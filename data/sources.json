@@ -1,0 +1,105 @@
+{
+  "_meta": {
+    "description": "vote-via-data 외부 출처 레지스트리. 카테고리: results(개표결과) / meta(코드·식별자) / geo(선거구·행정구역) / polls(여론조사). 신규 데이터셋 추가 시 여기 먼저 등록 → 페이지 출처 패널 → sitemap 동기화.",
+    "last_updated": "2026-05-22"
+  },
+  "datasets": [
+    {
+      "id": "nec_files_datagokr",
+      "category": "results",
+      "title": "중앙선거관리위원회 개표결과 파일데이터 (55건)",
+      "provider": "중앙선거관리위원회",
+      "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?org=%EC%A4%91%EC%95%99%EC%84%A0%EA%B1%B0%EA%B4%80%EB%A6%AC%EC%9C%84%EC%9B%90%ED%9A%8C",
+      "license": "공공누리 (출처표시) 추정 — 개별 확인",
+      "type": "FILE",
+      "format": "CSV / JSON / XML / XLSX",
+      "coverage": "대선 13~21대, 총선 14~22대, 지선 3~8회, 재보궐 2010 이후",
+      "unit": "전국 / 시도 / 구시군 / 읍면동 / 투표구",
+      "used_in": [],
+      "note": "**메인 출처**. 비로그인 직접 다운로드 가능하지만 다운 버튼이 JS(UDDI)라 curl 한 줄로 안 됨. 브라우저로 일괄 수동 다운 → data/raw/ 에 저장. 시군구별 후보별 득표·무효·기권 다 들어있음."
+    },
+    {
+      "id": "nec_openapi_set",
+      "category": "results",
+      "title": "중앙선거관리위원회 OpenAPI (투개표·당선인·코드·사전투표·후보자)",
+      "provider": "중앙선거관리위원회",
+      "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&org=%EC%A4%91%EC%95%99%EC%84%A0%EA%B1%B0%EA%B4%80%EB%A6%AC%EC%9C%84%EC%9B%90%ED%9A%8C",
+      "license": "이용허락범위 제한 없음",
+      "type": "OPEN_API",
+      "format": "REST → JSON/XML",
+      "used_in": [],
+      "note": "보조 출처. data.go.kr 인증키 발급 필요. 파일데이터로 부족할 때 (실시간/재조회/세분화). 키 .env에 DATA_GO_KR_KEY=..."
+    },
+    {
+      "id": "nec_info_system",
+      "category": "results",
+      "title": "중앙선거관리위원회 선거통계시스템",
+      "provider": "중앙선거관리위원회",
+      "url": "http://info.nec.go.kr/",
+      "license": "공공저작물 (출처표시)",
+      "type": "WEB_DOWNLOAD",
+      "format": "XLSX (브라우저 다운)",
+      "used_in": [],
+      "note": "백필용. 파일데이터에 없는 과거 회차나 세분화된 표가 필요할 때. UI POST 폼이라 자동화 어려움 → 수동."
+    },
+    {
+      "id": "nec_lod",
+      "category": "meta",
+      "title": "중앙선거관리위원회 LOD (선거 데이터 Linked Open Data)",
+      "provider": "중앙선거관리위원회",
+      "url": "http://data.nec.go.kr/",
+      "license": "공공저작물 (출처표시)",
+      "type": "LOD",
+      "format": "RDF/XML, JSON, Turtle, SPARQL",
+      "endpoints": {
+        "sparql": "http://data.nec.go.kr/lod/sparql/query.do",
+        "election_list": "http://data.nec.go.kr/lod/search/election-list.do",
+        "election_detail": "http://data.nec.go.kr/lod/search/election-detail.do?electionNo=Elec_YYYYMMDD"
+      },
+      "uri_pattern": {
+        "election_all": "http://data.nec.go.kr/resource/Elec_YYYYMMDD",
+        "election_subtype": "http://data.nec.go.kr/resource/Elec_NYYYYMMDD (N=종류코드)",
+        "candidate": "http://data.nec.go.kr/resource/Cnddt_<id><date>"
+      },
+      "coverage": "183개 선거, 27,467명 후보자",
+      "used_in": [],
+      "note": "선거↔선거구↔후보↔정당 관계 그래프. 개표 수치보단 메타·식별자. 코드 룩업·후보 검색에 유용."
+    },
+    {
+      "id": "admdong_kor_geo",
+      "category": "geo",
+      "title": "vuski/admdongkor — 대한민국 행정동 경계 GeoJSON",
+      "provider": "VW-Lab 김승범",
+      "url": "https://github.com/vuski/admdongkor",
+      "license": "리포지토리 LICENSE 확인 필요",
+      "type": "GEO",
+      "format": "GeoJSON",
+      "used_in": [],
+      "note": "읍면동 단위 경계. 2022-03-09 20대 대선 선거구 일치 버전 포함. 읍면동 개표 결과 매핑용."
+    },
+    {
+      "id": "ohmynews_21elec_map",
+      "category": "geo",
+      "title": "OhmyNews/2020_21_elec_map — 21대 총선 선거구 지도",
+      "provider": "오마이뉴스",
+      "url": "https://github.com/OhmyNews/2020_21_elec_map",
+      "license": "리포지토리 LICENSE 확인 필요",
+      "type": "GEO",
+      "format": "GeoJSON + CSV(UTF-8)",
+      "used_in": [],
+      "note": "253개 지역구 dissolve된 GeoJSON. 행정동 → 선거구 매핑 예시."
+    },
+    {
+      "id": "teampopong_data",
+      "category": "meta",
+      "title": "teampopong/data-for-rnd — 한국 정치 데이터",
+      "provider": "팀파퐁",
+      "url": "https://github.com/teampopong/data-for-rnd",
+      "license": "리포지토리 LICENSE 확인 필요",
+      "type": "REFERENCE",
+      "format": "CSV",
+      "used_in": [],
+      "note": "선관위·국회 의안정보 후처리. 의원·법안·표결 데이터."
+    }
+  ]
+}

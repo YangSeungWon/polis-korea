@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>vote · 2026 선거 한눈에</title>
+<meta name="description" content="2026 제9회 지방선거·국회의원 재보궐선거 여론조사를 hex 지도로 한눈에. 광역단체장·기초단체장·재보궐 판세. NESDC 등록 조사 인용.">
+<meta property="og:title" content="vote · 2026 선거 한눈에">
+<meta property="og:description" content="9회 지방선거·재보궐 여론조사를 hex 지도로 한눈에 — 광역·기초·재보궐 판세.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">vote</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="index.html" class="hdr-link is-current">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="history.html" class="hdr-link">역대 선거</a>
+  </nav>
+  <div class="hdr-meta">
+    <span id="countdown" class="countdown" aria-live="polite"></span>
+  </div>
+</header>
+
+<main class="page">
+  <section class="dash-intro">
+    <h1>2026 선거, 한눈에</h1>
+    <p class="lede">6·3 지방선거·국회의원 재·보궐선거 여론조사. 사전투표 5/29(금)~30(토) · 투표 방법·투표소·재외/선상투표는 <a href="https://www.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+  </section>
+
+  <section class="dash-grid">
+    <a class="dash-panel" href="/governor/">
+      <h2>광역단체장</h2>
+      <div class="dash-sub">17개 시·도 · 마지막 조사 1위</div>
+      <svg id="dash-governor" class="dash-hex" preserveAspectRatio="xMidYMid meet" aria-label="광역단체장 여론조사 판세"></svg>
+      <span class="dash-more">시·도별 자세히 →</span>
+    </a>
+
+    <a class="dash-panel" href="/mayor/">
+      <h2>기초단체장</h2>
+      <div class="dash-sub"><span id="dash-mayor-note">시군구 단위</span> · 마지막 조사 1위</div>
+      <svg id="dash-mayor" class="dash-hex" preserveAspectRatio="xMidYMid meet" aria-label="기초단체장 여론조사 판세"></svg>
+      <span class="dash-more">시군구별 자세히 →</span>
+    </a>
+
+    <a class="dash-panel" href="byelection.html">
+      <h2>국회의원 재·보궐</h2>
+      <div class="dash-sub">7개 선거구 · 마지막 조사 1위</div>
+      <div id="dash-boe-list" class="dash-boe-list"></div>
+      <span class="dash-more">선거구별 자세히 →</span>
+    </a>
+  </section>
+
+  <div id="dash-legend" class="dash-legend"></div>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467" target="_blank" rel="noopener">데이터 출처 · 중앙선거여론조사심의위원회</a>
+      <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">경계 GeoJSON · vuski/admdongkor</a>
+    </div>
+    <p class="fine">본 자료는 공직선거법에 따라 NESDC(nesdc.go.kr)에 등록·공표된 여론조사를 인용·재시각화한 것입니다. 인용 시 의뢰자·기관·조사기간·표본수·응답률·표본오차 표시 의무를 따릅니다. 정당·후보자 본인 의뢰 조사는 표시에서 제외됩니다. 선거일 6일 전(2026-05-28) ~ 선거일 18:00 사이 공표 금지 기간에는 신규 조사 표시가 차단됩니다.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/hexgrid.js"></script>
+<script src="assets/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>vote · 2026 국회의원 재·보궐선거 여론조사</title>
+<meta name="description" content="2026 국회의원 재·보궐선거 여론조사를 선거구별로. NESDC 등록 조사 인용.">
+<meta property="og:title" content="vote · 2026 재·보궐선거 여론조사">
+<meta property="og:description" content="2026 국회의원 재·보궐선거 여론조사를 선거구별 지도·카드로.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/byelection.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/polls.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">vote</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="index.html" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="byelection.html" class="hdr-link is-current">재·보궐선거</a>
+    <a href="history.html" class="hdr-link">역대 선거</a>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>2026 국회의원 재·보궐선거 여론조사</h1>
+    <p class="lede">6·3 지방선거와 동시 실시되는 국회의원 재·보궐선거 여론조사를 선거구별로 모았습니다. 지도의 점은 선거구 위치, 색은 마지막 조사 1위 후보의 정당색입니다.</p>
+  </section>
+
+  <section class="controls">
+    <div class="seg seg-wrap" role="tablist" aria-label="선거구" id="boe-chips"></div>
+  </section>
+
+  <section class="viz byelection-viz">
+    <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
+    <div id="boe-map" class="map-pane"></div>
+    <aside class="detail-pane" id="cards-pane"></aside>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467&pollGubuncd=VT039" target="_blank" rel="noopener">데이터 출처 · 중앙선거여론조사심의위원회 (2026 재·보궐)</a>
+    </div>
+    <p class="fine">본 자료는 공직선거법에 따라 NESDC(nesdc.go.kr)에 등록·공표된 여론조사를 인용·재시각화한 것입니다. 인용 시 의뢰자·기관·조사기간·표본수·응답률·표본오차 표시 의무를 따릅니다. 선거일 6일 전(2026-05-28)~선거일 18:00 공표 금지 기간에는 신규 조사 표시가 차단됩니다.</p>
+  </footer>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/byelection.js"></script>
+</body>
+</html>

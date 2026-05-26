@@ -1,0 +1,96 @@
+/* dashboard.css — 랜딩 대시보드 (3패널: 광역·기초·재보궐) */
+
+.dash-intro { margin: 8px 0 18px; }
+.dash-intro h1 { font-size: 26px; margin: 0 0 6px; letter-spacing: -0.02em; }
+.dash-intro .lede { font-size: 14px; color: var(--ink-soft); max-width: 64ch; line-height: 1.6; }
+.dash-intro .lede a { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--rule-strong); }
+.dash-intro .lede a:hover { text-decoration-color: var(--ink); }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 0.85fr;  /* 기초(밀도)↑, 재보궐↓ */
+  gap: 16px;
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .dash-grid { grid-template-columns: 1fr; }  /* 모바일 세로 스택 */
+}
+
+.dash-panel {
+  position: relative;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--bg2);
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  /* 카드 전체가 링크 */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color .12s, box-shadow .12s, transform .12s;
+}
+.dash-panel:hover {
+  border-color: var(--ink);
+  box-shadow: 0 4px 14px rgba(10, 14, 26, 0.10);
+  transform: translateY(-2px);
+}
+.dash-panel:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.dash-panel h2 { font-size: 15px; margin: 0; letter-spacing: -0.01em; }
+.dash-panel .dash-sub { font-size: 12px; color: var(--ink-soft); margin: 2px 0 10px; }
+
+.dash-hex {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  flex: 1 1 auto;
+  display: block;
+}
+
+/* 재보궐 리스트 */
+.dash-boe-list { flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; }
+.dash-boe-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+}
+.dash-boe-item:last-child { border-bottom: none; }
+.dash-boe-name { color: var(--ink); font-weight: 600; }
+.dash-boe-top { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dash-empty { color: var(--ink-soft); font-size: 13px; padding: 12px 0; }
+
+/* 공통 dot */
+.dash-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; display: inline-block; }
+
+/* "자세히 →" */
+.dash-more {
+  margin-top: 10px;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 1px;
+}
+.dash-more:hover { opacity: 0.6; }
+
+/* 정당색 범례 */
+.dash-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 16px 0 4px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.dash-legend .dash-leg-item { display: inline-flex; align-items: center; gap: 6px; }

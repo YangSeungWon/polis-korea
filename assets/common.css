@@ -1,0 +1,160 @@
+/* vote.ysw.kr — 공통 스타일. 샤프한 선거 톤 (warm 크림 아님). */
+:root {
+  --bg:       #fafbfc;
+  --bg2:      #f1f3f6;
+  --bg3:      #e6e9ef;
+  --ink:      #0a0e1a;
+  --ink-soft: #5a6378;
+  --ink-mute: #8a93a3;
+  --rule:     rgba(10,14,26,0.10);
+  --rule-strong: rgba(10,14,26,0.22);
+  --accent:   #0a0e1a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Pretendard', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+/* Leaflet */
+.leaflet-container { background: var(--bg2); font-family: 'Pretendard', sans-serif; }
+
+/* 시군구/역 툴팁 (어두운 배경) */
+.sigungu-tooltip, .station-tooltip {
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+  padding: 9px 13px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sigungu-tooltip b, .station-tooltip b { color: #fff; font-weight: 600; }
+
+/* 데이터 출처 패널 — 모든 페이지 동일 */
+.src-toggle {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  padding: 8px 14px;
+  font: inherit; font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 400;
+}
+.src-toggle:hover { background: var(--ink); color: var(--bg); }
+.src-panel {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--ink);
+  padding: 24px 28px;
+  transform: translateY(100%);
+  transition: transform .25s ease;
+  z-index: 600;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.src-panel.open { transform: translateY(0); }
+.src-panel h3 { margin: 0 0 16px; font-size: 18px; }
+.src-panel .src-close {
+  position: absolute;
+  top: 18px; right: 22px;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 22px; color: var(--ink);
+}
+.src-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px 28px; }
+.src-item { padding: 10px 0; border-top: 1px solid var(--rule); }
+.src-item a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(27,34,55,0.3);
+}
+.src-item a:hover {
+  text-decoration-color: var(--accent, #c8553d);
+  color: var(--accent, #c8553d);
+}
+.src-item .src-meta { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+.src-item .src-note { font-size: 12px; color: var(--ink-soft); margin-top: 6px; line-height: 1.45; }
+
+/* Loading */
+.loading-overlay {
+  position: absolute; inset: 0;
+  background: rgba(245,239,228,0.85);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500;
+  font-size: 13px; color: var(--ink-soft);
+}
+.spin {
+  display: inline-block;
+  width: 14px; height: 14px;
+  margin-right: 10px;
+  border: 2px solid var(--ink-soft);
+  border-top-color: transparent;
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: kvd-spin .9s linear infinite;
+}
+@keyframes kvd-spin { to { transform: rotate(360deg); } }
+
+/* === 사이트 chrome (헤더·페이지·푸터) — 전 페이지 공통 (대시보드 포함) === */
+.site-hdr {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px;
+  background: rgba(250,251,252,0.92);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule-strong);
+}
+.brand { display: flex; align-items: baseline; gap: 6px; }
+.brand .logo { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; color: var(--ink); }
+.brand .domain { font-size: 12px; color: var(--ink-mute); letter-spacing: 0; }
+.logo-link { text-decoration: none; display: flex; align-items: baseline; gap: 6px; color: inherit; }
+.hdr-meta { display: flex; gap: 12px; align-items: center; }
+.hdr-nav { display: flex; gap: 18px; align-items: baseline; margin-left: 24px; margin-right: auto; }
+.hdr-link {
+  text-decoration: none; color: var(--ink-soft); font-size: 13px; font-weight: 500;
+  padding: 2px 0; border-bottom: 2px solid transparent; transition: color .12s, border-color .12s;
+}
+.hdr-link:hover { color: var(--ink); }
+.hdr-link.is-current { color: var(--ink); border-bottom-color: var(--ink); }
+.countdown {
+  font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;
+  padding: 4px 10px; border: 1px solid var(--rule-strong); border-radius: 3px;
+}
+.blackout-tag {
+  background: var(--ink); color: #fff; padding: 4px 10px; border-radius: 3px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.02em;
+}
+.page { max-width: 1320px; margin: 0 auto; padding: 28px 24px 80px; }
+.foot {
+  margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--rule-strong);
+  font-size: 12px; color: var(--ink-soft);
+}
+.foot a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-strong); }
+.foot a:hover { text-decoration-color: var(--ink); }
+.foot .foot-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
+.foot .fine { font-size: 11px; color: var(--ink-mute); line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .page { padding: 18px 14px 60px; }
+  .site-hdr { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  .hdr-nav { gap: 10px; margin-left: 0; margin-right: 0; }
+  .hdr-link { font-size: 12px; }
+  .brand .logo { font-size: 18px; }
+  .brand .domain { font-size: 10px; }
+  .countdown { font-size: 11px; padding: 3px 8px; }
+  .foot { margin-top: 22px; }
+  .foot .foot-row { gap: 12px; }
+}
+@media (max-width: 480px) {
+  .hdr-nav { font-size: 11px; gap: 8px; }
+  .hdr-link { padding: 1px 0; }
+}

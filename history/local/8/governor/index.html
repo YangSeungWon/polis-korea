@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>vote · 8회 지선 광역단체장 (2022-06-01)</title>
+<meta name="description" content="8회 전국동시지방선거 광역단체장 결과 (2022-06-01) — 시군구 hex 격자 시각화.">
+<meta property="og:title" content="vote · 8회 지선 광역단체장 (2022-06-01)">
+<meta property="og:description" content="8회 전국동시지방선거 광역단체장 결과 (2022-06-01) — 시군구 hex 격자 시각화.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/history/local/8/governor/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/polls.css">
+<link rel="stylesheet" href="assets/history.css">
+<script id="initial-state">window.__INITIAL_STATE__ = {"type": "local", "n": 8, "office": "광역단체장"};</script>
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">vote</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="index.html" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="history.html" class="hdr-link is-current">역대 선거</a>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>역대 선거 결과</h1>
+    <p class="lede">1987년 직선제 부활 이후 대선·총선·지선을 시군구 hex 격자로. 헥스 셀의 색은 그 지역 1위 후보의 정당색, 명도는 1·2위 격차.</p>
+  </section>
+
+  <section class="controls">
+    <div class="seg" role="tablist" aria-label="선거 종류">
+      <button class="seg-btn is-active" data-type="presidential">대통령선거</button>
+      <button class="seg-btn" data-type="national_assembly">국회의원선거</button>
+      <button class="seg-btn" data-type="local">지방선거</button>
+    </div>
+    <div class="seg seg-rounds" role="tablist" aria-label="회차" id="rounds-seg">
+      <!-- JS가 회차별 버튼 채움 -->
+    </div>
+    <div class="seg seg-offices" role="tablist" aria-label="직위" id="offices-seg" hidden>
+      <button class="seg-btn is-active" data-office="광역단체장">광역단체장</button>
+      <button class="seg-btn" data-office="기초단체장">기초단체장</button>
+      <button class="seg-btn" data-office="교육감">교육감</button>
+    </div>
+    <div class="seg" role="tablist" aria-label="사이즈" id="sizing-seg" hidden>
+      <button class="seg-btn is-active" data-sizing="동일">동일</button>
+      <button class="seg-btn" data-sizing="반지름">반지름</button>
+      <button class="seg-btn" data-sizing="격자">격자 hex</button>
+      <button class="seg-btn" data-sizing="dorling">Dorling 원</button>
+    </div>
+    <div class="time-anchor">
+      <span class="label" id="election-date">—</span>
+    </div>
+  </section>
+
+  <section class="viz">
+    <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
+    <svg id="hex" class="hex-pane" viewBox="0 0 640 720" preserveAspectRatio="xMidYMid meet" hidden></svg>
+    <svg id="hex2" class="hex-pane" viewBox="0 0 720 720" preserveAspectRatio="xMidYMid meet"></svg>
+    <aside class="detail-pane" id="detail-pane">
+      <div class="detail-empty">시도·시군구를 선택하면 그 지역 결과가 여기에 표시됩니다.</div>
+    </aside>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">데이터 출처 · 중앙선거관리위원회 선거통계시스템</a>
+      <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">경계 GeoJSON · vuski/admdongkor</a>
+    </div>
+    <p class="fine">대선·지선 광역단체장은 시군구 hex로, 총선은 회차별 지역구 hex로 표시. 회차마다 행정구역·선거구 경계 변화는 데이터 시점 기준으로 매핑.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/hexgrid.js"></script>
+<script src="assets/history.js"></script>
+</body>
+</html>
