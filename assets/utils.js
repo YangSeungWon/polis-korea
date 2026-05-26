@@ -73,9 +73,19 @@ function formatPeriod(start, end) {
 
 // 시간 decay + 표본수 가중 평균으로 정당 기준 1위 산출 (메인 폴 지도·대시보드 공용).
 // decay: 14일 = e-fold. polls: 한 지역·직위의 조사 배열.
-function summarizeLatest(polls, decayDays = 14) {
+function summarizeLatest(polls, decayDays = 14, requireRecent = { n: 2, windowDays: 30 }) {
   if (!polls.length) return null;
   const now = Date.now();
+  // 최근 N일 안 폴 부족하면 "low_recent" 플래그만 — 데이터는 옛 폴로 계산해 일단 보여줌
+  let lowRecent = false;
+  if (requireRecent && requireRecent.n > 0) {
+    const cutoff = now - requireRecent.windowDays * 86_400_000;
+    const recent = polls.filter((p) => {
+      const ts = Date.parse(p.period_end || p.period_start || '0');
+      return isFinite(ts) && ts >= cutoff;
+    });
+    if (recent.length < requireRecent.n) lowRecent = true;
+  }
   const partyAgg = {};
   const polls_sorted = [...polls].sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));
   const latestName = {};
@@ -101,10 +111,20 @@ function summarizeLatest(polls, decayDays = 14) {
   if (!sorted.length) return null;
   const top = sorted[0];
   const sec = sorted[1] || { name: '', pct: 0 };
+  // sample_error 평균 — "±4.4%P" 같은 텍스트에서 숫자 추출, 폴 여러개면 평균
+  const errs = polls.map((p) => {
+    const m = (p.sample_error || '').match(/(\d+\.?\d*)/);
+    return m ? parseFloat(m[1]) : null;
+  }).filter((x) => x != null);
+  const avgErr = errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : null;
+  const gap = top.pct - (sec.pct || 0);
+  // 통계적으로 의미 있는 격차: gap - err (1×, 광역 시도 단위는 폴 다수 평균이라 사실상 더 작음)
+  const effGap = avgErr != null ? Math.max(0, gap - avgErr) : gap;
   return {
     party: top.party, name: top.name, pct: Math.round(top.pct * 10) / 10,
     second_name: sec.name, second_pct: Math.round(sec.pct * 10) / 10,
-    gap: top.pct - (sec.pct || 0),
+    gap, effective_gap: effGap, sample_error: avgErr,
+    low_recent: lowRecent,
     period: polls_sorted[0].period_end, n_polls: polls.length, source: polls_sorted[0],
   };
 }

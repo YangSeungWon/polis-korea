@@ -317,6 +317,21 @@ def build() -> dict:
             # 찬반 표 잘못 분류 (e.g., "약속하는 후보 지지") → skip
             if metric_type in ("후보지지", "당선가능성") and re.search(r"찬\s*성|반\s*대|폐\s*지|약속하는|찬반", title):
                 continue
+            # 단일정당 당내 경선·적합도·지지 (예: "더불어민주당 차기 중구청장 후보 적합도",
+            # "충북도지사 국민의힘 후보 지지도") → 같은 당 후보끼리라 일반 후보지지 아님.
+            # 판별: title에 정당명이 정확히 1개 + (후보|적합|경선|단일화). 일반 폴은 정당명이
+            # 0개("○○시장 후보 지지도")거나 여러 개(후보별 정당 나열)라 유지됨.
+            if metric_type in ("후보지지", "당선가능성", "적합도"):
+                _np = sum(1 for pn in ("더불어민주당", "국민의힘", "조국혁신당", "개혁신당",
+                                       "진보당", "정의당", "기본소득당", "새로운미래", "사회민주당")
+                          if pn in title)
+                if (re.search(r"적합|경선|단일화", title) and _np >= 1) or \
+                   (_np == 1 and "후보" in title):
+                    continue
+            # 가상 양자대결·맞대결 (시나리오 카드) → 헤드라인 아님. 다자대결·적합도·지지는 유지.
+            if metric_type in ("후보지지", "당선가능성", "적합도") and \
+               re.search(r"가상\s*대결|가상\s*양자|양자\s*대결|맞대결|\bvs\b|\bVS\b", title):
+                continue
             # 후보지지·당선가능성·적합도만 office_level 분류, 나머지는 광역/시도 단위 메트릭
             if metric_type in ("후보지지", "당선가능성", "적합도"):
                 office_level, office_label = classify_office(title, sido, sigungu)
@@ -324,6 +339,10 @@ def build() -> dict:
                 # 정당지지·국정평가·투표의향 — sido(+sigungu) 단위, office_level은 메트릭 자체
                 office_level = metric_type
                 office_label = metric_type
+            # 광역단체장·교육감은 도/광역시 전체 race — sigungu가 붙은 건 그 시군구 응답자만의
+            # 부분표본(시군구별 등록의 도지사 cross-tab)이라 광역 결과 아님 → skip.
+            if office_level in ("광역단체장", "교육감") and sigungu:
+                continue
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
@@ -539,8 +558,9 @@ def build() -> dict:
         print(f"  NEC 후보자검색으로 정당 보완: {n_party_nec}건")
 
     # 중복 카드 제거 — 같은 등록(ntt_id)·office·지역의 동일 후보집합은 보통 지역별/페이지
-    # cross-tab 분해라 전체 1건만 남긴다. 양자대결 등 다른 후보집합은 키가 달라 보존.
-    # 표본 큰 것(=전체) 우선, 동률이면 후보 많은 것.
+    # cross-tab 분해라 1건만 남긴다. 다른 후보집합(다자 vs 양자 등)은 키가 달라 보존.
+    # (시군구 부분표본은 위에서 이미 drop; 별개 등록은 독립 조사라 보존.)
+    # 표본 큰 것 우선, 동률이면 후보 많은 것.
     seen_card: dict[tuple, int] = {}
     deduped = []
     n_dup = 0

@@ -152,6 +152,24 @@ function partyTextColor(party) {
   return c;
 }
 
+// hex/cell 배경색 위에 글씨 색 자동 결정. YIQ 공식 — 밝으면 검정, 어두우면 흰색.
+// fillOpacity가 낮으면 흰 배경에 blend되어 실제 보이는 색이 옅어지므로 그것도 반영.
+function pickTextColor(bgHex, fillOpacity = 1) {
+  const c = (bgHex || '#ffffff').replace('#', '');
+  if (c.length < 6) return '#0a0e1a';
+  let r = parseInt(c.substr(0, 2), 16);
+  let g = parseInt(c.substr(2, 2), 16);
+  let b = parseInt(c.substr(4, 2), 16);
+  if (fillOpacity < 1) {
+    // 흰 배경(255,255,255) 위 알파 블렌딩
+    r = Math.round(r * fillOpacity + 255 * (1 - fillOpacity));
+    g = Math.round(g * fillOpacity + 255 * (1 - fillOpacity));
+    b = Math.round(b * fillOpacity + 255 * (1 - fillOpacity));
+  }
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 165 ? '#0a0e1a' : '#fff';
+}
+
 // 격차(%p)에 따른 opacity. 박빙일수록 연하게.
 //   0p (박빙) → 0.55
 //   5p        → 0.73

@@ -116,14 +116,17 @@ function renderHex() {
     poly.setAttribute('fill', fill);
     poly.setAttribute('stroke', '#0a0e1a');
     poly.setAttribute('stroke-width', '1.2');
-    poly.setAttribute('fill-opacity', result ? gapOpacity(result.gap) : '1');
+    const fillOp = result ? (result.low_recent ? 0.4 : gapOpacity(result.effective_gap ?? result.gap)) : 1;
+    poly.setAttribute('fill-opacity', fillOp);
+    if (result && (result.n_polls <= 2 || result.low_recent)) poly.setAttribute('stroke-dasharray', '3,2');
     g.appendChild(poly);
 
+    const textCol = result ? pickTextColor(fill, fillOp) : '#1b2237';
     const t1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     t1.setAttribute('class', 'hex-label');
     t1.setAttribute('x', cx);
     t1.setAttribute('y', cy + 2);
-    t1.setAttribute('fill', result ? '#fff' : '#1b2237');
+    t1.setAttribute('fill', textCol);
     t1.textContent = pos.label;
     g.appendChild(t1);
 
@@ -132,7 +135,7 @@ function renderHex() {
       t2.setAttribute('class', 'hex-pct');
       t2.setAttribute('x', cx);
       t2.setAttribute('y', cy + 20);
-      t2.setAttribute('fill', '#fff');
+      t2.setAttribute('fill', textCol);
       const lbl = result.name || result.party || '';
       // 긴 정당명·후보명일 때 폰트 동적 축소 (시도 hex radius 56 안에 맞춤)
       const total = lbl.length + String(result.pct).length + 2;
@@ -322,12 +325,14 @@ function sidoStyle(feat) {
   const sido = canonSido((feat.properties.name || '').trim());
   const result = sidoLastWinningParty(sido, state.office);
   const sel = state.selectedSido === sido && !state.selectedSigungu;
+  const low = result && result.n_polls <= 2;
   return {
     fillColor: result ? partyColor(result.party) : '#d8dce4',
-    fillOpacity: result ? gapOpacity(result.gap) : 0.55,
+    fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
     color: sel ? '#0a0e1a' : '#2a2f3c',
     weight: sel ? 2.5 : 1.4,
     opacity: sel ? 1 : 0.7,
+    dashArray: low ? '4,3' : null,
   };
 }
 
@@ -337,11 +342,13 @@ function sigunguStyle(feat) {
   const name = feat.properties.name || '';
   const result = sigunguLastWinningParty(sido, name, state.office);
   const selected = state.selectedSido === sido && state.selectedSigungu === name;
+  const low = result && result.n_polls <= 2;
   return {
     fillColor: result ? partyColor(result.party) : '#d8dce4',
-    fillOpacity: result ? gapOpacity(result.gap) : 0.55,
+    fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
     color: selected ? '#0a0e1a' : '#7a8090',
     weight: selected ? 2.5 : 0.6,
+    dashArray: low ? '3,2' : null,
   };
 }
 
@@ -517,7 +524,9 @@ async function renderSigunguHex() {
     poly.setAttribute('fill', fill);
     poly.setAttribute('stroke', '#0a0e1a');
     poly.setAttribute('stroke-width', '0.7');
-    poly.setAttribute('fill-opacity', result ? gapOpacity(result.gap) : '1');
+    const fillOpS = result ? (result.low_recent ? 0.4 : gapOpacity(result.effective_gap ?? result.gap)) : 1;
+    poly.setAttribute('fill-opacity', fillOpS);
+    if (result && (result.n_polls <= 2 || result.low_recent)) poly.setAttribute('stroke-dasharray', '2,1.5');
     poly.style.cursor = 'pointer';
     poly.addEventListener('click', () => {
       state.selectedSido = d.sido;
@@ -541,7 +550,7 @@ async function renderSigunguHex() {
       txt.setAttribute('x', cx);
       txt.setAttribute('text-anchor', 'middle');
       txt.setAttribute('font-weight', '600');
-      txt.setAttribute('fill', result ? '#fff' : '#0a0e1a');
+      txt.setAttribute('fill', result ? pickTextColor(fill, fillOpS) : '#0a0e1a');
       txt.setAttribute('pointer-events', 'none');
       txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       if (label.prefix) {
