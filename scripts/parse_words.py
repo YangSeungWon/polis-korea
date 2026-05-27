@@ -136,6 +136,13 @@ def _ntitle(t: str) -> str:
 _PREFIX_LEAK = re.compile(r"^기[가-힣]{2,3}$")  # "기이장우" = 기호 number가 이름에 붙은 격자 artifact
 _BAD_WORDNAME = {"사람", "사람이", "다음", "인물", "후보"}
 
+# 한국 흔한 성씨 — '기'(기호 번호) leak를 벗길 때 잔여부가 진짜 이름인지 가드.
+_SURNAMES = ("김이박최정강조윤장임한오서신권황안송전홍유고문양손배백허남심노하곽성차주우구"
+             "나민진지엄채원천방공현함변염여추도소석선설마길연위표명반왕금옥육인맹제모탁국어은편용봉")
+# "기김정철"→"김정철": 선두 기(기호) + (성씨+1~2자) 형태만 strip. 정책어(기업유치=업?, 기초학력=초?)는
+# 잔여부 첫 글자가 성씨가 아니라 보호됨. 진짜 '기'씨 후보는 잔여부가 성씨로 시작 안 하면 안전.
+_BALLOT_PREFIX = re.compile(rf"^기([{_SURNAMES}][가-힣]{{1,2}})$")
+
 
 def _clean_names(cands) -> bool:
     """word 후보가 모두 깨끗한 이름인지 (FP 방지 가드 — 사람/사람이/truncation 거부)."""
@@ -203,14 +210,46 @@ def scrub_noise() -> int:
             continue
         changed = False
         for q in d.get("questions", []):
-            if q.get("election_office") not in CAND_OFFICE:
-                continue
+            # 노이즈 이름 drop은 office 무관하게 안전 — "기타"(공천방식·제2장 등)로 분류됐다
+            # build에서 office_level로 승격·병합되는 표의 잔재(전략공천·중진컷오)까지 정리.
             kept = [c for c in q.get("candidates", [])
                     if not (c.get("name") and _is_noise_name(c["name"]))]
             if len(kept) != len(q.get("candidates", [])):
                 q["candidates"] = kept
                 changed = True
                 n += 1
+        if changed:
+            Path(pf).write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+    return n
+
+
+def strip_ballot_prefix(verbose=False) -> int:
+    """'기'(기호 번호) 컬럼이 이름 앞에 붙은 '기+성명'을 정규화('기김정철'→'김정철').
+
+    fix_prefix_leak는 word 재추출이 깨끗할 때만 행 전체를 교체하나, 그게 실패한 잔재
+    (펜앤마이크류 격자)에 '기성명'이 남는다. 잔여부가 성씨로 시작할 때만 strip → 정책어
+    (기업유치·기초학력·기존처럼)는 보호. 후보지지/적합도/당선가능성 office에만 적용.
+    """
+    import glob
+    import json
+    n = 0
+    for pf in glob.glob(str(Path(__file__).resolve().parent.parent / "data/raw/parsed/*.json")):
+        try:
+            d = json.loads(Path(pf).read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        changed = False
+        for q in d.get("questions", []):
+            if q.get("election_office") not in CAND_OFFICE:
+                continue
+            for c in q.get("candidates", []):
+                m = _BALLOT_PREFIX.match(c.get("name", ""))
+                if m:
+                    if verbose:
+                        print(f"  {Path(pf).stem.split('_')[0]}: {c['name']} → {m.group(1)}")
+                    c["name"] = m.group(1)
+                    changed = True
+                    n += 1
         if changed:
             Path(pf).write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
     return n
@@ -239,8 +278,9 @@ def main():
             nok += 1
             nq += len(cand_q)
     np, nr = fix_prefix_leak()
+    nb = strip_ballot_prefix()
     ns = scrub_noise()
-    print(f"words 파싱: {nok} PDF 회복 {nq} 문항 · 기-leak 교체 {nr}({np} PDF) · 노이즈 scrub {ns}q / {time.time()-t:.0f}s",
+    print(f"words 파싱: {nok} PDF 회복 {nq} 문항 · 기-leak 교체 {nr}({np} PDF) · 기호strip {nb} · 노이즈 scrub {ns}q / {time.time()-t:.0f}s",
           file=sys.stderr)
 
 

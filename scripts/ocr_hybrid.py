@@ -20,6 +20,12 @@ import pdfplumber
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from poll_terms import PARTY_NAMES, _is_noise_name, detect_office  # noqa: E402
 
+# 후보가 행으로 들어간 transposed 표 감지용 ("민주당 김상욱" 시작 행). 이 hybrid는
+# 후보=열 가정이라 transposed면 전체값 컬럼을 신뢰성 있게 못 짚음 → skip(틀린값 방지).
+_ROW_CAND = re.compile(
+    r"^(?:더불어민주당|국민의힘|조국혁신당|개혁신당|진보당|정의당|기본소득당|새로운미래|사회민주당|무소속)"
+    r"\s*[가-힣]{2,4}")
+
 DPI = 150
 SCALE = DPI / 72.0  # pdf point → 렌더 픽셀
 
@@ -104,6 +110,12 @@ def extract_page(pdf_path: Path, page_index: int) -> list[dict]:
             title = line
             break
     if not title:
+        return []
+
+    # transposed(후보=행) 감지 — "정당+이름"으로 시작하는 행이 ≥2개면 후보=열 가정이 깨짐.
+    # 이 hybrid는 transposed의 전체값 컬럼을 신뢰성 있게 못 짚으므로 skip(틀린 김상/없디 방지).
+    if sum(1 for _, toks in orows
+           if toks and _ROW_CAND.match("".join(t for _, t in toks[:3]))) >= 2:
         return []
 
     questions = []

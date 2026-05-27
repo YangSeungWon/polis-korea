@@ -301,6 +301,17 @@ def build() -> dict:
             title = q.get("title", "")
             metric_type = detect_metric_type(title, election_office)
 
+            # 정책·현안·방식 질문 reject — 후보 race가 아닌데 office_level로 승격돼 가짜 후보
+            # (기존처럼·통합광역·기대전야·전략공천·미래기업)가 새던 것을 차단.
+            _ntitle_p = re.sub(r"\s", " ", title)
+            # 강한 metric 마커 — 어떤 office든 후보 질문일 수 없음 ("X가 잘하는 점", "공천 방식").
+            if re.search(r"잘하는|잘한\s*점|힘써야|할\s*분야|공천\s*방식|방식으로|우선\s*순위", _ntitle_p):
+                continue
+            # 약한 마커 — parser가 "기타"(비후보)로 분류한 경우만 (전략·시대·체제는 정식 제목에도 출현).
+            if election_office == "기타" and re.search(
+                    r"선거\s*방식|체제|전략|시대|축소|방안|과제|통합\s*이후|영상|주력해야|해야할", _ntitle_p):
+                continue
+
             # 합계 정규화 + 비정상 필터
             pcts = [c.get("pct") for c in cands if c.get("pct") is not None]
             if pcts:
