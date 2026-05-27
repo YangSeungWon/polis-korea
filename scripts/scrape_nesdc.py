@@ -234,7 +234,7 @@ def detail_iter(ntt_ids: list[str], delay: float = 0.4):
         time.sleep(delay)
 
 
-RESULT_KEYWORDS = ("결과", "통계", "보고", "분석")  # 결과 PDF만 다운로드용 필터
+RESULT_KEYWORDS = ("결과", "집계", "통계", "보고", "분석")  # 결과 PDF만 다운로드용 필터 (집계표 포함)
 
 
 def download_pdfs(detail_meta: dict, out_dir: Path, result_only: bool = True,

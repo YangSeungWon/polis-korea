@@ -16,7 +16,7 @@ from pathlib import Path
 import pdfplumber
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office  # noqa: E402
+from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office, PARTY_CANON  # noqa: E402
 from parse_pdf_v2 import METRIC_TITLE_KW, is_metric_title  # noqa: E402
 
 _PCT = re.compile(r"^\d{1,3}(?:\.\d)?$")
@@ -69,7 +69,7 @@ def extract_page(page) -> list[dict]:
                 tt = re.sub(r"\s", "", t)
                 pn = next((p for p in PARTY_NAMES if p in tt), "")
                 if pn:
-                    parties.append((x, pn))
+                    parties.append((x, PARTY_CANON.get(pn, pn)))
                     tt = tt.replace(pn, "")
                 m = re.fullmatch(r"[가-힣]{2,4}", tt)
                 if m and tt not in HEADER_WORDS and not _is_noise_name(tt):
@@ -115,3 +115,44 @@ def extract_pdf(pdf_path: Path) -> dict:
         print(f"  words fail {pdf_path.name}: {e}", file=sys.stderr)
     ntt = pdf_path.name.split("_", 1)[0]
     return {"source_pdf": pdf_path.name, "ntt_id": ntt, "questions": questions}
+
+
+def _result_pdf(ntt: str):
+    import glob
+    for pat in (f"data/raw/pdf/{ntt}_*결과*.pdf", f"data/raw/pdf/{ntt}_*통계*.pdf",
+                f"data/raw/pdf/{ntt}_*집계*.pdf"):
+        g = glob.glob(pat)
+        if g:
+            return g[0]
+    g = [f for f in glob.glob(f"data/raw/pdf/{ntt}_*.pdf")
+         if not any(k in f for k in ("설문", "질문", "보도"))]
+    return g[0] if g else None
+
+
+def main():
+    """image_no_table(표 선 없는 텍스트 PDF)에 일괄 적용 → parsed/ 기록."""
+    import json
+    import subprocess
+    import time
+    root = Path(__file__).resolve().parent.parent
+    img = [l.split(" | ")[0] for l in subprocess.run(
+        [sys.executable, "scripts/audit_parse.py", "--list", "image_no_table"],
+        capture_output=True, text=True).stdout.splitlines()]
+    t = time.time()
+    nok = nq = 0
+    for ntt in img:
+        f = _result_pdf(ntt)
+        if not f:
+            continue
+        r = extract_pdf(Path(f))
+        cand_q = [q for q in r["questions"] if q["candidates"]]
+        if cand_q:
+            out = root / "data/raw/parsed" / (Path(f).stem + ".json")
+            out.write_text(json.dumps(r, ensure_ascii=False, indent=2), encoding="utf-8")
+            nok += 1
+            nq += len(cand_q)
+    print(f"words 파싱: {nok} PDF 회복, {nq} 문항 / {time.time()-t:.0f}s", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

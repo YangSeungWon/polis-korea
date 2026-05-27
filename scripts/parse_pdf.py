@@ -1079,6 +1079,15 @@ def _process_one(args_tuple: tuple[str, str]) -> tuple[str, int, int, str]:
         if q["candidates"] and any("pct" in c for c in q["candidates"])
     )
     out_path = out_dir / (pdf_path.stem + ".json")
+    # 덮어쓰기 가드: grid 추출이 후보 0인데 기존 parsed(OCR/words)에 후보가 있으면 보존.
+    # parse_pdf·ocr_hybrid·parse_words가 같은 parsed/ namespace를 써서 clobber 방지.
+    if qs_with_pct == 0 and out_path.exists():
+        try:
+            prev = json.loads(out_path.read_text(encoding="utf-8"))
+            if any(q.get("candidates") for q in prev.get("questions", [])):
+                return (pdf_path.name, len(prev["questions"]), 0, "")  # 기존 보존
+        except Exception:
+            pass
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     return (pdf_path.name, len(result["questions"]), qs_with_pct, "")

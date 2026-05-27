@@ -70,8 +70,12 @@ GET /WtvtelpcInfoInqireService/getWtvtelpcsccnInfoInqire
 
 | 스크립트 | 입력 | 출력 | 비고 |
 |---|---|---|---|
-| `poll_terms.py` | — | — | 공유 어휘·분류기(정당명·헤더어·`detect_office`·`is_metric_title`·`_is_noise_name`). v1·v2 둘 다 import (v2→v1 의존 제거용) |
+| `poll_terms.py` | — | — | 공유 어휘·분류기(정당명·`PARTY_CANON` 약칭맵·헤더어·`detect_office`·`is_metric_title`·`_is_noise_name`). 모든 파서가 import |
 | `audit_parse.py` | `raw/grids`·`raw/parsed`·메타 CSV | funnel 요약 / `--json` 리포트 | **파싱 품질 하네스**. 이미지/파싱실패/누출/정상 4분류 + `--baseline` diff. 파서 변경 전후 측정 기준 |
+| `parse_pdf_v2.py` | grids 캐시 | questions | 격자 기반 파서(classify/extract). 기본 lines + 실패 시 tuned(text) 재추출 자가치유 |
+| `ocr_hybrid.py` + `run_ocr_batch.py` | CID폰트 PDF | `parsed/` | 텍스트층이 `(cid:..)`로 깨진 PDF(여론조사꽃 등): **숫자는 pdfplumber 좌표(소수점 보존), 후보명은 PaddleOCR**, x좌표 정렬. 느림(페이지당 ~17s) |
+| `parse_words.py` | 표선 없는 텍스트 PDF | `parsed/` | `extract_tables`=0이지만 텍스트 정상인 PDF: `extract_words` 좌표로 후보·정당·% 정렬. **OCR 불필요·빠름** |
+| `redownload_orphans.py` | 메타 `pdf_files` 토큰 | `raw/pdf/` | 결과 PDF 미수집(orphan) 재다운로드. NESDC 부하 줄이려 딜레이 |
 | `parse_district_nec.py` | `raw/nec_district/*.xlsx` | `parsed/`, `results/national_assembly_*.json` | 19~22대 총선 xlsx parser |
 | `parse_local_xlsx.py` | `raw/results_csv/local_*.csv` | `results/local_*.json` | 5~8 지선 (3 office) |
 | `ingest_wwolf.py` | `raw/wwolf/*.tsv` | `results/*.json` patch | WWolf TSV 통합 |
@@ -110,6 +114,24 @@ data/polls/aggregated.json        # UI fetch
 
 룰 한 줄 바꿔도 1867 PDF reparse가 1~2분에 끝남 — `parse_from_grids`만 다시 돌리면 됨.
 새 PDF 추가 시 `--skip-existing`으로 그것만 Step A.
+
+### PDF 양식별 파싱 경로 (parsed/ 단일 namespace)
+
+`parsed/{stem}.json`은 PDF 양식에 따라 **다른 파서가 채운다**:
+- **격자 있음** (대부분) → `parse_pdf` (Step A/B/C, 위).
+- **CID 폰트 깨짐** (여론조사꽃 등, 텍스트가 `(cid:..)`) → `run_ocr_batch` (ocr_hybrid).
+- **표 선 없는 텍스트** (`extract_tables`=0이나 텍스트 정상) → `parse_words`.
+
+세 파서가 같은 파일을 쓰므로 **덮어쓰기 가드**가 있다: `parse_pdf`가 후보 0을 뽑았는데
+기존 parsed에 후보가 있으면(=OCR/words 결과) 덮지 않는다. 그래서 `parse_pdf 'data/raw/pdf/*.pdf'`
+전체 재실행해도 OCR/words 회복분이 안 날아간다. (단 OCR/words 룰을 바꾸면 그 배치를 다시 돌려야 반영됨.)
+
+### gotcha (디버깅하다 발견)
+
+- **`RESULT_KEYWORDS`에 "집계" 필수** — 빠지면 `집계표`(가장 흔한 결과 PDF명)를 스킵해 등록이 orphan이 됨.
+- **정당 약칭 "국힘"** — 헤더가 `국힘이근수`처럼 약칭+이름. `PARTY_NAMES`에 "국힘" 두고 `PARTY_CANON`으로 국민의힘 정규화해 후보명(이근수) 복구. 약칭을 노이즈로 드롭하면 그 후보 결과가 통째로 사라지니 주의.
+- **직무평가 leak** — 리얼미터 "제2장.조사결과"는 한 페이지에 후보지지+직무평가가 섞여 "잘못함" 응답이 후보로 새던 것 → `_is_noise_name`에서 평가응답(잘함/잘못함/매우/대체로) 차단.
+- **시군구별 등록** — 한 조사를 시군구마다 따로 등록(도지사 결과에 sigungu가 붙음). `build_polls`가 광역단체장·교육감 + sigungu면 부분표본으로 보고 drop.
 
 ## 빌드 순서
 

@@ -23,7 +23,7 @@ import pdfplumber
 
 # 정당명·헤더 단어·노이즈 검사기는 poll_terms에서 (v1과 공유, v1 의존 없음)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office, is_metric_title  # type: ignore
+from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office, is_metric_title, PARTY_CANON  # type: ignore
 
 # ---------- Step A: 격자 추출 + 정규화 ----------
 
@@ -264,11 +264,11 @@ def extract_candidates(table: list[list[str]], kind: str) -> list[dict]:
         pct = _parse_pct(data_row[col_i])
         if pct is None:
             continue
-        # 정당 매칭 (긴 이름 우선)
+        # 정당 매칭 (긴 이름 우선) — 약칭(국힘)은 정식명(국민의힘)으로 정규화
         party = ""
         for pname in sorted(PARTY_NAMES, key=len, reverse=True):
             if pname in h:
-                party = pname
+                party = PARTY_CANON.get(pname, pname)
                 break
         name = ""
         if kind == "candidate":
