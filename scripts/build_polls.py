@@ -343,6 +343,12 @@ def build() -> dict:
             # 부분표본(시군구별 등록의 도지사 cross-tab)이라 광역 결과 아님 → skip.
             if office_level in ("광역단체장", "교육감") and sigungu:
                 continue
+            # 후보지지·적합도·당선가능성은 race — 후보 2명 미만이면 무의미(메트릭 응답 leak·
+            # 다자대결 추출실패의 증상). race가 아닌 단독 카드는 drop.
+            if metric_type in ("후보지지", "당선가능성", "적합도"):
+                n_named = sum(1 for c in cands if c.get("pct") is not None and c.get("name"))
+                if n_named < 2:
+                    continue
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),

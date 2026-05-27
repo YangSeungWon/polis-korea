@@ -272,27 +272,31 @@ def extract_candidates(table: list[list[str]], kind: str) -> list[dict]:
                 break
         name = ""
         if kind == "candidate":
-            # 정당명 위치 후의 첫 한글이 후보명일 가능성 높음 (column header가
-            # "정당명 + 후보 + 이름 + 직책" 패턴). 정당명 없으면 전체에서.
-            search_from = h
+            # 후보명은 정당명에 인접 — "정당+이름"(뒤) 또는 "이름+정당+직책"(앞) 둘 다 처리.
+            # 정당명 없으면 셀 맨 앞에서. (전경선현전남도의회의원=무소속 / 여인두현정의당목포…)
+            idx = -1
             for pname in sorted(PARTY_NAMES, key=len, reverse=True):
-                idx = search_from.find(pname)
+                idx = h.find(pname)
                 if idx >= 0:
-                    search_from = search_from[idx + len(pname):]
+                    plen = len(pname)
                     break
-            # "후보" 라벨 제거 (정당명 뒤에 흔히)
-            stripped = re.sub(r"(후보는?)", "", search_from)
-            m = re.search(r"[가-힣]{2,4}", stripped)
-            if m:
-                cand = m.group(0)
-                # 4자 후보명 끝글자가 직책 마커·시군구·시도 단글자면 3자로
-                # 예: "김철전양"(전+양구) → "김철전" → 그 후 "전" 직책 떼고 → "김철"
+            if idx >= 0:
+                segs = [(h[:idx], True), (h[idx + plen:], False)]  # (앞: 정당직전=last, 뒤: first)
+            else:
+                segs = [(h, False)]  # 정당 없음 → 맨 앞
+            for seg, pick_last in segs:
+                seg = re.sub(r"(후보는?)", "", seg)
+                found = re.findall(r"[가-힣]{2,4}", seg)
+                if not found:
+                    continue
+                cand = found[-1] if pick_last else found[0]
                 if len(cand) == 4 and cand[-1] in "양강충전남북경구군시도":
                     cand = cand[:-1]
                 if len(cand) == 4 and cand[-1] in "현전":
                     cand = cand[:-1]
                 if not _is_noise_name(cand) and cand not in HEADER_WORDS:
                     name = cand
+                    break
         # candidate kind인데 name 추출 실패면 skip (정당만 매칭된 column)
         if kind == "candidate" and not name:
             continue
@@ -437,6 +441,18 @@ def parse_from_grids(grids: dict) -> dict:
                     office = "후보지지"
             if kind == "party":
                 office = "정당지지"
+            # 페이지 분할 표 병합 — "X 후보 지지도_계속"은 X의 후보 컬럼이 다음 page로 넘친 것.
+            # 직전 질문(같은 title 본체·같은 office)에 후보를 합치고 새 question은 안 만든다.
+            base_title = re.sub(r"[_\s]*\(?\s*계\s*속\s*\)?\s*$", "", title)
+            if questions and base_title and base_title != title and \
+               re.sub(r"[_\s]*\(?\s*계\s*속\s*\)?\s*$", "", questions[-1]["title"]) == base_title and \
+               questions[-1]["election_office"] == office:
+                exist = {c["name"] for c in questions[-1]["candidates"] if c.get("name")}
+                for c in cands:
+                    if c.get("name") and c["name"] not in exist:
+                        questions[-1]["candidates"].append(c)
+                        exist.add(c["name"])
+                continue
             sig = (office, tuple(sorted((c.get("name",""), c.get("party",""), c.get("pct")) for c in cands)))
             if sig in seen_signatures:
                 continue
