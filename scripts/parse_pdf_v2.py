@@ -290,7 +290,8 @@ def extract_candidates(table: list[list[str]], kind: str) -> list[dict]:
                 if not found:
                     continue
                 cand = found[-1] if pick_last else found[0]
-                if len(cand) == 4 and cand[-1] in "양강충전남북경구군시도":
+                # 4자 끝글자가 직책·지역 단글자면 잘린 직책 — 3자로 (이개호국[회의원]→이개호)
+                if len(cand) == 4 and cand[-1] in "양강충전남북경구군시도국":
                     cand = cand[:-1]
                 if len(cand) == 4 and cand[-1] in "현전":
                     cand = cand[:-1]
