@@ -258,7 +258,7 @@ def download_pdfs(detail_meta: dict, out_dir: Path, result_only: bool = True,
             f"&bbsId={bbs_id}&bbsKey={bbs_key}"
         )
         try:
-            r = requests.get(url, headers=HEADERS, timeout=60, stream=True)
+            r = requests.get(url, headers=HEADERS, timeout=25, stream=True)
             r.raise_for_status()
         except Exception as e:
             print(f"  ! 다운로드 실패 ntt={detail_meta['ntt_id']} sn={file_sn}: {e}", file=sys.stderr)

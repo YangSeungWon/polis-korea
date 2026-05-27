@@ -187,6 +187,35 @@ def fix_prefix_leak() -> tuple[int, int]:
 CAND_OFFICE = ("후보지지", "적합도", "당선가능성")
 
 
+def scrub_noise() -> int:
+    """모든 parsed의 후보지지 후보명을 현재 _is_noise_name으로 재필터(drop).
+
+    재추출(grid)은 clobber-guard로 stale OCR/words를 안 덮으므로, 노이즈 어휘가 갱신되면
+    그 stale 결과의 잔재(국회·긍정·부정 등)가 남는다. 이름만 재검사해 정리(재추출 X·안전).
+    """
+    import glob
+    import json
+    n = 0
+    for pf in glob.glob(str(Path(__file__).resolve().parent.parent / "data/raw/parsed/*.json")):
+        try:
+            d = json.loads(Path(pf).read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        changed = False
+        for q in d.get("questions", []):
+            if q.get("election_office") not in CAND_OFFICE:
+                continue
+            kept = [c for c in q.get("candidates", [])
+                    if not (c.get("name") and _is_noise_name(c["name"]))]
+            if len(kept) != len(q.get("candidates", [])):
+                q["candidates"] = kept
+                changed = True
+                n += 1
+        if changed:
+            Path(pf).write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+    return n
+
+
 def main():
     """image_no_table(표 선 없는 텍스트 PDF) 추출 + 격자 '기'-leak word 교체 → parsed/."""
     import json
@@ -210,7 +239,8 @@ def main():
             nok += 1
             nq += len(cand_q)
     np, nr = fix_prefix_leak()
-    print(f"words 파싱: {nok} PDF 회복 {nq} 문항 · 기-leak 교체 {nr}({np} PDF) / {time.time()-t:.0f}s",
+    ns = scrub_noise()
+    print(f"words 파싱: {nok} PDF 회복 {nq} 문항 · 기-leak 교체 {nr}({np} PDF) · 노이즈 scrub {ns}q / {time.time()-t:.0f}s",
           file=sys.stderr)
 
 
