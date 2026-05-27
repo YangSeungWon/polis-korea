@@ -59,22 +59,41 @@ CURRENT_PARTIES = {
 }
 
 
+TARGET_SG = "2026"  # 9회 지방선거(sgId 2026…) — 다선 경력자의 옛 선거 정당 오매칭 방지
+
+
 def resolve(rows: list[dict], sido: str) -> str:
-    """sido 매칭 동명이인 구분 → 가장 최근 출마 정당. 단 현존 정당만 (옛 정당=오매칭→'')."""
+    """sido 매칭 동명이인 구분 → 정당. 2026 지방선거 등록 이력을 최우선으로,
+    없으면(예비·미등록) 가장 최근 이력으로 fallback. 현존 정당만 (옛 정당=오매칭→'')."""
     cand = [r for r in rows if r["sd"] == sido] or rows
     if not cand:
         return ""
-    cand.sort(key=lambda r: r["sgId"], reverse=True)  # 최근 우선
-    party = cand[0]["jd"] or "무소속"
+    # 2026 등록 이력이 있으면 그것만 — 김관영(과거 무소속 국회의원 이력)류 오매칭 차단
+    cur = [r for r in cand if r["sgId"].startswith(TARGET_SG)]
+    pool = sorted(cur or cand, key=lambda r: r["sgId"], reverse=True)
+    party = pool[0]["jd"] or "무소속"
     return party if party in CURRENT_PARTIES else ""
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--refresh", action="store_true",
+                    help="캐시의 모든 이름을 재조회·재해결 (resolve 로직 변경 시 기존 오매칭 교정)")
+    ap.add_argument("--diag", metavar="NAME",
+                    help="한 이름의 NEC 원본 이력(sgId·sido·정당) 출력 후 종료")
     args = ap.parse_args()
 
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
+
+    # 진단: 한 이름의 raw 이력만 보고 종료
+    if args.diag:
+        key = os.environ.get("NEC_API_KEY")
+        if not key:
+            print("NEC_API_KEY 없음", file=sys.stderr); sys.exit(1)
+        for r in sorted(fetch_name(key, args.diag), key=lambda x: x["sgId"], reverse=True):
+            print(f"  sgId={r['sgId']}  {r['sd']}  정당={r['jd'] or '(무)'}")
+        return
 
     recs = json.loads(AGG.read_text(encoding="utf-8"))["polls"]
     missing = set()
@@ -86,8 +105,13 @@ def main():
             if not c.get("party") and re.fullmatch(r"[가-힣]{2,4}", nm):
                 missing.add((r.get("sido") or "", nm))
 
-    todo_names = sorted({nm for _, nm in missing if not any(k.endswith(f"|{nm}") for k in cache)})
-    print(f"정당 빈 후보 (sido,name): {len(missing)} | 조회할 이름: {len(todo_names)}", file=sys.stderr)
+    # --refresh: 캐시에 이미 있는 이름도 재조회 (resolve 변경분 반영). 기본: 신규만.
+    if args.refresh:
+        todo_names = sorted({nm for _, nm in missing} | {k.split("|", 1)[1] for k in cache})
+    else:
+        todo_names = sorted({nm for _, nm in missing if not any(k.endswith(f"|{nm}") for k in cache)})
+    print(f"정당 빈 후보 (sido,name): {len(missing)} | 조회할 이름: {len(todo_names)}"
+          f"{' [refresh]' if args.refresh else ''}", file=sys.stderr)
 
     if args.offline or not todo_names:
         print("  (조회 생략 — offline 또는 신규 없음)" if args.offline else "  (신규 이름 없음)", file=sys.stderr)
@@ -102,19 +126,28 @@ def main():
             time.sleep(0.12)  # graceful
             if (i + 1) % 50 == 0:
                 print(f"  ...{i + 1}/{len(todo_names)}", file=sys.stderr)
-        # (sido|name) → party 해결
-        n_new = 0
-        for sido, nm in missing:
+        # (sido|name) → party 해결. refresh면 기존 항목도 재해결·교정.
+        targets = set(missing)
+        if args.refresh:
+            targets |= {(k.split("|", 1)[0], k.split("|", 1)[1]) for k in cache}
+        n_new = n_chg = 0
+        for sido, nm in sorted(targets):
             k = f"{sido}|{nm}"
-            if k in cache or nm not in by_name:
+            if nm not in by_name:
                 continue
             party = resolve(by_name[nm], sido)
-            if party:
+            if not party:
+                continue
+            if k not in cache:
                 cache[k] = party
                 n_new += 1
+            elif cache[k] != party:
+                print(f"  교정 {k}: {cache[k]} → {party}", file=sys.stderr)
+                cache[k] = party
+                n_chg += 1
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
-        print(f"  캐시 +{n_new} → {CACHE.relative_to(ROOT)} (총 {len(cache)})", file=sys.stderr)
+        print(f"  캐시 +{n_new} 교정 {n_chg} → {CACHE.relative_to(ROOT)} (총 {len(cache)})", file=sys.stderr)
 
     # 채움 가능 미리보기
     fillable = sum(1 for s, n in missing if f"{s}|{n}" in cache)

@@ -301,6 +301,12 @@ def build() -> dict:
             title = q.get("title", "")
             metric_type = detect_metric_type(title, election_office)
 
+            # 적합도 제외 — 경선·예비후보 비교(같은 당 주자 적합도)라 본선 race가 아니다.
+            # 정당 모호함(예: 김관영 무소속 vs 민주 경선)·파싱 노이즈의 주범. 본선 후보지지·
+            # 정당지지 매치업 시계열만 남긴다.
+            if metric_type == "적합도":
+                continue
+
             # 정책·현안·방식 질문 reject — 후보 race가 아닌데 office_level로 승격돼 가짜 후보
             # (기존처럼·통합광역·기대전야·전략공천·미래기업)가 새던 것을 차단.
             _ntitle_p = re.sub(r"\s", " ", title)
