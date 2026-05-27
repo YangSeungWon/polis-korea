@@ -129,8 +129,66 @@ def _result_pdf(ntt: str):
     return g[0] if g else None
 
 
+def _ntitle(t: str) -> str:
+    return re.sub(r"[\s\[\]【】<>()표\d.·_-]+", "", t or "")
+
+
+_PREFIX_LEAK = re.compile(r"^기[가-힣]{2,3}$")  # "기이장우" = 기호 number가 이름에 붙은 격자 artifact
+_BAD_WORDNAME = {"사람", "사람이", "다음", "인물", "후보"}
+
+
+def _clean_names(cands) -> bool:
+    """word 후보가 모두 깨끗한 이름인지 (FP 방지 가드 — 사람/사람이/truncation 거부)."""
+    ns = [c["name"] for c in cands if c.get("name")]
+    return bool(ns) and all(
+        re.fullmatch(r"[가-힣]{2,4}", n) and n not in _BAD_WORDNAME and not _is_noise_name(n)
+        for n in ns)
+
+
+def fix_prefix_leak() -> tuple[int, int]:
+    """격자가 '기OOO'(기호 leak)로 이름을 망친 후보지지를, word 추출이 깨끗하면 교체.
+
+    blanket word-merge는 충북 도지사 등을 '사람/사람이'로 망치는 FP가 있어(전수검증 확인) 폐기.
+    대신 '기'-leak는 격자의 알려진 실패 모드라, 그 표만 word로 — word 결과가 깨끗할 때만.
+    """
+    import glob
+    import json
+    root = Path(__file__).resolve().parent.parent
+    n_pdf = n_repl = 0
+    for pf in glob.glob(str(root / "data/raw/parsed/*.json")):
+        try:
+            d = json.loads(Path(pf).read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not any(q.get("election_office") in CAND_OFFICE and
+                   any(_PREFIX_LEAK.match(c.get("name", "")) for c in q.get("candidates", []))
+                   for q in d.get("questions", [])):
+            continue
+        pdfs = glob.glob(str(root / "data/raw/pdf" / (Path(pf).stem + ".pdf")))
+        if not pdfs:
+            continue
+        wq = {_ntitle(q["title"]): q for q in extract_pdf(Path(pdfs[0]))["questions"]
+              if len(q["candidates"]) >= 2}
+        changed = False
+        for q in d["questions"]:
+            w = wq.get(_ntitle(q.get("title", "")))
+            if (w and q.get("election_office") in CAND_OFFICE
+                    and len(w["candidates"]) >= len(q.get("candidates", []))
+                    and _clean_names(w["candidates"])):
+                q["candidates"] = w["candidates"]
+                changed = True
+                n_repl += 1
+        if changed:
+            Path(pf).write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+            n_pdf += 1
+    return n_pdf, n_repl
+
+
+CAND_OFFICE = ("후보지지", "적합도", "당선가능성")
+
+
 def main():
-    """image_no_table(표 선 없는 텍스트 PDF)에 일괄 적용 → parsed/ 기록."""
+    """image_no_table(표 선 없는 텍스트 PDF) 추출 + 격자 '기'-leak word 교체 → parsed/."""
     import json
     import subprocess
     import time
@@ -151,7 +209,9 @@ def main():
             out.write_text(json.dumps(r, ensure_ascii=False, indent=2), encoding="utf-8")
             nok += 1
             nq += len(cand_q)
-    print(f"words 파싱: {nok} PDF 회복, {nq} 문항 / {time.time()-t:.0f}s", file=sys.stderr)
+    np, nr = fix_prefix_leak()
+    print(f"words 파싱: {nok} PDF 회복 {nq} 문항 · 기-leak 교체 {nr}({np} PDF) / {time.time()-t:.0f}s",
+          file=sys.stderr)
 
 
 if __name__ == "__main__":
