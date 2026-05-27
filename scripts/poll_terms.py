@@ -177,4 +177,10 @@ def _is_noise_name(t: str) -> bool:
     #   PARTY_NAMES에 "국힘" 추가 + extract에서 약칭 정규화로 "이근수"+국민의힘 복구.
     if re.search(r"현정부|정부지지|새로운인|투표안함|재신임", t):
         return True
+    # 후보 선택기준 응답 (리얼미터 "제2장.조사결과"에서 후보표와 붙어 추출되던 잔재)
+    if re.search(r"지역발|과거경력|자인물|인물및|및자질|정책공약|소속정당|도덕성과|^종합", t):
+        return True
+    # 동의척도·찬반 응답 (현안/정책 설문 보기) + "정당지지" 헤더어
+    if re.search(r"그렇|별로|전혀|매우|대체로|정당지지|여당위해|야당|차기포항|포항시발|사회활동", t):
+        return True
     return False

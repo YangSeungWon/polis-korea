@@ -41,8 +41,15 @@ def main():
             print(f"  ! {ntt}: 격자 cache 없음 ({note})", file=sys.stderr)
             skipped += 1
             continue
-        grids = json.load(open(grid_files[0], encoding="utf-8"))
-        result = parse_from_grids(grids)
+        # 한 ntt에 여러 PDF (질문지·결과보고서). parse 결과 풍부한 쪽 선택.
+        best = None
+        for gf in grid_files:
+            g = json.load(open(gf, encoding="utf-8"))
+            r = parse_from_grids(g)
+            score = sum(len(q.get("candidates", [])) for q in r.get("questions", []))
+            if best is None or score > best[0]:
+                best = (score, g, r, gf)
+        _, grids, result, _ = best
         out = {
             "ntt_id": ntt,
             "source_pdf": grids.get("source_pdf", ""),
