@@ -305,7 +305,8 @@ def build() -> dict:
             # (기존처럼·통합광역·기대전야·전략공천·미래기업)가 새던 것을 차단.
             _ntitle_p = re.sub(r"\s", " ", title)
             # 강한 metric 마커 — 어떤 office든 후보 질문일 수 없음 ("X가 잘하는 점", "공천 방식").
-            if re.search(r"잘하는|잘한\s*점|힘써야|할\s*분야|공천\s*방식|방식으로|우선\s*순위", _ntitle_p):
+            if re.search(r"잘하는|잘한\s*점|힘써야|할\s*분야|공천\s*방식|방식으로|우선\s*순위"
+                         r"|평가\s*이유|인물\s*성향|인물\s*유형|선호\s*인물\s*유형", _ntitle_p):
                 continue
             # 약한 마커 — parser가 "기타"(비후보)로 분류한 경우만 (전략·시대·체제는 정식 제목에도 출현).
             if election_office == "기타" and re.search(
