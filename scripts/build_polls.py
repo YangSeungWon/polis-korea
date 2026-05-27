@@ -572,6 +572,30 @@ def build() -> dict:
     if n_garbage:
         print(f"  후보명 오추출 race record drop {n_garbage}건", file=sys.stderr)
 
+    # column-bleed 보정 — 이름 끝에 옆칸 글자 1개가 붙은 OCR/격자 오류(원강수원→원강수,
+    # 김경수대→김경수). 끝 글자를 떼면 같은 (sido,office)에서 더 자주 나오는 실명이 될 때만 스냅.
+    name_freq: dict[tuple[str, str], Counter] = defaultdict(Counter)
+    for p in polls:
+        if p["office_level"] in REAL_OFFICES:
+            for c in p["candidates"]:
+                nm = c.get("name", "")
+                if nm and re.fullmatch(r"[가-힣]{2,5}", nm):
+                    name_freq[(p["sido"], p["office_level"])][nm] += 1
+    n_bleed = 0
+    for p in polls:
+        if p["office_level"] not in REAL_OFFICES:
+            continue
+        F = name_freq[(p["sido"], p["office_level"])]
+        for c in p["candidates"]:
+            nm = c.get("name", "")
+            if re.fullmatch(r"[가-힣]{4,5}", nm):
+                base = nm[:-1]
+                if len(base) >= 2 and F[base] >= 2 and F[base] > F[nm]:
+                    c["name"] = base
+                    n_bleed += 1
+    if n_bleed:
+        print(f"  column-bleed 이름 보정 {n_bleed}건", file=sys.stderr)
+
     # 한 record 안 동일 후보 dedup (pct 큰 쪽 유지). 정당지지는 name이 비어 party가 식별자라
     # name-or-party를 키로 — 안 그러면 모든 정당이 빈 name 하나로 뭉개져 1정당만 남는다.
     n_dup_in = 0
