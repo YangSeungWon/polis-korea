@@ -711,7 +711,9 @@ def build() -> dict:
             parties = [c.get("party", "") for c in named]
             distinct_real = set(x for x in parties if x and x != "무소속")
             all_empty = not any(parties)                                     # 직책·공약 garbage
-            single_consensus = len(distinct_real) == 1 and all(parties) and "무소속" not in parties  # 경선(전원 같은 당)
+            # 실제 정당 1종뿐(+빈칸 가능)이고 무소속도 없으면 단일정당 경선. 빈칸은 NEC 미등록
+            # 경선 주자. 무소속 있으면(호남 민주 vs 무소속 등) 본선일 수 있어 제외.
+            single_consensus = len(distinct_real) == 1 and "무소속" not in parties
             if len(named) >= 2 and (all_empty or single_consensus):
                 n_singleparty += 1
                 continue
