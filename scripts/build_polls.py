@@ -304,7 +304,9 @@ def build() -> dict:
             # 적합도 제외 — 경선·예비후보 비교(같은 당 주자 적합도)라 본선 race가 아니다.
             # 정당 모호함(예: 김관영 무소속 vs 민주 경선)·파싱 노이즈의 주범. 본선 후보지지·
             # 정당지지 매치업 시계열만 남긴다.
-            if metric_type == "적합도":
+            # 국정평가·투표의향 — 지선 스코프(VT026)엔 진짜 데이터가 없고, 우리가 가진 건
+            # 전부 후보지지 오분류(대부분 중복) + 응답노이즈(것이다·최고위원)라 함께 제외.
+            if metric_type in ("적합도", "국정평가", "투표의향"):
                 continue
 
             # 정책·현안·방식 질문 reject — 후보 race가 아닌데 office_level로 승격돼 가짜 후보
@@ -474,18 +476,19 @@ def build() -> dict:
     if n_candrm:
         print(f"  정당명·메트릭 라벨 candidate 제거 {n_candrm}건", file=sys.stderr)
 
-    # 한 record 안 동일 name 후보 dedup (pct 큰 쪽 유지)
+    # 한 record 안 동일 후보 dedup (pct 큰 쪽 유지). 정당지지는 name이 비어 party가 식별자라
+    # name-or-party를 키로 — 안 그러면 모든 정당이 빈 name 하나로 뭉개져 1정당만 남는다.
     n_dup_in = 0
     for p in polls:
         seen = {}
-        for c in p.get("candidates", []):
-            nm = c.get("name", "")
-            if not nm:
-                seen.setdefault("", c); continue
-            cur = seen.get(nm)
+        for i, c in enumerate(p.get("candidates", [])):
+            key = c.get("name", "") or c.get("party", "")
+            if not key:
+                seen[f"_blank{i}"] = c; continue  # 이름·정당 둘 다 없으면 보존(중복판정 안 함)
+            cur = seen.get(key)
             if cur is None or (c.get("pct") or 0) > (cur.get("pct") or 0):
                 if cur is not None: n_dup_in += 1
-                seen[nm] = c
+                seen[key] = c
             else:
                 n_dup_in += 1
         p["candidates"] = list(seen.values())
@@ -505,13 +508,14 @@ def build() -> dict:
             merged.append(ps[0]); continue
         base = ps[0]
         cands = {}
-        for q in ps:
-            for c in q.get("candidates", []):
-                nm = c.get("name", "")
-                if not nm: continue
-                cur = cands.get(nm)
+        for qi, q in enumerate(ps):
+            for ci, c in enumerate(q.get("candidates", [])):
+                k = c.get("name", "") or c.get("party", "")
+                if not k:
+                    cands[f"_blank{qi}_{ci}"] = c; continue
+                cur = cands.get(k)
                 if cur is None or (c.get("pct") or 0) > (cur.get("pct") or 0):
-                    cands[nm] = c
+                    cands[k] = c
         base["candidates"] = list(cands.values())
         merged.append(base)
         n_merged += len(ps) - 1

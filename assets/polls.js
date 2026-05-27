@@ -382,8 +382,11 @@ function renderDetail() {
     return;
   }
 
-  // 시계열 산점도 SVG (조사 ≥ 2건일 때만)
-  if (officePolls.length >= 2) {
+  // 시계열 차트 — 정당지지는 정당별 추이 선, 그 외는 후보 산점도 (조사 ≥ 2건)
+  if (state.office === '정당지지') {
+    const svg = buildPartyTrendSVG(officePolls);
+    if (svg) html += `<div class="scatter-wrap">${svg}</div>`;
+  } else if (officePolls.length >= 2) {
     html += `<div class="scatter-wrap">${buildScatterSVG(officePolls)}</div>`;
   }
   // 첫 카드 위 라벨
@@ -433,14 +436,6 @@ function setView(v) {
 // 색 범례 — 현재 office의 지도/격자에 실제 등장하는 정당(또는 메트릭 카테고리).
 function legendData() {
   const o = state.office;
-  if (o === '국정평가') {
-    return [['긍정 평가', '긍정평가'], ['부정 평가', '부정평가'], ['모름·무응답', '모름/무응답']]
-      .map(([label, k]) => ({ label, color: METRIC_COLORS[k] }));
-  }
-  if (o === '투표의향') {
-    return [['투표 의향', '투표함'], ['의향 없음', '투표안함'], ['모름·무응답', '모름/무응답']]
-      .map(([label, k]) => ({ label, color: METRIC_COLORS[k] }));
-  }
   // 정당 기반 office (광역·기초·교육감·정당지지) — 지역별 1위 정당 수집
   const sg = isSigunguMode();
   const polls = state.data.polls.filter(
@@ -588,9 +583,9 @@ function setOffice(o) {
   document.querySelectorAll('[data-office]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.office === o);
   });
-  // scope 토글 — 정당지지/국정평가/투표의향만 의미. 시도/시군구 데이터 둘 다 있는 경우 노출.
+  // scope 토글 — 정당지지만 시도/시군구 둘 다라 의미. 데이터 둘 다 있을 때만 노출.
   const scopeSeg = $('#scope-seg');
-  const showScope = ['정당지지', '국정평가', '투표의향'].includes(o) && hasSigunguData();
+  const showScope = o === '정당지지' && hasSigunguData();
   scopeSeg.toggleAttribute('hidden', !showScope);
   if (!showScope) state.scope = '시도';  // reset
   setView(state.view);

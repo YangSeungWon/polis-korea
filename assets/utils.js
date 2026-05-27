@@ -223,3 +223,74 @@ function buildScatterSVG(polls) {
   }).join('');
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${dots}</svg>`;
 }
+
+// 정당 지지율 추이 — 정당별 시계열 선 (정당지지 office 전용).
+// 같은 날짜 여러 조사는 평균내 하루 한 점으로 묶어 선이 덜 튀게 한다.
+const PARTY_SHORT = {
+  '더불어민주당': '민주', '국민의힘': '국힘', '조국혁신당': '조국혁신',
+  '개혁신당': '개혁', '진보당': '진보', '기본소득당': '기본소득',
+  '사회민주당': '사민', '새로운미래': '새미래', '정의당': '정의', '무소속': '무소속',
+};
+function buildPartyTrendSVG(polls) {
+  const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
+  const series = {};  // party → { dateStr → [pct] }
+  for (const p of polls) {
+    if (!p.period_end || !p.candidates) continue;
+    if (!isFinite(Date.parse(p.period_end))) continue;
+    for (const c of p.candidates) {
+      if (c.pct == null || !c.party) continue;
+      const party = CANON[c.party] || c.party;
+      ((series[party] ||= {})[p.period_end] ||= []).push(c.pct);
+    }
+  }
+  const lines = {};  // party → [{ts, pct}] (하루 평균, 시간순)
+  let minTs = Infinity, maxTs = -Infinity, maxPct = 0;
+  for (const [party, byDate] of Object.entries(series)) {
+    const pts = Object.entries(byDate).map(([ds, arr]) => ({
+      ts: Date.parse(ds), pct: arr.reduce((a, b) => a + b, 0) / arr.length,
+    })).sort((a, b) => a.ts - b.ts);
+    lines[party] = pts;
+    for (const pt of pts) { minTs = Math.min(minTs, pt.ts); maxTs = Math.max(maxTs, pt.ts); maxPct = Math.max(maxPct, pt.pct); }
+  }
+  const parties = Object.keys(lines);
+  if (!parties.length) return '';
+  const mean = (ps) => ps.reduce((s, p) => s + p.pct, 0) / ps.length;
+  parties.sort((a, b) => mean(lines[b]) - mean(lines[a]));  // 지지율 높은 순
+  const W = 380, H = 210, pl = 28, pr = 56, pt = 12, pb = 24;
+  maxPct = Math.max(50, Math.ceil(maxPct / 10) * 10);
+  const tsRange = (maxTs - minTs) || 86_400_000 * 7;
+  const x = (ts) => pl + ((ts - minTs) / tsRange) * (W - pl - pr);
+  const y = (pct) => pt + (1 - pct / maxPct) * (H - pt - pb);
+  let grid = '';
+  for (const v of [0, 25, 50, maxPct]) {
+    if (v > maxPct) continue;
+    const yy = y(v);
+    grid += `<line x1="${pl}" y1="${yy}" x2="${W - pr}" y2="${yy}" stroke="#e6e9ef" stroke-width="0.6"/>`;
+    grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="9" fill="#8a93a3" text-anchor="end">${v}</text>`;
+  }
+  let xax = '';
+  for (const ts of [minTs, (minTs + maxTs) / 2, maxTs]) {
+    const d = new Date(ts);
+    xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="#8a93a3" text-anchor="middle">${d.getMonth() + 1}/${d.getDate()}</text>`;
+  }
+  // 라벨 y겹침 방지 — 위에서부터 최소 간격 11px
+  let lastLabelY = -99;
+  let body = '';
+  for (const party of parties) {
+    const pts = lines[party];
+    const color = partyColor(party);
+    if (pts.length >= 2) {
+      const dpath = pts.map((p, i) => `${i ? 'L' : 'M'}${x(p.ts).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
+      body += `<path d="${dpath}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.9"/>`;
+    }
+    for (const p of pts) {
+      body += `<circle cx="${x(p.ts).toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="2.4" fill="${color}"><title>${PARTY_SHORT[party] || party} ${p.pct.toFixed(1)}% · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
+    }
+    const last = pts[pts.length - 1];
+    let ly = y(last.pct) + 3;
+    if (ly - lastLabelY < 11) ly = lastLabelY + 11;  // 겹치면 아래로 밀기
+    lastLabelY = ly;
+    body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${PARTY_SHORT[party] || party}</text>`;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${body}</svg>`;
+}

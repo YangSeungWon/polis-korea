@@ -10,8 +10,6 @@ polls.html(지선 도구) / history.html을 템플릿으로, manifest.json + ele
     /mayor/index.html         (기초단체장)
     /superintendent/index.html(교육감)
     /party/index.html         (정당지지)
-    /approval/index.html      (국정평가)
-    /turnout/index.html       (투표의향)
 
   history 페이지:
     /history/presidential/{n}/index.html
@@ -39,8 +37,6 @@ OFFICE_SLUG = {
     '기초단체장': 'mayor',
     '교육감':     'superintendent',
     '정당지지':   'party',
-    '국정평가':   'approval',
-    '투표의향':   'turnout',
 }
 
 # history 지선 office (5/6/7/8회) — 광역·기초·교육감만
