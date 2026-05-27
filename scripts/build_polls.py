@@ -460,6 +460,9 @@ def build() -> dict:
         _PARTY_NAMES = []
     party_name_set = {re.sub(r"\s+", "", p) for p in _PARTY_NAMES}
     metric_in_name = re.compile(r'^(차기|적합|선호|지지|당선|소속|예정|성향|진영)')
+    # 직책·기관 라벨이 후보명으로 추출된 것 (교육감 표에서 "조교수/교육국장 출신" 직책 컬럼).
+    title_noise = re.compile(r'(조교수|대학원|^소장$|^교장$|^국장$|교육국장|추대후보|^수후보$'
+                             r'|연구회|구청$|^교수$|^원장$|사무국장|^위원$|위원장$|^후보$|^대표$)')
     n_candrm = 0
     for p in polls:
         keep = []
@@ -469,12 +472,105 @@ def build() -> dict:
                 keep.append(c); continue
             if nm in party_name_set:
                 n_candrm += 1; continue
-            if metric_in_name.search(nm):
+            if metric_in_name.search(nm) or title_noise.search(nm):
                 n_candrm += 1; continue
             keep.append(c)
         p["candidates"] = keep
     if n_candrm:
         print(f"  정당명·메트릭 라벨 candidate 제거 {n_candrm}건", file=sys.stderr)
+
+    # "기타" race 폴 office 복구 — 리얼미터·이너텍 등이 챕터헤더 제목("제2장.조사결과")을
+    # 달아 classify_office가 office를 못 잡은 본선 race(office_level='기타'라 사이트 탭에
+    # 안 뜸)를, 후보→office 매핑으로 광역단체장/기초단체장/교육감에 재분류한다.
+    # 매핑원: (1) 정상분류 폴의 (sido,name)→office_level, (2) NEC 후보자검색 office 캐시.
+    name_office_clean: dict[tuple[str, str], Counter] = defaultdict(Counter)
+    for p in polls:
+        if p["office_level"] in ("광역단체장", "기초단체장", "교육감"):
+            for c in p["candidates"]:
+                if c.get("name"):
+                    name_office_clean[(p["sido"], c["name"])][p["office_level"]] += 1
+    nec_off = {}
+    _op = ROOT / "data" / "raw" / "nec_candidate_office.json"
+    if _op.exists():
+        try:
+            nec_off = json.loads(_op.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    def _infer_office(p):
+        votes = Counter()
+        for c in p["candidates"]:
+            nm = c.get("name", "")
+            if not nm or c.get("pct") is None:
+                continue
+            if (p["sido"], nm) in name_office_clean:
+                votes[name_office_clean[(p["sido"], nm)].most_common(1)[0][0]] += 1
+            elif f"{p['sido']}|{nm}" in nec_off:
+                votes[nec_off[f"{p['sido']}|{nm}"]] += 1
+        if not votes:
+            return ""
+        top, n = votes.most_common(1)[0]
+        others = sum(v for k, v in votes.items() if k != top)
+        return top if (len(votes) == 1 or n >= 2 * others) else ""
+
+    n_reclass = 0
+    for p in polls:
+        if p["office_level"] != "기타" or p["metric_type"] not in ("후보지지", "당선가능성"):
+            continue
+        if sum(1 for c in p["candidates"] if c.get("name") and c.get("pct") is not None) < 2:
+            continue
+        off = _infer_office(p)
+        if not off:
+            continue
+        # 광역단체장·교육감인데 시군구가 붙은 건 부분표본(도 전체 race 아님) → drop
+        if off in ("광역단체장", "교육감") and p.get("sigungu"):
+            p["candidates"] = []
+            continue
+        p["office_level"] = off
+        p["office_label"] = off
+        n_reclass += 1
+    polls = [p for p in polls if p.get("candidates")]
+    if n_reclass:
+        print(f"  기타→office 재분류 {n_reclass}건", file=sys.stderr)
+
+    # race 폴 후보명 검증 — 직책/지역/정책 오추출(국무총리·중앙정부·대표도·정부의소 등)을 드롭.
+    # 파서가 이름 대신 직책/문항 컬럼을 집은 record. "실제 후보" 판정:
+    #   같은 (sido,office)에서 2개 이상 조사기관에 등장(여러 기관이 같은 garbage를 낼 리 없음)
+    #   OR NEC 후보자검색 캐시(정당·office)에 있음(단독폴 legit 후보 보호).
+    # race 후보 중 실제후보가 2명 미만이면 그 record는 오추출 → drop. 정상 record는 보존.
+    REAL_OFFICES = ("광역단체장", "기초단체장", "교육감")
+    agencies_by_name: dict[tuple[str, str], dict[str, set]] = defaultdict(lambda: defaultdict(set))
+    for p in polls:
+        if p["office_level"] in REAL_OFFICES:
+            for c in p["candidates"]:
+                if c.get("name"):
+                    agencies_by_name[(p["sido"], p["office_level"])][c["name"]].add(p.get("agency", ""))
+    nec_names_by_sido: dict[str, set] = defaultdict(set)
+    for src_path in (ROOT / "data/raw/nec_candidate_party.json", _op):
+        if src_path.exists():
+            try:
+                for k in json.loads(src_path.read_text(encoding="utf-8")):
+                    sido, _, nm = k.partition("|")
+                    if nm:
+                        nec_names_by_sido[sido].add(nm)
+            except Exception:
+                pass
+
+    def _known_cand(sido, office, nm):
+        return len(agencies_by_name[(sido, office)].get(nm, ())) >= 2 or nm in nec_names_by_sido[sido]
+
+    n_garbage = 0
+    kept = []
+    for p in polls:
+        if p["office_level"] in REAL_OFFICES:
+            named = [c["name"] for c in p["candidates"] if c.get("name") and c.get("pct") is not None]
+            if len(named) >= 2 and sum(1 for n in named if _known_cand(p["sido"], p["office_level"], n)) < 2:
+                n_garbage += 1
+                continue
+        kept.append(p)
+    polls = kept
+    if n_garbage:
+        print(f"  후보명 오추출 race record drop {n_garbage}건", file=sys.stderr)
 
     # 한 record 안 동일 후보 dedup (pct 큰 쪽 유지). 정당지지는 name이 비어 party가 식별자라
     # name-or-party를 키로 — 안 그러면 모든 정당이 빈 name 하나로 뭉개져 1정당만 남는다.
@@ -506,19 +602,36 @@ def build() -> dict:
     for key, ps in groups.items():
         if len(ps) == 1:
             merged.append(ps[0]); continue
-        base = ps[0]
-        cands = {}
-        for qi, q in enumerate(ps):
-            for ci, c in enumerate(q.get("candidates", [])):
-                k = c.get("name", "") or c.get("party", "")
-                if not k:
-                    cands[f"_blank{qi}_{ci}"] = c; continue
-                cur = cands.get(k)
-                if cur is None or (c.get("pct") or 0) > (cur.get("pct") or 0):
-                    cands[k] = c
-        base["candidates"] = list(cands.values())
-        merged.append(base)
-        n_merged += len(ps) - 1
+        # 후보(이름·정당)가 겹치는 record끼리만 클러스터링 — 한 표가 쪼개진 경우만 합치고,
+        # 같은 제목이라도 후보셋이 disjoint한 별개 문항(민주 경선 vs 국힘 경선 subsample)은
+        # 안 합친다 (합치면 합계 167% 같은 garble 발생).
+        def _keyset(p):
+            return {(c.get("name", "") or c.get("party", "")) for c in p["candidates"]
+                    if c.get("name") or c.get("party")}
+        clusters = []
+        for p in ps:
+            ks = _keyset(p)
+            for cl in clusters:
+                if cl["keys"] & ks or (not ks and not cl["keys"]):
+                    cl["recs"].append(p); cl["keys"] |= ks; break
+            else:
+                clusters.append({"keys": set(ks), "recs": [p]})
+        for cl in clusters:
+            if len(cl["recs"]) == 1:
+                merged.append(cl["recs"][0]); continue
+            base = cl["recs"][0]
+            cands = {}
+            for qi, q in enumerate(cl["recs"]):
+                for ci, c in enumerate(q.get("candidates", [])):
+                    k = c.get("name", "") or c.get("party", "")
+                    if not k:
+                        cands[f"_blank{qi}_{ci}"] = c; continue
+                    cur = cands.get(k)
+                    if cur is None or (c.get("pct") or 0) > (cur.get("pct") or 0):
+                        cands[k] = c
+            base["candidates"] = list(cands.values())
+            merged.append(base)
+            n_merged += len(cl["recs"]) - 1
     polls = merged
     if n_merged:
         print(f"  같은 표 split records merge {n_merged}건 흡수", file=sys.stderr)
@@ -584,6 +697,28 @@ def build() -> dict:
                 n_party_nec += 1
     if n_party_nec:
         print(f"  NEC 후보자검색으로 정당 보완: {n_party_nec}건")
+
+    # 단일정당 경선 drop — race인데 후보 전원이 같은 정당이면 본선이 아니라 당내 경선/적합도
+    # (예: 국힘 김문수/양향자/함진규, 민주 김동연/추미애/한준호). 챕터헤더 제목으로 적합도
+    # 필터를 빠져나온 subsample 문항이 정당 채운 뒤 드러난다. 본선은 정의상 2개 이상 정당.
+    # 광역단체장·기초단체장만 — 교육감은 정당공천 금지라 전원 무소속/정당빈이 정상(제외).
+    # 교육감 직책 garbage(수후보·대학원 등)는 위 garbage-name 필터가 NEC 교육감 명부로 거른다.
+    n_singleparty = 0
+    kept = []
+    for p in polls:
+        if p["office_level"] in ("광역단체장", "기초단체장"):
+            named = [c for c in p["candidates"] if c.get("name") and c.get("pct") is not None]
+            parties = [c.get("party", "") for c in named]
+            distinct_real = set(x for x in parties if x and x != "무소속")
+            all_empty = not any(parties)                                     # 직책·공약 garbage
+            single_consensus = len(distinct_real) == 1 and all(parties) and "무소속" not in parties  # 경선(전원 같은 당)
+            if len(named) >= 2 and (all_empty or single_consensus):
+                n_singleparty += 1
+                continue
+        kept.append(p)
+    polls = kept
+    if n_singleparty:
+        print(f"  단일정당 경선·정당빈 race drop {n_singleparty}건", file=sys.stderr)
 
     # 중복 카드 제거 — 같은 등록(ntt_id)·office·지역의 동일 후보집합은 보통 지역별/페이지
     # cross-tab 분해라 1건만 남긴다. 다른 후보집합(다자 vs 양자 등)은 키가 달라 보존.

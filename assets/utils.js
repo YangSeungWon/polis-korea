@@ -72,8 +72,8 @@ function formatPeriod(start, end) {
 }
 
 // 시간 decay + 표본수 가중 평균으로 정당 기준 1위 산출 (메인 폴 지도·대시보드 공용).
-// decay: 14일 = e-fold. polls: 한 지역·직위의 조사 배열.
-function summarizeLatest(polls, decayDays = 14, requireRecent = { n: 2, windowDays: 30 }) {
+// decay: 7일 = e-fold (최근 추세 반영). polls: 한 지역·직위의 조사 배열.
+function summarizeLatest(polls, decayDays = 7, requireRecent = { n: 2, windowDays: 30 }) {
   if (!polls.length) return null;
   const now = Date.now();
   // 최근 N일 안 폴 부족하면 "low_recent" 플래그만 — 데이터는 옛 폴로 계산해 일단 보여줌
@@ -111,9 +111,10 @@ function summarizeLatest(polls, decayDays = 14, requireRecent = { n: 2, windowDa
   if (!sorted.length) return null;
   const top = sorted[0];
   const sec = sorted[1] || { name: '', pct: 0 };
-  // sample_error 평균 — "±4.4%P" 같은 텍스트에서 숫자 추출, 폴 여러개면 평균
+  // sample_error 평균 — "95% 신뢰수준에 ±4.4%P" 형태에서 "±" 뒤 숫자만.
+  // (그냥 첫 숫자면 "95"가 잡혀버림)
   const errs = polls.map((p) => {
-    const m = (p.sample_error || '').match(/(\d+\.?\d*)/);
+    const m = (p.sample_error || '').match(/±\s*(\d+\.?\d*)/);
     return m ? parseFloat(m[1]) : null;
   }).filter((x) => x != null);
   const avgErr = errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : null;
@@ -179,7 +180,9 @@ function renderPollCard(p, officeLabel) {
 // === 시계열 산점도 SVG ===
 // 각 점 = 한 조사·한 후보. x=조사기간 끝, y=지지율, color=정당색.
 // 같은 ts 여러 점 약간 jitter, hover 메타. (parties.js의 partyColor 의존)
-function buildScatterSVG(polls) {
+// roster: { "sido|name": {sgg,jd,...} or null } — NEC 등록 후보 명부.
+// 등록 후보면 진한 dot + line, 사전 거론은 옅은 dot만.
+function buildScatterSVG(polls, roster = null) {
   const W = 380, H = 180, pad_l = 28, pad_r = 12, pad_t = 14, pad_b = 22;
   const points = [];
   for (const p of polls) {
@@ -188,7 +191,10 @@ function buildScatterSVG(polls) {
     if (!isFinite(ts)) continue;
     for (const c of p.candidates) {
       if (c.pct == null) continue;
-      points.push({ ts, pct: c.pct, party: c.party, name: c.name, agency: p.agency });
+      const sd = p.sido || '';
+      const nm = c.name || '';
+      const registered = !!(roster && nm && roster[`${sd}|${nm}`]);
+      points.push({ ts, pct: c.pct, party: c.party, name: nm, agency: p.agency, registered });
     }
   }
   if (points.length < 2) return '';
@@ -217,11 +223,30 @@ function buildScatterSVG(polls) {
     const label = `${d.getMonth() + 1}/${d.getDate()}`;
     xax += `<text x="${xx}" y="${H - 6}" font-size="9" fill="#8a93a3" text-anchor="middle">${label}</text>`;
   }
+  // 등록 후보별 line: name → 시간 순 점들 (jitter 안 한 ts 좌표)
+  let lines = '';
+  if (roster) {
+    const byName = {};
+    for (const p of points) {
+      if (!p.registered) continue;
+      (byName[p.name] ||= []).push(p);
+    }
+    for (const [nm, ps] of Object.entries(byName)) {
+      if (ps.length < 2) continue;
+      ps.sort((a, b) => a.ts - b.ts);
+      const color = partyColor(ps[0].party);
+      const path = ps.map((p) => `${x(p.ts).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
+      lines += `<polyline points="${path}" fill="none" stroke="${color}" stroke-width="1.2" stroke-opacity="0.55" stroke-linejoin="round"/>`;
+    }
+  }
   const dots = jittered.map((p) => {
     const color = partyColor(p.party);
-    return `<circle cx="${p.jx.toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="3" fill="${color}" fill-opacity="0.75" stroke="${color}" stroke-width="0.5"><title>${p.name || '?'} (${p.party || '?'}) ${p.pct}% · ${p.agency} · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
+    // 등록 후보 진하게 (0.85), 사전 거론 옅게 (0.3). roster 없으면 일률 0.75.
+    const fillOp = roster ? (p.registered ? 0.85 : 0.3) : 0.75;
+    const r = roster && p.registered ? 3.2 : 2.5;
+    return `<circle cx="${p.jx.toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="${r}" fill="${color}" fill-opacity="${fillOp}" stroke="${color}" stroke-width="0.5"><title>${p.name || '?'} (${p.party || '?'}) ${p.pct}%${roster && !p.registered ? ' · 미등록/사전' : ''} · ${p.agency} · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
   }).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${dots}</svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${lines}${dots}</svg>`;
 }
 
 // 정당 지지율 추이 — 정당별 시계열 선 (정당지지 office 전용).

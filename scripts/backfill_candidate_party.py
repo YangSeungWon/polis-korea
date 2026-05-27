@@ -29,7 +29,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 AGG = ROOT / "data" / "polls" / "aggregated.json"
 CACHE = ROOT / "data" / "raw" / "nec_candidate_party.json"
+OFFICE_CACHE = ROOT / "data" / "raw" / "nec_candidate_office.json"
 API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
+
+# NEC sgTypecode → office_level (관심 직위만; 5=광역의원·6=기초의원 등은 무시)
+TYPECODE_OFFICE = {"3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+
+
+def resolve_office(rows: list[dict], sido: str) -> str:
+    """2026 지방선거 + 해당 sido 등록 이력의 sgTypecode로 office_level 결정.
+    관심 직위(광역단체장·기초단체장·교육감)가 유일하게 좁혀질 때만 반환 (동명이인 안전)."""
+    offs = {TYPECODE_OFFICE[r["tc"]] for r in rows
+            if r["sgId"].startswith(TARGET_SG) and r["sd"] == sido and r["tc"] in TYPECODE_OFFICE}
+    return offs.pop() if len(offs) == 1 else ""
 
 
 def fetch_name(key: str, name: str) -> list[dict]:
@@ -48,6 +60,7 @@ def fetch_name(key: str, name: str) -> list[dict]:
             "sd": it.findtext("sdName") or "",
             "jd": it.findtext("jdName") or "",
             "sgId": it.findtext("sgId") or "",
+            "tc": it.findtext("sgTypecode") or "",   # 3=광역단체장 4=기초단체장 11=교육감
         })
     return out
 
@@ -85,6 +98,7 @@ def main():
     args = ap.parse_args()
 
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
+    ocache = json.loads(OFFICE_CACHE.read_text(encoding="utf-8")) if OFFICE_CACHE.exists() else {}
 
     # 진단: 한 이름의 raw 이력만 보고 종료
     if args.diag:
@@ -92,25 +106,36 @@ def main():
         if not key:
             print("NEC_API_KEY 없음", file=sys.stderr); sys.exit(1)
         for r in sorted(fetch_name(key, args.diag), key=lambda x: x["sgId"], reverse=True):
-            print(f"  sgId={r['sgId']}  {r['sd']}  정당={r['jd'] or '(무)'}")
+            print(f"  sgId={r['sgId']} tc={r['tc']} {r['sd']} 정당={r['jd'] or '(무)'}")
         return
 
     recs = json.loads(AGG.read_text(encoding="utf-8"))["polls"]
-    missing = set()
+    missing = set()       # 정당 빈 (sido, name)
+    office_need = set()    # office 모를 race 후보 (sido, name) — "기타" 폴 등
     for r in recs:
         if r.get("is_self_poll"):
             continue
+        gita = r.get("office_level") == "기타"
+        sido = r.get("sido") or ""
         for c in r.get("candidates") or []:
             nm = (c.get("name") or "").strip()
-            if not c.get("party") and re.fullmatch(r"[가-힣]{2,4}", nm):
-                missing.add((r.get("sido") or "", nm))
+            if not re.fullmatch(r"[가-힣]{2,4}", nm):
+                continue
+            if not c.get("party"):
+                missing.add((sido, nm))
+            if gita and c.get("pct") is not None:
+                office_need.add((sido, nm))
 
-    # --refresh: 캐시에 이미 있는 이름도 재조회 (resolve 변경분 반영). 기본: 신규만.
+    # --refresh: 캐시의 모든 이름 재조회. 기본: party·office 캐시에 없는 신규만.
     if args.refresh:
-        todo_names = sorted({nm for _, nm in missing} | {k.split("|", 1)[1] for k in cache})
+        todo_names = sorted({nm for _, nm in missing | office_need}
+                            | {k.split("|", 1)[1] for k in cache}
+                            | {k.split("|", 1)[1] for k in ocache})
     else:
-        todo_names = sorted({nm for _, nm in missing if not any(k.endswith(f"|{nm}") for k in cache)})
-    print(f"정당 빈 후보 (sido,name): {len(missing)} | 조회할 이름: {len(todo_names)}"
+        todo_names = sorted(
+            {nm for s, nm in missing if f"{s}|{nm}" not in cache}
+            | {nm for s, nm in office_need if f"{s}|{nm}" not in ocache})
+    print(f"정당 빈 {len(missing)} · office 필요 {len(office_need)} | 조회할 이름: {len(todo_names)}"
           f"{' [refresh]' if args.refresh else ''}", file=sys.stderr)
 
     if args.offline or not todo_names:
@@ -126,32 +151,36 @@ def main():
             time.sleep(0.12)  # graceful
             if (i + 1) % 50 == 0:
                 print(f"  ...{i + 1}/{len(todo_names)}", file=sys.stderr)
-        # (sido|name) → party 해결. refresh면 기존 항목도 재해결·교정.
-        targets = set(missing)
-        if args.refresh:
-            targets |= {(k.split("|", 1)[0], k.split("|", 1)[1]) for k in cache}
+        # (sido|name) → party / office 해결. refresh면 기존 항목도 재해결.
+        ptargets = set(missing) | ({(k.split("|", 1)[0], k.split("|", 1)[1]) for k in cache} if args.refresh else set())
+        otargets = set(office_need) | ({(k.split("|", 1)[0], k.split("|", 1)[1]) for k in ocache} if args.refresh else set())
         n_new = n_chg = 0
-        for sido, nm in sorted(targets):
-            k = f"{sido}|{nm}"
+        for sido, nm in sorted(ptargets):
             if nm not in by_name:
                 continue
             party = resolve(by_name[nm], sido)
             if not party:
                 continue
+            k = f"{sido}|{nm}"
             if k not in cache:
-                cache[k] = party
-                n_new += 1
+                cache[k] = party; n_new += 1
             elif cache[k] != party:
-                print(f"  교정 {k}: {cache[k]} → {party}", file=sys.stderr)
-                cache[k] = party
-                n_chg += 1
+                print(f"  교정 {k}: {cache[k]} → {party}", file=sys.stderr); cache[k] = party; n_chg += 1
+        on_new = 0
+        for sido, nm in sorted(otargets):
+            if nm not in by_name:
+                continue
+            off = resolve_office(by_name[nm], sido)
+            if off and ocache.get(f"{sido}|{nm}") != off:
+                ocache[f"{sido}|{nm}"] = off; on_new += 1
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
-        print(f"  캐시 +{n_new} 교정 {n_chg} → {CACHE.relative_to(ROOT)} (총 {len(cache)})", file=sys.stderr)
+        OFFICE_CACHE.write_text(json.dumps(ocache, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+        print(f"  party 캐시 +{n_new} 교정 {n_chg} (총 {len(cache)}) · office 캐시 +{on_new} (총 {len(ocache)})", file=sys.stderr)
 
-    # 채움 가능 미리보기
     fillable = sum(1 for s, n in missing if f"{s}|{n}" in cache)
-    print(f"캐시로 채울 수 있는 (sido,name): {fillable}/{len(missing)}")
+    o_fill = sum(1 for s, n in office_need if f"{s}|{n}" in ocache)
+    print(f"party 채움 {fillable}/{len(missing)} · office 채움 {o_fill}/{len(office_need)}")
 
 
 if __name__ == "__main__":

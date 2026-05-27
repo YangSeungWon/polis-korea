@@ -37,6 +37,13 @@ async function loadData() {
   } catch (e) {
     state.data = { _meta: {}, polls: [] };
   }
+  // NEC 등록 후보 명부 (있으면 산점도에 진한/옅은 구분)
+  try {
+    const r = await fetch('data/raw/nec_roster_9th.json');
+    state.roster = r.ok ? await r.json() : null;
+  } catch (e) {
+    state.roster = null;
+  }
   // 블랙아웃이면 5/28 이전 조사만 노출
   if (state.blackoutActive) {
     state.data.polls = state.data.polls.filter((p) => {
@@ -387,7 +394,7 @@ function renderDetail() {
     const svg = buildPartyTrendSVG(officePolls);
     if (svg) html += `<div class="scatter-wrap">${svg}</div>`;
   } else if (officePolls.length >= 2) {
-    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls)}</div>`;
+    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls, state.roster)}</div>`;
   }
   // 첫 카드 위 라벨
   const latest = officePolls[0];
