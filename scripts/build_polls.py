@@ -352,6 +352,17 @@ def build() -> dict:
             if metric_type in ("후보지지", "당선가능성", "적합도") and \
                re.search(r"가상\s*대결|가상\s*양자|양자\s*대결|맞대결|\bvs\b|\bVS\b", title):
                 continue
+            # 신설 분구 보정 (9회 지선) — title에 "영종구청장"·"제물포구청장" 등 신설구 이름
+            # 있으면 sigungu를 그 구로 override. NESDC region은 옛 행정구역("중구")로 표기.
+            # 인천 중구 → 영종구·제물포구 분구 (2026-07).
+            NEW_SIGUNGU = {
+                "영종구청장": "영종구", "제물포구청장": "제물포구",
+            }
+            for kw, new_sg in NEW_SIGUNGU.items():
+                if kw in title:
+                    sigungu = new_sg
+                    break
+
             # 후보지지·당선가능성·적합도만 office_level 분류, 나머지는 광역/시도 단위 메트릭
             if metric_type in ("후보지지", "당선가능성", "적합도"):
                 office_level, office_label = classify_office(title, sido, sigungu)
@@ -626,20 +637,23 @@ def build() -> dict:
     for key, ps in groups.items():
         if len(ps) == 1:
             merged.append(ps[0]); continue
-        # 후보(이름·정당)가 겹치는 record끼리만 클러스터링 — 한 표가 쪼개진 경우만 합치고,
-        # 같은 제목이라도 후보셋이 disjoint한 별개 문항(민주 경선 vs 국힘 경선 subsample)은
-        # 안 합친다 (합치면 합계 167% 같은 garble 발생).
-        def _keyset(p):
-            return {(c.get("name", "") or c.get("party", "")) for c in p["candidates"]
-                    if c.get("name") or c.get("party")}
+        # 겹치는 후보의 pct가 "일치"할 때만 클러스터링(=진짜 split/중복 표). 같은 후보가
+        # 다른 pct면 다른 시나리오(다자 vs 양자 vs 적합도 — 같은 제목 "제2장.조사결과")라
+        # 합치면 max-pct로 합계 100% 초과 garble. disjoint(민주경선 vs 국힘경선)도 별도.
+        # 충돌·disjoint는 dedup-by-card가 후보집합 기준으로 하나만 남긴다.
+        def _pctmap(p):
+            return {(c.get("name", "") or c.get("party", "")): c.get("pct")
+                    for c in p["candidates"]
+                    if (c.get("name") or c.get("party")) and c.get("pct") is not None}
         clusters = []
         for p in ps:
-            ks = _keyset(p)
+            pm = _pctmap(p)
             for cl in clusters:
-                if cl["keys"] & ks or (not ks and not cl["keys"]):
-                    cl["recs"].append(p); cl["keys"] |= ks; break
+                shared = set(cl["pm"]) & set(pm)
+                if shared and all(abs((cl["pm"][k] or 0) - (pm[k] or 0)) <= 1.0 for k in shared):
+                    cl["recs"].append(p); cl["pm"].update(pm); break
             else:
-                clusters.append({"keys": set(ks), "recs": [p]})
+                clusters.append({"pm": dict(pm), "recs": [p]})
         for cl in clusters:
             if len(cl["recs"]) == 1:
                 merged.append(cl["recs"][0]); continue
@@ -745,6 +759,22 @@ def build() -> dict:
     polls = kept
     if n_singleparty:
         print(f"  단일정당 경선·정당빈 race drop {n_singleparty}건", file=sys.stderr)
+
+    # 합계>113% race drop — 지지도는 단일선택이라 후보 합이 ~100 이하(무응답 제외). 113 초과면
+    # 여러 시나리오(다자+양자+적합도)가 한 record에 섞였거나 적합도-style(독립 %) 오분류 →
+    # 합쳐진 수치라 무의미. (단일정당 경선·merge garble의 잔여 single-record 케이스 정리)
+    n_oversum = 0
+    kept = []
+    for p in polls:
+        if p["office_level"] in ("광역단체장", "기초단체장", "교육감"):
+            s = sum(c.get("pct") or 0 for c in p["candidates"] if c.get("pct") is not None)
+            if s > 113:
+                n_oversum += 1
+                continue
+        kept.append(p)
+    polls = kept
+    if n_oversum:
+        print(f"  합계>113% garble race drop {n_oversum}건", file=sys.stderr)
 
     # 중복 카드 제거 — 같은 등록(ntt_id)·office·지역의 동일 후보집합은 보통 지역별/페이지
     # cross-tab 분해라 1건만 남긴다. 다른 후보집합(다자 vs 양자 등)은 키가 달라 보존.
