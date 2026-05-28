@@ -44,7 +44,8 @@ def extract_page(rows) -> list[dict]:
     title_ri = -1
     for ri, (top, toks) in enumerate(rows):
         line = "".join(t for _, t in toks)
-        if _OFFICE_KW.search(line) and _RACE_KW.search(line) and ("표" in line or "문" in line or _flat(toks).startswith(("<표", "[표"))):
+        # 제목은 짧은 행 (토큰 ≤8) + race 키워드 — 질문 paragraph(다토큰) 제외
+        if _OFFICE_KW.search(line) and _RACE_KW.search(line) and len(toks) <= 8:
             title = line.strip()
             title_ri = ri
             break
@@ -136,16 +137,22 @@ def main():
         if any(k in b for k in ("설문", "질문", "보도")):
             continue
         out = root / "data/raw/parsed" / (Path(pf).stem + ".json")
+        cur_cands_max = 0
         if out.exists():
             cur = json.loads(out.read_text(encoding="utf-8"))
             has_cand = any(q.get("candidates") and any("pct" in c for c in q["candidates"])
                            for q in cur.get("questions", []))
             has_garbage = any(_GARBAGE_NAME.search(c.get("name", ""))
                               for q in cur.get("questions", []) for c in q.get("candidates", []))
-            if has_cand and not has_garbage:
-                continue  # 깨끗한 후보 있음 → 보존
+            cur_cands_max = max((len(q.get("candidates", [])) for q in cur.get("questions", [])
+                                 if q.get("candidates")), default=0)
+            # garbage 없고 후보 충분(≥3)이면 보존. 그 외(garbage·후보<3)면 재추출 후 비교.
+            if has_cand and not has_garbage and cur_cands_max >= 3:
+                continue
         r = extract_pdf(Path(pf))
-        if any(q["candidates"] for q in r["questions"]):
+        new_max = max((len(q["candidates"]) for q in r["questions"] if q["candidates"]), default=0)
+        # 신규 추출이 0이면 skip. 기존이 있으면 신규가 더 많을 때만 덮어씀 (놓친 후보 복구).
+        if new_max > 0 and (cur_cands_max == 0 or new_max > cur_cands_max):
             out.write_text(json.dumps(r, ensure_ascii=False, indent=2), encoding="utf-8")
             nok += 1
             nq += sum(1 for q in r["questions"] if q["candidates"])
