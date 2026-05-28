@@ -814,18 +814,25 @@ def build() -> dict:
             name = c.get("name", "")
             if not name:
                 continue
+            # NEC roster (sg_id=20260603 + 같은 시도 + 같은 시군구 등록) 우선 — 동명이인이라도
+            # 같은 race이면 정확. 다수결은 fallback.
             party = ""
-            k_sido = (sido, name)
-            if k_sido in name_party_by_sido:
-                party = majority(name_party_by_sido[k_sido])
-            elif name in name_party_global:
-                party = majority(name_party_global[name])
+            sigungu = p.get("sigungu", "")
+            roster_hit = _NEC_ROSTER.get(f"{sido}|{name}") if _NEC_ROSTER else None
+            if roster_hit and roster_hit.get("jd") and \
+                    (not sigungu or roster_hit.get("sgg") in (sigungu, sido)):
+                party = roster_hit["jd"]
+            elif cand_party_cache.get(f"{sido}|{name}"):
+                party = cand_party_cache[f"{sido}|{name}"]
+            else:
+                k_sido = (sido, name)
+                if k_sido in name_party_by_sido:
+                    party = majority(name_party_by_sido[k_sido])
+                elif name in name_party_global:
+                    party = majority(name_party_global[name])
             if party:
                 c["party"] = party
                 n_party_filled += 1
-            elif cand_party_cache.get(f"{sido}|{name}"):  # NEC 공식 정당 보완
-                c["party"] = cand_party_cache[f"{sido}|{name}"]
-                n_party_nec += 1
     if n_party_nec:
         print(f"  NEC 후보자검색으로 정당 보완: {n_party_nec}건")
 

@@ -28,7 +28,7 @@ CELL_SIZE = float(os.environ.get('CELL_SIZE', '0.18'))
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data" / "geo" / "sigungu_simple.json"
-OUT = ROOT / "data" / "geo" / "sigungu_hex.json"
+OUT = ROOT / "data" / "geo" / ("sigungu_hex_legacy.json" if os.environ.get("HEX_LEGACY")=="1" else "sigungu_hex.json")
 
 from _geo import SIDO_CODE_TO_NAME, SIGUNGU_SIDO_OVERRIDE, sigungu_to_sido
 from _hex import offset_neighbors, offset_to_pixel, polygon_centroid  # noqa: F401
@@ -168,6 +168,40 @@ def main():
             continue
         lon, lat = polygon_centroid(feat["geometry"])
         rows.append({"code": code, "name": props["name"], "sido": sido, "lon": lon, "lat": lat})
+
+    # 1-1. 통합도시 일반구 merge — 9회 지선 기초단체장은 통합 시장 1명.
+    # 일반구(수원시장안구·청주시상당구 등)는 centroid 평균으로 1 row.
+    # LEGACY 모드 (대선·총선 데이터처럼 일반구별 표시)면 merge 안 함.
+    LEGACY = os.environ.get("HEX_LEGACY") == "1"
+    import re
+    if not LEGACY:
+        parent_groups: dict[tuple, list] = defaultdict(list)
+        others = []
+        for r in rows:
+            m = re.match(r"^([가-힣]+시)([가-힣]+구)$", r["name"])
+            if m:
+                parent_groups[(r["sido"], m.group(1))].append(r)
+            else:
+                others.append(r)
+        rows = list(others)
+        for (sido, parent), group in parent_groups.items():
+            if len(group) == 1:
+                rows.append(group[0])
+                continue
+            avg_lon = sum(g["lon"] for g in group) / len(group)
+            avg_lat = sum(g["lat"] for g in group) / len(group)
+            code = group[0]["code"][:5] + "0"
+            rows.append({"code": code, "name": parent, "sido": sido, "lon": avg_lon, "lat": avg_lat})
+
+    # 1-2. 인천 신설 분구 (2026-07) — 9회 지선 base만, LEGACY 모드는 skip.
+    if not LEGACY:
+        INCHEON_NEW = [
+            ("영종구",   "23013", 126.45, 37.49),
+            ("제물포구", "23012", 126.65, 37.47),
+            ("검단구",   "23014", 126.66, 37.61),
+        ]
+        for name, code, lon, lat in INCHEON_NEW:
+            rows.append({"code": code, "name": name, "sido": "인천광역시", "lon": lon, "lat": lat})
 
     by_sido: dict[str, list[dict]] = defaultdict(list)
     for r in rows:

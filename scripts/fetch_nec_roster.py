@@ -28,7 +28,7 @@ API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
 SG_ID = "20260603"
 
 # sgTypecode → office_level
-TYPECODE_OFFICE = {"3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+TYPECODE_OFFICE = {"2": "국회의원", "3": "광역단체장", "4": "기초단체장", "11": "교육감"}
 
 
 def fetch_name(key: str, name: str) -> list[dict]:
@@ -88,6 +88,30 @@ def main():
                         continue
                     targets.add((sd, nm))
 
+    # byelection.json도 보충 — 재보궐 후보 (sg_typecode=2)
+    BYELECT = ROOT / "data" / "polls" / "byelection.json"
+    if BYELECT.exists():
+        try:
+            bj = json.load(open(BYELECT, encoding="utf-8"))
+            for d in bj.get("districts", []):
+                # district 이름에서 sido 추출 (예: "부산 북구갑" → "부산광역시")
+                SIDO_FROM_SHORT = {"서울":"서울특별시","부산":"부산광역시","대구":"대구광역시",
+                    "인천":"인천광역시","광주":"광주광역시","대전":"대전광역시","울산":"울산광역시",
+                    "세종":"세종특별자치시","경기":"경기도","강원":"강원특별자치도",
+                    "충북":"충청북도","충남":"충청남도","전북":"전북특별자치도","전남":"전라남도",
+                    "경북":"경상북도","경남":"경상남도","제주":"제주특별자치도"}
+                first = (d.get("district") or "").split()[0] if d.get("district") else ""
+                sd = SIDO_FROM_SHORT.get(first, "")
+                if not sd: continue
+                for p in d.get("polls", []):
+                    for c in p.get("candidates", []):
+                        nm = (c.get("name") or "").strip()
+                        if not nm or not re.fullmatch(r"[가-힣]{2,4}", nm):
+                            continue
+                        targets.add((sd, nm))
+        except Exception:
+            pass
+
     # aggregated.json도 보충 (있으면)
     if AGG.exists():
         data = json.load(open(AGG, encoding="utf-8"))
@@ -112,7 +136,8 @@ def main():
     n_new = n_match = 0
     for i, (sd, nm) in enumerate(sorted(targets), 1):
         key_str = f"{sd}|{nm}"
-        if key_str in roster:
+        # 매칭된 entry({sg_typecode:..}) 있으면 skip. 빈 dict는 refetch (TYPECODE_OFFICE 확장 시).
+        if key_str in roster and roster[key_str]:
             continue
         rows = fetch_name(key, nm)
         n_new += 1
