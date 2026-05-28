@@ -4,6 +4,38 @@
   "note": "에이스 — 포항 차기시장 (title row skip 검증)",
   "expected_questions": [
     {
+      "table_no": "1",
+      "title": "정당 지지도",
+      "election_office": "정당지지",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 19.3
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 63.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.6
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
       "table_no": "4",
       "title": "차기 국민의힘 포항시장 적합도 - 1",
       "election_office": "후보지지",

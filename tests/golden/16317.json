@@ -4,6 +4,38 @@
   "note": "리얼미터 — 광주 정당지지 (multi-row header + /구분자)",
   "expected_questions": [
     {
+      "table_no": "1",
+      "title": "정당 지지도",
+      "election_office": "정당지지",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 75.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 6.8
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 5.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.6
+        }
+      ]
+    },
+    {
       "table_no": "5",
       "title": "국가AI컴퓨팅센터 광주 유치 필요성",
       "election_office": "기타",

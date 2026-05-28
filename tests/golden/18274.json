@@ -4,6 +4,38 @@
   "note": "에이스 — 양구군수 (시군구 라벨 침투 케이스)",
   "expected_questions": [
     {
+      "table_no": "1",
+      "title": "정당 지지도",
+      "election_office": "정당지지",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 40.1
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 37.2
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.8
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 0.6
+        }
+      ]
+    },
+    {
       "table_no": "3",
       "title": "차기 양구군수 지지도 -1",
       "election_office": "후보지지",
