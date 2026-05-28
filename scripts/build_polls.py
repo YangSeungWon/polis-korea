@@ -516,6 +516,19 @@ def build() -> dict:
             if not top: continue
             canonical, top_cnt = top[0]
             if canonical == name or top_cnt < 3: continue
+            # 같은 (sido,sigungu,office,party)에 distinct 이름이 다수면 다른 후보들이라
+            # 합치면 안 됨. 또 typo가 아니면 (한 글자 차이 또는 prefix/suffix 관계) 합치지 않음.
+            if len(counter) >= 3:
+                continue  # 한 정당에 후보 3+ 있는 race는 normalize 비활성 (제주 국힘 다자 등)
+            if abs(len(name) - len(canonical)) > 1:
+                continue
+            # 한 글자 차이(edit-dist ≤1) 또는 prefix 관계인 경우만 typo로 간주
+            short, long = (name, canonical) if len(name) < len(canonical) else (canonical, name)
+            is_prefix = long.startswith(short) or long.endswith(short)
+            same_len_one_diff = (len(name) == len(canonical)
+                                 and sum(a != b for a, b in zip(name, canonical)) <= 1)
+            if not (is_prefix or same_len_one_diff):
+                continue
             c["_original_name"] = name
             c["name"] = canonical
             n_normalized += 1
@@ -859,7 +872,8 @@ def build() -> dict:
     # 양자대결·진영 경쟁력 race drop — "오세훈 대 박주민"(양자), "범보수/범진보 경쟁력"(진영
     # 가상)은 본선 아님. grid 재분류가 챕터헤더 탓에 office로 올린 것. 제목에 "대"·경쟁력·
     # 범보수/범진보·가상/양자 마커가 있으면 드롭. (build 메인 루프 가상대결 필터를 못 거친 잔여)
-    _VS = re.compile(r"[가-힣]{2,3}\s*대\s*[가-힣]{2,3}|경쟁력|범보수|범진보|가상\s*대결|양자|맞대결|\bvs\b|\bVS\b")
+    _VS = re.compile(r"[가-힣]{2,3}\s*대\s*[가-힣]{2,3}|경쟁력|범보수|범진보|가상\s*대결|양자|맞대결"
+                     r"|\bvs\b|\bVS\b|만약|다음\s*(두|세|네|다섯|[2-5])\s*명")
     n_vs = 0
     kept = []
     for p in polls:
@@ -871,16 +885,15 @@ def build() -> dict:
     if n_vs:
         print(f"  양자대결·경쟁력 race drop {n_vs}건", file=sys.stderr)
 
-    # 중복 카드 제거 — 같은 등록(ntt_id)·office·지역의 동일 후보집합은 보통 지역별/페이지
-    # cross-tab 분해라 1건만 남긴다. 다른 후보집합(다자 vs 양자 등)은 키가 달라 보존.
-    # (시군구 부분표본은 위에서 이미 drop; 별개 등록은 독립 조사라 보존.)
-    # 표본 큰 것 우선, 동률이면 후보 많은 것.
+    # 중복 카드 제거 — 한 등록(ntt)·office·지역 = 한 race. 다자 본선 + 가상 sub-matchup
+    # ("만약 다음 세 명" 3자, "제2장.조사결과" 2자)이 같이 추출돼 카드 inflate되던 것을,
+    # 후보 최다(=다자 본선)만 남겨 1카드/race로 합친다. tie-break: 표본 큰 것.
+    # 경선/적합도는 위 필터들이 미리 제거하므로 "후보 최다"가 본선 다자를 가리킨다.
     seen_card: dict[tuple, int] = {}
     deduped = []
     n_dup = 0
     for p in polls:
-        names = tuple(sorted(c.get("name", "") for c in p.get("candidates", [])))
-        k = (p.get("ntt_id"), p["office_level"], p.get("sido", ""), p.get("sigungu", ""), names)
+        k = (p.get("ntt_id"), p["office_level"], p.get("sido", ""), p.get("sigungu", ""))
         if k not in seen_card:
             seen_card[k] = len(deduped)
             deduped.append(p)
@@ -888,7 +901,7 @@ def build() -> dict:
         n_dup += 1
         idx = seen_card[k]
         prev = deduped[idx]
-        score = lambda q: ((q.get("sample_size") or 0), len(q.get("candidates", [])))
+        score = lambda q: (len(q.get("candidates", [])), q.get("sample_size") or 0)
         if score(p) > score(prev):
             deduped[idx] = p
     if n_dup:
