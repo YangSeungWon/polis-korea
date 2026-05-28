@@ -374,7 +374,10 @@ function renderDetail() {
     return;
   }
   const polls = pollsByRegion(state.selectedSido, state.selectedSigungu);
-  const officePolls = polls.filter((p) => p.office_level === state.office);
+  // 시도만 선택했으면 시도 단위 record만 (시군구 records 섞이지 않게).
+  // 시군구 선택했으면 pollsByRegion에서 이미 sigungu filter됨.
+  const officePolls = polls.filter((p) => p.office_level === state.office
+    && (state.selectedSigungu || !p.sigungu));
 
   const titleParts = [state.selectedSido];
   if (state.selectedSigungu) titleParts.push(state.selectedSigungu);
@@ -532,7 +535,7 @@ async function renderSigunguHex() {
     poly.style.cursor = 'pointer';
     poly.addEventListener('click', () => {
       state.selectedSido = d.sido;
-      state.selectedSigungu = state.office === '기초단체장' ? d.name : null;
+      state.selectedSigungu = isSigunguMode() ? d.name : null;
       renderSigunguHex();
       renderDetail();
     });

@@ -202,9 +202,13 @@ function buildScatterSVG(polls, roster = null) {
   if (points.length < 2) return '';
   const minTs = Math.min(...points.map((p) => p.ts));
   const maxTs = Math.max(...points.map((p) => p.ts));
+  const singleTs = minTs === maxTs;  // 한 조사만 — 모든 점이 같은 ts
   const tsRange = (maxTs - minTs) || 86_400_000 * 7;
   const maxPct = Math.max(60, Math.ceil(Math.max(...points.map((p) => p.pct)) / 10) * 10);
-  const x = (ts) => pad_l + ((ts - minTs) / tsRange) * (W - pad_l - pad_r);
+  // singleTs면 모든 점을 중앙(W/2)으로
+  const x = (ts) => singleTs
+    ? (pad_l + W - pad_r) / 2
+    : pad_l + ((ts - minTs) / tsRange) * (W - pad_l - pad_r);
   const y = (pct) => pad_t + (1 - pct / maxPct) * (H - pad_t - pad_b);
   const jittered = points.map((p) => ({
     ...p,
@@ -219,7 +223,8 @@ function buildScatterSVG(polls, roster = null) {
   }
   const midTs = (minTs + maxTs) / 2;
   let xax = '';
-  for (const ts of [minTs, midTs, maxTs]) {
+  const axisTimes = singleTs ? [minTs] : [minTs, midTs, maxTs];
+  for (const ts of axisTimes) {
     const xx = x(ts);
     const d = new Date(ts);
     const label = `${d.getMonth() + 1}/${d.getDate()}`;
