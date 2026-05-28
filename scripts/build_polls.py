@@ -22,6 +22,15 @@ META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
 OUT_DIR = ROOT / "data" / "polls"
 OUT_PATH = OUT_DIR / "aggregated.json"
+NEC_ROSTER_PATH = ROOT / "data" / "raw" / "nec_roster_9th.json"
+
+# NEC 9회 지선 등록 후보 명부 — office 재분류·정당 보완에 사용
+_NEC_ROSTER: dict = {}
+if NEC_ROSTER_PATH.exists():
+    try:
+        _NEC_ROSTER = json.load(open(NEC_ROSTER_PATH, encoding="utf-8"))
+    except Exception:
+        _NEC_ROSTER = {}
 
 ELECTION_DATE = date(2026, 6, 3)
 BLACKOUT_START = date(2026, 5, 28)  # 5/28 00:00부터 공표 금지
@@ -129,6 +138,16 @@ def classify_office(title: str, sido: str, sigungu: str) -> tuple[str, str]:
         return ("기초단체장", "군수")
     if "시장" in title and sigungu:
         return ("기초단체장", "시장")
+
+    # title에 "구청장"/"군수"/"시장" 키워드는 없지만 sigungu가 있으면 단위 추정
+    # (예: "OO 지방선거 여론조사" — title이 일반화돼있고 표는 구청장 표)
+    if sigungu:
+        if sido in SPECIAL_SIDOS:  # 광역시·특별시 산하 sigungu = 자치구청장
+            return ("기초단체장", "구청장")
+        if sigungu.endswith("군"):
+            return ("기초단체장", "군수")
+        if sigungu.endswith("시"):
+            return ("기초단체장", "시장")
 
     return ("기타", "")
 
@@ -279,7 +298,10 @@ def build() -> dict:
         }
         # 후보 이름에 들어있으면 그 record가 OCR 오류·메트릭 표일 가능성 높음
         BAD_NAME_PATTERNS = re.compile(
-            r'(정읍|위원회|수석|비서|현안|지지|의장|회장|당선|기관|단체|기타|모름|무응답)'
+            r'(정읍|위원회|수석|비서|현안|지지|의장|회장|당선|기관|단체|기타|모름|무응답|'
+            r'교육청|교육감|교육|자치도|치도|특별시|광역시|협의회|'
+            r'행정경험|인지도|경험|능력|이미지|평가|선호도|적합도|'
+            r'전교조|노조|조합|것이|이다)'
         )
         for q in p.get("questions", []):
             cands = q.get("candidates") or []
@@ -290,9 +312,14 @@ def build() -> dict:
             names_clean = [re.sub(r"\s+", "", n) for n in names]
             if any(n in METRIC_NAME_KW for n in names_clean):
                 continue
-            # 후보 이름에 지명·직책·기관 keyword (BAD_NAME_PATTERNS) 포함이면 reject
+            # 후보 이름에 지명·직책·기관 keyword (BAD_NAME_PATTERNS) 매칭된 candidate만 제거.
+            # 정상 후보 1+ 같이 있으면 race 살림 (전체 reject는 너무 aggressive).
             if any(BAD_NAME_PATTERNS.search(n) for n in names_clean):
-                continue
+                cands = [c for c, n in zip(cands, names_clean) if not BAD_NAME_PATTERNS.search(n)]
+                names_clean = [n for n in names_clean if not BAD_NAME_PATTERNS.search(n)]
+                if not cands:
+                    continue
+                q["candidates"] = cands  # 정리된 cands 다시 q에 (이후 처리에 사용)
             # 동일 이름 반복 (parse 시 column 인식 실패 → 한 이름이 전 후보 자리 채움)
             non_empty = [n for n in names_clean if n]
             if len(non_empty) >= 3 and len(set(non_empty)) < len(non_empty) * 0.6:
@@ -307,6 +334,11 @@ def build() -> dict:
             # 국정평가·투표의향 — 지선 스코프(VT026)엔 진짜 데이터가 없고, 우리가 가진 건
             # 전부 후보지지 오분류(대부분 중복) + 응답노이즈(것이다·최고위원)라 함께 제외.
             if metric_type in ("적합도", "국정평가", "투표의향"):
+                continue
+
+            # 대선 회상 투표 reject — "21대 대선 투표 후보" 같은 회상 질문이 기초단체장으로
+            # 잘못 분류돼 이재명·김문수·이준석이 시장/군수 후보로 표시되는 케이스 차단.
+            if re.search(r"(대선|대통령)\s*(투표|선거|후보)|\d+대\s*대선|회상\s*투표", title):
                 continue
 
             # 정책·현안·방식 질문 reject — 후보 race가 아닌데 office_level로 승격돼 가짜 후보
@@ -352,20 +384,49 @@ def build() -> dict:
             if metric_type in ("후보지지", "당선가능성", "적합도") and \
                re.search(r"가상\s*대결|가상\s*양자|양자\s*대결|맞대결|\bvs\b|\bVS\b", title):
                 continue
-            # 신설 분구 보정 (9회 지선) — title에 "영종구청장"·"제물포구청장" 등 신설구 이름
-            # 있으면 sigungu를 그 구로 override. NESDC region은 옛 행정구역("중구")로 표기.
-            # 인천 중구 → 영종구·제물포구 분구 (2026-07).
-            NEW_SIGUNGU = {
-                "영종구청장": "영종구", "제물포구청장": "제물포구",
-            }
-            for kw, new_sg in NEW_SIGUNGU.items():
+            # 신설 분구 보정 (9회 지선) — title에 신설구 이름 있으면 sigungu override.
+            # NESDC region은 옛 행정구역으로 표기 (중구→영종/제물포, 서구→검단 등).
+            NEW_SIGUNGU_KEYWORDS = ["영종구", "제물포구", "검단구"]
+            for kw in NEW_SIGUNGU_KEYWORDS:
                 if kw in title:
-                    sigungu = new_sg
+                    sigungu = kw
                     break
+
+            # NEC roster 기반 office/sigungu 재분류 — 한 PDF에 여러 office 표 있을 때
+            # (강원도민 여론조사: 도지사·교육감·시장/군수 다 한 PDF). page 큰 title이
+            # 모든 표에 일괄 적용되어 region 기반 분류만 되면 광역·교육감 record가 잘못
+            # 기초단체장 페이지에 섞임. 후보들의 sg_typecode로 진짜 office 추정.
+            cand_names = [c.get("name","") for c in cands if c.get("name")]
+            roster_typecodes = []
+            roster_sggs = []
+            for nm in cand_names:
+                hit = _NEC_ROSTER.get(f"{sido}|{nm}") if _NEC_ROSTER else None
+                if hit and hit.get("sg_typecode"):
+                    roster_typecodes.append(hit["sg_typecode"])
+                    if hit.get("sgg"):
+                        roster_sggs.append(hit["sgg"])
+            # 다수결로 typecode 결정 (후보들이 같은 race 출마 가정)
+            roster_override_office = None  # (office_level, office_label) 강제 override
+            if roster_typecodes:
+                from collections import Counter
+                top_tc = Counter(roster_typecodes).most_common(1)[0][0]
+                if top_tc == "3":
+                    sigungu = ""
+                    roster_override_office = ("광역단체장", "도지사")  # 광역시장도 같은 카테고리
+                elif top_tc == "11":
+                    sigungu = ""
+                    roster_override_office = ("교육감", "교육감")
+                elif top_tc == "4" and roster_sggs:
+                    top_sgg = Counter(roster_sggs).most_common(1)[0][0]
+                    if top_sgg and top_sgg != sigungu:
+                        sigungu = top_sgg
 
             # 후보지지·당선가능성·적합도만 office_level 분류, 나머지는 광역/시도 단위 메트릭
             if metric_type in ("후보지지", "당선가능성", "적합도"):
-                office_level, office_label = classify_office(title, sido, sigungu)
+                if roster_override_office:
+                    office_level, office_label = roster_override_office
+                else:
+                    office_level, office_label = classify_office(title, sido, sigungu)
             else:
                 # 정당지지·국정평가·투표의향 — sido(+sigungu) 단위, office_level은 메트릭 자체
                 office_level = metric_type
@@ -379,6 +440,17 @@ def build() -> dict:
             if metric_type in ("후보지지", "당선가능성", "적합도"):
                 n_named = sum(1 for c in cands if c.get("pct") is not None and c.get("name"))
                 if n_named < 2:
+                    continue
+
+            # 정당지지 race — party 빈 candidate 제거 (column 매핑 잘못된 row).
+            # 또 양대정당(민주·국힘) 모두 있어야 의미 있음 — 단독 정당 record drop.
+            if metric_type == "정당지지":
+                cands = [c for c in cands if c.get("party")]
+                parties = {c.get("party") for c in cands}
+                if not ({"더불어민주당", "국민의힘"} <= parties):
+                    continue
+                # 경선 record는 별도 — title에 "경선"·"단일화" 들어가면 정당지지 page에 부적절
+                if re.search(r"경선|단일화|당내", title):
                     continue
             polls.append({
                 "ntt_id": ntt_id,
@@ -709,11 +781,19 @@ def build() -> dict:
         except Exception:
             cand_party_cache = {}
 
+    # 교육감은 무소속(정치적 중립) — 다른 office의 정당 매핑이 새지 않게 모두 비움
+    for p in polls:
+        if p.get("office_level") == "교육감":
+            for c in p["candidates"]:
+                c["party"] = ""
+
     # 정당 빈 후보에 mapping 적용 (다수결 → NEC 캐시 순)
     n_party_filled = n_party_nec = 0
     for p in polls:
         if p["metric_type"] not in ("후보지지", "당선가능성", "적합도"):
             continue
+        if p.get("office_level") == "교육감":
+            continue  # 교육감 무소속 — 매핑 skip
         sido = p.get("sido", "")
         for c in p["candidates"]:
             if c.get("party"):
@@ -775,6 +855,21 @@ def build() -> dict:
     polls = kept
     if n_oversum:
         print(f"  합계>113% garble race drop {n_oversum}건", file=sys.stderr)
+
+    # 양자대결·진영 경쟁력 race drop — "오세훈 대 박주민"(양자), "범보수/범진보 경쟁력"(진영
+    # 가상)은 본선 아님. grid 재분류가 챕터헤더 탓에 office로 올린 것. 제목에 "대"·경쟁력·
+    # 범보수/범진보·가상/양자 마커가 있으면 드롭. (build 메인 루프 가상대결 필터를 못 거친 잔여)
+    _VS = re.compile(r"[가-힣]{2,3}\s*대\s*[가-힣]{2,3}|경쟁력|범보수|범진보|가상\s*대결|양자|맞대결|\bvs\b|\bVS\b")
+    n_vs = 0
+    kept = []
+    for p in polls:
+        if p["office_level"] in ("광역단체장", "기초단체장", "교육감") and _VS.search(p.get("table_title", "")):
+            n_vs += 1
+            continue
+        kept.append(p)
+    polls = kept
+    if n_vs:
+        print(f"  양자대결·경쟁력 race drop {n_vs}건", file=sys.stderr)
 
     # 중복 카드 제거 — 같은 등록(ntt_id)·office·지역의 동일 후보집합은 보통 지역별/페이지
     # cross-tab 분해라 1건만 남긴다. 다른 후보집합(다자 vs 양자 등)은 키가 달라 보존.
