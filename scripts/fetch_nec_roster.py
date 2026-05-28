@@ -21,6 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 AGG = ROOT / "data" / "polls" / "aggregated.json"
+PARSED_DIR = ROOT / "data" / "raw" / "parsed"
+META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
 OUT = ROOT / "data" / "raw" / "nec_roster_9th.json"
 API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
 SG_ID = "20260603"
@@ -56,20 +58,46 @@ def main():
     if not key:
         print("환경변수 NEC_API_KEY 필요", file=sys.stderr)
         sys.exit(1)
-    if not AGG.exists():
-        print("aggregated.json 없음 — build_polls 먼저", file=sys.stderr)
-        sys.exit(1)
-    data = json.load(open(AGG, encoding="utf-8"))
-    # polls의 candidates 중 (sido, name) 유니크 모음 (정상 한글 인명만)
-    import re
-    targets = set()
-    for p in data["polls"]:
-        sd = p.get("sido", "")
-        for c in p.get("candidates", []):
-            nm = (c.get("name") or "").strip()
-            if not nm or not re.fullmatch(r"[가-힣]{2,4}", nm):
+    # parsed JSON + meta region에서 (sido, name) 모음 — aggregated보다 광범위
+    # (build_polls가 drop한 record의 후보도 포함되어 순환 의존 회피)
+    import re, csv
+    targets: set[tuple[str, str]] = set()
+
+    # meta에서 ntt_id → sido
+    ntt_to_sido = {}
+    if META_CSV.exists():
+        SIDO_FIRST = re.compile(r"^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))")
+        for r in csv.DictReader(open(META_CSV, encoding="utf-8")):
+            m = SIDO_FIRST.match(r.get("region", "") or "")
+            if m:
+                ntt_to_sido[r["ntt_id"]] = m.group(1)
+
+    if PARSED_DIR.exists():
+        for path in PARSED_DIR.glob("*.json"):
+            try:
+                d = json.load(open(path, encoding="utf-8"))
+            except Exception:
                 continue
-            targets.add((sd, nm))
+            sd = ntt_to_sido.get(d.get("ntt_id", ""), "")
+            if not sd:
+                continue
+            for q in d.get("questions", []):
+                for c in q.get("candidates", []):
+                    nm = (c.get("name") or "").strip()
+                    if not nm or not re.fullmatch(r"[가-힣]{2,4}", nm):
+                        continue
+                    targets.add((sd, nm))
+
+    # aggregated.json도 보충 (있으면)
+    if AGG.exists():
+        data = json.load(open(AGG, encoding="utf-8"))
+        for p in data.get("polls", []):
+            sd = p.get("sido", "")
+            for c in p.get("candidates", []):
+                nm = (c.get("name") or "").strip()
+                if not nm or not re.fullmatch(r"[가-힣]{2,4}", nm):
+                    continue
+                targets.add((sd, nm))
     print(f"조회 대상 (sido, name) 유니크: {len(targets)}", file=sys.stderr)
 
     # 기존 cache 로드 (증분)

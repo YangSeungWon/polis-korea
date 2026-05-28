@@ -62,6 +62,8 @@ def _norm_cell(text: Optional[str]) -> str:
     s = s.replace("*", "")
     if s.endswith("%"):
         s = s[:-1]
+    # 한길리서치 등 양식의 enumerated marker 제거 (①김진규 → 김진규)
+    s = re.sub(r"[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]", "", s)
     return s
 
 
@@ -87,6 +89,9 @@ def _is_data_row(row: list[str]) -> bool:
     return pct_like >= max(2, int(len(nonempty) * 0.6))
 
 
+_TOTAL_CELL = re.compile(r"^[■▣\s]*(?:전\s?체|합\s?계|총\s?계)[■▣\s]*$")
+
+
 def _merge_multirow_header(table: list[list[str]]) -> tuple[list[str], int]:
     """multi-row header → 한 row로 column-wise concat.
     "전체" 매칭으로 data row 찾기 + fallback으로 "첫 data-row" 휴리스틱.
@@ -95,9 +100,10 @@ def _merge_multirow_header(table: list[list[str]]) -> tuple[list[str], int]:
     if not table:
         return [], 0
     data_idx = None
-    # 1차: "전체" 매칭 (■전체■, ▣전체▣ 등)
+    # 1차: cell-strict "전체"/"합계"/"총계" 매칭 — substring 매칭은 "전체후보 유관곤" 같은
+    # cross-tab row까지 잡아 data_start가 너무 늦게 잡히는 issue.
     for i, row in enumerate(table):
-        if any("전체" in c or "전 체" in c for c in row):
+        if any(c and _TOTAL_CELL.match(c.strip()) for c in row):
             data_idx = i
             break
     # 2차: % 값 row 휴리스틱 (data로 추정되는 첫 row)
@@ -169,6 +175,10 @@ def classify_table(table: list[list[str]], title: str, page_text: str) -> str:
     header, _ = _merge_multirow_header(table)
     header_join = "".join(header)
     has_party = any(p in header_join for p in PARTY_NAMES)
+    # title에 "정당지지" 명시 + header에 정당명 ≥ 3개 있으면 party 확정 (잘못 candidate 분류 방지)
+    party_col_count = sum(1 for h in header if any(p in h for p in PARTY_NAMES))
+    if "정당지지" in t and party_col_count >= 3:
+        return "party"
     # header에 후보명 같은 한글 2-4자 (정당·헤더어 제외)가 있으면 후보지지
     has_cand_cell = False
     for h in header:
@@ -241,11 +251,11 @@ def _is_skip_header(h: str) -> bool:
 
 
 def _find_data_row(table: list[list[str]], data_start: int) -> Optional[list[str]]:
-    """전체 row 찾기. data_start 이후에서."""
+    """전체/합계 row 찾기 — cell 단위 strict 매칭 ("전체후보 유관곤" 같은 cross-tab row 회피)."""
     for row in table[data_start:]:
-        joined = "".join(row)
-        if "전체" in joined or "전 체" in joined or "▣" in joined or "■" in joined:
-            return row
+        for c in row:
+            if c and _TOTAL_CELL.match(c.strip()):
+                return row
     # fallback: data_start row 자체
     if data_start < len(table):
         return table[data_start]
