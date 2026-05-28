@@ -20,3 +20,5 @@ data/*.xls
 # 예외: 후보 정당·직위 캐시 (NEC 후보자검색 결과·공개데이터 — 커밋해 키 없이 재현)
 !data/raw/nec_candidate_party.json
 !data/raw/nec_candidate_office.json
+# 예외: NEC 등록후보 명부 (산점도 등록/사전거론 구분용·런타임 fetch·공개데이터)
+!data/raw/nec_roster_9th.json

@@ -193,7 +193,9 @@ function buildScatterSVG(polls, roster = null) {
       if (c.pct == null) continue;
       const sd = p.sido || '';
       const nm = c.name || '';
-      const registered = !!(roster && nm && roster[`${sd}|${nm}`]);
+      // 빈 객체 {} 는 truthy지만 미등록 — sg_typecode 있어야 진짜 등록
+      const hit = roster && nm ? roster[`${sd}|${nm}`] : null;
+      const registered = !!(hit && hit.sg_typecode);
       points.push({ ts, pct: c.pct, party: c.party, name: nm, agency: p.agency, registered });
     }
   }
@@ -223,9 +225,11 @@ function buildScatterSVG(polls, roster = null) {
     const label = `${d.getMonth() + 1}/${d.getDate()}`;
     xax += `<text x="${xx}" y="${H - 6}" font-size="9" fill="#8a93a3" text-anchor="middle">${label}</text>`;
   }
-  // 등록 후보별 line: name → 시간 순 점들 (jitter 안 한 ts 좌표)
+  // 등록 후보 + "최근까지 살아남은" 후보만 line. 최신 폴 기준 14일 안에 등장한 후보만.
   let lines = '';
   if (roster) {
+    const latestTs = Math.max(...points.map((p) => p.ts));
+    const cutoff = latestTs - 14 * 86_400_000;
     const byName = {};
     for (const p of points) {
       if (!p.registered) continue;
@@ -234,17 +238,21 @@ function buildScatterSVG(polls, roster = null) {
     for (const [nm, ps] of Object.entries(byName)) {
       if (ps.length < 2) continue;
       ps.sort((a, b) => a.ts - b.ts);
+      // 후보의 가장 최신 점이 cutoff 이전이면 line 안 그림 (= 마지막까지 못 온 후보)
+      if (ps[ps.length - 1].ts < cutoff) continue;
       const color = partyColor(ps[0].party);
       const path = ps.map((p) => `${x(p.ts).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
       lines += `<polyline points="${path}" fill="none" stroke="${color}" stroke-width="1.2" stroke-opacity="0.55" stroke-linejoin="round"/>`;
     }
   }
   const dots = jittered.map((p) => {
-    const color = partyColor(p.party);
-    // 등록 후보 진하게 (0.85), 사전 거론 옅게 (0.3). roster 없으면 일률 0.75.
-    const fillOp = roster ? (p.registered ? 0.85 : 0.3) : 0.75;
-    const r = roster && p.registered ? 3.2 : 2.5;
-    return `<circle cx="${p.jx.toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="${r}" fill="${color}" fill-opacity="${fillOp}" stroke="${color}" stroke-width="0.5"><title>${p.name || '?'} (${p.party || '?'}) ${p.pct}%${roster && !p.registered ? ' · 미등록/사전' : ''} · ${p.agency} · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
+    // 등록 후보: 정당색 진하게. 사전 거론: 회색 통일 + 옅고 작게 (시각적 노이즈 감소).
+    const isSub = roster && !p.registered;
+    const color = isSub ? '#9ea3ad' : partyColor(p.party);
+    const fillOp = isSub ? 0.35 : (roster ? 0.85 : 0.75);
+    const r = isSub ? 1.6 : (roster ? 3.2 : 2.5);
+    const strokeAttr = isSub ? '' : ` stroke="${color}" stroke-width="0.5"`;
+    return `<circle cx="${p.jx.toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="${r}" fill="${color}" fill-opacity="${fillOp}"${strokeAttr}><title>${p.name || '?'} (${p.party || '?'}) ${p.pct}%${isSub ? ' · 미등록/사전' : ''} · ${p.agency} · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
   }).join('');
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${lines}${dots}</svg>`;
 }

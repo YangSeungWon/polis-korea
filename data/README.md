@@ -119,7 +119,10 @@ data/polls/aggregated.json        # UI fetch
 
 `parsed/{stem}.json`은 PDF 양식에 따라 **다른 파서가 채운다**:
 - **격자 있음** (대부분) → `parse_pdf` (Step A/B/C, 위).
-- **CID 폰트 깨짐** (여론조사꽃 등, 텍스트가 `(cid:..)`) → `run_ocr_batch` (ocr_hybrid).
+- **CID 폰트 깨짐** (여론조사꽃 등, 텍스트가 `(cid:..)` 또는 한글이 잘못 매핑) →
+  먼저 `scripts/cid_decode.py`(`repair_text`)로 NotoSansCJK cmap 기반 복구 시도. 격자 자체는
+  정상이고 한글만 깨진 케이스(여론조사꽃 result PDF)는 OCR 없이 복구됨. 글리프 자체가
+  이미지인 경우만 `run_ocr_batch`(ocr_hybrid) fallback.
 - **표 선 없는 텍스트** (`extract_tables`=0이나 텍스트 정상) → `parse_words`.
 
 세 파서가 같은 파일을 쓰므로 **덮어쓰기 가드**가 있다: `parse_pdf`가 후보 0을 뽑았는데
