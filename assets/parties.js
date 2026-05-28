@@ -130,6 +130,11 @@ const METRIC_COLORS = {
   '모름/무응답':  '#bbbbbb',  // 옅은 회색
 };
 
+// 9회 지선 주요 출마 정당 — 범례에 항상 노출. 1위 안 잡혀도 색 안내용.
+const LEGEND_DEFAULT_PARTIES = [
+  '더불어민주당', '국민의힘', '조국혁신당', '개혁신당', '진보당', '무소속',
+];
+
 function partyColor(party) {
   if (!party) return PARTY_FALLBACK;
   if (METRIC_COLORS[party]) return METRIC_COLORS[party];

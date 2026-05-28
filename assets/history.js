@@ -28,7 +28,8 @@ const state = {
   office: '광역단체장',
   sizing: '동일',  // 동일 | 인구비례 — 시군구 hex 사이즈 모드
   elections: null,
-  hexData: null,            // sigungu_hex.json
+  hexData: null,            // sigungu_hex.json (9회 기준 통합도시)
+  hexLegacy: null,          // sigungu_hex_legacy.json (옛 회차 — 일반구 분할)
   districtHex: {},          // {22: [...]} 지역구별 hex layout
   results: null,
   selected: null,
@@ -43,14 +44,16 @@ async function loadJson(path) {
 }
 
 async function init() {
-  const [elections, hex, manifest] = await Promise.all([
+  const [elections, hex, hexLegacy, manifest] = await Promise.all([
     loadJson('data/elections.json'),
     loadJson('data/geo/sigungu_hex.json'),
+    loadJson('data/geo/sigungu_hex_legacy.json').catch(() => null),
     loadJson('data/results/manifest.json').catch(() => ({ presidential: [], national_assembly: [], local: [] })),
   ]);
   state.elections = elections;
   state.elections._available = manifest;
   state.hexData = hex;
+  state.hexLegacy = hexLegacy;
 
   document.querySelectorAll('[data-type]').forEach((b) => {
     b.addEventListener('click', () => setType(b.dataset.type));
@@ -183,11 +186,24 @@ const SIGUNGU_NAME_HISTORY = {
   '청주시청원구':   ['청원군'],          // 2014.7 통합 전 (5/6회)
   '미추홀구':       ['남구'],            // 인천 2018 개명 전 (5/6/7회 → '남구')
   '남구':           ['미추홀구'],        // 인천 — hex가 옛 vuski GeoJSON '남구', 8회+ 데이터엔 '미추홀구'
+  // 인천 2026-07 신설 분구: 옛 회차에선 cell 자체 hide (SIGUNGU_HEX_HISTORY 참조).
+  // 신설 cell이 옛 데이터를 같은 색으로 표시하는 건 misleading이라 cell 자체 안 그림.
 };
 // 1 hex ↔ N 데이터 합산 (분할구 → 통합 시 vote 합산).
-// 부천 2016 3구→1시 통합. 5/6회 데이터엔 3구로 분할.
+// hex는 이제 통합도시 1 cell — 옛 역대 데이터(일반구 분할)는 합산해서 표시.
 const SIGUNGU_MERGE = {
   '부천시': ['부천시원미구', '부천시소사구', '부천시오정구'],
+  '수원시': ['수원시장안구', '수원시권선구', '수원시팔달구', '수원시영통구'],
+  '용인시': ['용인시처인구', '용인시기흥구', '용인시수지구'],
+  '고양시': ['고양시덕양구', '고양시일산동구', '고양시일산서구'],
+  '성남시': ['성남시수정구', '성남시중원구', '성남시분당구'],
+  '안양시': ['안양시만안구', '안양시동안구'],
+  '안산시': ['안산시상록구', '안산시단원구'],
+  '청주시': ['청주시상당구', '청주시서원구', '청주시흥덕구', '청주시청원구'],
+  '천안시': ['천안시동남구', '천안시서북구'],
+  '전주시': ['전주시완산구', '전주시덕진구'],
+  '창원시': ['창원시의창구', '창원시성산구', '창원시마산합포구', '창원시마산회원구', '창원시진해구'],
+  '포항시': ['포항시남구', '포항시북구'],
 };
 
 function mergeSigunguResults(parts) {
@@ -597,8 +613,13 @@ function renderSigunguHex() {
   svg.innerHTML = '';
   svg.setAttribute('width', '100%');
   svg.setAttribute('height', '100%');
-  const data = state.hexData;
+  // 대선만 일반구별 개표 단위 (legacy sigungu hex). 지선은 통합 시장이라 base hex.
+  // 총선은 지역구(district_hex_*.json) — renderDistrictHex가 별도 처리.
+  const useLegacy = state.hexLegacy && state.type === 'presidential';
+  let data = useLegacy ? state.hexLegacy : state.hexData;
   if (!data?.length) return;
+  // 회차별 자동 hide — data.sigungu에 매칭 없는 cell (행정구역상 그 시점 존재 X 또는 데이터 누락)
+  data = data.filter((d) => resultForSigungu(d.sido, d.name));
   const cs = data.map((d) => d.c);
   const rs = data.map((d) => d.r);
   const minC = Math.min(...cs), minR = Math.min(...rs);

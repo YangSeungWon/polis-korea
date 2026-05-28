@@ -76,10 +76,26 @@ function sidoLastWinningParty(sido, office) {
 
 // 시군구 단위 — 기초단체장은 office_level='기초단체장', 그외 메트릭(정당지지/국정평가/투표의향)은
 // office_level이 메트릭 자체. sigungu 필드가 있는 polls만 사용.
+// 일반구 → 모도시 매핑 (통합 도시 기초단체장은 시장 1명. 수원시장안구 → 수원시)
+function parentSigungu(sigungu) {
+  if (!sigungu) return null;
+  const m = sigungu.match(/^([가-힣]+시)[가-힣]+구$/);
+  return m ? m[1] : null;
+}
+
 function sigunguLastWinningParty(sido, sigungu, office = '기초단체장') {
-  return summarizeLatest(pollsByOffice(office).filter(
+  const polls = pollsByOffice(office).filter(
     (p) => p.sido === sido && p.sigungu === sigungu
-  ));
+  );
+  if (polls.length) return summarizeLatest(polls);
+  // 일반구라면 모도시(통합도시) polls로 fallback
+  const parent = parentSigungu(sigungu);
+  if (parent) {
+    return summarizeLatest(pollsByOffice(office).filter(
+      (p) => p.sido === sido && p.sigungu === parent
+    ));
+  }
+  return null;
 }
 
 // === HEX 격자 ===
@@ -460,9 +476,11 @@ function legendData() {
   const parties = new Set();
   for (const k in groups) {
     const t = summarizeLatest(groups[k]);
-    if (t) parties.add(CANON[t.party] || t.party || '무소속');  // 빈 정당·무소속 합침
+    if (t) parties.add(CANON[t.party] || t.party || '무소속');
   }
-  const ORDER = ['더불어민주당', '국민의힘', '조국혁신당', '개혁신당', '진보당', '새로운미래', '무소속'];
+  // 9회 출마 주요 정당은 1위 안 잡혀도 범례에 표시 (사전 안내)
+  for (const p of LEGEND_DEFAULT_PARTIES) parties.add(p);
+  const ORDER = LEGEND_DEFAULT_PARTIES.concat(['새로운미래']);
   const sorted = [...parties].sort((a, b) => {
     const ia = ORDER.indexOf(a), ib = ORDER.indexOf(b);
     return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
@@ -535,7 +553,9 @@ async function renderSigunguHex() {
     poly.style.cursor = 'pointer';
     poly.addEventListener('click', () => {
       state.selectedSido = d.sido;
-      state.selectedSigungu = isSigunguMode() ? d.name : null;
+      // 일반구 클릭 시 모도시로 (통합도시 1 race) — polls는 모도시 단위
+      const sgName = isSigunguMode() ? d.name : null;
+      state.selectedSigungu = sgName ? (parentSigungu(sgName) || sgName) : null;
       renderSigunguHex();
       renderDetail();
     });
@@ -597,7 +617,15 @@ function setOffice(o) {
   const scopeSeg = $('#scope-seg');
   const showScope = o === '정당지지' && hasSigunguData();
   scopeSeg.toggleAttribute('hidden', !showScope);
-  if (!showScope) state.scope = '시도';  // reset
+  if (!showScope) {
+    state.scope = '시도';  // reset
+  } else if (o === '정당지지') {
+    // 정당지지 진입 시 시군구 기본 (지역별 격차가 더 흥미)
+    state.scope = '시군구';
+    document.querySelectorAll('[data-scope]').forEach((b) => {
+      b.classList.toggle('is-active', b.dataset.scope === '시군구');
+    });
+  }
   setView(state.view);
   renderDetail();
   recalcSegFades();  // scope seg 노출 변화 → 페이드 재계산

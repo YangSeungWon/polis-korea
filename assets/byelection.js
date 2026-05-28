@@ -10,12 +10,14 @@ const $ = (s) => document.querySelector(s);
 async function init() {
   let geo = null;
   try {
-    const [bj, gj] = await Promise.all([
+    const [bj, gj, rj] = await Promise.all([
       fetch('data/polls/byelection.json').then((r) => r.json()),
       fetch('data/geo/sido_simple.json').then((r) => r.json()).catch(() => null),
+      fetch('data/raw/nec_roster_9th.json').then((r) => r.ok ? r.json() : null).catch(() => null),
     ]);
     state.data = bj;
     geo = gj;
+    state.roster = rj;
   } catch (e) {
     state.data = { districts: [] };
   }
@@ -32,6 +34,8 @@ async function init() {
   renderMap(geo);
   renderChips();
   renderCards();
+  // 초기 marker 강조 (페이지 로드 시 자동 scroll은 X)
+  if (state.selected) selectDistrict(state.selected, { scroll: false });
 }
 
 function latestTop(d) {
@@ -72,6 +76,7 @@ function renderMap(geo) {
       fillColor: color, fillOpacity: top ? Math.max(0.6, gapOpacity(top.gap)) : 0.6,
       color: '#0a0e1a', weight: 1.6,
     }).addTo(map);
+    marker._districtName = d.district;  // 선택 강조용
     // 상시 라벨 — hover 없이 선거구명 바로 보이게
     marker.bindTooltip(d.district, {
       permanent: true, direction: 'right', offset: [6, 0],
@@ -88,12 +93,30 @@ function renderMap(geo) {
   }
 }
 
-function selectDistrict(name) {
+function selectDistrict(name, { scroll = true } = {}) {
   state.selected = name;
   renderChips();
   renderCards();
-  const m = state.markers[name];
-  if (m && state.map) state.map.panTo(m.getLatLng());
+  // 선택된 marker 강조 (굵은 노란 outline + radius +3)
+  for (const [n, m] of Object.entries(state.markers)) {
+    const isSel = n === name;
+    m.setStyle({
+      color: isSel ? '#f5b800' : '#0a0e1a',
+      weight: isSel ? 3.5 : 1.6,
+    });
+    const baseR = m.options.radius;
+    if (isSel) m.bringToFront();
+  }
+  // 재보궐 지도는 7개 marker 다 보이는 fit 상태 — panTo·zoom 변경 불요
+  // 모바일: 지도 클릭 후 조사 결과 영역으로 자동 scroll (데스크탑은 옆에 있어 무의미)
+  if (scroll && window.matchMedia('(max-width: 768px)').matches) {
+    const cards = document.getElementById('cards-pane');
+    if (cards) {
+      // pane top에서 60px 정도 위 (헤더·라벨 안 가리게)
+      const top = cards.getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
 }
 
 // 선거구 칩 (지도 위 필터)
@@ -125,6 +148,10 @@ function renderCards() {
   </div>`;
   if (top) {
     html += `<div class="latest-label">최신 ${fmtDate(top.period)} · 1위 <b style="color:${partyTextColor(top.party)}">${top.name}</b> (${top.party}) ${top.pct}%</div>`;
+  }
+  // 산점도 — 조사 2건 이상이면 시계열 시각화 (메인 폴과 동일)
+  if (d.polls.length >= 2) {
+    html += `<div class="scatter-wrap">${buildScatterSVG(d.polls, state.roster || null)}</div>`;
   }
   for (const p of d.polls) {
     html += renderPollCard(p, '국회의원');  // renderPollCard → utils.js (공용)
