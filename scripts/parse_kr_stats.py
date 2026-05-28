@@ -22,6 +22,9 @@ _PCT = re.compile(r"^\d{1,3}(?:\.\d)?$")        # 괄호 없는 0~100 (사례수
 _NAME = re.compile(r"^[가-힣]{2,4}$")
 _OFFICE_KW = re.compile(r"(시장|지사|교육감|군수|구청장|단체장)")
 _RACE_KW = re.compile(r"(선호도|지지도|적합도|지지율|선호하|지지하|적합)")
+# 질문문/안내 단어 — 이름칸 위·아래에 섞여 들어옴 (거론되고·있는·뽑는·순환하여·생각하십니까…)
+_QWORD = re.compile(r"되고|되는|되어|있는|있다|있습|하여|하는|뽑는|순환|무작위|보기|굳이|경우|드리"
+                    r"|십니까|이라도|말씀|거론|출마|낫다|누가|생각|응답|조금|다음|중에|이번")
 
 
 def _rows(page):
@@ -60,26 +63,29 @@ def extract_page(rows) -> list[dict]:
     pcts = [(x, float(t)) for x, t in rows[total_ri][1] if _PCT.match(t) and 0 <= float(t) <= 100]
     if len(pcts) < 2:
         return []
-    # 이름 헤더 행: 제목~전체행 사이에서 실명 토큰이 가장 많은 행
-    best_names = []
+    # 이름은 각 컬럼 "맨 위(top 최소) 깨끗한 토큰". 직책(전/현/대통령/소속/위원회/부의장/
+    # 자문위원…)은 그 아래로 stack되고, 후보마다 직책 줄 수가 달라 이름이 컬럼별 다른 y에
+    # staggered됨 → "이름 많은 한 행"으론 직책(대통령소)을 집는다. 컬럼 x별 topmost-clean으로.
+    # 각 % 컬럼 x의 "맨 위(top 최소) 깨끗한 이름". 질문문(문…생각하십니까)·직책이 이름 위/아래에
+    # 섞여 있으므로 질문어(되고/있는/뽑는/순환…)는 제외하고, 남은 topmost를 이름으로.
+    header_toks = []  # (x, top, name)
     for ri in range(title_ri + 1, total_ri):
-        names = []
+        top = rows[ri][0]
         for x, t in rows[ri][1]:
             tt = re.sub(r"\s", "", t)
-            if _NAME.match(tt) and tt not in HEADER_WORDS and not _is_noise_name(tt):
-                names.append((x, tt))
-        if len(names) > len(best_names):
-            best_names = names
-    if len(best_names) < 2:
+            if (_NAME.match(tt) and tt not in HEADER_WORDS
+                    and not _is_noise_name(tt) and not _QWORD.search(tt)):
+                header_toks.append((x, top, tt))
+    if len({t for _, _, t in header_toks}) < 2:
         return []
-    # % → 가장 가까운 이름 (x 정렬)
     cands = []
     used = set()
     for px, pv in pcts:
-        m = min(((abs(px - nx), nm) for nx, nm in best_names), default=None)
-        if m and m[0] < 22 and m[1] not in used:
-            used.add(m[1])
-            cands.append({"name": m[1], "party": "", "pct": pv})
+        near = sorted(((top, nm) for x, top, nm in header_toks if abs(px - x) <= 18),
+                      key=lambda z: z[0])  # 같은 컬럼 토큰을 위에서 아래로
+        if near and near[0][1] not in used:
+            used.add(near[0][1])
+            cands.append({"name": near[0][1], "party": "", "pct": pv})
     if len(cands) < 2:
         return []
     page_txt = title
@@ -112,9 +118,15 @@ if __name__ == "__main__":
             print(f"  [{q['election_office']}] {q['title'][:42]} | {[(c['name'], c['pct']) for c in q['candidates']]}")
 
 
+# 직책/질문문이 후보명으로 잘못 추출된 흔적 (이게 있으면 통계표 재추출이 더 정확)
+_GARBAGE_NAME = re.compile(r"대통령|소속$|^현$|^전$|위원회|부의장|자문위원|본부장|"
+                           r"되고|되는|있는|뽑는|순환|거론|무작위|보기|여부|두명")
+
+
 def main():
-    """parsed 후보 0인 결과 PDF에 이 통계표 파서를 적용해 회복분을 parsed/에 기록.
-    덮어쓰기 가드: 현 parsed에 후보(pct)가 이미 있으면 건드리지 않는다 (다른 파서 결과 보존)."""
+    """결과 PDF에 통계표 파서 적용 → parsed/에 기록. 후보 0이거나, 현 parsed에 직책/질문문
+    garbage 이름(대통령소·거론되고 등)이 섞였으면 재추출(통계표 stacked-header를 더 정확히 읽음).
+    깨끗한 후보가 이미 있으면 보존."""
     import glob
     import json
     root = Path(__file__).resolve().parent.parent
@@ -126,15 +138,18 @@ def main():
         out = root / "data/raw/parsed" / (Path(pf).stem + ".json")
         if out.exists():
             cur = json.loads(out.read_text(encoding="utf-8"))
-            if any(q.get("candidates") and any("pct" in c for c in q["candidates"])
-                   for q in cur.get("questions", [])):
-                continue  # 이미 후보 있음 → skip
+            has_cand = any(q.get("candidates") and any("pct" in c for c in q["candidates"])
+                           for q in cur.get("questions", []))
+            has_garbage = any(_GARBAGE_NAME.search(c.get("name", ""))
+                              for q in cur.get("questions", []) for c in q.get("candidates", []))
+            if has_cand and not has_garbage:
+                continue  # 깨끗한 후보 있음 → 보존
         r = extract_pdf(Path(pf))
         if any(q["candidates"] for q in r["questions"]):
             out.write_text(json.dumps(r, ensure_ascii=False, indent=2), encoding="utf-8")
             nok += 1
             nq += sum(1 for q in r["questions"] if q["candidates"])
-    print(f"kr-stats 회복: {nok} PDF, {nq} 문항", file=sys.stderr)
+    print(f"kr-stats 회복/교정: {nok} PDF, {nq} 문항", file=sys.stderr)
 
 
 if __name__ == "__main__" and len(sys.argv) == 1:
