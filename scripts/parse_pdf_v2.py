@@ -30,11 +30,30 @@ from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office,
 # pdfplumber가 wrap된 셀 안에 넣는 구분자 (\n, /) 제거 — 'A\nB'·'A/B' → 'AB'
 _WRAP_SEP = re.compile(r"[\n\r/]+")
 
+# CID 폰트 깨짐 복구 — 여론조사꽃 등은 한글이 (cid:NNNNN) 리터럴로 추출됨.
+# NotoSansCJK cmap으로 cid→unicode 복구 (OCR 불필요). (cid:N)은 깨진 PDF에만 있어 셀 단위 안전.
+_CID_LIT = re.compile(r"\(cid:(\d+)\)")
+_cid_table = None
+
+
+def _repair_cid(s: str) -> str:
+    if "(cid:" not in s:
+        return s
+    global _cid_table
+    if _cid_table is None:
+        try:
+            from cid_decode import build_cid_table
+            _cid_table = build_cid_table()
+        except Exception:
+            _cid_table = {}
+    t = _cid_table
+    return _CID_LIT.sub(lambda m: chr(t[int(m.group(1))]) if int(m.group(1)) in t else "", s)
+
 
 def _norm_cell(text: Optional[str]) -> str:
     if text is None:
         return ""
-    s = str(text)
+    s = _repair_cid(str(text))  # CID 깨짐(여론조사꽃) → 한글 복구
     # 셀 내부 공백·줄바꿈 제거
     s = _WRAP_SEP.sub("", s)
     s = re.sub(r"\s+", "", s)
@@ -415,7 +434,7 @@ def parse_from_grids(grids: dict) -> dict:
     seen_signatures = set()
     source_pdf = grids.get("source_pdf", "")
     for page in grids.get("pages", []):
-        page_text = page.get("page_text", "")
+        page_text = _repair_cid(page.get("page_text", ""))  # CID 깨짐 복구 (제목 탐지용)
         raw_tables = page.get("tables", [])
         for tinfo in raw_tables:
             ti = tinfo.get("table_index", 0)
