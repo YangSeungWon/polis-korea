@@ -20,7 +20,7 @@ from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office 
 
 _PCT = re.compile(r"^\d{1,3}(?:\.\d)?$")        # 괄호 없는 0~100 (사례수 (502)는 제외)
 _NAME = re.compile(r"^[가-힣]{2,4}$")
-_OFFICE_KW = re.compile(r"(시장|지사|교육감|군수|구청장|단체장)")
+_OFFICE_KW = re.compile(r"(시장|지사|교육감|군수|구청장|단체장|국회의원)")
 _RACE_KW = re.compile(r"(선호도|지지도|적합도|지지율|선호하|지지하|적합)")
 # 질문문/안내 단어 — 이름칸 위·아래에 섞여 들어옴 (거론되고·있는·뽑는·순환하여·생각하십니까…)
 _QWORD = re.compile(r"되고|되는|되어|있는|있다|있습|하여|하는|뽑는|순환|무작위|보기|굳이|경우|드리"
