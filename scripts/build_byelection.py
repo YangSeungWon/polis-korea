@@ -54,12 +54,19 @@ DISTRICT_LATLNG = {
 }
 
 
-def canon_district(region: str) -> str:
+def canon_district(region: str, pdf_name_hint: str = "") -> str:
+    """region(NESDC 등록) + PDF 파일명 힌트 → canonical district label.
+
+    NESDC region이 시 단위만이고 갑/을 미명기인 경우(18000 '경기도 평택시'),
+    PDF 파일명에서 마커 보강 (예: '평택을 국회의원' → '을').
+    합구(18047 군산시김제시부안군갑)는 가장 긴 토큰이 합구 정보를 포함하므로
+    그것만 사용해 'XX김제부안갑' 형태로 유지 (중복 '군산군산시...' 회피).
+    """
     r = region.replace("선거구", " ").replace("지역", " ").strip()
     r = re.sub(r"\s+", " ", r)
     for full, short in SIDO_SHORT.items():
         r = r.replace(full, short)
-    toks = list(dict.fromkeys(r.split()))  # dedup, 순서 유지
+    toks = list(dict.fromkeys(r.split()))
     if not toks:
         return ""
     sido = toks[0] if toks[0] in SIDO_SHORT.values() else ""
@@ -68,16 +75,48 @@ def canon_district(region: str) -> str:
     m = re.search(r"(갑|을|병|정)", r)
     if m:
         marker = m.group(1)
-    # 합구 (공주부여청양 등) — 시군구 여러 개
-    base_parts = []
-    for t in rest:
-        tt = re.sub(r"(갑|을|병|정)$", "", t)
-        if re.search(r"(시|군|구)$", tt) and tt not in base_parts:
-            base_parts.append(tt)
-    if not base_parts and rest:
-        base_parts = [re.sub(r"(갑|을|병|정)$", "", rest[0])]
-    base = "".join(p[:-1] if p[-1] in "시군구" and len(base_parts) > 1 else p for p in base_parts) \
-        if len(base_parts) > 1 else (base_parts[0] if base_parts else "")
+    # region에 마커 없으면 PDF 파일명에서 추출 (18000 '평택을' 등).
+    # 단순 '정/갑' 등 글자가 PDF 파일명 다른 곳(20260512_14일+보도+수정)에서 잘못 잡히지
+    # 않게 마커 뒤에 '국회의원·보궐·재선거·선거구' 키워드 인접 강제.
+    if not marker and pdf_name_hint:
+        mh = re.search(r"([가-힣]+)(갑|을|병|정)\s*[+_·\s]*(?:국회의원|보궐|재선거|선거구)",
+                       pdf_name_hint)
+        if mh:
+            marker = mh.group(2)
+            if mh.group(1) and not any(mh.group(1) in t for t in rest):
+                rest = [mh.group(1) + ("시" if not mh.group(1).endswith(("시","군","구")) else "")]
+    # rest 토큰 처리: longest가 다른 토큰들을 포함하면 longest만 (18047 '군산시김제시부안군갑'),
+    # 아니면 다중 시군구 합구로 가정해 모두 사용 (18869 ['공주시','부여군','청양군']).
+    if len(rest) > 1:
+        longest = max(rest, key=lambda t: len(re.sub(r"(갑|을|병|정)$", "", t)))
+        others = [t for t in rest if t != longest]
+        if all(re.sub(r"(갑|을|병|정)$", "", o).rstrip("시군구") in longest for o in others):
+            rest = [longest]
+    # rest 다중이면(합구 다중 시군구) 모든 토큰을 시·군·구 단위 분해 대상으로.
+    if len(rest) > 1:
+        compound_text = " ".join(re.sub(r"(갑|을|병|정)$", "", t) for t in rest)
+    elif rest:
+        compound_text = re.sub(r"(갑|을|병|정)$", "", rest[0])
+    else:
+        compound_text = ""
+    # 합구 토큰을 시·군·구 단위로 split: '공주시·부여군·청양군' → ['공주시','부여군','청양군']
+    # '군산시김제시부안군' → ['군산시','김제시','부안군'] (음절 경계로 greedy match)
+    parts: list[str] = []
+    for seg in re.split(r"[·\s]+", compound_text):
+        while seg:
+            mm = re.match(r"^([가-힣]+?(?:시|군|구))", seg)
+            if mm:
+                parts.append(mm.group(1))
+                seg = seg[len(mm.group(1)):]
+            else:
+                if seg:
+                    parts.append(seg)
+                break
+    if not parts:
+        parts = [compound_text] if compound_text else []
+    # 시/군/구 음절 떼고 합치기 — '공주부여청양', '군산김제부안'
+    base = "".join(p[:-1] if (p and p[-1] in "시군구" and len(parts) > 1) else p
+                   for p in parts)
     label = f"{sido} {base}{marker}".strip()
     return label
 
@@ -88,7 +127,12 @@ def main():
     n_polls = 0
     for m in rows:
         nid = m["ntt_id"]
-        district = canon_district(m.get("region", ""))
+        # PDF 파일명 힌트 — region에 갑/을 미명기인 경우 파일명에서 추출 (18000 등)
+        pdf_hint = ""
+        for pdf in (ROOT / "data/raw/pdf").glob(f"{nid}_*.pdf"):
+            pdf_hint = pdf.name
+            break
+        district = canon_district(m.get("region", ""), pdf_hint)
         if not district or district == "전국":
             continue
         # parsed JSON
