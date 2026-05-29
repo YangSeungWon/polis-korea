@@ -342,25 +342,44 @@ _TABLE_HDR = re.compile(
     r"\s*([^\n\[【<(［]+?)(?=\n|$|【|\[)",
     re.MULTILINE,
 )
+# 로마자 챕터 패턴: "표Ⅲ-1 : 서천군수 후보 지지도" — 한 PDF에 여러 race 통합 보고서.
+# 19316·비슷한 양식에서 sub-title을 정확히 잡기 위해 별도 regex.
+# PDF에 따라 line head에 bullet glyph( 등 사설 unicode)이 붙는 경우 있어 허용.
+_TABLE_HDR_ROMAN = re.compile(
+    r"^[\s-◆■▶▷●○◦・·]*"
+    r"표\s*([ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩIVX]+)\s*[-－‐]\s*(\d+)?\s*[:：]\s*([^\n]+?)(?=\n|$)",
+    re.MULTILINE,
+)
 # table cell 안에서 title이 들어있는 케이스도 (갤럽: row[0] = "표3.강원특별자치도지사직무수행평가")
 _CELL_TITLE = re.compile(r"^\s*(?:표\s*(\d+)\.|[\[【]\s*표\s*(\d+)\s*[\]】])\s*(.+)")
 
 
 def _find_table_title(page_text: str, table_idx: int, first_cell: str = "") -> tuple[str, str]:
-    """page text + 표 첫 cell에서 N번째 표 title 찾기."""
-    # 1차: 표 첫 cell에 title 들어있는지 (갤럽 양식)
+    """page text + 표 첫 cell에서 N번째 표 title 찾기.
+
+    1차: 표 첫 cell에 title (갤럽).
+    2차a: 로마자 chapter (표Ⅲ-1: 서천군수 …) — 19316 같은 통합 보고서. 페이지에 1개만.
+    2차b: page text의 일반 marker (표1·[표 2]·Q3·1.).
+    3차: page text 첫 줄 fallback.
+    """
     if first_cell:
         m = _CELL_TITLE.match(first_cell)
         if m:
             no = m.group(1) or m.group(2) or ""
             return m.group(3).strip(), no
-    # 2차: page text에서 N번째 marker
+    # 2차a: 로마자 챕터 (19316 등 — 한 페이지에 1개 표가 sub-title을 가짐)
+    rom_matches = list(_TABLE_HDR_ROMAN.finditer(page_text))
+    if rom_matches and table_idx < len(rom_matches):
+        m = rom_matches[table_idx]
+        # 'Ⅲ-1' 형식이면 sub-no를 우선 사용 (page-level table 식별자)
+        no = m.group(2) or m.group(1) or ""
+        return m.group(3).strip(), no
+    # 2차b: 기존 일반 marker
     matches = list(_TABLE_HDR.finditer(page_text))
     if table_idx < len(matches):
         m = matches[table_idx]
         no = m.group(1) or m.group(2) or m.group(3) or m.group(4) or ""
         return m.group(5).strip(), no
-    # 3차: page text 첫 줄 (대제목 line)
     first_line = page_text.split('\n', 1)[0].strip()
     return first_line, ""
 
