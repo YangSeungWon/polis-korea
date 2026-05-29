@@ -175,14 +175,11 @@ def _patch_parsed(json_path: Path, sido: str, cand1: str, cand2: str, pct1: floa
             q["candidates"] = []
             n_clear += 1
             continue
-        # 후보지지·기타 office이고 (정당지지·오차범위·정책 등 metric 아닌) 다자 cross-tab인 경우
-        # — 자체조사 PDF는 적합도·가상대결 외엔 정답 race가 없으므로 다 비움
+        # 후보지지·기타 office인 question — 우리가 추가한 정답 title은 line 167에서
+        # 이미 continue. 여기 도달한 건 cross-tab 다른 시나리오(가상대결 B/C/D·적합도)
+        # 또는 garbage. 18726처럼 후보 이름이 우연히 _PARTY 매핑된 2명이어도(73.9/15.1
+        # 같은 sub-row cross-tab) 정답 title 외엔 신뢰 못함 → 다 비움.
         if q.get("election_office") in ("후보지지", "기타") and len(cs) >= 2:
-            # 단, 단일 후보·단일 정당 같은 metric은 유지
-            names = [c.get("name", "") for c in cs]
-            if all(n in _PARTY for n in names if n) and len(cs) <= 2:
-                # 우리가 추가한 정답 형식 — 보존
-                continue
             q["candidates"] = []
             n_clear += 1
 
