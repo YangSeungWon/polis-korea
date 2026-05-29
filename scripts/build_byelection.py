@@ -20,6 +20,14 @@ META_CSV = ROOT / "data" / "raw" / "nesdc_byelection.csv"
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
 OUT = ROOT / "data" / "polls" / "byelection.json"
 
+# VT039 카테고리(재보궐) 내에서 parse_pdf가 "국회의원후보"로 못 잡은 표 구제.
+# title에 "국회의원" + 메트릭(지지/적합/선호/후보), 또는 "보궐/재보궐/재선거" + "국회의원".
+# 예: "차기 북구 갑 국회의원 지지도", "지방선거 및 국회의원 재보궐 선거 여론조사".
+BYELECT_TITLE_FALLBACK = re.compile(
+    r"국회의원.{0,40}?(지지[도율]?|적합도?|선호도?|후보)"
+    r"|(?:보궐|재보궐|재선거).{0,30}?국회의원"
+)
+
 SIDO_SHORT = {
     "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구", "인천광역시": "인천",
     "광주광역시": "광주", "대전광역시": "대전", "울산광역시": "울산", "세종특별자치시": "세종",
@@ -91,10 +99,16 @@ def main():
             except Exception:
                 continue
             for q in d.get("questions", []):
-                if q.get("election_office") != "국회의원후보":
-                    continue
+                ttl = (q.get("title", "") or "")
+                qt = (q.get("question_text", "") or "") + " " + ttl
+                # election_office가 "국회의원후보"면 통과.
+                # "기타"여도 title에 국회의원 + 메트릭이면 통과 (parse_pdf 분류 누락 구제).
+                # "정당지지"·"투표의향" 등 다른 office는 제외 (정당지지 표가 후보로 오인되지 않게).
+                eo = q.get("election_office", "")
+                if eo != "국회의원후보":
+                    if eo != "기타" or not BYELECT_TITLE_FALLBACK.search(ttl):
+                        continue
                 # 단일정당 경선("더불어민주당 후보로 누가 적합") 제외 — 정당 간 본선 맞대결만.
-                qt = (q.get("question_text", "") or "") + " " + (q.get("title", "") or "")
                 if re.search(r"(더불어민주당|국민의힘|조국혁신당|개혁신당|진보당|민주당)\s*후보(로|\s*중)", qt):
                     continue
                 # 진짜 후보 = 이름(non-noise) + 정당 둘 다.
