@@ -357,7 +357,8 @@ def build() -> dict:
             _ntitle_p = re.sub(r"\s", " ", title)
             # 강한 metric 마커 — 어떤 office든 후보 질문일 수 없음 ("X가 잘하는 점", "공천 방식").
             if re.search(r"잘하는|잘한\s*점|힘써야|할\s*분야|공천\s*방식|방식으로|우선\s*순위"
-                         r"|평가\s*이유|인물\s*성향|인물\s*유형|선호\s*인물\s*유형", _ntitle_p):
+                         r"|평가\s*이유|인물\s*성향|인물\s*유형|선호\s*인물\s*유형"
+                         r"|^사례수$|자유\s*응답|재선\s*가능성|현역\s*[가-힣]+의원", _ntitle_p):
                 continue
             # 약한 마커 — parser가 "기타"(비후보)로 분류한 경우만 (전략·시대·체제는 정식 제목에도 출현).
             if election_office == "기타" and re.search(
@@ -377,6 +378,12 @@ def build() -> dict:
                 # 2) 합계 0 또는 너무 큼 → 추출 실패, skip
                 if s == 0 or s > 110:
                     continue
+                # 3) 합계 너무 작음(<30%) — 거론율·자유응답 형식. 본선 다자 race는 무응답 포함해도
+                # 보통 합 40% 이상. 30% 미만은 일부 후보만 추출됐거나 metric 응답.
+                # 교육감은 거론율 보고서 형식이 흔해 제외 (title에 교육감 키워드).
+                if metric_type in ("후보지지", "당선가능성") and s < 30 \
+                        and "교육감" not in title:
+                    continue
             # 찬반 표 잘못 분류 (e.g., "약속하는 후보 지지") → skip
             if metric_type in ("후보지지", "당선가능성") and re.search(r"찬\s*성|반\s*대|폐\s*지|약속하는|찬반", title):
                 continue
@@ -390,6 +397,18 @@ def build() -> dict:
                           if pn in title)
                 if (re.search(r"적합|경선|단일화", title) and _np >= 1) or \
                    (_np == 1 and "후보" in title):
+                    continue
+                # title이 일반적이어도 후보들의 정당 분포로 적합도/경선 판정:
+                # 메이저 정당(더민주·국힘·조국혁신·진보·개혁신·정의)에 4+ 후보면 본선 아닌
+                # 정당 내부 적합도/경선 race (예: 18068 안산 더민주 5명, 18040 여수 더민주 6명,
+                # 17967 군산 더민주 6명). 3명은 본선 다자 가능성 있어 keep.
+                # 무소속은 다자 본선에 흔하므로 카운트 제외.
+                _MAJOR = {"더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "진보당",
+                          "정의당", "민주당"}
+                from collections import Counter as _Cnt
+                _pc = _Cnt(c.get("party","") for c in cands
+                           if c.get("party") and c.get("party") in _MAJOR)
+                if any(v >= 4 for v in _pc.values()):
                     continue
             # 가상 양자대결·맞대결 (시나리오 카드) → 헤드라인 아님. 다자대결·적합도·지지는 유지.
             if metric_type in ("후보지지", "당선가능성", "적합도") and \
@@ -912,6 +931,25 @@ def build() -> dict:
     polls = kept
     if n_vs:
         print(f"  양자대결·경쟁력 race drop {n_vs}건", file=sys.stderr)
+
+    # 메이저 정당 4+ 후보 race drop (후처리) — main loop drop이 dedup merge로 다시 4+ 되는
+    # 케이스 보정. title 명백 적합도(17967 "민주당후보선호도") + emit 시점 3명이었으나 같은
+    # 표 split records merge로 후보 합쳐져 4+ 된 경우 등. 본선 다자도 한 정당 4+는 드물어
+    # 적합도/경선 race로 보는 게 안전.
+    _MAJOR_F = {"더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "진보당", "정의당", "민주당"}
+    n_party4 = 0
+    kept = []
+    for p in polls:
+        if p["office_level"] in ("광역단체장", "기초단체장"):
+            from collections import Counter as _Cnt2
+            pc = _Cnt2(c.get("party","") for c in p["candidates"] if c.get("party") in _MAJOR_F)
+            if any(v >= 4 for v in pc.values()):
+                n_party4 += 1
+                continue
+        kept.append(p)
+    polls = kept
+    if n_party4:
+        print(f"  메이저정당 4+ 적합도 race drop {n_party4}건", file=sys.stderr)
 
     # 중복 카드 제거 — 한 등록(ntt)·office·지역 = 한 race. 다자 본선 + 가상 sub-matchup
     # ("만약 다음 세 명" 3자, "제2장.조사결과" 2자)이 같이 추출돼 카드 inflate되던 것을,
