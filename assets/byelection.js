@@ -7,6 +7,15 @@ const BLACKOUT_END = new Date('2026-06-03T18:00:00+09:00');
 const state = { data: null, selected: null, map: null, markers: {} };
 const $ = (s) => document.querySelector(s);
 
+// district 첫 토큰("부산", "경기") → roster key용 정식 시도명
+const SIDO_FROM_SHORT = {
+  '서울': '서울특별시', '부산': '부산광역시', '대구': '대구광역시', '인천': '인천광역시',
+  '광주': '광주광역시', '대전': '대전광역시', '울산': '울산광역시', '세종': '세종특별자치시',
+  '경기': '경기도', '강원': '강원특별자치도', '충북': '충청북도', '충남': '충청남도',
+  '전북': '전북특별자치도', '전남': '전라남도', '경북': '경상북도', '경남': '경상남도',
+  '제주': '제주특별자치도',
+};
+
 async function init() {
   let geo = null;
   try {
@@ -150,8 +159,11 @@ function renderCards() {
     html += `<div class="latest-label">최신 ${fmtDate(top.period)} · 1위 <b style="color:${partyTextColor(top.party)}">${top.name}</b> (${top.party}) ${top.pct}%</div>`;
   }
   // 산점도 — 조사 2건 이상이면 시계열 시각화 (메인 폴과 동일)
+  // roster 룩업은 "sido|name" 키. byelection.json poll엔 sido 없으니 district 첫 토큰에서 주입.
   if (d.polls.length >= 2) {
-    html += `<div class="scatter-wrap">${buildScatterSVG(d.polls, state.roster || null)}</div>`;
+    const sido = SIDO_FROM_SHORT[(d.district || '').split(' ')[0]] || '';
+    const pollsWithSido = d.polls.map((p) => ({ ...p, sido }));
+    html += `<div class="scatter-wrap">${buildScatterSVG(pollsWithSido, state.roster || null)}</div>`;
   }
   for (const p of d.polls) {
     html += renderPollCard(p, '국회의원');  // renderPollCard → utils.js (공용)
