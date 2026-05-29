@@ -64,26 +64,34 @@ def canon_sido(s: str) -> str:
     return SIDO_CANONICAL.get(s, s)
 
 
-def parse_region(region: str) -> tuple[str, str]:
+def parse_region(region: str, sub_election: str = "") -> tuple[str, str]:
     """`region` 필드 → (sido_canonical, sigungu).
 
     예: "경상북도 구미시" → ("경상북도", "구미시")
         "충청남도" → ("충청남도", "")
         "전라남도 영광군 나선거구" → ("전라남도", "영광군")  # 선거구 표기 제거
+
+    region이 시도만이면 sub_election에서 시군구 보강 (19316 'sub_election'에
+    "(충청남도 서천군 ...)" 패턴 있는 경우).
     """
     if not region:
         return ("", "")
-    # 선거구 부분 제거
     region = re.sub(r"\s+[가-힣]+선거구.*$", "", region.strip())
     parts = region.strip().split()
     if not parts:
         return ("", "")
     sido = canon_sido(parts[0])
-    # 첫 sigungu token만 사용 (NESDC가 "OO시 OO도 전체" 식 멀티 region 묶음 가능)
     sigungu = parts[1] if len(parts) > 1 else ""
-    # 시도 전체 마커 또는 시도명이 또 나오면 비움
     if sigungu in {"전체", "전 지역", "전지역"} or canon_sido(sigungu) in SIDO_CANONICAL.values():
         sigungu = ""
+    # sub_election에서 시군구 보강 (NESDC region이 시도만일 때)
+    if not sigungu and sub_election and sido:
+        # "(충청남도 서천군 기초의원선거 ...)" 패턴에서 sido 직후 한글+(시|군|구) 추출
+        m = re.search(rf"{re.escape(sido)}\s+([가-힣]+(?:시|군|구))", sub_election)
+        if m:
+            cand = m.group(1)
+            if canon_sido(cand) not in SIDO_CANONICAL.values():
+                sigungu = cand
     return (sido, sigungu)
 
 
@@ -262,7 +270,7 @@ def build() -> dict:
 
     canonical_sidos = set(SIDO_CANONICAL.values())
     for ntt_id, m in meta.items():
-        sido, sigungu = parse_region(m.get("region", ""))
+        sido, sigungu = parse_region(m.get("region", ""), m.get("sub_election", ""))
         # 매핑 안 되는 시도 (전국·해외 등) skip — 시각화 단위 아님
         if sido and sido not in canonical_sidos:
             continue
@@ -334,6 +342,9 @@ def build() -> dict:
             # 국정평가·투표의향 — 지선 스코프(VT026)엔 진짜 데이터가 없고, 우리가 가진 건
             # 전부 후보지지 오분류(대부분 중복) + 응답노이즈(것이다·최고위원)라 함께 제외.
             if metric_type in ("적합도", "국정평가", "투표의향"):
+                continue
+            # 광역의원·기초의원·교육의원 — 시스템 scope 외 (광역단체장·기초단체장·교육감만 카드).
+            if election_office in ("광역의원후보", "기초의원후보", "교육의원후보"):
                 continue
 
             # 대선 회상 투표 reject — "21대 대선 투표 후보" 같은 회상 질문이 기초단체장으로
@@ -661,6 +672,16 @@ def build() -> dict:
         if p["office_level"] in REAL_OFFICES:
             named = [c["name"] for c in p["candidates"] if c.get("name") and c.get("pct") is not None]
             if len(named) >= 2 and sum(1 for n in named if _known_cand(p["sido"], p["office_level"], n)) < 2:
+                # 신규 단독 폴 구제 — 모든 후보가 한국 이름 형식(2-4자 한글)이고
+                # 정당이 모두 채워져 있으면 진짜 race로 판정 (NEC roster fetch 전·신규 ntt).
+                # 19316 충남 서천군 군수 같은 단독 PDF 첫 등록 케이스 보호.
+                all_party = all(c.get("party") for c in p["candidates"]
+                                if c.get("name") and c.get("pct") is not None)
+                all_korean = all(re.match(r"^[가-힣]{2,4}$", c["name"]) for c in p["candidates"]
+                                 if c.get("name") and c.get("pct") is not None)
+                if all_party and all_korean:
+                    kept.append(p)
+                    continue
                 n_garbage += 1
                 continue
         kept.append(p)
