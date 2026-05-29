@@ -429,9 +429,18 @@ def build() -> dict:
             cand_names = [c.get("name","") for c in cands if c.get("name")]
             roster_typecodes = []
             roster_sggs = []
-            for nm in cand_names:
-                hit = _NEC_ROSTER.get(f"{sido}|{nm}") if _NEC_ROSTER else None
-                if hit and hit.get("sg_typecode"):
+            # roster lookup 결과: None(fetch 전·신규), {}(NEC 검색 결과 없음 = 비등록 확정), dict(등록)
+            roster_lookups = [_NEC_ROSTER.get(f"{sido}|{nm}") if _NEC_ROSTER else None
+                              for nm in cand_names]
+            # 후보 중 한 명이라도 명시적 빈 dict({}) = NEC 검색 결과 0건 = 비등록 = 거론/예비.
+            # 본선 race는 모든 후보가 NEC 등록되어 있어야 정의. 17969 옥천군 PDF의
+            # '김재종 vs 황규철·김승룡 vs 전상인' 등 8개 가상대결 매트릭스에서 본선
+            # (황규철+전상인)만 살아남게. None은 fetch 안 됐을 수도 있어 보호
+            # (19316 신규 PDF·재보궐 byelection은 별도 build_byelection 처리).
+            if cand_names and any(v == {} for v in roster_lookups):
+                continue
+            for nm, hit in zip(cand_names, roster_lookups):
+                if hit and isinstance(hit, dict) and hit.get("sg_typecode"):
                     roster_typecodes.append(hit["sg_typecode"])
                     if hit.get("sgg"):
                         roster_sggs.append(hit["sgg"])
@@ -953,8 +962,18 @@ def build() -> dict:
 
     # 중복 카드 제거 — 한 등록(ntt)·office·지역 = 한 race. 다자 본선 + 가상 sub-matchup
     # ("만약 다음 세 명" 3자, "제2장.조사결과" 2자)이 같이 추출돼 카드 inflate되던 것을,
-    # 후보 최다(=다자 본선)만 남겨 1카드/race로 합친다. tie-break: 표본 큰 것.
-    # 경선/적합도는 위 필터들이 미리 제거하므로 "후보 최다"가 본선 다자를 가리킨다.
+    # 본선 우선 → 후보 최다 → 표본 큰 것 순으로 1카드/race로 합친다.
+    # 본선 우선: race candidates 중 NEC roster 본선 등록(빈 dict {} 아닌 dict) 비율 높은 race.
+    # 17969 옥천군 PDF 처럼 같은 ntt에 가상대결 매트릭스(황규철 vs 김승룡 등 일부 비등록 매치업)
+    # 과 본선 race(황규철+전상인 둘 다 등록)이 섞여있을 때 본선이 카드 자리 차지하도록.
+    def _roster_score(p):
+        s = p.get("sido","")
+        cs = p.get("candidates", [])
+        if not cs: return 0
+        n_reg = sum(1 for c in cs if c.get("name") and
+                    isinstance(_NEC_ROSTER.get(f"{s}|{c['name']}") if _NEC_ROSTER else None, dict)
+                    and _NEC_ROSTER.get(f"{s}|{c['name']}", {}).get("jd"))
+        return n_reg / len(cs)
     seen_card: dict[tuple, int] = {}
     deduped = []
     n_dup = 0
@@ -967,7 +986,8 @@ def build() -> dict:
         n_dup += 1
         idx = seen_card[k]
         prev = deduped[idx]
-        score = lambda q: (len(q.get("candidates", [])), q.get("sample_size") or 0)
+        # 본선 우선 (roster 등록 비율 높은 쪽) → 후보 최다 → 표본 큰 것
+        score = lambda q: (_roster_score(q), len(q.get("candidates", [])), q.get("sample_size") or 0)
         if score(p) > score(prev):
             deduped[idx] = p
     if n_dup:
