@@ -210,8 +210,10 @@ const SIDO_HEX_LAYOUT = {
   '부산광역시':     { col: 4, row: 2, label: '부산' },
   '울산광역시':     { col: 5, row: 2, label: '울산' },
 
-  '전북특별자치도': { col: 1, row: 3, label: '전북' },
-  '전라북도':       { col: 1, row: 3, label: '전북' },  // 옛 이름 alias
+  // 9회 active: row 3 col 2·3·4 가운데 정렬 (전남이 전남광주로 통합, col 2 자리 빔 → 전북 옮김).
+  // 옛 시점은 history.js LEGACY override가 전북 col 1·전남 col 2로 복원.
+  '전북특별자치도': { col: 2, row: 3, label: '전북' },
+  '전라북도':       { col: 2, row: 3, label: '전북' },  // 옛 이름 alias
   '경상남도':       { col: 3, row: 3, label: '경남' },
   '제주특별자치도': { col: 4, row: 3, label: '제주' },
 };

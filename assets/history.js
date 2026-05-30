@@ -482,10 +482,12 @@ const SIDO_HEX_SINCE = {
   '세종특별자치시': '2012-07-01',
   '전남광주특별시': '2026-06-03',
 };
-// 9회 이전 layout — 광주·전남 별개.
-//   row 2 col 1 = 광주 (전남광주 자리), row 3 col 2 = 전남 (새 자리)
+// 9회 이전 layout — 광주·전남 별개. row 3 col 1·2·3·4 4 cell.
+//   row 2 col 1 = 광주 (전남광주 자리), row 3 col 1 = 전북, col 2 = 전남
 const SIDO_HEX_LAYOUT_LEGACY = {
   '광주광역시':     { col: 1, row: 2, label: '광주' },
+  '전북특별자치도': { col: 1, row: 3, label: '전북' },  // 9회 active 가운데 정렬을 옛 col 1로 복원
+  '전라북도':       { col: 1, row: 3, label: '전북' },
   '전라남도':       { col: 2, row: 3, label: '전남' },
 };
 // 세종 신설 전 layout — row 1 충남·충북·경북 col 2·3·4 가운데 정렬 (빈 자리 0).
