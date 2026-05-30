@@ -310,14 +310,13 @@ const SIGUNGU_SIDO_HISTORY = {
 };
 // 행정구역 변경 — hex name → 데이터 name 후보들 (list).
 const SIGUNGU_NAME_HISTORY = {
-  '세종시':         ['세종특별자치시'],  // 데이터 name 형식 차이
+  '세종시':         ['세종특별자치시', '연기군'],  // 데이터 name 형식 차이 + 옛 충남 연기군
   '당진시':         ['당진군'],          // 2012 시 승격 전 (5회)
   '여주시':         ['여주군'],          // 2013 시 승격 전 (5회)
   '청주시청원구':   ['청원군'],          // 2014.7 통합 전 (5/6회)
   '미추홀구':       ['남구'],            // 인천 2018 개명 전 (5/6/7회 → '남구')
   '남구':           ['미추홀구'],        // 인천 — hex가 옛 vuski GeoJSON '남구', 8회+ 데이터엔 '미추홀구'
   // 인천 2026-07 신설 분구: 옛 회차에선 cell 자체 hide (SIGUNGU_HEX_HISTORY 참조).
-  // 신설 cell이 옛 데이터를 같은 색으로 표시하는 건 misleading이라 cell 자체 안 그림.
 };
 // 1 hex ↔ N 데이터 합산 (분할구 → 통합 시 vote 합산).
 // hex는 이제 통합도시 1 cell — 옛 역대 데이터(일반구 분할)는 합산해서 표시.
@@ -370,6 +369,17 @@ function resultForSigungu(sido, name) {
   if (!data?.sigungu) return null;
   const exact = data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === name);
   if (exact) return exact;
+  // disambig 자동 처리: 옛 NEC 데이터 '동구(대전)'·'고성군(강원)' → hex 'name'
+  // 시도 일치 + name+'(...)'로 시작하는 데이터 찾음
+  const disambig = data.sigungu.find((r) =>
+    canonSido(r.sido) === sido && r.name.replace(/\([^)]+\)$/, '') === name
+  );
+  if (disambig) return disambig;
+  // 데이터 sigungu='세종특별자치시' (시도와 동일) → hex '세종시' 매칭
+  if (name === '세종시' && sido === '세종특별자치시') {
+    const r = data.sigungu.find((rr) => rr.sido === '세종특별자치시');
+    if (r) return r;
+  }
   // 시도 이동 fallback (예: 군위군 대구↔경북)
   const altSidos = SIGUNGU_SIDO_HISTORY[name];
   if (altSidos && altSidos.includes(sido)) {
