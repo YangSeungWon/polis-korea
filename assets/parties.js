@@ -186,13 +186,13 @@ function gapOpacity(gap) {
   return Math.max(0.5, Math.min(1, a));
 }
 
-// 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset. 직사각 4·4·5·4 layout.
-// 지리적 권역:
-//   row 0:  [인천][서울][경기][강원]            (4) — 수도권·강원
-//   row 1:    [충남][세종][충북][경북]          (4) — 중부 (충청·경북)
-//   row 2:  [전남광주][대전][대구][부산][울산]  (5) — 남부 (호남·영남)
-//   row 3:    [전북][전남][경남][제주]          (4) — 최남부 (옛 시점)
-// 옛 시점은 row 2 col 1 = '광주' (history.js LEGACY override). 9회+ row 3 col 2 (전남)는 hide.
+// 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset.
+// 9회 active layout: 4·4·4·4 (전남광주 row 3, 빈자리 0).
+//   row 0:  [인천][서울][경기][강원]              (4) — 수도권·강원
+//   row 1:    [충남][세종][충북][경북]            (4) — 중부 (충청·경북)
+//   row 2:  [대전][대구][부산][울산]              (4) — 남부 영남
+//   row 3:    [전남광주][전북][경남][제주]        (4) — 최남부 호남·경남·제주
+// 옛 시점 (history.js LEGACY override): row 2 5 cell (광주·대전·대구·부산·울산), row 3 4 cell (전북·전남·경남·제주).
 const SIDO_HEX_LAYOUT = {
   '인천광역시':     { col: 1, row: 0, label: '인천' },
   '서울특별시':     { col: 2, row: 0, label: '서울' },
@@ -204,14 +204,12 @@ const SIDO_HEX_LAYOUT = {
   '충청북도':       { col: 3, row: 1, label: '충북' },
   '경상북도':       { col: 4, row: 1, label: '경북' },
 
-  '전남광주특별시': { col: 1, row: 2, label: '전남광주' },
-  '대전광역시':     { col: 2, row: 2, label: '대전' },
-  '대구광역시':     { col: 3, row: 2, label: '대구' },
-  '부산광역시':     { col: 4, row: 2, label: '부산' },
-  '울산광역시':     { col: 5, row: 2, label: '울산' },
+  '대전광역시':     { col: 1, row: 2, label: '대전' },
+  '대구광역시':     { col: 2, row: 2, label: '대구' },
+  '부산광역시':     { col: 3, row: 2, label: '부산' },
+  '울산광역시':     { col: 4, row: 2, label: '울산' },
 
-  // 9회 active: row 3 col 2·3·4 가운데 정렬 (전남이 전남광주로 통합, col 2 자리 빔 → 전북 옮김).
-  // 옛 시점은 history.js LEGACY override가 전북 col 1·전남 col 2로 복원.
+  '전남광주특별시': { col: 1, row: 3, label: '전남광주' },
   '전북특별자치도': { col: 2, row: 3, label: '전북' },
   '전라북도':       { col: 2, row: 3, label: '전북' },  // 옛 이름 alias
   '경상남도':       { col: 3, row: 3, label: '경남' },
