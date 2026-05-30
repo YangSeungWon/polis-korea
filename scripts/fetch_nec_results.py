@@ -37,13 +37,28 @@ API_BASE = "https://apis.data.go.kr/9760000/VoteXmntckInfoInqireService2"
 ENDPOINT_XMNTCK = "/getXmntckSttusInfoInqire"  # 개표 결과 (메인)
 ENDPOINT_VOTE = "/getVoteSttusInfoInqire"      # 투표 결과 (투표율 등)
 
-# 광역시도 17개 (전남광주 통합 전 매핑 — NEC API는 이전 명칭 사용 가능성)
-ALL_SIDOS = [
-    "서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시",
-    "대전광역시", "울산광역시", "세종특별자치시", "경기도", "강원특별자치도",
-    "충청북도", "충청남도", "전북특별자치도", "전라남도", "경상북도", "경상남도",
-    "제주특별자치도",
-]
+# NEC API가 받는 시도명은 sg_id 시점 기준. 옛 회차는 옛 명칭 써야 인식.
+# 변경 이력:
+#   2006-07-01: 제주도 → 제주특별자치도
+#   2012-07-01: 세종특별자치시 신설 (없음 → 17개)
+#   2023-06-11: 강원도 → 강원특별자치도
+#   2024-01-18: 전라북도 → 전북특별자치도
+#   2026-06-03: 광주광역시+전라남도 → 전남광주특별시 (메타 sido_merge로 처리)
+def sidos_for_sg_id(sg_id: str) -> list[str]:
+    yyyymmdd = int(sg_id) if sg_id.isdigit() else 99999999
+    base = ["서울특별시", "부산광역시", "대구광역시", "인천광역시",
+            "광주광역시", "대전광역시", "울산광역시", "경기도",
+            "충청북도", "충청남도", "전라남도", "경상북도", "경상남도"]
+    if yyyymmdd >= 20120701:
+        base.append("세종특별자치시")
+    base.append("강원특별자치도" if yyyymmdd >= 20230611 else "강원도")
+    base.append("전북특별자치도" if yyyymmdd >= 20240118 else "전라북도")
+    base.append("제주특별자치도" if yyyymmdd >= 20060701 else "제주도")
+    return base
+
+
+# 호환용 default (legacy 호출 — main()는 sidos_for_sg_id 사용)
+ALL_SIDOS = sidos_for_sg_id("99999999")
 
 
 def load_election_meta(election_id: str) -> dict:
@@ -67,31 +82,48 @@ def _load_api_key() -> str:
     return ""
 
 
-def fetch_xmntck(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
-                 num_rows: int = 300) -> list[dict]:
-    """한 (sg_id, sg_typecode, sd_name)의 개표 결과. 시도 합계 + 시군구별 row."""
+def _fetch_page(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
+                page: int, num_rows: int = 100) -> tuple[int, list[dict]]:
+    """한 page 호출. (totalCount, items) 반환."""
     params = {
         "serviceKey": api_key, "sgId": sg_id, "sgTypecode": sg_typecode,
-        "sdName": sd_name, "numOfRows": num_rows, "pageNo": 1,
+        "sdName": sd_name, "numOfRows": num_rows, "pageNo": page,
     }
     url = f"{API_BASE}{ENDPOINT_XMNTCK}?{urllib.parse.urlencode(params, safe='%')}"
+    with urllib.request.urlopen(url, timeout=20) as r:
+        raw = r.read().decode("utf-8", errors="replace")
+    root = ET.fromstring(raw)
+    total = int(root.findtext(".//totalCount", "0") or "0")
+    result_code = root.findtext(".//resultCode", "")
+    if result_code == "INFO-03":
+        return 0, []
+    items = [{c.tag: c.text for c in item} for item in root.findall(".//item")]
+    return total, items
+
+
+def fetch_xmntck(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
+                 num_rows: int = 100) -> list[dict]:
+    """한 (sg_id, sg_typecode, sd_name)의 개표 결과 — 페이지네이션 자동.
+
+    NEC API max 100 row/page → totalCount 보고 추가 page 호출.
+    """
     try:
-        with urllib.request.urlopen(url, timeout=20) as r:
-            raw = r.read().decode("utf-8", errors="replace")
+        total, items = _fetch_page(sg_id, sg_typecode, sd_name, api_key, 1, num_rows)
     except Exception as e:
         return [{"_error": str(e), "_sd_name": sd_name}]
-    try:
-        root = ET.fromstring(raw)
-        result_code = root.findtext(".//resultCode", "")
-        if result_code == "INFO-03":  # 데이터 없음 (개표 전 또는 sg 조합 무)
-            return []
-        items = []
-        for item in root.findall(".//item"):
-            d = {child.tag: child.text for child in item}
-            items.append(d)
-        return items
-    except Exception as e:
-        return [{"_error": f"XML parse: {e}", "_raw_head": raw[:300]}]
+    # 추가 page (page 2, 3, ...)
+    page = 2
+    while len(items) < total and page <= 20:  # 안전 cap
+        try:
+            _, more = _fetch_page(sg_id, sg_typecode, sd_name, api_key, page, num_rows)
+            if not more:
+                break
+            items.extend(more)
+            page += 1
+            time.sleep(0.15)
+        except Exception:
+            break
+    return items
 
 
 def parse_row_candidates(row: dict) -> list[dict]:
@@ -114,40 +146,39 @@ def parse_row_candidates(row: dict) -> list[dict]:
     return cs
 
 
-def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str,
+def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str, wiw: str,
                    row: dict) -> dict:
     """한 row → 표준 race record.
 
-    sd_name='합계' 호출 응답 — sgg='대한민국' wiw='합계' = nation race.
-    sd_name='합계' 호출 응답 — sgg=시도명 wiw='합계' = 시도별 합계 (sd_name=시도 호출과 동일).
-    sd_name=시도 호출 응답 — wiw='합계' = 시도 합계 (광역단체장 race 본체).
-    sd_name=시도 호출 응답 — wiw=시군구명 = 시군구별 (기초단체장 race 본체 / 광역단체장 세부).
+    NEC API 응답 row 의미 (sg_typecode별):
+
+    | tc | sgg | wiw | scope | sigungu | district |
+    |----|-----|-----|-------|---------|----------|
+    | 1 (대선) | '대한민국' (sd_name='합계') | '합계' | nation | '' | - |
+    | 1 (대선) | '대한민국' (sd_name=시도) | '합계' | sido | '' | - |
+    | 1 (대선) | '대한민국' (sd_name=시도) | 시군구명 | sigungu | wiw | - |
+    | 2 (총선) | 지역구명 | '합계' | district | '' | sgg |
+    | 2 (총선) | 지역구명 | 시군구명 | district_sigungu | wiw | sgg |
+    | 3 (광역) | 시도명 | '합계' | sido | '' | - |
+    | 3 (광역) | 시도명 | 시군구명 | sigungu | wiw | - |
+    | 4 (기초) | 시군구명 | '합계' | sigungu | sgg | - |
+    | 4 (기초) | 시군구명 | 시군구명 (=sgg) | sigungu_part | wiw | - |
+    | 7 (비례) | '비례대표' | '합계' | nation | '' | - |
+    | 7 (비례) | '비례대표' (sd_name=시도) | 시군구명 | sigungu | wiw | - |
+    | 11 (교육감) | 시도명 | '합계' | sido | '' | - |
+    | 11 (교육감) | 시도명 | 시군구명 | sigungu | wiw | - |
     """
     # 통합 시도 매핑 (전남광주 등)
     merges = {alias: m["canonical"]
               for m in meta.get("sido_merge", [])
               for alias in m.get("merge_from", [])}
     sd = merges.get(sd, sd)
-    # nation row 식별 — '합계' 호출의 nation row.
-    # 대선: sgg='대한민국' wiw='합계' / 비례: sgg='비례대표' wiw='합계'
-    is_nation = (sgg in ("대한민국", "비례대표")) or (sd == "" and not sgg)
-    if is_nation:
-        scope = "nation"
-        sido_out = ""
-        sigungu_out = ""
-    elif not sgg or sgg == "합계":
-        scope = "sido"
-        sido_out = sd
-        sigungu_out = ""
-    else:
-        scope = "sigungu"
-        sido_out = sd
-        sigungu_out = sgg
-    return {
+
+    out = {
         "sg_typecode": sg_typecode,
-        "sido": sido_out,
-        "sigungu": sigungu_out,
-        "scope": scope,
+        "sido": sd,
+        "sigungu": "",
+        "scope": "sido",
         "electors": int(row.get("sunsu") or 0),
         "voters": int(row.get("tusu") or 0),
         "valid_votes": int(row.get("yutusu") or 0),
@@ -155,6 +186,37 @@ def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str,
         "abstain": int(row.get("gigwonsu") or 0),
         "candidates": parse_row_candidates(row),
     }
+
+    # nation row: sd_name='합계' 호출의 sgg='대한민국'(대선) / '비례대표'(비례)
+    if sgg in ("대한민국", "비례대표") and wiw == "합계" and (not sd or sd == "합계"):
+        out["sido"] = ""
+        out["scope"] = "nation"
+        return out
+
+    # 총선 국회의원 (tc=2): sgg가 지역구명
+    if sg_typecode == "2":
+        out["district"] = sgg
+        if wiw == "합계":
+            out["scope"] = "district"
+        else:
+            out["scope"] = "district_sigungu"
+            out["sigungu"] = wiw
+        return out
+
+    # 기초단체장 (tc=4): sgg가 시군구명
+    if sg_typecode == "4":
+        out["sigungu"] = sgg
+        out["scope"] = "sigungu" if wiw == "합계" else "sigungu_part"
+        return out
+
+    # 그 외 (tc=1,3,7,11): sgg가 시도명·대한민국·비례대표·sd_name 결정
+    # wiw='합계' → 시도 race / wiw=시군구 → 시군구 race
+    if wiw == "합계":
+        out["scope"] = "sido"
+    else:
+        out["scope"] = "sigungu"
+        out["sigungu"] = wiw
+    return out
 
 
 def main():
@@ -182,8 +244,9 @@ def main():
     # 5(광역의원)·6(기초의원)는 sd 단위 호출만으로는 race 식별 어려움 → 별도 처리 (TODO)
     target_offices = [o for o in offices
                       if o.get("sg_typecode") in ("1", "2", "3", "4", "7", "11")]
+    sidos_at_sg = sidos_for_sg_id(sg_id)
     print(f"  대상 office: {[o['level'] for o in target_offices]}", file=sys.stderr)
-    print(f"  대상 시도: {len(ALL_SIDOS)}개", file=sys.stderr)
+    print(f"  대상 시도: {len(sidos_at_sg)}개 ({sg_id} 시점)", file=sys.stderr)
 
     all_races: list[dict] = []
     n_call = n_row = 0
@@ -201,13 +264,14 @@ def main():
                 # sgg='비례대표' wiw='합계' = 총선 비례 nation race.
                 # 그 외 row(시도별)는 중복 → skip.
                 if row.get("sggName") in ("대한민국", "비례대표"):
-                    race = normalize_race(meta, tc, "", row.get("sggName", ""), row)
+                    race = normalize_race(meta, tc, "", row.get("sggName", ""),
+                                          row.get("wiwName", ""), row)
                     all_races.append(race)
                     n_row += 1
             print(f"  ✓ {office['level']} 전국 합계 nation race",
                   file=sys.stderr)
             time.sleep(args.delay)
-        sidos = [ALL_SIDOS[0]] if args.dry_run else ALL_SIDOS
+        sidos = [sidos_at_sg[0]] if args.dry_run else sidos_at_sg
         for sd in sidos:
             rows = fetch_xmntck(sg_id, tc, sd, api_key)
             n_call += 1
@@ -216,7 +280,8 @@ def main():
                 continue
             n_row += len(rows)
             for row in rows:
-                race = normalize_race(meta, tc, sd, row.get("wiwName", ""), row)
+                race = normalize_race(meta, tc, sd, row.get("sggName", ""),
+                                      row.get("wiwName", ""), row)
                 all_races.append(race)
             print(f"  ✓ {office['level']} {sd}: {len(rows)} rows",
                   file=sys.stderr)

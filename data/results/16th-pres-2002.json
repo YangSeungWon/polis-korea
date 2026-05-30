@@ -3,10 +3,10 @@
     "election": "제16대 대통령선거",
     "election_id": "16th-pres-2002",
     "election_date": "2002-12-19",
-    "fetched_at": "2026-05-31T01:12:19+09:00",
+    "fetched_at": "2026-05-31T01:54:09+09:00",
     "is_final": true,
-    "n_calls": 18,
-    "n_rows": 226
+    "n_calls": 17,
+    "n_rows": 256
   },
   "races": [
     {
@@ -12387,111 +12387,111 @@
     },
     {
       "sg_typecode": "1",
-      "sido": "제주특별자치도",
+      "sido": "강원도",
       "sigungu": "",
       "scope": "sido",
-      "electors": 391151,
-      "voters": 268227,
-      "valid_votes": 264799,
-      "invalid_votes": 3428,
-      "abstain": 122924,
+      "electors": 1131168,
+      "voters": 773560,
+      "valid_votes": 762937,
+      "invalid_votes": 10623,
+      "abstain": 357608,
       "candidates": [
         {
-          "name": "노무현",
-          "party": "새천년민주당",
-          "votes": 148423,
-          "pct": 56.05,
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 400405,
+          "pct": 52.48,
           "rank": 1,
           "won": true
         },
         {
-          "name": "이회창",
-          "party": "한나라당",
-          "votes": 105744,
-          "pct": 39.93,
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 316722,
+          "pct": 41.51,
           "rank": 2
         },
         {
           "name": "권영길",
           "party": "민주노동당",
-          "votes": 8619,
-          "pct": 3.25,
+          "votes": 38722,
+          "pct": 5.08,
           "rank": 3
-        },
-        {
-          "name": "김길수",
-          "party": "호국당",
-          "votes": 981,
-          "pct": 0.37,
-          "rank": 4
         },
         {
           "name": "이한동",
           "party": "하나로국민연합",
-          "votes": 744,
-          "pct": 0.28,
+          "votes": 3406,
+          "pct": 0.45,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 2713,
+          "pct": 0.36,
           "rank": 5
         },
         {
           "name": "김영규",
           "party": "사회당",
-          "votes": 288,
-          "pct": 0.11,
+          "votes": 969,
+          "pct": 0.13,
           "rank": 6
         }
       ]
     },
     {
       "sg_typecode": "1",
-      "sido": "제주특별자치도",
-      "sigungu": "제주시",
+      "sido": "강원도",
+      "sigungu": "춘천시",
       "scope": "sigungu",
-      "electors": 198820,
-      "voters": 136002,
-      "valid_votes": 134873,
-      "invalid_votes": 1129,
-      "abstain": 62818,
+      "electors": 183483,
+      "voters": 127404,
+      "valid_votes": 125941,
+      "invalid_votes": 1463,
+      "abstain": 56079,
       "candidates": [
         {
-          "name": "노무현",
-          "party": "새천년민주당",
-          "votes": 73679,
-          "pct": 54.63,
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 64221,
+          "pct": 50.99,
           "rank": 1,
           "won": true
         },
         {
-          "name": "이회창",
-          "party": "한나라당",
-          "votes": 55892,
-          "pct": 41.44,
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 54187,
+          "pct": 43.03,
           "rank": 2
         },
         {
           "name": "권영길",
           "party": "민주노동당",
-          "votes": 4609,
-          "pct": 3.42,
+          "votes": 6523,
+          "pct": 5.18,
           "rank": 3
         },
         {
           "name": "이한동",
           "party": "하나로국민연합",
-          "votes": 315,
-          "pct": 0.23,
+          "votes": 549,
+          "pct": 0.44,
           "rank": 4
         },
         {
           "name": "김길수",
           "party": "호국당",
-          "votes": 250,
-          "pct": 0.19,
+          "votes": 350,
+          "pct": 0.28,
           "rank": 5
         },
         {
           "name": "김영규",
           "party": "사회당",
-          "votes": 128,
+          "votes": 111,
           "pct": 0.09,
           "rank": 6
         }
@@ -12499,55 +12499,55 @@
     },
     {
       "sg_typecode": "1",
-      "sido": "제주특별자치도",
-      "sigungu": "북제주군",
+      "sido": "강원도",
+      "sigungu": "원주시",
       "scope": "sigungu",
-      "electors": 74769,
-      "voters": 51969,
-      "valid_votes": 50874,
-      "invalid_votes": 1095,
-      "abstain": 22800,
+      "electors": 196592,
+      "voters": 132543,
+      "valid_votes": 131174,
+      "invalid_votes": 1369,
+      "abstain": 64049,
       "candidates": [
         {
-          "name": "노무현",
-          "party": "새천년민주당",
-          "votes": 28501,
-          "pct": 56.02,
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 63614,
+          "pct": 48.5,
           "rank": 1,
           "won": true
         },
         {
-          "name": "이회창",
-          "party": "한나라당",
-          "votes": 20345,
-          "pct": 39.99,
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 58351,
+          "pct": 44.48,
           "rank": 2
         },
         {
           "name": "권영길",
           "party": "민주노동당",
-          "votes": 1474,
-          "pct": 2.9,
+          "votes": 8059,
+          "pct": 6.14,
           "rank": 3
-        },
-        {
-          "name": "김길수",
-          "party": "호국당",
-          "votes": 316,
-          "pct": 0.62,
-          "rank": 4
         },
         {
           "name": "이한동",
           "party": "하나로국민연합",
-          "votes": 168,
-          "pct": 0.33,
+          "votes": 613,
+          "pct": 0.47,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 347,
+          "pct": 0.26,
           "rank": 5
         },
         {
           "name": "김영규",
           "party": "사회당",
-          "votes": 70,
+          "votes": 190,
           "pct": 0.14,
           "rank": 6
         }
@@ -12555,112 +12555,1792 @@
     },
     {
       "sg_typecode": "1",
-      "sido": "제주특별자치도",
-      "sigungu": "서귀포시",
+      "sido": "강원도",
+      "sigungu": "강릉시",
       "scope": "sigungu",
-      "electors": 61099,
-      "voters": 41151,
-      "valid_votes": 40698,
-      "invalid_votes": 453,
-      "abstain": 19948,
+      "electors": 169672,
+      "voters": 113778,
+      "valid_votes": 112491,
+      "invalid_votes": 1287,
+      "abstain": 55894,
       "candidates": [
         {
-          "name": "노무현",
-          "party": "새천년민주당",
-          "votes": 24026,
-          "pct": 59.03,
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 67497,
+          "pct": 60.0,
           "rank": 1,
           "won": true
         },
         {
-          "name": "이회창",
-          "party": "한나라당",
-          "votes": 15077,
-          "pct": 37.05,
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 39727,
+          "pct": 35.32,
           "rank": 2
         },
         {
           "name": "권영길",
           "party": "민주노동당",
-          "votes": 1288,
-          "pct": 3.16,
+          "votes": 4530,
+          "pct": 4.03,
           "rank": 3
-        },
-        {
-          "name": "김길수",
-          "party": "호국당",
-          "votes": 159,
-          "pct": 0.39,
-          "rank": 4
         },
         {
           "name": "이한동",
           "party": "하나로국민연합",
-          "votes": 118,
-          "pct": 0.29,
+          "votes": 367,
+          "pct": 0.33,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 222,
+          "pct": 0.2,
           "rank": 5
         },
         {
           "name": "김영규",
           "party": "사회당",
-          "votes": 30,
-          "pct": 0.07,
+          "votes": 148,
+          "pct": 0.13,
           "rank": 6
         }
       ]
     },
     {
       "sg_typecode": "1",
-      "sido": "제주특별자치도",
-      "sigungu": "남제주군",
+      "sido": "강원도",
+      "sigungu": "동해시",
       "scope": "sigungu",
-      "electors": 56463,
-      "voters": 39105,
-      "valid_votes": 38354,
-      "invalid_votes": 751,
-      "abstain": 17358,
+      "electors": 75071,
+      "voters": 49535,
+      "valid_votes": 48931,
+      "invalid_votes": 604,
+      "abstain": 25536,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 29429,
+          "pct": 60.14,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 16989,
+          "pct": 34.72,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 2226,
+          "pct": 4.55,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 138,
+          "pct": 0.28,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 110,
+          "pct": 0.22,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 39,
+          "pct": 0.08,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "삼척시",
+      "scope": "sigungu",
+      "electors": 59109,
+      "voters": 41110,
+      "valid_votes": 40303,
+      "invalid_votes": 807,
+      "abstain": 17999,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 24789,
+          "pct": 61.51,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 13438,
+          "pct": 33.34,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1699,
+          "pct": 4.22,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 171,
+          "pct": 0.42,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 167,
+          "pct": 0.41,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 39,
+          "pct": 0.1,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "태백시",
+      "scope": "sigungu",
+      "electors": 41781,
+      "voters": 27434,
+      "valid_votes": 27118,
+      "invalid_votes": 316,
+      "abstain": 14347,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 15868,
+          "pct": 58.51,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 9721,
+          "pct": 35.85,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1349,
+          "pct": 4.97,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 76,
+          "pct": 0.28,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 69,
+          "pct": 0.25,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 35,
+          "pct": 0.13,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "정선군",
+      "scope": "sigungu",
+      "electors": 36635,
+      "voters": 25218,
+      "valid_votes": 24663,
+      "invalid_votes": 555,
+      "abstain": 11417,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 13124,
+          "pct": 53.21,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 10008,
+          "pct": 40.58,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1212,
+          "pct": 4.91,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 163,
+          "pct": 0.66,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 123,
+          "pct": 0.5,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 33,
+          "pct": 0.13,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "속초시",
+      "scope": "sigungu",
+      "electors": 64321,
+      "voters": 40547,
+      "valid_votes": 40191,
+      "invalid_votes": 356,
+      "abstain": 23774,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 22040,
+          "pct": 54.84,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 16346,
+          "pct": 40.67,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1579,
+          "pct": 3.93,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 108,
+          "pct": 0.27,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 78,
+          "pct": 0.19,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 40,
+          "pct": 0.1,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "고성군(강원)",
+      "scope": "sigungu",
+      "electors": 26047,
+      "voters": 18184,
+      "valid_votes": 17909,
+      "invalid_votes": 275,
+      "abstain": 7863,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 9325,
+          "pct": 52.07,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 7699,
+          "pct": 42.99,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 734,
+          "pct": 4.1,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 76,
+          "pct": 0.42,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 50,
+          "pct": 0.28,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 25,
+          "pct": 0.14,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "양양군",
+      "scope": "sigungu",
+      "electors": 23295,
+      "voters": 16857,
+      "valid_votes": 16567,
+      "invalid_votes": 290,
+      "abstain": 6438,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 8718,
+          "pct": 52.62,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 6972,
+          "pct": 42.08,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 710,
+          "pct": 4.29,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 75,
+          "pct": 0.45,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 69,
+          "pct": 0.42,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 23,
+          "pct": 0.14,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "인제군",
+      "scope": "sigungu",
+      "electors": 23722,
+      "voters": 17207,
+      "valid_votes": 16841,
+      "invalid_votes": 366,
+      "abstain": 6515,
       "candidates": [
         {
           "name": "노무현",
           "party": "새천년민주당",
-          "votes": 22217,
-          "pct": 57.93,
+          "votes": 8124,
+          "pct": 48.24,
           "rank": 1,
           "won": true
         },
         {
           "name": "이회창",
           "party": "한나라당",
-          "votes": 14430,
-          "pct": 37.62,
+          "votes": 7674,
+          "pct": 45.57,
           "rank": 2
         },
         {
           "name": "권영길",
           "party": "민주노동당",
-          "votes": 1248,
-          "pct": 3.25,
+          "votes": 842,
+          "pct": 5.0,
           "rank": 3
         },
         {
           "name": "김길수",
           "party": "호국당",
-          "votes": 256,
-          "pct": 0.67,
+          "votes": 89,
+          "pct": 0.53,
           "rank": 4
         },
         {
           "name": "이한동",
           "party": "하나로국민연합",
-          "votes": 143,
-          "pct": 0.37,
+          "votes": 81,
+          "pct": 0.48,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 31,
+          "pct": 0.18,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "홍천군",
+      "scope": "sigungu",
+      "electors": 54336,
+      "voters": 37924,
+      "valid_votes": 37188,
+      "invalid_votes": 736,
+      "abstain": 16412,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 17546,
+          "pct": 47.18,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 17127,
+          "pct": 46.06,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1969,
+          "pct": 5.29,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 250,
+          "pct": 0.67,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 239,
+          "pct": 0.64,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 57,
+          "pct": 0.15,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "횡성군",
+      "scope": "sigungu",
+      "electors": 34856,
+      "voters": 25121,
+      "valid_votes": 24630,
+      "invalid_votes": 491,
+      "abstain": 9735,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 11965,
+          "pct": 48.58,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 10617,
+          "pct": 43.11,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1703,
+          "pct": 6.91,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 158,
+          "pct": 0.64,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 129,
+          "pct": 0.52,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 58,
+          "pct": 0.24,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "영월군",
+      "scope": "sigungu",
+      "electors": 35376,
+      "voters": 24563,
+      "valid_votes": 24071,
+      "invalid_votes": 492,
+      "abstain": 10813,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 11946,
+          "pct": 49.63,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 10557,
+          "pct": 43.86,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1276,
+          "pct": 5.3,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 148,
+          "pct": 0.61,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 107,
+          "pct": 0.44,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 37,
+          "pct": 0.15,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "평창군",
+      "scope": "sigungu",
+      "electors": 35044,
+      "voters": 24160,
+      "valid_votes": 23704,
+      "invalid_votes": 456,
+      "abstain": 10884,
+      "candidates": [
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 11393,
+          "pct": 48.06,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 10471,
+          "pct": 44.17,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1471,
+          "pct": 6.21,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 193,
+          "pct": 0.81,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 138,
+          "pct": 0.58,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 38,
+          "pct": 0.16,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "화천군",
+      "scope": "sigungu",
+      "electors": 18035,
+      "voters": 13245,
+      "valid_votes": 13041,
+      "invalid_votes": 204,
+      "abstain": 4790,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 6214,
+          "pct": 47.65,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 5912,
+          "pct": 45.33,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 743,
+          "pct": 5.7,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 87,
+          "pct": 0.67,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 66,
+          "pct": 0.51,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 19,
+          "pct": 0.15,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "양구군",
+      "scope": "sigungu",
+      "electors": 16532,
+      "voters": 12048,
+      "valid_votes": 11824,
+      "invalid_votes": 224,
+      "abstain": 4484,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 5785,
+          "pct": 48.93,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 5229,
+          "pct": 44.22,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 646,
+          "pct": 5.46,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 75,
+          "pct": 0.63,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 73,
+          "pct": 0.62,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 16,
+          "pct": 0.14,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "강원도",
+      "sigungu": "철원군",
+      "scope": "sigungu",
+      "electors": 37261,
+      "voters": 26682,
+      "valid_votes": 26350,
+      "invalid_votes": 332,
+      "abstain": 10579,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 12622,
+          "pct": 47.9,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 11882,
+          "pct": 45.09,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1451,
+          "pct": 5.51,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 254,
+          "pct": 0.96,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 111,
+          "pct": 0.42,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 30,
+          "pct": 0.11,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "",
+      "scope": "sido",
+      "electors": 1427135,
+      "voters": 1064744,
+      "valid_votes": 1054800,
+      "invalid_votes": 9944,
+      "abstain": 362391,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 966053,
+          "pct": 91.59,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 65334,
+          "pct": 6.19,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 14904,
+          "pct": 1.41,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 5187,
+          "pct": 0.49,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 2505,
+          "pct": 0.24,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 817,
+          "pct": 0.08,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "전주시완산구",
+      "scope": "sigungu",
+      "electors": 235457,
+      "voters": 179812,
+      "valid_votes": 178897,
+      "invalid_votes": 915,
+      "abstain": 55645,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 165652,
+          "pct": 92.6,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 10580,
+          "pct": 5.91,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 2056,
+          "pct": 1.15,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 271,
+          "pct": 0.15,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 249,
+          "pct": 0.14,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 89,
+          "pct": 0.05,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "전주시덕진구",
+      "scope": "sigungu",
+      "electors": 197761,
+      "voters": 150526,
+      "valid_votes": 149734,
+      "invalid_votes": 792,
+      "abstain": 47235,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 138057,
+          "pct": 92.2,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 8862,
+          "pct": 5.92,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 2302,
+          "pct": 1.54,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 234,
+          "pct": 0.16,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 214,
+          "pct": 0.14,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 65,
+          "pct": 0.04,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "군산시",
+      "scope": "sigungu",
+      "electors": 197371,
+      "voters": 141850,
+      "valid_votes": 140886,
+      "invalid_votes": 964,
+      "abstain": 55521,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 128150,
+          "pct": 90.96,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 9729,
+          "pct": 6.91,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 2340,
+          "pct": 1.66,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 350,
+          "pct": 0.25,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 248,
+          "pct": 0.18,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 69,
+          "pct": 0.05,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "익산시",
+      "scope": "sigungu",
+      "electors": 234783,
+      "voters": 170715,
+      "valid_votes": 169409,
+      "invalid_votes": 1306,
+      "abstain": 64068,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 155186,
+          "pct": 91.6,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 10761,
+          "pct": 6.35,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 2609,
+          "pct": 1.54,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 419,
+          "pct": 0.25,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 340,
+          "pct": 0.2,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 94,
+          "pct": 0.06,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "정읍시",
+      "scope": "sigungu",
+      "electors": 104529,
+      "voters": 77016,
+      "valid_votes": 76123,
+      "invalid_votes": 893,
+      "abstain": 27513,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 70652,
+          "pct": 92.81,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 3772,
+          "pct": 4.96,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 941,
+          "pct": 1.24,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 479,
+          "pct": 0.63,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 210,
+          "pct": 0.28,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 69,
+          "pct": 0.09,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "남원시",
+      "scope": "sigungu",
+      "electors": 75135,
+      "voters": 57125,
+      "valid_votes": 56334,
+      "invalid_votes": 791,
+      "abstain": 18010,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 51764,
+          "pct": 91.89,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 3267,
+          "pct": 5.8,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 619,
+          "pct": 1.1,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 474,
+          "pct": 0.84,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 146,
+          "pct": 0.26,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 64,
+          "pct": 0.11,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "김제시",
+      "scope": "sigungu",
+      "electors": 86559,
+      "voters": 64932,
+      "valid_votes": 64149,
+      "invalid_votes": 783,
+      "abstain": 21627,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 58933,
+          "pct": 91.87,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 3922,
+          "pct": 6.11,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 733,
+          "pct": 1.14,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 323,
+          "pct": 0.5,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 185,
+          "pct": 0.29,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 53,
+          "pct": 0.08,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "완주군",
+      "scope": "sigungu",
+      "electors": 65311,
+      "voters": 48703,
+      "valid_votes": 48238,
+      "invalid_votes": 465,
+      "abstain": 16608,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 43815,
+          "pct": 90.83,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 2859,
+          "pct": 5.93,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 1040,
+          "pct": 2.16,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 337,
+          "pct": 0.7,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 136,
+          "pct": 0.28,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 51,
+          "pct": 0.11,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "진안군",
+      "scope": "sigungu",
+      "electors": 24052,
+      "voters": 18200,
+      "valid_votes": 17932,
+      "invalid_votes": 268,
+      "abstain": 5852,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 15928,
+          "pct": 88.82,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 1359,
+          "pct": 7.58,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 272,
+          "pct": 1.52,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 263,
+          "pct": 1.47,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 75,
+          "pct": 0.42,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 35,
+          "pct": 0.2,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "무주군",
+      "scope": "sigungu",
+      "electors": 21936,
+      "voters": 16700,
+      "valid_votes": 16380,
+      "invalid_votes": 320,
+      "abstain": 5236,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 14097,
+          "pct": 86.06,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 1746,
+          "pct": 10.66,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 271,
+          "pct": 1.65,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 188,
+          "pct": 1.15,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 62,
+          "pct": 0.38,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 16,
+          "pct": 0.1,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "장수군",
+      "scope": "sigungu",
+      "electors": 20891,
+      "voters": 16753,
+      "valid_votes": 16334,
+      "invalid_votes": 419,
+      "abstain": 4138,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 14330,
+          "pct": 87.73,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 1122,
+          "pct": 6.87,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 408,
+          "pct": 2.5,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 239,
+          "pct": 1.46,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 175,
+          "pct": 1.07,
           "rank": 5
         },
         {
           "name": "김영규",
           "party": "사회당",
           "votes": 60,
+          "pct": 0.37,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "임실군",
+      "scope": "sigungu",
+      "electors": 28467,
+      "voters": 21735,
+      "valid_votes": 21338,
+      "invalid_votes": 397,
+      "abstain": 6732,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 19236,
+          "pct": 90.15,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 1350,
+          "pct": 6.33,
+          "rank": 2
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 370,
+          "pct": 1.73,
+          "rank": 3
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 268,
+          "pct": 1.26,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 80,
+          "pct": 0.37,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 34,
           "pct": 0.16,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "순창군",
+      "scope": "sigungu",
+      "electors": 26037,
+      "voters": 20038,
+      "valid_votes": 19677,
+      "invalid_votes": 361,
+      "abstain": 5999,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 17848,
+          "pct": 90.7,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 1159,
+          "pct": 5.89,
+          "rank": 2
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 324,
+          "pct": 1.65,
+          "rank": 3
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 247,
+          "pct": 1.26,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 67,
+          "pct": 0.34,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 32,
+          "pct": 0.16,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "고창군",
+      "scope": "sigungu",
+      "electors": 54115,
+      "voters": 40466,
+      "valid_votes": 39820,
+      "invalid_votes": 646,
+      "abstain": 13649,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 36477,
+          "pct": 91.6,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 2192,
+          "pct": 5.5,
+          "rank": 2
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 594,
+          "pct": 1.49,
+          "rank": 3
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 372,
+          "pct": 0.93,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 142,
+          "pct": 0.36,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 43,
+          "pct": 0.11,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "1",
+      "sido": "전라북도",
+      "sigungu": "부안군",
+      "scope": "sigungu",
+      "electors": 54731,
+      "voters": 40173,
+      "valid_votes": 39549,
+      "invalid_votes": 624,
+      "abstain": 14558,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 35928,
+          "pct": 90.84,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 2654,
+          "pct": 6.71,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 426,
+          "pct": 1.08,
+          "rank": 3
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 386,
+          "pct": 0.98,
+          "rank": 4
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 112,
+          "pct": 0.28,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 43,
+          "pct": 0.11,
           "rank": 6
         }
       ]
