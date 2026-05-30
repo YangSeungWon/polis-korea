@@ -32,6 +32,19 @@ if NEC_ROSTER_PATH.exists():
     except Exception:
         _NEC_ROSTER = {}
 
+# 2026 지선 통합 광역시도 alias — roster 후보 sd="광주광역시"·"전라남도"이면
+# "전남광주특별시|name" 키로 사본 추가. parse_region이 통합 region을 통합 sido로
+# 반환했을 때 NEC roster lookup이 매치되도록.
+for _k in list(_NEC_ROSTER.keys()):
+    _v = _NEC_ROSTER[_k]
+    if not (isinstance(_v, dict) and _v.get("sg_typecode") == "3"):
+        continue
+    if _v.get("sgg") != "전남광주통합특별시":
+        continue
+    _sd, _, _nm = _k.partition("|")
+    if _sd in ("광주광역시", "전라남도"):
+        _NEC_ROSTER.setdefault(f"전남광주특별시|{_nm}", _v)
+
 ELECTION_DATE = date(2026, 6, 3)
 BLACKOUT_START = date(2026, 5, 28)  # 5/28 00:00부터 공표 금지
 BLACKOUT_END = datetime(2026, 6, 3, 18, 0)  # 6/3 18:00 해제
@@ -52,6 +65,8 @@ SIDO_CANONICAL = {
     "충남": "충청남도", "충청남도": "충청남도",
     "전북": "전북특별자치도", "전라북도": "전북특별자치도", "전북특별자치도": "전북특별자치도",
     "전남": "전라남도", "전라남도": "전라남도",
+    # 2026 지선 — 전남광주 통합 (통합 단체장 1명 선출)
+    "전남광주특별시": "전남광주특별시", "전남광주통합특별시": "전남광주특별시",
     "경북": "경상북도", "경상북도": "경상북도",
     "경남": "경상남도", "경상남도": "경상남도",
     "제주": "제주특별자치도", "제주특별자치도": "제주특별자치도", "제주도": "제주특별자치도",
@@ -76,6 +91,10 @@ def parse_region(region: str, sub_election: str = "") -> tuple[str, str]:
     """
     if not region:
         return ("", "")
+    # 2026 지선부터 전남광주 통합 — region/sub_election에 통합 키워드 있으면 통합 sido로.
+    # NESDC region은 '광주광역시 전체 전라남도 전체 전남광주통합특별시' 같은 복합 형태.
+    if "전남광주통합" in region or "전남광주통합" in sub_election:
+        return ("전남광주특별시", "")
     region = re.sub(r"\s+[가-힣]+선거구.*$", "", region.strip())
     parts = region.strip().split()
     if not parts:
@@ -123,6 +142,7 @@ def classify_office(title: str, sido: str, sigungu: str) -> tuple[str, str]:
         "울산광역시": "광역시장",
         "세종특별자치시": "세종시장",
         "제주특별자치도": "도지사",  # 제주는 도지사
+        "전남광주특별시": "통합시장",  # 2026 지선부터 광주·전남 통합
     }
     # 시도 short → 광역시장·도지사 매핑 (title이 "인천시장"·"서울시장" 등이면 광역)
     SIDO_SHORT_TO_SIDO = {
@@ -736,6 +756,13 @@ def build() -> dict:
                         nec_names_by_sido[sido].add(nm)
             except Exception:
                 pass
+    # _NEC_ROSTER에서 통합 sido alias도 추가 (전남광주특별시 등)
+    for k, v in _NEC_ROSTER.items():
+        if not isinstance(v, dict) or not v.get("jd"):
+            continue
+        sido, _, nm = k.partition("|")
+        if nm:
+            nec_names_by_sido[sido].add(nm)
 
     def _known_cand(sido, office, nm):
         return len(agencies_by_name[(sido, office)].get(nm, ())) >= 2 or nm in nec_names_by_sido[sido]

@@ -1,0 +1,56 @@
+{
+  "id": "9th-local-2026",
+  "name": "제9회 전국동시지방선거",
+  "type": "local",
+  "date": "2026-06-03",
+  "blackout": {
+    "_note": "공직선거법 — 선거 6일 전 00시부터 선거일 18시까지 신규 여론조사 공표 금지",
+    "start": "2026-05-28T00:00:00+09:00",
+    "end": "2026-06-03T18:00:00+09:00"
+  },
+  "nesdc": {
+    "gubun": "VT026",
+    "csv": "data/raw/nesdc_9th_polls.csv"
+  },
+  "nec": {
+    "sg_id": "20260603",
+    "roster": "data/raw/nec_roster_9th.json",
+    "candidate_party_cache": "data/raw/nec_candidate_party.json",
+    "candidate_office_cache": "data/raw/nec_candidate_office.json"
+  },
+  "offices": [
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido",
+      "_note": "도지사·광역시장·특별시장·세종시장 같은 카테고리"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu",
+      "_note": "시장·군수·구청장"
+    },
+    {
+      "level": "교육감",
+      "sg_typecode": "11",
+      "scope": "sido",
+      "_note": "광역 단위 무소속 race"
+    }
+  ],
+  "party_canon": {
+    "_note": "OCR/parsing 약칭 → 정식 명칭 (poll_terms.PARTY_CANON과 동기)",
+    "국힘": "국민의힘",
+    "민주": "더불어민주당"
+  },
+  "sido_merge": [
+    {
+      "_note": "2026 지선부터 전라남도+광주광역시 → 전남광주통합특별시. 통합 단체장 1명 선출. NESDC region이 '광주광역시 전체 전라남도 전체 전남광주통합특별시' 같은 복합 형태로 등록. sub_election에 통합 키워드 있으면 sido='전남광주특별시'로 매핑.",
+      "canonical": "전남광주특별시",
+      "merge_from": ["광주광역시", "전라남도"],
+      "trigger_keyword": "전남광주통합",
+      "nec_sgg": "전남광주통합특별시"
+    }
+  ],
+  "candidates_overrides": "data/elections/9th-local-2026-candidates.json"
+}
