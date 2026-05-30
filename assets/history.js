@@ -482,13 +482,12 @@ const SIDO_HEX_SINCE = {
   '세종특별자치시': '2012-07-01',
   '전남광주특별시': '2026-06-03',
 };
-// 9회 이전 layout — 통합 전 광주·전남·제주가 별개 cell. row 5 부활.
+// 9회 이전 layout — 광주·전남 별개. 4·5·4·4 layout 유지.
+//   row 2: [광주][대전][대구][부산]      ← 전남광주 자리에 광주
+//   row 3: [전북][전남][경남][제주]      ← row 3 col 2에 전남 추가
 const SIDO_HEX_LAYOUT_LEGACY = {
-  '광주광역시':     { col: 1, row: 3, label: '광주' },
-  '전라남도':       { col: 1, row: 4, label: '전남' },
-  '경상남도':       { col: 2, row: 4, label: '경남' },
-  '부산광역시':     { col: 3, row: 4, label: '부산' },
-  '제주특별자치도': { col: 1, row: 5, label: '제주' },
+  '광주광역시':     { col: 1, row: 2, label: '광주' },
+  '전라남도':       { col: 2, row: 3, label: '전남' },
 };
 
 function getActiveSidoLayout(electionDate) {

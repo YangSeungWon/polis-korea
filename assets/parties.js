@@ -186,13 +186,13 @@ function gapOpacity(gap) {
   return Math.max(0.5, Math.min(1, a));
 }
 
-// 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset.
-//   row 0:  [인천][서울][경기][강원]
-//   row 1:     [충남][세종][충북]
-//   row 2:  [전북][대전][경북]
-//   row 3:     [광주][대구][울산]   ← 울산: 경북·대구·부산과 인접 (동해안)
-//   row 4:  [전남][경남][부산]
-//   row 5:     [제주]
+// 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset. 직사각 4·5·4·4 layout.
+//   row 0:  [인천][서울][경기][강원]            (4)
+//   row 1:    [충남][세종][충북][경북][울산]    (5)
+//   row 2:  [전남광주][대전][대구][부산]        (4)  ← 9회+ 통합
+//   row 3:    [전북][전남][경남][제주]          (4)  ← 옛 시점 layout
+// 옛 시점은 row 2 col 1 = '광주', row 3 col 2 = '전남' (history.js LEGACY override).
+// 9회+ 시점은 row 3 col 2 (전남 자리)는 hide → row 3 3 cell.
 const SIDO_HEX_LAYOUT = {
   '인천광역시':     { col: 1, row: 0, label: '인천' },
   '서울특별시':     { col: 2, row: 0, label: '서울' },
@@ -202,23 +202,18 @@ const SIDO_HEX_LAYOUT = {
   '충청남도':       { col: 1, row: 1, label: '충남' },
   '세종특별자치시': { col: 2, row: 1, label: '세종' },
   '충청북도':       { col: 3, row: 1, label: '충북' },
+  '경상북도':       { col: 4, row: 1, label: '경북' },
+  '울산광역시':     { col: 5, row: 1, label: '울산' },
 
-  '전북특별자치도': { col: 1, row: 2, label: '전북' },
-  '전라북도':       { col: 1, row: 2, label: '전북' },  // 옛 이름 alias
+  '전남광주특별시': { col: 1, row: 2, label: '전남광주' },
   '대전광역시':     { col: 2, row: 2, label: '대전' },
-  '경상북도':       { col: 3, row: 2, label: '경북' },
+  '대구광역시':     { col: 3, row: 2, label: '대구' },
+  '부산광역시':     { col: 4, row: 2, label: '부산' },
 
-  // 2026 지선부터 광주·전남 통합 → '전남광주특별시'.
-  // 광주 자리에 통합 셀, 옛 전남 자리는 제주가 한 칸 위로 이동.
-  // 옛 광주·전남 데이터(5~8회 지선)는 history.html에서 별도 layout 사용.
-  '전남광주특별시': { col: 1, row: 3, label: '전남광주' },
-
-  '대구광역시':     { col: 2, row: 3, label: '대구' },
-  '울산광역시':     { col: 3, row: 3, label: '울산' },  // 경북·대구·부산과 인접하는 동해안
-
-  '제주특별자치도': { col: 1, row: 4, label: '제주' },
-  '경상남도':       { col: 2, row: 4, label: '경남' },
-  '부산광역시':     { col: 3, row: 4, label: '부산' },
+  '전북특별자치도': { col: 1, row: 3, label: '전북' },
+  '전라북도':       { col: 1, row: 3, label: '전북' },  // 옛 이름 alias
+  '경상남도':       { col: 3, row: 3, label: '경남' },
+  '제주특별자치도': { col: 4, row: 3, label: '제주' },
 };
 
 const SIDO_HEX_BLANKS = [];
