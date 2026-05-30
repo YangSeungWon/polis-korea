@@ -252,7 +252,7 @@ def detect_metric_type(title: str, election_office: str) -> str:
     if election_office == "비례정당":
         return "비례정당"
     # 후보지지 — 세부 분류
-    if "당선" in title and ("가능" in title or "예측" in title):
+    if "당선" in title and ("가능" in title or "예측" in title or "예상" in title):
         return "당선가능성"
     if "적합" in title:
         return "적합도"
@@ -384,7 +384,7 @@ def build() -> dict:
             # 정당지지 매치업 시계열만 남긴다.
             # 국정평가·투표의향 — 지선 스코프(VT026)엔 진짜 데이터가 없고, 우리가 가진 건
             # 전부 후보지지 오분류(대부분 중복) + 응답노이즈(것이다·최고위원)라 함께 제외.
-            if metric_type in ("적합도", "국정평가", "투표의향"):
+            if metric_type in ("적합도", "국정평가", "투표의향", "당선가능성"):
                 continue
             # 광역의원·기초의원·교육의원 — 시스템 scope 외 (광역단체장·기초단체장·교육감만 카드).
             if election_office in ("광역의원후보", "기초의원후보", "교육의원후보"):
@@ -493,10 +493,13 @@ def build() -> dict:
                 from collections import Counter
                 top_tc = Counter(roster_typecodes).most_common(1)[0][0]
                 if top_tc == "3":
-                    sigungu = ""
-                    roster_override_office = ("광역단체장", "도지사")  # 광역시장도 같은 카테고리
+                    # 후보들이 NEC 광역단체장 등록 → race도 광역단체장. sigungu는 keep —
+                    # region에 sigungu 있으면 부분표본(예: 19113 태백시 응답자 대상 도지사
+                    # 조사·18853 대전 유성구 응답자 대상 대전시장 조사). 광역+sigungu →
+                    # 다음 라인에서 skip (도 전체 대표성 없는 표본).
+                    roster_override_office = ("광역단체장", "도지사")
                 elif top_tc == "11":
-                    sigungu = ""
+                    # 교육감도 동일 — 부분표본 시군구 keep해 광역+sigungu skip
                     roster_override_office = ("교육감", "교육감")
                 elif top_tc == "4" and roster_sggs:
                     top_sgg = Counter(roster_sggs).most_common(1)[0][0]
