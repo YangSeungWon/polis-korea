@@ -1,0 +1,137 @@
+{
+  "date": "2026-05-30",
+  "polls_total": 1949,
+  "polls_data": 1863,
+  "polls_pending": 86,
+  "checks": [
+    {
+      "name": "시계열 outlier",
+      "severity": "warn",
+      "count": 6,
+      "items": [
+        {
+          "ntt": "16878",
+          "key": [
+            "전라남도",
+            "담양군",
+            "기초단체장",
+            "박종원"
+          ],
+          "pct": 26.7,
+          "median": 45.5,
+          "mad": 2.3,
+          "dev": 18.8,
+          "period_end": "2025-12-20"
+        },
+        {
+          "ntt": "18348",
+          "key": [
+            "충청북도",
+            "",
+            "광역단체장",
+            "신용한"
+          ],
+          "pct": 51.2,
+          "median": 34.5,
+          "mad": 3.5,
+          "dev": 16.7,
+          "period_end": "2026-04-22"
+        },
+        {
+          "ntt": "19014",
+          "key": [
+            "제주특별자치도",
+            "",
+            "광역단체장",
+            "위성곤"
+          ],
+          "pct": 81.0,
+          "median": 58.4,
+          "mad": 3.4,
+          "dev": 22.6,
+          "period_end": "2026-05-24"
+        },
+        {
+          "ntt": "18272",
+          "key": [
+            "강원특별자치도",
+            "",
+            "광역단체장",
+            "우상호"
+          ],
+          "pct": 59.9,
+          "median": 44.7,
+          "mad": 2.2,
+          "dev": 15.2,
+          "period_end": "2026-04-14"
+        },
+        {
+          "ntt": "18431",
+          "key": [
+            "강원특별자치도",
+            "",
+            "광역단체장",
+            "김진태"
+          ],
+          "pct": 55.4,
+          "median": 37.4,
+          "mad": 2.3,
+          "dev": 18.0,
+          "period_end": "2026-04-28"
+        },
+        {
+          "ntt": "19113",
+          "key": [
+            "강원특별자치도",
+            "",
+            "광역단체장",
+            "김진태"
+          ],
+          "pct": 52.6,
+          "median": 37.4,
+          "mad": 2.3,
+          "dev": 15.2,
+          "period_end": "2026-05-26"
+        }
+      ]
+    },
+    {
+      "name": "메이저정당 4+ 후보 잔존",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "정당명-as-후보",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "office 분류 false positive",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "합계 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "NEC roster 누락 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "build_golden 회귀",
+      "severity": "info",
+      "count": 0,
+      "items": [
+        "총 19 cases: 15 pass, 4 warn, 0 fail"
+      ]
+    }
+  ]
+}

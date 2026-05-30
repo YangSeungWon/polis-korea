@@ -1,0 +1,222 @@
+{
+  "_note": "build_polls + patch_* 단계 후 aggregated.json 회귀 검출. 사용자 신고 케이스 + 핵심 fix 패턴. ntt+office 매칭 polls의 candidates(name/party/pct) 비교.",
+  "_threshold": {"pct_tolerance": 1.0, "min_match_ratio": 0.8},
+  "cases": [
+    {
+      "ntt": "18726",
+      "office_level": "광역단체장",
+      "sido": "경상북도",
+      "sigungu": "",
+      "case": "여론조사꽃 5/14 경북 가상대결 — patch_cross_tab 가상대결 A 추출 (사용자 신고)",
+      "expected": [
+        {"name": "오중기", "party": "더불어민주당", "pct": 34.2},
+        {"name": "이철우", "party": "국민의힘", "pct": 48.7}
+      ]
+    },
+    {
+      "ntt": "17167",
+      "office_level": "광역단체장",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "case": "여론조사꽃 자체조사 부산 가상대결 A (사용자 신고)",
+      "expected": [
+        {"name": "전재수", "party": "더불어민주당", "pct": 47.9},
+        {"name": "박형준", "party": "국민의힘", "pct": 33.6}
+      ]
+    },
+    {
+      "ntt": "17178",
+      "office_level": "광역단체장",
+      "sido": "경상남도",
+      "sigungu": "",
+      "case": "여론조사꽃 자체조사 경남 가상대결 A",
+      "expected": [
+        {"name": "김경수", "party": "더불어민주당", "pct": 47.7},
+        {"name": "박완수", "party": "국민의힘", "pct": 37.4}
+      ]
+    },
+    {
+      "ntt": "18758",
+      "office_level": "광역단체장",
+      "sido": "충청북도",
+      "sigungu": "",
+      "case": "충북 KOPRA — stacked-header 정당명만 잡던 회귀 fix (사용자 신고)",
+      "expected": [
+        {"name": "신용한", "party": "더불어민주당", "pct": 46.5},
+        {"name": "김영환", "party": "국민의힘", "pct": 39.3}
+      ]
+    },
+    {
+      "ntt": "18779",
+      "office_level": "광역단체장",
+      "sido": "충청남도",
+      "sigungu": "",
+      "case": "충남 코리아리서치 — stacked-header (사용자 신고)",
+      "expected": [
+        {"name": "박수현", "party": "더불어민주당", "pct": 45.0},
+        {"name": "김태흠", "party": "국민의힘", "pct": 37.0}
+      ]
+    },
+    {
+      "ntt": "18865",
+      "office_level": "기초단체장",
+      "sido": "충청남도",
+      "sigungu": "보령시",
+      "case": "보령시장 코리아리서치 stacked-header",
+      "expected": [
+        {"name": "이영우", "party": "더불어민주당", "pct": 38.0},
+        {"name": "엄승용", "party": "국민의힘", "pct": 49.0},
+        {"name": "김흥식", "party": "무소속", "pct": 1.0}
+      ]
+    },
+    {
+      "ntt": "18864",
+      "office_level": "기초단체장",
+      "sido": "충청남도",
+      "sigungu": "홍성군",
+      "case": "홍성군수 코리아리서치 stacked-header",
+      "expected": [
+        {"name": "손세희", "party": "더불어민주당", "pct": 35.0},
+        {"name": "박정주", "party": "국민의힘", "pct": 40.0},
+        {"name": "이두원", "party": "무소속", "pct": 2.0}
+      ]
+    },
+    {
+      "ntt": "18832",
+      "office_level": "기초단체장",
+      "sido": "대전광역시",
+      "sigungu": "동구",
+      "case": "대전 동구청장 코리아리서치 stacked-header",
+      "expected": [
+        {"name": "황인호", "party": "더불어민주당", "pct": 40.0},
+        {"name": "박희조", "party": "국민의힘", "pct": 30.0},
+        {"name": "한현택", "party": "무소속", "pct": 2.0}
+      ]
+    },
+    {
+      "ntt": "18763",
+      "office_level": "광역단체장",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "case": "제주 도지사 코리아리서치 stacked-header",
+      "expected": [
+        {"name": "위성곤", "party": "더불어민주당", "pct": 55.0},
+        {"name": "문성유", "party": "국민의힘", "pct": 21.0},
+        {"name": "양윤녕", "party": "무소속", "pct": 1.0}
+      ]
+    },
+    {
+      "ntt": "19316",
+      "office_level": "기초단체장",
+      "sido": "충청남도",
+      "sigungu": "서천군",
+      "case": "충남 서천군 — 통합 보고서 (군수+도의원+군의원) sub-title 추출 영구 fix",
+      "expected": [
+        {"name": "김기웅", "party": "국민의힘", "pct": 45.9},
+        {"name": "유승광", "party": "더불어민주당", "pct": 44.9},
+        {"name": "조중연", "party": "개혁신당", "pct": 2.8}
+      ]
+    },
+    {
+      "ntt": "19227",
+      "office_level": "광역단체장",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "case": "KSOI 서울 5/27 — 새 PDF 일반 stacked-header",
+      "expected": [
+        {"name": "정원오", "party": "더불어민주당", "pct": 45.7},
+        {"name": "오세훈", "party": "국민의힘", "pct": 45.6}
+      ]
+    },
+    {
+      "ntt": "19193",
+      "office_level": "광역단체장",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "case": "케이스탯 서울 5/27 — 일반 다자대결",
+      "expected": [
+        {"name": "정원오", "party": "더불어민주당", "pct": 44.0},
+        {"name": "오세훈", "party": "국민의힘", "pct": 36.0}
+      ]
+    },
+    {
+      "ntt": "19194",
+      "office_level": "광역단체장",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "case": "케이스탯 부산 5/27 — 일반 다자대결",
+      "expected": [
+        {"name": "전재수", "party": "더불어민주당", "pct": 48.0},
+        {"name": "박형준", "party": "국민의힘", "pct": 32.0}
+      ]
+    },
+    {
+      "ntt": "19195",
+      "office_level": "광역단체장",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "case": "케이스탯 대구 5/27 — 일반 다자대결",
+      "expected": [
+        {"name": "김부겸", "party": "더불어민주당", "pct": 39.0},
+        {"name": "추경호", "party": "국민의힘", "pct": 42.0},
+        {"name": "이수찬", "party": "개혁신당", "pct": 1.0}
+      ]
+    },
+    {
+      "ntt": "19254",
+      "office_level": "광역단체장",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "case": "엠브레인 부산 5/27 — parse_kr_stats main 보존 조건 완화로 회복",
+      "expected": [
+        {"name": "전재수", "party": "더불어민주당", "pct": 40.0},
+        {"name": "박형준", "party": "국민의힘", "pct": 39.0}
+      ]
+    },
+    {
+      "ntt": "19228",
+      "office_level": "기초단체장",
+      "sido": "경상남도",
+      "sigungu": "진주시",
+      "case": "한국리서치 진주 5/27 — parse_kr_stats 보강",
+      "expected": [
+        {"name": "갈상돈", "party": "더불어민주당", "pct": 33.0},
+        {"name": "조규일", "party": "국민의힘", "pct": 32.0},
+        {"name": "한경호", "party": "더불어민주당", "pct": 15.0}
+      ]
+    },
+    {
+      "ntt": "18749",
+      "office_level": "기초단체장",
+      "sido": "충청북도",
+      "sigungu": "옥천군",
+      "case": "옥천군수 케이스탯 본선 (사용자 신고 - NEC roster 보수적 룰 정합성)",
+      "expected": [
+        {"name": "황규철", "party": "더불어민주당", "pct": 58.0},
+        {"name": "전상인", "party": "국민의힘", "pct": 31.0}
+      ]
+    },
+    {
+      "ntt": "17969",
+      "office_level": "기초단체장",
+      "sido": "충청북도",
+      "sigungu": "옥천군",
+      "case": "옥천군 모노 — 가상대결 매트릭스에서 본선(황규철+전상인) 선택, dedup roster 우선",
+      "expected": [
+        {"name": "황규철", "party": "더불어민주당", "pct": 45.3},
+        {"name": "전상인", "party": "국민의힘", "pct": 28.1}
+      ]
+    },
+    {
+      "ntt": "19272",
+      "office_level": "기초단체장",
+      "sido": "전라남도",
+      "sigungu": "무안군",
+      "case": "무안군 모노 — refresh_pending_pdfs로 결과 PDF 회복",
+      "expected": [
+        {"name": "김산", "party": "더불어민주당", "pct": 44.8},
+        {"name": "정영덕", "party": "국민의힘", "pct": 43.2}
+      ]
+    }
+  ]
+}
