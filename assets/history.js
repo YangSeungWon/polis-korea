@@ -43,6 +43,119 @@ async function loadJson(path) {
   return r.json();
 }
 
+// === 새 schema (data/results/{id}.json) → 옛 format adapter ===
+// 새 schema: { _meta, races: [{sg_typecode, sido, sigungu/district, scope, candidates, electors, voters, ...}] }
+// 옛 format: { _meta, national/sigungu/district 또는 offices[level]={national, sigungu} }
+
+function _ordinal(n) {
+  if (n >= 11 && n <= 13) return `${n}th`;
+  const last = n % 10;
+  return `${n}${last === 1 ? 'st' : last === 2 ? 'nd' : last === 3 ? 'rd' : 'th'}`;
+}
+
+function newSchemaPath(type, n) {
+  const el = state.elections?.[type]?.elections?.find((x) => x.n === n);
+  if (!el?.date) return null;
+  const year = el.date.split('-')[0];
+  const kind = { presidential: 'pres', national_assembly: 'general', local: 'local' }[type];
+  if (!kind) return null;
+  return `data/results/${_ordinal(n)}-${kind}-${year}.json`;
+}
+
+function _raceToOldRow(race) {
+  return {
+    sido: race.sido,
+    name: race.sigungu || '',
+    electors: race.electors || 0,
+    voted: race.voters || 0,
+    turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
+    invalid: race.invalid_votes || 0,
+    candidates: race.candidates || [],
+  };
+}
+
+function _raceToOldDistrict(race) {
+  const winner = race.candidates?.[0];
+  return {
+    sido: race.sido,
+    name: race.district || '',
+    winner: winner?.name || '',
+    winner_party: winner?.party || '',
+    electors: race.electors || 0,
+    voted: race.voters || 0,
+    invalid: race.invalid_votes || 0,
+    turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
+    candidates: race.candidates || [],
+  };
+}
+
+function _raceToOldNation(race) {
+  return {
+    electors: race.electors || 0,
+    voted: race.voters || 0,
+    invalid: race.invalid_votes || 0,
+    turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
+    candidates: race.candidates || [],
+  };
+}
+
+// 시도 race들 합산 → nation fallback (nation race 없을 때만)
+function _aggSidoToNation(sidoRaces) {
+  const electors = sidoRaces.reduce((s, r) => s + (r.electors || 0), 0);
+  const voted = sidoRaces.reduce((s, r) => s + (r.voters || 0), 0);
+  const candMap = new Map();
+  for (const r of sidoRaces) {
+    for (const c of r.candidates || []) {
+      const k = `${c.party}|${c.name}`;
+      const prev = candMap.get(k) || { name: c.name, party: c.party, votes: 0 };
+      prev.votes += c.votes || 0;
+      candMap.set(k, prev);
+    }
+  }
+  const total = [...candMap.values()].reduce((s, c) => s + c.votes, 0);
+  return {
+    electors, voted,
+    turnout: electors ? +(voted / electors * 100).toFixed(2) : 0,
+    candidates: [...candMap.values()]
+      .map((c) => ({ ...c, pct: total ? +(c.votes / total * 100).toFixed(2) : 0 }))
+      .sort((a, b) => b.votes - a.votes),
+  };
+}
+
+function adaptNewSchema(raw, type) {
+  const out = { _meta: raw._meta };
+  const races = raw.races || [];
+  if (type === 'presidential') {
+    const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '1');
+    const sidoRaces = races.filter((r) => r.scope === 'sido' && r.sg_typecode === '1');
+    out.national = nation ? _raceToOldNation(nation) : _aggSidoToNation(sidoRaces);
+    out.sigungu = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === '1')
+                       .map(_raceToOldRow);
+  } else if (type === 'national_assembly') {
+    // 옛 schema의 national은 비례 전국 합계
+    const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '7');
+    const sidoProp = races.filter((r) => r.scope === 'sido' && r.sg_typecode === '7');
+    out.national = nation ? _raceToOldNation(nation) : _aggSidoToNation(sidoProp);
+    out.district = races.filter((r) => r.scope === 'district' && r.sg_typecode === '2')
+                        .map(_raceToOldDistrict);
+    // 시군구는 비례 시군구별 (총선 시군구 hex 대안)
+    out.sigungu = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === '7')
+                       .map(_raceToOldRow);
+  } else if (type === 'local') {
+    out.offices = {};
+    const officeTc = { '광역단체장': '3', '기초단체장': '4', '교육감': '11' };
+    for (const [office, tc] of Object.entries(officeTc)) {
+      const sidoRaces = races.filter((r) => r.scope === 'sido' && r.sg_typecode === tc);
+      out.offices[office] = {
+        national: _aggSidoToNation(sidoRaces),
+        sigungu: races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === tc)
+                      .map(_raceToOldRow),
+      };
+    }
+  }
+  return out;
+}
+
 async function init() {
   const [elections, hex, hexLegacy, manifest] = await Promise.all([
     loadJson('data/elections.json'),
@@ -157,10 +270,27 @@ async function setRound(n) {
   if (el) {
     $('#election-date').textContent = `${el.date}${el.note ? ' · ' + el.note : ''}`;
   }
-  try {
-    state.results = await loadJson(`data/results/${state.type}_${n}.json`);
-  } catch {
-    state.results = null;
+  state.results = null;
+  // 1차: 새 schema (통일 path) — data/results/{Nth}-{kind}-{year}.json
+  const newPath = newSchemaPath(state.type, n);
+  if (newPath) {
+    try {
+      const raw = await loadJson(newPath);
+      state.results = adaptNewSchema(raw, state.type);
+    } catch (e) {
+      // 2차 fallback: 옛 path
+      try {
+        state.results = await loadJson(`data/results/${state.type}_${n}.json`);
+      } catch {
+        state.results = null;
+      }
+    }
+  } else {
+    try {
+      state.results = await loadJson(`data/results/${state.type}_${n}.json`);
+    } catch {
+      state.results = null;
+    }
   }
   renderAll();
 }
