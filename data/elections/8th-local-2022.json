@@ -1,0 +1,23 @@
+{
+  "id": "8th-local-2022",
+  "name": "제8회 전국동시지방선거",
+  "type": "local",
+  "date": "2022-06-01",
+  "blackout": {
+    "start": "2022-05-26T00:00:00+09:00",
+    "end": "2022-06-01T18:00:00+09:00"
+  },
+  "nec": {
+    "sg_id": "20220601",
+    "_note": "메타용 — 실제 fetch는 안 함. 결과는 이미 data/results/local_8.json에 있음."
+  },
+  "results_file": "data/results/local_8.json",
+  "offices": [
+    {"level": "광역단체장", "sg_typecode": "3", "scope": "sido"},
+    {"level": "기초단체장", "sg_typecode": "4", "scope": "sigungu"},
+    {"level": "광역의원", "sg_typecode": "5", "scope": "district"},
+    {"level": "기초의원", "sg_typecode": "6", "scope": "district"},
+    {"level": "교육감", "sg_typecode": "11", "scope": "sido"}
+  ],
+  "_note": "archive. history.html에서 결과 시각화 사용."
+}
