@@ -21,7 +21,8 @@ from poll_terms import PARTY_NAMES, HEADER_WORDS, _is_noise_name, detect_office 
 _PCT = re.compile(r"^\d{1,3}(?:\.\d)?$")        # 괄호 없는 0~100 (사례수 (502)는 제외)
 _NAME = re.compile(r"^[가-힣]{2,4}$")
 _OFFICE_KW = re.compile(r"(시장|지사|교육감|군수|구청장|단체장|국회의원)")
-_RACE_KW = re.compile(r"(선호도|지지도|적합도|지지율|선호하|지지하|적합)")
+_RACE_KW = re.compile(r"(선호도|지지도|적합도|지지율|선호하|지지하|적합|다자대결|"
+                      r"가상\s*양자|가상\s*대결|양자\s*대결)")
 # 질문문/안내 단어 — 이름칸 위·아래에 섞여 들어옴 (거론되고·있는·뽑는·순환하여·생각하십니까…)
 _QWORD = re.compile(r"되고|되는|되어|있는|있다|있습|하여|하는|뽑는|순환|무작위|보기|굳이|경우|드리"
                     r"|십니까|이라도|말씀|거론|출마|낫다|누가|생각|응답|조금|다음|중에|이번")
@@ -142,6 +143,7 @@ def main():
             continue
         out = root / "data/raw/parsed" / (Path(pf).stem + ".json")
         cur_cands_max = 0
+        cur_cands_max_race = 0  # 후보지지 race 후보 최대 (정당지지 제외)
         if out.exists():
             cur = json.loads(out.read_text(encoding="utf-8"))
             has_cand = any(q.get("candidates") and any("pct" in c for c in q["candidates"])
@@ -150,11 +152,38 @@ def main():
                               for q in cur.get("questions", []) for c in q.get("candidates", []))
             cur_cands_max = max((len(q.get("candidates", [])) for q in cur.get("questions", [])
                                  if q.get("candidates")), default=0)
-            # garbage 없고 후보 충분(≥3)이면 보존. 그 외(garbage·후보<3)면 재추출 후 비교.
-            if has_cand and not has_garbage and cur_cands_max >= 3:
+            # 정당지지·정당빈 race(name='')는 제외하고 후보지지 race만 카운트
+            cur_cands_max_race = max(
+                (len([c for c in q.get("candidates", []) if c.get("name")])
+                 for q in cur.get("questions", [])
+                 if q.get("election_office") in ("후보지지", "국회의원후보")
+                 and q.get("candidates")), default=0)
+            # garbage 없고 후보지지 race가 충분(≥3)하면 보존. 정당지지만 있는 case도
+            # 재추출 (19250 엠브레인 PDF처럼 parse_pdf가 정당지지 5명만 잡았는데 PDF엔
+            # 후보지지 race도 명확히 있는 경우 후보지지 추가).
+            if has_cand and not has_garbage and cur_cands_max_race >= 3:
                 continue
         r = extract_pdf(Path(pf))
         new_max = max((len(q["candidates"]) for q in r["questions"] if q["candidates"]), default=0)
+        # 신규 추출의 후보지지 race 최대 후보 수
+        new_max_race = max(
+            (len([c for c in q.get("candidates", []) if c.get("name")])
+             for q in r.get("questions", [])
+             if q.get("election_office") in ("후보지지", "국회의원후보")
+             and q.get("candidates")), default=0)
+        # 신규 후보지지 race가 기존보다 풍부하면 정당지지 등 기존 question도 보존하면서 합침.
+        if new_max_race > cur_cands_max_race and out.exists():
+            cur = json.loads(out.read_text(encoding="utf-8"))
+            # 기존 후보지지 race는 제거하고 정당지지·기타는 유지. 새 후보지지 추가.
+            kept = [q for q in cur.get("questions", [])
+                    if q.get("election_office") not in ("후보지지",)
+                    or not any(c.get("name") for c in q.get("candidates", []))]
+            kept.extend(q for q in r["questions"] if q.get("candidates"))
+            cur["questions"] = kept
+            out.write_text(json.dumps(cur, ensure_ascii=False, indent=2), encoding="utf-8")
+            nok += 1
+            nq += sum(1 for q in r["questions"] if q["candidates"])
+            continue
         # 신규 추출이 0이면 skip. 기존이 있으면 신규가 더 많을 때만 덮어씀 (놓친 후보 복구).
         if new_max > 0 and (cur_cands_max == 0 or new_max > cur_cands_max):
             out.write_text(json.dumps(r, ensure_ascii=False, indent=2), encoding="utf-8")
