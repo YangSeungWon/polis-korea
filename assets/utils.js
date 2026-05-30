@@ -27,6 +27,7 @@ function sigunguSidoFromCode(code) {
 function canonSido(s) {
   if (s === '강원도') return '강원특별자치도';
   if (s === '전라북도') return '전북특별자치도';
+  if (s === '제주도') return '제주특별자치도';  // 2006-07-01 이전 명칭 (16대 대선 등)
   return s;
 }
 

@@ -475,6 +475,29 @@ function candLabel(c) {
 
 // === 시도 17셀 hex (메인 페이지와 동일 layout) ===
 
+// 회차 date 기준 시도 cell 표시 여부 (시도 신설·통합 처리).
+//   세종특별자치시: 2012-07-01 신설 (그 이전 회차에선 cell 자체 hide)
+//   전남광주특별시: 2026-06-03 신설 (9회 지선 이전 회차에선 hide, 광주·전남 별개 cell 표시)
+const SIDO_HEX_SINCE = {
+  '세종특별자치시': '2012-07-01',
+  '전남광주특별시': '2026-06-03',
+};
+// 9회 이전 layout — 통합 전 광주·전남·제주가 별개 cell. row 5 부활.
+const SIDO_HEX_LAYOUT_LEGACY = {
+  '광주광역시':     { col: 1, row: 3, label: '광주' },
+  '전라남도':       { col: 1, row: 4, label: '전남' },
+  '경상남도':       { col: 2, row: 4, label: '경남' },
+  '부산광역시':     { col: 3, row: 4, label: '부산' },
+  '제주특별자치도': { col: 1, row: 5, label: '제주' },
+};
+
+function getActiveSidoLayout(electionDate) {
+  if (!electionDate || electionDate >= '2026-06-03') return SIDO_HEX_LAYOUT;
+  const layout = { ...SIDO_HEX_LAYOUT, ...SIDO_HEX_LAYOUT_LEGACY };
+  delete layout['전남광주특별시'];
+  return layout;
+}
+
 function renderSidoHex() {
   const svg = $('#hex');
   svg.innerHTML = '';
@@ -486,8 +509,14 @@ function renderSidoHex() {
   const offsetX = 75 - colW;
   const offsetY = 70;
 
-  for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+  const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
+  const electionDate = el?.date || '';
+  const layout = getActiveSidoLayout(electionDate);
+
+  for (const [sido, pos] of Object.entries(layout)) {
     if (sido === '전라북도') continue; // 전북특별자치도와 중복 alias
+    const since = SIDO_HEX_SINCE[sido];
+    if (since && electionDate && electionDate < since) continue;
     const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
     const result = resultForSido(sido);
     const top = topCandidate(result);
