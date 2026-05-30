@@ -3,12 +3,117 @@
     "election": "제19대 대통령선거",
     "election_id": "19th-pres-2017",
     "election_date": "2017-05-09",
-    "fetched_at": "2026-05-31T00:32:23+09:00",
+    "fetched_at": "2026-05-31T01:08:21+09:00",
     "is_final": true,
-    "n_calls": 17,
-    "n_rows": 232
+    "n_calls": 18,
+    "n_rows": 233
   },
   "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 42479710,
+      "voters": 32807908,
+      "valid_votes": 32672175,
+      "invalid_votes": 135733,
+      "abstain": 9671802,
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "votes": 13423800,
+          "pct": 41.09,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "votes": 7852849,
+          "pct": 24.04,
+          "rank": 2
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "votes": 6998342,
+          "pct": 21.42,
+          "rank": 3
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "votes": 2208771,
+          "pct": 6.76,
+          "rank": 4
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "votes": 2017458,
+          "pct": 6.17,
+          "rank": 5
+        },
+        {
+          "name": "조원진",
+          "party": "새누리당",
+          "votes": 42949,
+          "pct": 0.13,
+          "rank": 6
+        },
+        {
+          "name": "김민찬",
+          "party": "무소속",
+          "votes": 33990,
+          "pct": 0.1,
+          "rank": 7
+        },
+        {
+          "name": "김선동",
+          "party": "민중연합당",
+          "votes": 27229,
+          "pct": 0.08,
+          "rank": 8
+        },
+        {
+          "name": "장성민",
+          "party": "국민대통합당",
+          "votes": 21709,
+          "pct": 0.07,
+          "rank": 9
+        },
+        {
+          "name": "윤홍식",
+          "party": "홍익당",
+          "votes": 18543,
+          "pct": 0.06,
+          "rank": 10
+        },
+        {
+          "name": "이경희",
+          "party": "한국국민당",
+          "votes": 11355,
+          "pct": 0.03,
+          "rank": 11
+        },
+        {
+          "name": "이재오",
+          "party": "늘푸른한국당",
+          "votes": 9140,
+          "pct": 0.03,
+          "rank": 12
+        },
+        {
+          "name": "오영국",
+          "party": "경제애국당",
+          "votes": 6040,
+          "pct": 0.02,
+          "rank": 13
+        }
+      ]
+    },
     {
       "sg_typecode": "1",
       "sido": "서울특별시",

@@ -3,12 +3,68 @@
     "election": "제18대 대통령선거",
     "election_id": "18th-pres-2012",
     "election_date": "2012-12-19",
-    "fetched_at": "2026-05-31T00:34:18+09:00",
+    "fetched_at": "2026-05-31T01:09:43+09:00",
     "is_final": true,
-    "n_calls": 17,
-    "n_rows": 233
+    "n_calls": 18,
+    "n_rows": 234
   },
   "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 40507842,
+      "voters": 30721459,
+      "valid_votes": 30594621,
+      "invalid_votes": 126838,
+      "abstain": 9786383,
+      "candidates": [
+        {
+          "name": "박근혜",
+          "party": "새누리당",
+          "votes": 15773128,
+          "pct": 51.56,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "문재인",
+          "party": "민주통합당",
+          "votes": 14692632,
+          "pct": 48.02,
+          "rank": 2
+        },
+        {
+          "name": "강지원",
+          "party": "무소속",
+          "votes": 53303,
+          "pct": 0.17,
+          "rank": 3
+        },
+        {
+          "name": "김순자",
+          "party": "무소속",
+          "votes": 46017,
+          "pct": 0.15,
+          "rank": 4
+        },
+        {
+          "name": "김소연",
+          "party": "무소속",
+          "votes": 16687,
+          "pct": 0.05,
+          "rank": 5
+        },
+        {
+          "name": "박종선",
+          "party": "무소속",
+          "votes": 12854,
+          "pct": 0.04,
+          "rank": 6
+        }
+      ]
+    },
     {
       "sg_typecode": "1",
       "sido": "서울특별시",

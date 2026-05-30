@@ -116,17 +116,38 @@ def parse_row_candidates(row: dict) -> list[dict]:
 
 def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str,
                    row: dict) -> dict:
-    """한 row → 표준 race record."""
+    """한 row → 표준 race record.
+
+    sd_name='합계' 호출 응답 — sgg='대한민국' wiw='합계' = nation race.
+    sd_name='합계' 호출 응답 — sgg=시도명 wiw='합계' = 시도별 합계 (sd_name=시도 호출과 동일).
+    sd_name=시도 호출 응답 — wiw='합계' = 시도 합계 (광역단체장 race 본체).
+    sd_name=시도 호출 응답 — wiw=시군구명 = 시군구별 (기초단체장 race 본체 / 광역단체장 세부).
+    """
     # 통합 시도 매핑 (전남광주 등)
     merges = {alias: m["canonical"]
               for m in meta.get("sido_merge", [])
               for alias in m.get("merge_from", [])}
     sd = merges.get(sd, sd)
+    # nation row 식별 — '합계' 호출의 nation row.
+    # 대선: sgg='대한민국' wiw='합계' / 비례: sgg='비례대표' wiw='합계'
+    is_nation = (sgg in ("대한민국", "비례대표")) or (sd == "" and not sgg)
+    if is_nation:
+        scope = "nation"
+        sido_out = ""
+        sigungu_out = ""
+    elif not sgg or sgg == "합계":
+        scope = "sido"
+        sido_out = sd
+        sigungu_out = ""
+    else:
+        scope = "sigungu"
+        sido_out = sd
+        sigungu_out = sgg
     return {
         "sg_typecode": sg_typecode,
-        "sido": sd,
-        "sigungu": sgg if sgg and sgg != "합계" else "",
-        "scope": "sido" if (not sgg or sgg == "합계") else "sigungu",
+        "sido": sido_out,
+        "sigungu": sigungu_out,
+        "scope": scope,
         "electors": int(row.get("sunsu") or 0),
         "voters": int(row.get("tusu") or 0),
         "valid_votes": int(row.get("yutusu") or 0),
@@ -166,8 +187,26 @@ def main():
 
     all_races: list[dict] = []
     n_call = n_row = 0
+    # nation scope race가 의미 있는 office (대선·총선 비례).
+    # sd_name='합계' 호출 → sgg='대한민국' wiw='합계' row 1개 = 전국 race.
+    # 시도별 호출 합산은 재외·관외 누락 → nation race가 정답.
+    NATION_OFFICES = {"1", "7"}
     for office in target_offices:
         tc = office["sg_typecode"]
+        if tc in NATION_OFFICES and not args.dry_run:
+            nation_rows = fetch_xmntck(sg_id, tc, "합계", api_key)
+            n_call += 1
+            for row in nation_rows:
+                # sgg='대한민국' wiw='합계' = 대선 nation race.
+                # sgg='비례대표' wiw='합계' = 총선 비례 nation race.
+                # 그 외 row(시도별)는 중복 → skip.
+                if row.get("sggName") in ("대한민국", "비례대표"):
+                    race = normalize_race(meta, tc, "", row.get("sggName", ""), row)
+                    all_races.append(race)
+                    n_row += 1
+            print(f"  ✓ {office['level']} 전국 합계 nation race",
+                  file=sys.stderr)
+            time.sleep(args.delay)
         sidos = [ALL_SIDOS[0]] if args.dry_run else ALL_SIDOS
         for sd in sidos:
             rows = fetch_xmntck(sg_id, tc, sd, api_key)

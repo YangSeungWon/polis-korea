@@ -3,10 +3,10 @@
     "election": "제20대 국회의원선거",
     "election_id": "20th-general-2016",
     "election_date": "2016-04-13",
-    "fetched_at": "2026-05-31T00:32:52+09:00",
+    "fetched_at": "2026-05-31T01:15:27+09:00",
     "is_final": true,
-    "n_calls": 34,
-    "n_rows": 734
+    "n_calls": 35,
+    "n_rows": 735
   },
   "races": [
     {
@@ -19984,6 +19984,167 @@
           "votes": 37097,
           "pct": 46.48,
           "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 42100398,
+      "voters": 24430746,
+      "valid_votes": 23760977,
+      "invalid_votes": 669769,
+      "abstain": 17669652,
+      "candidates": [
+        {
+          "name": "새누리당",
+          "party": "새누리당",
+          "votes": 7960272,
+          "pct": 33.5,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "국민의당",
+          "party": "국민의당",
+          "votes": 6355572,
+          "pct": 26.75,
+          "rank": 2
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 6069744,
+          "pct": 25.55,
+          "rank": 3
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 1719891,
+          "pct": 7.24,
+          "rank": 4
+        },
+        {
+          "name": "기독자유당",
+          "party": "기독자유당",
+          "votes": 626853,
+          "pct": 2.64,
+          "rank": 5
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 209872,
+          "pct": 0.88,
+          "rank": 6
+        },
+        {
+          "name": "녹색당",
+          "party": "녹색당",
+          "votes": 182301,
+          "pct": 0.77,
+          "rank": 7
+        },
+        {
+          "name": "민중연합당",
+          "party": "민중연합당",
+          "votes": 145624,
+          "pct": 0.61,
+          "rank": 8
+        },
+        {
+          "name": "기독당",
+          "party": "기독당",
+          "votes": 129978,
+          "pct": 0.55,
+          "rank": 9
+        },
+        {
+          "name": "노동당",
+          "party": "노동당",
+          "votes": 91705,
+          "pct": 0.39,
+          "rank": 10
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 86464,
+          "pct": 0.36,
+          "rank": 11
+        },
+        {
+          "name": "불교당",
+          "party": "불교당",
+          "votes": 31141,
+          "pct": 0.13,
+          "rank": 12
+        },
+        {
+          "name": "코리아",
+          "party": "코리아",
+          "votes": 27103,
+          "pct": 0.11,
+          "rank": 13
+        },
+        {
+          "name": "일제·위안부·인권정당",
+          "party": "일제·위안부·인권정당",
+          "votes": 25227,
+          "pct": 0.11,
+          "rank": 14
+        },
+        {
+          "name": "복지국가당",
+          "party": "복지국가당",
+          "votes": 20267,
+          "pct": 0.09,
+          "rank": 15
+        },
+        {
+          "name": "통일한국당",
+          "party": "통일한국당",
+          "votes": 16427,
+          "pct": 0.07,
+          "rank": 16
+        },
+        {
+          "name": "한국국민당",
+          "party": "한국국민당",
+          "votes": 16407,
+          "pct": 0.07,
+          "rank": 17
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 12295,
+          "pct": 0.05,
+          "rank": 18
+        },
+        {
+          "name": "고용복지연금선진화연대",
+          "party": "고용복지연금선진화연대",
+          "votes": 12143,
+          "pct": 0.05,
+          "rank": 19
+        },
+        {
+          "name": "개혁국민신당",
+          "party": "개혁국민신당",
+          "votes": 11981,
+          "pct": 0.05,
+          "rank": 20
+        },
+        {
+          "name": "친반통일당",
+          "party": "친반통일당",
+          "votes": 9710,
+          "pct": 0.04,
+          "rank": 21
         }
       ]
     },

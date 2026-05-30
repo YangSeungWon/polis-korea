@@ -3,10 +3,10 @@
     "election": "제17대 국회의원선거",
     "election_id": "17th-general-2004",
     "election_date": "2004-04-15",
-    "fetched_at": "2026-05-31T00:35:57+09:00",
+    "fetched_at": "2026-05-31T01:14:14+09:00",
     "is_final": true,
-    "n_calls": 34,
-    "n_rows": 711
+    "n_calls": 35,
+    "n_rows": 712
   },
   "races": [
     {
@@ -23176,6 +23176,118 @@
           "votes": 402,
           "pct": 1.21,
           "rank": 4
+        }
+      ]
+    },
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 35596497,
+      "voters": 21581550,
+      "valid_votes": 21285984,
+      "invalid_votes": 295566,
+      "abstain": 14014947,
+      "candidates": [
+        {
+          "name": "열린우리당",
+          "party": "열린우리당",
+          "votes": 8145824,
+          "pct": 38.27,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 7613660,
+          "pct": 35.77,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 2774061,
+          "pct": 13.03,
+          "rank": 3
+        },
+        {
+          "name": "새천년민주당",
+          "party": "새천년민주당",
+          "votes": 1510178,
+          "pct": 7.09,
+          "rank": 4
+        },
+        {
+          "name": "자민련",
+          "party": "자민련",
+          "votes": 600462,
+          "pct": 2.82,
+          "rank": 5
+        },
+        {
+          "name": "기독당",
+          "party": "기독당",
+          "votes": 228837,
+          "pct": 1.08,
+          "rank": 6
+        },
+        {
+          "name": "국민통합21",
+          "party": "국민통합21",
+          "votes": 119746,
+          "pct": 0.56,
+          "rank": 7
+        },
+        {
+          "name": "녹색사민당",
+          "party": "녹색사민당",
+          "votes": 103845,
+          "pct": 0.49,
+          "rank": 8
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 47311,
+          "pct": 0.22,
+          "rank": 9
+        },
+        {
+          "name": "민주화합당",
+          "party": "민주화합당",
+          "votes": 39785,
+          "pct": 0.19,
+          "rank": 10
+        },
+        {
+          "name": "노년권익보호당",
+          "party": "노년권익보호당",
+          "votes": 37084,
+          "pct": 0.17,
+          "rank": 11
+        },
+        {
+          "name": "가자희망2080",
+          "party": "가자희망2080",
+          "votes": 31501,
+          "pct": 0.15,
+          "rank": 12
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 24360,
+          "pct": 0.11,
+          "rank": 13
+        },
+        {
+          "name": "구국총연합",
+          "party": "구국총연합",
+          "votes": 9330,
+          "pct": 0.04,
+          "rank": 14
         }
       ]
     },

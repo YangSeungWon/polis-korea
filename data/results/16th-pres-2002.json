@@ -3,12 +3,68 @@
     "election": "제16대 대통령선거",
     "election_id": "16th-pres-2002",
     "election_date": "2002-12-19",
-    "fetched_at": "2026-05-31T00:36:08+09:00",
+    "fetched_at": "2026-05-31T01:12:19+09:00",
     "is_final": true,
-    "n_calls": 17,
-    "n_rows": 225
+    "n_calls": 18,
+    "n_rows": 226
   },
   "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 34991529,
+      "voters": 24784963,
+      "valid_votes": 24561916,
+      "invalid_votes": 223047,
+      "abstain": 10206566,
+      "candidates": [
+        {
+          "name": "노무현",
+          "party": "새천년민주당",
+          "votes": 12014277,
+          "pct": 48.91,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 11443297,
+          "pct": 46.59,
+          "rank": 2
+        },
+        {
+          "name": "권영길",
+          "party": "민주노동당",
+          "votes": 957148,
+          "pct": 3.9,
+          "rank": 3
+        },
+        {
+          "name": "이한동",
+          "party": "하나로국민연합",
+          "votes": 74027,
+          "pct": 0.3,
+          "rank": 4
+        },
+        {
+          "name": "김길수",
+          "party": "호국당",
+          "votes": 51104,
+          "pct": 0.21,
+          "rank": 5
+        },
+        {
+          "name": "김영규",
+          "party": "사회당",
+          "votes": 22063,
+          "pct": 0.09,
+          "rank": 6
+        }
+      ]
+    },
     {
       "sg_typecode": "1",
       "sido": "서울특별시",

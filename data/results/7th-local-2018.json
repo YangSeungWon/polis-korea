@@ -3,10 +3,10 @@
     "election": "제7회 전국동시지방선거",
     "election_id": "7th-local-2018",
     "election_date": "2018-06-13",
-    "fetched_at": "2026-05-31T00:32:06+09:00",
+    "fetched_at": "2026-05-31T01:08:08+09:00",
     "is_final": true,
     "n_calls": 51,
-    "n_rows": 866
+    "n_rows": 872
   },
   "races": [
     {
@@ -28678,6 +28678,174 @@
           "votes": 42467,
           "pct": 24.36,
           "rank": 3
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "scope": "sido",
+      "electors": 1219507,
+      "voters": 706959,
+      "valid_votes": 686266,
+      "invalid_votes": 20693,
+      "abstain": 512548,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 363708,
+          "pct": 53.0,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 322558,
+          "pct": 47.0,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "동구",
+      "scope": "sigungu",
+      "electors": 191360,
+      "voters": 106322,
+      "valid_votes": 102187,
+      "invalid_votes": 4135,
+      "abstain": 85038,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 56624,
+          "pct": 55.41,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 45563,
+          "pct": 44.59,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "중구",
+      "scope": "sigungu",
+      "electors": 206041,
+      "voters": 116934,
+      "valid_votes": 113104,
+      "invalid_votes": 3830,
+      "abstain": 89107,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 62133,
+          "pct": 54.93,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 50971,
+          "pct": 45.07,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "서구",
+      "scope": "sigungu",
+      "electors": 395365,
+      "voters": 226575,
+      "valid_votes": 221120,
+      "invalid_votes": 5455,
+      "abstain": 168790,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 116617,
+          "pct": 52.74,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 104503,
+          "pct": 47.26,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "유성구",
+      "scope": "sigungu",
+      "electors": 272663,
+      "voters": 168291,
+      "valid_votes": 164148,
+      "invalid_votes": 4143,
+      "abstain": 104372,
+      "candidates": [
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 82506,
+          "pct": 50.26,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 81642,
+          "pct": 49.74,
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "sigungu": "대덕구",
+      "scope": "sigungu",
+      "electors": 154078,
+      "voters": 88837,
+      "valid_votes": 85707,
+      "invalid_votes": 3130,
+      "abstain": 65241,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "votes": 46692,
+          "pct": 54.48,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "votes": 39015,
+          "pct": 45.52,
+          "rank": 2
         }
       ]
     },

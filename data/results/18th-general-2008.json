@@ -3,10 +3,10 @@
     "election": "제18대 국회의원선거",
     "election_id": "18th-general-2008",
     "election_date": "2008-04-09",
-    "fetched_at": "2026-05-31T00:35:20+09:00",
+    "fetched_at": "2026-05-31T01:14:32+09:00",
     "is_final": true,
-    "n_calls": 34,
-    "n_rows": 724
+    "n_calls": 35,
+    "n_rows": 725
   },
   "races": [
     {
@@ -22623,6 +22623,125 @@
           "votes": 863,
           "pct": 1.3,
           "rank": 5
+        }
+      ]
+    },
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 37796035,
+      "voters": 17415920,
+      "valid_votes": 17131537,
+      "invalid_votes": 284383,
+      "abstain": 20380115,
+      "candidates": [
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6421727,
+          "pct": 37.48,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "votes": 4313645,
+          "pct": 25.18,
+          "rank": 2
+        },
+        {
+          "name": "친박연대",
+          "party": "친박연대",
+          "votes": 2258750,
+          "pct": 13.18,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 1173463,
+          "pct": 6.85,
+          "rank": 4
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 973445,
+          "pct": 5.68,
+          "rank": 5
+        },
+        {
+          "name": "창조한국당",
+          "party": "창조한국당",
+          "votes": 651993,
+          "pct": 3.81,
+          "rank": 6
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 504466,
+          "pct": 2.94,
+          "rank": 7
+        },
+        {
+          "name": "기독당",
+          "party": "기독당",
+          "votes": 443775,
+          "pct": 2.59,
+          "rank": 8
+        },
+        {
+          "name": "평화통일가정당",
+          "party": "평화통일가정당",
+          "votes": 180857,
+          "pct": 1.06,
+          "rank": 9
+        },
+        {
+          "name": "국민실향안보당",
+          "party": "국민실향안보당",
+          "votes": 93554,
+          "pct": 0.55,
+          "rank": 10
+        },
+        {
+          "name": "한국사회당",
+          "party": "한국사회당",
+          "votes": 35496,
+          "pct": 0.21,
+          "rank": 11
+        },
+        {
+          "name": "문화예술당",
+          "party": "문화예술당",
+          "votes": 33966,
+          "pct": 0.2,
+          "rank": 12
+        },
+        {
+          "name": "시민당",
+          "party": "시민당",
+          "votes": 17656,
+          "pct": 0.1,
+          "rank": 13
+        },
+        {
+          "name": "직능연합당",
+          "party": "직능연합당",
+          "votes": 16622,
+          "pct": 0.1,
+          "rank": 14
+        },
+        {
+          "name": "신미래당",
+          "party": "신미래당",
+          "votes": 12122,
+          "pct": 0.07,
+          "rank": 15
         }
       ]
     },

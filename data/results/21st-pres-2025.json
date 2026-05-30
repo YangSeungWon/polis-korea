@@ -3,12 +3,61 @@
     "election": "제21대 대통령선거",
     "election_id": "21st-pres-2025",
     "election_date": "2025-06-03",
-    "fetched_at": "2026-05-31T00:36:49+09:00",
+    "fetched_at": "2026-05-31T01:05:41+09:00",
     "is_final": true,
-    "n_calls": 17,
-    "n_rows": 270
+    "n_calls": 18,
+    "n_rows": 271
   },
   "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 44391871,
+      "voters": 35236497,
+      "valid_votes": 34980616,
+      "invalid_votes": 255881,
+      "abstain": 9155374,
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "votes": 17287513,
+          "pct": 49.42,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "votes": 14395639,
+          "pct": 41.15,
+          "rank": 2
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "votes": 2917523,
+          "pct": 8.34,
+          "rank": 3
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "votes": 344150,
+          "pct": 0.98,
+          "rank": 4
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "votes": 35791,
+          "pct": 0.1,
+          "rank": 5
+        }
+      ]
+    },
     {
       "sg_typecode": "1",
       "sido": "서울특별시",
