@@ -1,0 +1,19 @@
+{
+  "id": "21st-pres-2025",
+  "name": "제21대 대통령선거",
+  "type": "pres",
+  "date": "2025-06-03",
+  "nec": {
+    "sg_id": "20250603",
+    "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/presidential_21.json",
+  "_note": "archive. history.html에서 결과 시각화 사용."
+}

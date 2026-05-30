@@ -1,0 +1,19 @@
+{
+  "id": "18th-pres-2012",
+  "name": "제18대 대통령선거",
+  "type": "pres",
+  "date": "2012-12-19",
+  "nec": {
+    "sg_id": "20121219",
+    "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/presidential_18.json",
+  "_note": "archive. history.html에서 결과 시각화 사용."
+}

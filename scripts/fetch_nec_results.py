@@ -157,8 +157,10 @@ def main():
 
     print(f"=== {meta['name']} (sg_id={sg_id}) 개표 결과 fetch ===", file=sys.stderr)
     offices = meta.get("offices", [])
+    # 1=대통령, 2=국회의원, 3=광역단체장, 4=기초단체장, 7=비례대표, 11=교육감.
+    # 5(광역의원)·6(기초의원)는 sd 단위 호출만으로는 race 식별 어려움 → 별도 처리 (TODO)
     target_offices = [o for o in offices
-                      if o.get("sg_typecode") in ("3", "4", "11")]  # 광역·기초·교육감
+                      if o.get("sg_typecode") in ("1", "2", "3", "4", "7", "11")]
     print(f"  대상 office: {[o['level'] for o in target_offices]}", file=sys.stderr)
     print(f"  대상 시도: {len(ALL_SIDOS)}개", file=sys.stderr)
 
@@ -181,13 +183,20 @@ def main():
                   file=sys.stderr)
             time.sleep(args.delay)
 
+    # 옛 선거(선거일 < 오늘 - 7일)는 확정 결과. 신선거는 잠정 가능 → False.
+    from datetime import date, timedelta
+    try:
+        ed = date.fromisoformat(meta["date"])
+        is_final = ed < date.today() - timedelta(days=7)
+    except Exception:
+        is_final = False
     out = {
         "_meta": {
             "election": meta["name"],
             "election_id": meta["id"],
             "election_date": meta["date"],
             "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-            "is_final": False,  # 호출 시점 잠정/확정 판별 어려움 — 보수적으로 False
+            "is_final": is_final,
             "n_calls": n_call,
             "n_rows": n_row,
         },

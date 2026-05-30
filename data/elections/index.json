@@ -5,20 +5,22 @@
     "9th-byelection-2026"
   ],
   "archive": [
-    "8th-local-2022",
+    "21st-pres-2025",
     "22nd-general-2024",
-    "21st-pres-2022",
-    "20th-pres-2017",
-    "19th-pres-2012",
-    "18th-pres-2007",
+    "8th-local-2022",
+    "20th-pres-2022",
     "21st-general-2020",
-    "20th-general-2016",
-    "19th-general-2012",
-    "18th-general-2008",
-    "17th-general-2004",
     "7th-local-2018",
+    "19th-pres-2017",
+    "20th-general-2016",
     "6th-local-2014",
-    "5th-local-2010"
+    "19th-general-2012",
+    "18th-pres-2012",
+    "5th-local-2010",
+    "18th-general-2008",
+    "17th-pres-2007",
+    "17th-general-2004",
+    "16th-pres-2002"
   ],
-  "_note": "archive는 history.html이 보여주는 역대 선거. 실제 메타 파일은 단계적으로 추가. 첫 작업은 active 2건만 분리."
+  "_note": "archive 시간 역순. 각 메타 파일에서 results_file 필드로 data/results/*.json 매핑."
 }
