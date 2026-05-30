@@ -1,0 +1,12 @@
+# 핵심 파이프라인 deps
+pdfplumber>=0.11
+pymupdf>=1.24
+requests>=2.31
+beautifulsoup4>=4.12
+
+# 분석·계산
+scipy>=1.13
+numpy>=1.26
+
+# 지리 (build_sigungu_hex·history 빌드용 — cron 안 돌리지만 import 체인 보호)
+shapely>=2.0

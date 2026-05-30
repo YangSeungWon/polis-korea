@@ -28,8 +28,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install deps
-        run: |
-          pip install pdfplumber pymupdf scipy numpy requests
+        run: pip install -r requirements.txt
 
       # raw PDF cache (3GB 정도 — 매 실행 재다운 안 하게).
       # data/raw/* 는 .gitignore라 commit엔 안 들어가지만 캐시는 유지.
