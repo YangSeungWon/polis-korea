@@ -30,19 +30,38 @@ jobs:
       - name: Install deps
         run: pip install -r requirements.txt
 
-      # raw PDF cache (3GB 정도 — 매 실행 재다운 안 하게).
-      # data/raw/* 는 .gitignore라 commit엔 안 들어가지만 캐시는 유지.
+      # raw PDF cache (매일 누적). data/raw/* 는 .gitignore — commit 안 들어가지만 cache 유지.
       - name: Cache raw PDFs
+        id: cache-raw
         uses: actions/cache@v4
         with:
           path: |
             data/raw/pdf
             data/raw/grids
             data/raw/parsed
-          # 캐시 키는 매일 다르게(=캐시 갱신) + 이전 키로 restore (이전 PDF 보존)
           key: rawdata-${{ github.run_id }}
           restore-keys: |
             rawdata-
+
+      # cache miss (첫 실행 또는 cache 만료 후) — Release zip 다운로드해서 base 복원.
+      # 그 이후 scrape_nesdc가 신규만 추가. 다음 실행부터는 cache hit.
+      - name: Restore from Release (cache miss only)
+        if: steps.cache-raw.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache miss — Release zip 다운로드"
+          gh release download raw-bundle-v1 \
+            --repo YangSeungWon/polis-korea \
+            --pattern 'raw-bundle.tar.gz' \
+            --dir /tmp || true
+          if [ -f /tmp/raw-bundle.tar.gz ]; then
+            tar -xzf /tmp/raw-bundle.tar.gz -C data/
+            echo "복원: $(ls data/raw/pdf | wc -l) PDFs"
+            rm /tmp/raw-bundle.tar.gz
+          else
+            echo "Release zip 다운로드 실패 — scrape가 처음부터 받음"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Pipeline
         env:
