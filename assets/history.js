@@ -476,24 +476,37 @@ function candLabel(c) {
 // === 시도 17셀 hex (메인 페이지와 동일 layout) ===
 
 // 회차 date 기준 시도 cell 표시 여부 (시도 신설·통합 처리).
-//   세종특별자치시: 2012-07-01 신설 (그 이전 회차에선 cell 자체 hide)
-//   전남광주특별시: 2026-06-03 신설 (9회 지선 이전 회차에선 hide, 광주·전남 별개 cell 표시)
+//   세종특별자치시: 2012-07-01 신설 (그 이전 회차에선 cell 자체 없음)
+//   전남광주특별시: 2026-06-03 신설 (9회 지선 이전 회차에선 광주·전남 별개)
 const SIDO_HEX_SINCE = {
   '세종특별자치시': '2012-07-01',
   '전남광주특별시': '2026-06-03',
 };
-// 9회 이전 layout — 광주·전남 별개. 4·5·4·4 layout 유지.
-//   row 2: [광주][대전][대구][부산]      ← 전남광주 자리에 광주
-//   row 3: [전북][전남][경남][제주]      ← row 3 col 2에 전남 추가
+// 9회 이전 layout — 광주·전남 별개.
+//   row 2 col 1 = 광주 (전남광주 자리), row 3 col 2 = 전남 (새 자리)
 const SIDO_HEX_LAYOUT_LEGACY = {
   '광주광역시':     { col: 1, row: 2, label: '광주' },
   '전라남도':       { col: 2, row: 3, label: '전남' },
 };
+// 세종 신설 전 layout — row 1 충남·충북·경북 col 2·3·4 가운데 정렬 (빈 자리 0).
+const SIDO_HEX_LAYOUT_PRE_SEJONG = {
+  '충청남도': { col: 2, row: 1, label: '충남' },
+  '충청북도': { col: 3, row: 1, label: '충북' },
+  '경상북도': { col: 4, row: 1, label: '경북' },
+};
 
 function getActiveSidoLayout(electionDate) {
-  if (!electionDate || electionDate >= '2026-06-03') return SIDO_HEX_LAYOUT;
-  const layout = { ...SIDO_HEX_LAYOUT, ...SIDO_HEX_LAYOUT_LEGACY };
-  delete layout['전남광주특별시'];
+  let layout = { ...SIDO_HEX_LAYOUT };
+  // 9회 이전 — 광주·전남 별개
+  if (electionDate && electionDate < '2026-06-03') {
+    layout = { ...layout, ...SIDO_HEX_LAYOUT_LEGACY };
+    delete layout['전남광주특별시'];
+  }
+  // 세종 신설 전 — row 1 가운데 정렬, 세종 cell 자체 제거
+  if (electionDate && electionDate < '2012-07-01') {
+    layout = { ...layout, ...SIDO_HEX_LAYOUT_PRE_SEJONG };
+    delete layout['세종특별자치시'];
+  }
   return layout;
 }
 
