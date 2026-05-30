@@ -208,15 +208,20 @@ const SIDO_HEX_LAYOUT = {
   '대전광역시':     { col: 2, row: 2, label: '대전' },
   '경상북도':       { col: 3, row: 2, label: '경북' },
 
-  '광주광역시':     { col: 1, row: 3, label: '광주' },
+  // 2026 지선부터 광주·전남 통합 → '전남광주특별시'. 전남 자리에 통합 셀, 광주 자리 빈칸.
+  // 옛 광주·전남 데이터(5~8회 지선)는 history.html에서 별도 layout 사용.
+  '전남광주특별시': { col: 1, row: 4, label: '전남광주' },
+
   '대구광역시':     { col: 2, row: 3, label: '대구' },
   '울산광역시':     { col: 3, row: 3, label: '울산' },  // 경북·대구·부산과 인접하는 동해안
 
-  '전라남도':       { col: 1, row: 4, label: '전남' },
   '경상남도':       { col: 2, row: 4, label: '경남' },
   '부산광역시':     { col: 3, row: 4, label: '부산' },
 
   '제주특별자치도': { col: 1, row: 5, label: '제주' },
 };
 
-const SIDO_HEX_BLANKS = [];
+const SIDO_HEX_BLANKS = [
+  // 옛 광주광역시 자리 — 2026부터 전남광주 통합으로 비움
+  { col: 1, row: 3 },
+];
