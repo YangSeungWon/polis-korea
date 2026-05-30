@@ -3,10 +3,10 @@
     "election": "제20대 국회의원선거",
     "election_id": "20th-general-2016",
     "election_date": "2016-04-13",
-    "fetched_at": "2026-05-31T01:49:48+09:00",
+    "fetched_at": "2026-05-31T02:42:24+09:00",
     "is_final": true,
     "n_calls": 35,
-    "n_rows": 848
+    "n_rows": 849
   },
   "races": [
     {
@@ -67037,6 +67037,30 @@
           "rank": 21
         }
       ]
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "통영시고성군",
+      "scope": "district",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이군현",
+          "party": "새누리당",
+          "votes": 0,
+          "pct": 100.0,
+          "rank": 1,
+          "won": true,
+          "uncontested": true
+        }
+      ],
+      "_source": "nec_uncontested"
     }
   ]
 }

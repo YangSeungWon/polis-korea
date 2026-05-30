@@ -219,6 +219,65 @@ def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str, wiw: str,
     return out
 
 
+def inject_uncontested(election_id: str, races: list[dict]) -> int:
+    """무투표 당선 race를 새 schema에 추가. 추가 건수 반환.
+
+    NEC 개표 API는 투표 진행 지역만 응답 → 단독 후보 등록으로 자동 당선된
+    지역구는 누락. data/raw/nec_uncontested/{n}.json에서 inject.
+    파일 schema: [{sido, name, winner, winner_party}, ...]
+    """
+    # election_id에서 회차 n 추출 ('22nd-general-2024' → 22)
+    parts = election_id.split("-")
+    if len(parts) < 3 or parts[1] not in ("general", "local", "pres"):
+        return 0
+    ordinal = parts[0]  # '22nd', '21st', ...
+    try:
+        n = int(''.join(c for c in ordinal if c.isdigit()))
+    except ValueError:
+        return 0
+    # 총선만 무투표 캐시 보유 (지선은 별도, 대선은 없음)
+    if parts[1] != "general":
+        return 0
+    p = ROOT / f"data/raw/nec_uncontested/{n}.json"
+    if not p.exists():
+        return 0
+    try:
+        uc = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return 0
+    existing = {(r.get("sido", ""), r.get("district", "")) for r in races
+                if r.get("scope") == "district"}
+    added = 0
+    for entry in uc:
+        key = (entry.get("sido", ""), entry.get("name", ""))
+        if not key[1] or key in existing:
+            continue
+        races.append({
+            "sg_typecode": "2",
+            "sido": entry["sido"],
+            "sigungu": "",
+            "district": entry["name"],
+            "scope": "district",
+            "electors": 0,
+            "voters": 0,
+            "valid_votes": 0,
+            "invalid_votes": 0,
+            "abstain": 0,
+            "candidates": [{
+                "name": entry["winner"],
+                "party": entry.get("winner_party", ""),
+                "votes": 0,
+                "pct": 100.0,
+                "rank": 1,
+                "won": True,
+                "uncontested": True,
+            }],
+            "_source": "nec_uncontested",
+        })
+        added += 1
+    return added
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--election", required=True, help="data/elections/{id}.json")
@@ -294,6 +353,13 @@ def main():
         is_final = ed < date.today() - timedelta(days=7)
     except Exception:
         is_final = False
+    # 무투표 당선 backfill — NEC 개표 API는 투표 있는 지역만 반환.
+    # 무투표 당선 지역은 data/raw/nec_uncontested/{n}.json에서 inject (총선만).
+    uc_added = inject_uncontested(args.election, all_races)
+    if uc_added:
+        n_row += uc_added
+        print(f"  ✓ 무투표 당선 backfill: {uc_added}건", file=sys.stderr)
+
     out = {
         "_meta": {
             "election": meta["name"],
