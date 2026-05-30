@@ -37,9 +37,31 @@ def has_result_pdf(nid: str) -> bool:
 
 
 def main():
+    import argparse
+    from datetime import date
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max-days", type=int, default=30,
+                    help="survey_end 기준 최근 N일 이내만 검사 (기본 30). "
+                         "0이면 무제한. 오래된 ntt는 결과 영원히 미게시 가능성 높아 skip.")
+    args = ap.parse_args()
+
     rows = list(csv.DictReader(open(META_CSV, encoding="utf-8")))
     pending = [r for r in rows if not has_result_pdf(r["ntt_id"])]
-    print(f"결과 PDF 없는 ntts: {len(pending)}건 (검사 시작)", file=sys.stderr)
+    n_total = len(pending)
+    if args.max_days > 0:
+        today = date.today()
+        def _within(r):
+            end = r.get("survey_end", "")[:10]
+            if not end:
+                return True  # 날짜 없으면 일단 검사 (보수적)
+            try:
+                d = date.fromisoformat(end)
+                return (today - d).days <= args.max_days
+            except Exception:
+                return True
+        pending = [r for r in pending if _within(r)]
+    print(f"결과 PDF 없는 ntts: {n_total}건 → 최근 {args.max_days}일 이내 {len(pending)}건 검사",
+          file=sys.stderr)
     n_ok = 0
     n_still = 0
     for r in pending:
