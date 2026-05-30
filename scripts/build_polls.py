@@ -286,6 +286,49 @@ def build() -> dict:
         p = parsed.get(ntt_id)
         if not p:
             skipped_no_pdf += 1
+            # 결과 PDF 없는 polls — pending 카드로 emit. 메타만 채우고 candidates 비움.
+            # NESDC sub_election에서 office 추정 (광역단체장·기초단체장·교육감 키워드).
+            sub = m.get("sub_election", "") + " " + m.get("poll_name", "")
+            pending_office = ""
+            if "교육감선거" in sub or "교육감" in sub:
+                pending_office = "교육감"
+            elif "광역단체장선거" in sub or "도지사" in sub or "시장 선거" in sub:
+                pending_office = "광역단체장"
+            elif "기초단체장선거" in sub or "구청장" in sub or "군수" in sub:
+                pending_office = "기초단체장"
+            elif "광역의원" in sub or "기초의원" in sub or "국회의원" in sub:
+                # scope 외 — 카드 안 만듦
+                continue
+            if not pending_office:
+                continue
+            sido_p, sigungu_p = parse_region(m.get("region",""), m.get("sub_election",""))
+            if not sido_p:
+                continue
+            if pending_office in ("광역단체장","교육감"):
+                sigungu_p = ""
+            polls.append({
+                "ntt_id": ntt_id,
+                "source_url": m.get("source_url", ""),
+                "agency": m.get("agency", ""),
+                "co_agency": m.get("co_agency", ""),
+                "requester": requester,
+                "is_self_poll": self_poll,
+                "method": m.get("method", ""),
+                "sample_size": m.get("sample_size", ""),
+                "response_rate": m.get("response_rate", ""),
+                "contact_rate": m.get("contact_rate", ""),
+                "sample_error": m.get("sample_error", ""),
+                "period_start": period_start,
+                "period_end": period_end,
+                "sido": sido_p,
+                "sigungu": sigungu_p,
+                "office_level": pending_office,
+                "office_label": "",
+                "metric_type": "후보지지",
+                "table_title": "",
+                "candidates": [],
+                "is_pending": True,
+            })
             continue
 
         # 후보지지·당선가능성·정당지지·국정평가·투표의향 모두 emit
@@ -664,7 +707,7 @@ def build() -> dict:
         p["office_level"] = off
         p["office_label"] = off
         n_reclass += 1
-    polls = [p for p in polls if p.get("candidates")]
+    polls = [p for p in polls if p.get("candidates") or p.get("is_pending")]
     if n_reclass:
         print(f"  기타→office 재분류 {n_reclass}건", file=sys.stderr)
 
@@ -808,8 +851,8 @@ def build() -> dict:
     if n_merged:
         print(f"  같은 표 split records merge {n_merged}건 흡수", file=sys.stderr)
 
-    # candidates 비어버린 record drop
-    polls = [p for p in polls if p.get("candidates")]
+    # candidates 비어버린 record drop (단, pending은 보존)
+    polls = [p for p in polls if p.get("candidates") or p.get("is_pending")]
 
     # 후보 → 정당 자동 매핑 (정당 미표기 양식 fix)
     # 정당이 있는 후보들에서 (sido, name) → party 사전 구축, 시도·전국 우선순위

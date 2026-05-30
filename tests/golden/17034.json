@@ -1,7 +1,7 @@
 {
   "ntt_id": "17034",
   "source_pdf": "17034_wvE0duRcZoHPoK1KPjPIzA%3D%3D_보고서_비전코리아_공주시장260102M2.pdf",
-  "note": "비전코리아 — 공주 정당지지·후보지지",
+  "note": "비전코리아 — 공주 정당지지·후보지지 / 2026-05-30: parse_pdf_v2 _TABLE_HDR_ROMAN 추가로 제2장 가상대결 1건 추가 (build에서 1명 race drop).",
   "expected_questions": [
     {
       "table_no": "",
@@ -90,6 +90,18 @@
           "pct": 36.5
         }
       ]
+    },
+    {
+      "title": "제2장 조사결과분석 Q4. 차기 공주시장 임달희 vs 최원철 가상대결 공주시 언론인 협회",
+      "election_office": "후보지지",
+      "candidates": [
+        {
+          "name": "최원철가",
+          "party": "",
+          "pct": 42.0
+        }
+      ],
+      "note": "_TABLE_HDR_ROMAN 추가 후 제2장에서 추가 추출. cands garbage(최원철가, 1명)라 build_polls 단계에서 drop."
     }
   ]
 }
