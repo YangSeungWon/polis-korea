@@ -1,50 +1,93 @@
-# korea-election-hex
+# polis-korea
 
-한국 선거 데이터를 **hex 카토그램**으로 시각화하는 정적 사이트 — **[vote.ysw.kr](https://vote.ysw.kr)**.
+[polis.ysw.kr](https://polis.ysw.kr)
 
-역대 대선·총선·지선 개표 결과와 2026년 9회 지방선거·재보궐선거 여론조사를, 면적 왜곡 없이 모든 시군구·선거구를 같은 크기 육각형으로 보여줍니다. 빌드 도구 없는 순수 HTML/CSS/JS + Python 데이터 파이프라인.
+- 9회 지선·재보궐 여론조사 + 역대 대선·총선·지선 개표 결과
+- 시각화 단위는 선거별로: 총선=지역구 / 지선=시군구 / 대선=시군구+인구비례
+- 앞으로 있을 선거들 계속 추가
+- 정적 사이트 (HTML/CSS/JS) + Python 파이프라인
 
 ## 페이지
 
 | 페이지 | 내용 |
 |---|---|
-| **index** (`/`) | 9회 지방선거(2026-06-03) 여론조사 — 시도/시군구 hex + 17셀 시도 격자 |
-| **history** (`/history`) | 역대 선거 결과 — 대선 16~21대, 총선 17~22대(지역구 hex + 비례 픽토그램), 지선 5~8회 |
-| **byelection** (`/byelection`) | 2026 국회의원 재·보궐선거 여론조사 — 선거구별 지도(Leaflet) + 카드 |
+| **index** (`/`) | 9회 지방선거(2026-06-03) 여론조사 — 시도·시군구 지도 + 17셀 시도 격자 |
+| **polls** (`/polls`) | 선거구별 여론조사 카드 — 시계열·산점도·후보 표 |
+| **history** (`/history`) | 역대 선거 — 대선 16~21대, 총선 17~22대(지역구 + 비례), 지선 5~8회 |
+| **byelection** (`/byelection`) | 2026 국회의원 재·보궐선거 여론조사 — 선거구별 지도·카드 |
 
-## 시각화
+향후 추가 예정: 선거 일정·후보 등록 현황·개표 결과 통합.
 
-- **시군구 hex 카토그램** — 250개 시군구를 동일 크기 육각형으로. centroid를 격자에 snap + 시도 클러스터 연결성 보장 (`build_sigungu_hex.py`).
-- **지역구 hex** — 총선 회차별 지역구(254개 등)를 시군구 hex 위에 매핑.
-- **17셀 시도 격자** — 광역단체장·정당 단위 요약용.
-- **비례대표 픽토그램** — 정당별 한 줄, 의석 1석 = 육각형 1개. 지역구+비례 합산 총 300석.
+## 시각화 컨셉
 
-## 데이터 출처·라이선스
+**모든 시군구는 같은 크기 한 칸**.  
+인구가 많고 적음, 면적이 넓고 좁음에 휘둘리지 않는다. 서울 강남구 한 칸, 강원 양양군 한 칸 — 같은 정치적 단위로 본다. 250개 시군구를 육각형 격자에 snap하고 시도 클러스터 연결성을 보장한다 (`build_sigungu_hex.py`).
+
+- **시군구 카토그램** — 9회 지선 + 역대 결과
+- **지역구 카토그램** — 총선 회차별 지역구(약 254개)를 시군구 위에 매핑
+- **17셀 시도 격자** — 광역단체장·정당 단위 요약
+- **비례대표 픽토그램** — 정당별 한 줄, 의석 1석 = 한 칸
+
+## 데이터 출처
 
 모든 출처는 **[`data/sources.json`](data/sources.json)** 단일 레지스트리에 등록, 각 페이지 하단 출처 패널에도 표시.
 
-- **개표 결과·당선인**: 중앙선거관리위원회 (data.go.kr 파일데이터·OpenAPI). 공개 사실 + 공공데이터.
-- **여론조사**: NESDC(중앙선거여론조사심의위원회) 등록·공표 조사. **공직선거법에 따라 의뢰자·기관·조사기간·표본수·응답률·표본오차·NESDC 출처를 표시**하고, 공표금지기간(선거 6일 전~선거일 18시)에는 신규 조사 표시를 차단합니다.
-- 원본 데이터(raw)는 저장소에 포함하지 않으며(`data/raw/` gitignore), 가공 결과(공개 사실)만 공개합니다.
+- **여론조사**: NESDC(중앙선거여론조사심의위원회) 등록·공표 조사 — [www.nesdc.go.kr](https://www.nesdc.go.kr/)
+- **개표 결과·당선인**: 중앙선거관리위원회 — [data.go.kr](https://www.data.go.kr/) OpenAPI · 파일데이터
+- **2026 등록 후보**: NEC CndaSrchService API (선관위 후보자검색)
 
-자세한 데이터 흐름·수집 스크립트·빌드 순서: **[`data/README.md`](data/README.md)**.
+원본(raw)은 저장소에 포함하지 않으며(`data/raw/` gitignore), 가공 결과만 공개한다.
+
+## 법적 사항 — 여론조사 인용
+
+공직선거법에 따라 인용 시 반드시 표시:
+
+1. **의뢰자**
+2. **조사기관**
+3. **조사기간**
+4. **NESDC 원문 링크** (각 카드의 *원문 보기*)
+
+표본수·응답률·접촉률·표본오차도 카드에 함께 표시.  
+**공표금지기간(선거 6일 전~선거일 18시)** 에는 신규 조사 노출을 자동 차단.
 
 ## 로컬 실행
 
 ```bash
+# 정적 사이트만 보기
 python3 -m http.server 8766    # http://localhost:8766
+
+# 데이터 파이프라인 재실행
+python3 -m venv .venv && .venv/bin/pip install pdfplumber pymupdf scipy numpy requests
+.venv/bin/python scripts/scrape_nesdc.py              # NESDC 등록현황 → CSV
+.venv/bin/python scripts/refresh_pending_pdfs.py      # 결과 PDF 후속 첨부 회복
+.venv/bin/python scripts/parse_pdf.py "data/raw/pdf/*.pdf" --jobs 4
+.venv/bin/python scripts/parse_kr_stats.py            # 통계표 stacked-header 보강
+.venv/bin/python scripts/patch_cross_tab.py           # 자체조사 cross-tab 정정
+.venv/bin/python scripts/patch_byelection.py          # 재보궐 PDF 후보 추출
+.venv/bin/python scripts/build_polls.py               # → data/polls/aggregated.json
+.venv/bin/python scripts/build_byelection.py          # → data/polls/byelection.json
+.venv/bin/python scripts/build_static.py              # → polls.json·history.json·sitemap
+.venv/bin/python scripts/optimize_data.py             # 정적 자산 압축
 ```
 
-데이터 재생성(선택):
+전체 데이터 흐름·수집 스크립트·빌드 순서: **[`data/README.md`](data/README.md)**.
 
-```bash
-python3 -m venv .venv && .venv/bin/pip install pdfplumber pymupdf scipy numpy
-.venv/bin/python scripts/build_sigungu_hex.py
-for n in 19 20 21 22; do .venv/bin/python scripts/build_district_hex_v2.py $n; done
+## 디렉터리
+
 ```
-
-전체 파이프라인은 `data/README.md`의 "빌드 순서" 참고.
+.
+├── *.html              # 정적 페이지
+├── assets/             # 공통 CSS·JS
+├── data/
+│   ├── polls/          # aggregated·byelection·history 공개 JSON
+│   ├── geo/            # 시군구·지역구 hex 좌표
+│   ├── sources.json    # 데이터 출처 레지스트리
+│   └── raw/            # gitignore (원본 PDF·CSV)
+├── scripts/            # 파이프라인 Python
+└── tests/              # 골든 baseline (parse 룰 회귀 검출)
+```
 
 ## 라이선스
 
-코드는 자유롭게 활용 가능. 데이터는 각 출처의 라이선스(대부분 공공데이터·공개 사실)를 따르며, 여론조사 인용은 위 표시 의무를 전제로 합니다.
+- **코드**: MIT
+- **데이터**: 각 출처 라이선스(대부분 공공누리·공공데이터). 여론조사 인용은 위 표시 의무 전제.
