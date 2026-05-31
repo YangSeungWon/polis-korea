@@ -95,7 +95,7 @@ SIDO_BASE_SHAPE = {
     # cells 적은 회차는 shape_for(cells)로 작은 shape 자동 계산 (dense).
     # 여유 자리 25~50% 확보 — 분구 cluster 매핑 위해 (강남갑·을·병 자리 선택권 확대).
     # 외곽 빈자리만 발생, 시도 내부 빈자리 X (작은 회차 cells에는 shape_for로 dense).
-    '인천광역시':     (3, 8),    # 24 col 0~2 row 3~10 (cells 14 + 외곽 빈자리 10) — 서울 직접 인접
+    '인천광역시':     (3, 5),    # 15 col 0~2 row 4~8 (cells 14 dense fit) — 서울 row 4~8 직접 인접
     '서울특별시':     (7, 8),    # 56 (max 48 + 여유 8) — 분구 cluster 위해
     '경기도':         (12, 13),  # bbox col 0~11 row 0~12 (156) - 서울 56 - 인천 24 = 76 자리 (cells 60 + 여유 16) — 남부 cells row 11·12 cluster
 
@@ -156,7 +156,7 @@ SIDO_SHAPE = SIDO_BASE_SHAPE
 SIDO_OFFSET = {
     # 한국 지리 dense 배치. 모든 시도 boundary 인접 (gap 0).
     # 사용자 의도 — 경기↔강원 gap 줄임, 중남부 시도들 상승.
-    '인천광역시':     (0, 3),    # col 0~1 row 3~10 (2×8=16)
+    '인천광역시':     (0, 4),    # col 0~2 row 4~8 (3×5=15) — dense, 서울 row 3~10 옆
     '서울특별시':     (3, 3),    # col 3~9 row 3~10 (7×8=56) — 여유 8
     '경기도':         (0, 0),    # bbox col 0~14 row 0~11. 서울·인천 exclude.
     '강원특별자치도': (12, 0),   # col 12~15 row 0~5 (경기 col 11 인접)
