@@ -101,7 +101,7 @@ def build_polls(urls: list):
     # 루트 / 도 sitemap에 포함 (가장 높은 priority)
     urls.append(('/', '1.0', 'daily'))
     for office_ko, slug in OFFICE_SLUG.items():
-        title = f'vote · 9회 지선 {office_ko} 여론조사'
+        title = f'polis · 9회 지선 {office_ko} 여론조사'
         desc = f'2026 제9회 전국동시지방선거 {office_ko} 여론조사를 시도·시군구 단위로. NESDC 등록 조사 인용.'
         canon = f'/{slug}/'
         html = replace_meta(template, title, desc, canon, {'office': office_ko})
@@ -125,7 +125,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
             el_date = meta.get('date', '')
             if type_key == 'local':
                 for office_ko, off_slug in LOCAL_OFFICE_SLUG.items():
-                    title = f'vote · {n}회 {type_short} {office_ko} ({el_date})'
+                    title = f'polis · {n}회 {type_short} {office_ko} ({el_date})'
                     desc = f'{n}회 전국동시지방선거 {office_ko} 결과 ({el_date}) — 시군구 hex 격자 시각화.'
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
                     init_state = {'type': type_key, 'n': n, 'office': office_ko}
@@ -136,7 +136,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
             else:
                 winner = meta.get('winner', '')
                 winner_str = f' · {winner} 당선' if winner else ''
-                title = f'vote · {n}{type_short} ({el_date}){winner_str}'
+                title = f'polis · {n}{type_short} ({el_date}){winner_str}'
                 desc = f'{n}{type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
                 canon = f'/history/{type_slug}/{n}/'
                 init_state = {'type': type_key, 'n': n}
