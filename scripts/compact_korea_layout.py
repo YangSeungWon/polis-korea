@@ -58,36 +58,38 @@ SIDO_MAX_CELLS = {
 SIDO_BASE_SHAPE = {
     # max cells (22대 또는 legacy) 기준 시도 cluster shape.
     # cells 적은 회차는 shape_for(cells)로 작은 shape 자동 계산 (dense).
-    '인천광역시':     (3, 5),
-    '서울특별시':     (7, 7),
-    '경기도':         (11, 12),  # 132 - 49 (서울 exclude) = 83 (max 60, 23 외곽 자리 — 남부 cells)
+    # 여유 자리 25~50% 확보 — 분구 cluster 매핑 위해 (강남갑·을·병 자리 선택권 확대).
+    # 외곽 빈자리만 발생, 시도 내부 빈자리 X (작은 회차 cells에는 shape_for로 dense).
+    '인천광역시':     (3, 6),    # 18 (max 14 + 여유 4) col 0~2 row 4~9
+    '서울특별시':     (7, 8),    # 56 (max 48 + 여유 8)
+    '경기도':         (11, 12),  # ring dynamic — compute_gyeonggi_ring +여유
 
-    '강원특별자치도': (4, 5),
-    '경상북도':       (5, 5),  # 25 (max 23 + 2 외곽)
+    '강원특별자치도': (4, 6),    # 24 (max 18 + 여유 6)
+    '경상북도':       (5, 6),    # 30 (max 23 + 여유 7)
 
-    '충청남도':       (4, 4),  # col 3~6 row 12~15 (세종 col 7 인접)
+    '충청남도':       (4, 5),    # 20 (max 16 + 여유 4)
     '세종특별자치시': (1, 2),
-    '충청북도':       (4, 4),  # col 8~11 row 12~15 (세종 col 7 인접)
-    '대전광역시':     (3, 3),
-    '대구광역시':     (4, 3),
-    '울산광역시':     (2, 3),
-    '전북특별자치도': (4, 4),
-    '경상남도':       (4, 6),  # 24 (22 cells, 2 외곽)
-    '부산광역시':     (5, 4),
-    '광주광역시':     (3, 3),
-    '전라남도':       (5, 5),
-    '제주특별자치도': (3, 1),
+    '충청북도':       (4, 5),    # 20 (max 14 + 여유 6)
+    '대전광역시':     (3, 3),    # 9 (max 7 + 여유 2)
+    '대구광역시':     (4, 4),    # 16 (max 12 + 여유 4)
+    '울산광역시':     (2, 3),    # 6 (정확)
+    '전북특별자치도': (4, 5),    # 20 (max 15 + 여유 5)
+    '경상남도':       (3, 7),    # 21 (max 18 + 여유 3) — col 11~13 row 16~22
+    '부산광역시':     (5, 5),    # 25 (max 18 + 여유 7) — col 14~18 row 16~20
+    '광주광역시':     (3, 4),    # 12 (max 8 + 여유 4)
+    '전라남도':       (5, 6),    # 30 (max 22 + 여유 8)
+    '제주특별자치도': (3, 1),    # 3 (정확)
 }
 
 
 def compute_gyeonggi_ring(n_cells: int, seoul_shape: tuple[int, int]) -> tuple[int, int]:
-    """경기 ring shape — 서울 둘러쌈 + cells N fit.
+    """경기 ring shape — 서울 둘러쌈 + cells N fit + 여유 20%.
 
-    outer × outer ≥ cells + seoul_total. ring 두께 ≥ 1.
+    outer × outer ≥ (cells + seoul_total) * 1.2. ring 두께 ≥ 1.
     """
     sw, sh = seoul_shape
     s_total = sw * sh
-    target = n_cells + s_total
+    target = (n_cells + s_total) * 1.2  # 여유 20% — 분구 cluster 매핑 위해
     side = math.ceil(math.sqrt(target))
     min_side = max(sw, sh) + 2  # ring 두께 ≥ 1
     side = max(side, min_side)
@@ -107,20 +109,14 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
         return compute_gyeonggi_ring(n_cells, seoul_shape)
     w_b, h_b = base
     base_total = w_b * h_b
-    # 서울은 cells fit (시군구 25 → (5, 5) dense)
-    if sido == '서울특별시':
-        if n_cells >= base_total * 0.85:
-            return base
-        ratio = w_b / h_b
-        h = max(1, math.ceil(math.sqrt(n_cells / ratio)))
-        w = max(1, math.ceil(n_cells / h))
-        return (w, h)
-    # 나머지 시도 — 50% 이상이면 base 유지
-    if n_cells >= base_total * 0.5:
+    # cells 갯수 fit (여유 30%) — 작은 회차에는 작은 dense shape, 큰 회차에는 base.
+    # 내부 빈자리 없이 외곽 인접 시도 쪽 cluster.
+    target = n_cells * 1.3  # 여유 30%
+    if target >= base_total:
         return base
     ratio = w_b / h_b
-    h = max(1, math.ceil(math.sqrt(n_cells / ratio)))
-    w = max(1, math.ceil(n_cells / h))
+    h = max(1, math.ceil(math.sqrt(target / ratio)))
+    w = max(1, math.ceil(target / h))
     return (w, h)
 
 
@@ -133,23 +129,23 @@ SIDO_SHAPE = SIDO_BASE_SHAPE
 SIDO_OFFSET = {
     # 한국 지리 dense 배치. 모든 시도 boundary 인접 (gap 0).
     # 사용자 의도 — 경기↔강원 gap 줄임, 중남부 시도들 상승.
-    '인천광역시':     (0, 4),    # col 0~2 row 4~8
-    '서울특별시':     (3, 3),    # col 3~9 row 3~9
-    '경기도':         (3, 0),    # col 3~13 row 0~9 — shape (11, 10) cells = 자리 정확 fit
-    '강원특별자치도': (14, 0),   # col 14~17 row 0~4 (gap 0)
-    '경상북도':       (14, 5),   # col 14~18 row 5~9
-    '충청남도':       (3, 12),   # col 3~6 row 12~15 (경기 row 11 인접)
+    '인천광역시':     (0, 4),    # col 0~2 row 4~9 (3×6=18)
+    '서울특별시':     (3, 3),    # col 3~9 row 3~10 (7×8=56) — 여유 8
+    '경기도':         (3, 0),    # ring col 3~14 row 0~11 — 동적 (12×12 fit)
+    '강원특별자치도': (15, 0),   # col 15~18 row 0~5
+    '경상북도':       (15, 6),   # col 15~19 row 6~11
+    '충청남도':       (3, 12),   # col 3~6 row 12~16
     '세종특별자치시': (7, 13),   # col 7 row 13~14
-    '충청북도':       (8, 12),   # col 8~11 row 12~15
-    '대구광역시':     (14, 10),  # col 14~17 row 10~12
-    '울산광역시':     (18, 10),  # col 18~19 row 10~12
-    '대전광역시':     (7, 16),   # col 7~9 row 16~18 (전북 col 6 인접)
-    '전북특별자치도': (3, 16),   # col 3~6 row 16~19
-    '경상남도':       (11, 13),  # col 11~14 row 13~18
-    '부산광역시':     (15, 13),  # col 15~19 row 13~16
-    '광주광역시':     (3, 20),   # col 3~5 row 20~22
-    '전라남도':       (6, 20),   # col 6~10 row 20~24
-    '제주특별자치도': (7, 25),   # col 7~9 row 25
+    '충청북도':       (8, 12),   # col 8~11 row 12~16
+    '대구광역시':     (15, 12),  # col 15~18 row 12~15
+    '울산광역시':     (19, 13),  # col 19~20 row 13~15 (대구 row 12 인접)
+    '대전광역시':     (7, 17),   # col 7~9 row 17~19 (전북 col 6 인접)
+    '전북특별자치도': (3, 17),   # col 3~6 row 17~21
+    '경상남도':       (11, 16),  # col 11~13 row 16~22 (대구 row 15 인접)
+    '부산광역시':     (14, 16),  # col 14~18 row 16~20 (경남 col 13 인접)
+    '광주광역시':     (3, 22),   # col 3~5 row 22~25
+    '전라남도':       (6, 22),   # col 6~10 row 22~27
+    '제주특별자치도': (7, 28),   # col 7~9 row 28
 }
 
 
@@ -177,6 +173,15 @@ def cell_geo(cell, centers):
     name = cell.get("name", "")
     sido = {'강원도': '강원특별자치도', '전라북도': '전북특별자치도',
             '제주도': '제주특별자치도'}.get(sido, sido)
+    # 1) cell.sigungus field 우선 — 자치구 list 평균 centroid
+    #    (강남구갑 → ['강남구'], 수원시갑 → ['수원시장안구·권선·팔달·영통'])
+    sigungus = cell.get("sigungus", [])
+    if sigungus:
+        geos = [centers.get((sido, s)) for s in sigungus]
+        valid = [g for g in geos if g is not None]
+        if valid:
+            return (sum(g[0] for g in valid) / len(valid),
+                    sum(g[1] for g in valid) / len(valid))
     if (sido, name) in centers:
         return centers[(sido, name)]
     if name.endswith('시') or name.endswith('군'):
@@ -194,6 +199,11 @@ def cell_geo(cell, centers):
     i = name.find("시")
     if i > 0 and i < len(name) - 1 and (sido, name[:i+1]) in centers:
         return centers[(sido, name[:i+1])]
+    # name 끝 [갑을병정무] 제거 → 자치구명 (은평구갑 → 은평구)
+    import re
+    m = re.match(r'^(.+?)([갑을병정무]+)$', name)
+    if m and (sido, m.group(1)) in centers:
+        return centers[(sido, m.group(1))]
     # 시도 평균 fallback
     sido_geos = [v for (s, _), v in centers.items() if s == sido]
     if sido_geos:
@@ -225,93 +235,79 @@ def normalize(arr):
     return (arr - mn) / rng
 
 
-def assign_cells(cells, positions, centers, w_lon=2.5, n_swap=50):
-    # 분구 cluster — 같은 자치구 cells (강남갑·을·병) 가까운 자리에 강제 cluster.
+def assign_cells(cells, positions, centers, w_lon=2.5):
+    """자치구 단위 매핑 + 분구 인접 자리.
+
+    1) cells를 (sido, sigungus) group으로 묶음
+    2) 자치구 centroid → 자치구 N개를 자리 N개에 Hungarian 매핑 (분구 cells 갯수 X)
+    3) 분구 cells (group size > 1) → anchor 자리 + N-1 인접 자리 (남은 자리 중)
+
+    원리 — 자치구 위치 lat·lon 정확 매핑이 우선. 분구 cells는 자치구 anchor 주변
+    cluster (anchor 가까운 free 자리에 매핑).
+    """
+    if not positions or not cells:
+        return [None] * len(cells)
+
     # 1) group cells by (sido, sigungus)
-    # 2) 큰 group부터 group centroid 가까운 N 자리 차지 (greedy)
-    # 3) 나머지 cells Hungarian으로 매핑
     by_group = defaultdict(list)
     for c in cells:
         sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
         sido = c.get("sido", "")
         by_group[(sido, sigungus)].append(c)
 
-    # 자리 정규화 (col, row) → distance 계산용
-    if not positions:
-        return [None] * len(cells)
-    pos_arr = np.array(positions, dtype=float)
-    pos_n_full = normalize(pos_arr) if len(positions) > 1 else np.array([[0.5, 0.5]])
-
-    # cells 정규화 위해 모든 cells geo 모음 + sido 평균 normalize
-    all_geos = [cell_geo(c, centers) for c in cells]
-    valid_geos = [g for g in all_geos if g is not None]
-    if not valid_geos:
-        return [None] * len(cells)
-    geo_arr = np.array(valid_geos, dtype=float)
-    geo_n_min = geo_arr.min(axis=0)
-    geo_n_rng = np.where(geo_arr.max(axis=0) - geo_n_min > 0,
-                          geo_arr.max(axis=0) - geo_n_min, 1)
-
-    def norm_geo(g):
-        n = (np.array(g) - geo_n_min) / geo_n_rng
-        return (n[0], 1 - n[1])  # flip lat
-
-    cells_assigned = {id(c): None for c in cells}
-    used_pos = set()
-
-    # 큰 group부터 cluster (greedy)
-    groups_sorted = sorted(by_group.items(), key=lambda kv: -len(kv[1]))
-    for key, group in groups_sorted:
-        if len(group) < 2:
-            continue  # 단일 cell은 나중 Hungarian
-        # group centroid (cell_geo 평균)
+    sigus = list(by_group.keys())
+    sigu_geos = []
+    for key in sigus:
+        group = by_group[key]
         geos = [cell_geo(c, centers) for c in group]
         valid = [g for g in geos if g is not None]
-        if not valid:
-            continue
-        cx = sum(g[0] for g in valid) / len(valid)
-        cy = sum(g[1] for g in valid) / len(valid)
-        # 정규화 centroid
-        cx_n = (cx - geo_n_min[0]) / geo_n_rng[0]
-        cy_n = 1 - (cy - geo_n_min[1]) / geo_n_rng[1]
-        # free positions distance to centroid
-        free = [p for p in positions if p not in used_pos]
-        if len(free) < len(group):
-            continue
-        # normalize free pos
-        def dist(p):
-            pn = (np.array(p, dtype=float) - pos_arr.min(axis=0)) / \
-                 np.where(pos_arr.max(axis=0) - pos_arr.min(axis=0) > 0,
-                          pos_arr.max(axis=0) - pos_arr.min(axis=0), 1)
-            dx = cx_n - pn[0]
-            dy = cy_n - pn[1]
-            return w_lon * dx * dx + dy * dy
-        free.sort(key=dist)
-        # group N cells → N closest free, cells.name 순서 적용
-        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
-        for i, c in enumerate(group_sorted):
-            cells_assigned[id(c)] = free[i]
-            used_pos.add(free[i])
+        if valid:
+            cx = sum(g[0] for g in valid) / len(valid)
+            cy = sum(g[1] for g in valid) / len(valid)
+            sigu_geos.append((cx, cy))
+        else:
+            sigu_geos.append(None)
 
-    # 나머지 cells (단일 cell 또는 group 매핑 실패) — Hungarian
-    remaining = [c for c in cells if cells_assigned[id(c)] is None]
-    remaining_pos = [p for p in positions if p not in used_pos]
-    if remaining and remaining_pos:
-        rem_geos = [cell_geo(c, centers) for c in remaining]
-        rem_valid = [i for i, g in enumerate(rem_geos) if g is not None]
-        if rem_valid and len(rem_valid) <= len(remaining_pos):
-            rg_arr = np.array([rem_geos[i] for i in rem_valid], dtype=float)
-            rg_n = normalize(rg_arr); rg_n[:, 1] = 1 - rg_n[:, 1]
-            rp_arr = np.array(remaining_pos, dtype=float)
-            rp_n = normalize(rp_arr) if len(remaining_pos) > 1 else np.array([[0.5, 0.5]])
-            cost = np.zeros((len(rem_valid), len(remaining_pos)))
-            for i in range(len(rem_valid)):
-                for j in range(len(remaining_pos)):
-                    dx = rg_n[i, 0] - rp_n[j, 0]; dy = rg_n[i, 1] - rp_n[j, 1]
-                    cost[i, j] = w_lon * dx*dx + dy*dy
-            _, col_ind = linear_sum_assignment(cost)
-            for i_local, j in enumerate(col_ind):
-                cells_assigned[id(remaining[rem_valid[i_local]])] = remaining_pos[j]
+    # 2) 자치구 N개 → 자리 N개 Hungarian
+    valid_idx = [i for i, g in enumerate(sigu_geos) if g is not None]
+    if not valid_idx or len(valid_idx) > len(positions):
+        return [None] * len(cells)
+    geo_arr = np.array([sigu_geos[i] for i in valid_idx], dtype=float)
+    pos_arr = np.array(positions, dtype=float)
+    geo_n = normalize(geo_arr); geo_n[:, 1] = 1 - geo_n[:, 1]
+    pos_n = normalize(pos_arr) if len(positions) > 1 else np.array([[0.5, 0.5]])
+    cost = np.zeros((len(valid_idx), len(positions)))
+    for i in range(len(valid_idx)):
+        for j in range(len(positions)):
+            dx = geo_n[i, 0] - pos_n[j, 0]; dy = geo_n[i, 1] - pos_n[j, 1]
+            cost[i, j] = w_lon * dx * dx + dy * dy
+    _, col_ind = linear_sum_assignment(cost)
+
+    # 3) 자치구 자리 적용 + 분구 인접 자리
+    cells_assigned = {id(c): None for c in cells}
+    used_pos = set()
+    pending_extras = []  # [(extra_cells, anchor_pos)]
+    for i_local, sigu_idx in enumerate(valid_idx):
+        key = sigus[sigu_idx]
+        group = by_group[key]
+        anchor = positions[col_ind[i_local]]
+        used_pos.add(anchor)
+        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
+        cells_assigned[id(group_sorted[0])] = anchor
+        if len(group_sorted) > 1:
+            pending_extras.append((group_sorted[1:], anchor))
+
+    # 4) 분구 cells — anchor 가까운 free 자리 차지 (자치구 크기 큰 group 먼저)
+    pending_extras.sort(key=lambda x: -len(x[0]))
+    for extras, anchor in pending_extras:
+        free = [p for p in positions if p not in used_pos]
+        if not free:
+            break
+        free.sort(key=lambda p: (p[0] - anchor[0]) ** 2 + (p[1] - anchor[1]) ** 2)
+        for k, c in enumerate(extras):
+            if k < len(free):
+                cells_assigned[id(c)] = free[k]
+                used_pos.add(free[k])
 
     return [cells_assigned[id(c)] for c in cells]
 
