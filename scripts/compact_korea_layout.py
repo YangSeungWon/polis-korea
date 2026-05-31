@@ -142,27 +142,27 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     if sido == '경기도':
         # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
         return base
-    # 경기·인천 base 고정 (서울 ring 안정 위해). 서울 + 나머지 시도 — cells dense fit.
-    if sido in ('경기도', '인천광역시'):
-        return base
-    w_b, h_b = base
-    base_total = w_b * h_b
-    target = n_cells + 1
-    if target >= base_total:
-        return base
-    # 모든 (w, h) 중 — w·h ≥ target, w ≤ w_b, h ≤ h_b — 자리 최소 + ratio 가까운 선호
-    ratio = w_b / h_b
-    best = base
-    best_score = (base_total, abs(w_b / h_b - ratio))
-    for w in range(1, w_b + 1):
-        h = math.ceil(target / w)
-        if h > h_b or w * h < target:
-            continue
-        score = (w * h, abs(w / h - ratio))
-        if score < best_score:
-            best = (w, h)
-            best_score = score
-    return best
+    # base 유지 — cells가 base 안에 spread (외측 자리도 사용). 후처리로 시도 사이
+    # gap 줄임. 서울만 cells fit (회차별 크기 차이 큼).
+    if sido == '서울특별시':
+        w_b, h_b = base
+        base_total = w_b * h_b
+        target = n_cells + 1
+        if target >= base_total:
+            return base
+        ratio = w_b / h_b
+        best = base
+        best_score = (base_total, abs(w_b / h_b - ratio))
+        for w in range(1, w_b + 1):
+            h = math.ceil(target / w)
+            if h > h_b or w * h < target:
+                continue
+            score = (w * h, abs(w / h - ratio))
+            if score < best_score:
+                best = (w, h)
+                best_score = score
+        return best
+    return base
 
 
 # 호환 alias
