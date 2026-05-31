@@ -571,22 +571,23 @@ def fill_between_sido(cells, n_iter=100,
                 cs_in = by_sido[top_sido]
                 cx = sum(c["c"] for c in cs_in) / len(cs_in)
                 cy = sum(c["r"] for c in cs_in) / len(cs_in)
+                # 외측 cell만 (same_sido_ng ≤ 2) + 이동이 centroid 가까워지거나 동일거리 OK.
+                # cluster 확장은 OK이지만 — centroid 매우 멀리 가는 이동 X.
                 best_cand = None
-                best_gain = 0
+                best_gain = -1.0  # gain ≥ 0 + 약간 음수까지 OK
                 for cand in cs_in:
-                    # 후보 cell의 이전 자리가 cluster 외측 (4 이웃 같은 시도 cells ≤ 2)
-                    # 이어야 — 그래야 이동 후 끊어짐 risk 낮음
-                    same_sido_ng = 0
-                    for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                        p = (cand["c"] + dc, cand["r"] + dr)
-                        if p in pos_to_cell and pos_to_cell[p]["sido"] == top_sido:
-                            same_sido_ng += 1
+                    same_sido_ng = sum(
+                        1 for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]
+                        if (cand["c"] + dc, cand["r"] + dr) in pos_to_cell
+                        and pos_to_cell[(cand["c"] + dc, cand["r"] + dr)]["sido"] == top_sido
+                    )
                     if same_sido_ng > 2:
-                        continue  # cluster 내부 cell — 이동 시 끊어짐 risk
+                        continue
                     d_cur = (cand["c"] - cx) ** 2 + (cand["r"] - cy) ** 2
                     d_new = (col - cx) ** 2 + (row - cy) ** 2
                     gain = d_cur - d_new
-                    if gain > best_gain:
+                    # gain ≥ -2 (이동 후 centroid 약간 멀어져도 OK — cluster 확장)
+                    if gain > best_gain and gain > -2.0:
                         best_gain = gain
                         best_cand = cand
                 if best_cand:
@@ -711,10 +712,11 @@ def process(src_name, out_suffix="_v2"):
 
     # 후처리 1 — 시도 안 빈자리 채우기 (외측 cells 안쪽으로)
     post_compact(cells)
-    # 후처리 2 — 시도 사이 빈자리 채우기 (호남·충청·영남 cluster 확장)
+    # 후처리 2 — 시도 사이 빈자리 채우기 (호남·충청·영남 cluster 확장 적극)
     fill_between_sido(cells)
-    # 후처리 3 — 경기·서울·인천 cluster 연결성 회복 (작은 분할 → 큰 cluster 인접)
-    reconnect_cluster(cells, sidos=('경기도', '서울특별시', '인천광역시'))
+    # 후처리 3 — 모든 시도 cluster 연결성 회복 (확장 후 끊김 fix)
+    all_sidos = tuple(set(c["sido"] for c in cells))
+    reconnect_cluster(cells, sidos=all_sidos)
 
     out = src.with_name(src.stem + out_suffix + src.suffix)
     out.write_text(json.dumps(cells, ensure_ascii=False), encoding="utf-8")
