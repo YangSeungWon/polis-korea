@@ -226,6 +226,98 @@ def normalize(arr):
 
 
 def assign_cells(cells, positions, centers, w_lon=2.5, n_swap=50):
+    # 분구 cluster — 같은 자치구 cells (강남갑·을·병) 가까운 자리에 강제 cluster.
+    # 1) group cells by (sido, sigungus)
+    # 2) 큰 group부터 group centroid 가까운 N 자리 차지 (greedy)
+    # 3) 나머지 cells Hungarian으로 매핑
+    by_group = defaultdict(list)
+    for c in cells:
+        sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
+        sido = c.get("sido", "")
+        by_group[(sido, sigungus)].append(c)
+
+    # 자리 정규화 (col, row) → distance 계산용
+    if not positions:
+        return [None] * len(cells)
+    pos_arr = np.array(positions, dtype=float)
+    pos_n_full = normalize(pos_arr) if len(positions) > 1 else np.array([[0.5, 0.5]])
+
+    # cells 정규화 위해 모든 cells geo 모음 + sido 평균 normalize
+    all_geos = [cell_geo(c, centers) for c in cells]
+    valid_geos = [g for g in all_geos if g is not None]
+    if not valid_geos:
+        return [None] * len(cells)
+    geo_arr = np.array(valid_geos, dtype=float)
+    geo_n_min = geo_arr.min(axis=0)
+    geo_n_rng = np.where(geo_arr.max(axis=0) - geo_n_min > 0,
+                          geo_arr.max(axis=0) - geo_n_min, 1)
+
+    def norm_geo(g):
+        n = (np.array(g) - geo_n_min) / geo_n_rng
+        return (n[0], 1 - n[1])  # flip lat
+
+    cells_assigned = {id(c): None for c in cells}
+    used_pos = set()
+
+    # 큰 group부터 cluster (greedy)
+    groups_sorted = sorted(by_group.items(), key=lambda kv: -len(kv[1]))
+    for key, group in groups_sorted:
+        if len(group) < 2:
+            continue  # 단일 cell은 나중 Hungarian
+        # group centroid (cell_geo 평균)
+        geos = [cell_geo(c, centers) for c in group]
+        valid = [g for g in geos if g is not None]
+        if not valid:
+            continue
+        cx = sum(g[0] for g in valid) / len(valid)
+        cy = sum(g[1] for g in valid) / len(valid)
+        # 정규화 centroid
+        cx_n = (cx - geo_n_min[0]) / geo_n_rng[0]
+        cy_n = 1 - (cy - geo_n_min[1]) / geo_n_rng[1]
+        # free positions distance to centroid
+        free = [p for p in positions if p not in used_pos]
+        if len(free) < len(group):
+            continue
+        # normalize free pos
+        def dist(p):
+            pn = (np.array(p, dtype=float) - pos_arr.min(axis=0)) / \
+                 np.where(pos_arr.max(axis=0) - pos_arr.min(axis=0) > 0,
+                          pos_arr.max(axis=0) - pos_arr.min(axis=0), 1)
+            dx = cx_n - pn[0]
+            dy = cy_n - pn[1]
+            return w_lon * dx * dx + dy * dy
+        free.sort(key=dist)
+        # group N cells → N closest free, cells.name 순서 적용
+        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
+        for i, c in enumerate(group_sorted):
+            cells_assigned[id(c)] = free[i]
+            used_pos.add(free[i])
+
+    # 나머지 cells (단일 cell 또는 group 매핑 실패) — Hungarian
+    remaining = [c for c in cells if cells_assigned[id(c)] is None]
+    remaining_pos = [p for p in positions if p not in used_pos]
+    if remaining and remaining_pos:
+        rem_geos = [cell_geo(c, centers) for c in remaining]
+        rem_valid = [i for i, g in enumerate(rem_geos) if g is not None]
+        if rem_valid and len(rem_valid) <= len(remaining_pos):
+            rg_arr = np.array([rem_geos[i] for i in rem_valid], dtype=float)
+            rg_n = normalize(rg_arr); rg_n[:, 1] = 1 - rg_n[:, 1]
+            rp_arr = np.array(remaining_pos, dtype=float)
+            rp_n = normalize(rp_arr) if len(remaining_pos) > 1 else np.array([[0.5, 0.5]])
+            cost = np.zeros((len(rem_valid), len(remaining_pos)))
+            for i in range(len(rem_valid)):
+                for j in range(len(remaining_pos)):
+                    dx = rg_n[i, 0] - rp_n[j, 0]; dy = rg_n[i, 1] - rp_n[j, 1]
+                    cost[i, j] = w_lon * dx*dx + dy*dy
+            _, col_ind = linear_sum_assignment(cost)
+            for i_local, j in enumerate(col_ind):
+                cells_assigned[id(remaining[rem_valid[i_local]])] = remaining_pos[j]
+
+    return [cells_assigned[id(c)] for c in cells]
+
+
+# 이전 Hungarian-only 함수 보존 (참고)
+def _assign_cells_hungarian(cells, positions, centers, w_lon=2.5, n_swap=50):
     geos = [cell_geo(c, centers) for c in cells]
     valid = [i for i, g in enumerate(geos) if g is not None]
     if len(valid) < 1:
