@@ -60,9 +60,9 @@ SIDO_BASE_SHAPE = {
     # cells 적은 회차는 shape_for(cells)로 작은 shape 자동 계산 (dense).
     # 여유 자리 25~50% 확보 — 분구 cluster 매핑 위해 (강남갑·을·병 자리 선택권 확대).
     # 외곽 빈자리만 발생, 시도 내부 빈자리 X (작은 회차 cells에는 shape_for로 dense).
-    '인천광역시':     (3, 6),    # 18 (max 14 + 여유 4) col 0~2 row 4~9
-    '서울특별시':     (7, 8),    # 56 (max 48 + 여유 8)
-    '경기도':         (11, 12),  # ring dynamic — compute_gyeonggi_ring +여유
+    '인천광역시':     (2, 8),    # 16 (max 14 + 여유 2) col 0~1 row 3~10 — col 2 비워서 서울 서측 도시 (부천·광명·시흥) 자리
+    '서울특별시':     (7, 8),    # 56 (max 48 + 여유 8) — 분구 cluster 위해
+    '경기도':         (15, 12),  # fixed bbox col 0~14 row 0~11 — 서울·인천 exclude. 동적 X.
 
     '강원특별자치도': (4, 6),    # 24 (max 18 + 여유 6)
     '경상북도':       (5, 6),    # 30 (max 23 + 여유 7)
@@ -105,8 +105,8 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     """
     base = SIDO_BASE_SHAPE.get(sido, (3, 3))
     if sido == '경기도':
-        seoul_shape = SIDO_BASE_SHAPE.get('서울특별시', (7, 7))
-        return compute_gyeonggi_ring(n_cells, seoul_shape)
+        # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
+        return base
     w_b, h_b = base
     base_total = w_b * h_b
     # cells 갯수 fit (여유 30%) — 작은 회차에는 작은 dense shape, 큰 회차에는 base.
@@ -129,9 +129,9 @@ SIDO_SHAPE = SIDO_BASE_SHAPE
 SIDO_OFFSET = {
     # 한국 지리 dense 배치. 모든 시도 boundary 인접 (gap 0).
     # 사용자 의도 — 경기↔강원 gap 줄임, 중남부 시도들 상승.
-    '인천광역시':     (0, 4),    # col 0~2 row 4~9 (3×6=18)
+    '인천광역시':     (0, 3),    # col 0~1 row 3~10 (2×8=16)
     '서울특별시':     (3, 3),    # col 3~9 row 3~10 (7×8=56) — 여유 8
-    '경기도':         (3, 0),    # ring col 3~14 row 0~11 — 동적 (12×12 fit)
+    '경기도':         (0, 0),    # bbox col 0~14 row 0~11. 서울·인천 exclude.
     '강원특별자치도': (15, 0),   # col 15~18 row 0~5
     '경상북도':       (15, 6),   # col 15~19 row 6~11
     '충청남도':       (3, 12),   # col 3~6 row 12~16
@@ -233,6 +233,110 @@ def normalize(arr):
     mn = arr.min(axis=0); mx = arr.max(axis=0)
     rng = np.where(mx - mn > 0, mx - mn, 1)
     return (arr - mn) / rng
+
+
+def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_pos):
+    """경기처럼 ring 모양 (서울 둘러쌈) 자리에 매핑.
+
+    cells lat·lon → ring center 기준 polar (angle, distance).
+    자리 col·row → ring center 자리 기준 polar (angle, distance).
+    Hungarian cost = angle diff + distance diff (정규화).
+    """
+    if not positions or not cells:
+        return [None] * len(cells)
+
+    # 1) group cells by (sido, sigungus)
+    by_group = defaultdict(list)
+    for c in cells:
+        sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
+        sido = c.get("sido", "")
+        by_group[(sido, sigungus)].append(c)
+
+    sigus = list(by_group.keys())
+    sigu_geos = []
+    for key in sigus:
+        group = by_group[key]
+        geos = [cell_geo(c, centers) for c in group]
+        valid = [g for g in geos if g is not None]
+        if valid:
+            cx = sum(g[0] for g in valid) / len(valid)
+            cy = sum(g[1] for g in valid) / len(valid)
+            sigu_geos.append((cx, cy))
+        else:
+            sigu_geos.append(None)
+
+    # polar coord (각도, 거리) — ring center 기준
+    def polar_geo(g):
+        dx = g[0] - ring_center_geo[0]
+        dy = g[1] - ring_center_geo[1]
+        return math.atan2(dy, dx), math.hypot(dx, dy)
+
+    def polar_pos(p):
+        dx = p[0] - ring_center_pos[0]
+        # row 클수록 남쪽 = lat 작음. row flip하여 polar y와 일치
+        dy = -(p[1] - ring_center_pos[1])
+        return math.atan2(dy, dx), math.hypot(dx, dy)
+
+    valid_idx = [i for i, g in enumerate(sigu_geos) if g is not None]
+    if not valid_idx or len(valid_idx) > len(positions):
+        return [None] * len(cells)
+
+    cell_polars = [polar_geo(sigu_geos[i]) for i in valid_idx]
+    pos_polars = [polar_pos(p) for p in positions]
+
+    # 거리 정규화 (cell·pos 각자)
+    cell_dists = [d for _, d in cell_polars]
+    pos_dists = [d for _, d in pos_polars]
+    cd_max = max(cell_dists) if cell_dists else 1
+    pd_max = max(pos_dists) if pos_dists else 1
+    cd_max = cd_max if cd_max > 0 else 1
+    pd_max = pd_max if pd_max > 0 else 1
+
+    # cost = (각도 차이)^2 * w_angle + (거리 차이 정규화)^2 * w_dist
+    w_angle = 3.0  # 각도가 ring projection 핵심
+    w_dist = 1.0
+    cost = np.zeros((len(valid_idx), len(positions)))
+    for i in range(len(valid_idx)):
+        ca, cd = cell_polars[i]
+        cd_n = cd / cd_max
+        for j in range(len(positions)):
+            pa, pd = pos_polars[j]
+            pd_n = pd / pd_max
+            # 각도 차이 wrap-around 처리 (-π~π)
+            ad = ca - pa
+            while ad > math.pi: ad -= 2 * math.pi
+            while ad < -math.pi: ad += 2 * math.pi
+            dd = cd_n - pd_n
+            cost[i, j] = w_angle * ad * ad + w_dist * dd * dd
+    _, col_ind = linear_sum_assignment(cost)
+
+    # 자치구 자리 + 분구 인접 자리
+    cells_assigned = {id(c): None for c in cells}
+    used_pos = set()
+    pending_extras = []
+    for i_local, sigu_idx in enumerate(valid_idx):
+        key = sigus[sigu_idx]
+        group = by_group[key]
+        anchor = positions[col_ind[i_local]]
+        used_pos.add(anchor)
+        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
+        cells_assigned[id(group_sorted[0])] = anchor
+        if len(group_sorted) > 1:
+            pending_extras.append((group_sorted[1:], anchor))
+
+    # 분구 cluster — anchor 가까운 free 자리 (swap X — 다른 자치구 anchor 망침)
+    pending_extras.sort(key=lambda x: -len(x[0]))
+    for extras, anchor in pending_extras:
+        free = [p for p in positions if p not in used_pos]
+        if not free:
+            break
+        free.sort(key=lambda p: (p[0] - anchor[0]) ** 2 + (p[1] - anchor[1]) ** 2)
+        for k, c in enumerate(extras):
+            if k < len(free):
+                cells_assigned[id(c)] = free[k]
+                used_pos.add(free[k])
+
+    return [cells_assigned[id(c)] for c in cells]
 
 
 def assign_cells(cells, positions, centers, w_lon=2.5):
@@ -362,16 +466,19 @@ def process(src_name, out_suffix="_v2"):
         by_sido[c["sido"]].append(c)
 
 
-    # 회차별 cells 갯수 → shape 동적 계산 (경기 ring은 현재 서울 shape 기준)
+    # 회차별 cells 갯수 → shape 동적 계산
     seoul_cells_n = len(by_sido.get('서울특별시', []))
     seoul_shape = shape_for('서울특별시', seoul_cells_n)
-    gyeonggi_cells_n = len(by_sido.get('경기도', []))
-    gyeonggi_shape = compute_gyeonggi_ring(gyeonggi_cells_n, seoul_shape) \
-        if gyeonggi_cells_n else (1, 1)
+    gyeonggi_shape = SIDO_BASE_SHAPE['경기도']  # 고정 (15, 12)
     seoul_offset = SIDO_OFFSET.get('서울특별시', (3, 3))
     seoul_bbox = (seoul_offset[0], seoul_offset[1],
                   seoul_offset[0] + seoul_shape[0] - 1,
                   seoul_offset[1] + seoul_shape[1] - 1)
+    icn_shape = SIDO_BASE_SHAPE['인천광역시']
+    icn_offset = SIDO_OFFSET['인천광역시']
+    icn_bbox = (icn_offset[0], icn_offset[1],
+                icn_offset[0] + icn_shape[0] - 1,
+                icn_offset[1] + icn_shape[1] - 1)
 
     print(f"\n=== {src_name} ({len(cells)} cells) ===")
     for sido, sido_cells in sorted(by_sido.items()):
@@ -387,9 +494,22 @@ def process(src_name, out_suffix="_v2"):
             shape_ = gyeonggi_shape
         else:
             shape_ = shape_for(sido, n)
-        excludes = [seoul_bbox] if sido == '경기도' else []
+        if sido == '경기도':
+            excludes = [seoul_bbox, icn_bbox]
+        else:
+            excludes = []
         positions = positions_in_bbox(offset, shape_, excludes)
-        new_pos = assign_cells(sido_cells, positions, centers)
+        if sido == '경기도':
+            # 경기 ring projection — 서울 중심 lat·lon + 자리 중심 기준 polar
+            seoul_centers = [v for (s, _), v in centers.items() if s == '서울특별시']
+            seoul_geo_center = (sum(g[0] for g in seoul_centers) / len(seoul_centers),
+                                sum(g[1] for g in seoul_centers) / len(seoul_centers))
+            seoul_pos_center = ((seoul_bbox[0] + seoul_bbox[2]) / 2,
+                                (seoul_bbox[1] + seoul_bbox[3]) / 2)
+            new_pos = assign_cells_ring(sido_cells, positions, centers,
+                                         seoul_geo_center, seoul_pos_center)
+        else:
+            new_pos = assign_cells(sido_cells, positions, centers)
         applied = 0
         for cell, p in zip(sido_cells, new_pos):
             if p:
