@@ -136,6 +136,10 @@ function adaptNewSchema(raw, type) {
     const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '7');
     const sidoProp = races.filter((r) => r.scope === 'sido' && r.sg_typecode === '7');
     out.national = nation ? _raceToOldNation(nation) : _aggSidoToNation(sidoProp);
+    // 비례 의석 — _meta.proportional_seats (NEC API fetch 결과를 새 schema에 백필)
+    if (raw._meta?.proportional_seats) {
+      out.national.proportional_seats = raw._meta.proportional_seats;
+    }
     out.district = races.filter((r) => r.scope === 'district' && r.sg_typecode === '2')
                         .map(_raceToOldDistrict);
     // 시군구는 비례 시군구별 (총선 시군구 hex 대안)
