@@ -63,10 +63,11 @@ SIDO_BASE_SHAPE = {
     '경기도':         (11, 12),  # 132 - 49 (서울 exclude) = 83 (max 60, 23 외곽 자리 — 남부 cells)
 
     '강원특별자치도': (4, 5),
-    '경상북도':       (5, 5),
-    '충청남도':       (4, 4),
+    '경상북도':       (5, 5),  # 25 (max 23 + 2 외곽)
+
+    '충청남도':       (4, 4),  # col 3~6 row 12~15 (세종 col 7 인접)
     '세종특별자치시': (1, 2),
-    '충청북도':       (4, 4),
+    '충청북도':       (4, 4),  # col 8~11 row 12~15 (세종 col 7 인접)
     '대전광역시':     (3, 3),
     '대구광역시':     (4, 3),
     '울산광역시':     (2, 3),
@@ -79,19 +80,33 @@ SIDO_BASE_SHAPE = {
 }
 
 
+def compute_gyeonggi_ring(n_cells: int, seoul_shape: tuple[int, int]) -> tuple[int, int]:
+    """경기 ring shape — 서울 둘러쌈 + cells N fit.
+
+    outer × outer ≥ cells + seoul_total. ring 두께 ≥ 1.
+    """
+    sw, sh = seoul_shape
+    s_total = sw * sh
+    target = n_cells + s_total
+    side = math.ceil(math.sqrt(target))
+    min_side = max(sw, sh) + 2  # ring 두께 ≥ 1
+    side = max(side, min_side)
+    return (side, side)
+
+
 def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     """cells 갯수에 fit shape.
 
-    경기 같이 ring 시도는 base shape 유지 (서울 둘러쌈).
-    나머지 시도는 cells fit (base aspect ratio).
+    경기 — cells fit ring (서울 둘러쌈, dynamic).
+    나머지 시도 — cells fit (base aspect ratio).
     """
     base = SIDO_BASE_SHAPE.get(sido, (3, 3))
-    # 경기는 항상 base (서울 둘러쌈 위해)
+    # 경기 dynamic ring
     if sido == '경기도':
-        return base
+        seoul_shape = SIDO_BASE_SHAPE.get('서울특별시', (7, 7))
+        return compute_gyeonggi_ring(n_cells, seoul_shape)
     w_b, h_b = base
     base_total = w_b * h_b
-    # cells fit (base 90% 이상이면 base 그대로)
     if n_cells >= base_total * 0.85:
         return base
     ratio = w_b / h_b
@@ -250,10 +265,12 @@ def process(src_name, out_suffix="_v2"):
         by_sido[c["sido"]].append(c)
 
 
-    # 회차별 cells 갯수 → shape 동적 계산
-    # 서울 cluster shape (회차별)
+    # 회차별 cells 갯수 → shape 동적 계산 (경기 ring은 현재 서울 shape 기준)
     seoul_cells_n = len(by_sido.get('서울특별시', []))
     seoul_shape = shape_for('서울특별시', seoul_cells_n)
+    gyeonggi_cells_n = len(by_sido.get('경기도', []))
+    gyeonggi_shape = compute_gyeonggi_ring(gyeonggi_cells_n, seoul_shape) \
+        if gyeonggi_cells_n else (1, 1)
     seoul_offset = SIDO_OFFSET.get('서울특별시', (3, 3))
     seoul_bbox = (seoul_offset[0], seoul_offset[1],
                   seoul_offset[0] + seoul_shape[0] - 1,
@@ -266,7 +283,13 @@ def process(src_name, out_suffix="_v2"):
             continue
         n = len(sido_cells)
         offset = SIDO_OFFSET[sido]
-        shape_ = shape_for(sido, n)  # 회차별 cells 갯수 동적
+        # 동적 shape — 서울·경기는 위에서 계산한 값
+        if sido == '서울특별시':
+            shape_ = seoul_shape
+        elif sido == '경기도':
+            shape_ = gyeonggi_shape
+        else:
+            shape_ = shape_for(sido, n)
         excludes = [seoul_bbox] if sido == '경기도' else []
         positions = positions_in_bbox(offset, shape_, excludes)
         new_pos = assign_cells(sido_cells, positions, centers)
