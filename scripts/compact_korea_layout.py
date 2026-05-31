@@ -98,16 +98,24 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     """cells 갯수에 fit shape.
 
     경기 — cells fit ring (서울 둘러쌈, dynamic).
-    나머지 시도 — cells fit (base aspect ratio).
+    서울 — cells fit (시군구 25 vs 22대 48 큰 차이).
+    나머지 시도 — base 유지 (50% 이상 — 시도 boundary 인접).
     """
     base = SIDO_BASE_SHAPE.get(sido, (3, 3))
-    # 경기 dynamic ring
     if sido == '경기도':
         seoul_shape = SIDO_BASE_SHAPE.get('서울특별시', (7, 7))
         return compute_gyeonggi_ring(n_cells, seoul_shape)
     w_b, h_b = base
     base_total = w_b * h_b
-    # base shape 유지 — cells 50% 이상이면 base (시도 boundary 인접 유지)
+    # 서울은 cells fit (시군구 25 → (5, 5) dense)
+    if sido == '서울특별시':
+        if n_cells >= base_total * 0.85:
+            return base
+        ratio = w_b / h_b
+        h = max(1, math.ceil(math.sqrt(n_cells / ratio)))
+        w = max(1, math.ceil(n_cells / h))
+        return (w, h)
+    # 나머지 시도 — 50% 이상이면 base 유지
     if n_cells >= base_total * 0.5:
         return base
     ratio = w_b / h_b
