@@ -688,7 +688,13 @@ function shortDistrictLabel(name, sido) {
   }
   // 갑/을 suffix는 body에 붙임 ('평택갑')
   if (suf) body = body + suf;
-  const sidoAbbr = sido ? (SIDO_HEX_LAYOUT[sido]?.label || sido.slice(0, 2)) : '';
+  // SIDO_HEX_LAYOUT에 '전라남도'·'광주광역시'는 9회 통합으로 인해 '전남광주특별시' 키만
+  // 등록됨. 22대 이전 회차 cells가 '전라남도'·'광주광역시' sido이라 fallback 필요.
+  const SIDO_LABEL_FALLBACK = {
+    '전라남도': '전남', '광주광역시': '광주',
+    '강원도': '강원', '제주도': '제주', '전라북도': '전북',
+  };
+  const sidoAbbr = sido ? (SIDO_HEX_LAYOUT[sido]?.label || SIDO_LABEL_FALLBACK[sido] || sido.slice(0, 2)) : '';
   return { prefix: sidoAbbr, short: body, fullName: name };
 }
 

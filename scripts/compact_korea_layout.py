@@ -99,8 +99,8 @@ SIDO_BASE_SHAPE = {
     '서울특별시':     (7, 8),    # 56 (max 48 + 여유 8) — 분구 cluster 위해
     '경기도':         (12, 13),  # bbox col 0~11 row 0~12 (156) - 서울 56 - 인천 24 = 76 자리 (cells 60 + 여유 16) — 남부 cells row 11·12 cluster
 
-    '강원특별자치도': (4, 6),    # 24 (max 18 + 여유 6)
-    '경상북도':       (5, 6),    # 30 (max 23 + 여유 7)
+    '강원특별자치도': (3, 6),    # 18 (max 18 fit) — col 12~14
+    '경상북도':       (4, 6),    # 24 (max legacy 23 fit) — shape_for로 22대 cells 13는 dense (3, 5)
 
     '충청남도':       (4, 5),    # 20 (max 16 + 여유 4)
     '세종특별자치시': (1, 5),    # col 7 row 12~16 (cells 1~2 → 외곽 빈자리 충남↔충북 사이 채움)
@@ -142,19 +142,28 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     if sido == '경기도':
         # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
         return base
-    # 큰 시도 (경기·인천·서울) base 유지. 나머지 시도는 cells N fit (+1 여유).
-    # 작은 시도들 dense cluster — 외곽 빈자리 최소.
+    # 큰 시도 (경기·인천·서울) base 유지. 나머지는 cells dense fit
+    # — base 안에서 ratio 비슷하면서 자리 최소 (외곽 빈자리 최소).
     if sido in ('경기도', '인천광역시', '서울특별시'):
         return base
     w_b, h_b = base
     base_total = w_b * h_b
-    target = n_cells + 1  # 여유 1 (분구 cluster)
+    target = n_cells + 1
     if target >= base_total:
         return base
+    # 모든 (w, h) 중 — w·h ≥ target, w ≤ w_b, h ≤ h_b — 자리 최소 + ratio 가까운 선호
     ratio = w_b / h_b
-    h = max(1, math.ceil(math.sqrt(target / ratio)))
-    w = max(1, math.ceil(target / h))
-    return (w, h)
+    best = base
+    best_score = (base_total, abs(w_b / h_b - ratio))
+    for w in range(1, w_b + 1):
+        h = math.ceil(target / w)
+        if h > h_b or w * h < target:
+            continue
+        score = (w * h, abs(w / h - ratio))
+        if score < best_score:
+            best = (w, h)
+            best_score = score
+    return best
 
 
 # 호환 alias
@@ -169,8 +178,8 @@ SIDO_OFFSET = {
     '인천광역시':     (0, 4),    # col 0~2 row 4~8 (3×5=15) — dense, 서울 row 3~10 옆
     '서울특별시':     (3, 3),    # col 3~9 row 3~10 (7×8=56) — 여유 8
     '경기도':         (0, 0),    # bbox col 0~14 row 0~11. 서울·인천 exclude.
-    '강원특별자치도': (12, 0),   # col 12~15 row 0~5 (경기 col 11 인접)
-    '경상북도':       (12, 6),   # col 12~16 row 6~11
+    '강원특별자치도': (12, 1),   # col 12~14 row 1~6 (사용자 — 한 row 내림)
+    '경상북도':       (12, 7),   # col 12~15 row 7~12 (사용자 — 내림)
     '충청남도':       (3, 13),   # col 3~6 row 13~17 (경기 row 12 인접)
     '세종특별자치시': (7, 13),   # col 7 row 13~17 (충남 col 6 인접)
     '충청북도':       (8, 13),   # col 8~11 row 13~17 (세종 col 7 인접)
@@ -180,8 +189,8 @@ SIDO_OFFSET = {
     '전북특별자치도': (3, 18),   # col 3~6 row 18~22
     '경상남도':       (12, 17),  # col 12~14 row 17~23 (충북 col 11 인접)
     '부산광역시':     (15, 17),  # col 15~19 row 17~21 (경남 col 14 인접)
-    '광주광역시':     (3, 23),   # col 3~5 row 23~26
-    '전라남도':       (6, 23),   # col 6~10 row 23~28
+    '전라남도':       (3, 23),   # col 3~6 row 23~28 (사용자 — 왼쪽)
+    '광주광역시':     (7, 23),   # col 7~9 row 23~26 (전남 옆)
     '제주특별자치도': (7, 29),   # col 7~9 row 29
 }
 
