@@ -29,7 +29,7 @@ HISTORY_TEMPLATE = ROOT / 'history.html'
 MANIFEST = ROOT / 'data/results/manifest.json'
 ELECTIONS = ROOT / 'data/elections.json'
 
-SITE = 'https://vote.ysw.kr'  # canonical base. robots/sitemap에 사용.
+SITE = 'https://polis.ysw.kr'  # canonical base. robots/sitemap에 사용.
 
 # polls office → URL slug + Korean label
 OFFICE_SLUG = {

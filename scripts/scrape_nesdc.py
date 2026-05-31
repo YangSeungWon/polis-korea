@@ -33,7 +33,7 @@ PDF_DIR = RAW / "pdf"
 CSV_PATH = RAW / "nesdc_9th_polls.csv"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (vote-via-data scraper; +https://vote.ysw.kr)"
+    "User-Agent": "Mozilla/5.0 (vote-via-data scraper; +https://polis.ysw.kr)"
 }
 
 

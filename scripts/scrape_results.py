@@ -77,7 +77,7 @@ META = {
     },
 }
 
-UA = "Mozilla/5.0 (vote-via-data scraper; +https://vote.ysw.kr)"
+UA = "Mozilla/5.0 (vote-via-data scraper; +https://polis.ysw.kr)"
 
 
 def download_csv(type_: str, n: int) -> Path:

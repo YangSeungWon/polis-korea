@@ -178,45 +178,72 @@ async function init() {
     b.addEventListener('click', () => setSizing(b.dataset.sizing));
   });
 
-  // 초기 상태 — URL 쿼리스트링 우선, 없으면 prerender INITIAL_STATE
-  const params = new URLSearchParams(location.search);
-  const init0 = {
-    type: params.get('type') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.type),
-    n: params.get('n') ? +params.get('n') : (typeof window !== 'undefined' && window.__INITIAL_STATE__?.n),
-    office: params.get('office') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.office),
-    sizing: params.get('sizing') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.sizing),
-  };
+  // 초기 상태 — path 우선 (prerender path 호환), 쿼리스트링·INITIAL_STATE fallback
+  // path: /history/presidential/16/ or /history/local/8/governor/
+  const init0 = parseInitialState();
   const type0 = init0.type || 'presidential';
   setType(type0, /*skipDefaultRound=*/ init0.n != null);
   if (init0.office && init0.office !== state.office) setOffice(init0.office);
   if (init0.sizing && init0.sizing !== state.sizing) setSizing(init0.sizing);
   if (init0.n != null) setRound(init0.n);
 
-  // popstate (브라우저 뒤·앞)
+  // popstate (브라우저 뒤·앞) — path 우선
   window.addEventListener('popstate', () => {
-    const p = new URLSearchParams(location.search);
-    const t = p.get('type') || 'presidential';
-    const n = p.get('n') ? +p.get('n') : null;
-    const o = p.get('office');
-    if (t !== state.type) setType(t, n != null);
-    if (o && o !== state.office) setOffice(o);
-    if (n != null && n !== state.n) setRound(n);
+    const s = parseInitialState();
+    if (s.type && s.type !== state.type) setType(s.type, s.n != null);
+    if (s.office && s.office !== state.office) setOffice(s.office);
+    if (s.n != null && s.n !== state.n) setRound(s.n);
   });
 
   $('#loading').hidden = true;
 }
 
-// URL 쿼리스트링 갱신 (새로고침 시 같은 상태 복원)
-function updateURL() {
-  const params = new URLSearchParams();
-  if (state.type && state.type !== 'presidential') params.set('type', state.type);
-  if (state.n != null) params.set('n', state.n);
-  if (state.type === 'local' && state.office && state.office !== '광역단체장') {
-    params.set('office', state.office);
+// URL ↔ state — path-based (prerender 호환, SEO 최적)
+//   대선:   /history/presidential/{n}/
+//   총선:   /history/national-assembly/{n}/
+//   지선:   /history/local/{n}/{governor|mayor|superintendent}/
+const TYPE_TO_SLUG = { presidential: 'presidential', national_assembly: 'national-assembly', local: 'local' };
+const SLUG_TO_TYPE = { presidential: 'presidential', 'national-assembly': 'national_assembly', local: 'local' };
+const OFFICE_TO_SLUG = { '광역단체장': 'governor', '기초단체장': 'mayor', '교육감': 'superintendent' };
+const SLUG_TO_OFFICE = { governor: '광역단체장', mayor: '기초단체장', superintendent: '교육감' };
+
+function parseInitialState() {
+  // path: /history/presidential/16/ or /history/local/8/governor/
+  const path = location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+  const params = new URLSearchParams(location.search);
+  const init = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
+  let type, n, office;
+  if (path[0] === 'history' && path[1]) {
+    type = SLUG_TO_TYPE[path[1]];
+    if (path[2]) n = +path[2];
+    if (type === 'local' && path[3]) office = SLUG_TO_OFFICE[path[3]];
   }
+  // 쿼리스트링·INITIAL_STATE fallback
+  return {
+    type: type || params.get('type') || init.type,
+    n: n != null ? n : (params.get('n') ? +params.get('n') : init.n),
+    office: office || params.get('office') || init.office,
+    sizing: params.get('sizing') || init.sizing,
+  };
+}
+
+function buildPath() {
+  const tSlug = TYPE_TO_SLUG[state.type];
+  if (!tSlug || state.n == null) return '/history.html';
+  let path = `/history/${tSlug}/${state.n}/`;
+  if (state.type === 'local' && state.office) {
+    const oSlug = OFFICE_TO_SLUG[state.office];
+    if (oSlug) path += `${oSlug}/`;
+  }
+  return path;
+}
+
+function updateURL() {
+  const newPath = buildPath();
+  const params = new URLSearchParams();
   if (state.sizing && state.sizing !== '동일') params.set('sizing', state.sizing);
   const q = params.toString();
-  const newUrl = q ? `${location.pathname}?${q}` : location.pathname;
+  const newUrl = q ? `${newPath}?${q}` : newPath;
   if (newUrl !== location.pathname + location.search) {
     history.replaceState(null, '', newUrl);
   }
