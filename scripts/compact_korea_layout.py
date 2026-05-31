@@ -462,6 +462,191 @@ def _assign_cells_hungarian(cells, positions, centers, w_lon=2.5, n_swap=50):
     return out_pos
 
 
+def reconnect_cluster(cells, sidos=('경기도',), n_iter=30):
+    """시도 cluster 끊어진 작은 components → 큰 cluster 인접 빈자리로 이동.
+
+    경기·서울·인천 ring 시도 cluster 1 group 유지 위해.
+    """
+    by_sido = defaultdict(list)
+    for c in cells:
+        by_sido[c["sido"]].append(c)
+
+    for sido in sidos:
+        cs = by_sido.get(sido, [])
+        if len(cs) < 2:
+            continue
+        for _ in range(n_iter):
+            used = set((c["c"], c["r"]) for c in cells)
+            pos_set = set((c["c"], c["r"]) for c in cs)
+            pos_to_cell = {(c["c"], c["r"]): c for c in cs}
+            # connected components (BFS)
+            unvisited = set(pos_set)
+            components = []
+            while unvisited:
+                start = next(iter(unvisited))
+                comp = {start}
+                stack = [start]
+                while stack:
+                    p = stack.pop()
+                    for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                        n = (p[0] + dc, p[1] + dr)
+                        if n in pos_set and n not in comp:
+                            comp.add(n)
+                            stack.append(n)
+                components.append(comp)
+                unvisited -= comp
+            if len(components) <= 1:
+                break
+            components.sort(key=lambda c: -len(c))
+            main = components[0]
+            # 작은 components의 cells → main 인접 빈자리로
+            moved = False
+            for small in components[1:]:
+                for p in small:
+                    cell = pos_to_cell[p]
+                    # main 인접 빈자리 (any free 자리, 다른 시도 자리 X)
+                    best = None
+                    best_d = float("inf")
+                    for mp in main:
+                        for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            n = (mp[0] + dc, mp[1] + dr)
+                            if n in used:
+                                continue
+                            d = (cell["c"] - n[0]) ** 2 + (cell["r"] - n[1]) ** 2
+                            if d < best_d:
+                                best_d = d
+                                best = n
+                    if best:
+                        prev = (cell["c"], cell["r"])
+                        used.discard(prev)
+                        used.add(best)
+                        pos_set.discard(prev)
+                        pos_set.add(best)
+                        pos_to_cell.pop(prev, None)
+                        cell["c"], cell["r"] = best
+                        pos_to_cell[best] = cell
+                        main.add(best)
+                        moved = True
+            if not moved:
+                break
+
+
+def fill_between_sido(cells, n_iter=100,
+                       skip=('경기도', '서울특별시', '인천광역시')):
+    """시도 사이 빈자리 fill — 호남·충청·영남 다닥다닥 cluster.
+
+    skip 시도 (경기·서울·인천 ring) cluster 끊어짐 risk → cell 이동 X.
+    빈자리 4 이웃 ≥ 2 + 같은 시도 cells ≥ 1 → 그 시도 cluster 확장.
+    """
+    from collections import Counter as _Counter
+    by_sido = defaultdict(list)
+    for c in cells:
+        by_sido[c["sido"]].append(c)
+
+    for _ in range(n_iter):
+        used = set((c["c"], c["r"]) for c in cells)
+        pos_to_cell = {(c["c"], c["r"]): c for c in cells}
+        cmin = min(c["c"] for c in cells); cmax = max(c["c"] for c in cells)
+        rmin = min(c["r"] for c in cells); rmax = max(c["r"] for c in cells)
+        moved = False
+        for col in range(cmin, cmax + 1):
+            for row in range(rmin, rmax + 1):
+                if (col, row) in used:
+                    continue
+                ngs = []
+                for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    p = (col + dc, row + dr)
+                    if p in pos_to_cell:
+                        ngs.append(pos_to_cell[p])
+                if len(ngs) < 2:
+                    continue
+                sido_counts = _Counter(c["sido"] for c in ngs)
+                # skip 시도 제외 (경기·서울·인천 cluster 끊어짐 risk)
+                for s in list(sido_counts.keys()):
+                    if s in skip:
+                        del sido_counts[s]
+                if not sido_counts:
+                    continue
+                top_sido, _ = sido_counts.most_common(1)[0]
+                cs_in = by_sido[top_sido]
+                cx = sum(c["c"] for c in cs_in) / len(cs_in)
+                cy = sum(c["r"] for c in cs_in) / len(cs_in)
+                best_cand = None
+                best_gain = 0
+                for cand in cs_in:
+                    # 후보 cell의 이전 자리가 cluster 외측 (4 이웃 같은 시도 cells ≤ 2)
+                    # 이어야 — 그래야 이동 후 끊어짐 risk 낮음
+                    same_sido_ng = 0
+                    for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                        p = (cand["c"] + dc, cand["r"] + dr)
+                        if p in pos_to_cell and pos_to_cell[p]["sido"] == top_sido:
+                            same_sido_ng += 1
+                    if same_sido_ng > 2:
+                        continue  # cluster 내부 cell — 이동 시 끊어짐 risk
+                    d_cur = (cand["c"] - cx) ** 2 + (cand["r"] - cy) ** 2
+                    d_new = (col - cx) ** 2 + (row - cy) ** 2
+                    gain = d_cur - d_new
+                    if gain > best_gain:
+                        best_gain = gain
+                        best_cand = cand
+                if best_cand:
+                    prev = (best_cand["c"], best_cand["r"])
+                    used.discard(prev)
+                    used.add((col, row))
+                    pos_to_cell.pop(prev, None)
+                    best_cand["c"], best_cand["r"] = col, row
+                    pos_to_cell[(col, row)] = best_cand
+                    moved = True
+        if not moved:
+            break
+
+
+def post_compact(cells, n_iter=30, skip=('경기도', '서울특별시', '인천광역시')):
+    """후처리 — 시도 안 cells 안쪽으로 살짝 이동.
+
+    경기·서울·인천 ring 시도는 cluster 끊어짐 risk → skip.
+    """
+    by_sido = defaultdict(list)
+    for c in cells:
+        by_sido[c["sido"]].append(c)
+    used_global = set((c["c"], c["r"]) for c in cells)
+    for sido, cs in by_sido.items():
+        if sido in skip or len(cs) < 2:
+            continue
+        cx = sum(c["c"] for c in cs) / len(cs)
+        cy = sum(c["r"] for c in cs) / len(cs)
+        # 시도 cells의 자리 bbox (cells 분포 기준 — 후처리는 이 안에서만)
+        cmin = min(c["c"] for c in cs); cmax = max(c["c"] for c in cs)
+        rmin = min(c["r"] for c in cs); rmax = max(c["r"] for c in cs)
+        for _ in range(n_iter):
+            moved = False
+            # cells centroid에서 먼 cell부터 (외측 cell 안쪽으로 우선)
+            cs.sort(key=lambda c: -((c["c"] - cx) ** 2 + (c["r"] - cy) ** 2))
+            for cell in cs:
+                d_cur = (cell["c"] - cx) ** 2 + (cell["r"] - cy) ** 2
+                best = None
+                best_d = d_cur
+                # 4 이웃 검사 (안쪽 = centroid 가까운)
+                for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    nc, nr = cell["c"] + dc, cell["r"] + dr
+                    if (nc, nr) in used_global:
+                        continue
+                    # 시도 cells bbox 안만 (다른 시도 자리 X)
+                    if not (cmin <= nc <= cmax and rmin <= nr <= rmax):
+                        continue
+                    d_new = (nc - cx) ** 2 + (nr - cy) ** 2
+                    if d_new < best_d:
+                        best_d = d_new
+                        best = (nc, nr)
+                if best:
+                    used_global.discard((cell["c"], cell["r"]))
+                    used_global.add(best)
+                    cell["c"], cell["r"] = best
+                    moved = True
+            if not moved:
+                break
+
+
 def process(src_name, out_suffix="_v2"):
     src = GEO_DIR / src_name
     cells = json.loads(src.read_text(encoding="utf-8"))
@@ -523,6 +708,13 @@ def process(src_name, out_suffix="_v2"):
                 cell["c"], cell["r"] = p
                 applied += 1
         print(f"  {sido:20s} {n:3d} cells → shape {shape_} 자리 {len(positions)} 적용 {applied}")
+
+    # 후처리 1 — 시도 안 빈자리 채우기 (외측 cells 안쪽으로)
+    post_compact(cells)
+    # 후처리 2 — 시도 사이 빈자리 채우기 (호남·충청·영남 cluster 확장)
+    fill_between_sido(cells)
+    # 후처리 3 — 경기·서울·인천 cluster 연결성 회복 (작은 분할 → 큰 cluster 인접)
+    reconnect_cluster(cells, sidos=('경기도', '서울특별시', '인천광역시'))
 
     out = src.with_name(src.stem + out_suffix + src.suffix)
     out.write_text(json.dumps(cells, ensure_ascii=False), encoding="utf-8")
