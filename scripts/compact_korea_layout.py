@@ -142,9 +142,8 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     if sido == '경기도':
         # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
         return base
-    # 큰 시도 (경기·인천·서울) base 유지. 나머지는 cells dense fit
-    # — base 안에서 ratio 비슷하면서 자리 최소 (외곽 빈자리 최소).
-    if sido in ('경기도', '인천광역시', '서울특별시'):
+    # 경기·인천 base 고정 (서울 ring 안정 위해). 서울 + 나머지 시도 — cells dense fit.
+    if sido in ('경기도', '인천광역시'):
         return base
     w_b, h_b = base
     base_total = w_b * h_b
