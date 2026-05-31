@@ -482,7 +482,9 @@ def process(src_name, out_suffix="_v2"):
         else:
             shape_ = shape_for(sido, n)
         if sido == '경기도':
-            excludes = [seoul_bbox, icn_bbox]
+            # 인천 위쪽 (col 0~2 row 0~3) 자리 exclude — 김포·파주·고양·부천이
+            # col 3+로 cluster (인천과 갈라먹지 X, 다른 경기와 인접)
+            excludes = [seoul_bbox, icn_bbox, (0, 0, 2, 3)]
         else:
             excludes = []
         positions = positions_in_bbox(offset, shape_, excludes)
