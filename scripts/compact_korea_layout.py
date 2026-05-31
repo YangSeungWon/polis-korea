@@ -107,17 +107,9 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     if sido == '경기도':
         # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
         return base
-    w_b, h_b = base
-    base_total = w_b * h_b
-    # cells 갯수 fit (여유 30%) — 작은 회차에는 작은 dense shape, 큰 회차에는 base.
-    # 내부 빈자리 없이 외곽 인접 시도 쪽 cluster.
-    target = n_cells * 1.3  # 여유 30%
-    if target >= base_total:
-        return base
-    ratio = w_b / h_b
-    h = max(1, math.ceil(math.sqrt(target / ratio)))
-    w = max(1, math.ceil(target / h))
-    return (w, h)
+    # base 유지 — 시도 cluster 크기 일정. 작은 회차에는 외곽 빈자리만 (시도 boundary
+    # 위치 일정). 시도 사이 gap 0 유지.
+    return base
 
 
 # 호환 alias
@@ -236,36 +228,42 @@ def normalize(arr):
 
 
 def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_pos):
-    """경기처럼 ring 모양 (서울 둘러쌈) 자리에 매핑.
+    """경기·서울 ring 모양 자리에 매핑.
 
-    cells lat·lon → ring center 기준 polar (angle, distance).
-    자리 col·row → ring center 자리 기준 polar (angle, distance).
-    Hungarian cost = angle diff + distance diff (정규화).
+    cells lat·lon → polar (angle, distance) 기준 ring center.
+    분구 cells에 group jitter (cell.name 순 격자) — 같은 group cells 인접 매핑.
+    Hungarian 전체 cells → positions.
     """
     if not positions or not cells:
         return [None] * len(cells)
 
-    # 1) group cells by (sido, sigungus)
     by_group = defaultdict(list)
     for c in cells:
         sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
         sido = c.get("sido", "")
         by_group[(sido, sigungus)].append(c)
 
-    sigus = list(by_group.keys())
-    sigu_geos = []
-    for key in sigus:
-        group = by_group[key]
-        geos = [cell_geo(c, centers) for c in group]
-        valid = [g for g in geos if g is not None]
-        if valid:
-            cx = sum(g[0] for g in valid) / len(valid)
-            cy = sum(g[1] for g in valid) / len(valid)
-            sigu_geos.append((cx, cy))
-        else:
-            sigu_geos.append(None)
+    # cells 각자 geo (분구 jitter 적용 — group cells 안 격자 위치)
+    JITTER_OFFSET = 0.025  # 자치구 spacing 절반 정도 (서울 spacing ~0.04~0.05)
+    geos = []
+    for c in cells:
+        sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
+        sido = c.get("sido", "")
+        grp = by_group[(sido, sigungus)]
+        g = cell_geo(c, centers)
+        if g is None:
+            geos.append(None); continue
+        if len(grp) > 1:
+            grp_sorted = sorted(grp, key=lambda x: x.get("name", ""))
+            idx = grp_sorted.index(c)
+            side = math.ceil(math.sqrt(len(grp)))
+            jr = idx // side
+            jc = idx % side
+            jx = (jc - (side - 1) / 2) * JITTER_OFFSET
+            jy = (jr - (side - 1) / 2) * JITTER_OFFSET
+            g = (g[0] + jx, g[1] + jy)
+        geos.append(g)
 
-    # polar coord (각도, 거리) — ring center 기준
     def polar_geo(g):
         dx = g[0] - ring_center_geo[0]
         dy = g[1] - ring_center_geo[1]
@@ -273,18 +271,16 @@ def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_po
 
     def polar_pos(p):
         dx = p[0] - ring_center_pos[0]
-        # row 클수록 남쪽 = lat 작음. row flip하여 polar y와 일치
         dy = -(p[1] - ring_center_pos[1])
         return math.atan2(dy, dx), math.hypot(dx, dy)
 
-    valid_idx = [i for i, g in enumerate(sigu_geos) if g is not None]
+    valid_idx = [i for i, g in enumerate(geos) if g is not None]
     if not valid_idx or len(valid_idx) > len(positions):
         return [None] * len(cells)
 
-    cell_polars = [polar_geo(sigu_geos[i]) for i in valid_idx]
+    cell_polars = [polar_geo(geos[i]) for i in valid_idx]
     pos_polars = [polar_pos(p) for p in positions]
 
-    # 거리 정규화 (cell·pos 각자)
     cell_dists = [d for _, d in cell_polars]
     pos_dists = [d for _, d in pos_polars]
     cd_max = max(cell_dists) if cell_dists else 1
@@ -292,9 +288,9 @@ def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_po
     cd_max = cd_max if cd_max > 0 else 1
     pd_max = pd_max if pd_max > 0 else 1
 
-    # cost = (각도 차이)^2 * w_angle + (거리 차이 정규화)^2 * w_dist
-    w_angle = 3.0  # 각도가 ring projection 핵심
-    w_dist = 1.0
+    # 각도 + 거리 cost — w_dist ↑ (남부 도시들 진짜 남쪽 row 11에 매핑)
+    w_angle = 2.0
+    w_dist = 2.0
     cost = np.zeros((len(valid_idx), len(positions)))
     for i in range(len(valid_idx)):
         ca, cd = cell_polars[i]
@@ -302,7 +298,6 @@ def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_po
         for j in range(len(positions)):
             pa, pd = pos_polars[j]
             pd_n = pd / pd_max
-            # 각도 차이 wrap-around 처리 (-π~π)
             ad = ca - pa
             while ad > math.pi: ad -= 2 * math.pi
             while ad < -math.pi: ad += 2 * math.pi
@@ -310,73 +305,53 @@ def assign_cells_ring(cells, positions, centers, ring_center_geo, ring_center_po
             cost[i, j] = w_angle * ad * ad + w_dist * dd * dd
     _, col_ind = linear_sum_assignment(cost)
 
-    # 자치구 자리 + 분구 인접 자리
-    cells_assigned = {id(c): None for c in cells}
-    used_pos = set()
-    pending_extras = []
-    for i_local, sigu_idx in enumerate(valid_idx):
-        key = sigus[sigu_idx]
-        group = by_group[key]
-        anchor = positions[col_ind[i_local]]
-        used_pos.add(anchor)
-        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
-        cells_assigned[id(group_sorted[0])] = anchor
-        if len(group_sorted) > 1:
-            pending_extras.append((group_sorted[1:], anchor))
-
-    # 분구 cluster — anchor 가까운 free 자리 (swap X — 다른 자치구 anchor 망침)
-    pending_extras.sort(key=lambda x: -len(x[0]))
-    for extras, anchor in pending_extras:
-        free = [p for p in positions if p not in used_pos]
-        if not free:
-            break
-        free.sort(key=lambda p: (p[0] - anchor[0]) ** 2 + (p[1] - anchor[1]) ** 2)
-        for k, c in enumerate(extras):
-            if k < len(free):
-                cells_assigned[id(c)] = free[k]
-                used_pos.add(free[k])
-
-    return [cells_assigned[id(c)] for c in cells]
+    out_pos = [None] * len(cells)
+    for i_local, j in enumerate(col_ind):
+        out_pos[valid_idx[i_local]] = positions[j]
+    return out_pos
 
 
 def assign_cells(cells, positions, centers, w_lon=2.5):
-    """자치구 단위 매핑 + 분구 인접 자리.
+    """cells 직접 Hungarian + 분구 group jitter — cells N 정확 fit bbox에 dense 매핑.
 
-    1) cells를 (sido, sigungus) group으로 묶음
-    2) 자치구 centroid → 자치구 N개를 자리 N개에 Hungarian 매핑 (분구 cells 갯수 X)
-    3) 분구 cells (group size > 1) → anchor 자리 + N-1 인접 자리 (남은 자리 중)
-
-    원리 — 자치구 위치 lat·lon 정확 매핑이 우선. 분구 cells는 자치구 anchor 주변
-    cluster (anchor 가까운 free 자리에 매핑).
+    분구 cells (강남갑·을·병)에 cell.name 순 격자 jitter → 같은 group cells가 자연
+    인접 자리에 매핑. 자치구 단위 매핑 X (자치구 anchor 정확 + 분구 X 자리 trade-off).
     """
     if not positions or not cells:
         return [None] * len(cells)
 
-    # 1) group cells by (sido, sigungus)
     by_group = defaultdict(list)
     for c in cells:
         sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
         sido = c.get("sido", "")
         by_group[(sido, sigungus)].append(c)
 
-    sigus = list(by_group.keys())
-    sigu_geos = []
-    for key in sigus:
-        group = by_group[key]
-        geos = [cell_geo(c, centers) for c in group]
-        valid = [g for g in geos if g is not None]
-        if valid:
-            cx = sum(g[0] for g in valid) / len(valid)
-            cy = sum(g[1] for g in valid) / len(valid)
-            sigu_geos.append((cx, cy))
-        else:
-            sigu_geos.append(None)
+    # 분구 jitter — group 안 cell.name 순서 격자 위치
+    JITTER_OFFSET = 0.020  # 자치구 spacing 절반 (서울 0.04~0.05, 경기 0.05~0.1)
+    geos = []
+    for c in cells:
+        sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
+        sido = c.get("sido", "")
+        grp = by_group[(sido, sigungus)]
+        g = cell_geo(c, centers)
+        if g is None:
+            geos.append(None); continue
+        if len(grp) > 1:
+            grp_sorted = sorted(grp, key=lambda x: x.get("name", ""))
+            idx = grp_sorted.index(c)
+            side = math.ceil(math.sqrt(len(grp)))
+            jr = idx // side
+            jc = idx % side
+            jx = (jc - (side - 1) / 2) * JITTER_OFFSET
+            jy = (jr - (side - 1) / 2) * JITTER_OFFSET
+            g = (g[0] + jx, g[1] + jy)
+        geos.append(g)
 
-    # 2) 자치구 N개 → 자리 N개 Hungarian
-    valid_idx = [i for i, g in enumerate(sigu_geos) if g is not None]
+    valid_idx = [i for i, g in enumerate(geos) if g is not None]
     if not valid_idx or len(valid_idx) > len(positions):
         return [None] * len(cells)
-    geo_arr = np.array([sigu_geos[i] for i in valid_idx], dtype=float)
+
+    geo_arr = np.array([geos[i] for i in valid_idx], dtype=float)
     pos_arr = np.array(positions, dtype=float)
     geo_n = normalize(geo_arr); geo_n[:, 1] = 1 - geo_n[:, 1]
     pos_n = normalize(pos_arr) if len(positions) > 1 else np.array([[0.5, 0.5]])
@@ -387,33 +362,10 @@ def assign_cells(cells, positions, centers, w_lon=2.5):
             cost[i, j] = w_lon * dx * dx + dy * dy
     _, col_ind = linear_sum_assignment(cost)
 
-    # 3) 자치구 자리 적용 + 분구 인접 자리
-    cells_assigned = {id(c): None for c in cells}
-    used_pos = set()
-    pending_extras = []  # [(extra_cells, anchor_pos)]
-    for i_local, sigu_idx in enumerate(valid_idx):
-        key = sigus[sigu_idx]
-        group = by_group[key]
-        anchor = positions[col_ind[i_local]]
-        used_pos.add(anchor)
-        group_sorted = sorted(group, key=lambda c: c.get("name", ""))
-        cells_assigned[id(group_sorted[0])] = anchor
-        if len(group_sorted) > 1:
-            pending_extras.append((group_sorted[1:], anchor))
-
-    # 4) 분구 cells — anchor 가까운 free 자리 차지 (자치구 크기 큰 group 먼저)
-    pending_extras.sort(key=lambda x: -len(x[0]))
-    for extras, anchor in pending_extras:
-        free = [p for p in positions if p not in used_pos]
-        if not free:
-            break
-        free.sort(key=lambda p: (p[0] - anchor[0]) ** 2 + (p[1] - anchor[1]) ** 2)
-        for k, c in enumerate(extras):
-            if k < len(free):
-                cells_assigned[id(c)] = free[k]
-                used_pos.add(free[k])
-
-    return [cells_assigned[id(c)] for c in cells]
+    out_pos = [None] * len(cells)
+    for i_local, j in enumerate(col_ind):
+        out_pos[valid_idx[i_local]] = positions[j]
+    return out_pos
 
 
 # 이전 Hungarian-only 함수 보존 (참고)
