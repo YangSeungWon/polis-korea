@@ -55,26 +55,52 @@ SIDO_MAX_CELLS = {
 
 # 시도별 bbox shape (width × height) — cells 갯수에 fit (사각형 또는 직사각형)
 # 시도 형태 한국 지리 따라 (가로 긴 vs 세로 긴)
-SIDO_SHAPE = {
-    # 22대 60 cells 경기에 맞춤. 7×7 서울 + 11×12 경기 ring → cells 다 수용.
+SIDO_BASE_SHAPE = {
+    # max cells (22대 또는 legacy) 기준 시도 cluster shape.
+    # cells 적은 회차는 shape_for(cells)로 작은 shape 자동 계산 (dense).
     '인천광역시':     (3, 5),
-    '서울특별시':     (7, 7),  # 49 (max 48)
-    '경기도':         (11, 12), # 132-49=83 (max 60, 23 외곽 빈자리 — 한국 외)
-    '강원특별자치도': (4, 5),  # 20 (max 18)
-    '충청북도':       (4, 4),  # 16 (max 14)
+    '서울특별시':     (7, 7),
+    '경기도':         (11, 12),  # 132 - 49 (서울 exclude) = 83 (max 60)
+    '강원특별자치도': (4, 5),
+    '경상북도':       (5, 5),
     '충청남도':       (4, 4),
     '세종특별자치시': (1, 2),
+    '충청북도':       (4, 4),
     '대전광역시':     (3, 3),
-    '경상북도':       (5, 5),
     '대구광역시':     (4, 3),
     '울산광역시':     (2, 3),
+    '전북특별자치도': (4, 4),
     '경상남도':       (3, 8),
     '부산광역시':     (5, 4),
-    '전북특별자치도': (4, 4),
-    '전라남도':       (5, 5),
     '광주광역시':     (3, 3),
+    '전라남도':       (5, 5),
     '제주특별자치도': (3, 1),
 }
+
+
+def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
+    """cells 갯수에 fit shape.
+
+    경기 같이 ring 시도는 base shape 유지 (서울 둘러쌈).
+    나머지 시도는 cells fit (base aspect ratio).
+    """
+    base = SIDO_BASE_SHAPE.get(sido, (3, 3))
+    # 경기는 항상 base (서울 둘러쌈 위해)
+    if sido == '경기도':
+        return base
+    w_b, h_b = base
+    base_total = w_b * h_b
+    # cells fit (base 90% 이상이면 base 그대로)
+    if n_cells >= base_total * 0.85:
+        return base
+    ratio = w_b / h_b
+    h = max(1, math.ceil(math.sqrt(n_cells / ratio)))
+    w = max(1, math.ceil(n_cells / h))
+    return (w, h)
+
+
+# 호환 alias
+SIDO_SHAPE = SIDO_BASE_SHAPE
 
 # 시도 centroid 격자 위치 (사용자 시도 hex 5 row layout 영감)
 # col·row = 시도 시작점 (top-left of bbox)
@@ -222,10 +248,11 @@ def process(src_name, out_suffix="_v2"):
     for c in cells:
         by_sido[c["sido"]].append(c)
 
-    # 시도별 positions — SIDO_OFFSET + SIDO_SHAPE
-    # 경기 ring 처리: 서울 영역 exclude
-    seoul_offset = SIDO_OFFSET.get('서울특별시', (3, 4))
-    seoul_shape = SIDO_SHAPE.get('서울특별시', (7, 7))
+    # 회차별 cells 갯수 → shape 동적 계산
+    # 서울 cluster shape (회차별)
+    seoul_cells_n = len(by_sido.get('서울특별시', []))
+    seoul_shape = shape_for('서울특별시', seoul_cells_n)
+    seoul_offset = SIDO_OFFSET.get('서울특별시', (3, 3))
     seoul_bbox = (seoul_offset[0], seoul_offset[1],
                   seoul_offset[0] + seoul_shape[0] - 1,
                   seoul_offset[1] + seoul_shape[1] - 1)
@@ -235,8 +262,9 @@ def process(src_name, out_suffix="_v2"):
         if sido not in SIDO_OFFSET:
             print(f"  {sido} skip")
             continue
+        n = len(sido_cells)
         offset = SIDO_OFFSET[sido]
-        shape_ = SIDO_SHAPE[sido]
+        shape_ = shape_for(sido, n)  # 회차별 cells 갯수 동적
         excludes = [seoul_bbox] if sido == '경기도' else []
         positions = positions_in_bbox(offset, shape_, excludes)
         new_pos = assign_cells(sido_cells, positions, centers)
@@ -245,7 +273,7 @@ def process(src_name, out_suffix="_v2"):
             if p:
                 cell["c"], cell["r"] = p
                 applied += 1
-        print(f"  {sido:20s} {len(sido_cells):3d} cells → {applied} 적용 (자리 {len(positions)})")
+        print(f"  {sido:20s} {n:3d} cells → shape {shape_} 자리 {len(positions)} 적용 {applied}")
 
     out = src.with_name(src.stem + out_suffix + src.suffix)
     out.write_text(json.dumps(cells, ensure_ascii=False), encoding="utf-8")
