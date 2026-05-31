@@ -107,7 +107,8 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
         return compute_gyeonggi_ring(n_cells, seoul_shape)
     w_b, h_b = base
     base_total = w_b * h_b
-    if n_cells >= base_total * 0.85:
+    # base shape 유지 — cells 50% 이상이면 base (시도 boundary 인접 유지)
+    if n_cells >= base_total * 0.5:
         return base
     ratio = w_b / h_b
     h = max(1, math.ceil(math.sqrt(n_cells / ratio)))
