@@ -142,9 +142,19 @@ def shape_for(sido: str, n_cells: int) -> tuple[int, int]:
     if sido == '경기도':
         # 경기 bbox 고정 (15, 12) col 0~14 row 0~11. 서울·인천 exclude.
         return base
-    # base 유지 — 시도 cluster 크기 일정. 작은 회차에는 외곽 빈자리만 (시도 boundary
-    # 위치 일정). 시도 사이 gap 0 유지.
-    return base
+    # 큰 시도 (경기·인천·서울) base 유지. 나머지 시도는 cells N fit (+1 여유).
+    # 작은 시도들 dense cluster — 외곽 빈자리 최소.
+    if sido in ('경기도', '인천광역시', '서울특별시'):
+        return base
+    w_b, h_b = base
+    base_total = w_b * h_b
+    target = n_cells + 1  # 여유 1 (분구 cluster)
+    if target >= base_total:
+        return base
+    ratio = w_b / h_b
+    h = max(1, math.ceil(math.sqrt(target / ratio)))
+    w = max(1, math.ceil(target / h))
+    return (w, h)
 
 
 # 호환 alias
