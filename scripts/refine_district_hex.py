@@ -79,8 +79,12 @@ def normalize(arr: np.ndarray) -> np.ndarray:
     return (arr - mn) / rng
 
 
-def assign_and_swap(cells: list[dict], centers: dict, n_swap_passes: int = 50) -> int:
+def assign_and_swap(cells: list[dict], centers: dict, n_swap_passes: int = 50,
+                    w_lon: float | None = None) -> int:
     """1단계 Hungarian + 2단계 swap optimization.
+
+    w_lon: lon축 cost weight. None이면 시도의 aspect ratio (geo lon_range / lat_range
+      vs pos col_range / row_range)로 자동.
 
     return: 변경된 cell 수.
     """
@@ -95,38 +99,50 @@ def assign_and_swap(cells: list[dict], centers: dict, n_swap_passes: int = 50) -
     geo_arr = np.array([geos[i] for i in valid_idx], dtype=float)
     pos_arr = np.array([positions[i] for i in valid_idx], dtype=float)
 
+    # raw range 자동 weight 계산 (정규화 전)
+    geo_xr = geo_arr[:, 0].max() - geo_arr[:, 0].min()
+    geo_yr = geo_arr[:, 1].max() - geo_arr[:, 1].min()
+    pos_xr = pos_arr[:, 0].max() - pos_arr[:, 0].min()
+    pos_yr = pos_arr[:, 1].max() - pos_arr[:, 1].min()
+    if w_lon is None:
+        # geo aspect / pos aspect — 시도가 가늘 길면 lon weight ↑
+        try:
+            geo_aspect = (geo_xr / geo_yr) if geo_yr > 0 else 1.0
+            pos_aspect = (pos_xr / pos_yr) if pos_yr > 0 else 1.0
+            # weight = pos_aspect / geo_aspect — pos가 더 wide면 lon에 weight ↑
+            w = pos_aspect / geo_aspect if geo_aspect > 0 else 1.0
+            w_lon = max(0.5, min(4.0, w))  # cap [0.5, 4.0]
+        except Exception:
+            w_lon = 1.0
+
     geo_n = normalize(geo_arr)
     geo_n[:, 1] = 1 - geo_n[:, 1]  # lat 높음 = row 0
     pos_n = normalize(pos_arr)
+
+    # cost function with weight
+    def pair_cost(geo_i, pos_j):
+        dx = geo_i[0] - pos_j[0]
+        dy = geo_i[1] - pos_j[1]
+        return w_lon * dx * dx + dy * dy
 
     # 1단계: Hungarian
     cost = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            dx = geo_n[i, 0] - pos_n[j, 0]
-            dy = geo_n[i, 1] - pos_n[j, 1]
-            cost[i, j] = dx * dx + dy * dy
+            cost[i, j] = pair_cost(geo_n[i], pos_n[j])
     _, col_ind = linear_sum_assignment(cost)
-    # cell i (valid_idx[i]) → position col_ind[i] (valid_idx[col_ind[i]])
-    assign = list(col_ind)  # assign[i] = j (포지션 인덱스)
+    assign = list(col_ind)
 
     # 2단계: pair swap optimization
-    def total_cost(a):
-        return sum(((geo_n[i, 0] - pos_n[a[i], 0]) ** 2 +
-                    (geo_n[i, 1] - pos_n[a[i], 1]) ** 2) for i in range(n))
-
-    cur = total_cost(assign)
     for _ in range(n_swap_passes):
         improved = False
         for i in range(n):
             for j in range(i + 1, n):
-                # swap i,j
                 a, b = assign[i], assign[j]
-                # new cost delta
-                old_i = (geo_n[i, 0] - pos_n[a, 0]) ** 2 + (geo_n[i, 1] - pos_n[a, 1]) ** 2
-                old_j = (geo_n[j, 0] - pos_n[b, 0]) ** 2 + (geo_n[j, 1] - pos_n[b, 1]) ** 2
-                new_i = (geo_n[i, 0] - pos_n[b, 0]) ** 2 + (geo_n[i, 1] - pos_n[b, 1]) ** 2
-                new_j = (geo_n[j, 0] - pos_n[a, 0]) ** 2 + (geo_n[j, 1] - pos_n[a, 1]) ** 2
+                old_i = pair_cost(geo_n[i], pos_n[a])
+                old_j = pair_cost(geo_n[j], pos_n[b])
+                new_i = pair_cost(geo_n[i], pos_n[b])
+                new_j = pair_cost(geo_n[j], pos_n[a])
                 if new_i + new_j < old_i + old_j - 1e-9:
                     assign[i], assign[j] = b, a
                     improved = True
@@ -167,7 +183,8 @@ def quality_report(cells: list[dict], centers: dict, sido: str) -> list[tuple]:
     return sorted(out, key=lambda x: -x[1])
 
 
-def process(n: int, out_suffix: str = "_v2", show_quality: bool = True):
+def process(n: int, out_suffix: str = "_v2", show_quality: bool = True,
+            w_lon: float | None = None):
     src = GEO_DIR / f"district_hex_{n}.json"
     cells = json.loads(src.read_text(encoding="utf-8"))
     centers = load_sigungu_centers()
@@ -178,7 +195,7 @@ def process(n: int, out_suffix: str = "_v2", show_quality: bool = True):
     print(f"\n=== {n}대 총선 ({len(cells)}구) ===")
     total_changed = 0
     for sido, sido_cells in sorted(by_sido.items()):
-        changed = assign_and_swap(sido_cells, centers)
+        changed = assign_and_swap(sido_cells, centers, w_lon=w_lon)
         total_changed += changed
         print(f"  {sido:20s} {len(sido_cells):3d}구 — {changed} 변경")
         if show_quality:
@@ -197,9 +214,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ns", nargs="+", type=int)
     ap.add_argument("--out", default="_v2")
+    ap.add_argument("--w-lon", type=float, default=None,
+                    help="lon weight. None=시도 aspect ratio 자동")
     args = ap.parse_args()
     for n in args.ns:
-        process(n, args.out)
+        process(n, args.out, w_lon=args.w_lon)
 
 
 if __name__ == "__main__":
