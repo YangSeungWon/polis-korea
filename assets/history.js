@@ -494,12 +494,15 @@ const SIDO_HEX_SINCE = {
 };
 // 9회 이전 layout — 4·4·5·4. row 2가 5 cell (광주·대전·대구·부산·울산), row 3 4 cell.
 //   row 2 col 1 = 광주, col 2 = 대전, col 3 = 대구, col 4 = 부산, col 5 = 울산
-//   row 3 col 1 = 전북, col 2 = 전남, col 3 = 경남, col 4 = 제주
-// 옛 시점은 광주광역시(전남광주 자리)·울산(row 2)·전남(row 3 col 2 신규)·경남(col 3) override.
+//   row 3 col 1 = 전남, col 2 = 전북, col 3 = 경남, col 4 = 제주 (col 1·2 lon 순서)
+// parties.js 9회 active (부산·울산 swap, 전북 col 1)를 옛 layout으로 override.
 const SIDO_HEX_LAYOUT_LEGACY = {
   '광주광역시':     { col: 1, row: 2, label: '광주' },
+  '부산광역시':     { col: 4, row: 2, label: '부산' },  // 옛: row 2 col 4 (parties.js의 울산 자리)
   '울산광역시':     { col: 5, row: 2, label: '울산' },
-  '전라남도':       { col: 2, row: 3, label: '전남' },
+  '전라남도':       { col: 1, row: 3, label: '전남' },  // 옛: col 1 (lon 서)
+  '전북특별자치도': { col: 2, row: 3, label: '전북' },  // 옛: col 2 (lon 동)
+  '전라북도':       { col: 2, row: 3, label: '전북' },
   '경상남도':       { col: 3, row: 3, label: '경남' },
 };
 // 세종 신설 전 layout — row 1 충남·충북·경북 col 2·3·4 가운데 정렬 (빈 자리 0).

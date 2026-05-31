@@ -207,12 +207,12 @@ const SIDO_HEX_LAYOUT = {
   '전남광주특별시': { col: 1, row: 2, label: '전남광주' },
   '대전광역시':     { col: 2, row: 2, label: '대전' },
   '대구광역시':     { col: 3, row: 2, label: '대구' },
-  '부산광역시':     { col: 4, row: 2, label: '부산' },
+  '울산광역시':     { col: 4, row: 2, label: '울산' },
 
   '전북특별자치도': { col: 1, row: 3, label: '전북' },
   '전라북도':       { col: 1, row: 3, label: '전북' },  // 옛 이름 alias
   '경상남도':       { col: 2, row: 3, label: '경남' },
-  '울산광역시':     { col: 3, row: 3, label: '울산' },
+  '부산광역시':     { col: 3, row: 3, label: '부산' },
   '제주특별자치도': { col: 4, row: 3, label: '제주' },
 };
 
