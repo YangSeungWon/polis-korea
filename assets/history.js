@@ -178,14 +178,48 @@ async function init() {
     b.addEventListener('click', () => setSizing(b.dataset.sizing));
   });
 
-  // 정적 prerender가 주입한 초기 상태 (URL 기반)
-  const init0 = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
+  // 초기 상태 — URL 쿼리스트링 우선, 없으면 prerender INITIAL_STATE
+  const params = new URLSearchParams(location.search);
+  const init0 = {
+    type: params.get('type') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.type),
+    n: params.get('n') ? +params.get('n') : (typeof window !== 'undefined' && window.__INITIAL_STATE__?.n),
+    office: params.get('office') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.office),
+    sizing: params.get('sizing') || (typeof window !== 'undefined' && window.__INITIAL_STATE__?.sizing),
+  };
   const type0 = init0.type || 'presidential';
   setType(type0, /*skipDefaultRound=*/ init0.n != null);
-  // setType이 default office 'is-active' 처리하므로 setOffice는 setType 후 호출
   if (init0.office && init0.office !== state.office) setOffice(init0.office);
+  if (init0.sizing && init0.sizing !== state.sizing) setSizing(init0.sizing);
   if (init0.n != null) setRound(init0.n);
+
+  // popstate (브라우저 뒤·앞)
+  window.addEventListener('popstate', () => {
+    const p = new URLSearchParams(location.search);
+    const t = p.get('type') || 'presidential';
+    const n = p.get('n') ? +p.get('n') : null;
+    const o = p.get('office');
+    if (t !== state.type) setType(t, n != null);
+    if (o && o !== state.office) setOffice(o);
+    if (n != null && n !== state.n) setRound(n);
+  });
+
   $('#loading').hidden = true;
+}
+
+// URL 쿼리스트링 갱신 (새로고침 시 같은 상태 복원)
+function updateURL() {
+  const params = new URLSearchParams();
+  if (state.type && state.type !== 'presidential') params.set('type', state.type);
+  if (state.n != null) params.set('n', state.n);
+  if (state.type === 'local' && state.office && state.office !== '광역단체장') {
+    params.set('office', state.office);
+  }
+  if (state.sizing && state.sizing !== '동일') params.set('sizing', state.sizing);
+  const q = params.toString();
+  const newUrl = q ? `${location.pathname}?${q}` : location.pathname;
+  if (newUrl !== location.pathname + location.search) {
+    history.replaceState(null, '', newUrl);
+  }
 }
 
 function setType(type, skipDefaultRound = false) {
@@ -195,6 +229,7 @@ function setType(type, skipDefaultRound = false) {
   });
   $('#offices-seg').hidden = type !== 'local';
   renderRoundsSeg();
+  updateURL();
   if (skipDefaultRound) return;
   const available = state.elections._available?.[type] || [];
   const list = state.elections[type]?.elections || [];
@@ -209,6 +244,7 @@ function setOffice(office) {
   document.querySelectorAll('[data-office]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.office === office);
   });
+  updateURL();
   renderAll();
 }
 
@@ -217,6 +253,7 @@ function setSizing(s) {
   document.querySelectorAll('[data-sizing]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.sizing === s);
   });
+  updateURL();
   renderAll();
 }
 
@@ -263,6 +300,7 @@ function renderRoundsSeg() {
 async function setRound(n) {
   state.n = n;
   state.selected = null;
+  updateURL();
   document.querySelectorAll('#rounds-seg [data-n]').forEach((b) => {
     b.classList.toggle('is-active', +b.dataset.n === n);
   });
