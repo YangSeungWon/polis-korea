@@ -1277,9 +1277,9 @@ function renderDetail() {
       </div>
     </div>`;
   } else if (state.type === 'local') {
-    // 지선 — 광역단체장·기초단체장 winner_party 카운트 (정당별 당선 수)
+    // 지선 — 광역단체장·기초단체장·교육감 winner_party 카운트 (정당별 당선 곳 수)
     const winsByParty = new Map();
-    for (const r of state.results?.sigungu || []) {
+    for (const r of data?.sigungu || []) {
       const winner = r.candidates?.[0];
       if (!winner?.party) continue;
       winsByParty.set(winner.party, (winsByParty.get(winner.party) || 0) + 1);
