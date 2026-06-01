@@ -639,6 +639,196 @@ def fill_between_sido(cells, sido_bbox=None, n_iter=100,
             break
 
 
+# ===== Dynamic layout — 시도별 cells fit shape + 권역별 자동 배치 =====
+# 사용자 의도 — 단계 1) 시도 cells dense cluster. 단계 2) 시도 cluster들
+# 끌어당겨 합치기 (시도 사이 gap 0). 회차별 cells N 다르므로 SIDO_OFFSET 동적.
+
+# 시도별 ratio (가로:세로) — 한국 지리 모양 따라 자치구 분포 비율
+SIDO_RATIO = {
+    '서울특별시':     (7, 7),   # 정사각 (cells 25~48)
+    '인천광역시':     (3, 8),   # 세로 길음 (강화·옹진 포함 남북)
+    '경기도':         (1, 1),   # ring shape (특별 처리)
+    '강원특별자치도': (1, 1),   # 정사각
+    '경상북도':       (4, 6),   # 세로 길음 (남북으로 김)
+    '경상남도':       (3, 4),   # 세로
+    '전라북도':       (4, 3),   # 가로 (동서로 김)
+    '전북특별자치도': (4, 3),
+    '전라남도':       (4, 4),   # 정사각
+    '충청남도':       (4, 3),   # 가로 (동서로 김)
+    '충청북도':       (4, 3),   # 가로
+    '대구광역시':     (4, 4),
+    '대전광역시':     (3, 3),
+    '광주광역시':     (3, 3),
+    '울산광역시':     (2, 3),
+    '부산광역시':     (4, 4),
+    '세종특별자치시': (1, 4),   # 세로 (좁음)
+    '제주특별자치도': (3, 1),   # 가로 (남북 짧음)
+}
+
+
+def shape_fit(sido, n_cells, slack=2):
+    """cells N+slack fit 최소 shape — ratio 가까이 우선."""
+    if sido not in SIDO_RATIO:
+        return (3, 3)
+    rw, rh = SIDO_RATIO[sido]
+    target = max(n_cells + slack, 1)
+    base_ratio = rw / rh
+    best = None
+    best_score = (float('inf'), float('inf'))
+    for w in range(1, target + 1):
+        h = math.ceil(target / w)
+        if w * h < target:
+            continue
+        cur_ratio = w / h
+        ratio_diff = abs(cur_ratio - base_ratio)
+        # ratio 우선 (visual 모양 위해) + 자리 적은 후순위
+        score = (ratio_diff, w * h)
+        if score < best_score:
+            best_score = score
+            best = (w, h)
+    return best or (1, target)
+
+
+def compute_gyeonggi_ring_shape(gg_cells, seoul_shape):
+    """경기 ring shape (서울 둘러쌈). 경기 cells fit ring 두께 자동."""
+    sw, sh = seoul_shape
+    # 경기 cells을 ring에 fit. ring 두께 r → outer (sw+2r, sh+2r), 자리 = outer - 서울.
+    # 자리 ≥ gg_cells.
+    for r in range(1, 10):
+        outer = (sw + 2 * r) * (sh + 2 * r) - sw * sh
+        if outer >= gg_cells:
+            return (sw + 2 * r, sh + 2 * r, r)
+    return (sw + 6, sh + 6, 3)
+
+
+def compute_dynamic_layout(by_sido):
+    """시도별 shape + offset 동적 계산. 권역별 grid packing.
+
+    배치 — 한국 지도 모양:
+      [인천][서울 (경기 ring 안)] [강원]
+                                  [경북]
+      [충남][세종][충북]           [대구][울산]
+      [전북][대전]                 [경남][부산]
+      [전남][광주]
+      [제주]
+    """
+    n_cells = {sido: len(cs) for sido, cs in by_sido.items()}
+
+    # 1. 각 시도 shape 계산
+    shapes = {}
+    for sido, n in n_cells.items():
+        if sido not in SIDO_RATIO:
+            continue
+        if sido == '경기도':
+            continue  # 경기 별도 처리
+        shapes[sido] = shape_fit(sido, n)
+
+    # 2. 경기 ring shape (서울 둘러쌈)
+    seoul_shape = shapes.get('서울특별시', (5, 5))
+    gg_cells = n_cells.get('경기도', 0)
+    if gg_cells > 0:
+        gg_w, gg_h, ring_thickness = compute_gyeonggi_ring_shape(gg_cells, seoul_shape)
+        shapes['경기도'] = (gg_w, gg_h)
+    else:
+        gg_w, gg_h, ring_thickness = seoul_shape[0] + 6, seoul_shape[1] + 6, 3
+
+    # 3. SIDO_OFFSET 자동 계산
+    offsets = {}
+
+    # 수도권 + 강원·경북 — row 0 시작
+    # 인천: col 0. 경기: col w_icn 시작. 서울: 경기 안.
+    icn_w, icn_h = shapes.get('인천광역시', (3, 8))
+    # 인천 row: 경기 ring 중간 (인천 lat·lon이 서울보다 약간 북서)
+    icn_row_offset = max(0, (gg_h - icn_h) // 2 - 1)
+    offsets['인천광역시'] = (0, icn_row_offset)
+
+    # 경기: 인천 col 끝 + 1
+    gg_col = icn_w
+    offsets['경기도'] = (gg_col, 0)
+
+    # 서울: 경기 안 (ring 중심)
+    seoul_col = gg_col + ring_thickness
+    seoul_row = ring_thickness
+    offsets['서울특별시'] = (seoul_col, seoul_row)
+
+    # 강원: 경기 동측
+    gw_col = gg_col + gg_w
+    offsets['강원특별자치도'] = (gw_col, 0)
+    gw_w, gw_h = shapes.get('강원특별자치도', (3, 3))
+
+    # 경북: 강원 아래
+    gb_col = gw_col
+    gb_row = gw_h
+    offsets['경상북도'] = (gb_col, gb_row)
+    gb_w, gb_h = shapes.get('경상북도', (4, 4))
+
+    # 충청 row 시작 — 경기 row 끝 (gg_h)
+    chung_row = gg_h
+    cn_w, cn_h = shapes.get('충청남도', (4, 3))
+    se_w, se_h = shapes.get('세종특별자치시', (1, 2))
+    cb_w, cb_h = shapes.get('충청북도', (4, 3))
+
+    # 충남: col = icn_w (인천 끝 + 경기 시작 = 같은 col)
+    cn_col = icn_w
+    offsets['충청남도'] = (cn_col, chung_row)
+
+    # 세종: 충남 col 끝
+    se_col = cn_col + cn_w
+    offsets['세종특별자치시'] = (se_col, chung_row)
+
+    # 충북: 세종 col 끝
+    cb_col = se_col + se_w
+    offsets['충청북도'] = (cb_col, chung_row)
+
+    # 대구: 경북 아래 (row = gb_row + gb_h)
+    dg_row = gb_row + gb_h
+    dg_w, dg_h = shapes.get('대구광역시', (4, 4))
+    offsets['대구광역시'] = (gb_col, dg_row)
+
+    # 울산: 대구 옆
+    us_w, us_h = shapes.get('울산광역시', (2, 3))
+    us_row = dg_row + max(0, (dg_h - us_h) // 2)
+    offsets['울산광역시'] = (gb_col + dg_w, us_row)
+
+    # 호남 row 시작 — 충청 row 끝
+    chung_h_max = max(cn_h, se_h, cb_h)
+    honam_row = chung_row + chung_h_max
+    jb_w, jb_h = shapes.get('전북특별자치도', (4, 3))
+    dj_w, dj_h = shapes.get('대전광역시', (3, 3))
+
+    # 전북: col = cn_col
+    offsets['전북특별자치도'] = (cn_col, honam_row)
+
+    # 대전: 전북 col 끝
+    offsets['대전광역시'] = (cn_col + jb_w, honam_row)
+
+    # 경남: 대구 아래 (row = dg_row + dg_h)
+    gn_row = dg_row + dg_h
+    gn_w, gn_h = shapes.get('경상남도', (3, 4))
+    offsets['경상남도'] = (gb_col, gn_row)
+
+    # 부산: 경남 옆
+    bs_w, bs_h = shapes.get('부산광역시', (5, 5))
+    offsets['부산광역시'] = (gb_col + gn_w, gn_row)
+
+    # 광주: 호남 안 (전북·전남 사이). row = honam_row + jb_h
+    gj_row = honam_row + jb_h
+    gj_w, gj_h = shapes.get('광주광역시', (3, 3))
+    offsets['광주광역시'] = (cn_col, gj_row)
+
+    # 전남: 광주 아래
+    jn_row = gj_row + gj_h
+    jn_w, jn_h = shapes.get('전라남도', (4, 5))
+    offsets['전라남도'] = (cn_col, jn_row)
+
+    # 제주: 전남 아래 (또는 옆)
+    jj_row = jn_row + jn_h
+    jj_w, jj_h = shapes.get('제주특별자치도', (3, 1))
+    offsets['제주특별자치도'] = (cn_col, jj_row)
+
+    return shapes, offsets, ring_thickness
+
+
 def post_compact(cells, n_iter=30, skip=('경기도', '서울특별시', '인천광역시')):
     """후처리 — 시도 안 cells 안쪽으로 살짝 이동.
 
@@ -694,34 +884,28 @@ def process(src_name, out_suffix="_v2"):
         by_sido[c["sido"]].append(c)
 
 
-    # 회차별 cells 갯수 → shape 동적 계산
-    seoul_cells_n = len(by_sido.get('서울특별시', []))
-    seoul_shape = shape_for('서울특별시', seoul_cells_n)
-    gyeonggi_shape = SIDO_BASE_SHAPE['경기도']  # 고정 (15, 12)
-    seoul_offset = SIDO_OFFSET.get('서울특별시', (3, 3))
+    # 회차별 cells 갯수 → dynamic layout (시도별 cells fit shape + 자동 packing)
+    dyn_shapes, dyn_offsets, ring_thickness = compute_dynamic_layout(by_sido)
+    seoul_shape = dyn_shapes.get('서울특별시', (5, 5))
+    gyeonggi_shape = dyn_shapes.get('경기도', (11, 11))
+    seoul_offset = dyn_offsets.get('서울특별시', (3, 3))
     seoul_bbox = (seoul_offset[0], seoul_offset[1],
                   seoul_offset[0] + seoul_shape[0] - 1,
                   seoul_offset[1] + seoul_shape[1] - 1)
-    icn_shape = SIDO_BASE_SHAPE['인천광역시']
-    icn_offset = SIDO_OFFSET['인천광역시']
+    icn_shape = dyn_shapes.get('인천광역시', (3, 8))
+    icn_offset = dyn_offsets.get('인천광역시', (0, 4))
     icn_bbox = (icn_offset[0], icn_offset[1],
                 icn_offset[0] + icn_shape[0] - 1,
                 icn_offset[1] + icn_shape[1] - 1)
 
     print(f"\n=== {src_name} ({len(cells)} cells) ===")
     for sido, sido_cells in sorted(by_sido.items()):
-        if sido not in SIDO_OFFSET:
+        if sido not in dyn_offsets:
             print(f"  {sido} skip")
             continue
         n = len(sido_cells)
-        offset = SIDO_OFFSET[sido]
-        # 동적 shape — 서울·경기는 위에서 계산한 값
-        if sido == '서울특별시':
-            shape_ = seoul_shape
-        elif sido == '경기도':
-            shape_ = gyeonggi_shape
-        else:
-            shape_ = shape_for(sido, n)
+        offset = dyn_offsets[sido]
+        shape_ = dyn_shapes.get(sido, (3, 3))
         if sido == '경기도':
             # 인천 위쪽 (col 0~2 row 0~3) 자리 exclude — 김포·파주·고양·부천이
             # col 3+로 cluster (인천과 갈라먹지 X, 다른 경기와 인접)
