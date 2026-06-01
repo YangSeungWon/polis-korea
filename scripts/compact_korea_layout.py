@@ -666,7 +666,7 @@ SIDO_RATIO = {
 }
 
 
-def shape_fit(sido, n_cells, slack=2):
+def shape_fit(sido, n_cells, slack=0):
     """cells N+slack fit 최소 shape — ratio 가까이 우선."""
     if sido not in SIDO_RATIO:
         return (3, 3)
@@ -934,24 +934,10 @@ def process(src_name, out_suffix="_v2"):
                 applied += 1
         print(f"  {sido:20s} {n:3d} cells → shape {shape_} 자리 {len(positions)} 적용 {applied}")
 
-    # 후처리 1 — 시도 안 빈자리 채우기 (외측 cells 안쪽으로)
-    # B 시도 — assign_cells rank-based가 cells을 자리 분포에 spread (외측 row/col에도
-    # cells 매핑). post_compact는 cells centroid 안쪽 → spread 효과 무효화. 비활성화.
-    # post_compact(cells)
-    # 후처리 2 — 시도 사이 빈자리 채우기 — 빈자리 base 안 시도 cells만 이동
-    sido_bbox_dict = {}
-    for sido, off in SIDO_OFFSET.items():
-        if sido in by_sido:
-            n_cells_sido = len(by_sido[sido])
-            if sido == '서울특별시':
-                shp = seoul_shape
-            elif sido == '경기도':
-                shp = gyeonggi_shape
-            else:
-                shp = shape_for(sido, n_cells_sido)
-            sido_bbox_dict[sido] = (off[0], off[1], off[0]+shp[0]-1, off[1]+shp[1]-1)
-    fill_between_sido(cells, sido_bbox=sido_bbox_dict)
-    # 후처리 3 — 모든 시도 cluster 보존 (MAX_MOVE_DIST 4로 cascading 막음)
+    # === 후처리 제거 ===
+    # Pipeline: shape_fit (slack=0) + compute_dynamic_layout (시도 cluster packing) +
+    # assign_cells (rank-based spread). Step 1·2가 정확하면 후처리 불필요.
+    # cluster 분할 시만 reconnect (최소 이동).
     all_sidos = tuple(set(c["sido"] for c in cells))
     reconnect_cluster(cells, sidos=all_sidos)
 
