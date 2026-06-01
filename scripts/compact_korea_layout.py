@@ -108,7 +108,7 @@ SIDO_BASE_SHAPE = {
     '대전광역시':     (4, 3),    # 12 (max 7 fit) — col 7~10 row 17~19 (충북 row 16 + 경남 col 11 인접)
     '대구광역시':     (4, 4),    # 16 (max 12 fit) — col 12~15 row 13~16
     '울산광역시':     (2, 3),    # 6 (max 6 fit) — col 16·17 row 14~16 (대구 col 15 인접)
-    '전북특별자치도': (4, 5),    # 20 (max 15 fit) — col 3~6 row 17~21
+    '전북특별자치도': (4, 4),    # 16 (max 15 fit) — col 3~6 row 17~20 (호남 위로 끌어옴 위해 한 row 줄임)
     '경상남도':       (3, 8),    # 24 (max 22 legacy fit) — col 11~13 row 17~24
     '부산광역시':     (5, 5),    # 25 (max 18 fit) — col 14~18 row 17~21 (경남 col 13 인접)
     '광주광역시':     (4, 4),    # 16 (max 8 fit) — col 7~10 row 22~25 (전남 col 6 + 경남 col 11 인접)
@@ -188,9 +188,9 @@ SIDO_OFFSET = {
     '전북특별자치도': (3, 17),   # col 3~6 row 17~21 (충남 row 16 인접)
     '경상남도':       (11, 17),  # col 11~13 row 17~24 (대전 col 10 + 대구 row 16 인접)
     '부산광역시':     (14, 17),  # col 14~18 row 17~21 (경남 col 13 인접)
-    '전라남도':       (3, 22),   # col 3~6 row 22~27 (전북 row 21 인접)
-    '광주광역시':     (7, 22),   # col 7~10 row 22~25 (대전 row 19 + 전남 col 6 인접)
-    '제주특별자치도': (7, 28),   # col 7~9 row 28
+    '전라남도':       (3, 21),   # col 3~6 row 21~26 (전북 row 20 인접 — 위로 한 row)
+    '광주광역시':     (7, 21),   # col 7~10 row 21~24 (대전 row 19 + 전남 col 6 인접)
+    '제주특별자치도': (7, 27),   # col 7~9 row 27 (전남 row 26 + 광주 row 24 옆)
 }
 
 
@@ -572,20 +572,27 @@ def fill_between_sido(cells, sido_bbox=None, n_iter=100,
                             target_sido = sido
                             break
                 if target_sido is None:
-                    # base 밖 빈자리 — fill X (외측 빈자리는 자연)
                     continue
                 if target_sido in skip:
                     continue
-                # 빈자리에 그 시도 cells 이동만 허용
                 top_sido = target_sido
+                # 이동 자리 4 이웃에 같은 시도 cells ≥ 1 — cluster 연결 보장
+                same_at_target = sum(1 for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]
+                    if (col + dc, row + dr) in pos_to_cell
+                    and pos_to_cell[(col + dc, row + dr)]["sido"] == top_sido)
+                if same_at_target < 1:
+                    continue  # cluster 끊김 risk
                 cs_in = by_sido[top_sido]
                 if not cs_in:
                     continue
                 cx = sum(c["c"] for c in cs_in) / len(cs_in)
                 cy = sum(c["r"] for c in cs_in) / len(cs_in)
-                # 외측 cell만 (same_sido_ng ≤ 2) + 4 이웃 cells (cluster 확장 ngs ≥ 1)
+                # gain 한계 — 시도 base 크기 비례 (작은 시도일수록 cells 멀리 이동 OK).
+                base_size = (sido_bbox[top_sido][2] - sido_bbox[top_sido][0] + 1) * \
+                            (sido_bbox[top_sido][3] - sido_bbox[top_sido][1] + 1) if sido_bbox else 16
+                gain_limit = -base_size  # base 안 어디든 이동 OK
                 best_cand = None
-                best_gain = -2.0  # gain ≥ -2 (cluster 약간 확장 OK)
+                best_gain = gain_limit
                 for cand in cs_in:
                     same_sido_ng = sum(
                         1 for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]
