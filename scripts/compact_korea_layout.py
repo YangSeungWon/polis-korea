@@ -770,10 +770,10 @@ def compute_dynamic_layout(by_sido):
     se_col = cn_col + cn_w
     offsets['세종특별자치시'] = (se_col, chung_row)
 
-    # 대전: 세종 같은 col, 세종 아래 (사용자 요구 — 세종·대전이 충남·충북 사이)
+    # 대전: 세종 같은 col, 충북·세종 끝 row 시작 (충청권 하나처럼)
     dj_w, dj_h = shapes.get('대전광역시', (3, 3))
     dj_col = se_col
-    dj_row = chung_row + se_h
+    dj_row = chung_row + max(se_h, cb_h)
     offsets['대전광역시'] = (dj_col, dj_row)
 
     # 충북: 세종·대전 col 끝 (max width)
@@ -796,9 +796,9 @@ def compute_dynamic_layout(by_sido):
     us_row = dg_row + max(0, (dg_h - us_h) // 2)
     offsets['울산광역시'] = (gb_col + dg_w, us_row)
 
-    # 호남 row 시작 — 충청 row 끝
+    # 호남 row 시작 — 충청 (대전 포함) row 끝
     chung_h_max = max(cn_h, se_h, cb_h)
-    honam_row = chung_row + chung_h_max
+    honam_row = max(chung_row + chung_h_max, dj_row + dj_h)
     jb_w, jb_h = shapes.get('전북특별자치도', (4, 3))
     dj_w, dj_h = shapes.get('대전광역시', (3, 3))
 
