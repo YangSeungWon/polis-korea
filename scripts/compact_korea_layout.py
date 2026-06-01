@@ -751,16 +751,10 @@ def compute_dynamic_layout(by_sido):
     seoul_row = ring_thickness
     offsets['서울특별시'] = (seoul_col, seoul_row)
 
-    # 강원: 경기 동측
+    # 강원: 경기 동측 row 0~
     gw_col = gg_col + gg_w
     offsets['강원특별자치도'] = (gw_col, 0)
     gw_w, gw_h = shapes.get('강원특별자치도', (3, 3))
-
-    # 경북: 강원 아래
-    gb_col = gw_col
-    gb_row = gw_h
-    offsets['경상북도'] = (gb_col, gb_row)
-    gb_w, gb_h = shapes.get('경상북도', (4, 4))
 
     # 충청 row 시작 — 경기 row 끝 (gg_h)
     chung_row = gg_h
@@ -780,12 +774,18 @@ def compute_dynamic_layout(by_sido):
     cb_col = se_col + se_w
     offsets['충청북도'] = (cb_col, chung_row)
 
-    # 대구: 경북 아래 (row = gb_row + gb_h)
+    # 경북: **충북 오른쪽** (사용자 요구 — 경기 오른쪽 아래, 충북 오른쪽)
+    gb_col = cb_col + cb_w
+    gb_row = chung_row
+    offsets['경상북도'] = (gb_col, gb_row)
+    gb_w, gb_h = shapes.get('경상북도', (4, 4))
+
+    # 대구: 경북 아래
     dg_row = gb_row + gb_h
     dg_w, dg_h = shapes.get('대구광역시', (4, 4))
     offsets['대구광역시'] = (gb_col, dg_row)
 
-    # 울산: 대구 옆
+    # 울산: 대구 오른쪽
     us_w, us_h = shapes.get('울산광역시', (2, 3))
     us_row = dg_row + max(0, (dg_h - us_h) // 2)
     offsets['울산광역시'] = (gb_col + dg_w, us_row)
@@ -802,16 +802,16 @@ def compute_dynamic_layout(by_sido):
     # 대전: 전북 col 끝
     offsets['대전광역시'] = (cn_col + jb_w, honam_row)
 
-    # 경남: 대구 아래 (row = dg_row + dg_h)
+    # 경남: 대구 아래
     gn_row = dg_row + dg_h
     gn_w, gn_h = shapes.get('경상남도', (3, 4))
     offsets['경상남도'] = (gb_col, gn_row)
 
-    # 부산: 경남 옆
+    # 부산: 경남 오른쪽
     bs_w, bs_h = shapes.get('부산광역시', (5, 5))
     offsets['부산광역시'] = (gb_col + gn_w, gn_row)
 
-    # 광주: 호남 안 (전북·전남 사이). row = honam_row + jb_h
+    # 광주: 전북·전남 사이 (row = honam_row + jb_h)
     gj_row = honam_row + jb_h
     gj_w, gj_h = shapes.get('광주광역시', (3, 3))
     offsets['광주광역시'] = (cn_col, gj_row)
@@ -821,7 +821,7 @@ def compute_dynamic_layout(by_sido):
     jn_w, jn_h = shapes.get('전라남도', (4, 5))
     offsets['전라남도'] = (cn_col, jn_row)
 
-    # 제주: 전남 아래 (또는 옆)
+    # 제주: 전남 아래
     jj_row = jn_row + jn_h
     jj_w, jj_h = shapes.get('제주특별자치도', (3, 1))
     offsets['제주특별자치도'] = (cn_col, jj_row)
