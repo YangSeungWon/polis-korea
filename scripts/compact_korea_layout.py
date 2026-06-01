@@ -786,15 +786,16 @@ def compute_dynamic_layout(by_sido):
     offsets['경상북도'] = (gb_col, gb_row)
     gb_w, gb_h = shapes.get('경상북도', (4, 4))
 
-    # 대구: 경북 아래
+    # 대구: 경북 아래 — 사용자 요구 (한 col 왼쪽, 경북 외)
     dg_row = gb_row + gb_h
     dg_w, dg_h = shapes.get('대구광역시', (4, 4))
-    offsets['대구광역시'] = (gb_col, dg_row)
+    dg_col = max(0, gb_col - 1)
+    offsets['대구광역시'] = (dg_col, dg_row)
 
     # 울산: 대구 오른쪽
     us_w, us_h = shapes.get('울산광역시', (2, 3))
     us_row = dg_row + max(0, (dg_h - us_h) // 2)
-    offsets['울산광역시'] = (gb_col + dg_w, us_row)
+    offsets['울산광역시'] = (dg_col + dg_w, us_row)
 
     # 호남 row 시작 — 충청 (대전 포함) row 끝
     chung_h_max = max(cn_h, se_h, cb_h)
@@ -805,14 +806,14 @@ def compute_dynamic_layout(by_sido):
     # 전북: col = cn_col (대전은 위로 이동 — 충남·충북 사이)
     offsets['전북특별자치도'] = (cn_col, honam_row)
 
-    # 경남: 대구 아래
+    # 경남: 대구 아래 (대구와 같은 col — 한 col 왼쪽)
     gn_row = dg_row + dg_h
     gn_w, gn_h = shapes.get('경상남도', (3, 4))
-    offsets['경상남도'] = (gb_col, gn_row)
+    offsets['경상남도'] = (dg_col, gn_row)
 
     # 부산: 경남 오른쪽
     bs_w, bs_h = shapes.get('부산광역시', (5, 5))
-    offsets['부산광역시'] = (gb_col + gn_w, gn_row)
+    offsets['부산광역시'] = (dg_col + gn_w, gn_row)
 
     # 광주: 전북·전남 사이 (row = honam_row + jb_h)
     gj_row = honam_row + jb_h
