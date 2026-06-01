@@ -766,12 +766,18 @@ def compute_dynamic_layout(by_sido):
     cn_col = icn_w
     offsets['충청남도'] = (cn_col, chung_row)
 
-    # 세종: 충남 col 끝
+    # 세종: 충남 col 끝 (충남·충북 사이 위쪽)
     se_col = cn_col + cn_w
     offsets['세종특별자치시'] = (se_col, chung_row)
 
-    # 충북: 세종 col 끝
-    cb_col = se_col + se_w
+    # 대전: 세종 같은 col, 세종 아래 (사용자 요구 — 세종·대전이 충남·충북 사이)
+    dj_w, dj_h = shapes.get('대전광역시', (3, 3))
+    dj_col = se_col
+    dj_row = chung_row + se_h
+    offsets['대전광역시'] = (dj_col, dj_row)
+
+    # 충북: 세종·대전 col 끝 (max width)
+    cb_col = se_col + max(se_w, dj_w)
     offsets['충청북도'] = (cb_col, chung_row)
 
     # 경북: **충북 오른쪽** (사용자 요구 — 경기 오른쪽 아래, 충북 오른쪽)
@@ -796,11 +802,8 @@ def compute_dynamic_layout(by_sido):
     jb_w, jb_h = shapes.get('전북특별자치도', (4, 3))
     dj_w, dj_h = shapes.get('대전광역시', (3, 3))
 
-    # 전북: col = cn_col
+    # 전북: col = cn_col (대전은 위로 이동 — 충남·충북 사이)
     offsets['전북특별자치도'] = (cn_col, honam_row)
-
-    # 대전: 전북 col 끝
-    offsets['대전광역시'] = (cn_col + jb_w, honam_row)
 
     # 경남: 대구 아래
     gn_row = dg_row + dg_h
