@@ -906,9 +906,9 @@ function renderSigunguHex() {
   }
   const minRatio = 0.20;
 
-  // 격자 hex 모드: 시군구당 N개 작은 hex 패킹
+  // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 5만표)
   if (sizingMode === '격자' && maxVoted > 0) {
-    const unit = Math.max(20000, Math.round(maxVoted / 14));  // 시군구 최대 ~14개 hex
+    const unit = 50000;  // 1 hex = 5만표 (고정 — 회차·선거 동일 단위로 비교 가능)
     const smallR = 5;
     // axial 좌표 BFS 스파이럴 (1..N hex 배치)
     function hexSpiral(N) {
@@ -967,6 +967,13 @@ function renderSigunguHex() {
         ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.pct?.toFixed(1)}% · ${N}석/표`
         : `${d.sido} ${d.name}`;
       g.appendChild(tt);
+      // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합)
+      const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      sigOutline.setAttribute('points', hexPoints(cx0, cy0, 45));
+      sigOutline.setAttribute('fill', isSelected ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.025)');
+      sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(0,0,0,0.18)');
+      sigOutline.setAttribute('stroke-width', isSelected ? '1.5' : '0.6');
+      g.appendChild(sigOutline);
       // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
       const spiral = hexSpiral(N);
       const fills = [];
