@@ -645,7 +645,7 @@ def fill_between_sido(cells, sido_bbox=None, n_iter=100,
 
 # 시도별 ratio (가로:세로) — 한국 지리 모양 따라 자치구 분포 비율
 SIDO_RATIO = {
-    '서울특별시':     (7, 7),   # 정사각 (cells 25~48)
+    '서울특별시':     (7, 8),   # 세로 살짝 (cells 48, chung_row 12 위해)
     '인천광역시':     (3, 8),   # 세로 길음 (강화·옹진 포함 남북)
     '경기도':         (1, 1),   # ring shape (특별 처리)
     '강원특별자치도': (1, 1),   # 정사각
@@ -661,7 +661,7 @@ SIDO_RATIO = {
     '광주광역시':     (3, 3),
     '울산광역시':     (2, 3),
     '부산광역시':     (4, 4),
-    '세종특별자치시': (1, 4),   # 세로 (좁음)
+    '세종특별자치시': (2, 1),   # 가로 (r12 한 row, cells 2)
     '제주특별자치도': (3, 1),   # 가로 (남북 짧음)
 }
 
@@ -762,18 +762,18 @@ def compute_dynamic_layout(by_sido):
     se_w, se_h = shapes.get('세종특별자치시', (1, 2))
     cb_w, cb_h = shapes.get('충청북도', (4, 3))
 
-    # 충남: col = icn_w (인천 끝 + 경기 시작 = 같은 col)
-    cn_col = icn_w
+    # 충남: col 0 (사용자 요구 — 충남 왼쪽 끝)
+    cn_col = 0
     offsets['충청남도'] = (cn_col, chung_row)
 
-    # 세종: 충남 col 끝 (충남·충북 사이 위쪽)
+    # 세종: 충남 col 끝, row 12 한 row (사용자 요구)
     se_col = cn_col + cn_w
     offsets['세종특별자치시'] = (se_col, chung_row)
 
-    # 대전: 세종 같은 col, 충북·세종 끝 row 시작 (충청권 하나처럼)
+    # 대전: 세종 같은 col, 세종 아래 row 13~15 (사용자 요구)
     dj_w, dj_h = shapes.get('대전광역시', (3, 3))
     dj_col = se_col
-    dj_row = chung_row + max(se_h, cb_h)
+    dj_row = chung_row + se_h
     offsets['대전광역시'] = (dj_col, dj_row)
 
     # 충북: 세종·대전 col 끝 (max width)
