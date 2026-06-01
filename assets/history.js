@@ -970,9 +970,9 @@ function renderSigunguHex() {
       // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합)
       const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
       sigOutline.setAttribute('points', hexPoints(cx0, cy0, 45));
-      sigOutline.setAttribute('fill', isSelected ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.025)');
-      sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(0,0,0,0.18)');
-      sigOutline.setAttribute('stroke-width', isSelected ? '1.5' : '0.6');
+      sigOutline.setAttribute('fill', isSelected ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)');
+      sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(27,34,55,0.45)');
+      sigOutline.setAttribute('stroke-width', isSelected ? '1.8' : '1.0');
       g.appendChild(sigOutline);
       // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
       const spiral = hexSpiral(N);
