@@ -380,7 +380,7 @@ def assign_cells(cells, positions, centers, w_lon=2.5):
         by_group[(sido, sigungus)].append(c)
 
     # 분구 jitter — group 안 cell.name 순서 격자 위치
-    JITTER_OFFSET = 0.020  # 자치구 spacing 절반 (서울 0.04~0.05, 경기 0.05~0.1)
+    JITTER_OFFSET = 0.040  # 자치구 평균 spacing 만큼 — cells 자리에 spread (외측 자리 사용)
     geos = []
     for c in cells:
         sigungus = tuple(sorted(c.get("sigungus", [c.get("name", "")])))
@@ -499,12 +499,12 @@ def reconnect_cluster(cells, sidos=('경기도',), n_iter=30):
                 break
             components.sort(key=lambda c: -len(c))
             main = components[0]
-            # 작은 components의 cells → main 인접 빈자리로
+            # 작은 components cells → main 인접 빈자리로 (cell 원위치 거리 ≤ 4 자리)
+            MAX_MOVE_DIST_SQ = 4 ** 2  # 거리 4 자리 이내만 이동 (너무 멀리 안 감)
             moved = False
             for small in components[1:]:
                 for p in small:
                     cell = pos_to_cell[p]
-                    # main 인접 빈자리 (any free 자리, 다른 시도 자리 X)
                     best = None
                     best_d = float("inf")
                     for mp in main:
@@ -513,6 +513,8 @@ def reconnect_cluster(cells, sidos=('경기도',), n_iter=30):
                             if n in used:
                                 continue
                             d = (cell["c"] - n[0]) ** 2 + (cell["r"] - n[1]) ** 2
+                            if d > MAX_MOVE_DIST_SQ:
+                                continue  # 원자리에서 너무 멀음
                             if d < best_d:
                                 best_d = d
                                 best = n
@@ -525,18 +527,18 @@ def reconnect_cluster(cells, sidos=('경기도',), n_iter=30):
                         pos_to_cell.pop(prev, None)
                         cell["c"], cell["r"] = best
                         pos_to_cell[best] = cell
-                        main.add(best)
+                        # main에 추가 X — cascading 막음 (main 그대로 유지)
                         moved = True
             if not moved:
                 break
 
 
-def fill_between_sido(cells, n_iter=100,
+def fill_between_sido(cells, sido_bbox=None, n_iter=100,
                        skip=('경기도', '서울특별시', '인천광역시')):
     """시도 사이 빈자리 fill — 호남·충청·영남 다닥다닥 cluster.
 
-    skip 시도 (경기·서울·인천 ring) cluster 끊어짐 risk → cell 이동 X.
-    빈자리 4 이웃 ≥ 2 + 같은 시도 cells ≥ 1 → 그 시도 cluster 확장.
+    sido_bbox = {sido: (cmin, rmin, cmax, rmax)} — 시도 base 안 자리 검사.
+    빈자리가 어느 시도 base 안인지 확인 → 그 시도 cells만 이동 (자기 base 안만).
     """
     from collections import Counter as _Counter
     by_sido = defaultdict(list)
@@ -553,28 +555,37 @@ def fill_between_sido(cells, n_iter=100,
             for row in range(rmin, rmax + 1):
                 if (col, row) in used:
                     continue
+                # 8 이웃 (4 직접 + 4 대각선) — col 6 row 22 같은 시도 사이 외측 fill 가능
                 ngs = []
-                for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1),
+                                (-1, -1), (1, 1), (-1, 1), (1, -1)]:
                     p = (col + dc, row + dr)
                     if p in pos_to_cell:
                         ngs.append(pos_to_cell[p])
-                if len(ngs) < 2:
+                if len(ngs) < 1:
                     continue
-                sido_counts = _Counter(c["sido"] for c in ngs)
-                # skip 시도 제외 (경기·서울·인천 cluster 끊어짐 risk)
-                for s in list(sido_counts.keys()):
-                    if s in skip:
-                        del sido_counts[s]
-                if not sido_counts:
+                # 빈자리가 어느 시도 base 안인지 결정 — 그 시도 cells만 fill 가능
+                target_sido = None
+                if sido_bbox:
+                    for sido, bb in sido_bbox.items():
+                        if bb[0] <= col <= bb[2] and bb[1] <= row <= bb[3]:
+                            target_sido = sido
+                            break
+                if target_sido is None:
+                    # base 밖 빈자리 — fill X (외측 빈자리는 자연)
                     continue
-                top_sido, _ = sido_counts.most_common(1)[0]
+                if target_sido in skip:
+                    continue
+                # 빈자리에 그 시도 cells 이동만 허용
+                top_sido = target_sido
                 cs_in = by_sido[top_sido]
+                if not cs_in:
+                    continue
                 cx = sum(c["c"] for c in cs_in) / len(cs_in)
                 cy = sum(c["r"] for c in cs_in) / len(cs_in)
-                # 외측 cell만 (same_sido_ng ≤ 2) + 이동이 centroid 가까워지거나 동일거리 OK.
-                # cluster 확장은 OK이지만 — centroid 매우 멀리 가는 이동 X.
+                # 외측 cell만 (same_sido_ng ≤ 2) + 4 이웃 cells (cluster 확장 ngs ≥ 1)
                 best_cand = None
-                best_gain = -1.0  # gain ≥ 0 + 약간 음수까지 OK
+                best_gain = -2.0  # gain ≥ -2 (cluster 약간 확장 OK)
                 for cand in cs_in:
                     same_sido_ng = sum(
                         1 for dc, dr in [(-1, 0), (1, 0), (0, -1), (0, 1)]
@@ -586,8 +597,7 @@ def fill_between_sido(cells, n_iter=100,
                     d_cur = (cand["c"] - cx) ** 2 + (cand["r"] - cy) ** 2
                     d_new = (col - cx) ** 2 + (row - cy) ** 2
                     gain = d_cur - d_new
-                    # gain ≥ -2 (이동 후 centroid 약간 멀어져도 OK — cluster 확장)
-                    if gain > best_gain and gain > -2.0:
+                    if gain > best_gain:
                         best_gain = gain
                         best_cand = cand
                 if best_cand:
@@ -712,9 +722,20 @@ def process(src_name, out_suffix="_v2"):
 
     # 후처리 1 — 시도 안 빈자리 채우기 (외측 cells 안쪽으로)
     post_compact(cells)
-    # 후처리 2 — 시도 사이 빈자리 채우기 (호남·충청·영남 cluster 확장 적극)
-    fill_between_sido(cells)
-    # 후처리 3 — 모든 시도 cluster 연결성 회복 (확장 후 끊김 fix)
+    # 후처리 2 — 시도 사이 빈자리 채우기 — 빈자리 base 안 시도 cells만 이동
+    sido_bbox_dict = {}
+    for sido, off in SIDO_OFFSET.items():
+        if sido in by_sido:
+            n_cells_sido = len(by_sido[sido])
+            if sido == '서울특별시':
+                shp = seoul_shape
+            elif sido == '경기도':
+                shp = gyeonggi_shape
+            else:
+                shp = shape_for(sido, n_cells_sido)
+            sido_bbox_dict[sido] = (off[0], off[1], off[0]+shp[0]-1, off[1]+shp[1]-1)
+    fill_between_sido(cells, sido_bbox=sido_bbox_dict)
+    # 후처리 3 — 모든 시도 cluster 보존 (MAX_MOVE_DIST 4로 cascading 막음)
     all_sidos = tuple(set(c["sido"] for c in cells))
     reconnect_cluster(cells, sidos=all_sidos)
 
