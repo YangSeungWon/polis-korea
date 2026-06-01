@@ -1277,19 +1277,47 @@ function renderDetail() {
       </div>
     </div>`;
   } else if (state.type === 'local') {
-    html += `<div class="national-summary">
+    // 지선 — 광역단체장·기초단체장 winner_party 카운트 (정당별 당선 수)
+    const winsByParty = new Map();
+    for (const r of state.results?.sigungu || []) {
+      const winner = r.candidates?.[0];
+      if (!winner?.party) continue;
+      winsByParty.set(winner.party, (winsByParty.get(winner.party) || 0) + 1);
+    }
+    const parties = [...winsByParty.entries()]
+      .map(([party, wins]) => ({ party, wins, color: partyColor(party) }))
+      .sort((a, b) => b.wins - a.wins);
+    const total = parties.reduce((s, p) => s + p.wins, 0);
+    const top = parties[0];
+    html += `<div class="national-summary" style="border-left-color:${top ? top.color : 'var(--ink)'}">
       <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · ${state.office}</div>
-      <div class="ns-name">${el?.date || ''}</div>
-      <div class="ns-party">${state.office === '광역단체장' ? '17개 시·도지사 선거' :
-                              state.office === '교육감' ? '17개 시·도교육감 선거' :
-                              '각 시군구의 단체장 선거'}</div>
+      <div class="ns-name" style="color:${top ? top.color : 'var(--ink)'}">${top ? top.party : '—'}</div>
+      <div class="ns-party">${top ? `${top.wins}곳 / 총 ${total}곳` : (el?.date || '')}</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
+        ${el?.date ? `<span>${el.date}</span>` : ''}
       </div>
-    </div>`;
+    </div>
+    ${parties.length ? `<div class="party-seats">
+      ${parties.map((p) => `<span class="ps-item" title="${p.party} ${p.wins}곳">
+        <span class="ps-dot" style="background:${p.color}"></span>${p.party} <b>${p.wins}</b>
+      </span>`).join('')}
+    </div>` : ''}`;
   } else if (nat?.candidates?.length) {
-    const top = nat.candidates[0];
+    const sorted = [...nat.candidates].sort((a, b) => (b.pct || 0) - (a.pct || 0));
+    const top = sorted[0];
     const color = partyColor(top.party);
+    const maxPct = top.pct || 0;
+    // 1·2위 격차 그리고 전체 분포 (최대 10명 막대그래프)
+    const barRows = sorted.slice(0, 10).map((c) => {
+      const cColor = partyColor(c.party);
+      const w = maxPct > 0 ? ((c.pct || 0) / maxPct) * 100 : 0;
+      return `<div class="rc-bar-row">
+        <span class="name">${candLabel(c)}</span>
+        <span class="rc-bar"><span class="rc-bar-fill" style="width:${w}%;background:${cColor}"></span></span>
+        <span class="pct" style="color:${cColor}">${c.pct != null ? c.pct.toFixed(1) + '%' : '—'}</span>
+      </div>`;
+    }).join('');
     html += `<div class="national-summary" style="border-left-color:${color}">
       <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국</div>
       <div class="ns-name" style="color:${color}">${candLabel(top) || el?.winner || '—'}</div>
@@ -1298,7 +1326,8 @@ function renderDetail() {
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}
       </div>
-    </div>`;
+    </div>
+    <div class="result-card" style="border-left-color:${color}">${barRows}</div>`;
   } else if (el) {
     html += `<div class="national-summary">
       <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회</div>
