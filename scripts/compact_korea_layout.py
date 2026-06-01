@@ -104,15 +104,15 @@ SIDO_BASE_SHAPE = {
 
     '충청남도':       (4, 4),    # 16 (max legacy 16 fit) — col 3~6 row 13~16
     '세종특별자치시': (1, 4),    # 4 col 7 row 13~16 (충남 col 6 + 충북 col 8 인접)
-    '충청북도':       (4, 4),    # 16 (max legacy 14 fit) — col 8~11 row 13~16 (세종 col 7 + 대구 col 12 인접)
+    '충청북도':       (4, 3),    # 12 (cells 8 fit, legacy 14 일부 X) — col 8~11 row 13~15 (납작, 경기 row 12 인접)
     '대전광역시':     (4, 3),    # 12 (max 7 fit) — col 7~10 row 17~19 (충북 row 16 + 경남 col 11 인접)
     '대구광역시':     (4, 4),    # 16 (max 12 fit) — col 12~15 row 13~16
     '울산광역시':     (2, 3),    # 6 (max 6 fit) — col 16·17 row 14~16 (대구 col 15 인접)
-    '전북특별자치도': (4, 4),    # 16 (max 15 fit) — col 3~6 row 17~20 (호남 위로 끌어옴 위해 한 row 줄임)
+    '전북특별자치도': (4, 3),    # 12 (cells 10 fit, legacy 15 일부 X) — col 3~6 row 17~19 (납작)
     '경상남도':       (3, 8),    # 24 (max 22 legacy fit) — col 11~13 row 17~24
     '부산광역시':     (5, 5),    # 25 (max 18 fit) — col 14~18 row 17~21 (경남 col 13 인접)
-    '광주광역시':     (4, 4),    # 16 (max 8 fit) — col 7~10 row 22~25 (전남 col 6 + 경남 col 11 인접)
-    '전라남도':       (4, 6),    # 24 (max 22 legacy fit) — col 3~6 row 22~27
+    '광주광역시':     (4, 2),    # 8 (cells 8 fit) — col 3~6 row 21·22 (전북·전남 사이, 사용자 요구)
+    '전라남도':       (4, 6),    # 24 (max 22 legacy fit) — col 3~6 row 23~28
     '제주특별자치도': (3, 1),    # 3 (정확)
 }
 
@@ -188,9 +188,9 @@ SIDO_OFFSET = {
     '전북특별자치도': (3, 17),   # col 3~6 row 17~21 (충남 row 16 인접)
     '경상남도':       (11, 17),  # col 11~13 row 17~24 (대전 col 10 + 대구 row 16 인접)
     '부산광역시':     (14, 17),  # col 14~18 row 17~21 (경남 col 13 인접)
-    '전라남도':       (3, 21),   # col 3~6 row 21~26 (전북 row 20 인접 — 위로 한 row)
-    '광주광역시':     (7, 21),   # col 7~10 row 21~24 (대전 row 19 + 전남 col 6 인접)
-    '제주특별자치도': (7, 27),   # col 7~9 row 27 (전남 row 26 + 광주 row 24 옆)
+    '광주광역시':     (3, 21),   # col 3~6 row 21·22 (전북 row 20 + 전남 row 23 사이)
+    '전라남도':       (3, 23),   # col 3~6 row 23~28 (광주 row 22 인접)
+    '제주특별자치도': (7, 27),   # col 7~9 row 27 (전남 row 23~28 옆)
 }
 
 
@@ -406,11 +406,31 @@ def assign_cells(cells, positions, centers, w_lon=2.5):
 
     geo_arr = np.array([geos[i] for i in valid_idx], dtype=float)
     pos_arr = np.array(positions, dtype=float)
-    geo_n = normalize(geo_arr); geo_n[:, 1] = 1 - geo_n[:, 1]
-    pos_n = normalize(pos_arr) if len(positions) > 1 else np.array([[0.5, 0.5]])
-    cost = np.zeros((len(valid_idx), len(positions)))
-    for i in range(len(valid_idx)):
-        for j in range(len(positions)):
+
+    # === B 시도 — rank-based normalize (unique value 기준) ===
+    # 같은 col/row 자리들은 동일 rank. cells lat·lon도 unique value별 rank.
+    # cells N개를 자리 분포에 강제 spread.
+    n_cells = len(valid_idx)
+    n_pos = len(positions)
+    geo_n = np.zeros_like(geo_arr)
+    pos_n = np.zeros_like(pos_arr)
+
+    def rank_normalize(values):
+        """value → 0~1 rank (unique value 기준)."""
+        uniq = sorted(set(values))
+        rank_map = {v: i / max(len(uniq) - 1, 1) for i, v in enumerate(uniq)}
+        return np.array([rank_map[v] for v in values])
+
+    # cells lon rank (col 방향), lat rank flip (row 방향, 큰 lat = 작은 row)
+    geo_n[:, 0] = rank_normalize(geo_arr[:, 0])
+    geo_n[:, 1] = 1 - rank_normalize(geo_arr[:, 1])
+    # 자리 col rank, row rank
+    pos_n[:, 0] = rank_normalize(pos_arr[:, 0])
+    pos_n[:, 1] = rank_normalize(pos_arr[:, 1])
+
+    cost = np.zeros((n_cells, n_pos))
+    for i in range(n_cells):
+        for j in range(n_pos):
             dx = geo_n[i, 0] - pos_n[j, 0]; dy = geo_n[i, 1] - pos_n[j, 1]
             cost[i, j] = w_lon * dx * dx + dy * dy
     _, col_ind = linear_sum_assignment(cost)
@@ -728,7 +748,9 @@ def process(src_name, out_suffix="_v2"):
         print(f"  {sido:20s} {n:3d} cells → shape {shape_} 자리 {len(positions)} 적용 {applied}")
 
     # 후처리 1 — 시도 안 빈자리 채우기 (외측 cells 안쪽으로)
-    post_compact(cells)
+    # B 시도 — assign_cells rank-based가 cells을 자리 분포에 spread (외측 row/col에도
+    # cells 매핑). post_compact는 cells centroid 안쪽 → spread 효과 무효화. 비활성화.
+    # post_compact(cells)
     # 후처리 2 — 시도 사이 빈자리 채우기 — 빈자리 base 안 시도 cells만 이동
     sido_bbox_dict = {}
     for sido, off in SIDO_OFFSET.items():
