@@ -967,9 +967,9 @@ function renderSigunguHex() {
         ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.pct?.toFixed(1)}% · ${N}석/표`
         : `${d.sido} ${d.name}`;
       g.appendChild(tt);
-      // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합)
+      // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
       const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-      sigOutline.setAttribute('points', hexPoints(cx0, cy0, 45));
+      sigOutline.setAttribute('points', hexPoints(cx0, cy0, 22));
       sigOutline.setAttribute('fill', isSelected ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)');
       sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(27,34,55,0.45)');
       sigOutline.setAttribute('stroke-width', isSelected ? '1.8' : '1.0');
