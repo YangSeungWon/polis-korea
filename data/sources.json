@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "vote-via-data 외부 출처 레지스트리. 카테고리: results(개표결과) / meta(코드·식별자) / geo(선거구·행정구역) / polls(여론조사). 신규 데이터셋 추가 시 여기 먼저 등록 → 페이지 출처 패널 → sitemap 동기화.",
-    "last_updated": "2026-05-22"
+    "last_updated": "2026-06-02"
   },
   "datasets": [
     {
@@ -78,16 +78,35 @@
       "note": "읍면동 단위 경계. 2022-03-09 20대 대선 선거구 일치 버전 포함. 읍면동 개표 결과 매핑용."
     },
     {
+      "id": "ohmynews_22elec_map",
+      "category": "geo",
+      "title": "OhmyNews/2024_22_elec_map — 22대 총선 254 지역구 GeoJSON",
+      "provider": "오마이뉴스",
+      "url": "https://github.com/OhmyNews/2024_22_elec_map",
+      "license": "MIT License",
+      "type": "GEO",
+      "format": "GeoJSON (원본 ~15MB + simplify ~1MB) + CSV 메타",
+      "crs": "EPSG:4326 (WGS84)",
+      "attributes": ["SGG_Code (NEC 7자리)", "SIDO_SGG", "SIDO", "SGG"],
+      "local_path": "data/geo/district_22_geojson.json (simplify 1.1MB) + .LICENSE",
+      "used_in": ["/history/national-assembly/22/"],
+      "method": "통계청 행정동 경계 (V-World dsId=30017) → NEC 선거구별 dissolve. 부천시는 일반구 폐지(2016)로 옛 행정동 체계 필요해 vuski/admdongkor 과거판으로 백필.",
+      "note": "**22대 지역구 시각화 진실 공급원**. 254 features. 동→선거구 매핑은 NEC info.nec.go.kr 표 기반(repo 내 매핑 CSV 미공개). 강남갑/을/병 등 split 선거구도 동 단위로 정확. **attribution 의무 — 페이지 출처 패널에 '© 오마이뉴스, MIT License' 명시.** LICENSE 사본 data/geo/district_22_geojson.LICENSE."
+    },
+    {
       "id": "ohmynews_21elec_map",
       "category": "geo",
-      "title": "OhmyNews/2020_21_elec_map — 21대 총선 선거구 지도",
+      "title": "OhmyNews/2020_21_elec_map — 21대 총선 253 지역구 GeoJSON",
       "provider": "오마이뉴스",
       "url": "https://github.com/OhmyNews/2020_21_elec_map",
-      "license": "리포지토리 LICENSE 확인 필요",
+      "license": "MIT License",
       "type": "GEO",
       "format": "GeoJSON + CSV(UTF-8)",
+      "crs": "EPSG:4326 (WGS84)",
+      "attributes": ["SGG_Code", "SGG_1", "SGG_2", "SGG_3"],
       "used_in": [],
-      "note": "253개 지역구 dissolve된 GeoJSON. 행정동 → 선거구 매핑 예시."
+      "method": "vuski/admdongkor `ver2020xxxx_for_update` 행정동 → NEC 선거구로 dissolve. 매핑 출처는 NEC 선거통계시스템 '선거구 및 읍면동 현황' (info.nec.go.kr). 화성 봉담읍 리 단위, 용인 동백 분동 등 동내 분할은 수기 보정 명시.",
+      "note": "21대 (2020.4.15) 시계열 비교용. SGG_Code 체계는 22대와 다름 (예: 부천 4석→3석 회차 간 변동). **attribution 의무.**"
     },
     {
       "id": "teampopong_data",

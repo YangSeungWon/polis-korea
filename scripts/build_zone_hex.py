@@ -562,29 +562,29 @@ def design_zone_S(zone_cells_by_sido):
     yn_plan = design_yeongnam(zone_cells_by_sido)
     ho_plan = design_honam(zone_cells_by_sido)
     w_yn = yn_plan['W_yn']
-    H_S = max(yn_plan['H_yn'], ho_plan['H_ho'])  # 양쪽 height 더 큰 쪽
 
-    # 왼쪽: 충청 top + 호남 bot. 같은 width w_left, height H_S.
-    # 충청 top h_ch rows, 호남 H_S - h_ch rows.
-    # 두 시도가 같은 w_left 안에 fit해야: w_left*h_ch ≥ n_ch, w_left*(H_S-h_ch) ≥ n_ho
-    best_left = None
-    for w_left in range(1, max(20, n_ch + n_ho)):
-        h_ch_min = math.ceil(n_ch / w_left)
-        h_ho_min = math.ceil(n_ho / w_left)
-        if h_ch_min + h_ho_min > H_S:
+    # 충청 시도별 stack width — 시도별 W = ceil(n/h_ch). Sum이 충청 stripe 실제 width.
+    ch_counts = [len(zone_cells_by_sido.get(s, [])) for s in
+                 ['충청남도', '세종특별자치시', '대전광역시', '충청북도']]
+
+    # h_ch 결정: 충청 stack 너비 + 호남 너비 균형, S zone height도 영남과 맞춤.
+    best = None
+    for h_ch_try in range(1, max(2, n_ch + 1)):
+        ch_widths = [math.ceil(c / h_ch_try) if c else 0 for c in ch_counts]
+        w_ch_stack = sum(ch_widths)
+        w_left = max(w_ch_stack, ho_plan['W_ho'])
+        # 호남 row count
+        H_left = h_ch_try + ho_plan['H_ho']
+        H_S_try = max(yn_plan['H_yn'], H_left)
+        zone_W_try = w_left + w_yn
+        # 컴팩트 — 전체 bbox + waste 최소
+        ch_waste = h_ch_try * w_left - n_ch
+        if ch_waste < 0:
             continue
-        # OK fit. waste 측정
-        waste = w_left * H_S - n_ch - n_ho
-        score = (w_left, waste)
-        if best_left is None or score < best_left[0]:
-            best_left = (score, w_left, h_ch_min)
-        break  # 첫 fit이면 충분 (최소 w_left)
-    if best_left is None:
-        # fallback
-        w_left = max(1, math.ceil((n_ch + n_ho) / H_S))
-        h_ch = math.ceil(n_ch / w_left)
-    else:
-        _, w_left, h_ch = best_left
+        score = (zone_W_try + H_S_try, ch_waste, h_ch_try)
+        if best is None or score < best[0]:
+            best = (score, h_ch_try, w_ch_stack, w_left, H_S_try)
+    _, h_ch, w_ch_stack, w_left, H_S = best
 
     zone_W = w_left + w_yn
     zone_H = H_S
@@ -691,7 +691,7 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         col_start=col_offset, row_start=row_offset,
         H=plan['h_ch'],
         sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='left_top',
+        partial_align='left_bot',  # partial을 stripe 아래쪽으로 — 위 row 빈자리 줄여 시도 인접 보장
     )
     # 호남: 전북 top + 전남 wrap (좌·우·아래) + 광주 inner
     ho_plan = plan['ho_plan']
