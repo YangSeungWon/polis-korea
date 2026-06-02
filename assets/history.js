@@ -336,14 +336,21 @@ function renderHistoryLegend() {
   const el = $('#history-legend');
   if (!el) return;
   const type = state.type;
-  const parties = new Set();
+  // 총선은 범례 안 보임 (지역구 색 자체로 충분)
   if (type === 'national_assembly') {
-    // 지역구 1위 정당
-    for (const r of (state.results?.district || [])) {
-      const w = (r.candidates || []).find((c) => c.won || c.rank === 1) || r.candidates?.[0];
-      if (w?.party) parties.add(w.party);
-    }
-  } else if (type === 'presidential') {
+    el.hidden = true; el.innerHTML = '';
+    return;
+  }
+  // 대선은 detail-pane(우측 그래프) 아래로 이동, 그 외는 viz 안 기본 위치
+  const detailPane = $('#detail-pane');
+  const vizParent = detailPane?.parentElement;
+  if (type === 'presidential' && detailPane && el.parentElement !== detailPane) {
+    detailPane.appendChild(el);
+  } else if (type !== 'presidential' && vizParent && el.parentElement !== vizParent) {
+    vizParent.insertBefore(el, detailPane);
+  }
+  const parties = new Set();
+  if (type === 'presidential') {
     // 시군구별 1위 정당
     for (const r of (state.results?.sigungu || [])) {
       const w = (r.candidates || [])[0];

@@ -1027,15 +1027,22 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     ho_col_shift = plan['w_left'] - ho_plan['W_ho']
     ho_col0 = col_offset + ho_col_shift
     ho_row0 = row_offset + plan['h_ch']
-    # 전북 top — partial row right-align (호남 right-align과 일관 → 우측 edge 깔끔)
+    # 전북 top — column-major from RIGHT (우측 col부터 위→아래 채움)
+    # 빈자리는 좌측 col (서쪽 outer) — 호남 right-align과 일관
+    # 우측 col이 가득 차서 영남과 boundary 깔끔
     jb_cells = zone_cells_by_sido.get('전북특별자치도', []) + zone_cells_by_sido.get('전라북도', [])
-    fill_rect(
-        jb_cells,
-        col_start=ho_col0, row_start=ho_row0,
-        W=ho_plan['total_w'], H=ho_plan['top_h_jb'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='right_top',
-    )
+    jb_W = ho_plan['total_w']
+    jb_H = ho_plan['top_h_jb']
+    if jb_cells and jb_W > 0 and jb_H > 0:
+        # east first (lon 큰 cell이 우측 col 우선), 같은 col 안에서 북 → 남
+        jb_sorted = sorted(jb_cells, key=lambda c: (-c['lon'], -c['lat']))
+        for i, cell in enumerate(jb_sorted):
+            col_idx = (jb_W - 1) - (i // jb_H)
+            row_idx = i % jb_H
+            if col_idx < 0:
+                break
+            cell['c'] = ho_col0 + col_idx
+            cell['r'] = ho_row0 + row_idx
     # 광주 inner block
     gj_col = ho_col0 + ho_plan['left_w']
     gj_row = ho_row0 + ho_plan['top_h_jb']
