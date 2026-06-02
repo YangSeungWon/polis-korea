@@ -244,18 +244,16 @@ def fill_horizontal_stack(sido_cell_pairs, col_start, row_start, H, sort_key=Non
     return cur_col - col_start
 
 
-def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h, right_w, bot_h):
+def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h, right_w, bot_h, bot_extra_left=0):
     """경기 wrap — inner block 위·우·아래 둘러쌈.
-    cells lat 분포로 top/right/bot 분배:
-      top wrap: 가장 높은 lat 시군구 (위 row 일수록 lat 더 큼)
-      bot wrap: 가장 낮은 lat
-      right wrap: 중간 lat + 높은 lon (또는 단순히 남은 cells)
-    """
+    bot_extra_left>0이면 bot이 좌측으로 추가 cols 확장 (예: 인천 아래).
+    cells lat 분포로 top/right/bot 분배 (top=북, right=중간, bot=남)."""
     if not cells:
         return
-    total_wrap_w = inner_W + right_w
-    N_top = top_h * total_wrap_w
-    N_bot = bot_h * total_wrap_w
+    top_w = inner_W + right_w
+    bot_w = inner_W + right_w + bot_extra_left
+    N_top = top_h * top_w
+    N_bot = bot_h * bot_w
     N_right = right_w * inner_H
     N_total = N_top + N_right + N_bot
     cells_sorted = sorted(cells, key=lambda c: -c['lat'])
@@ -281,7 +279,7 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         top_cells,
         col_start=inner_col,
         row_start=inner_row - top_h,
-        W=total_wrap_w, H=top_h,
+        W=top_w, H=top_h,
         sort_key=None,
         partial_align='left_top',  # 미달 시 위쪽 outer
     )
@@ -291,15 +289,15 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         col_start=inner_col + inner_W,
         row_start=inner_row,
         W=right_w, H=inner_H,
-        sort_key=lambda c: (-c['lat'], -c['lon']),  # 위쪽 row lat 큰, 같은 row lon 큰
+        sort_key=None,
         partial_align='right_top',  # 미달 시 우측 outer
     )
-    # bot wrap: row inner_row+inner_H..inner_row+inner_H+bot_h-1
+    # bot wrap: inner_row+inner_H..inner_row+inner_H+bot_h-1, cols 인천 아래까지 확장
     fill_rect(
         bot_cells,
-        col_start=inner_col,
+        col_start=inner_col - bot_extra_left,
         row_start=inner_row + inner_H,
-        W=total_wrap_w, H=bot_h,
+        W=bot_w, H=bot_h,
         sort_key=None,
         partial_align='left_bot',  # 미달 시 아래쪽 outer
     )
@@ -327,21 +325,36 @@ def design_zone_N(zone_cells_by_sido):
             w_seoul = math.ceil(n_seoul / h_seoul)
     inner_H = h_seoul
 
-    # 경기 wrap: 서울만 둘러쌈 (인천·강원은 wrap 밖). top + right + bot.
-    # cells = (top_h + bot_h)*(w_seoul + right_w) + right_w * inner_H
-    # 점수: 빈자리 + right_w 페널티 → top ≤ bot (남부 인구 집중) → bot 크게
-    # 동부 셀수 = right_w * inner_H. 크면 지리 부정확 (실제 경기 동부 시군 적음).
+    # 인천 width 임시 (cap 계산용) — 살짝 세로 (h:w ≈ 1.5)
+    if n_in == 0:
+        w_in_est = 0
+    elif n_in < 4:
+        w_in_est = 1
+    else:
+        h_est = max(2, math.ceil(math.sqrt(n_in * 1.5)))
+        w_in_est = math.ceil(n_in / h_est)
+        if inner_H and h_est > inner_H:
+            w_in_est = math.ceil(n_in / inner_H)
+    # 경기 wrap: top + right (서울 둘러쌈) + bot (인천 아래까지 확장).
+    # cells = top_h*(w_seoul+right_w) + right_w*inner_H + bot_h*(w_in + w_seoul + right_w)
+    # 점수: 빈자리 + right_w 페널티 + top ≤ bot (남부 인구 집중) + bot 크게
     best = None
     for right_w in range(1, 4):
+        top_w = w_seoul + right_w
+        bot_w = w_in_est + w_seoul + right_w
         for top_h in range(1, 4):
             for bot_h in range(1, 6):
-                cap = (top_h + bot_h) * (w_seoul + right_w) + right_w * inner_H
+                cap = top_h * top_w + right_w * inner_H + bot_h * bot_w
                 if cap >= n_gg:
+                    # Bridge 조건: bot 첫 row가 bot_w 전체 채워야 right wrap과 연결
+                    bot_cells = n_gg - top_h * top_w - right_w * inner_H
+                    if bot_cells < bot_w:
+                        continue
                     waste = cap - n_gg
                     top_heavy = max(0, top_h - bot_h)
-                    # right_w 페널티: 빈자리 1당 비용 vs right_w 1당 비용 5
                     east_penalty = right_w * 5
-                    score = (waste + east_penalty, top_heavy, -bot_h, top_h + bot_h)
+                    # top_heavy 페널티 + bot_h 보상 (남부 인구 집중)
+                    score = (waste + east_penalty + top_heavy * 10 - bot_h * 4, top_h + bot_h)
                     if best is None or score < best[0]:
                         best = (score, right_w, top_h, bot_h, cap)
     if best is None:
@@ -352,21 +365,26 @@ def design_zone_N(zone_cells_by_sido):
     # N zone 전체 높이 = 경기 top + 서울 inner + 경기 bot
     H_N = top_h + inner_H + bot_h
 
-    # 인천: top-aligned, N zone 좌측. H_N 높이에 맞춰 w_in 결정 (cells 가능한 정확 채움)
-    w_in = max(1, math.ceil(n_in / H_N)) if n_in else 0
+    # 인천: 살짝 세로 (h:w ≈ 1.5), inner_H 안에 fit
+    if n_in == 0:
+        w_in = 0
+    elif n_in < 4:
+        w_in = 1
+    else:
+        h_in_pref = max(2, math.ceil(math.sqrt(n_in * 1.5)))
+        w_in = math.ceil(n_in / h_in_pref)
+        if inner_H and h_in_pref > inner_H:
+            w_in = math.ceil(n_in / inner_H)
 
-    # 강원: 경기 right 옆 column. 2-wide compact 우선 (1-col 지렁이 방지).
+    # 강원: 살짝 세로로 길게 (h:w ~ 2:1, 강원은 남북으로 긴 권역)
     if n_gw == 0:
         w_gw, h_gw = 0, 0
     elif n_gw < 4:
         w_gw, h_gw = 1, n_gw
     else:
-        # 2-wide 우선 (셀 충분하면). inner_H 초과 시 wider.
-        w_gw = max(2, math.ceil(n_gw / inner_H)) if inner_H else 2
-        h_gw = math.ceil(n_gw / w_gw)
-        if inner_H and h_gw > inner_H:
-            w_gw = math.ceil(n_gw / inner_H)
-            h_gw = inner_H
+        # h ≈ sqrt(n * 1.5) — 세로 1.5배 선호
+        h_gw = max(2, math.ceil(math.sqrt(n_gw * 1.5)))
+        w_gw = math.ceil(n_gw / h_gw)
 
     zone_W = w_in + w_seoul + right_w + w_gw
     zone_H = H_N
@@ -979,11 +997,11 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
       인천 [경기 bot 위 서울]
     """
     inner_row = row_offset + plan['top_h']
-    # 인천 — N zone 좌측 col, top-aligned (rows 0..ceil(n/w)-1)
+    # 인천 — N zone 좌측 col, 서울과 같은 row 범위 (inner_H 만큼만, 아래는 경기 남부 영역)
     fill_rect(
         zone_cells_by_sido.get('인천광역시', []),
-        col_start=col_offset, row_start=row_offset,  # row 0 (N zone 맨 위)
-        W=plan['w_in'], H=plan['H_N'],
+        col_start=col_offset, row_start=inner_row,
+        W=plan['w_in'], H=plan['inner_H'],
         sort_key=None,
         partial_align='right_bot',  # partial 마지막 행 우측 (서울 쪽으로 부착)
     )
@@ -996,12 +1014,13 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=None,
         partial_align='left_bot',
     )
-    # 경기 wrap — 서울만 둘러쌈 (top+right+bot)
+    # 경기 wrap — top·right 서울 둘러쌈, bot은 인천 아래까지 확장
     fill_wrap_top_right_bot(
         zone_cells_by_sido.get('경기도', []),
         inner_col=seoul_col0, inner_row=inner_row,
         inner_W=plan['w_seoul'], inner_H=plan['inner_H'],
         top_h=plan['top_h'], right_w=plan['right_w'], bot_h=plan['bot_h'],
+        bot_extra_left=plan['w_in'],
     )
     # 강원 — 경기 right 옆, top 정렬 (북동 강원이 N zone 상단에 맞춰지게)
     gw_cells = zone_cells_by_sido.get('강원특별자치도', []) + zone_cells_by_sido.get('강원도', [])
