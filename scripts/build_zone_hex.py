@@ -549,13 +549,65 @@ def design_yeongnam(zone_cells_by_sido):
 
     W_yn = max(total_top_w, actual_bot_w)
     H_yn = top_half_h + h_bot
+
+    # Perfect-fit 시도 — n_total 인수쌍으로 정확히 채울 수 있으면 mode='perfect'
+    n_yn_total = n_kb + n_dg + n_gn + n_bs + n_us
+    factors = [(n_yn_total // h, h) for h in range(2, n_yn_total + 1) if n_yn_total % h == 0]
+    # 극단 aspect 제외 (4 ≤ W/H ≤ 4)
+    factors = [(w, h) for w, h in factors if h >= 3 and 0.4 <= w/h <= 2.5]
+    if factors:
+        factors.sort(key=lambda wh: abs(wh[0] - wh[1]))
+        W_p, H_p = factors[0]
+        return {
+            'W_yn': W_p, 'H_yn': H_p,
+            'mode': 'perfect',
+            'n_total': n_yn_total,
+        }
     return {
         'W_yn': W_yn, 'H_yn': H_yn,
+        'mode': 'wrap',
         'top_h': top_h, 'left_w': left_w, 'right_w': right_w,
         'h_dg': h_dg, 'w_dg': w_dg,
         'h_bot': h_bot, 'w_gn': w_gn, 'w_bs': w_bs, 'w_us': w_us,
         'total_top_w': total_top_w,
     }
+
+
+def find_yeongnam_wh(n_total, target_h=None):
+    """n_total의 인수쌍 — target_h 가까운 H 우선, 정사각 가까이."""
+    factors = [(n_total // h, h) for h in range(1, n_total + 1) if n_total % h == 0]
+    if target_h:
+        factors.sort(key=lambda wh: (abs(wh[1] - target_h), abs(wh[0] - wh[1])))
+    else:
+        factors.sort(key=lambda wh: abs(wh[0] - wh[1]))
+    return factors[0] if factors else (n_total, 1)
+
+
+def partition_yeongnam(by_sido, W, H):
+    """W×H 그리드를 5 영남 시도로 row-major partition (north→south 정렬).
+    각 시도 cells contiguous in sort = contiguous in grid → cluster preserved.
+    return: True if 정확 fit, False if cell count != W*H."""
+    SIDO_ORDER = {  # lon 기준 west → east (column-major fill에서 col 0이 서, col W-1이 동)
+        '경상남도': 0,    # 128.3 (west)
+        '대구광역시': 1,  # 128.6 (mid)
+        '경상북도': 2,    # 129.0 (north-east)
+        '부산광역시': 3,  # 129.0 (south-east)
+        '울산광역시': 4,  # 129.3 (far east)
+    }
+    all_cells = []
+    for sido_name, idx in SIDO_ORDER.items():
+        for c in by_sido.get(sido_name, []):
+            all_cells.append((idx, c))
+    # Sort: (sido_order, -lat, lon)
+    all_cells.sort(key=lambda x: (x[0], -x[1]['lat'], x[1]['lon']))
+    if len(all_cells) != W * H:
+        return False
+    # Column-major: col 0 rows 0..H-1, col 1 rows 0..H-1, ...
+    # 시도 cells이 col 단위 흐름 → 시도 경계가 col 사이로 떨어져 cluster 보존
+    for i, (_, cell) in enumerate(all_cells):
+        cell['_yn_c'] = i // H
+        cell['_yn_r'] = i % H
+    return True
 
 
 def partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch):
@@ -704,38 +756,47 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     ch_cells = [c for s in 충청_sidos for c in zone_cells_by_sido.get(s, [])]
     yn_cells = [c for s in 영남_sidos for c in zone_cells_by_sido.get(s, [])]
 
-    # 영남: 대구 inner + 경북 wrap + 경남/부산/울산 bottom stack
+    # 영남 layout — mode='perfect' 면 row-major, else 기존 wrap
     yn_plan = plan['yn_plan']
     yn_col0 = col_offset + plan['w_left']
-    # 대구 inner block 위치
-    dg_col = yn_col0 + yn_plan['left_w']
-    dg_row = row_offset + yn_plan['top_h']
-    fill_rect(
-        zone_cells_by_sido.get('대구광역시', []),
-        col_start=dg_col, row_start=dg_row,
-        W=yn_plan['w_dg'], H=yn_plan['h_dg'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='left_bot',
-    )
-    # 경북 wrap top+left+right
-    fill_wrap_top_left_right(
-        zone_cells_by_sido.get('경상북도', []),
-        inner_col=dg_col, inner_row=dg_row,
-        inner_W=yn_plan['w_dg'], inner_H=yn_plan['h_dg'],
-        top_h=yn_plan['top_h'], left_w=yn_plan['left_w'], right_w=yn_plan['right_w'],
-    )
-    # 영남 bottom: 경남 → 부산 → 울산 (lon 오름차순)
-    bot_row = row_offset + yn_plan['top_h'] + yn_plan['h_dg']
-    yn_bot_order = [('경상남도', zone_cells_by_sido.get('경상남도', [])),
-                    ('부산광역시', zone_cells_by_sido.get('부산광역시', [])),
-                    ('울산광역시', zone_cells_by_sido.get('울산광역시', []))]
-    fill_horizontal_stack(
-        yn_bot_order,
-        col_start=yn_col0, row_start=bot_row,
-        H=yn_plan['h_bot'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='left_bot',
-    )
+    if yn_plan.get('mode') == 'perfect':
+        # n_total 인수쌍 row-major partition. 빈자리 0.
+        ok = partition_yeongnam(zone_cells_by_sido, yn_plan['W_yn'], yn_plan['H_yn'])
+        if ok:
+            영남_sidos = ['경상북도', '대구광역시', '경상남도', '부산광역시', '울산광역시']
+            for sido in 영남_sidos:
+                for c in zone_cells_by_sido.get(sido, []):
+                    if '_yn_c' in c:
+                        c['c'] = yn_col0 + c.pop('_yn_c')
+                        c['r'] = row_offset + c.pop('_yn_r')
+    else:
+        # wrap mode: 대구 inner + 경북 wrap + 경남/부산/울산 bottom stack
+        dg_col = yn_col0 + yn_plan['left_w']
+        dg_row = row_offset + yn_plan['top_h']
+        fill_rect(
+            zone_cells_by_sido.get('대구광역시', []),
+            col_start=dg_col, row_start=dg_row,
+            W=yn_plan['w_dg'], H=yn_plan['h_dg'],
+            sort_key=lambda c: (-c['lat'], c['lon']),
+            partial_align='left_bot',
+        )
+        fill_wrap_top_left_right(
+            zone_cells_by_sido.get('경상북도', []),
+            inner_col=dg_col, inner_row=dg_row,
+            inner_W=yn_plan['w_dg'], inner_H=yn_plan['h_dg'],
+            top_h=yn_plan['top_h'], left_w=yn_plan['left_w'], right_w=yn_plan['right_w'],
+        )
+        bot_row = row_offset + yn_plan['top_h'] + yn_plan['h_dg']
+        yn_bot_order = [('경상남도', zone_cells_by_sido.get('경상남도', [])),
+                        ('부산광역시', zone_cells_by_sido.get('부산광역시', [])),
+                        ('울산광역시', zone_cells_by_sido.get('울산광역시', []))]
+        fill_horizontal_stack(
+            yn_bot_order,
+            col_start=yn_col0, row_start=bot_row,
+            H=yn_plan['h_bot'],
+            sort_key=lambda c: (-c['lat'], c['lon']),
+            partial_align='left_bot',
+        )
     # 충청 perfect-fit layout: 좌(충남) | 중앙(세종 위 + 대전 아래) | 우(충북). 빈자리 0.
     n_cn = len(zone_cells_by_sido.get('충청남도', []))
     n_sj = len(zone_cells_by_sido.get('세종특별자치시', []))
