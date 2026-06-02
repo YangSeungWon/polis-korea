@@ -482,7 +482,105 @@ def design_honam(zone_cells_by_sido):
 
 
 def design_yeongnam(zone_cells_by_sido):
-    """영남 sub-layout: 대구 inner + 경북 wrap (top+left+right) + 경남/부산/울산 bottom stack."""
+    """영남 sub-layout — blob mode:
+       Top: 경북 north-wrap (top + left + bridge), 대구 직사각형 좌-중앙 bot, 울산 직사각형/L 우-bot.
+            대구 bot row = 울산 bot row (정렬). 둘 다 bot region과 직접 접촉.
+       Bot: 경남 (서쪽 cols 0..w_gn-1), 부산 (동쪽 cols w_gn..W-1).
+       빈자리는 outer-east (top 우상) + outer-bot (남동).
+       사용자 의도: 울산이 뭉친 blob + east 라인, 대구·울산이 경남부산과 접촉."""
+    n_dg = len(zone_cells_by_sido.get('대구광역시', []))
+    n_kb = len(zone_cells_by_sido.get('경상북도', []))
+    n_gn = len(zone_cells_by_sido.get('경상남도', []))
+    n_bs = len(zone_cells_by_sido.get('부산광역시', []))
+    n_us = len(zone_cells_by_sido.get('울산광역시', []))
+
+    # 대구 직사각형 — 정사각 가까이, 가로 ≤ 세로 선호 (vertical blob)
+    dg_pairs = []
+    for h in range(2, n_dg + 1):
+        if n_dg % h == 0:
+            w = n_dg // h
+            dg_pairs.append((abs(h - w), -h, h, w))
+    dg_pairs.sort()
+    if dg_pairs:
+        h_dg, w_dg = dg_pairs[0][2], dg_pairs[0][3]
+    else:
+        h_dg, w_dg = n_dg, 1
+
+    # 울산: 5셀이면 L자 (3×2 -1 corner), 6셀이면 3×2 직사각, 그 외 정사각 가까이
+    if n_us == 5:
+        h_us, w_us, us_l = 3, 2, True
+    elif n_us == 6:
+        h_us, w_us, us_l = 3, 2, False
+    elif n_us == 4:
+        h_us, w_us, us_l = 2, 2, False
+    elif n_us == 0:
+        h_us, w_us, us_l = 0, 0, False
+    else:
+        h_us = max(2, round(math.sqrt(n_us)))
+        w_us = math.ceil(n_us / h_us)
+        us_l = (w_us * h_us > n_us)
+
+    inner_h = max(h_dg, h_us)
+    inner_w = w_dg + w_us
+    n_bot = n_gn + n_bs
+
+    # 검색: (top_h, left_w, W_extra, H_bot, w_gn)
+    # 점수: (total_empties, W) — 빈자리 최소 + 더 좁은 W (taller blob) 선호
+    best = None
+    for top_h in range(1, 5):
+        for left_w in range(1, 3):
+            for W_extra in range(0, 4):
+                W = left_w + inner_w + W_extra
+                H_top = top_h + inner_h
+                top_slots = W * H_top
+                top_taken = n_dg + n_us + n_kb
+                if top_slots < top_taken:
+                    continue
+                top_empties = top_slots - top_taken
+                # T 경계: row 0 (W) + col 0 (inner_h) + bridges + L corner = 필수 경북 cells.
+                bridge_us = (h_dg - h_us) * w_us
+                us_corner = 1 if us_l else 0
+                kb_must = W + (H_top - 1) + bridge_us + us_corner  # 단순화
+                if n_kb < W:
+                    continue  # 경북이 row 0도 못 채움 (T 경계 violation)
+                for H_bot in range(3, 12):
+                    if W * H_bot < n_bot:
+                        continue
+                    bot_empties = W * H_bot - n_bot
+                    for w_gn in range(1, W):
+                        # 경남이 w_gn col 다 채우고 인접 col에 1행 overflow 허용
+                        if w_gn * H_bot + H_bot < n_gn:
+                            continue
+                        # 부산도 마찬가지로 borrow 1 row 가능
+                        if (W - w_gn) * H_bot + H_bot < n_bs:
+                            continue
+                        total_empties = top_empties + bot_empties
+                        score = (total_empties, W, abs((H_top + H_bot) - W))
+                        if best is None or score < best[0]:
+                            best = (score, W, H_top, H_bot, top_h, left_w, W_extra, w_gn)
+
+    if best is None:
+        # fallback: 단순 H=W 정사각
+        n_total = n_dg + n_kb + n_gn + n_bs + n_us
+        H = max(3, math.ceil(math.sqrt(n_total)))
+        W = math.ceil(n_total / H)
+        return {'W_yn': W, 'H_yn': H, 'mode': 'fallback',
+                'h_dg': h_dg, 'w_dg': w_dg, 'h_us': h_us, 'w_us': w_us, 'us_l': us_l}
+
+    _, W, H_top, H_bot, top_h, left_w, W_extra, w_gn = best
+    return {
+        'W_yn': W, 'H_yn': H_top + H_bot,
+        'mode': 'blob',
+        'H_top': H_top, 'H_bot': H_bot,
+        'top_h': top_h, 'left_w': left_w, 'W_extra': W_extra,
+        'h_dg': h_dg, 'w_dg': w_dg,
+        'h_us': h_us, 'w_us': w_us, 'us_l': us_l,
+        'w_gn': w_gn,
+    }
+
+
+def _legacy_design_yeongnam(zone_cells_by_sido):
+    """레거시 wrap mode (참고용, 사용 안 함)."""
     n_dg = len(zone_cells_by_sido.get('대구광역시', []))
     n_kb = len(zone_cells_by_sido.get('경상북도', []))
     n_gn = len(zone_cells_by_sido.get('경상남도', []))
@@ -550,19 +648,8 @@ def design_yeongnam(zone_cells_by_sido):
     W_yn = max(total_top_w, actual_bot_w)
     H_yn = top_half_h + h_bot
 
-    # Perfect-fit 시도 — n_total 인수쌍으로 정확히 채울 수 있으면 mode='perfect'
-    n_yn_total = n_kb + n_dg + n_gn + n_bs + n_us
-    factors = [(n_yn_total // h, h) for h in range(2, n_yn_total + 1) if n_yn_total % h == 0]
-    # 극단 aspect 제외 (4 ≤ W/H ≤ 4)
-    factors = [(w, h) for w, h in factors if h >= 3 and 0.4 <= w/h <= 2.5]
-    if factors:
-        factors.sort(key=lambda wh: abs(wh[0] - wh[1]))
-        W_p, H_p = factors[0]
-        return {
-            'W_yn': W_p, 'H_yn': H_p,
-            'mode': 'perfect',
-            'n_total': n_yn_total,
-        }
+    # column-based perfect-fit는 시도 stripe 형태가 비지리적이라 사용 안 함.
+    # wrap mode (경북이 대구 둘러쌈 + 경남/부산/울산 bottom stack) — 한반도 영남 지리 자연.
     return {
         'W_yn': W_yn, 'H_yn': H_yn,
         'mode': 'wrap',
@@ -573,40 +660,142 @@ def design_yeongnam(zone_cells_by_sido):
     }
 
 
-def find_yeongnam_wh(n_total, target_h=None):
-    """n_total의 인수쌍 — target_h 가까운 H 우선, 정사각 가까이."""
-    factors = [(n_total // h, h) for h in range(1, n_total + 1) if n_total % h == 0]
-    if target_h:
-        factors.sort(key=lambda wh: (abs(wh[1] - target_h), abs(wh[0] - wh[1])))
-    else:
-        factors.sort(key=lambda wh: abs(wh[0] - wh[1]))
-    return factors[0] if factors else (n_total, 1)
+def find_yeongnam_wh_smart(n_total, n_us, target_h=None):
+    """울산을 마지막 col 단독 + 나머지 col 0..W-2 column-major.
+    조건: n_us ≤ H AND (W-1)*H ≥ (n_total - n_us).
+    empties는 마지막 col(울산 아래) + 마지막 col-1 하단에 모임 (outer-right).
+    target_h 가까운 H 우선, empties 최소."""
+    n_other = n_total - n_us
+    candidates = []
+    for H in range(max(n_us, 3), n_total + 1):
+        if H > 30:
+            break
+        W = max(2, math.ceil(n_other / H) + 1)  # +1 col for 울산
+        if (W - 1) * H < n_other:
+            continue
+        empties = W * H - n_total
+        h_score = abs(H - target_h) if target_h else 0
+        score = (h_score, empties, abs(W - H))
+        candidates.append((score, W, H))
+    if not candidates:
+        return None
+    candidates.sort()
+    return candidates[0][1], candidates[0][2]
+
+
+def partition_yeongnam_blob(by_sido, plan):
+    """blob layout: 대구·울산 bot-aligned 직사각형/L. 경북 north wrap. 경남·부산 bot stack.
+    return: grid_map {(c, r): sido_name} (영남 zone local 좌표)."""
+    W = plan['W_yn']
+    H_top = plan['H_top']
+    H_bot = plan['H_bot']
+    top_h = plan['top_h']
+    left_w = plan['left_w']
+    w_dg, h_dg = plan['w_dg'], plan['h_dg']
+    w_us, h_us, us_l = plan['w_us'], plan['h_us'], plan['us_l']
+    w_gn = plan['w_gn']
+    n_kb = len(by_sido.get('경상북도', []))
+    n_gn = len(by_sido.get('경상남도', []))
+    n_bs = len(by_sido.get('부산광역시', []))
+
+    grid = {}
+    inner_h = max(h_dg, h_us)
+
+    # 대구 직사각형
+    dg_col0 = left_w
+    dg_row0 = top_h + (inner_h - h_dg)
+    for dc in range(w_dg):
+        for dr in range(h_dg):
+            grid[(dg_col0 + dc, dg_row0 + dr)] = '대구광역시'
+
+    # 울산 (직사각 or L)
+    us_col0 = left_w + w_dg
+    us_row0 = top_h + (inner_h - h_us)
+    for dc in range(w_us):
+        for dr in range(h_us):
+            if us_l and dc == w_us - 1 and dr == 0:
+                continue  # L자: top-right corner = 경북 bridge
+            grid[(us_col0 + dc, us_row0 + dr)] = '울산광역시'
+
+    # 경북: 우선순위 — (1) row 0 T-boundary, (2) col 0 T-boundary, (3) 울산 위 bridge,
+    # (4) L-corner, (5) 나머지 top region. n_kb개까지 채우고 나머지 empty.
+    kb_ordered = []
+    seen = set()
+    def add(p):
+        if p in grid or p in seen: return
+        seen.add(p)
+        kb_ordered.append(p)
+    # (1) row 0 — T-boundary top
+    for c in range(W):
+        add((c, 0))
+    # (2) col 0 rows 1..H_top-1 — T-boundary left
+    for r in range(1, H_top):
+        add((0, r))
+    # (3) bridge above 울산 (h_dg > h_us 경우)
+    for r in range(top_h, us_row0):
+        for c in range(us_col0, us_col0 + w_us):
+            add((c, r))
+    # (4) L-corner
+    if us_l:
+        add((us_col0 + w_us - 1, us_row0))
+    # (5) 나머지 top cells (top-first / inner-first 우선 → cluster 유지)
+    for r in range(H_top):
+        for c in range(W):
+            add((c, r))
+    for i, p in enumerate(kb_ordered):
+        if i < n_kb:
+            grid[p] = '경상북도'
+
+    # Bot region: 경남 + 부산
+    bot_row0 = H_top
+    bot_cells = [(c, r) for r in range(bot_row0, bot_row0 + H_bot) for c in range(W)]
+    gn_pool = [p for p in bot_cells if p[0] < w_gn]
+    bs_pool = [p for p in bot_cells if p[0] >= w_gn]
+
+    # 경남 채우기 (top first)
+    gn_pool.sort(key=lambda p: (p[1], p[0]))
+    gn_short = n_gn - len(gn_pool)
+    if gn_short > 0:
+        # 경남이 col w_gn에 침투 (bot row부터, 부산과 인접)
+        bs_west_col = [p for p in bs_pool if p[0] == w_gn]
+        bs_west_col.sort(key=lambda p: (-p[1], p[0]))  # bot first
+        for p in bs_west_col[:gn_short]:
+            gn_pool.append(p)
+            bs_pool.remove(p)
+    for i, p in enumerate(gn_pool[:n_gn]):
+        grid[p] = '경상남도'
+
+    # 부산 채우기 (top first)
+    bs_pool.sort(key=lambda p: (p[1], p[0]))
+    for i, p in enumerate(bs_pool[:n_bs]):
+        grid[p] = '부산광역시'
+
+    return grid
 
 
 def partition_yeongnam(by_sido, W, H):
-    """W×H 그리드를 5 영남 시도로 row-major partition (north→south 정렬).
-    각 시도 cells contiguous in sort = contiguous in grid → cluster preserved.
-    return: True if 정확 fit, False if cell count != W*H."""
-    SIDO_ORDER = {  # lon 기준 west → east (column-major fill에서 col 0이 서, col W-1이 동)
-        '경상남도': 0,    # 128.3 (west)
-        '대구광역시': 1,  # 128.6 (mid)
-        '경상북도': 2,    # 129.0 (north-east)
-        '부산광역시': 3,  # 129.0 (south-east)
-        '울산광역시': 4,  # 129.3 (far east)
-    }
-    all_cells = []
-    for sido_name, idx in SIDO_ORDER.items():
+    """LEGACY column-major (사용 안 함)."""
+    n_us = len(by_sido.get('울산광역시', []))
+    if n_us > H:
+        return False  # 울산이 col 한 개에 못 들어감
+    # 비-울산 cells
+    OTHER_ORDER = {'경상남도': 0, '대구광역시': 1, '경상북도': 2, '부산광역시': 3}
+    other_cells = []
+    for sido_name, idx in OTHER_ORDER.items():
         for c in by_sido.get(sido_name, []):
-            all_cells.append((idx, c))
-    # Sort: (sido_order, -lat, lon)
-    all_cells.sort(key=lambda x: (x[0], -x[1]['lat'], x[1]['lon']))
-    if len(all_cells) != W * H:
-        return False
-    # Column-major: col 0 rows 0..H-1, col 1 rows 0..H-1, ...
-    # 시도 cells이 col 단위 흐름 → 시도 경계가 col 사이로 떨어져 cluster 보존
-    for i, (_, cell) in enumerate(all_cells):
+            other_cells.append((idx, c))
+    other_cells.sort(key=lambda x: (x[0], -x[1]['lat'], x[1]['lon']))
+    if len(other_cells) > (W - 1) * H:
+        return False  # cols 0..W-2에 못 들어감
+    # cols 0..W-2 column-major
+    for i, (_, cell) in enumerate(other_cells):
         cell['_yn_c'] = i // H
         cell['_yn_r'] = i % H
+    # 울산 col W-1 rows 0..n_us-1
+    us_cells = sorted(by_sido.get('울산광역시', []), key=lambda c: (-c['lat'], c['lon']))
+    for i, cell in enumerate(us_cells):
+        cell['_yn_c'] = W - 1
+        cell['_yn_r'] = i
     return True
 
 
@@ -756,19 +945,20 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     ch_cells = [c for s in 충청_sidos for c in zone_cells_by_sido.get(s, [])]
     yn_cells = [c for s in 영남_sidos for c in zone_cells_by_sido.get(s, [])]
 
-    # 영남 layout — mode='perfect' 면 row-major, else 기존 wrap
+    # 영남 layout — blob mode (대구·울산 bot-aligned, 경남부산 직접 접촉)
     yn_plan = plan['yn_plan']
     yn_col0 = col_offset + plan['w_left']
-    if yn_plan.get('mode') == 'perfect':
-        # n_total 인수쌍 row-major partition. 빈자리 0.
-        ok = partition_yeongnam(zone_cells_by_sido, yn_plan['W_yn'], yn_plan['H_yn'])
-        if ok:
-            영남_sidos = ['경상북도', '대구광역시', '경상남도', '부산광역시', '울산광역시']
-            for sido in 영남_sidos:
-                for c in zone_cells_by_sido.get(sido, []):
-                    if '_yn_c' in c:
-                        c['c'] = yn_col0 + c.pop('_yn_c')
-                        c['r'] = row_offset + c.pop('_yn_r')
+    if yn_plan.get('mode') == 'blob':
+        grid_map = partition_yeongnam_blob(zone_cells_by_sido, yn_plan)
+        sido_positions = {}
+        for (c, r), sido in grid_map.items():
+            sido_positions.setdefault(sido, []).append((c, r))
+        for sido, positions in sido_positions.items():
+            cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
+            positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
+            for cell, (c, r) in zip(cells_list, positions_sorted):
+                cell['c'] = yn_col0 + c
+                cell['r'] = row_offset + r
     else:
         # wrap mode: 대구 inner + 경북 wrap + 경남/부산/울산 bottom stack
         dg_col = yn_col0 + yn_plan['left_w']
