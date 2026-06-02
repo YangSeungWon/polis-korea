@@ -373,22 +373,28 @@ def square_factor(n, prefer_tall=True):
     return best[1], best[2]
 
 
-def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left_w, right_w, bot_h):
-    """3-side wrap (left + right + bot). top 무. inner block의 좌·우·아래 둘러쌈."""
+def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left_w, right_w, bot_h, extra_positions=None):
+    """3-side wrap (left + right + bot) + optional extra positions (e.g., inner box 빈자리 채움)."""
     if not cells:
         return
+    extra_positions = list(extra_positions or [])
     total_w = left_w + inner_W + right_w
     cells_sorted = sorted(cells, key=lambda c: -c['lat'])
     n = len(cells_sorted)
     N_left = left_w * inner_H
     N_right = right_w * inner_H
+    N_extra = len(extra_positions)
     N_bot = bot_h * total_w
-    # 위쪽 inner 옆 (left+right): lat 중간 cells. bot은 가장 아래 (lat 낮은).
-    # 분배: 위에서부터 left+right (lat 큰), 그 다음 bot (lat 작은)
+    # 분배: middle wrap (lat 큰) + extra (mid lat, inner box 빈자리) + bot (lat 작은)
     middle_count = min(N_left + N_right, n)
-    bot_count = min(N_bot, n - middle_count)
+    extra_count = min(N_extra, n - middle_count)
+    bot_count = min(N_bot, n - middle_count - extra_count)
     middle = cells_sorted[:middle_count]
-    bot_cells_arr = cells_sorted[middle_count:middle_count + bot_count]
+    extra_cells = cells_sorted[middle_count:middle_count + extra_count]
+    bot_cells_arr = cells_sorted[middle_count + extra_count:middle_count + extra_count + bot_count]
+    # extra: 광주 box 빈자리를 전남으로 메움
+    for cell, pos in zip(extra_cells, extra_positions):
+        cell['c'], cell['r'] = pos
     middle_lon = sorted(middle, key=lambda c: c['lon'])
     take_left = min(N_left, len(middle_lon))
     left_cells = middle_lon[:take_left]
@@ -1053,13 +1059,22 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=lambda c: (-c['lat'], c['lon']),
         partial_align='left_bot',
     )
-    # 전남 wrap (좌·우·아래)
+    # 광주 box 안 빈자리 (광주 셀이 못 채운 위치) → 전남이 메움
+    gj_placed_set = {(c['c'], c['r']) for c in zone_cells_by_sido.get('광주광역시', []) if 'c' in c}
+    gj_box_empty = []
+    for cc in range(ho_plan['w_gj']):
+        for rr in range(ho_plan['h_gj']):
+            p = (gj_col + cc, gj_row + rr)
+            if p not in gj_placed_set:
+                gj_box_empty.append(p)
+    # 전남 wrap (좌·우·아래) + 광주 빈자리 메움
     jn_cells = zone_cells_by_sido.get('전라남도', [])
     fill_wrap_left_right_bot(
         jn_cells,
         inner_col=gj_col, inner_row=gj_row,
         inner_W=ho_plan['w_gj'], inner_H=ho_plan['h_gj'],
         left_w=ho_plan['left_w'], right_w=ho_plan['right_w'], bot_h=ho_plan['bot_h'],
+        extra_positions=gj_box_empty,
     )
 
 
