@@ -416,10 +416,11 @@ def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left
     )
 
 
-def design_honam(zone_cells_by_sido, target_W=None):
+def design_honam(zone_cells_by_sido, target_W=None, target_H=None):
     """호남 sub-layout: 광주 inner + 전남 wrap (left+right+bot) + 전북 top.
     광주 shape + 전남 wrap 동시 최적화 — waste 최소 + 연결성 보장.
-    target_W 주면 W_ho==target_W 후보 우선 (strict). 없으면 free search."""
+    target_W 주면 W_ho==target_W 후보 우선 (strict). 없으면 free search.
+    target_H 주면 H_ho==target_H 후보 우선 (영남과 Left H 맞춤)."""
     n_gj = len(zone_cells_by_sido.get('광주광역시', []))
     n_jn = len(zone_cells_by_sido.get('전라남도', []))
     n_jb = len(zone_cells_by_sido.get('전북특별자치도', [])) + len(zone_cells_by_sido.get('전라북도', []))
@@ -458,15 +459,20 @@ def design_honam(zone_cells_by_sido, target_W=None):
                     if bot_h == 0 and (left_w + right_w) > 0 and bot_used == 0:
                         # bot 없이 left+right만 → 좌·우 단절
                         continue
-                    # left·right 둘 다 있는데 bot이 비어있으면 (bot_used=0) 좌·우 단절
-                    if left_w > 0 and right_w > 0 and bot_used == 0:
+                    # left·right 둘 다 있으면 bot이 좌·우 연결해야 함.
+                    # bot이 full row 못 채우면 (left_bot align으로 좌측에만 셀) 우측 wrap 단절.
+                    if left_w > 0 and right_w > 0 and bot_used < total_w:
                         continue
                     jn_waste = cap - n_jn
                     asym = abs(left_w - right_w)
                     total_w = left_w + w_gj + right_w
-                    # target_W 매칭 페널티 — 충청 W와 호남 W 일치하면 좌측 큰 notch 없음
+                    # target_W 매칭 페널티
                     w_penalty = abs(total_w - target_W) * 5 if target_W else 0
-                    score = (gj_waste + jn_waste + w_penalty, asym, bot_h + left_w + right_w, h_gj * 10 + w_gj)
+                    # target_H 매칭 페널티 — 영남 H에 맞춰 Left H stretch
+                    top_h_jb_try = math.ceil(n_jb / total_w) if total_w and n_jb else 0
+                    H_ho_try = top_h_jb_try + h_gj + bot_h
+                    h_penalty = abs(H_ho_try - target_H) * 10 if target_H else 0
+                    score = (gj_waste + jn_waste + w_penalty + h_penalty, asym, bot_h + left_w + right_w, h_gj * 10 + w_gj)
                     if best is None or score < best[0]:
                         best = (score, h_gj, w_gj, bot_h, left_w, right_w)
     if best is None:
@@ -875,8 +881,9 @@ def design_zone_S(zone_cells_by_sido):
     # 충청 perfect-fit: n_total의 인수쌍 W×H. 빈자리 0.
     w_ch, h_ch = find_chungcheong_wh(n_ch, prefer_h_range=(3, max(3, yn_plan['H_yn'] // 2)))
 
-    # 호남: 충청 W에 맞춰 검색 (좌측 큰 notch 회피)
-    ho_plan = design_honam(zone_cells_by_sido, target_W=w_ch)
+    # 호남: 충청 W에 맞춰 + 영남 H에 맞춤 (Left H = 영남 H로 stretch)
+    target_H_ho = yn_plan['H_yn'] - h_ch
+    ho_plan = design_honam(zone_cells_by_sido, target_W=w_ch, target_H=target_H_ho)
 
     w_left = max(w_ch, ho_plan['W_ho'])
     H_left = h_ch + ho_plan['H_ho']
