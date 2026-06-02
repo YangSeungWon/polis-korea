@@ -135,7 +135,19 @@ def fill_rect(cells, col_start, row_start, W, H, sort_key=None, partial_align='l
     remainder = N - full_rows * W
     # partial row 정렬 결정
     rows_filled = []
-    if partial_align in ('left_bot', 'right_bot'):
+    if partial_align in ('bot_anchor', 'right_bot_anchor'):
+        # 바닥(row H-1)에 항상 채움. 빈 row는 위쪽으로. partial row는 full rows의 바로 위.
+        # cells 분배: 마지막 H-1 row부터 거꾸로 full_rows 채우고, 그 위 row는 partial.
+        rows_used = full_rows + (1 if remainder > 0 else 0)
+        empty_top = max(0, H - rows_used)
+        if remainder > 0:
+            rows_filled.append((empty_top, remainder))
+            first_full = empty_top + 1
+        else:
+            first_full = empty_top
+        for r in range(full_rows):
+            rows_filled.append((first_full + r, W))
+    elif partial_align in ('left_bot', 'right_bot'):
         # 모든 full row 위쪽 + 마지막 row 아래
         for r in range(full_rows):
             rows_filled.append((r, W))
@@ -151,7 +163,7 @@ def fill_rect(cells, col_start, row_start, W, H, sort_key=None, partial_align='l
             rows_filled.append((r + offset, W))
     idx = 0
     for local_r, count in rows_filled:
-        right_align = partial_align in ('right_top', 'right_bot')
+        right_align = partial_align in ('right_top', 'right_bot', 'right_bot_anchor')
         if right_align and count < W:
             col_offset = W - count
         else:
@@ -546,9 +558,63 @@ def design_yeongnam(zone_cells_by_sido):
     }
 
 
+def partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch):
+    """w_ch × h_ch grid을 4 시도(충남·세종·대전·충북)로 partition.
+    빈자리 없음 (n_cn+n_sj+n_dj+n_cb == w_ch × h_ch 가정).
+    return: dict {(c,r): sido_name}"""
+    grid = {}
+    # 충남 좌, bot_anchor, col 단위
+    cn_rem = n_cn
+    col = 0
+    while cn_rem > 0 and col < w_ch:
+        cells_in_col = min(cn_rem, h_ch)
+        for offset in range(cells_in_col):
+            grid[(col, h_ch - 1 - offset)] = '충청남도'
+        cn_rem -= cells_in_col
+        col += 1
+    # 충북 우, bot_anchor
+    cb_rem = n_cb
+    col = w_ch - 1
+    while cb_rem > 0 and col >= 0:
+        if (col, h_ch - 1) in grid:
+            break  # 충남과 충돌 — 설계 잘못
+        cells_in_col = min(cb_rem, h_ch)
+        for offset in range(cells_in_col):
+            grid[(col, h_ch - 1 - offset)] = '충청북도'
+        cb_rem -= cells_in_col
+        col -= 1
+    # 중앙: 나머지 — 세종 top, 대전 그 아래
+    remaining = sorted(
+        ((c, r) for c in range(w_ch) for r in range(h_ch) if (c, r) not in grid),
+        key=lambda p: (p[1], p[0]),
+    )
+    for i, p in enumerate(remaining):
+        if i < n_sj:
+            grid[p] = '세종특별자치시'
+        elif i < n_sj + n_dj:
+            grid[p] = '대전광역시'
+    return grid
+
+
+def find_chungcheong_wh(n_total, prefer_h_range=None):
+    """n_total의 (W, H) 인수쌍 — 정사각 가까운 것 우선. h ∈ prefer_h_range 안에서 우선."""
+    factors = [(n_total // h, h) for h in range(2, n_total + 1) if n_total % h == 0]
+    if not factors:
+        # prime — fallback to 1×N
+        factors = [(n_total, 1), (1, n_total)]
+    # 정사각 가까운 것 + prefer_h_range 안 우선
+    def score(wh):
+        w, h = wh
+        in_range = 0 if (prefer_h_range and prefer_h_range[0] <= h <= prefer_h_range[1]) else 1
+        return (in_range, abs(w - h))
+    factors.sort(key=score)
+    return factors[0]
+
+
 def design_zone_S(zone_cells_by_sido):
     """S zone: 영남이 전체 오른쪽 (full height). 왼쪽은 충청 top + 호남 bot.
-    영남 = 대구 wrap (경북) + 경남/부산/울산 bottom."""
+    영남 = 대구 wrap (경북) + 경남/부산/울산 bottom.
+    충청: 빈자리 0 보장 — n_total의 인수쌍으로 W×H 결정."""
     호남_sidos = ['전북특별자치도', '전라북도', '전라남도', '광주광역시', '전남광주특별시']
     충청_sidos = ['충청남도', '충청북도', '세종특별자치시', '대전광역시']
 
@@ -559,28 +625,12 @@ def design_zone_S(zone_cells_by_sido):
     ho_plan = design_honam(zone_cells_by_sido)
     w_yn = yn_plan['W_yn']
 
-    # 충청 시도별 stack width — 시도별 W = ceil(n/h_ch). Sum이 충청 stripe 실제 width.
-    ch_counts = [len(zone_cells_by_sido.get(s, [])) for s in
-                 ['충청남도', '세종특별자치시', '대전광역시', '충청북도']]
+    # 충청 perfect-fit: n_total의 인수쌍 W×H. 빈자리 0.
+    w_ch, h_ch = find_chungcheong_wh(n_ch, prefer_h_range=(3, max(3, yn_plan['H_yn'] // 2)))
 
-    # h_ch 결정: 충청 stack 너비 + 호남 너비 균형, S zone height도 영남과 맞춤.
-    best = None
-    for h_ch_try in range(1, max(2, n_ch + 1)):
-        ch_widths = [math.ceil(c / h_ch_try) if c else 0 for c in ch_counts]
-        w_ch_stack = sum(ch_widths)
-        w_left = max(w_ch_stack, ho_plan['W_ho'])
-        # 호남 row count
-        H_left = h_ch_try + ho_plan['H_ho']
-        H_S_try = max(yn_plan['H_yn'], H_left)
-        zone_W_try = w_left + w_yn
-        # 컴팩트 — 전체 bbox + waste 최소
-        ch_waste = h_ch_try * w_left - n_ch
-        if ch_waste < 0:
-            continue
-        score = (zone_W_try + H_S_try, ch_waste, h_ch_try)
-        if best is None or score < best[0]:
-            best = (score, h_ch_try, w_ch_stack, w_left, H_S_try)
-    _, h_ch, w_ch_stack, w_left, H_S = best
+    w_left = max(w_ch, ho_plan['W_ho'])
+    H_left = h_ch + ho_plan['H_ho']
+    H_S = max(yn_plan['H_yn'], H_left)
 
     zone_W = w_left + w_yn
     zone_H = H_S
@@ -588,6 +638,7 @@ def design_zone_S(zone_cells_by_sido):
     return {
         'zone_W': zone_W, 'zone_H': zone_H,
         'w_left': w_left, 'h_ch': h_ch, 'w_yn': w_yn, 'H_S': H_S,
+        'w_ch': w_ch,
         'yn_plan': yn_plan, 'ho_plan': ho_plan,
     }
 
@@ -685,16 +736,25 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=lambda c: (-c['lat'], c['lon']),
         partial_align='left_bot',
     )
-    # 충청 top (left side) — 충남(서) → 세종 → 대전 → 충북(동)
-    ch_order = ['충청남도', '세종특별자치시', '대전광역시', '충청북도']
-    ch_pairs = [(s, zone_cells_by_sido.get(s, [])) for s in ch_order]
-    fill_horizontal_stack(
-        ch_pairs,
-        col_start=col_offset, row_start=row_offset,
-        H=plan['h_ch'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='left_bot',  # partial을 stripe 아래쪽으로 — 위 row 빈자리 줄여 시도 인접 보장
-    )
+    # 충청 perfect-fit layout: 좌(충남) | 중앙(세종 위 + 대전 아래) | 우(충북). 빈자리 0.
+    n_cn = len(zone_cells_by_sido.get('충청남도', []))
+    n_sj = len(zone_cells_by_sido.get('세종특별자치시', []))
+    n_dj = len(zone_cells_by_sido.get('대전광역시', []))
+    n_cb = len(zone_cells_by_sido.get('충청북도', []))
+    w_ch = plan['w_ch']
+    h_ch = plan['h_ch']
+    grid_map = partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch)
+    # 시도별 positions 정리
+    sido_positions = {}
+    for (c, r), sido in grid_map.items():
+        sido_positions.setdefault(sido, []).append((c, r))
+    # 각 시도 cells을 (-lat, lon) 정렬 후 positions(top-left 우선)에 할당
+    for sido, positions in sido_positions.items():
+        cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
+        positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
+        for cell, (c, r) in zip(cells_list, positions_sorted):
+            cell['c'] = col_offset + c
+            cell['r'] = row_offset + r
     # 호남: 전북 top + 전남 wrap (좌·우·아래) + 광주 inner
     ho_plan = plan['ho_plan']
     ho_col0 = col_offset
