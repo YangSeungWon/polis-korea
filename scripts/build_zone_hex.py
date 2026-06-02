@@ -376,14 +376,14 @@ def design_zone_N(zone_cells_by_sido):
         if inner_H and h_in_pref > inner_H:
             w_in = math.ceil(n_in / inner_H)
 
-    # 강원: 살짝 세로로 길게 (h:w ~ 2:1, 강원은 남북으로 긴 권역)
+    # 강원: 세로로 길게 (h:w ~ 2:1, 강원은 남북으로 매우 긴 권역)
     if n_gw == 0:
         w_gw, h_gw = 0, 0
     elif n_gw < 4:
         w_gw, h_gw = 1, n_gw
     else:
-        # h ≈ sqrt(n * 1.5) — 세로 1.5배 선호
-        h_gw = max(2, math.ceil(math.sqrt(n_gw * 1.5)))
+        # h ≈ sqrt(n * 2) — 세로 2배 선호
+        h_gw = max(2, math.ceil(math.sqrt(n_gw * 2)))
         w_gw = math.ceil(n_gw / h_gw)
 
     zone_W = w_in + w_seoul + right_w + w_gw
@@ -1023,13 +1023,15 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         top_h=plan['top_h'], right_w=plan['right_w'], bot_h=plan['bot_h'],
         bot_extra_left=extra, top_extra_left=extra,
     )
-    # 강원 — 경기 right 옆, top 정렬 (북동 강원이 N zone 상단에 맞춰지게)
+    # 강원 — 경기 right 옆, bot 정렬 (N zone 하단 = S zone 경북과 접촉)
     gw_cells = zone_cells_by_sido.get('강원특별자치도', []) + zone_cells_by_sido.get('강원도', [])
+    h_gw = plan.get('h_gw', plan['inner_H'])
+    gw_row_start = row_offset + plan['H_N'] - h_gw
     fill_rect(
         gw_cells,
         col_start=seoul_col0 + plan['w_seoul'] + plan['right_w'],
-        row_start=inner_row,
-        W=plan['w_gw'], H=plan.get('h_gw', plan['inner_H']),
+        row_start=gw_row_start,
+        W=plan['w_gw'], H=h_gw,
         sort_key=None,
         partial_align='left_bot',
     )
