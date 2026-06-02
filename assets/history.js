@@ -25,14 +25,17 @@ function activeUnit(type, office, results) {
 const state = {
   type: 'presidential',
   n: null,
-  office: '기초단체장',  // 지선 진입 첫인상 — 시군구 250셀 hex가 풍부, 광역·교육감은 옆 버튼으로 즉시 전환
-  sizing: '격자',  // 동일 | 반지름 | 격자 | dorling — 시군구 hex 사이즈 모드 (대선 기본 = 격자, 그 외 = 동일; typeDefaultSizing 참조)
+  office: '기초단체장',
+  sizing: '격자',
+  display: 'hex',  // hex | geo — 22대 총선에 한해 실제 지리 polygon 지도 view 가능 (OhmyNews GeoJSON)
   elections: null,
   hexData: null,            // sigungu_hex.json (9회 기준 통합도시)
   hexLegacy: null,          // sigungu_hex_legacy.json (옛 회차 — 일반구 분할)
   districtHex: {},          // {22: [...]} 지역구별 hex layout
   results: null,
   selected: null,
+  geoData22: null,    // 22대 GeoJSON cache
+  geoMap22: null,     // 22대 sido|name → SGG_Code 매핑
 };
 
 const $ = (s) => document.querySelector(s);
@@ -181,6 +184,9 @@ async function init() {
   document.querySelectorAll('[data-sizing]').forEach((b) => {
     b.addEventListener('click', () => setSizing(b.dataset.sizing));
   });
+  document.querySelectorAll('[data-display]').forEach((b) => {
+    b.addEventListener('click', () => setDisplay(b.dataset.display));
+  });
 
   // 초기 상태 — path 우선 (prerender path 호환), 쿼리스트링·INITIAL_STATE fallback
   // path: /history/presidential/16/ or /history/local/8/governor/
@@ -303,15 +309,28 @@ function setSizing(s) {
   renderAll();
 }
 
+function setDisplay(d) {
+  state.display = d;
+  document.querySelectorAll('[data-display]').forEach((b) => {
+    b.classList.toggle('is-active', b.dataset.display === d);
+  });
+  renderAll();
+}
+
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
-  $('#hex').toggleAttribute('hidden', unit !== 'sido');
-  $('#hex2').toggleAttribute('hidden', unit === 'sido');
-  // 사이즈 토글은 시군구 hex + 표심 분포가 의미 있는 type에서만 (대선·옛 총선).
-  // 지선은 시군구 1셀 = 단체장 1명 winner-takes-all이라 크기 가중 무의미 → 숨김.
-  $('#sizing-seg').toggleAttribute('hidden', unit !== 'sigungu' || state.type === 'local');
-  if (unit === 'sido') renderSidoHex();
+  // 22대 총선만 진짜 지도 view 지원 (OhmyNews GeoJSON, MIT)
+  const geoSupported = state.type === 'national_assembly' && state.n === 22;
+  $('#display-seg').toggleAttribute('hidden', !geoSupported);
+  const showGeo = geoSupported && state.display === 'geo';
+  $('#hex').toggleAttribute('hidden', showGeo || unit !== 'sido');
+  $('#hex2').toggleAttribute('hidden', showGeo || unit === 'sido');
+  $('#geomap').toggleAttribute('hidden', !showGeo);
+  // 사이즈 토글은 시군구 hex + 표심 분포 의미 있는 type만 (대선·옛 총선). 지선·geo 모드는 숨김.
+  $('#sizing-seg').toggleAttribute('hidden', showGeo || unit !== 'sigungu' || state.type === 'local');
+  if (showGeo) await renderGeoMap();
+  else if (unit === 'sido') renderSidoHex();
   else if (unit === 'district') await renderDistrictHex();
   else renderSigunguHex();
   renderDetail();
@@ -713,6 +732,99 @@ function shortDistrictLabel(name, sido) {
   const sidoAbbr = sido ? (SIDO_HEX_LAYOUT[sido]?.label || SIDO_LABEL_FALLBACK[sido] || sido.slice(0, 2)) : '';
   return { prefix: sidoAbbr, short: body, fullName: name };
 }
+
+// === 22대 GeoJSON chloropleth (OhmyNews MIT) ===
+async function loadGeo22() {
+  if (state.geoData22 && state.geoMap22) return;
+  const [geo, mapj] = await Promise.all([
+    loadJson('data/geo/district_22_geojson.json'),
+    loadJson('data/geo/district_22_geojson_map.json'),
+  ]);
+  state.geoData22 = geo;
+  state.geoMap22 = mapj.name_to_sgg_code;
+}
+
+async function renderGeoMap() {
+  await loadGeo22();
+  const svg = $('#geomap');
+  svg.innerHTML = '';
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('height', '100%');
+  const features = state.geoData22?.features || [];
+  if (!features.length) return;
+  // SGG_Code → race lookup
+  const sggToWinner = {};
+  const districts = state.results?.district || [];
+  for (const race of districts) {
+    const key = `${race.sido}|${race.name}`;
+    const sggCode = state.geoMap22[key];
+    if (!sggCode) continue;
+    const winner = (race.candidates || []).find((c) => c.won || c.rank === 1) || race.candidates?.[0];
+    sggToWinner[sggCode] = { race, winner };
+  }
+  // 전체 bbox 계산
+  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+  for (const f of features) {
+    const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
+    for (const poly of polys) for (const ring of poly) for (const [lon, lat] of ring) {
+      if (lon < minLon) minLon = lon;
+      if (lon > maxLon) maxLon = lon;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    }
+  }
+  // 한반도 비율 보정 — lat 1° ≈ 111km, lon 1° ≈ 88km (lat 36° 기준)
+  const W = 720, H = 720, pad = 20;
+  const cosLat = Math.cos(((minLat + maxLat) / 2) * Math.PI / 180);
+  const spanLon = (maxLon - minLon) * cosLat;
+  const spanLat = (maxLat - minLat);
+  const scale = Math.min((W - 2 * pad) / spanLon, (H - 2 * pad) / spanLat);
+  const offX = (W - spanLon * scale) / 2;
+  const offY = pad;
+  const project = (lon, lat) => [
+    offX + (lon - minLon) * cosLat * scale,
+    H - offY - (lat - minLat) * scale,  // flip y (lat 큰 = 위)
+  ];
+  const ns = 'http://www.w3.org/2000/svg';
+  for (const f of features) {
+    const p = f.properties;
+    const sgg = p.SGG_Code;
+    const info = sggToWinner[sgg];
+    let fill = '#3a4055', stroke = '#1b2237';
+    if (info?.winner?.party) fill = partyColor(info.winner.party);
+    const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
+    let d = '';
+    for (const poly of polys) for (const ring of poly) {
+      ring.forEach(([lon, lat], i) => {
+        const [x, y] = project(lon, lat);
+        d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
+      });
+      d += 'Z';
+    }
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', fill);
+    path.setAttribute('stroke', stroke);
+    path.setAttribute('stroke-width', '0.6');
+    path.setAttribute('vector-effect', 'non-scaling-stroke');
+    path.setAttribute('data-sgg', sgg);
+    path.setAttribute('data-name', p.SIDO_SGG);
+    if (info) {
+      path.style.cursor = 'pointer';
+      path.addEventListener('mouseenter', () => path.setAttribute('stroke-width', '1.8'));
+      path.addEventListener('mouseleave', () => path.setAttribute('stroke-width', '0.6'));
+      path.addEventListener('click', () => {
+        state.selected = info.race;
+        renderDetail();
+      });
+    }
+    const title = document.createElementNS(ns, 'title');
+    title.textContent = info ? `${p.SIDO_SGG} — ${info.winner?.name || ''} (${info.winner?.party || ''})` : p.SIDO_SGG;
+    path.appendChild(title);
+    svg.appendChild(path);
+  }
+}
+
 
 async function renderDistrictHex() {
   const layout = await loadDistrictHex(state.n);
