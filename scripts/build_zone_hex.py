@@ -329,14 +329,19 @@ def design_zone_N(zone_cells_by_sido):
 
     # 경기 wrap: 서울만 둘러쌈 (인천·강원은 wrap 밖). top + right + bot.
     # cells = (top_h + bot_h)*(w_seoul + right_w) + right_w * inner_H
+    # 점수: 빈자리 + right_w 페널티 → top ≤ bot (남부 인구 집중) → bot 크게
+    # 동부 셀수 = right_w * inner_H. 크면 지리 부정확 (실제 경기 동부 시군 적음).
     best = None
     for right_w in range(1, 4):
         for top_h in range(1, 4):
-            for bot_h in range(1, 4):
+            for bot_h in range(1, 6):
                 cap = (top_h + bot_h) * (w_seoul + right_w) + right_w * inner_H
                 if cap >= n_gg:
                     waste = cap - n_gg
-                    score = (waste, abs(top_h - bot_h), right_w + top_h + bot_h)
+                    top_heavy = max(0, top_h - bot_h)
+                    # right_w 페널티: 빈자리 1당 비용 vs right_w 1당 비용 5
+                    east_penalty = right_w * 5
+                    score = (waste + east_penalty, top_heavy, -bot_h, top_h + bot_h)
                     if best is None or score < best[0]:
                         best = (score, right_w, top_h, bot_h, cap)
     if best is None:
