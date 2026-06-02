@@ -653,7 +653,7 @@ SIDO_RATIO = {
     '경상남도':       (3, 4),   # 세로
     '전라북도':       (8, 2),   # 가로 8 (호남 col 0~7 확장 — 매우 납작)
     '전북특별자치도': (8, 2),
-    '전라남도':       (8, 2),   # 가로 8
+    '전라남도':       (8, 3),   # 가로 8 row 3 (cells 22 legacy fit + 경남 col 9 겹침 방지)
     '충청남도':       (4, 3),   # 가로 (동서로 김)
     '충청북도':       (4, 3),   # 가로
     '대구광역시':     (4, 4),
@@ -667,11 +667,14 @@ SIDO_RATIO = {
 
 
 def shape_fit(sido, n_cells, slack=0):
-    """cells N+slack fit 최소 shape — ratio 가까이 우선."""
+    """cells N+slack fit 최소 shape — ratio 가까이 우선. base 우선 사용."""
     if sido not in SIDO_RATIO:
         return (3, 3)
     rw, rh = SIDO_RATIO[sido]
     target = max(n_cells + slack, 1)
+    # base 가 cells fit이면 그대로 사용 (회차마다 동일 shape 유지)
+    if rw * rh >= target:
+        return (rw, rh)
     base_ratio = rw / rh
     best = None
     best_score = (float('inf'), float('inf'))
@@ -681,7 +684,6 @@ def shape_fit(sido, n_cells, slack=0):
             continue
         cur_ratio = w / h
         ratio_diff = abs(cur_ratio - base_ratio)
-        # ratio 우선 (visual 모양 위해) + 자리 적은 후순위
         score = (ratio_diff, w * h)
         if score < best_score:
             best_score = score
