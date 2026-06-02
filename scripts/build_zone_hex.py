@@ -120,13 +120,15 @@ def cell_centroid(cell, by_code, by_name):
 
 def fill_rect(cells, col_start, row_start, W, H, sort_key=None, partial_align='left_top'):
     """cells을 col_start..col_start+W-1, row_start..row_start+H-1 직사각형에 채움.
-    sort_key: 정렬 기준 (default: (-lat, lon) — 위 row 위쪽 lat 큰 cell)
+    sort_key: 정렬 기준. None이면 2-pass: row 분배는 -lat (북 먼저), row 내 col은 lon (서 먼저).
+    sort_key 명시 시 1-pass (기존 동작).
     partial_align: 마지막 row 미달 시 정렬 — 'left_top'/'right_top'/'left_bot'/'right_bot'.
     """
     if not cells:
         return
+    two_pass = sort_key is None
     if sort_key is None:
-        sort_key = lambda c: (-c['lat'], c['lon'])
+        sort_key = lambda c: -c['lat']
     sorted_cells = sorted(cells, key=sort_key)
     N = len(sorted_cells)
     capacity = W * H
@@ -168,11 +170,20 @@ def fill_rect(cells, col_start, row_start, W, H, sort_key=None, partial_align='l
             col_offset = W - count
         else:
             col_offset = 0
-        for i in range(count):
-            c = sorted_cells[idx]
-            c['c'] = col_start + col_offset + i
-            c['r'] = row_start + local_r
-            idx += 1
+        # 2-pass: row 안에서 lon으로 다시 정렬 (서 → 동)
+        if two_pass:
+            row_slice = sorted_cells[idx:idx+count]
+            row_slice.sort(key=lambda c: c['lon'])
+            for i in range(count):
+                row_slice[i]['c'] = col_start + col_offset + i
+                row_slice[i]['r'] = row_start + local_r
+            idx += count
+        else:
+            for i in range(count):
+                c = sorted_cells[idx]
+                c['c'] = col_start + col_offset + i
+                c['r'] = row_start + local_r
+                idx += 1
 
 
 def fill_wrap_top_left_right(cells, inner_col, inner_row, inner_W, inner_H, top_h, left_w, right_w):
@@ -198,14 +209,14 @@ def fill_wrap_top_left_right(cells, inner_col, inner_row, inner_W, inner_H, top_
         top_cells,
         col_start=inner_col - left_w, row_start=inner_row - top_h,
         W=total_w, H=top_h,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_top',
     )
     fill_rect(
         left_cells,
         col_start=inner_col - left_w, row_start=inner_row,
         W=left_w, H=inner_H,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
     fill_rect(
@@ -271,7 +282,7 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         col_start=inner_col,
         row_start=inner_row - top_h,
         W=total_wrap_w, H=top_h,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_top',  # 미달 시 위쪽 outer
     )
     # right wrap: rows inner_row..inner_row+inner_H-1, cols inner_col+inner_W..inner_col+inner_W+right_w-1
@@ -289,7 +300,7 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         col_start=inner_col,
         row_start=inner_row + inner_H,
         W=total_wrap_w, H=bot_h,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',  # 미달 시 아래쪽 outer
     )
 
@@ -413,7 +424,7 @@ def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left
         left_cells,
         col_start=inner_col - left_w, row_start=inner_row,
         W=left_w, H=inner_H,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
     fill_rect(
@@ -427,7 +438,7 @@ def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left
         bot_cells_arr,
         col_start=inner_col - left_w, row_start=inner_row + inner_H,
         W=total_w, H=bot_h,
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
 
@@ -968,7 +979,7 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         zone_cells_by_sido.get('인천광역시', []),
         col_start=col_offset, row_start=row_offset,  # row 0 (N zone 맨 위)
         W=plan['w_in'], H=plan['H_N'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='right_bot',  # partial 마지막 행 우측 (서울 쪽으로 부착)
     )
     # 서울 — 인천 우측, inner row range
@@ -977,7 +988,7 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         zone_cells_by_sido.get('서울특별시', []),
         col_start=seoul_col0, row_start=inner_row,
         W=plan['w_seoul'], H=plan['inner_H'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
     # 경기 wrap — 서울만 둘러쌈 (top+right+bot)
@@ -994,7 +1005,7 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         col_start=seoul_col0 + plan['w_seoul'] + plan['right_w'],
         row_start=inner_row,
         W=plan['w_gw'], H=plan.get('h_gw', plan['inner_H']),
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
 
@@ -1016,11 +1027,24 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         for (c, r), sido in grid_map.items():
             sido_positions.setdefault(sido, []).append((c, r))
         for sido, positions in sido_positions.items():
-            cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
-            positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
-            for cell, (c, r) in zip(cells_list, positions_sorted):
-                cell['c'] = yn_col0 + c
-                cell['r'] = row_offset + r
+            sido_cells = list(zone_cells_by_sido.get(sido, []))
+            # 2-pass: cells을 lat 순으로 row 그룹에 분배 (북 → 남)
+            # 같은 row 안에서는 lon 순으로 col에 배치 (서 → 동)
+            sido_cells.sort(key=lambda c: -c['lat'])
+            row_to_positions = {}
+            for p in positions:
+                row_to_positions.setdefault(p[1], []).append(p)
+            rows_sorted = sorted(row_to_positions.keys())
+            cell_idx = 0
+            for row in rows_sorted:
+                row_positions = sorted(row_to_positions[row], key=lambda p: p[0])
+                n_in_row = len(row_positions)
+                row_cells = sido_cells[cell_idx:cell_idx + n_in_row]
+                row_cells.sort(key=lambda c: c['lon'])  # west first
+                for cell, pos in zip(row_cells, row_positions):
+                    cell['c'] = yn_col0 + pos[0]
+                    cell['r'] = row_offset + pos[1]
+                cell_idx += n_in_row
     else:
         # wrap mode: 대구 inner + 경북 wrap + 경남/부산/울산 bottom stack
         dg_col = yn_col0 + yn_plan['left_w']
@@ -1029,7 +1053,7 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
             zone_cells_by_sido.get('대구광역시', []),
             col_start=dg_col, row_start=dg_row,
             W=yn_plan['w_dg'], H=yn_plan['h_dg'],
-            sort_key=lambda c: (-c['lat'], c['lon']),
+            sort_key=None,
             partial_align='left_bot',
         )
         fill_wrap_top_left_right(
@@ -1046,7 +1070,7 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
             yn_bot_order,
             col_start=yn_col0, row_start=bot_row,
             H=yn_plan['h_bot'],
-            sort_key=lambda c: (-c['lat'], c['lon']),
+            sort_key=None,
             partial_align='left_bot',
         )
     # 충청 perfect-fit layout: 좌(충남) | 중앙(세종 위 + 대전 아래) | 우(충북). 빈자리 0.
@@ -1100,7 +1124,7 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         zone_cells_by_sido.get('광주광역시', []),
         col_start=gj_col, row_start=gj_row,
         W=ho_plan['w_gj'], H=ho_plan['h_gj'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
     # 광주 box 안 빈자리 (광주 셀이 못 채운 위치) → 전남이 메움
@@ -1128,7 +1152,7 @@ def layout_zone_P(zone_cells_by_sido, plan, col_offset, row_offset):
         p_cells,
         col_start=col_offset, row_start=row_offset,
         W=plan['w_p'], H=plan['h_p'],
-        sort_key=lambda c: (-c['lat'], c['lon']),
+        sort_key=None,
         partial_align='left_bot',
     )
 
