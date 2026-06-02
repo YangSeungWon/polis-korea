@@ -318,6 +318,43 @@ function setDisplay(d) {
   renderAll();
 }
 
+// 현재 결과에 등장한 1위 정당 모아 색 범례 — hex/지도 공통
+function renderHistoryLegend() {
+  const el = $('#history-legend');
+  if (!el) return;
+  const type = state.type;
+  const parties = new Set();
+  if (type === 'national_assembly') {
+    // 지역구 1위 정당
+    for (const r of (state.results?.district || [])) {
+      const w = (r.candidates || []).find((c) => c.won || c.rank === 1) || r.candidates?.[0];
+      if (w?.party) parties.add(w.party);
+    }
+  } else if (type === 'presidential') {
+    // 시군구별 1위 정당
+    for (const r of (state.results?.sigungu || [])) {
+      const w = (r.candidates || [])[0];
+      if (w?.party) parties.add(w.party);
+    }
+  } else if (type === 'local') {
+    // 광역단체장은 sido, 기초단체장은 sigungu
+    const list = (state.results?.sido || []).concat(state.results?.sigungu || []);
+    for (const r of list) {
+      const w = (r.candidates || [])[0];
+      if (w?.party) parties.add(w.party);
+    }
+  }
+  if (!parties.size) {
+    el.hidden = true; el.innerHTML = ''; return;
+  }
+  // 등장 순 정렬 (가나다순)
+  const sorted = [...parties].sort((a, b) => a.localeCompare(b, 'ko'));
+  el.hidden = false;
+  el.innerHTML = sorted.map((p) =>
+    `<span class="leg-item"><span class="leg-dot" style="background:${partyColor(p)}"></span>${p}</span>`
+  ).join('') + '<span class="leg-item"><span class="leg-dot" style="background:#9aa3b3"></span>데이터 없음</span>';
+}
+
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
@@ -335,6 +372,7 @@ async function renderAll() {
   else if (unit === 'district') await renderDistrictHex();
   else renderSigunguHex();
   renderDetail();
+  renderHistoryLegend();
 }
 
 async function loadDistrictHex(n) {
