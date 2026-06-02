@@ -910,8 +910,9 @@ def design_zone_P(zone_cells_by_sido):
     n_p = len(zone_cells_by_sido.get('제주특별자치도', []))
     if n_p == 0:
         return {'zone_W': 0, 'zone_H': 0, 'w_p': 0, 'h_p': 0}
-    h_p = max(1, round(math.sqrt(n_p)))
-    w_p = math.ceil(n_p / h_p)
+    # 한 줄로 (지리 — 제주는 한반도 남쪽 바다 위 섬, 가로 strip)
+    h_p = 1
+    w_p = n_p
     return {'zone_W': w_p, 'zone_H': h_p, 'w_p': w_p, 'h_p': h_p}
 
 
@@ -1108,13 +1109,19 @@ def manual_layout(cells):
     # zone 중앙 정렬 (col_offset)
     n_col_offset = (bbox_W - plan_N['zone_W']) // 2
     s_col_offset = (bbox_W - plan_S['zone_W']) // 2
-    p_col_offset = (bbox_W - plan_P['zone_W']) // 2
+    # 제주: 호남 아래 좌측 정렬 (호남 actual leftmost col에 맞춤)
+    # 호남 right-aligned with shift = w_left - W_ho. 제주도 그 col에 시작.
+    ho_shift = plan_S['w_left'] - plan_S['ho_plan']['W_ho']
+    p_col_offset = s_col_offset + ho_shift
 
     row_off = 0
     layout_zone_N(by_sido, plan_N, n_col_offset, row_off)
     row_off += plan_N['zone_H']
     layout_zone_S(by_sido, plan_S, s_col_offset, row_off)
     row_off += plan_S['zone_H']
+    # 제주는 S zone에서 1 행 떨어뜨려 배치 (섬 분리감)
+    if plan_P['zone_H'] > 0:
+        row_off += 1
     layout_zone_P(by_sido, plan_P, p_col_offset, row_off)
     row_off += plan_P['zone_H']
 
