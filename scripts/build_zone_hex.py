@@ -1075,20 +1075,24 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     ho_row0 = row_offset + plan['h_ch']
     # 전북 top — column-major from RIGHT (우측 col부터 위→아래 채움)
     # 빈자리는 좌측 col (서쪽 outer) — 호남 right-align과 일관
-    # 우측 col이 가득 차서 영남과 boundary 깔끔
+    # 2-pass: (1) lon으로 col 그룹핑 (east col 먼저), (2) col 내 lat sort (북→남)
     jb_cells = zone_cells_by_sido.get('전북특별자치도', []) + zone_cells_by_sido.get('전라북도', [])
     jb_W = ho_plan['total_w']
     jb_H = ho_plan['top_h_jb']
     if jb_cells and jb_W > 0 and jb_H > 0:
-        # east first (lon 큰 cell이 우측 col 우선), 같은 col 안에서 북 → 남
-        jb_sorted = sorted(jb_cells, key=lambda c: (-c['lon'], -c['lat']))
-        for i, cell in enumerate(jb_sorted):
-            col_idx = (jb_W - 1) - (i // jb_H)
-            row_idx = i % jb_H
-            if col_idx < 0:
+        # (1) lon 큰 → 작은 (east first) 정렬해서 H씩 batch로 col에 분배
+        jb_by_lon = sorted(jb_cells, key=lambda c: -c['lon'])
+        for batch_idx in range(jb_W):
+            start = batch_idx * jb_H
+            end = min(start + jb_H, len(jb_by_lon))
+            if start >= end:
                 break
-            cell['c'] = ho_col0 + col_idx
-            cell['r'] = ho_row0 + row_idx
+            col_global = (jb_W - 1) - batch_idx  # east col 먼저
+            # (2) col 안에서 lat 큰 → 작은 (북 → 남)
+            col_cells = sorted(jb_by_lon[start:end], key=lambda c: -c['lat'])
+            for row_idx, cell in enumerate(col_cells):
+                cell['c'] = ho_col0 + col_global
+                cell['r'] = ho_row0 + row_idx
     # 광주 inner block
     gj_col = ho_col0 + ho_plan['left_w']
     gj_row = ho_row0 + ho_plan['top_h_jb']
