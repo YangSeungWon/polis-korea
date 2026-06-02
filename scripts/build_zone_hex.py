@@ -347,6 +347,132 @@ def design_zone_N(zone_cells_by_sido):
     }
 
 
+def square_factor(n, prefer_tall=True):
+    """n cells을 (h, w) 직사각으로 — waste + asym 최소 (tie: -h)."""
+    if n == 0:
+        return 1, 0
+    h_root = max(1, round(math.sqrt(n)))
+    best = None
+    for h in range(max(1, h_root - 1), h_root + 3):
+        w = math.ceil(n / h)
+        waste = w * h - n
+        if waste < 0:
+            continue
+        # waste + asym 같으면 -h (높이 큰 게 우선) 또는 +h (낮은 게 우선)
+        score = (waste + abs(h - w), -h if prefer_tall else h)
+        if best is None or score < best[0]:
+            best = (score, h, w)
+    return best[1], best[2]
+
+
+def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left_w, right_w, bot_h):
+    """3-side wrap (left + right + bot). top 무. inner block의 좌·우·아래 둘러쌈."""
+    if not cells:
+        return
+    total_w = left_w + inner_W + right_w
+    cells_sorted = sorted(cells, key=lambda c: -c['lat'])
+    n = len(cells_sorted)
+    N_left = left_w * inner_H
+    N_right = right_w * inner_H
+    N_bot = bot_h * total_w
+    # 위쪽 inner 옆 (left+right): lat 중간 cells. bot은 가장 아래 (lat 낮은).
+    # 분배: 위에서부터 left+right (lat 큰), 그 다음 bot (lat 작은)
+    middle_count = min(N_left + N_right, n)
+    bot_count = min(N_bot, n - middle_count)
+    middle = cells_sorted[:middle_count]
+    bot_cells_arr = cells_sorted[middle_count:middle_count + bot_count]
+    middle_lon = sorted(middle, key=lambda c: c['lon'])
+    take_left = min(N_left, len(middle_lon))
+    left_cells = middle_lon[:take_left]
+    right_cells = middle_lon[take_left:]
+    fill_rect(
+        left_cells,
+        col_start=inner_col - left_w, row_start=inner_row,
+        W=left_w, H=inner_H,
+        sort_key=lambda c: (-c['lat'], c['lon']),
+        partial_align='left_bot',
+    )
+    fill_rect(
+        right_cells,
+        col_start=inner_col + inner_W, row_start=inner_row,
+        W=right_w, H=inner_H,
+        sort_key=lambda c: (-c['lat'], -c['lon']),
+        partial_align='right_bot',
+    )
+    fill_rect(
+        bot_cells_arr,
+        col_start=inner_col - left_w, row_start=inner_row + inner_H,
+        W=total_w, H=bot_h,
+        sort_key=lambda c: (-c['lat'], c['lon']),
+        partial_align='left_bot',
+    )
+
+
+def design_honam(zone_cells_by_sido):
+    """호남 sub-layout: 광주 inner + 전남 wrap (left+right+bot) + 전북 top.
+    광주 shape + 전남 wrap 동시 최적화 — waste 최소 + 연결성 보장."""
+    n_gj = len(zone_cells_by_sido.get('광주광역시', []))
+    n_jn = len(zone_cells_by_sido.get('전라남도', []))
+    n_jb = len(zone_cells_by_sido.get('전북특별자치도', [])) + len(zone_cells_by_sido.get('전라북도', []))
+
+    # 광주 후보 shape (square_factor 주변)
+    gj_candidates = []
+    if n_gj > 0:
+        h_root = max(1, round(math.sqrt(n_gj)))
+        for h in range(max(1, h_root - 1), h_root + 3):
+            w = math.ceil(n_gj / h)
+            waste = w * h - n_gj
+            if 0 <= waste <= 2:
+                gj_candidates.append((h, w, waste))
+    else:
+        gj_candidates.append((1, 0, 0))
+
+    # 동시 최적화: 광주 + 전남 wrap. 연결성 — bot row 완전 채워짐(또는 bot_h≥2).
+    best = None
+    for h_gj, w_gj, gj_waste in gj_candidates:
+        for bot_h in range(0, 6):
+            for left_w in range(1, 5):
+                for right_w in range(1, 5):
+                    total_w = left_w + w_gj + right_w
+                    cap = bot_h * total_w + (left_w + right_w) * h_gj
+                    if cap < n_jn:
+                        continue
+                    bot_used = n_jn - (left_w + right_w) * h_gj
+                    if bot_used < 0:
+                        continue
+                    # 연결성: bot_h=0이면 좌우 분리. bot_h=1이고 partial이면 좌우 wrap과 단절 가능
+                    if bot_used > 0 and bot_h == 0:
+                        continue
+                    if bot_h == 1 and 0 < bot_used < total_w:
+                        # 1행 partial → 좌·우 boundary 둘 다 못 닿음
+                        continue
+                    if bot_h == 0 and (left_w + right_w) > 0 and bot_used == 0:
+                        # bot 없이 left+right만 → 좌·우 단절
+                        continue
+                    jn_waste = cap - n_jn
+                    asym = abs(left_w - right_w)
+                    score = (gj_waste + jn_waste, asym, bot_h + left_w + right_w, h_gj * 10 + w_gj)
+                    if best is None or score < best[0]:
+                        best = (score, h_gj, w_gj, bot_h, left_w, right_w)
+    if best is None:
+        # fallback
+        h_gj, w_gj = square_factor(n_gj)
+        bot_h, left_w, right_w = 1, 1, 1
+    else:
+        _, h_gj, w_gj, bot_h, left_w, right_w = best
+    total_w = left_w + w_gj + right_w
+    top_h_jb = math.ceil(n_jb / total_w) if total_w and n_jb else 0
+    W_ho = total_w
+    H_ho = top_h_jb + h_gj + bot_h
+    return {
+        'W_ho': W_ho, 'H_ho': H_ho,
+        'top_h_jb': top_h_jb, 'bot_h': bot_h,
+        'left_w': left_w, 'right_w': right_w,
+        'h_gj': h_gj, 'w_gj': w_gj,
+        'total_w': total_w,
+    }
+
+
 def design_yeongnam(zone_cells_by_sido):
     """영남 sub-layout: 대구 inner + 경북 wrap (top+left+right) + 경남/부산/울산 bottom stack."""
     n_dg = len(zone_cells_by_sido.get('대구광역시', []))
@@ -434,8 +560,9 @@ def design_zone_S(zone_cells_by_sido):
     n_ch = sum(len(zone_cells_by_sido.get(s, [])) for s in 충청_sidos)
 
     yn_plan = design_yeongnam(zone_cells_by_sido)
+    ho_plan = design_honam(zone_cells_by_sido)
     w_yn = yn_plan['W_yn']
-    H_S = yn_plan['H_yn']
+    H_S = max(yn_plan['H_yn'], ho_plan['H_ho'])  # 양쪽 height 더 큰 쪽
 
     # 왼쪽: 충청 top + 호남 bot. 같은 width w_left, height H_S.
     # 충청 top h_ch rows, 호남 H_S - h_ch rows.
@@ -465,7 +592,7 @@ def design_zone_S(zone_cells_by_sido):
     return {
         'zone_W': zone_W, 'zone_H': zone_H,
         'w_left': w_left, 'h_ch': h_ch, 'w_yn': w_yn, 'H_S': H_S,
-        'yn_plan': yn_plan,  # 영남 sub-layout
+        'yn_plan': yn_plan, 'ho_plan': ho_plan,
     }
 
 
@@ -566,16 +693,36 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=lambda c: (-c['lat'], c['lon']),
         partial_align='left_top',
     )
-    # 호남 bot — 광주(서) → 전남 → 전북(동/북). 실제 광주 lon 126.9, 전남 126.7, 전북 127.1.
-    # lon 순: 전남 → 광주 → 전북
-    ho_order = ['전라남도', '광주광역시', '전북특별자치도', '전라북도', '전남광주특별시']
-    ho_pairs = [(s, zone_cells_by_sido.get(s, [])) for s in ho_order]
-    fill_horizontal_stack(
-        ho_pairs,
-        col_start=col_offset, row_start=row_offset + plan['h_ch'],
-        H=plan['H_S'] - plan['h_ch'],
+    # 호남: 전북 top + 전남 wrap (좌·우·아래) + 광주 inner
+    ho_plan = plan['ho_plan']
+    ho_col0 = col_offset
+    ho_row0 = row_offset + plan['h_ch']
+    # 전북 top
+    jb_cells = zone_cells_by_sido.get('전북특별자치도', []) + zone_cells_by_sido.get('전라북도', [])
+    fill_rect(
+        jb_cells,
+        col_start=ho_col0, row_start=ho_row0,
+        W=ho_plan['total_w'], H=ho_plan['top_h_jb'],
         sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='right_bot',
+        partial_align='left_top',
+    )
+    # 광주 inner block
+    gj_col = ho_col0 + ho_plan['left_w']
+    gj_row = ho_row0 + ho_plan['top_h_jb']
+    fill_rect(
+        zone_cells_by_sido.get('광주광역시', []),
+        col_start=gj_col, row_start=gj_row,
+        W=ho_plan['w_gj'], H=ho_plan['h_gj'],
+        sort_key=lambda c: (-c['lat'], c['lon']),
+        partial_align='left_bot',
+    )
+    # 전남 wrap (좌·우·아래)
+    jn_cells = zone_cells_by_sido.get('전라남도', [])
+    fill_wrap_left_right_bot(
+        jn_cells,
+        inner_col=gj_col, inner_row=gj_row,
+        inner_W=ho_plan['w_gj'], inner_H=ho_plan['h_gj'],
+        left_w=ho_plan['left_w'], right_w=ho_plan['right_w'], bot_h=ho_plan['bot_h'],
     )
 
 
