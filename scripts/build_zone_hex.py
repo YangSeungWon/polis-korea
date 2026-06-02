@@ -821,38 +821,67 @@ def partition_yeongnam(by_sido, W, H):
 def partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch):
     """w_ch × h_ch grid을 4 시도(충남·세종·대전·충북)로 partition.
     빈자리 없음 (n_cn+n_sj+n_dj+n_cb == w_ch × h_ch 가정).
+
+    구조: 충남 좌 cols (bot_anchor) → 충남 last col top 빈자리 + 추가 2-col block에
+          세종 + 대전 compact 배치 → 나머지 cells을 충북 (우측부터 fill).
+    대전 P자/2-col compact 보장 (지렁이 방지).
+
     return: dict {(c,r): sido_name}"""
     grid = {}
-    # 충남 좌, bot_anchor, col 단위
+    # 충남 좌, bot_anchor
+    w_cn = math.ceil(n_cn / h_ch) if n_cn else 0
     cn_rem = n_cn
-    col = 0
-    while cn_rem > 0 and col < w_ch:
+    last_cn_col = -1
+    cn_last_col_cells = 0
+    for col in range(w_cn):
         cells_in_col = min(cn_rem, h_ch)
         for offset in range(cells_in_col):
             grid[(col, h_ch - 1 - offset)] = '충청남도'
         cn_rem -= cells_in_col
-        col += 1
-    # 충북 우, bot_anchor
-    cb_rem = n_cb
-    col = w_ch - 1
-    while cb_rem > 0 and col >= 0:
-        if (col, h_ch - 1) in grid:
-            break  # 충남과 충돌 — 설계 잘못
-        cells_in_col = min(cb_rem, h_ch)
-        for offset in range(cells_in_col):
-            grid[(col, h_ch - 1 - offset)] = '충청북도'
-        cb_rem -= cells_in_col
-        col -= 1
-    # 중앙: 나머지 — 세종 top, 대전 그 아래
-    remaining = sorted(
-        ((c, r) for c in range(w_ch) for r in range(h_ch) if (c, r) not in grid),
-        key=lambda p: (p[1], p[0]),
-    )
-    for i, p in enumerate(remaining):
+        if cn_rem == 0:
+            last_cn_col = col
+            cn_last_col_cells = cells_in_col
+            break
+    cn_last_col_empty = h_ch - cn_last_col_cells if last_cn_col >= 0 else 0
+
+    # 세종+대전 통합 영역: 충남 last col top 빈자리 + 추가 col(들).
+    # 충남 last col에 남는 빈자리 cn_last_col_empty 셀, 추가 cells = sj+dj - 그것.
+    sj_dj_total = n_sj + n_dj
+    extra_needed = max(0, sj_dj_total - cn_last_col_empty)
+    extra_cols_needed = math.ceil(extra_needed / h_ch) if extra_needed > 0 else 0
+
+    # 세종+대전 positions: 충남 last col top + 추가 col 전체
+    sj_dj_positions = []
+    if last_cn_col >= 0 and cn_last_col_empty > 0:
+        for r in range(cn_last_col_empty):
+            sj_dj_positions.append((last_cn_col, r))
+    for ec in range(extra_cols_needed):
+        c = last_cn_col + 1 + ec if last_cn_col >= 0 else ec
+        if c >= w_ch:
+            break
+        for r in range(h_ch):
+            sj_dj_positions.append((c, r))
+
+    # 정렬: (row, col) — top first, west first
+    sj_dj_positions.sort(key=lambda p: (p[1], p[0]))
+
+    # 세종 + 대전 할당
+    for i, p in enumerate(sj_dj_positions):
         if i < n_sj:
             grid[p] = '세종특별자치시'
         elif i < n_sj + n_dj:
             grid[p] = '대전광역시'
+        # 나머지 positions은 충북
+
+    # 충북: 모든 남은 cells, 우측부터 fill (bot_anchor 비슷)
+    cb_rem = n_cb
+    for col in range(w_ch - 1, -1, -1):
+        for r in range(h_ch):
+            if cb_rem == 0:
+                break
+            if (col, r) not in grid:
+                grid[(col, r)] = '충청북도'
+                cb_rem -= 1
     return grid
 
 
