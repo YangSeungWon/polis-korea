@@ -1,12 +1,7 @@
-"""OhmyNews 22대 GeoJSON SGG_Code ↔ hex/results district name 매핑 생성.
+"""OhmyNews 21·22대 GeoJSON SGG_Code ↔ hex/results district name 매핑 생성.
 
-OhmyNews는 SGG (예: '수원갑'), 우리 hex/results는 풀네임 (예: '수원시갑').
-sigungus list 기반으로 매칭하고 결과를 data/geo/district_22_geojson_map.json에 저장.
-
-매칭 규칙:
-1. sigungus 같은 시 prefix 공유 → 시명 short + suffix(갑/을…)
-2. sigungus 단일 → 시·구·군 정규식 정리 (양구군의 양구는 보존)
-3. sigungus 복수 다른 시 → 각 시군구 short concat + suffix
+OhmyNews 22대는 SIDO+SGG short (예: '수원갑'), 21대는 SGG_2 풀명 (예: '경기도 고양시갑').
+sigungus list 기반으로 매칭하고 결과를 data/geo/district_{n}_geojson_map.json에 저장.
 """
 from __future__ import annotations
 import json
@@ -63,14 +58,15 @@ def short_name(hex_entry):
     return ''.join(strip_one(sg) for sg in sigungus) + suffix
 
 
-def main():
-    hex22 = json.loads((ROOT / 'data/geo/district_hex_22.json').read_text())
-    oh = json.loads((ROOT / 'data/geo/district_22_geojson.json').read_text())
+# 시도 옛 이름 (21대 OhmyNews 시점) ↔ 현재 이름
+SIDO_OLD = {
+    '강원특별자치도': '강원도',
+    '전북특별자치도': '전라북도',
+}
 
-    oh_by = {}
-    for f in oh['features']:
-        p = f['properties']
-        oh_by[(p['SIDO'], p['SGG'])] = p['SGG_Code']
+
+def build_22(hex22, oh22, oh_by):
+    """22대 매핑 — SIDO+SGG short 매칭."""
 
     # OhmyNews 명명 불규칙 (광역시 단음절 구 일부만 보존 등) — 수동 매핑
     MANUAL = {
@@ -129,30 +125,68 @@ def main():
         if found:
             mapping[f"{x['sido']}|{x['name']}"] = found
         else:
-            unmatched.append((x['name'], sido_short, candidates(x)))
+            unmatched.append((x['name'], sido_short))
+    return mapping, unmatched
 
-    print(f'매칭: {len(mapping)}/{len(hex22)}')
-    if unmatched:
-        print(f'unmatched {len(unmatched)}:')
-        for n, sd, cands in unmatched[:20]:
-            print(f'  {n} → ({sd}, 시도: {cands})')
 
-    out = {
+def build_21(hex21, oh21):
+    """21대 매핑 — OhmyNews 21대는 SGG_2 = '{시도} {name}' 풀명 사용. 직접 매칭."""
+    oh_by_sgg2 = {f['properties']['SGG_2']: f['properties']['SGG_Code'] for f in oh21['features']}
+    mapping = {}
+    unmatched = []
+    for x in hex21:
+        # 시도 옛 이름으로 변환 (강원특별자치도 → 강원도)
+        old_sido = SIDO_OLD.get(x['sido'], x['sido'])
+        key = f"{old_sido} {x['name']}"
+        if key in oh_by_sgg2:
+            mapping[f"{x['sido']}|{x['name']}"] = oh_by_sgg2[key]
+        else:
+            unmatched.append((x['name'], x['sido']))
+    return mapping, unmatched
+
+
+def main():
+    # 22대
+    hex22 = json.loads((ROOT / 'data/geo/district_hex_22.json').read_text())
+    oh22 = json.loads((ROOT / 'data/geo/district_22_geojson.json').read_text())
+    oh22_by = {(f['properties']['SIDO'], f['properties']['SGG']): f['properties']['SGG_Code'] for f in oh22['features']}
+    m22, u22 = build_22(hex22, oh22, oh22_by)
+    print(f'[22대] 매칭: {len(m22)}/{len(hex22)}, unmatched: {len(u22)}')
+
+    out22 = {
         '_meta': {
-            'description': 'hex/results district key "{sido}|{name}" → OhmyNews SGG_Code (NEC 7자리). 22대 chloropleth 매칭용. 광역시 일반구 중복명("북구을" 등) 때문에 sido 포함 key.',
-            'source_hex': 'data/geo/district_hex_22.json',
+            'description': 'hex key "{sido}|{name}" → OhmyNews SGG_Code (NEC 7자리). 22대 chloropleth.',
             'source_geojson': 'data/geo/district_22_geojson.json (© OhmyNews, MIT)',
-            'matched': len(mapping),
-            'total': len(hex22),
-            'unmatched': [n for n, _, _ in unmatched],
-            'note': 'unmatched 일부는 OhmyNews 명명 불규칙(광역시 일부 구만 보존)으로 자동 매칭 실패. polygon 렌더는 가능하나 chloropleth 색칠 안 됨.',
+            'matched': len(m22), 'total': len(hex22),
+            'unmatched': [n for n, _ in u22],
         },
-        'name_to_sgg_code': mapping,
+        'name_to_sgg_code': m22,
     }
     (ROOT / 'data/geo/district_22_geojson_map.json').write_text(
-        json.dumps(out, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+        json.dumps(out22, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
     )
-    print(f'\nwritten: data/geo/district_22_geojson_map.json')
+
+    # 21대
+    hex21 = json.loads((ROOT / 'data/geo/district_hex_21.json').read_text())
+    oh21 = json.loads((ROOT / 'data/geo/district_21_geojson.json').read_text())
+    m21, u21 = build_21(hex21, oh21)
+    print(f'[21대] 매칭: {len(m21)}/{len(hex21)}, unmatched: {len(u21)}')
+    for n, s in u21[:10]:
+        print(f'  {s} | {n}')
+
+    out21 = {
+        '_meta': {
+            'description': 'hex key "{sido}|{name}" → OhmyNews SGG_Code (NEC 7자리). 21대 chloropleth.',
+            'source_geojson': 'data/geo/district_21_geojson.json (© OhmyNews, MIT)',
+            'matched': len(m21), 'total': len(hex21),
+            'unmatched': [n for n, _ in u21],
+        },
+        'name_to_sgg_code': m21,
+    }
+    (ROOT / 'data/geo/district_21_geojson_map.json').write_text(
+        json.dumps(out21, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+    )
+    print('\nwritten: data/geo/district_22_geojson_map.json, data/geo/district_21_geojson_map.json')
 
 
 if __name__ == '__main__':

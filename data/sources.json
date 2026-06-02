@@ -103,10 +103,11 @@
       "type": "GEO",
       "format": "GeoJSON + CSV(UTF-8)",
       "crs": "EPSG:4326 (WGS84)",
-      "attributes": ["SGG_Code", "SGG_1", "SGG_2", "SGG_3"],
-      "used_in": [],
+      "attributes": ["SGG_Code", "SGG_1 (시도)", "SGG_2 (시도+선거구 풀명)", "SGG_3 (시도+선거구 짧음)"],
+      "local_path": "data/geo/district_21_geojson.json (simplify 0.7MB) + .LICENSE",
+      "used_in": ["/history/national-assembly/21/"],
       "method": "vuski/admdongkor `ver2020xxxx_for_update` 행정동 → NEC 선거구로 dissolve. 매핑 출처는 NEC 선거통계시스템 '선거구 및 읍면동 현황' (info.nec.go.kr). 화성 봉담읍 리 단위, 용인 동백 분동 등 동내 분할은 수기 보정 명시.",
-      "note": "21대 (2020.4.15) 시계열 비교용. SGG_Code 체계는 22대와 다름 (예: 부천 4석→3석 회차 간 변동). **attribution 의무.**"
+      "note": "21대 (2020.4.15) 시계열 비교용. SGG_2가 '{시도} {풀명}' 형태라 우리 hex와 매핑 단순(SIDO_OLD 옛 이름 정규화만). **attribution 의무.**"
     },
     {
       "id": "teampopong_data",

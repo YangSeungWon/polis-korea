@@ -1,12 +1,10 @@
 {
   "_meta": {
-    "description": "hex/results district key \"{sido}|{name}\" → OhmyNews SGG_Code (NEC 7자리). 22대 chloropleth 매칭용. 광역시 일반구 중복명(\"북구을\" 등) 때문에 sido 포함 key.",
-    "source_hex": "data/geo/district_hex_22.json",
+    "description": "hex key \"{sido}|{name}\" → OhmyNews SGG_Code (NEC 7자리). 22대 chloropleth.",
     "source_geojson": "data/geo/district_22_geojson.json (© OhmyNews, MIT)",
     "matched": 254,
     "total": 254,
-    "unmatched": [],
-    "note": "unmatched 일부는 OhmyNews 명명 불규칙(광역시 일부 구만 보존)으로 자동 매칭 실패. polygon 렌더는 가능하나 chloropleth 색칠 안 됨."
+    "unmatched": []
   },
   "name_to_sgg_code": {
     "강원특별자치도|속초시인제군고성군양양군": "2520801",
