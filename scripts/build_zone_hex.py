@@ -339,8 +339,18 @@ def design_zone_N(zone_cells_by_sido):
     # 인천: top-aligned, N zone 좌측. H_N 높이에 맞춰 w_in 결정 (cells 가능한 정확 채움)
     w_in = max(1, math.ceil(n_in / H_N)) if n_in else 0
 
-    # 강원: 경기 right 옆 column. inner_H 높이.
-    w_gw = math.ceil(n_gw / inner_H) if (inner_H and n_gw) else 0
+    # 강원: 경기 right 옆 column. 2-wide compact 우선 (1-col 지렁이 방지).
+    if n_gw == 0:
+        w_gw, h_gw = 0, 0
+    elif n_gw < 4:
+        w_gw, h_gw = 1, n_gw
+    else:
+        # 2-wide 우선 (셀 충분하면). inner_H 초과 시 wider.
+        w_gw = max(2, math.ceil(n_gw / inner_H)) if inner_H else 2
+        h_gw = math.ceil(n_gw / w_gw)
+        if inner_H and h_gw > inner_H:
+            w_gw = math.ceil(n_gw / inner_H)
+            h_gw = inner_H
 
     zone_W = w_in + w_seoul + right_w + w_gw
     zone_H = H_N
@@ -350,7 +360,7 @@ def design_zone_N(zone_cells_by_sido):
         'top_h': top_h, 'bot_h': bot_h, 'right_w': right_w,
         'inner_W': w_seoul,  # 경기 wrap 대상 = 서울만
         'inner_H': inner_H,
-        'w_in': w_in, 'w_seoul': w_seoul, 'w_gw': w_gw,
+        'w_in': w_in, 'w_seoul': w_seoul, 'w_gw': w_gw, 'h_gw': h_gw,
         'H_N': H_N,
     }
 
@@ -977,13 +987,13 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         inner_W=plan['w_seoul'], inner_H=plan['inner_H'],
         top_h=plan['top_h'], right_w=plan['right_w'], bot_h=plan['bot_h'],
     )
-    # 강원 — 경기 right 옆
+    # 강원 — 경기 right 옆, top 정렬 (북동 강원이 N zone 상단에 맞춰지게)
     gw_cells = zone_cells_by_sido.get('강원특별자치도', []) + zone_cells_by_sido.get('강원도', [])
     fill_rect(
         gw_cells,
         col_start=seoul_col0 + plan['w_seoul'] + plan['right_w'],
         row_start=inner_row,
-        W=plan['w_gw'], H=plan['inner_H'],
+        W=plan['w_gw'], H=plan.get('h_gw', plan['inner_H']),
         sort_key=lambda c: (-c['lat'], c['lon']),
         partial_align='left_bot',
     )
