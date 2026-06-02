@@ -25,8 +25,8 @@ function activeUnit(type, office, results) {
 const state = {
   type: 'presidential',
   n: null,
-  office: '광역단체장',
-  sizing: '동일',  // 동일 | 인구비례 — 시군구 hex 사이즈 모드
+  office: '기초단체장',  // 지선 진입 첫인상 — 시군구 250셀 hex가 풍부, 광역·교육감은 옆 버튼으로 즉시 전환
+  sizing: '격자',  // 동일 | 반지름 | 격자 | dorling — 시군구 hex 사이즈 모드 (대선 기본 = 격자, 그 외 = 동일; typeDefaultSizing 참조)
   elections: null,
   hexData: null,            // sigungu_hex.json (9회 기준 통합도시)
   hexLegacy: null,          // sigungu_hex_legacy.json (옛 회차 — 일반구 분할)
@@ -188,6 +188,7 @@ async function init() {
   const type0 = init0.type || 'presidential';
   setType(type0, /*skipDefaultRound=*/ init0.n != null);
   if (init0.office && init0.office !== state.office) setOffice(init0.office);
+  // URL ?sizing= 가 있으면 type 기본을 override (setType이 이미 type 기본 적용)
   if (init0.sizing && init0.sizing !== state.sizing) setSizing(init0.sizing);
   if (init0.n != null) setRound(init0.n);
 
@@ -245,7 +246,7 @@ function buildPath() {
 function updateURL() {
   const newPath = buildPath();
   const params = new URLSearchParams();
-  if (state.sizing && state.sizing !== '동일') params.set('sizing', state.sizing);
+  if (state.sizing && state.sizing !== typeDefaultSizing(state.type)) params.set('sizing', state.sizing);
   const q = params.toString();
   const newUrl = q ? `${newPath}?${q}` : newPath;
   if (newUrl !== location.pathname + location.search) {
@@ -253,12 +254,26 @@ function updateURL() {
   }
 }
 
+// 대선만 격자 hex 기본 (전국 표심을 면적으로 공평하게). 총선·지선은 동일.
+function typeDefaultSizing(type) {
+  return type === 'presidential' ? '격자' : '동일';
+}
+
 function setType(type, skipDefaultRound = false) {
+  const prevType = state.type;
   state.type = type;
   document.querySelectorAll('[data-type]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.type === type);
   });
   $('#offices-seg').hidden = type !== 'local';
+  // type 전환 시 sizing 기본 재적용 (같은 type 안에서는 사용자 선택 유지)
+  if (prevType !== type) {
+    const def = typeDefaultSizing(type);
+    state.sizing = def;
+    document.querySelectorAll('[data-sizing]').forEach((b) => {
+      b.classList.toggle('is-active', b.dataset.sizing === def);
+    });
+  }
   renderRoundsSeg();
   updateURL();
   if (skipDefaultRound) return;
@@ -293,8 +308,9 @@ async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
   $('#hex').toggleAttribute('hidden', unit !== 'sido');
   $('#hex2').toggleAttribute('hidden', unit === 'sido');
-  // 사이즈 토글은 시군구 hex에서만 의미 있음 (반지름·격자·dorling이 시군구 응답수 기반)
-  $('#sizing-seg').toggleAttribute('hidden', unit !== 'sigungu');
+  // 사이즈 토글은 시군구 hex + 표심 분포가 의미 있는 type에서만 (대선·옛 총선).
+  // 지선은 시군구 1셀 = 단체장 1명 winner-takes-all이라 크기 가중 무의미 → 숨김.
+  $('#sizing-seg').toggleAttribute('hidden', unit !== 'sigungu' || state.type === 'local');
   if (unit === 'sido') renderSidoHex();
   else if (unit === 'district') await renderDistrictHex();
   else renderSigunguHex();
