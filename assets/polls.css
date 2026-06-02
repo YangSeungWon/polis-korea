@@ -42,7 +42,7 @@ a { color: inherit; }
   margin-top: 14px;
   padding: 10px 14px;
   background: var(--ink);
-  color: #fff;
+  color: var(--bg);
   border-radius: 3px;
   font-size: 12px;
   display: flex;
@@ -94,7 +94,7 @@ a { color: inherit; }
 .seg-btn:last-child  { border-radius: 0 3px 3px 0; border-right: 1px solid var(--rule-strong); }
 .seg-btn.is-active {
   background: var(--ink);
-  color: #fff;
+  color: var(--bg);
   border-color: var(--ink);
 }
 .seg-btn:hover:not(.is-active) {
@@ -127,7 +127,7 @@ a { color: inherit; }
   flex: 1 1 0;
   min-width: 0;
   height: 680px;
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--rule-strong);
   border-radius: 3px;
   position: relative;
@@ -151,8 +151,8 @@ a { color: inherit; }
   top: 10px;
   right: 10px;
   z-index: 600;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(10,14,26,0.12);
+  background: var(--bg);
+  box-shadow: 0 2px 8px var(--shadow, rgba(10,14,26,0.12));
   border-radius: 4px;
 }
 .view-toggle .seg-btn {
@@ -160,7 +160,7 @@ a { color: inherit; }
   align-items: center;
   gap: 4px;
 }
-.view-toggle .seg-btn:not(.is-active) { background: #fff; }
+.view-toggle .seg-btn:not(.is-active) { background: var(--bg); }
 .view-toggle .seg-btn svg { opacity: 0.85; }
 .view-toggle .seg-btn.is-active svg { opacity: 1; }
 .detail-pane { flex: 0 0 420px; }
@@ -169,7 +169,7 @@ a { color: inherit; }
 
 .loading-overlay {
   position: absolute; inset: 0;
-  background: rgba(250,251,252,0.95);
+  background: var(--bg);
   display: flex; align-items: center; justify-content: center;
   z-index: 500;
   font-size: 13px; color: var(--ink-soft);
@@ -187,7 +187,7 @@ a { color: inherit; }
 
 /* === 디테일 패널 === */
 .detail-pane {
-  background: #fff;
+  background: var(--bg);
   border: 1px solid var(--rule-strong);
   border-radius: 3px;
   height: 680px;
@@ -244,7 +244,7 @@ a { color: inherit; }
   border-radius: 0;
   padding: 10px 14px 12px;
   margin-bottom: 10px;
-  background: #fff;
+  background: var(--bg);
 }
 .poll-card .pc-hdr {
   display: flex;
@@ -348,10 +348,10 @@ a { color: inherit; }
 .hex-pane .hex-cell:hover { opacity: 0.85; }
 /* 선택 셀 — 흰 테두리 + 글로우 halo. 권역(시도) 다크 경계선과 헷갈리지 않게 확연히 구분. */
 .hex-pane .hex-cell.is-selected {
-  stroke: #fff;
+  stroke: var(--bg);
   stroke-width: 3;
   paint-order: stroke;
-  filter: drop-shadow(0 0 3.5px rgba(0, 0, 0, 0.85));
+  filter: drop-shadow(0 0 3.5px rgba(0, 0, 0, 0.55));
 }
 .hex-pane .hex-cell.no-data {
   fill: var(--bg2);
@@ -376,7 +376,7 @@ a { color: inherit; }
   font-variant-numeric: tabular-nums;
 }
 .hex-pane .hex-cell.has-data + .hex-label,
-.hex-pane .hex-cell.has-data + .hex-label + .hex-pct { fill: #fff; }
+.hex-pane .hex-cell.has-data + .hex-label + .hex-pct { fill: var(--bg); }
 
 /* === 색 범례 (지도/격자 아래) === */
 .poll-legend {
@@ -449,7 +449,7 @@ a { color: inherit; }
 .byelection-viz #boe-map { width: 100%; height: 600px; border: 1px solid var(--line, rgba(27,34,55,0.18)); border-radius: 8px; background: #eef1f6; }
 .byelection-viz .detail-pane { max-height: 600px; overflow-y: auto; }
 .boe-district { margin-bottom: 18px; padding: 8px; border-radius: 8px; transition: background .2s; }
-.boe-district.is-selected { background: rgba(90,110,156,0.12); outline: 2px solid rgba(90,110,156,0.4); }
+.boe-district.is-selected { background: rgba(90,110,156,0.18); outline: 2px solid rgba(90,110,156,0.55); }
 .boe-dist-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; border-bottom: 2px solid var(--ink, #1b2237); padding-bottom: 4px; }
 .boe-dist-name { font-weight: 800; font-size: 1.05rem; color: var(--ink, #1b2237); }
 .boe-dist-meta { font-size: 0.8rem; color: var(--ink-soft, #4d5570); }
@@ -460,7 +460,7 @@ a { color: inherit; }
 .seg-wrap { flex-wrap: wrap; gap: 6px; }
 .boe-chip { font-size: 0.82rem; }
 /* 재보궐 지도 상시 라벨 */
-.boe-label { background: rgba(255,255,255,0.9); border: 1px solid rgba(27,34,55,0.25); border-radius: 4px;
-  font-size: 11px; font-weight: 700; color: #1b2237; padding: 1px 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+.boe-label { background: var(--bg); border: 1px solid var(--rule-strong); border-radius: 4px;
+  font-size: 11px; font-weight: 700; color: var(--ink); padding: 1px 5px; box-shadow: 0 1px 2px var(--shadow, rgba(0,0,0,0.12));
   font-family: Pretendard, system-ui, sans-serif; }
 .boe-label::before { display: none; }  /* leaflet tooltip 화살표 제거 */

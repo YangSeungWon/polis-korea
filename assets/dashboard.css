@@ -32,7 +32,7 @@
 }
 .dash-panel:hover {
   border-color: var(--ink);
-  box-shadow: 0 4px 14px rgba(10, 14, 26, 0.10);
+  box-shadow: 0 4px 14px var(--shadow, rgba(10,14,26,0.10));
   transform: translateY(-2px);
 }
 .dash-panel:focus-visible {

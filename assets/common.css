@@ -108,7 +108,7 @@ body {
   color: var(--ink);
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-color: rgba(27,34,55,0.3);
+  text-decoration-color: var(--rule-strong);
 }
 .src-item a:hover {
   text-decoration-color: var(--accent, #c8553d);
@@ -120,7 +120,7 @@ body {
 /* Loading */
 .loading-overlay {
   position: absolute; inset: 0;
-  background: rgba(245,239,228,0.85);
+  background: rgba(0,0,0,0); /* loading bg는 투명 (다크 자동) */ backdrop-filter: blur(2px);
   display: flex; align-items: center; justify-content: center;
   z-index: 500;
   font-size: 13px; color: var(--ink-soft);
@@ -142,12 +142,28 @@ body {
   position: sticky; top: 0; z-index: 50;
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 24px;
-  background: rgba(250,251,252,0.92);
+  background: var(--bg);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule-strong);
 }
 .brand { display: flex; align-items: baseline; gap: 6px; }
 .brand .logo { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; color: var(--ink); }
+
+/* 테마 토글 — 우측 상단, OS 자동/라이트/다크 순환 */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  line-height: 1;
+}
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.theme-toggle .ico { display: inline-flex; align-items: center; margin-right: 5px; vertical-align: middle; }
+.theme-toggle .ico svg { display: block; }
 .brand .domain { font-size: 12px; color: var(--ink-mute); letter-spacing: 0; }
 .logo-link { text-decoration: none; display: flex; align-items: baseline; gap: 6px; color: inherit; }
 .hdr-meta { display: flex; gap: 12px; align-items: center; }
