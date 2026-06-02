@@ -416,9 +416,10 @@ def fill_wrap_left_right_bot(cells, inner_col, inner_row, inner_W, inner_H, left
     )
 
 
-def design_honam(zone_cells_by_sido):
+def design_honam(zone_cells_by_sido, target_W=None):
     """호남 sub-layout: 광주 inner + 전남 wrap (left+right+bot) + 전북 top.
-    광주 shape + 전남 wrap 동시 최적화 — waste 최소 + 연결성 보장."""
+    광주 shape + 전남 wrap 동시 최적화 — waste 최소 + 연결성 보장.
+    target_W 주면 W_ho==target_W 후보 우선 (strict). 없으면 free search."""
     n_gj = len(zone_cells_by_sido.get('광주광역시', []))
     n_jn = len(zone_cells_by_sido.get('전라남도', []))
     n_jb = len(zone_cells_by_sido.get('전북특별자치도', [])) + len(zone_cells_by_sido.get('전라북도', []))
@@ -999,25 +1000,26 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     sido_positions = {}
     for (c, r), sido in grid_map.items():
         sido_positions.setdefault(sido, []).append((c, r))
-    # 각 시도 cells을 (-lat, lon) 정렬 후 positions(top-left 우선)에 할당
+    # 충청은 left-align (col 0 N-S 좌측 boundary 보존)
     for sido, positions in sido_positions.items():
         cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
         positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
         for cell, (c, r) in zip(cells_list, positions_sorted):
             cell['c'] = col_offset + c
             cell['r'] = row_offset + r
-    # 호남: 전북 top + 전남 wrap (좌·우·아래) + 광주 inner
+    # 호남 right-align: W_ho < w_left 면 좌측 비고 우측 정렬 (영남 boundary와 일치)
     ho_plan = plan['ho_plan']
-    ho_col0 = col_offset
+    ho_col_shift = plan['w_left'] - ho_plan['W_ho']
+    ho_col0 = col_offset + ho_col_shift
     ho_row0 = row_offset + plan['h_ch']
-    # 전북 top
+    # 전북 top — partial row right-align (호남 right-align과 일관 → 우측 edge 깔끔)
     jb_cells = zone_cells_by_sido.get('전북특별자치도', []) + zone_cells_by_sido.get('전라북도', [])
     fill_rect(
         jb_cells,
         col_start=ho_col0, row_start=ho_row0,
         W=ho_plan['total_w'], H=ho_plan['top_h_jb'],
         sort_key=lambda c: (-c['lat'], c['lon']),
-        partial_align='left_top',
+        partial_align='right_top',
     )
     # 광주 inner block
     gj_col = ho_col0 + ho_plan['left_w']
