@@ -458,9 +458,15 @@ def design_honam(zone_cells_by_sido, target_W=None):
                     if bot_h == 0 and (left_w + right_w) > 0 and bot_used == 0:
                         # bot 없이 left+right만 → 좌·우 단절
                         continue
+                    # left·right 둘 다 있는데 bot이 비어있으면 (bot_used=0) 좌·우 단절
+                    if left_w > 0 and right_w > 0 and bot_used == 0:
+                        continue
                     jn_waste = cap - n_jn
                     asym = abs(left_w - right_w)
-                    score = (gj_waste + jn_waste, asym, bot_h + left_w + right_w, h_gj * 10 + w_gj)
+                    total_w = left_w + w_gj + right_w
+                    # target_W 매칭 페널티 — 충청 W와 호남 W 일치하면 좌측 큰 notch 없음
+                    w_penalty = abs(total_w - target_W) * 5 if target_W else 0
+                    score = (gj_waste + jn_waste + w_penalty, asym, bot_h + left_w + right_w, h_gj * 10 + w_gj)
                     if best is None or score < best[0]:
                         best = (score, h_gj, w_gj, bot_h, left_w, right_w)
     if best is None:
@@ -864,11 +870,13 @@ def design_zone_S(zone_cells_by_sido):
     n_ch = sum(len(zone_cells_by_sido.get(s, [])) for s in 충청_sidos)
 
     yn_plan = design_yeongnam(zone_cells_by_sido)
-    ho_plan = design_honam(zone_cells_by_sido)
     w_yn = yn_plan['W_yn']
 
     # 충청 perfect-fit: n_total의 인수쌍 W×H. 빈자리 0.
     w_ch, h_ch = find_chungcheong_wh(n_ch, prefer_h_range=(3, max(3, yn_plan['H_yn'] // 2)))
+
+    # 호남: 충청 W에 맞춰 검색 (좌측 큰 notch 회피)
+    ho_plan = design_honam(zone_cells_by_sido, target_W=w_ch)
 
     w_left = max(w_ch, ho_plan['W_ho'])
     H_left = h_ch + ho_plan['H_ho']
