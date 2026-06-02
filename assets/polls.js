@@ -127,7 +127,7 @@ function renderHex() {
     if (sido === '전라북도') continue;
     const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
     const result = sidoLastWinningParty(sido, state.office);
-    const fill = result ? partyColor(result.party) : '#e6e9ef';
+    const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
     const cls = result ? 'hex-cell has-data' : 'hex-cell no-data';
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     g.setAttribute('data-sido', sido);
@@ -137,14 +137,14 @@ function renderHex() {
     poly.setAttribute('class', cls + (state.selectedSido === sido ? ' is-selected' : ''));
     poly.setAttribute('points', hexPoints(cx, cy, r - 2));
     poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', '#0a0e1a');
+    poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
     poly.setAttribute('stroke-width', '1.2');
     const fillOp = result ? (result.low_recent ? 0.4 : gapOpacity(result.effective_gap ?? result.gap)) : 1;
     poly.setAttribute('fill-opacity', fillOp);
     if (result && (result.n_polls <= 2 || result.low_recent)) poly.setAttribute('stroke-dasharray', '3,2');
     g.appendChild(poly);
 
-    const textCol = result ? pickTextColor(fill, fillOp) : '#1b2237';
+    const textCol = result ? pickTextColor(fill, fillOp) : 'var(--ink, #1b2237)';
     const t1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     t1.setAttribute('class', 'hex-label');
     t1.setAttribute('x', cx);
@@ -193,7 +193,7 @@ const KOREA_BOUNDS = [[32.5, 123.5], [39.5, 132.5]];
 function setupMiniMap(sidoData) {
   if (miniMapCtrl || typeof L.Control.MiniMap === 'undefined') return;
   const miniLayer = L.geoJSON(sidoData, {
-    style: { color: '#999', weight: 0.6, fillColor: '#e0e3ea', fillOpacity: 0.85 },
+    style: { color: 'var(--ink-mute, #999)', weight: 0.6, fillColor: 'var(--bg3, #e0e3ea)', fillOpacity: 0.85 },
     interactive: false,
   });
   // 한반도 본토 위주 — 독도/울릉 등 동쪽 outlier 제외해 세로 비율 유지.
@@ -350,9 +350,9 @@ function sidoStyle(feat) {
   const sel = state.selectedSido === sido && !state.selectedSigungu;
   const low = result && result.n_polls <= 2;
   return {
-    fillColor: result ? partyColor(result.party) : '#d8dce4',
+    fillColor: result ? partyColor(result.party) : 'var(--bg3, #d8dce4)',
     fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
-    color: sel ? '#0a0e1a' : '#2a2f3c',
+    color: sel ? 'var(--ink, #0a0e1a)' : 'var(--ink-soft, #2a2f3c)',
     weight: sel ? 2.5 : 1.4,
     opacity: sel ? 1 : 0.7,
     dashArray: low ? '4,3' : null,
@@ -367,9 +367,9 @@ function sigunguStyle(feat) {
   const selected = state.selectedSido === sido && state.selectedSigungu === name;
   const low = result && result.n_polls <= 2;
   return {
-    fillColor: result ? partyColor(result.party) : '#d8dce4',
+    fillColor: result ? partyColor(result.party) : 'var(--bg3, #d8dce4)',
     fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
-    color: selected ? '#0a0e1a' : '#7a8090',
+    color: selected ? 'var(--ink, #0a0e1a)' : 'var(--ink-mute, #7a8090)',
     weight: selected ? 2.5 : 0.6,
     dashArray: low ? '3,2' : null,
   };
@@ -377,7 +377,7 @@ function sigunguStyle(feat) {
 
 // 시도 외곽선 전용 스타일 (시군구 모드에서 위에 오버레이) — fill 없이 굵은 line
 function sidoOutlineStyle() {
-  return { fill: false, color: '#3a4050', weight: 1.6, opacity: 0.55, interactive: false };
+  return { fill: false, color: 'var(--ink-soft, #3a4050)', weight: 1.6, opacity: 0.55, interactive: false };
 }
 
 // === 디테일 패널 ===
@@ -539,13 +539,13 @@ async function renderSigunguHex() {
       isSigunguMode()
         ? sigunguLastWinningParty(d.sido, d.name, state.office)
         : sidoLastWinningParty(d.sido, state.office);
-    const fill = result ? partyColor(result.party) : '#e6e9ef';
+    const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
     const cls = result ? 'hex-cell has-data' : 'hex-cell no-data';
     const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     poly.setAttribute('class', cls + (state.selectedSido === d.sido && state.selectedSigungu === d.name ? ' is-selected' : ''));
     poly.setAttribute('points', hexPoints(cx, cy, r - 0.7));
     poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', '#0a0e1a');
+    poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
     poly.setAttribute('stroke-width', '0.7');
     const fillOpS = result ? (result.low_recent ? 0.4 : gapOpacity(result.effective_gap ?? result.gap)) : 1;
     poly.setAttribute('fill-opacity', fillOpS);
@@ -575,7 +575,7 @@ async function renderSigunguHex() {
       txt.setAttribute('x', cx);
       txt.setAttribute('text-anchor', 'middle');
       txt.setAttribute('font-weight', '600');
-      txt.setAttribute('fill', result ? pickTextColor(fill, fillOpS) : '#0a0e1a');
+      txt.setAttribute('fill', result ? pickTextColor(fill, fillOpS) : 'var(--ink, #0a0e1a)');
       txt.setAttribute('pointer-events', 'none');
       txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       if (label.prefix) {

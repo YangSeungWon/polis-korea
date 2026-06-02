@@ -219,8 +219,8 @@ function buildScatterSVG(polls, roster = null) {
   for (const v of [0, 25, 50, maxPct]) {
     if (v > maxPct) continue;
     const yy = y(v);
-    grid += `<line x1="${pad_l}" y1="${yy}" x2="${W - pad_r}" y2="${yy}" stroke="#e6e9ef" stroke-width="0.6"/>`;
-    grid += `<text x="${pad_l - 4}" y="${yy + 3}" font-size="9" fill="#8a93a3" text-anchor="end">${v}</text>`;
+    grid += `<line x1="${pad_l}" y1="${yy}" x2="${W - pad_r}" y2="${yy}" stroke="var(--rule, #e6e9ef)" stroke-width="0.6"/>`;
+    grid += `<text x="${pad_l - 4}" y="${yy + 3}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="end">${v}</text>`;
   }
   const midTs = (minTs + maxTs) / 2;
   let xax = '';
@@ -229,7 +229,7 @@ function buildScatterSVG(polls, roster = null) {
     const xx = x(ts);
     const d = new Date(ts);
     const label = `${d.getMonth() + 1}/${d.getDate()}`;
-    xax += `<text x="${xx}" y="${H - 6}" font-size="9" fill="#8a93a3" text-anchor="middle">${label}</text>`;
+    xax += `<text x="${xx}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${label}</text>`;
   }
   // 등록 후보 + "최근까지 살아남은" 후보만 line. 최신 폴 기준 14일 안에 등장한 후보만.
   let lines = '';
@@ -304,13 +304,13 @@ function buildPartyTrendSVG(polls) {
   for (const v of [0, 25, 50, maxPct]) {
     if (v > maxPct) continue;
     const yy = y(v);
-    grid += `<line x1="${pl}" y1="${yy}" x2="${W - pr}" y2="${yy}" stroke="#e6e9ef" stroke-width="0.6"/>`;
-    grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="9" fill="#8a93a3" text-anchor="end">${v}</text>`;
+    grid += `<line x1="${pl}" y1="${yy}" x2="${W - pr}" y2="${yy}" stroke="var(--rule, #e6e9ef)" stroke-width="0.6"/>`;
+    grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="end">${v}</text>`;
   }
   let xax = '';
   for (const ts of [minTs, (minTs + maxTs) / 2, maxTs]) {
     const d = new Date(ts);
-    xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="#8a93a3" text-anchor="middle">${d.getMonth() + 1}/${d.getDate()}</text>`;
+    xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${d.getMonth() + 1}/${d.getDate()}</text>`;
   }
   // 라벨 y겹침 방지 — 위에서부터 최소 간격 11px
   let lastLabelY = -99;

@@ -41,6 +41,19 @@ const state = {
 
 const $ = (s) => document.querySelector(s);
 
+// CSS variable resolver — SVG에 inline 색 부여할 때 라이트·다크 자동
+function themeVar(name, fallback) {
+  try {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  } catch (e) { return fallback; }
+}
+function inkAlpha(a) {
+  // --ink가 light면 어둠, dark면 밝음 — alpha rgba 직접 만들기 어려워서 currentColor 활용 또는 hex+a hack
+  // 단순화: themeVar('--ink') 색에 opacity는 별도 attr로
+  return themeVar('--ink', '#0a0e1a');
+}
+
 async function loadJson(path) {
   const r = await fetch(path);
   if (!r.ok) throw new Error(`${path}: ${r.status}`);
@@ -848,20 +861,21 @@ async function renderGeoMap() {
     const p = f.properties;
     const sgg = String(p.SGG_Code);
     const info = sggToWinner[sgg];
-    let fill = '#9aa3b3';
+    let fill = themeVar('--ink-mute', '#9aa3b3');
     if (info?.winner?.party) fill = partyColor(info.winner.party);
     let d = '';
     walkRings(f.geometry, (ring) => { d += ringToPath(ring); });
     const path = document.createElementNS(ns, 'path');
     path.setAttribute('d', d);
     path.setAttribute('fill', fill);
-    path.setAttribute('stroke', 'rgba(10,14,26,0.35)');
+    path.setAttribute('stroke', inkAlpha(0.35));
+    path.setAttribute('stroke-opacity', '0.35');
     path.setAttribute('stroke-width', '0.5');
     path.setAttribute('vector-effect', 'non-scaling-stroke');
     if (info) {
       path.style.cursor = 'pointer';
-      path.addEventListener('mouseenter', () => path.setAttribute('stroke-width', '1.8'));
-      path.addEventListener('mouseleave', () => path.setAttribute('stroke-width', '0.5'));
+      path.addEventListener('mouseenter', () => { path.setAttribute('stroke-width', '1.8'); path.setAttribute('stroke-opacity', '0.85'); });
+      path.addEventListener('mouseleave', () => { path.setAttribute('stroke-width', '0.5'); path.setAttribute('stroke-opacity', '0.35'); });
       path.addEventListener('click', () => { state.selected = info.race; renderDetail(); });
     }
     const title = document.createElementNS(ns, 'title');
@@ -877,7 +891,8 @@ async function renderGeoMap() {
     const path = document.createElementNS(ns, 'path');
     path.setAttribute('d', d);
     path.setAttribute('fill', 'none');
-    path.setAttribute('stroke', 'rgba(10,14,26,0.85)');
+    path.setAttribute('stroke', inkAlpha());
+    path.setAttribute('stroke-opacity', '0.85');
     path.setAttribute('stroke-width', '1.4');
     path.setAttribute('stroke-linejoin', 'round');
     path.setAttribute('vector-effect', 'non-scaling-stroke');

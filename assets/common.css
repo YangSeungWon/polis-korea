@@ -9,6 +9,39 @@
   --rule:     rgba(10,14,26,0.10);
   --rule-strong: rgba(10,14,26,0.22);
   --accent:   #0a0e1a;
+  /* dark에서도 일관된 흰색 anchor 필요 시 */
+  --white:    #ffffff;
+  --shadow:   rgba(10,14,26,0.12);
+}
+
+/* === Dark theme — OS prefers-color-scheme 자동 + [data-theme="dark"] manual override === */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:       #0d1018;
+    --bg2:      #161a25;
+    --bg3:      #1f2433;
+    --ink:      #e8eaf0;
+    --ink-soft: #9aa3b3;
+    --ink-mute: #6a7383;
+    --rule:     rgba(232,234,240,0.12);
+    --rule-strong: rgba(232,234,240,0.26);
+    --accent:   #e8eaf0;
+    --shadow:   rgba(0,0,0,0.55);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:       #0d1018;
+  --bg2:      #161a25;
+  --bg3:      #1f2433;
+  --ink:      #e8eaf0;
+  --ink-soft: #9aa3b3;
+  --ink-mute: #6a7383;
+  --rule:     rgba(232,234,240,0.12);
+  --rule-strong: rgba(232,234,240,0.26);
+  --accent:   #e8eaf0;
+  --shadow:   rgba(0,0,0,0.55);
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
