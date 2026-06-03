@@ -382,15 +382,17 @@ def design_zone_N(zone_cells_by_sido):
         w_in_est = math.ceil(n_in / h_est)
         if in_H_avail and h_est > in_H_avail:
             w_in_est = math.ceil(n_in / in_H_avail)
-    # 경기 wrap: top + right + bot. top·bot 둘 다 인천 절반(좌측 ceil(w_in/2))까지 확장.
-    extra = (w_in_est + 1) // 2  # 인천 절반 (ceil)
+    # 경기 wrap: top + right + bot. top은 인천 절반(ceil(w_in/2)) + extra row 가득,
+    # bot은 인천 전체 폭(w_in)까지 확장 → 인천 아래 비대칭 해소.
+    top_extra = (w_in_est + 1) // 2  # 인천 우측 절반 (ceil)
+    bot_extra = w_in_est             # 인천 전체 폭
     # cells = top_h*top_w + right_w*inner_H + bot_h*bot_w
     best = None
     # 경기 북부에 인천 위 1 row 추가 (인천이 1 row 내려가서 그 자리 차지)
     in_extra_top_row = w_in_est
     for right_w in range(1, 4):
-        top_w = extra + w_seoul + right_w
-        bot_w = extra + w_seoul + right_w
+        top_w = top_extra + w_seoul + right_w
+        bot_w = bot_extra + w_seoul + right_w
         for top_h in range(1, 4):
             for bot_h in range(1, 6):
                 cap = top_h * top_w + in_extra_top_row + right_w * inner_H + bot_h * bot_w
@@ -1067,14 +1069,14 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
                 cell['c'] = col_offset + col_global
                 cell['r'] = inner_row + 1 + row_idx
             idx += in_H
-        # partial col (leftmost = westernmost, col 0) — bot-aligned
+        # partial col (leftmost = westernmost, col 0) — top-aligned
+        # (cells 위쪽, 빈자리 아래쪽 → 강화도 등 서북 섬을 윗줄에 두는 인상)
         if remainder > 0:
             col_global = (in_W - 1) - full_cols
             col_cells = sorted(in_by_lon[idx:idx + remainder], key=lambda c: -c['lat'])
-            row_offset_partial = in_H - remainder  # bot-align
             for row_idx, cell in enumerate(col_cells):
                 cell['c'] = col_offset + col_global
-                cell['r'] = inner_row + 1 + row_offset_partial + row_idx
+                cell['r'] = inner_row + 1 + row_idx
     # 서울 — 인천 우측, inner row range
     seoul_col0 = col_offset + plan['w_in']
     fill_rect(
@@ -1084,14 +1086,15 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=None,
         partial_align='left_bot',
     )
-    # 경기 wrap — top·bot 모두 인천 절반까지 확장 + 인천 위 1 row 추가
-    extra = (plan['w_in'] + 1) // 2  # ceil(w_in/2) — 인천 좌측 절반
+    # 경기 wrap — top은 인천 절반(extra row가 위쪽 가득 덮음), bot은 인천 전체 폭 확장
+    top_extra = (plan['w_in'] + 1) // 2  # ceil(w_in/2) — 인천 우측 절반 위
+    bot_extra = plan['w_in']             # 인천 전체 폭 아래
     fill_wrap_top_right_bot(
         zone_cells_by_sido.get('경기도', []),
         inner_col=seoul_col0, inner_row=inner_row,
         inner_W=plan['w_seoul'], inner_H=plan['inner_H'],
         top_h=plan['top_h'], right_w=plan['right_w'], bot_h=plan['bot_h'],
-        bot_extra_left=extra, top_extra_left=extra,
+        bot_extra_left=bot_extra, top_extra_left=top_extra,
         in_extra_top_row=1, in_extra_w=plan['w_in'],
     )
     # 강원 — 경기 right 옆, bot 정렬 (N zone 하단 = S zone 경북과 접촉)

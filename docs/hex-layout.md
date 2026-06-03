@@ -71,20 +71,23 @@ inner_H = h_seoul.
 - **column-major from RIGHT** (동쪽 = 서울 가까움).
   - (1) lon 큰 → 작은 (east first)로 H씩 batch, col `w_in-1 .. 0` 채움.
   - (2) col 안에서 lat 큰 → 작은 (북 → 남).
-- **partial col = 서쪽 outermost (col 0), bot-aligned**.
-  - 셀이 H로 안 나눠지면 leftmost col이 미달 — 남쪽(bot)에 붙임.
-  - 결과: **좌상단(서북)이 빔** = 강화도 북쪽 바다. 옹진군 같은 단일 cell은 col 0 bot.
+- **partial col = 서쪽 outermost (col 0), top-aligned**.
+  - 셀이 H로 안 나눠지면 leftmost col이 미달 — 북쪽(top)에 붙임.
+  - 결과: **좌하단이 빔** (서남 바다 쪽). 옹진군·강화군 같은 단일/소수 cell은 col 0 top.
+  - 인천 본토 아래쪽 = 경기 bot wrap 위쪽 빈자리와 매끄럽게 이어짐.
 
 ### 경기도 wrap (top + right + bot)
 
-서울을 둘러쌈. top·bot은 인천 절반(`ceil(w_in/2)`)까지 확장.
+서울을 둘러쌈. **top은 인천 우측 절반**(`ceil(w_in/2)`)까지, **bot은 인천 전체 폭**(`w_in`)까지 확장.
+(top은 extra row가 인천 위 가득 덮어주므로 절반만으로 충분, bot은 비대칭 해소를 위해 full width.)
 
 **Cap 계산**:
 ```
-top_w = extra + w_seoul + right_w  # 인천 좌측 절반
-bot_w = extra + w_seoul + right_w
-extra = ceil(w_in_est / 2)
-cap = top_h × top_w + right_w × inner_H + bot_h × bot_w
+top_extra = ceil(w_in_est / 2)
+bot_extra = w_in_est
+top_w = top_extra + w_seoul + right_w
+bot_w = bot_extra + w_seoul + right_w
+cap = top_h × top_w + in_extra_top_row + right_w × inner_H + bot_h × bot_w
 ```
 
 **점수** (작을수록 선택):
@@ -221,7 +224,8 @@ if bot_cells_actual < bot_h:  # 동쪽 col 1개는 full 채워야 right wrap 연
 | 항목 | 결정 | 이유 |
 |---|---|---|
 | 인천 1 row 내림 | row top_h은 경기 북부로 | 경기 북부 셀 보충 |
-| 경기 top·bot 인천 절반 확장 | ceil(w_in/2) | 인천 outer 공간 활용 |
+| 경기 top 인천 절반 확장 | ceil(w_in/2) + extra row 가득 | 인천 위 공간 활용 |
+| 경기 bot 인천 전체 폭 확장 | w_in (full) | 인천 본토 아래까지 경기로 메움 (비대칭 해소) |
 | 경기 bot column-major from RIGHT | 동쪽 col 우선 full, partial westmost bot-align | 마지막 row 가득 유지, 빈자리 westmost col 위쪽 (인천 아래 notch 흡수) |
 | 강원 1×N strip 허용 | H_N 채움 우선 | 강원 남북으로 긴 권역 |
 | 강원 bot-align | N zone 끝 = S zone 경북 top - 1 | 지리적 접촉 |
