@@ -1280,6 +1280,36 @@ function renderSigunguHex() {
       for (let k = 0; k < rem; k++) floors[fracs[k].i] += 1;
       return floors;
     }
+    // 시도 라벨 백그라운드 — cells보다 먼저 그려 spiral 색이 위에 덮이도록.
+    // cluster centroid 큰 글씨, spiral 사이/외곽에서 살짝 비침.
+    {
+      const sidoCenters = new Map();
+      for (const d of data) {
+        const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+        const k = d.sido;
+        const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
+        c.sx += cx; c.sy += cy; c.n += 1;
+        sidoCenters.set(k, c);
+      }
+      for (const [sido, c] of sidoCenters) {
+        const lbl = SIDO_LABEL_SHORT[sido] || sido;
+        const tx = c.sx / c.n;
+        const ty = c.sy / c.n;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        t.setAttribute('x', tx);
+        t.setAttribute('y', ty);
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('dominant-baseline', 'middle');
+        t.setAttribute('font-size', '44');
+        t.setAttribute('font-weight', '800');
+        t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+        t.setAttribute('pointer-events', 'none');
+        t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+        t.textContent = lbl;
+        svg.appendChild(t);
+      }
+    }
+
     let selectedG = null;
     for (const d of data) {
       const result = resultForSigungu(d.sido, d.name);
@@ -1350,35 +1380,6 @@ function renderSigunguHex() {
     }
     // 시도 경계 굵은 선 — 격자 모드도 cell 위치가 동일 모드와 같으므로 적용 가능.
     drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
-    // 시도별 centroid에 큰 시도명 한 번 — 각 cell prefix 대신 cluster 단위 표시.
-    const sidoCenters = new Map();
-    for (const d of data) {
-      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      const k = d.sido;
-      const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
-      c.sx += cx; c.sy += cy; c.n += 1;
-      sidoCenters.set(k, c);
-    }
-    for (const [sido, c] of sidoCenters) {
-      const lbl = SIDO_LABEL_SHORT[sido] || sido;
-      const tx = c.sx / c.n;
-      const ty = c.sy / c.n;
-      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      t.setAttribute('x', tx);
-      t.setAttribute('y', ty);
-      t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('dominant-baseline', 'middle');
-      t.setAttribute('font-size', '28');
-      t.setAttribute('font-weight', '800');
-      t.setAttribute('fill', 'rgba(10,14,26,0.32)');
-      t.setAttribute('stroke', 'rgba(255,255,255,0.78)');
-      t.setAttribute('stroke-width', '5');
-      t.setAttribute('paint-order', 'stroke fill');
-      t.setAttribute('pointer-events', 'none');
-      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      t.textContent = lbl;
-      svg.appendChild(t);
-    }
     // 선택 cell을 마지막에 다시 append → SVG z-order 최상위 (인접 cell·경계선이
     // selected outline 가리지 않게).
     if (selectedG) svg.appendChild(selectedG);
@@ -1424,6 +1425,71 @@ function renderSigunguHex() {
         n.cy += (n.cy0 - n.cy) * 0.05;
       }
     }
+    // 시도별 그룹핑 (권역 테두리 + 라벨 centroid 공용)
+    const sidoGroups = new Map();
+    for (const n of nodes) {
+      const k = n.d.sido;
+      const list = sidoGroups.get(k) || [];
+      list.push(n);
+      sidoGroups.set(k, list);
+    }
+    // 권역 테두리 — 시도별 convex hull (각 node의 원 외곽 padding 포함).
+    // monotone chain 알고리즘. nodes 적어 성능 부담 X.
+    function _convexHull(pts) {
+      const arr = [...pts].sort((a, b) => a.x - b.x || a.y - b.y);
+      const cross = (O, A, B) => (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
+      const lower = [];
+      for (const p of arr) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop();
+        lower.push(p);
+      }
+      const upper = [];
+      for (let i = arr.length - 1; i >= 0; i--) {
+        const p = arr[i];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop();
+        upper.push(p);
+      }
+      return lower.slice(0, -1).concat(upper.slice(0, -1));
+    }
+    for (const [sido, list] of sidoGroups) {
+      const expanded = [];
+      for (const n of list) {
+        const pad = n.radius + 3;
+        for (let k = 0; k < 12; k++) {
+          const a = (k * Math.PI * 2) / 12;
+          expanded.push({ x: n.cx + Math.cos(a) * pad, y: n.cy + Math.sin(a) * pad });
+        }
+      }
+      const hull = _convexHull(expanded);
+      if (hull.length < 3) continue;
+      const points = hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      poly.setAttribute('points', points);
+      poly.setAttribute('fill', 'rgba(10,14,26,0.04)');
+      poly.setAttribute('stroke', 'rgba(10,14,26,0.45)');
+      poly.setAttribute('stroke-width', '1.5');
+      poly.setAttribute('stroke-linejoin', 'round');
+      poly.setAttribute('pointer-events', 'none');
+      svg.appendChild(poly);
+    }
+    // 시도 라벨 백그라운드 — 권역 테두리 안 centroid에 큰 글씨
+    for (const [sido, list] of sidoGroups) {
+      const cx = list.reduce((s, n) => s + n.cx, 0) / list.length;
+      const cy = list.reduce((s, n) => s + n.cy, 0) / list.length;
+      const lbl = SIDO_LABEL_SHORT[sido] || sido;
+      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      t.setAttribute('x', cx);
+      t.setAttribute('y', cy);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '44');
+      t.setAttribute('font-weight', '800');
+      t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+      t.setAttribute('pointer-events', 'none');
+      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+      t.textContent = lbl;
+      svg.appendChild(t);
+    }
     for (const n of nodes) {
       const isSelected = state.selected
         && state.selected.sido === n.d.sido && state.selected.name === n.d.name;
@@ -1467,6 +1533,35 @@ function renderSigunguHex() {
       svg.appendChild(g);
     }
     return;
+  }
+
+  // 동일·반지름 모드 — 시도 라벨 백그라운드 (cells보다 먼저 그려 spiral·hex 위에 덮이도록).
+  {
+    const sidoCenters = new Map();
+    for (const d of data) {
+      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+      const k = d.sido;
+      const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
+      c.sx += cx; c.sy += cy; c.n += 1;
+      sidoCenters.set(k, c);
+    }
+    for (const [sido, c] of sidoCenters) {
+      const lbl = SIDO_LABEL_SHORT[sido] || sido;
+      const tx = c.sx / c.n;
+      const ty = c.sy / c.n;
+      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      t.setAttribute('x', tx);
+      t.setAttribute('y', ty);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '44');
+      t.setAttribute('font-weight', '800');
+      t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+      t.setAttribute('pointer-events', 'none');
+      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+      t.textContent = lbl;
+      svg.appendChild(t);
+    }
   }
 
   for (const d of data) {
