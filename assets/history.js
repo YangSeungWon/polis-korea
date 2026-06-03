@@ -286,6 +286,11 @@ function setType(type, skipDefaultRound = false) {
     b.classList.toggle('is-active', b.dataset.type === type);
   });
   $('#offices-seg').hidden = type !== 'local';
+  // office button visual을 state.office와 동기 — HTML default와 state.office가 어긋날 때 보정
+  // (예: URL ↔ default mismatch, 캐시된 옛 HTML)
+  document.querySelectorAll('[data-office]').forEach((b) => {
+    b.classList.toggle('is-active', b.dataset.office === state.office);
+  });
   // type 전환 시 sizing 기본 재적용 (같은 type 안에서는 사용자 선택 유지)
   if (prevType !== type) {
     const def = typeDefaultSizing(type);
@@ -824,13 +829,83 @@ function _geoDisplayName(p, n) {
   return p.SIDO_SGG || p.SGG_2 || p.SGG || '';
 }
 
+// === Leaflet geomap (21·22대 총선 지역구 chloropleth) ===
+// 확대·패닝 + 미니맵 지원. polls.js 패턴 재사용.
+
+let geoLeafletMap = null;
+let geoDistrictLayer = null;    // 현재 회차 layer
+let geoDistrictByN = {};        // n → L.geoJSON layer (캐시, 재방문 시 재생성 안 함)
+let geoSidoOutlineLayer = null;
+let geoMiniMapCtrl = null;
+let geoInitialZoom = null;
+const KOREA_BOUNDS_GEO = [[32.5, 123.5], [39.5, 132.5]];
+
+function _districtStyleFor(info) {
+  return {
+    color: 'rgba(10,14,26,0.35)',
+    weight: 0.6,
+    fillColor: info?.winner?.party ? partyColor(info.winner.party) : 'rgba(154,163,179,0.65)',
+    fillOpacity: 0.85,
+  };
+}
+
+function _attachDistrictInteraction(feature, layer, info, label) {
+  layer.bindTooltip(
+    info ? `${label} — ${info.winner?.name || ''} (${info.winner?.party || ''})` : label,
+    { className: 'sigungu-tooltip', sticky: true, direction: 'auto' }
+  );
+  if (info) {
+    layer.on('mouseover', () => layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }));
+    layer.on('mouseout', () => layer.setStyle({ weight: 0.6, color: 'rgba(10,14,26,0.35)' }));
+    layer.on('click', () => {
+      state.selected = { sido: info.race.sido, name: info.race.name, kind: 'district' };
+      renderDetail();
+    });
+  }
+}
+
+function _setupGeoMiniMap(sidoData) {
+  if (geoMiniMapCtrl || typeof L.Control.MiniMap === 'undefined') return;
+  const miniLayer = L.geoJSON(sidoData, {
+    style: { color: 'rgba(10,14,26,0.4)', weight: 0.6, fillColor: 'rgba(230,233,239,0.85)', fillOpacity: 0.85 },
+    interactive: false,
+  });
+  const MAINLAND = L.latLngBounds([32.8, 125.6], [38.8, 130.0]);
+  const TARGET_H = 170;
+  let miniZoom = geoInitialZoom;
+  let sw, ne, miniW, miniH;
+  for (let i = 0; i < 8; i++) {
+    sw = geoLeafletMap.project(MAINLAND.getSouthWest(), miniZoom);
+    ne = geoLeafletMap.project(MAINLAND.getNorthEast(), miniZoom);
+    miniH = sw.y - ne.y;
+    if (miniH > TARGET_H * 1.4 && miniZoom > 0) { miniZoom--; continue; }
+    if (miniH < TARGET_H * 0.7) { miniZoom++; continue; }
+    break;
+  }
+  miniW = Math.ceil(ne.x - sw.x) + 12;
+  miniH = Math.ceil(miniH) + 12;
+  geoMiniMapCtrl = new L.Control.MiniMap(miniLayer, {
+    position: 'bottomleft',
+    width: miniW,
+    height: miniH,
+    toggleDisplay: false,
+    zoomLevelFixed: miniZoom,
+    centerFixed: MAINLAND.getCenter(),
+    aimingRectOptions: { color: '#e61e2b', weight: 2, fillColor: '#e61e2b', fillOpacity: 0.15 },
+  }).addTo(geoLeafletMap);
+  const updateMini = () => {
+    const path = geoMiniMapCtrl._aimingRect && geoMiniMapCtrl._aimingRect._path;
+    if (!path) return;
+    path.style.display = geoLeafletMap.getZoom() > geoInitialZoom ? '' : 'none';
+  };
+  geoLeafletMap.on('zoomend', updateMini);
+  geoLeafletMap.on('moveend', updateMini);
+  setTimeout(updateMini, 0);
+}
+
 async function renderGeoMap() {
   const n = state.n;
   await Promise.all([loadGeo(n), loadSidoGeo()]);
-  const svg = $('#geomap');
-  svg.innerHTML = '';
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
   const features = state.geoCache[n]?.features || [];
   if (!features.length) return;
   const sggMap = state.geoMapCache[n];
@@ -843,79 +918,69 @@ async function renderGeoMap() {
     const winner = (race.candidates || []).find((c) => c.won || c.rank === 1) || race.candidates?.[0];
     sggToWinner[String(sggCode)] = { race, winner };
   }
-  // 전체 bbox (지역구 + 시도 overlay 함께)
-  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
-  const walkRings = (geom, fn) => {
-    const polys = geom.type === 'MultiPolygon' ? geom.coordinates : [geom.coordinates];
-    for (const poly of polys) for (const ring of poly) fn(ring);
-  };
-  for (const f of features) walkRings(f.geometry, (ring) => {
-    for (const [lon, lat] of ring) {
-      if (lon < minLon) minLon = lon; if (lon > maxLon) maxLon = lon;
-      if (lat < minLat) minLat = lat; if (lat > maxLat) maxLat = lat;
-    }
-  });
-  const W = 720, H = 720, pad = 20;
-  const cosLat = Math.cos(((minLat + maxLat) / 2) * Math.PI / 180);
-  const spanLon = (maxLon - minLon) * cosLat;
-  const spanLat = (maxLat - minLat);
-  const scale = Math.min((W - 2 * pad) / spanLon, (H - 2 * pad) / spanLat);
-  const offX = (W - spanLon * scale) / 2;
-  const project = (lon, lat) => [
-    offX + (lon - minLon) * cosLat * scale,
-    H - pad - (lat - minLat) * scale,
-  ];
-  const ringToPath = (ring) => {
-    let d = '';
-    ring.forEach(([lon, lat], i) => {
-      const [x, y] = project(lon, lat);
-      d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
+
+  if (!geoLeafletMap) {
+    geoLeafletMap = L.map('geomap', {
+      zoomControl: true,
+      attributionControl: false,
+      maxBounds: KOREA_BOUNDS_GEO,
+      maxBoundsViscosity: 1.0,
     });
-    return d + 'Z';
-  };
-  const ns = 'http://www.w3.org/2000/svg';
-  // 선거구 polygon
-  for (const f of features) {
-    const p = f.properties;
-    const sgg = String(p.SGG_Code);
-    const info = sggToWinner[sgg];
-    let fill = themeVar('--ink-mute', '#9aa3b3');
-    if (info?.winner?.party) fill = partyColor(info.winner.party);
-    let d = '';
-    walkRings(f.geometry, (ring) => { d += ringToPath(ring); });
-    const path = document.createElementNS(ns, 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('fill', fill);
-    path.setAttribute('stroke', inkAlpha(0.35));
-    path.setAttribute('stroke-opacity', '0.35');
-    path.setAttribute('stroke-width', '0.5');
-    path.setAttribute('vector-effect', 'non-scaling-stroke');
-    if (info) {
-      path.style.cursor = 'pointer';
-      path.addEventListener('mouseenter', () => { path.setAttribute('stroke-width', '1.8'); path.setAttribute('stroke-opacity', '0.85'); });
-      path.addEventListener('mouseleave', () => { path.setAttribute('stroke-width', '0.5'); path.setAttribute('stroke-opacity', '0.35'); });
-      path.addEventListener('click', () => { state.selected = info.race; renderDetail(); });
-    }
-    const title = document.createElementNS(ns, 'title');
-    const label = _geoDisplayName(p, n);
-    title.textContent = info ? `${label} — ${info.winner?.name || ''} (${info.winner?.party || ''})` : label;
-    path.appendChild(title);
-    svg.appendChild(path);
+    geoLeafletMap.setView([35.9, 127.8], 6);
+  } else {
+    geoLeafletMap.invalidateSize();
   }
-  // 시도 경계 overlay (no fill, 굵은 stroke)
-  for (const f of (state.geoSido?.features || [])) {
-    let d = '';
-    walkRings(f.geometry, (ring) => { d += ringToPath(ring); });
-    const path = document.createElementNS(ns, 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke', inkAlpha());
-    path.setAttribute('stroke-opacity', '0.85');
-    path.setAttribute('stroke-width', '1.4');
-    path.setAttribute('stroke-linejoin', 'round');
-    path.setAttribute('vector-effect', 'non-scaling-stroke');
-    path.setAttribute('pointer-events', 'none');
-    svg.appendChild(path);
+
+  // 기존 회차 layer 제거 (회차 바뀐 경우)
+  if (geoDistrictLayer && geoLeafletMap.hasLayer(geoDistrictLayer)) {
+    geoLeafletMap.removeLayer(geoDistrictLayer);
+  }
+
+  // 회차별 layer 캐시 — winner 색만 재적용
+  if (!geoDistrictByN[n]) {
+    geoDistrictByN[n] = L.geoJSON(state.geoCache[n], {
+      style: (f) => _districtStyleFor(sggToWinner[String(f.properties.SGG_Code)]),
+      onEachFeature: (f, l) => {
+        const info = sggToWinner[String(f.properties.SGG_Code)];
+        _attachDistrictInteraction(f, l, info, _geoDisplayName(f.properties, n));
+      },
+    });
+  } else {
+    // 캐시된 layer는 style/tooltip만 갱신
+    geoDistrictByN[n].eachLayer((l) => {
+      const f = l.feature;
+      const info = sggToWinner[String(f.properties.SGG_Code)];
+      l.setStyle(_districtStyleFor(info));
+      l.unbindTooltip();
+      _attachDistrictInteraction(f, l, info, _geoDisplayName(f.properties, n));
+    });
+  }
+  geoDistrictLayer = geoDistrictByN[n];
+  geoDistrictLayer.addTo(geoLeafletMap);
+
+  // 시도 외곽선 overlay (한 번만 생성)
+  if (!geoSidoOutlineLayer && state.geoSido) {
+    geoSidoOutlineLayer = L.geoJSON(state.geoSido, {
+      style: { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' },
+      interactive: false,
+    });
+  }
+  if (geoSidoOutlineLayer && !geoLeafletMap.hasLayer(geoSidoOutlineLayer)) {
+    geoSidoOutlineLayer.addTo(geoLeafletMap);
+  }
+  if (geoSidoOutlineLayer) geoSidoOutlineLayer.bringToFront();
+
+  // 초기 fitBounds + minimap (한 번만)
+  if (geoInitialZoom == null) {
+    const bounds = geoDistrictLayer.getBounds();
+    geoLeafletMap.fitBounds(bounds, { padding: [12, 12] });
+    const finalize = () => {
+      geoLeafletMap.off('moveend', finalize);
+      geoInitialZoom = geoLeafletMap.getZoom();
+      geoLeafletMap.setMinZoom(geoInitialZoom);
+      if (state.geoSido) _setupGeoMiniMap(state.geoSido);
+    };
+    geoLeafletMap.on('moveend', finalize);
   }
 }
 
