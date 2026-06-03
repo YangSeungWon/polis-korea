@@ -1323,8 +1323,7 @@ function renderSigunguHex() {
         const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
         poly.setAttribute('points', hexPoints(sx, sy, smallR - 0.4));
         poly.setAttribute('fill', fills[i] || '#e6e9ef');
-        poly.setAttribute('stroke', isSelected ? '#0a0e1a' : 'none');
-        poly.setAttribute('stroke-width', isSelected ? '1.0' : '0');
+        // 작은 hex는 stroke 없음 — selected는 큰 outline에서만 강조.
         g.appendChild(poly);
       }
       // 시군구 라벨 — cell 상단으로 이동해 spiral(중앙) 안 가림. N 작은 시군구도 색 보임.
