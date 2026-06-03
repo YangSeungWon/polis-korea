@@ -41,14 +41,12 @@
   color: var(--ink-soft);
 }
 
-/* 결과 카드 — polls.js와 비슷한 톤 */
+/* 결과 카드 — 평면적 */
 .result-card {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
   padding: 12px 14px;
   margin-bottom: 12px;
   border-left: 4px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
 }
 .result-card .rc-hdr {
   display: flex;
@@ -102,14 +100,11 @@
   justify-content: space-between;
 }
 
-/* 전국 요약 카드 (header) */
+/* 전국 요약 (header) — 평면적 */
 .national-summary {
-  background: var(--bg);
   color: var(--ink);
-  padding: 14px 16px;
-  border: 1px solid var(--rule);
+  padding: 14px 0 14px 14px;
   border-left: 4px solid var(--ink);  /* JS에서 정당색 inline */
-  border-radius: 2px;
   margin-bottom: 16px;
 }
 .national-summary .ns-title {
@@ -136,11 +131,9 @@
   font-variant-numeric: tabular-nums;
 }
 .parliament-wrap {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  padding: 12px;
+  padding: 12px 0;
   margin-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
 }
 .parliament-chart {
   display: block;
@@ -188,19 +181,12 @@
 /* archive 회차 페이지 link banner */
 .archive-banner {
   display: block;
-  background: var(--bg3);
-  border: 1px solid var(--rule-strong);
   border-left: 3px solid var(--accent, #c8553d);
-  border-radius: 2px;
-  padding: 10px 14px;
+  padding: 8px 0 8px 12px;
   margin: 0 0 14px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--accent, #c8553d);
   text-decoration: none;
-  transition: background 0.08s;
 }
-.archive-banner:hover {
-  background: var(--accent, #c8553d);
-  color: #fff;
-}
+.archive-banner:hover { text-decoration: underline; }

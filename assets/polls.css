@@ -152,8 +152,7 @@ a { color: inherit; }
   right: 10px;
   z-index: 600;
   background: var(--bg);
-  box-shadow: 0 2px 8px var(--shadow, rgba(10,14,26,0.12));
-  border-radius: 2px;
+  border: 1px solid var(--rule-strong);
 }
 .view-toggle .seg-btn {
   display: inline-flex;
@@ -221,10 +220,8 @@ a { color: inherit; }
 }
 
 .scatter-wrap {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  padding: 8px;
+  border-top: 1px solid var(--rule);
+  padding: 8px 0;
   margin: 14px 0 4px;
 }
 .scatter-wrap svg { display: block; }
@@ -236,14 +233,12 @@ a { color: inherit; }
   margin: 14px 0 8px;
 }
 
-/* 카드 (각 조사) */
+/* 카드 (각 조사) — 평면적 */
 .poll-card {
-  border: 1px solid var(--rule);
   border-left: 3px solid var(--ink);
-  border-radius: 0;
   padding: 10px 14px 12px;
   margin-bottom: 10px;
-  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
 }
 .poll-card .pc-hdr {
   display: flex;
