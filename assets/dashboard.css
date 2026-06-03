@@ -165,3 +165,28 @@
 @media (max-width: 700px) {
   .dash-grid-2 { grid-template-columns: 1fr; }
 }
+
+/* status 카드 — 정당 pill, chip */
+.status-card .party-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  color: #fff;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.status-card .party-chip {
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.status-card .party-chip b {
+  font-size: 14px;
+  font-weight: 800;
+  margin-right: 3px;
+}
+/* timeline 4번째 카드 — 값 영역 SVG로 */
+.status-card-timeline .status-value { padding: 4px 0; }

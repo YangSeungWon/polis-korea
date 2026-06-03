@@ -35,30 +35,30 @@
 
 <main class="page">
   <section class="dash-intro">
-    <h1>2026 선거, 한눈에</h1>
-    <p class="lede">6·3 지방선거·국회의원 재·보궐선거 여론조사. 사전투표 5/29(금)~30(토) · 투표 방법·투표소·재외/선상투표는 <a href="https://www.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <h1>한국 정치, 한눈에</h1>
+    <p class="lede">국가 대표는 <b>대선(5년)</b>, 입법부는 <b>총선(4년)</b>, 지방정부는 <b>지선(4년)</b>으로 뽑습니다. 각 정치 단위가 누구인지, 다음 투표가 언제인지.</p>
   </section>
 
   <section class="status-overview" id="status-overview" hidden>
     <a class="status-card" data-slot="president" href="history.html?type=presidential">
-      <div class="status-label">현 대통령</div>
+      <div class="status-label">대통령 · 대선</div>
       <div class="status-value" id="status-pres-name">—</div>
       <div class="status-meta" id="status-pres-meta">—</div>
     </a>
     <a class="status-card" data-slot="assembly" href="history.html?type=national_assembly">
-      <div class="status-label">현 국회</div>
+      <div class="status-label">국회 · 총선</div>
       <div class="status-value" id="status-asm-top">—</div>
       <div class="status-meta" id="status-asm-meta">—</div>
     </a>
-    <a class="status-card" data-slot="latest" href="timeline.html">
-      <div class="status-label">가장 최근 선거</div>
-      <div class="status-value" id="status-latest-name">—</div>
-      <div class="status-meta" id="status-latest-meta">—</div>
+    <a class="status-card" data-slot="local" href="history.html?type=local">
+      <div class="status-label">지방정부 · 지선</div>
+      <div class="status-value" id="status-local-name">—</div>
+      <div class="status-meta" id="status-local-meta">—</div>
     </a>
-    <a class="status-card" data-slot="next" href="timeline.html">
-      <div class="status-label">다음 선거</div>
-      <div class="status-value" id="status-next-name">—</div>
-      <div class="status-meta" id="status-next-meta">—</div>
+    <a class="status-card status-card-timeline" data-slot="timeline" href="timeline.html">
+      <div class="status-label">다음 / 최근</div>
+      <div class="status-value" id="status-timeline-axis">—</div>
+      <div class="status-meta" id="status-timeline-meta">—</div>
     </a>
   </section>
 

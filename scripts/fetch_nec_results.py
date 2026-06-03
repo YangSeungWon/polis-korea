@@ -53,13 +53,25 @@ def sidos_for_sg_id(sg_id: str) -> list[str]:
     # 세종 데이터 보유 — 2012년 이후 항상 query. INFO-03 응답하면 자연 skip.
     if yyyymmdd >= 20120101:
         base.append("세종특별자치시")
-    # NEC OpenAPI는 옛 회차에도 현재 명칭으로 query해야 응답하는 경우가 있음
-    # (16대 대선 제주는 '제주도' 거부, '제주특별자치도'만 INFO-00 반환).
-    # 강원·전북도 동일 가능 — 이미 INFO-00 받았으면 옛 명칭 그대로, 아니면 현재명 fallback.
+    # NEC OpenAPI 시도명 일관성 없음 — 회차마다 옛/새 명칭 중 하나만 응답.
+    # (16대 대선: 제주특별자치도만 OK, 17대 총선: 제주도만 OK 등)
+    # 한 명칭만 fix할 수 없어 fetch wrapper가 두 명칭 순차 시도, INFO-00 받은 것 채택.
     base.append("강원특별자치도" if yyyymmdd >= 20230611 else "강원도")
     base.append("전북특별자치도" if yyyymmdd >= 20240118 else "전라북도")
-    base.append("제주특별자치도")  # NEC API가 모든 회차에 '제주특별자치도' 응답
+    base.append("제주특별자치도")
     return base
+
+
+# 시도명 fallback alias — 어떤 회차에 어떤 명칭이 응답될지 모름.
+# fetch_xmntck_with_fallback가 두 명칭 순차 시도, INFO-00 받은 것 사용.
+SIDO_NAME_ALIASES = {
+    "제주특별자치도": ["제주특별자치도", "제주도"],
+    "제주도":         ["제주도", "제주특별자치도"],
+    "강원특별자치도": ["강원특별자치도", "강원도"],
+    "강원도":         ["강원도", "강원특별자치도"],
+    "전북특별자치도": ["전북특별자치도", "전라북도"],
+    "전라북도":       ["전라북도", "전북특별자치도"],
+}
 
 
 # 호환용 default (legacy 호출 — main()는 sidos_for_sg_id 사용)
@@ -111,16 +123,25 @@ def fetch_xmntck(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
     """한 (sg_id, sg_typecode, sd_name)의 개표 결과 — 페이지네이션 자동.
 
     NEC API max 100 row/page → totalCount 보고 추가 page 호출.
+    옛 시도명·새 시도명 fallback: SIDO_NAME_ALIASES에 따라 두 명칭 순차 시도.
     """
-    try:
-        total, items = _fetch_page(sg_id, sg_typecode, sd_name, api_key, 1, num_rows)
-    except Exception as e:
-        return [{"_error": str(e), "_sd_name": sd_name}]
+    aliases = SIDO_NAME_ALIASES.get(sd_name, [sd_name])
+    total, items, used_name = 0, [], sd_name
+    for alias in aliases:
+        try:
+            t, it = _fetch_page(sg_id, sg_typecode, alias, api_key, 1, num_rows)
+        except Exception as e:
+            continue
+        if t > 0 or it:
+            total, items, used_name = t, it, alias
+            break
+    if not items:
+        return []
     # 추가 page (page 2, 3, ...)
     page = 2
     while len(items) < total and page <= 20:  # 안전 cap
         try:
-            _, more = _fetch_page(sg_id, sg_typecode, sd_name, api_key, page, num_rows)
+            _, more = _fetch_page(sg_id, sg_typecode, used_name, api_key, page, num_rows)
             if not more:
                 break
             items.extend(more)
