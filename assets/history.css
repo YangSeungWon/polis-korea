@@ -63,7 +63,7 @@
 .result-card .rc-meta {
   font-size: 11px;
   color: var(--ink-mute);
-  letter-spacing: 0.03em;
+  
 }
 .result-card .rc-bar-row {
   display: grid;
@@ -114,8 +114,7 @@
 }
 .national-summary .ns-title {
   font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  
   color: var(--ink-mute);
 }
 .national-summary .ns-name {

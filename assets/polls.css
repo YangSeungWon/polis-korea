@@ -109,7 +109,7 @@ a { color: inherit; }
   gap: 6px;
   align-items: baseline;
 }
-.time-anchor .label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+.time-anchor .label {  font-size: 11px; }
 .time-anchor .value {
   font-weight: 600;
   color: var(--ink);
@@ -217,7 +217,7 @@ a { color: inherit; }
 .detail-hdr .count {
   font-size: 12px;
   color: var(--ink-mute);
-  letter-spacing: 0.04em;
+  
 }
 
 .scatter-wrap {
@@ -232,8 +232,7 @@ a { color: inherit; }
 .latest-label {
   font-size: 11px;
   color: var(--ink-mute);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  
   margin: 14px 0 8px;
 }
 
@@ -257,13 +256,12 @@ a { color: inherit; }
   font-weight: 700;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  
 }
 .poll-card .pc-office {
   font-size: 10px;
   color: var(--ink-mute);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  
 }
 .poll-card .pc-agency {
   font-size: 13px;
@@ -323,7 +321,7 @@ a { color: inherit; }
   color: var(--ink-soft);
   text-decoration: none;
   border-bottom: 1px solid var(--rule-strong);
-  letter-spacing: 0.02em;
+  
 }
 .poll-card .pc-link:hover { color: var(--ink); border-color: var(--ink); }
 
