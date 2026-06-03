@@ -912,7 +912,9 @@ async function renderGeoMap() {
   const sggToWinner = {};
   const districts = state.results?.district || [];
   for (const race of districts) {
-    const key = `${race.sido}|${race.name}`;
+    // sggMap 키는 새 sido명(전북특별자치도·강원특별자치도) 기준. 옛 race 데이터(전라북도·강원도)는
+    // canonSido로 정규화해 매칭.
+    const key = `${canonSido(race.sido)}|${race.name}`;
     const sggCode = sggMap[key];
     if (sggCode == null) continue;
     const winner = (race.candidates || []).find((c) => c.won || c.rank === 1) || race.candidates?.[0];
