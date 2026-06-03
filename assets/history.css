@@ -45,7 +45,7 @@
 .result-card {
   background: var(--bg2);
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 12px 14px;
   margin-bottom: 12px;
   border-left: 4px solid var(--ink);
@@ -109,7 +109,7 @@
   padding: 14px 16px;
   border: 1px solid var(--rule);
   border-left: 4px solid var(--ink);  /* JS에서 정당색 inline */
-  border-radius: 3px;
+  border-radius: 2px;
   margin-bottom: 16px;
 }
 .national-summary .ns-title {
@@ -138,7 +138,7 @@
 .parliament-wrap {
   background: var(--bg2);
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 12px;
   margin-bottom: 16px;
 }
@@ -191,7 +191,7 @@
   background: var(--bg3);
   border: 1px solid var(--rule-strong);
   border-left: 3px solid var(--accent, #c8553d);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 10px 14px;
   margin: 0 0 14px;
   font-size: 13px;

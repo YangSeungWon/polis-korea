@@ -19,22 +19,16 @@
 .dash-panel {
   position: relative;
   border: 1px solid var(--rule);
-  border-radius: 4px;
-  background: var(--bg2);
+  border-radius: 2px;
   padding: 14px 14px 12px;
   display: flex;
   flex-direction: column;
-  /* 카드 전체가 링크 */
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: border-color .12s, box-shadow .12s, transform .12s;
+  transition: border-color .12s;
 }
-.dash-panel:hover {
-  border-color: var(--ink);
-  box-shadow: 0 4px 14px var(--shadow, rgba(10,14,26,0.10));
-  transform: translateY(-2px);
-}
+.dash-panel:hover { border-color: var(--ink); }
 .dash-panel:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -110,19 +104,17 @@
 }
 .status-card {
   display: flex; flex-direction: column;
-  padding: 14px 16px;
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 4px;
+  padding: 14px 18px 14px 0;
+  border-right: 1px solid var(--rule);
   text-decoration: none;
   color: var(--ink);
-  transition: transform 0.08s ease, border-color 0.08s ease, box-shadow 0.08s ease;
+  transition: opacity 0.08s ease;
 }
-.status-card:hover {
-  transform: translateY(-1px);
-  border-color: var(--ink-soft);
-  box-shadow: 0 2px 8px var(--shadow);
-}
+.status-card:last-child { border-right: none; }
+.status-card:hover { opacity: 0.75; }
+.status-cards-row .status-card:first-child { padding-left: 0; }
+.status-cards-row .status-card { padding-left: 18px; }
+.status-cards-row .status-card:first-child { padding-left: 0; }
 .status-card .status-label {
   font-size: 13px;
   font-weight: 700;
@@ -224,7 +216,7 @@
   text-decoration: none;
   padding: 6px 12px;
   border: 1px solid var(--accent, #c8553d);
-  border-radius: 3px;
+  border-radius: 2px;
   white-space: nowrap;
   flex-shrink: 0;
   transition: background 0.08s;
@@ -260,10 +252,8 @@
   gap: 14px;
 }
 .status-timeline-strip {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  padding: 8px 4px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
   cursor: default;
 }
 .status-timeline-strip svg { display: block; }
@@ -306,3 +296,33 @@
   border-radius: 50%;
 }
 .status-card .party-legend .leg-other b { color: var(--ink-soft); }
+
+/* 대통령 카드 — 임기 progress bar */
+.status-card .pres-result {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.status-card .term-progress {
+  position: relative;
+  width: 100%;
+  height: 18px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.status-card .term-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.status-card .term-pct {
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+  z-index: 1;
+}

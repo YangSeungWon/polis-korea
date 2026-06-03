@@ -44,11 +44,10 @@
   .ar-hero-stats { grid-template-columns: repeat(2, 1fr); }
 }
 .ar-stat {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  padding: 12px 14px;
+  padding: 4px 18px 4px 0;
+  border-right: 1px solid var(--rule);
 }
+.ar-stat:last-child { border-right: none; }
 .ar-stat-label {
   font-size: 13px;
   font-weight: 600;
@@ -63,10 +62,8 @@
 .ar-hero-status {
   font-size: 12px;
   color: var(--ink-soft);
-  background: var(--bg3);
-  padding: 10px 14px;
   border-left: 3px solid var(--ink-mute);
-  border-radius: 2px;
+  padding: 4px 0 4px 10px;
   margin: 0;
 }
 
@@ -95,9 +92,7 @@
 }
 .ar-pred-cell {
   border: 1px solid var(--rule);
-  border-radius: 3px;
   padding: 10px 12px;
-  background: var(--bg2);
 }
 .ar-pred-cell.is-hit { border-left: 3px solid #2e7d6f; }
 .ar-pred-cell.is-miss { border-left: 3px solid #c8553d; }
@@ -120,7 +115,7 @@
 }
 .ar-poll-item {
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 10px 12px;
   font-size: 12px;
 }
@@ -131,7 +126,7 @@
 .ar-trend-host {
   background: var(--bg2);
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 14px;
   min-height: 280px;
   font-size: 11px;
@@ -146,7 +141,7 @@
 }
 .ar-by-card {
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 12px 14px;
   background: var(--bg2);
 }

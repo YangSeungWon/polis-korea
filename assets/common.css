@@ -158,7 +158,7 @@ body {
   font: inherit;
   font-size: 13px;
   padding: 4px 10px;
-  border-radius: 3px;
+  border-radius: 2px;
   line-height: 1;
 }
 .theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
@@ -176,10 +176,10 @@ body {
 .hdr-link.is-current { color: var(--ink); border-bottom-color: var(--ink); }
 .countdown {
   font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;
-  padding: 4px 10px; border: 1px solid var(--rule-strong); border-radius: 3px;
+  padding: 4px 10px; border: 1px solid var(--rule-strong); border-radius: 2px;
 }
 .blackout-tag {
-  background: var(--ink); color: #fff; padding: 4px 10px; border-radius: 3px;
+  background: var(--ink); color: #fff; padding: 4px 10px; border-radius: 2px;
   font-size: 12px; font-weight: 700; 
 }
 .page { max-width: 1320px; margin: 0 auto; padding: 28px 24px 80px; }

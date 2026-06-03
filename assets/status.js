@@ -34,16 +34,26 @@
       })();
       headingEl.innerHTML = `<span class="card-heading-n">${lastPres.label}</span><span class="card-heading-date">${lastPres.date}</span>`;
     }
-    document.getElementById('status-pres-name').innerHTML = lastPres.winner
-      ? `${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color}">${party}</span>` : ''}`
-      : '—';
+    // 임기 progress bar
+    const startDate = new Date(lastPres.date);
     const endDate = new Date(lastPres.date);
     endDate.setFullYear(endDate.getFullYear() + 5);
+    const totalMs = endDate - startDate;
+    const elapsedMs = today - startDate;
+    const pct = Math.max(0, Math.min(100, (elapsedMs / totalMs) * 100));
     const remDays = Math.ceil((endDate - today) / 86400000);
     const remY = Math.floor(remDays / 365);
     const remM = Math.floor((remDays % 365) / 30);
+    const result = lastPres.winner
+      ? `<div class="pres-result">${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color}">${party}</span>` : ''}</div>`
+      : '<div class="pres-result">—</div>';
+    const progress = `<div class="term-progress" title="임기 ${pct.toFixed(1)}% 경과">
+        <div class="term-bar" style="width:${pct.toFixed(1)}%;background:${color}"></div>
+        <div class="term-pct">${Math.round(pct)}%</div>
+      </div>`;
+    document.getElementById('status-pres-name').innerHTML = result + progress;
     document.getElementById('status-pres-meta').textContent =
-      remDays > 0 ? `당선 · 잔여 ${remY}년 ${remM}개월` : '임기 종료';
+      remDays > 0 ? `임기 5년 · 잔여 ${remY}년 ${remM}개월` : '임기 종료';
   }
 
   // 2) 국회 — 가장 최근 총선. partySeats(지역구+비례 위성정당 합산) 우선, fallback sidoWinners.
