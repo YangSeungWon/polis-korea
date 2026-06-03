@@ -51,9 +51,12 @@ def sidos_for_sg_id(sg_id: str) -> list[str]:
             "충청북도", "충청남도", "전라남도", "경상북도", "경상남도"]
     if yyyymmdd >= 20120701:
         base.append("세종특별자치시")
+    # NEC OpenAPI는 옛 회차에도 현재 명칭으로 query해야 응답하는 경우가 있음
+    # (16대 대선 제주는 '제주도' 거부, '제주특별자치도'만 INFO-00 반환).
+    # 강원·전북도 동일 가능 — 이미 INFO-00 받았으면 옛 명칭 그대로, 아니면 현재명 fallback.
     base.append("강원특별자치도" if yyyymmdd >= 20230611 else "강원도")
     base.append("전북특별자치도" if yyyymmdd >= 20240118 else "전라북도")
-    base.append("제주특별자치도" if yyyymmdd >= 20060701 else "제주도")
+    base.append("제주특별자치도")  # NEC API가 모든 회차에 '제주특별자치도' 응답
     return base
 
 

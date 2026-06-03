@@ -103,9 +103,9 @@
 }
 .tl-row-link:hover .tl-meta .tl-label { color: var(--accent, #c8553d); }
 
-/* 필터 dim */
-.tl-row.is-dimmed { opacity: 0.18; pointer-events: none; transition: opacity 0.15s; }
-.tl-row { transition: opacity 0.15s; }
+/* 필터 dim — display:contents는 opacity 직접 안 먹어서 children에 적용 */
+.tl-row > * { transition: opacity 0.15s; }
+.tl-row.is-dimmed > * { opacity: 0.18; pointer-events: none; }
 
 /* 예정·예측 회차 — sidos 회색 dim + 우측 태그 */
 .tl-row.is-upcoming .tl-sidos { opacity: 0.4; }

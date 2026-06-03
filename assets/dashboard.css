@@ -94,3 +94,53 @@
   color: var(--ink-soft);
 }
 .dash-legend .dash-leg-item { display: inline-flex; align-items: center; gap: 6px; }
+
+/* 현재 상태 대시보드 — index 상단 */
+.status-overview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 22px;
+}
+@media (max-width: 900px) {
+  .status-overview { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .status-overview { grid-template-columns: 1fr; }
+}
+.status-card {
+  display: flex; flex-direction: column;
+  padding: 14px 16px;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.08s ease, border-color 0.08s ease, box-shadow 0.08s ease;
+}
+.status-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--ink-soft);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.status-card .status-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.status-card .status-value {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.status-card .status-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-top: auto;
+}

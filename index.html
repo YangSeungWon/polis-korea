@@ -39,6 +39,29 @@
     <p class="lede">6·3 지방선거·국회의원 재·보궐선거 여론조사. 사전투표 5/29(금)~30(토) · 투표 방법·투표소·재외/선상투표는 <a href="https://www.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
   </section>
 
+  <section class="status-overview" id="status-overview" hidden>
+    <a class="status-card" data-slot="president" href="history.html?type=presidential">
+      <div class="status-label">현 대통령</div>
+      <div class="status-value" id="status-pres-name">—</div>
+      <div class="status-meta" id="status-pres-meta">—</div>
+    </a>
+    <a class="status-card" data-slot="assembly" href="history.html?type=national_assembly">
+      <div class="status-label">현 국회</div>
+      <div class="status-value" id="status-asm-top">—</div>
+      <div class="status-meta" id="status-asm-meta">—</div>
+    </a>
+    <a class="status-card" data-slot="latest" href="timeline.html">
+      <div class="status-label">가장 최근 선거</div>
+      <div class="status-value" id="status-latest-name">—</div>
+      <div class="status-meta" id="status-latest-meta">—</div>
+    </a>
+    <a class="status-card" data-slot="next" href="timeline.html">
+      <div class="status-label">다음 선거</div>
+      <div class="status-value" id="status-next-name">—</div>
+      <div class="status-meta" id="status-next-meta">—</div>
+    </a>
+  </section>
+
   <section class="dash-grid">
     <a class="dash-panel" href="/governor/">
       <h2>광역단체장</h2>
@@ -85,6 +108,7 @@
 <script src="assets/utils.js"></script>
 <script src="assets/hexgrid.js"></script>
 <script src="assets/dashboard.js"></script>
+<script src="assets/status.js"></script>
 <script src="assets/theme.js"></script>
 </body>
 </html>
