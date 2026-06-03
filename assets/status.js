@@ -71,10 +71,18 @@
       headingEl.innerHTML = `<span class="card-heading-n">${lastAsm.label}</span><span class="card-heading-date">${lastAsm.date}</span>`;
     }
     if (sorted.length && total > 0) {
-      document.getElementById('status-asm-top').innerHTML = renderHalfDonut(sorted, total);
+      // parliament half-donut dots (history.html detail pane와 동일 디자인).
+      const parties = sorted.map(([party, seats]) => ({
+        party, seats,
+        color: (typeof partyColor === 'function') ? partyColor(party) : '#999',
+      }));
+      const chart = (typeof renderParliamentChart === 'function')
+        ? renderParliamentChart(parties, total, 260, 130)
+        : '';
+      document.getElementById('status-asm-top').innerHTML =
+        `<div class="parliament-wrap-mini">${chart}<div class="parliament-total">${total}석</div></div>`;
     }
-    document.getElementById('status-asm-meta').textContent =
-      `${total}석 · 임기 4년`;
+    document.getElementById('status-asm-meta').textContent = `임기 4년`;
   }
 
   // 3) 지방정부 — 가장 최근 지선, 시도지사 정당 분포
@@ -125,30 +133,6 @@
 
   root.hidden = false;
 })();
-
-// 반 도넛 의석 차트 — 좌(π)→우(0) 위쪽 호. SVG y-down에서 sweep=0 outer, sweep=1 inner.
-function renderHalfDonut(sorted, total) {
-  const W = 220, H = 78, cx = W / 2, cy = H - 6, rOut = 60, rIn = 36;
-  let accAngle = Math.PI;
-  const arcs = sorted.map(([party, seats]) => {
-    const span = (seats / total) * Math.PI;
-    const a0 = accAngle, a1 = accAngle - span;
-    accAngle = a1;
-    const color = (typeof partyColor === 'function') ? partyColor(party) : '#999';
-    const p1 = polarToXY(cx, cy, rOut, a0);
-    const p2 = polarToXY(cx, cy, rOut, a1);
-    const p3 = polarToXY(cx, cy, rIn, a1);
-    const p4 = polarToXY(cx, cy, rIn, a0);
-    const d = `M${p1.x.toFixed(2)},${p1.y.toFixed(2)} `
-            + `A${rOut},${rOut} 0 0 0 ${p2.x.toFixed(2)},${p2.y.toFixed(2)} `
-            + `L${p3.x.toFixed(2)},${p3.y.toFixed(2)} `
-            + `A${rIn},${rIn} 0 0 1 ${p4.x.toFixed(2)},${p4.y.toFixed(2)} Z`;
-    return `<path d="${d}" fill="${color}"><title>${party} ${seats}석</title></path>`;
-  }).join('');
-  const cnt = `<text x="${cx}" y="${cy - 12}" text-anchor="middle" font-size="20" font-weight="800" fill="#0a0e1a" font-family="Pretendard, system-ui, sans-serif">${total}</text>`;
-  const lbl = `<text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="9" fill="#5a6378" font-family="Pretendard, system-ui, sans-serif">지역구 의석</text>`;
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" style="display:block">${arcs}${cnt}${lbl}</svg>`;
-}
 
 // 시간축 — 좌측 최근, 중앙 오늘 dot, 우측 다음. 막대 너비 비례 안 함 (단순 indicator).
 function renderTimeAxis(latest, next, today) {

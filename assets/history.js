@@ -1649,71 +1649,7 @@ function renderSigunguHex() {
 // === Parliament half-donut chart ===
 // 의회 반도넛 시각화. 각 점 = 1 의석. 좌→우 순서로 정당별 의석 배치.
 // parties: [{party, seats, color}] 의석 desc 정렬.
-function renderParliamentChart(parties, total, width = 320, height = 170) {
-  if (!total) return '';
-  const cx = width / 2;
-  const cy = height - 14;
-  // ring 개수 — 의석 많을수록 많이.
-  const rings = total > 280 ? 7 : total > 180 ? 6 : total > 100 ? 5 : 4;
-  const rOuter = Math.min(width / 2 - 8, height - 18);
-  // inner radius 비율 — ring 개수에 따라 조정
-  const rInner = rOuter * (0.40 + 0.04 * (rings - 4));
-  const dr = (rOuter - rInner) / Math.max(1, rings - 1);
-  const ringR = Array.from({ length: rings }, (_, i) => rInner + i * dr);
-  // dot radius — ring 간격에 fit + 가장 안쪽 ring 호 길이로 제한
-  // 한 ring 당 dot 개수가 호 길이에 비례하므로, 모두 같은 dot size로 fit 가능.
-  // dot 지름 ≈ dr (ring 간격) — 그러면 ring 사이 간격 0, 빽빽.
-  // 약간 여유: dr * 0.46
-  const seatRadius = dr * 0.46;
-  // 각 ring 의석 수 — 호 길이 / (2 × seatRadius × spacing)
-  const spacing = 1.15;  // dot 사이 간격
-  const ringCap = ringR.map(r => Math.floor((Math.PI * r) / (2 * seatRadius * spacing)));
-  // ringCap 합 < total이면 capacity 부족 → seatRadius 조정 (작게).
-  let cap = ringCap.reduce((a, b) => a + b, 0);
-  let adjRadius = seatRadius;
-  while (cap < total && adjRadius > 0.5) {
-    adjRadius *= 0.97;
-    cap = ringR.map(r => Math.floor((Math.PI * r) / (2 * adjRadius * spacing))).reduce((a, b) => a + b, 0);
-  }
-  const finalCap = ringR.map(r => Math.floor((Math.PI * r) / (2 * adjRadius * spacing)));
-  // 의석을 ring에 분배 — 호 길이 비율로
-  const weight = ringR.map(r => Math.PI * r);
-  const totalW = weight.reduce((a, b) => a + b, 0);
-  let ringSeats = weight.map(w => Math.floor(total * w / totalW));
-  let diff = total - ringSeats.reduce((a, b) => a + b, 0);
-  for (let i = rings - 1; diff > 0 && i >= 0; i--) {
-    const room = finalCap[i] - ringSeats[i];
-    const add = Math.min(diff, room);
-    ringSeats[i] += add; diff -= add;
-  }
-  // 각 seat에 (x, y, angle) 결정
-  const allSeats = [];
-  for (let i = 0; i < rings; i++) {
-    const r = ringR[i];
-    const n = ringSeats[i];
-    if (!n) continue;
-    // 양 끝 padding — n>1이면 끝점 안 닿게
-    for (let k = 0; k < n; k++) {
-      const t = n > 1 ? k / (n - 1) : 0.5;
-      const angle = Math.PI * (1 - t);
-      allSeats.push({ x: cx + r * Math.cos(angle), y: cy - r * Math.sin(angle), angle });
-    }
-  }
-  allSeats.sort((a, b) => b.angle - a.angle);
-  // 정당별 색 배정 (좌→우)
-  const seatColors = [];
-  for (const p of parties) {
-    for (let k = 0; k < p.seats; k++) seatColors.push(p.color);
-  }
-  let svg = `<svg class="parliament-chart" viewBox="0 0 ${width} ${height}" width="100%" preserveAspectRatio="xMidYMax meet">`;
-  for (let i = 0; i < allSeats.length; i++) {
-    const s = allSeats[i];
-    const c = seatColors[i] || '#bbb';
-    svg += `<circle cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="${adjRadius.toFixed(1)}" fill="${c}" stroke="rgba(0,0,0,0.15)" stroke-width="0.4"/>`;
-  }
-  svg += '</svg>';
-  return svg;
-}
+// renderParliamentChart → assets/parliament.js (공용)
 
 // === Detail Pane ===
 
@@ -1728,7 +1664,7 @@ function renderDetail() {
   const el = list.find((x) => x.n === state.n);
   const archiveHref = ARCHIVE_PAGES[`${state.type}|${state.n}`];
   const archiveBanner = archiveHref
-    ? `<a class="archive-banner" href="${archiveHref}">📁 이 회차 아카이브 — 예측 vs 실제·여론조사·재보궐 →</a>`
+    ? `<a class="archive-banner" href="${archiveHref}">이 회차 아카이브 →</a>`
     : '';
 
   if (!state.results) {

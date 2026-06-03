@@ -124,12 +124,10 @@
   box-shadow: 0 2px 8px var(--shadow);
 }
 .status-card .status-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-mute);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
 }
 .status-card .status-value {
   font-size: 20px;
@@ -149,15 +147,14 @@
 .dash-section { margin: 0 0 36px; }
 .dash-section + .dash-section { padding-top: 18px; border-top: 1px solid var(--rule); }
 .dash-section-title {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: var(--ink);
   margin: 0 0 4px;
+  letter-spacing: -0.01em;
 }
 .dash-section-sub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-soft);
   margin: 0 0 14px;
 }
@@ -233,3 +230,24 @@
   transition: background 0.08s;
 }
 .dash-section-link:hover { background: var(--accent, #c8553d); color: #fff; }
+
+/* parliament chart mini (status overview 카드 안) */
+.parliament-wrap-mini {
+  position: relative;
+  width: 100%;
+  padding-bottom: 4px;
+}
+.parliament-wrap-mini .parliament-chart {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.parliament-wrap-mini .parliament-total {
+  position: absolute;
+  left: 50%; bottom: 4px;
+  transform: translateX(-50%);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  pointer-events: none;
+}
