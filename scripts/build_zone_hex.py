@@ -257,22 +257,22 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
     N_bot = bot_h * bot_w
     N_right = right_w * inner_H
     N_total = N_top + N_right + N_bot
-    cells_sorted = sorted(cells, key=lambda c: -c['lat'])
-    # cells_sorted: lat 큰 → 작은
-    # top: 가장 lat 큰 N_top cells
-    # bot: 가장 lat 작은 N_bot cells
-    # right: 중간 N_right cells
-    n_actual = len(cells_sorted)
-    # 남은 empty 분배: top/right/bot 비례. 단순화 — top·bot에 empty 우선
-    # 일단 cells_sorted 전체를 top → right → bot 순으로 채움 (lat 내림차순)
-    # top section 채울 cell 수 = min(N_top, available)
-    # 다음 right section, bot section
+    # 분배 전략:
+    # 1) top  = 가장 북 N_top cells (lat 큰 순). 북부는 lon 무관.
+    # 2) 나머지에서 east-most N_right cells = right wrap. 진짜 동쪽만.
+    # 3) 그 나머지 = bot wrap (남부 + 서남).
+    # 이전 단순 lat 분배는 부천·광명 같은 mid-lat 서쪽이 right 박혀 부자연 → lon 고려.
+    cells_by_lat = sorted(cells, key=lambda c: -c['lat'])
+    n_actual = len(cells_by_lat)
     take_top = min(N_top, n_actual)
-    take_right = min(N_right, n_actual - take_top)
-    take_bot = min(N_bot, n_actual - take_top - take_right)
-    top_cells = cells_sorted[:take_top]
-    right_cells = cells_sorted[take_top:take_top + take_right]
-    bot_cells = cells_sorted[take_top + take_right:take_top + take_right + take_bot]
+    top_cells = cells_by_lat[:take_top]
+    leftover = cells_by_lat[take_top:]
+    leftover_by_lon = sorted(leftover, key=lambda c: -c['lon'])
+    take_right = min(N_right, len(leftover_by_lon))
+    right_cells = leftover_by_lon[:take_right]
+    bot_pool = leftover_by_lon[take_right:]
+    take_bot = min(N_bot, len(bot_pool))
+    bot_cells = bot_pool[:take_bot]
 
     # top wrap: top_h rows + 추가 row (인천 위 1 row, cols 0..in_extra_w-1)
     # cells을 2 그룹으로 — 추가 row (인천 위, 가장 lat 큰 in_extra_w 개? 아니면 중간 위치라 단순화)
@@ -382,13 +382,14 @@ def design_zone_N(zone_cells_by_sido):
         w_in_est = math.ceil(n_in / h_est)
         if in_H_avail and h_est > in_H_avail:
             w_in_est = math.ceil(n_in / in_H_avail)
-    # 경기 wrap: top + right + bot. top은 인천 절반(ceil(w_in/2)) + extra row 가득,
-    # bot은 인천 전체 폭(w_in)까지 확장 → 인천 아래 비대칭 해소.
-    top_extra = (w_in_est + 1) // 2  # 인천 우측 절반 (ceil)
-    bot_extra = w_in_est             # 인천 전체 폭
+    # 경기 wrap: top + right + bot. top·bot 모두 인천 전체 폭(w_in)까지 감쌀 수 있도록 영역 확보.
+    # 단 cells 부족 시 westmost col은 column-major 알고리즘상 자연 탈락 (빈 공간으로 보임) —
+    # 영역 설계는 가득 덮음 의도, 실제 fill은 cells 양에 따름.
+    top_extra = (w_in_est + 1) // 2  # top wrap rows는 절반만 (extra row가 따로 위 덮음)
+    bot_extra = w_in_est              # bot은 full width 영역 (빈 col 탈락 허용)
     # cells = top_h*top_w + right_w*inner_H + bot_h*bot_w
     best = None
-    # 경기 북부에 인천 위 1 row 추가 (인천이 1 row 내려가서 그 자리 차지)
+    # 인천 위 추가 row (인천이 1 row 내려가서 row top_h 자리) — 인천 가득
     in_extra_top_row = w_in_est
     for right_w in range(1, 4):
         top_w = top_extra + w_seoul + right_w
@@ -1086,9 +1087,10 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         sort_key=None,
         partial_align='left_bot',
     )
-    # 경기 wrap — top은 인천 절반(extra row가 위쪽 가득 덮음), bot은 인천 전체 폭 확장
-    top_extra = (plan['w_in'] + 1) // 2  # ceil(w_in/2) — 인천 우측 절반 위
-    bot_extra = plan['w_in']             # 인천 전체 폭 아래
+    # 경기 wrap — top은 절반(extra row가 위 가득) + bot은 인천 전체 폭 영역 확보.
+    # bot column-major에서 cells 부족 시 westmost col은 자연 탈락 (빈 col로 남음).
+    top_extra = (plan['w_in'] + 1) // 2
+    bot_extra = plan['w_in']
     fill_wrap_top_right_bot(
         zone_cells_by_sido.get('경기도', []),
         inner_col=seoul_col0, inner_row=inner_row,

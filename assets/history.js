@@ -1206,7 +1206,7 @@ function renderSigunguHex() {
         poly.setAttribute('stroke-width', isSelected ? '1.0' : '0');
         g.appendChild(poly);
       }
-      // 시군구 라벨 — spiral 위에 덮어 가독성. stroke로 어떤 색 위에서도 보이게.
+      // 시군구 라벨 — cell 상단으로 이동해 spiral(중앙) 안 가림. N 작은 시군구도 색 보임.
       const label = shortSigunguLabel(d.name, d.sido);
       if (label.short) {
         const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -1214,27 +1214,28 @@ function renderSigunguHex() {
         txt.setAttribute('text-anchor', 'middle');
         txt.setAttribute('font-weight', '700');
         txt.setAttribute('fill', '#0a0e1a');
-        txt.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+        txt.setAttribute('stroke', 'rgba(255,255,255,0.9)');
         txt.setAttribute('stroke-width', '2.2');
         txt.setAttribute('paint-order', 'stroke fill');
         txt.setAttribute('pointer-events', 'none');
         txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
         if (label.prefix) {
+          // prefix(작게) 위 + short(메인) 아래 — 둘 다 cell 상단 영역
           const tp1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
           tp1.setAttribute('x', cx0);
-          tp1.setAttribute('y', cy0 - 2);
+          tp1.setAttribute('y', cy0 - 14);
           tp1.setAttribute('font-size', '6');
           tp1.setAttribute('opacity', '0.75');
           tp1.textContent = label.prefix;
           txt.appendChild(tp1);
           const tp2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
           tp2.setAttribute('x', cx0);
-          tp2.setAttribute('y', cy0 + 8);
+          tp2.setAttribute('y', cy0 - 5);
           tp2.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
           tp2.textContent = label.short;
           txt.appendChild(tp2);
         } else {
-          txt.setAttribute('y', cy0 + 3);
+          txt.setAttribute('y', cy0 - 10);
           txt.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
           txt.textContent = label.short;
         }
@@ -1242,6 +1243,8 @@ function renderSigunguHex() {
       }
       svg.appendChild(g);
     }
+    // 시도 경계 굵은 선 — 격자 모드도 cell 위치가 동일 모드와 같으므로 적용 가능.
+    drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
     return;
   }
 
@@ -1405,8 +1408,9 @@ function renderSigunguHex() {
     svg.appendChild(g);
   }
 
-  // 시도 경계 굵은 선 + 한반도 외곽 — 동일 모드에서만 (다른 모드는 hex 크기/위치 달라 경계 불일치)
-  if (sizingMode !== '동일') return;
+  // 시도 경계 굵은 선 + 한반도 외곽 — dorling 제외 (원 위치가 force-directed로 이동해 경계 불일치).
+  // 격자 모드는 spiral 그린 뒤 위쪽에서 별도 호출.
+  if (sizingMode === 'dorling') return;
   drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
 }
 
