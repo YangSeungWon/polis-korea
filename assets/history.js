@@ -1079,25 +1079,25 @@ async function renderDistrictHex() {
   // 시도 경계 굵은 선 + 한반도 외곽 — drawHexBorders (hexgrid.js)
   drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true);
 
-  // 비례대표 — 정당별 한 줄 픽토그램 (한 줄 = 한 정당, hex 1개 = 1석)
-  // pointy-top hex를 가로 pitch √3·r로 놓으면 좌우 수직변이 맞닿아 빈틈 없이 이어짐.
+  // 비례대표 — 정당별 세로 col, 지역구 hex 우측에 배치. 사이즈는 지역구와 동일(r=22).
+  // 같은 col 안 vertical pitch = 1.5r (격자 hex 표준, odd col 0.5 row shift로 interlock).
   const propSeats = state.results?.national?.proportional_seats || [];
   if (propSeats.length) {
     const totalProp = propSeats.reduce((s, p) => s + p.seats, 0);
     const totalSeats = layout.length + totalProp;
-    const maxSeats = Math.max(...propSeats.map((p) => p.seats));
-    const seatR = 13;                          // 비례 seat hex 반지름 (지역구보다 작게)
-    const seatPitch = seatR * Math.sqrt(3);    // 같은 줄 가로 간격 (= hex 폭, snug)
-    const rowGap = seatR * 2 + 7;              // 정당 줄 간격
-    const labelRight = 96;                     // 정당명 우측 정렬 기준 x
-    const hexStartX = labelRight + 14 + seatR; // 첫 hex 중심 x
-    const margin = rowH * 1.1;
-    const headerY = h + margin;                // 섹션 헤더 baseline
-    const firstRowY = headerY + seatR + 16;    // 첫 정당 줄 중심 y
+    const sorted = [...propSeats].sort((a, b) => b.seats - a.seats);
+    const ns = 'http://www.w3.org/2000/svg';
 
-    // 헤더
-    const sectionLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    sectionLabel.setAttribute('x', 10);
+    const propGap = colW * 0.8;          // 지역구와 비례 영역 사이 여백
+    const propStartX = w + propGap;      // 비례 첫 col 좌측 base
+    const propColW = colW;               // 정당 col 폭 = 지역구 colW (snug interlock)
+    const propRowH = rowH;               // 세로 pitch = 지역구 rowH (1.5r)
+    const labelOffsetY = -rowH * 0.6;    // 정당 라벨 baseline (첫 hex 위쪽)
+
+    // 헤더 (지역구 위쪽 여백, 비례 영역 상단)
+    const headerY = labelOffsetY * 2;    // 정당 라벨보다 더 위
+    const sectionLabel = document.createElementNS(ns, 'text');
+    sectionLabel.setAttribute('x', propStartX);
     sectionLabel.setAttribute('y', headerY);
     sectionLabel.setAttribute('font-size', '12');
     sectionLabel.setAttribute('font-weight', '700');
@@ -1106,51 +1106,48 @@ async function renderDistrictHex() {
     sectionLabel.textContent = `비례대표 ${totalProp}석 · 총 ${totalSeats}석`;
     svg.appendChild(sectionLabel);
 
-    // 정당별 한 줄 (의석 많은 순)
-    [...propSeats].sort((a, b) => b.seats - a.seats).forEach((ps, pi) => {
+    let maxColH = 0;
+    sorted.forEach((ps, pi) => {
       const color = partyColor(ps.party);
-      const cy = firstRowY + pi * rowGap;
-      // 정당명 (우측 정렬, 줄 중앙)
-      const nm = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      nm.setAttribute('x', labelRight);
-      nm.setAttribute('y', cy + 4);
-      nm.setAttribute('text-anchor', 'end');
+      // odd col 0.5 row shift로 interlock (지역구 hex와 같은 odd-r offset 패턴).
+      const colCx = propStartX + (pi + 0.5) * propColW;
+      // 정당 라벨 (col 위쪽)
+      const nm = document.createElementNS(ns, 'text');
+      nm.setAttribute('x', colCx);
+      nm.setAttribute('y', labelOffsetY);
+      nm.setAttribute('text-anchor', 'middle');
       nm.setAttribute('font-size', '11');
       nm.setAttribute('font-weight', '700');
       nm.setAttribute('fill', color);
       nm.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      nm.textContent = ps.party;
+      nm.textContent = `${ps.party} ${ps.seats}`;
       svg.appendChild(nm);
-      // 의석 hex들
-      for (let i = 0; i < ps.seats; i++) {
-        const cx = hexStartX + i * seatPitch;
-        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        poly.setAttribute('points', hexPoints(cx, cy, seatR - 0.7));
+      // 의석 hex 세로 stack (위→아래)
+      for (let j = 0; j < ps.seats; j++) {
+        const cy = j * propRowH + r;  // 첫 hex 중심 = top + r
+        // odd col은 0.5 row shift
+        const cxShift = (pi % 2) * 0;   // col 자체 위치는 위에서 잡았으니 추가 shift 없음
+        const cy2 = cy + (pi % 2) * (rowH / 2);
+        const poly = document.createElementNS(ns, 'polygon');
+        poly.setAttribute('points', hexPoints(colCx + cxShift, cy2, r - 0.7));
         poly.setAttribute('fill', color);
         poly.setAttribute('stroke', '#fff');
         poly.setAttribute('stroke-width', '1');
-        const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        tt.textContent = `비례 ${ps.party} ${i + 1}/${ps.seats}석`;
+        const tt = document.createElementNS(ns, 'title');
+        tt.textContent = `비례 ${ps.party} ${j + 1}/${ps.seats}석`;
         poly.appendChild(tt);
         svg.appendChild(poly);
       }
-      // 의석 수 (hex 줄 우측 끝)
-      const cnt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      cnt.setAttribute('x', hexStartX + (ps.seats - 1) * seatPitch + seatR + 8);
-      cnt.setAttribute('y', cy + 4);
-      cnt.setAttribute('text-anchor', 'start');
-      cnt.setAttribute('font-size', '11');
-      cnt.setAttribute('font-weight', '700');
-      cnt.setAttribute('fill', color);
-      cnt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      cnt.textContent = ps.seats;
-      svg.appendChild(cnt);
+      const colH = ps.seats * propRowH + (pi % 2) * (rowH / 2) + r;
+      if (colH > maxColH) maxColH = colH;
     });
 
-    // viewBox 확장 (가장 긴 줄 + 의석수 라벨까지)
-    const contentW = hexStartX + (maxSeats - 1) * seatPitch + seatR + 36;
-    const newH = firstRowY + propSeats.length * rowGap + seatR;
-    svg.setAttribute('viewBox', `0 0 ${Math.ceil(Math.max(w, contentW))} ${Math.ceil(newH)}`);
+    // viewBox 확장 — 우측 비례 + 위쪽 라벨 영역까지
+    const newW = propStartX + sorted.length * propColW + propGap;
+    const topPad = -headerY + 8;
+    const newH = Math.max(h, maxColH) + topPad;
+    const minY = headerY - 8;
+    svg.setAttribute('viewBox', `0 ${Math.floor(minY)} ${Math.ceil(newW)} ${Math.ceil(newH)}`);
   }
 }
 
