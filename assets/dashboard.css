@@ -190,3 +190,24 @@
 }
 /* timeline 4번째 카드 — 값 영역 SVG로 */
 .status-card-timeline .status-value { padding: 4px 0; }
+
+/* card heading — 회차+날짜 가운데 정렬 */
+.status-card .card-heading {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 4px 0 8px;
+}
+.status-card .card-heading-n {
+  font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em;
+}
+.status-card .card-heading-date {
+  font-size: 11px; color: var(--ink-soft); margin-top: 1px;
+}
+.status-card .status-value {
+  text-align: center;
+  font-size: 18px;
+}
+.status-card .status-meta {
+  text-align: center;
+  font-size: 10px;
+}
+.status-card-timeline .status-value, .status-card-timeline .status-meta { text-align: left; }

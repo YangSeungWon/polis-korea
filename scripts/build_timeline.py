@@ -128,6 +128,44 @@ def sido_winners_from_new_schema(races: list[dict], kind: str) -> dict:
     return out
 
 
+# 위성정당 → 본정당 매핑 (총선 비례·지역구 합산용)
+SATELLITE_TO_MAIN = {
+    '국민의미래': '국민의힘',
+    '더불어민주연합': '더불어민주당',
+    '미래한국당': '미래통합당',
+    '더불어시민당': '더불어민주당',
+    '열린민주당': '더불어민주당',  # 21대 위성성
+}
+
+
+def party_total_seats(races, kind, n):
+    """총선 회차의 정당별 총 의석 (지역구 + 비례, 위성정당 → 본정당 합산)."""
+    if kind != "national_assembly":
+        return []
+    from collections import Counter
+    counter = Counter()
+    # 지역구 race(scope=district, tc=2)에서 winner 카운트
+    for r in races:
+        if r.get("scope") != "district" or r.get("sg_typecode") != "2":
+            continue
+        cands = r.get("candidates") or []
+        won = next((c for c in cands if c.get("rank") == 1 or c.get("won")), None) or (cands[0] if cands else None)
+        if won:
+            p = SATELLITE_TO_MAIN.get(won.get("party", ""), won.get("party", ""))
+            counter[p] += 1
+    # 비례 의석은 옛 schema에서 (national_assembly_N.json)
+    old_path = ROOT / f"data/results/national_assembly_{n}.json"
+    if old_path.exists():
+        try:
+            old = json.loads(old_path.read_text(encoding="utf-8"))
+            for ps in (old.get("national", {}).get("proportional_seats") or []):
+                p = SATELLITE_TO_MAIN.get(ps.get("party", ""), ps.get("party", ""))
+                counter[p] += ps.get("seats", 0)
+        except Exception:
+            pass
+    return [[p, c] for p, c in counter.most_common()]
+
+
 def main():
     elections = json.loads((ROOT / "data/elections.json").read_text(encoding="utf-8"))
     out_rounds = []
@@ -137,13 +175,16 @@ def main():
             n = e["n"]
             path_name = NEW_PATHS.get((n, kind))
             sido_winners = {}
+            party_seats = []
             if path_name:
                 p = RESULTS / path_name
                 if p.exists():
                     raw = json.loads(p.read_text(encoding="utf-8"))
-                    sido_winners = sido_winners_from_new_schema(raw.get("races", []), kind)
+                    races = raw.get("races", [])
+                    sido_winners = sido_winners_from_new_schema(races, kind)
+                    party_seats = party_total_seats(races, kind, n)
             label_short = KIND_LABEL[kind]
-            out_rounds.append({
+            entry = {
                 "kind": kind,
                 "n": n,
                 "date": e.get("date", ""),
@@ -152,7 +193,10 @@ def main():
                 "winner_party": e.get("winner_party"),
                 "turnout": e.get("turnout"),
                 "sidoWinners": sido_winners,
-            })
+            }
+            if party_seats:
+                entry["partySeats"] = party_seats
+            out_rounds.append(entry)
 
     # 향후 예정 선거 (data/elections/index.json active + 주기 기반 예측 ~10년).
     # 데이터 없는 상태로 추가 — UI에서 "예정" 표시.

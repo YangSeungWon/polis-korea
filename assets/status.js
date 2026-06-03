@@ -18,14 +18,23 @@
   const today = new Date();
   const daysBetween = (d) => Math.ceil((new Date(d) - today) / 86400000);
 
-  // 1) 대통령 — 가장 최근 대선
+  // 1) 대통령 — 가장 최근 대선. 카드 layout: 회차+날짜 헤딩 → 결과 가운데 → 잔여 작게.
   const lastPres = past.find((r) => r.kind === 'presidential');
   if (lastPres) {
     const color = (typeof partyColor === 'function' && lastPres.winner_party)
       ? partyColor(lastPres.winner_party) : '#5a6378';
-    const nameEl = document.getElementById('status-pres-name');
     const party = lastPres.winner_party || '';
-    nameEl.innerHTML = lastPres.winner
+    const card = document.querySelector('[data-slot="president"]');
+    if (card) {
+      const headingEl = card.querySelector('.card-heading') || (() => {
+        const e = document.createElement('div');
+        e.className = 'card-heading';
+        card.querySelector('.status-label').after(e);
+        return e;
+      })();
+      headingEl.innerHTML = `<span class="card-heading-n">${lastPres.label}</span><span class="card-heading-date">${lastPres.date}</span>`;
+    }
+    document.getElementById('status-pres-name').innerHTML = lastPres.winner
       ? `${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color}">${party}</span>` : ''}`
       : '—';
     const endDate = new Date(lastPres.date);
@@ -34,27 +43,38 @@
     const remY = Math.floor(remDays / 365);
     const remM = Math.floor((remDays % 365) / 30);
     document.getElementById('status-pres-meta').textContent =
-      `${lastPres.label} · ${lastPres.date} 당선${remDays > 0 ? ` · 잔여 ${remY}년 ${remM}개월` : ''}`;
+      remDays > 0 ? `당선 · 잔여 ${remY}년 ${remM}개월` : '임기 종료';
   }
 
-  // 2) 국회 — 가장 최근 총선, 의석 반 도넛
+  // 2) 국회 — 가장 최근 총선. partySeats(지역구+비례 위성정당 합산) 우선, fallback sidoWinners.
   const lastAsm = past.find((r) => r.kind === 'national_assembly');
   if (lastAsm) {
-    const sw = lastAsm.sidoWinners || {};
-    const seatsByParty = {};
-    for (const sido of Object.keys(sw)) {
-      const w = sw[sido];
-      if (w && w.party && w.seats) {
-        seatsByParty[w.party] = (seatsByParty[w.party] || 0) + w.seats;
+    let sorted = lastAsm.partySeats || [];
+    if (!sorted.length) {
+      const sw = lastAsm.sidoWinners || {};
+      const counter = {};
+      for (const sido of Object.keys(sw)) {
+        const w = sw[sido];
+        if (w?.party && w?.seats) counter[w.party] = (counter[w.party] || 0) + w.seats;
       }
+      sorted = Object.entries(counter).sort((a, b) => b[1] - a[1]);
     }
-    const sorted = Object.entries(seatsByParty).sort((a, b) => b[1] - a[1]);
     const total = sorted.reduce((s, [, v]) => s + v, 0);
+    const card = document.querySelector('[data-slot="assembly"]');
+    if (card) {
+      const headingEl = card.querySelector('.card-heading') || (() => {
+        const e = document.createElement('div');
+        e.className = 'card-heading';
+        card.querySelector('.status-label').after(e);
+        return e;
+      })();
+      headingEl.innerHTML = `<span class="card-heading-n">${lastAsm.label}</span><span class="card-heading-date">${lastAsm.date}</span>`;
+    }
     if (sorted.length && total > 0) {
       document.getElementById('status-asm-top').innerHTML = renderHalfDonut(sorted, total);
     }
     document.getElementById('status-asm-meta').textContent =
-      `${lastAsm.label} · ${lastAsm.date} 선출 · 임기 4년`;
+      `${total}석 · 임기 4년`;
   }
 
   // 3) 지방정부 — 가장 최근 지선, 시도지사 정당 분포
@@ -67,7 +87,16 @@
       if (w && w.party) partyCount[w.party] = (partyCount[w.party] || 0) + 1;
     }
     const sorted = Object.entries(partyCount).sort((a, b) => b[1] - a[1]);
-    const total = sorted.reduce((s, [, v]) => s + v, 0) || 17;
+    const card = document.querySelector('[data-slot="local"]');
+    if (card) {
+      const headingEl = card.querySelector('.card-heading') || (() => {
+        const e = document.createElement('div');
+        e.className = 'card-heading';
+        card.querySelector('.status-label').after(e);
+        return e;
+      })();
+      headingEl.innerHTML = `<span class="card-heading-n">${lastLocal.label}</span><span class="card-heading-date">${lastLocal.date}</span>`;
+    }
     const nameEl = document.getElementById('status-local-name');
     if (sorted.length) {
       nameEl.innerHTML = sorted.slice(0, 3).map(([p, c]) => {
@@ -76,7 +105,7 @@
       }).join(' ');
     }
     document.getElementById('status-local-meta').textContent =
-      `${lastLocal.label} · ${lastLocal.date} 선출 · 17개 시·도지사 · 임기 4년`;
+      `17개 시·도지사 · 임기 4년`;
   }
 
   // 4) 시간축 — 최근 선거 ←  오늘  → 다음 선거
