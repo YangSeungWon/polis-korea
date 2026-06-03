@@ -6,7 +6,8 @@
     "fetched_at": "2026-05-31T01:53:59+09:00",
     "is_final": true,
     "n_calls": 51,
-    "n_rows": 995
+    "n_rows": 995,
+    "legacy_merge": "; merged 170 from local_8.json"
   },
   "races": [
     {
@@ -34728,6 +34729,4210 @@
           "rank": 2
         }
       ]
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "서울특별시",
+      "scope": "sigungu",
+      "electors": 8378339,
+      "voters": 4455161,
+      "valid_votes": 4455161,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "오세훈",
+          "party": "국민의힘",
+          "votes": 2608277,
+          "pct": 59.05
+        },
+        {
+          "name": "송영길",
+          "party": "더불어민주당",
+          "votes": 1733183,
+          "pct": 39.24
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "votes": 53840,
+          "pct": 1.22
+        },
+        {
+          "name": "신지혜",
+          "party": "기본소득당",
+          "votes": 12619,
+          "pct": 0.29
+        },
+        {
+          "name": "김광종",
+          "party": "무소속",
+          "votes": 9000,
+          "pct": 0.2
+        }
+      ],
+      "sigungu": "서울특별시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "부산광역시",
+      "scope": "sigungu",
+      "electors": 2916832,
+      "voters": 1432194,
+      "valid_votes": 1432194,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박형준",
+          "party": "국민의힘",
+          "votes": 938601,
+          "pct": 66.37
+        },
+        {
+          "name": "변성완",
+          "party": "더불어민주당",
+          "votes": 455901,
+          "pct": 32.24
+        },
+        {
+          "name": "김영진",
+          "party": "정의당",
+          "votes": 19733,
+          "pct": 1.4
+        }
+      ],
+      "sigungu": "부산광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 2044579,
+      "voters": 883141,
+      "valid_votes": 883141,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "votes": 685159,
+          "pct": 78.75
+        },
+        {
+          "name": "서재헌",
+          "party": "더불어민주당",
+          "votes": 156429,
+          "pct": 17.98
+        },
+        {
+          "name": "한민정",
+          "party": "정의당",
+          "votes": 20904,
+          "pct": 2.4
+        },
+        {
+          "name": "신원호",
+          "party": "기본소득당",
+          "votes": 7542,
+          "pct": 0.87
+        }
+      ],
+      "sigungu": "대구광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "인천광역시",
+      "scope": "sigungu",
+      "electors": 2534338,
+      "voters": 1240469,
+      "valid_votes": 1240469,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "votes": 634250,
+          "pct": 51.77
+        },
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 545885,
+          "pct": 44.56
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "votes": 38921,
+          "pct": 3.18
+        },
+        {
+          "name": "김한별",
+          "party": "기본소득당",
+          "votes": 6079,
+          "pct": 0.5
+        }
+      ],
+      "sigungu": "인천광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 1206886,
+      "voters": 454516,
+      "valid_votes": 454516,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강기정",
+          "party": "더불어민주당",
+          "votes": 334699,
+          "pct": 74.92
+        },
+        {
+          "name": "주기환",
+          "party": "국민의힘",
+          "votes": 71062,
+          "pct": 15.91
+        },
+        {
+          "name": "장연주",
+          "party": "정의당",
+          "votes": 21070,
+          "pct": 4.72
+        },
+        {
+          "name": "김주업",
+          "party": "진보당",
+          "votes": 16595,
+          "pct": 3.71
+        },
+        {
+          "name": "문현철",
+          "party": "기본소득당",
+          "votes": 3344,
+          "pct": 0.75
+        }
+      ],
+      "sigungu": "광주광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "대전광역시",
+      "scope": "sigungu",
+      "electors": 1233557,
+      "voters": 612639,
+      "valid_votes": 612639,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이장우",
+          "party": "국민의힘",
+          "votes": 310035,
+          "pct": 51.2
+        },
+        {
+          "name": "허태정",
+          "party": "더불어민주당",
+          "votes": 295555,
+          "pct": 48.8
+        }
+      ],
+      "sigungu": "대전광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "울산광역시",
+      "scope": "sigungu",
+      "electors": 941189,
+      "voters": 491866,
+      "valid_votes": 491866,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김두겸",
+          "party": "국민의힘",
+          "votes": 290563,
+          "pct": 59.79
+        },
+        {
+          "name": "송철호",
+          "party": "더불어민주당",
+          "votes": 195430,
+          "pct": 40.21
+        }
+      ],
+      "sigungu": "울산광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "경기도",
+      "scope": "sigungu",
+      "electors": 11497206,
+      "voters": 5820631,
+      "valid_votes": 5820631,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "votes": 2827593,
+          "pct": 49.07
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "votes": 2818680,
+          "pct": 48.91
+        },
+        {
+          "name": "강용석",
+          "party": "무소속",
+          "votes": 54758,
+          "pct": 0.95
+        },
+        {
+          "name": "황순식",
+          "party": "정의당",
+          "votes": 38525,
+          "pct": 0.67
+        },
+        {
+          "name": "송영주",
+          "party": "진보당",
+          "votes": 13939,
+          "pct": 0.24
+        },
+        {
+          "name": "서태성",
+          "party": "기본소득당",
+          "votes": 9314,
+          "pct": 0.16
+        }
+      ],
+      "sigungu": "경기도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 1336080,
+      "voters": 772498,
+      "valid_votes": 772498,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김진태",
+          "party": "국민의힘",
+          "votes": 409461,
+          "pct": 54.07
+        },
+        {
+          "name": "이광재",
+          "party": "더불어민주당",
+          "votes": 347766,
+          "pct": 45.93
+        }
+      ],
+      "sigungu": "강원도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "충청북도",
+      "scope": "sigungu",
+      "electors": 1368779,
+      "voters": 692324,
+      "valid_votes": 692324,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김영환",
+          "party": "국민의힘",
+          "votes": 395517,
+          "pct": 58.19
+        },
+        {
+          "name": "노영민",
+          "party": "더불어민주당",
+          "votes": 284166,
+          "pct": 41.81
+        }
+      ],
+      "sigungu": "충청북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "충청남도",
+      "scope": "sigungu",
+      "electors": 1803096,
+      "voters": 898369,
+      "valid_votes": 898369,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김태흠",
+          "party": "국민의힘",
+          "votes": 468658,
+          "pct": 53.87
+        },
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "votes": 401308,
+          "pct": 46.13
+        }
+      ],
+      "sigungu": "충청남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 1532133,
+      "voters": 745354,
+      "valid_votes": 745354,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김관영",
+          "party": "더불어민주당",
+          "votes": 591510,
+          "pct": 82.12
+        },
+        {
+          "name": "조배숙",
+          "party": "국민의힘",
+          "votes": 128828,
+          "pct": 17.88
+        }
+      ],
+      "sigungu": "전라북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 1580098,
+      "voters": 923347,
+      "valid_votes": 923347,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김영록",
+          "party": "더불어민주당",
+          "votes": 672433,
+          "pct": 75.74
+        },
+        {
+          "name": "이정현",
+          "party": "국민의힘",
+          "votes": 167020,
+          "pct": 18.81
+        },
+        {
+          "name": "민점기",
+          "party": "진보당",
+          "votes": 48336,
+          "pct": 5.44
+        }
+      ],
+      "sigungu": "전라남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 2268707,
+      "voters": 1194595,
+      "valid_votes": 1194595,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이철우",
+          "party": "국민의힘",
+          "votes": 904675,
+          "pct": 77.96
+        },
+        {
+          "name": "임미애",
+          "party": "더불어민주당",
+          "votes": 255775,
+          "pct": 22.04
+        }
+      ],
+      "sigungu": "경상북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "경상남도",
+      "scope": "sigungu",
+      "electors": 2804287,
+      "voters": 1497400,
+      "valid_votes": 1497400,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박완수",
+          "party": "국민의힘",
+          "votes": 963473,
+          "pct": 65.71
+        },
+        {
+          "name": "양문석",
+          "party": "더불어민주당",
+          "votes": 431569,
+          "pct": 29.43
+        },
+        {
+          "name": "여영국",
+          "party": "정의당",
+          "votes": 58933,
+          "pct": 4.02
+        },
+        {
+          "name": "최진석",
+          "party": "통일한국당",
+          "votes": 12353,
+          "pct": 0.84
+        }
+      ],
+      "sigungu": "경상남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "3",
+      "sido": "제주특별자치도",
+      "scope": "sigungu",
+      "electors": 565084,
+      "voters": 300139,
+      "valid_votes": 300139,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "오영훈",
+          "party": "더불어민주당",
+          "votes": 163116,
+          "pct": 55.15
+        },
+        {
+          "name": "허향진",
+          "party": "국민의힘",
+          "votes": 116786,
+          "pct": 39.48
+        },
+        {
+          "name": "박찬식",
+          "party": "무소속",
+          "votes": 10138,
+          "pct": 3.43
+        },
+        {
+          "name": "부순정",
+          "party": "녹색당",
+          "votes": 5750,
+          "pct": 1.94
+        }
+      ],
+      "sigungu": "제주특별자치도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "류규하",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "중구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이태훈",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달서구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박병규",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "광산구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김철우",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "보성군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "명현관",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "해남군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김학동",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "예천군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 244406,
+      "voters": 137766,
+      "valid_votes": 137766,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "육동한",
+          "party": "더불어민주당",
+          "votes": 61751,
+          "pct": 45.62
+        },
+        {
+          "name": "최성현",
+          "party": "국민의힘",
+          "votes": 60702,
+          "pct": 44.85
+        },
+        {
+          "name": "이광준",
+          "party": "무소속",
+          "votes": 12903,
+          "pct": 9.53
+        }
+      ],
+      "sigungu": "춘천시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 304060,
+      "voters": 157537,
+      "valid_votes": 157537,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "원강수",
+          "party": "국민의힘",
+          "votes": 82526,
+          "pct": 53.55
+        },
+        {
+          "name": "구자열",
+          "party": "더불어민주당",
+          "votes": 71581,
+          "pct": 46.45
+        }
+      ],
+      "sigungu": "원주시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 185804,
+      "voters": 101939,
+      "valid_votes": 101939,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김홍규",
+          "party": "국민의힘",
+          "votes": 43887,
+          "pct": 43.93
+        },
+        {
+          "name": "김우영",
+          "party": "더불어민주당",
+          "votes": 29661,
+          "pct": 29.69
+        },
+        {
+          "name": "김한근",
+          "party": "무소속",
+          "votes": 24091,
+          "pct": 24.11
+        },
+        {
+          "name": "임명희",
+          "party": "정의당",
+          "votes": 2268,
+          "pct": 2.27
+        }
+      ],
+      "sigungu": "강릉시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 76886,
+      "voters": 42045,
+      "valid_votes": 42045,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "심규언",
+          "party": "국민의힘",
+          "votes": 23502,
+          "pct": 57.1
+        },
+        {
+          "name": "최석찬",
+          "party": "더불어민주당",
+          "votes": 10284,
+          "pct": 24.98
+        },
+        {
+          "name": "심상화",
+          "party": "무소속",
+          "votes": 7376,
+          "pct": 17.92
+        }
+      ],
+      "sigungu": "동해시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 57023,
+      "voters": 37548,
+      "valid_votes": 37548,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박상수",
+          "party": "국민의힘",
+          "votes": 18031,
+          "pct": 49.13
+        },
+        {
+          "name": "김양호",
+          "party": "더불어민주당",
+          "votes": 17107,
+          "pct": 46.61
+        },
+        {
+          "name": "안호성",
+          "party": "무소속",
+          "votes": 1563,
+          "pct": 4.26
+        }
+      ],
+      "sigungu": "삼척시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 35236,
+      "voters": 22538,
+      "valid_votes": 22538,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이상호",
+          "party": "국민의힘",
+          "votes": 11847,
+          "pct": 54.04
+        },
+        {
+          "name": "류태호",
+          "party": "더불어민주당",
+          "votes": 9715,
+          "pct": 44.32
+        },
+        {
+          "name": "김용희",
+          "party": "무소속",
+          "votes": 360,
+          "pct": 1.64
+        }
+      ],
+      "sigungu": "태백시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 32001,
+      "voters": 22082,
+      "valid_votes": 22082,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최승준",
+          "party": "더불어민주당",
+          "votes": 10901,
+          "pct": 51.01
+        },
+        {
+          "name": "홍천식",
+          "party": "국민의힘",
+          "votes": 10469,
+          "pct": 48.99
+        }
+      ],
+      "sigungu": "정선군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 71621,
+      "voters": 37093,
+      "valid_votes": 37093,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이병선",
+          "party": "국민의힘",
+          "votes": 20758,
+          "pct": 56.94
+        },
+        {
+          "name": "주대하",
+          "party": "더불어민주당",
+          "votes": 15696,
+          "pct": 43.06
+        }
+      ],
+      "sigungu": "속초시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 24776,
+      "voters": 16777,
+      "valid_votes": 16777,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "함명준",
+          "party": "더불어민주당",
+          "votes": 9149,
+          "pct": 56.05
+        },
+        {
+          "name": "홍남기",
+          "party": "국민의힘",
+          "votes": 7173,
+          "pct": 43.95
+        }
+      ],
+      "sigungu": "고성군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 25359,
+      "voters": 16671,
+      "valid_votes": 16671,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김진하",
+          "party": "국민의힘",
+          "votes": 9390,
+          "pct": 57.51
+        },
+        {
+          "name": "김정중",
+          "party": "더불어민주당",
+          "votes": 6938,
+          "pct": 42.49
+        }
+      ],
+      "sigungu": "양양군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 27939,
+      "voters": 18541,
+      "valid_votes": 18541,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최상기",
+          "party": "더불어민주당",
+          "votes": 9280,
+          "pct": 51.4
+        },
+        {
+          "name": "이순선",
+          "party": "국민의힘",
+          "votes": 8484,
+          "pct": 46.99
+        },
+        {
+          "name": "한상철",
+          "party": "무소속",
+          "votes": 289,
+          "pct": 1.6
+        }
+      ],
+      "sigungu": "인제군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 60743,
+      "voters": 36938,
+      "valid_votes": 36938,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신영재",
+          "party": "국민의힘",
+          "votes": 21212,
+          "pct": 58.84
+        },
+        {
+          "name": "허필홍",
+          "party": "더불어민주당",
+          "votes": 14839,
+          "pct": 41.16
+        }
+      ],
+      "sigungu": "홍천군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 41777,
+      "voters": 27752,
+      "valid_votes": 27752,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김명기",
+          "party": "국민의힘",
+          "votes": 13659,
+          "pct": 50.35
+        },
+        {
+          "name": "장신상",
+          "party": "더불어민주당",
+          "votes": 13169,
+          "pct": 48.54
+        },
+        {
+          "name": "원재성",
+          "party": "무소속",
+          "votes": 300,
+          "pct": 1.11
+        }
+      ],
+      "sigungu": "횡성군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 34371,
+      "voters": 22805,
+      "valid_votes": 22805,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최명서",
+          "party": "국민의힘",
+          "votes": 11950,
+          "pct": 53.58
+        },
+        {
+          "name": "박선규",
+          "party": "무소속",
+          "votes": 5605,
+          "pct": 25.13
+        },
+        {
+          "name": "김기석",
+          "party": "더불어민주당",
+          "votes": 4749,
+          "pct": 21.29
+        }
+      ],
+      "sigungu": "영월군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 37372,
+      "voters": 25364,
+      "valid_votes": 25364,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "심재국",
+          "party": "국민의힘",
+          "votes": 14660,
+          "pct": 59.1
+        },
+        {
+          "name": "한왕기",
+          "party": "더불어민주당",
+          "votes": 9707,
+          "pct": 39.13
+        },
+        {
+          "name": "최호영",
+          "party": "무소속",
+          "votes": 439,
+          "pct": 1.77
+        }
+      ],
+      "sigungu": "평창군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 21055,
+      "voters": 13837,
+      "valid_votes": 13837,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최문순",
+          "party": "국민의힘",
+          "votes": 7722,
+          "pct": 57.14
+        },
+        {
+          "name": "김세훈",
+          "party": "더불어민주당",
+          "votes": 5793,
+          "pct": 42.86
+        }
+      ],
+      "sigungu": "화천군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 18552,
+      "voters": 12805,
+      "valid_votes": 12805,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "서흥원",
+          "party": "국민의힘",
+          "votes": 5201,
+          "pct": 41.52
+        },
+        {
+          "name": "조인묵",
+          "party": "더불어민주당",
+          "votes": 4604,
+          "pct": 36.75
+        },
+        {
+          "name": "김철",
+          "party": "무소속",
+          "votes": 2052,
+          "pct": 16.38
+        },
+        {
+          "name": "최지붕",
+          "party": "무소속",
+          "votes": 671,
+          "pct": 5.36
+        }
+      ],
+      "sigungu": "양구군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 37099,
+      "voters": 22456,
+      "valid_votes": 22456,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이현종",
+          "party": "국민의힘",
+          "votes": 8032,
+          "pct": 36.74
+        },
+        {
+          "name": "한금석",
+          "party": "더불어민주당",
+          "votes": 7663,
+          "pct": 35.05
+        },
+        {
+          "name": "고기영",
+          "party": "무소속",
+          "votes": 6166,
+          "pct": 28.21
+        }
+      ],
+      "sigungu": "철원군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 550442,
+      "voters": 222248,
+      "valid_votes": 222248,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "우범기",
+          "party": "더불어민주당",
+          "votes": 160339,
+          "pct": 74.13
+        },
+        {
+          "name": "김경민",
+          "party": "국민의힘",
+          "votes": 33615,
+          "pct": 15.54
+        },
+        {
+          "name": "서윤근",
+          "party": "정의당",
+          "votes": 22343,
+          "pct": 10.33
+        }
+      ],
+      "sigungu": "전주시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 224926,
+      "voters": 87120,
+      "valid_votes": 87120,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강임준",
+          "party": "더불어민주당",
+          "votes": 56843,
+          "pct": 68.24
+        },
+        {
+          "name": "나기학",
+          "party": "무소속",
+          "votes": 11653,
+          "pct": 13.99
+        },
+        {
+          "name": "이근열",
+          "party": "국민의힘",
+          "votes": 11569,
+          "pct": 13.89
+        },
+        {
+          "name": "채남덕",
+          "party": "무소속",
+          "votes": 3230,
+          "pct": 3.88
+        }
+      ],
+      "sigungu": "군산시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 239077,
+      "voters": 107254,
+      "valid_votes": 107254,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "정헌율",
+          "party": "더불어민주당",
+          "votes": 72544,
+          "pct": 69.98
+        },
+        {
+          "name": "임형택",
+          "party": "무소속",
+          "votes": 17239,
+          "pct": 16.63
+        },
+        {
+          "name": "임석삼",
+          "party": "국민의힘",
+          "votes": 9697,
+          "pct": 9.35
+        },
+        {
+          "name": "박경철",
+          "party": "무소속",
+          "votes": 4191,
+          "pct": 4.04
+        }
+      ],
+      "sigungu": "익산시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 93307,
+      "voters": 54283,
+      "valid_votes": 54283,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이학수",
+          "party": "더불어민주당",
+          "votes": 25964,
+          "pct": 49.75
+        },
+        {
+          "name": "김민영",
+          "party": "무소속",
+          "votes": 23891,
+          "pct": 45.78
+        },
+        {
+          "name": "이상옥",
+          "party": "무소속",
+          "votes": 2332,
+          "pct": 4.47
+        }
+      ],
+      "sigungu": "정읍시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 69007,
+      "voters": 44519,
+      "valid_votes": 44519,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최경식",
+          "party": "더불어민주당",
+          "votes": 16127,
+          "pct": 37.17
+        },
+        {
+          "name": "강동원",
+          "party": "무소속",
+          "votes": 13508,
+          "pct": 31.14
+        },
+        {
+          "name": "윤승호",
+          "party": "무소속",
+          "votes": 12082,
+          "pct": 27.85
+        },
+        {
+          "name": "오철기",
+          "party": "무소속",
+          "votes": 1027,
+          "pct": 2.37
+        },
+        {
+          "name": "박종희",
+          "party": "무소속",
+          "votes": 641,
+          "pct": 1.48
+        }
+      ],
+      "sigungu": "남원시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 72358,
+      "voters": 42669,
+      "valid_votes": 42669,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "정성주",
+          "party": "더불어민주당",
+          "votes": 22531,
+          "pct": 54.67
+        },
+        {
+          "name": "김종회",
+          "party": "무소속",
+          "votes": 17096,
+          "pct": 41.48
+        },
+        {
+          "name": "신성욱",
+          "party": "무소속",
+          "votes": 1584,
+          "pct": 3.84
+        }
+      ],
+      "sigungu": "김제시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 78284,
+      "voters": 41416,
+      "valid_votes": 41416,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "유희태",
+          "party": "더불어민주당",
+          "votes": 16329,
+          "pct": 40.89
+        },
+        {
+          "name": "국영석",
+          "party": "무소속",
+          "votes": 14306,
+          "pct": 35.83
+        },
+        {
+          "name": "송지용",
+          "party": "무소속",
+          "votes": 9297,
+          "pct": 23.28
+        }
+      ],
+      "sigungu": "완주군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 22634,
+      "voters": 16616,
+      "valid_votes": 16616,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "전춘성",
+          "party": "더불어민주당",
+          "votes": 9818,
+          "pct": 61.7
+        },
+        {
+          "name": "이한기",
+          "party": "무소속",
+          "votes": 3213,
+          "pct": 20.19
+        },
+        {
+          "name": "천춘진",
+          "party": "무소속",
+          "votes": 2881,
+          "pct": 18.11
+        }
+      ],
+      "sigungu": "진안군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 21279,
+      "voters": 16267,
+      "valid_votes": 16267,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "황인홍",
+          "party": "무소속",
+          "votes": 9114,
+          "pct": 58.15
+        },
+        {
+          "name": "황의탁",
+          "party": "더불어민주당",
+          "votes": 5721,
+          "pct": 36.5
+        },
+        {
+          "name": "서정호",
+          "party": "국민의힘",
+          "votes": 837,
+          "pct": 5.34
+        }
+      ],
+      "sigungu": "무주군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 19380,
+      "voters": 14591,
+      "valid_votes": 14591,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최훈식",
+          "party": "더불어민주당",
+          "votes": 7479,
+          "pct": 53.62
+        },
+        {
+          "name": "장영수",
+          "party": "무소속",
+          "votes": 6044,
+          "pct": 43.34
+        },
+        {
+          "name": "이춘열",
+          "party": "무소속",
+          "votes": 424,
+          "pct": 3.04
+        }
+      ],
+      "sigungu": "장수군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 24346,
+      "voters": 17638,
+      "valid_votes": 17638,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "심민",
+          "party": "무소속",
+          "votes": 7540,
+          "pct": 44.18
+        },
+        {
+          "name": "한병락",
+          "party": "더불어민주당",
+          "votes": 7364,
+          "pct": 43.15
+        },
+        {
+          "name": "박기봉",
+          "party": "무소속",
+          "votes": 1776,
+          "pct": 10.41
+        },
+        {
+          "name": "박정근",
+          "party": "무소속",
+          "votes": 388,
+          "pct": 2.27
+        }
+      ],
+      "sigungu": "임실군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 23898,
+      "voters": 18592,
+      "valid_votes": 18592,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최영일",
+          "party": "무소속",
+          "votes": 9380,
+          "pct": 52.36
+        },
+        {
+          "name": "최기환",
+          "party": "더불어민주당",
+          "votes": 8534,
+          "pct": 47.64
+        }
+      ],
+      "sigungu": "순창군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 47581,
+      "voters": 34665,
+      "valid_votes": 34665,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "심덕섭",
+          "party": "더불어민주당",
+          "votes": 16584,
+          "pct": 49.72
+        },
+        {
+          "name": "유기상",
+          "party": "무소속",
+          "votes": 15769,
+          "pct": 47.28
+        },
+        {
+          "name": "이호근",
+          "party": "무소속",
+          "votes": 999,
+          "pct": 3.0
+        }
+      ],
+      "sigungu": "고창군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "4",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 45614,
+      "voters": 27494,
+      "valid_votes": 27494,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "권익현",
+          "party": "더불어민주당",
+          "votes": 15351,
+          "pct": 57.7
+        },
+        {
+          "name": "김성수",
+          "party": "무소속",
+          "votes": 9859,
+          "pct": 37.06
+        },
+        {
+          "name": "김성태",
+          "party": "국민의힘",
+          "votes": 1394,
+          "pct": 5.24
+        }
+      ],
+      "sigungu": "부안군"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "서울특별시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김동욱",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "강남구제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "서울특별시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김길영",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "강남구제6선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임인환",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "중구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김재우",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "동구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박소영",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "동구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "권기훈",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "동구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김대현",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "서구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이재화",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "서구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박우근",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김지만",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김재용",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "하병문",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "정일균",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "수성구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "조경구",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "수성구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이성오",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "수성구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "전경원",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "수성구제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김태우",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "수성구제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이영애",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달서구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "허시영",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달서구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "황순자",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달서구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "윤권근",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달서구제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "하중환",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "달성군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "인천광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박용철",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "강화군선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "홍기월",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "동구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박미정",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "동구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강수훈",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "서구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "서임석",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임미란",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남구제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박희율",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "안평환",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신수정",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "심창욱",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "북구제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박필순",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "광산구제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박수기",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "광산구제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "울산광역시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "안수일",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남구제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이병도",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "진형석",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "송승용",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최형열",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김희수",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제6선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이병철",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제7선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강동화",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제8선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "서난이",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제9선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이명연",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제10선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "국주영은",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "전주시제12선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강태창",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "군산시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김동구",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "군산시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박정희",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "군산시제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "한정수",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "익산시제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임승식",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "정읍시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이정린",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "남원시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "나인권",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "김제시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "황영석",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "김제시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "윤수봉",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "완주군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "권요안",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "완주군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김만기",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "고창군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김정기",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "부안군선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최선국",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "목포시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박문옥",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "목포시제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "전경선",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "목포시제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이광일",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "여수시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강문성",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "여수시제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최병용",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "여수시제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "주종섭",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "여수시제6선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "한춘옥",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "순천시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "서동욱",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "순천시제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김진남",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "순천시제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신민호",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "순천시제6선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김정이",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "순천시제8선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "최명수",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "나주시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김태균",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "광양시제3선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박종원",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "담양군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "송형곤",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "고흥군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이동현",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "보성군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임지락",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "화순군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "류기준",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "화순군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김성일",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "해남군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "손남일",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "영암군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "정길수",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "무안군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "나광국",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "무안군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박원종",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "영광군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "정철",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "장성군제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신의준",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "완도군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "한창화",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "포항시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박용선",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "포항시제5선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이동업",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "포항시제7선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "배진석",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "경주시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박승직",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "경주시제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "권광택",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "안동시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김용현",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "구미시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김상조",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "구미시제4선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임병하",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "영주시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박성만",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "영주시제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이춘우",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "영천시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "남영숙",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "상주시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박영서",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "문경시제1선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박창석",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "군위군선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이충원",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "의성군제2선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신효광",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "청송군선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "노성환",
+          "party": "국민의힘",
+          "votes": 0,
+          "pct": 100.0
+        }
+      ],
+      "sigungu": "고령군선거구"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "서울특별시",
+      "scope": "sigungu",
+      "electors": 8378337,
+      "voters": 4454150,
+      "valid_votes": 4454150,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "조희연",
+          "party": "교육감",
+          "votes": 1614564,
+          "pct": 38.11
+        },
+        {
+          "name": "조전혁",
+          "party": "교육감",
+          "votes": 995518,
+          "pct": 23.5
+        },
+        {
+          "name": "박선영",
+          "party": "교육감",
+          "votes": 978935,
+          "pct": 23.11
+        },
+        {
+          "name": "조영달",
+          "party": "교육감",
+          "votes": 281090,
+          "pct": 6.63
+        },
+        {
+          "name": "윤호상",
+          "party": "교육감",
+          "votes": 226563,
+          "pct": 5.35
+        },
+        {
+          "name": "최보선",
+          "party": "교육감",
+          "votes": 140031,
+          "pct": 3.31
+        }
+      ],
+      "sigungu": "서울특별시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "부산광역시",
+      "scope": "sigungu",
+      "electors": 2916831,
+      "voters": 1432081,
+      "valid_votes": 1432081,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "하윤수",
+          "party": "교육감",
+          "votes": 706152,
+          "pct": 50.83
+        },
+        {
+          "name": "김석준",
+          "party": "교육감",
+          "votes": 683210,
+          "pct": 49.17
+        }
+      ],
+      "sigungu": "부산광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대구광역시",
+      "scope": "sigungu",
+      "electors": 2044579,
+      "voters": 883093,
+      "valid_votes": 883093,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "강은희",
+          "party": "교육감",
+          "votes": 530235,
+          "pct": 61.62
+        },
+        {
+          "name": "엄창옥",
+          "party": "교육감",
+          "votes": 330319,
+          "pct": 38.38
+        }
+      ],
+      "sigungu": "대구광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "인천광역시",
+      "scope": "sigungu",
+      "electors": 2534337,
+      "voters": 1240324,
+      "valid_votes": 1240324,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "도성훈",
+          "party": "교육감",
+          "votes": 494366,
+          "pct": 41.47
+        },
+        {
+          "name": "최계운",
+          "party": "교육감",
+          "votes": 470870,
+          "pct": 39.5
+        },
+        {
+          "name": "서정호",
+          "party": "교육감",
+          "votes": 226953,
+          "pct": 19.04
+        }
+      ],
+      "sigungu": "인천광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "광주광역시",
+      "scope": "sigungu",
+      "electors": 1206886,
+      "voters": 454475,
+      "valid_votes": 454475,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "이정선",
+          "party": "교육감",
+          "votes": 154068,
+          "pct": 34.91
+        },
+        {
+          "name": "박혜자",
+          "party": "교육감",
+          "votes": 100297,
+          "pct": 22.73
+        },
+        {
+          "name": "정성홍",
+          "party": "교육감",
+          "votes": 96491,
+          "pct": 21.86
+        },
+        {
+          "name": "이정재",
+          "party": "교육감",
+          "votes": 53303,
+          "pct": 12.08
+        },
+        {
+          "name": "강동완",
+          "party": "교육감",
+          "votes": 37167,
+          "pct": 8.42
+        }
+      ],
+      "sigungu": "광주광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "대전광역시",
+      "scope": "sigungu",
+      "electors": 1233556,
+      "voters": 612581,
+      "valid_votes": 612581,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "교육감",
+          "votes": 247077,
+          "pct": 41.5
+        },
+        {
+          "name": "성광진",
+          "party": "교육감",
+          "votes": 178958,
+          "pct": 30.06
+        },
+        {
+          "name": "정상신",
+          "party": "교육감",
+          "votes": 103363,
+          "pct": 17.36
+        },
+        {
+          "name": "김동석",
+          "party": "교육감",
+          "votes": 65954,
+          "pct": 11.08
+        }
+      ],
+      "sigungu": "대전광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "울산광역시",
+      "scope": "sigungu",
+      "electors": 941188,
+      "voters": 491851,
+      "valid_votes": 491851,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "노옥희",
+          "party": "교육감",
+          "votes": 266647,
+          "pct": 55.03
+        },
+        {
+          "name": "김주홍",
+          "party": "교육감",
+          "votes": 217863,
+          "pct": 44.97
+        }
+      ],
+      "sigungu": "울산광역시"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경기도",
+      "scope": "sigungu",
+      "electors": 11497203,
+      "voters": 5819746,
+      "valid_votes": 5819746,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임태희",
+          "party": "교육감",
+          "votes": 3081100,
+          "pct": 54.79
+        },
+        {
+          "name": "성기선",
+          "party": "교육감",
+          "votes": 2541863,
+          "pct": 45.21
+        }
+      ],
+      "sigungu": "경기도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "강원특별자치도",
+      "scope": "sigungu",
+      "electors": 1336080,
+      "voters": 772388,
+      "valid_votes": 772388,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "신경호",
+          "party": "교육감",
+          "votes": 210523,
+          "pct": 29.51
+        },
+        {
+          "name": "강삼영",
+          "party": "교육감",
+          "votes": 163816,
+          "pct": 22.96
+        },
+        {
+          "name": "유대균",
+          "party": "교육감",
+          "votes": 149906,
+          "pct": 21.01
+        },
+        {
+          "name": "문태호",
+          "party": "교육감",
+          "votes": 87286,
+          "pct": 12.24
+        },
+        {
+          "name": "조백송",
+          "party": "교육감",
+          "votes": 54951,
+          "pct": 7.7
+        },
+        {
+          "name": "민성숙",
+          "party": "교육감",
+          "votes": 46851,
+          "pct": 6.57
+        }
+      ],
+      "sigungu": "강원도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "충청북도",
+      "scope": "sigungu",
+      "electors": 1368779,
+      "voters": 692287,
+      "valid_votes": 692287,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "윤건영",
+          "party": "교육감",
+          "votes": 375295,
+          "pct": 55.96
+        },
+        {
+          "name": "김병우",
+          "party": "교육감",
+          "votes": 295375,
+          "pct": 44.04
+        }
+      ],
+      "sigungu": "충청북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "충청남도",
+      "scope": "sigungu",
+      "electors": 1803096,
+      "voters": 898258,
+      "valid_votes": 898258,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김지철",
+          "party": "교육감",
+          "votes": 287639,
+          "pct": 33.79
+        },
+        {
+          "name": "이병학",
+          "party": "교육감",
+          "votes": 232368,
+          "pct": 27.3
+        },
+        {
+          "name": "조영종",
+          "party": "교육감",
+          "votes": 191360,
+          "pct": 22.48
+        },
+        {
+          "name": "김영춘",
+          "party": "교육감",
+          "votes": 139869,
+          "pct": 16.43
+        }
+      ],
+      "sigungu": "충청남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전북특별자치도",
+      "scope": "sigungu",
+      "electors": 1532133,
+      "voters": 745299,
+      "valid_votes": 745299,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "서거석",
+          "party": "교육감",
+          "votes": 310247,
+          "pct": 43.52
+        },
+        {
+          "name": "천호성",
+          "party": "교육감",
+          "votes": 285753,
+          "pct": 40.09
+        },
+        {
+          "name": "김윤태",
+          "party": "교육감",
+          "votes": 116813,
+          "pct": 16.39
+        }
+      ],
+      "sigungu": "전라북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "전라남도",
+      "scope": "sigungu",
+      "electors": 1580095,
+      "voters": 923277,
+      "valid_votes": 923277,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김대중",
+          "party": "교육감",
+          "votes": 393462,
+          "pct": 45.09
+        },
+        {
+          "name": "장석웅",
+          "party": "교육감",
+          "votes": 323364,
+          "pct": 37.05
+        },
+        {
+          "name": "김동환",
+          "party": "교육감",
+          "votes": 155884,
+          "pct": 17.86
+        }
+      ],
+      "sigungu": "전라남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상북도",
+      "scope": "sigungu",
+      "electors": 2268699,
+      "voters": 1194539,
+      "valid_votes": 1194539,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "임종식",
+          "party": "교육감",
+          "votes": 561389,
+          "pct": 49.78
+        },
+        {
+          "name": "마숙자",
+          "party": "교육감",
+          "votes": 312755,
+          "pct": 27.73
+        },
+        {
+          "name": "임준희",
+          "party": "교육감",
+          "votes": 253709,
+          "pct": 22.49
+        }
+      ],
+      "sigungu": "경상북도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "경상남도",
+      "scope": "sigungu",
+      "electors": 2804287,
+      "voters": 1497284,
+      "valid_votes": 1497284,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "박종훈",
+          "party": "교육감",
+          "votes": 727720,
+          "pct": 50.23
+        },
+        {
+          "name": "김상권",
+          "party": "교육감",
+          "votes": 720970,
+          "pct": 49.77
+        }
+      ],
+      "sigungu": "경상남도"
+    },
+    {
+      "sg_id": "20220601",
+      "sg_typecode": "11",
+      "sido": "제주특별자치도",
+      "scope": "sigungu",
+      "electors": 565084,
+      "voters": 300124,
+      "valid_votes": 300124,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김광수",
+          "party": "교육감",
+          "votes": 168019,
+          "pct": 57.47
+        },
+        {
+          "name": "이석문",
+          "party": "교육감",
+          "votes": 124322,
+          "pct": 42.53
+        }
+      ],
+      "sigungu": "제주특별자치도"
     }
   ]
 }

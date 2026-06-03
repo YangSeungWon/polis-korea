@@ -486,8 +486,30 @@ const SIGUNGU_NAME_HISTORY = {
   '청주시청원구':   ['청원군'],          // 2014.7 통합 전 (5/6회)
   '미추홀구':       ['남구'],            // 인천 2018 개명 전 (5/6/7회 → '남구')
   '남구':           ['미추홀구'],        // 인천 — hex가 옛 vuski GeoJSON '남구', 8회+ 데이터엔 '미추홀구'
-  // 인천 2026-07 신설 분구: 옛 회차에선 cell 자체 hide (SIGUNGU_HEX_HISTORY 참조).
 };
+// 시군구 hex cell lifecycle — 등장(since)/폐지(until) 시점.
+// since: 이 날짜 이전 회차에서 cell hide (행정구역 신설 — 옛 회차엔 존재 X).
+// until: 이 날짜 이후 회차에서 cell hide (행정구역 폐지·통합 — 새 회차엔 존재 X).
+// 추가 패턴 (앞으로 행정구역 변경 발생 시 한 줄씩 추가):
+//   '시도명|시군구명': { since: 'YYYY-MM-DD' }
+//   '시도명|시군구명': { until: 'YYYY-MM-DD' }
+//   '시도명|시군구명': { since: '...', until: '...' }
+// sido 이동(예: 군위군 경북→대구 2023-07)은 SIGUNGU_SIDO_HISTORY로 처리 — 별도.
+const SIGUNGU_HEX_LIFECYCLE = {
+  // 인천 2026-07-01 신설 — 남구 분할 → 검단·제물포구, 중구 일부 → 영종구.
+  '인천광역시|검단구':   { since: '2026-07-01' },
+  '인천광역시|영종구':   { since: '2026-07-01' },
+  '인천광역시|제물포구': { since: '2026-07-01' },
+};
+
+function isSigunguHexActive(sido, name, electionDate) {
+  if (!electionDate) return true;
+  const lc = SIGUNGU_HEX_LIFECYCLE[`${sido}|${name}`];
+  if (!lc) return true;
+  if (lc.since && electionDate < lc.since) return false;
+  if (lc.until && electionDate >= lc.until) return false;
+  return true;
+}
 // 1 hex ↔ N 데이터 합산 (분할구 → 통합 시 vote 합산).
 // hex는 이제 통합도시 1 cell — 옛 역대 데이터(일반구 분할)는 합산해서 표시.
 const SIGUNGU_MERGE = {
@@ -1106,14 +1128,19 @@ async function renderDistrictHex() {
     sectionLabel.textContent = `비례대표 ${totalProp}석 · 총 ${totalSeats}석`;
     svg.appendChild(sectionLabel);
 
+    // 정당당 2 col 블록 — 의석 zigzag 배치(좌→우→좌→…)로 세로 길이 절반, 라벨 폭 확보.
+    const blockW = 2 * propColW;        // 정당당 2 col 폭
+    const blockGap = propColW * 0.35;   // 정당 블록 사이 여백
     let maxColH = 0;
     sorted.forEach((ps, pi) => {
       const color = partyColor(ps.party);
-      // odd col 0.5 row shift로 interlock (지역구 hex와 같은 odd-r offset 패턴).
-      const colCx = propStartX + (pi + 0.5) * propColW;
-      // 정당 라벨 (col 위쪽)
+      const blockX = propStartX + pi * (blockW + blockGap);
+      const col0Cx = blockX + propColW * 0.5;        // 좌 col 중심
+      const col1Cx = blockX + propColW * 1.5;        // 우 col 중심
+      const labelCx = blockX + blockW / 2;
+      // 정당 라벨 (블록 중앙 위)
       const nm = document.createElementNS(ns, 'text');
-      nm.setAttribute('x', colCx);
+      nm.setAttribute('x', labelCx);
       nm.setAttribute('y', labelOffsetY);
       nm.setAttribute('text-anchor', 'middle');
       nm.setAttribute('font-size', '11');
@@ -1122,14 +1149,14 @@ async function renderDistrictHex() {
       nm.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       nm.textContent = `${ps.party} ${ps.seats}`;
       svg.appendChild(nm);
-      // 의석 hex 세로 stack (위→아래)
+      // 의석 hex zigzag: 짝수 j → 좌 col, 홀수 j → 우 col (0.5 row shift).
       for (let j = 0; j < ps.seats; j++) {
-        const cy = j * propRowH + r;  // 첫 hex 중심 = top + r
-        // odd col은 0.5 row shift
-        const cxShift = (pi % 2) * 0;   // col 자체 위치는 위에서 잡았으니 추가 shift 없음
-        const cy2 = cy + (pi % 2) * (rowH / 2);
+        const isRight = j % 2 === 1;
+        const rowIdx = Math.floor(j / 2);
+        const cx = isRight ? col1Cx : col0Cx;
+        const cy = rowIdx * propRowH + r + (isRight ? rowH / 2 : 0);
         const poly = document.createElementNS(ns, 'polygon');
-        poly.setAttribute('points', hexPoints(colCx + cxShift, cy2, r - 0.7));
+        poly.setAttribute('points', hexPoints(cx, cy, r - 0.7));
         poly.setAttribute('fill', color);
         poly.setAttribute('stroke', '#fff');
         poly.setAttribute('stroke-width', '1');
@@ -1138,12 +1165,13 @@ async function renderDistrictHex() {
         poly.appendChild(tt);
         svg.appendChild(poly);
       }
-      const colH = ps.seats * propRowH + (pi % 2) * (rowH / 2) + r;
+      const rows = Math.ceil(ps.seats / 2);
+      const colH = rows * propRowH + rowH / 2 + r;
       if (colH > maxColH) maxColH = colH;
     });
 
     // viewBox 확장 — 우측 비례 + 위쪽 라벨 영역까지
-    const newW = propStartX + sorted.length * propColW + propGap;
+    const newW = propStartX + sorted.length * (blockW + blockGap) + propGap;
     const topPad = -headerY + 8;
     const newH = Math.max(h, maxColH) + topPad;
     const minY = headerY - 8;
@@ -1163,8 +1191,14 @@ function renderSigunguHex() {
   const useLegacy = state.hexLegacy && state.type === 'presidential';
   let data = useLegacy ? state.hexLegacy : state.hexData;
   if (!data?.length) return;
-  // 회차별 자동 hide — data.sigungu에 매칭 없는 cell (행정구역상 그 시점 존재 X 또는 데이터 누락)
-  data = data.filter((d) => resultForSigungu(d.sido, d.name));
+  // 회차별 자동 hide:
+  //   1) lifecycle since/until — 행정구역 신설·폐지 (확장 가능, SIGUNGU_HEX_LIFECYCLE 참조)
+  //   2) 데이터 매칭 — 그 회차에 결과 없는 cell 자동 숨김
+  const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
+  const electionDate = el?.date || '';
+  data = data.filter((d) =>
+    isSigunguHexActive(d.sido, d.name, electionDate) && resultForSigungu(d.sido, d.name)
+  );
   const cs = data.map((d) => d.c);
   const rs = data.map((d) => d.r);
   const minC = Math.min(...cs), minR = Math.min(...rs);
