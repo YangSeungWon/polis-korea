@@ -251,3 +251,30 @@
   color: var(--ink);
   pointer-events: none;
 }
+
+/* status overview v2 — 가로 시간축 strip + 3 카드 row */
+.status-overview-v2 {
+  margin: 0 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.status-timeline-strip {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 8px 4px;
+  cursor: default;
+}
+.status-timeline-strip svg { display: block; }
+.status-timeline-strip .tl-dot { cursor: pointer; }
+.status-timeline-strip .tl-dot:hover circle { stroke-width: 2.2; }
+
+.status-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 800px) {
+  .status-cards-row { grid-template-columns: 1fr; }
+}

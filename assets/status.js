@@ -116,56 +116,79 @@
       `17개 시·도지사 · 임기 4년`;
   }
 
-  // 4) 시간축 — 최근 선거 ←  오늘  → 다음 선거
-  const latest = past[0];
-  const next = future[0];
-  if (latest || next) {
-    const axisEl = document.getElementById('status-timeline-axis');
-    axisEl.innerHTML = renderTimeAxis(latest, next, today);
-    const parts = [];
-    if (latest) parts.push(`${latest.label} ${Math.abs(daysBetween(latest.date))}일 전`);
-    if (next) {
-      const dd = daysBetween(next.date);
-      parts.push(`${next.label} ${dd > 0 ? `D-${dd}` : dd === 0 ? '오늘' : `D+${-dd}`}`);
-    }
-    document.getElementById('status-timeline-meta').textContent = parts.join(' · ');
+  // 4) 시간축 strip — 최근 5년 + 향후 5년 회차 흐름. 오늘 dot.
+  const stripEl = document.getElementById('status-timeline-strip');
+  if (stripEl) {
+    const tEarliest = new Date(today); tEarliest.setFullYear(today.getFullYear() - 5);
+    const tLatest = new Date(today); tLatest.setFullYear(today.getFullYear() + 5);
+    const visible = rounds.filter((r) => {
+      const t = new Date(r.date);
+      return t >= tEarliest && t <= tLatest;
+    }).sort((a, b) => a.date.localeCompare(b.date));
+    stripEl.innerHTML = renderTimelineStrip(visible, today, tEarliest, tLatest);
+    stripEl.querySelectorAll('.tl-dot').forEach((g) => {
+      const href = g.getAttribute('data-href');
+      if (href) g.addEventListener('click', () => { location.href = href; });
+    });
   }
 
   root.hidden = false;
 })();
 
-// 시간축 — 좌측 최근, 중앙 오늘 dot, 우측 다음. 막대 너비 비례 안 함 (단순 indicator).
-function renderTimeAxis(latest, next, today) {
-  const W = 220, H = 70;
-  // 위치: latest 0%, today 40~60% (latest/next 거리 비례), next 100%
-  let todayPct = 50;
-  if (latest && next) {
-    const a = new Date(latest.date).getTime();
-    const b = new Date(next.date).getTime();
-    const t = today.getTime();
-    todayPct = Math.max(8, Math.min(92, ((t - a) / (b - a)) * 100));
-  } else if (!latest) { todayPct = 8; } else if (!next) { todayPct = 92; }
-
+function renderTimelineStrip(rounds, today, tStart, tEnd) {
+  const W = 1100, H = 90;
+  const padL = 60, padR = 60;
+  const inner = W - padL - padR;
+  const span = tEnd - tStart;
+  const xOf = (d) => padL + ((new Date(d) - tStart) / span) * inner;
   const kindCol = (k) => ({ presidential: '#c8553d', national_assembly: '#2e7d6f', local: '#b07e3d' }[k] || '#999');
+  const kindShort = { presidential: '대선', national_assembly: '총선', local: '지선' };
 
-  const leftLabel = latest
-    ? `<g><circle cx="20" cy="40" r="6" fill="${kindCol(latest.kind)}"/>
-        <text x="20" y="62" text-anchor="start" font-size="9" font-weight="700" fill="#0a0e1a">${latest.label}</text>
-        <text x="20" y="22" text-anchor="start" font-size="8" fill="#5a6378">${latest.date}</text></g>`
-    : '';
-  const rightLabel = next
-    ? `<g><circle cx="${W - 20}" cy="40" r="6" fill="${kindCol(next.kind)}" opacity="0.6" stroke="${kindCol(next.kind)}" stroke-width="1.5" stroke-dasharray="2,1.5"/>
-        <text x="${W - 20}" y="62" text-anchor="end" font-size="9" font-weight="700" fill="#0a0e1a">${next.label}</text>
-        <text x="${W - 20}" y="22" text-anchor="end" font-size="8" fill="#5a6378">${next.date}</text></g>`
-    : '';
-  // 가로 라인
-  const line = `<line x1="20" y1="40" x2="${W - 20}" y2="40" stroke="rgba(10,14,26,0.25)" stroke-width="1.5"/>`;
-  // 오늘 dot
-  const todayX = 20 + (W - 40) * (todayPct / 100);
-  const todayDot = `<g><circle cx="${todayX}" cy="40" r="4.5" fill="#0a0e1a"/>
-                     <text x="${todayX}" y="55" text-anchor="middle" font-size="8" font-weight="700" fill="#0a0e1a">오늘</text></g>`;
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" style="display:block;margin-top:2px">${line}${leftLabel}${rightLabel}${todayDot}</svg>`;
+  // 라인
+  const line = `<line x1="${padL}" y1="${H/2}" x2="${W - padR}" y2="${H/2}" stroke="rgba(10,14,26,0.18)" stroke-width="1.5"/>`;
+
+  // 시작/끝 연도 label
+  const yLabel = (d, anchor, x) => `<text x="${x}" y="${H/2 + 20}" text-anchor="${anchor}" font-size="10" fill="#8a93a3" font-family="Pretendard, system-ui, sans-serif">${new Date(d).getFullYear()}</text>`;
+
+  // round dots
+  let dots = '';
+  // 오늘과 충돌 방지 위해 label 위/아래 alternating
+  rounds.forEach((r, i) => {
+    const x = xOf(r.date);
+    const isPast = !r.upcoming;
+    const col = kindCol(r.kind);
+    const fill = isPast ? col : 'rgba(255,255,255,0.85)';
+    const stroke = col;
+    const r0 = 5.5;
+    const labelY = (i % 2 === 0) ? H/2 - 14 : H/2 + 24;
+    const labelText = `${r.n}${kindShort[r.kind]}`;
+    dots += `
+      <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}">
+        <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
+        <circle cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.6}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
+        <text x="${x}" y="${labelY}" text-anchor="middle" font-size="10.5" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelText}</text>
+      </g>
+    `;
+  });
+
+  // 오늘 dot (더 큼, 다크)
+  const tx = xOf(today.toISOString().slice(0, 10));
+  const todayDot = `
+    <line x1="${tx}" y1="${H/2 - 18}" x2="${tx}" y2="${H/2 + 18}" stroke="#0a0e1a" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.4"/>
+    <circle cx="${tx}" cy="${H/2}" r="6.5" fill="#0a0e1a"/>
+    <text x="${tx}" y="${H - 4}" text-anchor="middle" font-size="11" font-weight="800" fill="#0a0e1a" font-family="Pretendard, system-ui, sans-serif">오늘</text>
+  `;
+
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
+    ${line}
+    ${yLabel(tStart, 'start', padL)}
+    ${yLabel(tEnd, 'end', W - padR)}
+    ${dots}
+    ${todayDot}
+  </svg>`;
 }
+
+// (renderTimeAxis 제거됨 — 시간축은 renderTimelineStrip이 담당)
 
 function polarToXY(cx, cy, r, angle) {
   return { x: cx + r * Math.cos(angle), y: cy - r * Math.sin(angle) };

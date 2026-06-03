@@ -34,27 +34,25 @@
 </header>
 
 <main class="page">
-  <section class="status-overview" id="status-overview" hidden>
-    <a class="status-card" data-slot="president" href="history.html?type=presidential">
-      <div class="status-label">대통령 · 대선</div>
-      <div class="status-value" id="status-pres-name">—</div>
-      <div class="status-meta" id="status-pres-meta">—</div>
-    </a>
-    <a class="status-card" data-slot="assembly" href="history.html?type=national_assembly">
-      <div class="status-label">국회 · 총선</div>
-      <div class="status-value" id="status-asm-top">—</div>
-      <div class="status-meta" id="status-asm-meta">—</div>
-    </a>
-    <a class="status-card" data-slot="local" href="history.html?type=local">
-      <div class="status-label">지방정부 · 지선</div>
-      <div class="status-value" id="status-local-name">—</div>
-      <div class="status-meta" id="status-local-meta">—</div>
-    </a>
-    <a class="status-card status-card-timeline" data-slot="timeline" href="timeline.html">
-      <div class="status-label">다음 / 최근</div>
-      <div class="status-value" id="status-timeline-axis">—</div>
-      <div class="status-meta" id="status-timeline-meta">—</div>
-    </a>
+  <section class="status-overview-v2" id="status-overview" hidden>
+    <div class="status-timeline-strip" id="status-timeline-strip"></div>
+    <div class="status-cards-row">
+      <a class="status-card" data-slot="president" href="history.html?type=presidential">
+        <div class="status-label">대통령 · 대선</div>
+        <div class="status-value" id="status-pres-name">—</div>
+        <div class="status-meta" id="status-pres-meta">—</div>
+      </a>
+      <a class="status-card" data-slot="assembly" href="history.html?type=national_assembly">
+        <div class="status-label">국회 · 총선</div>
+        <div class="status-value" id="status-asm-top">—</div>
+        <div class="status-meta" id="status-asm-meta">—</div>
+      </a>
+      <a class="status-card" data-slot="local" href="history.html?type=local">
+        <div class="status-label">지방정부 · 지선</div>
+        <div class="status-value" id="status-local-name">—</div>
+        <div class="status-meta" id="status-local-meta">—</div>
+      </a>
+    </div>
   </section>
 
   <section class="dash-section">
