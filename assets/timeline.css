@@ -1,0 +1,129 @@
+/* timeline.html — 역대 선거 그리드 */
+
+.tl-controls { margin: 16px 0; }
+
+.tl-viz { position: relative; min-height: 200px; }
+
+.tl-table {
+  display: grid;
+  /* row: [라벨 콤팩트] [17 시도 cells] [meta] */
+  grid-template-columns: 200px 1fr 120px;
+  gap: 6px 12px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.tl-row {
+  display: contents;
+}
+
+/* 종류 아이콘 옆 라벨 */
+.tl-meta {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px 0;
+}
+.tl-meta .tl-label {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 13px;
+  display: inline-flex; align-items: baseline; gap: 6px;
+}
+.tl-meta .tl-kind {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.tl-meta .tl-kind.pres { background: #c8553d; }
+.tl-meta .tl-kind.gen  { background: #2e7d6f; }
+.tl-meta .tl-kind.local{ background: #b07e3d; }
+.tl-meta .tl-date {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* 시도 cells grid (17 cols) */
+.tl-sidos {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+  gap: 2px;
+  height: 30px;
+}
+.tl-sido-cell {
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  position: relative;
+}
+.tl-sido-cell:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 1px var(--ink);
+  z-index: 5;
+}
+.tl-sido-cell.no-data {
+  background: var(--bg3, #e6e9ef);
+}
+
+/* 우측 meta — 당선자(대선)·turnout */
+.tl-right {
+  display: flex; flex-direction: column; gap: 2px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-align: right;
+}
+.tl-right .tl-winner {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+/* 시도 column 헤더 */
+.tl-header {
+  display: contents;
+}
+.tl-header-empty {}
+.tl-header-sidos {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+  gap: 2px;
+  font-size: 9px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.tl-header-sidos > span { padding: 2px 0; }
+
+/* 행 hover 약한 강조 */
+.tl-row-link {
+  display: contents;
+  cursor: pointer;
+}
+.tl-row-link:hover .tl-meta .tl-label { color: var(--accent, #c8553d); }
+
+/* 필터 dim */
+.tl-row.is-dimmed { opacity: 0.18; pointer-events: none; transition: opacity 0.15s; }
+.tl-row { transition: opacity 0.15s; }
+
+/* 예정·예측 회차 — sidos 회색 dim + 우측 태그 */
+.tl-row.is-upcoming .tl-sidos { opacity: 0.4; }
+.tl-row.is-upcoming .tl-meta .tl-label { color: var(--ink-soft); }
+.tl-upcoming-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--bg3);
+  color: var(--ink-soft);
+  align-self: flex-end;
+}
+
+@media (max-width: 900px) {
+  .tl-table { grid-template-columns: 130px 1fr 90px; gap: 4px 8px; }
+  .tl-meta .tl-label { font-size: 12px; }
+  .tl-right { font-size: 10px; }
+  .tl-header-sidos { font-size: 7px; }
+}

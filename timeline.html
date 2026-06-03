@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 역대 선거 타임라인</title>
+<meta name="description" content="1987년 직선제 부활 이후 모든 대선·총선·지선을 시도별 1위 정당 흐름으로.">
+<meta property="og:title" content="polis · 역대 선거 타임라인">
+<meta property="og:description" content="1987년 이후 모든 선거를 한눈에. 시도별 1위 정당의 흐름과 정권 교체.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/timeline.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/polls.css">
+<link rel="stylesheet" href="assets/timeline.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">vote</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="index.html" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="history.html" class="hdr-link">역대 선거</a>
+    <a href="timeline.html" class="hdr-link is-current">타임라인</a>
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>역대 선거 타임라인</h1>
+    <p class="lede">1987년 직선제 부활 이후 모든 대선·총선·지선을 시간순으로. 각 행은 한 회차, 가로 셀은 17 시도. 셀 색은 그 시도의 1위 정당.</p>
+  </section>
+
+  <section class="tl-controls">
+    <div class="seg" role="tablist" aria-label="선거 종류 필터">
+      <button class="seg-btn is-active" data-filter="all">전체</button>
+      <button class="seg-btn" data-filter="presidential">대선</button>
+      <button class="seg-btn" data-filter="national_assembly">총선</button>
+      <button class="seg-btn" data-filter="local">지선</button>
+    </div>
+  </section>
+
+  <section class="tl-viz">
+    <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
+    <div id="tl-table" class="tl-table" hidden></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">데이터 출처 · 중앙선거관리위원회 선거통계시스템</a>
+    </div>
+    <p class="fine">시도별 1위 정당: 대선·지선 광역단체장 = 시도지사 race 1위, 총선 = 그 시도 지역구 의석 최다 정당. 1987 이전·1995 이전(지선) 일부 회차는 데이터 미수집(회색). 행 클릭 시 그 회차 상세 결과(역대 선거)로.</p>
+  </footer>
+</main>
+
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/timeline.js"></script>
+<script src="assets/theme.js"></script>
+</body>
+</html>
