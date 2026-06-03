@@ -1717,23 +1717,33 @@ function renderParliamentChart(parties, total, width = 320, height = 170) {
 
 // === Detail Pane ===
 
+// 회차별 archive 페이지 매핑 — 회차 detail에서 link 노출.
+const ARCHIVE_PAGES = {
+  'local|9': '/archive/9th-local-2026/',
+};
+
 function renderDetail() {
   const pane = $('#detail-pane');
   const list = state.elections[state.type]?.elections || [];
   const el = list.find((x) => x.n === state.n);
+  const archiveHref = ARCHIVE_PAGES[`${state.type}|${state.n}`];
+  const archiveBanner = archiveHref
+    ? `<a class="archive-banner" href="${archiveHref}">📁 이 회차 아카이브 — 예측 vs 실제·여론조사·재보궐 →</a>`
+    : '';
 
   if (!state.results) {
     pane.innerHTML = `<div class="detail-empty">
       <strong>${TYPE_LABEL[state.type].ko} ${state.n}회</strong>
       ${el ? `(${el.date})` : ''}
       <br><br>데이터를 아직 수집하지 않았습니다.
+      ${archiveBanner}
     </div>`;
     return;
   }
 
   const data = activeOfficeData();
   const nat = data?.national;
-  let html = '';
+  let html = archiveBanner;
   if (state.type === 'national_assembly' && nat) {
     // 정당별 총 의석 (지역구 winner_party 카운트 + 비례 의석)
     const seatsByParty = new Map();

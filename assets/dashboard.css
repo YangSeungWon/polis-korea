@@ -211,3 +211,25 @@
   font-size: 10px;
 }
 .status-card-timeline .status-value, .status-card-timeline .status-meta { text-align: left; }
+
+/* section head with link */
+.dash-section-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  margin-bottom: 14px;
+}
+.dash-section-head .dash-section-title,
+.dash-section-head .dash-section-sub { margin-bottom: 4px; }
+.dash-section-head > div:first-child { flex: 1; }
+.dash-section-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent, #c8553d);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid var(--accent, #c8553d);
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.08s;
+}
+.dash-section-link:hover { background: var(--accent, #c8553d); color: #fff; }

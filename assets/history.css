@@ -185,3 +185,23 @@
 .viz .hex-pane { background: var(--bg); }
 
 /* foot reuse polls.css .foot */
+
+/* archive 회차 페이지 link banner */
+.archive-banner {
+  display: block;
+  background: var(--bg3);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--accent, #c8553d);
+  border-radius: 3px;
+  padding: 10px 14px;
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.08s;
+}
+.archive-banner:hover {
+  background: var(--accent, #c8553d);
+  color: #fff;
+}
