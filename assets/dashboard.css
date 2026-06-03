@@ -135,15 +135,18 @@
   margin-top: auto;
 }
 
-/* 인덱스 섹션 구분 */
-.dash-section { margin: 0 0 36px; }
-.dash-section + .dash-section { padding-top: 18px; border-top: 1px solid var(--rule); }
+/* 인덱스 섹션 구분 — 굵은 horizontal rule로 명확히 */
+.dash-section {
+  margin: 0 0 56px;
+  padding-top: 32px;
+  border-top: 2px solid var(--ink);
+}
 .dash-section-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--ink);
   margin: 0 0 4px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 .dash-section-sub {
   font-size: 13px;
@@ -246,7 +249,7 @@
 
 /* status overview v2 — 가로 시간축 strip + 3 카드 row */
 .status-overview-v2 {
-  margin: 0 0 22px;
+  margin: 0 0 48px;
   display: flex;
   flex-direction: column;
   gap: 14px;
