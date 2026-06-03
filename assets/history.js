@@ -1334,8 +1334,8 @@ function renderSigunguHex() {
         txt.setAttribute('text-anchor', 'middle');
         txt.setAttribute('font-weight', '700');
         txt.setAttribute('fill', '#0a0e1a');
-        txt.setAttribute('stroke', 'rgba(255,255,255,0.9)');
-        txt.setAttribute('stroke-width', '2.2');
+        txt.setAttribute('stroke', 'rgba(255,255,255,0.92)');
+        txt.setAttribute('stroke-width', '3.5');
         txt.setAttribute('paint-order', 'stroke fill');
         txt.setAttribute('pointer-events', 'none');
         txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
