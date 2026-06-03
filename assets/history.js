@@ -1280,6 +1280,7 @@ function renderSigunguHex() {
       for (let k = 0; k < rem; k++) floors[fracs[k].i] += 1;
       return floors;
     }
+    let selectedG = null;
     for (const d of data) {
       const result = resultForSigungu(d.sido, d.name);
       if (!result?.voted) continue;
@@ -1304,9 +1305,9 @@ function renderSigunguHex() {
       // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
       const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
       sigOutline.setAttribute('points', hexPoints(cx0, cy0, 22));
-      sigOutline.setAttribute('fill', isSelected ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.35)');
+      sigOutline.setAttribute('fill', isSelected ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.35)');
       sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(27,34,55,0.45)');
-      sigOutline.setAttribute('stroke-width', isSelected ? '1.8' : '1.0');
+      sigOutline.setAttribute('stroke-width', isSelected ? '3.5' : '1.0');
       g.appendChild(sigOutline);
       // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
       const spiral = hexSpiral(N);
@@ -1326,45 +1327,61 @@ function renderSigunguHex() {
         // 작은 hex는 stroke 없음 — selected는 큰 outline에서만 강조.
         g.appendChild(poly);
       }
-      // 시군구 라벨 — cell 상단으로 이동해 spiral(중앙) 안 가림. N 작은 시군구도 색 보임.
+      // 시군구 라벨 — short(시군구 약칭)만 cell 상단에 작게. 시도 prefix는 cluster centroid에 별도(아래).
       const label = shortSigunguLabel(d.name, d.sido);
       if (label.short) {
         const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         txt.setAttribute('x', cx0);
         txt.setAttribute('text-anchor', 'middle');
+        txt.setAttribute('y', cy0 - 8);
+        txt.setAttribute('font-size', label.short.length > 3 ? '6' : '8');
         txt.setAttribute('font-weight', '700');
         txt.setAttribute('fill', '#0a0e1a');
         txt.setAttribute('stroke', 'rgba(255,255,255,0.92)');
-        txt.setAttribute('stroke-width', '3.5');
+        txt.setAttribute('stroke-width', '3');
         txt.setAttribute('paint-order', 'stroke fill');
         txt.setAttribute('pointer-events', 'none');
         txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-        if (label.prefix) {
-          // prefix(작게) 위 + short(메인) 아래 — 둘 다 cell 상단 영역
-          const tp1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-          tp1.setAttribute('x', cx0);
-          tp1.setAttribute('y', cy0 - 14);
-          tp1.setAttribute('font-size', '6');
-          tp1.setAttribute('opacity', '0.75');
-          tp1.textContent = label.prefix;
-          txt.appendChild(tp1);
-          const tp2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-          tp2.setAttribute('x', cx0);
-          tp2.setAttribute('y', cy0 - 5);
-          tp2.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
-          tp2.textContent = label.short;
-          txt.appendChild(tp2);
-        } else {
-          txt.setAttribute('y', cy0 - 10);
-          txt.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
-          txt.textContent = label.short;
-        }
+        txt.textContent = label.short;
         g.appendChild(txt);
       }
       svg.appendChild(g);
+      if (isSelected) selectedG = g;
     }
     // 시도 경계 굵은 선 — 격자 모드도 cell 위치가 동일 모드와 같으므로 적용 가능.
     drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
+    // 시도별 centroid에 큰 시도명 한 번 — 각 cell prefix 대신 cluster 단위 표시.
+    const sidoCenters = new Map();
+    for (const d of data) {
+      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+      const k = d.sido;
+      const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
+      c.sx += cx; c.sy += cy; c.n += 1;
+      sidoCenters.set(k, c);
+    }
+    for (const [sido, c] of sidoCenters) {
+      const lbl = SIDO_LABEL_SHORT[sido] || sido;
+      const tx = c.sx / c.n;
+      const ty = c.sy / c.n;
+      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      t.setAttribute('x', tx);
+      t.setAttribute('y', ty);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '28');
+      t.setAttribute('font-weight', '800');
+      t.setAttribute('fill', 'rgba(10,14,26,0.32)');
+      t.setAttribute('stroke', 'rgba(255,255,255,0.78)');
+      t.setAttribute('stroke-width', '5');
+      t.setAttribute('paint-order', 'stroke fill');
+      t.setAttribute('pointer-events', 'none');
+      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+      t.textContent = lbl;
+      svg.appendChild(t);
+    }
+    // 선택 cell을 마지막에 다시 append → SVG z-order 최상위 (인접 cell·경계선이
+    // selected outline 가리지 않게).
+    if (selectedG) svg.appendChild(selectedG);
     return;
   }
 
