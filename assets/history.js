@@ -576,6 +576,15 @@ function resultForSigungu(sido, name) {
     const parent = m[1];
     return data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === parent) || null;
   }
+  // Reverse-merge — hex name이 통합 시(name이 '○○시')인데 데이터에 분구만 있음.
+  // 21대 대선의 '화성시'(데이터: 화성시갑/을), '부천시'(부천시오정/원미/소사구) 케이스.
+  // name+자치구/선거구 분구 entries 자동 합산.
+  if (/^[가-힣]+시$/.test(name)) {
+    const escape = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const subRe = new RegExp(`^${escape}(?:[가-힣]+(?:구|군)|[갑을병정무])$`);
+    const parts = data.sigungu.filter((r) => canonSido(r.sido) === sido && subRe.test(r.name));
+    if (parts.length) return mergeSigunguResults(parts);
+  }
   return null;
 }
 
