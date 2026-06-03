@@ -487,28 +487,38 @@ const SIGUNGU_NAME_HISTORY = {
   '미추홀구':       ['남구'],            // 인천 2018 개명 전 (5/6/7회 → '남구')
   '남구':           ['미추홀구'],        // 인천 — hex가 옛 vuski GeoJSON '남구', 8회+ 데이터엔 '미추홀구'
 };
-// 시군구 hex cell lifecycle — 등장(since)/폐지(until) 시점.
-// since: 이 날짜 이전 회차에서 cell hide (행정구역 신설 — 옛 회차엔 존재 X).
-// until: 이 날짜 이후 회차에서 cell hide (행정구역 폐지·통합 — 새 회차엔 존재 X).
-// 추가 패턴 (앞으로 행정구역 변경 발생 시 한 줄씩 추가):
-//   '시도명|시군구명': { since: 'YYYY-MM-DD' }
-//   '시도명|시군구명': { until: 'YYYY-MM-DD' }
-//   '시도명|시군구명': { since: '...', until: '...' }
-// sido 이동(예: 군위군 경북→대구 2023-07)은 SIGUNGU_SIDO_HISTORY로 처리 — 별도.
+// 시군구 hex cell lifecycle — 등장(since)/폐지(until) 시점 + 이전·이후 대체 이름.
+// since: 이 날짜 이전 회차 → cell hide (신설), beforeAs 있으면 옛 행정구역 이름으로 표시.
+// until: 이 날짜 이후 회차 → cell hide (폐지), afterAs 있으면 새 이름으로 표시.
+// beforeAs/afterAs: { sido, name } — 그 시점 행정구역 alias. 데이터 매칭 + 라벨 모두 적용.
+// 추가 패턴:
+//   '시도명|시군구명': { since: 'YYYY-MM-DD', beforeAs: { sido, name } }
+//   '시도명|시군구명': { until: 'YYYY-MM-DD', afterAs: { sido, name } }
+// sido 이동(군위군 경북→대구 2023-07)은 SIGUNGU_SIDO_HISTORY로 처리 — 별도.
 const SIGUNGU_HEX_LIFECYCLE = {
+  // 세종 2012-07-01 신설 — 그 전엔 충남 연기군. 5회 시점엔 연기군으로 표시.
+  '세종특별자치시|세종시': {
+    since: '2012-07-01',
+    beforeAs: { sido: '충청남도', name: '연기군' },
+  },
   // 인천 2026-07-01 신설 — 남구 분할 → 검단·제물포구, 중구 일부 → 영종구.
   '인천광역시|검단구':   { since: '2026-07-01' },
   '인천광역시|영종구':   { since: '2026-07-01' },
   '인천광역시|제물포구': { since: '2026-07-01' },
 };
 
-function isSigunguHexActive(sido, name, electionDate) {
-  if (!electionDate) return true;
-  const lc = SIGUNGU_HEX_LIFECYCLE[`${sido}|${name}`];
-  if (!lc) return true;
-  if (lc.since && electionDate < lc.since) return false;
-  if (lc.until && electionDate >= lc.until) return false;
-  return true;
+// cell의 회차 시점 effective 정보 — null이면 hide, 객체면 {sido, name} 그 시점 행정구역.
+function effectiveCell(d, electionDate) {
+  if (!electionDate) return { sido: d.sido, name: d.name };
+  const lc = SIGUNGU_HEX_LIFECYCLE[`${d.sido}|${d.name}`];
+  if (!lc) return { sido: d.sido, name: d.name };
+  if (lc.since && electionDate < lc.since) {
+    return lc.beforeAs ? { sido: lc.beforeAs.sido, name: lc.beforeAs.name } : null;
+  }
+  if (lc.until && electionDate >= lc.until) {
+    return lc.afterAs ? { sido: lc.afterAs.sido, name: lc.afterAs.name } : null;
+  }
+  return { sido: d.sido, name: d.name };
 }
 // 1 hex ↔ N 데이터 합산 (분할구 → 통합 시 vote 합산).
 // hex는 이제 통합도시 1 cell — 옛 역대 데이터(일반구 분할)는 합산해서 표시.
@@ -1196,9 +1206,13 @@ function renderSigunguHex() {
   //   2) 데이터 매칭 — 그 회차에 결과 없는 cell 자동 숨김
   const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
   const electionDate = el?.date || '';
-  data = data.filter((d) =>
-    isSigunguHexActive(d.sido, d.name, electionDate) && resultForSigungu(d.sido, d.name)
-  );
+  // 각 cell에 그 시점 effective sido/name 주입 후 매칭 — beforeAs/afterAs 처리 일관.
+  data = data.flatMap((d) => {
+    const eff = effectiveCell(d, electionDate);
+    if (!eff) return [];
+    if (!resultForSigungu(eff.sido, eff.name)) return [];
+    return [{ ...d, sido: eff.sido, name: eff.name }];
+  });
   const cs = data.map((d) => d.c);
   const rs = data.map((d) => d.r);
   const minC = Math.min(...cs), minR = Math.min(...rs);
