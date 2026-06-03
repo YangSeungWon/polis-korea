@@ -39,26 +39,22 @@
       `${lastPres.label} · ${lastPres.date} 당선${remDays > 0 ? ` · 잔여 ${remY}년 ${remM}개월` : ''}`;
   }
 
-  // 2) 현 국회 = 가장 최근 national_assembly 회차 + sidoWinners 합산
+  // 2) 현 국회 = 가장 최근 national_assembly 회차. 반 도넛으로 시각화.
   const lastAsm = past.find((r) => r.kind === 'national_assembly');
   if (lastAsm) {
     const sw = lastAsm.sidoWinners || {};
     const seatsByParty = {};
-    let totalDistricts = 0;
     for (const sido of Object.keys(sw)) {
       const w = sw[sido];
       if (w && w.party && w.seats) {
         seatsByParty[w.party] = (seatsByParty[w.party] || 0) + w.seats;
-        totalDistricts += w.total || w.seats;
       }
     }
-    const sorted = Object.entries(seatsByParty).sort((a, b) => b[1] - a[1]).slice(0, 3);
+    const sorted = Object.entries(seatsByParty).sort((a, b) => b[1] - a[1]);
+    const total = sorted.reduce((s, [, v]) => s + v, 0);
     const topEl = document.getElementById('status-asm-top');
-    if (sorted.length) {
-      topEl.innerHTML = sorted.map(([p, s]) => {
-        const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
-        return `<span style="color:${col}">${p} ${s}</span>`;
-      }).join(' · ');
+    if (sorted.length && total > 0) {
+      topEl.innerHTML = renderHalfDonut(sorted, total);
     }
     document.getElementById('status-asm-meta').textContent =
       `${lastAsm.label} · ${lastAsm.date} 선출 · 임기 4년`;
@@ -77,8 +73,7 @@
   // 4) 다음 선거 = 가장 가까운 미래 회차 (active 우선, 그 다음 예측)
   const next = future[0];
   if (next) {
-    document.getElementById('status-next-name').textContent =
-      `${next.label}${next.predicted ? ' (예측)' : ''}`;
+    document.getElementById('status-next-name').textContent = next.label;
     const dDays = daysBetween(next.date);
     document.getElementById('status-next-meta').textContent =
       `${next.date} · ${dDays > 0 ? `D-${dDays}` : dDays === 0 ? '오늘' : `D+${-dDays}`}`;
@@ -86,3 +81,33 @@
 
   root.hidden = false;
 })();
+
+// 반 도넛 의석 차트 — sorted=[[party, seats], ...] 의석수 내림차순, total=총 의석.
+// 좌→우 호로 정당 색 분포. 60px 높이 SVG.
+function renderHalfDonut(sorted, total) {
+  const W = 200, H = 70, cx = W / 2, cy = H - 8, rOut = 56, rIn = 36;
+  // 좌→우 순서: 좌측 = 진보(파랑계열), 우측 = 보수(빨강계열) — 의석수 큰 정당 좌측부터
+  // 단순화: sorted 순서대로 좌→우.
+  let accAngle = Math.PI;  // π = 좌측 끝
+  const arcs = sorted.map(([party, seats]) => {
+    const span = (seats / total) * Math.PI;
+    const a0 = accAngle, a1 = accAngle - span;  // 시계방향(음수)
+    accAngle = a1;
+    const color = (typeof partyColor === 'function') ? partyColor(party) : '#999';
+    const p1 = polarToXY(cx, cy, rOut, a0);
+    const p2 = polarToXY(cx, cy, rOut, a1);
+    const p3 = polarToXY(cx, cy, rIn, a1);
+    const p4 = polarToXY(cx, cy, rIn, a0);
+    const large = span > Math.PI ? 1 : 0;
+    const d = `M${p1.x},${p1.y} A${rOut},${rOut} 0 ${large} 0 ${p2.x},${p2.y} L${p3.x},${p3.y} A${rIn},${rIn} 0 ${large} 1 ${p4.x},${p4.y} Z`;
+    return `<path d="${d}" fill="${color}"><title>${party} ${seats}석</title></path>`;
+  }).join('');
+  // 중앙 총 의석 텍스트
+  const cnt = `<text x="${cx}" y="${cy - 6}" text-anchor="middle" font-size="16" font-weight="800" fill="var(--ink)" font-family="Pretendard, system-ui, sans-serif">${total}</text>`;
+  const lbl = `<text x="${cx}" y="${cy + 6}" text-anchor="middle" font-size="9" fill="var(--ink-soft)" font-family="Pretendard, system-ui, sans-serif">지역구</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">${arcs}${cnt}${lbl}</svg>`;
+}
+
+function polarToXY(cx, cy, r, angle) {
+  return { x: cx + r * Math.cos(angle), y: cy - r * Math.sin(angle) };
+}
