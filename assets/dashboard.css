@@ -329,3 +329,42 @@
   color: var(--ink);
   z-index: 1;
 }
+
+/* 대통령 카드 — 후보 득표 막대 */
+.status-card .cand-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 8px;
+  width: 100%;
+}
+.status-card .cand-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 36px;
+  gap: 6px;
+  align-items: center;
+  font-size: 11px;
+}
+.status-card .cand-name {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+.status-card .cand-bar {
+  display: block;
+  height: 8px;
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+}
+.status-card .cand-fill {
+  display: block;
+  height: 100%;
+}
+.status-card .cand-pct {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}

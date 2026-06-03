@@ -34,24 +34,27 @@
       })();
       headingEl.innerHTML = `<span class="card-heading-n">${lastPres.label}</span><span class="card-heading-date">${lastPres.date}</span>`;
     }
-    // 임기 progress bar
-    const startDate = new Date(lastPres.date);
     const endDate = new Date(lastPres.date);
     endDate.setFullYear(endDate.getFullYear() + 5);
-    const totalMs = endDate - startDate;
-    const elapsedMs = today - startDate;
-    const pct = Math.max(0, Math.min(100, (elapsedMs / totalMs) * 100));
     const remDays = Math.ceil((endDate - today) / 86400000);
     const remY = Math.floor(remDays / 365);
     const remM = Math.floor((remDays % 365) / 30);
     const result = lastPres.winner
       ? `<div class="pres-result">${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color}">${party}</span>` : ''}</div>`
       : '<div class="pres-result">—</div>';
-    const progress = `<div class="term-progress" title="임기 ${pct.toFixed(1)}% 경과">
-        <div class="term-bar" style="width:${pct.toFixed(1)}%;background:${color}"></div>
-        <div class="term-pct">${Math.round(pct)}%</div>
-      </div>`;
-    document.getElementById('status-pres-name').innerHTML = result + progress;
+    // 전체 후보 득표 % 가로 막대 (상위 4명).
+    const cands = (lastPres.presCandidates || []).slice(0, 4);
+    const candHtml = cands.length
+      ? `<div class="cand-bars">` + cands.map((c) => {
+          const cc = (typeof partyColor === 'function') ? partyColor(c.party) : '#999';
+          return `<div class="cand-row">
+            <span class="cand-name">${c.name}</span>
+            <span class="cand-bar"><span class="cand-fill" style="width:${c.pct}%;background:${cc}"></span></span>
+            <span class="cand-pct">${c.pct.toFixed(1)}</span>
+          </div>`;
+        }).join('') + `</div>`
+      : '';
+    document.getElementById('status-pres-name').innerHTML = result + candHtml;
     document.getElementById('status-pres-meta').textContent =
       remDays > 0 ? `임기 5년 · 잔여 ${remY}년 ${remM}개월` : '임기 종료';
   }

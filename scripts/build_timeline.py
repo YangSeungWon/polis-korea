@@ -74,6 +74,21 @@ def canon_sido(s: str) -> str:
     return {"강원도": "강원특별자치도", "전라북도": "전북특별자치도", "제주도": "제주특별자치도"}.get(s, s)
 
 
+def pres_candidates_top(races: list[dict]) -> list[dict]:
+    """대선 회차의 nation race 후보 list (votes desc)."""
+    nat = next((r for r in races if r.get("scope") == "nation" and r.get("sg_typecode") == "1"), None)
+    if not nat:
+        return []
+    cands = list(nat.get("candidates") or [])
+    cands.sort(key=lambda c: c.get("votes", 0) or 0, reverse=True)
+    return [{
+        "name": c.get("name"),
+        "party": c.get("party"),
+        "votes": c.get("votes", 0),
+        "pct": c.get("pct", 0),
+    } for c in cands]
+
+
 def sido_winners_from_new_schema(races: list[dict], kind: str) -> dict:
     """새 schema races → 시도별 1위 정당.
     - presidential: scope=sido tc=1
@@ -176,6 +191,7 @@ def main():
             path_name = NEW_PATHS.get((n, kind))
             sido_winners = {}
             party_seats = []
+            pres_cands = []
             if path_name:
                 p = RESULTS / path_name
                 if p.exists():
@@ -183,6 +199,7 @@ def main():
                     races = raw.get("races", [])
                     sido_winners = sido_winners_from_new_schema(races, kind)
                     party_seats = party_total_seats(races, kind, n)
+                    pres_cands = pres_candidates_top(races) if kind == "presidential" else []
             label_short = KIND_LABEL[kind]
             entry = {
                 "kind": kind,
@@ -196,6 +213,8 @@ def main():
             }
             if party_seats:
                 entry["partySeats"] = party_seats
+            if pres_cands:
+                entry["presCandidates"] = pres_cands
             out_rounds.append(entry)
 
     # 향후 예정 선거 (data/elections/index.json active + 주기 기반 예측 ~10년).
