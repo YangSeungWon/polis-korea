@@ -1552,8 +1552,7 @@
       "winner": null,
       "winner_party": null,
       "turnout": null,
-      "sidoWinners": {},
-      "upcoming": true
+      "sidoWinners": {}
     },
     {
       "kind": "national_assembly",
@@ -1568,10 +1567,10 @@
       "predicted": true
     },
     {
-      "kind": "local",
-      "n": 10,
-      "date": "2030-06-01",
-      "label": "10대 지선",
+      "kind": "presidential",
+      "n": 22,
+      "date": "2030-06-03",
+      "label": "22대 대선",
       "winner": null,
       "winner_party": null,
       "turnout": null,
@@ -1580,10 +1579,10 @@
       "predicted": true
     },
     {
-      "kind": "presidential",
-      "n": 22,
+      "kind": "local",
+      "n": 10,
       "date": "2030-06-03",
-      "label": "22대 대선",
+      "label": "10대 지선",
       "winner": null,
       "winner_party": null,
       "turnout": null,
@@ -1606,7 +1605,7 @@
     {
       "kind": "local",
       "n": 11,
-      "date": "2034-06-01",
+      "date": "2034-06-03",
       "label": "11대 지선",
       "winner": null,
       "winner_party": null,

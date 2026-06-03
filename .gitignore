@@ -22,3 +22,4 @@ data/*.xls
 !data/raw/nec_candidate_office.json
 # 예외: NEC 등록후보 명부 (산점도 등록/사전거론 구분용·런타임 fetch·공개데이터)
 !data/raw/nec_roster_9th.json
+*.manual.bak

@@ -1,4 +1,4 @@
-// 2026 국회의원 재·보궐선거 여론조사 — vote.ysw.kr/byelection
+// 2026 국회의원 재·보궐선거 여론조사 — polis.ysw.kr/byelection
 // 데이터: data/polls/byelection.json (build_byelection.py). 의존: parties.js, utils.js, Leaflet.
 
 const BLACKOUT_START = new Date('2026-05-28T00:00:00+09:00');

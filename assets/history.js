@@ -1,4 +1,4 @@
-// 역대 선거 결과 페이지 — vote.ysw.kr/history
+// 역대 선거 결과 페이지 — polis.ysw.kr/history
 // 데이터: data/elections.json (회차 목록), data/results/{type}_{n}.json (결과)
 // 의존: regions.js, parties.js (SIDO_HEX_LAYOUT 포함), utils.js
 
