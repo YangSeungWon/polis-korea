@@ -1245,11 +1245,15 @@ def manual_layout(cells):
     row_off = 0
     layout_zone_N(by_sido, plan_N, n_col_offset, row_off)
     row_off += plan_N['zone_H']
+    s_row_start = row_off
     layout_zone_S(by_sido, plan_S, s_col_offset, row_off)
     row_off += plan_S['zone_H']
-    # 제주는 S zone에서 1 행 떨어뜨려 배치 (섬 분리감)
+    # 제주는 호남 실제 cells bot에서 1 행 떨어뜨려 배치 (영남 길이 무관)
     if plan_P['zone_H'] > 0:
-        row_off += 1
+        ho_sidos = ['전북특별자치도', '전라북도', '전라남도', '광주광역시']
+        ho_rows = [c['r'] for s in ho_sidos for c in by_sido.get(s, []) if 'r' in c]
+        if ho_rows:
+            row_off = max(ho_rows) + 2  # 호남 실제 bot + 1 row gap
     layout_zone_P(by_sido, plan_P, p_col_offset, row_off)
     row_off += plan_P['zone_H']
 
