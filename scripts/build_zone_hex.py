@@ -322,13 +322,14 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         partial_align='right_top',  # 미달 시 우측 outer
     )
     # bot wrap: inner_row+inner_H..inner_row+inner_H+bot_h-1, cols 인천 아래까지 확장
+    # partial 우측 (강원 옆 채워, 좌측 outer는 인천 아래라 자연)
     fill_rect(
         bot_cells,
         col_start=inner_col - bot_extra_left,
         row_start=inner_row + inner_H,
         W=bot_w, H=bot_h,
         sort_key=None,
-        partial_align='left_bot',  # 미달 시 아래쪽 outer
+        partial_align='right_bot',
     )
 
 
