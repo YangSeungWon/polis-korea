@@ -278,3 +278,31 @@
 @media (max-width: 800px) {
   .status-cards-row { grid-template-columns: 1fr; }
 }
+
+/* 국회 카드 정당 범례 */
+.status-card .party-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  justify-content: center;
+  text-align: center;
+}
+.status-card .party-legend .leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.status-card .party-legend .leg-item b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.status-card .party-legend .leg-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.status-card .party-legend .leg-other b { color: var(--ink-soft); }

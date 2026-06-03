@@ -71,7 +71,6 @@
       headingEl.innerHTML = `<span class="card-heading-n">${lastAsm.label}</span><span class="card-heading-date">${lastAsm.date}</span>`;
     }
     if (sorted.length && total > 0) {
-      // parliament half-donut dots (history.html detail pane와 동일 디자인).
       const parties = sorted.map(([party, seats]) => ({
         party, seats,
         color: (typeof partyColor === 'function') ? partyColor(party) : '#999',
@@ -79,8 +78,17 @@
       const chart = (typeof renderParliamentChart === 'function')
         ? renderParliamentChart(parties, total, 260, 130)
         : '';
+      // 범례: 상위 3 정당 + 나머지 합산
+      const topN = 3;
+      const top = parties.slice(0, topN);
+      const restSeats = parties.slice(topN).reduce((s, p) => s + p.seats, 0);
+      const legendHtml = top.map((p) =>
+        `<span class="leg-item"><span class="leg-dot" style="background:${p.color}"></span><b>${p.seats}</b> ${p.party}</span>`
+      ).join('')
+      + (restSeats ? `<span class="leg-item leg-other"><b>${restSeats}</b> 외 ${parties.length - topN}당</span>` : '');
       document.getElementById('status-asm-top').innerHTML =
-        `<div class="parliament-wrap-mini">${chart}<div class="parliament-total">${total}석</div></div>`;
+        `<div class="parliament-wrap-mini">${chart}<div class="parliament-total">${total}석</div></div>`
+        + `<div class="party-legend">${legendHtml}</div>`;
     }
     document.getElementById('status-asm-meta').textContent = `임기 4년`;
   }
@@ -136,8 +144,8 @@
 })();
 
 function renderTimelineStrip(rounds, today, tStart, tEnd) {
-  const W = 1100, H = 90;
-  const padL = 60, padR = 60;
+  const W = 1100, H = 110;
+  const padL = 30, padR = 30;
   const inner = W - padL - padR;
   const span = tEnd - tStart;
   const xOf = (d) => padL + ((new Date(d) - tStart) / span) * inner;
@@ -147,12 +155,10 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
   // 라인
   const line = `<line x1="${padL}" y1="${H/2}" x2="${W - padR}" y2="${H/2}" stroke="rgba(10,14,26,0.18)" stroke-width="1.5"/>`;
 
-  // 시작/끝 연도 label
-  const yLabel = (d, anchor, x) => `<text x="${x}" y="${H/2 + 20}" text-anchor="${anchor}" font-size="10" fill="#8a93a3" font-family="Pretendard, system-ui, sans-serif">${new Date(d).getFullYear()}</text>`;
-
   // round dots
   let dots = '';
-  // 오늘과 충돌 방지 위해 label 위/아래 alternating
+  const unitOf = { presidential: '대', national_assembly: '대', local: '회' };
+  // 위/아래 alternating — 회차명·연도 두 줄.
   rounds.forEach((r, i) => {
     const x = xOf(r.date);
     const isPast = !r.upcoming;
@@ -160,13 +166,18 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     const fill = isPast ? col : 'rgba(255,255,255,0.85)';
     const stroke = col;
     const r0 = 5.5;
-    const labelY = (i % 2 === 0) ? H/2 - 14 : H/2 + 24;
-    const labelText = `${r.n}${kindShort[r.kind]}`;
+    const above = (i % 2 === 0);
+    // 위: 회차명 위, 연도 더 위 / 아래: 회차명 아래, 연도 더 아래
+    const yName = above ? H/2 - 14 : H/2 + 22;
+    const yYear = above ? H/2 - 25 : H/2 + 33;
+    const labelName = `${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}`;
+    const year = r.date.slice(0, 4);
     dots += `
       <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}">
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
         <circle cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.6}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
-        <text x="${x}" y="${labelY}" text-anchor="middle" font-size="10.5" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelText}</text>
+        <text x="${x}" y="${yName}" text-anchor="middle" font-size="11" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
+        <text x="${x}" y="${yYear}" text-anchor="middle" font-size="9" fill="#8a93a3" font-family="Pretendard, system-ui, sans-serif">${year}</text>
       </g>
     `;
   });
@@ -174,15 +185,13 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
   // 오늘 dot (더 큼, 다크)
   const tx = xOf(today.toISOString().slice(0, 10));
   const todayDot = `
-    <line x1="${tx}" y1="${H/2 - 18}" x2="${tx}" y2="${H/2 + 18}" stroke="#0a0e1a" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.4"/>
+    <line x1="${tx}" y1="${H/2 - 22}" x2="${tx}" y2="${H/2 + 22}" stroke="#0a0e1a" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.4"/>
     <circle cx="${tx}" cy="${H/2}" r="6.5" fill="#0a0e1a"/>
-    <text x="${tx}" y="${H - 4}" text-anchor="middle" font-size="11" font-weight="800" fill="#0a0e1a" font-family="Pretendard, system-ui, sans-serif">오늘</text>
+    <text x="${tx}" y="${H/2 + 6}" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Pretendard, system-ui, sans-serif" style="pointer-events:none">오늘</text>
   `;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
     ${line}
-    ${yLabel(tStart, 'start', padL)}
-    ${yLabel(tEnd, 'end', W - padR)}
     ${dots}
     ${todayDot}
   </svg>`;
