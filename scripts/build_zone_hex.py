@@ -322,15 +322,31 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
         partial_align='right_top',  # 미달 시 우측 outer
     )
     # bot wrap: inner_row+inner_H..inner_row+inner_H+bot_h-1, cols 인천 아래까지 확장
-    # partial 우측 (강원 옆 채워, 좌측 outer는 인천 아래라 자연)
-    fill_rect(
-        bot_cells,
-        col_start=inner_col - bot_extra_left,
-        row_start=inner_row + inner_H,
-        W=bot_w, H=bot_h,
-        sort_key=None,
-        partial_align='right_bot',
-    )
+    # column-major from RIGHT: 동쪽 col (강원 옆) 우선 full bot_h, partial col은 westmost.
+    # 이유: row-major 'right_bot'은 마지막 row가 좌측 잘려 보임 → bot row 항상 full로 유지.
+    # partial col bot-align → westmost col 위쪽 빈자리 (인천 아래 notch, 자연 흡수).
+    bot_col_start = inner_col - bot_extra_left
+    bot_row_start = inner_row + inner_H
+    if bot_cells and bot_w > 0 and bot_h > 0:
+        bot_by_lon = sorted(bot_cells, key=lambda c: -c['lon'])
+        n_bot = len(bot_by_lon)
+        full_cols = n_bot // bot_h
+        remainder = n_bot - full_cols * bot_h
+        idx = 0
+        for batch_idx in range(full_cols):
+            col_global = (bot_w - 1) - batch_idx
+            col_cells = sorted(bot_by_lon[idx:idx + bot_h], key=lambda c: -c['lat'])
+            for row_idx, cell in enumerate(col_cells):
+                cell['c'] = bot_col_start + col_global
+                cell['r'] = bot_row_start + row_idx
+            idx += bot_h
+        if remainder > 0:
+            col_global = (bot_w - 1) - full_cols
+            col_cells = sorted(bot_by_lon[idx:idx + remainder], key=lambda c: -c['lat'])
+            row_offset_partial = bot_h - remainder  # bot-align
+            for row_idx, cell in enumerate(col_cells):
+                cell['c'] = bot_col_start + col_global
+                cell['r'] = bot_row_start + row_offset_partial + row_idx
 
 
 def design_zone_N(zone_cells_by_sido):
@@ -379,9 +395,9 @@ def design_zone_N(zone_cells_by_sido):
             for bot_h in range(1, 6):
                 cap = top_h * top_w + in_extra_top_row + right_w * inner_H + bot_h * bot_w
                 if cap >= n_gg:
-                    # Bridge 조건: bot 첫 row가 bot_w 전체 채워야 right wrap과 연결
+                    # Bridge 조건 (column-major bot): 동쪽 col 최소 1개 full → bot row 최우측 채움 + right wrap 연결
                     bot_cells = n_gg - top_h * top_w - right_w * inner_H
-                    if bot_cells < bot_w:
+                    if bot_cells < bot_h:
                         continue
                     waste = cap - n_gg
                     top_heavy = max(0, top_h - bot_h)
@@ -1029,15 +1045,36 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
       인천 [경기 bot 위 서울]
     """
     inner_row = row_offset + plan['top_h']
-    # 인천 — 서울보다 1 row 아래로 시작 (row top_h은 경기 북부가 차지)
+    # 인천 — 서울보다 1 row 아래로 시작 (row top_h은 경기 북부가 차지).
+    # column-major from RIGHT: 동쪽 col (서울 인접) 우선 채움, 빈자리는 서쪽 outer col (강화도 쪽).
+    # partial col은 bot-align (남부 인천 밀집 반영).
+    # 2-pass: (1) lon 큰 → 작은 (east first), H씩 batch로 col에 분배
+    #         (2) col 안 lat 큰 → 작은 (북 → 남)
     in_H = max(1, plan['inner_H'] - 1)
-    fill_rect(
-        zone_cells_by_sido.get('인천광역시', []),
-        col_start=col_offset, row_start=inner_row + 1,
-        W=plan['w_in'], H=in_H,
-        sort_key=None,
-        partial_align='right_bot',
-    )
+    in_cells = zone_cells_by_sido.get('인천광역시', [])
+    in_W = plan['w_in']
+    if in_cells and in_W > 0 and in_H > 0:
+        in_by_lon = sorted(in_cells, key=lambda c: -c['lon'])
+        n_in_cells = len(in_by_lon)
+        full_cols = n_in_cells // in_H
+        remainder = n_in_cells - full_cols * in_H
+        idx = 0
+        # full cols: east 먼저 (col in_W-1, in_W-2, ...)
+        for batch_idx in range(full_cols):
+            col_global = (in_W - 1) - batch_idx
+            col_cells = sorted(in_by_lon[idx:idx + in_H], key=lambda c: -c['lat'])
+            for row_idx, cell in enumerate(col_cells):
+                cell['c'] = col_offset + col_global
+                cell['r'] = inner_row + 1 + row_idx
+            idx += in_H
+        # partial col (leftmost = westernmost, col 0) — bot-aligned
+        if remainder > 0:
+            col_global = (in_W - 1) - full_cols
+            col_cells = sorted(in_by_lon[idx:idx + remainder], key=lambda c: -c['lat'])
+            row_offset_partial = in_H - remainder  # bot-align
+            for row_idx, cell in enumerate(col_cells):
+                cell['c'] = col_offset + col_global
+                cell['r'] = inner_row + 1 + row_offset_partial + row_idx
     # 서울 — 인천 우측, inner row range
     seoul_col0 = col_offset + plan['w_in']
     fill_rect(

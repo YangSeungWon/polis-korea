@@ -380,13 +380,15 @@ async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
   // 21·22대 총선만 진짜 지도 view 지원 (OhmyNews GeoJSON, MIT)
   const geoSupported = state.type === 'national_assembly' && (state.n === 21 || state.n === 22);
-  $('#display-seg').toggleAttribute('hidden', !geoSupported);
+  // 요소 누락(캐시된 옛 HTML 등)에도 깨지지 않게 null guard
+  const toggle = (sel, hide) => { const el = $(sel); if (el) el.toggleAttribute('hidden', hide); };
+  toggle('#display-seg', !geoSupported);
   const showGeo = geoSupported && state.display === 'geo';
-  $('#hex').toggleAttribute('hidden', showGeo || unit !== 'sido');
-  $('#hex2').toggleAttribute('hidden', showGeo || unit === 'sido');
-  $('#geomap').toggleAttribute('hidden', !showGeo);
+  toggle('#hex', showGeo || unit !== 'sido');
+  toggle('#hex2', showGeo || unit === 'sido');
+  toggle('#geomap', !showGeo);
   // 사이즈 토글은 시군구 hex + 표심 분포 의미 있는 type만 (대선·옛 총선). 지선·geo 모드는 숨김.
-  $('#sizing-seg').toggleAttribute('hidden', showGeo || unit !== 'sigungu' || state.type === 'local');
+  toggle('#sizing-seg', showGeo || unit !== 'sigungu' || state.type === 'local');
   if (showGeo) await renderGeoMap();
   else if (unit === 'sido') renderSidoHex();
   else if (unit === 'district') await renderDistrictHex();
@@ -1117,10 +1119,10 @@ function renderSigunguHex() {
   }
   const minRatio = 0.20;
 
-  // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 5만표)
+  // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 2만표)
   if (sizingMode === '격자' && maxVoted > 0) {
-    const unit = 50000;  // 1 hex = 5만표 (고정 — 회차·선거 동일 단위로 비교 가능)
-    const smallR = 5;
+    const unit = 20000;  // 1 hex = 2만표 (고정 — 회차·선거 동일 단위로 비교 가능)
+    const smallR = 3.2;  // unit ↓ → N ↑ (×2.5) → 면적 보존 위해 r √2.5 분의 1
     // axial 좌표 BFS 스파이럴 (1..N hex 배치)
     function hexSpiral(N) {
       const out = [[0, 0]];
@@ -1203,6 +1205,40 @@ function renderSigunguHex() {
         poly.setAttribute('stroke', isSelected ? '#0a0e1a' : 'none');
         poly.setAttribute('stroke-width', isSelected ? '1.0' : '0');
         g.appendChild(poly);
+      }
+      // 시군구 라벨 — spiral 위에 덮어 가독성. stroke로 어떤 색 위에서도 보이게.
+      const label = shortSigunguLabel(d.name, d.sido);
+      if (label.short) {
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', cx0);
+        txt.setAttribute('text-anchor', 'middle');
+        txt.setAttribute('font-weight', '700');
+        txt.setAttribute('fill', '#0a0e1a');
+        txt.setAttribute('stroke', 'rgba(255,255,255,0.85)');
+        txt.setAttribute('stroke-width', '2.2');
+        txt.setAttribute('paint-order', 'stroke fill');
+        txt.setAttribute('pointer-events', 'none');
+        txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+        if (label.prefix) {
+          const tp1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+          tp1.setAttribute('x', cx0);
+          tp1.setAttribute('y', cy0 - 2);
+          tp1.setAttribute('font-size', '6');
+          tp1.setAttribute('opacity', '0.75');
+          tp1.textContent = label.prefix;
+          txt.appendChild(tp1);
+          const tp2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+          tp2.setAttribute('x', cx0);
+          tp2.setAttribute('y', cy0 + 8);
+          tp2.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
+          tp2.textContent = label.short;
+          txt.appendChild(tp2);
+        } else {
+          txt.setAttribute('y', cy0 + 3);
+          txt.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
+          txt.textContent = label.short;
+        }
+        g.appendChild(txt);
       }
       svg.appendChild(g);
     }
