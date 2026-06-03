@@ -1,0 +1,175 @@
+/* archive 회차 전용 페이지 */
+
+.ar-breadcrumb {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 8px 0 16px;
+}
+.ar-breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.ar-breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+.ar-breadcrumb span { color: var(--ink); font-weight: 600; }
+
+/* hero */
+.ar-hero {
+  padding: 28px 0 32px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 28px;
+}
+.ar-hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule-strong);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+.ar-hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+.ar-hero-date {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+}
+.ar-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+@media (max-width: 700px) {
+  .ar-hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+.ar-stat {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+.ar-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.ar-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ar-hero-status {
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: var(--bg3);
+  padding: 10px 14px;
+  border-left: 3px solid var(--ink-mute);
+  border-radius: 2px;
+  margin: 0;
+}
+
+/* sections */
+.ar-section {
+  margin: 0 0 40px;
+  padding-top: 8px;
+}
+.ar-section-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.ar-section-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+/* prediction grid — 17 시도 */
+.ar-prediction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+.ar-pred-cell {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 10px 12px;
+  background: var(--bg2);
+}
+.ar-pred-cell.is-hit { border-left: 3px solid #2e7d6f; }
+.ar-pred-cell.is-miss { border-left: 3px solid #c8553d; }
+.ar-pred-sido { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
+.ar-pred-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: 12px;
+}
+.ar-pred-row + .ar-pred-row { margin-top: 2px; }
+.ar-pred-row .lbl { font-size: 10px; color: var(--ink-mute); }
+.ar-pred-row .party { font-weight: 700; }
+.ar-pred-row .pct { font-size: 11px; color: var(--ink-soft); margin-left: 6px; }
+.ar-pred-result { font-size: 12px; margin-top: 6px; color: var(--ink-soft); }
+
+/* polls list */
+.ar-polls-list-host {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+.ar-poll-item {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+.ar-poll-item .agency { font-weight: 700; }
+.ar-poll-item .period { color: var(--ink-soft); font-size: 11px; margin-top: 2px; }
+
+/* trend chart */
+.ar-trend-host {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 14px;
+  min-height: 280px;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* byelection */
+.ar-byelection-host {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.ar-by-card {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 12px 14px;
+  background: var(--bg2);
+}
+.ar-by-elpc { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.ar-by-reason {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: var(--bg3);
+  padding: 4px 8px;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 4px 0;
+}
+.ar-by-result { font-size: 12px; margin-top: 6px; }
+.ar-by-pending {
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-style: italic;
+}
