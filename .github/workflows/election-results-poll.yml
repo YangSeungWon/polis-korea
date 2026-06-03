@@ -85,15 +85,25 @@ jobs:
           echo "=== build_timeline ==="
           python3 scripts/build_timeline.py
 
+      # 재보궐 사유는 결과와 별도 — NEC가 사후(며칠~몇 주 후) 역대 API에
+      # 9회 byelection(2026-06-03) 사유를 옮길 때까지 매시간 체크.
+      # 결과 데이터(have_data) 여부와 무관하게 polling.
+      - name: Refresh byelection reasons
+        if: steps.window.outputs.skip != 'true'
+        env:
+          NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
+        run: |
+          python3 scripts/fetch_byelection_reasons.py || true
+
       - name: Commit & push if changed
-        if: steps.window.outputs.skip != 'true' && steps.probe.outputs.have_data == 'true'
+        if: steps.window.outputs.skip != 'true'
         run: |
           git config user.name "polis-bot"
           git config user.email "noreply@anthropic.com"
-          git add data/results/ data/timeline.json
+          git add data/results/ data/timeline.json data/byelection_reasons.json
           if git diff --staged --quiet; then
             echo "변경 없음 — push skip"
           else
-            git commit -m "지선: 9회 개표 결과 자동 갱신 ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git commit -m "polling: 9회 지선·재보궐 자동 갱신 ($(date -u +%Y-%m-%dT%H:%MZ))"
             git push
           fi
