@@ -1,0 +1,99 @@
+name: Election results polling (개표 추적)
+
+# 9회 지선(2026-06-03) 개표 동안 매시간 NEC OpenAPI polling.
+# 데이터 들어오면 자동 fetch → manifest 갱신 → timeline 재빌드 → commit/push.
+# 결과 미공개면 INFO-03 → skip (commit X).
+#
+# 활성 범위: 선거 직후 ~1주. 7일 후 자동 종료(아래 if 조건).
+on:
+  schedule:
+    # 매시간 정각 (UTC). 한국 시간 분기 9분 (KST UTC+9) — 09:00 KST = 00:00 UTC
+    - cron: '5 * * * *'
+  workflow_dispatch:
+    inputs:
+      election:
+        description: 'election id (e.g. 9th-local-2026)'
+        required: false
+        default: '9th-local-2026'
+
+concurrency:
+  group: election-poll
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    # 선거일로부터 7일까지만 동작 — 그 후 archive로 옮기고 polling 중단.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '5 * * * *' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Stop if past polling window (>7 days after election)
+        id: window
+        run: |
+          # 9회 지선 2026-06-03. D+7 = 2026-06-10. 그 후엔 skip.
+          ELECTION_DATE="2026-06-03"
+          DAYS_AFTER=$(( ( $(date -u +%s) - $(date -u -d "$ELECTION_DATE" +%s) ) / 86400 ))
+          echo "days_after=$DAYS_AFTER" >> $GITHUB_OUTPUT
+          if [ "$DAYS_AFTER" -gt 7 ]; then
+            echo "선거일로부터 ${DAYS_AFTER}일 경과 — polling 종료"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Probe NEC OpenAPI
+        if: steps.window.outputs.skip != 'true'
+        id: probe
+        env:
+          NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
+        run: |
+          # 광역단체장(tc=3) 서울 1페이지로 데이터 있는지 빠른 체크.
+          SD=$(python3 -c "import urllib.parse; print(urllib.parse.quote('서울특별시'))")
+          URL="https://apis.data.go.kr/9760000/VoteXmntckInfoInqireService2/getXmntckSttusInfoInqire?serviceKey=${NEC_API_KEY}&sgId=20260603&sgTypecode=3&sdName=${SD}&pageNo=1&numOfRows=1"
+          CODE=$(curl -s "$URL" | python3 -c "import sys,re; t=sys.stdin.read(); m=re.search(r'<resultCode>([^<]+)</resultCode>', t); print(m.group(1) if m else 'ERR')")
+          echo "result_code=$CODE" >> $GITHUB_OUTPUT
+          echo "NEC API resultCode=$CODE"
+          if [ "$CODE" = "INFO-00" ]; then
+            echo "have_data=true" >> $GITHUB_OUTPUT
+          else
+            echo "have_data=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Full fetch + rebuild
+        if: steps.window.outputs.skip != 'true' && steps.probe.outputs.have_data == 'true'
+        env:
+          NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
+        run: |
+          set -e
+          ELECTION="${{ github.event.inputs.election || '9th-local-2026' }}"
+          echo "=== fetch_nec_results: $ELECTION ==="
+          python3 scripts/fetch_nec_results.py --election "$ELECTION"
+          echo "=== merge_local_legacy_into_new ==="
+          python3 scripts/merge_local_legacy_into_new.py --rounds 9 || true
+          echo "=== rebuild_manifest ==="
+          python3 scripts/rebuild_manifest.py
+          echo "=== build_timeline ==="
+          python3 scripts/build_timeline.py
+
+      - name: Commit & push if changed
+        if: steps.window.outputs.skip != 'true' && steps.probe.outputs.have_data == 'true'
+        run: |
+          git config user.name "polis-bot"
+          git config user.email "noreply@anthropic.com"
+          git add data/results/ data/timeline.json
+          if git diff --staged --quiet; then
+            echo "변경 없음 — push skip"
+          else
+            git commit -m "지선: 9회 개표 결과 자동 갱신 ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git push
+          fi
