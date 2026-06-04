@@ -18,6 +18,8 @@
 @media (max-width: 860px) {
   .byelection-viz { grid-template-columns: 1fr; }
   .byelection-viz #boe-map { height: 380px; }
+  /* components.css의 600px 캡 + 내부 스크롤 override — 모바일에선 자연 흐름 */
+  .byelection-viz .detail-pane { max-height: none; overflow-y: visible; }
 }
 .boe-chip { font-size: 0.82rem; }
 .boe-chip.is-pollless {
