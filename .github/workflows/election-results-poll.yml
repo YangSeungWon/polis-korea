@@ -87,6 +87,25 @@ jobs:
           echo "=== build_timeline ==="
           python3 scripts/build/build_timeline.py
 
+      # OpenAPI(공식 data.go.kr)가 INFO-03(미공개)이면 NEC 개표방송 포털 fallback.
+      # info.nec.go.kr은 인증키 X·실시간 잠정값을 줘서 개표 진행 중 archive 페이지에
+      # 잠정 결과 표시. 다음 cron 주기에 OpenAPI가 INFO-00 응답하면 최종으로 덮어씀.
+      - name: Live fallback (info.nec.go.kr 잠정)
+        if: steps.window.outputs.skip != 'true' && steps.probe.outputs.have_data != 'true'
+        run: |
+          set -e
+          ELECTION="${{ github.event.inputs.election || '9th-local-2026' }}"
+          echo "=== fetch_nec_live: $ELECTION (OpenAPI 미공개 → live 포털 fallback) ==="
+          python3 scripts/fetch/fetch_nec_live.py --election "$ELECTION" || {
+            echo "live fetch 실패 — 데이터 미준비, 다음 주기에 재시도"; exit 0;
+          }
+          echo "=== chunk_results ==="
+          python3 scripts/build/chunk_results.py --id "$ELECTION" || true
+          echo "=== rebuild_manifest ==="
+          python3 scripts/build/rebuild_manifest.py
+          echo "=== build_timeline ==="
+          python3 scripts/build/build_timeline.py
+
       # 재보궐 사유는 결과와 별도 — NEC가 사후(며칠~몇 주 후) 역대 API에
       # 9회 byelection(2026-06-03) 사유를 옮길 때까지 매시간 체크.
       # 결과 데이터(have_data) 여부와 무관하게 polling.
@@ -106,6 +125,12 @@ jobs:
           if git diff --staged --quiet; then
             echo "변경 없음 — push skip"
           else
-            git commit -m "polling: 9회 지선·재보궐 자동 갱신 ($(date -u +%Y-%m-%dT%H:%MZ))"
+            # OpenAPI source면 '확정', live면 '잠정'으로 commit 메시지 구분
+            SRC=$(python3 -c "import json,sys; d=json.load(open('data/results/${{ github.event.inputs.election || '9th-local-2026' }}.json')); print(d.get('_meta',{}).get('source','openapi'))" 2>/dev/null || echo "openapi")
+            if [ "$SRC" = "nec-live-portal" ]; then
+              git commit -m "polling: 9회 지선 잠정 갱신 (live · $(date -u +%Y-%m-%dT%H:%MZ))"
+            else
+              git commit -m "polling: 9회 지선·재보궐 자동 갱신 ($(date -u +%Y-%m-%dT%H:%MZ))"
+            fi
             git push
           fi

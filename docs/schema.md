@@ -70,6 +70,7 @@ archive 페이지는 main race만 사용 (300 KB 이하). history 페이지는 c
 {
   "_meta": { "election", "election_id", "election_date",
              "fetched_at", "is_final", "n_rows",
+             "source": "openapi" | "nec-live-portal",
              "chunked": true },
   "races": [
     {
