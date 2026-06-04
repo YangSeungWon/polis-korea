@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-04T20:13:29",
+    "generated_at": "2026-06-04T20:15:41",
     "election": "22nd-general-2024",
     "election_date": "2024-04-10",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,7 +8,7 @@
     "stats": {
       "total_polls_meta": 1993,
       "matched_parsed": 1738,
-      "emitted_records": 826,
+      "emitted_records": 833,
       "skipped_no_pdf": 255,
       "skipped_no_race": 948
     }
@@ -15777,6 +15777,62 @@
       ]
     },
     {
+      "ntt_id": "14606",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14606&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "주·월간지 : 시사저널",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1009.0,
+      "response_rate": 9.7,
+      "contact_rate": 18.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-03-18",
+      "period_end": "2024-03-19",
+      "reg_date": "2024-03-21",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "3",
+      "table_title": "22대 비례대표 투표 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 18.3
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 28.5
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 1.4
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 4.6
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 22.3
+        }
+      ]
+    },
+    {
       "ntt_id": "14602",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14602&menuNo=200467",
       "agency": "넥스트리서치",
@@ -25088,6 +25144,57 @@
       ]
     },
     {
+      "ntt_id": "14266",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14266&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1015.0,
+      "response_rate": 11.8,
+      "contact_rate": 32.2,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-02-22",
+      "period_end": "2024-02-23",
+      "reg_date": "2024-02-23",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "표 7. 비례대표 투표 희망 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 39.0
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
       "ntt_id": "14090",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14090&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -25181,6 +25288,47 @@
           "name": "",
           "party": "진보당",
           "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "14079",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14079&menuNo=200467",
+      "agency": "(주)에스티아이",
+      "co_agency": "",
+      "requester": "기타 : 사장남천동",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 5.6,
+      "contact_rate": 61.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-02-17",
+      "period_end": "2024-02-18",
+      "reg_date": "2024-02-22",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "3",
+      "table_title": "가상대결 1",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.6
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 28.0
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 16.0
         }
       ]
     },
@@ -27352,6 +27500,57 @@
       ]
     },
     {
+      "ntt_id": "13949",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13949&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 805.0,
+      "response_rate": 10.4,
+      "contact_rate": 41.2,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2024-02-06",
+      "period_end": "2024-02-07",
+      "reg_date": "2024-02-07",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "표 7. 비례대표 투표 희망 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
       "ntt_id": "13948",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13948&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -27414,6 +27613,57 @@
           "name": "",
           "party": "무소속",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "13948",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13948&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 815.0,
+      "response_rate": 12.3,
+      "contact_rate": 33.5,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2024-02-06",
+      "period_end": "2024-02-07",
+      "reg_date": "2024-02-07",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "표 7. 비례대표 투표 희망 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 5.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 3.0
         }
       ]
     },
@@ -27827,6 +28077,57 @@
           "name": "",
           "party": "무소속",
           "pct": 2.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "13941",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13941&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 815.0,
+      "response_rate": 9.6,
+      "contact_rate": 44.5,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2024-02-05",
+      "period_end": "2024-02-06",
+      "reg_date": "2024-02-07",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "표 7. 비례대표 투표 희망 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 34.0
+        },
+        {
+          "name": "",
+          "party": "녹색정의당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 3.0
         }
       ]
     },
@@ -29452,6 +29753,47 @@
           "name": "",
           "party": "정의당",
           "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "13795",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13795&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1004.0,
+      "response_rate": 11.1,
+      "contact_rate": 37.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-01-29",
+      "period_end": "2024-01-30",
+      "reg_date": "2024-01-30",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "표 5. 비례대표 투표 희망 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 8.0
         }
       ]
     },

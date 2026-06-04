@@ -141,14 +141,21 @@ def accept_district_race(q: dict, roster_dist: dict[str, str]) -> list[dict] | N
 
 
 def accept_prop_race(q: dict, prop: set) -> list[dict] | None:
-    """비례 정당투표면 정제 candidates(party-only) 반환. proportional_parties anchor."""
+    """비례 정당투표면 정제 candidates(party-only) 반환. proportional_parties anchor.
+
+    폴은 위성정당(더불어민주연합·국민의미래) 대신 모정당명(더불어민주당·국민의힘)으로 묻기도
+    해서 anchor에 모정당명도 포함. 양대(민주계+국힘계)가 둘 다 있어야 의미 있는 비례 race.
+    """
+    anchor = prop | {"더불어민주당", "국민의힘"}
     keep = []
     for c in (q.get("candidates") or []):
         party = (c.get("party") or c.get("name") or "").strip()
-        if party in prop and c.get("pct") is not None:
+        if party in anchor and c.get("pct") is not None:
             keep.append({"name": "", "party": party, "pct": c["pct"]})
     parties = {c["party"] for c in keep}
-    if not (PROP_BIG <= parties) or len(keep) < 3:
+    has_dem = "더불어민주연합" in parties or "더불어민주당" in parties
+    has_ppp = "국민의미래" in parties or "국민의힘" in parties
+    if not (has_dem and has_ppp) or len(keep) < 3:
         return None
     if not normalize_pcts(keep):
         return None
@@ -318,7 +325,7 @@ def main():
     ap = argparse.ArgumentParser(description="총선 여론조사 aggregated.json build")
     ap.add_argument("--csv", default="data/raw/nesdc_22gen_polls.csv")
     ap.add_argument("--parsed", default="data/raw/parsed")
-    ap.add_argument("--out", default="data/polls/aggregated_22gen.json")
+    ap.add_argument("--out", default="data/polls/aggregated_22nd.json")
     args = ap.parse_args()
     csv_path = Path(args.csv) if Path(args.csv).is_absolute() else ROOT / args.csv
     parsed_dir = Path(args.parsed) if Path(args.parsed).is_absolute() else ROOT / args.parsed

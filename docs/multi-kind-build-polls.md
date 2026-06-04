@@ -53,6 +53,28 @@ suspect_names 0, zero_cand 0, weird_pct 0%, no-party 0. 월별 트렌드 실제 
 (이재명 40~47 선두, 김문수 5월 급등, 한덕수 4~5월 단일화 국면만 등장). 출력
 `data/polls/aggregated_21pres.json`. 실행: `python3 scripts/build/build_polls_pres.py`.
 
+## 총선 build (2026-06-04) — `scripts/build/build_polls_gen.py`
+
+대선 골격 재사용. 총선은 race 단위가 **선거구(254)**라 고정 roster 불가 → NEC 선거구별 명부
+(`nec_roster_22gen.json`, `build_roster_gen.py` 생성)로 anchor. 3 metric:
+- **후보지지(지역구)** → `국회의원`: region을 선거구 key로 정규화(중복토큰·압축갑을·오타 보정)
+  후 그 선거구 roster에 있는 후보명만 채택(≥2). 여론조사꽃류 깨진 race는 roster 미매칭으로
+  자연 탈락.
+- **비례대표** → 전국 정당투표: `proportional_parties` ∪ 모정당명(민주/국힘) anchor,
+  민주계+국힘계 둘 다 + ≥3 정당.
+- **정당지지** → 일반 정당지지(민주+국힘).
+
+결과(22대): 메타 1993 → emit **833** (정당지지 787·후보지지 39·비례 7, 지역구 31). zero/weird 0%.
+출력 `data/polls/aggregated_22nd.json` (메타 archive.polls_path 일치). 샘플 검증 정확
+(하남갑 추미애 51/이용 38, 화성을 공영운/이준석28 등).
+
+> **한계 — parse 품질**: 후보지지/비례가 적은 건 build 로직이 아니라 parse 블로커. 22대
+> PDF의 **여론조사꽃 391개(후보 race 파일의 52%)**가 괘선없는 cross-tab이라 pdfplumber가
+> 인접 숫자컬럼을 병합("36.042.70.41")·후보명을 라벨에 묻어 추출 실패. cid는 이미 정상
+> (parse_pdf_v2가 `(cid:N)` 복구). 해결하려면 **단어 x좌표 클러스터링 기반 cross-tab 추출기**가
+> 필요(후속 과제). 갤럽·한국리서치류 0-클린(~13%)도 별개 레이아웃 문제. 현재는 클린 기관
+> (리서치뷰·케이스탯·코리아정보·리얼미터 등)만 커버.
+
 > 아래는 작업 전 설계 옵션 분석 — 기록용. 실제 채택은 옵션 B.
 
 ## 설계 옵션
