@@ -77,3 +77,28 @@
   border-bottom: 1px solid var(--rule-strong);
 }
 .poll-card .pc-legal a:hover { color: var(--ink); border-color: var(--ink); }  /* leaflet tooltip 화살표 제거 */
+
+/* 선거 후 안내 banner — 회차 끝났음 표시 + archive link */
+.post-election-banner {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 10px 14px;
+  margin: 8px 0 14px;
+  border-left: 3px solid var(--ink);
+  background: var(--bg2);
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.peb-tag {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.peb-text { color: var(--ink-soft); flex: 1; min-width: 200px; }
+.peb-link {
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong, var(--ink));
+}
+.peb-link:hover { color: var(--accent, #c8553d); border-color: var(--accent, #c8553d); }

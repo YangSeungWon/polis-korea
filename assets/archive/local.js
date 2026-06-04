@@ -255,12 +255,39 @@
     document.getElementById('ar-polls-trend').hidden = false;
   }
 
+  function renderPollsLink(ctx) {
+    const polls = ctx.polls || [];
+    if (!polls.length) return;
+    const host = document.getElementById('ar-polls-link-host');
+    if (!host) return;
+    const isCurrentActive = ctx.meta.id === '9th-local-2026';
+    const pollsPageHref = isCurrentActive ? '/polls.html' : null;
+    const byOffice = {};
+    for (const p of polls) {
+      const lvl = p.office_level || '기타';
+      byOffice[lvl] = (byOffice[lvl] || 0) + 1;
+    }
+    const officeRows = Object.entries(byOffice)
+      .sort((a, b) => b[1] - a[1])
+      .map(([office, count]) => `<div class="ar-polls-link-row"><span class="ar-polls-link-office">${office}</span><span class="ar-polls-link-count">${count}건</span></div>`)
+      .join('');
+    host.innerHTML = `
+      <div class="ar-polls-link-card">
+        <div class="ar-polls-link-stat">NESDC 등록 여론조사 <b>${polls.length}건</b></div>
+        ${officeRows}
+        ${pollsPageHref ? `<a class="ar-polls-link-cta" href="${pollsPageHref}">시도·시군구 시각화 ↗</a>` : ''}
+      </div>
+    `;
+    document.getElementById('ar-polls-link').hidden = false;
+  }
+
   window.Archive.local = {
     async render(ctx) {
       // 시도별 결과 grid·폴 vs 실제·여론조사 추이는 /history.html에서 시각화로 더 강력
-      // → archive는 출구조사·재보궐만 표시
+      // → archive는 출구조사·재보궐·폴 link만 표시
       renderHero(ctx);
       renderExitPoll(ctx);
+      renderPollsLink(ctx);
       await renderByelection(ctx);
     },
   };

@@ -261,6 +261,43 @@
   color: var(--ink-soft);
 }
 
+/* 여론조사 link 카드 — archive에 폴 N건 통계 + active이면 시각화 페이지 link */
+.ar-polls-link-card {
+  border: 1px solid var(--rule);
+  padding: 14px 18px;
+  background: var(--bg2);
+}
+.ar-polls-link-stat {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.ar-polls-link-stat b { color: var(--ink); font-size: 18px; font-weight: 700; margin: 0 2px; }
+.ar-polls-link-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px;
+  padding: 4px 0;
+}
+.ar-polls-link-office { color: var(--ink-soft); }
+.ar-polls-link-count { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
+.ar-polls-link-cta {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong, var(--ink));
+}
+.ar-polls-link-cta:hover { color: var(--accent, #c8553d); border-color: var(--accent, #c8553d); }
+.ar-polls-link-note {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-style: italic;
+}
+
 /* 옛 데이터 source caveat — 위키 source 등 */
 .ar-source-caveat {
   font-size: 11px;

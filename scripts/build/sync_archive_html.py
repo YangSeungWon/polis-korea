@@ -215,6 +215,11 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
+  <section class="ar-section" id="ar-polls-link" hidden>
+    <h2 class="ar-section-title">여론조사</h2>
+    <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
+  </section>
+
   <section class="ar-section" id="ar-byelection" hidden>
     <h2 class="ar-section-title">재·보궐</h2>
     <div class="ar-byelection-host" id="ar-byelection-host"></div>
