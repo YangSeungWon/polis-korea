@@ -240,7 +240,7 @@ function renderCards() {
     const electors = result.electors || 0, voted = result.voters || 0;
     const turnout = electors ? (voted / electors * 100) : 0;
     const c1 = partyColor(r1.party);
-    const hit = top && top.party === r1.party ? '폴 적중 ✓' : (top ? '폴 빗나감 ✗' : '');
+    const hit = top && top.party === r1.party ? '여론조사 적중 ✓' : (top ? '여론조사 빗나감 ✗' : '');
     html += `<div class="boe-result">
       <div class="boe-result-hdr">
         <span class="boe-result-tag">실제 결과</span>
