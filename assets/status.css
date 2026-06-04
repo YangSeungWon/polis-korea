@@ -23,7 +23,6 @@
   transition: opacity 0.08s ease;
 }
 .status-card:last-child { border-right: none; }
-.status-card:hover { opacity: 0.75; }
 .status-cards-row .status-card:first-child { padding-left: 0; }
 .status-cards-row .status-card { padding-left: 18px; }
 .status-cards-row .status-card:first-child { padding-left: 0; }
