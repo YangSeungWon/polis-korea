@@ -197,6 +197,24 @@ def load_chunked(path: Path):
     return raw, races
 
 
+def compute_turnout(races, kind):
+    """elections.json에 turnout 없는 회차용 — results race 합산으로 자동 계산.
+    대선/지선 광역장: scope=sido tc=1 또는 3. 총선: scope=district tc=2.
+    nation race 우선(있으면 더 정확 — 재외·관외 포함)."""
+    SCOPE_TC = {
+        "presidential": [("nation", "1"), ("sido", "1")],
+        "national_assembly": [("nation", "2"), ("district", "2")],
+        "local": [("sido", "3")],
+    }
+    for scope, tc in SCOPE_TC.get(kind, []):
+        ts = [r for r in races if r.get("scope") == scope and r.get("sg_typecode") == tc]
+        e = sum(r.get("electors", 0) or 0 for r in ts)
+        v = sum(r.get("voters", 0) or 0 for r in ts)
+        if e > 0 and v > 0:
+            return round(v / e * 100, 2)
+    return None
+
+
 def party_total_seats(races, kind, n):
     """총선 회차의 정당별 총 의석 (지역구 + 비례, 위성정당 → 본정당 합산)."""
     if kind != "national_assembly":
@@ -239,6 +257,7 @@ def main():
             mayor_counts = []
             metro_council_counts = []
             local_council_counts = []
+            computed_turnout = None
             if path_name:
                 p = RESULTS / path_name
                 if p.exists():
@@ -250,6 +269,7 @@ def main():
                         mayor_counts = mayor_party_counts(races)
                         metro_council_counts = council_party_counts(races, "5")
                         local_council_counts = council_party_counts(races, "6")
+                    computed_turnout = compute_turnout(races, kind)
             label_short = KIND_LABEL[kind]
             entry = {
                 "kind": kind,
@@ -258,7 +278,7 @@ def main():
                 "label": f"{n}대 {label_short}",
                 "winner": e.get("winner"),
                 "winner_party": e.get("winner_party"),
-                "turnout": e.get("turnout"),
+                "turnout": e.get("turnout") if e.get("turnout") not in (None, 0) else computed_turnout,
                 "sidoWinners": sido_winners,
             }
             if party_seats:
