@@ -150,6 +150,7 @@ const ARCHIVE_PAGES = {};
     // history.js state.type은 'national_assembly' — 레지스트리 'general_election'을 정규화.
     const KIND_ALIAS = { 'general_election': 'national_assembly' };
     for (const m of metas) {
+      if (!m || !m.archive || !m.archive.page) continue;
       const key = (KIND_ALIAS[m.kind] || m.kind) + '|' + m.n;
       ARCHIVE_PAGES[key] = m.archive.page;
     }
@@ -157,6 +158,8 @@ const ARCHIVE_PAGES = {};
     if (typeof renderDetail === 'function' && document.getElementById('detail-pane')) {
       try { renderDetail(); } catch {}
     }
+  }).catch((e) => {
+    console.warn('[history] archive populate 실패:', e);
   });
 })();
 
