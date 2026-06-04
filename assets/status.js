@@ -91,14 +91,10 @@
       const chart = (typeof renderParliamentChart === 'function')
         ? renderParliamentChart(parties, total, 260, 130)
         : '';
-      // 범례: 상위 3 정당 + 나머지 합산
-      const topN = 3;
-      const top = parties.slice(0, topN);
-      const restSeats = parties.slice(topN).reduce((s, p) => s + p.seats, 0);
-      const legendHtml = top.map((p) =>
+      // 범례: 원내 전 정당 (의석 가진 정당 모두 — "외 N당" 합산 안 함)
+      const legendHtml = parties.map((p) =>
         `<span class="leg-item"><span class="leg-dot" style="background:${p.color}"></span><b>${p.seats}</b> ${p.party}</span>`
-      ).join('')
-      + (restSeats ? `<span class="leg-item leg-other"><b>${restSeats}</b> 외 ${parties.length - topN}당</span>` : '');
+      ).join('');
       document.getElementById('status-asm-top').innerHTML =
         `<div class="parliament-wrap-mini">${chart}<div class="parliament-total">${total}석</div></div>`
         + `<div class="party-legend">${legendHtml}</div>`;

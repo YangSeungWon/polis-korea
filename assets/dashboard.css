@@ -230,16 +230,20 @@
 .parliament-wrap-mini {
   position: relative;
   width: 100%;
-  padding-bottom: 4px;
+  padding-bottom: 0;
 }
 .parliament-wrap-mini .parliament-chart {
   display: block;
   max-width: 100%;
   height: auto;
+  /* 반원 다이어그램 아래 빈공간(반지름 hollow) crop → 도넛이 위로 올라가고
+     하단 평평한 모서리가 baseline에 맞음. 더 올리려면 값 키우기. */
+  margin-bottom: -6%;
 }
 .parliament-wrap-mini .parliament-total {
   position: absolute;
-  left: 50%; bottom: 4px;
+  /* 완전 도넛 중앙 위치처럼 반원 입구 안쪽으로 상향 (기존 bottom:4px → 위로) */
+  left: 50%; bottom: 18%;
   transform: translateX(-50%);
   font-size: 20px;
   font-weight: 800;

@@ -24,4 +24,6 @@ data/*.xls
 !data/raw/nec_roster_9th.json
 # 예외: 22대 총선 선거구별 후보 명부 (NEC 개표결과 xlsx 추출·공개데이터)
 !data/raw/nec_roster_22gen.json
+# 예외: raw 카탈로그 — 다른 머신·새 clone에서 재현 가능하도록 manifest 추적
+!data/raw/MANIFEST.json
 *.manual.bak
