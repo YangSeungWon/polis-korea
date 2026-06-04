@@ -1,0 +1,159 @@
+# build_polls.py 회차 종류 일반화 (대선·총선 지원)
+
+`scripts/build_polls.py`가 현재 **지선 전용** 로직으로 짜여 있어, 21대 대선 폴 build 시 후보지지 race가 거의 모두 reject됨 (499건 메타 → emit 17건, 전부 정당지지). 대선·총선용 build path를 추가하기 위한 설계 문서.
+
+## 현재 상태
+
+- **9회 지선** (`data/raw/nesdc_9th_polls.csv` 1886건 → `aggregated.json` 1703건): 정상 동작.
+- **8회 지선** (`nesdc_8th_polls.csv` 1886건 → `aggregated_8th.json` 846건): 정상 동작.
+- **21대 대선** (`nesdc_21pres_polls.csv` 499건 → `aggregated_21pres.json` **17건**): 거의 다 reject.
+
+PDF·CSV는 다 확보됨 (`data/raw/pdf/`에 4400+ PDF, `data/raw/parsed/`에 5500+ JSON). 마지막 build 단계만 막힘.
+
+## 원인 — 지선 가드가 대선을 reject
+
+`scripts/build_polls.py:417-419`:
+
+```python
+# 대선 회상 투표 reject — "21대 대선 투표 후보" 같은 회상 질문이 기초단체장으로
+# 잘못 승격되는 걸 막음 (9회 지선 폴에 섞임)
+if re.search(r"(대선|대통령)\s*(투표|선거|후보)|\d+대\s*대선|회상\s*투표", title):
+    continue
+```
+
+지선용 build에선 필요한 가드. 대선용 build에선 정작 핵심 race를 제거.
+
+또 `classify_office` (line 119)도 광역단체장/기초단체장/교육감/광역의원/기초의원/비례/기타만 출력. **'대통령'·'국회의원'·'비례대표 국회의원' 분기 없음**.
+
+## 설계 옵션
+
+### 옵션 A: `--kind {local,presidential,general}` 인자 + 분기 로직
+
+build_polls.py에 회차 종류 인자 추가. 가드·classify_office가 종류별로 분기:
+
+```python
+ap.add_argument("--kind", choices=["local","presidential","general"], default="local")
+```
+
+- `kind="local"`: 현재 로직 (대선 회상 reject + 광역/기초/교육감 classify).
+- `kind="presidential"`: 대선 회상 reject **안 함**. classify_office가 모두 "대통령" race로 인식 (시도별/전국별만 구분, 시군구 X).
+- `kind="general"`: 총선 회상 reject 안 함. classify_office가 "국회의원" race로 인식 (선거구별, 비례 분리).
+
+장점: 단일 스크립트, 진입점 단일.
+단점: 분기가 늘어나 가독성 ↓. classify_office가 거대해짐.
+
+### 옵션 B: 회차별 별도 스크립트 (`build_polls_pres.py`, `build_polls_gen.py`)
+
+공통 helper(`_polls_common.py`)에 PDF 매칭·CSV 파싱·후보 정규화 같은 종류 독립 로직 추출. 각 build_*는 classify_office·가드·candidates 필터만 자기 종류용.
+
+장점: 회차별 로직 명확 분리, 변경 영향 격리.
+단점: helper 추출 작업이 큼. 공통 코드 중복 위험.
+
+### 옵션 C: 메타 파일 기반 (`data/elections/{id}.json`)
+
+`9th-local-2026.json` 메타가 이미 office_list·sido_merge 등 보유. `build_polls.py`가 메타의 type·office_list 보고 classify·가드 분기.
+
+```python
+ap.add_argument("--election-id", required=True)
+# meta = load_election_meta(args.election_id)
+# kind = meta["type"]   # presidential/local/general
+# offices = meta["offices"]  # ["광역단체장", "기초단체장", ...] / ["대통령"] / ["국회의원","비례대표 국회의원"]
+```
+
+장점: 사이트 전체 메타 시스템(architecture.md)과 정합. 향후 회차 추가 시 메타만 작성.
+단점: 메타 schema 보완 필요. 일부 회차 메타가 부분만 있음(대선·총선 메타 아직 적음).
+
+## 추천 — 옵션 C (메타 우선) + 옵션 A 보강
+
+1. 메타 파일 schema 확장: `type`, `offices` (이미 있는 곳도 있음).
+2. `build_polls.py`에 `--election-id` 인자. 메타에서 `kind` 읽어 분기 로직 적용.
+3. fallback: 메타 미존재 시 `--kind {local,presidential,general}` 인자.
+
+## 작업 단계
+
+### 1. 메타 확인 + 보강
+
+```
+data/elections/9th-local-2026.json     ← type:"local", offices: [...]
+data/elections/21st-pres-2025.json     ← 신규 또는 보강
+data/elections/22nd-general-2024.json  ← 신규 또는 보강
+```
+
+각 메타에 최소: `id`, `type`, `date`, `offices`, `nec.sg_id`, `nesdc.gubun`.
+
+### 2. classify_office 분기
+
+```python
+def classify_office(title, sido, sigungu, kind, offices):
+    if kind == "presidential":
+        # 대통령 race만. office_label = "대통령". sigungu 무시.
+        if re.search(r"(대선|대통령|후보지지)", title):
+            return ("대통령", "대통령")
+        return (None, None)  # 그 외 race reject (정당지지·국정평가 등은 metric으로)
+    if kind == "general":
+        # 국회의원 race: 지역구 선거구 분류 + 비례 분리
+        if re.search(r"비례", title):
+            return ("비례대표 국회의원", "비례")
+        if re.search(r"(국회의원|총선|당선)", title):
+            return ("국회의원", "지역구")
+        return (None, None)
+    # kind == "local": 현재 로직
+    ...
+```
+
+### 3. 대선 회상 가드 conditional
+
+```python
+if kind == "local" and re.search(r"대선|대통령선거|회상", title):
+    continue
+# 대선·총선용 build에선 위 가드 안 건너뜀
+```
+
+### 4. 후보 정당 매핑
+
+대선·총선은 NEC roster가 다름. `data/raw/nec_roster_{id}.json` 구조 통일 또는 회차별 분리.
+
+예: `data/raw/nec_roster_21pres.json` 신규 생성 — 21대 대선 후보 5명 (이재명·김문수·이준석·권영국·송진호) party 매핑.
+
+### 5. 출력 path 분리
+
+`data/polls/aggregated_21pres.json`, `aggregated_22gen.json` 등 회차별. 9회 지선용 `aggregated.json`은 그대로 유지 (polls 페이지 운영).
+
+## 핸드오버 후 다음 단계
+
+1. **archive 페이지에 통합**: 21대 대선 archive 만들면서 `aggregated_21pres.json` 사용.
+2. **출구조사 데이터**: `data/exit_polls/21st-pres-2025.json` 수기 입력 + 9회 archive와 동일 schema.
+3. **NEC API polling 재검토**: 21대 대선 결과는 `data/results/21st-pres-2025.json` 이미 정상.
+
+## 참고 위치
+
+- `scripts/build_polls.py:417` — 대선 회상 reject 가드 (대선 build엔 빼야).
+- `scripts/build_polls.py:119` — `classify_office` 함수 (대선·총선 분기 추가).
+- `scripts/build_polls.py:267` — `metric_type` 결정 ("정당지지"·"국정평가"·"투표의향"·"적합도" 등).
+- `data/elections/index.json` — active/archive 회차 list.
+- `docs/architecture.md` — 메타 기반 운영 모델.
+
+## 현재 데이터 상태 (작업 시작 시점)
+
+- `data/raw/nesdc_21pres_polls.csv` 499건 (헤더 포함 500줄).
+- `data/raw/pdf/`에 21대 대선 PDF 다 다운 (parse 완료 5500+ JSON 누적).
+- 결과 데이터 `data/results/21st-pres-2025.json` 정상 (NEC OpenAPI fetch 완료).
+
+## 검증 기준
+
+각 회차 build 후:
+
+```python
+total = len(polls)
+suspect_names = sum(1 for p in polls for c in p.get('candidates',[])
+                    if any(c.get('name','').startswith(k) for k in ISSUE_KEYWORDS))
+zero_cand = sum(1 for p in polls if not p.get('candidates'))
+weird_pct = sum(1 for p in polls if p.get('candidates') and
+                (sum(c.get('pct',0) for c in p['candidates']) < 50
+                 or sum(...) > 105))
+```
+
+- `suspect_names == 0`
+- `zero_cand == 0`
+- `weird_pct / total < 5%`
+- `office_level` 분포에 "대통령"(대선 build) 또는 "국회의원"·"비례대표 국회의원"(총선 build) 다수
