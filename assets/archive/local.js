@@ -303,7 +303,8 @@
       }
       if (!total) continue;
       const sorted = Object.entries(ctr).sort((a, b) => b[1] - a[1]);
-      const chips = sorted.slice(0, 5).map(([p, c]) =>
+      // 모든 정당 표시 — 1석 소수정당도 빠지지 않게 (예: 녹색당 1석)
+      const chips = sorted.map(([p, c]) =>
         `<span class="ar-office-chip" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
       lines.push(`
         <div class="ar-office-row">

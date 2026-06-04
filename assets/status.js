@@ -140,8 +140,18 @@
       }).join('');
       return `<div class="lsb-bar">${segs}</div>`;
     };
-    const renderLegend = (counts, top = 2) => counts.slice(0, top).map(([p, c]) =>
-      `<span class="lsb-leg" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
+    const renderLegend = (counts, top = 2) => {
+      const head = counts.slice(0, top);
+      const tail = counts.slice(top);
+      const headHTML = head.map(([p, c]) =>
+        `<span class="lsb-leg" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
+      // 소수 정당(나머지)은 1정당당 1라인 — 1석도 빠지지 않게.
+      const tailHTML = tail.length
+        ? '<span class="lsb-leg-tail">+ ' + tail.map(([p, c]) =>
+            `<span style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' · ') + '</span>'
+        : '';
+      return headHTML + (tailHTML ? ' ' + tailHTML : '');
+    };
     const lines = [];
     const addLine = (label, total, counts) => {
       if (!counts.length) return;
