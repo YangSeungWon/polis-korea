@@ -85,32 +85,54 @@ def load_parsed(parsed_dir: Path, ids: set[str]) -> dict[str, dict]:
     return by_id
 
 
-def region_to_district(region: str) -> tuple[str, str]:
-    """NESDC region → (sido_canonical, 선거구). 전국/복합권역 → (sido_or_'', '')."""
-    if not region:
+def district_index(districts: dict) -> dict:
+    """{sido: [(base, suffix, fullname)]} — base 길이 desc 정렬 (긴 매칭 우선)."""
+    idx: dict[str, list] = defaultdict(list)
+    for key in districts:
+        sido, _, name = key.partition("|")
+        m = re.match(r"^(.*?)([갑을병정])$", name)
+        base, suf = (m.group(1), m.group(2)) if m else (name, "")
+        idx[sido].append((base, suf, name))
+    for sido in idx:
+        idx[sido].sort(key=lambda x: -len(x[0]))
+    return idx
+
+
+def region_to_district(region: str, idx: dict | None = None) -> tuple[str, str]:
+    """NESDC region → (sido_canonical, 선거구). roster index로 매칭.
+
+    region 텍스트가 지저분함(괄호 갑을병 "평택시(병)", 비연속/전체명 중복
+    "춘천시…양구군춘천시…양구군을", 구분자 "·"). 정제 후 roster 선거구명(base)이 region에
+    포함되고 갑을병 suffix가 맞는 것 중 가장 긴 base를 채택. idx 없으면 휴리스틱 결합 fallback.
+    """
+    if not region or region.startswith("전국"):
         return ("", "")
-    region = region.replace("서울틀별시", "서울특별시")  # NESDC 오타
-    if region.startswith("전국"):
-        return ("", "")
+    region = region.replace("서울틀별시", "서울특별시")
+    region = re.sub(r"[()·,]", " ", region)
     toks = [t for t in region.split() if t not in ("선거구", "전체", "전지역", "전 지역")]
     if not toks:
         return ("", "")
     sido = SIDO_SHORT.get(toks[0], canon_sido(toks[0]))
-    body = [t for t in toks[1:] if SIDO_SHORT.get(t, canon_sido(t)) not in _SIDO_VALUES]
-    # 연속 중복 토큰 제거 (천안시 충남 천안시 → 천안시)
-    dd = []
-    for t in body:
-        if not dd or dd[-1] != t:
-            dd.append(t)
-    # 압축 갑/을 결합 (화성시 화성을 → 화성시을)
-    out: list[str] = []
-    for t in dd:
-        m = re.match(r"^(.*?)([갑을병정])$", t)
-        if m and out and m.group(1) and (out[-1].startswith(m.group(1)) or m.group(1) in out[-1]):
-            out[-1] = out[-1] + m.group(2)
-        else:
-            out.append(t)
-    return (sido, "".join(out))
+    suffix = ""
+    parts: list[str] = []
+    for t in toks[1:]:
+        if SIDO_SHORT.get(t, canon_sido(t)) in _SIDO_VALUES:  # 반복 시도 제거
+            continue
+        if t in ("갑", "을", "병", "정"):
+            suffix = t
+            continue
+        m = re.match(r"^(.+?)([갑을병정])$", t)  # 토큰 끝 갑을병 분리
+        if m:
+            parts.append(m.group(1))
+            suffix = m.group(2)
+            continue
+        parts.append(t)
+    joined = "".join(parts)
+    if idx is not None:
+        for base, suf, name in idx.get(sido, []):
+            if base and base in joined and (suf == suffix or not suffix):
+                return (sido, name)
+    return (sido, joined + suffix)
 
 
 def normalize_pcts(cands: list[dict]) -> bool:

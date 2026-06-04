@@ -41,32 +41,37 @@ KIND_LABEL = {
 
 # 새 schema 파일 path (Nth-{kind}-YYYY.json) 우선, 옛 schema fallback.
 NEW_PATHS = {
-    # presidential
-    (13, "presidential"): None,
-    (14, "presidential"): None,
-    (15, "presidential"): None,
+    # presidential — 13~15 위키 nation 합산, 16~ NEC + 시도 분해
+    (13, "presidential"): "13th-pres-1987.json",
+    (14, "presidential"): "14th-pres-1992.json",
+    (15, "presidential"): "15th-pres-1997.json",
     (16, "presidential"): "16th-pres-2002.json",
     (17, "presidential"): "17th-pres-2007.json",
     (18, "presidential"): "18th-pres-2012.json",
     (19, "presidential"): "19th-pres-2017.json",
     (20, "presidential"): "20th-pres-2022.json",
     (21, "presidential"): "21st-pres-2025.json",
-    # national_assembly
-    (13, "national_assembly"): None,
-    (14, "national_assembly"): None,
-    (15, "national_assembly"): None,
-    (16, "national_assembly"): None,
+    # national_assembly — 13~16 위키 정당 합산, 17~ NEC + 지역구
+    (13, "national_assembly"): "13th-general-1988.json",
+    (14, "national_assembly"): "14th-general-1992.json",
+    (15, "national_assembly"): "15th-general-1996.json",
+    (16, "national_assembly"): "16th-general-2000.json",
     (17, "national_assembly"): "17th-general-2004.json",
     (18, "national_assembly"): "18th-general-2008.json",
     (19, "national_assembly"): "19th-general-2012.json",
     (20, "national_assembly"): "20th-general-2016.json",
     (21, "national_assembly"): "21st-general-2020.json",
     (22, "national_assembly"): "22nd-general-2024.json",
-    # local
+    # local — 1~4 위키, 5~ NEC
+    (1, "local"): "1st-local-1995.json",
+    (2, "local"): "2nd-local-1998.json",
+    (3, "local"): "3rd-local-2002.json",
+    (4, "local"): "4th-local-2006.json",
     (5, "local"): "5th-local-2010.json",
     (6, "local"): "6th-local-2014.json",
     (7, "local"): "7th-local-2018.json",
     (8, "local"): "8th-local-2022.json",
+    (9, "local"): "9th-local-2026.json",
 }
 
 
