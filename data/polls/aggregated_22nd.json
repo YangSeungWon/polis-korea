@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-04T21:36:14",
+    "generated_at": "2026-06-04T22:23:14",
     "election": "22nd-general-2024",
     "election_date": "2024-04-10",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,7 +8,7 @@
     "stats": {
       "total_polls_meta": 1993,
       "matched_parsed": 1738,
-      "emitted_records": 1473,
+      "emitted_records": 1481,
       "skipped_no_pdf": 255,
       "skipped_no_race": 555
     }
@@ -3911,6 +3911,47 @@
           "name": "",
           "party": "새로운미래",
           "pct": 4.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "15037",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15037&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 8.9,
+      "contact_rate": 40.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-03",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "중구강화군옹진군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "조택상",
+          "party": "더불어민주당",
+          "pct": 43.6
+        },
+        {
+          "name": "배준영",
+          "party": "국민의힘",
+          "pct": 46.9
+        },
+        {
+          "name": "구본철",
+          "party": "무소속",
+          "pct": 3.5
         }
       ]
     },
@@ -8070,6 +8111,47 @@
           "name": "",
           "party": "새로운미래",
           "pct": 4.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "14913",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14913&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 8.3,
+      "contact_rate": 42.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-31",
+      "period_end": "2024-04-01",
+      "reg_date": "2024-04-01",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "중구성동구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "박성준",
+          "party": "더불어민주당",
+          "pct": 46.3
+        },
+        {
+          "name": "이혜훈",
+          "party": "국민의힘",
+          "pct": 42.7
+        },
+        {
+          "name": "김영기",
+          "party": "한국국민당",
+          "pct": 2.4
         }
       ]
     },
@@ -12423,6 +12505,57 @@
       ]
     },
     {
+      "ntt_id": "14801",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14801&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 22.4,
+      "contact_rate": 17.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-27",
+      "period_end": "2024-03-28",
+      "reg_date": "2024-03-28",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이성윤",
+          "party": "더불어민주당",
+          "pct": 51.7
+        },
+        {
+          "name": "정운천",
+          "party": "국민의힘",
+          "pct": 17.2
+        },
+        {
+          "name": "강성희",
+          "party": "진보당",
+          "pct": 6.1
+        },
+        {
+          "name": "전기엽",
+          "party": "자유민주당",
+          "pct": 0.5
+        },
+        {
+          "name": "김광종",
+          "party": "무소속",
+          "pct": 0.8
+        }
+      ]
+    },
+    {
       "ntt_id": "14800",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14800&menuNo=200467",
       "agency": "(주)여론조사꽃",
@@ -13269,6 +13402,52 @@
           "name": "",
           "party": "새로운미래",
           "pct": 3.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "14783",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14783&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 502.0,
+      "response_rate": 9.2,
+      "contact_rate": 37.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-26",
+      "period_end": "2024-03-27",
+      "reg_date": "2024-03-28",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "용인시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이상식",
+          "party": "더불어민주당",
+          "pct": 51.9
+        },
+        {
+          "name": "이원모",
+          "party": "국민의힘",
+          "pct": 33.1
+        },
+        {
+          "name": "양향자",
+          "party": "개혁신당",
+          "pct": 4.4
+        },
+        {
+          "name": "우제창",
+          "party": "무소속",
+          "pct": 3.6
         }
       ]
     },
@@ -14447,6 +14626,42 @@
           "name": "",
           "party": "새로운미래",
           "pct": 2.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "14743",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14743&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 9.8,
+      "contact_rate": 35.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-25",
+      "period_end": "2024-03-26",
+      "reg_date": "2024-03-26",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "증평군진천군음성군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "임호선",
+          "party": "더불어민주당",
+          "pct": 48.7
+        },
+        {
+          "name": "경대수",
+          "party": "국민의힘",
+          "pct": 40.1
         }
       ]
     },
@@ -19676,6 +19891,42 @@
           "name": "",
           "party": "새로운미래",
           "pct": 2.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "14601",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14601&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 9.9,
+      "contact_rate": 35.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-20",
+      "period_end": "2024-03-21",
+      "reg_date": "2024-03-21",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "서귀포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "위성곤",
+          "party": "더불어민주당",
+          "pct": 56.8
+        },
+        {
+          "name": "고기철",
+          "party": "국민의힘",
+          "pct": 37.4
         }
       ]
     },
@@ -29332,6 +29583,47 @@
           "name": "",
           "party": "새로운미래",
           "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "14340",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14340&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 508.0,
+      "response_rate": 17.6,
+      "contact_rate": 21.4,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2024-03-06",
+      "period_end": "2024-03-07",
+      "reg_date": "2024-03-07",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "북구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "전재수",
+          "party": "더불어민주당",
+          "pct": 49.8
+        },
+        {
+          "name": "서병수",
+          "party": "국민의힘",
+          "pct": 35.8
+        },
+        {
+          "name": "배기석",
+          "party": "개혁신당",
+          "pct": 1.2
         }
       ]
     },
@@ -63354,6 +63646,42 @@
           "name": "",
           "party": "국민의힘",
           "pct": 32.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "12977",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=12977&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 15.5,
+      "contact_rate": 24.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2023-09-06",
+      "period_end": "2023-09-07",
+      "reg_date": "2023-09-08",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "동구미추홀구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "윤상현",
+          "party": "국민의힘",
+          "pct": 38.4
+        },
+        {
+          "name": "남영희",
+          "party": "더불어민주당",
+          "pct": 33.2
         }
       ]
     },
