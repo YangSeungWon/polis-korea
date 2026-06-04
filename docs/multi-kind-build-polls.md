@@ -64,16 +64,19 @@ suspect_names 0, zero_cand 0, weird_pct 0%, no-party 0. 월별 트렌드 실제 
   민주계+국힘계 둘 다 + ≥3 정당.
 - **정당지지** → 일반 정당지지(민주+국힘).
 
-결과(22대): 메타 1993 → emit **833** (정당지지 787·후보지지 39·비례 7, 지역구 31). zero/weird 0%.
-출력 `data/polls/aggregated_22nd.json` (메타 archive.polls_path 일치). 샘플 검증 정확
-(하남갑 추미애 51/이용 38, 화성을 공영운/이준석28 등).
+결과(22대, 여론조사꽃 복구 후): 메타 1993 → emit **1459** (정당지지 1176·후보지지 113·비례 170,
+지역구 **76개**). zero/weird/suspect 0. 출력 `data/polls/aggregated_22nd.json` (메타 archive.polls_path
+일치). 샘플 검증 정확 (부산진구갑 서은숙39.1/정성국42.8, 분당갑 이광재/안철수, 하남갑 추미애/이용 등).
 
-> **한계 — parse 품질**: 후보지지/비례가 적은 건 build 로직이 아니라 parse 블로커. 22대
-> PDF의 **여론조사꽃 391개(후보 race 파일의 52%)**가 괘선없는 cross-tab이라 pdfplumber가
-> 인접 숫자컬럼을 병합("36.042.70.41")·후보명을 라벨에 묻어 추출 실패. cid는 이미 정상
-> (parse_pdf_v2가 `(cid:N)` 복구). 해결하려면 **단어 x좌표 클러스터링 기반 cross-tab 추출기**가
-> 필요(후속 과제). 갤럽·한국리서치류 0-클린(~13%)도 별개 레이아웃 문제. 현재는 클린 기관
-> (리서치뷰·케이스탯·코리아정보·리얼미터 등)만 커버.
+> **parse 블로커 해결 — `scripts/parse/recover_flower.py`**: 22대 PDF의 **여론조사꽃 391개
+> (후보 race 파일의 52%)**가 괘선없는 cross-tab이라 pdfplumber `extract_tables`가 인접 숫자컬럼
+> 병합("36.042.70.41")·후보명을 라벨에 묻어 추출 실패했었다. cid는 정상(parse_pdf_v2 `(cid:N)` 복구).
+> 해법: `extract_words`로 단어 x좌표를 살려 **헤더를 x로 컬럼 클러스터링**(다줄 정당헤더 "더불어"+
+> "민주당" 결합) → '전체' 행 pct를 컬럼에 nearest 정렬 → roster 후보명/정당명으로 컬럼 식별.
+> 결과: 복구 391 ntt / 1908 questions → build 후보지지 39→113·비례 7→170·지역구 31→76.
+> 실행: `python3 scripts/parse/recover_flower.py --election 22nd-general-2024` (parsed JSON 덮어씀)
+> → `build_polls_gen.py` 재실행. **남은 과제**: 갤럽·한국리서치류 0-클린(~13%)은 별개 레이아웃
+> 문제(needs_repair=False, cross-tab 아님)라 미해결. region 정규화도 595중 200만 매칭 — 개선 여지.
 
 > 아래는 작업 전 설계 옵션 분석 — 기록용. 실제 채택은 옵션 B.
 
