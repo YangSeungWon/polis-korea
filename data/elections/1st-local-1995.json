@@ -1,0 +1,32 @@
+{
+  "id": "1st-local-1995",
+  "name": "제1회 전국동시지방선거",
+  "kind": "local",
+  "type": "local",
+  "n": 1,
+  "date": "1995-06-27",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 article body에서 추출"
+  },
+  "offices": [
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/1st-local-1995.json",
+  "_source_note": "민자 5·민주 4·자민련 4·무소속 2 — 김영삼 정부 평가, 첫 동시지방선거",
+  "_data_caveat": "위키백과 article body wikitable — 광역단체장 15 시도 1위 후보·득표 + 기초단체장·광역의원 정당 합산. 기초의원은 정당공천 없음 (4541명 무소속)."
+}

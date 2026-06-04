@@ -285,11 +285,180 @@ def parse_local_infobox(wt: str) -> tuple[list[dict], dict]:
     return parties, extras
 
 
+SIDOS_15 = [
+    "서울특별시", "인천광역시", "경기도", "강원도", "대전광역시", "충청남도",
+    "충청북도", "광주광역시", "전라남도", "전라북도", "부산광역시",
+    "경상남도", "대구광역시", "경상북도", "제주도",
+]
+
+
+def parse_local_body_v1(wt: str) -> list[dict]:
+    """1회 지선 (1995) — article body wikitable parse.
+
+    schema 4가지 sub-section:
+    - 광역단체장: 15 시도 sub-section 각각 first wikitable (순위·후보·정당·득표)
+    - 기초단체장: 첫 wikitable (정당 / 당선자 수)
+    - 광역의원: 첫 wikitable (정당 / 지역구 / 비례 / 합계)
+    - 기초의원: 정당공천 X — 무소속 4541명 (단순 카운트)
+    """
+    races = []
+
+    # 광역단체장 — 15 시도 sub-section. 각 1위 후보 추출 → sido scope race들
+    sido_start = wt.find("=== 광역단체장 ===", wt.find("== 선거 결과 =="))
+    sigungu_start = wt.find("=== 기초단체장 ===", sido_start)
+    sido_block = wt[sido_start:sigungu_start] if sido_start > 0 and sigungu_start > sido_start else ""
+
+    for sido in SIDOS_15:
+        # subsection 위치
+        idx = sido_block.find(f"===== {sido} =====")
+        if idx < 0:
+            continue
+        # 다음 ===== 까지
+        next_idx = sido_block.find("=====", idx + 15)
+        sub = sido_block[idx:next_idx if next_idx > 0 else idx + 5000]
+        # 첫 wikitable
+        m_tab = re.search(r"\{\|[\s\S]*?\|\}", sub)
+        if not m_tab:
+            continue
+        table = m_tab.group(0)
+        # 행 단위 — '|-' split, 후보 row만 (4 셀 이상 + name·party·votes 있음)
+        cands = []
+        for rowtext in re.split(r"\n\|-", table):
+            # 4셀 이상 (순위·기호·후보·정당·득표수·득표율·비고)
+            if rowtext.count("||") < 4:
+                continue
+            # 첫 [[name]] · 두 번째 [[party|alias]]
+            links = re.findall(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", rowtext)
+            if len(links) < 2:
+                continue
+            name_target, name_alias = links[0]
+            party_target, party_alias = links[1]
+            # 득표수 — 첫 콤마 포함 큰 숫자
+            m_v = re.search(r"\|\s*([\d,]{4,})\s*\|", rowtext)
+            # 득표율 — N.N%
+            m_p = re.search(r"([\d.]+)\s*%", rowtext)
+            if not m_v or not m_p:
+                continue
+            name = (name_alias or name_target).strip()
+            party = (party_alias or party_target).strip()
+            party = re.sub(r"\s*\([^)]+\)\s*$", "", party)
+            cands.append({
+                "name": name,
+                "party": party,
+                "votes": int(m_v.group(1).replace(",", "")),
+                "pct": float(m_p.group(1)),
+            })
+        if not cands:
+            continue
+        cands.sort(key=lambda c: -c["votes"])
+        for i, c in enumerate(cands, 1):
+            c["rank"] = i
+        cands[0]["won"] = True
+        total_v = sum(c["votes"] for c in cands)
+        # 투표율 — '투표율 | 66.18%'
+        m_t = re.search(r"투표율\s*\|\s*([\d.]+)\s*%", table)
+        race = {
+            "sg_typecode": "3",
+            "sido": sido,
+            "sigungu": "",
+            "scope": "sido",
+            "electors": 0,
+            "voters": total_v,
+            "valid_votes": total_v,
+            "invalid_votes": 0,
+            "abstain": 0,
+            "candidates": cands,
+        }
+        if m_t:
+            race["turnout_pct"] = float(m_t.group(1))
+        races.append(race)
+
+    # 기초단체장 — 정당별 nation 합산
+    sigungu_end = wt.find("=== 광역의원 ===", sigungu_start)
+    sigungu_block = wt[sigungu_start:sigungu_end] if sigungu_start > 0 and sigungu_end > sigungu_start else ""
+    m_t = re.search(r"\{\|[\s\S]*?\|\}", sigungu_block)
+    if m_t:
+        rows = re.findall(r"\|\s*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]\s*\n\|\s*(\d+)", m_t.group(0))
+        cands = []
+        for tg, al, n in rows:
+            party = (al or tg).strip()
+            party = re.sub(r"\s*\([^)]+\)\s*$", "", party)
+            cands.append({"name": "", "party": party, "seats": int(n), "proportional_seats": int(n), "votes": 0, "pct": 0.0})
+        cands.sort(key=lambda c: -c["seats"])
+        for i, c in enumerate(cands, 1):
+            c["rank"] = i
+        if cands:
+            cands[0]["won"] = True
+            races.append({
+                "sg_typecode": "4", "sido": "", "sigungu": "", "scope": "nation",
+                "electors": 0, "voters": 0, "valid_votes": 0, "invalid_votes": 0, "abstain": 0,
+                "candidates": cands,
+            })
+
+    # 광역의원 — 정당별 지역구·비례·합계
+    member_start = wt.find("=== 광역의원 ===", sigungu_start)
+    member_end = wt.find("=== 기초의원 ===", member_start)
+    member_block = wt[member_start:member_end] if member_start > 0 and member_end > member_start else ""
+    m_t = re.search(r"\{\|[\s\S]*?\|\}", member_block)
+    if m_t:
+        # 정당 / 지역구 / 비례 / 합계 행
+        rows = re.findall(
+            r"\|\s*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]\s*\n\|\s*([\d-]+)\s*\n\|\s*([\d-]+)\s*\n\|\s*(\d+)",
+            m_t.group(0),
+        )
+        cands = []
+        for tg, al, dist, prop, total in rows:
+            party = (al or tg).strip()
+            party = re.sub(r"\s*\([^)]+\)\s*$", "", party)
+            total_n = int(total)
+            cands.append({
+                "name": "", "party": party,
+                "seats": total_n, "proportional_seats": total_n,
+                "district_seats": int(dist) if dist.isdigit() else 0,
+                "votes": 0, "pct": 0.0,
+            })
+        cands.sort(key=lambda c: -c["seats"])
+        for i, c in enumerate(cands, 1):
+            c["rank"] = i
+        if cands:
+            cands[0]["won"] = True
+            races.append({
+                "sg_typecode": "5", "sido": "", "sigungu": "", "scope": "nation",
+                "electors": 0, "voters": 0, "valid_votes": 0, "invalid_votes": 0, "abstain": 0,
+                "candidates": cands,
+            })
+
+    return races
+
+
 def build_local(eid: str, spec: dict) -> dict:
-    """지선 — office별 nation 합산 (정당별 의석). 2~4회 위키 infobox."""
+    """지선 — office별 nation 합산 (정당별 의석).
+
+    - 1회 (1995): article body wikitable (시도지사 15개 + 기초·광역의원 합산)
+    - 2·3·4회: infobox parser
+    """
     wt = fetch_wikitext(spec["page"])
     if not wt:
         raise RuntimeError(f"빈 wikitext: {spec['page']}")
+
+    # 1회 — body parser
+    if eid == "1st-local-1995":
+        races = parse_local_body_v1(wt)
+        if not races:
+            raise RuntimeError(f"1회 race 0건: {spec['page']}")
+        return {
+            "_meta": {
+                "election": spec["name"],
+                "election_id": eid,
+                "election_date": spec["date"],
+                "source": "wikipedia-ko-body",
+                "_note": "1회 지선 — 위키백과 article body wikitable에서 광역단체장 (15 시도 1위) + 기초단체장 (정당 합산) + 광역의원 (정당 합산). 기초의원은 정당공천 X.",
+                "n_rows": len(races),
+            },
+            "races": races,
+        }
+
+    # 2·3·4회 — infobox parser (기존)
     parties, extras = parse_local_infobox(wt)
     if not parties:
         raise RuntimeError(f"정당 0건: {spec['page']}")
