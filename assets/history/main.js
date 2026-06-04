@@ -318,9 +318,60 @@ function renderDetail() {
       html += `<div class="detail-empty">이 지역 데이터 없음</div>`;
     }
   } else {
-    html += `<div class="detail-empty">시도·시군구를 클릭하면 그 지역 결과가 표시됩니다.</div>`;
+    // 선택 X — '박빙 top 5' 시군구/지역구 highlight (격차 작은 순)
+    const closeRaces = computeCloseRaces();
+    if (closeRaces.length) {
+      html += `<div class="hist-close">
+        <div class="hist-close-title">박빙 ${closeRaces.length}곳 <span class="hist-close-sub">격차 작은 순 · 클릭 시 그 지역으로</span></div>
+        ${closeRaces.map((r) => {
+          const top = r.candidates[0], second = r.candidates[1];
+          const col1 = partyColor(top.party), col2 = partyColor(second.party);
+          const label = r.district || r.sigungu;
+          return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${label}" data-kind="${r.scope}">
+            <span class="hist-close-loc">${r.sido} ${label}</span>
+            <span class="hist-close-cand" style="color:${col1}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
+            <span class="hist-close-vs">vs</span>
+            <span class="hist-close-cand" style="color:${col2}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
+            <span class="hist-close-margin">+${r.margin.toFixed(2)}pp</span>
+          </a>`;
+        }).join('')}
+      </div>
+      <div class="detail-empty hist-empty-hint">시도·시군구를 클릭하면 그 지역 결과가 표시됩니다.</div>`;
+    } else {
+      html += `<div class="detail-empty">시도·시군구를 클릭하면 그 지역 결과가 표시됩니다.</div>`;
+    }
   }
   pane.innerHTML = html;
+  // 박빙 row 클릭 → 선택
+  pane.querySelectorAll('.hist-close-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const sido = row.dataset.sido, name = row.dataset.name, kind = row.dataset.kind;
+      state.selected = { sido, name, kind };
+      renderDetail();
+    });
+  });
+}
+
+// 박빙 top N race 추출 — 2위 있고 격차 작은 순
+function computeCloseRaces(N = 5) {
+  const data = activeOfficeData();
+  const pool = [];
+  for (const list of [data?.sigungu || [], data?.district || []]) {
+    for (const r of list) {
+      if (!r.candidates || r.candidates.length < 2) continue;
+      const sorted = [...r.candidates].filter((c) => c.pct != null).sort((a, b) => b.pct - a.pct);
+      if (sorted.length < 2) continue;
+      const margin = sorted[0].pct - sorted[1].pct;
+      if (margin >= 30) continue;  // 너무 큰 격차 X
+      pool.push({
+        sido: r.sido, sigungu: r.sigungu, district: r.district,
+        scope: r.district ? 'district' : 'sigungu',
+        candidates: sorted, margin,
+      });
+    }
+  }
+  pool.sort((a, b) => a.margin - b.margin);
+  return pool.slice(0, N);
 }
 
 

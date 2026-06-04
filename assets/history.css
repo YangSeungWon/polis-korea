@@ -184,3 +184,35 @@
   text-decoration: none;
 }
 .archive-banner:hover { text-decoration: underline; }
+
+/* 박빙 top N — 클릭 시 선택 */
+.hist-close { margin: 12px 0 16px; }
+.hist-close-title {
+  font-size: 12px; font-weight: 700; color: var(--ink);
+  margin-bottom: 6px;
+}
+.hist-close-sub { font-weight: 400; color: var(--ink-soft); font-size: 11px; margin-left: 4px; }
+.hist-close-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto 56px;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 11px;
+  align-items: baseline;
+  cursor: pointer;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg2);
+  text-decoration: none;
+  color: inherit;
+}
+.hist-close-row:hover { background: var(--bg3); }
+.hist-close-loc { font-weight: 600; }
+.hist-close-cand { font-weight: 600; font-size: 11px; }
+.hist-close-vs { color: var(--ink-mute); font-size: 10px; }
+.hist-close-margin {
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.hist-empty-hint { font-size: 11px; padding: 8px 0 0; opacity: 0.7; }
