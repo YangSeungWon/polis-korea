@@ -19,14 +19,16 @@ const SIDO_FROM_SHORT = {
 async function init() {
   let geo = null;
   try {
-    const [bj, gj, rj] = await Promise.all([
+    const [bj, gj, rj, results] = await Promise.all([
       fetch('data/polls/byelection.json').then((r) => r.json()),
       fetch('data/geo/sido_simple.json').then((r) => r.json()).catch(() => null),
       fetch('data/raw/nec_roster_9th.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+      fetch('data/results/9th-byelection-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
     ]);
     state.data = bj;
     geo = gj;
     state.roster = rj;
+    state.results = results;
   } catch (e) {
     state.data = { districts: [] };
   }
@@ -45,6 +47,23 @@ async function init() {
   renderCards();
   // 초기 marker 강조 (페이지 로드 시 자동 scroll은 X)
   if (state.selected) selectDistrict(state.selected, { scroll: false });
+}
+
+// 폴 district("경기 평택시을") → results race 매칭. 시·군·구 suffix 무시한 fuzzy.
+function matchResult(pollDist) {
+  if (!state.results?.races) return null;
+  const [shortSido, ...rest] = pollDist.split(' ');
+  const fullSido = SIDO_FROM_SHORT[shortSido];
+  if (!fullSido) return null;
+  const pollDistrict = rest.join(' ');
+  const norm = (s) => (s || '').replace(/[시군구]/g, '');
+  for (const r of state.results.races) {
+    if (r.sido !== fullSido) continue;
+    if (r.district === pollDistrict || norm(r.district) === norm(pollDistrict)) {
+      return r;
+    }
+  }
+  return null;
 }
 
 function latestTop(d) {
@@ -151,10 +170,40 @@ function renderCards() {
     return;
   }
   const top = latestTop(d);
+  const result = matchResult(d.district);
   let html = `<div class="detail-hdr">
     <h2>${d.district}</h2>
     <span class="count">국회의원 재·보궐 · ${d.n_polls}건</span>
   </div>`;
+  // 실제 결과 (있으면) — 폴 위에 표시
+  if (result?.candidates?.length) {
+    const cs = result.candidates.slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+    const r1 = cs[0], r2 = cs[1];
+    const margin = r2 ? (r1.pct - r2.pct) : null;
+    const electors = result.electors || 0, voted = result.voters || 0;
+    const turnout = electors ? (voted / electors * 100) : 0;
+    const c1 = partyColor(r1.party);
+    const hit = top && top.party === r1.party ? '폴 적중 ✓' : (top ? '폴 빗나감 ✗' : '');
+    html += `<div class="boe-result">
+      <div class="boe-result-hdr">
+        <span class="boe-result-tag">실제 결과</span>
+        <span class="boe-result-meta">투표율 ${turnout.toFixed(1)}% · ${hit}</span>
+      </div>
+      <div class="boe-result-row">
+        <span class="boe-rank">1위</span>
+        <span class="boe-name" style="color:${c1};font-weight:700">${r1.name}</span>
+        <span class="boe-party" style="color:${c1}">${r1.party}</span>
+        <span class="boe-pct">${(r1.pct || 0).toFixed(2)}%</span>
+      </div>
+      ${r2 ? `<div class="boe-result-row">
+        <span class="boe-rank">2위</span>
+        <span class="boe-name">${r2.name}</span>
+        <span class="boe-party" style="color:${partyColor(r2.party)}">${r2.party}</span>
+        <span class="boe-pct">${(r2.pct || 0).toFixed(2)}%</span>
+      </div>` : ''}
+      ${margin != null ? `<div class="boe-result-margin">격차 ${margin.toFixed(2)}pp</div>` : ''}
+    </div>`;
+  }
   if (top) {
     html += `<div class="latest-label">최신 ${fmtDate(top.period)} · 1위 <b style="color:${partyTextColor(top.party)}">${top.name}</b> (${top.party}) ${top.pct}%</div>`;
   }
