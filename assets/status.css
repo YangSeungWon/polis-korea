@@ -77,7 +77,6 @@
 }
 .status-card .status-local-line:last-child { margin-bottom: 0; }
 .status-card .lsb-head {
-  display: flex; justify-content: space-between; align-items: baseline;
   font-size: 11px;
 }
 .status-card .status-local-label {
@@ -89,7 +88,7 @@
   font-weight: 700;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
-  font-size: 11px;
+  margin-left: 4px;
 }
 .status-card .lsb-bar {
   display: flex;

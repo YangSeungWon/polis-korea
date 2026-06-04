@@ -157,8 +157,7 @@
       if (!counts.length) return;
       lines.push(`<div class="status-local-line">
         <div class="lsb-head">
-          <span class="status-local-label">${label}</span>
-          <span class="lsb-total">${total}</span>
+          <span class="status-local-label">${label} <span class="lsb-total">${total}</span></span>
         </div>
         ${renderBar(counts, total)}
         <div class="lsb-legend">${renderLegend(counts)}</div>
