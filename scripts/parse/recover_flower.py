@@ -31,6 +31,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts" / "parse"))
 sys.path.insert(0, str(ROOT / "scripts" / "build"))
 from parse_pdf_v2 import _repair_cid  # cid 복구 (이미 검증됨)  # noqa: E402
+# region→선거구 매칭은 build_polls_gen와 단일 구현 공유 (roster-guided)
+from build_polls_gen import district_index, region_to_district  # noqa: E402
 
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
 
@@ -51,30 +53,6 @@ _PAREN = re.compile(r"^\(.*\)$")
 def load_meta(csv_path: Path) -> dict[str, dict]:
     with open(csv_path, newline="", encoding="utf-8") as f:
         return {r["ntt_id"]: r for r in csv.DictReader(f)}
-
-
-def region_to_district(region: str) -> str:
-    if not region or region.startswith("전국"):
-        return ""
-    region = region.replace("서울틀별시", "서울특별시")
-    toks = [t for t in region.split() if t not in ("선거구", "전체", "전지역", "전 지역")]
-    if not toks:
-        return ""
-    sido = SIDO_SHORT.get(toks[0], toks[0])
-    vals = set(SIDO_SHORT.values())
-    body = [t for t in toks[1:] if SIDO_SHORT.get(t, t) not in vals]
-    dd = []
-    for t in body:
-        if not dd or dd[-1] != t:
-            dd.append(t)
-    out: list[str] = []
-    for t in dd:
-        m = re.match(r"^(.*?)([갑을병정])$", t)
-        if m and out and m.group(1) and (out[-1].startswith(m.group(1)) or m.group(1) in out[-1]):
-            out[-1] = out[-1] + m.group(2)
-        else:
-            out.append(t)
-    return f"{sido}|{''.join(out)}"
 
 
 def _rows(pg) -> dict:
@@ -199,6 +177,7 @@ def main():
         "더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "녹색정의당",
         "새로운미래", "진보당", "자유통일당", "기본소득당"}
 
+    didx = district_index(districts)
     targets = [(nid, m) for nid, m in meta.items() if args.agency in m.get("agency", "")]
     if args.limit:
         targets = targets[:args.limit]
@@ -207,7 +186,8 @@ def main():
     n_patched = n_q = 0
     by_eo: dict = {}
     for nid, m in targets:
-        rd = districts.get(region_to_district(m.get("region", "")), {})
+        sido, dist = region_to_district(m.get("region", ""), didx)
+        rd = districts.get(f"{sido}|{dist}", {})
         pdfs = sorted((ROOT / "data/raw/pdf").glob(f"{nid}_*.pdf"))
         best_qs: list[dict] = []
         for pdf in pdfs:

@@ -200,6 +200,7 @@ def accept_party_race(q: dict) -> list[dict] | None:
 
 def build(csv_path: Path, parsed_dir: Path) -> dict:
     districts, prop = load_roster()
+    didx = district_index(districts)
     meta = load_meta(csv_path)
     parsed = load_parsed(parsed_dir, set(meta))
 
@@ -211,7 +212,7 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
         if not p:
             skipped_no_pdf += 1
             continue
-        sido, district = region_to_district(m.get("region", ""))
+        sido, district = region_to_district(m.get("region", ""), didx)
         roster_dist = districts.get(f"{sido}|{district}", {}) if district else {}
         ps = m.get("survey_start", "") or parse_survey_period(m.get("survey_period", ""))[0]
         pe = m.get("survey_end", "") or parse_survey_period(m.get("survey_period", ""))[1]
