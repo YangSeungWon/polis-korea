@@ -20,5 +20,18 @@
     }
   ],
   "results_file": "data/results/national_assembly_20.json",
-  "_note": "archive. history.html에서 결과 시각화 사용."
+  "_note": "archive. history.html에서 결과 시각화 사용.",
+  "archive": {
+    "page": "/archive/20th-general-2016/",
+    "results_path": "data/results/20th-general-2016.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "2",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정",
+    "data_source_note": "중앙선거관리위원회 OpenAPI"
+  },
+  "kind": "general_election",
+  "n": 20
 }

@@ -37,6 +37,17 @@
   "results_file": "data/results/local_7.json",
   "_note": "archive. history.html에서 결과 시각화 사용.",
   "archive": {
-    "byelection_id": "byelection-2018-06-13"
-  }
+    "byelection_id": "byelection-2018-06-13",
+    "page": "/archive/7th-local-2018/",
+    "results_path": "data/results/7th-local-2018.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "3",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정",
+    "data_source_note": "중앙선거관리위원회 OpenAPI"
+  },
+  "kind": "local",
+  "n": 7
 }

@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="/">
-<title>polis · 제2회 전국동시지방선거 (1998-06-04)</title>
-<meta name="description" content="제2회 전국동시지방선거(1998-06-04) 결과·여론조사·출구조사 비교 아카이브.">
-<meta property="og:title" content="polis · 2회 지선 아카이브">
-<meta property="og:description" content="2회 지선 결과·여론조사·출구조사 비교.">
+<title>polis · 제18대 대통령선거 (2012-12-19)</title>
+<meta name="description" content="제18대 대통령선거(2012-12-19) 결과·여론조사·출구조사 비교 아카이브.">
+<meta property="og:title" content="polis · 18대 대선 아카이브">
+<meta property="og:description" content="18대 대선 결과·여론조사·출구조사 비교.">
 <meta property="og:type" content="website">
-<link rel="canonical" href="/archive/2nd-local-1998/">
+<link rel="canonical" href="/archive/18th-pres-2012/">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/archive.css">
-<script id="archive-meta">window.__ARCHIVE__ = { id: '2nd-local-1998' };</script>
+<script id="archive-meta">window.__ARCHIVE__ = { id: '18th-pres-2012' };</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -37,57 +37,47 @@
 <main class="page">
   <nav class="ar-breadcrumb" aria-label="경로">
     <a href="/timeline.html">타임라인</a> ·
-    <a href="/history.html?type=local&n=2">역대 선거</a> · <span>2회 지선 아카이브</span>
+    <a href="/history.html?type=presidential&n=18">역대 선거</a> · <span>18대 대선 아카이브</span>
   </nav>
 
   <section class="ar-hero">
     <div class="ar-hero-tag">아카이브</div>
-    <h1 class="ar-hero-title" id="ar-title">제2회 전국동시지방선거</h1>
-    <div class="ar-hero-date" id="ar-date">1998-06-04 (목) · 새정치국민회의 6 · 한나라당 6 · 자민련 4 — 광역단체장 박빙</div>
-    <div class="ar-hero-stats" id="ar-stats">
+    <h1 class="ar-hero-title" id="ar-title">제18대 대통령선거</h1>
+    <div class="ar-hero-date" id="ar-date">2012-12-19 (수)</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">당선</div><div class="ar-stat-value" id="ar-winner">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">격차</div><div class="ar-stat-value" id="ar-margin">—</div></div>
       <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
-      <div class="ar-stat"><div class="ar-stat-label">광역단체장</div><div class="ar-stat-value" id="ar-governor-summary">—</div></div>
       <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
-      <div class="ar-stat"><div class="ar-stat-label">재·보궐</div><div class="ar-stat-value" id="ar-byelection-count">—</div></div>
     </div>
     <p class="ar-hero-status" id="ar-status">확정 결과.</p>
   </section>
 
-  <p class="ar-source-caveat"><span class="ar-source-caveat-tag">source</span> 위키백과 — nation 단위 집계 (시도/시군구 break 없음)</p>
+  <p class="ar-source-caveat"><span class="ar-source-caveat-tag">source</span> 중앙선거관리위원회 OpenAPI</p>
 
   <section class="ar-history-link">
-    <a href="/history.html?type=local&n=2" class="ar-history-link-btn">
+    <a href="/history.html?type=presidential&n=18" class="ar-history-link-btn">
       <span class="ar-history-link-label">시도·시군구 시각화</span>
-      <span class="ar-history-link-sub">/history 에서 광역·기초·교육감 hex로 →</span>
+      <span class="ar-history-link-sub">/history 에서 hex·지도로 →</span>
     </a>
   </section>
 
-  <section class="ar-section" id="ar-offices" hidden>
-    <h2 class="ar-section-title">선출직 정당 분포</h2>
-    <p class="ar-source-line">광역단체장 · 기초단체장 · 광역의원 지역구 · 기초의원 지역구. 비례·교육감 제외.</p>
-    <div class="ar-offices-grid" id="ar-offices-grid"></div>
+  <section class="ar-section" id="ar-nation" hidden>
+    <h2 class="ar-section-title">전국 결과</h2>
+    <p class="ar-source-line">데이터 원본: <a href="https://info.nec.go.kr/main/showDocument.xhtml?electionId=00220121219&topMenuId=VC&secondMenuId=VCCP09" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
+    <div class="ar-nation-host" id="ar-nation-host"></div>
   </section>
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">1998-06-04 18:00 발표. 3사(KBS·MBC·SBS)와 JTBC 분리 표시. 시도별 1위 일치율·평균 오차 자동 계산.</p>
+    <p class="ar-source-line">2012-12-19 18:00 발표. KBS·MBC·SBS 방송 3사, JTBC 권역별. 전국 적중·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-link" hidden>
-    <h2 class="ar-section-title">여론조사</h2>
-    <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
-  </section>
-
-  <section class="ar-section" id="ar-byelection" hidden>
-    <h2 class="ar-section-title">재·보궐</h2>
-    <div class="ar-byelection-host" id="ar-byelection-host"></div>
   </section>
 
   <footer class="foot">
     <div class="foot-row">
       <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
-      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467" target="_blank" rel="noopener">중앙선거여론조사심의위원회 (2회 지선)</a>
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467" target="_blank" rel="noopener">중앙선거여론조사심의위원회 (18대 대선)</a>
     </div>
     <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
   </footer>
