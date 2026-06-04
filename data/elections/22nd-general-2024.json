@@ -1,24 +1,37 @@
 {
   "id": "22nd-general-2024",
   "name": "제22대 국회의원선거",
+  "kind": "general_election",
   "type": "general",
+  "n": 22,
   "date": "2024-04-10",
+  "status": "archive",
+  "nesdc": {
+    "csv": "data/raw/nesdc_22gen_polls.csv"
+  },
   "nec": {
     "sg_id": "20240410",
     "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
   },
   "offices": [
-    {
-      "level": "국회의원",
-      "sg_typecode": "2",
-      "scope": "district"
-    },
-    {
-      "level": "비례대표",
-      "sg_typecode": "7",
-      "scope": "nation"
-    }
+    {"level": "국회의원", "sg_typecode": "2", "scope": "district"},
+    {"level": "비례대표", "sg_typecode": "7", "scope": "nation"}
   ],
-  "results_file": "data/results/national_assembly_22.json",
-  "_note": "archive. history.html에서 결과 시각화 사용."
+  "archive": {
+    "page": "/archive/22nd-general-2024/",
+    "results_path": "data/results/22nd-general-2024.json",
+    "polls_path": "data/polls/aggregated_22nd.json",
+    "exit_poll_path": "data/exit_polls/22nd-general-2024.json",
+    "polls_window": ["2023-04-10", "2024-04-09"],
+    "sg_typecode": "2",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정"
+  },
+  "wiki_exit_polls": {
+    "kind": "general",
+    "templates": [],
+    "_note": "22대 출구조사는 wikitable 구조 다름 (의석 예측). parser 별도 필요."
+  },
+  "results_file": "data/results/22nd-general-2024.json",
+  "_note": "archive. history.html·archive/22nd-general-2024/에서 사용."
 }

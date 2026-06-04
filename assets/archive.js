@@ -1,10 +1,34 @@
-// archive 회차 페이지 — window.__ARCHIVE__ 메타 기반.
+// archive 회차 페이지 — data/elections/{id}.json 레지스트리 기반.
+// 페이지는 window.__ARCHIVE__ = { id: ... }만 박아두고 나머지는 메타에서 읽음.
 // 결과·여론조사·재보궐 데이터 fetch 후 점진 렌더. 데이터 없으면 섹션 hidden.
 
 (async function() {
-  const meta = window.__ARCHIVE__ || {};
-  if (!meta.id) return;
+  const stub = window.__ARCHIVE__ || {};
+  if (!stub.id) return;
   const $ = (s) => document.querySelector(s);
+
+  // 레지스트리에서 회차 메타 로드 — assets/elections.js 필요.
+  const reg = (typeof Elections !== 'undefined') ? await Elections.loadElectionMeta(stub.id) : null;
+  if (!reg) {
+    console.warn('[archive] 회차 메타 로드 실패:', stub.id);
+    return;
+  }
+  // 호환 객체 — 기존 render 함수가 쓰던 키들을 reg에서 derive.
+  const ar = reg.archive || {};
+  const meta = {
+    id: reg.id,
+    name: reg.name,
+    date: reg.date,
+    electionKind: reg.kind,
+    electionN: reg.n,
+    sgTypecode: ar.sg_typecode,
+    proportionalSgTypecode: ar.proportional_sg_typecode,
+    resultsPath: ar.results_path,
+    pollsPath: ar.polls_path,
+    exitPollPath: ar.exit_poll_path,
+    byelectionId: ar.byelection_id || null,
+    pollsWindow: ar.polls_window ? { start: ar.polls_window[0], end: ar.polls_window[1] } : null,
+  };
 
   // 1. 결과 데이터
   let results = null;

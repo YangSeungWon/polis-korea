@@ -1653,13 +1653,24 @@ function renderSigunguHex() {
 
 // === Detail Pane ===
 
-// 회차별 archive 페이지 매핑 — 회차 detail에서 link 노출.
-const ARCHIVE_PAGES = {
-  'local|9': '/archive/9th-local-2026/',
-  'local|8': '/archive/8th-local-2022/',
-  'presidential|21': '/archive/21st-pres-2025/',
-  'national_assembly|22': '/archive/22nd-general-2024/',
-};
+// 회차별 archive 페이지 매핑 — data/elections 레지스트리에서 startup 시 채움.
+// kind|n 키 → /archive/{id}/ URL. assets/elections.js 필요.
+const ARCHIVE_PAGES = {};
+(function populateArchivePages() {
+  if (typeof Elections === 'undefined') return;
+  Elections.loadArchiveablePages().then((metas) => {
+    // history.js state.type은 'national_assembly' — 레지스트리 'general_election'을 정규화.
+    const KIND_ALIAS = { 'general_election': 'national_assembly' };
+    for (const m of metas) {
+      const key = (KIND_ALIAS[m.kind] || m.kind) + '|' + m.n;
+      ARCHIVE_PAGES[key] = m.archive.page;
+    }
+    // 비어있던 detail 재렌더 — 일치 회차 detail이 열려있으면 banner 다시.
+    if (typeof renderDetail === 'function' && document.getElementById('detail-pane')) {
+      try { renderDetail(); } catch {}
+    }
+  });
+})();
 
 function renderDetail() {
   const pane = $('#detail-pane');

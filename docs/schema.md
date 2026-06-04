@@ -8,20 +8,54 @@
 
 `kind` ∈ `{pres, general, local, byelection}`. archive.js `electionKind`는 풀네임(`presidential`/`general_election`/`local`) 사용 — 변환 필요. 통일은 [election-meta.md] 참조.
 
-## 2. 회차 메타 (`data/elections/`)
+## 2. 회차 메타 (`data/elections/`) — 단일 출처
 
 ```
 data/elections/
   index.json              # { active: [...id], archive: [...id] }
-  {id}.json               # 회차별 메타 (현재는 NEC 정보 중심)
+  {id}.json               # 회차 모든 메타 (NEC + NESDC + archive + wiki)
+```
+
+**페이지·스크립트는 `assets/elections.js` 또는 `data/elections/{id}.json` 직독으로만 회차 정보 참조** — `window.__ARCHIVE__`는 `{ id }`만, 나머지는 레지스트리에서 derive.
+
+전체 메타 구조 (대선 예):
+
+```json
+{
+  "id": "21st-pres-2025",
+  "name": "제21대 대통령선거",
+  "kind": "presidential",         // canonical: presidential | general_election | local | byelection
+  "type": "pres",                 // legacy 약칭 (호환용)
+  "n": 21,
+  "date": "2025-06-03",
+  "status": "archive",            // archive | active | upcoming
+  "nesdc": { "gubun": "VT027", "csv": "data/raw/..." },
+  "nec": { "sg_id": "20250603" },
+  "offices": [{ "level", "sg_typecode", "scope" }],
+  "archive": {                    // archive 페이지 데이터 paths
+    "page": "/archive/21st-pres-2025/",
+    "results_path": "data/results/21st-pres-2025.json",
+    "polls_path": "data/polls/aggregated_21pres.json",
+    "exit_poll_path": "data/exit_polls/21st-pres-2025.json",
+    "polls_window": ["2024-12-03", "2025-06-02"],
+    "sg_typecode": "1",
+    "proportional_sg_typecode": null,
+    "byelection_id": null,
+    "list_label": "확정"          // index.html 회차 목록 태그
+  },
+  "wiki_exit_polls": {            // fetch_exit_polls.py 소스
+    "kind": "local" | "pres",
+    "templates": [{ "page", "key", "name" }]
+  }
+}
 ```
 
 신규 회차 추가 체크리스트:
-1. `data/elections/{id}.json` 생성 — type, date, nec.sg_id, offices, results_file
-2. `data/elections/index.json` active 또는 archive에 id 추가
-3. (archive 페이지 만들면) `archive/{id}/index.html` + `index.html` 회차 목록 + `assets/history.js` ARCHIVE_PAGES
-
-> **리팩토링 후보**: archive HTML의 `window.__ARCHIVE__` (polls_path·exit_poll_path·polls_window·sgTypecode 등)을 elections 메타로 흡수. 현재는 양쪽에 분산.
+1. `data/elections/{id}.json` 생성 — 위 구조대로
+2. `data/elections/index.json` active/archive에 id 추가
+3. (archive 페이지 만들면) `archive/{id}/index.html` 생성 — `window.__ARCHIVE__ = { id: '...' }`만
+4. `index.html` 회차 아카이브 목록에 한 줄 추가 (정적, 수동 — SEO 위해 유지)
+5. `assets/history.js`의 `ARCHIVE_PAGES`는 startup 시 레지스트리에서 자동 populate — 별도 작업 불필요
 
 ## 3. 결과 (`data/results/{id}.json`)
 

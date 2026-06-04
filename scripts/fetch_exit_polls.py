@@ -7,11 +7,14 @@
 template page wikitext에 wikitable로 시도·정당·후보·예측 득표율 정리.
 지선 광역단체장이든 대선 권역별이든 동일한 rowspan="3" chunk 패턴.
 
-지원 회차:
-  - 8회 지선 (2022): 광역단체장 KEP
-  - 9회 지선 (2026): 광역단체장 KEP (위키 정리 진행중)
-  - 21대 대선 (2025): KEP·JTBC 권역별 (전국 + 17 시도)
-  - 22대 총선 등은 SOURCES dict에 page name 매핑 추가하면 동작.
+지원 회차는 data/elections/{id}.json 의 wiki_exit_polls 블록에 정의:
+  {
+    "wiki_exit_polls": {
+      "kind": "local" | "pres",
+      "templates": [{"page": "틀:...", "key": "kep_3sa", "name": "..."}, ...]
+    }
+  }
+새 회차는 메타에 추가하면 동작.
 
 사용:
   python3 scripts/fetch_exit_polls.py --id 8th-local-2022
@@ -30,35 +33,21 @@ ROOT = Path(__file__).resolve().parent.parent
 EXIT_DIR = ROOT / "data" / "exit_polls"
 WIKI_API = "https://ko.wikipedia.org/w/api.php"
 
-# 회차 → 위키 source 매핑.
-# local: template page에 시도별 광역단체장 wikitable
-# pres:  본 article 출구조사 섹션 안 wikitable (행=방송사, 열=후보)
-SOURCES = {
-    "8th-local-2022": {
-        "kind": "local",
-        "sources": [
-            {"page": "틀:제8회 전국동시지방선거 광역자치단체장 출구조사",
-             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
-        ],
-    },
-    "9th-local-2026": {
-        "kind": "local",
-        "sources": [
-            {"page": "틀:제9회 전국동시지방선거 광역자치단체장 출구조사",
-             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
-        ],
-    },
-    # 대선도 같은 wikitable 구조 — rowspan=3 chunk per 시도. office="대통령".
-    "21st-pres-2025": {
-        "kind": "pres",
-        "sources": [
-            {"page": "틀:대한민국 제21대 대통령 선거 출구조사",
-             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
-            {"page": "틀:대한민국 제21대 대통령 선거 출구조사 2",
-             "key": "jtbc", "name": "JTBC 예측조사"},
-        ],
-    },
-}
+# 위키 출구조사 source 매핑은 data/elections/{id}.json 의 wiki_exit_polls 블록.
+# kind=local: template page에 시도별 광역단체장 wikitable
+# kind=pres:  대선 권역별 (전국 + 17 시도)
+ELECTIONS_DIR = ROOT / "data" / "elections"
+
+
+def load_election_spec(election_id: str) -> dict | None:
+    p = ELECTIONS_DIR / f"{election_id}.json"
+    if not p.exists():
+        return None
+    meta = json.loads(p.read_text(encoding="utf-8"))
+    wep = meta.get("wiki_exit_polls") or {}
+    if not wep.get("templates"):
+        return None
+    return {"kind": wep.get("kind") or "local", "sources": wep["templates"]}
 
 
 
@@ -191,9 +180,9 @@ def main():
     ap.add_argument("--id", required=True, help="election id, e.g. 8th-local-2022")
     ap.add_argument("--source-key", default="kep_3sa", help="광역단체장 모드 source key")
     args = ap.parse_args()
-    spec = SOURCES.get(args.id)
+    spec = load_election_spec(args.id)
     if not spec:
-        print(f"ERR: {args.id} 매핑 없음 — SOURCES에 추가", file=sys.stderr)
+        print(f"ERR: {args.id} wiki_exit_polls 매핑 없음 — data/elections/{args.id}.json에 추가", file=sys.stderr)
         sys.exit(1)
     EXIT_DIR.mkdir(parents=True, exist_ok=True)
     data = load_existing(args.id)

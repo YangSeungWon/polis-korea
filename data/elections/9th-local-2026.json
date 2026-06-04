@@ -1,8 +1,11 @@
 {
   "id": "9th-local-2026",
   "name": "제9회 전국동시지방선거",
+  "kind": "local",
   "type": "local",
+  "n": 9,
   "date": "2026-06-03",
+  "status": "active",
   "blackout": {
     "_note": "공직선거법 — 선거 6일 전 00시부터 선거일 18시까지 신규 여론조사 공표 금지",
     "start": "2026-05-28T00:00:00+09:00",
@@ -52,5 +55,22 @@
       "nec_sgg": "전남광주통합특별시"
     }
   ],
-  "candidates_overrides": "data/elections/9th-local-2026-candidates.json"
+  "candidates_overrides": "data/elections/9th-local-2026-candidates.json",
+  "archive": {
+    "page": "/archive/9th-local-2026/",
+    "results_path": "data/results/9th-local-2026.json",
+    "polls_path": "data/polls/aggregated.json",
+    "exit_poll_path": "data/exit_polls/9th-local-2026.json",
+    "polls_window": ["2025-09-01", "2026-06-03"],
+    "sg_typecode": "3",
+    "proportional_sg_typecode": null,
+    "byelection_id": "9th-byelection-2026",
+    "list_label": "진행"
+  },
+  "wiki_exit_polls": {
+    "kind": "local",
+    "templates": [
+      {"page": "틀:제9회 전국동시지방선거 광역자치단체장 출구조사", "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"}
+    ]
+  }
 }

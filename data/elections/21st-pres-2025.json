@@ -1,19 +1,39 @@
 {
   "id": "21st-pres-2025",
   "name": "제21대 대통령선거",
+  "kind": "presidential",
   "type": "pres",
+  "n": 21,
   "date": "2025-06-03",
+  "status": "archive",
+  "nesdc": {
+    "gubun": "VT027",
+    "csv": "data/raw/nesdc_21pres_polls.csv"
+  },
   "nec": {
     "sg_id": "20250603",
     "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
   },
   "offices": [
-    {
-      "level": "대통령",
-      "sg_typecode": "1",
-      "scope": "nation"
-    }
+    {"level": "대통령", "sg_typecode": "1", "scope": "nation"}
   ],
-  "results_file": "data/results/presidential_21.json",
-  "_note": "archive. history.html에서 결과 시각화 사용."
+  "archive": {
+    "page": "/archive/21st-pres-2025/",
+    "results_path": "data/results/21st-pres-2025.json",
+    "polls_path": "data/polls/aggregated_21pres.json",
+    "exit_poll_path": "data/exit_polls/21st-pres-2025.json",
+    "polls_window": ["2024-12-03", "2025-06-02"],
+    "sg_typecode": "1",
+    "proportional_sg_typecode": null,
+    "list_label": "확정"
+  },
+  "wiki_exit_polls": {
+    "kind": "pres",
+    "templates": [
+      {"page": "틀:대한민국 제21대 대통령 선거 출구조사", "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
+      {"page": "틀:대한민국 제21대 대통령 선거 출구조사 2", "key": "jtbc", "name": "JTBC 예측조사"}
+    ]
+  },
+  "results_file": "data/results/21st-pres-2025.json",
+  "_note": "archive. history.html·archive/21st-pres-2025/에서 사용."
 }

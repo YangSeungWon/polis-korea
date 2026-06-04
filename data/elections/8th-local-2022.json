@@ -1,17 +1,23 @@
 {
   "id": "8th-local-2022",
   "name": "제8회 전국동시지방선거",
+  "kind": "local",
   "type": "local",
+  "n": 8,
   "date": "2022-06-01",
+  "status": "archive",
   "blackout": {
     "start": "2022-05-26T00:00:00+09:00",
     "end": "2022-06-01T18:00:00+09:00"
   },
+  "nesdc": {
+    "gubun": "VT022",
+    "csv": "data/raw/nesdc_8th_polls.csv"
+  },
   "nec": {
     "sg_id": "20220601",
-    "_note": "메타용 — 실제 fetch는 안 함. 결과는 이미 data/results/local_8.json에 있음."
+    "_note": "메타용 — 실제 fetch는 안 함. 결과는 이미 data/results/8th-local-2022.json에 있음."
   },
-  "results_file": "data/results/local_8.json",
   "offices": [
     {"level": "광역단체장", "sg_typecode": "3", "scope": "sido"},
     {"level": "기초단체장", "sg_typecode": "4", "scope": "sigungu"},
@@ -19,5 +25,22 @@
     {"level": "기초의원", "sg_typecode": "6", "scope": "district"},
     {"level": "교육감", "sg_typecode": "11", "scope": "sido"}
   ],
-  "_note": "archive. history.html에서 결과 시각화 사용."
+  "archive": {
+    "page": "/archive/8th-local-2022/",
+    "results_path": "data/results/8th-local-2022.json",
+    "polls_path": "data/polls/aggregated_8th.json",
+    "exit_poll_path": "data/exit_polls/8th-local-2022.json",
+    "polls_window": ["2021-12-01", "2022-06-01"],
+    "sg_typecode": "3",
+    "proportional_sg_typecode": null,
+    "list_label": "확정"
+  },
+  "wiki_exit_polls": {
+    "kind": "local",
+    "templates": [
+      {"page": "틀:제8회 전국동시지방선거 광역자치단체장 출구조사", "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"}
+    ]
+  },
+  "results_file": "data/results/8th-local-2022.json",
+  "_note": "archive. history.html·archive/8th-local-2022/에서 사용."
 }
