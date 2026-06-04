@@ -86,27 +86,14 @@
 }
 
 /* 시도 column 헤더 */
-.tl-header {
-  display: contents;
-}
-.tl-header-empty {}
-.tl-header-sidos {
-  display: grid;
-  grid-template-columns: repeat(17, 1fr);
-  gap: 2px;
-  font-size: 9px;
-  text-align: center;
-  color: var(--ink-soft);
-  font-weight: 600;
-}
-.tl-header-sidos > span { padding: 2px 0; }
+
+
+
+
 
 /* 행 hover 약한 강조 */
-.tl-row-link {
-  display: contents;
-  cursor: pointer;
-}
-.tl-row-link:hover .tl-meta .tl-label { color: var(--accent, #c8553d); }
+
+
 
 /* 필터 — 압축 행 (시간 흐름 유지, 시각상 dim) */
 .tl-row > * { transition: opacity 0.15s, height 0.15s, padding 0.15s, font-size 0.15s; }

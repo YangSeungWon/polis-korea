@@ -1,10 +1,10 @@
 /* dashboard.css — 랜딩 대시보드 (3패널: 광역·기초·재보궐) */
 
-.dash-intro { margin: 8px 0 18px; }
-.dash-intro h1 { font-size: 26px; margin: 0 0 6px; letter-spacing: -0.02em; }
-.dash-intro .lede { font-size: 14px; color: var(--ink-soft); max-width: 64ch; line-height: 1.6; }
-.dash-intro .lede a { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--rule-strong); }
-.dash-intro .lede a:hover { text-decoration-color: var(--ink); }
+
+
+
+
+
 
 .dash-grid {
   display: grid;
@@ -148,11 +148,7 @@
   margin: 0 0 4px;
   letter-spacing: -0.015em;
 }
-.dash-section-sub {
-  font-size: 13px;
-  color: var(--ink-soft);
-  margin: 0 0 14px;
-}
+
 .dash-grid-2 { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 700px) {
   .dash-grid-2 { grid-template-columns: 1fr; }
@@ -181,7 +177,7 @@
   margin-right: 3px;
 }
 /* timeline 4번째 카드 — 값 영역 SVG로 */
-.status-card-timeline .status-value { padding: 4px 0; }
+
 
 /* card heading — 회차+날짜 가운데 정렬 */
 .status-card .card-heading {
@@ -202,15 +198,14 @@
   text-align: center;
   font-size: 10px;
 }
-.status-card-timeline .status-value, .status-card-timeline .status-meta { text-align: left; }
+
 
 /* section head with link */
 .dash-section-head {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
   margin-bottom: 14px;
 }
-.dash-section-head .dash-section-title,
-.dash-section-head .dash-section-sub { margin-bottom: 4px; }
+.dash-section-head .dash-section-title { margin-bottom: 4px; }
 .dash-section-head > div:first-child { flex: 1; }
 .dash-section-link {
   font-size: 13px;
@@ -327,7 +322,7 @@
   width: 8px; height: 8px;
   border-radius: 50%;
 }
-.status-card .party-legend .leg-other b { color: var(--ink-soft); }
+
 
 /* 대통령 카드 — 임기 progress bar */
 .status-card .pres-result {
@@ -335,29 +330,9 @@
   font-weight: 800;
   margin-bottom: 10px;
 }
-.status-card .term-progress {
-  position: relative;
-  width: 100%;
-  height: 18px;
-  background: var(--bg3);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.status-card .term-bar {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
-.status-card .term-pct {
-  position: absolute;
-  inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--ink);
-  z-index: 1;
-}
+
+
+
 
 /* 대통령 카드 — 후보 득표 막대 */
 .status-card .cand-bars {
