@@ -1,0 +1,49 @@
+{
+  "id": "byelection-2023-10-11",
+  "name": "2023년 10·11 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2023,
+  "date": "2023-10-11",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20231011"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    }
+  ],
+  "archive": {
+    "page": "/archive/byelection-2023-10-11/",
+    "results_path": "data/results/byelection-2023-10-11.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "3",
+    "list_label": "확정",
+    "context_note": "10·11 재보궐"
+  }
+}

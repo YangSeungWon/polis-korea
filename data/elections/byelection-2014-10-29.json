@@ -1,0 +1,49 @@
+{
+  "id": "byelection-2014-10-29",
+  "name": "2014년 10·29 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2014,
+  "date": "2014-10-29",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20141029"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    }
+  ],
+  "archive": {
+    "page": "/archive/byelection-2014-10-29/",
+    "results_path": "data/results/byelection-2014-10-29.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "3",
+    "list_label": "확정",
+    "context_note": "10·29 정기 재보궐"
+  }
+}

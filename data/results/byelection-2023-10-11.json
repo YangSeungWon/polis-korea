@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "election": "2023년 10·11 재·보궐선거",
+    "election_id": "byelection-2023-10-11",
+    "election_date": "2023-10-11",
+    "fetched_at": "2026-06-04T19:44:04+09:00",
+    "is_final": true,
+    "n_calls": 85,
+    "n_rows": 2
+  },
+  "races": [
+    {
+      "sg_typecode": "4",
+      "sido": "서울특별시",
+      "sigungu": "강서구",
+      "scope": "sigungu",
+      "electors": 500603,
+      "voters": 243664,
+      "valid_votes": 242508,
+      "invalid_votes": 1156,
+      "abstain": 256939,
+      "candidates": [
+        {
+          "name": "진교훈",
+          "party": "더불어민주당",
+          "votes": 137066,
+          "pct": 56.52,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김태우",
+          "party": "국민의힘",
+          "votes": 95492,
+          "pct": 39.38,
+          "rank": 2
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "votes": 4451,
+          "pct": 1.84,
+          "rank": 3
+        },
+        {
+          "name": "권혜인",
+          "party": "진보당",
+          "votes": 3364,
+          "pct": 1.39,
+          "rank": 4
+        },
+        {
+          "name": "고영일",
+          "party": "자유통일당",
+          "votes": 1623,
+          "pct": 0.67,
+          "rank": 5
+        },
+        {
+          "name": "김유리",
+          "party": "녹색당",
+          "votes": 512,
+          "pct": 0.21,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "서울특별시",
+      "sigungu": "강서구",
+      "scope": "sigungu_part",
+      "electors": 500603,
+      "voters": 243664,
+      "valid_votes": 242508,
+      "invalid_votes": 1156,
+      "abstain": 256939,
+      "candidates": [
+        {
+          "name": "진교훈",
+          "party": "더불어민주당",
+          "votes": 137066,
+          "pct": 56.52,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김태우",
+          "party": "국민의힘",
+          "votes": 95492,
+          "pct": 39.38,
+          "rank": 2
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "votes": 4451,
+          "pct": 1.84,
+          "rank": 3
+        },
+        {
+          "name": "권혜인",
+          "party": "진보당",
+          "votes": 3364,
+          "pct": 1.39,
+          "rank": 4
+        },
+        {
+          "name": "고영일",
+          "party": "자유통일당",
+          "votes": 1623,
+          "pct": 0.67,
+          "rank": 5
+        },
+        {
+          "name": "김유리",
+          "party": "녹색당",
+          "votes": 512,
+          "pct": 0.21,
+          "rank": 6
+        }
+      ]
+    }
+  ]
+}

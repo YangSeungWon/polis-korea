@@ -69,3 +69,21 @@
   .bx-list-row { grid-template-columns: 90px 1fr 50px; }
   .bx-list-note { display: none; }
 }
+
+/* 커버리지 — 연도별 grid */
+.bx-cov-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+}
+.bx-cov-cell {
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  font-size: 12px;
+}
+.bx-cov-year { font-weight: 700; color: var(--ink); }
+.bx-cov-meta { font-size: 10px; color: var(--ink-soft); margin-top: 2px; }
+.bx-cov-cell.bx-cov-has-data { background: var(--bg2); }
+.bx-cov-cell.bx-cov-gap { opacity: 0.5; border-style: dashed; }
+.bx-cov-cell.bx-cov-gap .bx-cov-meta { font-style: italic; }
+.bx-cov-cell.bx-cov-unknown { opacity: 0.7; }

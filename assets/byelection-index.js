@@ -65,9 +65,16 @@
     .filter((m) => m && INTEGRATED_BY_DATE[m.date] === m.id && m.kind !== 'byelection')
     .sort((a, b) => b.date.localeCompare(a.date));
 
+  // 캘린더 fetch
+  let calendar = null;
+  try {
+    calendar = await fetch('/data/byelection_calendar.json').then((r) => r.ok ? r.json() : null);
+  } catch {}
+
   renderHot(standalone, allMetas);
   renderTimeline(standalone, integrated);
   renderList(standalone, integrated);
+  renderCoverage(calendar);
 
   // ---
 
@@ -160,6 +167,31 @@
     </g>`;
     svg += '</svg>';
     host.innerHTML = svg;
+  }
+
+  function renderCoverage(calendar) {
+    const host = document.getElementById('bx-coverage');
+    if (!host) return;
+    const allYears = [];
+    for (let y = 1987; y <= 2026; y++) allYears.push(y);
+    const byYear = {};
+    if (calendar?.cycles) {
+      for (const c of calendar.cycles) {
+        (byYear[c.year] = byYear[c.year] || []).push(c);
+      }
+    }
+    let html = '<div class="bx-cov-grid">';
+    for (const y of allYears) {
+      const cycles = byYear[y] || [];
+      const status = cycles.length ? 'has-data' : (y < 2010 ? 'gap' : 'unknown');
+      const n = cycles.reduce((s, c) => s + c.reasons_count, 0);
+      html += `<div class="bx-cov-cell bx-cov-${status}">
+        <div class="bx-cov-year">${y}</div>
+        <div class="bx-cov-meta">${cycles.length ? `${cycles.length}회 · 사유 ${n}건` : (y < 2010 ? '데이터 없음' : '실시 안 함')}</div>
+      </div>`;
+    }
+    html += '</div>';
+    host.innerHTML = html;
   }
 
   function renderList(standalone, integrated) {

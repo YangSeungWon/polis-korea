@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "election": "2013년 10·30 재·보궐선거",
+    "election_id": "byelection-2013-10-30",
+    "election_date": "2013-10-30",
+    "fetched_at": "2026-06-04T19:42:34+09:00",
+    "is_final": true,
+    "n_calls": 85,
+    "n_rows": 5
+  },
+  "races": [
+    {
+      "sg_typecode": "2",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 189817,
+      "voters": 60643,
+      "valid_votes": 60399,
+      "invalid_votes": 244,
+      "abstain": 129174,
+      "candidates": [
+        {
+          "name": "서청원",
+          "party": "새누리당",
+          "votes": 37848,
+          "pct": 62.66,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "오일용",
+          "party": "민주당",
+          "votes": 17618,
+          "pct": 29.17,
+          "rank": 2
+        },
+        {
+          "name": "홍성규",
+          "party": "통합진보당",
+          "votes": 4933,
+          "pct": 8.17,
+          "rank": 3
+        }
+      ],
+      "district": "화성시갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경기도",
+      "sigungu": "화성시",
+      "scope": "district_sigungu",
+      "electors": 189817,
+      "voters": 60643,
+      "valid_votes": 60399,
+      "invalid_votes": 244,
+      "abstain": 129174,
+      "candidates": [
+        {
+          "name": "서청원",
+          "party": "새누리당",
+          "votes": 37848,
+          "pct": 62.66,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "오일용",
+          "party": "민주당",
+          "votes": 17618,
+          "pct": 29.17,
+          "rank": 2
+        },
+        {
+          "name": "홍성규",
+          "party": "통합진보당",
+          "votes": 4933,
+          "pct": 8.17,
+          "rank": 3
+        }
+      ],
+      "district": "화성시갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 210156,
+      "voters": 73425,
+      "valid_votes": 72942,
+      "invalid_votes": 483,
+      "abstain": 136731,
+      "candidates": [
+        {
+          "name": "박명재",
+          "party": "새누리당",
+          "votes": 57309,
+          "pct": 78.57,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "허대만",
+          "party": "민주당",
+          "votes": 13501,
+          "pct": 18.51,
+          "rank": 2
+        },
+        {
+          "name": "박신용",
+          "party": "통합진보당",
+          "votes": 2132,
+          "pct": 2.92,
+          "rank": 3
+        }
+      ],
+      "district": "포항시남구울릉군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "포항시남구",
+      "scope": "district_sigungu",
+      "electors": 200735,
+      "voters": 68512,
+      "valid_votes": 68079,
+      "invalid_votes": 433,
+      "abstain": 132223,
+      "candidates": [
+        {
+          "name": "박명재",
+          "party": "새누리당",
+          "votes": 53099,
+          "pct": 78.0,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "허대만",
+          "party": "민주당",
+          "votes": 12935,
+          "pct": 19.0,
+          "rank": 2
+        },
+        {
+          "name": "박신용",
+          "party": "통합진보당",
+          "votes": 2045,
+          "pct": 3.0,
+          "rank": 3
+        }
+      ],
+      "district": "포항시남구울릉군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "울릉군",
+      "scope": "district_sigungu",
+      "electors": 9421,
+      "voters": 4913,
+      "valid_votes": 4863,
+      "invalid_votes": 50,
+      "abstain": 4508,
+      "candidates": [
+        {
+          "name": "박명재",
+          "party": "새누리당",
+          "votes": 4210,
+          "pct": 86.57,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "허대만",
+          "party": "민주당",
+          "votes": 566,
+          "pct": 11.64,
+          "rank": 2
+        },
+        {
+          "name": "박신용",
+          "party": "통합진보당",
+          "votes": 87,
+          "pct": 1.79,
+          "rank": 3
+        }
+      ],
+      "district": "포항시남구울릉군"
+    }
+  ]
+}
