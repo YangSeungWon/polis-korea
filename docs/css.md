@@ -8,7 +8,8 @@
 |---|---|---|---|
 | `common.css` | 175 | 전 페이지 | 토큰 (`:root --bg --ink`) · reset · 다크 테마 · 사이트 chrome (헤더·푸터·테마 토글) · Leaflet 배경 |
 | `components.css` | 343 | polls·history·timeline·byelection·archive | 공유 UI 컴포넌트 — `.controls`·`.seg`·`.lede`·`.intro`·`.detail-pane`·`.hex-pane`·`.map-pane`·`.viz`·`.loading-overlay`·`.spin`·상태(`.is-active`·`.fade-*`)·범례(`.leg-*`)·`.scatter-wrap`·`@keyframes spin` |
-| `dashboard.css` | 458 | index + archive 4 | 대시보드 (status overview · dash-section · dash-grid · 정당 범례 · parliament chart mini · timeline strip · ar-list) |
+| `dashboard.css` | 185 | index만 | 랜딩 대시보드 (3패널 광역·기초·재보궐 · 정당색 범례 · 역대 섹션 구분 · 회차 아카이브 list) |
+| `status.css` | 278 | index만 | 상단 status overview (3 회차 카드 · 시간축 strip · 대통령 카드 후보 막대 · parliament chart mini · 양방향 hover highlight · mobile vertical timeline) |
 | `polls.css` | 81 | polls·governor·mayor·superintendent·party | 폴 카드 (`.poll-card`·`.pc-*`) 전용 |
 | `history.css` | 186 | history + history sub | 회차 결과 chrome (`.rc-*`·`.ns-*`·`.parl-seats-legend`·아카이브 banner) |
 | `archive.css` | 287 | archive 4 | 아카이브 페이지 (`.ar-*` 전부 — hero·hero stats·sections·exit poll grid·seat rows…) |
@@ -18,12 +19,12 @@
 ## 페이지별 CSS 세트
 
 ```
-index.html                                common + dashboard
+index.html                                common + dashboard + status
 polls.html · governor · mayor · …          common + components + polls
 history.html · history/*                   common + components + history
 timeline.html                              common + components + timeline
 byelection.html                            common + components + byelection
-archive/{id}/                              common + components + dashboard + archive
+archive/{id}/                              common + components + archive
 ```
 
 ## 로드 순서

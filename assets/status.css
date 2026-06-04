@@ -1,0 +1,278 @@
+/* assets/status.css — index 상단 status overview (대선·총선·지선 3 회차 카드 + 시간축 strip + 대통령 카드 후보 막대 + 국회 정당 범례).
+   index.html 만 로드 — dashboard.css 와 함께. */
+
+/* 현재 상태 대시보드 — index 상단 */
+.status-overview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 22px;
+}
+@media (max-width: 900px) {
+  .status-overview { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .status-overview { grid-template-columns: 1fr; }
+}
+.status-card {
+  display: flex; flex-direction: column;
+  padding: 14px 18px 14px 0;
+  border-right: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition: opacity 0.08s ease;
+}
+.status-card:last-child { border-right: none; }
+.status-card:hover { opacity: 0.75; }
+.status-cards-row .status-card:first-child { padding-left: 0; }
+.status-cards-row .status-card { padding-left: 18px; }
+.status-cards-row .status-card:first-child { padding-left: 0; }
+.status-card .status-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.status-card .status-value {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.status-card .status-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-top: auto;
+}
+
+/* status 카드 — 정당 pill, chip */
+.status-card .party-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  color: #fff;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.status-card .party-chip {
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.status-card .party-chip b {
+  font-size: 14px;
+  font-weight: 800;
+  margin-right: 3px;
+}
+/* timeline 4번째 카드 — 값 영역 SVG로 */
+
+
+/* card heading — 회차+날짜 가운데 정렬 */
+.status-card .card-heading {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 4px 0 8px;
+}
+.status-card .card-heading-n {
+  font-size: 16px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em;
+}
+.status-card .card-heading-date {
+  font-size: 11px; color: var(--ink-soft); margin-top: 1px;
+}
+.status-card .status-value {
+  text-align: center;
+  font-size: 18px;
+}
+.status-card .status-meta {
+  text-align: center;
+  font-size: 10px;
+}
+
+/* status overview v2 — 가로 시간축 strip + 3 카드 row */
+.status-overview-v2 {
+  margin: 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.status-timeline-strip {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: default;
+}
+.status-timeline-strip svg { display: block; }
+.status-timeline-strip .tl-dot { cursor: pointer; }
+.status-timeline-strip .tl-dot:hover .tl-dot-vis { stroke: #0a0e1a; stroke-width: 2.5; stroke-dasharray: none; }
+.status-timeline-strip .tl-dot:hover text { fill: #0a0e1a; }
+
+/* 양방향 highlight — overview에 data-hover-kind 있으면 해당 kind 강조, 외 dim */
+.status-overview-v2[data-hover-kind] .tl-dot:not([data-kind=""]) { opacity: 0.35; }
+.status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"],
+.status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"],
+.status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] {
+  opacity: 1;
+}
+.status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"] .tl-dot-vis,
+.status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"] .tl-dot-vis,
+.status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] .tl-dot-vis {
+  stroke: #0a0e1a;
+  stroke-width: 2.5;
+  stroke-dasharray: none;
+}
+.status-overview-v2[data-hover-kind] .status-card { opacity: 0.45; }
+.status-overview-v2[data-hover-kind="presidential"] .status-card[data-slot="president"],
+.status-overview-v2[data-hover-kind="national_assembly"] .status-card[data-slot="assembly"],
+.status-overview-v2[data-hover-kind="local"] .status-card[data-slot="local"] {
+  opacity: 1;
+}
+.status-overview-v2 .status-card,
+.status-overview-v2 .tl-dot { transition: opacity 0.12s ease; }
+
+.status-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 800px) {
+  .status-cards-row { grid-template-columns: 1fr; }
+}
+
+/* 국회 카드 정당 범례 */
+.status-card .party-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  /* 도넛(원들)과 레전드 살짝 띄우기 — chart margin-bottom -6% crop을 상쇄하고 여백 확보 */
+  margin-top: 16px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  justify-content: center;
+  text-align: center;
+}
+.status-card .party-legend .leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.status-card .party-legend .leg-item b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.status-card .party-legend .leg-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+
+/* 대통령 카드 — 임기 progress bar */
+.status-card .pres-result {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+
+
+
+/* 대통령 카드 — 후보 득표 막대 */
+.status-card .cand-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 8px;
+  width: 100%;
+}
+.status-card .cand-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 36px;
+  gap: 6px;
+  align-items: center;
+  font-size: 11px;
+}
+.status-card .cand-name {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+.status-card .cand-bar {
+  display: block;
+  height: 8px;
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+}
+.status-card .cand-fill {
+  display: block;
+  height: 100%;
+}
+.status-card .cand-pct {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+
+/* status timeline strip — 모바일에서 최소 높이 보장 */
+.status-timeline-strip svg { width: 100%; height: auto; }
+@media (max-width: 700px) {
+  .status-timeline-strip svg { min-height: 170px; }
+  .status-cards-row .status-card { padding: 14px 0; border-right: none; border-bottom: 1px solid var(--rule); }
+  .status-cards-row .status-card:last-child { border-bottom: none; }
+}
+@media (max-width: 700px) {
+  .tl-strip-svg { display: none; }
+  .tl-strip-list { display: block; }
+  .status-timeline-strip svg { min-height: 0; }
+}
+
+/* tl-list — 모바일 vertical 시간축 */
+.tl-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.tl-list-row {
+  border-bottom: 1px solid var(--rule);
+}
+.tl-list-row:last-child { border-bottom: none; }
+.tl-list-row a {
+  display: grid;
+  grid-template-columns: 16px 64px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+}
+.tl-list-row.is-upcoming a { color: var(--ink-soft); }
+.tl-list-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.tl-list-date {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.tl-list-name { font-weight: 600; }
+.tl-list-today {
+  padding: 6px 0;
+  border-bottom: 2px solid var(--ink);
+  border-top: 2px solid var(--ink);
+  margin: 4px 0;
+}
+.tl-list-today span {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
