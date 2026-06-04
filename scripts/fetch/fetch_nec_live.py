@@ -155,9 +155,14 @@ def build(election_id_meta: str) -> dict:
         sys.exit(1)
     election_id = f"00{sg_id}"  # NEC 포털 electionId (예: 20260603 → 0020260603)
     menu = meta.get("nec", {}).get("live_menu", "VCCP09")
-    # 통합 시도 alias → canonical (전남광주통합특별시 → 메타 canonical)
-    merges = {a: m["canonical"] for m in meta.get("sido_merge", [])
-              for a in m.get("merge_from", [])}
+    # 통합 시도 alias → canonical (사이트 표준명). merge_from(옛 시도명)뿐 아니라
+    # NEC 개표 포털이 쓰는 nec_sgg("전남광주통합특별시")도 canonical("전남광주특별시")로.
+    merges = {}
+    for m in meta.get("sido_merge", []):
+        for a in m.get("merge_from", []):
+            merges[a] = m["canonical"]
+        if m.get("nec_sgg"):
+            merges[m["nec_sgg"]] = m["canonical"]
     def canon(sd):
         return merges.get(sd, sd)
 
