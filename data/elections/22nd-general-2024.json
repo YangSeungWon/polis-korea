@@ -31,8 +31,11 @@
   },
   "wiki_exit_polls": {
     "kind": "general",
-    "templates": [],
-    "_note": "22대 출구조사는 wikitable 구조 다름 (의석 예측). parser 별도 필요."
+    "templates": [
+      {"page": "틀:대한민국 제22대 국회의원 선거 출구조사",
+       "key": "kep_per_broadcaster", "name": "방송 3사 의석 예측"}
+    ],
+    "_note": "총선은 의석 예측 형태 — 한 template에 KBS/MBC/SBS row, 각자 별도 source로 생성."
   },
   "results_file": "data/results/22nd-general-2024.json",
   "_note": "archive. history.html·archive/22nd-general-2024/에서 사용."

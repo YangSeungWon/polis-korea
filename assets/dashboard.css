@@ -305,7 +305,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px 10px;
-  margin-top: 8px;
+  /* 도넛(원들)과 레전드 살짝 띄우기 — chart margin-bottom -6% crop을 상쇄하고 여백 확보 */
+  margin-top: 16px;
   font-size: 11px;
   color: var(--ink-soft);
   justify-content: center;

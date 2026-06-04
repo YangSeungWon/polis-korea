@@ -150,6 +150,118 @@ def parse_wikitable_kep(wikitext: str) -> dict:
 
 
 
+def parse_wikitable_general_seats(wikitext: str) -> dict:
+    """총선 출구조사 — 의석 예측 wikitable → {방송사_key: {name, seats}}.
+
+    template 구조:
+      ! 방송사  ! [[정당1]]<br/>[[위성1]]  ! [[정당2]]<br/>[[위성2]]  ...
+      |-
+      ! KBS  | 178~196 | 87~105 | ...
+      |- ...
+
+    위성정당이 본정당과 같은 헤더 cell에 묶여있으면 위성을 메모로 보존.
+    """
+    out: dict[str, dict] = {}
+    # 첫 wikitable 추출
+    m = re.search(r"\{\|[\s\S]*?\|\}", wikitext)
+    if not m:
+        return out
+    table = m.group(0)
+    rows = re.split(r"\n\|-+\n", table)
+    if len(rows) < 3:
+        return out
+    # rows[0] = {|... 테이블 opener / |+ caption. 실제 헤더 행은 rows[1].
+    header = rows[1]
+    data_rows = rows[2:]
+    # 정당 헤더 cell들 — '!' 뒤 [[정당]] (또는 alias) [<br/>...] 여러 줄 OK.
+    # 셀 단위: line starts with ! then content. '! 방송사'는 첫 cell, 나머지가 정당.
+    header_lines = [ln for ln in header.splitlines() if ln.strip().startswith("!")]
+    if len(header_lines) < 3:
+        # 한 줄에 '!!' 구분으로 묶여있을 수도
+        joined = " ".join(header_lines)
+        cells = re.split(r"!\s*", joined)
+        cells = [c.strip() for c in cells if c.strip()]
+    else:
+        cells = [ln.lstrip("!").strip() for ln in header_lines]
+    if not cells:
+        return out
+    party_cells = cells[1:]  # 첫 cell = 방송사 라벨
+
+    def extract_parties(cell: str) -> tuple[str, str]:
+        """cell → (main_party, satellite_or_alias). [[A|B]] → B, [[A]] → A."""
+        links = re.findall(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", cell)
+        if not links:
+            return "", ""
+        names = [alias.strip() if alias else target.strip() for target, alias in links]
+        main = names[0]
+        extra = names[1] if len(names) > 1 else ""
+        return main, extra
+
+    parties = [extract_parties(c) for c in party_cells]
+
+    # 데이터 행
+    for row in data_rows:
+        m_bc = re.match(r"\s*!\s*([^\n|]+)", row)
+        if not m_bc:
+            continue
+        bc = m_bc.group(1).strip()
+        # 셀: | 값 패턴
+        cells_data = re.findall(r"^\|\s*([^\n|]+)", row, flags=re.M)
+        # 첫 데이터 row의 cell 수가 party 수와 안 맞으면 skip
+        if len(cells_data) < len(parties):
+            continue
+        seats: dict[str, dict] = {}
+        for (main, extra), raw in zip(parties, cells_data[:len(parties)]):
+            if not main:
+                continue
+            raw = raw.strip()
+            mn, mx = parse_seat_range(raw)
+            if mn is None:
+                continue
+            entry: dict = {"min": mn, "max": mx}
+            if extra and extra != main:
+                entry["satellite"] = extra
+            seats[main] = entry
+        if seats:
+            key, name = BROADCAST_TO_KEY(bc)
+            out[key] = {"name": name, "seats": seats}
+    return out
+
+
+def parse_seat_range(text: str) -> tuple:
+    """'178~196' / '0' / '178 ~ 196' → (min, max). 못 파싱 시 (None, None)."""
+    text = text.strip().replace("~", "~").replace("〜", "~")
+    m = re.match(r"^\s*(\d+)\s*~\s*(\d+)\s*$", text)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+    m = re.match(r"^\s*(\d+)\s*$", text)
+    if m:
+        n = int(m.group(1))
+        return n, n
+    return None, None
+
+
+BROADCASTER_MAP = {
+    "KBS": ("kbs", "KBS 출구조사"),
+    "MBC": ("mbc", "MBC 출구조사"),
+    "SBS": ("sbs", "SBS 출구조사"),
+    "JTBC": ("jtbc", "JTBC 출구조사"),
+    "채널A": ("channel_a", "채널A 출구조사"),
+    "MBN": ("mbn", "MBN 출구조사"),
+    "방송 3사": ("kep_3sa", "KBS·MBC·SBS 공동 출구조사"),
+    "방송3사": ("kep_3sa", "KBS·MBC·SBS 공동 출구조사"),
+}
+
+
+def BROADCAST_TO_KEY(text: str) -> tuple[str, str]:
+    """방송사 라벨 → (source key, 표시명)."""
+    cleaned = re.sub(r"\s+", "", text)
+    for label, kv in BROADCASTER_MAP.items():
+        if label.replace(" ", "") in cleaned:
+            return kv
+    return ("other", text)
+
+
 def load_existing(election_id: str) -> dict:
     p = EXIT_DIR / f"{election_id}.json"
     if p.exists():
@@ -187,12 +299,31 @@ def main():
     EXIT_DIR.mkdir(parents=True, exist_ok=True)
     data = load_existing(args.id)
 
-    office = "광역단체장" if spec["kind"] == "local" else "대통령"
+    kind = spec["kind"]
+    office = {"local": "광역단체장", "pres": "대통령", "general": "국회의원"}.get(kind, "")
     any_updated = False
     for src in spec["sources"]:
         wt = fetch_wikitext(src["page"])
         if not wt:
             print(f"  ! {src['page']}: wikitext 비어있음 (스킵)", file=sys.stderr)
+            continue
+        if kind == "general":
+            # 한 페이지에 여러 방송사 row가 있어 → 여러 source 동시 생성
+            parsed = parse_wikitable_general_seats(wt)
+            if not parsed:
+                print(f"  ! {src['page']}: 0건 (스킵)", file=sys.stderr)
+                continue
+            for skey, block in parsed.items():
+                print(f"  {skey}: {len(block['seats'])} 정당 의석 예측 ← {src['page']}", file=sys.stderr)
+                upsert_source(data, skey, {
+                    "key": skey,
+                    "name": block["name"],
+                    "released_at": "",
+                    "quote_after": "",
+                    "office": office,
+                    "seats": block["seats"],
+                })
+                any_updated = True
             continue
         parsed = parse_wikitable_kep(wt)
         if not parsed:

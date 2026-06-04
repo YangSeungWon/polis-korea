@@ -250,7 +250,7 @@ SECTIONS_GENERAL = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. 방송사별 의석 예측. (데이터 수집 대기)</p>
+    <p class="ar-source-line">{date} 18:00 발표. 방송사별 정당 의석 예측 범위 vs 실제. 범위 안 적중 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 

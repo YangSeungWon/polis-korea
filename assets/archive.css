@@ -245,6 +245,24 @@
 .ar-dist-cand { font-weight: 700; }
 .ar-dist-meta { font-variant-numeric: tabular-nums; font-size: 11px; color: var(--ink-soft); text-align: right; }
 
+/* 의석 예측 vs 실제 (총선 22대형) */
+.ar-seat-rows { display: grid; gap: 4px; }
+.ar-seat-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 130px;
+  gap: 10px;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: center;
+}
+.ar-seat-row.is-hit { border-left: 2px solid #2e7d6f; padding-left: 8px; }
+.ar-seat-row.is-miss { border-left: 2px solid #c8553d; padding-left: 8px; }
+.ar-seat-party { font-weight: 700; }
+.ar-seat-sat { font-size: 10px; color: var(--ink-mute); font-weight: 400; }
+.ar-seat-pred { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+.ar-seat-actual { font-variant-numeric: tabular-nums; color: var(--ink-soft); text-align: right; }
+
 /* 출구조사 — 전국 행 강조 */
 .ar-exit-row.is-nation { border-top: 1px solid var(--ink); padding-top: 6px; }
 .ar-exit-row.is-nation .ar-exit-sido { color: var(--ink); }

@@ -136,6 +136,64 @@
     document.getElementById('ar-districts').hidden = false;
   }
 
+  // 의석 예측 vs 실제 — 22대형 출구조사 (방송사별 정당 의석 범위).
+  function renderExitPoll(ctx) {
+    const { exitData, results, meta, sgTypecode } = ctx;
+    if (!exitData?.sources) {
+      // 결과·시도별 dict 형태 source가 있으면 pres 함수 fallback.
+      if (exitData?.sources) window.Archive.pres.renderExitPoll(ctx);
+      return;
+    }
+    const now = new Date();
+    const seatBlocks = exitData.sources.filter((ep) => {
+      const qa = ep.quote_after ? new Date(ep.quote_after) : null;
+      if (qa && now < qa) return false;
+      return ep.seats && Object.keys(ep.seats).length > 0;
+    });
+    if (!seatBlocks.length) {
+      // 권역별 (results dict) source가 있으면 pres 함수 호출.
+      const regionBlocks = exitData.sources.some((ep) => ep.results && Object.keys(ep.results).length);
+      if (regionBlocks) window.Archive.pres.renderExitPoll(ctx);
+      return;
+    }
+    const actualSeats = results ? computeSeats(results, sgTypecode, propSg(meta)) : {};
+    const host = document.getElementById('ar-exitpoll-grid');
+    for (const ep of seatBlocks) {
+      const card = document.createElement('div');
+      card.className = 'ar-exit-block';
+      // 적중률 — 실제가 predicted [min, max] 안에 들어오나
+      let hits = 0, tot = 0;
+      for (const [party, range] of Object.entries(ep.seats)) {
+        const actual = actualSeats[party];
+        if (actual == null) continue;
+        tot += 1;
+        if (actual >= range.min && actual <= range.max) hits += 1;
+      }
+      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 범위 적중</span>` : '';
+      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}${stats}</h3>`;
+      const grid = document.createElement('div');
+      grid.className = 'ar-seat-rows';
+      for (const [party, range] of Object.entries(ep.seats)) {
+        const col = pcol(party);
+        const actual = actualSeats[party];
+        const hit = actual != null && actual >= range.min && actual <= range.max;
+        const sat = range.satellite ? ` <span class="ar-seat-sat">+${range.satellite}</span>` : '';
+        const predText = range.min === range.max ? `${range.min}` : `${range.min}~${range.max}`;
+        const row = document.createElement('div');
+        row.className = 'ar-seat-row ' + (actual != null ? (hit ? 'is-hit' : 'is-miss') : '');
+        row.innerHTML = `
+          <span class="ar-seat-party" style="color:${col};font-weight:700">${party}${sat}</span>
+          <span class="ar-seat-pred">${predText}석</span>
+          ${actual != null ? `<span class="ar-seat-actual">실제 ${actual}석 ${hit ? '✓' : '✗'}</span>` : ''}
+        `;
+        grid.appendChild(row);
+      }
+      card.appendChild(grid);
+      host.appendChild(card);
+    }
+    document.getElementById('ar-exitpoll').hidden = false;
+  }
+
   function renderTrend(ctx) {
     const { polls } = ctx;
     if (!polls?.length) return;
@@ -165,8 +223,8 @@
       renderParliament(ctx);
       renderProportional(ctx);
       renderDistricts(ctx);
-      // 출구조사는 pres와 동일 schema — 재사용
-      window.Archive.pres.renderExitPoll(ctx);
+      // 출구조사 — seats 형태(22대 의석 예측)면 자체 render, 그 외 pres 위임
+      renderExitPoll(ctx);
       renderTrend(ctx);
     },
   };
