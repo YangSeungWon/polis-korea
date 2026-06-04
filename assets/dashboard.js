@@ -192,11 +192,38 @@ function renderMayor(polls, sgHex, results) {
   if (!svg || !sgHex.length) return;
   const useResults = !!results;
   let byKey = {};  // 'sido|name' → { party, pct }
+  // 통합 시도 → 옛 시도로 split (hex 데이터는 옛 광주광역시·전라남도 분리 유지).
+  // results의 sido='전남광주특별시'면 sigungu가 광주 자치구(5개)면 광주광역시, 아니면 전라남도.
+  const GWANGJU_DISTRICTS = new Set(['동구', '서구', '남구', '북구', '광산구']);
+  const splitMergedSido = (sido, sigungu) => {
+    if (sido === '전남광주특별시') {
+      return GWANGJU_DISTRICTS.has(sigungu) ? '광주광역시' : '전라남도';
+    }
+    return sido;
+  };
   if (useResults) {
     const sigunguRaces = (results.races || []).filter((r) => r.scope === 'sigungu' && r.sg_typecode === '4');
     for (const r of sigunguRaces) {
       const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
-      if (top) byKey[`${canonSido(r.sido)}|${r.sigungu}`] = { party: top.party, pct: top.pct };
+      if (!top) continue;
+      const lookupSido = splitMergedSido(r.sido, r.sigungu);
+      byKey[`${canonSido(lookupSido)}|${r.sigungu}`] = { party: top.party, pct: top.pct };
+    }
+    // 단층 자치단체(세종·제주) — 기초장 race 없음, 광역장(tc=3) 결과를 hex에 fallback.
+    // hex name 매칭: 세종 → '세종시', 제주 → '제주시'/'서귀포시'(둘 다 광역결과로).
+    const SINGLE_TIER = {
+      '세종특별자치시': ['세종시'],
+      '제주특별자치도': ['제주시', '서귀포시'],
+    };
+    for (const r of (results.races || [])) {
+      if (r.scope !== 'sido' || r.sg_typecode !== '3') continue;
+      const names = SINGLE_TIER[canonSido(r.sido)];
+      if (!names) continue;
+      const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+      if (!top) continue;
+      for (const n of names) {
+        byKey[`${canonSido(r.sido)}|${n}`] = { party: top.party, pct: top.pct };
+      }
     }
   } else {
     const gc = polls.filter((p) => p.office_level === '기초단체장' && p.sigungu);
