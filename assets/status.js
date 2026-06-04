@@ -146,7 +146,9 @@
       const t = new Date(r.date);
       return t >= tEarliest && t <= tLatest;
     }).sort((a, b) => a.date.localeCompare(b.date));
-    stripEl.innerHTML = renderTimelineStrip(visible, today, tEarliest, tLatest);
+    stripEl.innerHTML =
+      `<div class="tl-strip-svg">${renderTimelineStrip(visible, today, tEarliest, tLatest)}</div>`
+      + `<div class="tl-strip-list">${renderTimelineList(visible, today)}</div>`;
     stripEl.querySelectorAll('.tl-dot').forEach((g) => {
       const href = g.getAttribute('data-href');
       if (href) g.addEventListener('click', () => { location.href = href; });
@@ -212,4 +214,34 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
 
 function polarToXY(cx, cy, r, angle) {
   return { x: cx + r * Math.cos(angle), y: cy - r * Math.sin(angle) };
+}
+
+// 모바일용 시간축 list — 시간 역순(미래→과거). 오늘 위치에 가로선 마커.
+function renderTimelineList(rounds, today) {
+  const kindCol = (k) => ({ presidential: '#c8553d', national_assembly: '#2e7d6f', local: '#b07e3d' }[k] || '#999');
+  const kindShort = { presidential: '대선', national_assembly: '총선', local: '지선' };
+  const unitOf = { presidential: '대', national_assembly: '대', local: '회' };
+  const todayStr = today.toISOString().slice(0, 10);
+  const sorted = [...rounds].sort((a, b) => b.date.localeCompare(a.date));
+  let inserted = false;
+  const rows = [];
+  for (const r of sorted) {
+    if (!inserted && r.date <= todayStr) {
+      rows.push(`<li class="tl-list-today"><span>오늘 · ${todayStr}</span></li>`);
+      inserted = true;
+    }
+    const col = kindCol(r.kind);
+    const fill = r.upcoming ? 'transparent' : col;
+    const dot = `<span class="tl-list-dot" style="background:${fill};border:2px solid ${col}"></span>`;
+    const url = `history.html?type=${r.kind}&n=${r.n}`;
+    rows.push(`<li class="tl-list-row${r.upcoming ? ' is-upcoming' : ''}">
+      <a href="${url}">
+        ${dot}
+        <span class="tl-list-date">${r.date.slice(0, 4)}.${r.date.slice(5, 7)}</span>
+        <span class="tl-list-name">${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}</span>
+      </a>
+    </li>`);
+  }
+  if (!inserted) rows.push(`<li class="tl-list-today"><span>오늘 · ${todayStr}</span></li>`);
+  return `<ul class="tl-list">${rows.join('')}</ul>`;
 }

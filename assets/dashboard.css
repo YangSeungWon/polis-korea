@@ -376,3 +376,57 @@
   .status-cards-row .status-card { padding: 14px 0; border-right: none; border-bottom: 1px solid var(--rule); }
   .status-cards-row .status-card:last-child { border-bottom: none; }
 }
+
+/* status timeline — desktop SVG / mobile list 토글 */
+.tl-strip-svg { display: block; }
+.tl-strip-list { display: none; }
+@media (max-width: 700px) {
+  .tl-strip-svg { display: none; }
+  .tl-strip-list { display: block; }
+  .status-timeline-strip svg { min-height: 0; }
+}
+
+/* tl-list — 모바일 vertical 시간축 */
+.tl-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.tl-list-row {
+  border-bottom: 1px solid var(--rule);
+}
+.tl-list-row:last-child { border-bottom: none; }
+.tl-list-row a {
+  display: grid;
+  grid-template-columns: 16px 64px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+}
+.tl-list-row.is-upcoming a { color: var(--ink-soft); }
+.tl-list-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.tl-list-date {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.tl-list-name { font-weight: 600; }
+.tl-list-today {
+  padding: 6px 0;
+  border-bottom: 2px solid var(--ink);
+  border-top: 2px solid var(--ink);
+  margin: 4px 0;
+}
+.tl-list-today span {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}

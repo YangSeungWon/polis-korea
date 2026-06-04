@@ -47,25 +47,30 @@
 
 /* 시도 cells grid (17 cols) */
 .tl-sidos {
-  display: grid;
-  grid-template-columns: repeat(17, 1fr);
-  gap: 2px;
-  height: 30px;
+  display: flex;
+  width: 100%;
+  height: 28px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
 }
-.tl-sido-cell {
-  border-radius: 2px;
-  cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.08s ease;
-  position: relative;
-}
-.tl-sido-cell:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 0 1px var(--ink);
-  z-index: 5;
-}
-.tl-sido-cell.no-data {
+.tl-sidos.is-empty {
   background: var(--bg3, #e6e9ef);
 }
+.tl-stack-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0,0,0,0.35);
+  min-width: 0;
+  overflow: hidden;
+  cursor: default;
+  border-right: 1px solid rgba(255,255,255,0.4);
+}
+.tl-stack-seg:last-child { border-right: none; }
+.tl-stack-seg:hover { filter: brightness(1.12); }
 
 /* 우측 meta — 당선자(대선)·turnout */
 .tl-right {

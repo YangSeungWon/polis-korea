@@ -23,6 +23,55 @@ const TYPE_SLUG = {
   local: 'local',
 };
 
+const PARTY_SHORT = {
+  '더불어민주당': '민주', '국민의힘': '국힘', '국민의미래': '국힘비례',
+  '더불어민주연합': '민주비례', '조국혁신당': '조국', '개혁신당': '개혁',
+  '새누리당': '새누리', '새정치민주연합': '새정치', '한나라당': '한나라',
+  '민주노동당': '민노', '자유한국당': '한국', '바른미래당': '바른',
+  '진보당': '진보', '새천년민주당': '새천년', '열린우리당': '열우',
+  '민주통합당': '민통', '민주당': '민주', '통합진보당': '통진',
+  '국민회의': '국민', '자민련': '자민련', '민자당': '민자',
+  '신한국당': '신한국', '한나라당계열': '한나라', '새정치국민회의': '국민회의',
+  '무소속': '무', '기타': '기타',
+};
+
+// 회차 단위 100% stacked bar 데이터 — kind별로 다른 데이터 source.
+function buildStackForRound(r) {
+  let parts = [];
+  if (r.kind === 'presidential' && r.presCandidates?.length) {
+    // 대선: 후보 득표율
+    parts = r.presCandidates.slice(0, 6).map((c) => ({
+      party: c.party,
+      value: c.pct || 0,
+      label: `${c.pct?.toFixed(1) || 0}% (${c.name || '?'})`,
+      short: PARTY_SHORT[c.party] || c.party.slice(0, 2),
+    }));
+  } else if (r.kind === 'national_assembly' && r.partySeats?.length) {
+    // 총선: 정당별 의석
+    parts = r.partySeats.map(([party, seats]) => ({
+      party, value: seats,
+      label: `${seats}석`,
+      short: PARTY_SHORT[party] || party.slice(0, 2),
+    }));
+  } else if (r.kind === 'local' && r.sidoWinners) {
+    // 지선: 광역단체장 정당별 시도 수
+    const counter = {};
+    for (const sido of Object.keys(r.sidoWinners)) {
+      const w = r.sidoWinners[sido];
+      if (w?.party) counter[w.party] = (counter[w.party] || 0) + 1;
+    }
+    parts = Object.entries(counter)
+      .sort((a, b) => b[1] - a[1])
+      .map(([party, n]) => ({
+        party, value: n,
+        label: `${n}곳`,
+        short: PARTY_SHORT[party] || party.slice(0, 2),
+      }));
+  }
+  const total = parts.reduce((s, p) => s + p.value, 0);
+  return { parts, total };
+}
+
 function loadJson(p) {
   return fetch(p).then((r) => r.json());
 }
@@ -34,21 +83,7 @@ function loadJson(p) {
   const root = $('#tl-table');
   root.hidden = false;
 
-  // 헤더 row — 시도 약칭
-  const header = document.createElement('div');
-  header.className = 'tl-header';
-  const emptyL = document.createElement('div');
-  emptyL.className = 'tl-header-empty';
-  const sidos = document.createElement('div');
-  sidos.className = 'tl-header-sidos';
-  for (const s of SIDO_ORDER) {
-    const span = document.createElement('span');
-    span.textContent = (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[s] || s) : s;
-    sidos.appendChild(span);
-  }
-  const emptyR = document.createElement('div');
-  header.appendChild(emptyL); header.appendChild(sidos); header.appendChild(emptyR);
-  root.appendChild(header);
+  // (헤더 row 제거 — 시도 약칭 헤더는 stacked bar 구조에서 의미 없음.)
 
   // 회차 row들 (시간 역순 — 최근 위)
   const sorted = [...rounds].sort((a, b) => b.date.localeCompare(a.date));
@@ -75,22 +110,28 @@ function loadJson(p) {
     meta.appendChild(lbl);
     meta.appendChild(date);
 
-    // 시도 cells
+    // 종류별 100% stacked bar — 회차의 의미 있는 분포 표시.
+    // 대선: 후보 득표율 / 총선: 정당별 의석 / 지선: 광역단체장 정당별 시도 수.
     const sidosBox = document.createElement('div');
     sidosBox.className = 'tl-sidos';
-    for (const s of SIDO_ORDER) {
-      const cell = document.createElement('div');
-      const winner = (r.sidoWinners || {})[s];
-      if (winner && winner.party) {
-        cell.className = 'tl-sido-cell';
-        const color = (typeof partyColor === 'function') ? partyColor(winner.party) : '#999';
-        cell.style.background = color;
-        cell.title = `${s} · ${winner.party} ${winner.pct?.toFixed(1) || ''}%`;
-      } else {
-        cell.className = 'tl-sido-cell no-data';
-        cell.title = `${s} · 데이터 없음`;
+    const stack = buildStackForRound(r);
+    if (stack.parts.length) {
+      for (const p of stack.parts) {
+        const seg = document.createElement('span');
+        seg.className = 'tl-stack-seg';
+        const col = (typeof partyColor === 'function') ? partyColor(p.party) : '#999';
+        seg.style.flexGrow = String(p.value);
+        seg.style.background = col;
+        seg.title = `${p.party} ${p.label}`;
+        // 큰 segment는 안에 정당 약칭
+        if (p.value / stack.total >= 0.12) {
+          seg.textContent = p.short || p.party;
+        }
+        sidosBox.appendChild(seg);
       }
-      sidosBox.appendChild(cell);
+    } else {
+      sidosBox.classList.add('is-empty');
+      sidosBox.textContent = r.upcoming ? '' : '';
     }
 
     // 우측 meta
