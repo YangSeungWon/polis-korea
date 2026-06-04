@@ -45,9 +45,20 @@ SIDO_SHORT = {
 }
 
 # 컬럼 라벨이 이것들이면 후보/정당 아님 (메트릭 컬럼)
-NON_DATA_COL = re.compile(r"전체|조사|완료|사례|단위|모름|무응답|없[음다]|가중|적용|Base|소계|합계|기타")
-_PCT = re.compile(r"^\d{1,3}\.\d$")
+NON_DATA_COL = re.compile(r"전체|조사|완료|사례|단위|모름|무응답|없[음다]|가중|적용|Base|소계|합계|기타|응답거절|계$")
+# 득표율 — 소수(36.0) 또는 정수(갤럽 등 "43"). (NNN) 표본수는 _PAREN으로 제외.
+_PCT = re.compile(r"^\d{1,3}(?:\.\d+)?$")
 _PAREN = re.compile(r"^\(.*\)$")
+
+
+def _is_total_row(ws_sorted: list[dict]) -> bool:
+    """행 레이블이 '전체'인가. '전'+'체' 분리·'■ 전 체 ■' 마커 케이스 포함."""
+    label = ""
+    for w in ws_sorted:
+        if _PCT.match(w["t"]) or _PAREN.match(w["t"]):
+            break
+        label += re.sub(r"[^가-힣]", "", w["t"])
+    return label.startswith("전체")
 
 
 def load_meta(csv_path: Path) -> dict[str, dict]:
@@ -92,8 +103,9 @@ def recover_page(rows: dict, roster_dist: dict, parties: set) -> dict | None:
     pcts: list[tuple[float, float]] = []
     for top in tops:
         ws = sorted(rows[top], key=lambda w: w["x0"])
-        if ws and ws[0]["t"] == "전체":
-            cand = [(float(w["t"]), w["xc"]) for w in ws[1:] if _PCT.match(w["t"])]
+        if _is_total_row(ws):
+            cand = [(float(w["t"]), w["xc"]) for w in ws
+                    if _PCT.match(w["t"]) and not _PAREN.match(w["t"])]
             if len(cand) >= 2:
                 total_top, pcts = top, cand
                 break
@@ -164,7 +176,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--election", default="22nd-general-2024")
     ap.add_argument("--csv", default="data/raw/nesdc_22gen_polls.csv")
-    ap.add_argument("--agency", default="여론조사꽃", help="대상 조사기관 키워드")
+    ap.add_argument("--agency",
+                    default="여론조사꽃,한국갤럽,한국리서치,넥스트,조원,한국사회여론",
+                    help="대상 조사기관 키워드(콤마구분) — 괘선없는 cross-tab 양식 기관")
     ap.add_argument("--roster", default="data/raw/nec_roster_22gen.json")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
@@ -178,7 +192,9 @@ def main():
         "새로운미래", "진보당", "자유통일당", "기본소득당"}
 
     didx = district_index(districts)
-    targets = [(nid, m) for nid, m in meta.items() if args.agency in m.get("agency", "")]
+    kws = [k.strip() for k in args.agency.split(",") if k.strip()]
+    targets = [(nid, m) for nid, m in meta.items()
+               if any(k in m.get("agency", "") for k in kws)]
     if args.limit:
         targets = targets[:args.limit]
     print(f"대상 {args.agency}: {len(targets)} ntt", file=sys.stderr)

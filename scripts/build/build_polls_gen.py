@@ -341,7 +341,10 @@ def postprocess(polls: list[dict]) -> list[dict]:
             out.append(p)
         elif sc > (len(out[seen_card[k]]["candidates"]), out[seen_card[k]].get("sample_size") or 0):
             out[seen_card[k]] = p
-    return out
+
+    # 최종 sanity — merge가 후보별 max-pct로 합치며 합>110 garble(양산갑·남양주병) 만들거나,
+    # sub-group 행을 전체로 오인(합<30)한 record drop.
+    return [p for p in out if 30 <= _sum(p) <= 110]
 
 
 def main():
