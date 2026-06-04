@@ -169,7 +169,8 @@ def build(election_id_meta: str) -> dict:
     s = make_session(election_id, menu)
     races: list[dict] = []
     n_call = 0
-    LIVE_TC = {"3", "4", "11", "8", "9"}  # 라이브 지원 office (의원 5/6은 town 단위 — TODO)
+    LIVE_TC = {"2", "3", "4", "11", "8", "9"}  # 라이브 지원 office (의원 5/6은 town 단위 — TODO)
+    # 2 = 국회의원 (재보궐 district scope) — 시도 loop, SGGNAME=선거구, WIWNAME=소계 row
     offices = [o for o in meta.get("offices", []) if o.get("sg_typecode") in LIVE_TC]
     print(f"=== {meta['name']} 실시간 개표 (electionId={election_id}) ===", file=sys.stderr)
 
@@ -212,6 +213,24 @@ def build(election_id_meta: str) -> dict:
                     races.append(r); kept += 1
                 time.sleep(0.2)
             print(f"  ✓ {o['level']} (sigungu): {kept} races ({len(cities)} 시도)", file=sys.stderr)
+        elif scope == "district":
+            # 재보궐 국회의원 — 시도 코드별 loop → SGGNAME=선거구, WIWNAME=소계 row
+            cities = fetch_city_list(s, election_id, tc); n_call += 1
+            kept = 0
+            for c in cities:
+                code = str(c.get("CODE"))
+                rows = fetch_report(s, election_id, menu, stmt, tc, code); n_call += 1
+                for row in rows:
+                    if row.get("WIWNAME") != "소계":
+                        continue
+                    r = base_race(row, tc, canon)
+                    r["sido"] = canon(row.get("SDNAME", ""))
+                    r["district"] = row.get("SGGNAME", "")
+                    r["sigungu"] = ""
+                    r["scope"] = "district"
+                    races.append(r); kept += 1
+                time.sleep(0.2)
+            print(f"  ✓ {o['level']} (district): {kept} races ({len(cities)} 시도)", file=sys.stderr)
 
     return {
         "_meta": {
