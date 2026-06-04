@@ -35,7 +35,8 @@
   } catch {}
 
   const isPres = meta.electionKind === 'presidential';
-  const sgTypecode = meta.sgTypecode || (isPres ? '1' : '3');
+  const isGeneral = meta.electionKind === 'general_election' || meta.electionKind === 'national_assembly';
+  const sgTypecode = meta.sgTypecode || (isPres ? '1' : isGeneral ? '2' : '3');
 
   if (isPres) {
     renderHeroPres(results, polls);
@@ -43,6 +44,13 @@
     renderCountingPres(results);
     renderExitPollPres(exitData, results);
     renderTrendPres(polls);
+  } else if (isGeneral) {
+    renderHeroGeneral(results, polls);
+    renderParliamentGeneral(results);
+    renderProportionalGeneral(results);
+    renderDistrictsGeneral(results);
+    renderExitPollPres(exitData, results);  // 동일 schema 재사용 — 데이터 들어오면 동작
+    renderTrendGeneral(polls);
   } else {
     renderHero(results, polls);
     renderCounting(results);
@@ -517,6 +525,208 @@
     }
     svg += '</svg>';
     host.innerHTML = svg;
+    document.getElementById('ar-polls-trend').hidden = false;
+  }
+
+  // ===========================================================
+  //  총선 (general_election) — 254 지역구 + 비례 47석
+  // ===========================================================
+  // 위성정당 → 본정당 (의석 합산용).
+  const SATELLITE_TO_MAIN = {
+    '국민의미래': '국민의힘',
+    '더불어민주연합': '더불어민주당',
+    '미래한국당': '국민의힘',
+    '더불어시민당': '더불어민주당',
+  };
+  const mainParty = (p) => SATELLITE_TO_MAIN[p] || p;
+  const propSg = () => meta.proportionalSgTypecode || '7';
+
+  function districtRaces(results) {
+    return (results?.races || []).filter((r) => r.scope === 'district' && r.sg_typecode === sgTypecode);
+  }
+  function propNationRace(results) {
+    return (results?.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === propSg());
+  }
+
+  // 정당별 의석 = 지역구 winner 카운트 + 비례 의석 (results._meta or 별도 계산)
+  function computeSeats(results) {
+    const seats = {};
+    for (const r of districtRaces(results)) {
+      const cands = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+      const top = cands[0];
+      if (top) {
+        const p = mainParty(top.party);
+        seats[p] = (seats[p] || 0) + 1;
+      }
+    }
+    // 비례: race에 proportional_seats가 있으면 사용, 없으면 nation race 정당 득표율로 추정 (정확도 ↓)
+    const propNat = propNationRace(results);
+    if (propNat?.candidates) {
+      for (const c of propNat.candidates) {
+        const n = c.proportional_seats != null ? c.proportional_seats : (c.seats != null ? c.seats : null);
+        if (n != null) {
+          const p = mainParty(c.party);
+          seats[p] = (seats[p] || 0) + n;
+        }
+      }
+    }
+    return seats;
+  }
+
+  function renderHeroGeneral(results, polls) {
+    if (polls) document.getElementById('ar-polls-count').textContent = polls.length.toLocaleString() + '건';
+    if (!results) return;
+    const seats = computeSeats(results);
+    const sorted = Object.entries(seats).sort((a, b) => b[1] - a[1]);
+    if (sorted.length) {
+      const [p1, n1] = sorted[0];
+      document.getElementById('ar-winner').innerHTML =
+        `<span style="color:${pcol(p1)};font-weight:700">${p1}</span> <span style="font-size:13px;color:var(--ink-soft)">${n1}석</span>`;
+    }
+    if (sorted.length > 1) {
+      const [p2, n2] = sorted[1];
+      document.getElementById('ar-runnerup').innerHTML =
+        `<span style="color:${pcol(p2)};font-weight:700">${p2}</span> <span style="font-size:13px;color:var(--ink-soft)">${n2}석</span>`;
+    }
+    // 투표율 — 지역구 race 합산
+    const drs = districtRaces(results);
+    let voters = 0, electors = 0;
+    for (const r of drs) { voters += r.voters || 0; electors += r.electors || 0; }
+    if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
+    document.getElementById('ar-status').textContent = `개표 완료 · ${results._meta?.fetched_at || '갱신 시각 미상'}`;
+  }
+
+  function renderParliamentGeneral(results) {
+    if (!results) return;
+    const seats = computeSeats(results);
+    const total = Object.values(seats).reduce((a, b) => a + b, 0);
+    if (!total) return;
+    const parties = Object.entries(seats)
+      .sort((a, b) => b[1] - a[1])
+      .map(([party, n]) => ({ party, seats: n, color: pcol(party) }));
+    const host = document.getElementById('ar-parliament-host');
+    if (typeof renderParliamentChart === 'function') {
+      host.innerHTML = renderParliamentChart(parties, total, 480, 230);
+    }
+    // 테이블
+    const table = document.getElementById('ar-parliament-table');
+    table.innerHTML = parties.slice(0, 10).map(({party, seats: n, color}) =>
+      `<div class="ar-parl-row">
+        <span class="ar-parl-swatch" style="background:${color}"></span>
+        <span class="ar-parl-name">${party}</span>
+        <span class="ar-parl-seats">${n}석</span>
+      </div>`).join('');
+    document.getElementById('ar-parliament').hidden = false;
+  }
+
+  function renderProportionalGeneral(results) {
+    const propNat = propNationRace(results);
+    if (!propNat?.candidates) return;
+    const cands = (propNat.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+    const total = cands.reduce((s, c) => s + (c.votes || 0), 0) || 1;
+    const top8 = cands.slice(0, 8);
+    let html = '<div class="ar-nation-bars">';
+    for (const c of top8) {
+      const w = (c.votes / total) * 100;
+      const col = pcol(c.party);
+      html += `<div class="ar-nation-row">
+        <div class="ar-nation-name"><span style="color:${col};font-weight:700">${c.party}</span></div>
+        <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
+        <div class="ar-nation-pct">${(c.pct||0).toFixed(2)}<span class="unit">%</span></div>
+        <div class="ar-nation-votes">${(c.votes||0).toLocaleString()}표</div>
+      </div>`;
+    }
+    html += '</div>';
+    document.getElementById('ar-proportional-host').innerHTML = html;
+    document.getElementById('ar-proportional').hidden = false;
+  }
+
+  function renderDistrictsGeneral(results) {
+    const drs = districtRaces(results);
+    if (!drs.length) return;
+    // 시도별 그룹
+    const bySido = {};
+    for (const r of drs) {
+      const s = r.sido || '기타';
+      (bySido[s] = bySido[s] || []).push(r);
+    }
+    const host = document.getElementById('ar-districts-host');
+    let html = '';
+    for (const sido of SIDO_ORDER) {
+      const list = bySido[sido];
+      if (!list?.length) continue;
+      html += `<div class="ar-dist-block"><h3 class="ar-dist-sido">${ssh(sido)} <span class="ar-dist-count">${list.length}곳</span></h3><div class="ar-dist-rows">`;
+      // 지역구명 정렬
+      list.sort((a, b) => (a.district || a.sigungu || '').localeCompare(b.district || b.sigungu || ''));
+      for (const r of list) {
+        const cands = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+        const top = cands[0], second = cands[1];
+        if (!top) continue;
+        const col = pcol(top.party);
+        const margin = second ? (top.pct - second.pct) : null;
+        const name = r.district || r.sigungu || '?';
+        html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
+          <span class="ar-dist-name">${name}</span>
+          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-meta">${(top.pct||0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+        </div>`;
+      }
+      html += '</div></div>';
+    }
+    host.innerHTML = html;
+    document.getElementById('ar-districts').hidden = false;
+  }
+
+  function renderTrendGeneral(polls) {
+    if (!polls?.length) return;
+    // 정당지지 시계열 — 정당별 (period_end → pct).
+    const partyPolls = polls.filter((p) => p.metric_type === '정당지지');
+    if (!partyPolls.length) return;
+    const byParty = new Map();
+    for (const p of partyPolls) {
+      for (const c of (p.candidates || [])) {
+        const pty = c.party || c.name;
+        if (!pty || c.pct == null) continue;
+        if (!byParty.has(pty)) byParty.set(pty, { party: pty, points: [] });
+        byParty.get(pty).points.push({ d: p.period_end || p.period_start, pct: c.pct });
+      }
+    }
+    const top = Array.from(byParty.values()).sort((a, b) => b.points.length - a.points.length).slice(0, 6);
+    if (!top.length) return;
+    const W = 720, H = 280, P = { l: 36, r: 12, t: 12, b: 28 };
+    const innerW = W - P.l - P.r, innerH = H - P.t - P.b;
+    const allD = top.flatMap((c) => c.points.map((p) => p.d)).filter(Boolean).sort();
+    if (!allD.length) return;
+    const d0 = new Date(allD[0]).getTime(), d1 = new Date(allD[allD.length-1]).getTime();
+    const yMax = Math.max(50, Math.ceil(Math.max(...top.flatMap((c) => c.points.map((p) => p.pct))) / 10) * 10);
+    const xf = (d) => P.l + ((new Date(d).getTime() - d0) / (d1 - d0 || 1)) * innerW;
+    const yf = (v) => P.t + innerH - (v / yMax) * innerH;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;max-height:340px">`;
+    for (let v = 0; v <= yMax; v += 10) {
+      const y = yf(v);
+      svg += `<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="0.5"/>`;
+      svg += `<text x="${P.l-6}" y="${y+3}" text-anchor="end" font-size="10" fill="var(--ink-mute)">${v}%</text>`;
+    }
+    const dt0 = new Date(d0), dt1 = new Date(d1);
+    const months = (dt1.getFullYear() - dt0.getFullYear()) * 12 + (dt1.getMonth() - dt0.getMonth());
+    const step = Math.max(1, Math.ceil(months / 6));
+    for (let i = 0; i <= months; i += step) {
+      const dx = new Date(dt0.getFullYear(), dt0.getMonth() + i, 1);
+      if (dx.getTime() > d1) break;
+      const x = xf(dx.toISOString().slice(0, 10));
+      svg += `<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="var(--ink-mute)">${dx.getFullYear()%100}.${(dx.getMonth()+1).toString().padStart(2,'0')}</text>`;
+    }
+    for (const c of top) {
+      const sorted = c.points.slice().sort((a, b) => (a.d || '').localeCompare(b.d || ''));
+      const path = sorted.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xf(p.d).toFixed(1)} ${yf(p.pct).toFixed(1)}`).join(' ');
+      const col = pcol(c.party);
+      svg += `<path d="${path}" stroke="${col}" stroke-width="1.4" fill="none" opacity="0.85"/>`;
+      const last = sorted[sorted.length-1];
+      svg += `<circle cx="${xf(last.d)}" cy="${yf(last.pct)}" r="2.5" fill="${col}"/>`;
+      svg += `<text x="${xf(last.d)+5}" y="${yf(last.pct)+3}" font-size="10" fill="${col}" font-weight="700">${c.party}</text>`;
+    }
+    svg += '</svg>';
+    document.getElementById('ar-trend-host').innerHTML = svg;
     document.getElementById('ar-polls-trend').hidden = false;
   }
 })();

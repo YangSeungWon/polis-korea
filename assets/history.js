@@ -1658,6 +1658,7 @@ const ARCHIVE_PAGES = {
   'local|9': '/archive/9th-local-2026/',
   'local|8': '/archive/8th-local-2022/',
   'presidential|21': '/archive/21st-pres-2025/',
+  'national_assembly|22': '/archive/22nd-general-2024/',
 };
 
 function renderDetail() {
