@@ -109,7 +109,13 @@
 .status-timeline-strip .tl-dot:hover .tl-dot-vis { stroke: #0a0e1a; stroke-width: 2.5; stroke-dasharray: none; }
 .status-timeline-strip .tl-dot:hover text { fill: #0a0e1a; }
 
-/* 양방향 highlight — hover한 kind만 살짝 강조 (외 dim X). */
+/* 시간축 dot: hover한 kind 외 dim (기존 패턴 유지). 카드는 dim X (살짝 강조만). */
+.status-overview-v2[data-hover-kind] .tl-dot:not([data-kind=""]) { opacity: 0.35; }
+.status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"],
+.status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"],
+.status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] {
+  opacity: 1;
+}
 .status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"] .tl-dot-vis,
 .status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"] .tl-dot-vis,
 .status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] .tl-dot-vis {
@@ -124,7 +130,7 @@
 }
 .status-overview-v2 .status-card,
 .status-overview-v2 .tl-dot,
-.status-overview-v2 .tl-dot-vis { transition: background 0.12s ease, stroke 0.12s ease, stroke-width 0.12s ease; }
+.status-overview-v2 .tl-dot-vis { transition: opacity 0.12s ease, background 0.12s ease, stroke 0.12s ease, stroke-width 0.12s ease; }
 
 .status-cards-row {
   display: grid;
