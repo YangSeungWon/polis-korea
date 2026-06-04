@@ -179,7 +179,7 @@ candidates.party는 위성정당(국민의미래·더불어민주연합) 원본 
 
 - archive.js가 `now < quote_after`면 표시 안 함
 - key가 일치하는 source는 갱신(`upsert_source`), 없으면 추가 — `released_at`·`quote_after`는 기존 값 보존
-- 신규 회차는 `scripts/fetch_exit_polls.py SOURCES` dict에 page 매핑 추가
+- 신규 회차는 `scripts/fetch/fetch_exit_polls.py SOURCES` dict에 page 매핑 추가
 
 ## 6. 타임라인 (`data/timeline.json`)
 
@@ -197,7 +197,7 @@ candidates.party는 위성정당(국민의미래·더불어민주연합) 원본 
 }
 ```
 
-`scripts/build_timeline.py`가 results에서 derive. 위성정당 합산 적용.
+`scripts/build/build_timeline.py`가 results에서 derive. 위성정당 합산 적용.
 
 ## 7. 재보궐 (`data/byelection_reasons.json`)
 
@@ -228,10 +228,10 @@ NEC·NESDC·OhmyNews·위키 등 모든 외부 데이터 출처 단일 레지스
 
 1. `data/elections/{id}.json` 메타 작성
 2. `data/elections/index.json` active/archive 갱신
-3. **결과**: `scripts/fetch_nec_results.py --id {id}` → `data/results/{id}.json`
-4. **폴**: NESDC CSV → `scripts/build_polls.py --csv ... --out data/polls/aggregated_{회차}.json`
-5. **출구조사**: `scripts/fetch_exit_polls.py SOURCES`에 매핑 추가 → `data/exit_polls/{id}.json`
-6. **타임라인**: `scripts/build_timeline.py` 재실행
+3. **결과**: `scripts/fetch/fetch_nec_results.py --id {id}` → `data/results/{id}.json`
+4. **폴**: NESDC CSV → `scripts/build/build_polls.py --csv ... --out data/polls/aggregated_{회차}.json`
+5. **출구조사**: `scripts/fetch/fetch_exit_polls.py SOURCES`에 매핑 추가 → `data/exit_polls/{id}.json`
+6. **타임라인**: `scripts/build/build_timeline.py` 재실행
 7. **archive 페이지**: `archive/{id}/index.html` (모드별 템플릿) + `index.html` 목록 + `history.js` ARCHIVE_PAGES
 
 각 단계가 어떤 스크립트·디렉토리에 있는지는 [cycle-workflow.md] 참조.

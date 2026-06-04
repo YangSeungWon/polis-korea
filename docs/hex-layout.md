@@ -1,7 +1,7 @@
 # hex 격자 layout 규칙
 
 한반도 시·군·구 / 선거구를 hex 격자로 시각화하는 layout 알고리즘 문서.
-`scripts/build_zone_hex.py` 가 모든 회차 hex 좌표를 생성한다.
+`scripts/build/build_zone_hex.py` 가 모든 회차 hex 좌표를 생성한다.
 
 ## 전체 구조 — 3 zone
 
@@ -238,7 +238,7 @@ if bot_cells_actual < bot_h:  # 동쪽 col 1개는 full 채워야 right wrap 연
 ## 검증
 
 ```bash
-python3 scripts/build_zone_hex.py
+python3 scripts/build/build_zone_hex.py
 ```
 
 - 모든 회차 cluster 단일성 (시도 cells 끊김 없음)

@@ -13,12 +13,12 @@
 
 ```
 NESDC 게시판 (nesdc.go.kr)
-  ↓ scripts/scrape_nesdc.py — Playwright (JSF anti-scrape)
+  ↓ scripts/fetch/scrape_nesdc.py — Playwright (JSF anti-scrape)
   ├ raw/nesdc_9th_polls.csv  (메타: 등록번호·기관·의뢰자·시도 등)
   └ raw/pdf/{regno}_*.pdf    (공시 PDF 첨부)
-      ↓ scripts/parse_pdf.py — pdftotext + OCR fallback
+      ↓ scripts/parse/parse_pdf.py — pdftotext + OCR fallback
       raw/parsed/{regno}_{hash}_{filename}.json  (정제 문항)
-          ↓ scripts/build_polls.py — 메타 + 파싱 결과 join
+          ↓ scripts/build/build_polls.py — 메타 + 파싱 결과 join
           polls/aggregated.json
               ↓ assets/polls.js fetch
               UI (지도/격자 + 시도·시군구 단위 group)
@@ -69,13 +69,13 @@ NESDC 게시판 (nesdc.go.kr)
 
 ```bash
 # 1. NESDC 신규 폴 메타+PDF 다운로드
-.venv/bin/python scripts/scrape_nesdc.py
+.venv/bin/python scripts/fetch/scrape_nesdc.py
 
 # 2. PDF 파싱
-.venv/bin/python scripts/parse_pdf.py
+.venv/bin/python scripts/parse/parse_pdf.py
 
 # 3. aggregated.json 빌드
-.venv/bin/python scripts/build_polls.py
+.venv/bin/python scripts/build/build_polls.py
 ```
 
 ## 알려진 한계

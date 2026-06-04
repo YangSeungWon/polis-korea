@@ -58,16 +58,16 @@ python3 -m http.server 8766    # http://localhost:8766
 
 # 데이터 파이프라인 재실행
 python3 -m venv .venv && .venv/bin/pip install pdfplumber pymupdf scipy numpy requests
-.venv/bin/python scripts/scrape_nesdc.py              # NESDC 등록현황 → CSV
-.venv/bin/python scripts/refresh_pending_pdfs.py      # 결과 PDF 후속 첨부 회복
-.venv/bin/python scripts/parse_pdf.py "data/raw/pdf/*.pdf" --jobs 4
-.venv/bin/python scripts/parse_kr_stats.py            # 통계표 stacked-header 보강
-.venv/bin/python scripts/patch_cross_tab.py           # 자체조사 cross-tab 정정
-.venv/bin/python scripts/patch_byelection.py          # 재보궐 PDF 후보 추출
-.venv/bin/python scripts/build_polls.py               # → data/polls/aggregated.json
-.venv/bin/python scripts/build_byelection.py          # → data/polls/byelection.json
-.venv/bin/python scripts/build_static.py              # → polls.json·history.json·sitemap
-.venv/bin/python scripts/optimize_data.py             # 정적 자산 압축
+.venv/bin/python scripts/fetch/scrape_nesdc.py              # NESDC 등록현황 → CSV
+.venv/bin/python scripts/fetch/refresh_pending_pdfs.py      # 결과 PDF 후속 첨부 회복
+.venv/bin/python scripts/parse/parse_pdf.py "data/raw/pdf/*.pdf" --jobs 4
+.venv/bin/python scripts/parse/parse_kr_stats.py            # 통계표 stacked-header 보강
+.venv/bin/python scripts/parse/patch_cross_tab.py           # 자체조사 cross-tab 정정
+.venv/bin/python scripts/build/patch_byelection.py          # 재보궐 PDF 후보 추출
+.venv/bin/python scripts/build/build_polls.py               # → data/polls/aggregated.json
+.venv/bin/python scripts/build/build_byelection.py          # → data/polls/byelection.json
+.venv/bin/python scripts/build/build_static.py              # → polls.json·history.json·sitemap
+.venv/bin/python scripts/build/optimize_data.py             # 정적 자산 압축
 ```
 
 전체 데이터 흐름·수집 스크립트·빌드 순서: **[`data/README.md`](data/README.md)**.

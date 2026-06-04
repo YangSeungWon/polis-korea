@@ -55,7 +55,7 @@ GitHub Actions cron이 알아서:
 # UI: 시도별 출구조사 vs 여론조사 비교
 
 # 개표 시작 ~ 새벽:
-python3 scripts/fetch_nec_results.py --election 10th-local-2030
+python3 scripts/fetch/fetch_nec_results.py --election 10th-local-2030
 # 30분~1시간마다 호출. cron 추가 가능 (개표 종료 후 비활성화).
 ```
 

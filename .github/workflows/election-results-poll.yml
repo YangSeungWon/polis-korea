@@ -77,13 +77,13 @@ jobs:
           set -e
           ELECTION="${{ github.event.inputs.election || '9th-local-2026' }}"
           echo "=== fetch_nec_results: $ELECTION ==="
-          python3 scripts/fetch_nec_results.py --election "$ELECTION"
+          python3 scripts/fetch/fetch_nec_results.py --election "$ELECTION"
           echo "=== merge_local_legacy_into_new ==="
-          python3 scripts/merge_local_legacy_into_new.py --rounds 9 || true
+          python3 scripts/build/merge_local_legacy_into_new.py --rounds 9 || true
           echo "=== rebuild_manifest ==="
-          python3 scripts/rebuild_manifest.py
+          python3 scripts/build/rebuild_manifest.py
           echo "=== build_timeline ==="
-          python3 scripts/build_timeline.py
+          python3 scripts/build/build_timeline.py
 
       # 재보궐 사유는 결과와 별도 — NEC가 사후(며칠~몇 주 후) 역대 API에
       # 9회 byelection(2026-06-03) 사유를 옮길 때까지 매시간 체크.
@@ -93,7 +93,7 @@ jobs:
         env:
           NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
         run: |
-          python3 scripts/fetch_byelection_reasons.py || true
+          python3 scripts/fetch/fetch_byelection_reasons.py || true
 
       - name: Commit & push if changed
         if: steps.window.outputs.skip != 'true'

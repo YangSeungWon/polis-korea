@@ -46,4 +46,4 @@
 출처: data.go.kr **무투표선거구 정보 API** (`WtvtelpcInfoInqireService`).
 예) 20대 경남 통영시고성군 — 이군현(새누리당).
 
-수집 스크립트: `scripts/scrape_results.py` (TBD).
+수집 스크립트: `scripts/fetch/scrape_results.py` (TBD).

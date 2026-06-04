@@ -47,7 +47,7 @@ def main():
 
     golden_files = sorted(GOLDEN.glob("*.json"))
     if not golden_files:
-        print("골든 없음. scripts/build_golden.py 먼저 실행.", file=sys.stderr)
+        print("골든 없음. scripts/build/build_golden.py 먼저 실행.", file=sys.stderr)
         return 1
 
     n_pass = n_fail = 0

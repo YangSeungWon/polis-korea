@@ -69,22 +69,22 @@ jobs:
         run: |
           set -e
           echo "=== 1. scrape_nesdc ==="
-          python scripts/scrape_nesdc.py
+          python scripts/fetch/scrape_nesdc.py
           echo "=== 2. refresh_pending_pdfs ==="
-          python scripts/refresh_pending_pdfs.py
+          python scripts/fetch/refresh_pending_pdfs.py
           echo "=== 3. parse_pdf (신규만) ==="
-          python scripts/parse_pdf.py --skip-existing --jobs 4 'data/raw/pdf/*.pdf'
+          python scripts/parse/parse_pdf.py --skip-existing --jobs 4 'data/raw/pdf/*.pdf'
           echo "=== 4. patch_cross_tab ==="
-          python scripts/patch_cross_tab.py
+          python scripts/parse/patch_cross_tab.py
           echo "=== 5. patch_byelection ==="
-          python scripts/patch_byelection.py
+          python scripts/build/patch_byelection.py
           echo "=== 6. build_polls ==="
-          python scripts/build_polls.py
+          python scripts/build/build_polls.py
           echo "=== 7. build_byelection ==="
-          python scripts/build_byelection.py
+          python scripts/build/build_byelection.py
           echo "=== 8. build_static + optimize ==="
-          python scripts/build_static.py
-          python scripts/optimize_data.py
+          python scripts/build/build_static.py
+          python scripts/build/optimize_data.py
 
       - name: Golden tests (회귀 검출)
         run: |
@@ -93,7 +93,7 @@ jobs:
           python tests/test_build_golden.py
 
       - name: Audit (error 시 워크플로 실패)
-        run: python scripts/audit_quality.py
+        run: python scripts/audit/audit_quality.py
 
       - name: Commit & push if changed
         run: |
