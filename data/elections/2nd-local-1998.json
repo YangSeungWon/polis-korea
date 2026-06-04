@@ -1,0 +1,37 @@
+{
+  "id": "2nd-local-1998",
+  "name": "제2회 전국동시지방선거",
+  "kind": "local",
+  "type": "local",
+  "n": 2,
+  "date": "1998-06-04",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+  },
+  "offices": [
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/2nd-local-1998.json",
+  "_source_note": "새정치국민회의 6 · 한나라당 6 · 자민련 4 — 광역단체장 박빙",
+  "_data_caveat": "위키백과 infobox — office별 정당 합산 의석만. 시도/시군구별 break·득표 없음 (2회는 광역단체장 득표 부분 있음)."
+}

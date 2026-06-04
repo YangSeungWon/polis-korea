@@ -1,0 +1,37 @@
+{
+  "id": "4th-local-2006",
+  "name": "제4회 전국동시지방선거",
+  "kind": "local",
+  "type": "local",
+  "n": 4,
+  "date": "2006-05-31",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+  },
+  "offices": [
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/4th-local-2006.json",
+  "_source_note": "한나라당 12 · 민주 2 · 열린우리 1 — 노무현 정부 중반 평가",
+  "_data_caveat": "위키백과 infobox — office별 정당 합산 의석만. 시도/시군구별 break·득표 없음 (2회는 광역단체장 득표 부분 있음)."
+}
