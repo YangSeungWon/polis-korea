@@ -2,18 +2,20 @@
 
 위키 회차별 페이지에 출구조사 섹션은 template invocation으로 분리됨:
   {{제8회 전국동시지방선거 광역자치단체장 출구조사}}
-  {{제21대 대선 출구조사}}
+  {{대한민국 제21대 대통령 선거 출구조사}}      (KEP 3사)
+  {{대한민국 제21대 대통령 선거 출구조사 2}}    (JTBC)
 template page wikitext에 wikitable로 시도·정당·후보·예측 득표율 정리.
+지선 광역단체장이든 대선 권역별이든 동일한 rowspan="3" chunk 패턴.
 
 지원 회차:
-  - 8회 지선 (2022): 광역자치단체장
-  - 21대 대선 (2025): 대통령
-  - 22대 총선 (2024): 국회의원
-  - 그 외는 page name 매핑 추가하면 동작.
+  - 8회 지선 (2022): 광역단체장 KEP
+  - 9회 지선 (2026): 광역단체장 KEP (위키 정리 진행중)
+  - 21대 대선 (2025): KEP·JTBC 권역별 (전국 + 17 시도)
+  - 22대 총선 등은 SOURCES dict에 page name 매핑 추가하면 동작.
 
 사용:
   python3 scripts/fetch_exit_polls.py --id 8th-local-2022
-  python3 scripts/fetch_exit_polls.py --id 9th-local-2026
+  python3 scripts/fetch_exit_polls.py --id 21st-pres-2025
 """
 from __future__ import annotations
 import argparse
@@ -28,21 +30,36 @@ ROOT = Path(__file__).resolve().parent.parent
 EXIT_DIR = ROOT / "data" / "exit_polls"
 WIKI_API = "https://ko.wikipedia.org/w/api.php"
 
-# 회차 → 위키 template page name (KEP 3사 출구조사 — KBS·MBC·SBS 공동).
-TEMPLATE_PAGE = {
-    "8th-local-2022": [
-        "틀:제8회 전국동시지방선거 광역자치단체장 출구조사",
-    ],
-    "9th-local-2026": [
-        "틀:제9회 전국동시지방선거 광역자치단체장 출구조사",
-    ],
-    "21st-pres-2025": [
-        "틀:제21대 대통령 선거 출구조사",
-    ],
-    "22nd-general-2024": [
-        "틀:제22대 국회의원 선거 출구조사",
-    ],
+# 회차 → 위키 source 매핑.
+# local: template page에 시도별 광역단체장 wikitable
+# pres:  본 article 출구조사 섹션 안 wikitable (행=방송사, 열=후보)
+SOURCES = {
+    "8th-local-2022": {
+        "kind": "local",
+        "sources": [
+            {"page": "틀:제8회 전국동시지방선거 광역자치단체장 출구조사",
+             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
+        ],
+    },
+    "9th-local-2026": {
+        "kind": "local",
+        "sources": [
+            {"page": "틀:제9회 전국동시지방선거 광역자치단체장 출구조사",
+             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
+        ],
+    },
+    # 대선도 같은 wikitable 구조 — rowspan=3 chunk per 시도. office="대통령".
+    "21st-pres-2025": {
+        "kind": "pres",
+        "sources": [
+            {"page": "틀:대한민국 제21대 대통령 선거 출구조사",
+             "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
+            {"page": "틀:대한민국 제21대 대통령 선거 출구조사 2",
+             "key": "jtbc", "name": "JTBC 예측조사"},
+        ],
+    },
 }
+
 
 
 def fetch_wikitext(page: str) -> str:
@@ -80,6 +97,7 @@ def parse_wikitable_kep(wikitext: str) -> dict:
     # rowspan="3" 패턴으로 split — 각 시도 그룹
     chunks = re.split(r'\|\s*rowspan="?3"?\s*\|', wikitext)[1:]
     sido_norm = {
+        # 광역단체장 (-시장/-도지사 suffix)
         "서울특별시장": "서울특별시", "부산광역시장": "부산광역시", "대구광역시장": "대구광역시",
         "인천광역시장": "인천광역시", "광주광역시장": "광주광역시", "대전광역시장": "대전광역시",
         "울산광역시장": "울산광역시", "세종특별자치시장": "세종특별자치시",
@@ -88,18 +106,43 @@ def parse_wikitable_kep(wikitext: str) -> dict:
         "전북특별자치도지사": "전북특별자치도", "전라북도지사": "전북특별자치도", "전라남도지사": "전라남도",
         "경상북도지사": "경상북도", "경상남도지사": "경상남도",
         "제주특별자치도지사": "제주특별자치도",
+        # 대선 권역 (시도 풀네임 또는 축약형)
+        "전국": "전국",
+        "서울": "서울특별시", "서울특별시": "서울특별시",
+        "부산": "부산광역시", "부산광역시": "부산광역시",
+        "대구": "대구광역시", "대구광역시": "대구광역시",
+        "인천": "인천광역시", "인천광역시": "인천광역시",
+        "광주": "광주광역시", "광주광역시": "광주광역시",
+        "대전": "대전광역시", "대전광역시": "대전광역시",
+        "울산": "울산광역시", "울산광역시": "울산광역시",
+        "세종": "세종특별자치시", "세종특별자치시": "세종특별자치시",
+        "경기": "경기도", "경기도": "경기도",
+        "강원": "강원특별자치도", "강원특별자치도": "강원특별자치도", "강원도": "강원특별자치도",
+        "충북": "충청북도", "충청북도": "충청북도",
+        "충남": "충청남도", "충청남도": "충청남도",
+        "전북": "전북특별자치도", "전북특별자치도": "전북특별자치도", "전라북도": "전북특별자치도",
+        "전남": "전라남도", "전라남도": "전라남도",
+        "경북": "경상북도", "경상북도": "경상북도",
+        "경남": "경상남도", "경상남도": "경상남도",
+        "제주": "제주특별자치도", "제주특별자치도": "제주특별자치도",
     }
     for chunk in chunks:
-        # 시도 이름 — 첫 [[...]]
-        m_sido = re.search(r"\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", chunk)
-        if not m_sido:
+        # 시도 이름 — chunk 시작이 평문 한글이면 평문, 아니면 첫 [[link]]
+        head = chunk[:200]
+        m_plain = re.match(r"\s*([가-힣]+)\s*(?:\n|\||$)", head)
+        m_link = re.search(r"\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", head)
+        if m_plain and (not m_link or m_plain.end() <= m_link.start()):
+            sido_raw = m_plain.group(1).strip()
+        elif m_link:
+            sido_raw = m_link.group(1).strip()
+        else:
             continue
-        sido_raw = m_sido.group(1).strip()
         sido = sido_norm.get(sido_raw)
         if not sido:
             continue
-        # 정당명 — ! [[정당명]] 패턴 (2개)
-        parties = re.findall(r"!\s*\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", chunk)
+        # 정당명 — ![[정당명]] 또는 ![[link|표시명]] (표시명 우선)
+        party_matches = re.findall(r"!\s*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", chunk)
+        parties = [(alias.strip() if alias else target.strip()) for target, alias in party_matches]
         # 후보명 — colspan="2" | [[후보]] 패턴 (정당 색 칸 다음에)
         names = re.findall(r'colspan="?2"?\s*\|\s*\[\[([^\]|]+)(?:\|[^\]]*)?\]\]', chunk)
         # pct — {{막대|...}} 다음 숫자%
@@ -116,6 +159,8 @@ def parse_wikitable_kep(wikitext: str) -> dict:
     return out
 
 
+
+
 def load_existing(election_id: str) -> dict:
     p = EXIT_DIR / f"{election_id}.json"
     if p.exists():
@@ -128,49 +173,58 @@ def load_existing(election_id: str) -> dict:
     }
 
 
+def upsert_source(data: dict, key: str, block: dict):
+    """sources 배열에서 key 매칭 source 갱신, 없으면 추가. released_at·quote_after 보존."""
+    idx = next((i for i, s in enumerate(data["sources"]) if s.get("key") == key), -1)
+    if idx >= 0:
+        existing = data["sources"][idx]
+        for k, v in block.items():
+            if k in ("released_at", "quote_after") and existing.get(k):
+                continue
+            existing[k] = v
+    else:
+        data["sources"].append(block)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--id", required=True, help="election id, e.g. 8th-local-2022")
-    ap.add_argument("--source-key", default="kep_3sa", help="source key (kep_3sa·jtbc 등)")
+    ap.add_argument("--source-key", default="kep_3sa", help="광역단체장 모드 source key")
     args = ap.parse_args()
-    pages = TEMPLATE_PAGE.get(args.id)
-    if not pages:
-        print(f"ERR: {args.id} template page mapping 없음 — TEMPLATE_PAGE에 추가", file=sys.stderr)
+    spec = SOURCES.get(args.id)
+    if not spec:
+        print(f"ERR: {args.id} 매핑 없음 — SOURCES에 추가", file=sys.stderr)
         sys.exit(1)
     EXIT_DIR.mkdir(parents=True, exist_ok=True)
     data = load_existing(args.id)
-    combined: dict = {}
-    for page in pages:
-        wt = fetch_wikitext(page)
+
+    office = "광역단체장" if spec["kind"] == "local" else "대통령"
+    any_updated = False
+    for src in spec["sources"]:
+        wt = fetch_wikitext(src["page"])
         if not wt:
-            print(f"  ! {page}: wikitext 비어있음", file=sys.stderr)
+            print(f"  ! {src['page']}: wikitext 비어있음 (스킵)", file=sys.stderr)
             continue
         parsed = parse_wikitable_kep(wt)
-        print(f"  {page}: {len(parsed)} 시도", file=sys.stderr)
-        combined.update(parsed)
-    if not combined:
+        if not parsed:
+            print(f"  ! {src['page']}: 0건 (스킵)", file=sys.stderr)
+            continue
+        print(f"  {src['key']}: {len(parsed)} 권역 ← {src['page']}", file=sys.stderr)
+        upsert_source(data, src["key"], {
+            "key": src["key"],
+            "name": src["name"],
+            "released_at": "",
+            "quote_after": "",
+            "office": office,
+            "results": parsed,
+        })
+        any_updated = True
+    if not any_updated:
         print("결과 0 — page name·구조 확인", file=sys.stderr)
         sys.exit(2)
-    # sources 중 key 매칭 source 갱신, 없으면 추가
-    src_idx = next((i for i, s in enumerate(data["sources"]) if s.get("key") == args.source_key), -1)
-    src_block = {
-        "key": args.source_key,
-        "name": "KBS·MBC·SBS 공동 출구조사" if args.source_key == "kep_3sa" else args.source_key,
-        "released_at": "",
-        "quote_after": "",
-        "office": "광역단체장",
-        "results": combined,
-    }
-    if src_idx >= 0:
-        # released_at/quote_after 기존 값 유지, results만 갱신
-        existing = data["sources"][src_idx]
-        existing["results"] = combined
-        existing["office"] = "광역단체장"
-    else:
-        data["sources"].append(src_block)
     out_path = EXIT_DIR / f"{args.id}.json"
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"→ {out_path.name}: {len(combined)} 시도 source={args.source_key}")
+    print(f"→ {out_path.name}")
 
 
 if __name__ == "__main__":
