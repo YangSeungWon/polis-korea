@@ -42,8 +42,9 @@
     }
     if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
     const meta = results._meta || {};
+    // nec-live-portal source라도 is_final이면 '확정' (개표 종료 후 라이브 소스 유지).
     const sourceLabel = meta.source === 'wikipedia-ko-infobox' || meta.source === 'wikipedia-ko-body'
-      ? '위키' : (meta.source === 'nec-live-portal' ? '잠정' : (meta.is_final ? '확정' : '진행'));
+      ? '위키' : (meta.is_final ? '확정' : (meta.source === 'nec-live-portal' ? '잠정' : '진행'));
     document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || meta.election_date || '미상'}`;
   }
 

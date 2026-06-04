@@ -257,16 +257,23 @@ def build(election_id_meta: str) -> dict:
                     time.sleep(0.2)
                 print(f"  ✓ {o['level']} (district): {kept} races ({len(cities)} 시도)", file=sys.stderr)
 
+    # is_final: 모든 race 98% 이상 + 평균 99.5% 이상 = 확정.
+    # NEC가 사후 미세 보정으로 일부 race가 98~99에서 fluctuate해도 결과는 fix.
+    # 너무 엄격(99.5+)하면 영원히 잠정 라벨. 라이브 source라도 final 가능.
+    cps = [r.get("count_pct", 0) for r in races if r.get("count_pct") is not None]
+    is_final = bool(cps) and min(cps) >= 98.0 and (sum(cps) / len(cps)) >= 99.5
     return {
         "_meta": {
             "election": meta["name"],
             "election_id": meta["id"],
             "election_date": meta["date"],
             "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-            "is_final": False,            # 라이브/잠정
+            "is_final": is_final,
             "source": "nec-live-portal",  # info.nec.go.kr (개표방송)
             "n_calls": n_call,
             "n_rows": len(races),
+            "count_pct_min": round(min(cps), 2) if cps else None,
+            "count_pct_avg": round(sum(cps) / len(cps), 2) if cps else None,
         },
         "races": races,
     }
