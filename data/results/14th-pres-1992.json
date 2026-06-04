@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "election": "제14대 대통령선거",
+    "election_id": "14th-pres-1992",
+    "election_date": "1992-12-18",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 23414730,
+      "valid_votes": 23414730,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김영삼",
+          "party": "신한국당",
+          "votes": 9977332,
+          "pct": 41.96,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김대중",
+          "party": "민주당",
+          "votes": 8041284,
+          "pct": 33.82,
+          "rank": 2
+        },
+        {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 3880067,
+          "pct": 16.31,
+          "rank": 3
+        },
+        {
+          "name": "박찬종",
+          "party": "신정치개혁당",
+          "votes": 1516047,
+          "pct": 6.37,
+          "rank": 4
+        }
+      ],
+      "turnout_pct": 81.9
+    }
+  ]
+}

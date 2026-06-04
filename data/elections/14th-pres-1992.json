@@ -1,0 +1,22 @@
+{
+  "id": "14th-pres-1992",
+  "name": "제14대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 14,
+  "date": "1992-12-18",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/14th-pres-1992.json",
+  "_source_note": "김영삼(신한국당) 41.96% — 3당 합당 후 민주화 시대",
+  "_data_caveat": "위키백과 infobox 기반 — 시도/시군구 분해 없음. 향후 NEC PDF 통계자료실 가공으로 정교화 가능."
+}

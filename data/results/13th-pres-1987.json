@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "election": "제13대 대통령선거",
+    "election_id": "13th-pres-1987",
+    "election_date": "1987-12-16",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 22556761,
+      "valid_votes": 22556761,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "노태우",
+          "party": "민주정의당",
+          "votes": 8282738,
+          "pct": 36.64,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김영삼",
+          "party": "통일민주당",
+          "votes": 6337581,
+          "pct": 28.03,
+          "rank": 2
+        },
+        {
+          "name": "김대중",
+          "party": "평화민주당",
+          "votes": 6113375,
+          "pct": 27.04,
+          "rank": 3
+        },
+        {
+          "name": "김종필",
+          "party": "신민주공화당",
+          "votes": 1823067,
+          "pct": 8.06,
+          "rank": 4
+        }
+      ],
+      "turnout_pct": 89.2
+    }
+  ]
+}

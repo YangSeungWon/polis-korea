@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "election": "제15대 대통령선거",
+    "election_id": "15th-pres-1997",
+    "election_date": "1997-12-18",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 25187584,
+      "valid_votes": 25187584,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "name": "김대중",
+          "party": "새정치국민회의",
+          "votes": 10326275,
+          "pct": 40.27,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이회창",
+          "party": "자유한국당",
+          "votes": 9935718,
+          "pct": 38.74,
+          "rank": 2
+        },
+        {
+          "name": "이인제",
+          "party": "국민신당",
+          "votes": 4925591,
+          "pct": 19.2,
+          "rank": 3
+        }
+      ],
+      "turnout_pct": 80.7
+    }
+  ]
+}

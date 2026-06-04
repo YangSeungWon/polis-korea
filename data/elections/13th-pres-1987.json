@@ -1,0 +1,22 @@
+{
+  "id": "13th-pres-1987",
+  "name": "제13대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 13,
+  "date": "1987-12-16",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/13th-pres-1987.json",
+  "_source_note": "노태우(민주정의당) 36.64% — 양김 분열 후 당선",
+  "_data_caveat": "위키백과 infobox 기반 — 시도/시군구 분해 없음. 향후 NEC PDF 통계자료실 가공으로 정교화 가능."
+}
