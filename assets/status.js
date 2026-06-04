@@ -151,7 +151,19 @@
       + `<div class="tl-strip-list">${renderTimelineList(visible, today)}</div>`;
     stripEl.querySelectorAll('.tl-dot').forEach((g) => {
       const href = g.getAttribute('data-href');
+      const kind = g.getAttribute('data-kind');
       if (href) g.addEventListener('click', () => { location.href = href; });
+      g.addEventListener('mouseenter', () => root.setAttribute('data-hover-kind', kind || ''));
+      g.addEventListener('mouseleave', () => root.removeAttribute('data-hover-kind'));
+    });
+    // 카드 ↔ dot 양방향 highlight
+    const SLOT_TO_KIND = { president: 'presidential', assembly: 'national_assembly', local: 'local' };
+    root.querySelectorAll('.status-card[data-slot]').forEach((card) => {
+      const slot = card.getAttribute('data-slot');
+      const kind = SLOT_TO_KIND[slot];
+      if (!kind) return;
+      card.addEventListener('mouseenter', () => root.setAttribute('data-hover-kind', kind));
+      card.addEventListener('mouseleave', () => root.removeAttribute('data-hover-kind'));
     });
   }
 
@@ -189,7 +201,7 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     const labelName = `${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}`;
     const year = r.date.slice(0, 4);
     dots += `
-      <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}">
+      <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}" data-kind="${r.kind}">
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
         <circle class="tl-dot-hit" cx="${x}" cy="${H/2}" r="${rHit}" fill="transparent"/>
         <circle class="tl-dot-vis" cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.8}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />

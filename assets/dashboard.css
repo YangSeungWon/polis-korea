@@ -264,6 +264,29 @@
 .status-timeline-strip .tl-dot:hover .tl-dot-vis { stroke: #0a0e1a; stroke-width: 2.5; stroke-dasharray: none; }
 .status-timeline-strip .tl-dot:hover text { fill: #0a0e1a; }
 
+/* 양방향 highlight — overview에 data-hover-kind 있으면 해당 kind 강조, 외 dim */
+.status-overview-v2[data-hover-kind] .tl-dot:not([data-kind=""]) { opacity: 0.35; }
+.status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"],
+.status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"],
+.status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] {
+  opacity: 1;
+}
+.status-overview-v2[data-hover-kind="presidential"] .tl-dot[data-kind="presidential"] .tl-dot-vis,
+.status-overview-v2[data-hover-kind="national_assembly"] .tl-dot[data-kind="national_assembly"] .tl-dot-vis,
+.status-overview-v2[data-hover-kind="local"] .tl-dot[data-kind="local"] .tl-dot-vis {
+  stroke: #0a0e1a;
+  stroke-width: 2.5;
+  stroke-dasharray: none;
+}
+.status-overview-v2[data-hover-kind] .status-card { opacity: 0.45; }
+.status-overview-v2[data-hover-kind="presidential"] .status-card[data-slot="president"],
+.status-overview-v2[data-hover-kind="national_assembly"] .status-card[data-slot="assembly"],
+.status-overview-v2[data-hover-kind="local"] .status-card[data-slot="local"] {
+  opacity: 1;
+}
+.status-overview-v2 .status-card,
+.status-overview-v2 .tl-dot { transition: opacity 0.12s ease; }
+
 .status-cards-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
