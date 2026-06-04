@@ -1,0 +1,22 @@
+{
+  "id": "byelection-2022-03-09",
+  "name": "2022년 3·9 동시 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2022,
+  "date": "2022-03-09",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20220309"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/byelection-2022-03-09.json",
+  "_parent": "20th-pres-2022",
+  "_note": "20대 대선 동시 재·보궐 — 국회의원 5건. 통합 회차 — 별도 archive 페이지 없음, 부모(20th-pres-2022) archive에 흡수."
+}

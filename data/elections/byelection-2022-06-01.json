@@ -1,0 +1,22 @@
+{
+  "id": "byelection-2022-06-01",
+  "name": "2022년 6·1 동시 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2022,
+  "date": "2022-06-01",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20220601"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/byelection-2022-06-01.json",
+  "_parent": "8th-local-2022",
+  "_note": "8회 지선 동시 재·보궐 — 국회의원 7건. 통합 회차 — 별도 archive 페이지 없음, 부모(8th-local-2022) archive에 흡수."
+}

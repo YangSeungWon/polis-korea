@@ -1,0 +1,491 @@
+{
+  "_meta": {
+    "election": "2022년 6·1 동시 재·보궐선거",
+    "election_id": "byelection-2022-06-01",
+    "election_date": "2022-06-01",
+    "fetched_at": "2026-06-04T19:38:00+09:00",
+    "is_final": true,
+    "n_calls": 17,
+    "n_rows": 16
+  },
+  "races": [
+    {
+      "sg_typecode": "2",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 145721,
+      "voters": 65533,
+      "valid_votes": 61961,
+      "invalid_votes": 3572,
+      "abstain": 80188,
+      "candidates": [
+        {
+          "name": "이인선",
+          "party": "국민의힘",
+          "votes": 49434,
+          "pct": 79.78,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김용락",
+          "party": "더불어민주당",
+          "votes": 12527,
+          "pct": 20.22,
+          "rank": 2
+        }
+      ],
+      "district": "수성구을"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "대구광역시",
+      "sigungu": "수성구",
+      "scope": "district_sigungu",
+      "electors": 145721,
+      "voters": 65533,
+      "valid_votes": 61961,
+      "invalid_votes": 3572,
+      "abstain": 80188,
+      "candidates": [
+        {
+          "name": "이인선",
+          "party": "국민의힘",
+          "votes": 49434,
+          "pct": 79.78,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김용락",
+          "party": "더불어민주당",
+          "votes": 12527,
+          "pct": 20.22,
+          "rank": 2
+        }
+      ],
+      "district": "수성구을"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 137090,
+      "voters": 82434,
+      "valid_votes": 80175,
+      "invalid_votes": 2259,
+      "abstain": 54656,
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "votes": 44289,
+          "pct": 55.24,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "윤형선",
+          "party": "국민의힘",
+          "votes": 35886,
+          "pct": 44.76,
+          "rank": 2
+        }
+      ],
+      "district": "계양구을"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "인천광역시",
+      "sigungu": "계양구",
+      "scope": "district_sigungu",
+      "electors": 137090,
+      "voters": 82434,
+      "valid_votes": 80175,
+      "invalid_votes": 2259,
+      "abstain": 54656,
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "votes": 44289,
+          "pct": 55.24,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "윤형선",
+          "party": "국민의힘",
+          "votes": 35886,
+          "pct": 44.76,
+          "rank": 2
+        }
+      ],
+      "district": "계양구을"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 213963,
+      "voters": 136516,
+      "valid_votes": 133982,
+      "invalid_votes": 2534,
+      "abstain": 77447,
+      "candidates": [
+        {
+          "name": "안철수",
+          "party": "국민의힘",
+          "votes": 83747,
+          "pct": 62.51,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김병관",
+          "party": "더불어민주당",
+          "votes": 50235,
+          "pct": 37.49,
+          "rank": 2
+        }
+      ],
+      "district": "성남시분당구갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경기도",
+      "sigungu": "성남시분당구",
+      "scope": "district_sigungu",
+      "electors": 213963,
+      "voters": 136516,
+      "valid_votes": 133982,
+      "invalid_votes": 2534,
+      "abstain": 77447,
+      "candidates": [
+        {
+          "name": "안철수",
+          "party": "국민의힘",
+          "votes": 83747,
+          "pct": 62.51,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김병관",
+          "party": "더불어민주당",
+          "votes": 50235,
+          "pct": 37.49,
+          "rank": 2
+        }
+      ],
+      "district": "성남시분당구갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "충청남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 131968,
+      "voters": 81758,
+      "valid_votes": 78337,
+      "invalid_votes": 3421,
+      "abstain": 50210,
+      "candidates": [
+        {
+          "name": "장동혁",
+          "party": "국민의힘",
+          "votes": 39960,
+          "pct": 51.01,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "나소열",
+          "party": "더불어민주당",
+          "votes": 38377,
+          "pct": 48.99,
+          "rank": 2
+        }
+      ],
+      "district": "보령시서천군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "충청남도",
+      "sigungu": "보령시",
+      "scope": "district_sigungu",
+      "electors": 86154,
+      "voters": 52496,
+      "valid_votes": 50419,
+      "invalid_votes": 2077,
+      "abstain": 33658,
+      "candidates": [
+        {
+          "name": "장동혁",
+          "party": "국민의힘",
+          "votes": 28202,
+          "pct": 55.94,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "나소열",
+          "party": "더불어민주당",
+          "votes": 22217,
+          "pct": 44.06,
+          "rank": 2
+        }
+      ],
+      "district": "보령시서천군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "충청남도",
+      "sigungu": "서천군",
+      "scope": "district_sigungu",
+      "electors": 45814,
+      "voters": 29262,
+      "valid_votes": 27918,
+      "invalid_votes": 1344,
+      "abstain": 16552,
+      "candidates": [
+        {
+          "name": "나소열",
+          "party": "더불어민주당",
+          "votes": 16160,
+          "pct": 57.88,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "장동혁",
+          "party": "국민의힘",
+          "votes": 11758,
+          "pct": 42.12,
+          "rank": 2
+        }
+      ],
+      "district": "보령시서천군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 219449,
+      "voters": 113016,
+      "valid_votes": 109091,
+      "invalid_votes": 3925,
+      "abstain": 106433,
+      "candidates": [
+        {
+          "name": "김영선",
+          "party": "국민의힘",
+          "votes": 68450,
+          "pct": 62.75,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김지수",
+          "party": "더불어민주당",
+          "votes": 40641,
+          "pct": 37.25,
+          "rank": 2
+        }
+      ],
+      "district": "창원시의창구"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상남도",
+      "sigungu": "창원시의창구",
+      "scope": "district_sigungu",
+      "electors": 184914,
+      "voters": 94736,
+      "valid_votes": 91260,
+      "invalid_votes": 3476,
+      "abstain": 90178,
+      "candidates": [
+        {
+          "name": "김영선",
+          "party": "국민의힘",
+          "votes": 57445,
+          "pct": 62.95,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김지수",
+          "party": "더불어민주당",
+          "votes": 33815,
+          "pct": 37.05,
+          "rank": 2
+        }
+      ],
+      "district": "창원시의창구"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상남도",
+      "sigungu": "창원시성산구",
+      "scope": "district_sigungu",
+      "electors": 34535,
+      "voters": 18280,
+      "valid_votes": 17831,
+      "invalid_votes": 449,
+      "abstain": 16255,
+      "candidates": [
+        {
+          "name": "김영선",
+          "party": "국민의힘",
+          "votes": 11005,
+          "pct": 61.72,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김지수",
+          "party": "더불어민주당",
+          "votes": 6826,
+          "pct": 38.28,
+          "rank": 2
+        }
+      ],
+      "district": "창원시의창구"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "강원도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 158304,
+      "voters": 80817,
+      "valid_votes": 78492,
+      "invalid_votes": 2325,
+      "abstain": 77487,
+      "candidates": [
+        {
+          "name": "박정하",
+          "party": "국민의힘",
+          "votes": 45366,
+          "pct": 57.8,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "원창묵",
+          "party": "더불어민주당",
+          "votes": 33126,
+          "pct": 42.2,
+          "rank": 2
+        }
+      ],
+      "district": "원주시갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "강원도",
+      "sigungu": "원주시",
+      "scope": "district_sigungu",
+      "electors": 158304,
+      "voters": 80817,
+      "valid_votes": 78492,
+      "invalid_votes": 2325,
+      "abstain": 77487,
+      "candidates": [
+        {
+          "name": "박정하",
+          "party": "국민의힘",
+          "votes": 45366,
+          "pct": 57.8,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "원창묵",
+          "party": "더불어민주당",
+          "votes": 33126,
+          "pct": 42.2,
+          "rank": 2
+        }
+      ],
+      "district": "원주시갑"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 194534,
+      "voters": 107782,
+      "valid_votes": 106219,
+      "invalid_votes": 1563,
+      "abstain": 86752,
+      "candidates": [
+        {
+          "name": "김한규",
+          "party": "더불어민주당",
+          "votes": 52490,
+          "pct": 49.42,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "부상일",
+          "party": "국민의힘",
+          "votes": 47954,
+          "pct": 45.15,
+          "rank": 2
+        },
+        {
+          "name": "김우남",
+          "party": "무소속",
+          "votes": 5775,
+          "pct": 5.44,
+          "rank": 3
+        }
+      ],
+      "district": "제주시을"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "제주특별자치도",
+      "sigungu": "제주시",
+      "scope": "district_sigungu",
+      "electors": 194534,
+      "voters": 107782,
+      "valid_votes": 106219,
+      "invalid_votes": 1563,
+      "abstain": 86752,
+      "candidates": [
+        {
+          "name": "김한규",
+          "party": "더불어민주당",
+          "votes": 52490,
+          "pct": 49.42,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "부상일",
+          "party": "국민의힘",
+          "votes": 47954,
+          "pct": 45.15,
+          "rank": 2
+        },
+        {
+          "name": "김우남",
+          "party": "무소속",
+          "votes": 5775,
+          "pct": 5.44,
+          "rank": 3
+        }
+      ],
+      "district": "제주시을"
+    }
+  ]
+}

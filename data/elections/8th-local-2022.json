@@ -19,26 +19,54 @@
     "_note": "메타용 — 실제 fetch는 안 함. 결과는 이미 data/results/8th-local-2022.json에 있음."
   },
   "offices": [
-    {"level": "광역단체장", "sg_typecode": "3", "scope": "sido"},
-    {"level": "기초단체장", "sg_typecode": "4", "scope": "sigungu"},
-    {"level": "광역의원", "sg_typecode": "5", "scope": "district"},
-    {"level": "기초의원", "sg_typecode": "6", "scope": "district"},
-    {"level": "교육감", "sg_typecode": "11", "scope": "sido"}
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    },
+    {
+      "level": "교육감",
+      "sg_typecode": "11",
+      "scope": "sido"
+    }
   ],
   "archive": {
     "page": "/archive/8th-local-2022/",
     "results_path": "data/results/8th-local-2022.json",
     "polls_path": "data/polls/aggregated_8th.json",
     "exit_poll_path": "data/exit_polls/8th-local-2022.json",
-    "polls_window": ["2021-12-01", "2022-06-01"],
+    "polls_window": [
+      "2021-12-01",
+      "2022-06-01"
+    ],
     "sg_typecode": "3",
     "proportional_sg_typecode": null,
-    "list_label": "확정"
+    "list_label": "확정",
+    "byelection_id": "byelection-2022-06-01"
   },
   "wiki_exit_polls": {
     "kind": "local",
     "templates": [
-      {"page": "틀:제8회 전국동시지방선거 광역자치단체장 출구조사", "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"}
+      {
+        "page": "틀:제8회 전국동시지방선거 광역자치단체장 출구조사",
+        "key": "kep_3sa",
+        "name": "KBS·MBC·SBS 공동 출구조사"
+      }
     ]
   },
   "results_file": "data/results/8th-local-2022.json",
