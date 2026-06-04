@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 제14대 국회의원선거 (1992-03-24)</title>
+<meta name="description" content="제14대 국회의원선거(1992-03-24) 결과·여론조사·출구조사 비교 아카이브.">
+<meta property="og:title" content="polis · 14대 총선 아카이브">
+<meta property="og:description" content="14대 총선 결과·여론조사·출구조사 비교.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/archive/14th-general-1992/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/archive.css">
+<script id="archive-meta">window.__ARCHIVE__ = { id: '14th-general-1992' };</script>
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="/" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="/byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="/history.html" class="hdr-link">역대 선거</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <nav class="ar-breadcrumb" aria-label="경로">
+    <a href="/timeline.html">타임라인</a> ·
+    <a href="/history.html?type=national_assembly&n=14">역대 선거</a> · <span>14대 총선 아카이브</span>
+  </nav>
+
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">제14대 국회의원선거</h1>
+    <div class="ar-hero-date" id="ar-date">1992-03-24 (화) · 민주자유당 149석 (3당 합당 효과)</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">1당</div><div class="ar-stat-value" id="ar-winner">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">2당</div><div class="ar-stat-value" id="ar-runnerup">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">확정 결과.</p>
+  </section>
+
+  <section class="ar-section" id="ar-parliament" hidden>
+    <h2 class="ar-section-title">의회 구성</h2>
+    <p class="ar-source-line">지역구 254석 + 비례대표 46석 = 총 300석. 데이터 원본: <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <div class="ar-parliament-host" id="ar-parliament-host"></div>
+    <div class="ar-parliament-table" id="ar-parliament-table"></div>
+  </section>
+
+  <section class="ar-section" id="ar-proportional" hidden>
+    <h2 class="ar-section-title">비례대표 정당 득표</h2>
+    <div class="ar-nation-host" id="ar-proportional-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-districts" hidden>
+    <h2 class="ar-section-title">지역구 결과 · 254곳</h2>
+    <p class="ar-source-line">시·도 순. 정당색은 당선자 소속 정당.</p>
+    <div class="ar-districts-host" id="ar-districts-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-exitpoll" hidden>
+    <h2 class="ar-section-title">출구조사 vs 실제</h2>
+    <p class="ar-source-line">1992-03-24 18:00 발표. 방송사별 정당 의석 예측 범위 vs 실제. 범위 안 적중 자동 계산.</p>
+    <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-trend" hidden>
+    <h2 class="ar-section-title">여론조사 정당 지지 추이</h2>
+    <div class="ar-trend-host" id="ar-trend-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-list" hidden>
+    <h2 class="ar-section-title">조사 목록</h2>
+    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467" target="_blank" rel="noopener">중앙선거여론조사심의위원회 (14대 총선)</a>
+    </div>
+    <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/parliament.js"></script>
+<script src="assets/elections.js"></script>
+<script src="assets/archive/shared.js"></script>
+<script src="assets/archive/local.js"></script>
+<script src="assets/archive/pres.js"></script>
+<script src="assets/archive/general.js"></script>
+<script src="assets/archive/byelection.js"></script>
+<script src="assets/archive/core.js"></script>
+<script src="assets/theme.js"></script>
+</body>
+</html>

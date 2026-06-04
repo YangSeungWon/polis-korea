@@ -15,11 +15,24 @@
     const races = sidoRaces(results);
     const partyCount = {};
     let voters = 0, electors = 0;
-    for (const r of races) {
-      const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cands[0]) partyCount[cands[0].party] = (partyCount[cands[0].party] || 0) + 1;
-      voters += r.voters || 0;
-      electors += r.electors || 0;
+    if (races.length) {
+      // 시도별 race 있음 (NEC 또는 1회 위키) — 시도별 1위 정당 카운트
+      for (const r of races) {
+        const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        if (cands[0]) partyCount[cands[0].party] = (partyCount[cands[0].party] || 0) + 1;
+        voters += r.voters || 0;
+        electors += r.electors || 0;
+      }
+    } else {
+      // 시도 race 없음 — nation 광역단체장 race로 fallback (옛 회차 위키 source)
+      const nat3 = (results.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === '3');
+      if (nat3) {
+        for (const c of nat3.candidates || []) {
+          if (c.party && c.seats) partyCount[c.party] = (partyCount[c.party] || 0) + c.seats;
+        }
+        voters = nat3.voters || 0;
+        electors = nat3.electors || 0;
+      }
     }
     const sorted = Object.entries(partyCount).sort((a, b) => b[1] - a[1]).slice(0, 3);
     const govEl = document.getElementById('ar-governor-summary');
@@ -29,8 +42,9 @@
     }
     if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
     const meta = results._meta || {};
-    const sourceLabel = meta.source === 'nec-live-portal' ? '잠정' : (meta.is_final ? '확정' : '진행');
-    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || '미상'}`;
+    const sourceLabel = meta.source === 'wikipedia-ko-infobox' || meta.source === 'wikipedia-ko-body'
+      ? '위키' : (meta.source === 'nec-live-portal' ? '잠정' : (meta.is_final ? '확정' : '진행'));
+    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || meta.election_date || '미상'}`;
   }
 
   function renderCounting(ctx) {

@@ -31,8 +31,9 @@
       document.getElementById('ar-turnout').textContent = (nat.voters / nat.electors * 100).toFixed(1) + '%';
     }
     const m = results._meta || {};
-    const sourceLabel = m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행');
-    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`;
+    const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
+      : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
+    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`;
   }
 
   function renderNation(ctx) {
