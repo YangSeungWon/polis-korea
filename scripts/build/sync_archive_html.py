@@ -1,0 +1,368 @@
+"""data/elections/{id}.json 레지스트리 → archive/{id}/index.html 자동 생성.
+
+archive HTML 4개 (8th-local·9th-local·21st-pres·22nd-general)는 head/footer가
+거의 같고 모드별 (hero stats · 섹션 list · source links)만 다름. 단일 출처로
+관리하기 위해 메타 + 종류별 템플릿으로 derive.
+
+새 archive 페이지 추가 = data/elections/{id}.json archive 블록 채우고
+이 스크립트 1회 실행. 손으로 수정 X.
+
+사용:
+  python3 scripts/build/sync_archive_html.py
+  python3 scripts/build/sync_archive_html.py --id 21st-pres-2025  # 한 회차만
+"""
+from __future__ import annotations
+import argparse
+import json
+import sys
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+ELECTIONS_DIR = ROOT / "data" / "elections"
+ARCHIVE_DIR = ROOT / "archive"
+
+DOW = ["월", "화", "수", "목", "금", "토", "일"]
+
+# kind → 짧은 라벨·history.html type slug·n 단위
+KIND_META = {
+    "local":              {"short": "지선",  "history_type": "local",              "n_unit": "회"},
+    "presidential":       {"short": "대선",  "history_type": "presidential",       "n_unit": "대"},
+    "general_election":   {"short": "총선",  "history_type": "national_assembly",  "n_unit": "대"},
+}
+
+
+def kday(date_str: str) -> str:
+    y, m, d = map(int, date_str.split("-"))
+    return f"{date_str} ({DOW[date.fromordinal(date(y, m, d).toordinal()).weekday()]})"
+
+
+def derive(meta: dict) -> dict:
+    """meta + archive 블록 → 템플릿에 박을 변수."""
+    kind = meta["kind"]
+    km = KIND_META[kind]
+    ar = meta["archive"]
+    sg_id = meta.get("nec", {}).get("sg_id", "")
+    gubun = meta.get("nesdc", {}).get("gubun", "")
+    context = ar.get("context_note", "")
+    date_label = kday(meta["date"])
+    if context:
+        date_label += f" · {context}"
+    return {
+        "id": meta["id"],
+        "name": meta["name"],
+        "date": meta["date"],
+        "date_label": date_label,
+        "n": meta["n"],
+        "n_unit": km["n_unit"],
+        "kind": kind,
+        "kind_short": km["short"],
+        "history_type": km["history_type"],
+        "is_active": meta.get("status") == "active",
+        "election_id_full": f"002{sg_id}" if sg_id else "",
+        "nesdc_gubun_query": f"&pollGubuncd={gubun}" if gubun else "",
+        "wiki_url": ar.get("wiki_url", ""),
+        "year": meta["date"][:4],
+    }
+
+
+# --- 공통 chrome ---
+
+HEAD = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · {name} ({date})</title>
+<meta name="description" content="{name}({date}) 결과·여론조사·출구조사 비교 아카이브.">
+<meta property="og:title" content="polis · {n}{n_unit} {kind_short} 아카이브">
+<meta property="og:description" content="{n}{n_unit} {kind_short} 결과·여론조사·출구조사 비교.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/archive/{id}/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/polls.css">
+<link rel="stylesheet" href="assets/dashboard.css">
+<link rel="stylesheet" href="assets/archive.css">
+<script id="archive-meta">window.__ARCHIVE__ = {{ id: '{id}' }};</script>
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="/" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="/byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="/history.html" class="hdr-link">역대 선거</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <nav class="ar-breadcrumb" aria-label="경로">
+    <a href="/timeline.html">타임라인</a> ·
+    <a href="/history.html?type={history_type}&n={n}">역대 선거</a> · <span>{n}{n_unit} {kind_short} 아카이브</span>
+  </nav>
+"""
+
+# --- hero 블록 (kind별) ---
+
+HERO_LOCAL = """
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">{name}</h1>
+    <div class="ar-hero-date" id="ar-date">{date_label}</div>
+    <div class="ar-hero-stats" id="ar-stats">
+      <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">광역단체장</div><div class="ar-stat-value" id="ar-governor-summary">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">재·보궐</div><div class="ar-stat-value" id="ar-byelection-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">{hero_status}</p>
+  </section>
+"""
+
+HERO_PRES = """
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">{name}</h1>
+    <div class="ar-hero-date" id="ar-date">{date_label}</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">당선</div><div class="ar-stat-value" id="ar-winner">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">격차</div><div class="ar-stat-value" id="ar-margin">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">{hero_status}</p>
+  </section>
+"""
+
+HERO_GENERAL = """
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">{name}</h1>
+    <div class="ar-hero-date" id="ar-date">{date_label}</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">1당</div><div class="ar-stat-value" id="ar-winner">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">2당</div><div class="ar-stat-value" id="ar-runnerup">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">{hero_status}</p>
+  </section>
+"""
+
+# --- 섹션 (kind별) — NEC 소스 URL은 derive ---
+
+NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={election_id_full}&topMenuId=VC&secondMenuId=VCCP09"
+
+SECTIONS_LOCAL = """
+  <section class="ar-section" id="ar-counting" hidden>
+    <h2 class="ar-section-title">{counting_title}</h2>
+    <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
+    <div class="ar-counting-grid" id="ar-counting-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-exitpoll" hidden>
+    <h2 class="ar-section-title">출구조사 vs 실제</h2>
+    <p class="ar-source-line">{date} 18:00 발표. 3사(KBS·MBC·SBS)와 JTBC 분리 표시. 시도별 1위 일치율·평균 오차 자동 계산.</p>
+    <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-prediction" hidden>
+    <h2 class="ar-section-title">예측 (여론조사) vs 실제</h2>
+    <div class="ar-prediction-grid" id="ar-prediction-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-trend" hidden>
+    <h2 class="ar-section-title">여론조사</h2>
+    <div class="ar-trend-host" id="ar-trend-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-byelection" hidden>
+    <h2 class="ar-section-title">재·보궐</h2>
+    <div class="ar-byelection-host" id="ar-byelection-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-list" hidden>
+    <h2 class="ar-section-title">조사 목록</h2>
+    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
+  </section>
+"""
+
+SECTIONS_PRES = """
+  <section class="ar-section" id="ar-nation" hidden>
+    <h2 class="ar-section-title">전국 결과</h2>
+    <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
+    <div class="ar-nation-host" id="ar-nation-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-counting" hidden>
+    <h2 class="ar-section-title">시도별 결과</h2>
+    <div class="ar-counting-grid" id="ar-counting-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-exitpoll" hidden>
+    <h2 class="ar-section-title">출구조사 vs 실제</h2>
+    <p class="ar-source-line">{date} 18:00 발표. KBS·MBC·SBS 방송 3사, JTBC 권역별. 전국 적중·평균 오차 자동 계산.</p>
+    <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-trend" hidden>
+    <h2 class="ar-section-title">여론조사 후보 추이</h2>
+    <div class="ar-trend-host" id="ar-trend-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-list" hidden>
+    <h2 class="ar-section-title">조사 목록</h2>
+    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
+  </section>
+"""
+
+SECTIONS_GENERAL = """
+  <section class="ar-section" id="ar-parliament" hidden>
+    <h2 class="ar-section-title">의회 구성</h2>
+    <p class="ar-source-line">지역구 254석 + 비례대표 46석 = 총 300석. 데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <div class="ar-parliament-host" id="ar-parliament-host"></div>
+    <div class="ar-parliament-table" id="ar-parliament-table"></div>
+  </section>
+
+  <section class="ar-section" id="ar-proportional" hidden>
+    <h2 class="ar-section-title">비례대표 정당 득표</h2>
+    <div class="ar-nation-host" id="ar-proportional-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-districts" hidden>
+    <h2 class="ar-section-title">지역구 결과 · 254곳</h2>
+    <p class="ar-source-line">시·도 순. 정당색은 당선자 소속 정당.</p>
+    <div class="ar-districts-host" id="ar-districts-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-exitpoll" hidden>
+    <h2 class="ar-section-title">출구조사 vs 실제</h2>
+    <p class="ar-source-line">{date} 18:00 발표. 방송사별 의석 예측. (데이터 수집 대기)</p>
+    <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-trend" hidden>
+    <h2 class="ar-section-title">여론조사 정당 지지 추이</h2>
+    <div class="ar-trend-host" id="ar-trend-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-list" hidden>
+    <h2 class="ar-section-title">조사 목록</h2>
+    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
+  </section>
+"""
+
+FOOT = """
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467{nesdc_gubun_query}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 ({n}{n_unit} {kind_short})</a>{wiki_link}
+    </div>
+    <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+{extra_scripts}<script src="assets/elections.js"></script>
+<script src="assets/archive/shared.js"></script>
+<script src="assets/archive/local.js"></script>
+<script src="assets/archive/pres.js"></script>
+<script src="assets/archive/general.js"></script>
+<script src="assets/archive/core.js"></script>
+<script src="assets/theme.js"></script>
+</body>
+</html>
+"""
+
+KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL}
+KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL}
+
+
+def hero_status(d: dict) -> str:
+    return "개표 결과 수집 중." if d["is_active"] else "확정 결과."
+
+
+def counting_title(d: dict) -> str:
+    return "개표 진행 · 시도별" if d["is_active"] else "광역단체장 결과 · 시도별"
+
+
+def render(meta: dict) -> str:
+    d = derive(meta)
+    d["hero_status"] = hero_status(d)
+    d["counting_title"] = counting_title(d)
+    d["nec_url"] = NEC_RESULTS_URL.format(election_id_full=d["election_id_full"]) if d["election_id_full"] else "https://info.nec.go.kr"
+    d["wiki_link"] = (
+        f'\n      <a href="{d["wiki_url"]}" target="_blank" rel="noopener">출구조사 · 위키백과</a>'
+        if d["wiki_url"] else ""
+    )
+    d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
+
+    return (
+        HEAD.format(**d)
+        + KIND_TO_HERO[d["kind"]].format(**d)
+        + KIND_TO_SECTIONS[d["kind"]].format(**d)
+        + FOOT.format(**d)
+    )
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--id", help="특정 회차 1건만")
+    ap.add_argument("--check", action="store_true", help="diff만 출력, 파일 안 씀")
+    args = ap.parse_args()
+
+    index = json.loads((ELECTIONS_DIR / "index.json").read_text(encoding="utf-8"))
+    all_ids = list(index.get("active", [])) + list(index.get("archive", []))
+    if args.id:
+        if args.id not in all_ids:
+            print(f"ERR: {args.id} index.json 에 없음", file=sys.stderr)
+            sys.exit(1)
+        all_ids = [args.id]
+
+    n_changed = 0
+    n_unchanged = 0
+    n_skipped = 0
+    for eid in all_ids:
+        meta_path = ELECTIONS_DIR / f"{eid}.json"
+        if not meta_path.exists():
+            continue
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        ar = meta.get("archive")
+        if not ar or not ar.get("page"):
+            n_skipped += 1
+            continue
+        if meta.get("kind") not in KIND_TO_HERO:
+            print(f"  ! {eid}: kind={meta.get('kind')} — 템플릿 없음, 스킵", file=sys.stderr)
+            n_skipped += 1
+            continue
+        html = render(meta)
+        out = ARCHIVE_DIR / eid / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        current = out.read_text(encoding="utf-8") if out.exists() else ""
+        if current == html:
+            n_unchanged += 1
+            continue
+        if args.check:
+            print(f"~ {eid} 변경 예정")
+            n_changed += 1
+            continue
+        out.write_text(html, encoding="utf-8")
+        print(f"OK {eid}")
+        n_changed += 1
+    print(f"\n변경 {n_changed} · 동일 {n_unchanged} · 스킵 {n_skipped}")
+
+
+if __name__ == "__main__":
+    main()
