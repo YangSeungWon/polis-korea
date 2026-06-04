@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 데이터 커버리지</title>
+<meta name="description" content="대선·총선·지선·재보궐 1987-2026 데이터 가용성·source 매트릭스. 어디까지 채워졌고 어디가 비었는지.">
+<meta property="og:title" content="polis · 데이터 커버리지">
+<meta property="og:description" content="1987-2026 모든 선거 데이터의 source·갭 명시.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/about/data-coverage/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/about-coverage.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="/" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="/byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="/history.html" class="hdr-link">역대 선거</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>데이터 커버리지</h1>
+    <p class="lede">1987-2026 대선·총선·지선·재보궐 각 회차의 데이터 source·범위·갭. 어디까지 채워졌고 어디가 비었는지 정직히 표시.</p>
+  </section>
+
+  <section class="cov-section">
+    <h2 class="cov-section-title">요약</h2>
+    <div class="cov-summary" id="cov-summary"></div>
+  </section>
+
+  <section class="cov-section">
+    <h2 class="cov-section-title">회차별 매트릭스</h2>
+    <p class="cov-section-sub">행=종류, 열=연도. 색=source. 셀 hover로 상세.</p>
+    <div class="cov-legend">
+      <span class="cov-tag cov-tag-nec">NEC API</span>
+      <span class="cov-tag cov-tag-live">실시간 (잠정)</span>
+      <span class="cov-tag cov-tag-wiki">위키백과</span>
+      <span class="cov-tag cov-tag-none">없음</span>
+    </div>
+    <div class="cov-matrix" id="cov-matrix"></div>
+  </section>
+
+  <section class="cov-section">
+    <h2 class="cov-section-title">source 별 한계</h2>
+    <div class="cov-source-details">
+      <div class="cov-src-card">
+        <h3>NEC OpenAPI <span class="cov-src-tag">data.go.kr</span></h3>
+        <p>중앙선거관리위원회 공식 API. 인증키 필요. 2010-07-28 이후 모든 race 시도/시군구별 break + 후보별 득표·정당 다 포함.</p>
+        <p class="cov-caveat">한계: 그 이전(1987-2009) 데이터 안 줌.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>NEC 개표 포털 (실시간) <span class="cov-src-tag">info.nec.go.kr</span></h3>
+        <p>비공식 JSON 엔드포인트. 인증키 X. 개표 진행 중 잠정값 제공 — OpenAPI보다 빠름. is_final=false.</p>
+        <p class="cov-caveat">한계: 선거 직후만. 며칠 후 OpenAPI 데이터로 자동 승계.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>위키백과 한국어판 <span class="cov-src-tag">ko.wikipedia.org</span></h3>
+        <p>article infobox + body wikitable. 옛 회차 (대선 13-15·총선 13-16·지선 1-4) 결과 + 재보궐 dates·count.</p>
+        <p class="cov-caveat">한계: nation 단위 합산만. 시도/시군구 break, 후보별 상세, 정확한 사유 없음. 위키 편집 오류 가능성.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>결손 시기 <span class="cov-src-tag">1987-2009 재보궐</span></h3>
+        <p>재보궐 1989-2007 위키 article에서 회차 실시여부 + office별 count 확보. 1987/1988 + 일부 갭.</p>
+        <p class="cov-caveat">보강 source: NEC PDF 통계자료실, 국회도서관 PDF, 행정안전부. 수기 입력 필요.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회</a>
+      <a href="https://ko.wikipedia.org" target="_blank" rel="noopener">위키백과 한국어판</a>
+      <a href="https://github.com/YangSeungWon/polis-korea" target="_blank" rel="noopener">소스 코드</a>
+    </div>
+    <p class="fine">없는 데이터를 있는 척하지 않습니다. 데이터 source·갭은 항상 명시.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/elections.js"></script>
+<script src="assets/about-coverage.js"></script>
+<script src="assets/theme.js"></script>
+</body>
+</html>
