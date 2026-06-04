@@ -157,12 +157,49 @@
     document.getElementById('ar-exitpoll').hidden = false;
   }
 
-  function renderByelection(ctx) {
+  async function renderByelection(ctx) {
     const reasons = ctx.byReasons || [];
+    // 통합 동시 재보궐 결과 — byelectionId 메타가 있으면 fetch
+    let byResults = null;
+    if (ctx.meta.byelectionId) {
+      try {
+        byResults = await fetch(`data/results/${ctx.meta.byelectionId}.json`).then((r) => r.ok ? r.json() : null);
+      } catch {}
+    }
+    const races = (byResults?.races || []).filter((r) => r.scope === 'district' && r.sg_typecode === '2');
     const cntEl = document.getElementById('ar-byelection-count');
-    if (cntEl) cntEl.textContent = reasons.length ? `${reasons.length}건` : '데이터 대기';
-    if (!reasons.length) return;
+    if (cntEl) {
+      const parts = [];
+      if (races.length) parts.push(`결과 ${races.length}`);
+      if (reasons.length) parts.push(`사유 ${reasons.length}`);
+      cntEl.textContent = parts.length ? parts.join(' · ') : '데이터 대기';
+    }
+    if (!races.length && !reasons.length) return;
     const host = document.getElementById('ar-byelection-host');
+
+    // 결과 mini 카드 (먼저 — 핵심 정보)
+    for (const race of races) {
+      const cs = (race.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      const top = cs[0], second = cs[1];
+      if (!top) continue;
+      const margin = second ? (top.pct - second.pct) : null;
+      const card = document.createElement('div');
+      card.className = 'ar-by-card ar-by-result-card';
+      const col = pcol(top.party);
+      card.innerHTML = `
+        <div class="ar-by-elpc">${race.sido || ''} ${race.district || race.sigungu || ''}</div>
+        <div class="ar-by-result-winner" style="border-left:3px solid ${col}">
+          <span style="color:${col};font-weight:700">${top.name}</span>
+          <span style="color:${col};font-size:11px">${top.party}</span>
+          <span style="font-weight:700;font-variant-numeric:tabular-nums">${(top.pct || 0).toFixed(2)}%</span>
+        </div>
+        ${second ? `<div class="ar-by-result-second">2위 <span style="color:${pcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${(second.pct || 0).toFixed(2)}%</span></div>` : ''}
+        ${margin != null ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:4px">격차 ${margin.toFixed(2)}pp</div>` : ''}
+      `;
+      host.appendChild(card);
+    }
+
+    // 사유 카드 (결과와 비교용)
     for (const r of reasons) {
       if (r.elctKndCd !== '2') continue;
       const card = document.createElement('div');
@@ -176,6 +213,16 @@
       `;
       host.appendChild(card);
     }
+
+    // 활성 회차면 byelection.html 진입 link, archive면 cross-archive link
+    if (races.length || reasons.length) {
+      const link = document.createElement('a');
+      link.className = 'ar-by-more-link';
+      link.href = '/byelection.html';
+      link.textContent = '재·보궐 여론조사·결과 상세 →';
+      host.appendChild(link);
+    }
+
     document.getElementById('ar-byelection').hidden = false;
   }
 
@@ -195,12 +242,12 @@
   }
 
   window.Archive.local = {
-    render(ctx) {
+    async render(ctx) {
       renderHero(ctx);
       renderCounting(ctx);
       renderExitPoll(ctx);
       renderPrediction(ctx);
-      renderByelection(ctx);
+      await renderByelection(ctx);
       renderTrend(ctx);
     },
   };

@@ -66,7 +66,7 @@
   if (isPres) window.Archive.pres.render(ctx);
   else if (isGeneral) window.Archive.general.render(ctx);
   else if (isByelection) await window.Archive.byelection.render(ctx);
-  else window.Archive.local.render(ctx);
+  else await window.Archive.local.render(ctx);
 
   window.Archive.renderPollsList(polls);
 })();
