@@ -12,33 +12,28 @@
   const calendar = await fetch('/data/byelection_calendar.json')
     .then((r) => r.ok ? r.json() : null).catch(() => null);
 
-  // 각 회차에 대해 source 분류 (results _meta.source로 판단)
-  const sourceCache = {};
-  async function classifySource(meta) {
-    if (!meta.archive?.results_path && !meta.results_file) return 'none';
-    const path = meta.archive?.results_path || meta.results_file;
-    if (sourceCache[path]) return sourceCache[path];
-    try {
-      const r = await fetch(path);
-      if (!r.ok) return (sourceCache[path] = 'none');
-      const d = await r.json();
-      const src = d._meta?.source;
-      let label = 'nec'; // 기본 (OpenAPI batch)
-      if (src === 'nec-live-portal') label = 'live';
-      else if (src === 'wikipedia-ko-infobox' || src === 'wikipedia-ko-body') label = 'wiki';
-      else if (!d.races || !d.races.length) label = 'none';
-      sourceCache[path] = label;
-      return label;
-    } catch { return (sourceCache[path] = 'none'); }
+  // 메타만 보고 source 분류 — result 파일 fetch X (lazy).
+  function classifySource(meta) {
+    if (!meta) return 'none';
+    // 위키 source 명시
+    if ((meta.archive?.data_source_note || '').includes('위키')) return 'wiki';
+    if ((meta._data_caveat || '').includes('위키')) return 'wiki';
+    if ((meta.nec?._note || '').includes('미가용')) return 'wiki';
+    // status: active이고 fetch_nec_live 시기면 잠정
+    const date = meta.date || '';
+    if (meta.status === 'active') return 'live';
+    // 2010 이후이면 NEC API, 이전이면 wiki (소수 옛 회차)
+    const year = parseInt(date.slice(0, 4)) || 0;
+    if (year >= 2010) return 'nec';
+    return 'wiki';
   }
 
-  // 각 회차를 (kind, year) → source 로 grouping
-  const cellMap = {};  // 'kind|year' → {source, meta}
+  // 각 회차 → (kind, year) cell
+  const cellMap = {};
   for (const m of allMetas) {
     const kind = m.kind === 'general_election' ? 'general' : m.kind;
     const year = parseInt(m.date.slice(0, 4));
-    const src = await classifySource(m);
-    cellMap[`${kind}|${year}`] = { source: src, meta: m };
+    cellMap[`${kind}|${year}`] = { source: classifySource(m), meta: m };
   }
 
   // 재보궐 캘린더: wiki entries만 추가 (NEC 회차는 위에서 처리됨)
