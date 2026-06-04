@@ -52,8 +52,15 @@ def chunk(data: dict) -> tuple[dict, dict] | None:
     if eid.startswith("byelection-"):
         return None  # standalone 재보궐은 통째로 유지
     races = data.get("races", [])
-    main_races = [r for r in races if r.get("scope") in MAIN_SCOPES]
-    drill_races = [r for r in races if r.get("scope") in DRILL_SCOPES]
+    # 지선 광역의원(tc=5)·기초의원(tc=6)은 scope=district이지만 1500+ race로 가중 → drill chunk로.
+    def is_drill(r):
+        if r.get("scope") in DRILL_SCOPES:
+            return True
+        if r.get("sg_typecode") in ("5", "6") and r.get("scope") == "district":
+            return True
+        return False
+    main_races = [r for r in races if not is_drill(r)]
+    drill_races = [r for r in races if is_drill(r)]
     if not drill_races:
         return None  # 청크할 게 없음
     meta = dict(data.get("_meta", {}))

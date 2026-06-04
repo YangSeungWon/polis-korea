@@ -155,6 +155,48 @@ SATELLITE_TO_MAIN = json.loads(
 )["satellite_to_main"]
 
 
+def mayor_party_counts(races):
+    """지선 기초단체장(tc=4) 정당별 당선 수."""
+    return _count_winners_by_tc(races, "4")
+
+
+def council_party_counts(races, tc):
+    """지선 광역의원(tc=5)·기초의원(tc=6) 지역구 당선자 정당 카운트."""
+    return _count_winners_by_tc(races, tc)
+
+
+def _count_winners_by_tc(races, tc):
+    # tc=4 (기초장) → scope=sigungu만 (sigungu_part는 시군구 내 구 breakdown)
+    # tc=5/6 (의원) → scope=district만
+    SCOPE_FOR = {"4": "sigungu", "5": "district", "6": "district"}
+    want_scope = SCOPE_FOR.get(tc)
+    from collections import Counter
+    ctr = Counter()
+    for r in races:
+        if r.get("sg_typecode") != tc:
+            continue
+        if want_scope and r.get("scope") != want_scope:
+            continue
+        cands = r.get("candidates") or []
+        if not cands:
+            continue
+        top = max(cands, key=lambda c: c.get("votes", 0) or 0)
+        p = top.get("party") or "무소속"
+        ctr[p] += 1
+    return [[p, c] for p, c in ctr.most_common()]
+
+
+def load_chunked(path: Path):
+    """main + .sigungu.json chunk 합쳐 races 반환."""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    races = list(raw.get("races") or [])
+    if raw.get("_meta", {}).get("chunked"):
+        sub = path.with_suffix("").with_suffix(".sigungu.json")
+        if sub.exists():
+            races += json.loads(sub.read_text(encoding="utf-8")).get("races") or []
+    return raw, races
+
+
 def party_total_seats(races, kind, n):
     """총선 회차의 정당별 총 의석 (지역구 + 비례, 위성정당 → 본정당 합산)."""
     if kind != "national_assembly":
@@ -194,14 +236,20 @@ def main():
             sido_winners = {}
             party_seats = []
             pres_cands = []
+            mayor_counts = []
+            metro_council_counts = []
+            local_council_counts = []
             if path_name:
                 p = RESULTS / path_name
                 if p.exists():
-                    raw = json.loads(p.read_text(encoding="utf-8"))
-                    races = raw.get("races", [])
+                    raw, races = load_chunked(p)
                     sido_winners = sido_winners_from_new_schema(races, kind)
                     party_seats = party_total_seats(races, kind, n)
                     pres_cands = pres_candidates_top(races) if kind == "presidential" else []
+                    if kind == "local":
+                        mayor_counts = mayor_party_counts(races)
+                        metro_council_counts = council_party_counts(races, "5")
+                        local_council_counts = council_party_counts(races, "6")
             label_short = KIND_LABEL[kind]
             entry = {
                 "kind": kind,
@@ -217,6 +265,12 @@ def main():
                 entry["partySeats"] = party_seats
             if pres_cands:
                 entry["presCandidates"] = pres_cands
+            if mayor_counts:
+                entry["mayorPartyCounts"] = mayor_counts
+            if metro_council_counts:
+                entry["metroCouncilPartyCounts"] = metro_council_counts
+            if local_council_counts:
+                entry["localCouncilPartyCounts"] = local_council_counts
             out_rounds.append(entry)
 
     # 향후 예정 선거 (data/elections/index.json active + 주기 기반 예측 ~10년).

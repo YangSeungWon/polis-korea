@@ -46,7 +46,7 @@ SELECTBOX = "/m/bizcommon/selectbox/"
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
 
 # sg_typecode → statementId 접미 (포털 JS 매핑; 투표상황 미입력판은 _0)
-STATEMENT_SUFFIX = {"5": "5_0", "6": "6_0", "10": "10_0"}
+STATEMENT_SUFFIX = {"10": "10_0"}  # 5/6은 _0 suffix 시 0 row 회신, 기본 tc 그대로 사용
 # cityEndpoint by sg_typecode (포털 OptionSearch 인자에서)
 CITY_ENDPOINT = {
     "3": "selectbox_cityCodeDIBySgJson.json", "11": "selectbox_cityCodeDIBySgJson.json",
@@ -169,7 +169,7 @@ def build(election_id_meta: str) -> dict:
     s = make_session(election_id, menu)
     races: list[dict] = []
     n_call = 0
-    LIVE_TC = {"2", "3", "4", "11", "8", "9"}  # 라이브 지원 office (의원 5/6은 town 단위 — TODO)
+    LIVE_TC = {"2", "3", "4", "5", "6", "11", "8", "9"}  # 의원(5/6)은 시도0 호출 한 번에 선거구별 row 회신
     # 2 = 국회의원 (재보궐 district scope) — 시도 loop, SGGNAME=선거구, WIWNAME=소계 row
     offices = [o for o in meta.get("offices", []) if o.get("sg_typecode") in LIVE_TC]
     print(f"=== {meta['name']} 실시간 개표 (electionId={election_id}) ===", file=sys.stderr)
@@ -214,23 +214,40 @@ def build(election_id_meta: str) -> dict:
                 time.sleep(0.2)
             print(f"  ✓ {o['level']} (sigungu): {kept} races ({len(cities)} 시도)", file=sys.stderr)
         elif scope == "district":
-            # 재보궐 국회의원 — 시도 코드별 loop → SGGNAME=선거구, WIWNAME=소계 row
-            cities = fetch_city_list(s, election_id, tc); n_call += 1
-            kept = 0
-            for c in cities:
-                code = str(c.get("CODE"))
-                rows = fetch_report(s, election_id, menu, stmt, tc, code); n_call += 1
+            # 광역의원(5)·기초의원(6): cityCode=0 한 호출 = 전 선거구 row (WIW=시군구).
+            #   → 시도별 loop 없이 한 번에 끝남, 모든 row가 race.
+            # 재보궐 국회의원(2): 시도 코드별 loop, WIWNAME=소계 row만 채택.
+            if tc in ("5", "6"):
+                rows = fetch_report(s, election_id, menu, stmt, tc, "0"); n_call += 1
+                kept = 0
                 for row in rows:
-                    if row.get("WIWNAME") != "소계":
+                    sgg = row.get("SGGNAME", "")
+                    if not sgg or sgg in ("합계", "소계"):
                         continue
                     r = base_race(row, tc, canon)
                     r["sido"] = canon(row.get("SDNAME", ""))
-                    r["district"] = row.get("SGGNAME", "")
-                    r["sigungu"] = ""
+                    r["district"] = sgg
+                    r["sigungu"] = row.get("WIWNAME", "")  # 선거구가 걸린 시군구
                     r["scope"] = "district"
                     races.append(r); kept += 1
-                time.sleep(0.2)
-            print(f"  ✓ {o['level']} (district): {kept} races ({len(cities)} 시도)", file=sys.stderr)
+                print(f"  ✓ {o['level']} (district, 한 호출): {kept} races", file=sys.stderr)
+            else:
+                cities = fetch_city_list(s, election_id, tc); n_call += 1
+                kept = 0
+                for c in cities:
+                    code = str(c.get("CODE"))
+                    rows = fetch_report(s, election_id, menu, stmt, tc, code); n_call += 1
+                    for row in rows:
+                        if row.get("WIWNAME") != "소계":
+                            continue
+                        r = base_race(row, tc, canon)
+                        r["sido"] = canon(row.get("SDNAME", ""))
+                        r["district"] = row.get("SGGNAME", "")
+                        r["sigungu"] = ""
+                        r["scope"] = "district"
+                        races.append(r); kept += 1
+                    time.sleep(0.2)
+                print(f"  ✓ {o['level']} (district): {kept} races ({len(cities)} 시도)", file=sys.stderr)
 
     return {
         "_meta": {

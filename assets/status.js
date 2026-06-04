@@ -123,14 +123,33 @@
       headingEl.innerHTML = `<span class="card-heading-n">${lastLocal.label}</span><span class="card-heading-date">${lastLocal.date}</span>`;
     }
     const nameEl = document.getElementById('status-local-name');
-    if (sorted.length) {
-      nameEl.innerHTML = sorted.slice(0, 3).map(([p, c]) => {
-        const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
-        return `<span class="party-chip" style="color:${col}"><b>${c}</b>${p}</span>`;
-      }).join(' ');
-    }
-    document.getElementById('status-local-meta').textContent =
-      `17개 시·도지사 · 임기 4년`;
+    const mayorCounts = lastLocal.mayorPartyCounts || [];
+    const metroCouncil = lastLocal.metroCouncilPartyCounts || [];
+    const localCouncil = lastLocal.localCouncilPartyCounts || [];
+    const govTotal = sorted.reduce((s, [, c]) => s + c, 0);
+    const mayorTotal = mayorCounts.reduce((s, [, c]) => s + c, 0);
+    const metroTotal = metroCouncil.reduce((s, [, c]) => s + c, 0);
+    const localTotal = localCouncil.reduce((s, [, c]) => s + c, 0);
+    const chip = (p, c) => {
+      const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
+      return `<span class="party-chip" style="color:${col}"><b>${c}</b>${p}</span>`;
+    };
+    const lines = [];
+    const addLine = (label, total, counts, top = 4) => {
+      if (!counts.length) return;
+      lines.push(`<div class="status-local-line">
+        <span class="status-local-label">${label} ${total}</span>
+        <span class="status-local-chips">${counts.slice(0, top).map(([p, c]) => chip(p, c)).join(' ')}</span>
+      </div>`);
+    };
+    addLine('광역단체장', govTotal, sorted);
+    addLine('기초단체장', mayorTotal, mayorCounts);
+    addLine('광역의원', metroTotal, metroCouncil, 3);
+    addLine('기초의원', localTotal, localCouncil, 3);
+    if (lines.length) nameEl.innerHTML = lines.join('');
+    const tot = [govTotal && `${govTotal} 광역장`, mayorTotal && `${mayorTotal} 기초장`,
+                 metroTotal && `${metroTotal} 광역의원`, localTotal && `${localTotal} 기초의원`].filter(Boolean).join(' · ');
+    document.getElementById('status-local-meta').textContent = `${tot || '17개 시·도'} · 임기 4년`;
   }
 
   // 4) 시간축 strip — 최근 5년 + 향후 5년 회차 흐름. 오늘 dot.

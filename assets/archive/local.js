@@ -281,11 +281,50 @@
     document.getElementById('ar-polls-link').hidden = false;
   }
 
+  // 선출직 정당 분포 — 광역장·기초장·광역의원·기초의원 4단 카운트.
+  // 회차 결과 (chunk 병합본) 한 번 훑어 winner party 카운트. 출처 단순화.
+  function renderOffices(ctx) {
+    const races = ctx.results?.races || [];
+    if (!races.length) return;
+    const SCOPE_FOR = { '3': 'sido', '4': 'sigungu', '5': 'district', '6': 'district' };
+    const LABEL = { '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원' };
+    const lines = [];
+    for (const tc of ['3', '4', '5', '6']) {
+      const want = SCOPE_FOR[tc];
+      const ctr = {};
+      let total = 0;
+      for (const r of races) {
+        if (r.sg_typecode !== tc || r.scope !== want) continue;
+        const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        if (!cs[0]) continue;
+        const p = cs[0].party || '무소속';
+        ctr[p] = (ctr[p] || 0) + 1;
+        total += 1;
+      }
+      if (!total) continue;
+      const sorted = Object.entries(ctr).sort((a, b) => b[1] - a[1]);
+      const chips = sorted.slice(0, 5).map(([p, c]) =>
+        `<span class="ar-office-chip" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
+      lines.push(`
+        <div class="ar-office-row">
+          <div class="ar-office-label">${LABEL[tc]} <span class="ar-office-total">${total}</span></div>
+          <div class="ar-office-chips">${chips}</div>
+        </div>
+      `);
+    }
+    if (!lines.length) return;
+    const host = document.getElementById('ar-offices-grid');
+    if (!host) return;
+    host.innerHTML = lines.join('');
+    document.getElementById('ar-offices').hidden = false;
+  }
+
   window.Archive.local = {
     async render(ctx) {
       // 시도별 결과 grid·폴 vs 실제·여론조사 추이는 /history.html에서 시각화로 더 강력
-      // → archive는 출구조사·재보궐·폴 link만 표시
+      // → archive는 선출직 분포·출구조사·재보궐·폴 link만 표시
       renderHero(ctx);
+      renderOffices(ctx);
       renderExitPoll(ctx);
       renderPollsLink(ctx);
       await renderByelection(ctx);

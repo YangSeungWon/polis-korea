@@ -65,8 +65,19 @@ async function init() {
       polls = polls.filter((p) => p.period_end && p.period_end < '2026-05-28');
     }
     if (meta.source === 'results') {
-      results = await fetch('data/results/9th-local-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null);
-      byResults = await fetch('data/results/9th-byelection-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null);
+      const [main, sigungu, byR] = await Promise.all([
+        fetch('data/results/9th-local-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+        fetch('data/results/9th-local-2026.sigungu.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+        fetch('data/results/9th-byelection-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+      ]);
+      // _meta.chunked → 기초단체장(tc=4) race는 .sigungu.json chunk에 있어 합치기
+      if (main) {
+        results = main;
+        if (main._meta?.chunked && sigungu?.races) {
+          results.races = (results.races || []).concat(sigungu.races);
+        }
+      }
+      byResults = byR;
     }
   } catch (e) { /* graceful */ }
 

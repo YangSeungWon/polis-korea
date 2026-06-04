@@ -68,6 +68,27 @@
   font-weight: 800;
   margin-right: 3px;
 }
+
+/* 지방정부 카드 — 광역·기초 2단 라인 */
+.status-card .status-local-line {
+  display: flex; flex-direction: column; align-items: stretch;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+.status-card .status-local-line:last-child { margin-bottom: 0; }
+.status-card .status-local-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.status-card .status-local-chips {
+  display: flex; flex-wrap: wrap; gap: 4px 8px;
+  font-size: 13px;
+}
+.status-card .status-local-chips .party-chip { margin-right: 0; font-size: 13px; }
+.status-card .status-local-chips .party-chip b { font-size: 13px; }
 /* timeline 4번째 카드 — 값 영역 SVG로 */
 
 

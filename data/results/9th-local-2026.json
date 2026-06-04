@@ -3,11 +3,11 @@
     "election": "제9회 전국동시지방선거",
     "election_id": "9th-local-2026",
     "election_date": "2026-06-03",
-    "fetched_at": "2026-06-04T17:02:29+09:00",
+    "fetched_at": "2026-06-04T22:13:39+09:00",
     "is_final": false,
     "source": "nec-live-portal",
-    "n_calls": 18,
-    "n_rows": 256,
+    "n_calls": 20,
+    "n_rows": 1838,
     "chunked": true,
     "sigungu_file": "sigungu"
   },
@@ -18,45 +18,45 @@
       "sigungu": "",
       "scope": "sido",
       "electors": 8319134,
-      "voters": 5264874,
-      "valid_votes": 5208798,
-      "invalid_votes": 56076,
-      "abstain": 3012535,
-      "count_pct": 99.54,
+      "voters": 5285171,
+      "valid_votes": 5228803,
+      "invalid_votes": 56368,
+      "abstain": 3027545,
+      "count_pct": 99.93,
       "candidates": [
         {
           "name": "오세훈",
           "party": "국민의힘",
-          "votes": 2560590,
-          "pct": 49.15,
+          "votes": 2572443,
+          "pct": 49.19,
           "rank": 1,
           "won": true
         },
         {
           "name": "정원오",
           "party": "더불어민주당",
-          "votes": 2507130,
-          "pct": 48.13,
+          "votes": 2514832,
+          "pct": 48.09,
           "rank": 2
         },
         {
           "name": "권영국",
           "party": "정의당",
-          "votes": 54149,
+          "votes": 54296,
           "pct": 1.03,
           "rank": 3
         },
         {
           "name": "유지혜",
           "party": "여성의당",
-          "votes": 43801,
+          "votes": 43939,
           "pct": 0.84,
           "rank": 4
         },
         {
           "name": "김정철",
           "party": "개혁신당",
-          "votes": 43128,
+          "votes": 43293,
           "pct": 0.82,
           "rank": 5
         }
@@ -615,67 +615,67 @@
       "sigungu": "",
       "scope": "sido",
       "electors": 8319121,
-      "voters": 5264363,
-      "valid_votes": 4964891,
-      "invalid_votes": 299472,
-      "abstain": 3013034,
-      "count_pct": 99.53,
+      "voters": 5284659,
+      "valid_votes": 4984129,
+      "invalid_votes": 300530,
+      "abstain": 3028045,
+      "count_pct": 99.92,
       "candidates": [
         {
           "name": "정근식",
           "party": "무소속",
-          "votes": 1505509,
-          "pct": 30.32,
+          "votes": 1509015,
+          "pct": 30.27,
           "rank": 1,
           "won": true
         },
         {
           "name": "조전혁",
           "party": "무소속",
-          "votes": 1166086,
-          "pct": 23.48,
+          "votes": 1172938,
+          "pct": 23.53,
           "rank": 2
         },
         {
           "name": "윤호상",
           "party": "무소속",
-          "votes": 723954,
-          "pct": 14.58,
+          "votes": 726273,
+          "pct": 14.57,
           "rank": 3
         },
         {
           "name": "한만중",
           "party": "무소속",
-          "votes": 468177,
-          "pct": 9.42,
+          "votes": 471614,
+          "pct": 9.46,
           "rank": 4
         },
         {
           "name": "김영배",
           "party": "무소속",
-          "votes": 365169,
-          "pct": 7.35,
+          "votes": 367082,
+          "pct": 7.36,
           "rank": 5
         },
         {
           "name": "홍제남",
           "party": "무소속",
-          "votes": 287733,
-          "pct": 5.79,
+          "votes": 288174,
+          "pct": 5.78,
           "rank": 6
         },
         {
           "name": "이학인",
           "party": "무소속",
-          "votes": 232627,
-          "pct": 4.68,
+          "votes": 232984,
+          "pct": 4.67,
           "rank": 7
         },
         {
           "name": "류수노",
           "party": "무소속",
-          "votes": 215636,
-          "pct": 4.34,
+          "votes": 216049,
+          "pct": 4.33,
           "rank": 8
         }
       ]

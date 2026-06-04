@@ -28,10 +28,15 @@
     pollsWindow: ar.polls_window ? { start: ar.polls_window[0], end: ar.polls_window[1] } : null,
   };
 
-  // 1. 결과
+  // 1. 결과 — _meta.chunked 플래그 있으면 .sigungu.json chunk 합치기
   let results = null;
   try {
     results = await fetch(meta.resultsPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null);
+    if (results?._meta?.chunked) {
+      const chunkPath = meta.resultsPath.replace(/\.json$/, '.sigungu.json');
+      const chunk = await fetch(chunkPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null).catch(() => null);
+      if (chunk?.races) results.races = (results.races || []).concat(chunk.races);
+    }
   } catch { results = null; }
 
   // 2. 폴 (회차별 path)
