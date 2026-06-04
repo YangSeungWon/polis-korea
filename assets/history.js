@@ -1656,6 +1656,7 @@ function renderSigunguHex() {
 // 회차별 archive 페이지 매핑 — 회차 detail에서 link 노출.
 const ARCHIVE_PAGES = {
   'local|9': '/archive/9th-local-2026/',
+  'local|8': '/archive/8th-local-2022/',
 };
 
 function renderDetail() {

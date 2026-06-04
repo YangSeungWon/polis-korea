@@ -12,10 +12,11 @@
     results = await fetch(meta.resultsPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null);
   } catch { results = null; }
 
-  // 2. 폴 데이터 (aggregated)
+  // 2. 폴 데이터 (회차별 path) — 메타의 pollsPath 우선, fallback aggregated.json.
   let polls = null;
   try {
-    const all = await fetch('data/polls/aggregated.json').then((r) => r.json());
+    const path = meta.pollsPath || 'data/polls/aggregated.json';
+    const all = await fetch(path).then((r) => r.json());
     polls = (all.polls || []).filter(filterPollForArchive);
   } catch { polls = null; }
 
@@ -29,7 +30,8 @@
   // 4. 출구조사 (방송 3사) — released_at 이후만 표시.
   let exitData = null;
   try {
-    exitData = await fetch(`data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null);
+    const path = meta.exitPollPath || `data/exit_polls/${meta.id}.json`;
+    exitData = await fetch(path).then((r) => r.ok ? r.json() : null);
   } catch {}
 
   renderHero(results, polls);
@@ -42,11 +44,13 @@
 
   // === 필터 ===
   function filterPollForArchive(p) {
-    // 9회 지선 폴만 — period가 2025~2026 + office_level 광역단체장 위주
+    // 메타의 pollsWindow 기준 — { start, end }. 지정 안 됐으면 1년 윈도.
     const ps = (p.period_start || '');
     if (!ps) return false;
-    // 9회 지선 관련 시기: 2025-12 ~ 2026-05 까지
-    if (ps < '2025-09-01' || ps > '2026-06-03') return false;
+    const w = meta.pollsWindow || {};
+    const start = w.start || (() => { const d = new Date(meta.date); d.setFullYear(d.getFullYear() - 1); return d.toISOString().slice(0, 10); })();
+    const end = w.end || meta.date;
+    if (ps < start || ps > end) return false;
     return true;
   }
 
@@ -222,18 +226,16 @@
   }
 
   function renderExitPoll(exitData, results) {
-    if (!exitData) return;
+    if (!exitData?.sources) return;
     const host = document.getElementById('ar-exitpoll-grid');
     const now = new Date();
     const blocks = [];
-    for (const key of ['kep_3sa', 'jtbc']) {
-      const ep = exitData[key];
-      if (!ep) continue;
+    for (const ep of exitData.sources) {
       const quoteAfter = ep.quote_after ? new Date(ep.quote_after) : null;
-      if (quoteAfter && now < quoteAfter) continue;  // 인용 가능 시점 전이면 표시 X
+      if (quoteAfter && now < quoteAfter) continue;  // 인용 가능 시점 전 표시 X
       const hasData = ep.results && Object.keys(ep.results).length > 0;
       if (!hasData) continue;
-      blocks.push({ key, ep });
+      blocks.push({ ep });
     }
     if (!blocks.length) return;
 

@@ -1,22 +1,24 @@
 {
-  "_meta": {
-    "id": "9th-local-2026",
-    "election_name": "제9회 전국동시지방선거",
-    "election_date": "2026-06-03",
-    "_legal_note": "KEP 인용 보도 기준 — 지상파 3사 6시15분부터, JTBC 발표 즉시 인용 가능. 각 출처 표시 필수."
-  },
-  "kep_3sa": {
-    "source": "KBS·MBC·SBS 공동 출구조사",
-    "released_at": "2026-06-03T18:00:00+09:00",
-    "quote_after": "2026-06-03T18:15:00+09:00",
-    "office": "광역단체장",
-    "results": {}
-  },
-  "jtbc": {
-    "source": "JTBC 예측조사",
-    "released_at": "2026-06-03T18:00:00+09:00",
-    "quote_after": "2026-06-03T18:00:00+09:00",
-    "office": "광역단체장",
-    "results": {}
-  }
+  "id": "9th-local-2026",
+  "election_name": "제9회 전국동시지방선거",
+  "election_date": "2026-06-03",
+  "_legal_note": "KEP 인용 보도 기준 — 지상파 3사 18:15 이후, JTBC 18:00 즉시 인용 가능. 각 출처 표시 필수.",
+  "sources": [
+    {
+      "key": "kep_3sa",
+      "name": "KBS·MBC·SBS 공동 출구조사",
+      "released_at": "2026-06-03T18:00:00+09:00",
+      "quote_after": "2026-06-03T18:15:00+09:00",
+      "office": "광역단체장",
+      "results": {}
+    },
+    {
+      "key": "jtbc",
+      "name": "JTBC 예측조사",
+      "released_at": "2026-06-03T18:00:00+09:00",
+      "quote_after": "2026-06-03T18:00:00+09:00",
+      "office": "광역단체장",
+      "results": {}
+    }
+  ]
 }
