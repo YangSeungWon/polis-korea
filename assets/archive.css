@@ -195,3 +195,12 @@
 .ar-exit-sido { font-weight: 700; color: var(--ink-soft); }
 .ar-exit-pred { font-weight: 700; }
 .ar-exit-actual { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* 데이터 출처 line */
+.ar-source-line {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: -6px 0 12px;
+}
+.ar-source-line a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-strong); }
+.ar-source-line a:hover { text-decoration-color: var(--ink); }
