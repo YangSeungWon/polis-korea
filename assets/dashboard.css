@@ -368,3 +368,11 @@
   color: var(--ink);
   text-align: right;
 }
+
+/* status timeline strip — 모바일에서 최소 높이 보장 */
+.status-timeline-strip svg { width: 100%; height: auto; }
+@media (max-width: 700px) {
+  .status-timeline-strip svg { min-height: 170px; }
+  .status-cards-row .status-card { padding: 14px 0; border-right: none; border-bottom: 1px solid var(--rule); }
+  .status-cards-row .status-card:last-child { border-bottom: none; }
+}

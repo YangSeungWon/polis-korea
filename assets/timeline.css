@@ -103,9 +103,20 @@
 }
 .tl-row-link:hover .tl-meta .tl-label { color: var(--accent, #c8553d); }
 
-/* 필터 dim — display:contents는 opacity 직접 안 먹어서 children에 적용 */
-.tl-row > * { transition: opacity 0.15s; }
-.tl-row.is-dimmed > * { opacity: 0.18; pointer-events: none; }
+/* 필터 — 압축 행 (시간 흐름 유지, 시각상 dim) */
+.tl-row > * { transition: opacity 0.15s, height 0.15s, padding 0.15s, font-size 0.15s; }
+.tl-row.is-dimmed > * {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.tl-row.is-dimmed .tl-meta { padding: 1px 0; }
+.tl-row.is-dimmed .tl-meta .tl-kind { font-size: 8px; padding: 0 3px; }
+.tl-row.is-dimmed .tl-meta .tl-label { font-size: 10px; }
+.tl-row.is-dimmed .tl-meta .tl-date { display: none; }
+.tl-row.is-dimmed .tl-sidos { height: 5px; gap: 1px; }
+.tl-row.is-dimmed .tl-right { font-size: 9px; }
+.tl-row.is-dimmed .tl-right .tl-winner { font-size: 9px; }
+.tl-row.is-dimmed:hover > * { opacity: 0.85; }
 
 /* 예정·예측 회차 — sidos 회색 dim + 우측 태그 */
 .tl-row.is-upcoming .tl-sidos { opacity: 0.4; }

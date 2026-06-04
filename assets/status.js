@@ -157,8 +157,8 @@
 })();
 
 function renderTimelineStrip(rounds, today, tStart, tEnd) {
-  const W = 1100, H = 110;
-  const padL = 30, padR = 30;
+  const W = 900, H = 130;
+  const padL = 26, padR = 26;
   const inner = W - padL - padR;
   const span = tEnd - tStart;
   const xOf = (d) => padL + ((new Date(d) - tStart) / span) * inner;
@@ -181,26 +181,24 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     const r0 = 5.5;
     const above = (i % 2 === 0);
     // 위: 회차명 위, 연도 더 위 / 아래: 회차명 아래, 연도 더 아래
-    const yName = above ? H/2 - 14 : H/2 + 22;
-    const yYear = above ? H/2 - 25 : H/2 + 33;
+    const yName = above ? H/2 - 16 : H/2 + 26;
+    const yYear = above ? H/2 - 30 : H/2 + 40;
     const labelName = `${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}`;
     const year = r.date.slice(0, 4);
     dots += `
       <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}">
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
         <circle cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.6}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
-        <text x="${x}" y="${yName}" text-anchor="middle" font-size="11" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
-        <text x="${x}" y="${yYear}" text-anchor="middle" font-size="9" fill="#8a93a3" font-family="Pretendard, system-ui, sans-serif">${year}</text>
+        <text x="${x}" y="${yName}" text-anchor="middle" font-size="13" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
+        <text x="${x}" y="${yYear}" text-anchor="middle" font-size="13" font-weight="700" fill="#5a6378" font-family="Pretendard, system-ui, sans-serif">${year}</text>
       </g>
     `;
   });
 
-  // 오늘 dot (더 큼, 다크)
+  // 오늘 — 수직선만 강조. dot/라벨은 회차 dot과 충돌 피해 제거.
   const tx = xOf(today.toISOString().slice(0, 10));
   const todayDot = `
-    <line x1="${tx}" y1="${H/2 - 22}" x2="${tx}" y2="${H/2 + 22}" stroke="#0a0e1a" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.4"/>
-    <circle cx="${tx}" cy="${H/2}" r="6.5" fill="#0a0e1a"/>
-    <text x="${tx}" y="${H/2 + 6}" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Pretendard, system-ui, sans-serif" style="pointer-events:none">오늘</text>
+    <line x1="${tx}" y1="6" x2="${tx}" y2="${H - 6}" stroke="#0a0e1a" stroke-width="1.6" opacity="0.55"/>
   `;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
