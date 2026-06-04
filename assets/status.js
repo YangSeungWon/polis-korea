@@ -180,7 +180,8 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     const col = kindCol(r.kind);
     const fill = isPast ? col : 'rgba(255,255,255,0.85)';
     const stroke = col;
-    const r0 = 5.5;
+    const r0 = 7;
+    const rHit = 18;  // 투명 hitbox 반경 — hover/click 영역 확장
     const above = (i % 2 === 0);
     // 위: 회차명 위, 연도 더 위 / 아래: 회차명 아래, 연도 더 아래
     const yName = above ? H/2 - 16 : H/2 + 26;
@@ -190,7 +191,8 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     dots += `
       <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}">
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
-        <circle cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.6}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
+        <circle class="tl-dot-hit" cx="${x}" cy="${H/2}" r="${rHit}" fill="transparent"/>
+        <circle class="tl-dot-vis" cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.8}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
         <text x="${x}" y="${yName}" text-anchor="middle" font-size="13" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
         <text x="${x}" y="${yYear}" text-anchor="middle" font-size="13" font-weight="700" fill="#5a6378" font-family="Pretendard, system-ui, sans-serif">${year}</text>
       </g>

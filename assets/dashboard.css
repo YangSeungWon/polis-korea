@@ -261,7 +261,8 @@
 }
 .status-timeline-strip svg { display: block; }
 .status-timeline-strip .tl-dot { cursor: pointer; }
-.status-timeline-strip .tl-dot:hover circle { stroke-width: 2.2; }
+.status-timeline-strip .tl-dot:hover .tl-dot-vis { stroke: #0a0e1a; stroke-width: 2.5; stroke-dasharray: none; }
+.status-timeline-strip .tl-dot:hover text { fill: #0a0e1a; }
 
 .status-cards-row {
   display: grid;
