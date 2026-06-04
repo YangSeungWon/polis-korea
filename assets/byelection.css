@@ -20,6 +20,11 @@
   .byelection-viz #boe-map { height: 380px; }
 }
 .boe-chip { font-size: 0.82rem; }
+.boe-chip.is-pollless {
+  opacity: 0.7;
+  border-style: dashed;
+}
+.boe-chip.is-pollless.is-active { opacity: 1; }
 /* 재보궐 지도 상시 라벨 */
 .boe-label { background: var(--bg); border: 1px solid var(--rule-strong); border-radius: 2px;
   font-size: 11px; font-weight: 700; color: var(--ink); padding: 1px 5px; box-shadow: 0 1px 2px var(--shadow, rgba(0,0,0,0.12));

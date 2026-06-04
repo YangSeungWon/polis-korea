@@ -15,6 +15,18 @@ const SIDO_FROM_SHORT = {
   '전북': '전북특별자치도', '전남': '전라남도', '경북': '경상북도', '경남': '경상남도',
   '제주': '제주특별자치도',
 };
+const SIDO_TO_SHORT = Object.fromEntries(Object.entries(SIDO_FROM_SHORT).map(([k, v]) => [v, k]));
+
+// 여론조사 없이 결과만 있는 선거구 좌표 (centroid 근사 — index 지도 패턴과 동일).
+// chip/map에 합쳐서 표시. 새 회차마다 NEC 결과 비교해 갱신.
+const RESULT_ONLY_LATLNG = {
+  '인천 계양구을': [37.537, 126.738],
+  '광주 광산구을': [35.135, 126.793],
+  '울산 남구갑':   [35.544, 129.330],
+  '경기 안산시갑': [37.300, 126.840],
+  '충남 아산시을': [36.790, 127.002],
+  '전북 군산김제부안을': [35.700, 126.700],
+};
 
 async function init() {
   let geo = null;
@@ -32,6 +44,8 @@ async function init() {
   } catch (e) {
     state.data = { districts: [] };
   }
+  // 결과만 있고 여론조사 없던 선거구를 stub districts로 합치기 (n_polls=0).
+  mergeResultOnlyDistricts();
   const now = new Date();
   if (now >= BLACKOUT_START && now < BLACKOUT_END) {
     for (const d of state.data.districts) {
@@ -47,6 +61,38 @@ async function init() {
   renderCards();
   // 초기 marker 강조 (페이지 로드 시 자동 scroll은 X)
   if (state.selected) selectDistrict(state.selected, { scroll: false });
+}
+
+// 여론조사 없고 결과만 있는 선거구를 districts에 추가 (stub, n_polls=0).
+function mergeResultOnlyDistricts() {
+  if (!state.results?.races || !state.data?.districts) return;
+  const norm = (s) => (s || '').replace(/[시군구]/g, '');
+  const pollByKey = new Map();
+  for (const d of state.data.districts) {
+    const [shortSido, ...rest] = d.district.split(' ');
+    const full = SIDO_FROM_SHORT[shortSido];
+    if (full) pollByKey.set(`${full}|${norm(rest.join(' '))}`, d);
+  }
+  for (const r of state.results.races) {
+    const key = `${r.sido}|${norm(r.district)}`;
+    if (pollByKey.has(key)) continue;
+    // 결과만 — stub district 생성
+    const short = SIDO_TO_SHORT[r.sido] || r.sido;
+    // 결과 district 이름 정규화 — '군산시김제시부안군을' 같은 풀네임을 약어로
+    const shortName = r.district.replace(/시(?=[가-힣])/g, '').replace(/군(?=[가-힣])/g, '');
+    const lookupKey = `${short} ${shortName}`;
+    const latlng = RESULT_ONLY_LATLNG[lookupKey] || RESULT_ONLY_LATLNG[`${short} ${r.district}`];
+    if (!latlng) {
+      console.warn('[byelection] 좌표 없음:', lookupKey);
+      continue;
+    }
+    state.data.districts.push({
+      district: lookupKey,
+      latlng,
+      polls: [],
+      n_polls: 0,
+    });
+  }
 }
 
 // 폴 district("경기 평택시을") → results race 매칭. 시·군·구 suffix 무시한 fuzzy.
@@ -98,11 +144,17 @@ function renderMap(geo) {
     if (!d.latlng) continue;
     pts.push(d.latlng);
     const top = latestTop(d);
-    const color = top ? partyColor(top.party) : '#888';
+    // 폴 없으면 결과 색으로 fallback (실제 1위 정당색).
+    const result = matchResult(d.district);
+    const resultTop = result ? result.candidates.slice().sort((a, b) => (b.votes||0) - (a.votes||0))[0] : null;
+    const color = top ? partyColor(top.party) : (resultTop ? partyColor(resultTop.party) : '#888');
+    const isPollless = d.n_polls === 0;
     const marker = L.circleMarker(d.latlng, {
-      radius: 8 + Math.min(d.n_polls, 8),
-      fillColor: color, fillOpacity: top ? Math.max(0.6, gapOpacity(top.gap)) : 0.6,
-      color: '#0a0e1a', weight: 1.6,
+      radius: isPollless ? 7 : (8 + Math.min(d.n_polls, 8)),
+      fillColor: color,
+      fillOpacity: isPollless ? 0.5 : (top ? Math.max(0.6, gapOpacity(top.gap)) : 0.6),
+      color: '#0a0e1a', weight: isPollless ? 1.2 : 1.6,
+      dashArray: isPollless ? '2,2' : null,
     }).addTo(map);
     marker._districtName = d.district;  // 선택 강조용
     // 상시 라벨 — hover 없이 선거구명 바로 보이게
@@ -153,10 +205,14 @@ function renderChips() {
   wrap.innerHTML = '';
   for (const d of state.data.districts) {
     const top = latestTop(d);
+    const result = matchResult(d.district);
+    const resultTop = result ? result.candidates.slice().sort((a, b) => (b.votes||0) - (a.votes||0))[0] : null;
+    const color = top ? partyColor(top.party) : (resultTop ? partyColor(resultTop.party) : '#888');
+    const isPollless = d.n_polls === 0;
     const btn = document.createElement('button');
-    btn.className = 'seg-btn boe-chip' + (state.selected === d.district ? ' is-active' : '');
-    btn.style.borderLeft = `4px solid ${top ? partyColor(top.party) : '#888'}`;
-    btn.textContent = `${d.district} · ${d.n_polls}`;
+    btn.className = 'seg-btn boe-chip' + (state.selected === d.district ? ' is-active' : '') + (isPollless ? ' is-pollless' : '');
+    btn.style.borderLeft = `4px solid ${color}`;
+    btn.textContent = isPollless ? `${d.district} · 결과만` : `${d.district} · ${d.n_polls}`;
     btn.addEventListener('click', () => selectDistrict(d.district));
     wrap.appendChild(btn);
   }
@@ -171,9 +227,10 @@ function renderCards() {
   }
   const top = latestTop(d);
   const result = matchResult(d.district);
+  const countLabel = d.n_polls === 0 ? '국회의원 재·보궐 · 여론조사 미시행' : `국회의원 재·보궐 · 여론조사 ${d.n_polls}건`;
   let html = `<div class="detail-hdr">
     <h2>${d.district}</h2>
-    <span class="count">국회의원 재·보궐 · ${d.n_polls}건</span>
+    <span class="count">${countLabel}</span>
   </div>`;
   // 실제 결과 (있으면) — 폴 위에 표시
   if (result?.candidates?.length) {
