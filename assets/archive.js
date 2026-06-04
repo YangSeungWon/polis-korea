@@ -34,13 +34,24 @@
     exitData = await fetch(path).then((r) => r.ok ? r.json() : null);
   } catch {}
 
-  renderHero(results, polls);
-  renderCounting(results);
-  renderExitPoll(exitData, results);
-  renderPrediction(results, polls);
+  const isPres = meta.electionKind === 'presidential';
+  const sgTypecode = meta.sgTypecode || (isPres ? '1' : '3');
+
+  if (isPres) {
+    renderHeroPres(results, polls);
+    renderNationPres(results);
+    renderCountingPres(results);
+    renderExitPollPres(exitData, results);
+    renderTrendPres(polls);
+  } else {
+    renderHero(results, polls);
+    renderCounting(results);
+    renderExitPoll(exitData, results);
+    renderPrediction(results, polls);
+    renderByelection(byReasons, results);
+    renderTrend(polls);
+  }
   renderPollsList(polls);
-  renderByelection(byReasons, results);
-  renderTrend(polls);
 
   // === 필터 ===
   function filterPollForArchive(p) {
@@ -283,5 +294,229 @@
       host.appendChild(card);
     }
     document.getElementById('ar-exitpoll').hidden = false;
+  }
+
+  // ===========================================================
+  //  대선 (presidential) — 전국 1개 race + 시도 17개 분포
+  // ===========================================================
+  const SIDO_ORDER = [
+    '서울특별시','인천광역시','경기도','강원특별자치도',
+    '세종특별자치시','대전광역시','충청북도','충청남도',
+    '광주광역시','전북특별자치도','전라남도',
+    '대구광역시','부산광역시','울산광역시','경상북도','경상남도',
+    '제주특별자치도',
+  ];
+  const ssh = (s) => (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[s] || s) : s;
+  const pcol = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#999';
+
+  function nationRace(results) {
+    return (results?.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === sgTypecode);
+  }
+  function sidoRacesPres(results) {
+    return (results?.races || []).filter((r) => r.scope === 'sido' && r.sg_typecode === sgTypecode);
+  }
+
+  function renderHeroPres(results, polls) {
+    if (polls) document.getElementById('ar-polls-count').textContent = polls.length.toLocaleString() + '건';
+    const nat = nationRace(results);
+    if (!nat) return;
+    const cands = (nat.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+    const top = cands[0], second = cands[1];
+    if (top) {
+      const col = pcol(top.party);
+      document.getElementById('ar-winner').innerHTML =
+        `<span style="color:${col};font-weight:700">${top.name}</span> <span style="font-size:13px;color:var(--ink-soft)">${top.party}</span> <span style="font-size:13px;color:var(--ink-soft)">${(top.pct||0).toFixed(1)}%</span>`;
+    }
+    if (top && second) {
+      document.getElementById('ar-margin').innerHTML =
+        `${(top.pct - second.pct).toFixed(2)}<span style="font-size:12px;color:var(--ink-soft)">pp</span>`;
+    }
+    if (nat.electors > 0) {
+      document.getElementById('ar-turnout').textContent = (nat.voters / nat.electors * 100).toFixed(1) + '%';
+    }
+    document.getElementById('ar-status').textContent = `개표 완료 · ${results._meta?.fetched_at || '갱신 시각 미상'}`;
+  }
+
+  function renderNationPres(results) {
+    const nat = nationRace(results);
+    if (!nat) return;
+    const host = document.getElementById('ar-nation-host');
+    const cands = (nat.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+    // 전국 후보별 가로 막대 (상위 6명)
+    const total = cands.reduce((s, c) => s + (c.votes || 0), 0) || 1;
+    const top6 = cands.slice(0, 6);
+    let html = '<div class="ar-nation-bars">';
+    for (const c of top6) {
+      const w = (c.votes / total) * 100;
+      const col = pcol(c.party);
+      html += `<div class="ar-nation-row">
+        <div class="ar-nation-name"><span style="color:${col};font-weight:700">${c.name}</span> <span class="ar-nation-party">${c.party}</span></div>
+        <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
+        <div class="ar-nation-pct">${(c.pct||0).toFixed(2)}<span class="unit">%</span></div>
+        <div class="ar-nation-votes">${(c.votes||0).toLocaleString()}표</div>
+      </div>`;
+    }
+    html += '</div>';
+    host.innerHTML = html;
+    document.getElementById('ar-nation').hidden = false;
+  }
+
+  function renderCountingPres(results) {
+    const sidos = sidoRacesPres(results);
+    if (!sidos.length) return;
+    const host = document.getElementById('ar-counting-grid');
+    // 시도 dict
+    const bySido = Object.fromEntries(sidos.map((r) => [r.sido, r]));
+    for (const sido of SIDO_ORDER) {
+      const r = bySido[sido];
+      if (!r) continue;
+      const cands = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+      const top = cands[0], second = cands[1];
+      if (!top) continue;
+      const col = pcol(top.party);
+      const margin = second ? (top.pct - second.pct) : null;
+      const cell = document.createElement('div');
+      cell.className = 'ar-count-cell';
+      cell.innerHTML = `
+        <div class="ar-count-sido">${ssh(sido)}</div>
+        <div class="ar-count-bar"><span class="ar-count-fill" style="width:${(top.pct||0).toFixed(1)}%;background:${col}"></span></div>
+        <div class="ar-count-meta">
+          <span style="color:${col};font-weight:700">${top.name} ${(top.pct||0).toFixed(1)}</span>
+          ${margin != null ? `<span class="ar-count-pct">+${margin.toFixed(1)}pp</span>` : ''}
+        </div>
+      `;
+      host.appendChild(cell);
+    }
+    document.getElementById('ar-counting').hidden = false;
+  }
+
+  function renderExitPollPres(exitData, results) {
+    if (!exitData?.sources) return;
+    const host = document.getElementById('ar-exitpoll-grid');
+    const now = new Date();
+    // 실제 — 전국 + 시도별 1위 후보
+    const nat = nationRace(results);
+    const sidos = sidoRacesPres(results);
+    const actual = {};
+    if (nat) {
+      const c = (nat.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0))[0];
+      if (c) actual['전국'] = { name: c.name, party: c.party, pct: c.pct };
+    }
+    for (const r of sidos) {
+      const c = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0))[0];
+      if (c) actual[r.sido] = { name: c.name, party: c.party, pct: c.pct };
+    }
+
+    let anyBlock = false;
+    for (const ep of exitData.sources) {
+      const qa = ep.quote_after ? new Date(ep.quote_after) : null;
+      if (qa && now < qa) continue;
+      const res = ep.results || {};
+      if (!Object.keys(res).length) continue;
+      anyBlock = true;
+      const card = document.createElement('div');
+      card.className = 'ar-exit-block';
+      // 적중률·평균 오차
+      let hits = 0, tot = 0, errSum = 0, errN = 0;
+      for (const [sido, cands] of Object.entries(res)) {
+        const a = actual[sido];
+        const top = cands?.[0];
+        if (a && top) {
+          tot += 1;
+          if (a.name === top.name) hits += 1;
+          if (a.pct != null && top.pct != null) {
+            errSum += Math.abs(a.pct - top.pct); errN += 1;
+          }
+        }
+      }
+      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 적중 · 평균 오차 ${errN ? (errSum/errN).toFixed(2) : '—'}pp</span>` : '';
+      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}${stats}</h3>`;
+      const grid = document.createElement('div');
+      grid.className = 'ar-exit-rows';
+      // 전국 행 먼저
+      const order = ['전국', ...SIDO_ORDER];
+      for (const sido of order) {
+        const cands = res[sido];
+        if (!cands || !cands[0]) continue;
+        const top = cands[0];
+        const a = actual[sido];
+        const hit = a && a.name === top.name;
+        const row = document.createElement('div');
+        row.className = 'ar-exit-row ' + (a ? (hit ? 'is-hit' : 'is-miss') : '');
+        if (sido === '전국') row.classList.add('is-nation');
+        const col = pcol(top.party);
+        row.innerHTML = `
+          <span class="ar-exit-sido">${sido === '전국' ? '전국' : ssh(sido)}</span>
+          <span class="ar-exit-pred" style="color:${col}">${top.name} ${(top.pct||0).toFixed(1)}</span>
+          ${a ? `<span class="ar-exit-actual">실제 ${a.name} ${(a.pct||0).toFixed(1)}${hit ? ' ✓' : ' ✗'}</span>` : ''}
+        `;
+        grid.appendChild(row);
+      }
+      card.appendChild(grid);
+      host.appendChild(card);
+    }
+    if (anyBlock) document.getElementById('ar-exitpoll').hidden = false;
+  }
+
+  function renderTrendPres(polls) {
+    if (!polls?.length) return;
+    // office_level=대통령, 후보지지 metric. 후보별 (period_end → pct) 시계열.
+    const candPolls = polls.filter((p) => p.office_level === '대통령' && p.metric_type === '후보지지');
+    if (!candPolls.length) return;
+    // 후보별 표본 집계 — 전체 등장 횟수 상위 N
+    const byCand = new Map();
+    for (const p of candPolls) {
+      for (const c of (p.candidates || [])) {
+        if (!c.name || c.pct == null) continue;
+        const key = c.name;
+        if (!byCand.has(key)) byCand.set(key, { name: c.name, party: c.party, points: [] });
+        byCand.get(key).points.push({ d: p.period_end || p.period_start, pct: c.pct });
+      }
+    }
+    // 상위 6명 (등장 수 기준)
+    const top = Array.from(byCand.values()).sort((a, b) => b.points.length - a.points.length).slice(0, 6);
+    if (!top.length) return;
+    // SVG 시계열
+    const W = 720, H = 280, P = { l: 36, r: 12, t: 12, b: 28 };
+    const innerW = W - P.l - P.r, innerH = H - P.t - P.b;
+    // 날짜 range
+    const allD = top.flatMap((c) => c.points.map((p) => p.d)).filter(Boolean).sort();
+    if (!allD.length) return;
+    const d0 = new Date(allD[0]).getTime(), d1 = new Date(allD[allD.length-1]).getTime();
+    const yMax = Math.max(60, Math.ceil(Math.max(...top.flatMap((c) => c.points.map((p) => p.pct))) / 10) * 10);
+    const xf = (d) => P.l + ((new Date(d).getTime() - d0) / (d1 - d0 || 1)) * innerW;
+    const yf = (v) => P.t + innerH - (v / yMax) * innerH;
+    const host = document.getElementById('ar-trend-host');
+    let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;max-height:340px">`;
+    // grid
+    for (let v = 0; v <= yMax; v += 20) {
+      const y = yf(v);
+      svg += `<line x1="${P.l}" x2="${W-P.r}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="0.5"/>`;
+      svg += `<text x="${P.l-6}" y="${y+3}" text-anchor="end" font-size="10" fill="var(--ink-mute)">${v}%</text>`;
+    }
+    // x-축 — 월별 tick (대략 6개)
+    const dt0 = new Date(d0), dt1 = new Date(d1);
+    const months = (dt1.getFullYear() - dt0.getFullYear()) * 12 + (dt1.getMonth() - dt0.getMonth());
+    const step = Math.max(1, Math.ceil(months / 6));
+    for (let i = 0; i <= months; i += step) {
+      const dx = new Date(dt0.getFullYear(), dt0.getMonth() + i, 1);
+      if (dx.getTime() > d1) break;
+      const x = xf(dx.toISOString().slice(0, 10));
+      svg += `<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="var(--ink-mute)">${dx.getFullYear()%100}.${(dx.getMonth()+1).toString().padStart(2,'0')}</text>`;
+    }
+    // 라인
+    for (const c of top) {
+      const sorted = c.points.slice().sort((a, b) => (a.d || '').localeCompare(b.d || ''));
+      const path = sorted.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xf(p.d).toFixed(1)} ${yf(p.pct).toFixed(1)}`).join(' ');
+      const col = pcol(c.party);
+      svg += `<path d="${path}" stroke="${col}" stroke-width="1.4" fill="none" opacity="0.85"/>`;
+      // 마지막 점에 라벨
+      const last = sorted[sorted.length-1];
+      svg += `<circle cx="${xf(last.d)}" cy="${yf(last.pct)}" r="2.5" fill="${col}"/>`;
+      svg += `<text x="${xf(last.d)+5}" y="${yf(last.pct)+3}" font-size="10" fill="${col}" font-weight="700">${c.name}</text>`;
+    }
+    svg += '</svg>';
+    host.innerHTML = svg;
+    document.getElementById('ar-polls-trend').hidden = false;
   }
 })();

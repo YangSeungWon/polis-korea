@@ -178,6 +178,34 @@
 .ar-count-meta { font-size: 11px; margin-top: 6px; display: flex; justify-content: space-between; }
 .ar-count-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
+/* 대선 전국 후보별 막대 */
+.ar-nation-bars { display: flex; flex-direction: column; gap: 8px; }
+.ar-nation-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 64px 110px;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+}
+@media (max-width: 640px) {
+  .ar-nation-row { grid-template-columns: 1fr 60px; grid-template-areas: "name pct" "bar bar" "votes votes"; gap: 4px; }
+  .ar-nation-name { grid-area: name; }
+  .ar-nation-bar { grid-area: bar; }
+  .ar-nation-pct { grid-area: pct; text-align: right; }
+  .ar-nation-votes { grid-area: votes; text-align: right; }
+}
+.ar-nation-name { font-weight: 700; }
+.ar-nation-party { font-size: 11px; color: var(--ink-soft); font-weight: 500; margin-left: 4px; }
+.ar-nation-bar { height: 10px; background: var(--bg3); position: relative; overflow: hidden; }
+.ar-nation-fill { display: block; height: 100%; }
+.ar-nation-pct { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; }
+.ar-nation-pct .unit { font-size: 11px; color: var(--ink-soft); font-weight: 400; margin-left: 1px; }
+.ar-nation-votes { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* 출구조사 — 전국 행 강조 */
+.ar-exit-row.is-nation { border-top: 1px solid var(--ink); padding-top: 6px; }
+.ar-exit-row.is-nation .ar-exit-sido { color: var(--ink); }
+
 /* 출구조사 */
 .ar-exit-block { margin-bottom: 22px; }
 .ar-exit-source { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }

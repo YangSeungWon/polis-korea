@@ -1657,6 +1657,7 @@ function renderSigunguHex() {
 const ARCHIVE_PAGES = {
   'local|9': '/archive/9th-local-2026/',
   'local|8': '/archive/8th-local-2022/',
+  'presidential|21': '/archive/21st-pres-2025/',
 };
 
 function renderDetail() {
