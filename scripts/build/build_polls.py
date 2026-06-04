@@ -1152,6 +1152,17 @@ def main():
     out = build()
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
+    # lite chunk — 후보 race(광역장·기초장·교육감)만. dashboard·archive 초기 fetch용.
+    # polls.html은 full aggregated.json 그대로 사용 (정당지지 포함).
+    CANDIDATE_OFFICES = {"광역단체장", "기초단체장", "교육감"}
+    lite = {
+        "_meta": dict(out.get("_meta", {}), chunk="candidates"),
+        "polls": [p for p in out["polls"] if p.get("office_level") in CANDIDATE_OFFICES],
+    }
+    lite_path = OUT_PATH.parent / "aggregated_candidates.json"
+    with open(lite_path, "w", encoding="utf-8") as f:
+        json.dump(lite, f, ensure_ascii=False, indent=2)
+    print(f"  + {lite_path.name} (lite, 후보 race {len(lite['polls'])}건)", file=sys.stderr)
     meta = out["_meta"]["stats"]
     print(f"메타 {meta['total_polls_meta']}건, 파싱 매칭 {meta['matched_parsed']}건, "
           f"emit {meta['emitted_records']}개", file=sys.stderr)

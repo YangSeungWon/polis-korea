@@ -57,7 +57,7 @@ async function init() {
     const [sg, by, agg] = await Promise.all([
       fetch('data/geo/sigungu_hex.json').then((r) => r.json()),
       fetch('data/polls/byelection.json').then((r) => r.ok ? r.json() : null).catch(() => null),
-      fetch('data/polls/aggregated.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+      fetch('data/polls/aggregated_candidates.json').then((r) => r.ok ? r.json() : null).catch(() => null),
     ]);
     sgHex = sg; boe = by;
     polls = (agg?.polls || []).filter((p) => !p.is_self_poll);

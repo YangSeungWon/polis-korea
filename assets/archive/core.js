@@ -42,7 +42,8 @@
   // 2. 폴 (회차별 path)
   let polls = null;
   try {
-    const path = meta.pollsPath || 'data/polls/aggregated.json';
+    // 활성 회차(9회) archive는 후보 race만 → lite chunk. 옛 회차는 회차별 path.
+    const path = meta.pollsPath || 'data/polls/aggregated_candidates.json';
     const all = await fetch(path).then((r) => r.json());
     polls = (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta));
   } catch { polls = null; }
