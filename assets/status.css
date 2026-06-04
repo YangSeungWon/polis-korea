@@ -69,26 +69,56 @@
   margin-right: 3px;
 }
 
-/* 지방정부 카드 — 광역·기초 2단 라인 */
+/* 지방정부 카드 — 4단 (광역장·기초장·광역의원·기초의원) 누적 막대 */
 .status-card .status-local-line {
   display: flex; flex-direction: column; align-items: stretch;
-  gap: 2px;
-  margin-bottom: 6px;
+  gap: 3px;
+  margin-bottom: 10px;
 }
 .status-card .status-local-line:last-child { margin-bottom: 0; }
+.status-card .lsb-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11px;
+}
 .status-card .status-local-label {
-  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+.status-card .lsb-total {
   font-weight: 700;
   color: var(--ink-soft);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
 }
-.status-card .status-local-chips {
-  display: flex; flex-wrap: wrap; gap: 4px 8px;
-  font-size: 13px;
+.status-card .lsb-bar {
+  display: flex;
+  height: 12px;
+  border-radius: 1px;
+  overflow: hidden;
+  background: var(--bg3, #e6e9ef);
 }
-.status-card .status-local-chips .party-chip { margin-right: 0; font-size: 13px; }
-.status-card .status-local-chips .party-chip b { font-size: 13px; }
+.status-card .lsb-seg {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0,0,0,0.35);
+  border-right: 1px solid rgba(255,255,255,0.4);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.status-card .lsb-seg:last-child { border-right: none; }
+.status-card .lsb-seg:hover { filter: brightness(1.1); }
+.status-card .lsb-seg-n { padding: 0 4px; }
+.status-card .lsb-legend {
+  display: flex; flex-wrap: wrap; gap: 2px 10px;
+  font-size: 11px;
+  margin-top: 1px;
+}
+.status-card .lsb-leg { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.status-card .lsb-leg b { font-weight: 800; margin-right: 2px; }
 /* timeline 4번째 카드 — 값 영역 SVG로 */
 
 

@@ -130,22 +130,34 @@
     const mayorTotal = mayorCounts.reduce((s, [, c]) => s + c, 0);
     const metroTotal = metroCouncil.reduce((s, [, c]) => s + c, 0);
     const localTotal = localCouncil.reduce((s, [, c]) => s + c, 0);
-    const chip = (p, c) => {
-      const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
-      return `<span class="party-chip" style="color:${col}"><b>${c}</b>${p}</span>`;
+    // 누적 막대 + 1·2위 정당 라벨. segment width ≥ 9% 시 카운트 embed.
+    const pcol = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#999';
+    const renderBar = (counts, total) => {
+      const segs = counts.map(([p, c]) => {
+        const pct = total > 0 ? (c / total * 100) : 0;
+        const showInline = pct >= 9;
+        return `<span class="lsb-seg" style="flex:${c};background:${pcol(p)}" title="${p} ${c} (${pct.toFixed(1)}%)">${showInline ? `<span class="lsb-seg-n">${c}</span>` : ''}</span>`;
+      }).join('');
+      return `<div class="lsb-bar">${segs}</div>`;
     };
+    const renderLegend = (counts, top = 2) => counts.slice(0, top).map(([p, c]) =>
+      `<span class="lsb-leg" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
     const lines = [];
-    const addLine = (label, total, counts, top = 4) => {
+    const addLine = (label, total, counts) => {
       if (!counts.length) return;
       lines.push(`<div class="status-local-line">
-        <span class="status-local-label">${label} ${total}</span>
-        <span class="status-local-chips">${counts.slice(0, top).map(([p, c]) => chip(p, c)).join(' ')}</span>
+        <div class="lsb-head">
+          <span class="status-local-label">${label}</span>
+          <span class="lsb-total">${total}</span>
+        </div>
+        ${renderBar(counts, total)}
+        <div class="lsb-legend">${renderLegend(counts)}</div>
       </div>`);
     };
     addLine('광역단체장', govTotal, sorted);
     addLine('기초단체장', mayorTotal, mayorCounts);
-    addLine('광역의원', metroTotal, metroCouncil, 3);
-    addLine('기초의원', localTotal, localCouncil, 3);
+    addLine('광역의원', metroTotal, metroCouncil);
+    addLine('기초의원', localTotal, localCouncil);
     if (lines.length) nameEl.innerHTML = lines.join('');
     const tot = [govTotal && `${govTotal} 광역장`, mayorTotal && `${mayorTotal} 기초장`,
                  metroTotal && `${metroTotal} 광역의원`, localTotal && `${localTotal} 기초의원`].filter(Boolean).join(' · ');
