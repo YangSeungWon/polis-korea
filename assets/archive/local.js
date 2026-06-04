@@ -257,12 +257,11 @@
 
   window.Archive.local = {
     async render(ctx) {
+      // 시도별 결과 grid·폴 vs 실제·여론조사 추이는 /history.html에서 시각화로 더 강력
+      // → archive는 출구조사·재보궐만 표시
       renderHero(ctx);
-      renderCounting(ctx);
       renderExitPoll(ctx);
-      renderPrediction(ctx);
       await renderByelection(ctx);
-      renderTrend(ctx);
     },
   };
 })();

@@ -222,13 +222,11 @@
 
   window.Archive.general = {
     render(ctx) {
+      // 254 지역구·정당지지 추이는 /history.html에서 시각화로 더 강력
       renderHero(ctx);
       renderParliament(ctx);
       renderProportional(ctx);
-      renderDistricts(ctx);
-      // 출구조사 — seats 형태(22대 의석 예측)면 자체 render, 그 외 pres 위임
       renderExitPoll(ctx);
-      renderTrend(ctx);
     },
   };
 })();

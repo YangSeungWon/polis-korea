@@ -174,11 +174,10 @@
 
   window.Archive.pres = {
     render(ctx) {
+      // 시도별 결과 grid·여론조사 추이는 /history.html에서 시각화로 더 강력
       renderHero(ctx);
       renderNation(ctx);
-      renderCounting(ctx);
       renderExitPoll(ctx);
-      renderTrend(ctx);
     },
     renderExitPoll,  // 총선이 재사용
   };

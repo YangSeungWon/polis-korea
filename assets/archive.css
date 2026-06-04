@@ -237,6 +237,30 @@
 .ar-dist-cand { font-weight: 700; }
 .ar-dist-meta { font-variant-numeric: tabular-nums; font-size: 11px; color: var(--ink-soft); text-align: right; }
 
+/* history 진입 link 카드 — archive에 hex/지도 redundant 제거 후 history로 유도 */
+.ar-history-link { margin: 0 0 28px; }
+.ar-history-link-btn {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid var(--rule-strong, var(--ink));
+  background: var(--bg2);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.1s;
+}
+.ar-history-link-btn:hover { background: var(--bg3); }
+.ar-history-link-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ar-history-link-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
 /* 옛 데이터 source caveat — 위키 source 등 */
 .ar-source-caveat {
   font-size: 11px;

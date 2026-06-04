@@ -181,66 +181,57 @@ HERO_GENERAL = """
 
 NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={election_id_full}&topMenuId=VC&secondMenuId=VCCP09"
 
-SECTIONS_LOCAL = """
-  <section class="ar-section" id="ar-counting" hidden>
-    <h2 class="ar-section-title">{counting_title}</h2>
-    <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
-    <div class="ar-counting-grid" id="ar-counting-grid"></div>
+HISTORY_LINK_PRES = """
+  <section class="ar-history-link">
+    <a href="/history.html?type=presidential&n={n}" class="ar-history-link-btn">
+      <span class="ar-history-link-label">시도·시군구 시각화</span>
+      <span class="ar-history-link-sub">/history 에서 hex·지도로 →</span>
+    </a>
   </section>
+"""
 
+HISTORY_LINK_LOCAL = """
+  <section class="ar-history-link">
+    <a href="/history.html?type=local&n={n}" class="ar-history-link-btn">
+      <span class="ar-history-link-label">시도·시군구 시각화</span>
+      <span class="ar-history-link-sub">/history 에서 광역·기초·교육감 hex로 →</span>
+    </a>
+  </section>
+"""
+
+HISTORY_LINK_GENERAL = """
+  <section class="ar-history-link">
+    <a href="/history.html?type=national_assembly&n={n}" class="ar-history-link-btn">
+      <span class="ar-history-link-label">지역구·시도 시각화</span>
+      <span class="ar-history-link-sub">/history 에서 254 지역구 hex·지도로 →</span>
+    </a>
+  </section>
+"""
+
+SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
     <p class="ar-source-line">{date} 18:00 발표. 3사(KBS·MBC·SBS)와 JTBC 분리 표시. 시도별 1위 일치율·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
-  <section class="ar-section" id="ar-prediction" hidden>
-    <h2 class="ar-section-title">예측 (여론조사) vs 실제</h2>
-    <div class="ar-prediction-grid" id="ar-prediction-grid"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-trend" hidden>
-    <h2 class="ar-section-title">여론조사</h2>
-    <div class="ar-trend-host" id="ar-trend-host"></div>
-  </section>
-
   <section class="ar-section" id="ar-byelection" hidden>
     <h2 class="ar-section-title">재·보궐</h2>
     <div class="ar-byelection-host" id="ar-byelection-host"></div>
   </section>
-
-  <section class="ar-section" id="ar-polls-list" hidden>
-    <h2 class="ar-section-title">조사 목록</h2>
-    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
-  </section>
 """
 
-SECTIONS_PRES = """
+SECTIONS_PRES = HISTORY_LINK_PRES + """
   <section class="ar-section" id="ar-nation" hidden>
     <h2 class="ar-section-title">전국 결과</h2>
     <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
     <div class="ar-nation-host" id="ar-nation-host"></div>
   </section>
 
-  <section class="ar-section" id="ar-counting" hidden>
-    <h2 class="ar-section-title">시도별 결과</h2>
-    <div class="ar-counting-grid" id="ar-counting-grid"></div>
-  </section>
-
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
     <p class="ar-source-line">{date} 18:00 발표. KBS·MBC·SBS 방송 3사, JTBC 권역별. 전국 적중·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-trend" hidden>
-    <h2 class="ar-section-title">여론조사 후보 추이</h2>
-    <div class="ar-trend-host" id="ar-trend-host"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-list" hidden>
-    <h2 class="ar-section-title">조사 목록</h2>
-    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
   </section>
 """
 
@@ -280,7 +271,7 @@ SECTIONS_BYELECTION = """
   </section>
 """
 
-SECTIONS_GENERAL = """
+SECTIONS_GENERAL = HISTORY_LINK_GENERAL + """
   <section class="ar-section" id="ar-parliament" hidden>
     <h2 class="ar-section-title">의회 구성</h2>
     <p class="ar-source-line">지역구 254석 + 비례대표 46석 = 총 300석. 데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
@@ -293,26 +284,10 @@ SECTIONS_GENERAL = """
     <div class="ar-nation-host" id="ar-proportional-host"></div>
   </section>
 
-  <section class="ar-section" id="ar-districts" hidden>
-    <h2 class="ar-section-title">지역구 결과 · 254곳</h2>
-    <p class="ar-source-line">시·도 순. 정당색은 당선자 소속 정당.</p>
-    <div class="ar-districts-host" id="ar-districts-host"></div>
-  </section>
-
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
     <p class="ar-source-line">{date} 18:00 발표. 방송사별 정당 의석 예측 범위 vs 실제. 범위 안 적중 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-trend" hidden>
-    <h2 class="ar-section-title">여론조사 정당 지지 추이</h2>
-    <div class="ar-trend-host" id="ar-trend-host"></div>
-  </section>
-
-  <section class="ar-section" id="ar-polls-list" hidden>
-    <h2 class="ar-section-title">조사 목록</h2>
-    <div class="ar-polls-list-host" id="ar-polls-list-host"></div>
   </section>
 """
 

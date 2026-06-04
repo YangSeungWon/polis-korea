@@ -67,6 +67,5 @@
   else if (isGeneral) window.Archive.general.render(ctx);
   else if (isByelection) await window.Archive.byelection.render(ctx);
   else await window.Archive.local.render(ctx);
-
-  window.Archive.renderPollsList(polls);
+  // 조사 60건 list section 제거됨 — 사용자 거의 안 보던 영역.
 })();
