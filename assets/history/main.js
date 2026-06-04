@@ -110,6 +110,14 @@ async function setRound(n) {
   if (newPath) {
     try {
       const raw = await loadJson(newPath);
+      // _meta.chunked 면 sigungu/district_sigungu race가 별도 파일 — 같이 fetch.
+      if (raw._meta?.chunked) {
+        const subPath = newPath.replace(/\.json$/, '.sigungu.json');
+        try {
+          const sub = await loadJson(subPath);
+          raw.races = (raw.races || []).concat(sub.races || []);
+        } catch {} // sigungu 파일 없으면 main race만으로 진행
+      }
       state.results = adaptNewSchema(raw, state.type);
     } catch (e) {
       // 2차 fallback: 옛 path

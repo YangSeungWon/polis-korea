@@ -23,6 +23,7 @@
 | `update_method.py` | 폴 method 갱신 |
 | `build_golden.py` | tests/golden 빌드 |
 | `sync_satellites_js.py` | data/parties/satellites.json → assets/parties.js SATELLITE_TO_MAIN sync |
+| `chunk_results.py` | data/results/{id}.json → main(nation/sido/district) + sigungu 청크 분리 (archive 92% 감량) |
 | `sync_archive_html.py` | data/elections/ → archive/{id}/index.html 자동 생성 (kind별 template) |
 
 핵심 루틴: `build_polls` · `build_timeline` · `build_byelection`.

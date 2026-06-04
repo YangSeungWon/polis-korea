@@ -78,6 +78,8 @@ jobs:
           ELECTION="${{ github.event.inputs.election || '9th-local-2026' }}"
           echo "=== fetch_nec_results: $ELECTION ==="
           python3 scripts/fetch/fetch_nec_results.py --election "$ELECTION"
+          echo "=== chunk_results (시군구 race 별도 청크) ==="
+          python3 scripts/build/chunk_results.py --id "$ELECTION" || true
           echo "=== merge_local_legacy_into_new ==="
           python3 scripts/build/merge_local_legacy_into_new.py --rounds 9 || true
           echo "=== rebuild_manifest ==="

@@ -60,10 +60,17 @@ data/elections/
 
 ## 3. 결과 (`data/results/{id}.json`)
 
+**청크 분할** — 새 schema 파일은 `scripts/build/chunk_results.py` 가 두 파일로 분리:
+- `{id}.json` — `_meta` + nation/sido/district race만 (`_meta.chunked: true` 표시)
+- `{id}.sigungu.json` — sigungu/district_sigungu/sigungu_part race (drill-down용)
+
+archive 페이지는 main race만 사용 (300 KB 이하). history 페이지는 chunked 감지 시 자동으로 sigungu 파일도 fetch + merge.
+
 ```json
 {
   "_meta": { "election", "election_id", "election_date",
-             "fetched_at", "is_final", "n_rows" },
+             "fetched_at", "is_final", "n_rows",
+             "chunked": true },
   "races": [
     {
       "scope": "nation" | "sido" | "sigungu" | "district" | "district_sigungu" | "sigungu_part",
