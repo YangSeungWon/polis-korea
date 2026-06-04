@@ -211,20 +211,18 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     `;
   });
 
-  // 오늘 — 가는 hairline + 위·아래 끝 캡(짧은 굵은 선) + 위쪽에 작은 '오늘' 라벨.
+  // 오늘 — 점선 세로선 (캡 제거). 맨 뒤로 보내기 위해 SVG 순서에서 dots보다 먼저.
   const tx = xOf(today.toISOString().slice(0, 10));
   const yT = 8, yB = H - 8;
   const todayDot = `
-    <line x1="${tx}" y1="${yT + 8}" x2="${tx}" y2="${yB - 8}" stroke="#0a0e1a" stroke-width="0.8" opacity="0.55"/>
-    <line x1="${tx - 6}" y1="${yT}" x2="${tx + 6}" y2="${yT}" stroke="#0a0e1a" stroke-width="2"/>
-    <line x1="${tx - 6}" y1="${yB}" x2="${tx + 6}" y2="${yB}" stroke="#0a0e1a" stroke-width="2"/>
-    <text x="${tx}" y="${yT - 1}" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0e1a" font-family="Pretendard, system-ui, sans-serif">오늘</text>
+    <line x1="${tx}" y1="${yT}" x2="${tx}" y2="${yB}" stroke="#0a0e1a" stroke-width="1.1" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="${tx}" y="${yT - 1}" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0e1a" opacity="0.6" font-family="Pretendard, system-ui, sans-serif">오늘</text>
   `;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
+    ${todayDot}
     ${line}
     ${dots}
-    ${todayDot}
   </svg>`;
 }
 

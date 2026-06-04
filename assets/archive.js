@@ -23,11 +23,18 @@
   let byReasons = [];
   try {
     const br = await fetch('data/byelection_reasons.json').then((r) => r.json());
-    // 9회 재보궐 = 2026-06-03 실시일
     byReasons = (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, ''));
   } catch {}
 
+  // 4. 출구조사 (방송 3사) — released_at 이후만 표시.
+  let exitData = null;
+  try {
+    exitData = await fetch(`data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null);
+  } catch {}
+
   renderHero(results, polls);
+  renderCounting(results);
+  renderExitPoll(exitData, results);
   renderPrediction(results, polls);
   renderPollsList(polls);
   renderByelection(byReasons, results);
@@ -186,5 +193,93 @@
     host.innerHTML = '<div style="font-weight:700;color:var(--ink);margin-bottom:8px">시도별 여론조사 건수</div>'
       + sorted.map(([s, c]) => `<div style="display:flex;justify-content:space-between;margin:2px 0"><span>${s}</span><span style="color:var(--ink);font-weight:600">${c}건</span></div>`).join('');
     document.getElementById('ar-polls-trend').hidden = false;
+  }
+  function renderCounting(results) {
+    if (!results?.races) return;
+    const sidoRace = results.races.filter((r) => r.scope === 'sido' && r.sg_typecode === '3');
+    if (!sidoRace.length) return;
+    const host = document.getElementById('ar-counting-grid');
+    for (const r of sidoRace) {
+      const cands = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+      const top = cands[0];
+      const electors = r.electors || 0, voted = r.voters || 0;
+      const pct = electors > 0 ? (voted / electors * 100) : 0;
+      const cell = document.createElement('div');
+      cell.className = 'ar-count-cell';
+      const col = (top && typeof partyColor === 'function') ? partyColor(top.party) : '#999';
+      const sshort = (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[r.sido] || r.sido) : r.sido;
+      cell.innerHTML = `
+        <div class="ar-count-sido">${sshort}</div>
+        <div class="ar-count-bar"><span class="ar-count-fill" style="width:${pct.toFixed(1)}%;background:${col}"></span></div>
+        <div class="ar-count-meta">
+          ${top ? `<span style="color:${col};font-weight:700">${top.party} ${top.pct?.toFixed(1) || ''}</span>` : '—'}
+          <span class="ar-count-pct">${pct.toFixed(1)}% 개표</span>
+        </div>
+      `;
+      host.appendChild(cell);
+    }
+    document.getElementById('ar-counting').hidden = false;
+  }
+
+  function renderExitPoll(exitData, results) {
+    if (!exitData) return;
+    const host = document.getElementById('ar-exitpoll-grid');
+    const now = new Date();
+    const blocks = [];
+    for (const key of ['kep_3sa', 'jtbc']) {
+      const ep = exitData[key];
+      if (!ep) continue;
+      const quoteAfter = ep.quote_after ? new Date(ep.quote_after) : null;
+      if (quoteAfter && now < quoteAfter) continue;  // 인용 가능 시점 전이면 표시 X
+      const hasData = ep.results && Object.keys(ep.results).length > 0;
+      if (!hasData) continue;
+      blocks.push({ key, ep });
+    }
+    if (!blocks.length) return;
+
+    // 시도별 actual top (from results)
+    const actual = {};
+    if (results?.races) {
+      const sidoRace = results.races.filter((r) => r.scope === 'sido' && r.sg_typecode === '3');
+      for (const r of sidoRace) {
+        const cs = (r.candidates || []).slice().sort((a, b) => (b.votes||0) - (a.votes||0));
+        if (cs[0]) actual[r.sido] = { party: cs[0].party, pct: cs[0].pct };
+      }
+    }
+
+    for (const { ep } of blocks) {
+      const card = document.createElement('div');
+      card.className = 'ar-exit-block';
+      card.innerHTML = `<h3 class="ar-exit-source">${ep.source}</h3>`;
+      const grid = document.createElement('div');
+      grid.className = 'ar-exit-rows';
+      const sidoOrder = [
+        '서울특별시','인천광역시','경기도','강원특별자치도',
+        '세종특별자치시','대전광역시','충청북도','충청남도',
+        '광주광역시','전북특별자치도','전라남도',
+        '대구광역시','부산광역시','울산광역시','경상북도','경상남도',
+        '제주특별자치도',
+      ];
+      for (const sido of sidoOrder) {
+        const e = (ep.results || {})[sido];
+        if (!e) continue;
+        const top = e[0];
+        const a = actual[sido];
+        const hit = a && top && a.party === top.party;
+        const row = document.createElement('div');
+        row.className = 'ar-exit-row ' + (a ? (hit ? 'is-hit' : 'is-miss') : '');
+        const col = (typeof partyColor === 'function') ? partyColor(top.party) : '#999';
+        const sshort = (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[sido] || sido) : sido;
+        row.innerHTML = `
+          <span class="ar-exit-sido">${sshort}</span>
+          <span class="ar-exit-pred" style="color:${col}">${top.party} ${top.pct?.toFixed(1) || ''}</span>
+          ${a ? `<span class="ar-exit-actual">실제 ${a.party} ${a.pct?.toFixed(1) || ''}${hit ? ' ✓' : ' ✗'}</span>` : ''}
+        `;
+        grid.appendChild(row);
+      }
+      card.appendChild(grid);
+      host.appendChild(card);
+    }
+    document.getElementById('ar-exitpoll').hidden = false;
   }
 })();

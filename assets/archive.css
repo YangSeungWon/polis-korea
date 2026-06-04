@@ -161,3 +161,37 @@
   color: var(--ink-mute);
   font-style: italic;
 }
+
+/* 개표 진행 grid */
+.ar-counting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.ar-count-cell {
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+}
+.ar-count-sido { font-size: 12px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
+.ar-count-bar { width: 100%; height: 8px; background: var(--bg3); position: relative; overflow: hidden; }
+.ar-count-fill { display: block; height: 100%; }
+.ar-count-meta { font-size: 11px; margin-top: 6px; display: flex; justify-content: space-between; }
+.ar-count-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+/* 출구조사 */
+.ar-exit-block { margin-bottom: 22px; }
+.ar-exit-source { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
+.ar-exit-rows { display: grid; gap: 4px; }
+.ar-exit-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 10px;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.ar-exit-row.is-hit { border-left: 2px solid #2e7d6f; padding-left: 8px; }
+.ar-exit-row.is-miss { border-left: 2px solid #c8553d; padding-left: 8px; }
+.ar-exit-sido { font-weight: 700; color: var(--ink-soft); }
+.ar-exit-pred { font-weight: 700; }
+.ar-exit-actual { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
