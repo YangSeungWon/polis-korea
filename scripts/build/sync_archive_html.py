@@ -345,6 +345,17 @@ KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_electio
 KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
 
 
+def source_caveat_block(meta: dict) -> str:
+    note = (meta.get("archive") or {}).get("data_source_note", "")
+    if not note:
+        return ""
+    return (
+        '\n  <p class="ar-source-caveat">'
+        f'<span class="ar-source-caveat-tag">source</span> {note}'
+        '</p>\n'
+    )
+
+
 def hero_status(d: dict) -> str:
     return "개표 결과 수집 중." if d["is_active"] else "확정 결과."
 
@@ -367,6 +378,7 @@ def render(meta: dict) -> str:
     return (
         HEAD.format(**d)
         + KIND_TO_HERO[d["kind"]].format(**d)
+        + source_caveat_block(meta)
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
         + FOOT.format(**d)
     )

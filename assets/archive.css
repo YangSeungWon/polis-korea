@@ -237,6 +237,24 @@
 .ar-dist-cand { font-weight: 700; }
 .ar-dist-meta { font-variant-numeric: tabular-nums; font-size: 11px; color: var(--ink-soft); text-align: right; }
 
+/* 옛 데이터 source caveat — 위키 source 등 */
+.ar-source-caveat {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: var(--bg2);
+  padding: 8px 12px;
+  margin: 0 0 24px;
+  border-left: 2px solid var(--ink-mute);
+}
+.ar-source-caveat-tag {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--ink);
+  margin-right: 6px;
+  letter-spacing: 0.02em;
+  font-size: 10px;
+}
+
 /* 재보궐 결과 mini 카드 (통합 회차 archive 안) */
 .ar-by-result-card { background: var(--bg2); }
 .ar-by-result-winner {
