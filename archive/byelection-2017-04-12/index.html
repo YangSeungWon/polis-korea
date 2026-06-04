@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 2017년 4·12 재·보궐선거 (2017-04-12)</title>
+<meta name="description" content="2017년 4·12 재·보궐선거(2017-04-12) 결과·여론조사·출구조사 비교 아카이브.">
+<meta property="og:title" content="polis · 2017년 재보궐 아카이브">
+<meta property="og:description" content="2017년 재보궐 결과·여론조사·출구조사 비교.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/archive/byelection-2017-04-12/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/archive.css">
+<script id="archive-meta">window.__ARCHIVE__ = { id: 'byelection-2017-04-12' };</script>
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <a href="/" class="hdr-link">홈</a>
+    <a href="/governor/" class="hdr-link">지선 여론조사</a>
+    <a href="/byelection.html" class="hdr-link">재·보궐선거</a>
+    <a href="/history.html" class="hdr-link">역대 선거</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <nav class="ar-breadcrumb" aria-label="경로">
+    <a href="/timeline.html">타임라인</a> ·
+    <a href="/history.html?type=byelection&n=2017">역대 선거</a> · <span>2017년 재보궐 아카이브</span>
+  </nav>
+
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">2017년 4·12 재·보궐선거</h1>
+    <div class="ar-hero-date" id="ar-date">2017-04-12 (수) · 19대 대선 직전 정기 재보궐</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">광역</div><div class="ar-stat-value" id="ar-by-sido-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">기초</div><div class="ar-stat-value" id="ar-by-sigungu-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">국회의원</div><div class="ar-stat-value" id="ar-by-district-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">사유</div><div class="ar-stat-value" id="ar-by-reasons-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">확정 결과.</p>
+  </section>
+
+  <section class="ar-section" id="ar-by-sido-section" hidden>
+    <h2 class="ar-section-title">광역단체장 결과</h2>
+    <p class="ar-source-line">데이터 원본: <a href="https://info.nec.go.kr/main/showDocument.xhtml?electionId=00220170412&topMenuId=VC&secondMenuId=VCCP09" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <div class="ar-by-sido-host" id="ar-by-sido-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-district-section" hidden>
+    <h2 class="ar-section-title">국회의원 재·보궐 결과</h2>
+    <div class="ar-by-district-host" id="ar-by-district-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-sigungu-section" hidden>
+    <h2 class="ar-section-title">기초단체장 결과</h2>
+    <div class="ar-by-sigungu-host" id="ar-by-sigungu-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-reasons-section" hidden>
+    <h2 class="ar-section-title">실시 사유</h2>
+    <p class="ar-source-line">중앙선거관리위원회 재·보궐 실시사유 확정상황 API · 전임자·소속 정당·사유.</p>
+    <div class="ar-by-reasons-host" id="ar-by-reasons-host"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
+      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467" target="_blank" rel="noopener">중앙선거여론조사심의위원회 (2017년 재보궐)</a>
+    </div>
+    <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
+  </footer>
+</main>
+
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/elections.js"></script>
+<script src="assets/archive/shared.js"></script>
+<script src="assets/archive/local.js"></script>
+<script src="assets/archive/pres.js"></script>
+<script src="assets/archive/general.js"></script>
+<script src="assets/archive/byelection.js"></script>
+<script src="assets/archive/core.js"></script>
+<script src="assets/theme.js"></script>
+</body>
+</html>

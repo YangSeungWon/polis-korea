@@ -1,0 +1,592 @@
+{
+  "_meta": {
+    "election": "2017년 4·12 재·보궐선거",
+    "election_id": "byelection-2017-04-12",
+    "election_date": "2017-04-12",
+    "fetched_at": "2026-06-04T18:14:15+09:00",
+    "is_final": true,
+    "n_calls": 68,
+    "n_rows": 11
+  },
+  "races": [
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 182858,
+      "voters": 98488,
+      "valid_votes": 96831,
+      "invalid_votes": 1657,
+      "abstain": 84370,
+      "candidates": [
+        {
+          "name": "김재원",
+          "party": "자유한국당",
+          "votes": 46022,
+          "pct": 47.53,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성윤환",
+          "party": "무소속",
+          "votes": 27819,
+          "pct": 28.73,
+          "rank": 2
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "votes": 17028,
+          "pct": 17.59,
+          "rank": 3
+        },
+        {
+          "name": "김진욱",
+          "party": "바른정당",
+          "votes": 5061,
+          "pct": 5.23,
+          "rank": 4
+        },
+        {
+          "name": "배익기",
+          "party": "무소속",
+          "votes": 465,
+          "pct": 0.48,
+          "rank": 5
+        },
+        {
+          "name": "류승구",
+          "party": "코리아",
+          "votes": 436,
+          "pct": 0.45,
+          "rank": 6
+        }
+      ],
+      "district": "상주시군위군의성군청송군"
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경기도",
+      "sigungu": "하남시",
+      "scope": "sigungu",
+      "electors": 174801,
+      "voters": 52632,
+      "valid_votes": 52485,
+      "invalid_votes": 147,
+      "abstain": 122169,
+      "candidates": [
+        {
+          "name": "오수봉",
+          "party": "더불어민주당",
+          "votes": 19841,
+          "pct": 37.8,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "윤재군",
+          "party": "자유한국당",
+          "votes": 14794,
+          "pct": 28.19,
+          "rank": 2
+        },
+        {
+          "name": "유형욱",
+          "party": "국민의당",
+          "votes": 14442,
+          "pct": 27.52,
+          "rank": 3
+        },
+        {
+          "name": "윤완채",
+          "party": "바른정당",
+          "votes": 3408,
+          "pct": 6.49,
+          "rank": 4
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경기도",
+      "sigungu": "하남시",
+      "scope": "sigungu_part",
+      "electors": 174801,
+      "voters": 52632,
+      "valid_votes": 52485,
+      "invalid_votes": 147,
+      "abstain": 122169,
+      "candidates": [
+        {
+          "name": "오수봉",
+          "party": "더불어민주당",
+          "votes": 19841,
+          "pct": 37.8,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "윤재군",
+          "party": "자유한국당",
+          "votes": 14794,
+          "pct": 28.19,
+          "rank": 2
+        },
+        {
+          "name": "유형욱",
+          "party": "국민의당",
+          "votes": 14442,
+          "pct": 27.52,
+          "rank": 3
+        },
+        {
+          "name": "윤완채",
+          "party": "바른정당",
+          "votes": 3408,
+          "pct": 6.49,
+          "rank": 4
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경기도",
+      "sigungu": "포천시",
+      "scope": "sigungu",
+      "electors": 129053,
+      "voters": 45612,
+      "valid_votes": 45108,
+      "invalid_votes": 504,
+      "abstain": 83441,
+      "candidates": [
+        {
+          "name": "김종천",
+          "party": "자유한국당",
+          "votes": 15285,
+          "pct": 33.89,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박윤국",
+          "party": "무소속",
+          "votes": 10925,
+          "pct": 24.22,
+          "rank": 2
+        },
+        {
+          "name": "최호열",
+          "party": "더불어민주당",
+          "votes": 10693,
+          "pct": 23.71,
+          "rank": 3
+        },
+        {
+          "name": "정종근",
+          "party": "바른정당",
+          "votes": 7112,
+          "pct": 15.77,
+          "rank": 4
+        },
+        {
+          "name": "유병권",
+          "party": "민중연합당",
+          "votes": 1093,
+          "pct": 2.42,
+          "rank": 5
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경기도",
+      "sigungu": "포천시",
+      "scope": "sigungu_part",
+      "electors": 129053,
+      "voters": 45612,
+      "valid_votes": 45108,
+      "invalid_votes": 504,
+      "abstain": 83441,
+      "candidates": [
+        {
+          "name": "김종천",
+          "party": "자유한국당",
+          "votes": 15285,
+          "pct": 33.89,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박윤국",
+          "party": "무소속",
+          "votes": 10925,
+          "pct": 24.22,
+          "rank": 2
+        },
+        {
+          "name": "최호열",
+          "party": "더불어민주당",
+          "votes": 10693,
+          "pct": 23.71,
+          "rank": 3
+        },
+        {
+          "name": "정종근",
+          "party": "바른정당",
+          "votes": 7112,
+          "pct": 15.77,
+          "rank": 4
+        },
+        {
+          "name": "유병권",
+          "party": "민중연합당",
+          "votes": 1093,
+          "pct": 2.42,
+          "rank": 5
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "충청북도",
+      "sigungu": "괴산군",
+      "scope": "sigungu",
+      "electors": 34622,
+      "voters": 21607,
+      "valid_votes": 21453,
+      "invalid_votes": 154,
+      "abstain": 13015,
+      "candidates": [
+        {
+          "name": "나용찬",
+          "party": "무소속",
+          "votes": 8251,
+          "pct": 38.46,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "송인헌",
+          "party": "자유한국당",
+          "votes": 6636,
+          "pct": 30.93,
+          "rank": 2
+        },
+        {
+          "name": "남무현",
+          "party": "더불어민주당",
+          "votes": 2692,
+          "pct": 12.55,
+          "rank": 3
+        },
+        {
+          "name": "김춘묵",
+          "party": "무소속",
+          "votes": 2416,
+          "pct": 11.26,
+          "rank": 4
+        },
+        {
+          "name": "김환동",
+          "party": "무소속",
+          "votes": 1326,
+          "pct": 6.18,
+          "rank": 5
+        },
+        {
+          "name": "박경옥",
+          "party": "국민행복당",
+          "votes": 132,
+          "pct": 0.62,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "충청북도",
+      "sigungu": "괴산군",
+      "scope": "sigungu_part",
+      "electors": 34622,
+      "voters": 21607,
+      "valid_votes": 21453,
+      "invalid_votes": 154,
+      "abstain": 13015,
+      "candidates": [
+        {
+          "name": "나용찬",
+          "party": "무소속",
+          "votes": 8251,
+          "pct": 38.46,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "송인헌",
+          "party": "자유한국당",
+          "votes": 6636,
+          "pct": 30.93,
+          "rank": 2
+        },
+        {
+          "name": "남무현",
+          "party": "더불어민주당",
+          "votes": 2692,
+          "pct": 12.55,
+          "rank": 3
+        },
+        {
+          "name": "김춘묵",
+          "party": "무소속",
+          "votes": 2416,
+          "pct": 11.26,
+          "rank": 4
+        },
+        {
+          "name": "김환동",
+          "party": "무소속",
+          "votes": 1326,
+          "pct": 6.18,
+          "rank": 5
+        },
+        {
+          "name": "박경옥",
+          "party": "국민행복당",
+          "votes": 132,
+          "pct": 0.62,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "상주시",
+      "scope": "district_sigungu",
+      "electors": 87605,
+      "voters": 45304,
+      "valid_votes": 44463,
+      "invalid_votes": 841,
+      "abstain": 42301,
+      "candidates": [
+        {
+          "name": "성윤환",
+          "party": "무소속",
+          "votes": 20977,
+          "pct": 47.18,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김재원",
+          "party": "자유한국당",
+          "votes": 11409,
+          "pct": 25.66,
+          "rank": 2
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "votes": 10781,
+          "pct": 24.25,
+          "rank": 3
+        },
+        {
+          "name": "김진욱",
+          "party": "바른정당",
+          "votes": 906,
+          "pct": 2.04,
+          "rank": 4
+        },
+        {
+          "name": "배익기",
+          "party": "무소속",
+          "votes": 197,
+          "pct": 0.44,
+          "rank": 5
+        },
+        {
+          "name": "류승구",
+          "party": "코리아",
+          "votes": 193,
+          "pct": 0.43,
+          "rank": 6
+        }
+      ],
+      "district": "상주시군위군의성군청송군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "군위군",
+      "scope": "district_sigungu",
+      "electors": 22317,
+      "voters": 12179,
+      "valid_votes": 11985,
+      "invalid_votes": 194,
+      "abstain": 10138,
+      "candidates": [
+        {
+          "name": "김재원",
+          "party": "자유한국당",
+          "votes": 8088,
+          "pct": 67.48,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성윤환",
+          "party": "무소속",
+          "votes": 1908,
+          "pct": 15.92,
+          "rank": 2
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "votes": 1228,
+          "pct": 10.25,
+          "rank": 3
+        },
+        {
+          "name": "김진욱",
+          "party": "바른정당",
+          "votes": 664,
+          "pct": 5.54,
+          "rank": 4
+        },
+        {
+          "name": "배익기",
+          "party": "무소속",
+          "votes": 56,
+          "pct": 0.47,
+          "rank": 5
+        },
+        {
+          "name": "류승구",
+          "party": "코리아",
+          "votes": 41,
+          "pct": 0.34,
+          "rank": 6
+        }
+      ],
+      "district": "상주시군위군의성군청송군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "의성군",
+      "scope": "district_sigungu",
+      "electors": 49250,
+      "voters": 28024,
+      "valid_votes": 27607,
+      "invalid_votes": 417,
+      "abstain": 21226,
+      "candidates": [
+        {
+          "name": "김재원",
+          "party": "자유한국당",
+          "votes": 18533,
+          "pct": 67.13,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "votes": 3063,
+          "pct": 11.1,
+          "rank": 2
+        },
+        {
+          "name": "김진욱",
+          "party": "바른정당",
+          "votes": 2973,
+          "pct": 10.77,
+          "rank": 3
+        },
+        {
+          "name": "성윤환",
+          "party": "무소속",
+          "votes": 2750,
+          "pct": 9.96,
+          "rank": 4
+        },
+        {
+          "name": "배익기",
+          "party": "무소속",
+          "votes": 149,
+          "pct": 0.54,
+          "rank": 5
+        },
+        {
+          "name": "류승구",
+          "party": "코리아",
+          "votes": 139,
+          "pct": 0.5,
+          "rank": 6
+        }
+      ],
+      "district": "상주시군위군의성군청송군"
+    },
+    {
+      "sg_typecode": "2",
+      "sido": "경상북도",
+      "sigungu": "청송군",
+      "scope": "district_sigungu",
+      "electors": 23686,
+      "voters": 12981,
+      "valid_votes": 12776,
+      "invalid_votes": 205,
+      "abstain": 10705,
+      "candidates": [
+        {
+          "name": "김재원",
+          "party": "자유한국당",
+          "votes": 7992,
+          "pct": 62.55,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "성윤환",
+          "party": "무소속",
+          "votes": 2184,
+          "pct": 17.09,
+          "rank": 2
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "votes": 1956,
+          "pct": 15.31,
+          "rank": 3
+        },
+        {
+          "name": "김진욱",
+          "party": "바른정당",
+          "votes": 518,
+          "pct": 4.05,
+          "rank": 4
+        },
+        {
+          "name": "류승구",
+          "party": "코리아",
+          "votes": 63,
+          "pct": 0.49,
+          "rank": 5
+        },
+        {
+          "name": "배익기",
+          "party": "무소속",
+          "votes": 63,
+          "pct": 0.49,
+          "rank": 6
+        }
+      ],
+      "district": "상주시군위군의성군청송군"
+    }
+  ]
+}

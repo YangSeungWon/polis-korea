@@ -29,16 +29,28 @@ ROOT = Path(__file__).resolve().parents[2]
 RESULTS_DIR = ROOT / "data" / "results"
 
 # {id}.json 패턴 (새 schema 회차별 파일).
-ID_PAT = re.compile(r"^(\d+)(st|nd|rd|th)-(pres|general|local|byelection)-\d+\.json$")
+#   N회/N대 형식: 22nd-general-2024.json
+#   단독 재보궐: byelection-2021-04-07.json (date 기반, n번호 없음)
+ID_PATS = [
+    re.compile(r"^(\d+)(st|nd|rd|th)-(pres|general|local|byelection)-\d+\.json$"),
+    re.compile(r"^byelection-\d{4}-\d{2}-\d{2}\.json$"),
+]
+ID_PAT = ID_PATS[0]  # 호환 유지
 
 MAIN_SCOPES = {"nation", "sido", "district"}
 DRILL_SCOPES = {"sigungu", "district_sigungu", "sigungu_part"}
 
 
 def chunk(data: dict) -> tuple[dict, dict] | None:
-    """전체 → (core, sigungu) 분할. 이미 청크되어 있으면 None."""
+    """전체 → (core, sigungu) 분할. 이미 청크되어 있으면 None.
+
+    byelection은 데이터 작아 (~80 KB 이하) 청크 의미 없음 — skip.
+    """
     if data.get("_meta", {}).get("chunked"):
         return None
+    eid = (data.get("_meta") or {}).get("election_id", "")
+    if eid.startswith("byelection-"):
+        return None  # standalone 재보궐은 통째로 유지
     races = data.get("races", [])
     main_races = [r for r in races if r.get("scope") in MAIN_SCOPES]
     drill_races = [r for r in races if r.get("scope") in DRILL_SCOPES]
@@ -78,7 +90,7 @@ def main():
     for f in sorted(RESULTS_DIR.iterdir()):
         if not f.is_file() or not f.name.endswith(".json"):
             continue
-        if not ID_PAT.match(f.name):
+        if not any(p.match(f.name) for p in ID_PATS):
             continue
         if args.id and not f.name.startswith(args.id + "."):
             continue

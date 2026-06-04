@@ -58,12 +58,14 @@
 
   const isPres = meta.electionKind === 'presidential';
   const isGeneral = meta.electionKind === 'general_election' || meta.electionKind === 'national_assembly';
+  const isByelection = meta.electionKind === 'byelection';
   const sgTypecode = meta.sgTypecode || (isPres ? '1' : isGeneral ? '2' : '3');
 
   const ctx = { meta, results, polls, byReasons, exitData, sgTypecode };
 
   if (isPres) window.Archive.pres.render(ctx);
   else if (isGeneral) window.Archive.general.render(ctx);
+  else if (isByelection) await window.Archive.byelection.render(ctx);
   else window.Archive.local.render(ctx);
 
   window.Archive.renderPollsList(polls);

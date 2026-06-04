@@ -32,6 +32,7 @@ KIND_META = {
     "local":              {"short": "지선",  "history_type": "local",              "n_unit": "회"},
     "presidential":       {"short": "대선",  "history_type": "presidential",       "n_unit": "대"},
     "general_election":   {"short": "총선",  "history_type": "national_assembly",  "n_unit": "대"},
+    "byelection":         {"short": "재보궐", "history_type": "byelection",         "n_unit": "년"},
 }
 
 
@@ -146,6 +147,21 @@ HERO_PRES = """
   </section>
 """
 
+HERO_BYELECTION = """
+  <section class="ar-hero">
+    <div class="ar-hero-tag">아카이브</div>
+    <h1 class="ar-hero-title" id="ar-title">{name}</h1>
+    <div class="ar-hero-date" id="ar-date">{date_label}</div>
+    <div class="ar-hero-stats" id="ar-hero-stats">
+      <div class="ar-stat"><div class="ar-stat-label">광역</div><div class="ar-stat-value" id="ar-by-sido-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">기초</div><div class="ar-stat-value" id="ar-by-sigungu-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">국회의원</div><div class="ar-stat-value" id="ar-by-district-count">—</div></div>
+      <div class="ar-stat"><div class="ar-stat-label">사유</div><div class="ar-stat-value" id="ar-by-reasons-count">—</div></div>
+    </div>
+    <p class="ar-hero-status" id="ar-status">{hero_status}</p>
+  </section>
+"""
+
 HERO_GENERAL = """
   <section class="ar-hero">
     <div class="ar-hero-tag">아카이브</div>
@@ -228,6 +244,30 @@ SECTIONS_PRES = """
   </section>
 """
 
+SECTIONS_BYELECTION = """
+  <section class="ar-section" id="ar-by-sido-section" hidden>
+    <h2 class="ar-section-title">광역단체장 결과</h2>
+    <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <div class="ar-by-sido-host" id="ar-by-sido-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-district-section" hidden>
+    <h2 class="ar-section-title">국회의원 재·보궐 결과</h2>
+    <div class="ar-by-district-host" id="ar-by-district-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-sigungu-section" hidden>
+    <h2 class="ar-section-title">기초단체장 결과</h2>
+    <div class="ar-by-sigungu-host" id="ar-by-sigungu-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-reasons-section" hidden>
+    <h2 class="ar-section-title">실시 사유</h2>
+    <p class="ar-source-line">중앙선거관리위원회 재·보궐 실시사유 확정상황 API · 전임자·소속 정당·사유.</p>
+    <div class="ar-by-reasons-host" id="ar-by-reasons-host"></div>
+  </section>
+"""
+
 SECTIONS_GENERAL = """
   <section class="ar-section" id="ar-parliament" hidden>
     <h2 class="ar-section-title">의회 구성</h2>
@@ -282,14 +322,15 @@ FOOT = """
 <script src="assets/archive/local.js"></script>
 <script src="assets/archive/pres.js"></script>
 <script src="assets/archive/general.js"></script>
+<script src="assets/archive/byelection.js"></script>
 <script src="assets/archive/core.js"></script>
 <script src="assets/theme.js"></script>
 </body>
 </html>
 """
 
-KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL}
-KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL}
+KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
+KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
 
 
 def hero_status(d: dict) -> str:
