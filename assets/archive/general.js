@@ -57,7 +57,9 @@
       voters += r.voters || 0; electors += r.electors || 0;
     }
     if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
-    document.getElementById('ar-status').textContent = `개표 완료 · ${results._meta?.fetched_at || '갱신 시각 미상'}`;
+    const m = results._meta || {};
+    const sourceLabel = m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행');
+    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`;
   }
 
   function renderParliament(ctx) {

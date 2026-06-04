@@ -28,7 +28,9 @@
         `<span style="color:${pcol(p)};margin-right:6px"><b>${c}</b> ${p}</span>`).join('');
     }
     if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
-    document.getElementById('ar-status').textContent = `개표 완료 · ${results._meta?.fetched_at || '갱신 시각 미상'}`;
+    const meta = results._meta || {};
+    const sourceLabel = meta.source === 'nec-live-portal' ? '잠정' : (meta.is_final ? '확정' : '진행');
+    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || '미상'}`;
   }
 
   function renderCounting(ctx) {
@@ -40,15 +42,21 @@
       const top = cands[0];
       const electors = r.electors || 0, voted = r.voters || 0;
       const turnout = electors > 0 ? (voted / electors * 100) : 0;
+      const countPct = r.count_pct != null ? r.count_pct : null;  // 개표율 (NEC GAEPYOYUL)
       const col = top ? pcol(top.party) : '#999';
+      // bar는 1위 후보 득표율 (시각적 우열). 진행 중이면 count_pct가 별도 라벨로.
+      const barW = top?.pct != null ? top.pct : turnout;
       const cell = document.createElement('div');
       cell.className = 'ar-count-cell';
+      const tail = countPct != null && countPct < 99.5
+        ? `<span class="ar-count-pct">개표 ${countPct.toFixed(1)}%</span>`
+        : (electors > 0 ? `<span class="ar-count-pct">투표율 ${turnout.toFixed(1)}%</span>` : '');
       cell.innerHTML = `
         <div class="ar-count-sido">${ssh(r.sido)}</div>
-        <div class="ar-count-bar"><span class="ar-count-fill" style="width:${turnout.toFixed(1)}%;background:${col}"></span></div>
+        <div class="ar-count-bar"><span class="ar-count-fill" style="width:${barW.toFixed(1)}%;background:${col}"></span></div>
         <div class="ar-count-meta">
           ${top ? `<span style="color:${col};font-weight:700">${top.party} ${top.pct?.toFixed(1) || ''}</span>` : '—'}
-          <span class="ar-count-pct">${turnout.toFixed(1)}% 개표</span>
+          ${tail}
         </div>
       `;
       host.appendChild(cell);
