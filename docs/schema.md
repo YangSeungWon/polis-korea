@@ -53,11 +53,10 @@ data/elections/
 신규 회차 추가 체크리스트:
 1. `data/elections/{id}.json` 생성 — 위 구조대로 (archive 블록까지)
 2. `data/elections/index.json` active/archive에 id 추가
-3. `python3 scripts/build/sync_archive_html.py` — `archive/{id}/index.html` 자동 생성
-4. `index.html` 회차 아카이브 목록에 한 줄 추가 (정적, 수동 — SEO 위해 유지)
-5. `assets/history.js`의 `ARCHIVE_PAGES`는 startup 시 레지스트리에서 자동 populate — 별도 작업 불필요
+3. `python3 scripts/build/sync_archive_html.py` — `archive/{id}/index.html` + `index.html` 회차 목록 동시 자동 생성
+4. `assets/history.js`의 `ARCHIVE_PAGES`는 startup 시 레지스트리에서 자동 populate — 별도 작업 불필요
 
-> archive HTML은 절대 손으로 수정하지 말 것 — 다음 sync 실행 시 덮어쓰임. 변경은 `data/elections/{id}.json` 또는 `scripts/build/sync_archive_html.py` 템플릿에서.
+> archive HTML과 index.html 회차 목록 (`<!-- AR_LIST_START -->` ~ `END -->` 사이)은 절대 손으로 수정하지 말 것 — 다음 sync 실행 시 덮어쓰임. 변경은 `data/elections/{id}.json` 또는 `scripts/build/sync_archive_html.py` 템플릿에서.
 
 ## 3. 결과 (`data/results/{id}.json`)
 

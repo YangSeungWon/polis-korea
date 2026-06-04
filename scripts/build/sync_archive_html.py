@@ -21,6 +21,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 ELECTIONS_DIR = ROOT / "data" / "elections"
 ARCHIVE_DIR = ROOT / "archive"
+INDEX_HTML = ROOT / "index.html"
+AR_LIST_START = "<!-- AR_LIST_START"
+AR_LIST_END = "<!-- AR_LIST_END -->"
 
 DOW = ["월", "화", "수", "목", "금", "토", "일"]
 
@@ -317,9 +320,42 @@ def render(meta: dict) -> str:
     )
 
 
+def render_ar_list(metas: list[dict]) -> str:
+    """index.html 회차 아카이브 목록 — 날짜 desc 정렬."""
+    rows = []
+    for m in sorted(metas, key=lambda x: x["date"], reverse=True):
+        ar = m["archive"]
+        label = ar.get("list_label") or ("진행" if m.get("status") == "active" else "확정")
+        rows.append(
+            f'      <a class="ar-list-row" href="{ar["page"]}">'
+            f'<span>{m["date"]}</span><span>{m["name"]}</span>'
+            f'<span class="ar-list-tag">{label}</span></a>'
+        )
+    return "\n".join(rows)
+
+
+def sync_index_html(metas: list[dict], check: bool) -> bool:
+    """index.html 회차 목록 markers 사이 갱신. 변경 여부 반환."""
+    html = INDEX_HTML.read_text(encoding="utf-8")
+    si = html.find(AR_LIST_START)
+    ei = html.find(AR_LIST_END)
+    if si < 0 or ei < 0:
+        print(f"  ! index.html에 AR_LIST 마커 없음 — 스킵", file=sys.stderr)
+        return False
+    # marker 줄 끝까지 포함
+    start_end = html.find("\n", si) + 1
+    new_block = render_ar_list(metas) + "\n      "
+    new_html = html[:start_end] + new_block + html[ei:]
+    if new_html == html:
+        return False
+    if not check:
+        INDEX_HTML.write_text(new_html, encoding="utf-8")
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--id", help="특정 회차 1건만")
+    ap.add_argument("--id", help="특정 회차 1건만 (index.html 은 갱신 안 됨)")
     ap.add_argument("--check", action="store_true", help="diff만 출력, 파일 안 씀")
     args = ap.parse_args()
 
@@ -334,6 +370,7 @@ def main():
     n_changed = 0
     n_unchanged = 0
     n_skipped = 0
+    archive_metas = []  # index.html 목록용
     for eid in all_ids:
         meta_path = ELECTIONS_DIR / f"{eid}.json"
         if not meta_path.exists():
@@ -347,6 +384,7 @@ def main():
             print(f"  ! {eid}: kind={meta.get('kind')} — 템플릿 없음, 스킵", file=sys.stderr)
             n_skipped += 1
             continue
+        archive_metas.append(meta)
         html = render(meta)
         out = ARCHIVE_DIR / eid / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -361,6 +399,11 @@ def main():
         out.write_text(html, encoding="utf-8")
         print(f"OK {eid}")
         n_changed += 1
+    # index.html 회차 목록 — --id 옵션이 아닐 때만 (부분 메타로 list 잘리면 안 됨)
+    if not args.id and archive_metas:
+        if sync_index_html(archive_metas, args.check):
+            print(("~" if args.check else "OK") + " index.html (회차 아카이브 목록)")
+
     print(f"\n변경 {n_changed} · 동일 {n_unchanged} · 스킵 {n_skipped}")
 
 
