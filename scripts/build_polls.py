@@ -18,6 +18,7 @@ from datetime import datetime, date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# 회차별 path — CLI 인자로 override 가능 (--csv, --out, --roster)
 META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
 OUT_DIR = ROOT / "data" / "polls"
@@ -1096,7 +1097,22 @@ def build() -> dict:
 
 
 def main():
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    import argparse
+    global META_CSV, OUT_PATH, NEC_ROSTER_PATH, _NEC_ROSTER
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--csv", help="NESDC 메타 CSV path", default=str(META_CSV))
+    ap.add_argument("--out", help="출력 JSON path", default=str(OUT_PATH))
+    ap.add_argument("--roster", help="NEC roster JSON path", default=str(NEC_ROSTER_PATH))
+    args = ap.parse_args()
+    META_CSV = Path(args.csv)
+    OUT_PATH = Path(args.out)
+    if args.roster != str(NEC_ROSTER_PATH):
+        NEC_ROSTER_PATH = Path(args.roster)
+        if NEC_ROSTER_PATH.exists():
+            _NEC_ROSTER = json.load(open(NEC_ROSTER_PATH, encoding="utf-8"))
+        else:
+            _NEC_ROSTER = {}
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     out = build()
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
