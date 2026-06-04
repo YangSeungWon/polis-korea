@@ -86,7 +86,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="assets/common.css">
-<link rel="stylesheet" href="assets/polls.css">
+<link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/dashboard.css">
 <link rel="stylesheet" href="assets/archive.css">
 <script id="archive-meta">window.__ARCHIVE__ = {{ id: '{id}' }};</script>
