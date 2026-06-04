@@ -20,6 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 # 회차별 path — CLI 인자로 override 가능 (--csv, --out, --roster)
 META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
+EMIT_PENDING = True  # PDF parse 안 된 폴도 emit (기본 — 9회 운영 호환)
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
 OUT_DIR = ROOT / "data" / "polls"
 OUT_PATH = OUT_DIR / "aggregated.json"
@@ -327,6 +328,8 @@ def build() -> dict:
                 continue
             if pending_office in ("광역단체장","교육감"):
                 sigungu_p = ""
+            if not EMIT_PENDING:
+                continue
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
@@ -558,6 +561,40 @@ def build() -> dict:
                 # 경선 record는 별도 — title에 "경선"·"단일화" 들어가면 정당지지 page에 부적절
                 if re.search(r"경선|단일화|당내", title):
                     continue
+            # 1) 잘못 추출된 후보 필터 — 정당기호 매핑 실패 ('기호') / 이슈 폴
+            #    ('환경문제'·'일자리확'·'코로나'·'경제'·'복지' 등이 후보명 자리)
+            ISSUE_NAMES = {
+                "기호", "환경문제", "일자리확", "일자리", "코로나", "경제",
+                "복지", "안전", "교육", "환경", "주거", "교통", "현안",
+                "정책", "공약", "후보", "지지",
+            }
+            cand_out = [
+                {"name": c.get("name", ""), "party": c.get("party", ""), "pct": c.get("pct")}
+                for c in cands
+                if "pct" in c
+                and c.get("name", "") not in ISSUE_NAMES
+                and not any(c.get("name", "").startswith(k) for k in ("환경문", "일자리", "현안", "코로나"))
+            ]
+            # 2) 다자대결인데 후보 0건이면 무의미 — 폴 자체 skip
+            if metric_type in ("후보지지", "당선가능성", "적합도") and not cand_out:
+                continue
+            # 2-b) 이슈 폴 의심 — 후보 모두 정당 없음 + 합 50% 미만 + 교육감/비례 아님.
+            #   ('소상공인'·'대중교통'·'XX문제' 등이 후보명, 그러나 응답률 큰 무응답 폴 X)
+            if (metric_type == "후보지지"
+                and office_level not in ("교육감",)
+                and cand_out
+                and all(not c.get("party") for c in cand_out)
+                and sum((c.get("pct") or 0) for c in cand_out) < 50):
+                continue
+            # 2-c) 분류 실패 office '기타'/'비례정당' (모든 후보 정당 없음) — 분석 가치 없음.
+            if office_level == "기타":
+                continue
+            if office_level == "비례정당" and cand_out and all(not c.get("party") for c in cand_out):
+                continue
+            # 3) 정당지지·국정평가는 office_level을 metric 자체로 (분류 명확화)
+            if metric_type in ("정당지지", "국정평가", "투표의향"):
+                office_level = metric_type
+                office_label = metric_type
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
@@ -580,11 +617,7 @@ def build() -> dict:
                 "metric_type": metric_type,
                 "table_no": q.get("table_no", ""),
                 "table_title": title,
-                "candidates": [
-                    {"name": c.get("name", ""), "party": c.get("party", ""), "pct": c.get("pct")}
-                    for c in cands
-                    if "pct" in c
-                ],
+                "candidates": cand_out,
             })
             any_emitted = True
 
@@ -1098,14 +1131,17 @@ def build() -> dict:
 
 def main():
     import argparse
-    global META_CSV, OUT_PATH, NEC_ROSTER_PATH, _NEC_ROSTER
+    global META_CSV, OUT_PATH, NEC_ROSTER_PATH, _NEC_ROSTER, EMIT_PENDING
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", help="NESDC 메타 CSV path", default=str(META_CSV))
     ap.add_argument("--out", help="출력 JSON path", default=str(OUT_PATH))
     ap.add_argument("--roster", help="NEC roster JSON path", default=str(NEC_ROSTER_PATH))
+    ap.add_argument("--no-pending", action="store_true",
+                    help="PDF parse 안 된 'pending' 폴 emit 안 함 (결과 확정 회차용)")
     args = ap.parse_args()
-    META_CSV = Path(args.csv)
-    OUT_PATH = Path(args.out)
+    EMIT_PENDING = not args.no_pending
+    META_CSV = Path(args.csv) if Path(args.csv).is_absolute() else ROOT / args.csv
+    OUT_PATH = Path(args.out) if Path(args.out).is_absolute() else ROOT / args.out
     if args.roster != str(NEC_ROSTER_PATH):
         NEC_ROSTER_PATH = Path(args.roster)
         if NEC_ROSTER_PATH.exists():

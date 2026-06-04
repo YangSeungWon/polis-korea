@@ -284,10 +284,14 @@ def main():
     ap.add_argument("--no-save", action="store_true", help="audit JSON 저장 안 함")
     ap.add_argument("--strict", action="store_true", help="warn도 exit 1")
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument("--agg", default=str(AGG), help="aggregated JSON path")
+    ap.add_argument("--roster", default=str(ROSTER), help="NEC roster JSON path")
     args = ap.parse_args()
 
-    polls = json.load(open(AGG, encoding="utf-8"))["polls"]
-    roster = json.load(open(ROSTER, encoding="utf-8")) if ROSTER.exists() else {}
+    agg_path = Path(args.agg) if Path(args.agg).is_absolute() else ROOT / args.agg
+    roster_path = Path(args.roster) if Path(args.roster).is_absolute() else ROOT / args.roster
+    polls = json.load(open(agg_path, encoding="utf-8"))["polls"]
+    roster = json.load(open(roster_path, encoding="utf-8")) if roster_path.exists() else {}
 
     checks = [
         check_outliers(polls, roster),
