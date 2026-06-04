@@ -180,14 +180,23 @@
         (byYear[c.year] = byYear[c.year] || []).push(c);
       }
     }
-    let html = '<div class="bx-cov-grid">';
+    let html = '<div class="bx-cov-legend">'
+      + '<span class="bx-cov-tag bx-cov-tag-nec">NEC API</span>'
+      + '<span class="bx-cov-tag bx-cov-tag-wiki">위키</span>'
+      + '<span class="bx-cov-tag bx-cov-tag-none">데이터 없음</span>'
+      + '</div><div class="bx-cov-grid">';
     for (const y of allYears) {
       const cycles = byYear[y] || [];
-      const status = cycles.length ? 'has-data' : (y < 2010 ? 'gap' : 'unknown');
-      const n = cycles.reduce((s, c) => s + c.reasons_count, 0);
-      html += `<div class="bx-cov-cell bx-cov-${status}">
+      const hasNec = cycles.some((c) => c.source !== 'wikipedia-ko');
+      const hasWiki = cycles.some((c) => c.source === 'wikipedia-ko');
+      const status = hasNec ? 'nec' : (hasWiki ? 'wiki' : (y < 2010 ? 'gap' : 'unknown'));
+      const n = cycles.reduce((s, c) => s + (c.reasons_count || 0), 0);
+      const label = cycles.length
+        ? (cycles.length === 1 ? `1회 · ${n}건` : `${cycles.length}회 · ${n}건`)
+        : (y < 2010 ? '미확인' : '실시 안 함');
+      html += `<div class="bx-cov-cell bx-cov-${status}" title="${y} · ${cycles.length} 회차">
         <div class="bx-cov-year">${y}</div>
-        <div class="bx-cov-meta">${cycles.length ? `${cycles.length}회 · 사유 ${n}건` : (y < 2010 ? '데이터 없음' : '실시 안 함')}</div>
+        <div class="bx-cov-meta">${label}</div>
       </div>`;
     }
     html += '</div>';
