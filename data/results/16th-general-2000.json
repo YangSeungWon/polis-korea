@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "election": "제16대 국회의원선거",
+    "election_id": "16th-general-2000",
+    "election_date": "2000-04-13",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 16005315,
+      "valid_votes": 16005315,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "party": "한나라당",
+          "name": "",
+          "seats": 133,
+          "proportional_seats": 133,
+          "votes": 7365359,
+          "pct": 39.0,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "party": "새천년민주당",
+          "name": "",
+          "seats": 115,
+          "proportional_seats": 115,
+          "votes": 6780625,
+          "pct": 35.9,
+          "rank": 2
+        },
+        {
+          "party": "자유민주연합",
+          "name": "",
+          "seats": 17,
+          "proportional_seats": 17,
+          "votes": 1859331,
+          "pct": 9.8,
+          "rank": 3
+        }
+      ],
+      "turnout_pct": 57.2,
+      "total_seats": 273
+    }
+  ]
+}

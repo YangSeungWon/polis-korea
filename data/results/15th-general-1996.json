@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "election": "제15대 국회의원선거",
+    "election_id": "15th-general-1996",
+    "election_date": "1996-04-11",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 17141860,
+      "valid_votes": 17141860,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "party": "신한국당",
+          "name": "",
+          "seats": 139,
+          "proportional_seats": 139,
+          "votes": 6783730,
+          "pct": 34.5,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "party": "새정치국민회의",
+          "name": "",
+          "seats": 79,
+          "proportional_seats": 79,
+          "votes": 4971961,
+          "pct": 25.3,
+          "rank": 2
+        },
+        {
+          "party": "자유민주연합",
+          "name": "",
+          "seats": 50,
+          "proportional_seats": 50,
+          "votes": 3178474,
+          "pct": 16.2,
+          "rank": 3
+        },
+        {
+          "party": "민주당",
+          "name": "",
+          "seats": 15,
+          "proportional_seats": 15,
+          "votes": 2207695,
+          "pct": 11.2,
+          "rank": 4
+        }
+      ],
+      "turnout_pct": 63.9,
+      "total_seats": 299
+    }
+  ]
+}

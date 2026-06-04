@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "election": "제14대 국회의원선거",
+    "election_id": "14th-general-1992",
+    "election_date": "1992-03-24",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 17502715,
+      "valid_votes": 17502715,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "party": "민주자유당",
+          "name": "",
+          "seats": 149,
+          "proportional_seats": 149,
+          "votes": 7923718,
+          "pct": 38.5,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "party": "민주당",
+          "name": "",
+          "seats": 97,
+          "proportional_seats": 97,
+          "votes": 6004578,
+          "pct": 29.2,
+          "rank": 2
+        },
+        {
+          "party": "통일국민당",
+          "name": "",
+          "seats": 31,
+          "proportional_seats": 31,
+          "votes": 3574419,
+          "pct": 17.4,
+          "rank": 3
+        }
+      ],
+      "turnout_pct": 71.9,
+      "total_seats": 299
+    }
+  ]
+}

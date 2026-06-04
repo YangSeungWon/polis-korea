@@ -1,0 +1,27 @@
+{
+  "id": "14th-general-1992",
+  "name": "제14대 국회의원선거",
+  "kind": "general_election",
+  "type": "general",
+  "n": 14,
+  "date": "1992-03-24",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "비례대표",
+      "sg_typecode": "7",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/14th-general-1992.json",
+  "_source_note": "민주자유당 149석 (3당 합당 효과)",
+  "_data_caveat": "위키백과 infobox — 정당별 nation 합산만 (지역구·비례 합산 의석·득표). 지역구별 break 없음."
+}

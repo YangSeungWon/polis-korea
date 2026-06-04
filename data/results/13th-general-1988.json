@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "election": "제13대 국회의원선거",
+    "election_id": "13th-general-1988",
+    "election_date": "1988-04-26",
+    "source": "wikipedia-ko-infobox",
+    "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
+    "n_rows": 1
+  },
+  "races": [
+    {
+      "sg_typecode": "7",
+      "sido": "",
+      "sigungu": "",
+      "scope": "nation",
+      "electors": 0,
+      "voters": 18196454,
+      "valid_votes": 18196454,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "candidates": [
+        {
+          "party": "민주정의당",
+          "name": "",
+          "seats": 125,
+          "proportional_seats": 125,
+          "votes": 6670494,
+          "pct": 34.0,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "party": "평화민주당",
+          "name": "",
+          "seats": 70,
+          "proportional_seats": 70,
+          "votes": 3783279,
+          "pct": 19.3,
+          "rank": 2
+        },
+        {
+          "party": "통일민주당",
+          "name": "",
+          "seats": 59,
+          "proportional_seats": 59,
+          "votes": 4680175,
+          "pct": 23.8,
+          "rank": 3
+        },
+        {
+          "party": "신민주공화당",
+          "name": "",
+          "seats": 35,
+          "proportional_seats": 35,
+          "votes": 3062506,
+          "pct": 15.6,
+          "rank": 4
+        }
+      ],
+      "turnout_pct": 75.8,
+      "total_seats": 299
+    }
+  ]
+}

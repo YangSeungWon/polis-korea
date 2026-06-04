@@ -106,6 +106,102 @@ def parse_investiture_year_voters(wt: str) -> dict:
     return out
 
 
+def parse_general_infobox(wt: str) -> tuple[list[dict], dict]:
+    """총선 infobox → 정당별 nation 합산 (의석·득표·득표율) + meta(투표율·총의석)."""
+    # 선거 정보 박스 균형 추출
+    m = re.search(r"\{\{선거 정보", wt)
+    if not m:
+        return [], {}
+    i = m.start()
+    depth = 0
+    while i < len(wt):
+        if wt[i:i+2] == "{{":
+            depth += 1; i += 2
+        elif wt[i:i+2] == "}}":
+            depth -= 1; i += 2
+            if depth == 0:
+                break
+        else:
+            i += 1
+    box = wt[m.start():i]
+    # 정당별 필드
+    parties = []
+    for n in range(1, 12):
+        m_party = re.search(rf"\|\s*정당{n}\s*=\s*'*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", box)
+        if not m_party:
+            continue
+        # 정당 alias 우선
+        party = (m_party.group(2) or m_party.group(1)).strip()
+        party = re.sub(r"\s*\([^)]+\)\s*$", "", party)
+        # 의석 키 fallback: 선거후_의석N → 의석N (15대 등 옛 회차)
+        m_seats = re.search(rf"\|\s*선거후_의석{n}\s*=\s*'*([\d,]+)\s*석?", box)
+        if not m_seats:
+            m_seats = re.search(rf"\|\s*의석{n}\s*=\s*'*([\d,]+)\s*석?", box)
+        m_votes = re.search(rf"\|\s*득표수{n}\s*=\s*'*([\d,]+)", box)
+        m_pct = re.search(rf"\|\s*득표율{n}\s*=\s*'*([\d.]+)\s*%", box)
+        parties.append({
+            "party": party,
+            "name": "",  # 정당 합산이라 후보명 없음
+            "seats": int(m_seats.group(1).replace(",", "")) if m_seats else 0,
+            "proportional_seats": int(m_seats.group(1).replace(",", "")) if m_seats else 0,
+            "votes": int(m_votes.group(1).replace(",", "")) if m_votes else 0,
+            "pct": float(m_pct.group(1)) if m_pct else 0.0,
+        })
+    parties.sort(key=lambda c: -c["seats"])
+    for i, c in enumerate(parties, 1):
+        c["rank"] = i
+    if parties:
+        parties[0]["won"] = True
+    # 메타
+    extras = {}
+    m_t = re.search(r"\|\s*투표율\s*=\s*([\d.]+)\s*%", box)
+    if m_t:
+        extras["turnout_pct"] = float(m_t.group(1))
+    m_total = re.search(r"\|\s*선출_의석\s*=\s*'*([\d,]+)\s*석?", box)
+    if m_total:
+        extras["total_seats"] = int(m_total.group(1).replace(",", ""))
+    return parties, extras
+
+
+def build_general(eid: str, spec: dict) -> dict:
+    """총선 — 정당별 nation 합산 (지역구+비례 합산 의석·득표). 13~16대 위키 infobox."""
+    wt = fetch_wikitext(spec["page"])
+    if not wt:
+        raise RuntimeError(f"빈 wikitext: {spec['page']}")
+    parties, extras = parse_general_infobox(wt)
+    if not parties:
+        raise RuntimeError(f"정당 0건: {spec['page']}")
+    total_votes = sum(c["votes"] for c in parties)
+    # 비례 schema (scope=nation, sg_typecode=7) — 정당 합산 정보 잘 맞음
+    nation = {
+        "sg_typecode": "7",
+        "sido": "",
+        "sigungu": "",
+        "scope": "nation",
+        "electors": 0,
+        "voters": total_votes,
+        "valid_votes": total_votes,
+        "invalid_votes": 0,
+        "abstain": 0,
+        "candidates": parties,
+    }
+    if "turnout_pct" in extras:
+        nation["turnout_pct"] = extras["turnout_pct"]
+    if "total_seats" in extras:
+        nation["total_seats"] = extras["total_seats"]
+    return {
+        "_meta": {
+            "election": spec["name"],
+            "election_id": eid,
+            "election_date": spec["date"],
+            "source": "wikipedia-ko-infobox",
+            "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
+            "n_rows": 1,
+        },
+        "races": [nation],
+    }
+
+
 def build_presidential(eid: str, spec: dict) -> dict:
     wt = fetch_wikitext(spec["page"])
     if not wt:
@@ -145,7 +241,7 @@ def build_presidential(eid: str, spec: dict) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--id", required=True, help="election id, e.g. 15th-pres-1997")
-    ap.add_argument("--kind", default="presidential", choices=["presidential"], help="현재 대선만 지원")
+    ap.add_argument("--kind", default="auto", choices=["auto", "presidential", "general"], help="auto = id로 추론")
     args = ap.parse_args()
 
     spec = WIKI_PAGES.get(args.id)
@@ -153,16 +249,28 @@ def main():
         print(f"ERR: {args.id} mapping 없음 — WIKI_PAGES에 추가", file=sys.stderr)
         sys.exit(1)
 
-    if args.kind != "presidential":
-        print(f"ERR: kind={args.kind} 현재 미지원", file=sys.stderr)
-        sys.exit(1)
+    kind = args.kind
+    if kind == "auto":
+        if "-pres-" in args.id:
+            kind = "presidential"
+        elif "-general-" in args.id:
+            kind = "general"
+        else:
+            print(f"ERR: kind 추론 실패 from {args.id}", file=sys.stderr)
+            sys.exit(1)
 
-    data = build_presidential(args.id, spec)
+    if kind == "presidential":
+        data = build_presidential(args.id, spec)
+    elif kind == "general":
+        data = build_general(args.id, spec)
+    else:
+        print(f"ERR: kind={kind} 미지원", file=sys.stderr); sys.exit(1)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     out_path = RESULTS_DIR / f"{args.id}.json"
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     n = len(data["races"][0]["candidates"])
-    print(f"→ {out_path.relative_to(ROOT)} ({n} 후보 · nation race 1)")
+    label = "후보" if kind == "presidential" else "정당"
+    print(f"→ {out_path.relative_to(ROOT)} ({n} {label} · nation race 1)")
 
 
 if __name__ == "__main__":
