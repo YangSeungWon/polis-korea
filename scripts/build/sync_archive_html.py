@@ -261,6 +261,18 @@ SECTIONS_BYELECTION = """
     <div class="ar-by-sigungu-host" id="ar-by-sigungu-host"></div>
   </section>
 
+  <section class="ar-section" id="ar-by-sido-mem-section" hidden>
+    <h2 class="ar-section-title">광역의원 결과</h2>
+    <p class="ar-source-line">시·도의회 의원 보궐 (선거구별).</p>
+    <div class="ar-by-sido-mem-host" id="ar-by-sido-mem-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-by-sigungu-mem-section" hidden>
+    <h2 class="ar-section-title">기초의원 결과</h2>
+    <p class="ar-source-line">시·군·구의회 의원 보궐 (선거구별).</p>
+    <div class="ar-by-sigungu-mem-host" id="ar-by-sigungu-mem-host"></div>
+  </section>
+
   <section class="ar-section" id="ar-by-reasons-section" hidden>
     <h2 class="ar-section-title">실시 사유</h2>
     <p class="ar-source-line">중앙선거관리위원회 재·보궐 실시사유 확정상황 API · 전임자·소속 정당·사유.</p>

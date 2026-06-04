@@ -235,6 +235,17 @@ def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str, wiw: str,
         out["scope"] = "sigungu" if wiw == "합계" else "sigungu_part"
         return out
 
+    # 광역의원 (tc=5) · 기초의원 (tc=6): sgg가 선거구명
+    # wiw='합계' → district 합계, wiw=시군구명 → district_sigungu sub-row
+    if sg_typecode in ("5", "6"):
+        out["district"] = sgg
+        if wiw == "합계":
+            out["scope"] = "district"
+        else:
+            out["scope"] = "district_sigungu"
+            out["sigungu"] = wiw
+        return out
+
     # 그 외 (tc=1,3,7,11): sgg가 시도명·대한민국·비례대표·sd_name 결정
     # wiw='합계' → 시도 race / wiw=시군구 → 시군구 race
     if wiw == "합계":
@@ -328,7 +339,7 @@ def main():
     # 1=대통령, 2=국회의원, 3=광역단체장, 4=기초단체장, 7=비례대표, 11=교육감.
     # 5(광역의원)·6(기초의원)는 sd 단위 호출만으로는 race 식별 어려움 → 별도 처리 (TODO)
     target_offices = [o for o in offices
-                      if o.get("sg_typecode") in ("1", "2", "3", "4", "7", "11")]
+                      if o.get("sg_typecode") in ("1", "2", "3", "4", "5", "6", "7", "11")]
     sidos_at_sg = sidos_for_sg_id(sg_id)
     print(f"  대상 office: {[o['level'] for o in target_offices]}", file=sys.stderr)
     print(f"  대상 시도: {len(sidos_at_sg)}개 ({sg_id} 시점)", file=sys.stderr)

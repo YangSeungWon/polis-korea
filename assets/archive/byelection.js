@@ -156,6 +156,36 @@
     document.getElementById('ar-by-reasons-section').hidden = false;
   }
 
+  // 의원 선거구 list (광역의원 tc=5 또는 기초의원 tc=6) — 시도별 그룹
+  function renderMemberList(ctx, tc, hostId, sectionId) {
+    const races = racesBy(ctx.results, 'district', tc);
+    if (!races.length) return;
+    const host = document.getElementById(hostId);
+    const bySido = {};
+    for (const r of races) (bySido[r.sido || '기타'] = bySido[r.sido || '기타'] || []).push(r);
+    let html = '';
+    for (const sido of SIDO_ORDER) {
+      const list = bySido[sido];
+      if (!list?.length) continue;
+      html += `<div class="ar-dist-block"><h3 class="ar-dist-sido">${ssh(sido)} <span class="ar-dist-count">${list.length}건</span></h3><div class="ar-dist-rows">`;
+      for (const r of list) {
+        const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        const top = cands[0], second = cands[1];
+        if (!top) continue;
+        const col = pcol(top.party);
+        const margin = second ? (top.pct - second.pct) : null;
+        html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
+          <span class="ar-dist-name">${r.district}</span>
+          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+        </div>`;
+      }
+      html += '</div></div>';
+    }
+    host.innerHTML = html;
+    document.getElementById(sectionId).hidden = false;
+  }
+
   window.Archive.byelection = {
     async render(ctx) {
       const reasons = await fetchReasons(ctx.meta.date);
@@ -163,6 +193,8 @@
       renderSidoBig(ctx);
       renderDistrictList(ctx);
       renderSigunguList(ctx);
+      renderMemberList(ctx, '5', 'ar-by-sido-mem-host', 'ar-by-sido-mem-section');
+      renderMemberList(ctx, '6', 'ar-by-sigungu-mem-host', 'ar-by-sigungu-mem-section');
       renderReasons(ctx, reasons);
     },
   };
