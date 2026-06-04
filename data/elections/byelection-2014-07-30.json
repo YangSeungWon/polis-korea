@@ -1,0 +1,55 @@
+{
+  "id": "byelection-2014-07-30",
+  "name": "2014년 7·30 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2014,
+  "date": "2014-07-30",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20140730",
+    "_note": "재보궐"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    },
+    {
+      "level": "교육감",
+      "sg_typecode": "11",
+      "scope": "sido"
+    }
+  ],
+  "archive": {
+    "page": "/archive/byelection-2014-07-30/",
+    "results_path": "data/results/byelection-2014-07-30.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "3",
+    "list_label": "확정",
+    "context_note": "안철수 새정치민주연합 7·30 패배 — 대표 사퇴 직접 원인"
+  }
+}

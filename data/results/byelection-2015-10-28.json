@@ -1,0 +1,1625 @@
+{
+  "_meta": {
+    "election": "2015년 10·28 재·보궐선거",
+    "election_id": "byelection-2015-10-28",
+    "election_date": "2015-10-28",
+    "fetched_at": "2026-06-04T18:58:02+09:00",
+    "is_final": true,
+    "n_calls": 102,
+    "n_rows": 46
+  },
+  "races": [
+    {
+      "sg_typecode": "4",
+      "sido": "경상남도",
+      "sigungu": "고성군",
+      "scope": "sigungu",
+      "electors": 47504,
+      "voters": 24101,
+      "valid_votes": 23891,
+      "invalid_votes": 210,
+      "abstain": 23403,
+      "candidates": [
+        {
+          "name": "최평호",
+          "party": "새누리당",
+          "votes": 9783,
+          "pct": 40.95,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이상근",
+          "party": "무소속",
+          "votes": 7036,
+          "pct": 29.45,
+          "rank": 2
+        },
+        {
+          "name": "백두현",
+          "party": "새정치민주연합",
+          "votes": 4759,
+          "pct": 19.92,
+          "rank": 3
+        },
+        {
+          "name": "정호용",
+          "party": "무소속",
+          "votes": 1365,
+          "pct": 5.71,
+          "rank": 4
+        },
+        {
+          "name": "이재희",
+          "party": "무소속",
+          "votes": 585,
+          "pct": 2.45,
+          "rank": 5
+        },
+        {
+          "name": "김인태",
+          "party": "공화당",
+          "votes": 363,
+          "pct": 1.52,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경상남도",
+      "sigungu": "고성군",
+      "scope": "sigungu_part",
+      "electors": 47504,
+      "voters": 24101,
+      "valid_votes": 23891,
+      "invalid_votes": 210,
+      "abstain": 23403,
+      "candidates": [
+        {
+          "name": "최평호",
+          "party": "새누리당",
+          "votes": 9783,
+          "pct": 40.95,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이상근",
+          "party": "무소속",
+          "votes": 7036,
+          "pct": 29.45,
+          "rank": 2
+        },
+        {
+          "name": "백두현",
+          "party": "새정치민주연합",
+          "votes": 4759,
+          "pct": 19.92,
+          "rank": 3
+        },
+        {
+          "name": "정호용",
+          "party": "무소속",
+          "votes": 1365,
+          "pct": 5.71,
+          "rank": 4
+        },
+        {
+          "name": "이재희",
+          "party": "무소속",
+          "votes": 585,
+          "pct": 2.45,
+          "rank": 5
+        },
+        {
+          "name": "김인태",
+          "party": "공화당",
+          "votes": 363,
+          "pct": 1.52,
+          "rank": 6
+        }
+      ]
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 81807,
+      "voters": 10874,
+      "valid_votes": 10823,
+      "invalid_votes": 51,
+      "abstain": 70933,
+      "candidates": [
+        {
+          "name": "김춘수",
+          "party": "새누리당",
+          "votes": 5952,
+          "pct": 54.99,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "조유진",
+          "party": "새정치민주연합",
+          "votes": 4083,
+          "pct": 37.73,
+          "rank": 2
+        },
+        {
+          "name": "진재범",
+          "party": "무소속",
+          "votes": 788,
+          "pct": 7.28,
+          "rank": 3
+        }
+      ],
+      "district": "영등포구제3선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "서울특별시",
+      "sigungu": "영등포구",
+      "scope": "district_sigungu",
+      "electors": 81807,
+      "voters": 10874,
+      "valid_votes": 10823,
+      "invalid_votes": 51,
+      "abstain": 70933,
+      "candidates": [
+        {
+          "name": "김춘수",
+          "party": "새누리당",
+          "votes": 5952,
+          "pct": 54.99,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "조유진",
+          "party": "새정치민주연합",
+          "votes": 4083,
+          "pct": 37.73,
+          "rank": 2
+        },
+        {
+          "name": "진재범",
+          "party": "무소속",
+          "votes": 788,
+          "pct": 7.28,
+          "rank": 3
+        }
+      ],
+      "district": "영등포구제3선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 86045,
+      "voters": 13428,
+      "valid_votes": 13351,
+      "invalid_votes": 77,
+      "abstain": 72617,
+      "candidates": [
+        {
+          "name": "김수용",
+          "party": "새누리당",
+          "votes": 8037,
+          "pct": 60.2,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이상호",
+          "party": "새정치민주연합",
+          "votes": 5314,
+          "pct": 39.8,
+          "rank": 2
+        }
+      ],
+      "district": "부산진구제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "부산광역시",
+      "sigungu": "부산진구",
+      "scope": "district_sigungu",
+      "electors": 86045,
+      "voters": 13428,
+      "valid_votes": 13351,
+      "invalid_votes": 77,
+      "abstain": 72617,
+      "candidates": [
+        {
+          "name": "김수용",
+          "party": "새누리당",
+          "votes": 8037,
+          "pct": 60.2,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이상호",
+          "party": "새정치민주연합",
+          "votes": 5314,
+          "pct": 39.8,
+          "rank": 2
+        }
+      ],
+      "district": "부산진구제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 44720,
+      "voters": 10232,
+      "valid_votes": 10189,
+      "invalid_votes": 43,
+      "abstain": 34488,
+      "candidates": [
+        {
+          "name": "정동만",
+          "party": "새누리당",
+          "votes": 4683,
+          "pct": 45.96,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김유환",
+          "party": "무소속",
+          "votes": 3893,
+          "pct": 38.21,
+          "rank": 2
+        },
+        {
+          "name": "정영주",
+          "party": "새정치민주연합",
+          "votes": 1613,
+          "pct": 15.83,
+          "rank": 3
+        }
+      ],
+      "district": "기장군제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "부산광역시",
+      "sigungu": "기장군",
+      "scope": "district_sigungu",
+      "electors": 44720,
+      "voters": 10232,
+      "valid_votes": 10189,
+      "invalid_votes": 43,
+      "abstain": 34488,
+      "candidates": [
+        {
+          "name": "정동만",
+          "party": "새누리당",
+          "votes": 4683,
+          "pct": 45.96,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김유환",
+          "party": "무소속",
+          "votes": 3893,
+          "pct": 38.21,
+          "rank": 2
+        },
+        {
+          "name": "정영주",
+          "party": "새정치민주연합",
+          "votes": 1613,
+          "pct": 15.83,
+          "rank": 3
+        }
+      ],
+      "district": "기장군제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 71870,
+      "voters": 11848,
+      "valid_votes": 11769,
+      "invalid_votes": 79,
+      "abstain": 60022,
+      "candidates": [
+        {
+          "name": "최만용",
+          "party": "새누리당",
+          "votes": 4769,
+          "pct": 40.52,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김상용",
+          "party": "정의당",
+          "votes": 3297,
+          "pct": 28.01,
+          "rank": 2
+        },
+        {
+          "name": "노태손",
+          "party": "새정치민주연합",
+          "votes": 3057,
+          "pct": 25.98,
+          "rank": 3
+        },
+        {
+          "name": "최종귀",
+          "party": "한나라당",
+          "votes": 646,
+          "pct": 5.49,
+          "rank": 4
+        }
+      ],
+      "district": "부평구제5선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "인천광역시",
+      "sigungu": "부평구",
+      "scope": "district_sigungu",
+      "electors": 71870,
+      "voters": 11848,
+      "valid_votes": 11769,
+      "invalid_votes": 79,
+      "abstain": 60022,
+      "candidates": [
+        {
+          "name": "최만용",
+          "party": "새누리당",
+          "votes": 4769,
+          "pct": 40.52,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김상용",
+          "party": "정의당",
+          "votes": 3297,
+          "pct": 28.01,
+          "rank": 2
+        },
+        {
+          "name": "노태손",
+          "party": "새정치민주연합",
+          "votes": 3057,
+          "pct": 25.98,
+          "rank": 3
+        },
+        {
+          "name": "최종귀",
+          "party": "한나라당",
+          "votes": 646,
+          "pct": 5.49,
+          "rank": 4
+        }
+      ],
+      "district": "부평구제5선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 92036,
+      "voters": 10570,
+      "valid_votes": 10511,
+      "invalid_votes": 59,
+      "abstain": 81466,
+      "candidates": [
+        {
+          "name": "김종인",
+          "party": "새정치민주연합",
+          "votes": 6090,
+          "pct": 57.94,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "문현주",
+          "party": "새누리당",
+          "votes": 4421,
+          "pct": 42.06,
+          "rank": 2
+        }
+      ],
+      "district": "서구제2선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "인천광역시",
+      "sigungu": "서구",
+      "scope": "district_sigungu",
+      "electors": 92036,
+      "voters": 10570,
+      "valid_votes": 10511,
+      "invalid_votes": 59,
+      "abstain": 81466,
+      "candidates": [
+        {
+          "name": "김종인",
+          "party": "새정치민주연합",
+          "votes": 6090,
+          "pct": 57.94,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "문현주",
+          "party": "새누리당",
+          "votes": 4421,
+          "pct": 42.06,
+          "rank": 2
+        }
+      ],
+      "district": "서구제2선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 83771,
+      "voters": 9797,
+      "valid_votes": 9739,
+      "invalid_votes": 58,
+      "abstain": 73974,
+      "candidates": [
+        {
+          "name": "정진선",
+          "party": "새누리당",
+          "votes": 4990,
+          "pct": 51.24,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "강은희",
+          "party": "새정치민주연합",
+          "votes": 4749,
+          "pct": 48.76,
+          "rank": 2
+        }
+      ],
+      "district": "의정부시제2선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "의정부시",
+      "scope": "district_sigungu",
+      "electors": 83771,
+      "voters": 9797,
+      "valid_votes": 9739,
+      "invalid_votes": 58,
+      "abstain": 73974,
+      "candidates": [
+        {
+          "name": "정진선",
+          "party": "새누리당",
+          "votes": 4990,
+          "pct": 51.24,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "강은희",
+          "party": "새정치민주연합",
+          "votes": 4749,
+          "pct": 48.76,
+          "rank": 2
+        }
+      ],
+      "district": "의정부시제2선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 91109,
+      "voters": 12095,
+      "valid_votes": 12030,
+      "invalid_votes": 65,
+      "abstain": 79014,
+      "candidates": [
+        {
+          "name": "국은주",
+          "party": "새누리당",
+          "votes": 6788,
+          "pct": 56.43,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박돈영",
+          "party": "새정치민주연합",
+          "votes": 5242,
+          "pct": 43.57,
+          "rank": 2
+        }
+      ],
+      "district": "의정부시제3선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "의정부시",
+      "scope": "district_sigungu",
+      "electors": 91109,
+      "voters": 12095,
+      "valid_votes": 12030,
+      "invalid_votes": 65,
+      "abstain": 79014,
+      "candidates": [
+        {
+          "name": "국은주",
+          "party": "새누리당",
+          "votes": 6788,
+          "pct": 56.43,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박돈영",
+          "party": "새정치민주연합",
+          "votes": 5242,
+          "pct": 43.57,
+          "rank": 2
+        }
+      ],
+      "district": "의정부시제3선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 57145,
+      "voters": 9650,
+      "valid_votes": 9600,
+      "invalid_votes": 50,
+      "abstain": 47495,
+      "candidates": [
+        {
+          "name": "권태진",
+          "party": "새누리당",
+          "votes": 5577,
+          "pct": 58.09,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이병인",
+          "party": "새정치민주연합",
+          "votes": 4023,
+          "pct": 41.91,
+          "rank": 2
+        }
+      ],
+      "district": "광명시제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "경기도",
+      "sigungu": "광명시",
+      "scope": "district_sigungu",
+      "electors": 57145,
+      "voters": 9650,
+      "valid_votes": 9600,
+      "invalid_votes": 50,
+      "abstain": 47495,
+      "candidates": [
+        {
+          "name": "권태진",
+          "party": "새누리당",
+          "votes": 5577,
+          "pct": 58.09,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이병인",
+          "party": "새정치민주연합",
+          "votes": 4023,
+          "pct": 41.91,
+          "rank": 2
+        }
+      ],
+      "district": "광명시제1선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "전라남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 15702,
+      "voters": 7196,
+      "valid_votes": 7129,
+      "invalid_votes": 67,
+      "abstain": 8506,
+      "candidates": [
+        {
+          "name": "정정희",
+          "party": "새정치민주연합",
+          "votes": 3369,
+          "pct": 47.26,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이재인",
+          "party": "무소속",
+          "votes": 2533,
+          "pct": 35.53,
+          "rank": 2
+        },
+        {
+          "name": "설명수",
+          "party": "무소속",
+          "votes": 1227,
+          "pct": 17.21,
+          "rank": 3
+        }
+      ],
+      "district": "함평군제2선거구"
+    },
+    {
+      "sg_typecode": "5",
+      "sido": "전라남도",
+      "sigungu": "함평군",
+      "scope": "district_sigungu",
+      "electors": 15702,
+      "voters": 7196,
+      "valid_votes": 7129,
+      "invalid_votes": 67,
+      "abstain": 8506,
+      "candidates": [
+        {
+          "name": "정정희",
+          "party": "새정치민주연합",
+          "votes": 3369,
+          "pct": 47.26,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이재인",
+          "party": "무소속",
+          "votes": 2533,
+          "pct": 35.53,
+          "rank": 2
+        },
+        {
+          "name": "설명수",
+          "party": "무소속",
+          "votes": 1227,
+          "pct": 17.21,
+          "rank": 3
+        }
+      ],
+      "district": "함평군제2선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 45161,
+      "voters": 7651,
+      "valid_votes": 7623,
+      "invalid_votes": 28,
+      "abstain": 37510,
+      "candidates": [
+        {
+          "name": "이성국",
+          "party": "새누리당",
+          "votes": 3925,
+          "pct": 51.49,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김수정",
+          "party": "새정치민주연합",
+          "votes": 3698,
+          "pct": 48.51,
+          "rank": 2
+        }
+      ],
+      "district": "양천구가선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "서울특별시",
+      "sigungu": "양천구",
+      "scope": "district_sigungu",
+      "electors": 45161,
+      "voters": 7651,
+      "valid_votes": 7623,
+      "invalid_votes": 28,
+      "abstain": 37510,
+      "candidates": [
+        {
+          "name": "이성국",
+          "party": "새누리당",
+          "votes": 3925,
+          "pct": 51.49,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김수정",
+          "party": "새정치민주연합",
+          "votes": 3698,
+          "pct": 48.51,
+          "rank": 2
+        }
+      ],
+      "district": "양천구가선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 26262,
+      "voters": 5755,
+      "valid_votes": 5717,
+      "invalid_votes": 38,
+      "abstain": 20507,
+      "candidates": [
+        {
+          "name": "허승만",
+          "party": "무소속",
+          "votes": 2988,
+          "pct": 52.27,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김두세",
+          "party": "새누리당",
+          "votes": 2213,
+          "pct": 38.71,
+          "rank": 2
+        },
+        {
+          "name": "오해진",
+          "party": "새정치민주연합",
+          "votes": 516,
+          "pct": 9.03,
+          "rank": 3
+        }
+      ],
+      "district": "서구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "부산광역시",
+      "sigungu": "서구",
+      "scope": "district_sigungu",
+      "electors": 26262,
+      "voters": 5755,
+      "valid_votes": 5717,
+      "invalid_votes": 38,
+      "abstain": 20507,
+      "candidates": [
+        {
+          "name": "허승만",
+          "party": "무소속",
+          "votes": 2988,
+          "pct": 52.27,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김두세",
+          "party": "새누리당",
+          "votes": 2213,
+          "pct": 38.71,
+          "rank": 2
+        },
+        {
+          "name": "오해진",
+          "party": "새정치민주연합",
+          "votes": 516,
+          "pct": 9.03,
+          "rank": 3
+        }
+      ],
+      "district": "서구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 32691,
+      "voters": 5474,
+      "valid_votes": 5449,
+      "invalid_votes": 25,
+      "abstain": 27217,
+      "candidates": [
+        {
+          "name": "윤태한",
+          "party": "새누리당",
+          "votes": 3327,
+          "pct": 61.06,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김덕영",
+          "party": "새정치민주연합",
+          "votes": 2122,
+          "pct": 38.94,
+          "rank": 2
+        }
+      ],
+      "district": "사상구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "부산광역시",
+      "sigungu": "사상구",
+      "scope": "district_sigungu",
+      "electors": 32691,
+      "voters": 5474,
+      "valid_votes": 5449,
+      "invalid_votes": 25,
+      "abstain": 27217,
+      "candidates": [
+        {
+          "name": "윤태한",
+          "party": "새누리당",
+          "votes": 3327,
+          "pct": 61.06,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김덕영",
+          "party": "새정치민주연합",
+          "votes": 2122,
+          "pct": 38.94,
+          "rank": 2
+        }
+      ],
+      "district": "사상구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 42286,
+      "voters": 6148,
+      "valid_votes": 6115,
+      "invalid_votes": 33,
+      "abstain": 36138,
+      "candidates": [
+        {
+          "name": "배세식",
+          "party": "새누리당",
+          "votes": 3494,
+          "pct": 57.14,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이병학",
+          "party": "새정치민주연합",
+          "votes": 2621,
+          "pct": 42.86,
+          "rank": 2
+        }
+      ],
+      "district": "남구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "인천광역시",
+      "sigungu": "남구",
+      "scope": "district_sigungu",
+      "electors": 42286,
+      "voters": 6148,
+      "valid_votes": 6115,
+      "invalid_votes": 33,
+      "abstain": 36138,
+      "candidates": [
+        {
+          "name": "배세식",
+          "party": "새누리당",
+          "votes": 3494,
+          "pct": 57.14,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이병학",
+          "party": "새정치민주연합",
+          "votes": 2621,
+          "pct": 42.86,
+          "rank": 2
+        }
+      ],
+      "district": "남구다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 43057,
+      "voters": 6584,
+      "valid_votes": 6545,
+      "invalid_votes": 39,
+      "abstain": 36473,
+      "candidates": [
+        {
+          "name": "이익성",
+          "party": "새누리당",
+          "votes": 3872,
+          "pct": 59.16,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이종빈",
+          "party": "새정치민주연합",
+          "votes": 2673,
+          "pct": 40.84,
+          "rank": 2
+        }
+      ],
+      "district": "부평구나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "인천광역시",
+      "sigungu": "부평구",
+      "scope": "district_sigungu",
+      "electors": 43057,
+      "voters": 6584,
+      "valid_votes": 6545,
+      "invalid_votes": 39,
+      "abstain": 36473,
+      "candidates": [
+        {
+          "name": "이익성",
+          "party": "새누리당",
+          "votes": 3872,
+          "pct": 59.16,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이종빈",
+          "party": "새정치민주연합",
+          "votes": 2673,
+          "pct": 40.84,
+          "rank": 2
+        }
+      ],
+      "district": "부평구나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "울산광역시",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 38328,
+      "voters": 9993,
+      "valid_votes": 9945,
+      "invalid_votes": 48,
+      "abstain": 28335,
+      "candidates": [
+        {
+          "name": "천병태",
+          "party": "무소속",
+          "votes": 5645,
+          "pct": 56.76,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이재철",
+          "party": "새누리당",
+          "votes": 4300,
+          "pct": 43.24,
+          "rank": 2
+        }
+      ],
+      "district": "중구나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "울산광역시",
+      "sigungu": "중구",
+      "scope": "district_sigungu",
+      "electors": 38328,
+      "voters": 9993,
+      "valid_votes": 9945,
+      "invalid_votes": 48,
+      "abstain": 28335,
+      "candidates": [
+        {
+          "name": "천병태",
+          "party": "무소속",
+          "votes": 5645,
+          "pct": 56.76,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이재철",
+          "party": "새누리당",
+          "votes": 4300,
+          "pct": 43.24,
+          "rank": 2
+        }
+      ],
+      "district": "중구나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 67614,
+      "voters": 9711,
+      "valid_votes": 9674,
+      "invalid_votes": 37,
+      "abstain": 57903,
+      "candidates": [
+        {
+          "name": "김종혁",
+          "party": "새누리당",
+          "votes": 5091,
+          "pct": 52.63,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "채신덕",
+          "party": "새정치민주연합",
+          "votes": 4360,
+          "pct": 45.07,
+          "rank": 2
+        },
+        {
+          "name": "김인수",
+          "party": "무소속",
+          "votes": 223,
+          "pct": 2.31,
+          "rank": 3
+        }
+      ],
+      "district": "김포시나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경기도",
+      "sigungu": "김포시",
+      "scope": "district_sigungu",
+      "electors": 67614,
+      "voters": 9711,
+      "valid_votes": 9674,
+      "invalid_votes": 37,
+      "abstain": 57903,
+      "candidates": [
+        {
+          "name": "김종혁",
+          "party": "새누리당",
+          "votes": 5091,
+          "pct": 52.63,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "채신덕",
+          "party": "새정치민주연합",
+          "votes": 4360,
+          "pct": 45.07,
+          "rank": 2
+        },
+        {
+          "name": "김인수",
+          "party": "무소속",
+          "votes": 223,
+          "pct": 2.31,
+          "rank": 3
+        }
+      ],
+      "district": "김포시나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "충청북도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 12059,
+      "voters": 4041,
+      "valid_votes": 4016,
+      "invalid_votes": 25,
+      "abstain": 8018,
+      "candidates": [
+        {
+          "name": "윤해명",
+          "party": "무소속",
+          "votes": 1979,
+          "pct": 49.28,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이창규",
+          "party": "새정치민주연합",
+          "votes": 1170,
+          "pct": 29.13,
+          "rank": 2
+        },
+        {
+          "name": "이규정",
+          "party": "새누리당",
+          "votes": 867,
+          "pct": 21.59,
+          "rank": 3
+        }
+      ],
+      "district": "증평군가선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "충청북도",
+      "sigungu": "증평군",
+      "scope": "district_sigungu",
+      "electors": 12059,
+      "voters": 4041,
+      "valid_votes": 4016,
+      "invalid_votes": 25,
+      "abstain": 8018,
+      "candidates": [
+        {
+          "name": "윤해명",
+          "party": "무소속",
+          "votes": 1979,
+          "pct": 49.28,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이창규",
+          "party": "새정치민주연합",
+          "votes": 1170,
+          "pct": 29.13,
+          "rank": 2
+        },
+        {
+          "name": "이규정",
+          "party": "새누리당",
+          "votes": 867,
+          "pct": 21.59,
+          "rank": 3
+        }
+      ],
+      "district": "증평군가선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "전라남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 23721,
+      "voters": 7295,
+      "valid_votes": 7228,
+      "invalid_votes": 67,
+      "abstain": 16426,
+      "candidates": [
+        {
+          "name": "이재용",
+          "party": "무소속",
+          "votes": 2771,
+          "pct": 38.34,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "송지원",
+          "party": "무소속",
+          "votes": 1617,
+          "pct": 22.37,
+          "rank": 2
+        },
+        {
+          "name": "서조원",
+          "party": "무소속",
+          "votes": 1491,
+          "pct": 20.63,
+          "rank": 3
+        },
+        {
+          "name": "천정우",
+          "party": "무소속",
+          "votes": 1349,
+          "pct": 18.66,
+          "rank": 4
+        }
+      ],
+      "district": "목포시라선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "전라남도",
+      "sigungu": "목포시",
+      "scope": "district_sigungu",
+      "electors": 23721,
+      "voters": 7295,
+      "valid_votes": 7228,
+      "invalid_votes": 67,
+      "abstain": 16426,
+      "candidates": [
+        {
+          "name": "이재용",
+          "party": "무소속",
+          "votes": 2771,
+          "pct": 38.34,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "송지원",
+          "party": "무소속",
+          "votes": 1617,
+          "pct": 22.37,
+          "rank": 2
+        },
+        {
+          "name": "서조원",
+          "party": "무소속",
+          "votes": 1491,
+          "pct": 20.63,
+          "rank": 3
+        },
+        {
+          "name": "천정우",
+          "party": "무소속",
+          "votes": 1349,
+          "pct": 18.66,
+          "rank": 4
+        }
+      ],
+      "district": "목포시라선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "전라남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 10231,
+      "voters": 6596,
+      "valid_votes": 6526,
+      "invalid_votes": 70,
+      "abstain": 3635,
+      "candidates": [
+        {
+          "name": "최승환",
+          "party": "무소속",
+          "votes": 2026,
+          "pct": 31.05,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박인석",
+          "party": "무소속",
+          "votes": 1817,
+          "pct": 27.84,
+          "rank": 2
+        },
+        {
+          "name": "김동근",
+          "party": "새정치민주연합",
+          "votes": 1421,
+          "pct": 21.77,
+          "rank": 3
+        },
+        {
+          "name": "전남주",
+          "party": "무소속",
+          "votes": 1262,
+          "pct": 19.34,
+          "rank": 4
+        }
+      ],
+      "district": "신안군나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "전라남도",
+      "sigungu": "신안군",
+      "scope": "district_sigungu",
+      "electors": 10231,
+      "voters": 6596,
+      "valid_votes": 6526,
+      "invalid_votes": 70,
+      "abstain": 3635,
+      "candidates": [
+        {
+          "name": "최승환",
+          "party": "무소속",
+          "votes": 2026,
+          "pct": 31.05,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "박인석",
+          "party": "무소속",
+          "votes": 1817,
+          "pct": 27.84,
+          "rank": 2
+        },
+        {
+          "name": "김동근",
+          "party": "새정치민주연합",
+          "votes": 1421,
+          "pct": 21.77,
+          "rank": 3
+        },
+        {
+          "name": "전남주",
+          "party": "무소속",
+          "votes": 1262,
+          "pct": 19.34,
+          "rank": 4
+        }
+      ],
+      "district": "신안군나선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경상북도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 18778,
+      "voters": 10259,
+      "valid_votes": 10177,
+      "invalid_votes": 82,
+      "abstain": 8519,
+      "candidates": [
+        {
+          "name": "황유성",
+          "party": "무소속",
+          "votes": 2955,
+          "pct": 29.04,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김정희",
+          "party": "무소속",
+          "votes": 2912,
+          "pct": 28.61,
+          "rank": 2
+        },
+        {
+          "name": "도한민",
+          "party": "무소속",
+          "votes": 1971,
+          "pct": 19.37,
+          "rank": 3
+        },
+        {
+          "name": "신상규",
+          "party": "무소속",
+          "votes": 1442,
+          "pct": 14.17,
+          "rank": 4
+        },
+        {
+          "name": "황윤석",
+          "party": "무소속",
+          "votes": 897,
+          "pct": 8.81,
+          "rank": 5
+        }
+      ],
+      "district": "울진군다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경상북도",
+      "sigungu": "울진군",
+      "scope": "district_sigungu",
+      "electors": 18778,
+      "voters": 10259,
+      "valid_votes": 10177,
+      "invalid_votes": 82,
+      "abstain": 8519,
+      "candidates": [
+        {
+          "name": "황유성",
+          "party": "무소속",
+          "votes": 2955,
+          "pct": 29.04,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김정희",
+          "party": "무소속",
+          "votes": 2912,
+          "pct": 28.61,
+          "rank": 2
+        },
+        {
+          "name": "도한민",
+          "party": "무소속",
+          "votes": 1971,
+          "pct": 19.37,
+          "rank": 3
+        },
+        {
+          "name": "신상규",
+          "party": "무소속",
+          "votes": 1442,
+          "pct": 14.17,
+          "rank": 4
+        },
+        {
+          "name": "황윤석",
+          "party": "무소속",
+          "votes": 897,
+          "pct": 8.81,
+          "rank": 5
+        }
+      ],
+      "district": "울진군다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경상남도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 24538,
+      "voters": 10600,
+      "valid_votes": 10523,
+      "invalid_votes": 77,
+      "abstain": 13938,
+      "candidates": [
+        {
+          "name": "박종권",
+          "party": "무소속",
+          "votes": 5597,
+          "pct": 53.19,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이삼수",
+          "party": "새누리당",
+          "votes": 4926,
+          "pct": 46.81,
+          "rank": 2
+        }
+      ],
+      "district": "사천시라선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "경상남도",
+      "sigungu": "사천시",
+      "scope": "district_sigungu",
+      "electors": 24538,
+      "voters": 10600,
+      "valid_votes": 10523,
+      "invalid_votes": 77,
+      "abstain": 13938,
+      "candidates": [
+        {
+          "name": "박종권",
+          "party": "무소속",
+          "votes": 5597,
+          "pct": 53.19,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "이삼수",
+          "party": "새누리당",
+          "votes": 4926,
+          "pct": 46.81,
+          "rank": 2
+        }
+      ],
+      "district": "사천시라선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "강원도",
+      "sigungu": "",
+      "scope": "district",
+      "electors": 11052,
+      "voters": 4914,
+      "valid_votes": 4891,
+      "invalid_votes": 23,
+      "abstain": 6138,
+      "candidates": [
+        {
+          "name": "엄광남",
+          "party": "새누리당",
+          "votes": 1914,
+          "pct": 39.13,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "심형기",
+          "party": "무소속",
+          "votes": 1613,
+          "pct": 32.98,
+          "rank": 2
+        },
+        {
+          "name": "원재민",
+          "party": "새정치민주연합",
+          "votes": 1364,
+          "pct": 27.89,
+          "rank": 3
+        }
+      ],
+      "district": "홍천군다선거구"
+    },
+    {
+      "sg_typecode": "6",
+      "sido": "강원도",
+      "sigungu": "홍천군",
+      "scope": "district_sigungu",
+      "electors": 11052,
+      "voters": 4914,
+      "valid_votes": 4891,
+      "invalid_votes": 23,
+      "abstain": 6138,
+      "candidates": [
+        {
+          "name": "엄광남",
+          "party": "새누리당",
+          "votes": 1914,
+          "pct": 39.13,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "심형기",
+          "party": "무소속",
+          "votes": 1613,
+          "pct": 32.98,
+          "rank": 2
+        },
+        {
+          "name": "원재민",
+          "party": "새정치민주연합",
+          "votes": 1364,
+          "pct": 27.89,
+          "rank": 3
+        }
+      ],
+      "district": "홍천군다선거구"
+    }
+  ]
+}

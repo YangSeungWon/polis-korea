@@ -1,0 +1,55 @@
+{
+  "id": "byelection-2010-10-27",
+  "name": "2010년 10·27 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2010,
+  "date": "2010-10-27",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20101027",
+    "_note": "재보궐"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "광역단체장",
+      "sg_typecode": "3",
+      "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    },
+    {
+      "level": "교육감",
+      "sg_typecode": "11",
+      "scope": "sido"
+    }
+  ],
+  "archive": {
+    "page": "/archive/byelection-2010-10-27/",
+    "results_path": "data/results/byelection-2010-10-27.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "3",
+    "list_label": "확정",
+    "context_note": "정기 10·27 재보궐"
+  }
+}
