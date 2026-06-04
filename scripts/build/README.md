@@ -22,5 +22,6 @@
 | `rebuild_manifest.py` | manifest 재생성 |
 | `update_method.py` | 폴 method 갱신 |
 | `build_golden.py` | tests/golden 빌드 |
+| `sync_satellites_js.py` | data/parties/satellites.json → assets/parties.js SATELLITE_TO_MAIN sync |
 
 핵심 루틴: `build_polls` · `build_timeline` · `build_byelection`.

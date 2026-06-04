@@ -15,14 +15,10 @@
   Archive.ssh = (s) => (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[s] || s) : s;
   Archive.pcol = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#999';
 
-  // 위성정당 → 본정당 (의석 합산용). archive.js·build_timeline.py와 동일.
-  Archive.SATELLITE_TO_MAIN = {
-    '국민의미래': '국민의힘',
-    '더불어민주연합': '더불어민주당',
-    '미래한국당': '국민의힘',
-    '더불어시민당': '더불어민주당',
-  };
-  Archive.mainParty = (p) => Archive.SATELLITE_TO_MAIN[p] || p;
+  // 위성정당 → 본정당: assets/parties.js 의 SATELLITE_TO_MAIN/mainParty 전역 사용.
+  // 단일 출처: data/parties/satellites.json → sync_satellites_js.py가 parties.js로 sync.
+  Archive.SATELLITE_TO_MAIN = (typeof SATELLITE_TO_MAIN !== 'undefined') ? SATELLITE_TO_MAIN : {};
+  Archive.mainParty = (typeof mainParty === 'function') ? mainParty : ((p) => Archive.SATELLITE_TO_MAIN[p] || p);
 
   // 폴 필터: pollsWindow (meta) 안 period_start 인 폴만 통과. window 없으면 1년 전 ~ 회차일.
   Archive.filterPoll = function (poll, meta) {

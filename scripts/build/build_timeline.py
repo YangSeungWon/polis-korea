@@ -143,14 +143,11 @@ def sido_winners_from_new_schema(races: list[dict], kind: str) -> dict:
     return out
 
 
-# 위성정당 → 본정당 매핑 (총선 비례·지역구 합산용)
-SATELLITE_TO_MAIN = {
-    '국민의미래': '국민의힘',
-    '더불어민주연합': '더불어민주당',
-    '미래한국당': '미래통합당',
-    '더불어시민당': '더불어민주당',
-    '열린민주당': '더불어민주당',  # 21대 위성성
-}
+# 위성정당 → 본정당 매핑 — data/parties/satellites.json 단일 출처.
+# JS 측은 scripts/build/sync_satellites_js.py가 assets/parties.js에 sync.
+SATELLITE_TO_MAIN = json.loads(
+    (ROOT / "data/parties/satellites.json").read_text(encoding="utf-8")
+)["satellite_to_main"]
 
 
 def party_total_seats(races, kind, n):

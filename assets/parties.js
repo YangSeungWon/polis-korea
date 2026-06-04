@@ -230,3 +230,16 @@ const SIDO_HEX_LAYOUT = {
 };
 
 const SIDO_HEX_BLANKS = [];
+
+// === SATELLITE_TO_MAIN auto-generated ===
+// data/parties/satellites.json에서 sync. 손으로 수정하지 말 것 —
+// scripts/build/sync_satellites_js.py 재실행으로 갱신.
+const SATELLITE_TO_MAIN = {
+  '미래한국당': '미래통합당',
+  '더불어시민당': '더불어민주당',
+  '열린민주당': '더불어민주당',
+  '국민의미래': '국민의힘',
+  '더불어민주연합': '더불어민주당',
+};
+const mainParty = (p) => SATELLITE_TO_MAIN[p] || p;
+// === /SATELLITE_TO_MAIN ===

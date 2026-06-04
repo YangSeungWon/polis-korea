@@ -216,7 +216,7 @@ const PARTY_COLORS = { "더불어민주당": "#152484", "국민의힘": "#E61E2B
 function partyColor(party) { ... }   // 위성정당도 본정당 색으로
 ```
 
-신규 정당 등장 시 추가. `SATELLITE_TO_MAIN` 매핑은 archive.js·build_timeline.py에 중복 정의 — 단일화 후보.
+신규 정당 등장 시 추가. **위성정당 → 본정당 매핑**은 `data/parties/satellites.json` 단일 출처 — Python `build_timeline.py`는 JSON 직접 read, JS는 `scripts/build/sync_satellites_js.py`가 `assets/parties.js`에 `SATELLITE_TO_MAIN` const 블록을 sync (마커 사이 자동 갱신).
 
 ## 10. 출처 (`data/sources.json`)
 
