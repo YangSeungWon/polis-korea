@@ -155,16 +155,24 @@ def build(election_id_meta: str) -> dict:
         sys.exit(1)
     election_id = f"00{sg_id}"  # NEC 포털 electionId (예: 20260603 → 0020260603)
     menu = meta.get("nec", {}).get("live_menu", "VCCP09")
-    # 통합 시도 alias → canonical (사이트 표준명). merge_from(옛 시도명)뿐 아니라
-    # NEC 개표 포털이 쓰는 nec_sgg("전남광주통합특별시")도 canonical("전남광주특별시")로.
+    # 통합 시도 alias → canonical. **광역단체장(tc=3)에만 적용**.
+    # 행정 통합은 광역장 1명만 선출 통합이고, 기초장·의원·교육감은 옛 시도 단위로
+    # 자치구·시군이 그대로 존속 → tc=4/5/6/11은 raw sido(광주광역시·전라남도) 유지해야
+    # hex(옛 시도 분리)와 자연 매칭. 통합 적용을 분기 안 하면 dashboard에서 매번
+    # split 로직 패치하는 hack 반복.
     merges = {}
     for m in meta.get("sido_merge", []):
         for a in m.get("merge_from", []):
             merges[a] = m["canonical"]
         if m.get("nec_sgg"):
             merges[m["nec_sgg"]] = m["canonical"]
-    def canon(sd):
-        return merges.get(sd, sd)
+    # 광역단체장(3)·교육감(11): 통합 시도 1명 선출 → canonical merge.
+    # 기초장(4)·광역의원(5)·기초의원(6): 자치구·시군 그대로 → raw sido 유지.
+    MERGED_TC = {"3", "11"}
+    def canon_for(tc):
+        def fn(sd):
+            return merges.get(sd, sd) if tc in MERGED_TC else sd
+        return fn
 
     s = make_session(election_id, menu)
     races: list[dict] = []
@@ -189,8 +197,8 @@ def build(election_id_meta: str) -> dict:
                 # 통합 시도: '소계'(결합 race)만 채택, 광주/전남 sub-breakdown(SD≠SGG)은 drop
                 if sd != sgg and sd != "소계":
                     continue
-                r = base_race(row, tc, canon)
-                r["sido"] = canon(sgg if sd == "소계" else sd)
+                r = base_race(row, tc, canon_for(tc))
+                r["sido"] = canon_for(tc)(sgg if sd == "소계" else sd)
                 r["scope"] = "sido"
                 races.append(r); kept += 1
             print(f"  ✓ {o['level']} (sido): {kept} races", file=sys.stderr)
@@ -207,7 +215,7 @@ def build(election_id_meta: str) -> dict:
                     # WIW=구명 sub-row는 drop.
                     if row.get("WIWNAME") != "소계":
                         continue
-                    r = base_race(row, tc, canon)
+                    r = base_race(row, tc, canon_for(tc))
                     r["sigungu"] = row.get("SGGNAME", "")
                     r["scope"] = "sigungu"
                     races.append(r); kept += 1
@@ -224,8 +232,8 @@ def build(election_id_meta: str) -> dict:
                     sgg = row.get("SGGNAME", "")
                     if not sgg or sgg in ("합계", "소계"):
                         continue
-                    r = base_race(row, tc, canon)
-                    r["sido"] = canon(row.get("SDNAME", ""))
+                    r = base_race(row, tc, canon_for(tc))
+                    r["sido"] = canon_for(tc)(row.get("SDNAME", ""))
                     r["district"] = sgg
                     r["sigungu"] = row.get("WIWNAME", "")  # 선거구가 걸린 시군구
                     r["scope"] = "district"
@@ -240,8 +248,8 @@ def build(election_id_meta: str) -> dict:
                     for row in rows:
                         if row.get("WIWNAME") != "소계":
                             continue
-                        r = base_race(row, tc, canon)
-                        r["sido"] = canon(row.get("SDNAME", ""))
+                        r = base_race(row, tc, canon_for(tc))
+                        r["sido"] = canon_for(tc)(row.get("SDNAME", ""))
                         r["district"] = row.get("SGGNAME", "")
                         r["sigungu"] = ""
                         r["scope"] = "district"
