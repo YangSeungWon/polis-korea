@@ -176,7 +176,7 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
   const inner = W - padL - padR;
   const span = tEnd - tStart;
   const xOf = (d) => padL + ((new Date(d) - tStart) / span) * inner;
-  const kindCol = (k) => ({ presidential: '#c8553d', national_assembly: '#2e7d6f', local: '#b07e3d' }[k] || '#999');
+  const kindCol = (k) => ({ presidential: '#5b3a8b', national_assembly: '#2d6e7e', local: '#8c5a1f' }[k] || '#999');
   const kindShort = { presidential: '대선', national_assembly: '총선', local: '지선' };
 
   // 라인
@@ -211,10 +211,14 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     `;
   });
 
-  // 오늘 — 수직선만 강조. dot/라벨은 회차 dot과 충돌 피해 제거.
+  // 오늘 — 가는 hairline + 위·아래 끝 캡(짧은 굵은 선) + 위쪽에 작은 '오늘' 라벨.
   const tx = xOf(today.toISOString().slice(0, 10));
+  const yT = 8, yB = H - 8;
   const todayDot = `
-    <line x1="${tx}" y1="6" x2="${tx}" y2="${H - 6}" stroke="#0a0e1a" stroke-width="1.6" opacity="0.55"/>
+    <line x1="${tx}" y1="${yT + 8}" x2="${tx}" y2="${yB - 8}" stroke="#0a0e1a" stroke-width="0.8" opacity="0.55"/>
+    <line x1="${tx - 6}" y1="${yT}" x2="${tx + 6}" y2="${yT}" stroke="#0a0e1a" stroke-width="2"/>
+    <line x1="${tx - 6}" y1="${yB}" x2="${tx + 6}" y2="${yB}" stroke="#0a0e1a" stroke-width="2"/>
+    <text x="${tx}" y="${yT - 1}" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0e1a" font-family="Pretendard, system-ui, sans-serif">오늘</text>
   `;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
@@ -232,7 +236,7 @@ function polarToXY(cx, cy, r, angle) {
 
 // 모바일용 시간축 list — 시간 역순(미래→과거). 오늘 위치에 가로선 마커.
 function renderTimelineList(rounds, today) {
-  const kindCol = (k) => ({ presidential: '#c8553d', national_assembly: '#2e7d6f', local: '#b07e3d' }[k] || '#999');
+  const kindCol = (k) => ({ presidential: '#5b3a8b', national_assembly: '#2d6e7e', local: '#8c5a1f' }[k] || '#999');
   const kindShort = { presidential: '대선', national_assembly: '총선', local: '지선' };
   const unitOf = { presidential: '대', national_assembly: '대', local: '회' };
   const todayStr = today.toISOString().slice(0, 10);
