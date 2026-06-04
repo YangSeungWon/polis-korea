@@ -14,26 +14,40 @@
     "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
   },
   "offices": [
-    {"level": "국회의원", "sg_typecode": "2", "scope": "district"},
-    {"level": "비례대표", "sg_typecode": "7", "scope": "nation"}
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    },
+    {
+      "level": "비례대표",
+      "sg_typecode": "7",
+      "scope": "nation"
+    }
   ],
   "archive": {
     "page": "/archive/22nd-general-2024/",
     "results_path": "data/results/22nd-general-2024.json",
     "polls_path": "data/polls/aggregated_22nd.json",
     "exit_poll_path": "data/exit_polls/22nd-general-2024.json",
-    "polls_window": ["2023-04-10", "2024-04-09"],
+    "polls_window": [
+      "2023-04-10",
+      "2024-04-09"
+    ],
     "sg_typecode": "2",
     "proportional_sg_typecode": "7",
     "list_label": "확정",
-    "context_note": "윤석열 정부 중간평가",
+    "context_note": "더불어민주당 161 · 국민의힘 90 · 더불어민주연합 14 · 국민의미래 18 · 조국혁신당 12 · 새로운미래 1 · 개혁신당 2 · 진보당 1",
     "wiki_url": "https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%A0%9C22%EB%8C%80_%EA%B5%AD%ED%9A%8C%EC%9D%98%EC%9B%90_%EC%84%A0%EA%B1%B0"
   },
   "wiki_exit_polls": {
     "kind": "general",
     "templates": [
-      {"page": "틀:대한민국 제22대 국회의원 선거 출구조사",
-       "key": "kep_per_broadcaster", "name": "방송 3사 의석 예측"}
+      {
+        "page": "틀:대한민국 제22대 국회의원 선거 출구조사",
+        "key": "kep_per_broadcaster",
+        "name": "방송 3사 의석 예측"
+      }
     ],
     "_note": "총선은 의석 예측 형태 — 한 template에 KBS/MBC/SBS row, 각자 별도 source로 생성."
   },

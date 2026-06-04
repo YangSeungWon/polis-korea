@@ -15,25 +15,40 @@
     "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
   },
   "offices": [
-    {"level": "대통령", "sg_typecode": "1", "scope": "nation"}
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
   ],
   "archive": {
     "page": "/archive/21st-pres-2025/",
     "results_path": "data/results/21st-pres-2025.json",
     "polls_path": "data/polls/aggregated_21pres.json",
     "exit_poll_path": "data/exit_polls/21st-pres-2025.json",
-    "polls_window": ["2024-12-03", "2025-06-02"],
+    "polls_window": [
+      "2024-12-03",
+      "2025-06-02"
+    ],
     "sg_typecode": "1",
     "proportional_sg_typecode": null,
     "list_label": "확정",
-    "context_note": "윤석열 탄핵 인용 후 조기 대선",
+    "context_note": "이재명(더불어민주당) 49.42% / 김문수 41.15% — 윤석열 탄핵 인용(2025-04-04) 후 조기 대선",
     "wiki_url": "https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%A0%9C21%EB%8C%80_%EB%8C%80%ED%86%B5%EB%A0%B9_%EC%84%A0%EA%B1%B0"
   },
   "wiki_exit_polls": {
     "kind": "pres",
     "templates": [
-      {"page": "틀:대한민국 제21대 대통령 선거 출구조사", "key": "kep_3sa", "name": "KBS·MBC·SBS 공동 출구조사"},
-      {"page": "틀:대한민국 제21대 대통령 선거 출구조사 2", "key": "jtbc", "name": "JTBC 예측조사"}
+      {
+        "page": "틀:대한민국 제21대 대통령 선거 출구조사",
+        "key": "kep_3sa",
+        "name": "KBS·MBC·SBS 공동 출구조사"
+      },
+      {
+        "page": "틀:대한민국 제21대 대통령 선거 출구조사 2",
+        "key": "jtbc",
+        "name": "JTBC 예측조사"
+      }
     ]
   },
   "results_file": "data/results/21st-pres-2025.json",
