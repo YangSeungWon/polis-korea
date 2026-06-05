@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-04T15:46:11",
+    "generated_at": "2026-06-05T12:48:18",
     "election": "21st-pres-2025",
     "election_date": "2025-06-03",
     "blackout_start": "2025-05-28",
@@ -11,9 +11,9 @@
     "stats": {
       "total_polls_meta": 499,
       "matched_parsed": 455,
-      "emitted_records": 364,
+      "emitted_records": 359,
       "skipped_no_pdf": 44,
-      "skipped_no_race": 129,
+      "skipped_no_race": 130,
       "skipped_pre_campaign": 34
     }
   },
@@ -3004,56 +3004,6 @@
       ]
     },
     {
-      "ntt_id": "16207",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16207&menuNo=200467",
-      "agency": "메타보이스(주)",
-      "co_agency": "",
-      "requester": "전국단위 신문/기타 : 매일노동뉴스/한국노동조합총연맹",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1008.0,
-      "response_rate": 2.7,
-      "contact_rate": 24.0,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-05-12",
-      "period_end": "2025-05-13",
-      "reg_date": "2025-05-23",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "노동과제를 잘 해결할 대선 후보",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 47.0
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 38.4
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 8.2
-        },
-        {
-          "name": "황교안",
-          "party": "무소속",
-          "pct": 1.9
-        },
-        {
-          "name": "송진호",
-          "party": "무소속",
-          "pct": 0.2
-        }
-      ]
-    },
-    {
       "ntt_id": "16233",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16233&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -4329,7 +4279,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "[표 14] (판세와 후보평가) 각 후보에 대한 호감: (종합) 호감이 간다",
+      "table_title": "[표 10] (판세와 후보평가) 대선 투표 후보",
       "candidates": [
         {
           "name": "이재명",
@@ -4339,12 +4289,22 @@
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 29.0
+          "pct": 25.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 25.0
+          "pct": 8.0
+        },
+        {
+          "name": "황교안",
+          "party": "무소속",
+          "pct": 1.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
         }
       ]
     },
@@ -11274,56 +11234,6 @@
       ]
     },
     {
-      "ntt_id": "15956",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15956&menuNo=200467",
-      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
-      "co_agency": "",
-      "requester": "방송사 : CBS",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1003.0,
-      "response_rate": 6.8,
-      "contact_rate": 50.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-04-04",
-      "period_end": "2025-04-05",
-      "reg_date": "2025-04-05",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "8",
-      "table_title": "범진보 후보 대권 주자 선호도",
-      "candidates": [
-        {
-          "name": "김경수",
-          "party": "더불어민주당",
-          "pct": 2.4
-        },
-        {
-          "name": "김동연",
-          "party": "더불어민주당",
-          "pct": 5.8
-        },
-        {
-          "name": "김부겸",
-          "party": "더불어민주당",
-          "pct": 4.2
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 10.9
-        },
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 46.1
-        }
-      ]
-    },
-    {
       "ntt_id": "15959",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15959&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -11730,56 +11640,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "15941",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15941&menuNo=200467",
-      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
-      "co_agency": "",
-      "requester": "방송사 : CBS",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1006.0,
-      "response_rate": 6.3,
-      "contact_rate": 54.9,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-28",
-      "period_end": "2025-03-29",
-      "reg_date": "2025-03-29",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "7",
-      "table_title": "범진보 후보 대권 주자 선호도",
-      "candidates": [
-        {
-          "name": "김경수",
-          "party": "더불어민주당",
-          "pct": 3.0
-        },
-        {
-          "name": "김동연",
-          "party": "더불어민주당",
-          "pct": 5.4
-        },
-        {
-          "name": "김부겸",
-          "party": "더불어민주당",
-          "pct": 5.7
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 9.5
-        },
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 47.2
         }
       ]
     },
@@ -14344,56 +14204,6 @@
       ]
     },
     {
-      "ntt_id": "15739",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15739&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 803.0,
-      "response_rate": 12.9,
-      "contact_rate": 43.4,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2025-02-14",
-      "period_end": "2025-02-15",
-      "reg_date": "2025-02-15",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "표 3. 범진보 진영 대선 후보 선호도",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 60.0
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
-        },
-        {
-          "name": "김동연",
-          "party": "더불어민주당",
-          "pct": 6.0
-        },
-        {
-          "name": "김부겸",
-          "party": "더불어민주당",
-          "pct": 3.0
-        },
-        {
-          "name": "김경수",
-          "party": "더불어민주당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
       "ntt_id": "15735",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15735&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -14439,56 +14249,6 @@
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "15735",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15735&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 805.0,
-      "response_rate": 17.0,
-      "contact_rate": 41.7,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2025-02-13",
-      "period_end": "2025-02-14",
-      "reg_date": "2025-02-14",
-      "sido": "전라남도",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "표 3. 범진보 진영 대선 후보 선호도",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 61.0
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
-        },
-        {
-          "name": "김동연",
-          "party": "더불어민주당",
-          "pct": 5.0
-        },
-        {
-          "name": "김부겸",
-          "party": "더불어민주당",
-          "pct": 2.0
-        },
-        {
-          "name": "김경수",
-          "party": "더불어민주당",
           "pct": 1.0
         }
       ]
@@ -16120,46 +15880,6 @@
       "reg_date": "2025-01-21",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "7",
-      "table_title": "제21대 대선 다자대결①",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 45.1
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 29.9
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 5.8
-        }
-      ]
-    },
-    {
-      "ntt_id": "15651",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15651&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "통신사 : KPI뉴스",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 4.7,
-      "contact_rate": 28.3,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-01-19",
-      "period_end": "2025-01-20",
-      "reg_date": "2025-01-21",
-      "sido": "",
-      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
@@ -16205,6 +15925,46 @@
           "name": "",
           "party": "민주당",
           "pct": 0.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "15651",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15651&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "통신사 : KPI뉴스",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 4.7,
+      "contact_rate": 28.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-01-19",
+      "period_end": "2025-01-20",
+      "reg_date": "2025-01-21",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "7",
+      "table_title": "제21대 대선 다자대결①",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 45.1
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 29.9
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.8
         }
       ]
     },
@@ -16800,46 +16560,6 @@
       "reg_date": "2025-01-14",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "9",
-      "table_title": "제21대 대선 다자대결②",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 48.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 25.2
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 4.8
-        }
-      ]
-    },
-    {
-      "ntt_id": "15625",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15625&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "통신사 : KPI뉴스",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 4.7,
-      "contact_rate": 27.6,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-01-12",
-      "period_end": "2025-01-13",
-      "reg_date": "2025-01-14",
-      "sido": "",
-      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
@@ -16885,6 +16605,46 @@
           "name": "",
           "party": "민주당",
           "pct": 0.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "15625",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15625&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "통신사 : KPI뉴스",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 4.7,
+      "contact_rate": 27.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-01-12",
+      "period_end": "2025-01-13",
+      "reg_date": "2025-01-14",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "9",
+      "table_title": "제21대 대선 다자대결②",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 48.0
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 25.2
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 4.8
         }
       ]
     },
