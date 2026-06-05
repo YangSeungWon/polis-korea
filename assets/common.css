@@ -140,6 +140,15 @@ body {
 }
 .hdr-link:hover { color: var(--ink); }
 .hdr-link.is-current { color: var(--ink); border-bottom-color: var(--ink); }
+/* urgent slot — assets/nav.js가 phase 따라 채움. 평시엔 빈 span. */
+.hdr-link-urgent {
+  padding: 2px 8px; border-radius: 10px; font-weight: 600; font-size: 12px;
+  border-bottom: none; background: rgba(230,30,43,0.08); color: #c81825;
+}
+.hdr-link-urgent:hover { background: rgba(230,30,43,0.15); color: #a01018; }
+.hdr-link-urgent-election { background: #e61e2b; color: #fff; animation: navpulse 1.6s infinite; }
+.hdr-link-urgent-election:hover { background: #c81825; color: #fff; }
+@keyframes navpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(230,30,43,0.55); } 50% { box-shadow: 0 0 0 6px rgba(230,30,43,0); } }
 .countdown {
   font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;
   padding: 4px 10px; border: 1px solid var(--rule-strong); border-radius: 2px;
