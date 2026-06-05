@@ -38,43 +38,48 @@ from build_polls import (  # noqa: E402
     SIDO_CANONICAL, canon_sido, parse_survey_period, to_float, is_self_poll,
 )
 
-# ── 21대 대선 설정 ──────────────────────────────────────────────────────────
-ELECTION_DATE = date(2025, 6, 3)
-BLACKOUT_START = date(2025, 5, 28)        # 6일 전 0시부터 공표 금지
-BLACKOUT_END = datetime(2025, 6, 3, 18, 0)  # 투표 마감 18시 해제
-# 21대 대선은 윤석열 탄핵(2024-12-03 비상계엄 → 2025-04-04 파면)으로 치러진 보궐성 대선.
-# NESDC가 "제21대 대통령선거" gubun으로 등록한 데엔 그 이전의 정례 "차기 대선주자/정당지지"
-# 사운딩(2022~2024 봄 — 사실상 22대 총선기 조사)도 섞여 timeline을 오염시킨다. 계엄 사태로
-# 이 선거가 사실상 점화된 2024-12-03을 campaign window 하한으로 잡아 그 이전 조사는 제외.
-CAMPAIGN_START = date(2024, 12, 3)
-# 본선 후보 5인 + 경선 국면 가상 ballot도 6인 안팎. 7인+ 다후보 표는 단일선택 ballot이 아니라
+# ── 대선 회차 config (--n으로 선택; main에서 전역 override) ─────────────────────
+# 본선 후보 + 경선 국면 ballot도 6인 안팎. 7인+ 다후보 표는 단일선택 ballot이 아니라
 # "차기주자 선호도/적합도" 매트릭스라 horse-race에서 제외.
 MAX_BALLOT = 6
 
-# 대선 주자 roster — 최종 5인 + 경선·단일화 국면에 horse-race 문항에 실제 등장한 주요 주자.
-# 이 set으로 후보 race를 anchor(OCR 잡음·정책응답·성향응답 제거)하고 정당 backfill에 사용.
-# party는 조사 시점 소속/계열 기준 (parsed에 party 없을 때만 적용).
-ROSTER: dict[str, str] = {
-    # 최종 본선 5인 (data/results/presidential_21.json)
-    "이재명": "더불어민주당",
-    "김문수": "국민의힘",
-    "이준석": "개혁신당",
-    "권영국": "민주노동당",
-    "송진호": "무소속",
-    # 경선·단일화 국면 주요 주자 (본선 전 다자/가상대결에 등장)
-    "한덕수": "무소속",
-    "홍준표": "국민의힘",
-    "한동훈": "국민의힘",
-    "안철수": "국민의힘",
-    "오세훈": "국민의힘",
-    "나경원": "국민의힘",
-    "유승민": "국민의힘",
-    "황교안": "국민의힘",
-    "김동연": "더불어민주당",
-    "김경수": "더불어민주당",
-    "김부겸": "더불어민주당",
-    "이낙연": "새로운미래",
+# roster — 본선 + 경선·단일화 국면 horse-race 문항에 실제 등장한 주요 주자.
+# 이 set으로 후보 race anchor(OCR 잡음·정책/성향응답 제거) + 정당 backfill. party는 조사 시점 소속.
+ROSTER_21 = {  # 21대(2025) — 최종 5인 + 경선/단일화 주자
+    "이재명": "더불어민주당", "김문수": "국민의힘", "이준석": "개혁신당",
+    "권영국": "민주노동당", "송진호": "무소속",
+    "한덕수": "무소속", "홍준표": "국민의힘", "한동훈": "국민의힘", "안철수": "국민의힘",
+    "오세훈": "국민의힘", "나경원": "국민의힘", "유승민": "국민의힘", "황교안": "국민의힘",
+    "김동연": "더불어민주당", "김경수": "더불어민주당", "김부겸": "더불어민주당", "이낙연": "새로운미래",
 }
+ROSTER_20 = {  # 20대(2022) — 본선(윤석열·이재명·심상정) + 사퇴/경선 주자
+    "이재명": "더불어민주당", "윤석열": "국민의힘", "심상정": "정의당",
+    "안철수": "국민의당", "김동연": "새로운물결",
+    "홍준표": "국민의힘", "유승민": "국민의힘", "원희룡": "국민의힘", "최재형": "국민의힘",
+    "이낙연": "더불어민주당", "정세균": "더불어민주당", "추미애": "더불어민주당", "박용진": "더불어민주당",
+    "오준호": "기본소득당", "허경영": "국가혁명당", "김재연": "진보당", "조원진": "우리공화당",
+}
+PRES_CONFIG = {
+    # 21대는 윤석열 탄핵(2024-12-03 계엄→2025-04-04 파면) 보궐성 대선 — campaign_start로
+    # 그 이전 정례 "차기 대선주자" 사운딩(timeline 오염) 컷. 20대는 정규 일정이라 선거 전년부터.
+    "21": {"election": "21st-pres-2025", "date": date(2025, 6, 3),
+           "blackout": (date(2025, 5, 28), datetime(2025, 6, 3, 18, 0)),
+           "campaign_start": date(2024, 12, 3), "roster": ROSTER_21, "anchor": {"이재명"},
+           "csv": "data/raw/nesdc_21pres_polls.csv", "out": "data/polls/aggregated_21pres.json"},
+    "20": {"election": "20th-pres-2022", "date": date(2022, 3, 9),
+           "blackout": (date(2022, 3, 3), datetime(2022, 3, 9, 18, 0)),
+           "campaign_start": date(2021, 1, 1), "roster": ROSTER_20, "anchor": {"이재명", "윤석열"},
+           "csv": "data/raw/nesdc_20pres_polls.csv", "out": "data/polls/aggregated_20pres.json"},
+}
+
+# 모듈 전역 (21대 default; main이 --n config로 override) — accept/build 함수가 전역 참조.
+_C = PRES_CONFIG["21"]
+ELECTION_ID = _C["election"]
+ELECTION_DATE = _C["date"]
+BLACKOUT_START, BLACKOUT_END = _C["blackout"]
+CAMPAIGN_START = _C["campaign_start"]
+ROSTER: dict[str, str] = _C["roster"]
+ANCHOR: set = _C["anchor"]
 
 # horse-race가 아닌 문항 reject (후보 이름이 섞여 있어도 헤드라인 지지율 아님).
 # 적합도/경선 = 같은 당 주자 비교, 양자 = 2자 가상, 단일화 = 시나리오, 가상대결 = pre-nomination,
@@ -156,7 +161,7 @@ def accept_candidate_race(q: dict) -> list[dict] | None:
     # roster 후보만 남김 — OCR 잡음(더민/불어주당)·정책응답(보수/진보)·기호 제거
     keep = [c for c in cands
             if c.get("name", "") in ROSTER and c.get("pct") is not None]
-    if not (3 <= len(keep) <= MAX_BALLOT) or not any(c["name"] == "이재명" for c in keep):
+    if not (3 <= len(keep) <= MAX_BALLOT) or not any(c["name"] in ANCHOR for c in keep):
         return None
     if not normalize_pcts(keep):
         return None
@@ -258,7 +263,7 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
     return {
         "_meta": {
             "generated_at": now.isoformat(timespec="seconds"),
-            "election": "21st-pres-2025",
+            "election": ELECTION_ID,
             "election_date": ELECTION_DATE.isoformat(),
             "blackout_start": BLACKOUT_START.isoformat(),
             "blackout_end": BLACKOUT_END.isoformat(timespec="minutes"),
@@ -357,16 +362,25 @@ def postprocess(polls: list[dict]) -> list[dict]:
 
 
 def main():
+    global ELECTION_ID, ELECTION_DATE, BLACKOUT_START, BLACKOUT_END, CAMPAIGN_START, ROSTER, ANCHOR
     ap = argparse.ArgumentParser(description="대선 여론조사 aggregated.json build")
-    ap.add_argument("--csv", default="data/raw/nesdc_21pres_polls.csv",
-                    help="NESDC 메타 CSV path")
+    ap.add_argument("--n", default="21", choices=list(PRES_CONFIG), help="대선 회차 (21/20)")
+    ap.add_argument("--csv", help="override: NESDC 메타 CSV")
     ap.add_argument("--parsed", default="data/raw/parsed", help="parsed JSON 디렉터리")
-    ap.add_argument("--out", default="data/polls/aggregated_21pres.json", help="출력 JSON path")
+    ap.add_argument("--out", help="override: 출력 JSON path")
     args = ap.parse_args()
+    cfg = PRES_CONFIG[args.n]
+    ELECTION_ID = cfg["election"]
+    ELECTION_DATE = cfg["date"]
+    BLACKOUT_START, BLACKOUT_END = cfg["blackout"]
+    CAMPAIGN_START = cfg["campaign_start"]
+    ROSTER = cfg["roster"]
+    ANCHOR = cfg["anchor"]
 
-    csv_path = Path(args.csv) if Path(args.csv).is_absolute() else ROOT / args.csv
+    csv_path = Path(args.csv or cfg["csv"]) if Path(args.csv or cfg["csv"]).is_absolute() else ROOT / (args.csv or cfg["csv"])
     parsed_dir = Path(args.parsed) if Path(args.parsed).is_absolute() else ROOT / args.parsed
-    out_path = Path(args.out) if Path(args.out).is_absolute() else ROOT / args.out
+    out = args.out or cfg["out"]
+    out_path = Path(out) if Path(out).is_absolute() else ROOT / out
 
     out = build(csv_path, parsed_dir)
     out_path.parent.mkdir(parents=True, exist_ok=True)
