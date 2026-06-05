@@ -173,6 +173,14 @@ def main():
             if r["sg_id"] == SG_ID and canon_sido(r["sd"]) == sd and r["sg_typecode"] in TYPECODE_OFFICE:
                 match = r
                 break
+        # party-fallback — 광역/기초장·교육감(2/3/4/11) 매칭 없으면 같은 선거 다른 office
+        # (광역의원5·기초의원6·비례7 등)라도 party(jd)는 동일하므로 backfill용으로 채택.
+        # office 분류는 build가 {3,4,11}만 보므로 영향 없음.
+        if match is None:
+            for r in rows:
+                if r["sg_id"] == SG_ID and canon_sido(r["sd"]) == sd and r["jd"]:
+                    match = r
+                    break
         roster[key_str] = match or {}  # 빈 dict면 등록 후보 아님
         if match:
             n_match += 1

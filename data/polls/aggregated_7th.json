@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-05T21:16:05",
+    "generated_at": "2026-06-05T21:55:38",
     "election_date": "2026-06-03",
     "blackout_start": "2026-05-28",
     "blackout_end": "2026-06-03T18:00",
@@ -12,7 +12,7 @@
       "matched_parsed": 1191,
       "emitted_records": 387,
       "skipped_no_pdf": 232,
-      "skipped_no_candidates": 685
+      "skipped_no_candidates": 686
     }
   },
   "polls": [
@@ -1492,22 +1492,27 @@
         {
           "name": "문대림",
           "party": "더불어민주당",
-          "pct": 28.0
+          "pct": 36.3
         },
         {
           "name": "김방훈",
           "party": "자유한국당",
-          "pct": 1.3
+          "pct": 2.2
+        },
+        {
+          "name": "장성철",
+          "party": "바른미래당",
+          "pct": 0.3
         },
         {
           "name": "고은영",
           "party": "녹색당",
-          "pct": 0.3
+          "pct": 2.7
         },
         {
           "name": "원희룡",
           "party": "무소속",
-          "pct": 53.9
+          "pct": 42.4
         }
       ]
     },
@@ -4302,17 +4307,52 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "[Q5] 그럼 이번에는 영광군수 선거에서 누굴 지지하십니까? 순서는 기호순입니다",
+      "table_title": "4 . 설문 항목별 응답결과값",
       "candidates": [
         {
-          "name": "김준성",
+          "name": "하기억",
           "party": "더불어민주당",
-          "pct": 81.3
+          "pct": 12.8
         },
         {
-          "name": "김연관",
-          "party": "민주평화당",
-          "pct": 10.1
+          "name": "김성진",
+          "party": "더불어민주당",
+          "pct": 8.0
+        },
+        {
+          "name": "은희삼",
+          "party": "더불어민주당",
+          "pct": 6.5
+        },
+        {
+          "name": "김강헌",
+          "party": "무소속",
+          "pct": 6.3
+        },
+        {
+          "name": "김양모",
+          "party": "",
+          "pct": 11.9
+        },
+        {
+          "name": "김병원",
+          "party": "무소속",
+          "pct": 11.7
+        },
+        {
+          "name": "조삼차",
+          "party": "",
+          "pct": 7.2
+        },
+        {
+          "name": "신평섭",
+          "party": "",
+          "pct": 2.6
+        },
+        {
+          "name": "장기소",
+          "party": "무소속",
+          "pct": 7.5
         }
       ]
     },
@@ -5821,23 +5861,28 @@
       "office_level": "기초단체장",
       "office_label": "시장",
       "metric_type": "후보지지",
-      "table_no": "3",
-      "table_title": "사천시장 후보지지도",
+      "table_no": "5",
+      "table_title": "경남도의원 후보지지도",
       "candidates": [
         {
-          "name": "차상돈",
-          "party": "더불어민주당",
-          "pct": 37.2
-        },
-        {
-          "name": "송도근",
-          "party": "자유한국당",
-          "pct": 43.1
-        },
-        {
-          "name": "이종범",
+          "name": "손성호",
           "party": "무소속",
-          "pct": 8.0
+          "pct": 19.3
+        },
+        {
+          "name": "김현철",
+          "party": "",
+          "pct": 36.8
+        },
+        {
+          "name": "정갑수",
+          "party": "",
+          "pct": 10.5
+        },
+        {
+          "name": "최갑현",
+          "party": "",
+          "pct": 18.2
         }
       ]
     },
@@ -5861,23 +5906,53 @@
       "office_level": "기초단체장",
       "office_label": "군수",
       "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "해남군수 후보지지도",
+      "table_no": "4",
+      "table_title": "해남군의원 후보지지도",
       "candidates": [
         {
-          "name": "이길운",
+          "name": "김종숙",
           "party": "민주당",
-          "pct": 41.0
+          "pct": 25.9
         },
         {
-          "name": "명현관",
+          "name": "김병덕",
+          "party": "민주당",
+          "pct": 11.6
+        },
+        {
+          "name": "민홍일",
+          "party": "민주당",
+          "pct": 8.7
+        },
+        {
+          "name": "김호성",
           "party": "민주평화당",
-          "pct": 39.7
+          "pct": 6.5
         },
         {
-          "name": "이정우",
+          "name": "박동인",
+          "party": "민주평화당",
+          "pct": 11.3
+        },
+        {
+          "name": "고성동",
+          "party": "민주평화당",
+          "pct": 6.6
+        },
+        {
+          "name": "오영택",
+          "party": "정의당",
+          "pct": 5.6
+        },
+        {
+          "name": "이정확",
+          "party": "민중당",
+          "pct": 10.2
+        },
+        {
+          "name": "최영남",
           "party": "무소속",
-          "pct": 6.1
+          "pct": 1.5
         }
       ]
     },
@@ -6185,19 +6260,44 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "장성욱",
-          "party": "더불어민주당",
-          "pct": 34.4
+          "name": "남영래",
+          "party": "민주당",
+          "pct": 12.3
         },
         {
-          "name": "이희진",
+          "name": "김은희",
           "party": "자유한국당",
-          "pct": 48.6
+          "pct": 20.9
         },
         {
-          "name": "박병일",
+          "name": "황창식",
+          "party": "자유한국당",
+          "pct": 11.3
+        },
+        {
+          "name": "최재열",
+          "party": "자유한국당",
+          "pct": 12.8
+        },
+        {
+          "name": "하병두",
           "party": "무소속",
-          "pct": 7.9
+          "pct": 9.9
+        },
+        {
+          "name": "나영조",
+          "party": "무소속",
+          "pct": 7.4
+        },
+        {
+          "name": "류학래",
+          "party": "무소속",
+          "pct": 4.6
+        },
+        {
+          "name": "김성식",
+          "party": "무소속",
+          "pct": 11.3
         }
       ]
     },
@@ -6265,14 +6365,39 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "김태율",
-          "party": "더불어민주당",
-          "pct": 23.1
+          "name": "이경동",
+          "party": "민주당",
+          "pct": 11.0
         },
         {
-          "name": "이승율",
+          "name": "박기호",
           "party": "자유한국당",
-          "pct": 63.3
+          "pct": 21.2
+        },
+        {
+          "name": "김동욱",
+          "party": "자유한국당",
+          "pct": 19.8
+        },
+        {
+          "name": "조성호",
+          "party": "자유한국당",
+          "pct": 8.6
+        },
+        {
+          "name": "전종율",
+          "party": "무소속",
+          "pct": 8.8
+        },
+        {
+          "name": "김명석",
+          "party": "무소속",
+          "pct": 3.6
+        },
+        {
+          "name": "한영찬",
+          "party": "무소속",
+          "pct": 8.7
         }
       ]
     },
@@ -7305,14 +7430,14 @@
       "table_title": "4 . 설문 항목별 응답결과값",
       "candidates": [
         {
-          "name": "최승준",
+          "name": "장덕수",
           "party": "더불어민주당",
-          "pct": 48.8
+          "pct": 40.9
         },
         {
-          "name": "유승근",
+          "name": "김기철",
           "party": "자유한국당",
-          "pct": 40.8
+          "pct": 38.8
         }
       ]
     },
@@ -9993,22 +10118,22 @@
         {
           "name": "백군기",
           "party": "더불어민주당",
-          "pct": 55.1
+          "pct": 52.6
         },
         {
           "name": "정찬민",
           "party": "자유한국당",
-          "pct": 27.7
+          "pct": 28.4
         },
         {
-          "name": "김상국",
-          "party": "바른미래당",
-          "pct": 6.2
+          "name": "우태주",
+          "party": "",
+          "pct": 5.6
         },
         {
           "name": "유영욱",
           "party": "민주평화당",
-          "pct": 2.3
+          "pct": 1.7
         }
       ]
     },
@@ -10892,18 +11017,23 @@
       "office_level": "기초단체장",
       "office_label": "시장",
       "metric_type": "후보지지",
-      "table_no": "5",
-      "table_title": "지지 정당",
+      "table_no": "1",
+      "table_title": "다자 구도 지지 후보",
       "candidates": [
         {
           "name": "황명선",
-          "party": "더불어민주당",
-          "pct": 45.0
+          "party": "민주당",
+          "pct": 41.5
         },
         {
           "name": "백성현",
           "party": "자유한국당",
-          "pct": 39.0
+          "pct": 33.1
+        },
+        {
+          "name": "전낙운",
+          "party": "자유한국당",
+          "pct": 9.3
         }
       ]
     },
@@ -11623,8 +11753,13 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사 통계표",
+      "table_title": "조사결과 요약",
       "candidates": [
+        {
+          "name": "김현철",
+          "party": "",
+          "pct": 22.0
+        },
         {
           "name": "박수우",
           "party": "무소속",
@@ -11996,29 +12131,49 @@
       "table_title": "4. 조사항목별 결과",
       "candidates": [
         {
+          "name": "박용일",
+          "party": "",
+          "pct": 11.1
+        },
+        {
+          "name": "윤창원",
+          "party": "",
+          "pct": 7.1
+        },
+        {
+          "name": "이항진",
+          "party": "더불어민주당",
+          "pct": 7.8
+        },
+        {
+          "name": "장학진",
+          "party": "",
+          "pct": 5.6
+        },
+        {
           "name": "박남수",
           "party": "더불어민주당",
-          "pct": 6.5
+          "pct": 7.4
         },
         {
           "name": "원경희",
           "party": "무소속",
-          "pct": 34.9
+          "pct": 26.1
         },
         {
           "name": "이충우",
           "party": "자유한국당",
-          "pct": 26.9
+          "pct": 20.5
         },
         {
           "name": "이환설",
           "party": "",
-          "pct": 5.3
+          "pct": 1.7
         },
         {
           "name": "최봉순",
           "party": "",
-          "pct": 5.0
+          "pct": 1.9
         }
       ]
     },
@@ -12563,27 +12718,37 @@
         {
           "name": "권세도",
           "party": "더불어민주당",
-          "pct": 20.4
+          "pct": 18.7
         },
         {
           "name": "권오봉",
           "party": "무소속",
-          "pct": 20.6
+          "pct": 15.8
         },
         {
           "name": "김순빈",
           "party": "더불어민주당",
-          "pct": 5.6
+          "pct": 5.7
+        },
+        {
+          "name": "김영규",
+          "party": "더불어민주당",
+          "pct": 6.7
         },
         {
           "name": "김유화",
           "party": "",
-          "pct": 7.4
+          "pct": 6.5
+        },
+        {
+          "name": "이노철",
+          "party": "",
+          "pct": 3.7
         },
         {
           "name": "주철현",
           "party": "",
-          "pct": 26.1
+          "pct": 23.5
         }
       ]
     },
@@ -13138,27 +13303,17 @@
         {
           "name": "박우정",
           "party": "더불어민주당",
-          "pct": 39.3
-        },
-        {
-          "name": "유기상",
-          "party": "민주평화당",
-          "pct": 22.3
+          "pct": 45.1
         },
         {
           "name": "이호근",
           "party": "무소속",
-          "pct": 4.7
+          "pct": 8.7
         },
         {
           "name": "장명식",
           "party": "무소속",
-          "pct": 17.1
-        },
-        {
-          "name": "정원환",
-          "party": "무소속",
-          "pct": 5.0
+          "pct": 20.5
         }
       ]
     },
@@ -14944,27 +15099,42 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사결과 요약",
+      "table_title": "조사 통계표",
       "candidates": [
         {
           "name": "김학관",
           "party": "",
-          "pct": 13.6
+          "pct": 8.8
+        },
+        {
+          "name": "김한기",
+          "party": "",
+          "pct": 2.7
         },
         {
           "name": "박기봉",
           "party": "무소속",
-          "pct": 9.7
+          "pct": 4.5
+        },
+        {
+          "name": "심민",
+          "party": "무소속",
+          "pct": 23.7
         },
         {
           "name": "전상두",
           "party": "더불어민주당",
-          "pct": 21.8
+          "pct": 13.4
         },
         {
           "name": "한병락",
           "party": "무소속",
-          "pct": 33.1
+          "pct": 28.4
+        },
+        {
+          "name": "한인수",
+          "party": "",
+          "pct": 3.7
         }
       ]
     },
@@ -15164,27 +15334,42 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사결과 요약",
+      "table_title": "조사 통계표",
       "candidates": [
+        {
+          "name": "권광열",
+          "party": "",
+          "pct": 1.8
+        },
+        {
+          "name": "김창수",
+          "party": "무소속",
+          "pct": 12.3
+        },
+        {
+          "name": "박용근",
+          "party": "무소속",
+          "pct": 3.3
+        },
         {
           "name": "양성빈",
           "party": "",
-          "pct": 17.6
+          "pct": 12.7
         },
         {
           "name": "오재만",
           "party": "",
-          "pct": 14.8
+          "pct": 13.3
         },
         {
           "name": "이영숙",
           "party": "무소속",
-          "pct": 28.7
+          "pct": 23.7
         },
         {
           "name": "장영수",
           "party": "더불어민주당",
-          "pct": 25.6
+          "pct": 23.5
         }
       ]
     },
@@ -15639,8 +15824,13 @@
       "office_label": "시장",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사 통계표",
+      "table_title": "조사결과 요약",
       "candidates": [
+        {
+          "name": "김대중",
+          "party": "더불어민주당",
+          "pct": 17.1
+        },
         {
           "name": "김성중",
           "party": "",
@@ -15808,7 +15998,7 @@
         },
         {
           "name": "김영춘",
-          "party": "더불어민주당",
+          "party": "무소속",
           "pct": 8.7
         },
         {
@@ -17193,28 +17383,28 @@
       "office_level": "기초단체장",
       "office_label": "시장",
       "metric_type": "후보지지",
-      "table_no": "7",
-      "table_title": "평택시장선거 4자대결④",
+      "table_no": "5",
+      "table_title": "평택시장선거 4자대결②",
       "candidates": [
         {
-          "name": "정장선",
+          "name": "오명근",
           "party": "민주당",
-          "pct": 42.0
+          "pct": 30.5
         },
         {
           "name": "공재광",
           "party": "자유한국당",
-          "pct": 27.6
+          "pct": 29.5
         },
         {
           "name": "이근홍",
           "party": "국민의당",
-          "pct": 3.9
+          "pct": 4.3
         },
         {
           "name": "이동화",
           "party": "바른정당",
-          "pct": 4.1
+          "pct": 4.6
         }
       ]
     },
@@ -17448,7 +17638,7 @@
       "candidates": [
         {
           "name": "김영춘",
-          "party": "더불어민주당",
+          "party": "무소속",
           "pct": 12.0
         },
         {

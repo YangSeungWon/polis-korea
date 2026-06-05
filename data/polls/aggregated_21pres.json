@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-05T13:27:37",
+    "generated_at": "2026-06-05T21:55:39",
     "election": "21st-pres-2025",
     "election_date": "2025-06-03",
     "blackout_start": "2025-05-28",
@@ -11,9 +11,9 @@
     "stats": {
       "total_polls_meta": 499,
       "matched_parsed": 455,
-      "emitted_records": 359,
+      "emitted_records": 409,
       "skipped_no_pdf": 44,
-      "skipped_no_race": 130,
+      "skipped_no_race": 115,
       "skipped_pre_campaign": 34
     }
   },
@@ -39,7 +39,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "[표 a04] (6.3대선) 투표한 후보",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -57,9 +57,64 @@
           "pct": 9.0
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 2.0
+        },
+        {
           "name": "송진호",
           "party": "무소속",
           "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16308",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16308&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "주·월간지 : 시사IN",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 2000.0,
+      "response_rate": 33.6,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-06-04",
+      "period_end": "2025-06-05",
+      "reg_date": "2025-06-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 38.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 2.0
         }
       ]
     },
@@ -84,7 +139,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 5-1] 정당 지지도(재질문 미포함)",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -134,32 +189,82 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 2] 지지하는 정당",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 35.9
+          "pct": 40.2
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 23.7
+          "pct": 28.3
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 5.4
+          "pct": 6.7
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 4.1
+          "pct": 6.9
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.4
+          "pct": 1.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "16298",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16298&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 코리아타임스",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 14.6,
+      "contact_rate": 24.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-06-04",
+      "period_end": "2025-06-05",
+      "reg_date": "2025-06-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 52.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 8.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 2.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
         }
       ]
     },
@@ -184,7 +289,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 15] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -419,6 +524,111 @@
       ]
     },
     {
+      "ntt_id": "16290",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16290&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 3004.0,
+      "response_rate": 22.1,
+      "contact_rate": 20.5,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-31",
+      "period_end": "2025-06-02",
+      "reg_date": "2025-06-02",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 48.6
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 34.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.5
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "16290",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16290&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 3004.0,
+      "response_rate": 22.1,
+      "contact_rate": 20.5,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-31",
+      "period_end": "2025-06-02",
+      "reg_date": "2025-06-02",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 49.6
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 33.8
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 6.6
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.1
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.3
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.1
+        }
+      ]
+    },
+    {
       "ntt_id": "16289",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16289&menuNo=200467",
       "agency": "미디어토마토",
@@ -629,7 +839,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "스트레이트뉴스 대선 특집 여론조사 보고서",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -673,23 +883,23 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "대선 지지 후보",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 50.0
+          "pct": 57.4
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 37.3
+          "pct": 36.8
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 9.4
+          "pct": 3.4
         }
       ]
     },
@@ -1014,7 +1224,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 3. 대선 후보 지지도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -1032,13 +1242,13 @@
           "pct": 11.0
         },
         {
-          "name": "황교안",
-          "party": "무소속",
+          "name": "권영국",
+          "party": "민주노동당",
           "pct": 0.0
         },
         {
-          "name": "권영국",
-          "party": "민주노동당",
+          "name": "황교안",
+          "party": "국민의힘",
           "pct": 0.0
         }
       ]
@@ -1064,7 +1274,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 14. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1095,11 +1305,146 @@
           "name": "",
           "party": "기본소득당",
           "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16277",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16277&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2011.0,
+      "response_rate": 21.9,
+      "contact_rate": 22.9,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-26",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 50.0
         },
         {
           "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
+          "party": "국민의힘",
+          "pct": 32.8
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 1.9
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 8.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16277",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16277&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2011.0,
+      "response_rate": 21.9,
+      "contact_rate": 22.9,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-26",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 50.3
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 32.7
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.4
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.9
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "16276",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16276&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2000.0,
+      "response_rate": 22.4,
+      "contact_rate": 17.5,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-25",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "개혁신당",
+          "pct": 41.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 46.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 9.0
         }
       ]
     },
@@ -1124,7 +1469,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 11] 정당지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1223,8 +1568,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1250,6 +1595,61 @@
           "name": "",
           "party": "진보당",
           "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "16258",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16258&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : MBC경남",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1009.0,
+      "response_rate": 8.1,
+      "contact_rate": 43.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-26",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 39.3
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 48.8
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.3
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.8
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.1
         }
       ]
     },
@@ -1320,11 +1720,66 @@
       "reg_date": "2025-05-27",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 45.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 36.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 10.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.0
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16274",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16274&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 21.5,
+      "contact_rate": 25.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-25",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 12] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1394,6 +1849,96 @@
       ]
     },
     {
+      "ntt_id": "16271",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16271&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15008.0,
+      "response_rate": 11.6,
+      "contact_rate": 40.0,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-24",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 47.1
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 37.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.3
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 9.7
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "16271",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16271&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15008.0,
+      "response_rate": 11.6,
+      "contact_rate": 40.0,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-24",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 48.8
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 37.7
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 10.7
+        }
+      ]
+    },
+    {
       "ntt_id": "16257",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16257&menuNo=200467",
       "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
@@ -1413,8 +1958,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1440,6 +1985,61 @@
           "name": "",
           "party": "진보당",
           "pct": 1.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "16257",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16257&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1005.0,
+      "response_rate": 7.3,
+      "contact_rate": 47.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-26",
+      "period_end": "2025-05-27",
+      "reg_date": "2025-05-27",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 58.2
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 35.5
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 3.4
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.7
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
         }
       ]
     },
@@ -1650,61 +2250,11 @@
       "reg_date": "2025-05-26",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "대선후보지지도-계속",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 49.0
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 36.0
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 9.0
-        },
-        {
-          "name": "황교안",
-          "party": "무소속",
-          "pct": 0.0
-        },
-        {
-          "name": "송진호",
-          "party": "무소속",
-          "pct": 0.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "16259",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16259&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "통신사 : 뉴스1",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1005.0,
-      "response_rate": 19.3,
-      "contact_rate": 30.3,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-05-25",
-      "period_end": "2025-05-26",
-      "reg_date": "2025-05-26",
-      "sido": "",
-      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "14",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -1818,7 +2368,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -1868,8 +2418,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "후보 지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -1887,8 +2437,13 @@
           "pct": 7.9
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.7
+        },
+        {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
           "pct": 0.3
         },
         {
@@ -1918,7 +2473,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -1968,8 +2523,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "후보 지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -1987,8 +2542,13 @@
           "pct": 10.4
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.6
+        },
+        {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
           "pct": 0.1
         },
         {
@@ -2018,7 +2578,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -2068,8 +2628,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "후보 지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -2087,8 +2647,13 @@
           "pct": 10.8
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.1
+        },
+        {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
           "pct": 0.4
         },
         {
@@ -2258,7 +2823,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -2303,23 +2868,23 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "대선 지지 후보",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 47.7
+          "pct": 57.3
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 38.9
+          "pct": 36.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 10.2
+          "pct": 4.0
         }
       ]
     },
@@ -2343,8 +2908,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "대선 지지 후보",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -2383,7 +2948,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "8",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -2469,7 +3034,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "■ 표3. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -2524,27 +3089,32 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "■ 표4. 후보 선호도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 44.9
+          "pct": 62.1
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 35.9
+          "pct": 29.1
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 9.6
+          "pct": 1.3
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.1
         },
         {
           "name": "황교안",
-          "party": "무소속",
-          "pct": 0.4
+          "party": "국민의힘",
+          "pct": 0.1
         },
         {
           "name": "송진호",
@@ -2573,8 +3143,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "대선후보지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -2592,8 +3162,13 @@
           "pct": 11.0
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.0
+        },
+        {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
           "pct": 0.0
         },
         {
@@ -2624,31 +3199,36 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 2. 대선 후보 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 49.0
+          "pct": 41.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 35.0
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 5.0
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 11.0
+          "pct": 6.0
         },
         {
           "name": "",
-          "party": "노동당",
+          "party": "진보당",
           "pct": 1.0
         },
         {
           "name": "",
-          "party": "무소속",
+          "party": "기본소득당",
           "pct": 0.0
         }
       ]
@@ -2764,27 +3344,87 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 49.547
+          "pct": 49.6
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 24.227
+          "pct": 31.6
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.67
+          "pct": 2.2
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.72
+          "pct": 8.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16244",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16244&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2004.0,
+      "response_rate": 18.9,
+      "contact_rate": 23.3,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-23",
+      "period_end": "2025-05-24",
+      "reg_date": "2025-05-24",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 50.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 30.5
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.2
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.6
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.5
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.1
         }
       ]
     },
@@ -2808,8 +3448,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -2835,6 +3475,61 @@
           "name": "",
           "party": "진보당",
           "pct": 0.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "16238",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16238&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1001.0,
+      "response_rate": 7.0,
+      "contact_rate": 49.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-23",
+      "period_end": "2025-05-24",
+      "reg_date": "2025-05-24",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 47.3
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 39.6
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.6
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.5
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.3
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
         }
       ]
     },
@@ -2934,22 +3629,37 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "[표 10] 대선후보 TV 토론에서 잘한 후보",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 28.0
+          "pct": 49.0
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 13.0
+          "pct": 34.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 20.0
+          "pct": 8.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.0
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 1.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
         }
       ]
     },
@@ -2974,7 +3684,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 12] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -3004,73 +3714,18 @@
       ]
     },
     {
-      "ntt_id": "16233",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16233&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "16232",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16232&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1002.0,
-      "response_rate": 17.8,
-      "contact_rate": 40.4,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-05-20",
-      "period_end": "2025-05-22",
-      "reg_date": "2025-05-22",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "●제21대대통령선거사전여론조사: 2024년 5월이후",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 23.0
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 3.0
-        },
-        {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 17.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 3.0
-        },
-        {
-          "name": "안철수",
-          "party": "국민의힘",
-          "pct": 2.0
-        },
-        {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 2.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "16233",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16233&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1002.0,
-      "response_rate": 17.8,
-      "contact_rate": 40.4,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-05-20",
+      "sample_size": 2005.0,
+      "response_rate": 18.5,
+      "contact_rate": 23.2,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-21",
       "period_end": "2025-05-22",
       "reg_date": "2025-05-22",
       "sido": "",
@@ -3079,42 +3734,177 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도 (현재 지지하는 정당)",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 37.0
+          "pct": 50.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 37.0
+          "pct": 31.8
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 4.0
+          "pct": 2.1
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.0
+          "pct": 8.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16232",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16232&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2005.0,
+      "response_rate": 18.5,
+      "contact_rate": 23.2,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-21",
+      "period_end": "2025-05-22",
+      "reg_date": "2025-05-22",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 50.5
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 30.6
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.2
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.6
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.6
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "16231",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16231&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-22",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 18.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16231",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16231&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-22",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
         },
         {
           "name": "",
           "party": "진보당",
           "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 0.4
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
         }
       ]
     },
@@ -3139,7 +3929,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 2. 대선 후보 지지도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -3157,8 +3947,13 @@
           "pct": 11.0
         },
         {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.0
+        },
+        {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
           "pct": 0.0
         },
         {
@@ -3189,7 +3984,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 11. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -3219,11 +4014,6 @@
         {
           "name": "",
           "party": "기본소득당",
-          "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
           "pct": 0.0
         }
       ]
@@ -3430,6 +4220,96 @@
           "name": "",
           "party": "사회민주당",
           "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "16222",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16222&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-21",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 18.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16222",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16222&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-21",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
         }
       ]
     },
@@ -3854,6 +4734,106 @@
       ]
     },
     {
+      "ntt_id": "16215",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16215&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2007.0,
+      "response_rate": 20.0,
+      "contact_rate": 23.7,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-19",
+      "period_end": "2025-05-20",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 31.7
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 1.7
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 7.7
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "16215",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16215&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2007.0,
+      "response_rate": 20.0,
+      "contact_rate": 23.7,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-19",
+      "period_end": "2025-05-20",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 51.5
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 29.9
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.7
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 0.8
+        }
+      ]
+    },
+    {
       "ntt_id": "16212",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16212&menuNo=200467",
       "agency": "(주)엠브레인퍼블릭",
@@ -3939,6 +4919,186 @@
       ]
     },
     {
+      "ntt_id": "16211",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16211&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15009.0,
+      "response_rate": 9.8,
+      "contact_rate": 44.4,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-17",
+      "period_end": "2025-05-20",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 50.4
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 34.6
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.7
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 7.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "16211",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16211&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15009.0,
+      "response_rate": 9.8,
+      "contact_rate": 44.4,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-17",
+      "period_end": "2025-05-20",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 52.3
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 35.1
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 9.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16210",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16210&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 18.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16210",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16210&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
       "ntt_id": "16208",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16208&menuNo=200467",
       "agency": "한길리서치",
@@ -3993,7 +5153,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -4038,8 +5198,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "3",
-      "table_title": "이재명/김문수/이준석 3자대결",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -4049,12 +5209,12 @@
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 38.5
+          "pct": 7.7
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 7.7
+          "pct": 1.9
         }
       ]
     },
@@ -4279,7 +5439,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "[표 10] (판세와 후보평가) 대선 투표 후보",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -4298,13 +5458,68 @@
         },
         {
           "name": "황교안",
-          "party": "무소속",
+          "party": "국민의힘",
+          "pct": 1.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
           "pct": 1.0
         },
         {
           "name": "송진호",
           "party": "무소속",
           "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16200",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16200&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-19",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
         }
       ]
     },
@@ -4419,7 +5634,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "■ 표2. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -4445,11 +5660,6 @@
           "name": "",
           "party": "진보당",
           "pct": 0.5
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
         }
       ]
     },
@@ -4474,27 +5684,112 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "■ 표4. 후보 지지도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 47.7
+          "pct": 67.4
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 33.3
+          "pct": 22.8
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 6.8
+          "pct": 1.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16189",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16189&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-18",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 51.0
         },
         {
-          "name": "황교안",
+          "name": "김문수",
           "party": "국민의힘",
-          "pct": 0.1
+          "pct": 27.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16189",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16189&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 3000.0,
+      "response_rate": 31.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-18",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 25.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
         }
       ]
     },
@@ -4619,27 +5914,72 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "여론조사꽃제115차CATI조사결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 49.549
+          "pct": 50.9
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 25.724
+          "pct": 32.0
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 7.89
+          "pct": 2.7
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.32
+          "pct": 5.9
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16194",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16194&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2007.0,
+      "response_rate": 17.3,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-16",
+      "period_end": "2025-05-17",
+      "reg_date": "2025-05-17",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 71.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 22.9
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 1.5
         }
       ]
     },
@@ -4663,8 +6003,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -4713,28 +6053,33 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "대통령 후보 지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 49.2
+          "pct": 61.4
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 36.4
+          "pct": 32.6
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 9.4
+          "pct": 2.5
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.4
         },
         {
           "name": "황교안",
-          "party": "무소속",
-          "pct": 1.2
+          "party": "국민의힘",
+          "pct": 0.2
         },
         {
           "name": "송진호",
@@ -4824,18 +6169,68 @@
       ]
     },
     {
-      "ntt_id": "16181",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16181&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "16180",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16180&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1004.0,
-      "response_rate": 16.4,
-      "contact_rate": 40.7,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-05-13",
+      "sample_size": 2012.0,
+      "response_rate": 19.5,
+      "contact_rate": 23.5,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-14",
+      "period_end": "2025-05-15",
+      "reg_date": "2025-05-15",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.3
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 31.3
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.1
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.3
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16180",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16180&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2012.0,
+      "response_rate": 19.5,
+      "contact_rate": 23.5,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-14",
       "period_end": "2025-05-15",
       "reg_date": "2025-05-15",
       "sido": "",
@@ -4844,37 +6239,22 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "●제21대대통령선거사전여론조사: 2024년 5월이후",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 23.0
+          "pct": 71.1
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 23.2
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 3.0
-        },
-        {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 17.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 3.0
-        },
-        {
-          "name": "안철수",
-          "party": "국민의힘",
-          "pct": 2.0
-        },
-        {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 2.0
+          "pct": 1.4
         }
       ]
     },
@@ -5005,11 +6385,66 @@
       "reg_date": "2025-05-15",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 46.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 31.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 8.0
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 1.0
+        },
+        {
+          "name": "황교안",
+          "party": "국민의힘",
+          "pct": 1.0
+        },
+        {
+          "name": "송진호",
+          "party": "무소속",
+          "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16177",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16177&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 18.3,
+      "contact_rate": 30.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-13",
+      "period_end": "2025-05-15",
+      "reg_date": "2025-05-15",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 12] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -5443,7 +6878,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -5488,8 +6923,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "3",
-      "table_title": "이재명/김문수/이준석 3자대결",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -5499,12 +6934,12 @@
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 29.5
+          "pct": 6.4
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 6.4
+          "pct": 1.0
         }
       ]
     },
@@ -5879,6 +7314,196 @@
       ]
     },
     {
+      "ntt_id": "16146",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16146&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2004.0,
+      "response_rate": 20.0,
+      "contact_rate": 23.6,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 30.6
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.1
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 5.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "16146",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16146&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2004.0,
+      "response_rate": 20.0,
+      "contact_rate": 23.6,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-12",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 71.7
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 21.6
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "16145",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16145&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15003.0,
+      "response_rate": 9.8,
+      "contact_rate": 38.4,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-10",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 49.3
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 36.2
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.8
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 6.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16145",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16145&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15003.0,
+      "response_rate": 9.8,
+      "contact_rate": 38.4,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-10",
+      "period_end": "2025-05-13",
+      "reg_date": "2025-05-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 85.1
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 4.6
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 3.5
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 2.2
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 1.9
+        }
+      ]
+    },
+    {
       "ntt_id": "16141",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16141&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -5899,7 +7524,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -5948,8 +7573,8 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "대선후보지지도",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -6298,7 +7923,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -6343,23 +7968,28 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "4",
-      "table_title": "이재명/김문수/이준석 3자대결",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 50.5
+          "pct": 58.9
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 30.8
+          "pct": 23.4
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 8.8
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 8.1
+          "pct": 4.6
         }
       ]
     },
@@ -6419,27 +8049,77 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 46.649
+          "pct": 52.5
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 27.325
+          "pct": 30.4
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.37
+          "pct": 3.2
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.02
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16128",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16128&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2002.0,
+      "response_rate": 17.5,
+      "contact_rate": 24.7,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-09",
+      "period_end": "2025-05-10",
+      "reg_date": "2025-05-10",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 54.1
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 20.6
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 6.9
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 24.6
         }
       ]
     },
@@ -6463,8 +8143,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -6490,6 +8170,51 @@
           "name": "",
           "party": "진보당",
           "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "16125",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16125&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1002.0,
+      "response_rate": 7.1,
+      "contact_rate": 48.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-09",
+      "period_end": "2025-05-10",
+      "reg_date": "2025-05-10",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 45.9
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 19.9
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 7.7
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 21.6
         }
       ]
     },
@@ -6605,11 +8330,56 @@
       "reg_date": "2025-05-09",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 48.0
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 19.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 14.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16115",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16115&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 3000.0,
+      "response_rate": 18.3,
+      "contact_rate": 28.8,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-05-06",
+      "period_end": "2025-05-08",
+      "reg_date": "2025-05-09",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 14] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -6635,6 +8405,96 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16114",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16114&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2006.0,
+      "response_rate": 19.2,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-07",
+      "period_end": "2025-05-08",
+      "reg_date": "2025-05-08",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.8
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "16114",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16114&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2006.0,
+      "response_rate": 19.2,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-07",
+      "period_end": "2025-05-08",
+      "reg_date": "2025-05-08",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 51.4
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 28.1
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.7
         }
       ]
     },
@@ -6765,11 +8625,56 @@
       "reg_date": "2025-05-08",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 43.0
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 23.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 12.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16110",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16110&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "케이스탯리서치",
+      "requester": "조사기관 자체/조사기관 자체/조사기관 자체/조사기관 자체 : (주)한국리서치/케이스탯리서치/(주)코리아리서치인터내셔널/(주)엠브레인퍼블릭",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 22.1,
+      "contact_rate": 30.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-05",
+      "period_end": "2025-05-07",
+      "reg_date": "2025-05-08",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 12] 정당지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -6818,8 +8723,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -6850,11 +8755,6 @@
           "name": "",
           "party": "기본소득당",
           "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
         }
       ]
     },
@@ -6879,7 +8779,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 2. 대선 후보 지지도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -6887,19 +8787,14 @@
           "pct": 50.0
         },
         {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 11.0
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 34.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 6.0
-        },
-        {
-          "name": "한덕수",
-          "party": "무소속",
-          "pct": 23.0
+          "pct": 7.0
         }
       ]
     },
@@ -6923,8 +8818,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -6950,6 +8845,146 @@
           "name": "",
           "party": "진보당",
           "pct": 1.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "16089",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16089&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : MBC경남",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1032.0,
+      "response_rate": 7.0,
+      "contact_rate": 50.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-05",
+      "period_end": "2025-05-06",
+      "reg_date": "2025-05-07",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 40.4
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 17.4
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.9
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 28.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "16100",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16100&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2010.0,
+      "response_rate": 18.6,
+      "contact_rate": 23.4,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-05",
+      "period_end": "2025-05-06",
+      "reg_date": "2025-05-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.5
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 33.4
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.5
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "16100",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16100&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2010.0,
+      "response_rate": 18.6,
+      "contact_rate": 23.4,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-05",
+      "period_end": "2025-05-06",
+      "reg_date": "2025-05-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 50.9
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 28.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 5.9
+        },
+        {
+          "name": "한동훈",
+          "party": "국민의힘",
+          "pct": 12.6
         }
       ]
     },
@@ -7070,11 +9105,61 @@
       "reg_date": "2025-05-06",
       "sido": "",
       "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 52.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.6
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "16096",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16096&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15001.0,
+      "response_rate": 9.1,
+      "contact_rate": 38.0,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-05-03",
+      "period_end": "2025-05-06",
+      "reg_date": "2025-05-06",
+      "sido": "",
+      "sigungu": "",
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "여론조사꽃대선15K ARS 여론조사(5차) 결과표",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -7383,8 +9468,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -7414,6 +9499,51 @@
       ]
     },
     {
+      "ntt_id": "16083",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16083&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 7.0,
+      "contact_rate": 48.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-05-04",
+      "period_end": "2025-05-05",
+      "reg_date": "2025-05-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 51.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 15.4
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 7.1
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 22.4
+        }
+      ]
+    },
+    {
       "ntt_id": "16088",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16088&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -7434,7 +9564,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -7460,11 +9590,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
         }
       ]
     },
@@ -7489,7 +9614,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 2. 대선 후보 선호도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -7699,7 +9824,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -7754,27 +9879,22 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 3. 대선 후보 선호도",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 47.0
+          "pct": 49.0
         },
         {
           "name": "김문수",
           "party": "국민의힘",
-          "pct": 13.0
+          "pct": 33.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
-          "pct": 4.0
-        },
-        {
-          "name": "한덕수",
-          "party": "무소속",
-          "pct": 23.0
+          "pct": 9.0
         }
       ]
     },
@@ -7799,27 +9919,87 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "여론조사꽃제113차CATI조사결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 45.546
+          "pct": 49.7
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 29.327
+          "pct": 34.5
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 7.69
+          "pct": 2.9
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.43
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "16082",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16082&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2010.0,
+      "response_rate": 15.9,
+      "contact_rate": 25.3,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-05-02",
+      "period_end": "2025-05-03",
+      "reg_date": "2025-05-03",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 47.3
+        },
+        {
+          "name": "한덕수",
+          "party": "무소속",
+          "pct": 19.0
+        },
+        {
+          "name": "한동훈",
+          "party": "국민의힘",
+          "pct": 9.1
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 6.4
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 3.0
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 1.7
         }
       ]
     },
@@ -8039,6 +10219,56 @@
       ]
     },
     {
+      "ntt_id": "16076",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16076&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2002.0,
+      "response_rate": 18.0,
+      "contact_rate": 23.3,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-04-30",
+      "period_end": "2025-05-01",
+      "reg_date": "2025-05-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 49.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.1
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.3
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
+        }
+      ]
+    },
+    {
       "ntt_id": "16073",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16073&menuNo=200467",
       "agency": "미디어토마토",
@@ -8134,6 +10364,56 @@
       ]
     },
     {
+      "ntt_id": "16072",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16072&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2009.0,
+      "response_rate": 17.3,
+      "contact_rate": 23.8,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-04-28",
+      "period_end": "2025-04-29",
+      "reg_date": "2025-04-29",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 49.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 33.8
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.3
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.3
+        }
+      ]
+    },
+    {
       "ntt_id": "16071",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16071&menuNo=200467",
       "agency": "(주)여론조사꽃",
@@ -8150,36 +10430,36 @@
       "reg_date": "2025-04-29",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "여론조사꽃대선15K ARS 여론조사(4차) 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
-          "name": "이재명",
+          "name": "",
           "party": "더불어민주당",
-          "pct": 47.8
+          "pct": 48.3
         },
         {
-          "name": "한동훈",
+          "name": "",
           "party": "국민의힘",
-          "pct": 11.1
+          "pct": 38.5
         },
         {
-          "name": "한덕수",
-          "party": "무소속",
-          "pct": 11.0
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.1
         },
         {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 7.3
+          "name": "",
+          "party": "개혁신당",
+          "pct": 3.6
         },
         {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 5.6
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
         }
       ]
     },
@@ -8394,27 +10674,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 45.945
+          "pct": 48.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 26.429
+          "pct": 31.3
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.17
+          "pct": 3.0
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.32
+          "pct": 2.4
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.6
         }
       ]
     },
@@ -8438,8 +10723,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -8588,7 +10873,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -8633,23 +10918,68 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "3",
-      "table_title": "이재명/한덕수/이준석 3자대결",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 45.9
+          "pct": 46.8
         },
         {
           "name": "한덕수",
           "party": "무소속",
-          "pct": 27.2
+          "pct": 5.0
         },
         {
           "name": "이준석",
           "party": "개혁신당",
+          "pct": 16.6
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
           "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "16060",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16060&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 3000.0,
+      "response_rate": 20.5,
+      "contact_rate": 25.8,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-04-22",
+      "period_end": "2025-04-24",
+      "reg_date": "2025-04-25",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 46.0
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 27.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 7.0
         }
       ]
     },
@@ -8674,7 +11004,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 12] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -8899,73 +11229,18 @@
       ]
     },
     {
-      "ntt_id": "16049",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16049&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "16052",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16052&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1005.0,
-      "response_rate": 16.5,
-      "contact_rate": 39.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-04-22",
-      "period_end": "2025-04-24",
-      "reg_date": "2025-04-24",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "조사완료 가중적용 장래 정치 지도자 선호도 (자유응답/주관식) 모름",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 35.0
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 9.0
-        },
-        {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 5.0
-        },
-        {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "16049",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16049&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1005.0,
-      "response_rate": 16.5,
-      "contact_rate": 39.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-04-22",
+      "sample_size": 3008.0,
+      "response_rate": 18.3,
+      "contact_rate": 23.3,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-04-21",
       "period_end": "2025-04-24",
       "reg_date": "2025-04-24",
       "sido": "",
@@ -8974,42 +11249,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도 (현재 지지하는 정당)",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 37.0
+          "pct": 50.5
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 37.0
+          "pct": 31.9
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 4.0
+          "pct": 3.2
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.0
+          "pct": 2.7
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 0.4
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
+          "pct": 0.6
         }
       ]
     },
@@ -9129,7 +11394,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 16. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -9160,11 +11425,6 @@
           "name": "",
           "party": "기본소득당",
           "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
         }
       ]
     },
@@ -9293,7 +11553,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -9338,23 +11598,28 @@
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
-      "table_no": "6",
-      "table_title": "이재명/한덕수/이준석 3자대결",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 52.5
+          "pct": 82.2
         },
         {
-          "name": "한덕수",
-          "party": "무소속",
-          "pct": 24.3
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 4.4
         },
         {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 5.6
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 1.9
+        },
+        {
+          "name": "권영국",
+          "party": "민주노동당",
+          "pct": 0.8
         }
       ]
     },
@@ -9539,27 +11804,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "여론조사꽃제111차CATI조사결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 43.545
+          "pct": 49.1
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 26.926
+          "pct": 31.1
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.49
+          "pct": 4.7
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 1.93
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
         }
       ]
     },
@@ -9583,8 +11853,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -9649,47 +11919,52 @@
       ]
     },
     {
-      "ntt_id": "16018",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16018&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "16020",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16020&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 14.8,
-      "contact_rate": 41.7,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-04-15",
+      "sample_size": 3014.0,
+      "response_rate": 16.5,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-04-14",
       "period_end": "2025-04-17",
       "reg_date": "2025-04-17",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "●장래정치지도자선호도–2021년 10월이후",
+      "table_title": "정당 지지도",
       "candidates": [
         {
-          "name": "이재명",
+          "name": "",
           "party": "더불어민주당",
-          "pct": 25.0
+          "pct": 52.0
         },
         {
-          "name": "홍준표",
+          "name": "",
           "party": "국민의힘",
-          "pct": 12.0
+          "pct": 30.5
         },
         {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 4.1
         },
         {
-          "name": "유승민",
-          "party": "국민의힘",
+          "name": "",
+          "party": "개혁신당",
           "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.7
         }
       ]
     },
@@ -9763,7 +12038,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -9835,6 +12110,56 @@
           "name": "",
           "party": "진보당",
           "pct": 1.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "16007",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=16007&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15004.0,
+      "response_rate": 10.2,
+      "contact_rate": 33.8,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-04-12",
+      "period_end": "2025-04-15",
+      "reg_date": "2025-04-15",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 49.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.3
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.9
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
         }
       ]
     },
@@ -10124,27 +12449,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.943
+          "pct": 49.6
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 29.026
+          "pct": 30.1
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.69
+          "pct": 3.1
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.61
+          "pct": 2.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.3
         }
       ]
     },
@@ -10168,8 +12498,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -10219,7 +12549,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -10250,11 +12580,56 @@
           "name": "",
           "party": "기본소득당",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15991",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15991&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1020.0,
+      "response_rate": 13.3,
+      "contact_rate": 37.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-04-10",
+      "period_end": "2025-04-11",
+      "reg_date": "2025-04-11",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 46.0
         },
         {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 15.0
+        },
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 4.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 29.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 14.0
         }
       ]
     },
@@ -10279,32 +12654,17 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 14] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
-          "party": "더불어민주당",
-          "pct": 36.0
-        },
-        {
-          "name": "",
           "party": "국민의힘",
-          "pct": 31.0
-        },
-        {
-          "name": "",
-          "party": "조국혁신당",
           "pct": 8.0
         },
         {
           "name": "",
-          "party": "개혁신당",
-          "pct": 3.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 1.0
+          "party": "더불어민주당",
+          "pct": 28.0
         }
       ]
     },
@@ -10355,51 +12715,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "15985",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15985&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1005.0,
-      "response_rate": 14.9,
-      "contact_rate": 38.2,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-04-08",
-      "period_end": "2025-04-10",
-      "reg_date": "2025-04-10",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "●장래정치지도자선호도–2021년 10월이후",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 25.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 12.0
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
-        },
-        {
-          "name": "유승민",
-          "party": "국민의힘",
-          "pct": 2.0
         }
       ]
     },
@@ -10474,7 +12789,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 9] 정당 기준 대선 후보 지지",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -10500,11 +12815,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 2.0
         }
       ]
     },
@@ -10529,7 +12839,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -10560,11 +12870,41 @@
           "name": "",
           "party": "기본소득당",
           "pct": 0.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15977",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15977&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "정책연구원 : 진보정책연구원",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 1000.0,
+      "response_rate": 5.4,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-04-04",
+      "period_end": "2025-04-07",
+      "reg_date": "2025-04-09",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 40.0
         },
         {
           "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
+          "party": "더불어민주당",
+          "pct": 19.0
         }
       ]
     },
@@ -10688,7 +13028,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -10869,7 +13209,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -10899,11 +13239,6 @@
         {
           "name": "",
           "party": "기본소득당",
-          "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
           "pct": 0.0
         }
       ]
@@ -11099,7 +13434,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -11130,11 +13465,6 @@
           "name": "",
           "party": "기본소득당",
           "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
         }
       ]
     },
@@ -11159,27 +13489,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.541
+          "pct": 49.1
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 26.829
+          "pct": 28.9
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.99
+          "pct": 5.9
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.12
+          "pct": 3.8
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.9
         }
       ]
     },
@@ -11203,8 +13538,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -11230,6 +13565,56 @@
           "name": "",
           "party": "진보당",
           "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "15956",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15956&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
+      "co_agency": "",
+      "requester": "방송사 : CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1003.0,
+      "response_rate": 6.8,
+      "contact_rate": 50.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-04-04",
+      "period_end": "2025-04-05",
+      "reg_date": "2025-04-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 2.4
+        },
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 5.8
+        },
+        {
+          "name": "김부겸",
+          "party": "더불어민주당",
+          "pct": 4.2
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 10.9
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 46.1
         }
       ]
     },
@@ -11519,27 +13904,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 39.542
+          "pct": 50.7
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 28.526
+          "pct": 30.5
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 8.99
+          "pct": 4.3
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.23
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.4
         }
       ]
     },
@@ -11613,8 +14003,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -11644,117 +14034,52 @@
       ]
     },
     {
-      "ntt_id": "15938",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15938&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "15941",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15941&menuNo=200467",
+      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "방송사 : CBS",
       "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 13.0,
-      "contact_rate": 43.7,
+      "method": "무선 ARS",
+      "sample_size": 1006.0,
+      "response_rate": 6.3,
+      "contact_rate": 54.9,
       "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-25",
-      "period_end": "2025-03-27",
-      "reg_date": "2025-03-27",
+      "period_start": "2025-03-28",
+      "period_end": "2025-03-29",
+      "reg_date": "2025-03-29",
       "sido": "",
       "sigungu": "",
       "office_level": "대통령",
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사완료 가중적용 장래 정치 지도자 선호도 (자유응답/주관식) 모름",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 3.0
+        },
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 5.4
+        },
+        {
+          "name": "김부겸",
+          "party": "더불어민주당",
+          "pct": 5.7
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 9.5
+        },
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 35.0
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 9.0
-        },
-        {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 5.0
-        },
-        {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "15938",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15938&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 13.0,
-      "contact_rate": 43.7,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-25",
-      "period_end": "2025-03-27",
-      "reg_date": "2025-03-27",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도 (현재 지지하는 정당)",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "조국혁신당",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "개혁신당",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 0.4
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
+          "pct": 47.2
         }
       ]
     },
@@ -11898,7 +14223,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -12044,72 +14369,132 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.039
+          "pct": 47.8
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 29.028
+          "pct": 31.6
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 7.68
+          "pct": 5.5
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.83
+          "pct": 2.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.6
         }
       ]
     },
     {
-      "ntt_id": "15914",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15914&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "15913",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15913&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1003.0,
-      "response_rate": 13.1,
-      "contact_rate": 46.4,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-18",
+      "sample_size": 3004.0,
+      "response_rate": 14.5,
+      "contact_rate": 26.6,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-03-17",
       "period_end": "2025-03-20",
       "reg_date": "2025-03-20",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "●장래정치지도자선호도–2021년 10월이후",
+      "table_title": "정당 지지도",
       "candidates": [
         {
-          "name": "이재명",
+          "name": "",
           "party": "더불어민주당",
-          "pct": 25.0
+          "pct": 49.5
         },
         {
-          "name": "홍준표",
+          "name": "",
           "party": "국민의힘",
-          "pct": 12.0
+          "pct": 32.9
         },
         {
-          "name": "유승민",
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.9
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "15912",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15912&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15011.0,
+      "response_rate": 9.5,
+      "contact_rate": 35.8,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-03-16",
+      "period_end": "2025-03-20",
+      "reg_date": "2025-03-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.4
+        },
+        {
+          "name": "",
           "party": "국민의힘",
-          "pct": 2.0
+          "pct": 37.6
         },
         {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
         }
       ]
     },
@@ -12403,8 +14788,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -12454,82 +14839,132 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 43.342
+          "pct": 44.7
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 27.429
+          "pct": 34.4
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 10.17
+          "pct": 5.4
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.12
+          "pct": 1.4
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.6
         }
       ]
     },
     {
-      "ntt_id": "15885",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15885&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "15889",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15889&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 15050.0,
+      "response_rate": 10.1,
+      "contact_rate": 33.5,
+      "sample_error": "95% 신뢰수준에 ±0.8%P",
+      "period_start": "2025-03-09",
+      "period_end": "2025-03-13",
+      "reg_date": "2025-03-14",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 50.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 39.3
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.8
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "15884",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15884&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1001.0,
-      "response_rate": 13.4,
-      "contact_rate": 45.2,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-11",
+      "sample_size": 3003.0,
+      "response_rate": 14.3,
+      "contact_rate": 26.9,
+      "sample_error": "95% 신뢰수준에 ±1.8%P",
+      "period_start": "2025-03-10",
       "period_end": "2025-03-13",
       "reg_date": "2025-03-13",
       "sido": "",
       "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "질문) 귀하는앞으로우리나라를이끌어갈정치지도자, 즉장래대통령감으로누가좋다고생각하십니까? 장래 정치 지도자 선호도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
-          "name": "이재명",
+          "name": "",
           "party": "더불어민주당",
-          "pct": 34.0
+          "pct": 47.1
         },
         {
-          "name": "김문수",
+          "name": "",
           "party": "국민의힘",
-          "pct": 10.0
+          "pct": 35.1
         },
         {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 6.0
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.9
         },
         {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 3.0
-        },
-        {
-          "name": "이준석",
+          "name": "",
           "party": "개혁신당",
-          "pct": 1.0
+          "pct": 1.6
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
         }
       ]
     },
@@ -12654,7 +15089,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 8] 정당 기준 대선 후보 지지",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -12680,11 +15115,6 @@
           "name": "",
           "party": "진보당",
           "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 1.0
         }
       ]
     },
@@ -12868,7 +15298,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -12995,61 +15425,6 @@
           "name": "",
           "party": "자유통일당",
           "pct": 2.3
-        }
-      ]
-    },
-    {
-      "ntt_id": "15858",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15858&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1003.0,
-      "response_rate": 14.2,
-      "contact_rate": 46.7,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-03-04",
-      "period_end": "2025-03-06",
-      "reg_date": "2025-03-06",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "질문) 귀하는앞으로우리나라를이끌어갈정치지도자, 즉장래대통령감으로누가좋다고생각하십니까? 장래 정치 지도자 선호도",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 35.0
-        },
-        {
-          "name": "김문수",
-          "party": "국민의힘",
-          "pct": 10.0
-        },
-        {
-          "name": "한동훈",
-          "party": "국민의힘",
-          "pct": 6.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 5.0
-        },
-        {
-          "name": "오세훈",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 1.0
         }
       ]
     },
@@ -13453,8 +15828,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -13485,11 +15860,6 @@
           "name": "",
           "party": "기본소득당",
           "pct": 0.5
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 1.0
         }
       ]
     },
@@ -13514,43 +15884,48 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제1장. 조사개요",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 39.241
+          "pct": 46.5
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 29.129
+          "pct": 34.3
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 11.09
+          "pct": 5.3
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.42
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
         }
       ]
     },
     {
-      "ntt_id": "15824",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15824&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
+      "ntt_id": "15823",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15823&menuNo=200467",
+      "agency": "(주)여론조사꽃",
       "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
       "is_self_poll": false,
       "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 14.5,
-      "contact_rate": 45.9,
+      "sample_size": 1004.0,
+      "response_rate": 14.2,
+      "contact_rate": 28.4,
       "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-02-25",
+      "period_start": "2025-02-26",
       "period_end": "2025-02-27",
       "reg_date": "2025-02-27",
       "sido": "",
@@ -13559,42 +15934,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도 (현재 지지하는 정당)",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 37.0
+          "pct": 47.3
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 37.0
+          "pct": 36.4
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 4.0
+          "pct": 4.5
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.0
+          "pct": 1.4
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 0.4
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
+          "pct": 0.2
         }
       ]
     },
@@ -13683,7 +16048,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -13810,6 +16175,106 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15798",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15798&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "주·월간지 : 시사IN",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 2000.0,
+      "response_rate": 29.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2025-02-03",
+      "period_end": "2025-02-05",
+      "reg_date": "2025-02-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 28.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15795",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15795&menuNo=200467",
+      "agency": "(주)여론조사꽃",
+      "co_agency": "",
+      "requester": "조사기관 자체 : (주)여론조사꽃",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1010.0,
+      "response_rate": 13.3,
+      "contact_rate": 29.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-02-19",
+      "period_end": "2025-02-20",
+      "reg_date": "2025-02-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 46.8
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 35.3
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 5.9
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
         }
       ]
     },
@@ -14169,12 +16634,12 @@
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 67.0
+          "pct": 65.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 8.0
+          "pct": 9.0
         },
         {
           "name": "",
@@ -14184,12 +16649,12 @@
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 1.0
+          "pct": 2.0
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.0
+          "pct": 2.0
         },
         {
           "name": "",
@@ -14254,51 +16719,6 @@
       ]
     },
     {
-      "ntt_id": "15729",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15729&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1004.0,
-      "response_rate": 16.1,
-      "contact_rate": 42.4,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-02-11",
-      "period_end": "2025-02-13",
-      "reg_date": "2025-02-13",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "●장래정치지도자선호도–2021년 10월이후",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 25.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 12.0
-        },
-        {
-          "name": "유승민",
-          "party": "국민의힘",
-          "pct": 2.0
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
-        }
-      ]
-    },
-    {
       "ntt_id": "15726",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15726&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -14319,7 +16739,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 6] 정당 기준 대선 후보 지지",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -14345,11 +16765,6 @@
           "name": "",
           "party": "진보당",
           "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 1.0
         }
       ]
     },
@@ -14438,7 +16853,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -14484,7 +16899,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표] 지지하는 정당",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -15064,27 +17479,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제1장. 조사개요",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 39.138
+          "pct": 50.4
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 30.431
+          "pct": 34.3
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 9.611
+          "pct": 3.5
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 3.13
+          "pct": 2.3
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.5
         }
       ]
     },
@@ -15159,7 +17579,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -15214,7 +17634,7 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "표 2. 장래 정치 지도자 – 계속",
+      "table_title": "지역구 후보 지지도",
       "candidates": [
         {
           "name": "이재명",
@@ -15315,11 +17735,61 @@
       "reg_date": "2025-01-27",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 47.0
+        },
+        {
+          "name": "오세훈",
+          "party": "국민의힘",
+          "pct": 12.0
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 12.0
+        },
+        {
+          "name": "김문수",
+          "party": "국민의힘",
+          "pct": 12.0
+        },
+        {
+          "name": "한동훈",
+          "party": "국민의힘",
+          "pct": 18.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15686",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15686&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 18.4,
+      "contact_rate": 30.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2025-01-24",
+      "period_end": "2025-01-26",
+      "reg_date": "2025-01-27",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 7] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -15569,7 +18039,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 1. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -15595,11 +18065,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.0
         }
       ]
     },
@@ -15645,66 +18110,6 @@
           "name": "이재명",
           "party": "더불어민주당",
           "pct": 66.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "15664",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15664&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 16.4,
-      "contact_rate": 40.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-01-21",
-      "period_end": "2025-01-23",
-      "reg_date": "2025-01-24",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도 (현재 지지하는 정당)",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "조국혁신당",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "개혁신당",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 0.4
-        },
-        {
-          "name": "",
-          "party": "사회민주당",
-          "pct": 0.1
         }
       ]
     },
@@ -16133,7 +18538,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -16229,7 +18634,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 6] 정당지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -16240,6 +18645,16 @@
           "name": "",
           "party": "국민의힘",
           "pct": 12.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 14.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.0
         },
         {
           "name": "",
@@ -16268,7 +18683,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -16364,27 +18779,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제1장. 조사개요",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 38.239
+          "pct": 43.2
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 30.43
+          "pct": 38.1
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 12.29
+          "pct": 5.6
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.03
+          "pct": 1.7
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 0.8
         }
       ]
     },
@@ -16649,51 +19069,6 @@
       ]
     },
     {
-      "ntt_id": "15613",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15613&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1004.0,
-      "response_rate": 16.3,
-      "contact_rate": 37.6,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-01-07",
-      "period_end": "2025-01-09",
-      "reg_date": "2025-01-10",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "●장래정치지도자선호도–2021년 10월이후",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 25.0
-        },
-        {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 12.0
-        },
-        {
-          "name": "유승민",
-          "party": "국민의힘",
-          "pct": 2.0
-        },
-        {
-          "name": "이낙연",
-          "party": "새로운미래",
-          "pct": 8.0
-        }
-      ]
-    },
-    {
       "ntt_id": "15606",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15606&menuNo=200467",
       "agency": "(주)리서치뷰",
@@ -16828,7 +19203,7 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
+      "table_no": "",
       "table_title": "정당 지지도",
       "candidates": [
         {
@@ -17019,7 +19394,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제1장. 조사개요",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17040,56 +19415,11 @@
           "name": "",
           "party": "개혁신당",
           "pct": 2.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "15596",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15596&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1015.0,
-      "response_rate": 14.0,
-      "contact_rate": 28.0,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-01-03",
-      "period_end": "2025-01-04",
-      "reg_date": "2025-01-04",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "대통령",
-      "office_label": "대통령",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "제1장. 조사개요",
-      "candidates": [
-        {
-          "name": "이재명",
-          "party": "더불어민주당",
-          "pct": 42.8
         },
         {
-          "name": "홍준표",
-          "party": "국민의힘",
-          "pct": 8.2
-        },
-        {
-          "name": "김동연",
-          "party": "더불어민주당",
-          "pct": 3.0
-        },
-        {
-          "name": "안철수",
-          "party": "국민의힘",
-          "pct": 2.3
-        },
-        {
-          "name": "이준석",
-          "party": "개혁신당",
-          "pct": 2.1
+          "name": "",
+          "party": "진보당",
+          "pct": 1.1
         }
       ]
     },
@@ -17179,7 +19509,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 13] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17325,11 +19655,61 @@
       "reg_date": "2024-12-30",
       "sido": "",
       "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 3.0
+        },
+        {
+          "name": "안철수",
+          "party": "국민의힘",
+          "pct": 3.0
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 2.0
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15573",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15573&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 코리아타임스",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 14.6,
+      "contact_rate": 24.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-12-26",
+      "period_end": "2024-12-27",
+      "reg_date": "2024-12-30",
+      "sido": "",
+      "sigungu": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 17] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17379,7 +19759,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 18] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17428,8 +19808,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17454,6 +19834,56 @@
       ]
     },
     {
+      "ntt_id": "15581",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15581&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "인터넷언론 : 한양경제",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1003.0,
+      "response_rate": 3.5,
+      "contact_rate": 18.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2024-12-28",
+      "period_end": "2024-12-29",
+      "reg_date": "2024-12-30",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 38.6
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 5.7
+        },
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 5.2
+        },
+        {
+          "name": "김부겸",
+          "party": "더불어민주당",
+          "pct": 5.0
+        },
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 1.9
+        }
+      ]
+    },
+    {
       "ntt_id": "15563",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15563&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -17474,7 +19904,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "[표 15] 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17523,8 +19953,8 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "정당지지도",
+      "table_no": "",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17550,66 +19980,6 @@
           "name": "",
           "party": "진보당",
           "pct": 0.7
-        }
-      ]
-    },
-    {
-      "ntt_id": "15558",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15558&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "조사기관 자체 : 한국갤럽 자체 조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1000.0,
-      "response_rate": 15.5,
-      "contact_rate": 35.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2024-12-17",
-      "period_end": "2024-12-19",
-      "reg_date": "2024-12-20",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "조사완료 가중적용 정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 34.0
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 3.0
-        },
-        {
-          "name": "",
-          "party": "녹색정의당",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "개혁신당",
-          "pct": 3.0
-        },
-        {
-          "name": "",
-          "party": "새로운미래",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 1.0
         }
       ]
     },
@@ -17699,7 +20069,7 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표 2. 정당 지지도",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
@@ -17754,27 +20124,32 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "제2장. 결과표",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.839
+          "pct": 54.2
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 28.631
+          "pct": 24.4
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 17.615
+          "pct": 11.4
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 6.45
+          "pct": 3.7
+        },
+        {
+          "name": "",
+          "party": "진보당",
+          "pct": 1.2
         }
       ]
     },
