@@ -180,7 +180,7 @@ def main():
                     default="여론조사꽃,한국갤럽,한국리서치,넥스트,조원,한국사회여론",
                     help="대상 조사기관 키워드(콤마구분) — 괘선없는 cross-tab 양식 기관")
     ap.add_argument("--roster", default="data/raw/nec_roster_22gen.json")
-    ap.add_argument("--pres", choices=["21", "20"], default=None,
+    ap.add_argument("--pres", choices=["21", "20", "19"], default=None,
                     help="대선 모드 — PRES_CONFIG roster를 전 ntt에 적용(전국). 미지정 시 총선(선거구) 모드")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)

@@ -19,9 +19,9 @@
   "archive": {
     "page": "/archive/19th-pres-2017/",
     "results_path": "data/results/19th-pres-2017.json",
-    "polls_path": null,
+    "polls_path": "data/polls/aggregated_19pres.json",
     "exit_poll_path": null,
-    "polls_window": null,
+    "polls_window": ["2016-10-01", "2017-05-08"],
     "sg_typecode": "1",
     "proportional_sg_typecode": null,
     "list_label": "확정",
