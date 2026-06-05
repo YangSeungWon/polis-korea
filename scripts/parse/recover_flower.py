@@ -180,26 +180,30 @@ def main():
                     default="여론조사꽃,한국갤럽,한국리서치,넥스트,조원,한국사회여론",
                     help="대상 조사기관 키워드(콤마구분) — 괘선없는 cross-tab 양식 기관")
     ap.add_argument("--roster", default="data/raw/nec_roster_22gen.json")
+    ap.add_argument("--pres", choices=["21", "20"], default=None,
+                    help="대선 모드 — PRES_CONFIG roster를 전 ntt에 적용(전국). 미지정 시 총선(선거구) 모드")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
     args = ap.parse_args()
 
     meta = load_meta(ROOT / args.csv)
-    roster = json.loads((ROOT / args.roster).read_text(encoding="utf-8"))
-    districts = roster["districts"]
-    # 컬럼 식별용 정당 set — roster 비례정당 + 역대 주요정당(회차별 지역구 party 포함).
-    # build 단계가 회차별 양대로 최종 필터하므로 넓게 잡아도 안전.
-    parties = set(roster["proportional_parties"]) | {
-        # 22대
-        "더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "녹색정의당",
+    # 컬럼 식별용 정당 set — 역대 주요정당(회차별 지역구 party 포함). build가 회차별 양대로 최종 필터.
+    BROAD_PARTIES = {
+        "더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "녹색정의당",       # 22대
         "새로운미래", "진보당", "자유통일당", "기본소득당", "더불어민주연합", "국민의미래",
-        # 21대(2020)
-        "미래통합당", "미래한국당", "더불어시민당", "정의당", "국민의당", "열린민주당", "민생당",
-        # 20대(2016)
-        "새누리당", "바른정당", "바른미래당", "자유한국당",
+        "미래통합당", "미래한국당", "더불어시민당", "정의당", "국민의당", "열린민주당", "민생당",  # 21대
+        "새누리당", "바른정당", "바른미래당", "자유한국당", "국가혁명당", "우리공화당",   # 20대/대선
     }
-
-    didx = district_index(districts)
+    if args.pres:
+        from build_polls_pres import PRES_CONFIG  # noqa: E402
+        pres_roster = PRES_CONFIG[args.pres]["roster"]  # 전국 단일 후보 set
+        districts, didx, parties = {}, {}, BROAD_PARTIES
+    else:
+        roster = json.loads((ROOT / args.roster).read_text(encoding="utf-8"))
+        districts = roster["districts"]
+        parties = set(roster["proportional_parties"]) | BROAD_PARTIES
+        didx = district_index(districts)
+        pres_roster = None
     kws = [k.strip() for k in args.agency.split(",") if k.strip()]
     targets = [(nid, m) for nid, m in meta.items()
                if any(k in m.get("agency", "") for k in kws)]
@@ -210,8 +214,11 @@ def main():
     n_patched = n_q = 0
     by_eo: dict = {}
     for nid, m in targets:
-        sido, dist = region_to_district(m.get("region", ""), didx)
-        rd = districts.get(f"{sido}|{dist}", {})
+        if pres_roster is not None:
+            rd = pres_roster  # 대선 — 전국 단일 후보 set
+        else:
+            sido, dist = region_to_district(m.get("region", ""), didx)
+            rd = districts.get(f"{sido}|{dist}", {})
         pdfs = sorted((ROOT / "data/raw/pdf").glob(f"{nid}_*.pdf"))
         best_qs: list[dict] = []
         for pdf in pdfs:
