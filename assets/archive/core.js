@@ -55,12 +55,14 @@
     byReasons = (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, ''));
   } catch {}
 
-  // 4. 출구조사
+  // 4. 출구조사 — meta에서 명시적으로 null이면 fetch 스킵 (해당 회차 출구조사 없음)
   let exitData = null;
-  try {
-    const path = meta.exitPollPath || `data/exit_polls/${meta.id}.json`;
-    exitData = await fetch(path).then((r) => r.ok ? r.json() : null);
-  } catch {}
+  if (meta.exitPollPath !== null) {
+    try {
+      const path = meta.exitPollPath || `data/exit_polls/${meta.id}.json`;
+      exitData = await fetch(path).then((r) => r.ok ? r.json() : null);
+    } catch {}
+  }
 
   const isPres = meta.electionKind === 'presidential';
   const isGeneral = meta.electionKind === 'general_election' || meta.electionKind === 'national_assembly';
