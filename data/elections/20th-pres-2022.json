@@ -3,6 +3,11 @@
   "name": "제20대 대통령선거",
   "type": "pres",
   "date": "2022-03-09",
+  "status": "archive",
+  "nesdc": {
+    "gubun": "VT025",
+    "csv": "data/raw/nesdc_20pres_polls.csv"
+  },
   "nec": {
     "sg_id": "20220309",
     "_note": "fetch_nec_results.py로 통일 schema 재수집 가능."
