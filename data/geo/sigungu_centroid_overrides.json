@@ -1,0 +1,8 @@
+{
+  "_schema": "sigungu_simple.json(base_year=2018) 이후 신설·개편된 시군구의 centroid 보정. build_zone_hex가 overlay로 사용. lon, lat 순서.",
+  "centroids": {
+    "23012": {"name": "제물포구", "sido": "인천광역시", "lonlat": [126.633, 37.470], "_note": "2026-07 인천 중구 본토 분할 신설"},
+    "23013": {"name": "영종구",   "sido": "인천광역시", "lonlat": [126.490, 37.493], "_note": "2026-07 인천 중구 영종도 분할 신설"},
+    "23014": {"name": "검단구",   "sido": "인천광역시", "lonlat": [126.659, 37.604], "_note": "2026-07 인천 서구 북부 분구 신설"}
+  }
+}

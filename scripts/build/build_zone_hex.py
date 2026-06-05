@@ -28,6 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SIGUNGU_GEO = ROOT / 'data/geo/sigungu_simple.json'
+SIGUNGU_OVERRIDES = ROOT / 'data/geo/sigungu_centroid_overrides.json'
 
 SIDO_REGION = {
     '서울특별시': '수도권', '인천광역시': '수도권', '경기도': '수도권',
@@ -81,6 +82,13 @@ def load_centroids():
         lon, lat = polygon_centroid(f['geometry'])
         by_code[code] = (lon, lat)
         by_name[name].append((code, lon, lat))
+    # geojson(base_year=2018) 이후 신설·개편 시군구는 overrides로 보정.
+    if SIGUNGU_OVERRIDES.exists():
+        ov = json.loads(SIGUNGU_OVERRIDES.read_text(encoding='utf-8'))
+        for code, entry in (ov.get('centroids') or {}).items():
+            lon, lat = entry['lonlat']
+            by_code[code] = (lon, lat)
+            by_name[entry['name']].append((code, lon, lat))
     return by_code, by_name
 
 
