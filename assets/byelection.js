@@ -79,7 +79,8 @@ function mergeResultOnlyDistricts() {
     // 결과만 — stub district 생성
     const short = SIDO_TO_SHORT[r.sido] || r.sido;
     // 결과 district 이름 정규화 — '군산시김제시부안군을' 같은 풀네임을 약어로
-    const shortName = r.district.replace(/시(?=[가-힣])/g, '').replace(/군(?=[가-힣])/g, '');
+    // 시/군 suffix만 제거 — 이름 첫 글자(군산·시흥 등)는 lookbehind로 보호.
+    const shortName = r.district.replace(/(?<=[가-힣])[시군](?=[가-힣])/g, '');
     const lookupKey = `${short} ${shortName}`;
     const latlng = RESULT_ONLY_LATLNG[lookupKey] || RESULT_ONLY_LATLNG[`${short} ${r.district}`];
     if (!latlng) {
