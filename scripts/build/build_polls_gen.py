@@ -342,16 +342,22 @@ def postprocess(polls: list[dict]) -> list[dict]:
         merged.extend(cl["rec"] for cl in clusters)
     polls = merged
 
-    # 한 (ntt, metric, sido, district) = 한 race. 후보 최다 → 표본 큰 카드.
+    # 한 (ntt, metric, sido, district) = 한 race. 같은 ntt에 같은 race 표가 여러 개(다자/양자/
+    # 어긋난 추출)일 때 1개만. 후보지지는 **합이 100에 가까운(완전 추출된) 표 우선** — 한 후보
+    # pct가 어긋나 합이 낮은 표(예: 박민식 0.9, 합 34)보다 정상 표(합 82) 선택. 그다음 후보수·표본.
+    def card_score(p):
+        s = _sum(p)
+        if p["metric_type"] == "후보지지":
+            return (40 <= s <= 110, -abs(s - 95), len(p["candidates"]), p.get("sample_size") or 0)
+        return (True, 0, len(p["candidates"]), p.get("sample_size") or 0)
     seen_card = {}
     out = []
     for p in polls:
         k = (p["ntt_id"], p["metric_type"], p["sido"], p["district"])
-        sc = (len(p["candidates"]), p.get("sample_size") or 0)
         if k not in seen_card:
             seen_card[k] = len(out)
             out.append(p)
-        elif sc > (len(out[seen_card[k]]["candidates"]), out[seen_card[k]].get("sample_size") or 0):
+        elif card_score(p) > card_score(out[seen_card[k]]):
             out[seen_card[k]] = p
 
     # 최종 sanity — merge가 후보별 max-pct로 합치며 합>110 garble(양산갑·남양주병) 만들거나,

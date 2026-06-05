@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-05T10:08:29",
+    "generated_at": "2026-06-05T23:11:45",
     "election": "21st-general-2020",
     "election_date": "2020-04-15",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,12 +8,68 @@
     "stats": {
       "total_polls_meta": 1122,
       "matched_parsed": 828,
-      "emitted_records": 384,
+      "emitted_records": 441,
       "skipped_no_pdf": 294,
-      "skipped_no_race": 636
+      "skipped_no_race": 582
     }
   },
   "polls": [
+    {
+      "ntt_id": "7891",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7891&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 미디어오늘 & 리서치뷰",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 4.6,
+      "contact_rate": 35.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-04-28",
+      "period_end": "2020-04-30",
+      "reg_date": "2020-05-04",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "3",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 51.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 24.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.0
+        }
+      ]
+    },
     {
       "ntt_id": "7884",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7884&menuNo=200467",
@@ -57,6 +113,128 @@
           "name": "",
           "party": "정의당",
           "pct": 4.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7879",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7879&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "방송사 : 제주KBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 806.0,
+      "response_rate": 17.5,
+      "contact_rate": 15.5,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2020-04-18",
+      "period_end": "2020-04-19",
+      "reg_date": "2020-04-20",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도1)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 47.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 15.1
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.1
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 2.4
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 1.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.8
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.9
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.1
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 1.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7875",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7875&menuNo=200467",
+      "agency": "(주)데일리리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 로이슈",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 707.0,
+      "response_rate": 5.3,
+      "contact_rate": 71.3,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-11",
+      "period_end": "2020-04-11",
+      "reg_date": "2020-04-16",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "관악구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 설문 항목별 응답결과값",
+      "candidates": [
+        {
+          "name": "정태호",
+          "party": "더불어민주당",
+          "pct": 56.4
+        },
+        {
+          "name": "오신환",
+          "party": "미래통합당",
+          "pct": 36.0
+        },
+        {
+          "name": "한인수",
+          "party": "민생당",
+          "pct": 1.1
+        },
+        {
+          "name": "김한영",
+          "party": "민중당",
+          "pct": 1.6
         }
       ]
     },
@@ -209,6 +387,57 @@
           "name": "",
           "party": "열린민주당",
           "pct": 7.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7868",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7868&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 미디어오늘",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 7.2,
+      "contact_rate": 41.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-04-08",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 44.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.0
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.0
         }
       ]
     },
@@ -1797,17 +2026,17 @@
         {
           "name": "전재수",
           "party": "더불어민주당",
-          "pct": 31.8
+          "pct": 56.7
         },
         {
           "name": "박민식",
           "party": "미래통합당",
-          "pct": 0.9
+          "pct": 24.3
         },
         {
           "name": "이성근",
           "party": "국가혁명배당금당",
-          "pct": 1.4
+          "pct": 1.0
         }
       ]
     },
@@ -2167,6 +2396,174 @@
       ]
     },
     {
+      "ntt_id": "7819",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7819&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1003.0,
+      "response_rate": 17.2,
+      "contact_rate": 23.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-04-08",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "7",
+      "table_title": ". 총선 결과 전망]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 59.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 18.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7816",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7816&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 19.8,
+      "contact_rate": 20.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-07",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 32.2
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.1
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.4
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.9
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.3
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7815",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7815&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 17.1,
+      "contact_rate": 27.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-07",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 31.9
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 1.8
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.4
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 3.2
+        }
+      ]
+    },
+    {
       "ntt_id": "7796",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7796&menuNo=200467",
       "agency": "(주)조원씨앤아이",
@@ -2239,22 +2636,22 @@
         {
           "name": "남영희",
           "party": "더불어민주당",
-          "pct": 36.7
+          "pct": 35.1
         },
         {
           "name": "윤상현",
           "party": "무소속",
-          "pct": 25.7
+          "pct": 30.5
         },
         {
           "name": "안상수",
           "party": "미래통합당",
-          "pct": 19.9
+          "pct": 21.8
         },
         {
           "name": "정수영",
           "party": "정의당",
-          "pct": 4.3
+          "pct": 2.6
         }
       ]
     },
@@ -2473,17 +2870,17 @@
         {
           "name": "김승남",
           "party": "더불어민주당",
-          "pct": 52.7
+          "pct": 48.6
         },
         {
           "name": "황주홍",
           "party": "민생당",
-          "pct": 2.8
+          "pct": 0.8
         },
         {
           "name": "김화진",
           "party": "무소속",
-          "pct": 1.4
+          "pct": 29.5
         }
       ]
     },
@@ -3134,17 +3531,17 @@
         {
           "name": "오영환",
           "party": "더불어민주당",
-          "pct": 48.8
+          "pct": 52.5
         },
         {
           "name": "강세창",
           "party": "미래통합당",
-          "pct": 28.9
+          "pct": 29.1
         },
         {
           "name": "문석균",
           "party": "무소속",
-          "pct": 10.6
+          "pct": 10.4
         }
       ]
     },
@@ -3569,24 +3966,24 @@
       "table_title": "지역구 후보 지지도",
       "candidates": [
         {
-          "name": "남영희",
-          "party": "더불어민주당",
-          "pct": 37.3
-        },
-        {
           "name": "윤상현",
           "party": "무소속",
-          "pct": 33.0
+          "pct": 38.1
+        },
+        {
+          "name": "남영희",
+          "party": "더불어민주당",
+          "pct": 33.1
         },
         {
           "name": "안상수",
           "party": "미래통합당",
-          "pct": 17.2
+          "pct": 17.4
         },
         {
           "name": "정수영",
           "party": "정의당",
-          "pct": 4.6
+          "pct": 4.7
         }
       ]
     },
@@ -4460,6 +4857,62 @@
       ]
     },
     {
+      "ntt_id": "7727",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7727&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "방송사 : KBS제주",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 13.5,
+      "contact_rate": 17.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 28.6
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.2
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.9
+        }
+      ]
+    },
+    {
       "ntt_id": "7738",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7738&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -4497,6 +4950,123 @@
           "name": "김화진",
           "party": "무소속",
           "pct": 7.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "7735",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7735&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 18.4,
+      "contact_rate": 21.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-07",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-07",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 38.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 33.9
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 1.7
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7734",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7734&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 22.8,
+      "contact_rate": 18.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-07",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-07",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 28.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 40.8
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 2.7
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.6
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 1.2
         }
       ]
     },
@@ -4603,12 +5173,12 @@
         {
           "name": "정찬민",
           "party": "미래통합당",
-          "pct": 44.3
+          "pct": 46.6
         },
         {
           "name": "오세영",
           "party": "더불어민주당",
-          "pct": 43.8
+          "pct": 44.0
         }
       ]
     },
@@ -4791,17 +5361,17 @@
         {
           "name": "홍정민",
           "party": "더불어민주당",
-          "pct": 47.4
+          "pct": 49.6
         },
         {
           "name": "김영환",
           "party": "미래통합당",
-          "pct": 37.4
+          "pct": 39.4
         },
         {
           "name": "김근복",
           "party": "우리공화당",
-          "pct": 1.3
+          "pct": 2.1
         }
       ]
     },
@@ -4882,6 +5452,215 @@
       ]
     },
     {
+      "ntt_id": "7697",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7697&menuNo=200467",
+      "agency": "경북인터넷방송",
+      "co_agency": "",
+      "requester": "인터넷언론 : 경북인터넷방송",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 6.7,
+      "contact_rate": 62.6,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-03",
+      "period_end": "2020-04-04",
+      "reg_date": "2020-04-07",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "4-2. 정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 18.3
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 54.7
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7696",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7696&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "통신사 : news1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1018.0,
+      "response_rate": 22.0,
+      "contact_rate": 18.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "8",
+      "table_title": ". 총선 결과 전망]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 42.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 14.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7672",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7672&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 20.5,
+      "contact_rate": 20.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 23.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.3
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7671",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7671&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 15.0,
+      "contact_rate": 28.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.8
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.1
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.7
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.4
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.6
+        }
+      ]
+    },
+    {
       "ntt_id": "7662",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7662&menuNo=200467",
       "agency": "(주)리서치뷰",
@@ -4911,6 +5690,11 @@
           "pct": 43.4
         },
         {
+          "name": "김양현",
+          "party": "민중당",
+          "pct": 1.5
+        },
+        {
           "name": "허승녕",
           "party": "무소속",
           "pct": 1.4
@@ -4919,6 +5703,57 @@
           "name": "이인숙",
           "party": "무소속",
           "pct": 2.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7662",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7662&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 평택시민신문, 평택신문, 평택자치신문, 평택시사신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 7.6,
+      "contact_rate": 45.6,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 33.6
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.9
         }
       ]
     },
@@ -4955,6 +5790,57 @@
           "name": "차화열",
           "party": "무소속",
           "pct": 1.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7661",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7661&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 평택시민신문, 평택신문, 평택자치신문, 평택시사신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 7.3,
+      "contact_rate": 47.3,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.3
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 32.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 9.8
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.5
         }
       ]
     },
@@ -5011,6 +5897,52 @@
           "name": "",
           "party": "우리공화당",
           "pct": 1.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7651",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7651&menuNo=200467",
+      "agency": "(주)한길리서치센타",
+      "co_agency": "",
+      "requester": "방송사 : 부산 MBC",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 701.0,
+      "response_rate": 8.9,
+      "contact_rate": 37.7,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "문2) 선생님께서는 이번에 양산을 국회의원선거에 출마한 다음 후보 중 누구를 지지하시겠습니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 42.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 45.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 1.8
+        },
+        {
+          "name": "",
+          "party": "국가혁명배당금당",
+          "pct": 1.9
         }
       ]
     },
@@ -5580,6 +6512,47 @@
       ]
     },
     {
+      "ntt_id": "7643",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7643&menuNo=200467",
+      "agency": "(주)한길리서치센타",
+      "co_agency": "",
+      "requester": "방송사 : 부산 MBC",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 712.0,
+      "response_rate": 9.1,
+      "contact_rate": 36.3,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-03",
+      "period_end": "2020-04-03",
+      "reg_date": "2020-04-06",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "문2) 선생님께서는 이번에 부산 연제구 국회의원선거에 출마한 다음 후보 중 누구를 지지하시겠습니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 42.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 50.3
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 8.0
+        }
+      ]
+    },
+    {
       "ntt_id": "7632",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7632&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -5782,29 +6755,29 @@
       "table_title": "지역구 후보 지지도",
       "candidates": [
         {
-          "name": "김현정",
-          "party": "더불어민주당",
-          "pct": 41.3
-        },
-        {
           "name": "유의동",
           "party": "미래통합당",
-          "pct": 37.4
+          "pct": 40.1
+        },
+        {
+          "name": "김현정",
+          "party": "더불어민주당",
+          "pct": 38.7
         },
         {
           "name": "김양현",
           "party": "민중당",
-          "pct": 3.2
-        },
-        {
-          "name": "이인숙",
-          "party": "무소속",
           "pct": 4.1
         },
         {
           "name": "허승녕",
           "party": "무소속",
-          "pct": 2.7
+          "pct": 3.6
+        },
+        {
+          "name": "이인숙",
+          "party": "무소속",
+          "pct": 3.2
         }
       ]
     },
@@ -5881,6 +6854,47 @@
           "name": "",
           "party": "민생당",
           "pct": 1.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7640",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7640&menuNo=200467",
+      "agency": "(주)한길리서치센타",
+      "co_agency": "",
+      "requester": "방송사 : 부산 MBC",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 706.0,
+      "response_rate": 8.5,
+      "contact_rate": 39.2,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-03",
+      "period_end": "2020-04-03",
+      "reg_date": "2020-04-06",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "문2) 선생님께서는 이번에 부산 북구강서구갑 국회의원선거에 출마한 다음 후보 중 누구를 지지하시겠습니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 48.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 43.7
+        },
+        {
+          "name": "",
+          "party": "국가혁명배당금당",
+          "pct": 2.5
         }
       ]
     },
@@ -6170,17 +7184,17 @@
         {
           "name": "윤영찬",
           "party": "더불어민주당",
-          "pct": 50.7
+          "pct": 48.9
         },
         {
           "name": "신상진",
           "party": "미래통합당",
-          "pct": 33.1
+          "pct": 35.9
         },
         {
           "name": "김미희",
           "party": "민중당",
-          "pct": 7.0
+          "pct": 8.8
         }
       ]
     },
@@ -6425,6 +7439,47 @@
           "name": "",
           "party": "열린민주당",
           "pct": 8.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7638",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7638&menuNo=200467",
+      "agency": "(주)한길리서치센타",
+      "co_agency": "",
+      "requester": "방송사 : 부산 MBC",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 728.0,
+      "response_rate": 9.9,
+      "contact_rate": 34.5,
+      "sample_error": "95% 신뢰수준에 ±3.6%P",
+      "period_start": "2020-04-03",
+      "period_end": "2020-04-03",
+      "reg_date": "2020-04-06",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "문2) 선생님께서는 이번에 부산 남구을 국회의원선거에 출마한 다음 후보 중 누구를 지지하시겠습니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 44.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 47.8
+        },
+        {
+          "name": "",
+          "party": "국가혁명배당금당",
+          "pct": 1.8
         }
       ]
     },
@@ -6948,27 +8003,17 @@
         {
           "name": "이병훈",
           "party": "더불어민주당",
-          "pct": 60.6
+          "pct": 69.6
         },
         {
           "name": "박주선",
           "party": "민생당",
-          "pct": 9.7
+          "pct": 9.4
         },
         {
           "name": "최만원",
           "party": "정의당",
-          "pct": 12.0
-        },
-        {
-          "name": "이향숙",
-          "party": "국가혁명배당금당",
-          "pct": 6.5
-        },
-        {
-          "name": "김성환",
-          "party": "무소속",
-          "pct": 9.5
+          "pct": 16.3
         }
       ]
     },
@@ -7299,22 +8344,17 @@
         {
           "name": "김회재",
           "party": "더불어민주당",
-          "pct": 63.7
+          "pct": 69.7
         },
         {
           "name": "임동하",
           "party": "미래통합당",
-          "pct": 3.3
+          "pct": 10.4
         },
         {
           "name": "김진수",
           "party": "정의당",
-          "pct": 3.2
-        },
-        {
-          "name": "권세도",
-          "party": "무소속",
-          "pct": 11.4
+          "pct": 17.6
         }
       ]
     },
@@ -7767,6 +8807,103 @@
       ]
     },
     {
+      "ntt_id": "7615",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7615&menuNo=200467",
+      "agency": "(주)데일리리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 로이슈",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 726.0,
+      "response_rate": 5.4,
+      "contact_rate": 71.3,
+      "sample_error": "95% 신뢰수준에 ±3.6%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "설문 항목별 응답결과값",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 47.5
+        },
+        {
+          "name": "",
+          "party": "국가혁명배당금당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7611",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7611&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "방송사 : KBS제주",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 507.0,
+      "response_rate": 11.6,
+      "contact_rate": 17.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.3
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 22.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.1
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.3
+        }
+      ]
+    },
+    {
       "ntt_id": "7583",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7583&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -7920,17 +9057,17 @@
         {
           "name": "조택상",
           "party": "더불어민주당",
-          "pct": 44.8
+          "pct": 46.8
         },
         {
           "name": "배준영",
           "party": "미래통합당",
-          "pct": 38.6
+          "pct": 40.0
         },
         {
           "name": "조수진",
           "party": "우리공화당",
-          "pct": 4.7
+          "pct": 4.5
         }
       ]
     },
@@ -8113,27 +9250,27 @@
         {
           "name": "김영진",
           "party": "더불어민주당",
-          "pct": 49.1
+          "pct": 49.0
         },
         {
           "name": "김용남",
           "party": "미래통합당",
-          "pct": 32.2
+          "pct": 31.8
         },
         {
           "name": "박예휘",
           "party": "정의당",
-          "pct": 3.1
+          "pct": 4.4
         },
         {
           "name": "임미숙",
           "party": "민중당",
-          "pct": 2.7
+          "pct": 3.3
         },
         {
           "name": "진재범",
           "party": "우리공화당",
-          "pct": 1.4
+          "pct": 0.8
         }
       ]
     },
@@ -9792,7 +10929,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 1.5
         }
       ]
@@ -10250,6 +11387,57 @@
           "name": "",
           "party": "한국경제당",
           "pct": 1.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7553",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7553&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 미디어오늘",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 7.1,
+      "contact_rate": 42.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-31",
+      "reg_date": "2020-04-02",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 43.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 34.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.0
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.0
         }
       ]
     },
@@ -10986,6 +12174,266 @@
       ]
     },
     {
+      "ntt_id": "7550",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7550&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 5.1,
+      "contact_rate": 68.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-02",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 23.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 53.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 2.9
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 2.5
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "7529",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7529&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 해남신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 12.7,
+      "contact_rate": 42.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "해남군완도군진도군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "후보지지도",
+      "candidates": [
+        {
+          "name": "윤재갑",
+          "party": "민주당",
+          "pct": 57.3
+        },
+        {
+          "name": "윤영일",
+          "party": "민생당",
+          "pct": 28.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7529",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7529&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 해남신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 12.7,
+      "contact_rate": 42.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "6",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 59.6
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 6.5
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 9.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 9.7
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7525",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7525&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 5.1,
+      "contact_rate": 66.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-04-01",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 33.8
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 42.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.4
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 3.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 1.6
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 2.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7523",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7523&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 511.0,
+      "response_rate": 5.2,
+      "contact_rate": 65.4,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-19",
+      "period_end": "2020-03-22",
+      "reg_date": "2020-04-01",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 46.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 34.1
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.3
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 0.6
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.4
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 0.7
+        }
+      ]
+    },
+    {
       "ntt_id": "7518",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7518&menuNo=200467",
       "agency": "(주)조원씨앤아이",
@@ -11088,17 +12536,17 @@
         {
           "name": "김교흥",
           "party": "더불어민주당",
-          "pct": 49.2
+          "pct": 52.8
         },
         {
           "name": "이학재",
           "party": "미래통합당",
-          "pct": 35.7
+          "pct": 39.3
         },
         {
           "name": "김중삼",
           "party": "정의당",
-          "pct": 3.3
+          "pct": 1.0
         }
       ]
     },
@@ -11281,22 +12729,22 @@
         {
           "name": "전해철",
           "party": "더불어민주당",
-          "pct": 58.4
+          "pct": 62.2
         },
         {
           "name": "박주원",
           "party": "미래통합당",
-          "pct": 25.7
+          "pct": 25.9
         },
         {
           "name": "이기학",
           "party": "우리공화당",
-          "pct": 1.9
+          "pct": 2.9
         },
         {
           "name": "홍연아",
           "party": "민중당",
-          "pct": 0.7
+          "pct": 0.6
         }
       ]
     },
@@ -11479,17 +12927,17 @@
         {
           "name": "민경욱",
           "party": "미래통합당",
-          "pct": 39.5
+          "pct": 46.8
         },
         {
           "name": "정일영",
           "party": "더불어민주당",
-          "pct": 31.4
+          "pct": 36.0
         },
         {
           "name": "이정미",
           "party": "정의당",
-          "pct": 19.4
+          "pct": 11.8
         }
       ]
     },
@@ -11672,22 +13120,22 @@
         {
           "name": "이재정",
           "party": "더불어민주당",
-          "pct": 52.9
+          "pct": 55.0
         },
         {
           "name": "심재철",
           "party": "미래통합당",
-          "pct": 33.4
+          "pct": 37.4
         },
         {
           "name": "추혜선",
           "party": "정의당",
-          "pct": 3.7
+          "pct": 1.2
         },
         {
           "name": "문태환",
           "party": "민생당",
-          "pct": 1.2
+          "pct": 0.7
         }
       ]
     },
@@ -11764,6 +13212,57 @@
           "name": "",
           "party": "민중당",
           "pct": 0.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7496",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7496&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "방송사 : 제주KBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 511.0,
+      "response_rate": 7.5,
+      "contact_rate": 22.2,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 19.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.4
         }
       ]
     },
@@ -13464,6 +14963,98 @@
       ]
     },
     {
+      "ntt_id": "7472",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7472&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 영남일보, KBS대구, 대구CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 518.0,
+      "response_rate": 8.0,
+      "contact_rate": 61.1,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "3",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 21.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 63.7
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 1.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7455",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7455&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 영남일보, KBS대구, 대구CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 508.0,
+      "response_rate": 7.5,
+      "contact_rate": 67.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-31",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "3",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 25.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 53.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7451",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7451&menuNo=200467",
       "agency": "(주)싸이리서치(SAI)",
@@ -13759,17 +15350,17 @@
         {
           "name": "김주영",
           "party": "더불어민주당",
-          "pct": 35.4
+          "pct": 39.5
         },
         {
           "name": "박진호",
           "party": "미래통합당",
-          "pct": 26.8
+          "pct": 28.7
         },
         {
           "name": "유영록",
           "party": "무소속",
-          "pct": 12.7
+          "pct": 14.5
         }
       ]
     },
@@ -13846,6 +15437,210 @@
           "name": "",
           "party": "민생당",
           "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7445",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7445&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 보령시민신문, 뉴스스토리",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 11.5,
+      "contact_rate": 38.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.7
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.6
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7444",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7444&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 서산시대, 태안신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 12.4,
+      "contact_rate": 45.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 36.1
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 3.8
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 7.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7437",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7437&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 평택시민신문, 평택신문, 평택자치신문, 평택시사신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 9.2,
+      "contact_rate": 46.0,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "6",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 37.9
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7434",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7434&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 평택시민신문, 평택신문, 평택자치신문, 평택시사신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 8.8,
+      "contact_rate": 48.5,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "6",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.5
         }
       ]
     },
@@ -14794,22 +16589,22 @@
         {
           "name": "김선교",
           "party": "미래통합당",
-          "pct": 42.4
+          "pct": 47.9
         },
         {
           "name": "최재관",
           "party": "더불어민주당",
-          "pct": 41.4
+          "pct": 41.8
         },
         {
           "name": "유상진",
           "party": "정의당",
-          "pct": 3.5
+          "pct": 1.8
         },
         {
           "name": "변성근",
           "party": "우리공화당",
-          "pct": 1.5
+          "pct": 0.2
         }
       ]
     },
@@ -14890,6 +16685,118 @@
       ]
     },
     {
+      "ntt_id": "7404",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7404&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 인천투데이",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 10.1,
+      "contact_rate": 43.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-30",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 39.7
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 30.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 9.1
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.7
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 2.9
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7403",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7403&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "인터넷언론 : 인천투데이",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 10.1,
+      "contact_rate": 44.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-30",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 38.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 26.1
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 3.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.8
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.1
+        }
+      ]
+    },
+    {
       "ntt_id": "7397",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7397&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -14916,12 +16823,12 @@
         {
           "name": "위성곤",
           "party": "더불어민주당",
-          "pct": 48.5
+          "pct": 52.9
         },
         {
           "name": "강경필",
           "party": "미래통합당",
-          "pct": 29.3
+          "pct": 27.0
         },
         {
           "name": "문광삼",
@@ -15291,6 +17198,11 @@
           "pct": 25.8
         },
         {
+          "name": "이인선",
+          "party": "미래통합당",
+          "pct": 34.7
+        },
+        {
           "name": "홍준표",
           "party": "무소속",
           "pct": 34.0
@@ -15542,12 +17454,12 @@
         {
           "name": "맹성규",
           "party": "더불어민주당",
-          "pct": 46.9
+          "pct": 49.4
         },
         {
           "name": "유정복",
           "party": "미래통합당",
-          "pct": 37.1
+          "pct": 38.1
         }
       ]
     },
@@ -15775,6 +17687,230 @@
       ]
     },
     {
+      "ntt_id": "7353",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7353&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 5.0,
+      "contact_rate": 39.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-29",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "6 ] 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 29.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 32.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.5
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 2.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7351",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7351&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 524.0,
+      "response_rate": 2.9,
+      "contact_rate": 43.1,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-29",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "6 ] 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 27.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 38.7
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.8
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7350",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7350&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 1.3,
+      "contact_rate": 44.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-29",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "6 ] 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 42.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 29.5
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.9
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.9
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7348",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7348&menuNo=200467",
+      "agency": "(주)디오피니언",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 2.4,
+      "contact_rate": 45.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-27",
+      "period_end": "2020-03-28",
+      "reg_date": "2020-03-29",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "2",
+      "table_title": "6 ] 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 42.7
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 32.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.3
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 2.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.6
+        }
+      ]
+    },
+    {
       "ntt_id": "7309",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7309&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -15801,17 +17937,58 @@
         {
           "name": "김승남",
           "party": "더불어민주당",
-          "pct": 50.4
+          "pct": 46.6
         },
         {
           "name": "김화진",
           "party": "무소속",
-          "pct": 3.6
+          "pct": 4.5
         },
         {
           "name": "황주홍",
           "party": "민생당",
-          "pct": 33.1
+          "pct": 36.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7303",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7303&menuNo=200467",
+      "agency": "(주)알앤써치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 경인일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 517.0,
+      "response_rate": 8.5,
+      "contact_rate": 59.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-24",
+      "period_end": "2020-03-25",
+      "reg_date": "2020-03-26",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "Q4).그리고, 선생님께서는 비례대표 정당투표에서는 어느 정당이나 단체에 투표하실 생각이십니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 28.3
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 26.7
+        },
+        {
+          "name": "",
+          "party": "친박신당",
+          "pct": 3.8
         }
       ]
     },
@@ -16009,7 +18186,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 0.5
         },
         {
@@ -16020,78 +18197,58 @@
       ]
     },
     {
-      "ntt_id": "7311",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7311&menuNo=200467",
-      "agency": "(주)한국리서치",
+      "ntt_id": "7310",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7310&menuNo=200467",
+      "agency": "(주)리서치뷰",
       "co_agency": "",
-      "requester": "방송사 : KBS",
+      "requester": "인터넷언론 : 인천투데이",
       "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1199.0,
-      "response_rate": 99.3,
-      "contact_rate": 100.0,
-      "sample_error": "95% 신뢰수준에 ±2.8%P",
-      "period_start": "2020-03-20",
-      "period_end": "2020-03-23",
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 7.9,
+      "contact_rate": 50.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-21",
+      "period_end": "2020-03-22",
       "reg_date": "2020-03-25",
-      "sido": "",
+      "sido": "인천광역시",
       "sigungu": "",
       "district": "",
-      "office_level": "비례대표",
-      "office_label": "비례대표",
-      "metric_type": "비례대표",
-      "table_no": "",
-      "table_title": "비례대표 정당투표",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당지지도",
       "candidates": [
         {
           "name": "",
-          "party": "더불어시민당",
-          "pct": 28.0
+          "party": "더불어민주당",
+          "pct": 40.5
         },
         {
           "name": "",
-          "party": "미래한국당",
-          "pct": 23.2
+          "party": "미래통합당",
+          "pct": 37.0
         },
         {
           "name": "",
           "party": "민생당",
-          "pct": 0.2
+          "pct": 2.0
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 10.7
+          "pct": 4.1
         },
         {
           "name": "",
-          "party": "국민의당",
-          "pct": 5.7
-        },
-        {
-          "name": "",
-          "party": "민중당",
-          "pct": 0.3
-        },
-        {
-          "name": "",
-          "party": "열린민주당",
-          "pct": 5.3
-        },
-        {
-          "name": "",
-          "party": "친박신당",
+          "party": "공화당",
           "pct": 0.6
         },
         {
           "name": "",
-          "party": "미래당",
-          "pct": 1.7
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 28.0
+          "party": "국민의당",
+          "pct": 3.1
         }
       ]
     },
@@ -16178,12 +18335,12 @@
         {
           "name": "곽상언",
           "party": "더불어민주당",
-          "pct": 38.4
+          "pct": 34.7
         },
         {
           "name": "박덕흠",
           "party": "미래통합당",
-          "pct": 47.1
+          "pct": 54.8
         }
       ]
     },
@@ -16651,17 +18808,17 @@
         {
           "name": "변재일",
           "party": "더불어민주당",
-          "pct": 42.2
+          "pct": 44.2
         },
         {
           "name": "김수민",
           "party": "미래통합당",
-          "pct": 27.4
+          "pct": 19.5
         },
         {
           "name": "이명주",
           "party": "민중당",
-          "pct": 2.5
+          "pct": 34.6
         }
       ]
     },
@@ -16824,6 +18981,265 @@
       ]
     },
     {
+      "ntt_id": "7264",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7264&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 15.1,
+      "contact_rate": 27.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-20",
+      "period_end": "2020-03-21",
+      "reg_date": "2020-03-21",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.3
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 20.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.5
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.5
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7263",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7263&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 505.0,
+      "response_rate": 18.4,
+      "contact_rate": 24.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-20",
+      "period_end": "2020-03-21",
+      "reg_date": "2020-03-21",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.6
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 20.1
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.9
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.8
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.6
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 3.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7262",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7262&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 505.0,
+      "response_rate": 14.6,
+      "contact_rate": 27.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-20",
+      "period_end": "2020-03-20",
+      "reg_date": "2020-03-21",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 31.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 18.4
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.8
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.7
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7260",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7260&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 17.3,
+      "contact_rate": 24.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-20",
+      "period_end": "2020-03-20",
+      "reg_date": "2020-03-21",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 32.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 20.0
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 1.9
+        }
+      ]
+    },
+    {
       "ntt_id": "7260",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7260&menuNo=200467",
       "agency": "(주)엠브레인퍼블릭",
@@ -16856,6 +19272,42 @@
           "name": "황교안",
           "party": "미래통합당",
           "pct": 13.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7261",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7261&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1011.0,
+      "response_rate": 20.2,
+      "contact_rate": 19.2,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-20",
+      "period_end": "2020-03-21",
+      "reg_date": "2020-03-21",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "14",
+      "table_title": ". 총선결과 1당 전당]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 44.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 25.6
         }
       ]
     },
@@ -17049,12 +19501,12 @@
         {
           "name": "홍문표",
           "party": "미래통합당",
-          "pct": 42.3
+          "pct": 50.7
         },
         {
           "name": "김학민",
           "party": "더불어민주당",
-          "pct": 34.5
+          "pct": 30.7
         }
       ]
     },
@@ -17135,7 +19587,7 @@
         },
         {
           "name": "",
-          "party": "미래한국당",
+          "party": "미래통합당",
           "pct": 41.8
         },
         {
@@ -17921,17 +20373,17 @@
         {
           "name": "남영희",
           "party": "더불어민주당",
-          "pct": 32.4
+          "pct": 27.8
         },
         {
           "name": "안상수",
           "party": "미래통합당",
-          "pct": 12.0
+          "pct": 13.6
         },
         {
           "name": "윤상현",
           "party": "무소속",
-          "pct": 28.9
+          "pct": 35.4
         }
       ]
     },
@@ -18237,12 +20689,12 @@
         {
           "name": "고민정",
           "party": "더불어민주당",
-          "pct": 43.3
+          "pct": 42.5
         },
         {
           "name": "오세훈",
           "party": "미래통합당",
-          "pct": 32.3
+          "pct": 35.0
         }
       ]
     },
@@ -18369,6 +20821,67 @@
       ]
     },
     {
+      "ntt_id": "7183",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7183&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "통신사 : news1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1005.0,
+      "response_rate": 24.0,
+      "contact_rate": 18.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-13",
+      "period_end": "2020-03-13",
+      "reg_date": "2020-03-13",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.2
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 19.7
+        },
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 0.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.7
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.8
+        },
+        {
+          "name": "",
+          "party": "공화당",
+          "pct": 0.5
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 1.6
+        }
+      ]
+    },
+    {
       "ntt_id": "7144",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7144&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -18404,7 +20917,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 2.0
         },
         {
@@ -18470,7 +20983,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.7
         },
         {
@@ -18527,12 +21040,12 @@
         {
           "name": "이낙연",
           "party": "더불어민주당",
-          "pct": 49.6
+          "pct": 57.1
         },
         {
           "name": "황교안",
           "party": "미래통합당",
-          "pct": 7.8
+          "pct": 23.2
         }
       ]
     },
@@ -18572,7 +21085,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.1
         },
         {
@@ -18638,7 +21151,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.8
         },
         {
@@ -18690,12 +21203,12 @@
         {
           "name": "고민정",
           "party": "더불어민주당",
-          "pct": 35.9
+          "pct": 44.4
         },
         {
           "name": "오세훈",
           "party": "미래통합당",
-          "pct": 3.1
+          "pct": 3.0
         }
       ]
     },
@@ -18735,7 +21248,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.3
         },
         {
@@ -18801,7 +21314,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.4
         },
         {
@@ -18872,7 +21385,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 0.8
         },
         {
@@ -18928,7 +21441,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "민생당",
           "pct": 1.3
         },
         {
@@ -19235,6 +21748,184 @@
       ]
     },
     {
+      "ntt_id": "7134",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7134&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 504.0,
+      "response_rate": 5.2,
+      "contact_rate": 65.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-02-27",
+      "period_end": "2020-03-01",
+      "reg_date": "2020-03-02",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 40.7
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 2.8
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 1.4
+        },
+        {
+          "name": "",
+          "party": "민주평화당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.7
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7133",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7133&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 506.0,
+      "response_rate": 4.3,
+      "contact_rate": 79.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-02-27",
+      "period_end": "2020-03-01",
+      "reg_date": "2020-03-02",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "1",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.5
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 44.5
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 1.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.2
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "민주평화당",
+          "pct": 0.3
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.1
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "7127",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7127&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 영남일보, 대구CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 502.0,
+      "response_rate": 5.6,
+      "contact_rate": 81.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-02-25",
+      "period_end": "2020-02-26",
+      "reg_date": "2020-02-27",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 12.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 69.8
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7102",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7102&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -19265,7 +21956,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 4.1
         },
         {
@@ -19326,7 +22017,7 @@
         },
         {
           "name": "장병완",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 20.4
         }
       ]
@@ -19362,7 +22053,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 4.5
         },
         {
@@ -19389,6 +22080,52 @@
           "name": "",
           "party": "정의당",
           "pct": 12.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7104",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7104&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 영남일보, 대구CBS",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 503.0,
+      "response_rate": 5.4,
+      "contact_rate": 84.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-02-24",
+      "period_end": "2020-02-25",
+      "reg_date": "2020-02-26",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 18.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 62.3
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 2.5
         }
       ]
     },
@@ -19704,7 +22441,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 66.9
         },
         {
@@ -19765,7 +22502,7 @@
         },
         {
           "name": "김동철",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 10.3
         },
         {
@@ -19811,7 +22548,7 @@
         },
         {
           "name": "천정배",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 16.5
         },
         {
@@ -19852,7 +22589,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 3.6
         },
         {
@@ -19884,6 +22621,62 @@
           "name": "",
           "party": "정의당",
           "pct": 3.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7051",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7051&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "통신사 : news1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1008.0,
+      "response_rate": 26.2,
+      "contact_rate": 18.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-02-24",
+      "period_end": "2020-02-25",
+      "reg_date": "2020-02-25",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "5",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 33.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 17.6
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 2.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.2
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.5
         }
       ]
     },
@@ -19954,7 +22747,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 74.0
         },
         {
@@ -20010,7 +22803,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 1.8
         },
         {
@@ -20076,7 +22869,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 5.2
         },
         {
@@ -20122,7 +22915,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 6.4
         },
         {
@@ -20169,6 +22962,62 @@
       ]
     },
     {
+      "ntt_id": "7050",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7050&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1003.0,
+      "response_rate": 16.4,
+      "contact_rate": 27.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-02-23",
+      "period_end": "2020-02-24",
+      "reg_date": "2020-02-24",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "3",
+      "table_title": ". 정당지지도]",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 27.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 13.8
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.5
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.3
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 0.8
+        }
+      ]
+    },
+    {
       "ntt_id": "7088",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7088&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -20204,7 +23053,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 2.4
         },
         {
@@ -20265,11 +23114,6 @@
         },
         {
           "name": "",
-          "party": "미래당",
-          "pct": 1.7
-        },
-        {
-          "name": "",
           "party": "정의당",
           "pct": 13.8
         },
@@ -20323,11 +23167,6 @@
           "name": "",
           "party": "미래한국당",
           "pct": 3.2
-        },
-        {
-          "name": "",
-          "party": "미래당",
-          "pct": 1.3
         },
         {
           "name": "",
@@ -20425,11 +23264,6 @@
           "name": "",
           "party": "미래한국당",
           "pct": 2.3
-        },
-        {
-          "name": "",
-          "party": "미래당",
-          "pct": 4.0
         },
         {
           "name": "",
@@ -20596,11 +23430,6 @@
         },
         {
           "name": "",
-          "party": "미래당",
-          "pct": 1.8
-        },
-        {
-          "name": "",
           "party": "정의당",
           "pct": 9.0
         },
@@ -20729,11 +23558,6 @@
         },
         {
           "name": "",
-          "party": "미래당",
-          "pct": 2.5
-        },
-        {
-          "name": "",
           "party": "정의당",
           "pct": 11.2
         },
@@ -20751,6 +23575,72 @@
           "name": "",
           "party": "국민의당",
           "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7079",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7079&menuNo=200467",
+      "agency": "(주)에브리미디어",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 에브리미디어",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 4.3,
+      "contact_rate": 78.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-02-20",
+      "period_end": "2020-02-23",
+      "reg_date": "2020-02-24",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "4",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 30.7
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 48.3
+        },
+        {
+          "name": "",
+          "party": "바른미래당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.6
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 3.1
+        },
+        {
+          "name": "",
+          "party": "민주평화당",
+          "pct": 0.2
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 0.3
+        },
+        {
+          "name": "",
+          "party": "우리공화당",
+          "pct": 1.4
         }
       ]
     },
@@ -20790,7 +23680,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 3.5
         },
         {
@@ -20887,7 +23777,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 1.2
         },
         {
@@ -21015,13 +23905,8 @@
         },
         {
           "name": "",
-          "party": "미래한국당",
+          "party": "미래통합당",
           "pct": 32.6
-        },
-        {
-          "name": "",
-          "party": "미래당",
-          "pct": 3.3
         },
         {
           "name": "",
@@ -21066,7 +23951,7 @@
         },
         {
           "name": "",
-          "party": "미래당",
+          "party": "바른미래당",
           "pct": 2.0
         },
         {
@@ -21114,6 +23999,42 @@
           "name": "송석준",
           "party": "미래통합당",
           "pct": 33.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "6990",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=6990&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 굿모닝충청",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 532.0,
+      "response_rate": 5.1,
+      "contact_rate": 51.8,
+      "sample_error": "95% 신뢰수준에 ±4.2%P",
+      "period_start": "2020-02-06",
+      "period_end": "2020-02-07",
+      "reg_date": "2020-02-10",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "서산시태안군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▷▷▷▶",
+      "candidates": [
+        {
+          "name": "성일종",
+          "party": "자유한국당",
+          "pct": 50.752
+        },
+        {
+          "name": "조한기",
+          "party": "더불어민주당",
+          "pct": 37.938
         }
       ]
     },
@@ -21424,9 +24345,14 @@
           "pct": 25.6
         },
         {
+          "name": "김선교",
+          "party": "자유한국당",
+          "pct": 42.0
+        },
+        {
           "name": "유상진",
           "party": "정의당",
-          "pct": 4.4
+          "pct": 5.0
         }
       ]
     },
@@ -22227,12 +25153,12 @@
         {
           "name": "김선우",
           "party": "무소속",
-          "pct": 4.2
+          "pct": 9.2
         },
         {
           "name": "이개호",
           "party": "더불어민주당",
-          "pct": 57.8
+          "pct": 62.4
         }
       ]
     },
@@ -22315,6 +25241,42 @@
           "name": "최경환",
           "party": "민생당",
           "pct": 12.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "6528",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=6528&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 당진시대",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 4.5,
+      "contact_rate": 75.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2019-11-02",
+      "period_end": "2019-11-03",
+      "reg_date": "2019-11-15",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "당진시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "5",
+      "table_title": "제21대 국회의원선거 양자대결",
+      "candidates": [
+        {
+          "name": "어기구",
+          "party": "민주당",
+          "pct": 48.9
+        },
+        {
+          "name": "정용선",
+          "party": "자유한국당",
+          "pct": 33.7
         }
       ]
     }
