@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-05T20:29:31",
+    "generated_at": "2026-06-05T21:16:05",
     "election_date": "2026-06-03",
     "blackout_start": "2026-05-28",
     "blackout_end": "2026-06-03T18:00",
@@ -10,9 +10,9 @@
     "stats": {
       "total_polls_meta": 1427,
       "matched_parsed": 1191,
-      "emitted_records": 328,
+      "emitted_records": 387,
       "skipped_no_pdf": 232,
-      "skipped_no_candidates": 664
+      "skipped_no_candidates": 685
     }
   },
   "polls": [
@@ -90,8 +90,13 @@
           "pct": 35.8
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이상헌",
+          "party": "자유한국당",
+          "pct": 26.8
+        },
+        {
+          "name": "박찬중",
+          "party": "바른미래당",
           "pct": 1.9
         },
         {
@@ -210,19 +215,99 @@
           "pct": 48.5
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "박성효",
+          "party": "자유한국당",
           "pct": 29.0
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "남충희",
+          "party": "바른미래당",
           "pct": 6.1
         },
         {
           "name": "김윤기",
           "party": "정의당",
           "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5614",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5614&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스프리존",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 803.0,
+      "response_rate": 1.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-06-05",
+      "period_end": "2018-06-05",
+      "reg_date": "2018-06-08",
+      "sido": "경기도",
+      "sigungu": "동두천시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "최용덕",
+          "party": "민주당",
+          "pct": 45.9
+        },
+        {
+          "name": "박형덕",
+          "party": "자유한국당",
+          "pct": 34.6
+        },
+        {
+          "name": "김홍규",
+          "party": "바른미래당",
+          "pct": 7.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "5613",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5613&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티, 세계로컬신문, 브레이크뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 606.0,
+      "response_rate": 2.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2018-06-03",
+      "period_end": "2018-06-04",
+      "reg_date": "2018-06-08",
+      "sido": "대전광역시",
+      "sigungu": "동구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "황인호",
+          "party": "더불어민주당",
+          "pct": 43.6
+        },
+        {
+          "name": "성선제",
+          "party": "자유한국당",
+          "pct": 21.6
+        },
+        {
+          "name": "한현택",
+          "party": "바른미래당",
+          "pct": 20.1
         }
       ]
     },
@@ -815,13 +900,13 @@
           "pct": 20.5
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "이철우",
+          "party": "자유한국당",
           "pct": 30.8
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "권오을",
+          "party": "바른미래당",
           "pct": 6.7
         },
         {
@@ -1002,6 +1087,81 @@
       ]
     },
     {
+      "ntt_id": "5565",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5565&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티, 세계로컬신문, 브레이크뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 607.0,
+      "response_rate": 2.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2018-06-03",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-07",
+      "sido": "대전광역시",
+      "sigungu": "대덕구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "박정현",
+          "party": "더불어민주당",
+          "pct": 48.0
+        },
+        {
+          "name": "박수범",
+          "party": "자유한국당",
+          "pct": 39.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5556",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5556&menuNo=200467",
+      "agency": "세이폴",
+      "co_agency": "",
+      "requester": "통신사 : GNN 뉴스통신",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 2.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-06-05",
+      "period_end": "2018-06-06",
+      "reg_date": "2018-06-07",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "http://Saypoll.com",
+      "candidates": [
+        {
+          "name": "장휘국",
+          "party": "",
+          "pct": 27.9
+        },
+        {
+          "name": "이정선",
+          "party": "",
+          "pct": 28.8
+        },
+        {
+          "name": "최영태",
+          "party": "",
+          "pct": 19.3
+        }
+      ]
+    },
+    {
       "ntt_id": "5554",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5554&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -1030,8 +1190,8 @@
           "pct": 17.8
         },
         {
-          "name": "한국당유",
-          "party": "",
+          "name": "유천호",
+          "party": "자유한국당",
           "pct": 50.8
         },
         {
@@ -1110,13 +1270,13 @@
           "pct": 10.8
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "황천모",
+          "party": "자유한국당",
           "pct": 25.2
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "김형상",
+          "party": "대한애국당",
           "pct": 1.7
         },
         {
@@ -1133,11 +1293,6 @@
           "name": "김종태",
           "party": "무소속",
           "pct": 25.4
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1165,24 +1320,19 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
+          "name": "김주수",
+          "party": "자유한국당",
+          "pct": 61.4
+        },
+        {
+          "name": "신광진",
+          "party": "민중당",
+          "pct": 5.1
+        },
+        {
           "name": "최유철",
           "party": "무소속",
-          "pct": 23.3
-        },
-        {
-          "name": "민중당신",
-          "party": "",
-          "pct": 5.3
-        },
-        {
-          "name": "자유한",
-          "party": "",
-          "pct": 63.0
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
+          "pct": 27.1
         }
       ]
     },
@@ -1215,8 +1365,8 @@
           "pct": 18.8
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "권기창",
+          "party": "자유한국당",
           "pct": 33.5
         },
         {
@@ -1317,6 +1467,51 @@
       ]
     },
     {
+      "ntt_id": "5537",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5537&menuNo=200467",
+      "agency": "마크로밀엠브레인",
+      "co_agency": "",
+      "requester": "방송사 : JIBS 제주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1018.0,
+      "response_rate": 8.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-06-05",
+      "period_end": "2018-06-06",
+      "reg_date": "2018-06-06",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "JIBS 제주방송 여론조사 통계표 (2018. 06. 06)",
+      "candidates": [
+        {
+          "name": "문대림",
+          "party": "더불어민주당",
+          "pct": 28.0
+        },
+        {
+          "name": "김방훈",
+          "party": "자유한국당",
+          "pct": 1.3
+        },
+        {
+          "name": "고은영",
+          "party": "녹색당",
+          "pct": 0.3
+        },
+        {
+          "name": "원희룡",
+          "party": "무소속",
+          "pct": 53.9
+        }
+      ]
+    },
+    {
       "ntt_id": "5536",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5536&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -1345,18 +1540,18 @@
           "pct": 10.4
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "주낙영",
+          "party": "자유한국당",
           "pct": 32.2
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "손경익",
+          "party": "바른미래당",
           "pct": 6.3
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "최길갈",
+          "party": "대한애국당",
           "pct": 3.2
         },
         {
@@ -1368,11 +1563,6 @@
           "name": "최양식",
           "party": "무소속",
           "pct": 21.8
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1402,22 +1592,17 @@
         {
           "name": "장성욱",
           "party": "민주당",
-          "pct": 35.3
+          "pct": 36.7
         },
         {
-          "name": "한국당이",
-          "party": "",
-          "pct": 54.9
+          "name": "이희진",
+          "party": "자유한국당",
+          "pct": 54.3
         },
         {
           "name": "박병일",
           "party": "무소속",
-          "pct": 2.8
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
+          "pct": 3.5
         }
       ]
     },
@@ -1450,8 +1635,8 @@
           "pct": 50.1
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "홍승채",
+          "party": "민주평화당",
           "pct": 4.3
         },
         {
@@ -1490,13 +1675,13 @@
           "pct": 38.0
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이강덕",
+          "party": "자유한국당",
           "pct": 42.2
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이창균",
+          "party": "바른미래당",
           "pct": 3.5
         },
         {
@@ -1508,11 +1693,6 @@
           "name": "모성은",
           "party": "무소속",
           "pct": 4.4
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1563,11 +1743,6 @@
           "name": "문경구",
           "party": "",
           "pct": 3.8
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1600,24 +1775,19 @@
           "pct": 27.1
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "이철우",
+          "party": "자유한국당",
           "pct": 43.2
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "권오을",
+          "party": "바른미래당",
           "pct": 8.7
         },
         {
           "name": "박창호",
           "party": "정의당",
           "pct": 2.8
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1650,18 +1820,18 @@
           "pct": 14.9
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "주낙영",
+          "party": "자유한국당",
           "pct": 31.1
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "손경익",
+          "party": "바른미래당",
           "pct": 6.2
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "최길갈",
+          "party": "대한애국당",
           "pct": 1.8
         },
         {
@@ -1673,11 +1843,6 @@
           "name": "최양식",
           "party": "무소속",
           "pct": 20.9
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -1710,8 +1875,8 @@
           "pct": 35.3
         },
         {
-          "name": "한국당김",
-          "party": "",
+          "name": "김성기",
+          "party": "자유한국당",
           "pct": 36.2
         },
         {
@@ -1762,6 +1927,46 @@
       ]
     },
     {
+      "ntt_id": "5496",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5496&menuNo=200467",
+      "agency": "(주)폴리컴",
+      "co_agency": "",
+      "requester": "인터넷언론 : 남해미래신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1029.0,
+      "response_rate": 7.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-06-05",
+      "period_end": "2018-06-06",
+      "reg_date": "2018-06-06",
+      "sido": "경상남도",
+      "sigungu": "남해군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "1",
+      "table_title": "남해군수 지지도",
+      "candidates": [
+        {
+          "name": "장충남",
+          "party": "더불어민주당",
+          "pct": 39.0
+        },
+        {
+          "name": "박영일",
+          "party": "자유한국당",
+          "pct": 42.5
+        },
+        {
+          "name": "이철호",
+          "party": "무소속",
+          "pct": 10.0
+        }
+      ]
+    },
+    {
       "ntt_id": "5492",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5492&menuNo=200467",
       "agency": "(주)에스티아이",
@@ -1790,13 +1995,13 @@
           "pct": 25.6
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "임남규",
+          "party": "자유한국당",
           "pct": 26.6
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "최종연",
+          "party": "바른미래당",
           "pct": 8.6
         },
         {
@@ -1813,6 +2018,46 @@
           "name": "김호규",
           "party": "무소속",
           "pct": 8.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "5474",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5474&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 함평타임즈",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1052.0,
+      "response_rate": 10.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-02",
+      "reg_date": "2018-06-06",
+      "sido": "전라남도",
+      "sigungu": "함평군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "김성모",
+          "party": "더불어민주당",
+          "pct": 44.1
+        },
+        {
+          "name": "이윤행",
+          "party": "민주평화당",
+          "pct": 36.5
+        },
+        {
+          "name": "노두근",
+          "party": "무소속",
+          "pct": 13.0
         }
       ]
     },
@@ -1925,8 +2170,8 @@
           "pct": 27.7
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "박홍률",
+          "party": "민주평화당",
           "pct": 40.5
         },
         {
@@ -1935,8 +2180,8 @@
           "pct": 3.7
         },
         {
-          "name": "한반도미",
-          "party": "",
+          "name": "김성남",
+          "party": "한반도미래연합",
           "pct": 4.0
         }
       ]
@@ -2027,6 +2272,41 @@
       ]
     },
     {
+      "ntt_id": "5453",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5453&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 평안신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 815.0,
+      "response_rate": 2.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2018-06-04",
+      "period_end": "2018-06-04",
+      "reg_date": "2018-06-05",
+      "sido": "경기도",
+      "sigungu": "평택시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "정장선",
+          "party": "더불어민주당",
+          "pct": 54.0
+        },
+        {
+          "name": "공재광",
+          "party": "자유한국당",
+          "pct": 35.5
+        }
+      ]
+    },
+    {
       "ntt_id": "5450",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5450&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -2055,24 +2335,19 @@
           "pct": 42.4
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "이완섭",
+          "party": "자유한국당",
           "pct": 44.9
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "박상무",
+          "party": "바른미래당",
           "pct": 5.2
         },
         {
           "name": "신현웅",
           "party": "정의당",
           "pct": 3.5
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -2275,14 +2550,54 @@
           "pct": 28.1
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "노박래",
+          "party": "자유한국당",
           "pct": 38.8
         },
         {
           "name": "김기웅",
           "party": "무소속",
           "pct": 28.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "5403",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5403&menuNo=200467",
+      "agency": "(주)에스티아이",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 놀뫼신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 5.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-04",
+      "sido": "충청남도",
+      "sigungu": "계룡시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "계룡시장 지지후보",
+      "candidates": [
+        {
+          "name": "최홍묵",
+          "party": "더불어민주당",
+          "pct": 41.7
+        },
+        {
+          "name": "이응우",
+          "party": "자유한국당",
+          "pct": 31.2
+        },
+        {
+          "name": "이기원",
+          "party": "바른미래당",
+          "pct": 14.6
         }
       ]
     },
@@ -2315,13 +2630,18 @@
           "pct": 46.4
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이석윤",
+          "party": "자유한국당",
           "pct": 21.8
         },
         {
-          "name": "민중당이",
-          "party": "",
+          "name": "이재진",
+          "party": "자유한국당",
+          "pct": 13.2
+        },
+        {
+          "name": "이용일",
+          "party": "민중당",
           "pct": 1.5
         },
         {
@@ -2365,13 +2685,13 @@
           "pct": 40.0
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이강덕",
+          "party": "자유한국당",
           "pct": 43.4
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이창균",
+          "party": "바른미래당",
           "pct": 3.2
         },
         {
@@ -2415,8 +2735,8 @@
           "pct": 48.7
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "민영삼",
+          "party": "민주평화당",
           "pct": 5.4
         },
         {
@@ -2425,8 +2745,8 @@
           "pct": 1.9
         },
         {
-          "name": "민중당이",
-          "party": "",
+          "name": "이성수",
+          "party": "민중당",
           "pct": 1.9
         }
       ]
@@ -2495,24 +2815,104 @@
           "pct": 34.0
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "김방훈",
+          "party": "자유한국당",
           "pct": 2.4
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "장성철",
+          "party": "바른미래당",
           "pct": 5.0
         },
         {
-          "name": "녹색당고",
-          "party": "",
+          "name": "고은영",
+          "party": "녹색당",
           "pct": 3.5
         },
         {
           "name": "원희룡",
           "party": "무소속",
           "pct": 44.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "5390",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5390&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "방송사 : MBN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 17.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-04",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 51.3
+        },
+        {
+          "name": "이인제",
+          "party": "자유한국당",
+          "pct": 24.7
+        },
+        {
+          "name": "코리아차",
+          "party": "",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "5389",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5389&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "방송사 : MBN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 16.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-04",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 48.2
+        },
+        {
+          "name": "김태호",
+          "party": "자유한국당",
+          "pct": 27.1
+        },
+        {
+          "name": "김유근",
+          "party": "바른미래당",
+          "pct": 2.4
         }
       ]
     },
@@ -2540,40 +2940,19 @@
       "table_title": "▮ 제7회 지방선거 여론조사",
       "candidates": [
         {
+          "name": "김문수",
+          "party": "자유한국당",
+          "pct": 20.5
+        },
+        {
+          "name": "안철수",
+          "party": "바른미래당",
+          "pct": 31.4
+        },
+        {
           "name": "박원순",
           "party": "더불어민주당",
-          "pct": 52.3
-        },
-        {
-          "name": "자유한",
-          "party": "",
-          "pct": 13.8
-        },
-        {
-          "name": "바른미래",
-          "party": "",
-          "pct": 13.7
-        },
-        {
-          "name": "김종민서",
-          "party": "정의당",
-          "pct": 1.0,
-          "_original_name": "김종민"
-        },
-        {
-          "name": "민중당김",
-          "party": "",
-          "pct": 1.0
-        },
-        {
-          "name": "대한애",
-          "party": "",
-          "pct": 2.0
-        },
-        {
-          "name": "녹색당신",
-          "party": "",
-          "pct": 7.0
+          "pct": 56.6
         }
       ]
     },
@@ -2641,19 +3020,59 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "자유한",
-          "party": "",
+          "name": "윤경희",
+          "party": "자유한국당",
           "pct": 59.1
         },
         {
           "name": "심상박",
           "party": "무소속",
           "pct": 33.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "5383",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5383&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 영암우리신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1041.0,
+      "response_rate": 7.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-04",
+      "sido": "전라남도",
+      "sigungu": "영암군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "1",
+      "table_title": "영암군수 후보지지도",
+      "candidates": [
+        {
+          "name": "전동평",
+          "party": "더불어민주당",
+          "pct": 53.7
         },
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
+          "name": "박소영",
+          "party": "민주평화당",
+          "pct": 25.0
+        },
+        {
+          "name": "박성호",
+          "party": "무소속",
+          "pct": 7.4
+        },
+        {
+          "name": "김철호",
+          "party": "무소속",
+          "pct": 8.0
         }
       ]
     },
@@ -2916,8 +3335,8 @@
           "pct": 27.0
         },
         {
-          "name": "한국당노",
-          "party": "",
+          "name": "노박래",
+          "party": "자유한국당",
           "pct": 38.0
         },
         {
@@ -2973,6 +3392,41 @@
       ]
     },
     {
+      "ntt_id": "5348",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5348&menuNo=200467",
+      "agency": "데일리리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 소통뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 705.0,
+      "response_rate": 4.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2018-06-02",
+      "period_end": "2018-06-03",
+      "reg_date": "2018-06-03",
+      "sido": "전북특별자치도",
+      "sigungu": "익산시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4 . 설문 항목별 응답결과값",
+      "candidates": [
+        {
+          "name": "김영배",
+          "party": "더불어민주당",
+          "pct": 43.2
+        },
+        {
+          "name": "정헌율",
+          "party": "민주평화당",
+          "pct": 50.0
+        }
+      ]
+    },
+    {
       "ntt_id": "5345",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5345&menuNo=200467",
       "agency": "제이비플러스",
@@ -2995,11 +3449,6 @@
       "table_no": "",
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "이시종",
           "party": "더불어민주당",
@@ -3040,11 +3489,6 @@
       "table_no": "",
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "김병우",
           "party": "",
@@ -3131,11 +3575,6 @@
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
-        {
           "name": "양승조",
           "party": "더불어민주당",
           "pct": 51.8
@@ -3175,11 +3614,6 @@
       "table_no": "",
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "김지철",
           "party": "",
@@ -3351,11 +3785,6 @@
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
-        {
           "name": "허태정",
           "party": "더불어민주당",
           "pct": 52.8
@@ -3400,11 +3829,6 @@
       "table_no": "",
       "table_title": "◎\u0000 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "설동호",
           "party": "",
@@ -3536,13 +3960,13 @@
           "pct": 30.5
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "이강덕",
+          "party": "자유한국당",
           "pct": 49.4
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이창균",
+          "party": "바른미래당",
           "pct": 4.1
         },
         {
@@ -3626,13 +4050,13 @@
           "pct": 35.4
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이강덕",
+          "party": "자유한국당",
           "pct": 48.6
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이창균",
+          "party": "바른미래당",
           "pct": 4.2
         },
         {
@@ -3644,11 +4068,41 @@
           "name": "모성은",
           "party": "무소속",
           "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5313",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5313&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 영동타임즈, 삼군신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 7.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2018-05-31",
+      "period_end": "2018-06-01",
+      "reg_date": "2018-06-02",
+      "sido": "충청북도",
+      "sigungu": "영동군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "영동군수 후보지지도",
+      "candidates": [
+        {
+          "name": "정구복",
+          "party": "민주당",
+          "pct": 46.0
         },
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
+          "name": "박세복",
+          "party": "자유한국당",
+          "pct": 43.4
         }
       ]
     },
@@ -3681,8 +4135,8 @@
           "pct": 7.1
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "정연선",
+          "party": "민주평화당",
           "pct": 6.2
         },
         {
@@ -3813,17 +4267,17 @@
         {
           "name": "고석규",
           "party": "",
-          "pct": 56.9
+          "pct": 38.1
         },
         {
           "name": "오인성",
           "party": "",
-          "pct": 11.7
+          "pct": 14.7
         },
         {
           "name": "장석웅",
           "party": "",
-          "pct": 12.3
+          "pct": 24.2
         }
       ]
     },
@@ -3848,52 +4302,57 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "4 . 설문 항목별 응답결과값",
+      "table_title": "[Q5] 그럼 이번에는 영광군수 선거에서 누굴 지지하십니까? 순서는 기호순입니다",
       "candidates": [
         {
-          "name": "하기억",
+          "name": "김준성",
           "party": "더불어민주당",
-          "pct": 12.8
+          "pct": 81.3
         },
         {
-          "name": "김성진",
+          "name": "김연관",
+          "party": "민주평화당",
+          "pct": 10.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "5289",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5289&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 장흥신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1026.0,
+      "response_rate": 15.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-05-28",
+      "period_end": "2018-05-29",
+      "reg_date": "2018-05-31",
+      "sido": "전라남도",
+      "sigungu": "장흥군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "박병동",
           "party": "더불어민주당",
-          "pct": 8.0
+          "pct": 30.6
         },
         {
-          "name": "은희삼",
-          "party": "더불어민주당",
-          "pct": 6.5
-        },
-        {
-          "name": "김강헌",
+          "name": "정종순",
           "party": "무소속",
-          "pct": 6.3
+          "pct": 47.1
         },
         {
-          "name": "김양모",
-          "party": "",
-          "pct": 11.9
-        },
-        {
-          "name": "김병원",
+          "name": "조재환",
           "party": "무소속",
-          "pct": 11.7
-        },
-        {
-          "name": "조삼차",
-          "party": "",
-          "pct": 7.2
-        },
-        {
-          "name": "신평섭",
-          "party": "",
-          "pct": 2.6
-        },
-        {
-          "name": "장기소",
-          "party": "무소속",
-          "pct": 7.5
+          "pct": 11.8
         }
       ]
     },
@@ -3926,8 +4385,8 @@
           "pct": 38.8
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "박홍률",
+          "party": "민주평화당",
           "pct": 47.8
         },
         {
@@ -3936,8 +4395,8 @@
           "pct": 4.2
         },
         {
-          "name": "한반도미",
-          "party": "",
+          "name": "김성남",
+          "party": "한반도미래연합",
           "pct": 1.9
         }
       ]
@@ -4309,51 +4768,6 @@
           "name": "손훈모",
           "party": "무소속",
           "pct": 18.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "5247",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5247&menuNo=200467",
-      "agency": "마크로밀엠브레인",
-      "co_agency": "",
-      "requester": "통신사 : 뉴스1대구경북본부",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 812.0,
-      "response_rate": 16.9,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.4%P",
-      "period_start": "2018-05-28",
-      "period_end": "2018-05-29",
-      "reg_date": "2018-05-30",
-      "sido": "경상북도",
-      "sigungu": "",
-      "office_level": "광역단체장",
-      "office_label": "도지사",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "뉴스1 경북 여론조사 통계표 (2018. 05. 29)",
-      "candidates": [
-        {
-          "name": "오중기",
-          "party": "더불어민주당",
-          "pct": 23.7
-        },
-        {
-          "name": "자유한",
-          "party": "",
-          "pct": 33.7
-        },
-        {
-          "name": "바른미래",
-          "party": "",
-          "pct": 8.5
-        },
-        {
-          "name": "박창호",
-          "party": "정의당",
-          "pct": 2.1
         }
       ]
     },
@@ -4823,6 +5237,91 @@
       ]
     },
     {
+      "ntt_id": "5203",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5203&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "방송사 : 목포MBC",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1015.0,
+      "response_rate": 6.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-05-28",
+      "period_end": "2018-05-29",
+      "reg_date": "2018-05-30",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "김영록",
+          "party": "더불어민주당",
+          "pct": 57.6
+        },
+        {
+          "name": "박매호",
+          "party": "바른미래당",
+          "pct": 5.8
+        },
+        {
+          "name": "민영삼",
+          "party": "민주평화당",
+          "pct": 11.2
+        },
+        {
+          "name": "노형태",
+          "party": "정의당",
+          "pct": 3.9
+        },
+        {
+          "name": "이성수",
+          "party": "민중당",
+          "pct": 5.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "5198",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5198&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 울산제일일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 2.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2018-05-28",
+      "period_end": "2018-05-29",
+      "reg_date": "2018-05-29",
+      "sido": "울산광역시",
+      "sigungu": "울주군",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "3",
+      "table_title": "기초단체장 지지도",
+      "candidates": [
+        {
+          "name": "이순걸",
+          "party": "자유한국당",
+          "pct": 53.4
+        },
+        {
+          "name": "이형철",
+          "party": "무소속",
+          "pct": 2.9
+        }
+      ]
+    },
+    {
       "ntt_id": "5197",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5197&menuNo=200467",
       "agency": "(주)에이스리서치",
@@ -4851,18 +5350,18 @@
           "pct": 27.7
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "박대동",
+          "party": "자유한국당",
           "pct": 43.7
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "강석구",
+          "party": "바른미래당",
           "pct": 5.9
         },
         {
-          "name": "민중당권",
-          "party": "",
+          "name": "권오길",
+          "party": "민중당",
           "pct": 12.6
         },
         {
@@ -4874,6 +5373,86 @@
           "name": "박재묵",
           "party": "무소속",
           "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "5196",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5196&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 울산제일일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 2.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2018-05-28",
+      "period_end": "2018-05-29",
+      "reg_date": "2018-05-29",
+      "sido": "울산광역시",
+      "sigungu": "동구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "3",
+      "table_title": "기초단체장 지지도",
+      "candidates": [
+        {
+          "name": "권명호",
+          "party": "자유한국당",
+          "pct": 35.4
+        },
+        {
+          "name": "송인국",
+          "party": "바른미래당",
+          "pct": 5.4
+        },
+        {
+          "name": "이재현",
+          "party": "민중당",
+          "pct": 17.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "5195",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5195&menuNo=200467",
+      "agency": "(주)에이스리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 울산제일일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 501.0,
+      "response_rate": 1.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2018-05-28",
+      "period_end": "2018-05-29",
+      "reg_date": "2018-05-29",
+      "sido": "울산광역시",
+      "sigungu": "남구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "3",
+      "table_title": "기초단체장 지지도",
+      "candidates": [
+        {
+          "name": "서동욱",
+          "party": "자유한국당",
+          "pct": 53.2
+        },
+        {
+          "name": "김진석",
+          "party": "민중당",
+          "pct": 8.7
+        },
+        {
+          "name": "서종대",
+          "party": "무소속",
+          "pct": 2.8
         }
       ]
     },
@@ -4906,8 +5485,8 @@
           "pct": 27.9
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "김호산",
+          "party": "민주평화당",
           "pct": 11.8
         },
         {
@@ -4956,6 +5535,11 @@
       "table_title": "김천시장 후보 지지도",
       "candidates": [
         {
+          "name": "김응규",
+          "party": "자유한국당",
+          "pct": 33.9
+        },
+        {
           "name": "박희주",
           "party": "무소속",
           "pct": 7.4
@@ -4999,46 +5583,6 @@
           "name": "김대동",
           "party": "민주평화당",
           "pct": 20.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "5148",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5148&menuNo=200467",
-      "agency": "데일리리서치",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 함안신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1003.0,
-      "response_rate": 5.1,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2018-05-28",
-      "period_end": "2018-05-29",
-      "reg_date": "2018-05-29",
-      "sido": "경상남도",
-      "sigungu": "함안군",
-      "office_level": "기초단체장",
-      "office_label": "군수",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "4 . 설문 항목별 응답결과값",
-      "candidates": [
-        {
-          "name": "김용철",
-          "party": "더불어민주당",
-          "pct": 41.8
-        },
-        {
-          "name": "자유한",
-          "party": "",
-          "pct": 43.0
-        },
-        {
-          "name": "배한극",
-          "party": "무소속",
-          "pct": 6.2
         }
       ]
     },
@@ -5156,8 +5700,8 @@
           "pct": 15.7
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "김수용",
+          "party": "자유한국당",
           "pct": 30.5
         },
         {
@@ -5241,8 +5785,8 @@
           "pct": 28.9
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이충우",
+          "party": "자유한국당",
           "pct": 31.5
         },
         {
@@ -5326,14 +5870,54 @@
           "pct": 41.0
         },
         {
-          "name": "평화당명",
-          "party": "",
+          "name": "명현관",
+          "party": "민주평화당",
           "pct": 39.7
         },
         {
           "name": "이정우",
           "party": "무소속",
           "pct": 6.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "5122",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5122&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "방송사 : 충남방송",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 8.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-05-26",
+      "period_end": "2018-05-27",
+      "reg_date": "2018-05-28",
+      "sido": "충청남도",
+      "sigungu": "당진시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "3",
+      "table_title": "당진시장 후보지지도",
+      "candidates": [
+        {
+          "name": "김홍장",
+          "party": "민주당",
+          "pct": 48.0
+        },
+        {
+          "name": "오성환",
+          "party": "자유한국당",
+          "pct": 30.3
+        },
+        {
+          "name": "이철수",
+          "party": "바른미래당",
+          "pct": 9.0
         }
       ]
     },
@@ -5411,13 +5995,13 @@
           "pct": 30.1
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "한명현",
+          "party": "자유한국당",
           "pct": 28.8
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "김승남",
+          "party": "바른미래당",
           "pct": 15.1
         },
         {
@@ -5439,11 +6023,6 @@
           "name": "김덕수",
           "party": "무소속",
           "pct": 8.7
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -5611,14 +6190,54 @@
           "pct": 34.4
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "이희진",
+          "party": "자유한국당",
           "pct": 48.6
         },
         {
           "name": "박병일",
           "party": "무소속",
           "pct": 7.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5111",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5111&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 프라임경제",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1039.0,
+      "response_rate": 1.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-05-27",
+      "period_end": "2018-05-28",
+      "reg_date": "2018-05-28",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "이정선",
+          "party": "",
+          "pct": 29.8
+        },
+        {
+          "name": "장휘국",
+          "party": "",
+          "pct": 29.1
+        },
+        {
+          "name": "최영태",
+          "party": "",
+          "pct": 25.1
         }
       ]
     },
@@ -5646,19 +6265,14 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "이승민",
+          "name": "김태율",
           "party": "더불어민주당",
-          "pct": 13.5
+          "pct": 23.1
         },
         {
-          "name": "자유한",
-          "party": "",
-          "pct": 32.6
-        },
-        {
-          "name": "김하수",
-          "party": "무소속",
-          "pct": 43.4
+          "name": "이승율",
+          "party": "자유한국당",
+          "pct": 63.3
         }
       ]
     },
@@ -5851,13 +6465,13 @@
           "pct": 46.8
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "박성효",
+          "party": "자유한국당",
           "pct": 30.2
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "남충희",
+          "party": "바른미래당",
           "pct": 6.0
         },
         {
@@ -5948,6 +6562,126 @@
       ]
     },
     {
+      "ntt_id": "5090",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5090&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티, 세계로컬신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 607.0,
+      "response_rate": 2.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2018-05-25",
+      "period_end": "2018-05-26",
+      "reg_date": "2018-05-28",
+      "sido": "대전광역시",
+      "sigungu": "동구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "황인호",
+          "party": "더불어민주당",
+          "pct": 42.2
+        },
+        {
+          "name": "성선제",
+          "party": "자유한국당",
+          "pct": 19.7
+        },
+        {
+          "name": "한현택",
+          "party": "바른미래당",
+          "pct": 23.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "5088",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5088&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티, 세계로컬신문사",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 708.0,
+      "response_rate": 3.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2018-05-25",
+      "period_end": "2018-05-27",
+      "reg_date": "2018-05-28",
+      "sido": "충청남도",
+      "sigungu": "논산시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "황명선",
+          "party": "더불어민주당",
+          "pct": 46.7
+        },
+        {
+          "name": "백성현",
+          "party": "자유한국당",
+          "pct": 41.3
+        },
+        {
+          "name": "이창원",
+          "party": "바른미래당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "5085",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5085&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티, 세계로컬신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 620.0,
+      "response_rate": 6.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.9%P",
+      "period_start": "2018-05-25",
+      "period_end": "2018-05-26",
+      "reg_date": "2018-05-28",
+      "sido": "충청남도",
+      "sigungu": "계룡시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "최홍묵",
+          "party": "더불어민주당",
+          "pct": 39.4
+        },
+        {
+          "name": "이응우",
+          "party": "자유한국당",
+          "pct": 30.6
+        },
+        {
+          "name": "이기원",
+          "party": "바른미래당",
+          "pct": 18.4
+        }
+      ]
+    },
+    {
       "ntt_id": "5051",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5051&menuNo=200467",
       "agency": "코리아스픽스",
@@ -5994,6 +6728,41 @@
           "name": "황호진",
           "party": "",
           "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5083",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5083&menuNo=200467",
+      "agency": "(주)데이터앤리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 글로벌경제신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1006.0,
+      "response_rate": 2.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-05-26",
+      "period_end": "2018-05-27",
+      "reg_date": "2018-05-27",
+      "sido": "경기도",
+      "sigungu": "평택시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "단위: %,(명)",
+      "candidates": [
+        {
+          "name": "정장선",
+          "party": "더불어민주당",
+          "pct": 50.4
+        },
+        {
+          "name": "공재광",
+          "party": "자유한국당",
+          "pct": 35.2
         }
       ]
     },
@@ -6126,13 +6895,13 @@
           "pct": 48.6
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "김석우",
+          "party": "자유한국당",
           "pct": 26.1
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이화복",
+          "party": "바른미래당",
           "pct": 3.3
         },
         {
@@ -6171,18 +6940,18 @@
           "pct": 13.3
         },
         {
-          "name": "한국당주",
-          "party": "",
+          "name": "주낙영",
+          "party": "자유한국당",
           "pct": 24.3
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "손경익",
+          "party": "바른미래당",
           "pct": 5.4
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "최길갈",
+          "party": "대한애국당",
           "pct": 3.0
         },
         {
@@ -6194,11 +6963,6 @@
           "name": "최양식",
           "party": "무소속",
           "pct": 23.6
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -6451,8 +7215,8 @@
           "pct": 28.2
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "박홍률",
+          "party": "민주평화당",
           "pct": 36.2
         },
         {
@@ -6461,8 +7225,8 @@
           "pct": 3.6
         },
         {
-          "name": "한반도미",
-          "party": "",
+          "name": "김성남",
+          "party": "한반도미래연합",
           "pct": 7.0
         }
       ]
@@ -6514,6 +7278,41 @@
           "name": "전화식",
           "party": "무소속",
           "pct": 30.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "5054",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=5054&menuNo=200467",
+      "agency": "데일리리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 정선신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 654.0,
+      "response_rate": 4.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.8%P",
+      "period_start": "2018-05-24",
+      "period_end": "2018-05-24",
+      "reg_date": "2018-05-25",
+      "sido": "강원특별자치도",
+      "sigungu": "정선군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4 . 설문 항목별 응답결과값",
+      "candidates": [
+        {
+          "name": "최승준",
+          "party": "더불어민주당",
+          "pct": 48.8
+        },
+        {
+          "name": "유승근",
+          "party": "자유한국당",
+          "pct": 40.8
         }
       ]
     },
@@ -6636,8 +7435,8 @@
           "pct": 14.3
         },
         {
-          "name": "한국당유",
-          "party": "",
+          "name": "유천호",
+          "party": "자유한국당",
           "pct": 50.2
         },
         {
@@ -6851,18 +7650,18 @@
           "pct": 29.9
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "김방훈",
+          "party": "자유한국당",
           "pct": 1.6
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "장성철",
+          "party": "바른미래당",
           "pct": 0.9
         },
         {
-          "name": "녹색당고",
-          "party": "",
+          "name": "고은영",
+          "party": "녹색당",
           "pct": 1.5
         },
         {
@@ -6895,11 +7694,6 @@
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "김병우",
           "party": "",
@@ -6940,11 +7734,6 @@
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "김지철",
           "party": "",
@@ -7031,11 +7820,6 @@
       "table_title": "◎ 교차분석표",
       "candidates": [
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
-        {
           "name": "설동호",
           "party": "",
           "pct": 36.3
@@ -7070,11 +7854,6 @@
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "이시종",
           "party": "더불어민주당",
@@ -7115,11 +7894,6 @@
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "양승조",
           "party": "더불어민주당",
@@ -7206,11 +7980,6 @@
       "table_title": "◎ 교차분석표",
       "candidates": [
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
-        {
           "name": "허태정",
           "party": "더불어민주당",
           "pct": 50.8
@@ -7272,7 +8041,7 @@
         },
         {
           "name": "이동화",
-          "party": "",
+          "party": "바른정당",
           "pct": 5.3
         }
       ]
@@ -7322,7 +8091,7 @@
         },
         {
           "name": "유재희",
-          "party": "",
+          "party": "대한애국당",
           "pct": 3.0
         }
       ]
@@ -7451,8 +8220,8 @@
           "pct": 34.2
         },
         {
-          "name": "한국당김",
-          "party": "",
+          "name": "김성기",
+          "party": "자유한국당",
           "pct": 34.3
         },
         {
@@ -7504,6 +8273,46 @@
           "name": "최유철",
           "party": "무소속",
           "pct": 24.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "4962",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4962&menuNo=200467",
+      "agency": "(주)알앤써치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 충청뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 831.0,
+      "response_rate": 3.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2018-05-19",
+      "period_end": "2018-05-20",
+      "reg_date": "2018-05-21",
+      "sido": "충청남도",
+      "sigungu": "공주시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1)선생님께서는 다음 공주시장후보중 누구를 차기공주시장으로 지지하십니까? 호명은 로테이션입니다.",
+      "candidates": [
+        {
+          "name": "김정섭",
+          "party": "더불어민주당",
+          "pct": 42.5
+        },
+        {
+          "name": "오시덕",
+          "party": "자유한국당",
+          "pct": 46.3
+        },
+        {
+          "name": "고광철",
+          "party": "바른미래당",
+          "pct": 4.7
         }
       ]
     },
@@ -7631,13 +8440,13 @@
           "pct": 60.1
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "김문수",
+          "party": "자유한국당",
           "pct": 18.5
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "안철수",
+          "party": "바른미래당",
           "pct": 12.3
         },
         {
@@ -7647,14 +8456,64 @@
           "_original_name": "김종민"
         },
         {
-          "name": "민중당김",
-          "party": "",
+          "name": "김진숙",
+          "party": "민중당",
           "pct": 0.5
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "인지연",
+          "party": "대한애국당",
           "pct": 1.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "4947",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4947&menuNo=200467",
+      "agency": "베스트사이트",
+      "co_agency": "",
+      "requester": "통신사 : KNS뉴스통신",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 5.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-04-03",
+      "period_end": "2018-04-05",
+      "reg_date": "2018-05-18",
+      "sido": "광주광역시",
+      "sigungu": "남구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "광주 남구청장 후보 지지도",
+      "candidates": [
+        {
+          "name": "김병내",
+          "party": "더불어민주당",
+          "pct": 19.7
+        },
+        {
+          "name": "임형진",
+          "party": "",
+          "pct": 9.6
+        },
+        {
+          "name": "정재수",
+          "party": "",
+          "pct": 16.3
+        },
+        {
+          "name": "최진",
+          "party": "무소속",
+          "pct": 17.2
+        },
+        {
+          "name": "기후",
+          "party": "",
+          "pct": 8.0
         }
       ]
     },
@@ -7862,8 +8721,8 @@
           "pct": 10.6
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "정연선",
+          "party": "민주평화당",
           "pct": 6.4
         },
         {
@@ -7918,7 +8777,7 @@
         },
         {
           "name": "이동화",
-          "party": "",
+          "party": "바른정당",
           "pct": 4.1
         }
       ]
@@ -7958,7 +8817,7 @@
         },
         {
           "name": "이동화",
-          "party": "",
+          "party": "바른정당",
           "pct": 4.6
         }
       ]
@@ -7995,6 +8854,46 @@
           "name": "박세복",
           "party": "자유한국당",
           "pct": 52.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "4890",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4890&menuNo=200467",
+      "agency": "(주)에스티아이",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 놀뫼신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 5.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2018-05-11",
+      "period_end": "2018-05-12",
+      "reg_date": "2018-05-13",
+      "sido": "충청남도",
+      "sigungu": "계룡시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "계룡시장 지지후보",
+      "candidates": [
+        {
+          "name": "최홍묵",
+          "party": "더불어민주당",
+          "pct": 49.4
+        },
+        {
+          "name": "이응우",
+          "party": "자유한국당",
+          "pct": 23.3
+        },
+        {
+          "name": "이기원",
+          "party": "바른미래당",
+          "pct": 13.5
         }
       ]
     },
@@ -8097,8 +8996,13 @@
           "pct": 29.08
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "이상헌",
+          "party": "자유한국당",
+          "pct": 23.63
+        },
+        {
+          "name": "박찬중",
+          "party": "바른미래당",
           "pct": 8.49
         },
         {
@@ -8110,6 +9014,81 @@
           "name": "김진호",
           "party": "무소속",
           "pct": 5.82
+        }
+      ]
+    },
+    {
+      "ntt_id": "4875",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4875&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 607.0,
+      "response_rate": 1.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2018-05-08",
+      "period_end": "2018-05-08",
+      "reg_date": "2018-05-11",
+      "sido": "대전광역시",
+      "sigungu": "대덕구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "박정현",
+          "party": "민주당",
+          "pct": 41.71
+        },
+        {
+          "name": "박수범",
+          "party": "자유한국당",
+          "pct": 36.03
+        }
+      ]
+    },
+    {
+      "ntt_id": "4870",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4870&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티앤티",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 652.0,
+      "response_rate": 7.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.8%P",
+      "period_start": "2018-05-10",
+      "period_end": "2018-05-10",
+      "reg_date": "2018-05-11",
+      "sido": "충청남도",
+      "sigungu": "계룡시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "최홍묵",
+          "party": "민주당",
+          "pct": 42.01
+        },
+        {
+          "name": "이응우",
+          "party": "자유한국당",
+          "pct": 27.04
+        },
+        {
+          "name": "이기원",
+          "party": "바른미래당",
+          "pct": 16.09
         }
       ]
     },
@@ -8244,6 +9223,46 @@
       ]
     },
     {
+      "ntt_id": "4852",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4852&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 서울신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 20.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-05-06",
+      "period_end": "2018-05-07",
+      "reg_date": "2018-05-08",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 42.5
+        },
+        {
+          "name": "김태호",
+          "party": "자유한국당",
+          "pct": 26.3
+        },
+        {
+          "name": "김유근",
+          "party": "바른미래당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
       "ntt_id": "4851",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4851&menuNo=200467",
       "agency": "(주) 메트릭스코퍼레이션",
@@ -8269,17 +9288,22 @@
         {
           "name": "박원순",
           "party": "더불어민주당",
-          "pct": 52.8
+          "pct": 50.3
         },
         {
-          "name": "자유한",
-          "party": "",
-          "pct": 17.5
+          "name": "김문수",
+          "party": "자유한국당",
+          "pct": 10.3
+        },
+        {
+          "name": "안철수",
+          "party": "바른미래당",
+          "pct": 12.0
         },
         {
           "name": "김종민서",
           "party": "정의당",
-          "pct": 1.4
+          "pct": 1.0
         }
       ]
     },
@@ -8325,6 +9349,41 @@
           "name": "배진교",
           "party": "정의당",
           "pct": 26.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "4840",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4840&menuNo=200467",
+      "agency": "(주)유앤미리서치",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 해피데이 신문사",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 508.0,
+      "response_rate": 17.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2018-05-06",
+      "period_end": "2018-05-06",
+      "reg_date": "2018-05-07",
+      "sido": "전북특별자치도",
+      "sigungu": "고창군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "차기 고창군수 후보지지도",
+      "candidates": [
+        {
+          "name": "박우정",
+          "party": "민주당",
+          "pct": 56.9
+        },
+        {
+          "name": "유기상",
+          "party": "민주평화당",
+          "pct": 33.6
         }
       ]
     },
@@ -8535,6 +9594,41 @@
           "name": "홍진규",
           "party": "무소속",
           "pct": 18.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "4814",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4814&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 뉴스티엔티",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 612.0,
+      "response_rate": 1.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2018-04-30",
+      "period_end": "2018-04-30",
+      "reg_date": "2018-05-01",
+      "sido": "대전광역시",
+      "sigungu": "대덕구",
+      "office_level": "기초단체장",
+      "office_label": "구청장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "박정현",
+          "party": "민주당",
+          "pct": 35.69
+        },
+        {
+          "name": "박수범",
+          "party": "자유한국당",
+          "pct": 47.14
         }
       ]
     },
@@ -8760,11 +9854,6 @@
           "name": "장규열",
           "party": "",
           "pct": 5.6
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -8797,13 +9886,13 @@
           "pct": 13.09
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이철우",
+          "party": "자유한국당",
           "pct": 53.77
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "권오을",
+          "party": "바른미래당",
           "pct": 12.22
         },
         {
@@ -8812,14 +9901,9 @@
           "pct": 2.98
         },
         {
-          "name": "대한애",
-          "party": "",
+          "name": "유재희",
+          "party": "대한애국당",
           "pct": 3.34
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -9039,6 +10123,41 @@
       ]
     },
     {
+      "ntt_id": "4777",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4777&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 비전코리아뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 724.0,
+      "response_rate": 3.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.6%P",
+      "period_start": "2018-04-21",
+      "period_end": "2018-04-21",
+      "reg_date": "2018-04-23",
+      "sido": "충청남도",
+      "sigungu": "논산시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "백성현",
+          "party": "자유한국당",
+          "pct": 50.12
+        },
+        {
+          "name": "황명선",
+          "party": "민주당",
+          "pct": 40.64
+        }
+      ]
+    },
+    {
       "ntt_id": "4771",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4771&menuNo=200467",
       "agency": "(주)리서치뷰",
@@ -9112,13 +10231,13 @@
           "pct": 17.62
         },
         {
-          "name": "바른미래",
-          "party": "",
+          "name": "손경익",
+          "party": "바른미래당",
           "pct": 6.13
         },
         {
-          "name": "한국당이",
-          "party": "",
+          "name": "이동우",
+          "party": "자유한국당",
           "pct": 17.11
         },
         {
@@ -9127,8 +10246,8 @@
           "pct": 9.85
         },
         {
-          "name": "한국당주",
-          "party": "",
+          "name": "주낙영",
+          "party": "자유한국당",
           "pct": 20.1
         },
         {
@@ -9137,14 +10256,9 @@
           "pct": 4.55
         },
         {
-          "name": "한국당최",
-          "party": "",
+          "name": "최학철",
+          "party": "자유한국당",
           "pct": 11.76
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -9289,6 +10403,46 @@
       ]
     },
     {
+      "ntt_id": "4741",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4741&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "방송사 : 매일경제,MBN",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 12.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-04-14",
+      "period_end": "2018-04-16",
+      "reg_date": "2018-04-17",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 36.6
+        },
+        {
+          "name": "김태호",
+          "party": "자유한국당",
+          "pct": 24.1
+        },
+        {
+          "name": "김유근",
+          "party": "바른미래당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
       "ntt_id": "4740",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4740&menuNo=200467",
       "agency": "(주) 메트릭스코퍼레이션",
@@ -9324,6 +10478,81 @@
       ]
     },
     {
+      "ntt_id": "4739",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4739&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "방송사 : 매일경제, MBN",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 7.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-04-14",
+      "period_end": "2018-04-16",
+      "reg_date": "2018-04-17",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 52.2
+        },
+        {
+          "name": "남경필",
+          "party": "자유한국당",
+          "pct": 16.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "4738",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4738&menuNo=200467",
+      "agency": "(주) 메트릭스코퍼레이션",
+      "co_agency": "",
+      "requester": "방송사 : 매일경제, MBN",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 7.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-04-14",
+      "period_end": "2018-04-16",
+      "reg_date": "2018-04-17",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "▮ 제7회 지방선거 여론조사",
+      "candidates": [
+        {
+          "name": "박원순",
+          "party": "더불어민주당",
+          "pct": 52.1
+        },
+        {
+          "name": "김문수",
+          "party": "자유한국당",
+          "pct": 10.1
+        },
+        {
+          "name": "안철수",
+          "party": "바른미래당",
+          "pct": 13.3
+        }
+      ]
+    },
+    {
       "ntt_id": "4728",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4728&menuNo=200467",
       "agency": "(주)에스티아이",
@@ -9352,14 +10581,94 @@
           "pct": 22.6
         },
         {
-          "name": "자유한",
-          "party": "",
+          "name": "노박래",
+          "party": "자유한국당",
           "pct": 33.4
         },
         {
           "name": "김기웅",
           "party": "무소속",
           "pct": 24.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "4724",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4724&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1012.0,
+      "response_rate": 22.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-04-14",
+      "period_end": "2018-04-14",
+      "reg_date": "2018-04-16",
+      "sido": "경상북도",
+      "sigungu": "영양군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "오도창",
+          "party": "자유한국당",
+          "pct": 41.88
+        },
+        {
+          "name": "윤철남",
+          "party": "무소속",
+          "pct": 38.68
+        }
+      ]
+    },
+    {
+      "ntt_id": "4723",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4723&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1098.0,
+      "response_rate": 18.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-04-13",
+      "period_end": "2018-04-13",
+      "reg_date": "2018-04-16",
+      "sido": "경상북도",
+      "sigungu": "청송군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "심상박",
+          "party": "무소속",
+          "pct": 12.53
+        },
+        {
+          "name": "우병윤",
+          "party": "",
+          "pct": 18.17
+        },
+        {
+          "name": "윤경희",
+          "party": "자유한국당",
+          "pct": 56.12
+        },
+        {
+          "name": "황광구",
+          "party": "",
+          "pct": 6.74
         }
       ]
     },
@@ -9393,7 +10702,7 @@
         },
         {
           "name": "김성호",
-          "party": "",
+          "party": "무소속",
           "pct": 9.4
         },
         {
@@ -9439,17 +10748,22 @@
       "office_label": "군수",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서 조사결과요약",
       "candidates": [
         {
           "name": "강진원",
           "party": "무소속",
-          "pct": 61.4
+          "pct": 51.5
+        },
+        {
+          "name": "곽영체",
+          "party": "민주평화당",
+          "pct": 12.5
         },
         {
           "name": "이승옥",
           "party": "더불어민주당",
-          "pct": 31.9
+          "pct": 27.6
         },
         {
           "name": "장경록",
@@ -9482,11 +10796,6 @@
       "table_title": "◎ 교차분석표",
       "candidates": [
         {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
-        {
           "name": "승광은",
           "party": "",
           "pct": 13.7
@@ -9495,6 +10804,106 @@
           "name": "성광진",
           "party": "",
           "pct": 18.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "4701",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4701&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1021.0,
+      "response_rate": 9.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-04-11",
+      "period_end": "2018-04-11",
+      "reg_date": "2018-04-12",
+      "sido": "경상북도",
+      "sigungu": "상주시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "이정백",
+          "party": "무소속",
+          "pct": 21.31
+        },
+        {
+          "name": "성백영",
+          "party": "무소속",
+          "pct": 20.89
+        },
+        {
+          "name": "송병길",
+          "party": "",
+          "pct": 7.91
+        },
+        {
+          "name": "윤위영",
+          "party": "",
+          "pct": 10.26
+        },
+        {
+          "name": "정송",
+          "party": "더불어민주당",
+          "pct": 8.46
+        },
+        {
+          "name": "황천모",
+          "party": "자유한국당",
+          "pct": 8.34
+        },
+        {
+          "name": "강영석",
+          "party": "",
+          "pct": 10.79
+        },
+        {
+          "name": "이운식",
+          "party": "",
+          "pct": 5.88
+        }
+      ]
+    },
+    {
+      "ntt_id": "4693",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4693&menuNo=200467",
+      "agency": "(주)에스티아이",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 놀뫼신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 4.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-04-09",
+      "period_end": "2018-04-10",
+      "reg_date": "2018-04-10",
+      "sido": "충청남도",
+      "sigungu": "논산시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "5",
+      "table_title": "지지 정당",
+      "candidates": [
+        {
+          "name": "황명선",
+          "party": "더불어민주당",
+          "pct": 45.0
+        },
+        {
+          "name": "백성현",
+          "party": "자유한국당",
+          "pct": 39.0
         }
       ]
     },
@@ -9567,24 +10976,69 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "김성열",
-          "party": "",
-          "pct": 6.93
+          "name": "김주수",
+          "party": "자유한국당",
+          "pct": 62.5
         },
         {
-          "name": "이재섭",
-          "party": "",
-          "pct": 21.46
-        },
-        {
-          "name": "김만용",
+          "name": "최유철",
           "party": "무소속",
-          "pct": 26.67
+          "pct": 25.11
+        }
+      ]
+    },
+    {
+      "ntt_id": "4661",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4661&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1078.0,
+      "response_rate": 8.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-04-06",
+      "period_end": "2018-04-07",
+      "reg_date": "2018-04-09",
+      "sido": "경상북도",
+      "sigungu": "상주시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "이정백",
+          "party": "무소속",
+          "pct": 20.98
         },
         {
-          "name": "이왕식",
+          "name": "성백영",
           "party": "무소속",
-          "pct": 19.8
+          "pct": 23.58
+        },
+        {
+          "name": "윤위영",
+          "party": "",
+          "pct": 10.15
+        },
+        {
+          "name": "정송",
+          "party": "더불어민주당",
+          "pct": 7.85
+        },
+        {
+          "name": "황천모",
+          "party": "자유한국당",
+          "pct": 9.6
+        },
+        {
+          "name": "강영석",
+          "party": "",
+          "pct": 12.31
         }
       ]
     },
@@ -9708,7 +11162,7 @@
         },
         {
           "name": "이동우",
-          "party": "",
+          "party": "자유한국당",
           "pct": 11.2
         },
         {
@@ -9814,6 +11268,61 @@
       ]
     },
     {
+      "ntt_id": "4604",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4604&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1018.0,
+      "response_rate": 3.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-04-03",
+      "period_end": "2018-04-03",
+      "reg_date": "2018-04-04",
+      "sido": "경상북도",
+      "sigungu": "포항시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "허대만",
+          "party": "더불어민주당",
+          "pct": 15.39
+        },
+        {
+          "name": "이강덕",
+          "party": "자유한국당",
+          "pct": 43.99
+        },
+        {
+          "name": "허명환",
+          "party": "",
+          "pct": 18.25
+        },
+        {
+          "name": "이창균",
+          "party": "바른미래당",
+          "pct": 3.46
+        },
+        {
+          "name": "모성은",
+          "party": "무소속",
+          "pct": 4.55
+        },
+        {
+          "name": "손성호",
+          "party": "무소속",
+          "pct": 1.55
+        }
+      ]
+    },
+    {
       "ntt_id": "4596",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4596&menuNo=200467",
       "agency": "(주)데이터앤리서치",
@@ -9897,19 +11406,74 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "오도창",
-          "party": "자유한국당",
-          "pct": 39.62
-        },
-        {
           "name": "윤철남",
           "party": "무소속",
-          "pct": 33.31
+          "pct": 25.59
         },
         {
-          "name": "목표할당",
+          "name": "김상선",
+          "party": "더불어민주당",
+          "pct": 4.74
+        },
+        {
+          "name": "오도창",
+          "party": "자유한국당",
+          "pct": 31.78
+        },
+        {
+          "name": "박홍열",
+          "party": "무소속",
+          "pct": 25.97
+        }
+      ]
+    },
+    {
+      "ntt_id": "4577",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4577&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "통신사 : 국제뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1082.0,
+      "response_rate": 15.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2018-03-29",
+      "period_end": "2018-03-29",
+      "reg_date": "2018-03-30",
+      "sido": "경상북도",
+      "sigungu": "청송군",
+      "office_level": "기초단체장",
+      "office_label": "군수",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "윤경희",
+          "party": "자유한국당",
+          "pct": 51.94
+        },
+        {
+          "name": "심상박",
+          "party": "무소속",
+          "pct": 13.0
+        },
+        {
+          "name": "우병윤",
           "party": "",
-          "pct": 1.0
+          "pct": 14.17
+        },
+        {
+          "name": "윤종도",
+          "party": "무소속",
+          "pct": 7.04
+        },
+        {
+          "name": "황광구",
+          "party": "",
+          "pct": 8.57
         }
       ]
     },
@@ -10147,24 +11711,14 @@
       "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
       "candidates": [
         {
-          "name": "백성현",
-          "party": "자유한국당",
-          "pct": 29.13
-        },
-        {
-          "name": "전낙운",
-          "party": "",
-          "pct": 8.99
-        },
-        {
-          "name": "전준호",
-          "party": "",
-          "pct": 13.71
-        },
-        {
           "name": "황명선",
           "party": "더불어민주당",
-          "pct": 33.15
+          "pct": 44.77
+        },
+        {
+          "name": "백성현",
+          "party": "자유한국당",
+          "pct": 42.16
         }
       ]
     },
@@ -10325,6 +11879,56 @@
           "name": "최진",
           "party": "무소속",
           "pct": 7.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "4510",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4510&menuNo=200467",
+      "agency": "주식회사 한길리서치센타",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전남중앙신문",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 18.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-03-18",
+      "period_end": "2018-03-20",
+      "reg_date": "2018-03-21",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문3) 다음은 전남도지사로 거론되는 인물들입니다. 귀하는 거론되는 다음 인물 중 전남도지사로 누구를 지지하십니까? [로테이션]",
+      "candidates": [
+        {
+          "name": "김영록",
+          "party": "더불어민주당",
+          "pct": 10.4
+        },
+        {
+          "name": "박지원",
+          "party": "민주평화당",
+          "pct": 12.3
+        },
+        {
+          "name": "신정훈",
+          "party": "",
+          "pct": 4.8
+        },
+        {
+          "name": "이성수",
+          "party": "민중당",
+          "pct": 1.6
+        },
+        {
+          "name": "장만채",
+          "party": "",
+          "pct": 16.1
         }
       ]
     },
@@ -10589,6 +12193,61 @@
       ]
     },
     {
+      "ntt_id": "4491",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4491&menuNo=200467",
+      "agency": "마크로밀엠브레인",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 대구경북본부",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 827.0,
+      "response_rate": 14.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2018-03-16",
+      "period_end": "2018-03-16",
+      "reg_date": "2018-03-17",
+      "sido": "경상북도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "뉴스1 경북 여론조사(2차) 통계표 (2018. 03. 17)",
+      "candidates": [
+        {
+          "name": "이철우",
+          "party": "자유한국당",
+          "pct": 17.4
+        },
+        {
+          "name": "오중기",
+          "party": "더불어민주당",
+          "pct": 10.5
+        },
+        {
+          "name": "박명재",
+          "party": "자유한국당",
+          "pct": 9.1
+        },
+        {
+          "name": "김광림",
+          "party": "자유한국당",
+          "pct": 8.9
+        },
+        {
+          "name": "권오을",
+          "party": "바른미래당",
+          "pct": 6.4
+        },
+        {
+          "name": "안선미",
+          "party": "더불어민주당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
       "ntt_id": "4486",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4486&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -10618,7 +12277,7 @@
         },
         {
           "name": "박정현",
-          "party": "",
+          "party": "더불어민주당",
           "pct": 2.4
         },
         {
@@ -10640,6 +12299,81 @@
           "name": "정찬민",
           "party": "자유한국당",
           "pct": 27.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "4459",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4459&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 중앙Sunday/입소스주식회사 공동",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 858.0,
+      "response_rate": 14.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.3%P",
+      "period_start": "2018-03-07",
+      "period_end": "2018-03-07",
+      "reg_date": "2018-03-09",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "10",
+      "table_title": "\u0000그럼\u0000이번\u0000서울시장\u0000선거가\u0000더불어민주당\u0000박영선\u0000국회의원과\u0000바른미래당\u0000안철수\u0000전\u0000대표의\u0000",
+      "candidates": [
+        {
+          "name": "박영선",
+          "party": "더불어민주당",
+          "pct": 45.7
+        },
+        {
+          "name": "안철수",
+          "party": "바른미래당",
+          "pct": 35.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "4458",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4458&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 중앙Sunday/입소스주식회사 공동",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 830.0,
+      "response_rate": 13.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2018-03-06",
+      "period_end": "2018-03-06",
+      "reg_date": "2018-03-09",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "06",
+      "table_title": "\u0000그럼 이번 경기도지사 선거가 더불어민주당 전해철 현 국회의원,\u0000자유한국당 남경필 현 경기도지사",
+      "candidates": [
+        {
+          "name": "전해철",
+          "party": "더불어민주당",
+          "pct": 28.7
+        },
+        {
+          "name": "남경필",
+          "party": "자유한국당",
+          "pct": 30.4
+        },
+        {
+          "name": "김영환",
+          "party": "바른미래당",
+          "pct": 5.6
         }
       ]
     },
@@ -10968,12 +12702,12 @@
         },
         {
           "name": "유현주",
-          "party": "",
+          "party": "민중당",
           "pct": 4.99
         },
         {
           "name": "이정문",
-          "party": "",
+          "party": "민주평화당",
           "pct": 2.34
         },
         {
@@ -11138,7 +12872,7 @@
         },
         {
           "name": "이동우",
-          "party": "",
+          "party": "자유한국당",
           "pct": 7.3
         },
         {
@@ -11158,7 +12892,7 @@
         },
         {
           "name": "최학철",
-          "party": "",
+          "party": "자유한국당",
           "pct": 7.5
         }
       ]
@@ -11320,6 +13054,61 @@
           "name": "황호진",
           "party": "",
           "pct": 3.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "4399",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4399&menuNo=200467",
+      "agency": "(주)코리아정보리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 경북신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1031.0,
+      "response_rate": 4.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2018-02-22",
+      "period_end": "2018-02-22",
+      "reg_date": "2018-02-23",
+      "sido": "경상북도",
+      "sigungu": "경주시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2018 전국동시지방선거 여론조사 결과보고서",
+      "candidates": [
+        {
+          "name": "박병훈",
+          "party": "무소속",
+          "pct": 18.3
+        },
+        {
+          "name": "이동우",
+          "party": "자유한국당",
+          "pct": 11.2
+        },
+        {
+          "name": "임배근",
+          "party": "더불어민주당",
+          "pct": 3.78
+        },
+        {
+          "name": "주낙영",
+          "party": "자유한국당",
+          "pct": 12.92
+        },
+        {
+          "name": "최양식",
+          "party": "무소속",
+          "pct": 17.46
+        },
+        {
+          "name": "최학철",
+          "party": "자유한국당",
+          "pct": 8.7
         }
       ]
     },
@@ -11488,7 +13277,7 @@
         },
         {
           "name": "임승근",
-          "party": "",
+          "party": "민주당",
           "pct": 8.0
         },
         {
@@ -11498,12 +13287,12 @@
         },
         {
           "name": "이근홍",
-          "party": "",
+          "party": "국민의당",
           "pct": 3.1
         },
         {
           "name": "김선기",
-          "party": "",
+          "party": "민주당",
           "pct": 12.6
         },
         {
@@ -11949,6 +13738,66 @@
       ]
     },
     {
+      "ntt_id": "4347",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4347&menuNo=200467",
+      "agency": "마크로밀엠브레인",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 대구경북본부",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 813.0,
+      "response_rate": 15.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-02-11",
+      "period_end": "2018-02-12",
+      "reg_date": "2018-02-12",
+      "sido": "경상북도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "뉴스1 경북 여론조사 통계표 (2018. 02. 12)",
+      "candidates": [
+        {
+          "name": "이철우",
+          "party": "자유한국당",
+          "pct": 14.3
+        },
+        {
+          "name": "김영태",
+          "party": "더불어민주당",
+          "pct": 8.5
+        },
+        {
+          "name": "김광림",
+          "party": "자유한국당",
+          "pct": 8.1
+        },
+        {
+          "name": "박명재",
+          "party": "자유한국당",
+          "pct": 7.9
+        },
+        {
+          "name": "권오을",
+          "party": "바른정당",
+          "pct": 6.6
+        },
+        {
+          "name": "김영석",
+          "party": "",
+          "pct": 4.9
+        },
+        {
+          "name": "남유진",
+          "party": "",
+          "pct": 4.7
+        }
+      ]
+    },
+    {
       "ntt_id": "4343",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4343&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -12163,7 +14012,7 @@
         },
         {
           "name": "이동우",
-          "party": "",
+          "party": "자유한국당",
           "pct": 5.6
         },
         {
@@ -12188,7 +14037,7 @@
         },
         {
           "name": "최학철",
-          "party": "",
+          "party": "자유한국당",
           "pct": 5.8
         }
       ]
@@ -12282,19 +14131,70 @@
           "pct": 45.0
         },
         {
-          "name": "민주평화",
-          "party": "",
+          "name": "이정문",
+          "party": "민주평화당",
           "pct": 6.7
         },
         {
-          "name": "민중당유",
-          "party": "",
+          "name": "유현주",
+          "party": "민중당",
           "pct": 7.7
         },
         {
           "name": "정현복",
           "party": "무소속",
           "pct": 30.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "4321",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4321&menuNo=200467",
+      "agency": "주식회사 한길리서치센타",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전남중앙신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 18.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2018-02-04",
+      "period_end": "2018-02-07",
+      "reg_date": "2018-02-09",
+      "sido": "전라남도",
+      "sigungu": "목포시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문3) 다음은 목포시장으로 거론되는 인물들입니다. 귀하는 현재 거론되는 다음 인물 중 목포시장으로 누구를",
+      "candidates": [
+        {
+          "name": "권욱",
+          "party": "국민의당",
+          "pct": 6.6
+        },
+        {
+          "name": "김대준",
+          "party": "더불어민주당",
+          "pct": 7.1
+        },
+        {
+          "name": "김종식",
+          "party": "더불어민주당",
+          "pct": 13.3
+        },
+        {
+          "name": "박홍률",
+          "party": "민주평화당",
+          "pct": 31.9,
+          "_original_name": "박홍률가"
+        },
+        {
+          "name": "최기동",
+          "party": "더불어민주당",
+          "pct": 6.6
         }
       ]
     },
@@ -12980,11 +14880,6 @@
           "name": "황의만",
           "party": "",
           "pct": 10.25
-        },
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
         }
       ]
     },
@@ -13223,7 +15118,7 @@
         },
         {
           "name": "박지원",
-          "party": "무소속",
+          "party": "국민의당",
           "pct": 10.8
         },
         {
@@ -13243,7 +15138,7 @@
         },
         {
           "name": "주승용",
-          "party": "",
+          "party": "국민의당",
           "pct": 8.0
         }
       ]
@@ -13917,8 +15812,8 @@
           "pct": 8.7
         },
         {
-          "name": "김세연바",
-          "party": "",
+          "name": "김세연",
+          "party": "바른정당",
           "pct": 5.5
         }
       ]
@@ -13952,8 +15847,8 @@
           "pct": 37.6
         },
         {
-          "name": "나경원자",
-          "party": "",
+          "name": "나경원",
+          "party": "자유한국당",
           "pct": 11.5
         },
         {
@@ -13963,12 +15858,12 @@
         },
         {
           "name": "안철수",
-          "party": "바른미래당",
+          "party": "국민의당",
           "pct": 10.4
         },
         {
           "name": "홍정욱",
-          "party": "",
+          "party": "한나라당",
           "pct": 4.8
         }
       ]
@@ -13996,11 +15891,6 @@
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "맹정호",
           "party": "더불어민주당",
@@ -14228,7 +16118,7 @@
       "candidates": [
         {
           "name": "박수현",
-          "party": "더불어민주당",
+          "party": "",
           "pct": 25.7
         },
         {
@@ -14304,6 +16194,46 @@
       ]
     },
     {
+      "ntt_id": "4080",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4080&menuNo=200467",
+      "agency": "한국갤럽조사연구소",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 부산일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 814.0,
+      "response_rate": 17.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2017-12-26",
+      "period_end": "2017-12-27",
+      "reg_date": "2017-12-28",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "4",
+      "table_title": "부산시장선거자유한국당후보선호도",
+      "candidates": [
+        {
+          "name": "박민식",
+          "party": "국민의힘",
+          "pct": 18.4
+        },
+        {
+          "name": "서병수",
+          "party": "자유한국당",
+          "pct": 35.7
+        },
+        {
+          "name": "이종혁",
+          "party": "자유한국당",
+          "pct": 7.1
+        }
+      ]
+    },
+    {
       "ntt_id": "4079",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4079&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -14373,7 +16303,7 @@
       "candidates": [
         {
           "name": "김광림",
-          "party": "",
+          "party": "자유한국당",
           "pct": 13.2
         },
         {
@@ -14393,7 +16323,7 @@
         },
         {
           "name": "박명재",
-          "party": "",
+          "party": "자유한국당",
           "pct": 10.4
         },
         {
@@ -14659,6 +16589,56 @@
       ]
     },
     {
+      "ntt_id": "4057",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4057&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 평택신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 813.0,
+      "response_rate": 1.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2017-12-11",
+      "period_end": "2017-12-13",
+      "reg_date": "2017-12-14",
+      "sido": "경기도",
+      "sigungu": "평택시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "임승근",
+          "party": "민주당",
+          "pct": 7.1
+        },
+        {
+          "name": "김선기",
+          "party": "민주당",
+          "pct": 18.7
+        },
+        {
+          "name": "정장선",
+          "party": "더불어민주당",
+          "pct": 27.9
+        },
+        {
+          "name": "오명근",
+          "party": "민주당",
+          "pct": 6.3
+        },
+        {
+          "name": "타인물인",
+          "party": "",
+          "pct": 8.5
+        }
+      ]
+    },
+    {
       "ntt_id": "4051",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4051&menuNo=200467",
       "agency": "(주)코리아정보리서치",
@@ -14720,11 +16700,86 @@
           "name": "황의만",
           "party": "",
           "pct": 9.89
+        }
+      ]
+    },
+    {
+      "ntt_id": "4041",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4041&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 에버뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1018.0,
+      "response_rate": 3.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-12-03",
+      "period_end": "2017-12-04",
+      "reg_date": "2017-12-06",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "강기정",
+          "party": "",
+          "pct": 13.0
         },
         {
-          "name": "목표할당",
+          "name": "김동철",
+          "party": "국민의당",
+          "pct": 3.6
+        },
+        {
+          "name": "민형배",
           "party": "",
-          "pct": 1.0
+          "pct": 9.3
+        },
+        {
+          "name": "박주선",
+          "party": "국민의당",
+          "pct": 6.9
+        },
+        {
+          "name": "윤장현",
+          "party": "",
+          "pct": 10.4
+        },
+        {
+          "name": "이용섭",
+          "party": "더불어민주당",
+          "pct": 32.9
+        },
+        {
+          "name": "장병완",
+          "party": "국민의당",
+          "pct": 2.2
+        },
+        {
+          "name": "최영호",
+          "party": "",
+          "pct": 5.0
+        },
+        {
+          "name": "적강기정",
+          "party": "",
+          "pct": 13.0
+        },
+        {
+          "name": "합도상김",
+          "party": "",
+          "pct": 3.6
+        },
+        {
+          "name": "세결민형",
+          "party": "",
+          "pct": 9.3
         }
       ]
     },
@@ -14789,6 +16844,131 @@
       ]
     },
     {
+      "ntt_id": "4036",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4036&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "인터넷언론 : 쿠키뉴스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 803.0,
+      "response_rate": 3.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2017-12-02",
+      "period_end": "2017-12-04",
+      "reg_date": "2017-12-05",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "5",
+      "table_title": "지역발전기여",
+      "candidates": [
+        {
+          "name": "이용섭",
+          "party": "더불어민주당",
+          "pct": 23.0
+        },
+        {
+          "name": "강기정",
+          "party": "",
+          "pct": 9.2
+        },
+        {
+          "name": "윤장현",
+          "party": "",
+          "pct": 7.0
+        },
+        {
+          "name": "최영호",
+          "party": "",
+          "pct": 6.5
+        },
+        {
+          "name": "민형배",
+          "party": "",
+          "pct": 6.5
+        },
+        {
+          "name": "김동철",
+          "party": "국민의당",
+          "pct": 5.5
+        },
+        {
+          "name": "천정배",
+          "party": "",
+          "pct": 4.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "4035",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4035&menuNo=200467",
+      "agency": "(주)순천투데이",
+      "co_agency": "",
+      "requester": "인터넷언론 : (주)순천투데이자체조사",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 504.0,
+      "response_rate": 2.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2017-11-24",
+      "period_end": "2017-11-26",
+      "reg_date": "2017-12-04",
+      "sido": "전라남도",
+      "sigungu": "광양시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[계층별 분석]",
+      "candidates": [
+        {
+          "name": "춘석",
+          "party": "",
+          "pct": 2.5
+        },
+        {
+          "name": "김재무",
+          "party": "더불어민주당",
+          "pct": 25.4
+        },
+        {
+          "name": "김재휴",
+          "party": "",
+          "pct": 7.0
+        },
+        {
+          "name": "현남옥",
+          "party": "",
+          "pct": 2.2
+        },
+        {
+          "name": "유현주",
+          "party": "민중당",
+          "pct": 6.6
+        },
+        {
+          "name": "이정문",
+          "party": "민주평화당",
+          "pct": 2.9
+        },
+        {
+          "name": "정현기복",
+          "party": "",
+          "pct": 37.6
+        },
+        {
+          "name": "타보",
+          "party": "",
+          "pct": 0.9
+        }
+      ]
+    },
+    {
       "ntt_id": "4034",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4034&menuNo=200467",
       "agency": "(주)순천투데이",
@@ -14833,7 +17013,7 @@
         },
         {
           "name": "주승용",
-          "party": "",
+          "party": "국민의당",
           "pct": 15.8
         }
       ]
@@ -14905,17 +17085,77 @@
       "reg_date": "2017-11-27",
       "sido": "충청남도",
       "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "◎ 교차분석표",
+      "candidates": [
+        {
+          "name": "나소열",
+          "party": "더불어민주당",
+          "pct": 5.9
+        },
+        {
+          "name": "박수현",
+          "party": "",
+          "pct": 17.2
+        },
+        {
+          "name": "복기왕",
+          "party": "더불어민주당",
+          "pct": 7.7
+        },
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 9.1
+        },
+        {
+          "name": "김태흠",
+          "party": "",
+          "pct": 5.1
+        },
+        {
+          "name": "박상돈",
+          "party": "자유한국당",
+          "pct": 6.1
+        },
+        {
+          "name": "이명수",
+          "party": "무소속",
+          "pct": 7.1
+        },
+        {
+          "name": "김용필",
+          "party": "",
+          "pct": 4.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "4023",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4023&menuNo=200467",
+      "agency": "세종리서치",
+      "co_agency": "",
+      "requester": "주·월간지 : 굿모닝충청",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 3.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-11-25",
+      "period_end": "2017-11-26",
+      "reg_date": "2017-11-27",
+      "sido": "충청남도",
+      "sigungu": "",
       "office_level": "교육감",
       "office_label": "교육감",
       "metric_type": "후보지지",
       "table_no": "",
       "table_title": "◎ 교차분석표",
       "candidates": [
-        {
-          "name": "목표할당",
-          "party": "",
-          "pct": 1.0
-        },
         {
           "name": "김지철",
           "party": "",
@@ -14930,6 +17170,51 @@
           "name": "임춘근",
           "party": "",
           "pct": 5.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "4018",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4018&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 평택시민신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1010.0,
+      "response_rate": 19.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-11-25",
+      "period_end": "2017-11-26",
+      "reg_date": "2017-11-27",
+      "sido": "경기도",
+      "sigungu": "평택시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "7",
+      "table_title": "평택시장선거 4자대결④",
+      "candidates": [
+        {
+          "name": "정장선",
+          "party": "민주당",
+          "pct": 42.0
+        },
+        {
+          "name": "공재광",
+          "party": "자유한국당",
+          "pct": 27.6
+        },
+        {
+          "name": "이근홍",
+          "party": "국민의당",
+          "pct": 3.9
+        },
+        {
+          "name": "이동화",
+          "party": "바른정당",
+          "pct": 4.1
         }
       ]
     },
@@ -14985,6 +17270,46 @@
           "name": "한규호",
           "party": "무소속",
           "pct": 33.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "4007",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=4007&menuNo=200467",
+      "agency": "(주)리서치뷰",
+      "co_agency": "",
+      "requester": "방송사 : 충남방송&당진시대",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1020.0,
+      "response_rate": 19.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-11-16",
+      "period_end": "2017-11-17",
+      "reg_date": "2017-11-18",
+      "sido": "충청남도",
+      "sigungu": "당진시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "5",
+      "table_title": "당진시장 3자대결②",
+      "candidates": [
+        {
+          "name": "김홍장",
+          "party": "민주당",
+          "pct": 44.3
+        },
+        {
+          "name": "오성환",
+          "party": "자유한국당",
+          "pct": 20.1
+        },
+        {
+          "name": "이철수",
+          "party": "국민의당",
+          "pct": 8.7
         }
       ]
     },
@@ -15153,7 +17478,7 @@
         },
         {
           "name": "안철수",
-          "party": "",
+          "party": "바른미래당",
           "pct": 6.8
         }
       ]
@@ -15188,7 +17513,7 @@
         },
         {
           "name": "박지원",
-          "party": "무소속",
+          "party": "국민의당",
           "pct": 16.1
         },
         {
@@ -15203,12 +17528,12 @@
         },
         {
           "name": "주승용",
-          "party": "",
+          "party": "국민의당",
           "pct": 12.5
         },
         {
           "name": "황주홍",
-          "party": "",
+          "party": "국민의당",
           "pct": 4.2
         }
       ]
@@ -15292,8 +17617,8 @@
           "pct": 15.2
         },
         {
-          "name": "국민의당",
-          "party": "",
+          "name": "곽영체",
+          "party": "국민의당",
           "pct": 22.9
         },
         {
@@ -15350,6 +17675,71 @@
           "name": "이충재",
           "party": "",
           "pct": 9.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "3917",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3917&menuNo=200467",
+      "agency": "세종리서치",
+      "co_agency": "",
+      "requester": "주·월간지 : 굿모닝충청",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1004.0,
+      "response_rate": 1.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-09-09",
+      "period_end": "2017-09-10",
+      "reg_date": "2017-09-12",
+      "sido": "충청남도",
+      "sigungu": "당진시",
+      "office_level": "기초단체장",
+      "office_label": "시장",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "◎ 교차분석표",
+      "candidates": [
+        {
+          "name": "나소열",
+          "party": "더불어민주당",
+          "pct": 8.4
+        },
+        {
+          "name": "박수현",
+          "party": "",
+          "pct": 15.0
+        },
+        {
+          "name": "복기왕",
+          "party": "더불어민주당",
+          "pct": 8.3
+        },
+        {
+          "name": "김홍장",
+          "party": "더불어민주당",
+          "pct": 3.8
+        },
+        {
+          "name": "전종한",
+          "party": "",
+          "pct": 2.8
+        },
+        {
+          "name": "이명수",
+          "party": "무소속",
+          "pct": 9.7
+        },
+        {
+          "name": "박상돈",
+          "party": "",
+          "pct": 8.0
+        },
+        {
+          "name": "김용필",
+          "party": "",
+          "pct": 5.2
         }
       ]
     },
