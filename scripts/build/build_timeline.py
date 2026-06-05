@@ -38,6 +38,8 @@ KIND_LABEL = {
     "national_assembly": "총선",
     "local": "지선",
 }
+# 회차 단위 — 대선·총선은 사람·기관 연속성('대'), 지선은 반복 행사('회').
+KIND_UNIT = {"presidential": "대", "national_assembly": "대", "local": "회"}
 
 # 새 schema 파일 path (Nth-{kind}-YYYY.json) 우선, 옛 schema fallback.
 NEW_PATHS = {
@@ -275,7 +277,7 @@ def main():
                 "kind": kind,
                 "n": n,
                 "date": e.get("date", ""),
-                "label": f"{n}대 {label_short}",
+                "label": f"{n}{KIND_UNIT[kind]} {label_short}",
                 "winner": e.get("winner"),
                 "winner_party": e.get("winner_party"),
                 "turnout": e.get("turnout") if e.get("turnout") not in (None, 0) else computed_turnout,
@@ -315,7 +317,7 @@ def main():
                 "kind": kind,
                 "n": n,
                 "date": meta.get("date", ""),
-                "label": f"{n}대 {KIND_LABEL[kind]}",
+                "label": f"{n}{KIND_UNIT[kind]} {KIND_LABEL[kind]}",
                 "winner": None, "winner_party": None, "turnout": None,
                 "sidoWinners": {},
                 "upcoming": True,
@@ -354,7 +356,7 @@ def main():
                 "kind": kind,
                 "n": cur_n,
                 "date": cur_date.isoformat(),
-                "label": f"{cur_n}대 {KIND_LABEL[kind]}",
+                "label": f"{cur_n}{KIND_UNIT[kind]} {KIND_LABEL[kind]}",
                 "winner": None, "winner_party": None, "turnout": None,
                 "sidoWinners": {},
                 "upcoming": True,
