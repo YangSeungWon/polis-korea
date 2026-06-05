@@ -20,15 +20,27 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AGG = ROOT / "data" / "polls" / "aggregated.json"
 PARSED_DIR = ROOT / "data" / "raw" / "parsed"
-META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
-OUT = ROOT / "data" / "raw" / "nec_roster_9th.json"
 API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
-SG_ID = "20260603"
+# build_polls의 시도 canonical 재사용 — roster 키를 build의 p["sido"]와 일치시키고,
+# NEC 응답의 시대별 명칭(2018 강원도 ↔ 2026 강원특별자치도)을 canon으로 흡수.
+sys.path.insert(0, str(ROOT / "scripts" / "build"))
+from build_polls import canon_sido  # noqa: E402
 
 # sgTypecode → office_level
 TYPECODE_OFFICE = {"2": "국회의원", "3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+
+
+def _load_api_key() -> str:
+    k = os.environ.get("NEC_API_KEY")
+    if k:
+        return k
+    env = ROOT / ".env"
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if line.strip().startswith("NEC_API_KEY="):
+                return line.split("=", 1)[1].strip().strip('"').strip("'")
+    return ""
 
 
 def fetch_name(key: str, name: str) -> list[dict]:
@@ -54,23 +66,36 @@ def fetch_name(key: str, name: str) -> list[dict]:
 
 
 def main():
-    key = os.environ.get("NEC_API_KEY")
+    import argparse
+    ap = argparse.ArgumentParser(description="NEC 등록후보 명부 fetch (CndaSrchService)")
+    ap.add_argument("--sg-id", default="20260603", help="선거 sgId (예: 20180613=7회 지선)")
+    ap.add_argument("--csv", default="data/raw/nesdc_9th_polls.csv", help="NESDC 메타 CSV")
+    ap.add_argument("--out", default="data/raw/nec_roster_9th.json", help="출력 roster JSON")
+    ap.add_argument("--agg", default="data/polls/aggregated.json", help="aggregated.json (있으면 보충)")
+    args = ap.parse_args()
+    SG_ID = args.sg_id
+    META_CSV = ROOT / args.csv
+    OUT = ROOT / args.out
+    AGG = ROOT / args.agg
+
+    key = _load_api_key()
     if not key:
-        print("환경변수 NEC_API_KEY 필요", file=sys.stderr)
+        print("NEC_API_KEY 필요 (env 또는 .env)", file=sys.stderr)
         sys.exit(1)
     # parsed JSON + meta region에서 (sido, name) 모음 — aggregated보다 광범위
     # (build_polls가 drop한 record의 후보도 포함되어 순환 의존 회피)
     import re, csv
     targets: set[tuple[str, str]] = set()
 
-    # meta에서 ntt_id → sido
+    # meta에서 ntt_id → sido (region 첫 토큰 canon — 단축형 "충북"·"경기"도 처리)
     ntt_to_sido = {}
     if META_CSV.exists():
-        SIDO_FIRST = re.compile(r"^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))")
         for r in csv.DictReader(open(META_CSV, encoding="utf-8")):
-            m = SIDO_FIRST.match(r.get("region", "") or "")
-            if m:
-                ntt_to_sido[r["ntt_id"]] = m.group(1)
+            toks = (r.get("region", "") or "").split()
+            if toks:
+                sd = canon_sido(toks[0])
+                if sd:
+                    ntt_to_sido[r["ntt_id"]] = sd
 
     if PARSED_DIR.exists():
         for path in PARSED_DIR.glob("*.json"):
@@ -144,7 +169,8 @@ def main():
         # sgId=20260603 + sd 매칭 + sgTypecode in 3/4/11
         match = None
         for r in rows:
-            if r["sg_id"] == SG_ID and r["sd"] == sd and r["sg_typecode"] in TYPECODE_OFFICE:
+            # NEC sdName을 canon으로 정규화해 시대별 명칭차(강원도↔강원특별자치도) 흡수
+            if r["sg_id"] == SG_ID and canon_sido(r["sd"]) == sd and r["sg_typecode"] in TYPECODE_OFFICE:
                 match = r
                 break
         roster[key_str] = match or {}  # 빈 dict면 등록 후보 아님
