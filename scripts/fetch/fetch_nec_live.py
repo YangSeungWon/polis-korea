@@ -211,13 +211,17 @@ def build(election_id_meta: str) -> dict:
                 code = str(c.get("CODE"))
                 rows = fetch_report(s, election_id, menu, stmt, tc, code); n_call += 1
                 for row in rows:
-                    # 시군구 race 총계는 WIWNAME='소계' (시도 level은 '합계'와 달리).
+                    # 무투표 시군구: MUTU_SGG=Y, WIWNAME=null. vote count 없음 → unopposed race.
+                    # 일반: 시군구 race 총계는 WIWNAME='소계' (시도 level은 '합계'와 달리).
                     # WIW=구명 sub-row는 drop.
-                    if row.get("WIWNAME") != "소계":
+                    is_mutu = row.get("MUTU_SGG") == "Y"
+                    if not is_mutu and row.get("WIWNAME") != "소계":
                         continue
                     r = base_race(row, tc, canon_for(tc))
                     r["sigungu"] = row.get("SGGNAME", "")
                     r["scope"] = "sigungu"
+                    if is_mutu:
+                        r["unopposed"] = True
                     races.append(r); kept += 1
                 time.sleep(0.2)
             print(f"  ✓ {o['level']} (sigungu): {kept} races ({len(cities)} 시도)", file=sys.stderr)
