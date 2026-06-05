@@ -30,8 +30,22 @@ from build_polls import (  # noqa: E402
     SIDO_CANONICAL, canon_sido, parse_survey_period, to_float, is_self_poll,
 )
 
-ELECTION_DATE = date(2024, 4, 10)
-ROSTER_PATH = ROOT / "data" / "raw" / "nec_roster_22gen.json"
+# 회차 config (--n으로 선택). 22대 default.
+# dem/ppp = 회차별 양대정당 별칭(모정당+비례위성). 정당지지/비례 anchor·양대 체크에 사용.
+GEN_CONFIG = {
+    "22": {"election": "22nd-general-2024", "date": "2024-04-10",
+           "csv": "data/raw/nesdc_22gen_polls.csv", "roster": "data/raw/nec_roster_22gen.json",
+           "out": "data/polls/aggregated_22nd.json",
+           "dem": ["더불어민주당", "더불어민주연합"], "ppp": ["국민의힘", "국민의미래"]},
+    "21": {"election": "21st-general-2020", "date": "2020-04-15",
+           "csv": "data/raw/nesdc_21gen_polls.csv", "roster": "data/raw/nec_roster_21gen.json",
+           "out": "data/polls/aggregated_21st.json",
+           "dem": ["더불어민주당", "더불어시민당"], "ppp": ["미래통합당", "미래한국당"]},
+    "20": {"election": "20th-general-2016", "date": "2016-04-13",
+           "csv": "data/raw/nesdc_20gen_polls.csv", "roster": "data/raw/nec_roster_20gen.json",
+           "out": "data/polls/aggregated_20th.json",
+           "dem": ["더불어민주당"], "ppp": ["새누리당"]},
+}
 
 SIDO_SHORT = {
     "서울": "서울특별시", "부산": "부산광역시", "대구": "대구광역시", "인천": "인천광역시",
@@ -47,12 +61,10 @@ REJECT_TITLE = re.compile(
     r"적합|경선|가상|단일화|단일\s*후보|찍고\s*싶지|절대|비호감|호감도|역선택|"
     r"성향|국정|평가|만족|정책|현안|\bvs\b|\bVS\b"
 )
-PROP_BIG = {"더불어민주연합", "국민의미래"}   # 비례 양대 위성정당
-PARTY_BIG = {"더불어민주당", "국민의힘"}      # 정당지지 양대정당
 
 
-def load_roster() -> tuple[dict, set]:
-    d = json.loads(ROSTER_PATH.read_text(encoding="utf-8"))
+def load_roster(roster_path: Path) -> tuple[dict, set]:
+    d = json.loads(roster_path.read_text(encoding="utf-8"))
     return d["districts"], set(d["proportional_parties"])
 
 
@@ -162,34 +174,33 @@ def accept_district_race(q: dict, roster_dist: dict[str, str]) -> list[dict] | N
              "pct": c["pct"]} for c in keep]
 
 
-def accept_prop_race(q: dict, prop: set) -> list[dict] | None:
-    """비례 정당투표면 정제 candidates(party-only) 반환. proportional_parties anchor.
+def accept_prop_race(q: dict, prop: set, dem: list, ppp: list) -> list[dict] | None:
+    """비례 정당투표면 정제 candidates(party-only) 반환. proportional_parties + 양대 별칭 anchor.
 
-    폴은 위성정당(더불어민주연합·국민의미래) 대신 모정당명(더불어민주당·국민의힘)으로 묻기도
-    해서 anchor에 모정당명도 포함. 양대(민주계+국힘계)가 둘 다 있어야 의미 있는 비례 race.
+    폴은 비례 위성정당 대신 모정당명으로 묻기도 해서 anchor에 dem/ppp 별칭 모두 포함.
+    양대(민주계+국힘계)가 둘 다 있어야 의미 있는 비례 race.
     """
-    anchor = prop | {"더불어민주당", "국민의힘"}
+    anchor = prop | set(dem) | set(ppp)
     keep = []
     for c in (q.get("candidates") or []):
         party = (c.get("party") or c.get("name") or "").strip()
         if party in anchor and c.get("pct") is not None:
             keep.append({"name": "", "party": party, "pct": c["pct"]})
     parties = {c["party"] for c in keep}
-    has_dem = "더불어민주연합" in parties or "더불어민주당" in parties
-    has_ppp = "국민의미래" in parties or "국민의힘" in parties
-    if not (has_dem and has_ppp) or len(keep) < 3:
+    if not (parties & set(dem)) or not (parties & set(ppp)) or len(keep) < 3:
         return None
     if not normalize_pcts(keep):
         return None
     return keep
 
 
-def accept_party_race(q: dict) -> list[dict] | None:
-    """일반 정당지지면 정제 candidates 반환."""
+def accept_party_race(q: dict, dem: list, ppp: list) -> list[dict] | None:
+    """일반 정당지지면 정제 candidates 반환. 양대정당(민주계+국힘계) 동시 등장."""
     keep = [{"name": "", "party": c["party"], "pct": c["pct"]}
             for c in (q.get("candidates") or [])
             if c.get("party") and c.get("pct") is not None]
-    if not (PARTY_BIG <= {c["party"] for c in keep}):
+    parties = {c["party"] for c in keep}
+    if not (parties & set(dem)) or not (parties & set(ppp)):
         return None
     if re.search(r"비례", q.get("title", "")):  # 비례는 accept_prop_race가 처리
         return None
@@ -198,8 +209,9 @@ def accept_party_race(q: dict) -> list[dict] | None:
     return keep
 
 
-def build(csv_path: Path, parsed_dir: Path) -> dict:
-    districts, prop = load_roster()
+def build(csv_path: Path, parsed_dir: Path, roster_path: Path,
+          election: str, election_date: str, dem: list, ppp: list) -> dict:
+    districts, prop = load_roster(roster_path)
     didx = district_index(districts)
     meta = load_meta(csv_path)
     parsed = load_parsed(parsed_dir, set(meta))
@@ -253,11 +265,11 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
             eo = q.get("election_office", "")
             title, tno = q.get("title", ""), q.get("table_no", "")
             if eo == "비례정당":
-                c = accept_prop_race(q, prop)
+                c = accept_prop_race(q, prop, dem, ppp)
                 if c:
                     emit("비례대표", "비례대표", c, title, tno); any_emitted = True
             elif eo == "정당지지":
-                c = accept_party_race(q)
+                c = accept_party_race(q, dem, ppp)
                 if c:
                     emit("정당지지", "정당지지", c, title, tno); any_emitted = True
             elif eo == "후보지지":
@@ -273,8 +285,8 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
     return {
         "_meta": {
             "generated_at": now.isoformat(timespec="seconds"),
-            "election": "22nd-general-2024",
-            "election_date": ELECTION_DATE.isoformat(),
+            "election": election,
+            "election_date": election_date,
             "source": "NESDC 등록현황 (nesdc.go.kr)",
             "legal_notice": "본 자료는 NESDC 등록 조사 인용. 인용 시 의뢰자·기관·조사기간·표본수·응답률·표본오차 표시 의무.",
             "stats": {
@@ -349,15 +361,21 @@ def postprocess(polls: list[dict]) -> list[dict]:
 
 def main():
     ap = argparse.ArgumentParser(description="총선 여론조사 aggregated.json build")
-    ap.add_argument("--csv", default="data/raw/nesdc_22gen_polls.csv")
+    ap.add_argument("--n", default="22", choices=list(GEN_CONFIG), help="총선 회차 (22/21/20)")
+    ap.add_argument("--csv", help="override: NESDC 메타 CSV")
     ap.add_argument("--parsed", default="data/raw/parsed")
-    ap.add_argument("--out", default="data/polls/aggregated_22nd.json")
+    ap.add_argument("--out", help="override: 출력 JSON")
+    ap.add_argument("--roster", help="override: 선거구 roster JSON")
     args = ap.parse_args()
-    csv_path = Path(args.csv) if Path(args.csv).is_absolute() else ROOT / args.csv
-    parsed_dir = Path(args.parsed) if Path(args.parsed).is_absolute() else ROOT / args.parsed
-    out_path = Path(args.out) if Path(args.out).is_absolute() else ROOT / args.out
+    cfg = GEN_CONFIG[args.n]
+    rel = lambda p: Path(p) if Path(p).is_absolute() else ROOT / p
+    csv_path = rel(args.csv or cfg["csv"])
+    parsed_dir = rel(args.parsed)
+    out_path = rel(args.out or cfg["out"])
+    roster_path = rel(args.roster or cfg["roster"])
 
-    out = build(csv_path, parsed_dir)
+    out = build(csv_path, parsed_dir, roster_path, cfg["election"], cfg["date"],
+                cfg["dem"], cfg["ppp"])
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     st = out["_meta"]["stats"]

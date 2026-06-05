@@ -79,8 +79,19 @@ def extract_proportional_parties(ws) -> list[str]:
     return []
 
 
+ELECTION_BY_N = {"22": "22nd-general-2024", "21": "21st-general-2020", "20": "20th-general-2016"}
+
+
 def main():
-    wb = openpyxl.load_workbook(XLSX, read_only=True)
+    import argparse
+    ap = argparse.ArgumentParser(description="총선 선거구 후보 roster 생성")
+    ap.add_argument("--n", default="22", help="총선 회차 (22/21/20)")
+    args = ap.parse_args()
+    xlsx = ROOT / "data" / "raw" / "nec_district" / f"n{args.n}_district_nec.xlsx"
+    out_path = ROOT / "data" / "raw" / f"nec_roster_{args.n}gen.json"
+    election = ELECTION_BY_N.get(args.n, f"{args.n}th-general")
+
+    wb = openpyxl.load_workbook(xlsx, read_only=True)
     districts = build_districts(wb["지역구"])
     prop_parties = extract_proportional_parties(wb["비례대표"])
     wb.close()
@@ -95,8 +106,8 @@ def main():
     n_cands = sum(len(v) for v in districts.values())
     out = {
         "_meta": {
-            "election": "22nd-general-2024",
-            "source": "NEC 개표결과 n22_district_nec.xlsx (data/raw/nec_district)",
+            "election": election,
+            "source": f"NEC 개표결과 n{args.n}_district_nec.xlsx (data/raw/nec_district)",
             "n_districts": len(districts),
             "n_candidates": n_cands,
             "n_proportional_parties": len(prop_parties),
@@ -106,9 +117,9 @@ def main():
         "name_party": name_party,
         "proportional_parties": prop_parties,
     }
-    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"선거구 {len(districts)}개, 후보 {n_cands}명, 비례 정당 {len(prop_parties)}개", file=sys.stderr)
-    print(f"→ {OUT.relative_to(ROOT)}", file=sys.stderr)
+    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"[{election}] 선거구 {len(districts)}, 후보 {n_cands}, 비례정당 {len(prop_parties)}", file=sys.stderr)
+    print(f"→ {out_path.relative_to(ROOT)}", file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-05T01:06:13",
+    "generated_at": "2026-06-05T10:16:47",
     "election": "22nd-general-2024",
     "election_date": "2024-04-10",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,7 +8,7 @@
     "stats": {
       "total_polls_meta": 1993,
       "matched_parsed": 1738,
-      "emitted_records": 2031,
+      "emitted_records": 2030,
       "skipped_no_pdf": 255,
       "skipped_no_race": 471
     }
@@ -25069,67 +25069,6 @@
           "name": "",
           "party": "조국혁신당",
           "pct": 10.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "14786",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14786&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "전국단위 신문 : 헤럴드경제",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 4041.0,
-      "response_rate": 3.9,
-      "contact_rate": 22.7,
-      "sample_error": "95% 신뢰수준에 ±1.5%P",
-      "period_start": "2024-03-25",
-      "period_end": "2024-03-27",
-      "reg_date": "2024-03-28",
-      "sido": "",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 48.6
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 40.1
-        },
-        {
-          "name": "",
-          "party": "녹색정의당",
-          "pct": 0.5
-        },
-        {
-          "name": "",
-          "party": "새로운미래",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "개혁신당",
-          "pct": 1.2
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 0.9
-        },
-        {
-          "name": "",
-          "party": "조국혁신당",
-          "pct": 3.4
         }
       ]
     },

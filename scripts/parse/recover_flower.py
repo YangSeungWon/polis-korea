@@ -187,9 +187,17 @@ def main():
     meta = load_meta(ROOT / args.csv)
     roster = json.loads((ROOT / args.roster).read_text(encoding="utf-8"))
     districts = roster["districts"]
+    # 컬럼 식별용 정당 set — roster 비례정당 + 역대 주요정당(회차별 지역구 party 포함).
+    # build 단계가 회차별 양대로 최종 필터하므로 넓게 잡아도 안전.
     parties = set(roster["proportional_parties"]) | {
+        # 22대
         "더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "녹색정의당",
-        "새로운미래", "진보당", "자유통일당", "기본소득당"}
+        "새로운미래", "진보당", "자유통일당", "기본소득당", "더불어민주연합", "국민의미래",
+        # 21대(2020)
+        "미래통합당", "미래한국당", "더불어시민당", "정의당", "국민의당", "열린민주당", "민생당",
+        # 20대(2016)
+        "새누리당", "바른정당", "바른미래당", "자유한국당",
+    }
 
     didx = district_index(districts)
     kws = [k.strip() for k in args.agency.split(",") if k.strip()]
