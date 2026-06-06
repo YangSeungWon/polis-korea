@@ -155,21 +155,22 @@
 
   // ---- load ----
   async function load() {
-    const [gallup, realmeter, nbs, hrc, ...aggs] = await Promise.all([
-      fetch('data/polls/approval_gallup.json').then((r) => r.json()).catch(() => ({ records: [] })),
-      fetch('data/polls/approval_realmeter.json').then((r) => r.json()).catch(() => ({ records: [] })),
-      fetch('data/polls/approval_nbs.json').then((r) => r.json()).catch(() => ({ records: [] })),
-      fetch('data/polls/approval_hrc.json').then((r) => r.json()).catch(() => ({ records: [] })),
+    const APPR_FILES = ['gallup', 'realmeter', 'nbs', 'hrc', 'general']
+      .map((s) => `data/polls/approval_${s}.json`);
+    const all = await Promise.all([
+      ...APPR_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ records: [] }))),
       ...AGG_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ polls: [] }))),
     ]);
-    // 국정평가 — 갤럽+리얼미터+NBS+한국리서치 통합
-    const recs = [...(gallup.records || []), ...(realmeter.records || []),
-                  ...(nbs.records || []), ...(hrc.records || [])]
-      .filter((r) => r.subject && r.positive != null)
+    const apprData = all.slice(0, APPR_FILES.length);
+    const aggs = all.slice(APPR_FILES.length);
+    // 국정평가 — 4기관 + 범용(기타 기관) 통합. ntt 중복 제거.
+    const seen = new Set();
+    const recs = apprData.flatMap((d) => d.records || [])
+      .filter((r) => r.subject && r.positive != null && !seen.has(r.ntt_id) && seen.add(r.ntt_id))
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
     document.getElementById('tk-approval').innerHTML = renderApproval(recs);
     const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)} ~ ${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
-    document.getElementById('tk-approval-meta').textContent = `갤럽·리얼미터·NBS·한국리서치 · ${ar}`;
+    document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
 
     // 정당지지 (전국만)
     const polls = [];
