@@ -113,7 +113,10 @@
     svg.setAttribute('width', w);
     svg.setAttribute('height', h);
 
-    const PARENT_R = 16;
+    // 부모 hex 격자 콜리전 — pointy-top tiling spacing 정확:
+    //   colW = R * sqrt(3),  rowH = R * 1.5.
+    // COL_W=24 → R ≤ 24/sqrt(3) ≈ 13.86. ROW_H=21 → R ≤ 14.
+    const PARENT_R = 13.85;
     const SMALL_R = 2.4;  // 모든 시군구 공통 hex 크기 (1석 = 1 hex 동일)
 
     // 시도 라벨 백그라운드 — cells보다 먼저 그려 위에 hex 덮이게.
