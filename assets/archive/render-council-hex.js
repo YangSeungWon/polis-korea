@@ -56,12 +56,21 @@
     return out;
   }
 
-  // sigungu별 의석 (지역구·비례) by party
+  // sigungu별 의석 (지역구·비례) by party.
+  // 구가 있는 시(부천시·용인시·수원시 등): tc=6 race.sigungu가 '부천시원미구' 등 →
+  // hex의 '부천시' key와 매칭 위해 부모 sigungu 추출 (시·군·구 suffix 직전).
+  function parentSigungu(sd, sg) {
+    if (!sg) return sg;
+    // '수원시장안구' → '수원시', '청주시상당구' → '청주시', '천안시동남구' → '천안시'
+    const m = sg.match(/^(.+?[시군])(.+[구])$/);
+    return m ? m[1] : sg;
+  }
   function aggregateSigunguSeats(races) {
     const byKey = new Map();
     function add(sd, sg, party, n) {
       if (!n) return;
-      const k = `${sd}|${sg}`;
+      const parent = parentSigungu(sd, sg);
+      const k = `${sd}|${parent}`;
       const m = byKey.get(k) || new Map();
       m.set(party, (m.get(party) || 0) + n);
       byKey.set(k, m);
@@ -70,7 +79,6 @@
       const sd = r.sido || '';
       const sg = r.sigungu || '';
       if (r.sg_typecode === '6') {
-        // 8회 sigungu_summary 우선 (정확 seats), 없으면 race winner 1로 fallback
         if (r.scope === 'sigungu_summary') {
           for (const c of r.candidates || []) add(sd, sg, c.party || '무소속', c.seats || 0);
         } else if (r.scope === 'district') {
