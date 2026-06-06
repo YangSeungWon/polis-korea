@@ -19,33 +19,41 @@
     }
     return pts.join(' ');
   }
-  // Compact hex cluster — distance-from-center sort. 작은 N도 동그란 모양 유지.
-  // partial ring은 ring 시작부터 인접 위치만 채워 흩어지지 않음 (한 방향 쏠림은 ring 1개만이라 minor).
+  // 표준 axial hex 이웃 (pointy-top, 시계방향).
+  const NEIGHBORS = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+  // 거리 layer의 ring 6L 개 cells 생성. 시작 = layer steps in NEIGHBORS[4] direction = (-L, L).
+  function hexRing(layer) {
+    const ring = [];
+    let q = -layer, r = layer;
+    for (let side = 0; side < 6; side++) {
+      const [dq, dr] = NEIGHBORS[side];
+      for (let step = 0; step < layer; step++) {
+        ring.push([q, r]);
+        q += dq; r += dr;
+      }
+    }
+    return ring;
+  }
+  // Compact cluster — 중심(0,0) + 완전 ring 1..L-1 + partial ring L 둘레 균등 sample.
   function hexSpiral(N) {
     if (N <= 0) return [];
-    // 충분한 ring 수까지 enumerate
-    let L = 0; let cap = 1;
-    while (cap < N) { L += 1; cap += 6 * L; }
-    const positions = [[0, 0]];
-    const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    for (let layer = 1; layer <= L; layer++) {
-      let q = layer, ar = -layer;
-      for (const [dq, dr] of dirs) {
-        for (let k = 0; k < layer; k++) {
-          q += dq; ar += dr;
-          positions.push([q, ar]);
+    const out = [[0, 0]];
+    let layer = 0;
+    while (out.length < N) {
+      layer += 1;
+      const ring = hexRing(layer);
+      const ringSize = ring.length;  // 6 * layer
+      const remaining = N - out.length;
+      if (remaining >= ringSize) {
+        for (const p of ring) out.push(p);
+      } else {
+        for (let i = 0; i < remaining; i++) {
+          const idx = Math.round(i * ringSize / remaining) % ringSize;
+          out.push(ring[idx]);
         }
       }
     }
-    // distance from origin (cube distance = max of |q|, |r|, |q+r|)로 sort
-    const dist = ([q, r]) => Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
-    positions.sort((a, b) => {
-      const da = dist(a), db = dist(b);
-      if (da !== db) return da - db;
-      // 같은 ring 안에서는 각도 순 (위쪽부터 시계방향)
-      return Math.atan2(a[1] + a[0] / 2, a[0]) - Math.atan2(b[1] + b[0] / 2, b[0]);
-    });
-    return positions.slice(0, N);
+    return out;
   }
 
   // sigungu별 의석 (지역구·비례) by party

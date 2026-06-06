@@ -18,29 +18,38 @@
     }
     return pts.join(' ');
   }
-  // Compact hex cluster — distance-from-center sort. 동그란 모양 + 중심 채움.
+  const NEIGHBORS = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+  function hexRing(layer) {
+    const ring = [];
+    let q = -layer, r = layer;
+    for (let side = 0; side < 6; side++) {
+      const [dq, dr] = NEIGHBORS[side];
+      for (let step = 0; step < layer; step++) {
+        ring.push([q, r]);
+        q += dq; r += dr;
+      }
+    }
+    return ring;
+  }
   function hexSpiral(N) {
     if (N <= 0) return [];
-    let L = 0; let cap = 1;
-    while (cap < N) { L += 1; cap += 6 * L; }
-    const positions = [[0, 0]];
-    const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    for (let layer = 1; layer <= L; layer++) {
-      let q = layer, ar = -layer;
-      for (const [dq, dr] of dirs) {
-        for (let k = 0; k < layer; k++) {
-          q += dq; ar += dr;
-          positions.push([q, ar]);
+    const out = [[0, 0]];
+    let layer = 0;
+    while (out.length < N) {
+      layer += 1;
+      const ring = hexRing(layer);
+      const ringSize = ring.length;
+      const remaining = N - out.length;
+      if (remaining >= ringSize) {
+        for (const p of ring) out.push(p);
+      } else {
+        for (let i = 0; i < remaining; i++) {
+          const idx = Math.round(i * ringSize / remaining) % ringSize;
+          out.push(ring[idx]);
         }
       }
     }
-    const dist = ([q, r]) => Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
-    positions.sort((a, b) => {
-      const da = dist(a), db = dist(b);
-      if (da !== db) return da - db;
-      return Math.atan2(a[1] + a[0] / 2, a[0]) - Math.atan2(b[1] + b[0] / 2, b[0]);
-    });
-    return positions.slice(0, N);
+    return out;
   }
 
   // 시도별 광역의원 (지역구·비례) by party
