@@ -26,11 +26,15 @@
     "results_path": "data/results/21st-general-2020.json",
     "polls_path": "data/polls/aggregated_21st.json",
     "exit_poll_path": null,
-    "polls_window": ["2019-04-15", "2020-04-14"],
+    "polls_window": [
+      "2019-04-15",
+      "2020-04-14"
+    ],
     "sg_typecode": "2",
     "proportional_sg_typecode": "7",
     "list_label": "확정",
-    "data_source_note": "중앙선거관리위원회 OpenAPI"
+    "data_source_note": "중앙선거관리위원회 OpenAPI",
+    "byelection_id": "byelection-2020-04-15"
   },
   "kind": "general_election",
   "n": 21
