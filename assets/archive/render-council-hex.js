@@ -127,10 +127,17 @@
       // small hex radius — N이 클수록 작게
       const smallR = Math.max(2.2, Math.min(SMALL_R_BASE, PARENT_R / Math.sqrt(N + 2)));
       const spiral = hexSpiral(N);
+      // partial layer 쏠림 보정
+      let ccx = 0, ccy = 0;
+      for (const [q, ar] of spiral) {
+        ccx += smallR * Math.sqrt(3) * (q + ar / 2);
+        ccy += smallR * 1.5 * ar;
+      }
+      ccx /= spiral.length; ccy /= spiral.length;
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
-        const dy = smallR * 1.5 * ar;
+        const dx = smallR * Math.sqrt(3) * (q + ar / 2) - ccx;
+        const dy = smallR * 1.5 * ar - ccy;
         const sx = cx + dx, sy = cy + dy;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(sx, sy, smallR * 0.95));

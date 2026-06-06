@@ -148,10 +148,17 @@
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
       }
       const spiral = hexSpiral(N);
+      // partial outer layer가 한 방향에 쏠림 → 실제 centroid 계산해 보정.
+      let ccx = 0, ccy = 0;
+      for (const [q, ar] of spiral) {
+        ccx += smallR * Math.sqrt(3) * (q + ar / 2);
+        ccy += smallR * 1.5 * ar;
+      }
+      ccx /= spiral.length; ccy /= spiral.length;
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
-        const dy = smallR * 1.5 * ar;
+        const dx = smallR * Math.sqrt(3) * (q + ar / 2) - ccx;
+        const dy = smallR * 1.5 * ar - ccy;
         const sx = info.cx + dx, sy = info.cy + dy;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(sx, sy, smallR * 0.92));
