@@ -348,6 +348,7 @@
       renderOffices(ctx);
       if (window.Archive.metroHex) await window.Archive.metroHex.init(ctx);
       if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
+      if (window.Archive.winners) await window.Archive.winners.init(ctx);
       renderExitPoll(ctx);
       renderPollsLink(ctx);
       await renderByelection(ctx);

@@ -481,3 +481,29 @@
 .ar-metro-hex-meta .mh-leg { white-space: nowrap; }
 .ar-metro-hex-meta .mh-leg b { font-weight: 800; margin-right: 2px; }
 .ar-metro-hex-meta #ar-metro-hex-total { font-weight: 700; color: var(--ink); margin-right: 12px; }
+
+/* 시의원 당선인 list — render-winners.js */
+.ar-winners-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.ar-winners-controls input, .ar-winners-controls select {
+  font: inherit; font-size: 13px; padding: 4px 8px;
+  border: 1px solid var(--rule-strong); background: var(--bg); color: var(--ink); border-radius: 2px;
+}
+.ar-winners-controls input[type=search] { min-width: 220px; }
+.ar-winners-count { font-size: 12px; color: var(--ink-soft); font-weight: 700; margin-left: auto; }
+.ar-winners-grid {
+  display: grid; grid-template-columns: 1fr; gap: 1px;
+  border: 1px solid var(--rule); border-radius: 2px; overflow: hidden;
+}
+.ar-winner-row {
+  display: grid; grid-template-columns: 24px 1fr 1fr auto auto;
+  gap: 10px; align-items: center;
+  padding: 6px 12px; font-size: 12px;
+  background: var(--bg);
+}
+.ar-winner-row:nth-child(even) { background: var(--bg2); }
+.ar-winner-lvl { font-weight: 700; color: var(--ink-soft); text-align: center; }
+.ar-winner-loc { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ar-winner-name { font-weight: 700; color: var(--ink); }
+.ar-winner-party { font-weight: 600; }
+.ar-winner-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 600; }
+.ar-winners-more { padding: 10px; text-align: center; color: var(--ink-soft); font-size: 12px; background: var(--bg2); }
