@@ -90,39 +90,12 @@
   font-variant-numeric: tabular-nums;
   margin-left: 4px;
 }
-.status-card .lsb-bar {
-  display: flex;
-  height: 12px;
-  border-radius: 1px;
-  overflow: hidden;
-  background: var(--bg3, #e6e9ef);
-}
-.status-card .lsb-seg {
-  display: flex; align-items: center; justify-content: center;
-  min-width: 0;
-  font-size: 10px;
-  font-weight: 700;
-  color: #fff;
-  text-shadow: 0 0 2px rgba(0,0,0,0.35);
-  border-right: 1px solid rgba(255,255,255,0.4);
-  overflow: hidden;
-  white-space: nowrap;
-}
-.status-card .lsb-seg:last-child { border-right: none; }
-.status-card .lsb-seg:hover { filter: brightness(1.1); }
-.status-card .lsb-seg-n { padding: 0 4px; }
+/* 막대·범례 내부 스타일은 common.css .sbar*/.sleg* (지선 archive와 공용). 여기선 범례 래퍼만. */
 .status-card .lsb-legend {
   display: flex; flex-wrap: wrap; gap: 2px 10px;
   font-size: 11px;
   margin-top: 1px;
 }
-.status-card .lsb-leg { font-variant-numeric: tabular-nums; white-space: nowrap; }
-.status-card .lsb-leg b { font-weight: 800; margin-right: 2px; }
-.status-card .lsb-leg-tail {
-  font-size: 10px; color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-}
-.status-card .lsb-leg-tail b { font-weight: 700; margin-right: 1px; }
 /* timeline 4번째 카드 — 값 영역 SVG로 */
 
 

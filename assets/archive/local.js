@@ -303,14 +303,13 @@
         total += 1;
       }
       if (!total) continue;
-      const sorted = Object.entries(ctr).sort((a, b) => b[1] - a[1]);
-      // 모든 정당 표시 — 1석 소수정당도 빠지지 않게 (예: 녹색당 1석)
-      const chips = sorted.map(([p, c]) =>
-        `<span class="ar-office-chip" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
+      const counts = Object.entries(ctr);  // partyStackBar/Legend가 내부 정렬
+      // 메인 status 스택바와 동일한 공용 렌더러 (utils.js). 바깥 grid 배치만 archive 고유.
       lines.push(`
         <div class="ar-office-row">
           <div class="ar-office-label">${LABEL[tc]} <span class="ar-office-total">${total}</span></div>
-          <div class="ar-office-chips">${chips}</div>
+          <div class="ar-office-bar">${partyStackBar(counts, total)}</div>
+          <div class="ar-office-legend">${partyStackLegend(counts)}</div>
         </div>
       `);
     }

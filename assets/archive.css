@@ -424,26 +424,38 @@
 .ar-source-line a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-strong); }
 .ar-source-line a:hover { text-decoration-color: var(--ink); }
 
-/* 지선 archive — 선출직 정당 분포 (4단: 광역장·기초장·광역의원·기초의원) */
+/* 지선 archive — 선출직 정당 분포 (4단: 광역장·기초장·광역의원·기초의원).
+   메인 status 스택바와 동일: 비율 막대 + 1·2위 inline 범례 + 나머지 tail. */
 .ar-offices-grid { display: grid; gap: 10px; }
 .ar-office-row {
   display: grid;
   grid-template-columns: 160px 1fr;
-  gap: 12px;
+  column-gap: 14px;
+  row-gap: 4px;
   padding: 8px 10px;
   background: var(--bg2);
   border-left: 3px solid var(--ink);
-  align-items: baseline;
+  align-items: center;
 }
-.ar-office-label { font-size: 13px; font-weight: 700; color: var(--ink); }
+.ar-office-label {
+  grid-column: 1; grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
 .ar-office-total {
   font-size: 11px; font-weight: 600; color: var(--ink-soft);
   font-variant-numeric: tabular-nums; margin-left: 4px;
 }
-.ar-office-chips { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; }
-.ar-office-chip { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ar-office-chip b { font-size: 14px; font-weight: 800; margin-right: 3px; }
+/* 막대·범례 내부 스타일은 common.css .sbar*/.sleg* (공용). 여기선 grid 배치만. */
+.ar-office-bar { grid-column: 2; grid-row: 1; }
+.ar-office-legend {
+  grid-column: 2; grid-row: 2;
+  display: flex; flex-wrap: wrap; gap: 2px 12px;
+  font-size: 12px;
+}
 @media (max-width: 640px) {
-  .ar-office-row { grid-template-columns: 1fr; gap: 4px; }
-  .ar-office-label { font-size: 12px; }
+  .ar-office-row { grid-template-columns: 1fr; }
+  .ar-office-label { grid-column: 1; grid-row: 1; font-size: 12px; }
+  .ar-office-bar { grid-column: 1; grid-row: 2; }
+  .ar-office-legend { grid-column: 1; grid-row: 3; }
 }

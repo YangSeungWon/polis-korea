@@ -178,6 +178,30 @@ function renderPollCard(p, officeLabel) {
   </div>`;
 }
 
+// === 정당 누적 비율 막대 + 범례 (메인 status·지선 archive 공용) ===
+// counts: [[party, n], ...] (정렬 가정 안 함 — 내부 정렬), total: 합계.
+// CSS는 common.css의 .sbar* / .sleg*. 바깥 배치(가로/세로)는 호출부가 정함.
+function partyStackBar(counts, total) {
+  const sorted = counts.slice().sort((a, b) => b[1] - a[1]);
+  const segs = sorted.map(([p, c]) => {
+    const pct = total > 0 ? (c / total * 100) : 0;
+    return `<span class="sbar-seg" style="flex:${c};background:${partyColor(p)}" title="${p} ${c} (${pct.toFixed(1)}%)">${pct >= 9 ? `<span class="sbar-seg-n">${c}</span>` : ''}</span>`;
+  }).join('');
+  return `<div class="sbar">${segs}</div>`;
+}
+// 1·N위 inline, 나머지(1석 소수정당 포함)는 "+ …" tail로 전부 표시.
+function partyStackLegend(counts, top = 2) {
+  const sorted = counts.slice().sort((a, b) => b[1] - a[1]);
+  const head = sorted.slice(0, top), tail = sorted.slice(top);
+  const headHTML = head.map(([p, c]) =>
+    `<span class="sleg" style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`).join(' ');
+  const tailHTML = tail.length
+    ? '<span class="sleg-tail">+ ' + tail.map(([p, c]) =>
+        `<span style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`).join(' · ') + '</span>'
+    : '';
+  return headHTML + (tailHTML ? ' ' + tailHTML : '');
+}
+
 // === 시계열 산점도 SVG ===
 // 각 점 = 한 조사·한 후보. x=조사기간 끝, y=지지율, color=정당색.
 // 같은 ts 여러 점 약간 jitter, hover 메타. (parties.js의 partyColor 의존)

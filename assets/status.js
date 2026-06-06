@@ -130,28 +130,9 @@
     const mayorTotal = mayorCounts.reduce((s, [, c]) => s + c, 0);
     const metroTotal = metroCouncil.reduce((s, [, c]) => s + c, 0);
     const localTotal = localCouncil.reduce((s, [, c]) => s + c, 0);
-    // 누적 막대 + 1·2위 정당 라벨. segment width ≥ 9% 시 카운트 embed.
-    const pcol = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#999';
-    const renderBar = (counts, total) => {
-      const segs = counts.map(([p, c]) => {
-        const pct = total > 0 ? (c / total * 100) : 0;
-        const showInline = pct >= 9;
-        return `<span class="lsb-seg" style="flex:${c};background:${pcol(p)}" title="${p} ${c} (${pct.toFixed(1)}%)">${showInline ? `<span class="lsb-seg-n">${c}</span>` : ''}</span>`;
-      }).join('');
-      return `<div class="lsb-bar">${segs}</div>`;
-    };
-    const renderLegend = (counts, top = 2) => {
-      const head = counts.slice(0, top);
-      const tail = counts.slice(top);
-      const headHTML = head.map(([p, c]) =>
-        `<span class="lsb-leg" style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' ');
-      // 소수 정당(나머지)은 1정당당 1라인 — 1석도 빠지지 않게.
-      const tailHTML = tail.length
-        ? '<span class="lsb-leg-tail">+ ' + tail.map(([p, c]) =>
-            `<span style="color:${pcol(p)}"><b>${c}</b> ${p}</span>`).join(' · ') + '</span>'
-        : '';
-      return headHTML + (tailHTML ? ' ' + tailHTML : '');
-    };
+    // 누적 막대 + 범례 — utils.js 공용 렌더러(지선 archive와 공유). segment ≥ 9% 시 카운트 embed.
+    const renderBar = (counts, total) => partyStackBar(counts, total);
+    const renderLegend = (counts, top = 2) => partyStackLegend(counts, top);
     const lines = [];
     const addLine = (label, total, counts) => {
       if (!counts.length) return;
