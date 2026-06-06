@@ -1,0 +1,22 @@
+/* assets/tracker.css — 상시 지표 tracker (국정평가·정당지지 연속 시계열). tracker.html 전용. */
+
+.tk-section { margin: 0 0 40px; }
+.tk-section-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin: 0 0 6px;
+  padding-bottom: 8px; border-bottom: 2px solid var(--ink);
+}
+.tk-section-title { font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+.tk-section-meta { font-size: 12px; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tk-section-sub { font-size: 12.5px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.5; }
+
+.tk-chart { width: 100%; overflow: hidden; }
+.tk-chart svg { display: block; width: 100%; height: auto; }
+
+/* 국정평가 긍/부정 범례 */
+.tk-legend { display: flex; gap: 16px; margin: 4px 0 10px; font-size: 12px; }
+.tk-legend .tk-leg { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); }
+.tk-legend .tk-leg-dot { width: 10px; height: 3px; border-radius: 1px; display: inline-block; }
+
+.tk-empty { color: var(--ink-mute); font-size: 13px; padding: 20px 0; }
+#tk-loading { color: var(--ink-soft); font-size: 13px; padding: 16px 0; }

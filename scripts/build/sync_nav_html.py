@@ -27,6 +27,7 @@ MENU = [
     ("홈", "/", "home"),
     ("여론조사", "/polls.html", "polls"),
     ("재·보궐", "/byelection.html", "byelection"),
+    ("지지율 추이", "/tracker.html", "tracker"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),
 ]
@@ -40,6 +41,8 @@ def menu_for_path(rel_path: str) -> str | None:
         return "polls"
     if p == "/byelection.html" or p.startswith("/byelection/"):
         return "byelection"
+    if p == "/tracker.html":
+        return "tracker"
     if p == "/history.html" or p.startswith("/archive/"):
         return "history"
     if p == "/timeline.html":

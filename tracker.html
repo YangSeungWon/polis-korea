@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 지지율 추이</title>
+<meta name="description" content="대통령 국정수행 평가(한국갤럽)와 정당 지지도의 연속 시계열. 선거와 무관한 상시 지표.">
+<meta property="og:title" content="polis · 지지율 추이">
+<meta property="og:description" content="대통령 국정 긍·부정과 정당 지지도를 한 흐름으로. 임기별 추이.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/tracker.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/tracker.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/" class="hdr-link">홈</a>
+  <span data-nav-urgent></span>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <a href="/byelection.html" class="hdr-link">재·보궐</a>
+  <a href="/tracker.html" class="hdr-link is-current">지지율 추이</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <!-- NAV_END -->
+</nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>지지율 추이</h1>
+    <p class="lede">선거에 묶이지 않는 상시 지표. 대통령 국정수행 평가와 정당 지지도를 하나의 연속 흐름으로.</p>
+  </section>
+
+  <div id="tk-loading">데이터 불러오는 중…</div>
+
+  <section class="tk-section">
+    <div class="tk-section-head">
+      <h2 class="tk-section-title">대통령 국정수행 평가</h2>
+      <span class="tk-section-meta" id="tk-approval-meta"></span>
+    </div>
+    <p class="tk-section-sub">“대통령이 직무를 잘 수행하고 있다고 보십니까?” 한국갤럽 조사 기준. 임기별로 구간을 나눠 표시(직무정지 기간 제외).</p>
+    <div class="tk-legend">
+      <span class="tk-leg"><span class="tk-leg-dot" style="background:#1f7a4d"></span> 긍정</span>
+      <span class="tk-leg"><span class="tk-leg-dot" style="background:#c0392b"></span> 부정</span>
+    </div>
+    <div class="tk-chart" id="tk-approval"></div>
+  </section>
+
+  <section class="tk-section">
+    <div class="tk-section-head">
+      <h2 class="tk-section-title">정당 지지도</h2>
+      <span class="tk-section-meta" id="tk-party-meta"></span>
+    </div>
+    <p class="tk-section-sub">전국 단위 조사의 정당 지지도 월평균. NESDC 등록 공표 조사를 통합해 연속 시계열로.</p>
+    <div class="tk-chart" id="tk-party"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://www.nesdc.go.kr" target="_blank" rel="noopener">데이터 출처 · 중앙선거여론조사심의위원회</a>
+      <a href="https://www.gallup.co.kr" target="_blank" rel="noopener">국정평가 · 한국갤럽</a>
+    </div>
+    <p class="fine">국정수행 평가는 한국갤럽 데일리 오피니언/정당지지도 보고서의 ‘전체’ 직무평가 긍·부정을 추출한 것. 정당 지지도는 NESDC에 등록·공표된 전국 조사를 인용·재시각화한 월평균이며, 조사별 표본·오차 등은 원자료를 따른다. 본 페이지는 특정 조사를 단독 인용하지 않고 추세 표현을 목적으로 한다.</p>
+  </footer>
+</main>
+
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/tracker.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>
