@@ -103,6 +103,8 @@ async function setRound(n) {
   const el = (state.elections[state.type]?.elections || []).find((x) => x.n === n);
   if (el) {
     $('#election-date').textContent = `${el.date}${el.note ? ' · ' + el.note : ''}`;
+    // 정당색 시대 맥락 — 회차 변경할 때마다 그 회차 날짜로 partyColor periods 활성.
+    if (typeof setPartyColorContext === 'function') setPartyColorContext(el.date);
   }
   state.results = null;
   // 1차: 새 schema (통일 path) — data/results/{Nth}-{kind}-{year}.json

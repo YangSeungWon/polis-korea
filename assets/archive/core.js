@@ -69,6 +69,9 @@
   const isByelection = meta.electionKind === 'byelection';
   const sgTypecode = meta.sgTypecode || (isPres ? '1' : isGeneral ? '2' : '3');
 
+  // 정당색 시대 맥락 — 이 회차 날짜로 partyColor periods lookup 활성.
+  if (typeof setPartyColorContext === 'function') setPartyColorContext(meta.date);
+
   const ctx = { meta, results, polls, byReasons, exitData, sgTypecode };
 
   if (isPres) window.Archive.pres.render(ctx);

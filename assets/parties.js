@@ -147,13 +147,19 @@ const LEGEND_DEFAULT_PARTIES = [
   '더불어민주당', '국민의힘', '조국혁신당', '개혁신당', '진보당', '무소속',
 ];
 
+// 페이지가 표시하는 회차 날짜 — archive/history 등에서 1회 set 후 모든 render가 동일 시점.
+// 명시 date 인자가 더 우선 (timeline 같은 다회차 페이지용).
+let _partyColorContextDate = null;
+function setPartyColorContext(date) { _partyColorContextDate = date || null; }
+
 function partyColor(party, date) {
   if (!party) return PARTY_FALLBACK;
   if (METRIC_COLORS[party]) return METRIC_COLORS[party];
-  // 시대 override — date(YYYY-MM-DD) 주어지면 해당 기간 색 우선.
-  if (date && PARTY_COLOR_PERIODS[party]) {
+  // 시대 override — date 인자 → context date 순. YYYY-MM-DD.
+  const effDate = date || _partyColorContextDate;
+  if (effDate && PARTY_COLOR_PERIODS[party]) {
     for (const p of PARTY_COLOR_PERIODS[party]) {
-      if (date >= p.from && date < p.to) return p.color;
+      if (effDate >= p.from && effDate < p.to) return p.color;
     }
   }
   if (PARTY_COLORS[party]) return PARTY_COLORS[party];
