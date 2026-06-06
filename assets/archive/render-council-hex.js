@@ -140,7 +140,7 @@
     }
     // 경기는 서울 둘러쌈 → 평균 centroid 겹침. 외곽 (서남쪽) 으로 oneset.
     const LABEL_OFFSET_HEX = {
-      '경기도': { dc: -2.5, dr: 2.5 },  // 서울 → 서남으로
+      '경기도': { dc: 2, dr: -1 },  // 서울 우측 약간 위
     };
     for (const [sd, e] of sidoCenters) {
       const off = LABEL_OFFSET_HEX[sd];
