@@ -62,21 +62,27 @@
       bands += `<line x1="${x0.toFixed(1)}" y1="${P.t}" x2="${x0.toFixed(1)}" y2="${H - P.b}" stroke="var(--rule-strong,#c4c9d2)" stroke-width="0.6"/>`;
     });
 
-    // 긍정·부정 라인 — 대통령별 segment로 끊어 그림(임기 교체 구간 연결 X)
+    // 긍정·부정 — 대통령별 월평균(갤럽+리얼미터 통합, house effect 완화) 라인 + 원자료 점.
     const grid = gridAxes(W, H, P, tMin, tMax, yMax, 20, xOf, yOf);
     function lineFor(key, color) {
       let body = '';
       for (const p of PRES) {
-        const seg = records.filter((r) => r.subject === p.name)
-          .map((r) => ({ t: ms(r.period_end), v: r[key] })).sort((a, b) => a.t - b.t);
-        if (seg.length >= 2) body += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="2" stroke-opacity="0.9"/>`;
-        for (const pt of seg) {
-          body += `<circle cx="${xOf(pt.t).toFixed(1)}" cy="${yOf(pt.v).toFixed(1)}" r="2.4" fill="${color}"><title>${key === 'positive' ? '긍정' : '부정'} ${pt.v}% · ${new Date(pt.t).toISOString().slice(0, 10)} (${p.name})</title></circle>`;
+        const recs = records.filter((r) => r.subject === p.name);
+        // 원자료 점(옅게)
+        for (const r of recs) {
+          body += `<circle cx="${xOf(ms(r.period_end)).toFixed(1)}" cy="${yOf(r[key]).toFixed(1)}" r="1.4" fill="${color}" opacity="0.28"/>`;
         }
-        // 임기 끝 라벨
+        // 월평균 라인
+        const byM = {};
+        for (const r of recs) ((byM[ym(r.period_end)] ||= []).push(r[key]));
+        const seg = Object.entries(byM).map(([k, a]) => ({
+          t: Date.parse(`${k}-15`), v: a.reduce((x, y) => x + y, 0) / a.length,
+        })).sort((a, b) => a.t - b.t);
+        if (seg.length >= 2) body += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="2" stroke-opacity="0.95"/>`;
         if (seg.length) {
           const last = seg[seg.length - 1];
-          body += `<text x="${(xOf(last.t) + 4).toFixed(1)}" y="${(yOf(last.v) + 3).toFixed(1)}" font-size="9" fill="${color}" font-weight="700">${last.v}</text>`;
+          body += `<circle cx="${xOf(last.t).toFixed(1)}" cy="${yOf(last.v).toFixed(1)}" r="2.6" fill="${color}"/>`;
+          body += `<text x="${(xOf(last.t) + 4).toFixed(1)}" y="${(yOf(last.v) + 3).toFixed(1)}" font-size="9" fill="${color}" font-weight="700">${Math.round(last.v)}</text>`;
         }
       }
       return body;
@@ -149,16 +155,18 @@
 
   // ---- load ----
   async function load() {
-    const [appr, ...aggs] = await Promise.all([
+    const [gallup, realmeter, ...aggs] = await Promise.all([
       fetch('data/polls/approval_gallup.json').then((r) => r.json()).catch(() => ({ records: [] })),
+      fetch('data/polls/approval_realmeter.json').then((r) => r.json()).catch(() => ({ records: [] })),
       ...AGG_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ polls: [] }))),
     ]);
-    // 국정평가
-    const recs = (appr.records || []).filter((r) => r.subject && r.positive != null)
+    // 국정평가 — 갤럽+리얼미터 통합
+    const recs = [...(gallup.records || []), ...(realmeter.records || [])]
+      .filter((r) => r.subject && r.positive != null)
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
     document.getElementById('tk-approval').innerHTML = renderApproval(recs);
-    const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end} ~ ${recs[recs.length - 1].period_end}` : '';
-    document.getElementById('tk-approval-meta').textContent = `한국갤럽 · ${ar}`;
+    const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)} ~ ${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
+    document.getElementById('tk-approval-meta').textContent = `한국갤럽·리얼미터 · ${ar}`;
 
     // 정당지지 (전국만)
     const polls = [];
