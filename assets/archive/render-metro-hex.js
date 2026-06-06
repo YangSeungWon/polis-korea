@@ -79,7 +79,8 @@
 
   // SIDO_HEX_LAYOUT (parties.js) 기반 5×5 격자 좌표 — 시도 cluster 겹침 방지.
   // col,row를 pixel로 변환. SPACING은 cluster radius 보다 크게.
-  const SIDO_GAP = 110;  // 시도 hex 간 거리 — outline overlap 방지
+  const SIDO_GAP = 120;  // 시도 hex 간 거리
+  const SMALL_R = 3.5;   // 모든 시도 공통 hex 크기 (1석 = 1 hex 동일 면적)
   function sidoCentroidsFromLayout() {
     if (typeof SIDO_HEX_LAYOUT !== 'object') return null;
     const out = new Map();
@@ -140,8 +141,9 @@
       for (const [p, n] of sorted) partyTotal.set(p, (partyTotal.get(p) || 0) + n);
 
       const g = document.createElementNS(NS, 'g');
-      // 시도 outline — SIDO_GAP/2 안 (인접 cluster와 겹침 방지)
-      const clusterR = SIDO_GAP * 0.45;
+      // smallR 고정 → cluster 실제 외곽 반경 = L * sqrt(3) * smallR (axial L 레이어).
+      const L_est = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
+      const clusterR = Math.max(14, (L_est + 0.6) * Math.sqrt(3) * SMALL_R);
       const outline = document.createElementNS(NS, 'circle');
       outline.setAttribute('cx', info.cx); outline.setAttribute('cy', info.cy);
       outline.setAttribute('r', clusterR);
@@ -154,11 +156,7 @@
       tt.textContent = `${sd} 광역의회 ${N}석 · ${seatsStr}`;
       g.appendChild(tt);
 
-      // small hex radius — 외곽 ring radius가 clusterR 안에 수렴.
-      // L 레이어 hex의 cluster radius = L * smallR * sqrt(3)/2 * 2 = L * smallR * sqrt(3).
-      // L = ceil(sqrt((N-1)/3)). smallR = clusterR / (L * sqrt(3) + 0.5)
-      const L_est = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
-      const smallR = Math.max(1.4, clusterR / (L_est * Math.sqrt(3) + 1.2));
+      const smallR = SMALL_R;
       const fills = [];
       for (const [p, n] of sorted) {
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');

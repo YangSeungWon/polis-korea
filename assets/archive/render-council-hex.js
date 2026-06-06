@@ -106,7 +106,7 @@
     svg.setAttribute('height', h);
 
     const PARENT_R = 16;
-    const SMALL_R_BASE = 4.2;
+    const SMALL_R = 2.4;  // 모든 시군구 공통 hex 크기 (1석 = 1 hex 동일)
 
     let totalSeats = 0;
     const partyTotal = new Map();
@@ -143,7 +143,7 @@
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
       }
       // small hex radius — N이 클수록 작게
-      const smallR = Math.max(2.2, Math.min(SMALL_R_BASE, PARENT_R / Math.sqrt(N + 2)));
+      const smallR = SMALL_R;
       const spiral = hexSpiral(N);
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
