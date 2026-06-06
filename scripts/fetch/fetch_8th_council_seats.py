@@ -25,12 +25,12 @@ ROOT = Path(__file__).resolve().parents[2]
 UA = "Mozilla/5.0 vote-via-data scraper"
 
 # 시도 prefix가 필요한 모호한 sigungu (남구·동구·서구·중구 등 — 여러 시도에 동시 존재)
-def candidate_urls(sido: str, sigungu: str) -> list[str]:
+def candidate_urls(sido: str, sigungu: str, n: int = 8) -> list[str]:
     s = sigungu
     return [
-        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제8회 전국동시지방선거 {s}의회')}",
-        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제8회 전국동시지방선거 {sido} {s}의회')}",
-        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제8회_전국동시지방선거_{s}의회')}",
+        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제{n}회 전국동시지방선거 {s}의회')}",
+        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제{n}회 전국동시지방선거 {sido} {s}의회')}",
+        f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제{n}회_전국동시지방선거_{s}의회')}",
     ]
 
 
@@ -69,10 +69,13 @@ def parse_party_seats(html: str) -> dict[str, dict]:
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--n", type=int, default=8, help="회차 (5/6/7/8)")
     ap.add_argument("--results", default="data/results/9th-local-2026.json",
-                    help="sigungu list 추출용 (8회는 같은 시군구 set)")
-    ap.add_argument("--out", default="data/raw/8th_council_party_seats.json")
+                    help="sigungu list 추출용 (9회 sigungu set 기준)")
+    ap.add_argument("--out", default=None)
     args = ap.parse_args()
+    if not args.out:
+        args.out = f"data/raw/{args.n}th_council_party_seats.json"
     rp = ROOT / args.results
     out_p = ROOT / args.out
     d = json.loads(rp.read_text(encoding="utf-8"))
@@ -90,7 +93,7 @@ def main():
             n_skip += 1
             continue
         seats = None
-        for url in candidate_urls(sido, sgg):
+        for url in candidate_urls(sido, sgg, args.n):
             try:
                 r = s.get(url, timeout=10)
             except Exception:

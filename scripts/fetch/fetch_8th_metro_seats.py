@@ -31,12 +31,16 @@ SIDOS = [
 
 
 def main():
-    out_p = ROOT / "data/raw/8th_metro_party_seats.json"
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--n", type=int, default=8)
+    args = ap.parse_args()
+    out_p = ROOT / f"data/raw/{args.n}th_metro_party_seats.json"
     s = requests.Session()
     s.headers.update({"User-Agent": UA})
     result = {}
     for sd in SIDOS:
-        url = f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제8회 전국동시지방선거 {sd}의회')}"
+        url = f"https://ko.wikipedia.org/wiki/{urllib.parse.quote(f'제{args.n}회 전국동시지방선거 {sd}의회')}"
         try:
             r = s.get(url, timeout=10)
         except Exception as e:

@@ -22,17 +22,27 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
+N_TO_YEAR = {5: 2010, 6: 2014, 7: 2018, 8: 2022}
+N_TO_ORD = {5: "5th", 6: "6th", 7: "7th", 8: "8th"}
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--results", default="data/results/8th-local-2022.json")
-    ap.add_argument("--sigungu", default="data/results/8th-local-2022.sigungu.json")
-    ap.add_argument("--seats", default="data/raw/8th_council_party_seats.json")
+    ap.add_argument("--n", type=int, default=8, help="회차 (5/6/7/8)")
+    ap.add_argument("--results", default=None)
+    ap.add_argument("--sigungu", default=None)
+    ap.add_argument("--seats", default=None)
     args = ap.parse_args()
+    ord_ = N_TO_ORD[args.n]
+    year = N_TO_YEAR[args.n]
+    if not args.results: args.results = f"data/results/{ord_}-local-{year}.json"
+    if not args.sigungu: args.sigungu = f"data/results/{ord_}-local-{year}.sigungu.json"
+    if not args.seats:   args.seats = f"data/raw/{ord_}_council_party_seats.json"
 
     main_p = ROOT / args.results
     sub_p = ROOT / args.sigungu
     seats_p = ROOT / args.seats
-    metro_p = ROOT / "data/raw/8th_metro_party_seats.json"
+    metro_p = ROOT / f"data/raw/{N_TO_ORD[args.n]}_metro_party_seats.json"
 
     main_d = json.loads(main_p.read_text(encoding="utf-8"))
     sub_d = json.loads(sub_p.read_text(encoding="utf-8"))
