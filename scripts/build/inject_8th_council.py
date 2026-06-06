@@ -32,14 +32,16 @@ def main():
     main_p = ROOT / args.results
     sub_p = ROOT / args.sigungu
     seats_p = ROOT / args.seats
+    metro_p = ROOT / "data/raw/8th_metro_party_seats.json"
 
     main_d = json.loads(main_p.read_text(encoding="utf-8"))
     sub_d = json.loads(sub_p.read_text(encoding="utf-8"))
     seats = json.loads(seats_p.read_text(encoding="utf-8"))
+    metro = json.loads(metro_p.read_text(encoding="utf-8")) if metro_p.exists() else {}
 
-    # 기존 추가된 tc=6_summary·tc=9 race 모두 삭제 후 재생성 (idempotent).
+    # 기존 추가 race 모두 삭제 후 재생성 (idempotent).
     for d in (main_d, sub_d):
-        d["races"] = [r for r in d.get("races", []) if r.get("scope") not in ("sigungu_summary",) and r.get("sg_typecode") != "9"]
+        d["races"] = [r for r in d.get("races", []) if r.get("scope") not in ("sigungu_summary", "sido_summary") and r.get("sg_typecode") not in ("8", "9")]
 
     new_races = []
     for key, party_map in seats.items():
@@ -70,6 +72,27 @@ def main():
             new_races.append({
                 "sg_typecode": "6", "sido": sido, "sigungu": sgg,
                 "scope": "sigungu_summary",
+                "seats_total": sum(c["seats"] for c in cands_dist),
+                "candidates": cands_dist,
+            })
+
+    # 광역의회 (시도 단위) — tc=5 sido_summary + tc=8 비례.
+    for sido, party_map in metro.items():
+        cands_prop = [{"name": p, "party": p, "seats": v["proportional"], "won": True}
+                      for p, v in party_map.items() if v.get("proportional")]
+        if cands_prop:
+            new_races.append({
+                "sg_typecode": "8", "sido": sido, "sigungu": "",
+                "scope": "proportional_sido",
+                "seats_total": sum(c["seats"] for c in cands_prop),
+                "candidates": cands_prop,
+            })
+        cands_dist = [{"name": p, "party": p, "seats": v["district"], "won": True}
+                      for p, v in party_map.items() if v.get("district")]
+        if cands_dist:
+            new_races.append({
+                "sg_typecode": "5", "sido": sido, "sigungu": "",
+                "scope": "sido_summary",
                 "seats_total": sum(c["seats"] for c in cands_dist),
                 "candidates": cands_dist,
             })

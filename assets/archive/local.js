@@ -293,7 +293,8 @@
     const ROWS = [
       { tc: '3', scope: 'sido',     label: '광역단체장',     mode: 'winner' },
       { tc: '4', scope: 'sigungu',  label: '기초단체장',     mode: 'winner' },
-      { tc: '5', scope: 'district', label: '광역의원 지역구', mode: 'winner' },
+      { tc: '5', scope: 'district', label: '광역의원 지역구', mode: 'winner',
+        altScope: 'sido_summary', altMode: 'seats' },
       { tc: '8', scope: 'proportional_sido',     label: '광역의원 비례',   mode: 'seats' },
       { tc: '6', scope: 'district', label: '기초의원 지역구', mode: 'winner',
         altScope: 'sigungu_summary', altMode: 'seats' },
