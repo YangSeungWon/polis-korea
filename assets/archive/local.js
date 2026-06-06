@@ -287,27 +287,46 @@
   function renderOffices(ctx) {
     const races = ctx.results?.races || [];
     if (!races.length) return;
-    const SCOPE_FOR = { '3': 'sido', '4': 'sigungu', '5': 'district', '6': 'district' };
-    const LABEL = { '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원' };
+    // 6단: 광역장 · 기초장 · 광역의원 지역구·비례 · 기초의원 지역구·비례.
+    // 지역구는 (scope=sido/sigungu/district) winner 카운트.
+    // 비례 (tc=8/9) 또는 sigungu_summary는 candidates[].seats 합산.
+    const ROWS = [
+      { tc: '3', scope: 'sido',     label: '광역단체장',     mode: 'winner' },
+      { tc: '4', scope: 'sigungu',  label: '기초단체장',     mode: 'winner' },
+      { tc: '5', scope: 'district', label: '광역의원 지역구', mode: 'winner' },
+      { tc: '8', scope: 'proportional_sido',     label: '광역의원 비례',   mode: 'seats' },
+      { tc: '6', scope: 'district', label: '기초의원 지역구', mode: 'winner',
+        altScope: 'sigungu_summary', altMode: 'seats' },
+      { tc: '9', scope: 'proportional_sigungu',  label: '기초의원 비례',   mode: 'seats' },
+    ];
     const lines = [];
-    for (const tc of ['3', '4', '5', '6']) {
-      const want = SCOPE_FOR[tc];
+    for (const row of ROWS) {
       const ctr = {};
       let total = 0;
+      // alt scope (예: 8회 sigungu_summary)이 있으면 그쪽 우선
+      let useScope = row.scope, useMode = row.mode;
+      const hasAlt = row.altScope && races.some((r) => r.sg_typecode === row.tc && r.scope === row.altScope);
+      if (hasAlt) { useScope = row.altScope; useMode = row.altMode; }
       for (const r of races) {
-        if (r.sg_typecode !== tc || r.scope !== want) continue;
-        const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-        if (!cs[0]) continue;
-        const p = cs[0].party || '무소속';
-        ctr[p] = (ctr[p] || 0) + 1;
-        total += 1;
+        if (r.sg_typecode !== row.tc || r.scope !== useScope) continue;
+        if (useMode === 'winner') {
+          const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+          if (!cs[0]) continue;
+          const p = cs[0].party || '무소속';
+          ctr[p] = (ctr[p] || 0) + 1;
+          total += 1;
+        } else {  // seats
+          for (const c of r.candidates || []) {
+            const s = c.seats || 0;
+            if (s > 0) { ctr[c.party || '무소속'] = (ctr[c.party || '무소속'] || 0) + s; total += s; }
+          }
+        }
       }
       if (!total) continue;
-      const counts = Object.entries(ctr);  // partyStackBar/Legend가 내부 정렬
-      // 메인 status 스택바와 동일한 공용 렌더러 (utils.js). 바깥 grid 배치만 archive 고유.
+      const counts = Object.entries(ctr);
       lines.push(`
         <div class="ar-office-row">
-          <div class="ar-office-label">${LABEL[tc]} <span class="ar-office-total">${total}</span></div>
+          <div class="ar-office-label">${row.label} <span class="ar-office-total">${total}</span></div>
           <div class="ar-office-bar">${partyStackBar(counts, total)}</div>
           <div class="ar-office-legend">${partyStackLegend(counts)}</div>
         </div>
