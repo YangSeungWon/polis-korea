@@ -227,34 +227,38 @@ def build(election_id_meta: str) -> dict:
                     races.append(r); kept += 1
                 time.sleep(0.2)
             print(f"  ✓ {o['level']} (sigungu): {kept} races ({len(cities)} 시도)", file=sys.stderr)
-        elif scope == "proportional_sido":
-            # tc=8 광역의원 비례: 시도별 wide row (JD01-N + DUGSU01-N + DUGYUL01-N).
-            # cityCode=시도 → WIWNAME='합계' row 1개 = 그 시도 비례 합계.
-            # 의석 배분은 build/calc_proportional.py가 별도 단계에서 적용.
+        elif scope in ("proportional_sido", "proportional_sigungu"):
+            # 비례 wide row (JD01-N + DUGSU01-N + DUGYUL01-N).
+            # tc=8 광역의원 비례: 시도별 (cityCode=시도) → WIWNAME='합계' 1개 = 그 시도 합계.
+            # tc=9 기초의원 비례: 시도별 호출 → WIWNAME='소계' = 그 시군구 합계,
+            #   WIWNAME=시군구명 = sub-row (skip). SGGNAME = 시군구.
+            # 의석 배분은 build/calc_proportional.py가 별도 단계.
             cities = fetch_city_list(s, election_id, tc); n_call += 1
             kept = 0
+            target_wiw = "합계" if scope == "proportional_sido" else "소계"
             for c in cities:
                 code = str(c.get("CODE"))
                 rows = fetch_report(s, election_id, menu, stmt, tc, code); n_call += 1
-                sumrow = next((r for r in rows if r.get("WIWNAME") == "합계"), None)
-                if not sumrow:
-                    continue
-                cands = parse_candidates(sumrow)
-                if not cands:
-                    continue
-                # parse_candidates가 1위에 won=True 자동 부여 — 비례는 의석 배분 후 결정.
-                for cand in cands:
-                    cand.pop("won", None)
-                r = base_race(sumrow, tc, canon_for(tc))
-                # 통합 시도(전남광주통합특별시): SDNAME='소계', SGGNAME에 실제 이름.
-                sd = sumrow.get("SDNAME", "")
-                if sd == "소계":
-                    r["sido"] = canon_for(tc)(sumrow.get("SGGNAME", ""))
-                r["candidates"] = cands
-                r["scope"] = "proportional_sido"
-                races.append(r); kept += 1
+                target_rows = [r for r in rows if r.get("WIWNAME") == target_wiw]
+                for sumrow in target_rows:
+                    cands = parse_candidates(sumrow)
+                    if not cands:
+                        continue
+                    for cand in cands:
+                        cand.pop("won", None)
+                    r = base_race(sumrow, tc, canon_for(tc))
+                    sd = sumrow.get("SDNAME", "")
+                    if sd == "소계":
+                        # 통합 시도 합계 row — SGGNAME에 실제 sido.
+                        r["sido"] = canon_for(tc)(sumrow.get("SGGNAME", ""))
+                    if scope == "proportional_sigungu":
+                        r["sigungu"] = sumrow.get("SGGNAME", "")
+                        # NEC MAXHUBOSU는 정원 아님 (모든 시군구 3 동일). 정원 hardcode 필요.
+                    r["candidates"] = cands
+                    r["scope"] = scope
+                    races.append(r); kept += 1
                 time.sleep(0.2)
-            print(f"  ✓ {o['level']} (proportional_sido): {kept} races ({len(cities)} 시도)", file=sys.stderr)
+            print(f"  ✓ {o['level']} ({scope}): {kept} races ({len(cities)} 시도)", file=sys.stderr)
         elif scope == "district":
             # 광역의원(5)·기초의원(6): cityCode=0 한 호출 = 전 선거구 row (WIW=시군구).
             #   → 시도별 loop 없이 한 번에 끝남, 모든 row가 race.

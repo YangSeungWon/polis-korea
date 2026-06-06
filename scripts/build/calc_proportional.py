@@ -90,16 +90,58 @@ def hare_niemeyer(seats: int, votes: dict[str, int]) -> dict[str, int]:
     return result
 
 
-def process(results: dict) -> int:
-    """tc=8 race에 seats 부여. 변경된 race 수 반환."""
-    changed = 0
+def compute_sigungu_quota(results: dict) -> dict[tuple, int]:
+    """기초의원 비례정원 = max(1, round(지역구 의원수 / 10)) per 시군구.
+    공직선거법 제23조 기준.
+
+    구가 있는 시(수원시·청주시 등)는 tc=6의 sigungu가 '수원시장안구' 식으로
+    구 포함이지만 tc=9 비례는 '수원시' 단위. tc=9 키별로 tc=6 count를
+    prefix 매칭해 합산."""
+    from collections import Counter
+    tc6 = Counter()
+    tc9_keys = set()
+    for r in results.get("races", []):
+        tc = r.get("sg_typecode")
+        if tc == "6":
+            tc6[(r.get("sido", ""), r.get("sigungu", ""))] += 1
+        elif tc == "9":
+            tc9_keys.add((r.get("sido", ""), r.get("sigungu", "")))
+    quota = {}
+    for sido, sgg in tc9_keys:
+        # exact match 우선
+        n = tc6.get((sido, sgg), 0)
+        if n == 0:
+            # prefix 합산 (예: '수원시' ← '수원시장안구'·'수원시권선구'…)
+            for (sd2, sgg2), c in tc6.items():
+                if sd2 == sido and sgg2.startswith(sgg):
+                    n += c
+        if n > 0:
+            quota[(sido, sgg)] = max(1, round(n / 10))
+    return quota
+
+
+def process(results: dict) -> tuple[int, int]:
+    """tc=8/9 race에 seats 부여. (광역_n, 기초_n) 반환."""
+    metro_n = local_n = 0
+    sigungu_quota = compute_sigungu_quota(results)
     for race in results.get("races", []):
-        if race.get("sg_typecode") != "8":
+        tc = race.get("sg_typecode")
+        if tc == "8":
+            sido = race.get("sido", "")
+            seats = GWANGYK_BIRYE_QUOTA.get(sido)
+            label = sido
+            counter_idx = "metro"
+        elif tc == "9":
+            sido, sgg = race.get("sido", ""), race.get("sigungu", "")
+            # NEC가 race shell에 seats_total을 MAXHUBOSU에서 직접 줌. fallback
+            # = round(tc=6 지역구 / 10) (구가 있는 시는 prefix 합산).
+            seats = race.get("seats_total") or sigungu_quota.get((sido, sgg))
+            label = f"{sido} {sgg}"
+            counter_idx = "local"
+        else:
             continue
-        sido = race.get("sido", "")
-        seats = GWANGYK_BIRYE_QUOTA.get(sido)
         if seats is None:
-            print(f"  ! 비례정원 미정의: {sido}")
+            print(f"  ! 비례정원 미정의: {label}")
             continue
         votes = {c["party"]: c.get("votes", 0) for c in race.get("candidates", []) if c.get("party")}
         alloc = hare_niemeyer(seats, votes)
@@ -107,9 +149,9 @@ def process(results: dict) -> int:
             cand["seats"] = alloc.get(cand["party"], 0)
             cand["won"] = cand["seats"] > 0
         race["seats_total"] = seats
-        # 1위 정당 기준 sort 유지 (이미 votes 정렬됨).
-        changed += 1
-    return changed
+        if counter_idx == "metro": metro_n += 1
+        else: local_n += 1
+    return metro_n, local_n
 
 
 def main():
@@ -118,21 +160,25 @@ def main():
     args = ap.parse_args()
     path = ROOT / args.results if not Path(args.results).is_absolute() else Path(args.results)
     d = json.loads(path.read_text(encoding="utf-8"))
-    n = process(d)
-    # 전국 정당별 합계 출력
-    party_total: dict[str, int] = {}
-    for r in d.get("races", []):
-        if r.get("sg_typecode") != "8":
-            continue
-        for c in r.get("candidates", []):
-            s = c.get("seats", 0)
-            if s:
-                party_total[c["party"]] = party_total.get(c["party"], 0) + s
-    print(f"광역의원 비례 의석 배분: {n}개 시도")
-    print("전국 정당별 합계:")
-    for party, s in sorted(party_total.items(), key=lambda x: -x[1]):
-        print(f"  {party}: {s}")
-    print(f"  총: {sum(party_total.values())}")
+    metro_n, local_n = process(d)
+
+    def summarize(tc, label):
+        total: dict[str, int] = {}
+        for r in d.get("races", []):
+            if r.get("sg_typecode") != tc:
+                continue
+            for c in r.get("candidates", []):
+                s = c.get("seats", 0)
+                if s:
+                    total[c["party"]] = total.get(c["party"], 0) + s
+        print(f"\n{label}:")
+        for party, s in sorted(total.items(), key=lambda x: -x[1]):
+            print(f"  {party}: {s}")
+        print(f"  총: {sum(total.values())}")
+
+    print(f"광역의원 비례: {metro_n}개 시도 / 기초의원 비례: {local_n}개 시군구")
+    summarize("8", "광역의원 비례 전국 합계")
+    summarize("9", "기초의원 비례 전국 합계")
     # 저장 — pretty (다른 results와 동일 포맷)
     path.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"→ {path}")
