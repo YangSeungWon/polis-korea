@@ -270,22 +270,42 @@ function renderTimelineList(rounds, today) {
   const future = [...rounds].filter((r) => r.date > todayStr).sort((a, b) => a.date.localeCompare(b.date));
   const prev = past[0];
   const next = future[0];
-  const cell = (r, label) => {
+  const DAY = 86_400_000;
+  const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / DAY);
+  const formatGap = (n, mode) => {
+    // mode: 'past' = "N일 전", 'future' = "D-N"
+    if (n === 0) return '오늘';
+    const abs = Math.abs(n);
+    if (mode === 'past') {
+      if (abs < 30) return `${abs}일 전`;
+      if (abs < 365) return `${Math.round(abs / 30)}달 전`;
+      const y = Math.floor(abs / 365); const m = Math.round((abs % 365) / 30);
+      return m ? `${y}년 ${m}달 전` : `${y}년 전`;
+    }
+    // future
+    return `D-${abs}`;
+  };
+  const cell = (r, label, mode) => {
     if (!r) return `<div class="tl-cell tl-cell-empty"><span class="tl-cell-label">${label}</span><span class="tl-cell-date">—</span></div>`;
     const col = kindCol(r.kind);
     const url = `history.html?type=${r.kind}&n=${r.n}`;
+    const gap = daysBetween(today, r.date);  // past → negative, future → positive
+    const gapLabel = formatGap(gap, mode);
     return `<a class="tl-cell" href="${url}">
       <span class="tl-cell-label">${label}</span>
       <span class="tl-cell-name" style="color:${col}">${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}</span>
       <span class="tl-cell-date">${r.date.slice(0, 4)}.${r.date.slice(5, 7)}.${r.date.slice(8, 10)}</span>
+      <span class="tl-cell-gap">${gapLabel}</span>
     </a>`;
   };
+  const weekday = ['일', '월', '화', '수', '목', '금', '토'][today.getDay()];
   return `<div class="tl-row3">
-    ${cell(prev, '직전')}
+    ${cell(prev, '직전', 'past')}
     <div class="tl-cell tl-cell-today">
       <span class="tl-cell-label">오늘</span>
-      <span class="tl-cell-date">${todayStr.slice(0, 4)}.${todayStr.slice(5, 7)}.${todayStr.slice(8, 10)}</span>
+      <span class="tl-cell-name">${todayStr.slice(5, 7)}.${todayStr.slice(8, 10)}</span>
+      <span class="tl-cell-date">${todayStr.slice(0, 4)} (${weekday})</span>
     </div>
-    ${cell(next, '직후')}
+    ${cell(next, '직후', 'future')}
   </div>`;
 }

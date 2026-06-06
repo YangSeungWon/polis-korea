@@ -324,3 +324,16 @@
 .tl-cell-today { background: var(--ink); border-color: var(--ink); }
 .tl-cell-today .tl-cell-label, .tl-cell-today .tl-cell-date { color: var(--bg); }
 .tl-cell-empty { opacity: 0.5; }
+
+.tl-cell-gap {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--rule-strong);
+  font-variant-numeric: tabular-nums;
+}
+.tl-cell-today .tl-cell-name { color: var(--bg); font-size: 18px; }
