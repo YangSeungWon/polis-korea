@@ -70,6 +70,16 @@
     <div class="ar-offices-grid" id="ar-offices-grid"></div>
   </section>
 
+  <section class="ar-section" id="ar-metro-hex-section" hidden>
+    <h2 class="ar-section-title">시·도의회 의석 분포</h2>
+    <p class="ar-source-line">각 시도 cluster — 광역의원 지역구(tc=5) + 비례(tc=8). 정당별 색.</p>
+    <div class="ar-metro-hex" id="ar-metro-hex"></div>
+    <div class="ar-metro-hex-meta">
+      <span id="ar-metro-hex-total"></span>
+      <span id="ar-metro-hex-legend"></span>
+    </div>
+  </section>
+
   <section class="ar-section" id="ar-council-hex-section" hidden>
     <h2 class="ar-section-title">시군구의회 의석 분포</h2>
     <p class="ar-source-line">각 시군구 hex 안에 의석 spiral — 정당별 색. 지역구(tc=6) + 비례(tc=9) 합산.</p>
@@ -114,6 +124,7 @@
 <script src="assets/archive/pres.js"></script>
 <script src="assets/archive/general.js"></script>
 <script src="assets/archive/byelection.js"></script>
+<script src="assets/archive/render-metro-hex.js"></script>
 <script src="assets/archive/render-council-hex.js"></script>
 <script src="assets/archive/core.js"></script>
 <script src="assets/theme.js"></script>
