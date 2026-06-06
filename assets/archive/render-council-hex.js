@@ -108,6 +108,38 @@
     const PARENT_R = 16;
     const SMALL_R = 2.4;  // 모든 시군구 공통 hex 크기 (1석 = 1 hex 동일)
 
+    // 시도 라벨 백그라운드 — cells보다 먼저 그려 위에 hex 덮이게.
+    const SIDO_LABEL_SHORT = {
+      '서울특별시': '서울', '부산광역시': '부산', '대구광역시': '대구',
+      '인천광역시': '인천', '광주광역시': '광주', '대전광역시': '대전',
+      '울산광역시': '울산', '세종특별자치시': '세종', '경기도': '경기',
+      '강원특별자치도': '강원', '강원도': '강원',
+      '충청북도': '충북', '충청남도': '충남',
+      '전북특별자치도': '전북', '전라북도': '전북', '전라남도': '전남',
+      '경상북도': '경북', '경상남도': '경남', '제주특별자치도': '제주',
+    };
+    const sidoCenters = new Map();
+    for (const c of hexCells) {
+      const [cx, cy] = hexCenter(c.c, c.r);
+      const e = sidoCenters.get(c.sido) || { sx: 0, sy: 0, n: 0 };
+      e.sx += cx; e.sy += cy; e.n += 1;
+      sidoCenters.set(c.sido, e);
+    }
+    for (const [sd, e] of sidoCenters) {
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', e.sx / e.n);
+      t.setAttribute('y', e.sy / e.n);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '38');
+      t.setAttribute('font-weight', '800');
+      t.setAttribute('fill', 'rgba(10,14,26,0.35)');
+      t.setAttribute('pointer-events', 'none');
+      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+      t.textContent = SIDO_LABEL_SHORT[sd] || sd;
+      svg.appendChild(t);
+    }
+
     let totalSeats = 0;
     const partyTotal = new Map();
 
