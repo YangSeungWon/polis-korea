@@ -61,7 +61,7 @@
           <span style="color:${pcol(second.party)}">${second.party}</span>
           <span>${(second.pct || 0).toFixed(2)}%</span>
         </div>` : ''}
-        ${margin != null ? `<div class="ar-by-sido-meta">격차 ${margin.toFixed(2)}pp · 투표율 ${turnout.toFixed(1)}%</div>` : ''}
+        ${margin != null ? `<div class="ar-by-sido-meta">격차 ${margin.toFixed(2)}%p · 투표율 ${turnout.toFixed(1)}%</div>` : ''}
       `;
       host.appendChild(card);
     }

@@ -259,7 +259,7 @@ function renderCards() {
         <span class="boe-party" style="color:${partyColor(r2.party)}">${r2.party}</span>
         <span class="boe-pct">${(r2.pct || 0).toFixed(2)}%</span>
       </div>` : ''}
-      ${margin != null ? `<div class="boe-result-margin">격차 ${margin.toFixed(2)}pp</div>` : ''}
+      ${margin != null ? `<div class="boe-result-margin">격차 ${margin.toFixed(2)}%p</div>` : ''}
     </div>`;
   }
   if (top) {

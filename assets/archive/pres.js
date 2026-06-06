@@ -25,7 +25,7 @@
     }
     if (top && second) {
       document.getElementById('ar-margin').innerHTML =
-        `${(top.pct - second.pct).toFixed(2)}<span style="font-size:12px;color:var(--ink-soft)">pp</span>`;
+        `${(top.pct - second.pct).toFixed(2)}<span style="font-size:12px;color:var(--ink-soft)">%p</span>`;
     }
     if (nat.electors > 0) {
       document.getElementById('ar-turnout').textContent = (nat.voters / nat.electors * 100).toFixed(1) + '%';
@@ -79,7 +79,7 @@
         <div class="ar-count-bar"><span class="ar-count-fill" style="width:${(top.pct || 0).toFixed(1)}%;background:${col}"></span></div>
         <div class="ar-count-meta">
           <span style="color:${col};font-weight:700">${top.name} ${(top.pct || 0).toFixed(1)}</span>
-          ${margin != null ? `<span class="ar-count-pct">+${margin.toFixed(1)}pp</span>` : ''}
+          ${margin != null ? `<span class="ar-count-pct">+${margin.toFixed(1)}%p</span>` : ''}
         </div>
       `;
       host.appendChild(cell);
@@ -123,7 +123,7 @@
           if (a.pct != null && top.pct != null) { errSum += Math.abs(a.pct - top.pct); errN += 1; }
         }
       }
-      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 적중 · 평균 오차 ${errN ? (errSum / errN).toFixed(2) : '—'}pp</span>` : '';
+      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 적중 · 평균 오차 ${errN ? (errSum / errN).toFixed(2) : '—'}%p</span>` : '';
       card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}${stats}</h3>`;
       const grid = document.createElement('div');
       grid.className = 'ar-exit-rows';

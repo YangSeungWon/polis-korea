@@ -117,7 +117,7 @@
         <div class="ar-pred-sido">${ssh(sido)}</div>
         <div class="ar-pred-row"><span class="lbl">예측</span><span>${partyHTML(p?.party, p?.pct)}</span></div>
         <div class="ar-pred-row"><span class="lbl">실제</span><span>${partyHTML(a?.party, a?.pct)}</span></div>
-        ${a && p && a.pct != null && p.pct != null ? `<div class="ar-pred-result">오차 ${Math.abs(a.pct - p.pct).toFixed(1)}pp ${hit ? '· 적중 ✓' : '· 빗나감 ❌'}</div>` : ''}
+        ${a && p && a.pct != null && p.pct != null ? `<div class="ar-pred-result">오차 ${Math.abs(a.pct - p.pct).toFixed(1)}%p ${hit ? '· 적중 ✓' : '· 빗나감 ❌'}</div>` : ''}
       `;
       host.appendChild(cell);
     }
@@ -209,7 +209,7 @@
           <span style="font-weight:700;font-variant-numeric:tabular-nums">${(top.pct || 0).toFixed(2)}%</span>
         </div>
         ${second ? `<div class="ar-by-result-second">2위 <span style="color:${pcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${(second.pct || 0).toFixed(2)}%</span></div>` : ''}
-        ${margin != null ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:4px">격차 ${margin.toFixed(2)}pp</div>` : ''}
+        ${margin != null ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:4px">격차 ${margin.toFixed(2)}%p</div>` : ''}
       `;
       host.appendChild(card);
     }

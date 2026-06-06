@@ -121,14 +121,15 @@ function loadJson(p) {
       for (const p of stack.parts) {
         const seg = document.createElement('span');
         seg.className = 'tl-stack-seg';
-        const col = (typeof partyColor === 'function') ? partyColor(p.party) : '#999';
+        // 시대 정확성: r.date 전달해 그 회차의 정당 공식 색 반환 (예: 5회 민주당=초록).
+        const col = (typeof partyColor === 'function') ? partyColor(p.party, r.date) : '#999';
         seg.style.flexGrow = String(p.value);
         seg.style.background = col;
         seg.title = `${p.party} ${p.label}`;
-        // 큰 segment는 안에 정당 약칭
-        if (p.value / stack.total >= 0.12) {
-          seg.textContent = p.short || p.party;
-        }
+        // 폭에 따라 풀네임 / 약칭 / 없음 단계.
+        const ratio = p.value / stack.total;
+        if (ratio >= 0.20) seg.textContent = p.party;
+        else if (ratio >= 0.10) seg.textContent = p.short || p.party.slice(0, 3);
         sidosBox.appendChild(seg);
       }
     } else {

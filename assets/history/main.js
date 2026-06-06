@@ -326,13 +326,12 @@ function renderDetail() {
         ${closeRaces.map((r) => {
           const top = r.candidates[0], second = r.candidates[1];
           const col1 = partyColor(top.party), col2 = partyColor(second.party);
-          const label = r.district || r.sigungu;
-          return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${label}" data-kind="${r.scope}">
-            <span class="hist-close-loc">${r.sido} ${label}</span>
+          return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${r.name}" data-kind="${r.scope}">
+            <span class="hist-close-loc">${r.sido} ${r.name}</span>
             <span class="hist-close-cand" style="color:${col1}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
             <span class="hist-close-vs">vs</span>
             <span class="hist-close-cand" style="color:${col2}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
-            <span class="hist-close-margin">+${r.margin.toFixed(2)}pp</span>
+            <span class="hist-close-margin">+${r.margin.toFixed(2)}%p</span>
           </a>`;
         }).join('')}
       </div>
@@ -356,18 +355,16 @@ function renderDetail() {
 function computeCloseRaces(N = 5) {
   const data = activeOfficeData();
   const pool = [];
-  for (const list of [data?.sigungu || [], data?.district || []]) {
+  // core.js _raceToOldRow가 race를 {sido, name, candidates, ...}로 정규화 — name이
+  // sigungu(또는 district). list별로 scope만 따로 부여.
+  for (const [list, scope] of [[data?.sigungu || [], 'sigungu'], [data?.district || [], 'district']]) {
     for (const r of list) {
       if (!r.candidates || r.candidates.length < 2) continue;
       const sorted = [...r.candidates].filter((c) => c.pct != null).sort((a, b) => b.pct - a.pct);
       if (sorted.length < 2) continue;
       const margin = sorted[0].pct - sorted[1].pct;
       if (margin >= 30) continue;  // 너무 큰 격차 X
-      pool.push({
-        sido: r.sido, sigungu: r.sigungu, district: r.district,
-        scope: r.district ? 'district' : 'sigungu',
-        candidates: sorted, margin,
-      });
+      pool.push({ sido: r.sido, name: r.name, scope, candidates: sorted, margin });
     }
   }
   pool.sort((a, b) => a.margin - b.margin);
