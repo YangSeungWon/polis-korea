@@ -68,23 +68,20 @@
     return bySido;
   }
 
-  // sigungu_hex에서 시도별 centroid + radius (cluster 크기)
-  function sidoCentroids(hexCells) {
-    const acc = new Map();
-    for (const cell of hexCells) {
-      const [cx, cy] = hexCenter(cell.c, cell.r);
-      const e = acc.get(cell.sido) || { sx: 0, sy: 0, n: 0, minC: Infinity, maxC: -Infinity, minR: Infinity, maxR: -Infinity };
-      e.sx += cx; e.sy += cy; e.n += 1;
-      e.minC = Math.min(e.minC, cell.c); e.maxC = Math.max(e.maxC, cell.c);
-      e.minR = Math.min(e.minR, cell.r); e.maxR = Math.max(e.maxR, cell.r);
-      acc.set(cell.sido, e);
-    }
+  // SIDO_HEX_LAYOUT (parties.js) 기반 5×5 격자 좌표 — 시도 cluster 겹침 방지.
+  // col,row를 pixel로 변환. SPACING은 cluster radius 보다 크게.
+  const SIDO_GAP = 110;  // 시도 hex 간 거리 — outline overlap 방지
+  function sidoCentroidsFromLayout() {
+    if (typeof SIDO_HEX_LAYOUT !== 'object') return null;
     const out = new Map();
-    for (const [sd, e] of acc) {
-      out.set(sd, {
-        cx: e.sx / e.n, cy: e.sy / e.n,
-        widthHex: (e.maxC - e.minC + 1), heightHex: (e.maxR - e.minR + 1),
-      });
+    const seen = new Set();
+    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+      const k = `${pos.col},${pos.row}`;
+      if (seen.has(k)) continue;
+      seen.add(k);
+      const cx = 80 + pos.col * SIDO_GAP + (pos.row % 2) * SIDO_GAP / 2;
+      const cy = 60 + pos.row * SIDO_GAP * 0.87;
+      out.set(sido, { cx, cy, label: pos.label });
     }
     return out;
   }
@@ -99,15 +96,16 @@
     return fetch('data/geo/sigungu_hex.json').then((r) => r.json()).catch(() => []);
   }
 
-  function render(svg, hexCells, sidoSeats) {
-    const maxC = Math.max(...hexCells.map((c) => c.c));
-    const maxR = Math.max(...hexCells.map((c) => c.r));
-    const w = OFF_X * 2 + (maxC + 1) * COL_W;
-    const h = OFF_Y * 2 + (maxR + 1) * ROW_H;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.setAttribute('width', w); svg.setAttribute('height', h);
-
-    const centroids = sidoCentroids(hexCells);
+  function render(svg, _hexCells, sidoSeats) {
+    const centroids = sidoCentroidsFromLayout();
+    if (!centroids) return { totalSeats: 0, partyTotal: new Map() };
+    // viewBox — top 라벨 + bottom legend 위해 padding 충분히
+    const xs = Array.from(centroids.values()).map((c) => c.cx);
+    const ys = Array.from(centroids.values()).map((c) => c.cy);
+    const w = Math.max(...xs) + 80;
+    const h = Math.max(...ys) + 100;
+    svg.setAttribute('viewBox', `0 -10 ${w} ${h + 10}`);
+    svg.setAttribute('width', w); svg.setAttribute('height', h + 10);
     let totalSeats = 0;
     const partyTotal = new Map();
 
@@ -133,8 +131,8 @@
       for (const [p, n] of sorted) partyTotal.set(p, (partyTotal.get(p) || 0) + n);
 
       const g = document.createElementNS(NS, 'g');
-      // 시도 outline (cluster 반경 — N에 따라)
-      const clusterR = Math.max(28, Math.sqrt(N) * 6);
+      // 시도 outline — SIDO_GAP/2 안 (인접 cluster와 겹침 방지)
+      const clusterR = SIDO_GAP * 0.45;
       const outline = document.createElementNS(NS, 'circle');
       outline.setAttribute('cx', info.cx); outline.setAttribute('cy', info.cy);
       outline.setAttribute('r', clusterR);
@@ -147,8 +145,11 @@
       tt.textContent = `${sd} 광역의회 ${N}석 · ${seatsStr}`;
       g.appendChild(tt);
 
-      // small hex radius
-      const smallR = Math.max(2.4, Math.min(5.0, clusterR / Math.sqrt(N + 2)));
+      // small hex radius — 외곽 ring radius가 clusterR 안에 수렴.
+      // L 레이어 hex의 cluster radius = L * smallR * sqrt(3)/2 * 2 = L * smallR * sqrt(3).
+      // L = ceil(sqrt((N-1)/3)). smallR = clusterR / (L * sqrt(3) + 0.5)
+      const L_est = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
+      const smallR = Math.max(1.4, clusterR / (L_est * Math.sqrt(3) + 1.2));
       const fills = [];
       for (const [p, n] of sorted) {
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
@@ -167,14 +168,14 @@
         g.appendChild(poly);
       }
       // 시도 라벨 (위)
-      const labelY = info.cy - clusterR - 4;
+      const labelY = info.cy - clusterR - 6;
       const t = document.createElementNS(NS, 'text');
       t.setAttribute('x', info.cx); t.setAttribute('y', labelY);
       t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('font-size', '11');
+      t.setAttribute('font-size', '13');
       t.setAttribute('font-weight', '700');
       t.setAttribute('fill', '#0a0e1a');
-      t.textContent = sd.replace(/(특별자치|광역|특별)?시/, '').replace(/(특별자치)?도/, '');
+      t.textContent = info.label || sd;
       g.appendChild(t);
       svg.appendChild(g);
     }
@@ -185,8 +186,6 @@
     const host = document.getElementById('ar-metro-hex');
     if (!host) return;
     const races = ctx?.results?.races || [];
-    const hexCells = await loadHex();
-    if (!hexCells.length) return;
     const seats = aggregateMetroSeats(races);
     if (seats.size === 0) {
       host.parentElement?.setAttribute('hidden', '');
@@ -196,7 +195,7 @@
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS);
     svg.setAttribute('class', 'metro-hex-svg');
-    const { totalSeats, partyTotal } = render(svg, hexCells, seats);
+    const { totalSeats, partyTotal } = render(svg, null, seats);
     host.innerHTML = '';
     host.appendChild(svg);
     const legend = document.getElementById('ar-metro-hex-legend');
