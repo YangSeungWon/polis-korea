@@ -19,19 +19,30 @@
     }
     return pts.join(' ');
   }
+  // 균등 분포 spiral — partial ring을 둘레에 균등 sample, (0,0) 중심 유지.
   function hexSpiral(N) {
     const out = [[0, 0]];
     if (N <= 1) return out.slice(0, N);
     const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    let q = 0, ar = 0, layer = 0;
+    let layer = 0;
     while (out.length < N) {
       layer += 1;
-      q += 1; ar += -1;
+      const ringSize = 6 * layer;
+      const remaining = N - out.length;
+      let q = layer, ar = -layer;
+      const ring = [];
       for (const [dq, dr] of dirs) {
         for (let k = 0; k < layer; k++) {
           q += dq; ar += dr;
-          out.push([q, ar]);
-          if (out.length >= N) return out;
+          ring.push([q, ar]);
+        }
+      }
+      if (remaining >= ringSize) {
+        for (const p of ring) out.push(p);
+      } else {
+        for (let i = 0; i < remaining; i++) {
+          const idx = Math.round(i * ringSize / remaining) % ringSize;
+          out.push(ring[idx]);
         }
       }
     }
@@ -127,17 +138,10 @@
       // small hex radius — N이 클수록 작게
       const smallR = Math.max(2.2, Math.min(SMALL_R_BASE, PARENT_R / Math.sqrt(N + 2)));
       const spiral = hexSpiral(N);
-      // partial layer 쏠림 보정
-      let ccx = 0, ccy = 0;
-      for (const [q, ar] of spiral) {
-        ccx += smallR * Math.sqrt(3) * (q + ar / 2);
-        ccy += smallR * 1.5 * ar;
-      }
-      ccx /= spiral.length; ccy /= spiral.length;
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2) - ccx;
-        const dy = smallR * 1.5 * ar - ccy;
+        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
+        const dy = smallR * 1.5 * ar;
         const sx = cx + dx, sy = cy + dy;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(sx, sy, smallR * 0.95));

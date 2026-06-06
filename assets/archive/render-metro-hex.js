@@ -18,19 +18,33 @@
     }
     return pts.join(' ');
   }
+  // 균등 분포 spiral — 완전 ring은 그대로, 마지막 partial ring은 ring 둘레에 균등 sample.
+  // (0,0) 중심 유지, partial 쏠림 제거 — 중심 빈자리 없음.
   function hexSpiral(N) {
     const out = [[0, 0]];
     if (N <= 1) return out.slice(0, N);
     const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    let q = 0, ar = 0, layer = 0;
+    let layer = 0;
     while (out.length < N) {
       layer += 1;
-      q += 1; ar += -1;
+      const ringSize = 6 * layer;
+      const remaining = N - out.length;
+      // ring 전체 생성
+      let q = layer, ar = -layer;
+      const ring = [];
       for (const [dq, dr] of dirs) {
         for (let k = 0; k < layer; k++) {
           q += dq; ar += dr;
-          out.push([q, ar]);
-          if (out.length >= N) return out;
+          ring.push([q, ar]);
+        }
+      }
+      if (remaining >= ringSize) {
+        for (const p of ring) out.push(p);
+      } else {
+        // partial — ring 둘레에 균등 sample
+        for (let i = 0; i < remaining; i++) {
+          const idx = Math.round(i * ringSize / remaining) % ringSize;
+          out.push(ring[idx]);
         }
       }
     }
@@ -148,17 +162,10 @@
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
       }
       const spiral = hexSpiral(N);
-      // partial outer layer가 한 방향에 쏠림 → 실제 centroid 계산해 보정.
-      let ccx = 0, ccy = 0;
-      for (const [q, ar] of spiral) {
-        ccx += smallR * Math.sqrt(3) * (q + ar / 2);
-        ccy += smallR * 1.5 * ar;
-      }
-      ccx /= spiral.length; ccy /= spiral.length;
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2) - ccx;
-        const dy = smallR * 1.5 * ar - ccy;
+        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
+        const dy = smallR * 1.5 * ar;
         const sx = info.cx + dx, sy = info.cy + dy;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(sx, sy, smallR * 0.92));
