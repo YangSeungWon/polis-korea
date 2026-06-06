@@ -90,13 +90,32 @@ def hare_niemeyer(seats: int, votes: dict[str, int]) -> dict[str, int]:
     return result
 
 
+def load_sigungu_quota_lookup() -> dict[tuple, int]:
+    """data/raw/sigungu_council_quota.json — 8회 위키 entry에서 추출한
+    시군구별 기초의원 비례 정수 룩업. 인천 영종·제물포구는 9회 신설.
+    9회 일부 시군구는 8회 baseline (인구 변동 작아 거의 동일)."""
+    p = ROOT / "data/raw/sigungu_council_quota.json"
+    if not p.exists():
+        return {}
+    d = json.loads(p.read_text(encoding="utf-8"))
+    quota = {}
+    for key, entry in d.items():
+        if "|" not in key:
+            continue
+        sido, sgg = key.split("|", 1)
+        prop = entry.get("proportional")
+        if isinstance(prop, int) and prop > 0:
+            quota[(sido, sgg)] = prop
+    return quota
+
+
 def compute_sigungu_quota(results: dict) -> dict[tuple, int]:
-    """기초의원 비례정원 = max(1, round(지역구 의원수 / 10)) per 시군구.
-    공직선거법 제23조 기준.
+    """기초의원 비례정수 — 위키 룩업 우선, 없으면 round(tc=6 race / 10) fallback.
 
     구가 있는 시(수원시·청주시 등)는 tc=6의 sigungu가 '수원시장안구' 식으로
     구 포함이지만 tc=9 비례는 '수원시' 단위. tc=9 키별로 tc=6 count를
-    prefix 매칭해 합산."""
+    prefix 매칭해 합산 (fallback용)."""
+    quota = dict(load_sigungu_quota_lookup())
     from collections import Counter
     tc6 = Counter()
     tc9_keys = set()
@@ -106,12 +125,12 @@ def compute_sigungu_quota(results: dict) -> dict[tuple, int]:
             tc6[(r.get("sido", ""), r.get("sigungu", ""))] += 1
         elif tc == "9":
             tc9_keys.add((r.get("sido", ""), r.get("sigungu", "")))
-    quota = {}
     for sido, sgg in tc9_keys:
-        # exact match 우선
+        if (sido, sgg) in quota:
+            continue  # 룩업 있으면 그대로
+        # fallback — race count 기반 추정
         n = tc6.get((sido, sgg), 0)
         if n == 0:
-            # prefix 합산 (예: '수원시' ← '수원시장안구'·'수원시권선구'…)
             for (sd2, sgg2), c in tc6.items():
                 if sd2 == sido and sgg2.startswith(sgg):
                     n += c
