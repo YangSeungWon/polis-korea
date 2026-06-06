@@ -133,16 +133,17 @@ body {
 .brand .domain { font-size: 12px; color: var(--ink-mute); letter-spacing: 0; }
 .logo-link { text-decoration: none; display: flex; align-items: baseline; gap: 6px; color: inherit; }
 .hdr-meta { display: flex; gap: 12px; align-items: center; }
-.hdr-nav { display: flex; gap: 18px; align-items: baseline; margin-left: 24px; margin-right: auto; }
+.hdr-nav { display: flex; gap: 18px; align-items: center; margin-left: 24px; margin-right: auto; }
 .hdr-link {
-  text-decoration: none; color: var(--ink-soft); font-size: 13px; font-weight: 500;
+  text-decoration: none; color: var(--ink-soft); font-size: 14px; font-weight: 500;
   padding: 2px 0; border-bottom: 2px solid transparent; transition: color .12s, border-color .12s;
 }
 .hdr-link:hover { color: var(--ink); }
 .hdr-link.is-current { color: var(--ink); border-bottom-color: var(--ink); }
 /* urgent slot — assets/nav.js가 phase 따라 채움. 평시엔 빈 span. */
+.hdr-nav [data-nav-urgent] { display: contents; }  /* flex gap이 chip 사이에도 적용되게 */
 .hdr-link-urgent {
-  padding: 2px 8px; border-radius: 10px; font-weight: 600; font-size: 12px;
+  padding: 3px 10px; border-radius: 11px; font-weight: 600; font-size: 14px; line-height: 1.25;
   border-bottom: none; background: rgba(230,30,43,0.08); color: #c81825;
 }
 .hdr-link-urgent:hover { background: rgba(230,30,43,0.15); color: #a01018; }
@@ -171,7 +172,8 @@ body {
   .page { padding: 18px 14px 60px; }
   .site-hdr { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
   .hdr-nav { gap: 10px; margin-left: 0; margin-right: 0; }
-  .hdr-link { font-size: 12px; }
+  .hdr-link { font-size: 13px; }
+  .hdr-link-urgent { font-size: 13px; padding: 2px 8px; }
   .brand .logo { font-size: 18px; }
   .brand .domain { font-size: 10px; }
   .countdown { font-size: 11px; padding: 3px 8px; }
@@ -179,6 +181,7 @@ body {
   .foot .foot-row { gap: 12px; }
 }
 @media (max-width: 480px) {
-  .hdr-nav { font-size: 11px; gap: 8px; }
-  .hdr-link { padding: 1px 0; }
+  .hdr-nav { font-size: 12px; gap: 8px; }
+  .hdr-link { padding: 1px 0; font-size: 12px; }
+  .hdr-link-urgent { font-size: 12px; padding: 2px 7px; }
 }
