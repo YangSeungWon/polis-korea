@@ -18,37 +18,29 @@
     }
     return pts.join(' ');
   }
-  // 균등 분포 spiral — 완전 ring은 그대로, 마지막 partial ring은 ring 둘레에 균등 sample.
-  // (0,0) 중심 유지, partial 쏠림 제거 — 중심 빈자리 없음.
+  // Compact hex cluster — distance-from-center sort. 동그란 모양 + 중심 채움.
   function hexSpiral(N) {
-    const out = [[0, 0]];
-    if (N <= 1) return out.slice(0, N);
+    if (N <= 0) return [];
+    let L = 0; let cap = 1;
+    while (cap < N) { L += 1; cap += 6 * L; }
+    const positions = [[0, 0]];
     const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    let layer = 0;
-    while (out.length < N) {
-      layer += 1;
-      const ringSize = 6 * layer;
-      const remaining = N - out.length;
-      // ring 전체 생성
+    for (let layer = 1; layer <= L; layer++) {
       let q = layer, ar = -layer;
-      const ring = [];
       for (const [dq, dr] of dirs) {
         for (let k = 0; k < layer; k++) {
           q += dq; ar += dr;
-          ring.push([q, ar]);
-        }
-      }
-      if (remaining >= ringSize) {
-        for (const p of ring) out.push(p);
-      } else {
-        // partial — ring 둘레에 균등 sample
-        for (let i = 0; i < remaining; i++) {
-          const idx = Math.round(i * ringSize / remaining) % ringSize;
-          out.push(ring[idx]);
+          positions.push([q, ar]);
         }
       }
     }
-    return out;
+    const dist = ([q, r]) => Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
+    positions.sort((a, b) => {
+      const da = dist(a), db = dist(b);
+      if (da !== db) return da - db;
+      return Math.atan2(a[1] + a[0] / 2, a[0]) - Math.atan2(b[1] + b[0] / 2, b[0]);
+    });
+    return positions.slice(0, N);
   }
 
   // 시도별 광역의원 (지역구·비례) by party

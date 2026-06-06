@@ -19,34 +19,33 @@
     }
     return pts.join(' ');
   }
-  // 균등 분포 spiral — partial ring을 둘레에 균등 sample, (0,0) 중심 유지.
+  // Compact hex cluster — distance-from-center sort. 작은 N도 동그란 모양 유지.
+  // partial ring은 ring 시작부터 인접 위치만 채워 흩어지지 않음 (한 방향 쏠림은 ring 1개만이라 minor).
   function hexSpiral(N) {
-    const out = [[0, 0]];
-    if (N <= 1) return out.slice(0, N);
+    if (N <= 0) return [];
+    // 충분한 ring 수까지 enumerate
+    let L = 0; let cap = 1;
+    while (cap < N) { L += 1; cap += 6 * L; }
+    const positions = [[0, 0]];
     const dirs = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    let layer = 0;
-    while (out.length < N) {
-      layer += 1;
-      const ringSize = 6 * layer;
-      const remaining = N - out.length;
+    for (let layer = 1; layer <= L; layer++) {
       let q = layer, ar = -layer;
-      const ring = [];
       for (const [dq, dr] of dirs) {
         for (let k = 0; k < layer; k++) {
           q += dq; ar += dr;
-          ring.push([q, ar]);
-        }
-      }
-      if (remaining >= ringSize) {
-        for (const p of ring) out.push(p);
-      } else {
-        for (let i = 0; i < remaining; i++) {
-          const idx = Math.round(i * ringSize / remaining) % ringSize;
-          out.push(ring[idx]);
+          positions.push([q, ar]);
         }
       }
     }
-    return out;
+    // distance from origin (cube distance = max of |q|, |r|, |q+r|)로 sort
+    const dist = ([q, r]) => Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
+    positions.sort((a, b) => {
+      const da = dist(a), db = dist(b);
+      if (da !== db) return da - db;
+      // 같은 ring 안에서는 각도 순 (위쪽부터 시계방향)
+      return Math.atan2(a[1] + a[0] / 2, a[0]) - Math.atan2(b[1] + b[0] / 2, b[0]);
+    });
+    return positions.slice(0, N);
   }
 
   // sigungu별 의석 (지역구·비례) by party
