@@ -459,3 +459,14 @@
   .ar-office-bar { grid-column: 1; grid-row: 2; }
   .ar-office-legend { grid-column: 1; grid-row: 3; }
 }
+
+/* 의회 의석 hex cluster — 시군구별 정당별 spiral. render-council-hex.js */
+.ar-council-hex { margin-top: 12px; }
+.ar-council-hex-svg { width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto; }
+.ar-council-hex-meta {
+  display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 12px;
+  font-size: 12px; color: var(--ink-soft);
+}
+.ar-council-hex-meta .ch-leg { white-space: nowrap; }
+.ar-council-hex-meta .ch-leg b { font-weight: 800; margin-right: 2px; }
+.ar-council-hex-meta #ar-council-hex-total { font-weight: 700; color: var(--ink); margin-right: 12px; }

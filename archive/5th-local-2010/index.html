@@ -72,6 +72,16 @@
     <div class="ar-offices-grid" id="ar-offices-grid"></div>
   </section>
 
+  <section class="ar-section" id="ar-council-hex-section" hidden>
+    <h2 class="ar-section-title">시군구의회 의석 분포</h2>
+    <p class="ar-source-line">각 시군구 hex 안에 의석 spiral — 정당별 색. 지역구(tc=6) + 비례(tc=9) 합산.</p>
+    <div class="ar-council-hex" id="ar-council-hex"></div>
+    <div class="ar-council-hex-meta">
+      <span id="ar-council-hex-total"></span>
+      <span id="ar-council-hex-legend"></span>
+    </div>
+  </section>
+
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
     <p class="ar-source-line">2010-06-02 18:00 발표. 3사(KBS·MBC·SBS)와 JTBC 분리 표시. 시도별 1위 일치율·평균 오차 자동 계산.</p>
@@ -106,6 +116,7 @@
 <script src="assets/archive/pres.js"></script>
 <script src="assets/archive/general.js"></script>
 <script src="assets/archive/byelection.js"></script>
+<script src="assets/archive/render-council-hex.js"></script>
 <script src="assets/archive/core.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>

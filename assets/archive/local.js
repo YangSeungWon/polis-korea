@@ -346,6 +346,7 @@
       // → archive는 선출직 분포·출구조사·재보궐·폴 link만 표시
       renderHero(ctx);
       renderOffices(ctx);
+      if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
       renderExitPoll(ctx);
       renderPollsLink(ctx);
       await renderByelection(ctx);
