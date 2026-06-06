@@ -141,16 +141,18 @@ def load_parsed(parsed_dir: Path, ids: set[str]) -> dict[str, dict]:
 
 
 def pres_sido(region: str) -> str:
-    """대선 region → 시도 canonical (전국·복합·해석불가 → "" = nationwide).
+    """대선 region → 시도 canonical. 전국→""(national)·단일시도→그 시도·
+    그 외(복합권역·해석불가)→"복합권역"(전국 아님).
 
     "전국 전체" → ""(national). "충청북도 전체" → "충청북도".
-    "대구광역시 전체 경상북도 전체"(복합 권역) → "" — 단일 시도 cross-tab 아님.
+    "대구광역시 전체 경상북도 전체"(복합 권역) → "복합권역" — 전국으로 새지 않게.
+    (과거엔 복합을 ""=전국으로 둬 호남·영남 권역조사가 전국 정당지지에 혼입됨.)
     """
     if not region or region.startswith("전국"):
         return ""
     toks = [canon_sido(t) for t in region.split() if t not in ("전체", "전지역", "전 지역")]
     sidos = {t for t in toks if t in SIDO_CANONICAL.values()}
-    return next(iter(sidos)) if len(sidos) == 1 else ""
+    return next(iter(sidos)) if len(sidos) == 1 else "복합권역"
 
 
 def normalize_pcts(cands: list[dict]) -> bool:
