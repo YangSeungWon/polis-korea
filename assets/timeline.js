@@ -103,7 +103,8 @@ function loadJson(p) {
     tag.textContent = KIND_LABEL[r.kind].ko;
     lbl.appendChild(tag);
     const num = document.createElement('span');
-    num.textContent = `${r.n}회`;
+    // 지선만 '회', 대선·총선은 '대' — 사람·기관 연속성(대) vs 반복행사(회).
+    num.textContent = `${r.n}${r.kind === 'local' ? '회' : '대'}`;
     lbl.appendChild(num);
     const date = document.createElement('div');
     date.className = 'tl-date';

@@ -83,6 +83,10 @@ body {
 
 
 
+/* HTML [hidden] 속성은 display:none이지만 element CSS가 display:flex 등으로
+   덮으면 무효 (loading-overlay 같은 케이스). 강제 보장. */
+[hidden] { display: none !important; }
+
 /* Loading */
 .loading-overlay {
   position: absolute; inset: 0;
