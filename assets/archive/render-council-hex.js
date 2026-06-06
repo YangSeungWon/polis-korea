@@ -129,14 +129,28 @@
     const sidoCenters = new Map();
     for (const c of hexCells) {
       const [cx, cy] = hexCenter(c.c, c.r);
-      const e = sidoCenters.get(c.sido) || { sx: 0, sy: 0, n: 0 };
+      const e = sidoCenters.get(c.sido) || { sx: 0, sy: 0, n: 0, minC: Infinity, maxC: -Infinity, minR: Infinity, maxR: -Infinity };
       e.sx += cx; e.sy += cy; e.n += 1;
+      e.minC = Math.min(e.minC, c.c); e.maxC = Math.max(e.maxC, c.c);
+      e.minR = Math.min(e.minR, c.r); e.maxR = Math.max(e.maxR, c.r);
       sidoCenters.set(c.sido, e);
     }
+    // 경기는 서울 둘러쌈 → 평균 centroid 겹침. 외곽 (서남쪽) 으로 oneset.
+    const LABEL_OFFSET_HEX = {
+      '경기도': { dc: -2.5, dr: 2.5 },  // 서울 → 서남으로
+    };
     for (const [sd, e] of sidoCenters) {
+      const off = LABEL_OFFSET_HEX[sd];
+      let tx, ty;
+      if (off) {
+        const [hx, hy] = hexCenter((e.minC + e.maxC) / 2 + off.dc, (e.minR + e.maxR) / 2 + off.dr);
+        tx = hx; ty = hy;
+      } else {
+        tx = e.sx / e.n; ty = e.sy / e.n;
+      }
       const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', e.sx / e.n);
-      t.setAttribute('y', e.sy / e.n);
+      t.setAttribute('x', tx);
+      t.setAttribute('y', ty);
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('dominant-baseline', 'middle');
       t.setAttribute('font-size', '38');
