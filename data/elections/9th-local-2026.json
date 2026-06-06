@@ -41,6 +41,12 @@
       "_note": "시도의회 지역구 의원"
     },
     {
+      "level": "광역의원 비례",
+      "sg_typecode": "8",
+      "scope": "proportional_sido",
+      "_note": "시도의회 비례대표. NEC API는 시도별 vote만 줌 — 의석은 build/calc_proportional.py가 헤어식 배분(5% 봉쇄, 2/3 상한)"
+    },
+    {
       "level": "기초의원",
       "sg_typecode": "6",
       "scope": "district",

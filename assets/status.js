@@ -126,10 +126,14 @@
     const mayorCounts = lastLocal.mayorPartyCounts || [];
     const metroCouncil = lastLocal.metroCouncilPartyCounts || [];
     const localCouncil = lastLocal.localCouncilPartyCounts || [];
+    const metroProp = lastLocal.metroProportionalPartyCounts || [];
+    const localProp = lastLocal.localProportionalPartyCounts || [];
     const govTotal = sorted.reduce((s, [, c]) => s + c, 0);
     const mayorTotal = mayorCounts.reduce((s, [, c]) => s + c, 0);
     const metroTotal = metroCouncil.reduce((s, [, c]) => s + c, 0);
     const localTotal = localCouncil.reduce((s, [, c]) => s + c, 0);
+    const metroPropTotal = metroProp.reduce((s, [, c]) => s + c, 0);
+    const localPropTotal = localProp.reduce((s, [, c]) => s + c, 0);
     // 누적 막대 + 범례 — utils.js 공용 렌더러(지선 archive와 공유). segment ≥ 9% 시 카운트 embed.
     const renderBar = (counts, total) => partyStackBar(counts, total);
     const renderLegend = (counts, top = 2) => partyStackLegend(counts, top);
@@ -146,11 +150,17 @@
     };
     addLine('광역단체장', govTotal, sorted);
     addLine('기초단체장', mayorTotal, mayorCounts);
-    addLine('광역의원', metroTotal, metroCouncil);
-    addLine('기초의원', localTotal, localCouncil);
+    addLine('광역의원 지역구', metroTotal, metroCouncil);
+    addLine('광역의원 비례', metroPropTotal, metroProp);
+    addLine('기초의원 지역구', localTotal, localCouncil);
+    addLine('기초의원 비례', localPropTotal, localProp);
     if (lines.length) nameEl.innerHTML = lines.join('');
-    const tot = [govTotal && `${govTotal} 광역장`, mayorTotal && `${mayorTotal} 기초장`,
-                 metroTotal && `${metroTotal} 광역의원`, localTotal && `${localTotal} 기초의원`].filter(Boolean).join(' · ');
+    const tot = [
+      govTotal && `${govTotal} 광역장`,
+      mayorTotal && `${mayorTotal} 기초장`,
+      (metroTotal + metroPropTotal) && `${metroTotal + metroPropTotal} 광역의원`,
+      (localTotal + localPropTotal) && `${localTotal + localPropTotal} 기초의원`,
+    ].filter(Boolean).join(' · ');
     document.getElementById('status-local-meta').textContent = `${tot || '17개 시·도'} · 임기 4년`;
   }
 

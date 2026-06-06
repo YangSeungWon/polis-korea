@@ -3,13 +3,13 @@
     "election": "제9회 전국동시지방선거",
     "election_id": "9th-local-2026",
     "election_date": "2026-06-03",
-    "fetched_at": "2026-06-05T10:39:10+09:00",
-    "is_final": true,
+    "fetched_at": "2026-06-06T22:01:34+09:00",
+    "is_final": false,
     "source": "nec-live-portal",
-    "n_calls": 20,
-    "n_rows": 1841,
-    "count_pct_min": 98.87,
-    "count_pct_avg": 100.0
+    "n_calls": 37,
+    "n_rows": 1857,
+    "count_pct_min": 0.0,
+    "count_pct_avg": 99.84
   },
   "races": [
     {
@@ -18,45 +18,45 @@
       "sigungu": "",
       "scope": "sido",
       "electors": 8319134,
-      "voters": 5285171,
-      "valid_votes": 5228803,
-      "invalid_votes": 56368,
-      "abstain": 3027545,
-      "count_pct": 99.93,
+      "voters": 5289383,
+      "valid_votes": 5232982,
+      "invalid_votes": 56401,
+      "abstain": 3029751,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "오세훈",
           "party": "국민의힘",
-          "votes": 2572443,
-          "pct": 49.19,
+          "votes": 2575819,
+          "pct": 49.22,
           "rank": 1,
           "won": true
         },
         {
           "name": "정원오",
           "party": "더불어민주당",
-          "votes": 2514832,
-          "pct": 48.09,
+          "votes": 2515560,
+          "pct": 48.07,
           "rank": 2
         },
         {
           "name": "권영국",
           "party": "정의당",
-          "votes": 54296,
+          "votes": 54315,
           "pct": 1.03,
           "rank": 3
         },
         {
           "name": "유지혜",
           "party": "여성의당",
-          "votes": 43939,
+          "votes": 43967,
           "pct": 0.84,
           "rank": 4
         },
         {
           "name": "김정철",
           "party": "개혁신당",
-          "votes": 43293,
+          "votes": 43321,
           "pct": 0.82,
           "rank": 5
         }
@@ -1352,25 +1352,25 @@
       "sigungu": "송파구",
       "scope": "sigungu",
       "electors": 565368,
-      "voters": 367918,
-      "valid_votes": 363825,
-      "invalid_votes": 4093,
-      "abstain": 191032,
-      "count_pct": 98.87,
+      "voters": 372202,
+      "valid_votes": 368068,
+      "invalid_votes": 4134,
+      "abstain": 193166,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "서강석",
           "party": "국민의힘",
-          "votes": 197837,
-          "pct": 54.37,
+          "votes": 201265,
+          "pct": 54.68,
           "rank": 1,
           "won": true
         },
         {
           "name": "조재희",
           "party": "더불어민주당",
-          "votes": 165988,
-          "pct": 45.62,
+          "votes": 166803,
+          "pct": 45.31,
           "rank": 2
         }
       ]
@@ -2564,6 +2564,52 @@
     {
       "sg_typecode": "4",
       "sido": "광주광역시",
+      "sigungu": "서구",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "count_pct": 0.0,
+      "candidates": [
+        {
+          "name": "김이강",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 0.0,
+          "rank": 1,
+          "won": true
+        }
+      ],
+      "unopposed": true
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "광주광역시",
+      "sigungu": "남구",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "count_pct": 0.0,
+      "candidates": [
+        {
+          "name": "김병내",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 0.0,
+          "rank": 1,
+          "won": true
+        }
+      ],
+      "unopposed": true
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "광주광역시",
       "sigungu": "북구",
       "scope": "sigungu",
       "electors": 359547,
@@ -3282,6 +3328,29 @@
           "rank": 2
         }
       ]
+    },
+    {
+      "sg_typecode": "4",
+      "sido": "경기도",
+      "sigungu": "시흥시",
+      "scope": "sigungu",
+      "electors": 0,
+      "voters": 0,
+      "valid_votes": 0,
+      "invalid_votes": 0,
+      "abstain": 0,
+      "count_pct": 0.0,
+      "candidates": [
+        {
+          "name": "임병택",
+          "party": "더불어민주당",
+          "votes": 0,
+          "pct": 0.0,
+          "rank": 1,
+          "won": true
+        }
+      ],
+      "unopposed": true
     },
     {
       "sg_typecode": "4",
@@ -10792,16 +10861,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 68903,
-      "voters": 47536,
-      "valid_votes": 46761,
-      "invalid_votes": 775,
-      "abstain": 21367,
-      "count_pct": 99.98,
+      "voters": 47552,
+      "valid_votes": 46775,
+      "invalid_votes": 777,
+      "abstain": 21351,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "윤유진",
           "party": "국민의힘",
-          "votes": 28191,
+          "votes": 28196,
           "pct": 60.28,
           "rank": 1,
           "won": true
@@ -10809,7 +10878,7 @@
         {
           "name": "김정열",
           "party": "더불어민주당",
-          "votes": 18570,
+          "votes": 18579,
           "pct": 39.71,
           "rank": 2
         }
@@ -10822,25 +10891,25 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 89089,
-      "voters": 57667,
-      "valid_votes": 56747,
-      "invalid_votes": 920,
-      "abstain": 31422,
-      "count_pct": 99.98,
+      "voters": 57676,
+      "valid_votes": 56754,
+      "invalid_votes": 922,
+      "abstain": 31413,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "김광철",
           "party": "국민의힘",
-          "votes": 30961,
-          "pct": 54.55,
+          "votes": 30965,
+          "pct": 54.56,
           "rank": 1,
           "won": true
         },
         {
           "name": "정주리",
           "party": "더불어민주당",
-          "votes": 25786,
-          "pct": 45.44,
+          "votes": 25789,
+          "pct": 45.43,
           "rank": 2
         }
       ],
@@ -10852,16 +10921,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 75736,
-      "voters": 48837,
-      "valid_votes": 47938,
+      "voters": 48844,
+      "valid_votes": 47945,
       "invalid_votes": 899,
-      "abstain": 26899,
-      "count_pct": 99.98,
+      "abstain": 26892,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "임춘대",
           "party": "국민의힘",
-          "votes": 26590,
+          "votes": 26594,
           "pct": 55.46,
           "rank": 1,
           "won": true
@@ -10869,7 +10938,7 @@
         {
           "name": "박종현",
           "party": "더불어민주당",
-          "votes": 21348,
+          "votes": 21351,
           "pct": 44.53,
           "rank": 2
         }
@@ -10882,25 +10951,25 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 113952,
-      "voters": 70023,
-      "valid_votes": 68906,
-      "invalid_votes": 1117,
-      "abstain": 37511,
-      "count_pct": 99.98,
+      "voters": 74200,
+      "valid_votes": 73032,
+      "invalid_votes": 1168,
+      "abstain": 39752,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "이성배",
           "party": "국민의힘",
-          "votes": 40046,
-          "pct": 58.11,
+          "votes": 43411,
+          "pct": 59.44,
           "rank": 1,
           "won": true
         },
         {
           "name": "이진용",
           "party": "더불어민주당",
-          "votes": 28860,
-          "pct": 41.88,
+          "votes": 29621,
+          "pct": 40.55,
           "rank": 2
         }
       ],
@@ -10912,16 +10981,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 110162,
-      "voters": 73468,
-      "valid_votes": 72300,
-      "invalid_votes": 1168,
-      "abstain": 36694,
-      "count_pct": 99.98,
+      "voters": 73493,
+      "valid_votes": 72323,
+      "invalid_votes": 1170,
+      "abstain": 36669,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "정진철",
           "party": "더불어민주당",
-          "votes": 35578,
+          "votes": 35589,
           "pct": 49.2,
           "rank": 1,
           "won": true
@@ -10929,14 +10998,14 @@
         {
           "name": "유정인",
           "party": "국민의힘",
-          "votes": 34805,
+          "votes": 34816,
           "pct": 48.13,
           "rank": 2
         },
         {
           "name": "이용우",
           "party": "진보당",
-          "votes": 1917,
+          "votes": 1918,
           "pct": 2.65,
           "rank": 3
         }
@@ -10949,24 +11018,24 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 107526,
-      "voters": 70301,
-      "valid_votes": 69170,
+      "voters": 70316,
+      "valid_votes": 69185,
       "invalid_votes": 1131,
-      "abstain": 37225,
-      "count_pct": 99.98,
+      "abstain": 37210,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "이수진",
           "party": "국민의힘",
-          "votes": 35591,
-          "pct": 51.45,
+          "votes": 35595,
+          "pct": 51.44,
           "rank": 1,
           "won": true
         },
         {
           "name": "신영재",
           "party": "더불어민주당",
-          "votes": 32207,
+          "votes": 32218,
           "pct": 46.56,
           "rank": 2
         },
@@ -29667,6 +29736,1542 @@
       "district": "제주특별자치도 서귀포시 표선면선거구"
     },
     {
+      "sg_typecode": "8",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 8319134,
+      "voters": 5287889,
+      "valid_votes": 5214958,
+      "invalid_votes": 72931,
+      "abstain": 3031245,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 2295093,
+          "pct": 44.0,
+          "rank": 1,
+          "seats": 5,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 2287569,
+          "pct": 43.86,
+          "rank": 2,
+          "seats": 5,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 214583,
+          "pct": 4.11,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 191190,
+          "pct": 3.66,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 71517,
+          "pct": 1.37,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 60974,
+          "pct": 1.16,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 39359,
+          "pct": 0.75,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 25571,
+          "pct": 0.49,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유통일당",
+          "party": "자유통일당",
+          "votes": 10245,
+          "pct": 0.19,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "거지당",
+          "party": "거지당",
+          "votes": 4865,
+          "pct": 0.09,
+          "rank": 10,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 3845,
+          "pct": 0.07,
+          "rank": 11,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "사회민주당",
+          "party": "사회민주당",
+          "votes": 3101,
+          "pct": 0.05,
+          "rank": 12,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민연합",
+          "party": "국민연합",
+          "votes": 1638,
+          "pct": 0.03,
+          "rank": 13,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민대통합당",
+          "party": "국민대통합당",
+          "votes": 1429,
+          "pct": 0.02,
+          "rank": 14,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "대한국민당",
+          "party": "대한국민당",
+          "votes": 1215,
+          "pct": 0.02,
+          "rank": 15,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 1049,
+          "pct": 0.02,
+          "rank": 16,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "한국독립당",
+          "party": "한국독립당",
+          "votes": 962,
+          "pct": 0.01,
+          "rank": 17,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "친미연합",
+          "party": "친미연합",
+          "votes": 753,
+          "pct": 0.01,
+          "rank": 18,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 10
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "전남광주통합특별시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2747725,
+      "voters": 1670138,
+      "valid_votes": 1629268,
+      "invalid_votes": 40870,
+      "abstain": 1077587,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 1118982,
+          "pct": 68.68,
+          "rank": 1,
+          "seats": 4,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 202702,
+          "pct": 12.44,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 128246,
+          "pct": 7.87,
+          "rank": 3,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 97826,
+          "pct": 6.0,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 47596,
+          "pct": 2.92,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 27278,
+          "pct": 1.67,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 6638,
+          "pct": 0.4,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 7
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2857335,
+      "voters": 1775323,
+      "valid_votes": 1748978,
+      "invalid_votes": 26345,
+      "abstain": 1082012,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 866687,
+          "pct": 49.55,
+          "rank": 1,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 774346,
+          "pct": 44.27,
+          "rank": 2,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 44227,
+          "pct": 2.52,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 25759,
+          "pct": 1.47,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 13017,
+          "pct": 0.74,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 12313,
+          "pct": 0.7,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 9322,
+          "pct": 0.53,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "사회민주당",
+          "party": "사회민주당",
+          "votes": 2405,
+          "pct": 0.13,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 902,
+          "pct": 0.05,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 6
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2049683,
+      "voters": 1316389,
+      "valid_votes": 1294257,
+      "invalid_votes": 22132,
+      "abstain": 733294,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 785564,
+          "pct": 60.69,
+          "rank": 1,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 431221,
+          "pct": 33.31,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 40504,
+          "pct": 3.12,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 9730,
+          "pct": 0.75,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 9540,
+          "pct": 0.73,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 6742,
+          "pct": 0.52,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 6708,
+          "pct": 0.51,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민연합",
+          "party": "국민연합",
+          "votes": 2393,
+          "pct": 0.18,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 1855,
+          "pct": 0.14,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 4
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2663459,
+      "voters": 1548583,
+      "valid_votes": 1523951,
+      "invalid_votes": 24632,
+      "abstain": 1114876,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 767626,
+          "pct": 50.37,
+          "rank": 1,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 626374,
+          "pct": 41.1,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 69827,
+          "pct": 4.58,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 14678,
+          "pct": 0.96,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 14292,
+          "pct": 0.93,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 14026,
+          "pct": 0.92,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 9389,
+          "pct": 0.61,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "노동당",
+          "party": "노동당",
+          "votes": 3114,
+          "pct": 0.2,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민당",
+          "party": "국민당",
+          "votes": 2771,
+          "pct": 0.18,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "사회민주당",
+          "party": "사회민주당",
+          "votes": 1227,
+          "pct": 0.08,
+          "rank": 10,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 627,
+          "pct": 0.04,
+          "rank": 11,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 5
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 1250891,
+      "voters": 746445,
+      "valid_votes": 730514,
+      "invalid_votes": 15931,
+      "abstain": 504446,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 355827,
+          "pct": 48.7,
+          "rank": 1,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 316501,
+          "pct": 43.32,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 34543,
+          "pct": 4.72,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 9534,
+          "pct": 1.3,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 8263,
+          "pct": 1.13,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 5846,
+          "pct": 0.8,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 4
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "울산광역시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 936171,
+      "voters": 599734,
+      "valid_votes": 588949,
+      "invalid_votes": 10785,
+      "abstain": 336437,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 272620,
+          "pct": 46.28,
+          "rank": 1,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 250093,
+          "pct": 42.46,
+          "rank": 2,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 29750,
+          "pct": 5.05,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 15283,
+          "pct": 2.59,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 13114,
+          "pct": 2.22,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 4792,
+          "pct": 0.81,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 3297,
+          "pct": 0.55,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 3
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 309134,
+      "voters": 193202,
+      "valid_votes": 190865,
+      "invalid_votes": 2337,
+      "abstain": 115932,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 98485,
+          "pct": 51.59,
+          "rank": 1,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 67818,
+          "pct": 35.53,
+          "rank": 2,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 15719,
+          "pct": 8.23,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 3180,
+          "pct": 1.66,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 3030,
+          "pct": 1.58,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 2633,
+          "pct": 1.37,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 2
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 11878997,
+      "voters": 6929654,
+      "valid_votes": 6832325,
+      "invalid_votes": 97329,
+      "abstain": 4949343,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 3350015,
+          "pct": 49.03,
+          "rank": 1,
+          "seats": 7,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 2627926,
+          "pct": 38.46,
+          "rank": 2,
+          "seats": 5,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 346848,
+          "pct": 5.07,
+          "rank": 3,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 249640,
+          "pct": 3.65,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 77912,
+          "pct": 1.14,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 68563,
+          "pct": 1.0,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 37037,
+          "pct": 0.54,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 34202,
+          "pct": 0.5,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "거지당",
+          "party": "거지당",
+          "votes": 7071,
+          "pct": 0.1,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "새미래민주당",
+          "party": "새미래민주당",
+          "votes": 6046,
+          "pct": 0.08,
+          "rank": 10,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 5297,
+          "pct": 0.07,
+          "rank": 11,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기독당",
+          "party": "기독당",
+          "votes": 4949,
+          "pct": 0.07,
+          "rank": 12,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "사회민주당",
+          "party": "사회민주당",
+          "votes": 3549,
+          "pct": 0.05,
+          "rank": 13,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민당",
+          "party": "국민당",
+          "votes": 3049,
+          "pct": 0.04,
+          "rank": 14,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민연합",
+          "party": "국민연합",
+          "votes": 3036,
+          "pct": 0.04,
+          "rank": 15,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민대통합당",
+          "party": "국민대통합당",
+          "votes": 2230,
+          "pct": 0.03,
+          "rank": 16,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "대한국민당",
+          "party": "대한국민당",
+          "votes": 2210,
+          "pct": 0.03,
+          "rank": 17,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 1612,
+          "pct": 0.02,
+          "rank": 18,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "친미연합",
+          "party": "친미연합",
+          "votes": 1133,
+          "pct": 0.01,
+          "rank": 19,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 13
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 1329742,
+      "voters": 858117,
+      "valid_votes": 840428,
+      "invalid_votes": 17689,
+      "abstain": 471625,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 393961,
+          "pct": 46.87,
+          "rank": 1,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 385027,
+          "pct": 45.81,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 27897,
+          "pct": 3.31,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 10419,
+          "pct": 1.23,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 7869,
+          "pct": 0.93,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 7732,
+          "pct": 0.92,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 7523,
+          "pct": 0.89,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 5
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "충청북도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 1396588,
+      "voters": 832551,
+      "valid_votes": 815089,
+      "invalid_votes": 17462,
+      "abstain": 564037,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 389433,
+          "pct": 47.77,
+          "rank": 1,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 366445,
+          "pct": 44.95,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 31918,
+          "pct": 3.91,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 9845,
+          "pct": 1.2,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 9648,
+          "pct": 1.18,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 7800,
+          "pct": 0.95,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 4
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "충청남도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 1857239,
+      "voters": 1091514,
+      "valid_votes": 1067551,
+      "invalid_votes": 23963,
+      "abstain": 765725,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 509326,
+          "pct": 47.7,
+          "rank": 1,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 487076,
+          "pct": 45.62,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 37800,
+          "pct": 3.54,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 11990,
+          "pct": 1.12,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 11145,
+          "pct": 1.04,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 10214,
+          "pct": 0.95,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 5
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 1509854,
+      "voters": 946581,
+      "valid_votes": 921709,
+      "invalid_votes": 24872,
+      "abstain": 563273,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 609771,
+          "pct": 66.15,
+          "rank": 1,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 140860,
+          "pct": 15.28,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 92472,
+          "pct": 10.03,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 38269,
+          "pct": 4.15,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 17677,
+          "pct": 1.91,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 16391,
+          "pct": 1.77,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "자유와혁신",
+          "party": "자유와혁신",
+          "votes": 6269,
+          "pct": 0.68,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 4
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "경상북도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2202861,
+      "voters": 1338407,
+      "valid_votes": 1302845,
+      "invalid_votes": 35562,
+      "abstain": 864454,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 834545,
+          "pct": 64.05,
+          "rank": 1,
+          "seats": 4,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 387678,
+          "pct": 29.75,
+          "rank": 2,
+          "seats": 2,
+          "won": true
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 37912,
+          "pct": 2.9,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 12923,
+          "pct": 0.99,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 8259,
+          "pct": 0.63,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 8215,
+          "pct": 0.63,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민연합",
+          "party": "국민연합",
+          "votes": 4330,
+          "pct": 0.33,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민대통합당",
+          "party": "국민대통합당",
+          "votes": 3240,
+          "pct": 0.24,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "친미연합",
+          "party": "친미연합",
+          "votes": 2895,
+          "pct": 0.22,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 2848,
+          "pct": 0.21,
+          "rank": 10,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 6
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "경상남도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 2775745,
+      "voters": 1793174,
+      "valid_votes": 1759406,
+      "invalid_votes": 33768,
+      "abstain": 982571,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 882019,
+          "pct": 50.13,
+          "rank": 1,
+          "seats": 4,
+          "won": true
+        },
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 726616,
+          "pct": 41.29,
+          "rank": 2,
+          "seats": 3,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 46823,
+          "pct": 2.66,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 36555,
+          "pct": 2.07,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 31354,
+          "pct": 1.78,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "정의당",
+          "party": "정의당",
+          "votes": 18082,
+          "pct": 1.02,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 10233,
+          "pct": 0.58,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "국민연합",
+          "party": "국민연합",
+          "votes": 5455,
+          "pct": 0.31,
+          "rank": 8,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "공화당",
+          "party": "공화당",
+          "votes": 2269,
+          "pct": 0.12,
+          "rank": 9,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 7
+    },
+    {
+      "sg_typecode": "8",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "scope": "proportional_sido",
+      "electors": 565350,
+      "voters": 318988,
+      "valid_votes": 313559,
+      "invalid_votes": 5429,
+      "abstain": 246362,
+      "count_pct": 100.0,
+      "candidates": [
+        {
+          "name": "더불어민주당",
+          "party": "더불어민주당",
+          "votes": 154818,
+          "pct": 49.37,
+          "rank": 1,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "국민의힘",
+          "party": "국민의힘",
+          "votes": 103075,
+          "pct": 32.87,
+          "rank": 2,
+          "seats": 1,
+          "won": true
+        },
+        {
+          "name": "조국혁신당",
+          "party": "조국혁신당",
+          "votes": 22651,
+          "pct": 7.22,
+          "rank": 3,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "진보당",
+          "party": "진보당",
+          "votes": 9539,
+          "pct": 3.04,
+          "rank": 4,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "녹색당",
+          "party": "녹색당",
+          "votes": 9449,
+          "pct": 3.01,
+          "rank": 5,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "개혁신당",
+          "party": "개혁신당",
+          "votes": 9417,
+          "pct": 3.0,
+          "rank": 6,
+          "seats": 0,
+          "won": false
+        },
+        {
+          "name": "기본소득당",
+          "party": "기본소득당",
+          "votes": 4610,
+          "pct": 1.47,
+          "rank": 7,
+          "seats": 0,
+          "won": false
+        }
+      ],
+      "seats_total": 2
+    },
+    {
       "sg_typecode": "6",
       "sido": "서울특별시",
       "sigungu": "종로구",
@@ -34340,16 +35945,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 68903,
-      "voters": 47521,
-      "valid_votes": 45682,
-      "invalid_votes": 1839,
-      "abstain": 21382,
-      "count_pct": 99.98,
+      "voters": 47553,
+      "valid_votes": 45712,
+      "invalid_votes": 1841,
+      "abstain": 21350,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "이강무",
           "party": "국민의힘",
-          "votes": 15321,
+          "votes": 15330,
           "pct": 33.53,
           "rank": 1,
           "won": true
@@ -34357,29 +35962,29 @@
         {
           "name": "정성일",
           "party": "더불어민주당",
-          "votes": 10407,
+          "votes": 10415,
           "pct": 22.78,
           "rank": 2
         },
         {
           "name": "김서윤",
           "party": "국민의힘",
-          "votes": 8883,
-          "pct": 19.44,
+          "votes": 8886,
+          "pct": 19.43,
           "rank": 3
         },
         {
           "name": "윤영한",
           "party": "더불어민주당",
-          "votes": 8778,
+          "votes": 8784,
           "pct": 19.21,
           "rank": 4
         },
         {
           "name": "장성혁",
           "party": "개혁신당",
-          "votes": 2293,
-          "pct": 5.01,
+          "votes": 2297,
+          "pct": 5.02,
           "rank": 5
         }
       ],
@@ -34391,16 +35996,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 75736,
-      "voters": 48817,
-      "valid_votes": 45560,
-      "invalid_votes": 3257,
-      "abstain": 26919,
-      "count_pct": 99.98,
+      "voters": 48843,
+      "valid_votes": 45581,
+      "invalid_votes": 3262,
+      "abstain": 26893,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "손병화",
           "party": "국민의힘",
-          "votes": 17208,
+          "votes": 17215,
           "pct": 37.76,
           "rank": 1,
           "won": true
@@ -34408,21 +36013,21 @@
         {
           "name": "박성희",
           "party": "더불어민주당",
-          "votes": 14494,
+          "votes": 14501,
           "pct": 31.81,
           "rank": 2
         },
         {
           "name": "유미현",
           "party": "국민의힘",
-          "votes": 7800,
+          "votes": 7805,
           "pct": 17.12,
           "rank": 3
         },
         {
           "name": "배신정",
           "party": "더불어민주당",
-          "votes": 6058,
+          "votes": 6060,
           "pct": 13.29,
           "rank": 4
         }
@@ -34435,39 +36040,39 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 60188,
-      "voters": 35013,
-      "valid_votes": 32560,
-      "invalid_votes": 2453,
-      "abstain": 18757,
-      "count_pct": 99.98,
+      "voters": 39197,
+      "valid_votes": 36403,
+      "invalid_votes": 2794,
+      "abstain": 20991,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "이혜숙",
           "party": "국민의힘",
-          "votes": 11498,
-          "pct": 35.31,
+          "votes": 13573,
+          "pct": 37.28,
           "rank": 1,
           "won": true
         },
         {
           "name": "이희승",
           "party": "더불어민주당",
-          "votes": 10631,
-          "pct": 32.65,
+          "votes": 11168,
+          "pct": 30.67,
           "rank": 2
         },
         {
           "name": "이원우",
           "party": "국민의힘",
-          "votes": 6337,
-          "pct": 19.46,
+          "votes": 7306,
+          "pct": 20.06,
           "rank": 3
         },
         {
           "name": "이성자",
           "party": "더불어민주당",
-          "votes": 4094,
-          "pct": 12.57,
+          "votes": 4356,
+          "pct": 11.96,
           "rank": 4
         }
       ],
@@ -34479,25 +36084,25 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 49654,
-      "voters": 32192,
-      "valid_votes": 31158,
-      "invalid_votes": 1034,
-      "abstain": 17462,
-      "count_pct": 99.98,
+      "voters": 32220,
+      "valid_votes": 31185,
+      "invalid_votes": 1035,
+      "abstain": 17434,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "정동배",
           "party": "더불어민주당",
-          "votes": 15273,
-          "pct": 49.01,
+          "votes": 15287,
+          "pct": 49.02,
           "rank": 1,
           "won": true
         },
         {
           "name": "박인섭",
           "party": "국민의힘",
-          "votes": 13214,
-          "pct": 42.4,
+          "votes": 13227,
+          "pct": 42.41,
           "rank": 2
         },
         {
@@ -34523,16 +36128,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 60508,
-      "voters": 41263,
-      "valid_votes": 39791,
+      "voters": 41276,
+      "valid_votes": 39804,
       "invalid_votes": 1472,
-      "abstain": 19245,
-      "count_pct": 99.98,
+      "abstain": 19232,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "조용근",
           "party": "더불어민주당",
-          "votes": 14347,
+          "votes": 14351,
           "pct": 36.05,
           "rank": 1,
           "won": true
@@ -34540,28 +36145,28 @@
         {
           "name": "지정수",
           "party": "국민의힘",
-          "votes": 11950,
+          "votes": 11955,
           "pct": 30.03,
           "rank": 2
         },
         {
           "name": "박지선",
           "party": "진보당",
-          "votes": 5425,
+          "votes": 5427,
           "pct": 13.63,
           "rank": 3
         },
         {
           "name": "윤정식",
           "party": "국민의힘",
-          "votes": 4498,
+          "votes": 4499,
           "pct": 11.3,
           "rank": 4
         },
         {
           "name": "신중철",
           "party": "더불어민주당",
-          "votes": 3571,
+          "votes": 3572,
           "pct": 8.97,
           "rank": 5
         }
@@ -34574,16 +36179,16 @@
       "sigungu": "송파구",
       "scope": "district",
       "electors": 52700,
-      "voters": 34545,
-      "valid_votes": 33498,
-      "invalid_votes": 1047,
-      "abstain": 18155,
-      "count_pct": 99.98,
+      "voters": 34569,
+      "valid_votes": 33521,
+      "invalid_votes": 1048,
+      "abstain": 18131,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "박지효",
           "party": "국민의힘",
-          "votes": 16641,
+          "votes": 16652,
           "pct": 49.67,
           "rank": 1,
           "won": true
@@ -34591,14 +36196,14 @@
         {
           "name": "채승우",
           "party": "더불어민주당",
-          "votes": 12798,
-          "pct": 38.2,
+          "votes": 12809,
+          "pct": 38.21,
           "rank": 2
         },
         {
           "name": "김진호",
           "party": "더불어민주당",
-          "votes": 4059,
+          "votes": 4060,
           "pct": 12.11,
           "rank": 3
         }
@@ -72540,66 +74145,66 @@
       "sigungu": "",
       "scope": "sido",
       "electors": 8319121,
-      "voters": 5284660,
-      "valid_votes": 4984129,
-      "invalid_votes": 300531,
-      "abstain": 3028044,
-      "count_pct": 99.92,
+      "voters": 5288844,
+      "valid_votes": 4988089,
+      "invalid_votes": 300755,
+      "abstain": 3030277,
+      "count_pct": 100.0,
       "candidates": [
         {
           "name": "정근식",
           "party": "무소속",
-          "votes": 1509015,
-          "pct": 30.27,
+          "votes": 1509528,
+          "pct": 30.26,
           "rank": 1,
           "won": true
         },
         {
           "name": "조전혁",
           "party": "무소속",
-          "votes": 1172938,
-          "pct": 23.53,
+          "votes": 1174624,
+          "pct": 23.54,
           "rank": 2
         },
         {
           "name": "윤호상",
           "party": "무소속",
-          "votes": 726273,
+          "votes": 727188,
           "pct": 14.57,
           "rank": 3
         },
         {
           "name": "한만중",
           "party": "무소속",
-          "votes": 471614,
-          "pct": 9.46,
+          "votes": 471715,
+          "pct": 9.45,
           "rank": 4
         },
         {
           "name": "김영배",
           "party": "무소속",
-          "votes": 367082,
+          "votes": 367276,
           "pct": 7.36,
           "rank": 5
         },
         {
           "name": "홍제남",
           "party": "무소속",
-          "votes": 288174,
+          "votes": 288378,
           "pct": 5.78,
           "rank": 6
         },
         {
           "name": "이학인",
           "party": "무소속",
-          "votes": 232984,
+          "votes": 233006,
           "pct": 4.67,
           "rank": 7
         },
         {
           "name": "류수노",
           "party": "무소속",
-          "votes": 216049,
+          "votes": 216374,
           "pct": 4.33,
           "rank": 8
         }
@@ -73177,75 +74782,6 @@
           "votes": 43362,
           "pct": 13.91,
           "rank": 3
-        }
-      ]
-    },
-    {
-      "sg_typecode": "4",
-      "sido": "광주광역시",
-      "sigungu": "남구",
-      "scope": "sigungu",
-      "unopposed": true,
-      "electors": 0,
-      "voters": 0,
-      "valid_votes": 0,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "count_pct": 0.0,
-      "candidates": [
-        {
-          "name": "김병내",
-          "party": "더불어민주당",
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 1,
-          "won": true
-        }
-      ]
-    },
-    {
-      "sg_typecode": "4",
-      "sido": "광주광역시",
-      "sigungu": "서구",
-      "scope": "sigungu",
-      "unopposed": true,
-      "electors": 0,
-      "voters": 0,
-      "valid_votes": 0,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "count_pct": 0.0,
-      "candidates": [
-        {
-          "name": "김이강",
-          "party": "더불어민주당",
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 1,
-          "won": true
-        }
-      ]
-    },
-    {
-      "sg_typecode": "4",
-      "sido": "경기도",
-      "sigungu": "시흥시",
-      "scope": "sigungu",
-      "unopposed": true,
-      "electors": 0,
-      "voters": 0,
-      "valid_votes": 0,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "count_pct": 0.0,
-      "candidates": [
-        {
-          "name": "임병택",
-          "party": "더불어민주당",
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 1,
-          "won": true
         }
       ]
     }

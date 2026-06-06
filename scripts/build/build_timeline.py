@@ -167,6 +167,20 @@ def council_party_counts(races, tc):
     return _count_winners_by_tc(races, tc)
 
 
+def proportional_party_counts(races, tc):
+    """비례(tc=8 광역·tc=9 기초) — candidate.seats 합계 by party."""
+    from collections import Counter
+    ctr = Counter()
+    for r in races:
+        if r.get("sg_typecode") != tc:
+            continue
+        for c in r.get("candidates") or []:
+            s = c.get("seats") or 0
+            if s:
+                ctr[c.get("party") or "무소속"] += s
+    return [[p, c] for p, c in ctr.most_common()]
+
+
 def _count_winners_by_tc(races, tc):
     # tc=4 (기초장) → scope=sigungu만 (sigungu_part는 시군구 내 구 breakdown)
     # tc=5/6 (의원) → scope=district만
@@ -259,6 +273,8 @@ def main():
             mayor_counts = []
             metro_council_counts = []
             local_council_counts = []
+            metro_proportional_counts = []
+            local_proportional_counts = []
             computed_turnout = None
             if path_name:
                 p = RESULTS / path_name
@@ -271,6 +287,8 @@ def main():
                         mayor_counts = mayor_party_counts(races)
                         metro_council_counts = council_party_counts(races, "5")
                         local_council_counts = council_party_counts(races, "6")
+                        metro_proportional_counts = proportional_party_counts(races, "8")
+                        local_proportional_counts = proportional_party_counts(races, "9")
                     computed_turnout = compute_turnout(races, kind)
             label_short = KIND_LABEL[kind]
             entry = {
@@ -293,6 +311,10 @@ def main():
                 entry["metroCouncilPartyCounts"] = metro_council_counts
             if local_council_counts:
                 entry["localCouncilPartyCounts"] = local_council_counts
+            if metro_proportional_counts:
+                entry["metroProportionalPartyCounts"] = metro_proportional_counts
+            if local_proportional_counts:
+                entry["localProportionalPartyCounts"] = local_proportional_counts
             out_rounds.append(entry)
 
     # 향후 예정 선거 (data/elections/index.json active + 주기 기반 예측 ~10년).
