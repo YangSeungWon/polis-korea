@@ -1,0 +1,40 @@
+{
+  "id": "byelection-2024-04-10",
+  "name": "2024년 4·10 동시 재·보궐선거",
+  "kind": "byelection",
+  "type": "byelection",
+  "n": 2024,
+  "date": "2024-04-10",
+  "status": "archive",
+  "nec": {
+    "sg_id": "20240410",
+    "_note": "22대 총선과 동시 시행. 기초단체장·광역의원·기초의원 (광역장·교육감·국회의원 재보궐은 별도 없음)"
+  },
+  "offices": [
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
+    }
+  ],
+  "archive": {
+    "page": "/archive/byelection-2024-04-10/",
+    "results_path": "data/results/byelection-2024-04-10.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "4",
+    "list_label": "확정",
+    "context_note": "22대 총선 동시 — 기초단체장·광역의원·기초의원 재보궐"
+  }
+}
