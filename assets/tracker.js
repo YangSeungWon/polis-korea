@@ -155,18 +155,19 @@
 
   // ---- load ----
   async function load() {
-    const [gallup, realmeter, ...aggs] = await Promise.all([
+    const [gallup, realmeter, nbs, ...aggs] = await Promise.all([
       fetch('data/polls/approval_gallup.json').then((r) => r.json()).catch(() => ({ records: [] })),
       fetch('data/polls/approval_realmeter.json').then((r) => r.json()).catch(() => ({ records: [] })),
+      fetch('data/polls/approval_nbs.json').then((r) => r.json()).catch(() => ({ records: [] })),
       ...AGG_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ polls: [] }))),
     ]);
-    // 국정평가 — 갤럽+리얼미터 통합
-    const recs = [...(gallup.records || []), ...(realmeter.records || [])]
+    // 국정평가 — 갤럽+리얼미터+NBS 통합
+    const recs = [...(gallup.records || []), ...(realmeter.records || []), ...(nbs.records || [])]
       .filter((r) => r.subject && r.positive != null)
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
     document.getElementById('tk-approval').innerHTML = renderApproval(recs);
     const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)} ~ ${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
-    document.getElementById('tk-approval-meta').textContent = `한국갤럽·리얼미터 · ${ar}`;
+    document.getElementById('tk-approval-meta').textContent = `한국갤럽·리얼미터·NBS · ${ar}`;
 
     // 정당지지 (전국만)
     const polls = [];
