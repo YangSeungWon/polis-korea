@@ -183,10 +183,25 @@ def proportional_party_counts(races, tc):
 
 def _count_winners_by_tc(races, tc):
     # tc=4 (기초장) → scope=sigungu만 (sigungu_part는 시군구 내 구 breakdown)
-    # tc=5/6 (의원) → scope=district만
+    # tc=5/6 (의원 지역구) → scope=district winner count.
+    # 위키 inject로 scope='sido_summary'/'sigungu_summary' 있으면 우선 (candidates[].seats 합산).
     SCOPE_FOR = {"4": "sigungu", "5": "district", "6": "district"}
+    SUMMARY_FOR = {"5": "sido_summary", "6": "sigungu_summary"}
     want_scope = SCOPE_FOR.get(tc)
+    summary_scope = SUMMARY_FOR.get(tc)
     from collections import Counter
+    # 1차: summary scope 데이터 있으면 그쪽으로 — seats 합산
+    if summary_scope and any(r.get("sg_typecode") == tc and r.get("scope") == summary_scope for r in races):
+        ctr = Counter()
+        for r in races:
+            if r.get("sg_typecode") != tc or r.get("scope") != summary_scope:
+                continue
+            for c in r.get("candidates") or []:
+                s = c.get("seats") or 0
+                if s:
+                    ctr[c.get("party") or "무소속"] += s
+        return [[p, c] for p, c in ctr.most_common()]
+    # 2차: winner count fallback
     ctr = Counter()
     for r in races:
         if r.get("sg_typecode") != tc:
