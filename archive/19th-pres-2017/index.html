@@ -44,11 +44,38 @@
     <div class="ar-hero-tag">아카이브</div>
     <h1 class="ar-hero-title" id="ar-title">제19대 대통령선거</h1>
     <div class="ar-hero-date" id="ar-date">2017-05-09 (화)</div>
-    <div class="ar-hero-stats" id="ar-hero-stats">
-      <div class="ar-stat"><div class="ar-stat-label">당선</div><div class="ar-stat-value" id="ar-winner">—</div></div>
-      <div class="ar-stat"><div class="ar-stat-label">격차</div><div class="ar-stat-value" id="ar-margin">—</div></div>
-      <div class="ar-stat"><div class="ar-stat-label">투표율</div><div class="ar-stat-value" id="ar-turnout">—</div></div>
-      <div class="ar-stat"><div class="ar-stat-label">여론조사</div><div class="ar-stat-value" id="ar-polls-count">—</div></div>
+    <div class="ar-hero-scorecard" id="ar-scorecard" hidden>
+      <div class="ar-sc-row ar-sc-head">
+        <div class="ar-sc-party ar-sc-p1" id="ar-sc-p1"></div>
+        <div class="ar-sc-label"></div>
+        <div class="ar-sc-party ar-sc-p2" id="ar-sc-p2"></div>
+      </div>
+      <div class="ar-sc-row">
+        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-name-l">—</div>
+        <div class="ar-sc-label">후보</div>
+        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-name-r">—</div>
+      </div>
+      <div class="ar-sc-row">
+        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-pct-l">—</div>
+        <div class="ar-sc-label">득표율</div>
+        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-pct-r">—</div>
+      </div>
+      <div class="ar-sc-row">
+        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-votes-l">—</div>
+        <div class="ar-sc-label">득표수</div>
+        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-votes-r">—</div>
+      </div>
+      <div class="ar-sc-row ar-sc-foot">
+        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-sido-l">—</div>
+        <div class="ar-sc-label">시도 1위</div>
+        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-sido-r">—</div>
+      </div>
+    </div>
+    <div class="ar-hero-meta" id="ar-hero-meta">
+      <span class="ar-hm-item"><span class="ar-hm-label">격차</span> <span class="ar-hm-value" id="ar-margin">—</span></span>
+      <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
+      <span class="ar-hm-item" id="ar-hm-exit" hidden><span class="ar-hm-label">출구조사 적중</span> <span class="ar-hm-value" id="ar-exit-hit">—</span></span>
+      <span class="ar-hm-item" id="ar-hm-polls" hidden><span class="ar-hm-label">여론조사</span> <span class="ar-hm-value" id="ar-polls-count">—</span></span>
     </div>
     <p class="ar-hero-status" id="ar-status">확정 결과.</p>
   </section>

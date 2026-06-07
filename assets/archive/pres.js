@@ -12,28 +12,72 @@
   }
 
   function renderHero(ctx) {
-    const { results, polls, sgTypecode } = ctx;
-    if (polls) document.getElementById('ar-polls-count').textContent = polls.length.toLocaleString() + '건';
+    const { results, polls, exitData, sgTypecode } = ctx;
     const nat = nationRace(results, sgTypecode);
     if (!nat) return;
     const cands = (nat.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
     const top = cands[0], second = cands[1];
-    if (top) {
-      const col = pcol(top.party);
-      document.getElementById('ar-winner').innerHTML =
-        `<span style="color:${col};font-weight:700">${top.name}</span> <span style="font-size:13px;color:var(--ink-soft)">${top.party}</span> <span style="font-size:13px;color:var(--ink-soft)">${(top.pct || 0).toFixed(1)}%</span>`;
+    if (!top) return;
+    const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
+    const sc = document.getElementById('ar-scorecard');
+    if (sc) sc.removeAttribute('hidden');
+    const renderParty = (party) => {
+      const col = pcol(party);
+      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
+    };
+    setHTML('ar-sc-p1', renderParty(top.party));
+    setText('ar-sc-name-l', top.name);
+    setText('ar-sc-pct-l', (top.pct || 0).toFixed(1) + '%');
+    setText('ar-sc-votes-l', (top.votes || 0).toLocaleString());
+    if (second) {
+      setHTML('ar-sc-p2', renderParty(second.party));
+      setText('ar-sc-name-r', second.name);
+      setText('ar-sc-pct-r', (second.pct || 0).toFixed(1) + '%');
+      setText('ar-sc-votes-r', (second.votes || 0).toLocaleString());
     }
-    if (top && second) {
-      document.getElementById('ar-margin').innerHTML =
-        `${(top.pct - second.pct).toFixed(2)}<span style="font-size:12px;color:var(--ink-soft)">%p</span>`;
+    // 시도 1위 카운트
+    const sidos = sidoRaces(results, sgTypecode);
+    let sidoL = 0, sidoR = 0;
+    for (const r of sidos) {
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (cs[0]?.party === top.party) sidoL++;
+      else if (second && cs[0]?.party === second.party) sidoR++;
     }
-    if (nat.electors > 0) {
-      document.getElementById('ar-turnout').textContent = (nat.voters / nat.electors * 100).toFixed(1) + '%';
+    if (sidos.length) {
+      setText('ar-sc-sido-l', `${sidoL} / ${sidos.length}`);
+      setText('ar-sc-sido-r', `${sidoR} / ${sidos.length}`);
+    }
+
+    if (second) setHTML('ar-margin', `${(top.pct - second.pct).toFixed(2)}<span style="font-size:11px;color:var(--ink-soft)">%p</span>`);
+    if (nat.electors > 0) setText('ar-turnout', (nat.voters / nat.electors * 100).toFixed(1) + '%');
+    // 출구조사 적중
+    if (exitData?.sources?.length && sidos.length) {
+      const actual = {};
+      for (const r of sidos) {
+        const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        if (cs[0]) actual[r.sido] = cs[0].party;
+      }
+      let hits = 0, total = 0;
+      const src = exitData.sources[0];
+      for (const sido of Object.keys(src.results || {})) {
+        const pred = src.results[sido]?.[0]?.party;
+        if (!pred || !actual[sido]) continue;
+        total++; if (pred === actual[sido]) hits++;
+      }
+      if (total) {
+        setText('ar-exit-hit', `${hits}/${total}`);
+        document.getElementById('ar-hm-exit')?.removeAttribute('hidden');
+      }
+    }
+    if (polls?.length) {
+      setText('ar-polls-count', polls.length.toLocaleString() + '건');
+      document.getElementById('ar-hm-polls')?.removeAttribute('hidden');
     }
     const m = results._meta || {};
     const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
       : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
-    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`;
+    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`);
   }
 
   function renderNation(ctx) {

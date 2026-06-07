@@ -37,30 +37,72 @@
   }
 
   function renderHero(ctx) {
-    const { results, polls, meta, sgTypecode } = ctx;
-    if (polls) document.getElementById('ar-polls-count').textContent = polls.length.toLocaleString() + '건';
+    const { results, polls, exitData, meta, sgTypecode } = ctx;
     if (!results) return;
-    const seats = computeSeats(results, sgTypecode, propSg(meta));
-    const sorted = Object.entries(seats).sort((a, b) => b[1] - a[1]);
-    if (sorted.length) {
-      const [p1, n1] = sorted[0];
-      document.getElementById('ar-winner').innerHTML =
-        `<span style="color:${pcol(p1)};font-weight:700">${p1}</span> <span style="font-size:13px;color:var(--ink-soft)">${n1}석</span>`;
+    // 지역구 + 비례 분리 카운트
+    const dist = {}, prop = {};
+    for (const r of districtRaces(results, sgTypecode)) {
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (cs[0]) {
+        const p = mainParty(cs[0].party);
+        dist[p] = (dist[p] || 0) + 1;
+      }
     }
-    if (sorted.length > 1) {
-      const [p2, n2] = sorted[1];
-      document.getElementById('ar-runnerup').innerHTML =
-        `<span style="color:${pcol(p2)};font-weight:700">${p2}</span> <span style="font-size:13px;color:var(--ink-soft)">${n2}석</span>`;
+    const propNat = propNationRace(results, propSg(meta));
+    if (propNat?.candidates) {
+      for (const c of propNat.candidates) {
+        const n = c.proportional_seats != null ? c.proportional_seats : (c.seats != null ? c.seats : null);
+        if (n != null) prop[mainParty(c.party)] = (prop[mainParty(c.party)] || 0) + n;
+      }
+    }
+    const total = {};
+    for (const p of new Set([...Object.keys(dist), ...Object.keys(prop)])) {
+      total[p] = (dist[p] || 0) + (prop[p] || 0);
+    }
+    const sorted = Object.entries(total).sort((a, b) => b[1] - a[1]);
+    if (sorted.length === 0) return;
+    const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
+    const sc = document.getElementById('ar-scorecard');
+    if (sc) sc.removeAttribute('hidden');
+    const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
+    const renderParty = (party) => {
+      const col = pcol(party);
+      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
+    };
+    setHTML('ar-sc-p1', renderParty(p1));
+    setText('ar-sc-dist-l', (dist[p1] || 0).toLocaleString());
+    setText('ar-sc-prop-l', (prop[p1] || 0).toLocaleString());
+    setText('ar-sc-total-l', total[p1].toLocaleString());
+    if (p2) {
+      setHTML('ar-sc-p2', renderParty(p2));
+      setText('ar-sc-dist-r', (dist[p2] || 0).toLocaleString());
+      setText('ar-sc-prop-r', (prop[p2] || 0).toLocaleString());
+      setText('ar-sc-total-r', total[p2].toLocaleString());
     }
     let voters = 0, electors = 0;
     for (const r of districtRaces(results, sgTypecode)) {
       voters += r.voters || 0; electors += r.electors || 0;
     }
-    if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
+    if (electors > 0) setText('ar-turnout', (voters / electors * 100).toFixed(1) + '%');
+    // 박빙 — 1·2위 차이 5%p 미만 지역구
+    let closeN = 0;
+    for (const r of districtRaces(results, sgTypecode)) {
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (cs.length >= 2 && cs[0].pct != null && cs[1].pct != null && cs[0].pct - cs[1].pct < 5) closeN++;
+    }
+    if (closeN > 0) {
+      setText('ar-close-count', `${closeN}곳`);
+      document.getElementById('ar-hm-close')?.removeAttribute('hidden');
+    }
+    if (polls?.length) {
+      setText('ar-polls-count', polls.length.toLocaleString() + '건');
+      document.getElementById('ar-hm-polls')?.removeAttribute('hidden');
+    }
     const m = results._meta || {};
     const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
       : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
-    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`;
+    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`);
   }
 
   function renderParliament(ctx) {
