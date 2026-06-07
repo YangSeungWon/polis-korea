@@ -63,16 +63,12 @@
     };
     setHTML('ar-sc-p1', renderParty(p1, 'l'));
     if (p2) setHTML('ar-sc-p2', renderParty(p2, 'r'));
-    let totalL = 0, totalR = 0;
     for (const tc of ['3', '4', '5', '6']) {
       const l = byTc[tc][p1] || 0;
       const r = p2 ? (byTc[tc][p2] || 0) : 0;
-      totalL += l; totalR += r;
       setText(`ar-sc-${tc}-l`, l ? l.toLocaleString() : '—');
       setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
     }
-    setText('ar-sc-total-l', totalL.toLocaleString());
-    setText('ar-sc-total-r', totalR.toLocaleString());
 
     // 하단 meta
     if (electors > 0) setText('ar-turnout', (voters / electors * 100).toFixed(1) + '%');

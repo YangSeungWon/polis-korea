@@ -113,7 +113,13 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--debug", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--incremental", action="store_true", help="기존 출력 보존·신규 ntt만(CI)")
     args = ap.parse_args()
+
+    prev, done = [], set()
+    if args.incremental and OUT.exists():
+        prev = json.loads(OUT.read_text()).get("records", [])
+        done = {r["ntt_id"] for r in prev}
 
     meta = load_meta()
     def is_nat(m):
@@ -130,7 +136,7 @@ def main():
     by_ntt: dict[str, dict] = {}
     for i, pp in enumerate(pdfs):
         nid = Path(pp).name.split("_", 1)[0]
-        if nid in by_ntt:
+        if nid in by_ntt or nid in done:
             continue
         pages = find_job_pages(pp)
         if not pages:
@@ -164,6 +170,7 @@ def main():
             "subject": subj, "positive": r["positive"], "negative": r["negative"],
             "source_url": m.get("source_url", ""),
         })
+    records = prev + records
     records.sort(key=lambda x: x["period_end"] or "")
     print(f"한국리서치 국정평가 {len(records)}건", file=sys.stderr)
     if args.dry_run or args.debug:

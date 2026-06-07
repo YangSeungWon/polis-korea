@@ -149,7 +149,13 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--debug", action="store_true")
     ap.add_argument("--only")
+    ap.add_argument("--incremental", action="store_true", help="기존 출력 보존·신규 ntt만(CI)")
     args = ap.parse_args()
+
+    prev, done = [], set()
+    if args.incremental and OUT.exists():
+        prev = json.loads(OUT.read_text()).get("polls", [])
+        done = {x["ntt_id"] for x in prev}
 
     meta = load_meta()
     def is_nat(m):
@@ -168,7 +174,7 @@ def main():
     print(f"VT012 전국 PDF {len(pdfs)}개 스캔", file=sys.stderr)
 
     polls = []
-    seen = set()
+    seen = set(done)
     for i, pp in enumerate(pdfs):
         nid = Path(pp).name.split("_", 1)[0]
         if nid in seen:
@@ -200,6 +206,7 @@ def main():
         if (i + 1) % 200 == 0:
             print(f"  {i+1}/{len(pdfs)} — {len(polls)}건", file=sys.stderr)
 
+    polls = prev + polls
     polls.sort(key=lambda p: p["period_end"] or "")
     print(f"VT012 정당지지 {len(polls)}건", file=sys.stderr)
     if args.debug and not args.only:

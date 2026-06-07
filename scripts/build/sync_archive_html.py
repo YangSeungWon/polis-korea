@@ -148,11 +148,6 @@ HERO_LOCAL = """
         <div class="ar-sc-label">기초의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-6-r">—</div>
       </div>
-      <div class="ar-sc-row ar-sc-foot">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-total-l">—</div>
-        <div class="ar-sc-label">합계</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-total-r">—</div>
-      </div>
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
@@ -242,11 +237,6 @@ HERO_BYELECTION = """
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-6-l">—</div>
         <div class="ar-sc-label">기초의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-6-r">—</div>
-      </div>
-      <div class="ar-sc-row ar-sc-foot">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-total-l">—</div>
-        <div class="ar-sc-label">합계</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-total-r">—</div>
       </div>
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">

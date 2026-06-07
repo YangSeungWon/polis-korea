@@ -47,11 +47,9 @@
       };
       setHTML('ar-sc-p1', renderParty(p1));
       if (p2) setHTML('ar-sc-p2', renderParty(p2));
-      let totalL = 0, totalR = 0;
       for (const tc of ['2', '3', '4', '5', '6']) {
         const l = byTc[tc][p1] || 0;
         const r = p2 ? (byTc[tc][p2] || 0) : 0;
-        totalL += l; totalR += r;
         // 해당 tc race 없으면 row 숨김
         const rowEl = document.querySelector(`.ar-sc-row[data-level="${tc}"]`);
         if (rowEl && Object.keys(byTc[tc]).length === 0) {
@@ -62,8 +60,6 @@
           setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
         }
       }
-      setText('ar-sc-total-l', totalL.toLocaleString());
-      setText('ar-sc-total-r', totalR.toLocaleString());
     }
     setText('ar-by-reasons-count', `${reasons.length}건`);
     if (closeN > 0) {
