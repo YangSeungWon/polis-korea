@@ -43,6 +43,11 @@
     <p class="lede">선거에 묶이지 않는 상시 지표. 대통령 국정수행 평가와 정당 지지도를 하나의 연속 흐름으로.</p>
   </section>
 
+  <div class="tk-controls">
+    <label class="tk-toggle"><input type="checkbox" id="tk-adjust"> <span>house effect 보정</span></label>
+    <span class="tk-controls-note">기관별 lean(아래 표)을 빼서 무편향 추세로 — 끄면 원자료.</span>
+  </div>
+
   <div id="tk-loading">데이터 불러오는 중…</div>
 
   <section class="tk-section">
@@ -65,6 +70,14 @@
     </div>
     <p class="tk-section-sub">전국 단위 다기관 조사의 정당 지지도. <b>점 = 개별 조사</b>(house effect 산포), <b>선 = 평활 추세</b>. NESDC 등록 공표 조사를 통합해 연속 시계열로.</p>
     <div class="tk-chart" id="tk-party"></div>
+  </section>
+
+  <section class="tk-section">
+    <div class="tk-section-head">
+      <h2 class="tk-section-title">조사기관별 성향 (house effect)</h2>
+    </div>
+    <p class="tk-section-sub">각 기관 조사값에서 전체 추세선을 뺀 <b>잔차의 평균</b>. +면 그 정당/지표를 평균보다 높게, −면 낮게 부르는 경향(전체 평균 대비 상대값). 표본 15건 이상.</p>
+    <div id="tk-lean"></div>
   </section>
 
   <footer class="foot">

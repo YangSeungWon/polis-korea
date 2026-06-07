@@ -67,9 +67,45 @@
     return segs;
   }
 
+  // 임의 시점 t의 평활 추세값 (잔차 계산용).
+  function kernelAt(pts, t, bw) {
+    let sw = 0, sv = 0;
+    for (const p of pts) { const d = t - p.t; const w = Math.exp(-(d * d) / (bw * bw)); sw += w; sv += w * p.v; }
+    return sw > 1e-9 ? sv / sw : null;
+  }
+
+  // house effect = 기관별 (조사값 − 추세값) 평균. minN 미만 기관은 0(축소).
+  // points: [{t,v,ag}]. 반환: {ag: lean}.
+  function houseEffects(points, bw, minN) {
+    bw = bw || 30 * 864e5; minN = minN || 12;
+    const tr = points.map((p) => ({ t: p.t, v: p.v }));
+    const res = {};
+    for (const p of points) {
+      const T = kernelAt(tr, p.t, bw);
+      if (T != null) (res[p.ag] ||= []).push(p.v - T);
+    }
+    const house = {};
+    for (const [ag, r] of Object.entries(res)) {
+      house[ag] = r.length >= minN ? r.reduce((a, b) => a + b, 0) / r.length : 0;
+    }
+    return house;
+  }
+  // 보정 적용: 점들에서 그 기관 lean을 뺌.
+  const applyHouse = (points, house) =>
+    points.map((p) => ({ t: p.t, v: p.v - (house[p.ag] || 0), ag: p.ag }));
+
+  const state = { adjust: false };
+
   // ===== ① 국정평가 =====
-  function renderApproval(records) {
+  function renderApproval(records, adjust) {
     if (!records.length) return '<div class="tk-empty">데이터 없음</div>';
+    // house effect (긍정·부정 각각) — 보정 on이면 점/추세에 적용.
+    const houseOf = {};
+    if (adjust) {
+      for (const key of ['positive', 'negative']) {
+        houseOf[key] = houseEffects(records.map((r) => ({ t: ms(r.period_end), v: r[key], ag: r.agency })));
+      }
+    }
     const W = 960, H = 360, P = { l: 30, r: 64, t: 28, b: 22 };
     const tMin = Math.min(...records.map((r) => ms(r.period_end)));
     const tMax = Math.max(...records.map((r) => ms(r.period_end)));
@@ -92,9 +128,10 @@
     const grid = gridAxes(W, H, P, tMin, tMax, yMax, 20, xOf, yOf);
     function lineFor(key, color) {
       let body = '';
+      const house = houseOf[key] || {};
       for (const p of PRES) {
         const pts = records.filter((r) => r.subject === p.name)
-          .map((r) => ({ t: ms(r.period_end), v: r[key] }));
+          .map((r) => ({ t: ms(r.period_end), v: r[key] - (house[r.agency] || 0) }));
         if (!pts.length) continue;
         for (const r of pts) {
           body += `<circle cx="${xOf(r.t).toFixed(1)}" cy="${yOf(r.v).toFixed(1)}" r="1.2" fill="${color}" opacity="0.2"/>`;
@@ -117,8 +154,8 @@
   }
 
   // ===== ② 정당지지 =====
-  function renderPartySupport(polls) {
-    // 개별 조사 점(전국) — party -> [{t,v}]
+  function renderPartySupport(polls, adjust) {
+    // 개별 조사 점(전국) — party -> [{t,v,ag}]
     const byParty = {};
     for (const p of polls) {
       if (!p.period_end || !p.candidates) continue;
@@ -127,14 +164,15 @@
       for (const c of p.candidates) {
         if (c.pct == null || !c.party) continue;
         const party = CANON[c.party] || c.party;
-        (byParty[party] ||= []).push({ t, v: c.pct });
+        (byParty[party] ||= []).push({ t, v: c.pct, ag: p.agency || '?' });
       }
     }
     const series = {};
     let tMin = Infinity, tMax = -Infinity, yMax = 10;
-    for (const [party, pts] of Object.entries(byParty)) {
+    for (let [party, pts] of Object.entries(byParty)) {
       if (NON_PARTY.has(party)) continue;
       pts.sort((a, b) => a.t - b.t);
+      if (adjust) pts = applyHouse(pts, houseEffects(pts));
       // 주요 정당만 — 평활 추세 최고 ≥ 5% (단발 이상치 말고 추세 기준).
       const sm = kernelSmooth(pts, 30).flat();
       const peak = Math.max(...sm.map((p) => p.v), 0);
@@ -191,19 +229,57 @@
     const recs = apprData.flatMap((d) => d.records || [])
       .filter((r) => r.subject && r.positive != null && !seen.has(r.ntt_id) && seen.add(r.ntt_id))
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
-    document.getElementById('tk-approval').innerHTML = renderApproval(recs);
-    const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)} ~ ${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
-    document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
-
     // 정당지지 (전국만)
     const polls = [];
     for (const a of aggs) for (const p of (a.polls || [])) {
       if (p.metric_type === '정당지지' && !p.sido) polls.push(p);
     }
-    document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
-    document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사 · 월평균`;
 
+    function renderAll() {
+      document.getElementById('tk-approval').innerHTML = renderApproval(recs, state.adjust);
+      document.getElementById('tk-party').innerHTML = renderPartySupport(polls, state.adjust);
+      const tag = state.adjust ? ' · house 보정' : '';
+      const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
+      document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}${tag}`;
+      document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사${tag}`;
+    }
+    renderAll();
+    renderLeanTable(recs, polls);
+
+    const tg = document.getElementById('tk-adjust');
+    if (tg) tg.addEventListener('change', () => { state.adjust = tg.checked; renderAll(); });
     document.getElementById('tk-loading')?.remove();
+  }
+
+  // ---- 기관별 lean 표 (538식 투명성) — 민주·국힘·국정긍정 잔차 평균 ----
+  function renderLeanTable(recs, polls) {
+    const host = document.getElementById('tk-lean');
+    if (!host) return;
+    const ptsOf = (party) => {
+      const out = [];
+      for (const p of polls) {
+        if (!p.period_end) continue;
+        const t = ms(p.period_end);
+        for (const c of (p.candidates || [])) {
+          if (c.pct != null && (CANON[c.party] || c.party) === party) out.push({ t, v: c.pct, ag: p.agency || '?' });
+        }
+      }
+      return out;
+    };
+    const dem = houseEffects(ptsOf('더불어민주당'));
+    const ppp = houseEffects(ptsOf('국민의힘'));
+    const app = houseEffects(recs.map((r) => ({ t: ms(r.period_end), v: r.positive, ag: r.agency })));
+    // 표본 수 (민주 기준)
+    const cnt = {};
+    for (const p of polls) cnt[p.agency || '?'] = (cnt[p.agency || '?'] || 0) + 1;
+    const ags = [...new Set([...Object.keys(dem), ...Object.keys(ppp), ...Object.keys(app)])]
+      .filter((a) => (dem[a] || ppp[a] || app[a]) && (cnt[a] || 0) >= 15)
+      .sort((a, b) => (dem[b] || 0) - (dem[a] || 0));
+    const cell = (v) => v == null || v === 0 ? '<td class="z">·</td>'
+      : `<td class="${v > 0 ? 'pos' : 'neg'}">${v > 0 ? '+' : ''}${v.toFixed(1)}</td>`;
+    const rows = ags.map((a) =>
+      `<tr><td class="ag">${a.replace(/\(주\)|주식회사/g, '').trim()}</td>${cell(dem[a])}${cell(ppp[a])}${cell(app[a])}<td class="n">${cnt[a] || ''}</td></tr>`).join('');
+    host.innerHTML = `<table class="tk-lean-tbl"><thead><tr><th>조사기관</th><th>민주</th><th>국힘</th><th>국정<br>긍정</th><th>n</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
