@@ -33,7 +33,7 @@ CSV = ROOT / "data" / "raw" / "nesdc_etc_polls.csv"
 OUT = ROOT / "data" / "polls" / "aggregated_etc.json"
 _TITLE = re.compile(r"정당\s*지지|지지.{0,2}정당|어느\s*정당")
 _TITLE_EXC = ("비례", "후보", "대선", "추이", "차기")
-_VAL = re.compile(r"^\d{1,3}(?:\.\d+)?$")
+_VAL = re.compile(r"^(?:\d{1,3}(?:\.\d+)?|\.\d+)$")  # 37.6·5·.7(=0.7) 모두 — 군소 컬럼 누락 방지
 # 양대 계열 — 둘 다 있어야 진짜 정당지지표
 DEM = {"더불어민주당", "민주당", "더불어시민당", "새정치민주연합", "민주통합당"}
 PPP = {"국민의힘", "국힘", "미래통합당", "자유한국당", "새누리당", "미래한국당", "국민의미래"}
@@ -105,7 +105,8 @@ def extract_page(pg, debug=False) -> list | None:
         labels = ["" for _ in cols]
         col_xs = [xc for xc, _ in cols]
         for tt in tops:
-            if not (title_y <= tt < top):
+            # 헤더 밴드 = 전체 행 바로 위 ~75px만 (질문/제목 prose 오염 방지).
+            if not (top - 75 <= tt < top):
                 continue
             for hx, htext in rows[tt]:
                 if not re.search(r"[가-힣]", htext):

@@ -293,10 +293,12 @@ def extract_candidates(table: list[list[str]], kind: str) -> list[dict]:
         pct = _parse_pct(data_row[col_i])
         if pct is None:
             continue
-        # 정당 매칭 (긴 이름 우선) — 약칭(국힘)은 정식명(국민의힘)으로 정규화
+        # 정당 매칭 (긴 이름 우선) — 약칭(국힘)은 정식명(국민의힘)으로 정규화.
+        # 헤더 공백·개행 제거 후 매칭: 분할 헤더 '열린\n민주당' → '열린민주당'(아니면 '민주당' 오매칭).
         party = ""
+        h_nows = re.sub(r"\s+", "", h)
         for pname in sorted(PARTY_NAMES, key=len, reverse=True):
-            if pname in h:
+            if pname in h_nows:
                 party = PARTY_CANON.get(pname, pname)
                 break
         name = ""
