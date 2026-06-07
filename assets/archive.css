@@ -540,3 +540,46 @@
 .ar-hm-item { display: inline-flex; align-items: baseline; gap: 6px; }
 .ar-hm-label { color: var(--ink-soft); font-weight: 600; }
 .ar-hm-value { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* Exit poll dumbbell chart */
+.ar-exit-block { margin-bottom: 24px; }
+.ar-exit-source {
+  font-size: 14px; font-weight: 800; margin: 0 0 10px;
+  display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline;
+}
+.ar-exit-hitrate { font-size: 12px; font-weight: 700; color: var(--ink); padding: 2px 8px; background: var(--bg2); border-radius: 2px; }
+.ar-exit-err { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+.ar-exit-dumbbell { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+.ar-exit-dbb {
+  display: grid;
+  grid-template-columns: 70px 1fr 50px 18px 50px 60px 20px;
+  gap: 10px; align-items: center;
+  padding: 6px 12px; background: var(--bg);
+  font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.ar-exit-dbb:nth-child(even) { background: var(--bg2); }
+.ar-exit-dbb.is-miss { background: rgba(230,30,43,0.06); }
+.ar-exit-dbb .ar-exit-sido { font-weight: 700; color: var(--ink); }
+.ar-exit-track {
+  position: relative; height: 14px;
+  background: var(--bg3); border-radius: 7px;
+}
+.ar-exit-line {
+  position: absolute; top: 6px; height: 2px;
+  background: var(--ink-soft);
+}
+.ar-exit-dot {
+  position: absolute; top: 2px; width: 10px; height: 10px;
+  border-radius: 50%; transform: translateX(-50%);
+  border: 1.5px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--ink-soft);
+}
+.ar-exit-dot-pred { opacity: 0.55; }
+.ar-exit-dot-actual { box-shadow: 0 0 0 1.5px var(--ink); }
+.ar-exit-pred-pct, .ar-exit-actual-pct { font-weight: 700; }
+.ar-exit-pred-pct { text-align: right; opacity: 0.7; }
+.ar-exit-arrow { color: var(--ink-mute); text-align: center; }
+.ar-exit-actual-pct { text-align: right; }
+.ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
+.ar-exit-mark { font-weight: 800; text-align: center; }
+.ar-exit-miss-mark { color: #c81825; }

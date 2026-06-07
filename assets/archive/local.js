@@ -216,29 +216,62 @@
         if (cs[0]) actual[r.sido] = { party: cs[0].party, pct: cs[0].pct };
       }
     }
+    // Dumbbell chart per source: 17 시도 × (예측 dot ●━ line ━● 실제 dot).
+    const W = 100;  // bar 영역 폭 %
     for (const ep of blocks) {
       const card = document.createElement('div');
       card.className = 'ar-exit-block';
-      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}</h3>`;
-      const grid = document.createElement('div');
-      grid.className = 'ar-exit-rows';
+      // 적중률·평균 오차 계산
+      let hits = 0, total = 0, errSum = 0, errN = 0;
+      const rows = [];
       for (const sido of SIDO_ORDER) {
-        const e = (ep.results || {})[sido];
-        if (!e?.[0]) continue;
-        const top = e[0];
+        const e = (ep.results || {})[sido]?.[0];
         const a = actual[sido];
-        const hit = a && a.party === top.party;
-        const row = document.createElement('div');
-        row.className = 'ar-exit-row ' + (a ? (hit ? 'is-hit' : 'is-miss') : '');
-        const col = pcol(top.party);
-        row.innerHTML = `
-          <span class="ar-exit-sido">${ssh(sido)}</span>
-          <span class="ar-exit-pred" style="color:${col}">${top.party} ${top.pct?.toFixed(1) || ''}</span>
-          ${a ? `<span class="ar-exit-actual">실제 ${a.party} ${a.pct?.toFixed(1) || ''}${hit ? ' ✓' : ' ✗'}</span>` : ''}
-        `;
-        grid.appendChild(row);
+        if (!e || !a) { if (e || a) rows.push({ sido, e, a }); continue; }
+        const hit = e.party === a.party;
+        if (hit) hits++;
+        total++;
+        if (e.pct != null && a.pct != null) {
+          errSum += Math.abs(e.pct - a.pct);
+          errN++;
+        }
+        rows.push({ sido, e, a, hit });
       }
-      card.appendChild(grid);
+      const hitRate = total ? (hits / total * 100).toFixed(0) : '—';
+      const avgErr = errN ? (errSum / errN).toFixed(2) : '—';
+      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}
+        <span class="ar-exit-hitrate">${hits}/${total} 적중 (${hitRate}%)</span>
+        <span class="ar-exit-err">평균 오차 ${avgErr}%p</span></h3>`;
+      const chart = document.createElement('div');
+      chart.className = 'ar-exit-dumbbell';
+      // 큰 오차 미스 사례부터 위쪽으로 정렬 (옵션 — 일단 SIDO_ORDER 유지)
+      for (const row of rows) {
+        const { sido, e, a } = row;
+        if (!e || !a) continue;
+        const ePct = e.pct || 0;
+        const aPct = a.pct || 0;
+        const eCol = pcol(e.party);
+        const aCol = pcol(a.party);
+        const lo = Math.min(ePct, aPct);
+        const hi = Math.max(ePct, aPct);
+        const diff = (e.pct != null && a.pct != null) ? Math.abs(ePct - aPct).toFixed(1) : '';
+        const hitMark = row.hit ? '<span class="ar-exit-mark">✓</span>' : '<span class="ar-exit-mark ar-exit-miss-mark">✗</span>';
+        chart.innerHTML += `
+          <div class="ar-exit-dbb ${row.hit ? 'is-hit' : 'is-miss'}">
+            <span class="ar-exit-sido">${ssh(sido)}</span>
+            <div class="ar-exit-track">
+              <div class="ar-exit-line" style="left:${lo}%;width:${hi - lo}%"></div>
+              <div class="ar-exit-dot ar-exit-dot-pred" style="left:${ePct}%;background:${eCol}" title="예측 ${e.party} ${ePct.toFixed(1)}%"></div>
+              <div class="ar-exit-dot ar-exit-dot-actual" style="left:${aPct}%;background:${aCol}" title="실제 ${a.party} ${aPct.toFixed(1)}%"></div>
+            </div>
+            <span class="ar-exit-pred-pct" style="color:${eCol}">${ePct.toFixed(1)}</span>
+            <span class="ar-exit-arrow">→</span>
+            <span class="ar-exit-actual-pct" style="color:${aCol}">${aPct.toFixed(1)}</span>
+            <span class="ar-exit-diff">${diff}%p</span>
+            ${hitMark}
+          </div>`;
+      }
+      card.appendChild(chart);
       host.appendChild(card);
     }
     document.getElementById('ar-exitpoll').hidden = false;
