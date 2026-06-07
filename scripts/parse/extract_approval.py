@@ -39,6 +39,7 @@ CSV_FILES = [
     "nesdc_9th_polls.csv", "nesdc_8th_polls.csv", "nesdc_7th_polls.csv",
     "nesdc_22gen_polls.csv", "nesdc_21gen_polls.csv", "nesdc_20gen_polls.csv",
     "nesdc_21pres_polls.csv", "nesdc_20pres_polls.csv", "nesdc_19pres_polls.csv",
+    "nesdc_etc_polls.csv",   # VT012 '기타' = 선거 무관 전국 정기(정례) 정당지지/국정 — 연속 트래킹 핵심
 ]
 OUT = ROOT / "data" / "polls" / "approval.json"
 
