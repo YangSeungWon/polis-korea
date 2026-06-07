@@ -128,8 +128,12 @@ def extract_page(pg, debug=False) -> list | None:
 def _validate(cands, debug, mode):
     parties = {c["party"] for c in cands}
     psum = sum(c["pct"] for c in cands)
+    pmax = max((c["pct"] for c in cands), default=0)
     if debug:
         print(f"      [{mode}] {[(c['party'],c['pct']) for c in cands]} 합{psum:.0f}", file=sys.stderr)
+    # 단일 정당 >65% = 비현실(이 시대 전국 최고 ~51%, 고편향 house ~61%) → cross-tab 오독 배제.
+    if pmax > 65:
+        return None
     if (parties & DEM) and (parties & PPP) and len(cands) >= 2 and 20 <= psum <= 102:
         best = {}
         for c in cands:
