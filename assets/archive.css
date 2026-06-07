@@ -583,3 +583,23 @@
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
 .ar-exit-mark { font-weight: 800; text-align: center; }
 .ar-exit-miss-mark { color: #c81825; }
+
+@media (max-width: 480px) {
+  /* Dumbbell mobile — track 영역 보존, 우측 텍스트 컴팩트 */
+  .ar-exit-dbb {
+    grid-template-columns: 38px 1fr 36px 36px 16px;
+    gap: 6px; padding: 5px 8px; font-size: 11px;
+  }
+  .ar-exit-dbb .ar-exit-arrow,
+  .ar-exit-dbb .ar-exit-diff { display: none; }
+  .ar-exit-dbb .ar-exit-pred-pct, .ar-exit-dbb .ar-exit-actual-pct { font-size: 11px; }
+  .ar-exit-source { font-size: 13px; }
+  .ar-exit-hitrate { font-size: 11px; }
+  .ar-exit-err { font-size: 11px; }
+  .ar-exit-dot { width: 8px; height: 8px; }
+  /* Hero scorecard — 모바일에서 라벨/숫자 약간 작게 */
+  .ar-sc-num { font-size: 18px; }
+  .ar-sc-foot .ar-sc-num { font-size: 22px; }
+  .ar-sc-label { font-size: 11px; min-width: 70px; }
+  .ar-hero-meta { gap: 8px 14px; font-size: 12px; }
+}
