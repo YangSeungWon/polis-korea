@@ -631,3 +631,16 @@
 @media (max-width: 480px) {
   .ar-nav-name { font-size: 12px; }
 }
+
+/* === 광역단체장 hex (시·도) === */
+.ar-governor-hex { width: 100%; max-width: 700px; margin: 0 auto; }
+.governor-hex-svg { width: 100%; height: auto; }
+.gov-hex-cell { stroke: var(--bg); stroke-width: 1.5; }
+.gov-hex-cell.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
+.gov-hex-label { text-anchor: middle; pointer-events: none; }
+.gov-hex-label.on-data { fill: var(--bg); }
+.gov-hex-label.no-data { fill: var(--ink-soft); }
+.gov-hex-name { fill: var(--bg); text-anchor: middle; pointer-events: none; }
+.gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
+.metro-hex-label { fill: var(--ink); }
+.council-hex-sido-label { fill: var(--ink); opacity: 0.35; }

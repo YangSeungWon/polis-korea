@@ -332,6 +332,12 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
     <div class="ar-offices-grid" id="ar-offices-grid"></div>
   </section>
 
+  <section class="ar-section" id="ar-governor-hex-section" hidden>
+    <h2 class="ar-section-title">광역단체장 결과</h2>
+    <p class="ar-source-line">17개 시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <div class="ar-governor-hex" id="ar-governor-hex"></div>
+  </section>
+
   <section class="ar-section" id="ar-metro-hex-section" hidden>
     <h2 class="ar-section-title">시·도의회 의석 분포</h2>
     <p class="ar-source-line">각 시도 cluster — 광역의원 지역구(tc=5) + 비례(tc=8). 정당별 색.</p>
@@ -455,6 +461,7 @@ FOOT = """
 {extra_scripts}<script src="assets/elections.js"></script>
 <script src="assets/archive/shared.js"></script>
 <script src="assets/archive/local.js"></script>
+<script src="assets/archive/render-governor-hex.js"></script>
 <script src="assets/archive/render-metro-hex.js"></script>
 <script src="assets/archive/render-council-hex.js"></script>
 <script src="assets/archive/render-winners.js"></script>

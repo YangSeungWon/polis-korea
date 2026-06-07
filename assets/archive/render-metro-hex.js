@@ -181,7 +181,7 @@
       t.setAttribute('text-anchor', 'middle');
       t.setAttribute('font-size', '13');
       t.setAttribute('font-weight', '700');
-      t.setAttribute('fill', '#0a0e1a');
+      t.setAttribute('class', 'metro-hex-label');
       t.textContent = info.label || sd;
       g.appendChild(t);
       svg.appendChild(g);

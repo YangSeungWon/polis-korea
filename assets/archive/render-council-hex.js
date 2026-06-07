@@ -158,7 +158,7 @@
       t.setAttribute('dominant-baseline', 'middle');
       t.setAttribute('font-size', '38');
       t.setAttribute('font-weight', '800');
-      t.setAttribute('fill', 'rgba(10,14,26,0.35)');
+      t.setAttribute('class', 'council-hex-sido-label');
       t.setAttribute('pointer-events', 'none');
       t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       t.textContent = SIDO_LABEL_SHORT[sd] || sd;
