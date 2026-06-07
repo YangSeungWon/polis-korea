@@ -9,43 +9,115 @@
   }
 
   function renderHero(ctx) {
-    const { results, polls } = ctx;
-    if (polls) document.getElementById('ar-polls-count').textContent = polls.length.toLocaleString() + '건';
+    const { results, polls, exitData } = ctx;
     if (!results?.races) return;
-    const races = sidoRaces(results);
-    const partyCount = {};
-    let voters = 0, electors = 0;
-    if (races.length) {
-      // 시도별 race 있음 (NEC 또는 1회 위키) — 시도별 1위 정당 카운트
-      for (const r of races) {
-        const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-        if (cands[0]) partyCount[cands[0].party] = (partyCount[cands[0].party] || 0) + 1;
-        voters += r.voters || 0;
-        electors += r.electors || 0;
-      }
-    } else {
-      // 시도 race 없음 — nation 광역단체장 race로 fallback (옛 회차 위키 source)
-      const nat3 = (results.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === '3');
-      if (nat3) {
-        for (const c of nat3.candidates || []) {
-          if (c.party && c.seats) partyCount[c.party] = (partyCount[c.party] || 0) + c.seats;
+    // tc별 정당 의석 집계 (지역구 winner + 비례 seats + sigungu_summary).
+    const byTc = { '3': {}, '4': {}, '5': {}, '6': {} };
+    let voters = 0, electors = 0, raceCount = 0;
+    for (const r of results.races) {
+      const tc = r.sg_typecode;
+      if (tc === '3' && r.scope === 'sido') {
+        const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+        if (top) byTc['3'][top.party] = (byTc['3'][top.party] || 0) + 1;
+        voters += r.voters || 0; electors += r.electors || 0; raceCount++;
+      } else if (tc === '3' && r.scope === 'nation') {
+        for (const c of r.candidates || []) if (c.party && c.seats) byTc['3'][c.party] = (byTc['3'][c.party] || 0) + c.seats;
+        voters += r.voters || 0; electors += r.electors || 0;
+      } else if (tc === '4' && r.scope === 'sigungu') {
+        const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+        if (top) byTc['4'][top.party] = (byTc['4'][top.party] || 0) + 1;
+      } else if (tc === '5') {
+        if (r.scope === 'sido_summary') {
+          for (const c of r.candidates || []) if (c.seats) byTc['5'][c.party] = (byTc['5'][c.party] || 0) + c.seats;
+        } else if (r.scope === 'district') {
+          const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+          if (top) byTc['5'][top.party] = (byTc['5'][top.party] || 0) + 1;
         }
-        voters = nat3.voters || 0;
-        electors = nat3.electors || 0;
+      } else if (tc === '6') {
+        if (r.scope === 'sigungu_summary') {
+          for (const c of r.candidates || []) if (c.seats) byTc['6'][c.party] = (byTc['6'][c.party] || 0) + c.seats;
+        } else if (r.scope === 'district') {
+          for (const c of r.candidates || []) if (c.won) byTc['6'][c.party] = (byTc['6'][c.party] || 0) + 1;
+        }
+      } else if (tc === '8' && r.scope === 'proportional_sido') {
+        for (const c of r.candidates || []) if (c.seats) byTc['5'][c.party] = (byTc['5'][c.party] || 0) + c.seats;
+      } else if (tc === '9' && r.scope === 'proportional_sigungu') {
+        for (const c of r.candidates || []) if (c.seats) byTc['6'][c.party] = (byTc['6'][c.party] || 0) + c.seats;
       }
     }
-    const sorted = Object.entries(partyCount).sort((a, b) => b[1] - a[1]).slice(0, 3);
-    const govEl = document.getElementById('ar-governor-summary');
-    if (sorted.length && govEl) {
-      govEl.innerHTML = sorted.map(([p, c]) =>
-        `<span style="color:${pcol(p)};margin-right:6px"><b>${c}</b> ${p}</span>`).join('');
+    // 전체 합계로 1·2당 결정
+    const totalByParty = {};
+    for (const tc of ['3', '4', '5', '6']) {
+      for (const [p, n] of Object.entries(byTc[tc])) totalByParty[p] = (totalByParty[p] || 0) + n;
     }
-    if (electors > 0) document.getElementById('ar-turnout').textContent = (voters / electors * 100).toFixed(1) + '%';
+    const sorted = Object.entries(totalByParty).sort((a, b) => b[1] - a[1]);
+    if (sorted.length === 0) return;
+    const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
+    const sc = document.getElementById('ar-scorecard');
+    if (sc) sc.removeAttribute('hidden');
+    const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
+    const renderParty = (p, side) => {
+      const col = pcol(p);
+      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${p}</span>`;
+    };
+    setHTML('ar-sc-p1', renderParty(p1, 'l'));
+    if (p2) setHTML('ar-sc-p2', renderParty(p2, 'r'));
+    let totalL = 0, totalR = 0;
+    for (const tc of ['3', '4', '5', '6']) {
+      const l = byTc[tc][p1] || 0;
+      const r = p2 ? (byTc[tc][p2] || 0) : 0;
+      totalL += l; totalR += r;
+      setText(`ar-sc-${tc}-l`, l ? l.toLocaleString() : '—');
+      setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
+    }
+    setText('ar-sc-total-l', totalL.toLocaleString());
+    setText('ar-sc-total-r', totalR.toLocaleString());
+
+    // 하단 meta
+    if (electors > 0) setText('ar-turnout', (voters / electors * 100).toFixed(1) + '%');
+    // 박빙 — 1·2위 차이 5%p 미만 race 카운트 (지역구만)
+    let closeN = 0;
+    for (const r of results.races) {
+      if (!['3', '4', '5', '6'].includes(r.sg_typecode)) continue;
+      if (!['sido', 'sigungu', 'district'].includes(r.scope)) continue;
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (cs.length >= 2 && cs[0].pct != null && cs[1].pct != null) {
+        if (cs[0].pct - cs[1].pct < 5) closeN++;
+      }
+    }
+    if (closeN > 0) {
+      setText('ar-close-count', `${closeN}곳`);
+      document.getElementById('ar-hm-close')?.removeAttribute('hidden');
+    }
+    // 출구조사 적중
+    if (exitData?.sources?.length) {
+      const exitRaces = sidoRaces(results);
+      const actual = {};
+      for (const r of exitRaces) {
+        const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+        if (top) actual[r.sido] = top.party;
+      }
+      let hits = 0, total = 0;
+      const src = exitData.sources[0];
+      for (const sido of Object.keys(src.results || {})) {
+        const pred = src.results[sido]?.[0]?.party;
+        if (!pred || !actual[sido]) continue;
+        total++; if (pred === actual[sido]) hits++;
+      }
+      if (total) {
+        setText('ar-exit-hit', `${hits}/${total}`);
+        document.getElementById('ar-hm-exit')?.removeAttribute('hidden');
+      }
+    }
+    if (polls?.length) {
+      setText('ar-polls-count', polls.length.toLocaleString() + '건');
+      document.getElementById('ar-hm-polls')?.removeAttribute('hidden');
+    }
     const meta = results._meta || {};
-    // nec-live-portal source라도 is_final이면 '확정' (개표 종료 후 라이브 소스 유지).
     const sourceLabel = meta.source === 'wikipedia-ko-infobox' || meta.source === 'wikipedia-ko-body'
       ? '위키' : (meta.is_final ? '확정' : (meta.source === 'nec-live-portal' ? '잠정' : '진행'));
-    document.getElementById('ar-status').textContent = `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || meta.election_date || '미상'}`;
+    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || meta.election_date || '미상'}`);
   }
 
   function renderCounting(ctx) {
