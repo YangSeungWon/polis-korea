@@ -16,6 +16,20 @@
     .map((s) => `data/polls/aggregated_${s}.json`);
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
   const NON_PARTY = new Set(['무소속', '없음', '기타', '무당층', '지지정당없음', '기타정당', '지지정당 없음']);
+
+  // 한 조사의 candidates → [{party(canon), pct}]. 핵심 보정: '더불어민주당'이 명시된 조사에
+  // 별도 '민주당'(1~8%)이 또 있으면 그건 열린민주당 등 군소의 split-header 오라벨이므로
+  // 더불어민주당으로 합치지 않음(그대로 두면 CANON이 합쳐 더불어민주당 추세를 끌어내림).
+  function cleanCands(poll) {
+    const cs = (poll.candidates || []).filter((c) => c.pct != null && c.party);
+    const hasDLP = cs.some((c) => c.party === '더불어민주당');
+    const out = [];
+    for (const c of cs) {
+      if (c.party === '민주당' && hasDLP) continue;  // 오라벨 군소 — 제외
+      out.push({ party: CANON[c.party] || c.party, pct: c.pct });
+    }
+    return out;
+  }
   const ms = (d) => Date.parse(d);
   const ym = (d) => d.slice(0, 7);
 
@@ -161,10 +175,8 @@
       if (!p.period_end || !p.candidates) continue;
       const t = ms(p.period_end);
       if (!isFinite(t)) continue;
-      for (const c of p.candidates) {
-        if (c.pct == null || !c.party) continue;
-        const party = CANON[c.party] || c.party;
-        (byParty[party] ||= []).push({ t, v: c.pct, ag: p.agency || '?' });
+      for (const c of cleanCands(p)) {
+        (byParty[c.party] ||= []).push({ t, v: c.pct, ag: p.agency || '?' });
       }
     }
     const series = {};
@@ -260,8 +272,8 @@
       for (const p of polls) {
         if (!p.period_end) continue;
         const t = ms(p.period_end);
-        for (const c of (p.candidates || [])) {
-          if (c.pct != null && (CANON[c.party] || c.party) === party) out.push({ t, v: c.pct, ag: p.agency || '?' });
+        for (const c of cleanCands(p)) {
+          if (c.party === party) out.push({ t, v: c.pct, ag: p.agency || '?' });
         }
       }
       return out;
