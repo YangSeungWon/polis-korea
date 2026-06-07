@@ -55,58 +55,10 @@
   const pathOf = (pts, xOf, yOf) =>
     pts.map((p, i) => `${i ? 'L' : 'M'}${xOf(p.t).toFixed(1)},${yOf(p.v).toFixed(1)}`).join(' ');
 
-  // Gaussian 커널 평활 — 불규칙 간격 개별 조사 → 추세선. 시간창(bw) 안 다기관 평균으로
-  // house effect 완화(가중평균이라 구성편향도 단순 월평균보다 덜함). 큰 공백은 segment로 끊음.
-  function kernelSmooth(points, bwDays) {
-    if (points.length < 2) return points.length ? [points.slice()] : [];
-    const pts = points.slice().sort((a, b) => a.t - b.t);
-    const bw = bwDays * 864e5, step = 7 * 864e5, maxGap = 75 * 864e5;
-    const t0 = pts[0].t, t1 = pts[pts.length - 1].t;
-    const segs = [];
-    let cur = [];
-    for (let t = t0; t <= t1 + 1; t += step) {
-      let sw = 0, sv = 0, near = Infinity;
-      for (const p of pts) {
-        const d = t - p.t;
-        if (d > near + 4 * bw) continue;
-        const ad = Math.abs(d);
-        near = Math.min(near, ad);
-        const w = Math.exp(-(d * d) / (bw * bw));
-        sw += w; sv += w * p.v;
-      }
-      if (near <= maxGap && sw > 1e-9) cur.push({ t, v: sv / sw });
-      else if (cur.length) { segs.push(cur); cur = []; }
-    }
-    if (cur.length) segs.push(cur);
-    return segs;
-  }
-
-  // 임의 시점 t의 평활 추세값 (잔차 계산용).
-  function kernelAt(pts, t, bw) {
-    let sw = 0, sv = 0;
-    for (const p of pts) { const d = t - p.t; const w = Math.exp(-(d * d) / (bw * bw)); sw += w; sv += w * p.v; }
-    return sw > 1e-9 ? sv / sw : null;
-  }
-
-  // house effect = 기관별 (조사값 − 추세값) 평균. minN 미만 기관은 0(축소).
-  // points: [{t,v,ag}]. 반환: {ag: lean}.
-  function houseEffects(points, bw, minN) {
-    bw = bw || 30 * 864e5; minN = minN || 12;
-    const tr = points.map((p) => ({ t: p.t, v: p.v }));
-    const res = {};
-    for (const p of points) {
-      const T = kernelAt(tr, p.t, bw);
-      if (T != null) (res[p.ag] ||= []).push(p.v - T);
-    }
-    const house = {};
-    for (const [ag, r] of Object.entries(res)) {
-      house[ag] = r.length >= minN ? r.reduce((a, b) => a + b, 0) / r.length : 0;
-    }
-    return house;
-  }
-  // 보정 적용: 점들에서 그 기관 lean을 뺌.
-  const applyHouse = (points, house) =>
-    points.map((p) => ({ t: p.t, v: p.v - (house[p.ag] || 0), ag: p.ag }));
+  // 평활·house effect — assets/poll-stats.js 공유 모듈 사용.
+  const kernelSmooth = (pts, bwDays) => PollStats.kernelSmooth(pts, bwDays);
+  const houseEffects = (pts) => PollStats.houseEffects(pts, { bwDays: 30, shrinkK: 10, minN: 3 });
+  const applyHouse = PollStats.applyHouse;
 
   const state = { adjust: false };
 
