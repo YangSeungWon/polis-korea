@@ -30,6 +30,7 @@ MENU = [
     ("지지율 추이", "/tracker.html", "tracker"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),
+    ("검색", "/search.html", "search"),
 ]
 
 # 파일 경로 → 활성 메뉴 키 매핑. 매치 안되면 is-current 없음 (archive 등).
@@ -47,6 +48,8 @@ def menu_for_path(rel_path: str) -> str | None:
         return "history"
     if p == "/timeline.html":
         return "timeline"
+    if p == "/search.html":
+        return "search"
     return None
 
 

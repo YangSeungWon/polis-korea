@@ -25,7 +25,7 @@
     <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+      <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
   <a href="/" class="hdr-link">홈</a>
   <span data-nav-urgent></span>
   <a href="/polls.html" class="hdr-link is-current">여론조사</a>
@@ -33,6 +33,7 @@
   <a href="/tracker.html" class="hdr-link">지지율 추이</a>
   <a href="/history.html" class="hdr-link">역대 결과</a>
   <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/search.html" class="hdr-link">검색</a>
   <!-- NAV_END -->
 </nav>
   <div class="hdr-meta">
@@ -63,6 +64,11 @@
       <button class="seg-btn" data-office="기초단체장">기초단체장</button>
       <button class="seg-btn" data-office="정당지지">정당지지</button>
     </div>
+    <div class="seg" role="tablist" aria-label="모드" id="mode-seg" hidden>
+      <button class="seg-btn is-active" data-mode="polls">여론조사 1위</button>
+      <button class="seg-btn" data-mode="result">실제 1위</button>
+    </div>
+    <div class="result-accuracy" id="result-accuracy"></div>
     <div class="seg" role="tablist" aria-label="단위" id="scope-seg" hidden>
       <button class="seg-btn is-active" data-scope="시도">시도 단위</button>
       <button class="seg-btn" data-scope="시군구">시군구 단위</button>
@@ -109,10 +115,12 @@
 <script src="assets/regions.js"></script>
 <script src="assets/parties.js"></script>
 <script src="assets/utils.js"></script>
+<script src="assets/poll-stats.js"></script>
 <script src="assets/hexgrid.js"></script>
 <script src="assets/polls/core.js"></script>
 <script src="assets/polls/render-hex.js"></script>
 <script src="assets/polls/render-map.js"></script>
+<script src="assets/polls/result-overlay.js"></script>
 <script src="assets/polls/chrome.js"></script>
 <script src="assets/polls/main.js"></script>
 </body>
