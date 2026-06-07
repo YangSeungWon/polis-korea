@@ -22,7 +22,7 @@
     <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+      <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
   <a href="/" class="hdr-link">홈</a>
   <span data-nav-urgent></span>
   <a href="/polls.html" class="hdr-link">여론조사</a>
@@ -30,6 +30,7 @@
   <a href="/tracker.html" class="hdr-link is-current">지지율 추이</a>
   <a href="/history.html" class="hdr-link">역대 결과</a>
   <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/search.html" class="hdr-link">검색</a>
   <!-- NAV_END -->
 </nav>
   <div class="hdr-meta">
@@ -40,7 +41,7 @@
 <main class="page">
   <section class="intro">
     <h1>지지율 추이</h1>
-    <p class="lede">선거에 묶이지 않는 상시 지표. 대통령 국정수행 평가와 정당 지지도를 하나의 연속 흐름으로.</p>
+    <p class="lede">선거에 묶이지 않는 상시 지표. 국정수행 평가·정당 지지도·차기 대선주자 선호를 하나의 연속 흐름으로. 점에 마우스를 올리면 개별 조사가 보인다.</p>
   </section>
 
   <div class="tk-controls">
@@ -70,6 +71,15 @@
     </div>
     <p class="tk-section-sub">전국 단위 다기관 조사의 정당 지지도. <b>점 = 개별 조사</b>(house effect 산포), <b>선 = 평활 추세</b>. NESDC 등록 공표 조사를 통합해 연속 시계열로.</p>
     <div class="tk-chart" id="tk-party"></div>
+  </section>
+
+  <section class="tk-section">
+    <div class="tk-section-head">
+      <h2 class="tk-section-title">차기 대선주자 선호</h2>
+      <span class="tk-section-meta" id="tk-cand-meta"></span>
+    </div>
+    <p class="tk-section-sub">“다음 대통령으로 누구를 선호하십니까?” <b>다자대결</b>(후보 4명 이상) 기준 — 양자대결·단독 적합도는 제외. 색은 소속 정당. 대선 국면(2016–17·2021–22·2024–25)별로 후보 동학이 보인다. 점에 마우스를 올리면 개별 조사.</p>
+    <div class="tk-chart" id="tk-cand"></div>
   </section>
 
   <section class="tk-section">

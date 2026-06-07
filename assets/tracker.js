@@ -110,6 +110,40 @@
 
   const state = { adjust: false };
 
+  // ===== 인터랙션: hover 툴팁 (차트별 점 좌표 저장 → 최근접 점 표시) =====
+  const HOVER = {};  // chartId → [{x,y,tip,color}]
+  function tipEl() {
+    let t = document.getElementById('tk-tip');
+    if (!t) { t = document.createElement('div'); t.id = 'tk-tip'; document.body.appendChild(t); }
+    return t;
+  }
+  function attachHover(id) {
+    const host = document.getElementById(id);
+    const svg = host && host.querySelector('svg');
+    const pts = HOVER[id];
+    if (!svg || !pts || !pts.length) return;
+    const tip = tipEl();
+    const move = (e) => {
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return;
+      const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
+      let best = null, bd = 20 * 20;
+      for (const q of pts) {
+        const dx = q.x - pt.x, dy = q.y - pt.y, d = dx * dx + dy * dy;
+        if (d < bd) { bd = d; best = q; }
+      }
+      if (best) {
+        tip.style.display = 'block';
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top = (e.clientY + 12) + 'px';
+        tip.innerHTML = `<span class="tk-tip-dot" style="background:${best.color}"></span>${best.tip}`;
+      } else { tip.style.display = 'none'; }
+    };
+    svg.addEventListener('mousemove', move);
+    svg.addEventListener('mouseleave', () => { tipEl().style.display = 'none'; });
+  }
+  const fmtD = (t) => new Date(t).toISOString().slice(0, 10);
+
   // ===== ① 국정평가 =====
   function renderApproval(records, adjust) {
     if (!records.length) return '<div class="tk-empty">데이터 없음</div>';
@@ -140,15 +174,18 @@
 
     // 긍정·부정 — 개별 조사 점(옅게) + 대통령별 평활 추세선(다기관 통합, house effect 완화).
     const grid = gridAxes(W, H, P, tMin, tMax, yMax, 20, xOf, yOf);
+    HOVER['tk-approval'] = [];
     function lineFor(key, color) {
       let body = '';
       const house = houseOf[key] || {};
+      const klabel = key === 'positive' ? '긍정' : '부정';
       for (const p of PRES) {
         const pts = records.filter((r) => r.subject === p.name)
-          .map((r) => ({ t: ms(r.period_end), v: r[key] - (house[r.agency] || 0) }));
+          .map((r) => ({ t: ms(r.period_end), v: r[key] - (house[r.agency] || 0), ag: r.agency }));
         if (!pts.length) continue;
         for (const r of pts) {
           body += `<circle cx="${xOf(r.t).toFixed(1)}" cy="${yOf(r.v).toFixed(1)}" r="1.2" fill="${color}" opacity="0.2"/>`;
+          HOVER['tk-approval'].push({ x: xOf(r.t), y: yOf(r.v), color, tip: `${p.name} ${klabel} <b>${r.v.toFixed(1)}%</b><br>${(r.ag || '').replace(/\(주\)/g, '')} · ${fmtD(r.t)}` });
         }
         const segs = kernelSmooth(pts, 30);
         for (const seg of segs) {
@@ -203,13 +240,16 @@
 
     const mean = (ps) => ps.reduce((s, p) => s + p.v, 0) / ps.length;
     parties.sort((a, b) => mean(series[b].sm) - mean(series[a].sm));
+    HOVER['tk-party'] = [];
     let lastLabelY = -99, dots = '', lines = '';
     for (const party of parties) {
       const { pts, sm } = series[party];
       const color = partyColor(party, new Date(tMax).toISOString().slice(0, 10));
+      const pshort = (typeof PARTY_SHORT !== 'undefined' && PARTY_SHORT[party]) || party;
       // 개별 조사 = 옅은 점 (house effect 산포)
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
+        HOVER['tk-party'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${pshort} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
       }
       // 평활 추세선 (공백 끊김 segment별)
       for (const seg of kernelSmooth(pts, 30)) {
@@ -224,6 +264,63 @@
     }
     const body = dots + lines;  // 점 먼저(아래), 선 위에
     return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="정당 지지도 추이">${grid}${body}</svg>`;
+  }
+
+  // ===== ③ 차기 대선주자 선호 (다자대결) =====
+  function renderCandidatePref(polls) {
+    // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
+    const byCand = {};  // name -> {pts:[{t,v,ag}], party}
+    for (const p of polls) {
+      const cs = (p.candidates || []).filter((c) => c.pct != null && c.name);
+      const s = cs.reduce((a, c) => a + c.pct, 0), mx = Math.max(0, ...cs.map((c) => c.pct));
+      if (cs.length < 4 || s < 70 || s > 106 || mx >= 55) continue;
+      const t = ms(p.period_end);
+      if (!isFinite(t)) continue;
+      for (const c of cs) {
+        (byCand[c.name] ||= { pts: [], party: c.party }).pts.push({ t, v: c.pct, ag: p.agency || '?' });
+        if (c.party) byCand[c.name].party = c.party;
+      }
+    }
+    const series = {};
+    let tMin = Infinity, tMax = -Infinity, yMax = 10;
+    for (const [name, o] of Object.entries(byCand)) {
+      o.pts.sort((a, b) => a.t - b.t);
+      const sm = kernelSmooth(o.pts, 25).flat();
+      const peak = Math.max(0, ...sm.map((p) => p.v));
+      if (peak < 8) continue;  // 주요 주자만
+      series[name] = { ...o, sm, peak };
+      for (const pt of o.pts) { tMin = Math.min(tMin, pt.t); tMax = Math.max(tMax, pt.t); }
+      yMax = Math.max(yMax, peak);
+    }
+    const names = Object.keys(series);
+    if (!names.length) return '<div class="tk-empty">데이터 없음</div>';
+    yMax = Math.min(60, Math.ceil(yMax / 10) * 10 + 5);
+    const W = 960, H = 380, P = { l: 30, r: 92, t: 16, b: 22 };
+    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
+    const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
+    const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
+
+    names.sort((a, b) => series[b].peak - series[a].peak);
+    HOVER['tk-cand'] = [];
+    let lastLabelY = -99, dots = '', lines = '';
+    for (const name of names) {
+      const { pts, sm, party } = series[name];
+      const color = party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888';
+      for (const p of pts) {
+        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
+        HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
+      }
+      for (const seg of kernelSmooth(pts, 25)) {
+        if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+      }
+      const last = sm[sm.length - 1];
+      if (!last) continue;
+      let ly = yOf(last.v) + 3;
+      if (ly - lastLabelY < 11) ly = lastLabelY + 11;
+      lastLabelY = ly;
+      lines += `<text x="${(W - P.r + 4).toFixed(1)}" y="${ly.toFixed(1)}" font-size="9.5" fill="${color}" font-weight="700">${name}</text>`;
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="차기 대선주자 선호 추이">${grid}${dots}${lines}</svg>`;
   }
 
   // ---- load ----
@@ -241,19 +338,24 @@
     const recs = apprData.flatMap((d) => d.records || [])
       .filter((r) => r.subject && r.positive != null && !seen.has(r.ntt_id) && seen.add(r.ntt_id))
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
-    // 정당지지 (전국만)
-    const polls = [];
+    // 정당지지(전국) · 차기 대선주자(대통령 후보지지, 전국)
+    const polls = [], candPolls = [];
     for (const a of aggs) for (const p of (a.polls || [])) {
-      if (p.metric_type === '정당지지' && !p.sido) polls.push(p);
+      if (p.sido) continue;
+      if (p.metric_type === '정당지지') polls.push(p);
+      else if (p.metric_type === '후보지지' && p.office_level === '대통령') candPolls.push(p);
     }
 
     function renderAll() {
       document.getElementById('tk-approval').innerHTML = renderApproval(recs, state.adjust);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls, state.adjust);
+      document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
       const tag = state.adjust ? ' · house 보정' : '';
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}${tag}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사${tag}`;
+      document.getElementById('tk-cand-meta').textContent = `다자대결 기준 · 대선 국면`;
+      ['tk-approval', 'tk-party', 'tk-cand'].forEach(attachHover);
     }
     renderAll();
     renderLeanTable(recs, polls);
