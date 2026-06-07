@@ -28,13 +28,22 @@ function renderDetail() {
     return;
   }
 
-  // 시계열 차트 — 정당지지는 정당별 추이 선, 그 외는 후보 산점도 (조사 ≥ 2건)
+  // 시계열 차트 — 정당지지는 정당별 추이 선, 그 외는 후보 산점도 (조사 ≥ 2건).
+  // 평활 + 밴드 + house effect 토글 (PollStats 사용).
+  const adjustHouse = !!state.adjustHouse;
+  const toggleHtml = `<label class="trend-toggle">
+    <input type="checkbox" id="trend-house"${adjustHouse ? ' checked' : ''}>
+    <span>house effect 보정</span>
+  </label>`;
   if (state.office === '정당지지') {
-    const svg = buildPartyTrendSVG(officePolls);
-    if (svg) html += `<div class="scatter-wrap">${svg}</div>`;
+    const svg = buildPartyTrendSVG(officePolls, { adjustHouse, showBand: true });
+    if (svg) html += `<div class="scatter-wrap">${svg}${toggleHtml}</div>`;
   } else if (officePolls.length >= 2) {
-    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls, state.roster)}</div>`;
+    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls, state.roster)}${toggleHtml}</div>`;
   }
+  // 기관별 lean mini-표 — 상위 1·2위 후보(또는 정당)별 잔차 평균.
+  const leanHtml = buildLeanTableHTML(officePolls);
+  if (leanHtml) html += leanHtml;
   // 첫 카드 위 라벨
   const latest = officePolls[0];
   if (latest) {
@@ -44,6 +53,74 @@ function renderDetail() {
     html += renderPollCard(p, p.office_label);  // renderPollCard → utils.js (공용)
   }
   pane.innerHTML = html;
+  const tg = document.getElementById('trend-house');
+  if (tg) tg.addEventListener('change', () => { state.adjustHouse = tg.checked; renderDetail(); });
+}
+
+// 기관별 lean mini-표 — 현 region+office 폴 안에서 상위 1·2 (후보 또는 정당)의
+// 기관별 잔차(개별 조사값 − 평활 추세) 평균. shrinkage 적용된 PollStats 사용.
+function buildLeanTableHTML(officePolls) {
+  if (typeof PollStats === 'undefined' || officePolls.length < 5) return '';
+  const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
+  const isParty = state.office === '정당지지';
+  // 키별 시계열 수집 — 후보면 name, 정당지지면 정당.
+  const byKey = {};      // key → [{t,v,ag,n}]
+  const meta = {};       // key → {label, color}
+  for (const p of officePolls) {
+    if (!p.period_end || !p.candidates) continue;
+    const t = Date.parse(p.period_end);
+    if (!isFinite(t)) continue;
+    for (const c of p.candidates) {
+      if (c.pct == null) continue;
+      let key, label, party;
+      if (isParty) {
+        if (!c.party) continue;
+        key = CANON[c.party] || c.party;
+        label = (typeof PARTY_SHORT !== 'undefined' && PARTY_SHORT[key]) || key;
+        party = key;
+      } else {
+        if (!c.name) continue;
+        // 등록 후보만 (state.roster로)
+        const hit = state.roster ? state.roster[`${p.sido}|${c.name}`] : null;
+        if (state.roster && !(hit && hit.sg_typecode)) continue;
+        key = c.name;
+        label = c.name;
+        party = c.party;
+      }
+      (byKey[key] = byKey[key] || []).push({ t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0 });
+      meta[key] = { label, color: party ? partyColor(party) : '#888' };
+    }
+  }
+  // 상위 2 by mean.
+  const ranked = Object.entries(byKey)
+    .filter(([, pts]) => pts.length >= 3)
+    .map(([k, pts]) => ({ k, pts, mean: pts.reduce((s, p) => s + p.v, 0) / pts.length }))
+    .sort((a, b) => b.mean - a.mean)
+    .slice(0, 2);
+  if (ranked.length < 1) return '';
+  // 기관별 lean 계산.
+  const allHouse = ranked.map(({ k, pts }) => ({
+    k, house: PollStats.houseEffects(pts, { bwDays: 21, shrinkK: 5, minN: 3 }),
+  }));
+  // n: 기관별 (이 region+office) 폴 수.
+  const cnt = {};
+  for (const p of officePolls) cnt[p.agency || '?'] = (cnt[p.agency || '?'] || 0) + 1;
+  const ags = Object.keys(cnt)
+    .filter((a) => cnt[a] >= 3)
+    .sort((a, b) => (allHouse[0].house[b] || 0) - (allHouse[0].house[a] || 0));
+  if (!ags.length) return '';
+  const cell = (v) => v == null || Math.abs(v) < 0.05 ? '<td class="z">·</td>'
+    : `<td class="${v > 0 ? 'pos' : 'neg'}">${v > 0 ? '+' : ''}${v.toFixed(1)}</td>`;
+  const head = ranked.map(({ k }) =>
+    `<th style="color:${meta[k].color}">${meta[k].label}</th>`).join('');
+  const rows = ags.map((a) => {
+    const cells = allHouse.map(({ house }) => cell(house[a])).join('');
+    return `<tr><td class="ag">${a.replace(/\(주\)|주식회사/g, '').trim()}</td>${cells}<td class="n">${cnt[a]}</td></tr>`;
+  }).join('');
+  return `<div class="lean-mini">
+    <div class="lean-mini-head">조사기관별 lean <span class="lean-mini-sub">잔차 평균 (+높게 / −낮게)</span></div>
+    <table class="lean-mini-tbl"><thead><tr><th>기관</th>${head}<th>n</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>`;
 }
 
 // === 토글 ===

@@ -255,9 +255,9 @@ function buildScatterSVG(polls, roster = null) {
     const label = `${d.getMonth() + 1}/${d.getDate()}`;
     xax += `<text x="${xx}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${label}</text>`;
   }
-  // 등록 후보 + "최근까지 살아남은" 후보만 line. 최신 폴 기준 14일 안에 등장한 후보만.
+  // 등록 후보 + "최근까지 살아남은" 후보 (최신 폴 기준 14일 안). 평활 선 + 밴드.
   let lines = '';
-  if (roster) {
+  if (roster && !singleTs && typeof PollStats !== 'undefined') {
     const latestTs = Math.max(...points.map((p) => p.ts));
     const cutoff = latestTs - 14 * 86_400_000;
     const byName = {};
@@ -265,14 +265,30 @@ function buildScatterSVG(polls, roster = null) {
       if (!p.registered) continue;
       (byName[p.name] ||= []).push(p);
     }
-    for (const [nm, ps] of Object.entries(byName)) {
-      if (ps.length < 2) continue;
+    // 상위 후보(평균 지지율) 2명만 — 좁은 detail-pane 노이즈 억제.
+    const ranked = Object.entries(byName)
+      .filter(([, ps]) => ps.length >= 2 && Math.max(...ps.map((p) => p.ts)) >= cutoff)
+      .map(([nm, ps]) => ({ nm, ps, mean: ps.reduce((s, p) => s + p.pct, 0) / ps.length }))
+      .sort((a, b) => b.mean - a.mean)
+      .slice(0, 2);
+    const bwDays = Math.max(14, Math.round((maxTs - minTs) / 86_400_000 / 6));
+    for (const { nm, ps } of ranked) {
       ps.sort((a, b) => a.ts - b.ts);
-      // 후보의 가장 최신 점이 cutoff 이전이면 line 안 그림 (= 마지막까지 못 온 후보)
-      if (ps[ps.length - 1].ts < cutoff) continue;
       const color = partyColor(ps[0].party);
-      const path = ps.map((p) => `${x(p.ts).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
-      lines += `<polyline points="${path}" fill="none" stroke="${color}" stroke-width="1.2" stroke-opacity="0.55" stroke-linejoin="round"/>`;
+      const points2 = ps.map((p) => ({ t: p.ts, v: p.pct, ag: p.agency, n: 0 }));
+      const segs = PollStats.kernelSmooth(points2, bwDays);
+      const bands = PollStats.kernelBand(points2, bwDays);
+      for (const band of bands) {
+        if (band.length < 2) continue;
+        const upper = band.map((p) => `${x(p.t).toFixed(1)},${y(Math.min(maxPct, p.v + p.sd)).toFixed(1)}`);
+        const lower = band.slice().reverse().map((p) => `${x(p.t).toFixed(1)},${y(Math.max(0, p.v - p.sd)).toFixed(1)}`);
+        lines += `<polygon points="${upper.concat(lower).join(' ')}" fill="${color}" fill-opacity="0.10" stroke="none"/>`;
+      }
+      for (const seg of segs) {
+        if (seg.length < 2) continue;
+        const dpath = seg.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
+        lines += `<path d="${dpath}" fill="none" stroke="${color}" stroke-width="1.6" stroke-opacity="0.9"/>`;
+      }
     }
   }
   const dots = jittered.map((p) => {
@@ -294,31 +310,51 @@ const PARTY_SHORT = {
   '개혁신당': '개혁', '진보당': '진보', '기본소득당': '기본소득',
   '사회민주당': '사민', '새로운미래': '새미래', '정의당': '정의', '무소속': '무소속',
 };
-function buildPartyTrendSVG(polls) {
+function buildPartyTrendSVG(polls, opts) {
+  opts = opts || {};
+  const adjustHouse = !!opts.adjustHouse;
+  const showBand = opts.showBand !== false;
+  const bw = opts.bwDays || 21;
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
-  const series = {};  // party → { dateStr → [pct] }
+  // party → [{t, v, ag, n}] (개별 조사 점)
+  const byParty = {};
   for (const p of polls) {
     if (!p.period_end || !p.candidates) continue;
-    if (!isFinite(Date.parse(p.period_end))) continue;
+    const t = Date.parse(p.period_end);
+    if (!isFinite(t)) continue;
     for (const c of p.candidates) {
       if (c.pct == null || !c.party) continue;
       const party = CANON[c.party] || c.party;
-      ((series[party] ||= {})[p.period_end] ||= []).push(c.pct);
+      (byParty[party] = byParty[party] || []).push({
+        t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0,
+      });
     }
   }
-  const lines = {};  // party → [{ts, pct}] (하루 평균, 시간순)
-  let minTs = Infinity, maxTs = -Infinity, maxPct = 0;
-  for (const [party, byDate] of Object.entries(series)) {
-    const pts = Object.entries(byDate).map(([ds, arr]) => ({
-      ts: Date.parse(ds), pct: arr.reduce((a, b) => a + b, 0) / arr.length,
-    })).sort((a, b) => a.ts - b.ts);
-    lines[party] = pts;
-    for (const pt of pts) { minTs = Math.min(minTs, pt.ts); maxTs = Math.max(maxTs, pt.ts); maxPct = Math.max(maxPct, pt.pct); }
-  }
-  const parties = Object.keys(lines);
+  const parties = Object.keys(byParty);
   if (!parties.length) return '';
-  const mean = (ps) => ps.reduce((s, p) => s + p.pct, 0) / ps.length;
-  parties.sort((a, b) => mean(lines[b]) - mean(lines[a]));  // 지지율 높은 순
+  // (옵션) house effect 보정 — 정당별 lean 계산 후 점 보정.
+  let perPartyHouse = {};
+  if (adjustHouse && typeof PollStats !== 'undefined') {
+    for (const party of parties) {
+      perPartyHouse[party] = PollStats.houseEffects(byParty[party], { bwDays: bw, shrinkK: 8, minN: 2 });
+      byParty[party] = PollStats.applyHouse(byParty[party], perPartyHouse[party]);
+    }
+  }
+  // 평활 + 밴드
+  const series = {}; // party → {pts, segs, bands}
+  let minTs = Infinity, maxTs = -Infinity, maxPct = 0;
+  for (const party of parties) {
+    const pts = byParty[party].slice().sort((a, b) => a.t - b.t);
+    const segs = (typeof PollStats !== 'undefined')
+      ? PollStats.kernelSmooth(pts, bw) : [pts.map((p) => ({ t: p.t, v: p.v }))];
+    const bands = showBand && typeof PollStats !== 'undefined'
+      ? PollStats.kernelBand(pts, bw) : [];
+    series[party] = { pts, segs, bands };
+    for (const p of pts) {
+      minTs = Math.min(minTs, p.t); maxTs = Math.max(maxTs, p.t);
+      maxPct = Math.max(maxPct, p.v);
+    }
+  }
   const W = 380, H = 210, pl = 28, pr = 56, pt = 12, pb = 24;
   maxPct = Math.max(50, Math.ceil(maxPct / 10) * 10);
   const tsRange = (maxTs - minTs) || 86_400_000 * 7;
@@ -336,22 +372,34 @@ function buildPartyTrendSVG(polls) {
     const d = new Date(ts);
     xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${d.getMonth() + 1}/${d.getDate()}</text>`;
   }
-  // 라벨 y겹침 방지 — 위에서부터 최소 간격 11px
-  let lastLabelY = -99;
-  let body = '';
+  const meanV = (s) => s.pts.reduce((a, p) => a + p.v, 0) / s.pts.length;
+  parties.sort((a, b) => meanV(series[b]) - meanV(series[a]));
+  let lastLabelY = -99, body = '';
   for (const party of parties) {
-    const pts = lines[party];
+    const { pts, segs, bands } = series[party];
     const color = partyColor(party);
-    if (pts.length >= 2) {
-      const dpath = pts.map((p, i) => `${i ? 'L' : 'M'}${x(p.ts).toFixed(1)},${y(p.pct).toFixed(1)}`).join(' ');
-      body += `<path d="${dpath}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.9"/>`;
+    // 밴드 (가중 std) — 정당색 옅게 채움
+    for (const band of bands) {
+      if (band.length < 2) continue;
+      const upper = band.map((p) => `${x(p.t).toFixed(1)},${y(Math.min(maxPct, p.v + p.sd)).toFixed(1)}`);
+      const lower = band.slice().reverse().map((p) => `${x(p.t).toFixed(1)},${y(Math.max(0, p.v - p.sd)).toFixed(1)}`);
+      body += `<polygon points="${upper.concat(lower).join(' ')}" fill="${color}" fill-opacity="0.10" stroke="none"/>`;
     }
+    // 개별 조사 점 (옅게)
     for (const p of pts) {
-      body += `<circle cx="${x(p.ts).toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="2.4" fill="${color}"><title>${PARTY_SHORT[party] || party} ${p.pct.toFixed(1)}% · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
+      body += `<circle cx="${x(p.t).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="1.8" fill="${color}" fill-opacity="0.35"><title>${PARTY_SHORT[party] || party} ${p.v.toFixed(1)}% · ${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtDate(new Date(p.t).toISOString().slice(0, 10))}</title></circle>`;
     }
-    const last = pts[pts.length - 1];
-    let ly = y(last.pct) + 3;
-    if (ly - lastLabelY < 11) ly = lastLabelY + 11;  // 겹치면 아래로 밀기
+    // 평활 선
+    for (const seg of segs) {
+      if (seg.length < 2) continue;
+      const dpath = seg.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
+      body += `<path d="${dpath}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+    }
+    const lastSeg = segs[segs.length - 1];
+    const last = lastSeg && lastSeg[lastSeg.length - 1];
+    if (!last) continue;
+    let ly = y(last.v) + 3;
+    if (ly - lastLabelY < 11) ly = lastLabelY + 11;
     lastLabelY = ly;
     body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${PARTY_SHORT[party] || party}</text>`;
   }
