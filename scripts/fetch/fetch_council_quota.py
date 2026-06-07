@@ -69,8 +69,10 @@ def main():
     out_p = ROOT / args.out
     d = json.loads(rp.read_text(encoding="utf-8"))
 
-    # tc=9 sigungus + tc=6 race count (지역구 정수)
-    tc9 = sorted(set((r["sido"], r["sigungu"]) for r in d["races"] if r.get("sg_typecode") == "9"))
+    # tc=4 (기초장) sigungus — 단층 제외 모든 시군구. tc=9는 NEC 누락(부천·용인)
+    # 가능성. tc=4가 가장 안정적.
+    tc9 = sorted(set((r["sido"], r["sigungu"]) for r in d["races"]
+                     if r.get("sg_typecode") == "4" and r.get("sigungu")))
     from collections import Counter
     tc6 = Counter()
     for r in d["races"]:

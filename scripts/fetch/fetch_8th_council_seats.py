@@ -80,7 +80,9 @@ def main():
     out_p = ROOT / args.out
     d = json.loads(rp.read_text(encoding="utf-8"))
 
-    sigungus = sorted(set((r["sido"], r["sigungu"]) for r in d["races"] if r.get("sg_typecode") == "9"))
+    # tc=4 sigungu set — NEC 누락(부천·용인 같이) 회복용. 단층 자치 제외.
+    sigungus = sorted(set((r["sido"], r["sigungu"]) for r in d["races"]
+                          if r.get("sg_typecode") == "4" and r.get("sigungu")))
     existing = json.loads(out_p.read_text(encoding="utf-8")) if out_p.exists() else {}
 
     result = dict(existing)
