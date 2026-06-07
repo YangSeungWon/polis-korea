@@ -35,10 +35,13 @@ active로 추가하면 사이트가 자동으로 다음 선거 모드로 전환.
 
 ## D-180 ~ D-1 — 데이터 자동 수집
 
-GitHub Actions cron이 알아서:
+GitHub Actions cron(`daily-refresh.yml`)이 알아서:
 - NESDC 신규 PDF scrape
 - parse → patch → build → polls.json
 - audit + golden 통과 시 commit·push
+
+> 선거와 무관한 **상시 추이**(국정평가·정당지지·차기주자)는 별개 주간 파이프라인
+> `tracker-refresh.yml`이 담당 — `docs/tracker-pipeline.md` 참고.
 
 사람 손길:
 - 자체조사 PDF의 새 후보 등장 → `{id}-candidates.json`에 추가

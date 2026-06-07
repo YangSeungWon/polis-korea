@@ -1,0 +1,109 @@
+name: Weekly tracker refresh
+
+# tracker(국정평가·정당지지·차기주자)의 상시 소스 VT012("기타" 전국 정기조사)를 주간 갱신.
+# VT012는 매주 차오르므로 주 1회면 충분. daily-refresh(선거 폴+빌드)와 별개.
+#
+# ⚠ 중요: CI엔 과거 선거(22gen·21pres 등) PDF가 없음(raw-bundle은 9회지선+VT012 일부만).
+# 따라서 추출기는 반드시 --incremental — 커밋된 approval_*.json/aggregated_etc.json(전체 history)을
+# 보존하고 새로 스크랩한 VT012 폴만 추가. (full 재추출하면 과거 데이터 소실됨.)
+on:
+  schedule:
+    - cron: '47 21 * * 0'   # 일요일 UTC 21:47 = 월요일 KST 06:47
+  workflow_dispatch: {}
+
+# daily-refresh와 같은 그룹 — raw 데이터 동시 접근 방지(큐잉).
+concurrency:
+  group: data-pipeline
+  cancel-in-progress: false
+
+jobs:
+  tracker:
+    runs-on: ubuntu-latest
+    # 첫 cold run은 Release zip 복원 + VT012 전체 스크랩(~2천 PDF)이라 길 수 있음. 넉넉히.
+    timeout-minutes: 300
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      # raw PDF + VT012 CSV cache (daily와 공유 — restore-keys 'rawdata-').
+      - name: Cache raw
+        id: cache-raw
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/raw/pdf
+            data/raw/nesdc_etc_polls.csv
+          key: rawdata-tracker-${{ github.run_id }}
+          restore-keys: |
+            rawdata-tracker-
+            rawdata-
+
+      # cache miss — Release zip으로 base PDF 복원 (이후 scrape가 신규만 추가).
+      - name: Restore from Release (cache miss only)
+        if: steps.cache-raw.outputs.cache-hit != 'true'
+        run: |
+          gh release download raw-bundle-v1 \
+            --repo YangSeungWon/polis-korea \
+            --pattern 'raw-bundle.tar.gz' --dir /tmp || true
+          if [ -f /tmp/raw-bundle.tar.gz ]; then
+            tar -xzf /tmp/raw-bundle.tar.gz -C data/ && rm /tmp/raw-bundle.tar.gz
+            echo "복원: $(ls data/raw/pdf | wc -l) PDFs"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Scrape VT012 (전국 정기조사) — 신규만
+        run: |
+          python scripts/fetch/scrape_nesdc.py \
+            --gubun VT012 --csv data/raw/nesdc_etc_polls.csv
+
+      - name: Extract tracker data (incremental — 기존 보존·신규만 추가)
+        run: |
+          set -e
+          for s in gallup realmeter nbs hrc general; do
+            echo "=== extract_approval_$s ==="
+            python scripts/parse/extract_approval_$s.py --incremental
+          done
+          echo "=== extract_party_support ==="
+          python scripts/parse/extract_party_support.py --incremental
+
+      # cold run(cache miss)이면 Release를 안 건드린 채 NESDC 전체 재스크랩한 상태 —
+      # 이때 코퍼스를 raw-bundle에 체크포인트해 다음 복구를 가볍게. warm run은 캐시가 이어지므로 skip.
+      # 가드: pdf < 1000이면 복원 실패로 의심(부분 코퍼스) → Release 덮어쓰기 금지(daily 보호).
+      - name: Refresh Release snapshot (cold run only)
+        if: steps.cache-raw.outputs.cache-hit != 'true'
+        run: |
+          n=$(ls data/raw/pdf 2>/dev/null | wc -l)
+          if [ "$n" -lt 1000 ]; then
+            echo "PDF ${n}개 — 부분 코퍼스 의심, Release 갱신 skip(안전)"; exit 0
+          fi
+          tar -czf /tmp/raw-bundle.tar.gz -C data raw/pdf raw/nesdc_etc_polls.csv
+          gh release upload raw-bundle-v1 /tmp/raw-bundle.tar.gz \
+            --repo YangSeungWon/polis-korea --clobber
+          echo "Release raw-bundle-v1 갱신: ${n} PDFs, $(du -h /tmp/raw-bundle.tar.gz | cut -f1)"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "polis-bot"
+          git config user.email "noreply@anthropic.com"
+          git add data/polls/approval_gallup.json data/polls/approval_realmeter.json \
+                  data/polls/approval_nbs.json data/polls/approval_hrc.json \
+                  data/polls/approval_general.json data/polls/aggregated_etc.json
+          if git diff --staged --quiet; then
+            echo "tracker 변경 없음 — push skip"
+          else
+            git commit -m "tracker 데이터 갱신 (자동·VT012): $(date +%Y-%m-%d)"
+            git push
+          fi
