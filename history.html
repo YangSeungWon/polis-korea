@@ -25,7 +25,7 @@
     <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+      <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
   <a href="/" class="hdr-link">홈</a>
   <span data-nav-urgent></span>
   <a href="/polls.html" class="hdr-link">여론조사</a>
@@ -33,6 +33,7 @@
   <a href="/tracker.html" class="hdr-link">지지율 추이</a>
   <a href="/history.html" class="hdr-link is-current">역대 결과</a>
   <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/search.html" class="hdr-link">검색</a>
   <!-- NAV_END -->
 </nav>
   <div class="hdr-meta">
@@ -45,6 +46,13 @@
     <h1>역대 선거 결과</h1>
     <p class="lede">1987년 이후 대선·총선·지선. hex 색=1위 정당, 명도=격차.</p>
   </section>
+
+  <form class="home-search" action="/search.html" method="get" role="search" aria-label="당선인 검색">
+    <input type="search" name="q" placeholder="당선인·지역·정당 검색" autocomplete="off">
+    <button type="submit" aria-label="검색">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm5.3 12.3l4 4"/></svg>
+    </button>
+  </form>
 
   <section class="controls">
     <div class="seg" role="tablist" aria-label="선거 종류">
