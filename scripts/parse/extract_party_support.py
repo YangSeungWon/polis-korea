@@ -209,7 +209,7 @@ def main():
     polls = prev + polls
     polls.sort(key=lambda p: p["period_end"] or "")
     print(f"VT012 정당지지 {len(polls)}건", file=sys.stderr)
-    if args.debug and not args.only:
+    if args.debug or args.only:   # --debug·--only는 검사 모드 — 전체 출력 덮어쓰지 않음
         return
     OUT.write_text(json.dumps({"_meta": {"source": "VT012 기타 전국 정기 정당지지", "n": len(polls)},
                    "polls": polls}, ensure_ascii=False, indent=2), encoding="utf-8")

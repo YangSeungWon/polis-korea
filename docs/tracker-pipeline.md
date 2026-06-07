@@ -70,7 +70,8 @@ records.sort(...)
 
 ```
 일요일 KST 06:47 (또는 workflow_dispatch 수동) →
-  scrape_nesdc --gubun VT012           # 신규 폴만
+  scrape_nesdc --gubun VT012           # 신규 폴 목록 + PDF
+  refresh_pending_pdfs                  # 늦게 첨부된 결과표 회수(아래 주의)
   extract_approval_{gallup,realmeter,nbs,hrc,general} --incremental
   extract_party_support --incremental
   → (cold run이면) Release 체크포인트 갱신
@@ -82,6 +83,11 @@ records.sort(...)
 - 캐시 `data/raw/pdf` + `nesdc_etc_polls.csv`, key `rawdata-tracker-<run_id>`,
   restore-keys `rawdata-tracker-`·`rawdata-`(daily와 공유).
 - cache miss 시 Release `raw-bundle-v1` 복원(9회 base).
+
+> **NESDC 늦은 PDF 첨부**: 폴 목록(메타)은 먼저 등록되고 결과표 PDF는 며칠 뒤
+> 붙는 경우가 많다(주간집계 등). 그래서 `scrape` 직후엔 PDF가 없어 추출 0건일 수
+> 있고, `refresh_pending_pdfs`(최근 30일 pending 재시도)가 다음 run에서 회수한다.
+> → 한 번에 안 잡혀도 **다음 주 run이 자동 보충**. 데이터 손실 아님.
 
 ### 왜 daily가 아니라 주간·별도인가
 
