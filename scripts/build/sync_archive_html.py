@@ -490,7 +490,7 @@ def counting_title(d: dict) -> str:
     return "개표 진행 · 시도별" if d["is_active"] else "광역단체장 결과 · 시도별"
 
 
-def render(meta: dict) -> str:
+def render(meta: dict, neighbors: dict | None = None) -> str:
     d = derive(meta)
     d["hero_status"] = hero_status(d)
     d["counting_title"] = counting_title(d)
@@ -500,14 +500,39 @@ def render(meta: dict) -> str:
         if d["wiki_url"] else ""
     )
     d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
+    d["nav_block"] = render_nav_block(neighbors or {})
 
     return (
         HEAD.format(**d)
         + KIND_TO_HERO[d["kind"]].format(**d)
         + source_caveat_block(meta)
+        + d["nav_block"]
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
+        + d["nav_block"]
         + FOOT.format(**d)
     )
+
+
+def render_nav_block(neighbors: dict) -> str:
+    """이전·다음 회차 nav. neighbors = {'prev': meta or None, 'next': meta or None}."""
+    prev_meta = neighbors.get("prev")
+    next_meta = neighbors.get("next")
+    if not prev_meta and not next_meta:
+        return ""
+    def cell(m, side):
+        if not m:
+            return f'<span class="ar-nav-cell ar-nav-empty">—</span>'
+        date = m.get("date", "")
+        name = m.get("name", "")
+        page = m.get("archive", {}).get("page", "#")
+        arrow = "←" if side == "prev" else "→"
+        label = "이전 회차" if side == "prev" else "다음 회차"
+        align = "left" if side == "prev" else "right"
+        return (f'<a class="ar-nav-cell ar-nav-{side}" href="{page}">'
+                f'<span class="ar-nav-label">{arrow if side == "prev" else ""} {label} {arrow if side == "next" else ""}</span>'
+                f'<span class="ar-nav-name">{name}</span>'
+                f'<span class="ar-nav-date">{date}</span></a>')
+    return f'<nav class="ar-nav">{cell(prev_meta, "prev")}{cell(next_meta, "next")}</nav>\n'
 
 
 def render_ar_list(metas: list[dict]) -> str:
@@ -557,6 +582,29 @@ def main():
             sys.exit(1)
         all_ids = [args.id]
 
+    # 모든 meta 먼저 로드 (kind별 neighbor 계산 위해)
+    all_metas = []
+    for eid in (list(index.get("active", [])) + list(index.get("archive", []))):
+        mp = ELECTIONS_DIR / f"{eid}.json"
+        if mp.exists():
+            m = json.loads(mp.read_text(encoding="utf-8"))
+            if m.get("archive") and m.get("kind") in KIND_TO_HERO:
+                all_metas.append(m)
+    # kind별 chronological list
+    from collections import defaultdict
+    by_kind: dict = defaultdict(list)
+    for m in all_metas:
+        by_kind[m["kind"]].append(m)
+    for k in by_kind:
+        by_kind[k].sort(key=lambda x: x.get("date", ""))
+    neighbors_of = {}
+    for kind, lst in by_kind.items():
+        for i, m in enumerate(lst):
+            neighbors_of[m["id"]] = {
+                "prev": lst[i - 1] if i > 0 else None,
+                "next": lst[i + 1] if i < len(lst) - 1 else None,
+            }
+
     n_changed = 0
     n_unchanged = 0
     n_skipped = 0
@@ -575,7 +623,7 @@ def main():
             n_skipped += 1
             continue
         archive_metas.append(meta)
-        html = render(meta)
+        html = render(meta, neighbors_of.get(meta["id"]))
         out = ARCHIVE_DIR / eid / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         current = out.read_text(encoding="utf-8") if out.exists() else ""
