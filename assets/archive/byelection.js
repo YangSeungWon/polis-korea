@@ -18,19 +18,61 @@
   }
 
   function renderHero(ctx, reasons) {
-    const { results, meta } = ctx;
-    const sido3 = racesBy(results, 'sido', '3');     // 광역단체장
-    const sigungu4 = racesBy(results, 'sigungu', '4'); // 기초단체장
-    const district2 = racesBy(results, 'district', '2'); // 국회의원
-    const setN = (id, n) => { const el = document.getElementById(id); if (el) el.textContent = n ? `${n}건` : '—'; };
-    setN('ar-by-sido-count', sido3.length);
-    setN('ar-by-sigungu-count', sigungu4.length);
-    setN('ar-by-district-count', district2.length);
-    setN('ar-by-reasons-count', reasons.length);
+    const { results } = ctx;
+    // tc별 정당 winner 카운트
+    const byTc = { '2': {}, '3': {}, '4': {}, '5': {}, '6': {} };
+    let closeN = 0;
+    for (const r of (results?.races || [])) {
+      const tc = r.sg_typecode;
+      if (!byTc[tc]) continue;
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (!cs[0]) continue;
+      byTc[tc][cs[0].party] = (byTc[tc][cs[0].party] || 0) + 1;
+      if (cs.length >= 2 && cs[0].pct != null && cs[1].pct != null && cs[0].pct - cs[1].pct < 5) closeN++;
+    }
+    const total = {};
+    for (const tc of Object.keys(byTc)) {
+      for (const [p, n] of Object.entries(byTc[tc])) total[p] = (total[p] || 0) + n;
+    }
+    const sorted = Object.entries(total).sort((a, b) => b[1] - a[1]);
+    const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
+    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
+    if (sorted.length > 0) {
+      const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
+      const sc = document.getElementById('ar-scorecard');
+      if (sc) sc.removeAttribute('hidden');
+      const renderParty = (party) => {
+        const col = pcol(party);
+        return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
+      };
+      setHTML('ar-sc-p1', renderParty(p1));
+      if (p2) setHTML('ar-sc-p2', renderParty(p2));
+      let totalL = 0, totalR = 0;
+      for (const tc of ['2', '3', '4', '5', '6']) {
+        const l = byTc[tc][p1] || 0;
+        const r = p2 ? (byTc[tc][p2] || 0) : 0;
+        totalL += l; totalR += r;
+        // 해당 tc race 없으면 row 숨김
+        const rowEl = document.querySelector(`.ar-sc-row[data-level="${tc}"]`);
+        if (rowEl && Object.keys(byTc[tc]).length === 0) {
+          rowEl.setAttribute('hidden', '');
+        } else if (rowEl) {
+          rowEl.removeAttribute('hidden');
+          setText(`ar-sc-${tc}-l`, l ? l.toLocaleString() : '—');
+          setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
+        }
+      }
+      setText('ar-sc-total-l', totalL.toLocaleString());
+      setText('ar-sc-total-r', totalR.toLocaleString());
+    }
+    setText('ar-by-reasons-count', `${reasons.length}건`);
+    if (closeN > 0) {
+      setText('ar-close-count', `${closeN}곳`);
+      document.getElementById('ar-hm-close')?.removeAttribute('hidden');
+    }
     const m = results?._meta || {};
     const sourceLabel = m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행');
-    const status = document.getElementById('ar-status');
-    if (status) status.textContent = `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`;
+    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`);
   }
 
   // 광역단체장 — 큰 카드. 보통 1~2건 (서울·부산 시장 같은).
