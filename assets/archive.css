@@ -491,20 +491,23 @@
 .ar-winners-controls input[type=search] { min-width: 220px; }
 .ar-winners-count { font-size: 12px; color: var(--ink-soft); font-weight: 700; margin-left: auto; }
 .ar-winners-grid {
-  display: grid; grid-template-columns: 1fr; gap: 1px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1px; background: var(--rule);
   border: 1px solid var(--rule); border-radius: 2px; overflow: hidden;
 }
 .ar-winner-row {
-  display: grid; grid-template-columns: 24px 1fr 1fr auto auto;
-  gap: 10px; align-items: center;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  gap: 8px; align-items: center;
   padding: 6px 12px; font-size: 12px;
   background: var(--bg);
 }
-.ar-winner-row:nth-child(even) { background: var(--bg2); }
-.ar-winner-lvl { font-weight: 700; color: var(--ink-soft); text-align: center; }
+.ar-winner-lvl {
+  font-size: 10px; font-weight: 700; color: var(--ink-soft);
+  background: var(--bg2); border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+}
 .ar-winner-loc { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ar-winner-name { font-weight: 700; color: var(--ink); }
-.ar-winner-party { font-weight: 600; }
+.ar-winner-name { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.ar-winner-party { font-weight: 600; white-space: nowrap; }
 .ar-winner-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 600; }
 .ar-winners-more { padding: 10px; text-align: center; color: var(--ink-soft); font-size: 12px; background: var(--bg2); }
 .ar-winners-hint { padding: 18px 16px; text-align: center; color: var(--ink-soft); font-size: 13px; line-height: 1.6; background: var(--bg2); border-radius: 4px; }

@@ -92,7 +92,7 @@
       }
       grid.innerHTML = filtered.slice(0, 500).map((w) => {
         const col = (typeof partyColor === 'function') ? partyColor(w.party) : '#999';
-        const lvlBadge = w.level === '광역의원' ? '광' : '기';
+        const lvlBadge = w.level === '광역의원' ? '광역' : '기초';
         return `<div class="ar-winner-row" style="border-left:3px solid ${col}">
           <span class="ar-winner-lvl">${lvlBadge}</span>
           <span class="ar-winner-loc">${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}</span>
