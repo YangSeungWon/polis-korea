@@ -44,6 +44,16 @@ SIDO_NORM = {
     "강원도": "강원특별자치도", "전라북도": "전북특별자치도",
 }
 
+# 전국구(비례) 당선자 — Elec_7{날짜}(부모선거 lowerPartElection). 당선=rdf:type neco:WinCandidate.
+# 후보 전원이 아니라 당선자만(≤62 <100, 페이징 불필요). 정당별 카운트 = 전국구 의석.
+JEON_Q = """PREFIX neco: <http://data.nec.go.kr/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?pname WHERE {{
+  <http://data.nec.go.kr/resource/{uri}> neco:hasCandidate ?c .
+  ?c rdf:type neco:WinCandidate ; neco:positionPoliticalParty ?p .
+  ?p neco:name ?pname . FILTER(lang(?pname)="")
+}} LIMIT 100"""
+
 QTMPL = """PREFIX neco: <http://data.nec.go.kr/ontology/>
 SELECT ?sido ?dname ?seats ?electors ?valid ?cname ?pname ?symbol ?votes WHERE {{
   <http://data.nec.go.kr/resource/{uri}> neco:hasCandidate ?c .
@@ -90,6 +100,16 @@ def parse_rows(root):
                 r[k] = v
         rows.append(r)
     return rows
+
+
+def fetch_jeon(uri: str, cookie: str):
+    """전국구(비례) 당선자 정당별 의석. uri = Elec_7{날짜}."""
+    from collections import Counter
+    c = Counter()
+    for r in parse_rows(run(JEON_Q.format(uri=uri), cookie)):
+        if r.get("pname"):
+            c[PARTY_ALIAS.get(r["pname"], r["pname"])] += 1
+    return dict(c)
 
 
 def fetch_all(uri: str, cookie: str):
@@ -158,21 +178,37 @@ def main():
         print(f"=== {fid}: 후보 {len(rows)} · 선거구 {len(races)} · 지역구 당선 {nwin} ===")
         for p, c in sorted(seat.items(), key=lambda x: -x[1])[:6]:
             print(f"    {p}: {c}")
+        # 전국구(비례) — LOD Elec_7{날짜}의 WinCandidate 정당별 카운트(권위, WWolf 도출 대체).
+        jeon = fetch_jeon("Elec_7" + uri[6:], cookie)
+        njeon = sum(jeon.values())
+        print(f"    전국구 {njeon}석: " + " ".join(f"{p} {n}" for p, n in sorted(jeon.items(), key=lambda x: -x[1])))
+        print(f"    → 총 {nwin + njeon}석 (지역구 {nwin} + 전국구 {njeon})")
         if args.dry_run:
             continue
         path = RESULTS / f"{fid}.json"
         data = json.loads(path.read_text())
         # 기존 district race 제거 후 새로 (14·15·16은 원래 없음) — nation race는 보존
         data["races"] = [r for r in data.get("races", []) if r.get("scope") != "district"] + races
-        # 전국구(비례) 도출: nation total − 지역구 → proportional_seats
         nats = [r for r in data["races"] if r.get("scope") == "nation"]
         if nats:
-            for c in nats[0].get("candidates", []):
-                tot = c.get("seats")
-                if isinstance(tot, int):
-                    c["proportional_seats"] = max(0, tot - seat.get(c.get("party"), 0))
+            nat = nats[0]
+            if jeon:  # 전국구가 LOD에 있음(16대~) — 권위값
+                existing = {c.get("party"): c for c in nat.get("candidates", [])}
+                for party, n in jeon.items():
+                    if party in existing:
+                        existing[party]["proportional_seats"] = n
+                    else:
+                        nat.setdefault("candidates", []).append(
+                            {"name": party, "party": party, "proportional_seats": n})
+                for c in nat.get("candidates", []):
+                    c.setdefault("proportional_seats", 0)
+            else:  # 14·15대 — LOD에 전국구 sub-election 없음 → 기존 total − 지역구 도출
+                for c in nat.get("candidates", []):
+                    tot = c.get("seats")
+                    if isinstance(tot, int):
+                        c["proportional_seats"] = max(0, tot - seat.get(c.get("party"), 0))
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
-        print(f"    → {path.name} 저장 (지역구 race {len(races)})")
+        print(f"    → {path.name} 저장 (지역구 race {len(races)} + 전국구 {njeon})")
 
 
 if __name__ == "__main__":
