@@ -52,6 +52,17 @@
     return g;
   }
 
+  // 차트 래핑: 본문 svg를 가로 스크롤 컨테이너에 + 모바일용 Y축 고정 오버레이.
+  // 데스크톱은 CSS에서 오버레이 숨김 → 본문 svg 자체 Y축 사용(현행과 동일).
+  function wrapChart(W, H, P, yMax, yStep, yOf, inner, aria) {
+    let ax = `<rect x="0" y="0" width="${P.l}" height="${H}" fill="var(--bg,#fff)"/>`;
+    for (let v = 0; v <= yMax; v += yStep) {
+      ax += `<text x="${P.l - 6}" y="${(yOf(v) + 3).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
+    }
+    return `<svg class="tk-axisfix" viewBox="0 0 ${P.l} ${H}" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">${ax}</svg>`
+      + `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${aria}">${inner}</svg></div>`;
+  }
+
   const pathOf = (pts, xOf, yOf) =>
     pts.map((p, i) => `${i ? 'L' : 'M'}${xOf(p.t).toFixed(1)},${yOf(p.v).toFixed(1)}`).join(' ');
 
@@ -71,7 +82,7 @@
   }
   function attachHover(id) {
     const host = document.getElementById(id);
-    const svg = host && host.querySelector('svg');
+    const svg = host && host.querySelector('svg.tk-body');
     const pts = HOVER[id];
     if (!svg || !pts || !pts.length) return;
     const tip = tipEl();
@@ -153,7 +164,7 @@
       return body;
     }
     const lines = lineFor('positive', POS) + lineFor('negative', NEG);
-    return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="대통령 국정수행 평가 추이">${bands}${grid}${lines}</svg>`;
+    return wrapChart(W, H, P, yMax, 20, yOf, `${bands}${grid}${lines}`, '대통령 국정수행 평가 추이');
   }
 
   // ===== ② 정당지지 =====
@@ -215,7 +226,7 @@
       lines += `<text x="${(W - P.r + 4).toFixed(1)}" y="${ly.toFixed(1)}" font-size="9.5" fill="${color}" font-weight="700">${(typeof PARTY_SHORT !== 'undefined' && PARTY_SHORT[party]) || party}</text>`;
     }
     const body = dots + lines;  // 점 먼저(아래), 선 위에
-    return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="정당 지지도 추이">${grid}${body}</svg>`;
+    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${body}`, '정당 지지도 추이');
   }
 
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
@@ -272,7 +283,7 @@
       lastLabelY = ly;
       lines += `<text x="${(W - P.r + 4).toFixed(1)}" y="${ly.toFixed(1)}" font-size="9.5" fill="${color}" font-weight="700">${name}</text>`;
     }
-    return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="차기 대선주자 선호 추이">${grid}${dots}${lines}</svg>`;
+    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}`, '차기 대선주자 선호 추이');
   }
 
   // ---- load ----
