@@ -460,6 +460,7 @@ FOOT = """
 <script src="assets/archive/byelection.js"></script>
 <script src="assets/archive/core.js"></script>
 <script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
 """
