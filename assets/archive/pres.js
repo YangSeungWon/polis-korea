@@ -36,18 +36,10 @@
       setText('ar-sc-pct-r', (second.pct || 0).toFixed(1) + '%');
       setText('ar-sc-votes-r', (second.votes || 0).toLocaleString());
     }
-    // 시도 1위 카운트
     const sidos = sidoRaces(results, sgTypecode);
-    let sidoL = 0, sidoR = 0;
-    for (const r of sidos) {
-      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]?.party === top.party) sidoL++;
-      else if (second && cs[0]?.party === second.party) sidoR++;
-    }
-    if (sidos.length) {
-      setText('ar-sc-sido-l', `${sidoL} / ${sidos.length}`);
-      setText('ar-sc-sido-r', `${sidoR} / ${sidos.length}`);
-    }
+    // '시도 1위 N/17'은 미스리딩(대선은 전국 득표로 당선 — 시도 수 아님) → scorecard 행 제거.
+    // 지역별 우세는 지도 시각화로 표현(미국 선거인단처럼 오인 방지).
+    document.getElementById('ar-sc-sido-l')?.closest('.ar-sc-row')?.remove();
 
     if (second) setHTML('ar-margin', `${(top.pct - second.pct).toFixed(2)}<span style="font-size:11px;color:var(--ink-soft)">%p</span>`);
     if (nat.electors > 0) setText('ar-turnout', (nat.voters / nat.electors * 100).toFixed(1) + '%');
