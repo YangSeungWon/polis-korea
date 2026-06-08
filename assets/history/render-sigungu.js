@@ -24,6 +24,7 @@ function renderSigunguHex() {
     if (!resultForSigungu(eff.sido, eff.name)) return [];
     return [{ ...d, sido: eff.sido, name: eff.name }];
   });
+  if (!data.length) return;  // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
   const cs = data.map((d) => d.c);
   const rs = data.map((d) => d.r);
   const minC = Math.min(...cs), minR = Math.min(...rs);
