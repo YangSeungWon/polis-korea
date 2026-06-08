@@ -79,7 +79,8 @@ function loadJson(p) {
 
 (async function init() {
   const data = await loadJson('data/timeline.json');
-  const rounds = data.rounds || [];
+  // 역대 페이지는 사실(과거) 중심 — 주기 추정 예측 행은 제외. 진짜 예정(active)만 노출.
+  const rounds = (data.rounds || []).filter((r) => !r.predicted);
   $('#loading').hidden = true;
   const root = $('#tl-table');
   root.hidden = false;

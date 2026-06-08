@@ -362,8 +362,43 @@ def main():
     except Exception:
         pass
 
-    # 주기 기반 예측은 정보량 0(막대 없음·회차 추정만) — 역대 페이지에서 제외.
-    # 진짜 예정(elections/index.json active) 항목은 위에서 이미 추가됨.
+    # 주기 기반 예측 — 대선 5년, 총선 4년, 지선 4년. 마지막 회차 + 주기.
+    # 홈 타임라인 strip이 미래 위치 표시에 사용. 역대 페이지 list는 consumer에서 필터.
+    CYCLE = {"presidential": 5, "national_assembly": 4, "local": 4}
+    HORIZON_YEARS = 10
+    from datetime import date as _date
+    today = _date(2026, 6, 3)
+    horizon = today.replace(year=today.year + HORIZON_YEARS)
+    for kind, cycle in CYCLE.items():
+        kdata = elections.get(kind, {})
+        elist = kdata.get("elections", [])
+        if not elist:
+            continue
+        last = elist[-1]
+        last_n = last["n"]
+        last_date = last.get("date", "")
+        if not last_date:
+            continue
+        y, m, d = map(int, last_date.split("-"))
+        cur_n = last_n
+        cur_date = _date(y, m, d)
+        while True:
+            cur_n += 1
+            cur_date = cur_date.replace(year=cur_date.year + cycle)
+            if cur_date > horizon:
+                break
+            if any(r["kind"] == kind and r["n"] == cur_n for r in out_rounds + future):
+                continue
+            future.append({
+                "kind": kind,
+                "n": cur_n,
+                "date": cur_date.isoformat(),
+                "label": f"{cur_n}{KIND_UNIT[kind]} {KIND_LABEL[kind]}",
+                "winner": None, "winner_party": None, "turnout": None,
+                "sidoWinners": {},
+                "upcoming": True,
+                "predicted": True,
+            })
 
     out_rounds.extend(future)
     # 시간순 정렬
