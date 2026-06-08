@@ -74,7 +74,12 @@ function pollsByRegion(sido, sigungu = null) {
 // summarizeLatest (시간감쇠 가중 1위 집계) → utils.js (대시보드와 공용)
 
 function sidoLastWinningParty(sido, office) {
-  return summarizeLatest(pollsByOffice(office).filter((p) => p.sido === sido && !p.sigungu));
+  let r = summarizeLatest(pollsByOffice(office).filter((p) => p.sido === sido && !p.sigungu));
+  // 분리 시도(광주·전남)로 못 찾으면 통합키(전남광주특별시)로 — 2026 지선 통합 대응.
+  if (!r && typeof SIDO_MERGE !== 'undefined' && SIDO_MERGE[sido]) {
+    r = summarizeLatest(pollsByOffice(office).filter((p) => p.sido === SIDO_MERGE[sido] && !p.sigungu));
+  }
+  return r;
 }
 
 // 시군구 단위 — 기초단체장은 office_level='기초단체장', 그외 메트릭(정당지지/국정평가/투표의향)은

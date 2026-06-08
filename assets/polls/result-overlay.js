@@ -43,7 +43,11 @@
   const _origSigungu = window.sigunguLastWinningParty;
   window.sidoLastWinningParty = function (sido, office) {
     if (state.mode === 'result') {
-      return actualBySidoOffice[`${sido}|${office}`] || null;
+      // 분리 시도로 못 찾으면 통합키(전남광주특별시) fallback — 2026 지선 통합.
+      const merged = (typeof SIDO_MERGE !== 'undefined' && SIDO_MERGE[sido]) ? SIDO_MERGE[sido] : null;
+      return actualBySidoOffice[`${sido}|${office}`]
+        || (merged && actualBySidoOffice[`${merged}|${office}`])
+        || null;
     }
     return _origSido(sido, office);
   };
