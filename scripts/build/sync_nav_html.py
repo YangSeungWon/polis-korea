@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MENU = [
     ("홈", "/", "home"),
     ("여론조사", "/polls.html", "polls"),
-    ("재·보궐", "/byelection.html", "byelection"),
+    ("재·보궐", "/byelection/", "byelection"),
     ("지지율 추이", "/tracker.html", "tracker"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),

@@ -101,7 +101,7 @@ HEAD = """<!DOCTYPE html>
     <a href="/" class="hdr-link">홈</a>
     <span data-nav-urgent></span>
     <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection.html" class="hdr-link">재·보궐</a>
+    <a href="/byelection/" class="hdr-link">재·보궐</a>
     <a href="/tracker.html" class="hdr-link">지지율 추이</a>
     <a href="/history.html" class="hdr-link is-current">역대 결과</a>
     <a href="/timeline.html" class="hdr-link">타임라인</a>
