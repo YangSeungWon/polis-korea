@@ -18,6 +18,9 @@
 | `nec_uncontested/` | source | 28 KB | NEC 무투표 당선 캐시 |
 | `ohmynews_*` | reference | 1.7 MB | 오마이뉴스 분석 데이터 |
 | `wwolf/` | reference | 21 MB | wwolf 비례 시군구별 데이터셋 |
+| `assembly/` | source | 3.4 MB · 10개 xlsx | 국회 OpenAPI 일괄 다운로드 (open.assembly.go.kr/portal/infs/list/infsListDownPage.do). 의원 unique ID·정당이력·생년월일. `scripts/build/parse_assembly_members.py`가 소비 |
+| `{5,6,7,8}th_council_party_seats.json` | derived | 80 KB | 위키 ‘제N회 전국동시지방선거 X의회’ 스크랩. `fetch_8th_council_seats.py` |
+| `assembly_member_map.json` | derived | 1.4 MB | assembly xlsx 파싱 → 의원 unique ID 룩업 |
 
 **source**: 외부 다운로드 원본. 손실 시 재다운로드 필요.
 **derived**: 파이프라인이 source에서 생성. source가 있으면 재생성 가능.
@@ -83,6 +86,27 @@ data/raw/*               # 기본 제외
 !data/raw/nec_uncontested/
 !data/raw/nec_candidate_*.json
 !data/raw/nec_roster_*.json
+!data/raw/{5,6,7,8}th_council_party_seats.json  # 위키 scrape 결과 — 재현 가능하지만 시간 절약
+!data/raw/assembly_member_map.json              # xlsx 파싱 결과 (xlsx 자체는 수동 다운로드)
+```
+
+## 국회 의원 데이터 갱신
+
+`data/raw/assembly/` xlsx는 수동 다운로드 (open.assembly.go.kr).
+회기 종료(매 4년) 후 새 의원 추가 시 재다운로드:
+
+```bash
+# 1. open.assembly.go.kr/portal/infs/list/infsListDownPage.do 에서 zip 다운로드
+unzip -O cp949 download_YYYYMMDD.zip -d data/raw/assembly/
+
+# 2. parse → 의원 unique ID 룩업
+.venv/bin/python scripts/build/parse_assembly_members.py
+
+# 3. 인물 인덱스 재빌드
+.venv/bin/python scripts/build/build_person_index.py
+.venv/bin/python scripts/build/enrich_person_index.py
+.venv/bin/python scripts/build/build_person_pages.py
+.venv/bin/python scripts/build/build_sitemap.py
 ```
 
 MANIFEST.json + 소량 NEC 캐시만 git tracked — 새 clone에서도 `verify_raw.py`

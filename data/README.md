@@ -45,6 +45,8 @@ data/
 | **github.com/vuski/...** (20대 대선) | 시군구 단위 대선 결과 | CSV | `data/raw/wwolf/vuski_20p.csv` |
 | **NESDC (nesdc.go.kr)** | 9회 지선 여론조사 (메인) | 공시 PDF/HTML | `scripts/fetch/scrape_nesdc.py` |
 | **위키백과 + 수동 patch** | PDF·기타 누락 보정 | manual | `data/raw/parsed/` |
+| **위키백과 ‘제N회 전국동시지방선거 X의회’** | 5~8회 기초의회 정당별 의석 | HTML scrape | `scripts/fetch/fetch_8th_council_seats.py` → `data/raw/{5,6,7,8}th_council_party_seats.json` |
+| **open.assembly.go.kr 국회정보 일괄 다운로드** | 13~22대 국회의원 unique ID(한자명·생년월일·정당이력) | xlsx 묶음 (수동 다운로드) | `data/raw/assembly/`. parse → `data/raw/assembly_member_map.json` (4,587명·9,486 careers) |
 
 ## data.go.kr OpenAPI (NEC) — 활성
 
@@ -83,6 +85,34 @@ GET /WtvtelpcInfoInqireService/getWtvtelpcsccnInfoInqire
 | `scrape_nesdc.py` | NESDC 공시 | `raw/parsed/`, `polls/` | 9회 polls |
 | `build_polls.py` | `raw/parsed/`, `raw/nec_candidate_party.json` | `polls/aggregated.json` | polls 집계 + 빈 정당 보완(조사 간 다수결 → NEC 캐시 순) |
 | `backfill_candidate_party.py` | 후보자 통합검색 API → `raw/nec_candidate_party.json` 캐시 | (캐시만; `build_polls`가 사용) | 어느 조사에도 정당이 안 적힌 후보(회색 셀)의 공식 정당을 이름 기반 조회. **현존 정당만 신뢰**(폐지 정당=동명이인/옛 이력→버림). 캐시 있으면 키 불필요 |
+
+## 인물·검색 인덱스 (`assets/`)
+
+UI fetch용 인물·검색 통합 인덱스. results/*.json → 후가공.
+
+| 파일 | 생성 | 비고 |
+|---|---|---|
+| `assets/search-index.json` | `scripts/build/build_search_index.py` | 모든 회차 당선인 5,011건. `/search.html`에서 fetch (~700KB) |
+| `assets/person-index.json` | `scripts/build/build_person_index.py` → `enrich_person_index.py` | 이름 기준 cluster 10,152명. assembly_id 매칭 시 동명이인 split. `/person.html?name=` dynamic fetch (~3.8MB) |
+| `person/{name}-{dob}/index.html` × 807 | `scripts/build/build_person_pages.py` | 의원(assembly 매칭) 한정 정적 prerender. inline JSON으로 fetch 없이 즉시 렌더 |
+
+### 인물 인덱스 빌드 파이프라인
+
+```
+data/raw/assembly/*.xlsx                 # 국회 일괄 다운로드 (수동)
+    ↓ parse_assembly_members.py
+data/raw/assembly_member_map.json        # 한자명·생년월일 기반 unique ID
+    ↓ build_person_index.py
+assets/person-index.json (초안)          # results/*.json의 모든 candidate → 이름 cluster
+    ↓ enrich_person_index.py
+assets/person-index.json (assembly_id 부착)  # 의원 매칭 + 동명이인 split
+    ↓ build_person_pages.py
+person/{slug}/index.html × 807           # SEO 정적 페이지
+    ↓ build_sitemap.py
+sitemap.xml (person URL 통합)
+```
+
+비의원 후보(시·군·구의원·낙선자 9,345명)는 정적 페이지 없음 — `/person.html?name=` dynamic fallback 사용.
 
 ## 생성물 (`geo/`)
 

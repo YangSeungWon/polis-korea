@@ -32,3 +32,10 @@ data/*.xls
 !data/raw/nec_roster_21gen.json
 !data/raw/nec_roster_20gen.json
 !data/raw/nec_roster_7th.json
+# 예외: 5~8회 기초의회 정당 의석 (위키 scrape — 재현 가능하지만 fetch 시간 절약)
+!data/raw/5th_council_party_seats.json
+!data/raw/6th_council_party_seats.json
+!data/raw/7th_council_party_seats.json
+!data/raw/8th_council_party_seats.json
+# 예외: 의원 unique ID 룩업 (assembly xlsx 파싱 결과 — xlsx는 수동 다운로드)
+!data/raw/assembly_member_map.json
