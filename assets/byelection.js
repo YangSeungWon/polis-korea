@@ -270,7 +270,7 @@ function renderCards() {
   if (d.polls.length >= 2) {
     const sido = SIDO_FROM_SHORT[(d.district || '').split(' ')[0]] || '';
     const pollsWithSido = d.polls.map((p) => ({ ...p, sido }));
-    html += `<div class="scatter-wrap">${buildScatterSVG(pollsWithSido, state.roster || null)}</div>`;
+    html += `<div class="scatter-wrap">${buildScatterSVG(pollsWithSido, state.roster || null, result)}</div>`;
   }
   for (const p of d.polls) {
     html += renderPollCard(p, '국회의원');  // renderPollCard → utils.js (공용)
