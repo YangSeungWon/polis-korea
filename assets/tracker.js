@@ -371,6 +371,14 @@
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
       document.getElementById('tk-cand-meta').textContent = `다자대결 기준 · 대선 국면`;
       ['tk-approval', 'tk-party', 'tk-cand'].forEach(attachHover);
+      // 모바일 가로 스크롤은 최신(우측 끝)이 보이도록 초기 스크롤.
+      // requestAnimationFrame으로 레이아웃 완료 후 실행.
+      requestAnimationFrame(() => {
+        for (const id of ['tk-approval', 'tk-party', 'tk-cand']) {
+          const sc = document.querySelector(`#${id} .tk-scroll`);
+          if (sc) sc.scrollLeft = sc.scrollWidth;
+        }
+      });
     }
     renderAll();
     renderLeanTable(recs, polls);
