@@ -301,6 +301,14 @@ function renderSigunguHex() {
       t.textContent = lbl;
       svg.appendChild(t);
     }
+    // 파이 슬라이스 path (top 기준 시계방향). 면적=표수(원), 파이=후보 구성.
+    const pieSlice = (cx, cy, rad, a0, a1) => {
+      const x0 = cx + rad * Math.cos(a0), y0 = cy + rad * Math.sin(a0);
+      const x1 = cx + rad * Math.cos(a1), y1 = cy + rad * Math.sin(a1);
+      const large = (a1 - a0) > Math.PI ? 1 : 0;
+      return `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${x0.toFixed(2)} ${y0.toFixed(2)} `
+           + `A ${rad.toFixed(2)} ${rad.toFixed(2)} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
+    };
     for (const n of nodes) {
       const isSelected = state.selected
         && state.selected.sido === n.d.sido && state.selected.name === n.d.name;
@@ -310,15 +318,38 @@ function renderSigunguHex() {
         state.selected = { sido: n.d.sido, name: n.d.name, code: n.d.code };
         renderAll(); renderDetail();
       });
-      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      c.setAttribute('cx', n.cx);
-      c.setAttribute('cy', n.cy);
-      c.setAttribute('r', n.radius);
-      c.setAttribute('fill', n.fill);
-      c.setAttribute('fill-opacity', n.op);
-      c.setAttribute('stroke', '#0a0e1a');
-      c.setAttribute('stroke-width', isSelected ? '1.6' : '0.5');
-      g.appendChild(c);
+      // 득표 비례 파이 — 셀 안에서 후보 구성 표시(승자독식 색 왜곡 제거).
+      const cands = (n.result?.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      const totalV = cands.reduce((s, c) => s + (c.votes || 0), 0);
+      if (totalV > 0 && cands.filter((c) => (c.votes || 0) > 0).length > 1) {
+        let a0 = -Math.PI / 2;
+        for (const cand of cands) {
+          const frac = (cand.votes || 0) / totalV;
+          if (frac <= 0) continue;
+          const a1 = a0 + frac * 2 * Math.PI;
+          const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          p.setAttribute('d', pieSlice(n.cx, n.cy, n.radius, a0, a1));
+          p.setAttribute('fill', partyColor(cand.party));
+          g.appendChild(p);
+          a0 = a1;
+        }
+        const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ring.setAttribute('cx', n.cx); ring.setAttribute('cy', n.cy); ring.setAttribute('r', n.radius);
+        ring.setAttribute('fill', 'none');
+        ring.setAttribute('stroke', '#0a0e1a');
+        ring.setAttribute('stroke-width', isSelected ? '1.6' : '0.5');
+        g.appendChild(ring);
+      } else {
+        // 단독·무투표 등 후보 1명 — 단색 원
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', n.cx);
+        c.setAttribute('cy', n.cy);
+        c.setAttribute('r', n.radius);
+        c.setAttribute('fill', n.fill);
+        c.setAttribute('stroke', '#0a0e1a');
+        c.setAttribute('stroke-width', isSelected ? '1.6' : '0.5');
+        g.appendChild(c);
+      }
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       tt.textContent = n.top
         ? `${n.d.sido} ${n.d.name} · ${candLabel(n.top)} (${n.top.party}) ${n.top.pct?.toFixed(1)}%`
