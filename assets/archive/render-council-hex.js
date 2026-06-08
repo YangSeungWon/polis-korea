@@ -186,8 +186,7 @@
       // 부모 outline
       const outline = document.createElementNS(NS, 'polygon');
       outline.setAttribute('points', hexPoints(cx, cy, PARENT_R));
-      outline.setAttribute('fill', 'rgba(255,255,255,0.4)');
-      outline.setAttribute('stroke', 'rgba(27,34,55,0.35)');
+      outline.setAttribute('class', 'council-outline');
       outline.setAttribute('stroke-width', '0.8');
       g.appendChild(outline);
       // 시군구명 hover tooltip
@@ -198,7 +197,7 @@
       g.appendChild(tt);
       // single-tier (세종·제주시·서귀포 등) — 회색 X
       if (cell.single_tier || !seats || seats.size === 0) {
-        outline.setAttribute('fill', 'rgba(220,224,232,0.5)');
+        outline.setAttribute('class', 'council-outline no-data');
         svg.appendChild(g);
         continue;
       }

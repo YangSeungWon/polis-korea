@@ -343,3 +343,70 @@
 .scatter-wrap svg { display: block; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* === Hex outline (시군구·시도 cluster footprint) — 테마 인지 ===
+   light: 기존 흰 반투명 유지 (디자인 자료에서 부드러운 footprint).
+   dark: 흰 반투명을 10~15%로 약하게 (데이터 hex 강조). */
+.sig-outline {
+  fill: rgba(255,255,255,0.35);
+  stroke: rgba(27,34,55,0.45);
+  stroke-width: 1.0;
+}
+.sig-outline.is-selected {
+  fill: rgba(255,255,255,0.7);
+  stroke: #0a0e1a;
+  stroke-width: 3.5;
+}
+.metro-outline {
+  fill: rgba(255,255,255,0.45);
+  stroke: rgba(27,34,55,0.45);
+  stroke-width: 1.2;
+}
+.council-outline {
+  fill: rgba(255,255,255,0.4);
+  stroke: rgba(27,34,55,0.35);
+  stroke-width: 0.8;
+}
+.council-outline.no-data {
+  fill: rgba(220,224,232,0.5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sig-outline {
+    fill: rgba(255,255,255,0.10);
+    stroke: rgba(255,255,255,0.18);
+  }
+  :root:not([data-theme="light"]) .sig-outline.is-selected {
+    fill: rgba(255,255,255,0.25);
+    stroke: var(--ink);
+  }
+  :root:not([data-theme="light"]) .metro-outline {
+    fill: rgba(255,255,255,0.10);
+    stroke: rgba(255,255,255,0.18);
+  }
+  :root:not([data-theme="light"]) .council-outline {
+    fill: rgba(255,255,255,0.10);
+    stroke: rgba(255,255,255,0.15);
+  }
+  :root:not([data-theme="light"]) .council-outline.no-data {
+    fill: rgba(255,255,255,0.06);
+  }
+}
+[data-theme="dark"] .sig-outline {
+  fill: rgba(255,255,255,0.10);
+  stroke: rgba(255,255,255,0.18);
+}
+[data-theme="dark"] .sig-outline.is-selected {
+  fill: rgba(255,255,255,0.25);
+  stroke: var(--ink);
+}
+[data-theme="dark"] .metro-outline {
+  fill: rgba(255,255,255,0.10);
+  stroke: rgba(255,255,255,0.18);
+}
+[data-theme="dark"] .council-outline {
+  fill: rgba(255,255,255,0.10);
+  stroke: rgba(255,255,255,0.15);
+}
+[data-theme="dark"] .council-outline.no-data {
+  fill: rgba(255,255,255,0.06);
+}

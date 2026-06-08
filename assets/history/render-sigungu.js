@@ -147,8 +147,7 @@ function renderSigunguHex() {
       // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
       const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
       sigOutline.setAttribute('points', hexPoints(cx0, cy0, 22));
-      sigOutline.setAttribute('fill', isSelected ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.35)');
-      sigOutline.setAttribute('stroke', isSelected ? '#0a0e1a' : 'rgba(27,34,55,0.45)');
+      sigOutline.setAttribute('class', 'sig-outline' + (isSelected ? ' is-selected' : ''));
       sigOutline.setAttribute('stroke-width', isSelected ? '3.5' : '1.0');
       g.appendChild(sigOutline);
       // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)

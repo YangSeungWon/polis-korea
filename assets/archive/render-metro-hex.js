@@ -150,8 +150,7 @@
       const outline = document.createElementNS(NS, 'circle');
       outline.setAttribute('cx', info.cx); outline.setAttribute('cy', info.cy);
       outline.setAttribute('r', clusterR);
-      outline.setAttribute('fill', 'rgba(255,255,255,0.45)');
-      outline.setAttribute('stroke', 'rgba(27,34,55,0.45)');
+      outline.setAttribute('class', 'metro-outline');
       outline.setAttribute('stroke-width', '1.2');
       g.appendChild(outline);
       const tt = document.createElementNS(NS, 'title');
