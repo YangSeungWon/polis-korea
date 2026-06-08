@@ -231,9 +231,9 @@ function updateURL() {
   }
 }
 
-// 대선만 격자 hex 기본 (전국 표심을 면적으로 공평하게). 총선·지선은 동일.
+// 격자 hex 기본 (전국 표심을 면적으로 공평하게 — 1 hex=2만표). '동일' 모드는 제거됨.
 function typeDefaultSizing(type) {
-  return type === 'presidential' ? '격자' : '동일';
+  return '격자';
 }
 
 function setType(type, skipDefaultRound = false) {

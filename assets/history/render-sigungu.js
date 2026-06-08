@@ -42,8 +42,8 @@ function renderSigunguHex() {
   for (const d of data) cellAt.set(`${d.c},${d.r}`, d);
   // nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
-  // 사이즈 모드 4가지: 동일 / 반지름 (hex radius scale) / 격자 (multiple small hexes per sigungu) / dorling (circles)
-  const sizingMode = state.sizing || '동일';
+  // 사이즈 모드 3가지: 격자 (multiple small hexes per sigungu·기본) / 반지름 (hex radius scale) / dorling (circles)
+  const sizingMode = state.sizing || '격자';
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
