@@ -54,8 +54,17 @@ SELECT ?pname WHERE {{
   ?p neco:name ?pname . FILTER(lang(?pname)="")
 }} LIMIT 100"""
 
+# 지역구 당선자 URI 집합 — NEC 권위 당선 플래그(rdf:type WinCandidate). '최다 득표'가 아니라
+# 이걸로 won 판정(후보 사퇴·등록무효 등으로 최다득표≠당선인 케이스 존재).
+WIN_Q = """PREFIX neco: <http://data.nec.go.kr/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?c WHERE {{
+  <http://data.nec.go.kr/resource/{uri}> neco:hasCandidate ?c .
+  ?c rdf:type neco:WinCandidate .
+}} ORDER BY ?c LIMIT 100 OFFSET {off}"""
+
 QTMPL = """PREFIX neco: <http://data.nec.go.kr/ontology/>
-SELECT ?sido ?dname ?seats ?electors ?valid ?cname ?pname ?symbol ?votes WHERE {{
+SELECT ?c ?sido ?dname ?seats ?electors ?valid ?cname ?pname ?symbol ?votes WHERE {{
   <http://data.nec.go.kr/resource/{uri}> neco:hasCandidate ?c .
   ?c neco:name ?cname . FILTER(lang(?cname)="")
   ?c neco:pollingScoreCount ?votes ; neco:electionSymbol ?symbol ;
@@ -102,6 +111,21 @@ def parse_rows(root):
     return rows
 
 
+def fetch_winners(uri: str, cookie: str):
+    """지역구 당선자 URI 집합 (WinCandidate). ≤253명 → OFFSET 페이징."""
+    out, off = set(), 0
+    while True:
+        rows = parse_rows(run(WIN_Q.format(uri=uri, off=off), cookie))
+        for r in rows:
+            if r.get("c"):
+                out.add(r["c"])
+        if len(rows) < 100:
+            break
+        off += 100
+        time.sleep(0.3)
+    return out
+
+
 def fetch_jeon(uri: str, cookie: str):
     """전국구(비례) 당선자 정당별 의석. uri = Elec_7{날짜}."""
     from collections import Counter
@@ -113,22 +137,26 @@ def fetch_jeon(uri: str, cookie: str):
 
 
 def fetch_all(uri: str, cookie: str):
-    rows, off, seen = [], 0, set()
+    # 후보 URI(?c)로 dedup — 같은 후보가 2개 득표값(재선거·보정)으로 중복될 수 있어
+    # 최다득표 행만 유지(안 그러면 한 선거구에 당선자 2명 마킹됨).
+    by_c, off = {}, 0
     while True:
         batch = parse_rows(run(QTMPL.format(uri=uri, off=off), cookie))
         for r in batch:
-            key = (r.get("dname"), r.get("cname"), r.get("votes"))
-            if key not in seen:
-                seen.add(key)
-                rows.append(r)
+            cid = r.get("c")
+            if not cid:
+                continue
+            prev = by_c.get(cid)
+            if prev is None or int(r.get("votes") or 0) > int(prev.get("votes") or 0):
+                by_c[cid] = r
         if len(batch) < 100:
             break
         off += 100
         time.sleep(0.3)
-    return rows
+    return list(by_c.values())
 
 
-def build_races(rows):
+def build_races(rows, winners):
     by = defaultdict(list)
     for r in rows:
         sido = SIDO_NORM.get(r.get("sido") or "", r.get("sido") or "")
@@ -146,7 +174,7 @@ def build_races(rows):
             out.append({
                 "name": c.get("cname"), "party": party,
                 "votes": v, "pct": round(v / valid * 100, 2) if valid else None,
-                "rank": i + 1, "won": i < seats,
+                "rank": i + 1, "won": c.get("c") in winners,  # NEC 권위 당선 플래그
             })
         races.append({
             "sg_typecode": "2", "scope": "district", "sido": sido, "sigungu": dname,
@@ -167,7 +195,8 @@ def main():
     for n in [int(x) for x in args.n.split(",")]:
         fid, uri = ELECTIONS[n]
         rows = fetch_all(uri, cookie)
-        races = build_races(rows)
+        winners = fetch_winners(uri, cookie)
+        races = build_races(rows, winners)
         # 검증: 정당별 지역구 의석
         seat = defaultdict(int)
         for r in races:
