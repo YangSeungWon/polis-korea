@@ -48,28 +48,8 @@
     <div class="ar-hero-tag">아카이브</div>
     <h1 class="ar-hero-title" id="ar-title">제17대 국회의원선거</h1>
     <div class="ar-hero-date" id="ar-date">2004-04-15 (목)</div>
-    <div class="ar-hero-scorecard" id="ar-scorecard" hidden>
-      <div class="ar-sc-row ar-sc-head">
-        <div class="ar-sc-party ar-sc-p1" id="ar-sc-p1"></div>
-        <div class="ar-sc-label"></div>
-        <div class="ar-sc-party ar-sc-p2" id="ar-sc-p2"></div>
-      </div>
-      <div class="ar-sc-row">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-dist-l">—</div>
-        <div class="ar-sc-label">지역구</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-dist-r">—</div>
-      </div>
-      <div class="ar-sc-row">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-prop-l">—</div>
-        <div class="ar-sc-label">비례대표</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-prop-r">—</div>
-      </div>
-      <div class="ar-sc-row ar-sc-foot">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-total-l">—</div>
-        <div class="ar-sc-label">합계</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-total-r">—</div>
-      </div>
-    </div>
+    <!-- 총선 히어로: 의석 반원(전 정당) 헤드라인. general.js renderHero가 채움. 정당별 상세는 '의회 구성' 섹션. -->
+    <div class="ar-hero-scorecard ar-parl-sc" id="ar-scorecard" hidden></div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
       <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
@@ -91,8 +71,7 @@
 
   <section class="ar-section" id="ar-parliament" hidden>
     <h2 class="ar-section-title">의회 구성</h2>
-    <p class="ar-source-line">지역구 254석 + 비례대표 46석 = 총 300석. 데이터 원본: <a href="https://info.nec.go.kr/main/showDocument.xhtml?electionId=00220040415&topMenuId=VC&secondMenuId=VCCP09" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
-    <div class="ar-parliament-host" id="ar-parliament-host"></div>
+    <p class="ar-source-line">정당별 지역구·비례대표 의석. 데이터 원본: <a href="https://info.nec.go.kr/main/showDocument.xhtml?electionId=00220040415&topMenuId=VC&secondMenuId=VCCP09" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
     <div class="ar-parliament-table" id="ar-parliament-table"></div>
   </section>
 

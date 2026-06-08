@@ -13,42 +13,14 @@
     return (results?.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === propSgCode);
   }
 
-  // 정당별 의석 = 지역구 winner + 비례 의석 (proportional_seats 또는 seats 필드).
-  function computeSeats(results, sgTypecode, propSgCode) {
-    const seats = {};
-    for (const r of districtRaces(results, sgTypecode)) {
-      const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      const top = cands[0];
-      if (top) {
-        const p = mainParty(top.party);
-        seats[p] = (seats[p] || 0) + 1;
-      }
-    }
-    const propNat = propNationRace(results, propSgCode);
-    if (propNat?.candidates) {
-      for (const c of propNat.candidates) {
-        const n = c.proportional_seats != null ? c.proportional_seats : (c.seats != null ? c.seats : null);
-        if (n != null) {
-          seats[mainParty(c.party)] = (seats[mainParty(c.party)] || 0) + n;
-        }
-      }
-    }
-    return seats;
-  }
-
-  function renderHero(ctx) {
-    const { results, polls, exitData, meta, sgTypecode } = ctx;
-    if (!results) return;
-    // 지역구 + 비례 분리 카운트
+  // 정당별 의석 = 지역구 winner + 비례 의석. 지역구·비례를 분리해 반환(상세표·반원 공용).
+  function computeSeatSplit(results, sgTypecode, propSgCode) {
     const dist = {}, prop = {};
     for (const r of districtRaces(results, sgTypecode)) {
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) {
-        const p = mainParty(cs[0].party);
-        dist[p] = (dist[p] || 0) + 1;
-      }
+      if (cs[0]) { const p = mainParty(cs[0].party); dist[p] = (dist[p] || 0) + 1; }
     }
-    const propNat = propNationRace(results, propSg(meta));
+    const propNat = propNationRace(results, propSgCode);
     if (propNat?.candidates) {
       for (const c of propNat.candidates) {
         const n = c.proportional_seats != null ? c.proportional_seats : (c.seats != null ? c.seats : null);
@@ -56,15 +28,22 @@
       }
     }
     const total = {};
-    for (const p of new Set([...Object.keys(dist), ...Object.keys(prop)])) {
-      total[p] = (dist[p] || 0) + (prop[p] || 0);
-    }
+    for (const p of new Set([...Object.keys(dist), ...Object.keys(prop)])) total[p] = (dist[p] || 0) + (prop[p] || 0);
+    return { dist, prop, total };
+  }
+  function computeSeats(results, sgTypecode, propSgCode) {
+    return computeSeatSplit(results, sgTypecode, propSgCode).total;
+  }
+
+  function renderHero(ctx) {
+    const { results, polls, exitData, meta, sgTypecode } = ctx;
+    if (!results) return;
+    const { total } = computeSeatSplit(results, sgTypecode, propSg(meta));
     const sorted = Object.entries(total).sort((a, b) => b[1] - a[1]);
     if (sorted.length === 0) return;
-    const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
     const sc = document.getElementById('ar-scorecard');
     if (sc) sc.removeAttribute('hidden');
-    // 의회 구성 — 의석 반원(hemicycle). scorecard 카드 맨 위에(보이는 컨테이너 안).
+    // 히어로 = 의석 반원 헤드라인(전 정당). 정당별 지역구/비례 상세는 '의회 구성' 섹션 표로.
     if (sc && typeof renderParliamentChart === 'function' && !sc.querySelector('.ar-parliament')) {
       const totalSeats = sorted.reduce((s, [, n]) => s + n, 0);
       if (totalSeats > 0) {
@@ -72,27 +51,12 @@
         const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
           .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}"></span><b>${seats}</b> ${party}</span>`).join('');
         sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
-          + renderParliamentChart(pp, totalSeats, 440, 200)
+          + renderParliamentChart(pp, totalSeats, 460, 210)
           + `<div class="ar-pl-total">${totalSeats}석</div>`
           + `<div class="ar-pl-legend">${legend}</div></div>`);
       }
     }
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
-    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
-    const renderParty = (party) => {
-      const col = pcol(party);
-      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
-    };
-    setHTML('ar-sc-p1', renderParty(p1));
-    setText('ar-sc-dist-l', (dist[p1] || 0).toLocaleString());
-    setText('ar-sc-prop-l', (prop[p1] || 0).toLocaleString());
-    setText('ar-sc-total-l', total[p1].toLocaleString());
-    if (p2) {
-      setHTML('ar-sc-p2', renderParty(p2));
-      setText('ar-sc-dist-r', (dist[p2] || 0).toLocaleString());
-      setText('ar-sc-prop-r', (prop[p2] || 0).toLocaleString());
-      setText('ar-sc-total-r', total[p2].toLocaleString());
-    }
     let voters = 0, electors = 0;
     for (const r of districtRaces(results, sgTypecode)) {
       voters += r.voters || 0; electors += r.electors || 0;
@@ -118,26 +82,38 @@
     setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`);
   }
 
+  // '의회 구성' 섹션 — 반원은 히어로가 가지므로 여기선 정당별 지역구/비례/계 상세표(중복 제거).
   function renderParliament(ctx) {
     const { results, meta, sgTypecode } = ctx;
     if (!results) return;
-    const seats = computeSeats(results, sgTypecode, propSg(meta));
-    const total = Object.values(seats).reduce((a, b) => a + b, 0);
-    if (!total) return;
-    const parties = Object.entries(seats)
-      .sort((a, b) => b[1] - a[1])
-      .map(([party, n]) => ({ party, seats: n, color: pcol(party) }));
-    const host = document.getElementById('ar-parliament-host');
-    if (typeof renderParliamentChart === 'function') {
-      host.innerHTML = renderParliamentChart(parties, total, 480, 230);
-    }
+    const { dist, prop, total } = computeSeatSplit(results, sgTypecode, propSg(meta));
+    const rows = Object.keys(total).map((p) => ({ p, d: dist[p] || 0, pr: prop[p] || 0, t: total[p] }))
+      .filter((r) => r.t >= 1)
+      .sort((a, b) => b.t - a.t || b.pr - a.pr);
+    if (!rows.length) return;
+    // 비례 의석 배분이 데이터에 있는 회차(22대~)만 비례/계 열 표시. 이전은 지역구만(비례는 득표율만 존재).
+    const hasProp = rows.some((r) => r.pr > 0);
+    const sumD = rows.reduce((s, r) => s + r.d, 0);
+    const sumP = rows.reduce((s, r) => s + r.pr, 0);
+    const grand = rows.reduce((s, r) => s + r.t, 0);
+    const head = hasProp
+      ? '<span></span><span>정당</span><span>지역구</span><span>비례</span><span>계</span>'
+      : '<span></span><span>정당</span><span>지역구 당선</span>';
+    const cells = (r) => hasProp
+      ? `<span class="ar-parl-n">${r.d || '·'}</span><span class="ar-parl-n">${r.pr || '·'}</span><span class="ar-parl-n ar-parl-tot">${r.t}</span>`
+      : `<span class="ar-parl-n ar-parl-tot">${r.d}</span>`;
+    const foot = hasProp
+      ? `<span class="ar-parl-n">${sumD}</span><span class="ar-parl-n">${sumP}</span><span class="ar-parl-n ar-parl-tot">${grand}</span>`
+      : `<span class="ar-parl-n ar-parl-tot">${sumD}</span>`;
     const table = document.getElementById('ar-parliament-table');
-    table.innerHTML = parties.slice(0, 10).map(({ party, seats: n, color }) =>
-      `<div class="ar-parl-row">
-        <span class="ar-parl-swatch" style="background:${color}"></span>
-        <span class="ar-parl-name">${party}</span>
-        <span class="ar-parl-seats">${n}석</span>
-      </div>`).join('');
+    table.innerHTML = `<div class="ar-parl-table${hasProp ? '' : ' two-col'}">
+      <div class="ar-parl-thead">${head}</div>
+      ${rows.map((r) => `<div class="ar-parl-trow">
+        <span class="ar-parl-swatch" style="background:${pcol(r.p)}"></span>
+        <span class="ar-parl-name">${r.p}</span>${cells(r)}
+      </div>`).join('')}
+      <div class="ar-parl-trow ar-parl-foot"><span></span><span class="ar-parl-name">합계</span>${foot}</div>
+    </div>${hasProp ? '' : '<p class="ar-parl-note">비례대표는 정당 득표율만 기록 — 의석 배분 미집계. 지역구 당선만 표시.</p>'}`;
     document.getElementById('ar-parliament').hidden = false;
   }
 

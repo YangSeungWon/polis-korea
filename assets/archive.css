@@ -195,25 +195,31 @@
 .ar-nation-votes { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; text-align: right; }
 
 /* 총선 의회 구성 */
-.ar-parliament-host { display: flex; justify-content: center; }
-.ar-parliament-host svg { width: 100%; max-width: 480px; height: auto; }
-.ar-parliament-table {
+/* 의회 구성 — 정당별 지역구/비례/계 상세표 (반원은 히어로 소관). */
+.ar-parl-table { max-width: 460px; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.ar-parl-thead, .ar-parl-trow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 4px 12px;
-  margin-top: 14px;
+  grid-template-columns: 12px 1fr 56px 56px 56px;
+  gap: 10px; align-items: center; padding: 5px 0;
 }
-.ar-parl-row {
-  display: grid;
-  grid-template-columns: 12px 1fr auto;
-  gap: 8px;
-  align-items: center;
-  font-size: 13px;
-  padding: 4px 0;
+.ar-parl-table.two-col .ar-parl-thead,
+.ar-parl-table.two-col .ar-parl-trow { grid-template-columns: 12px 1fr 72px; }
+.ar-parl-note { font-size: 11px; color: var(--ink-soft); margin: 8px 0 0; max-width: 460px; }
+.ar-parl-thead {
+  font-size: 11px; color: var(--ink-soft); font-weight: 700;
+  border-bottom: 1.5px solid var(--rule-strong);
 }
-.ar-parl-swatch { width: 10px; height: 10px; }
+.ar-parl-thead span:nth-child(n+3), .ar-parl-trow .ar-parl-n { text-align: right; }
+.ar-parl-trow { font-size: 13px; border-bottom: 1px dashed var(--rule); }
+.ar-parl-swatch { width: 10px; height: 10px; border-radius: 2px; }
 .ar-parl-name { font-weight: 600; }
-.ar-parl-seats { font-variant-numeric: tabular-nums; color: var(--ink-soft); font-weight: 700; }
+.ar-parl-n { color: var(--ink-soft); font-weight: 600; }
+.ar-parl-tot { color: var(--ink); font-weight: 800; }
+.ar-parl-foot {
+  border-bottom: none; border-top: 1.5px solid var(--rule-strong);
+  font-size: 12px; color: var(--ink-soft);
+}
+.ar-parl-foot .ar-parl-name { font-weight: 700; }
 
 /* 총선 지역구 grid */
 .ar-districts-host { display: flex; flex-direction: column; gap: 18px; }
