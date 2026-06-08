@@ -34,13 +34,14 @@
   const ym = (d) => d.slice(0, 7);
 
   // ---- 공통 축 ----
-  function gridAxes(W, H, P, tMin, tMax, yMax, yStep, xOf, yOf) {
+  function gridAxes(W, H, P, tMin, tMax, yMax, yStep, xOf, yOf, opts = {}) {
     let g = '';
     for (let v = 0; v <= yMax; v += yStep) {
       const y = yOf(v);
       g += `<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W - P.r}" y2="${y.toFixed(1)}" stroke="var(--rule,#e6e9ef)" stroke-width="0.5"/>`;
       g += `<text x="${P.l - 6}" y="${(y + 3).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
     }
+    if (opts.noYears) return g;   // 차기주자: 연도선은 클러스터별 라벨로 별도 처리
     const y0 = new Date(tMin).getFullYear(), y1 = new Date(tMax).getFullYear();
     for (let yr = y0; yr <= y1; yr++) {
       const t = Date.parse(`${yr}-01-01`);
@@ -258,32 +259,79 @@
     const names = Object.keys(series);
     if (!names.length) return '<div class="tk-empty">데이터 없음</div>';
     yMax = Math.min(60, Math.ceil(yMax / 10) * 10 + 5);
-    const W = 960, H = 380, P = { l: 30, r: 92, t: 16, b: 22 };
-    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
+    const W = 960, H = 380, P = { l: 30, r: 96, t: 16, b: 26 };
     const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
-    const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
+
+    // 빈 구간 압축 — 활성 시점을 대선 국면 클러스터로(200일+ 비면 끊김), 폭은 지속기간 비례.
+    const allT = [];
+    for (const n of names) for (const pt of series[n].pts) allT.push(pt.t);
+    allT.sort((a, b) => a - b);
+    const GAP = 200 * 864e5, BREAK = 52;
+    const clusters = [];
+    for (const t of allT) {
+      const c = clusters[clusters.length - 1];
+      if (!c || t - c.tEnd > GAP) clusters.push({ tStart: t, tEnd: t });
+      else c.tEnd = t;
+    }
+    const availW = (W - P.l - P.r) - BREAK * (clusters.length - 1);
+    const totDur = clusters.reduce((s, c) => s + Math.max(c.tEnd - c.tStart, 1), 0);
+    let cx = P.l;
+    for (const c of clusters) {
+      c.w = availW * Math.max(c.tEnd - c.tStart, 1) / totDur;
+      c.x0 = cx; c.x1 = cx + c.w; cx = c.x1 + BREAK;
+    }
+    const clusterIdx = (t) => {
+      for (let i = 0; i < clusters.length; i++) if (t >= clusters[i].tStart && t <= clusters[i].tEnd) return i;
+      let bi = 0, bd = Infinity;
+      for (let i = 0; i < clusters.length; i++) { const d = Math.min(Math.abs(t - clusters[i].tStart), Math.abs(t - clusters[i].tEnd)); if (d < bd) { bd = d; bi = i; } }
+      return bi;
+    };
+    const xOf = (t) => { const c = clusters[clusterIdx(t)]; return c.x0 + (t - c.tStart) / Math.max(c.tEnd - c.tStart, 1) * c.w; };
+
+    // y 그리드만 + 클러스터별 연도 라벨 + 끊김(∥) 표시
+    let grid = gridAxes(W, H, P, 0, 1, yMax, 10, xOf, yOf, { noYears: true });
+    clusters.forEach((c, i) => {
+      const ya = new Date(c.tStart).getFullYear(), yb = new Date(c.tEnd).getFullYear();
+      const lab = ya === yb ? `${ya}` : `${ya}–${String(yb).slice(2)}`;
+      grid += `<text x="${((c.x0 + c.x1) / 2).toFixed(1)}" y="${(H - P.b + 16).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${lab}</text>`;
+      if (i > 0) grid += `<text x="${(c.x0 - BREAK / 2).toFixed(1)}" y="${((P.t + H - P.b) / 2).toFixed(1)}" font-size="15" fill="var(--rule-strong,#c4c9d2)" text-anchor="middle" font-weight="700">∥</text>`;
+    });
 
     names.sort((a, b) => series[b].peak - series[a].peak);
     HOVER['tk-cand'] = [];
-    let lastLabelY = -99, dots = '', lines = '';
+    let dots = '', lines = '';
+    const ends = clusters.map(() => []);  // 클러스터별 [{x,y,name,color}] (선 끝 라벨)
     for (const name of names) {
-      const { pts, sm, party } = series[name];
+      const { pts, party } = series[name];
       const color = party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888';
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
         HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
       }
-      for (const seg of kernelSmooth(pts, 25)) {
-        if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
-      }
-      const last = sm[sm.length - 1];
-      if (!last) continue;
-      let ly = yOf(last.v) + 3;
-      if (ly - lastLabelY < 11) ly = lastLabelY + 11;
-      lastLabelY = ly;
-      lines += `<text x="${(W - P.r + 4).toFixed(1)}" y="${ly.toFixed(1)}" font-size="9.5" fill="${color}" font-weight="700">${name}</text>`;
+      // 클러스터(대선 국면)별로 나눠 평활·라벨 — 라벨이 그 국면 선 끝에 위치.
+      const byC = clusters.map(() => []);
+      for (const p of pts) byC[clusterIdx(p.t)].push(p);
+      byC.forEach((cpts, k) => {
+        if (cpts.length < 2) return;
+        const segs = kernelSmooth(cpts, 25);
+        for (const seg of segs) if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+        const flat = segs.flat(), last = flat[flat.length - 1];
+        if (last && Math.max(...cpts.map((p) => p.v)) >= 6) ends[k].push({ x: xOf(last.t), y: yOf(last.v), name, color });
+      });
     }
-    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}`, '차기 대선주자 선호 추이');
+    // 라벨 — 클러스터 직후(마지막은 우측 여백)에, 세로 충돌 회피 + 선 끝까지 leader.
+    let labels = '';
+    ends.forEach((arr, k) => {
+      arr.sort((a, b) => a.y - b.y);
+      for (let i = 1; i < arr.length; i++) if (arr[i].y - arr[i - 1].y < 10.5) arr[i].y = arr[i - 1].y + 10.5;
+      const lx = (k === clusters.length - 1) ? (W - P.r + 5) : (clusters[k].x1 + 5);
+      for (const L of arr) {
+        labels += `<circle cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" r="1.8" fill="${L.color}"/>`;
+        if (lx - L.x > 6) labels += `<line x1="${(L.x + 2).toFixed(1)}" y1="${L.y.toFixed(1)}" x2="${(lx - 1).toFixed(1)}" y2="${L.y.toFixed(1)}" stroke="${L.color}" stroke-width="0.5" stroke-opacity="0.4"/>`;
+        labels += `<text x="${lx.toFixed(1)}" y="${(L.y + 3).toFixed(1)}" font-size="9" fill="${L.color}" font-weight="700">${L.name}</text>`;
+      }
+    });
+    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, '차기 대선주자 선호 추이');
   }
 
   // ---- load ----
