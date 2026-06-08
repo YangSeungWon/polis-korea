@@ -34,6 +34,9 @@ ELECTIONS = {
     16: ("16th-general-2000", "Elec_220000413"),
 }
 
+# 정당명 시대차 — LOD 지역구명 → 기존 nation total명(합산 정규화). 15대 통합민주당=민주당.
+PARTY_ALIAS = {"통합민주당": "민주당"}
+
 # LOD 시대명(직할시) → 우리 데이터 현행명.
 SIDO_NORM = {
     "부산직할시": "부산광역시", "대구직할시": "대구광역시", "인천직할시": "인천광역시",
@@ -119,8 +122,9 @@ def build_races(rows):
         out = []
         for i, c in enumerate(cands):
             v = int(c.get("votes") or 0)
+            party = PARTY_ALIAS.get(c.get("pname"), c.get("pname"))
             out.append({
-                "name": c.get("cname"), "party": c.get("pname"),
+                "name": c.get("cname"), "party": party,
                 "votes": v, "pct": round(v / valid * 100, 2) if valid else None,
                 "rank": i + 1, "won": i < seats,
             })

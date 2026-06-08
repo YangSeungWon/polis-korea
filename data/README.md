@@ -47,6 +47,7 @@ data/
 | **위키백과 + 수동 patch** | PDF·기타 누락 보정 | manual | `data/raw/parsed/` |
 | **위키백과 ‘제N회 전국동시지방선거 X의회’** | 5~8회 기초의회 정당별 의석 | HTML scrape | `scripts/fetch/fetch_8th_council_seats.py` → `data/raw/{5,6,7,8}th_council_party_seats.json` |
 | **open.assembly.go.kr 국회정보 일괄 다운로드** | 13~22대 국회의원 unique ID(한자명·생년월일·정당이력) | xlsx 묶음 (수동 다운로드) | `data/raw/assembly/`. parse → `data/raw/assembly_member_map.json` (4,587명·9,486 careers) |
+| **data.nec.go.kr LOD (SPARQL)** | 14·15·16대 총선 **선거구별 후보·득표**(OpenAPI·다운로드가 못 미치는 옛 총선) | SPARQL RDF/XML | `scripts/fetch/fetch_lod_assembly.py` → `results/{14,15,16}th-general-*.json` district race. 아래 전용 섹션 |
 
 ## data.go.kr OpenAPI (NEC) — 활성
 
@@ -67,6 +68,27 @@ GET /WtvtelpcInfoInqireService/getWtvtelpcsccnInfoInqire
   &sgTypecode=4            # 4=구시군의장(기초단체장), 3=시도지사, 1=대통령, 2=국회의원
   &pageNo=1&numOfRows=100
 ```
+
+## data.nec.go.kr LOD (SPARQL) — 옛 총선 백필
+
+NEC 국가선거정보 개방포털의 **Linked Open Data**. OpenAPI(당선인·투개표)는 17대(지역구)·
+16대(전국구)에서, info.nec 일괄다운로드·data.go.kr 파일셋은 19대에서 끊기지만, **LOD는
+14대까지** 선거구별 후보·득표를 보유. 13대 이전은 LOD에도 후보 데이터 없음(선거 메타뿐).
+
+- **SPARQL 엔드포인트**: `http://data.nec.go.kr/sparql/` — 온톨로지 `http://data.nec.go.kr/ontology/`.
+- **접근 제약**: ① **국내 IP 전용**(해외/CI에선 TCP 차단) ② **세션 쿠키 필요**(브라우저에서
+  `SESSION_DATA_1` 복사) ③ `format` 파라미터 무시하고 **항상 SPARQL RDF/XML 결과셋** 반환
+  ④ **결과 100행 캡** → `LIMIT 100 OFFSET` 페이징 필수.
+  → CI 자동화 불가, **일회성 수기 백필**용. (자동 파이프라인은 OpenAPI/NESDC.)
+- **온톨로지 핵심**: `Election` —`hasCandidate`→ `Candidate`(`name`·`pollingScoreCount`=득표·
+  `electionSymbol`=기호·`positionPoliticalParty`→`PoliticalParty.name`·`hasElectionDistrict`→
+  `ElectionDistrict`). `ElectionDistrict`: `name`·`numberOfElection`=의원정수·`electorCount`·
+  `validityVoteCount`·`cityAndProvinces`→시도. 선거 URI = `Elec_2{YYYYMMDD}`(2=국회의원).
+- **당선 도출**: 당선 플래그 없음 → 선거구 내 최다 득표(소선거구 정수=1). 전국구(비례)는 별도
+  투표가 아니라 배분이라 LOD 지역구엔 없음 → 기존 nation total − 지역구 으로 `proportional_seats` 도출.
+- **회수**: `NEC_LOD_COOKIE='...' python scripts/fetch/fetch_lod_assembly.py` (curl 경유 — urllib은 500).
+- **정당명 시대차**: LOD 지역구명 ≠ 기존 nation total명일 때 합산 분리됨(예: 15대 통합민주당↔민주당)
+  → 스크립트 `PARTY_ALIAS`로 정규화.
 
 ## 수집 스크립트 (`scripts/`)
 
