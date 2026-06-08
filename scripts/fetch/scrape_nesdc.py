@@ -307,6 +307,8 @@ def main():
     ap.add_argument("--delay", type=float, default=1.5,
                     help="요청 간 지연 초 (default 1.5, DOS 방지)")
     ap.add_argument("--pdf-delay", type=float, default=0.8, help="PDF 다운로드 간격")
+    ap.add_argument("--stop-after-known-pages", type=int, default=0,
+                    help="마지막 신규 이후 N페이지 연속 기존이면 조기 종료(증분용·0=전체 순회)")
     ap.add_argument("--gubun", default=POLL_GUBUN_9TH_LOCAL,
                     help="선거구분 코드 (VT026=9회지선, VT039=2026재보궐)")
     ap.add_argument("--csv", default=str(CSV_PATH), help="출력 CSV 경로")
@@ -320,13 +322,20 @@ def main():
     existing = load_existing_ids(csv_path)
     print(f"기존 CSV: {len(existing)}건 / gubun={args.gubun}", file=sys.stderr)
 
-    # 신규 nttId 수집 (목록 순회)
+    # 신규 nttId 수집 (목록 순회). 목록은 최신순(pageIndex=1=최신)이라 신규는 앞쪽에 몰림.
+    # --stop-after-known-pages N: 마지막 신규 이후 N페이지 연속 전부 기존이면 조기 종료
+    # (정기 증분 run이 매번 전체 목록을 안 훑게. 0이면 비활성=전체 순회, daily 기본).
     list_rows = []
+    last_new_page = 1
     for row, page, total in list_iter(
         args.gubun, max_pages=args.max_pages, delay=args.delay
     ):
+        if args.stop_after_known_pages and page - last_new_page >= args.stop_after_known_pages:
+            print(f"  조기종료: {page}p까지 {args.stop_after_known_pages}p 연속 기존 — 중단", file=sys.stderr)
+            break
         if row["ntt_id"] in existing:
             continue
+        last_new_page = page
         list_rows.append(row)
         if args.limit and len(list_rows) >= args.limit:
             break

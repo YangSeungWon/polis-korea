@@ -44,10 +44,12 @@ jobs:
           key: tracker-pdf-${{ github.run_id }}
           restore-keys: tracker-pdf-
 
+      # 목록 최신순 → 마지막 신규 이후 3p 연속 기존이면 조기 종료(전체 ~260p 페이징 회피).
       - name: Scrape VT012 (커밋된 CSV 기준 증분 — 신규 폴만)
         run: |
           python scripts/fetch/scrape_nesdc.py \
-            --gubun VT012 --csv data/raw/nesdc_etc_polls.csv
+            --gubun VT012 --csv data/raw/nesdc_etc_polls.csv \
+            --stop-after-known-pages 3
 
       # NESDC는 목록을 먼저 등록하고 결과 PDF를 나중에 첨부하는 경우가 많음(주간집계 등).
       # scrape 당시 PDF 없던 pending 건을 재시도 — 못 받으면 다음 주 run이 회수.
