@@ -211,9 +211,15 @@ def _count_winners_by_tc(races, tc):
         cands = r.get("candidates") or []
         if not cands:
             continue
-        top = max(cands, key=lambda c: c.get("votes", 0) or 0)
-        p = top.get("party") or "무소속"
-        ctr[p] += 1
+        won = [c for c in cands if c.get("won")]
+        if won:
+            # 중선거구(기초의원 지역구 tc=6 등) — 1선거구 다수 당선. won 전원이 의석.
+            for c in won:
+                ctr[c.get("party") or "무소속"] += 1
+        else:
+            # won 플래그 없는 옛 데이터 — 1선거구 1위만(단선거구 가정).
+            top = max(cands, key=lambda c: c.get("votes", 0) or 0)
+            ctr[top.get("party") or "무소속"] += 1
     return [[p, c] for p, c in ctr.most_common()]
 
 
