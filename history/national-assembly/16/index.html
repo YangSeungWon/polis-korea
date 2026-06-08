@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 16총선 (2000-04-13)</title>
+<meta name="description" content="16총선 결과 (2000-04-13) — hex 격자로 지역별 1위 정당·격차 시각화.">
+<meta property="og:title" content="polis · 16총선 (2000-04-13)">
+<meta property="og:description" content="16총선 결과 (2000-04-13) — hex 격자로 지역별 1위 정당·격차 시각화.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/history/national-assembly/16/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-minimap@3.6.1/dist/Control.MiniMap.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/history.css">
+<script id="initial-state">window.__INITIAL_STATE__ = {"type": "national_assembly", "n": 16};</script>
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+          <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/" class="hdr-link">홈</a>
+  <span data-nav-urgent></span>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/history.html" class="hdr-link is-current">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <!-- NAV_END -->
+</nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>역대 선거 결과</h1>
+    <p class="lede">1987년 이후 대선·총선·지선. hex 색=1위 정당, 명도=격차.</p>
+  </section>
+
+  <form class="home-search" action="/search.html" method="get" role="search" aria-label="당선인 검색">
+    <input type="search" name="q" placeholder="당선인·지역·정당 검색" autocomplete="off">
+    <button type="submit" aria-label="검색">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm5.3 12.3l4 4"/></svg>
+    </button>
+  </form>
+
+  <section class="controls">
+    <div class="seg" role="tablist" aria-label="선거 종류">
+      <button class="seg-btn is-active" data-type="presidential">대통령선거</button>
+      <button class="seg-btn" data-type="national_assembly">국회의원선거</button>
+      <button class="seg-btn" data-type="local">지방선거</button>
+    </div>
+    <div class="seg seg-rounds" role="tablist" aria-label="회차" id="rounds-seg">
+      <!-- JS가 회차별 버튼 채움 -->
+    </div>
+    <div class="seg seg-offices" role="tablist" aria-label="직위" id="offices-seg" hidden>
+      <button class="seg-btn" data-office="광역단체장">광역단체장</button>
+      <button class="seg-btn is-active" data-office="기초단체장">기초단체장</button>
+      <button class="seg-btn" data-office="교육감">교육감</button>
+    </div>
+    <div class="seg" role="tablist" aria-label="사이즈" id="sizing-seg" hidden>
+      <button class="seg-btn is-active" data-sizing="격자">격자 hex</button>
+      <button class="seg-btn" data-sizing="dorling">Dorling 원</button>
+    </div>
+    <div class="seg" role="tablist" aria-label="표시 모드" id="display-seg" hidden>
+      <button class="seg-btn is-active" data-display="hex">Hex</button>
+      <button class="seg-btn" data-display="geo">지도</button>
+    </div>
+    <div class="time-anchor">
+      <span class="label" id="election-date">—</span>
+    </div>
+  </section>
+
+  <section class="viz">
+    <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
+    <svg id="hex" class="hex-pane" viewBox="0 0 640 720" preserveAspectRatio="xMidYMid meet" hidden></svg>
+    <svg id="hex2" class="hex-pane" viewBox="0 0 720 720" preserveAspectRatio="xMidYMid meet"></svg>
+    <div id="geomap" class="map-pane" hidden></div>
+    <div id="history-legend" class="hist-legend" hidden></div>
+    <aside class="detail-pane" id="detail-pane">
+      <div class="detail-empty">시도·시군구를 선택하면 그 지역 결과가 여기에 표시됩니다.</div>
+    </aside>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">데이터 출처 · 중앙선거관리위원회 선거통계시스템</a>
+      <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">행정동 경계 · vuski/admdongkor</a>
+      <a href="https://github.com/OhmyNews/2024_22_elec_map" target="_blank" rel="noopener">22대 선거구 GeoJSON · © 오마이뉴스 (MIT)</a>
+      <a href="https://github.com/OhmyNews/2020_21_elec_map" target="_blank" rel="noopener">21대 선거구 GeoJSON · © 오마이뉴스 (MIT)</a>
+    </div>
+    <p class="fine">대선·지선 광역단체장은 시군구 hex로, 총선은 회차별 지역구 hex로 표시. 회차마다 행정구역·선거구 경계 변화는 데이터 시점 기준으로 매핑.</p>
+  </footer>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-minimap@3.6.1/dist/Control.MiniMap.min.js"></script>
+<script src="assets/regions.js"></script>
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/hexgrid.js"></script>
+<script src="assets/parliament.js"></script>
+<script src="assets/elections.js"></script>
+<script src="assets/history/core.js"></script>
+<script src="assets/history/data.js"></script>
+<script src="assets/history/render-sido.js"></script>
+<script src="assets/history/render-district.js"></script>
+<script src="assets/history/render-sigungu.js"></script>
+<script src="assets/history/main.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>

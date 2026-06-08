@@ -22,7 +22,7 @@
 <body>
 <header class="site-hdr">
   <div class="brand">
-    <a href="index.html" class="logo-link"><span class="logo">vote</span><span class="domain">ysw.kr</span></a>
+    <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
           <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
@@ -36,6 +36,7 @@
   <!-- NAV_END -->
 </nav>
   <div class="hdr-meta">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
     <span id="countdown" class="countdown" aria-live="polite"></span>
     <span id="blackout-tag" class="blackout-tag" hidden>공표 금지 기간</span>
   </div>
@@ -44,7 +45,7 @@
 <main class="page">
   <section class="intro">
     <h1>9회 전국동시지방선거 여론조사</h1>
-    <p class="lede">NESDC 등록 조사를 시도·시군구 단위로 모아 봅니다. 각 셀의 색은 마지막 조사 1위 후보의 정당색이며, 조사기간이 헤더에 명시됩니다.</p>
+    <p class="lede">NESDC 등록 조사. 셀 색=마지막 조사 1위 정당.</p>
     <div class="post-election-banner">
       <span class="peb-tag">2026-06-03</span>
       <span class="peb-text">선거 종료</span>
@@ -63,6 +64,11 @@
       <button class="seg-btn" data-office="기초단체장">기초단체장</button>
       <button class="seg-btn" data-office="정당지지">정당지지</button>
     </div>
+    <div class="seg" role="tablist" aria-label="모드" id="mode-seg" hidden>
+      <button class="seg-btn is-active" data-mode="polls">여론조사 1위</button>
+      <button class="seg-btn" data-mode="result">실제 1위</button>
+    </div>
+    <div class="result-accuracy" id="result-accuracy"></div>
     <div class="seg" role="tablist" aria-label="단위" id="scope-seg" hidden>
       <button class="seg-btn is-active" data-scope="시도">시도 단위</button>
       <button class="seg-btn" data-scope="시군구">시군구 단위</button>
@@ -109,11 +115,15 @@
 <script src="assets/regions.js"></script>
 <script src="assets/parties.js"></script>
 <script src="assets/utils.js"></script>
+<script src="assets/poll-stats.js"></script>
 <script src="assets/hexgrid.js"></script>
 <script src="assets/polls/core.js"></script>
 <script src="assets/polls/render-hex.js"></script>
 <script src="assets/polls/render-map.js"></script>
+<script src="assets/polls/result-overlay.js"></script>
 <script src="assets/polls/chrome.js"></script>
 <script src="assets/polls/main.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
