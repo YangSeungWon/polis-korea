@@ -231,9 +231,10 @@ function updateURL() {
   }
 }
 
-// 격자 hex 기본 (전국 표심을 면적으로 공평하게 — 1 hex=2만표). '동일' 모드는 제거됨.
+// 대선만 격자 hex 기본(전국 표심을 면적으로 — 1 hex=2만표). 지선·총선은 단일 hex('동일',
+// 시군구당 1위 정당색). 대선 sizing-seg는 격자/Dorling만; 지선은 sizing-seg 자체가 숨김.
 function typeDefaultSizing(type) {
-  return '격자';
+  return type === 'presidential' ? '격자' : '동일';
 }
 
 function setType(type, skipDefaultRound = false) {

@@ -43,9 +43,9 @@ function renderSigunguHex() {
   for (const d of data) cellAt.set(`${d.c},${d.r}`, d);
   // nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
-  // 사이즈 모드 2가지: 격자 (multiple small hexes per sigungu·기본) / dorling (circles).
-  // 그 외(stale URL·무투표 fallback)는 격자로 정규화 — '반지름'·'동일' 모드는 제거됨.
-  const sizingMode = state.sizing === 'dorling' ? 'dorling' : '격자';
+  // 사이즈 모드: 격자(시군구당 득표 비례 작은 hex·대선 기본) / dorling(원) / 그 외=단일 hex.
+  // 지선·총선은 '동일'(단일 hex, 1위 정당색). 제거된 '반지름' 등 stale 값은 단일 hex로 처리.
+  const sizingMode = state.sizing || '동일';
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
