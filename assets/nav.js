@@ -1,6 +1,25 @@
-// nav.js — 상단 nav의 urgent slot 채움. evergreen 메뉴는 sync_nav_html.py가 inline.
+// nav.js — 상단 nav의 urgent slot + 헤더 검색 주입. evergreen 메뉴는 sync_nav_html.py가 inline.
 // 활성 회차(data/elections/index.json의 active)를 today 기준 phase 산정해
 // BLACKOUT/ELECTION/POST/RECENT 면 빨간 chip으로 노출. 그 외 phase는 슬롯 비움.
+
+// 헤더 우측 검색 — 전 페이지 공통(단일 소스). HTML 복제 없이 여기서 .hdr-meta에 1회 주입.
+// 데스크톱=입력창, 모바일=🔍 아이콘만(빈 제출 → /search.html). CSS: .hdr-search (common.css).
+(function injectHeaderSearch() {
+  const meta = document.querySelector('.hdr-meta');
+  if (!meta || meta.querySelector('.hdr-search')) return;
+  const form = document.createElement('form');
+  form.className = 'hdr-search';
+  form.action = '/search.html';
+  form.method = 'get';
+  form.setAttribute('role', 'search');
+  form.setAttribute('aria-label', '검색');
+  form.innerHTML =
+    '<input type="search" name="q" placeholder="검색" autocomplete="off" aria-label="당선인·지역·정당 검색">'
+    + '<button type="submit" class="hdr-search-btn" aria-label="검색">'
+    + '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm5.3 12.3l4 4"/></svg>'
+    + '</button>';
+  meta.insertBefore(form, meta.firstChild);
+})();
 
 (async function fillNavUrgent() {
   const slot = document.querySelector('[data-nav-urgent]');

@@ -30,7 +30,7 @@ MENU = [
     ("지지율 추이", "/tracker.html", "tracker"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),
-    ("검색", "/search.html", "search"),
+    # '검색'은 nav 링크 대신 헤더 우측 검색창(nav.js가 .hdr-meta에 주입)으로 대체.
 ]
 
 # 파일 경로 → 활성 메뉴 키 매핑. 매치 안되면 is-current 없음 (archive 등).

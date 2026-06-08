@@ -137,6 +137,25 @@ body {
 .brand .domain { font-size: 12px; color: var(--ink-mute); letter-spacing: 0; }
 .logo-link { text-decoration: none; display: flex; align-items: baseline; gap: 6px; color: inherit; }
 .hdr-meta { display: flex; gap: 12px; align-items: center; }
+/* 헤더 우측 검색 — nav.js가 .hdr-meta에 주입. 데스크톱=입력창, 모바일=🔍 아이콘만. */
+.hdr-search { display: inline-flex; align-items: center; gap: 2px; }
+.hdr-search input {
+  width: 138px; font: inherit; font-size: 13px; padding: 5px 9px;
+  border: 1px solid var(--rule); border-radius: 5px; background: var(--bg2);
+  color: var(--ink); outline: none; transition: border-color .12s, width .15s;
+}
+.hdr-search input::placeholder { color: var(--ink-soft); }
+.hdr-search input:focus { border-color: var(--ink); width: 168px; }
+.hdr-search-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: none; border: none; color: var(--ink-soft); cursor: pointer; padding: 4px; margin-left: -30px;
+}
+.hdr-search-btn:hover { color: var(--ink); }
+@media (max-width: 640px) {
+  /* 모바일: 입력창 숨김 → 🔍만. 빈 q 제출 → /search.html(전용 검색 페이지). */
+  .hdr-search input { display: none; }
+  .hdr-search-btn { margin-left: 0; }
+}
 .hdr-nav { display: flex; gap: 18px; align-items: center; margin-left: 24px; margin-right: auto; }
 .hdr-link {
   text-decoration: none; color: var(--ink-soft); font-size: 14px; font-weight: 500;
