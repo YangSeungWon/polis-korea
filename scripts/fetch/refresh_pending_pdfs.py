@@ -43,9 +43,15 @@ def main():
     ap.add_argument("--max-days", type=int, default=30,
                     help="survey_end 기준 최근 N일 이내만 검사 (기본 30). "
                          "0이면 무제한. 오래된 ntt는 결과 영원히 미게시 가능성 높아 skip.")
+    ap.add_argument("--csv", default=str(META_CSV),
+                    help="대상 목록 CSV (기본 9회지선 — tracker는 nesdc_etc_polls.csv 지정)")
     args = ap.parse_args()
 
-    rows = list(csv.DictReader(open(META_CSV, encoding="utf-8")))
+    meta_csv = Path(args.csv)
+    if not meta_csv.exists():
+        print(f"목록 CSV 없음: {meta_csv} — skip", file=sys.stderr)
+        return
+    rows = list(csv.DictReader(open(meta_csv, encoding="utf-8")))
     pending = [r for r in rows if not has_result_pdf(r["ntt_id"])]
     n_total = len(pending)
     if args.max_days > 0:
