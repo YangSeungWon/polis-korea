@@ -107,3 +107,17 @@
   .s-sub-place { grid-column: 1/-1; font-size: 11px; }
   .s-sub .pp-party, .s-sub .s-party { display: none; }
 }
+
+/* 단발 결과 — archive 직행 + 인물 페이지 보조 링크 */
+.s-single { display: grid; grid-template-columns: 1fr auto; align-items: center; }
+.s-single .s-link { padding-right: 0; }
+.s-aside-link {
+  font-size: 11px; font-weight: 600; color: var(--ink-soft);
+  text-decoration: none; padding: 4px 9px;
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  margin: 0 6px; white-space: nowrap;
+}
+.s-aside-link:hover { color: var(--ink); border-color: var(--ink); }
+@media (max-width: 600px) {
+  .s-single { grid-template-columns: 1fr auto; }
+}
