@@ -23,16 +23,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-  <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
-  <a href="/" class="hdr-link">홈</a>
-  <span data-nav-urgent></span>
-  <a href="/polls.html" class="hdr-link">여론조사</a>
-  <a href="/byelection.html" class="hdr-link">재·보궐</a>
-  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-  <a href="/history.html" class="hdr-link is-current">역대 결과</a>
-  <a href="/timeline.html" class="hdr-link">타임라인</a>
-  <!-- NAV_END -->
-</nav>
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+    <a href="/" class="hdr-link">홈</a>
+    <span data-nav-urgent></span>
+    <a href="/polls.html" class="hdr-link">여론조사</a>
+    <a href="/byelection.html" class="hdr-link">재·보궐</a>
+    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+    <a href="/history.html" class="hdr-link is-current">역대 결과</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+    <!-- NAV_END -->
+  </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
   </div>
@@ -48,36 +48,9 @@
     <div class="ar-hero-tag">아카이브</div>
     <h1 class="ar-hero-title" id="ar-title">제18대 대통령선거</h1>
     <div class="ar-hero-date" id="ar-date">2012-12-19 (수)</div>
-    <div class="ar-hero-scorecard" id="ar-scorecard" hidden>
-      <div class="ar-sc-row ar-sc-head">
-        <div class="ar-sc-party ar-sc-p1" id="ar-sc-p1"></div>
-        <div class="ar-sc-label"></div>
-        <div class="ar-sc-party ar-sc-p2" id="ar-sc-p2"></div>
-      </div>
-      <div class="ar-sc-row">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-name-l">—</div>
-        <div class="ar-sc-label">후보</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-name-r">—</div>
-      </div>
-      <div class="ar-sc-row">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-pct-l">—</div>
-        <div class="ar-sc-label">득표율</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-pct-r">—</div>
-      </div>
-      <div class="ar-sc-row">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-votes-l">—</div>
-        <div class="ar-sc-label">득표수</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-votes-r">—</div>
-      </div>
-      <div class="ar-sc-row ar-sc-foot">
-        <div class="ar-sc-num ar-sc-num-l" id="ar-sc-sido-l">—</div>
-        <div class="ar-sc-label">시도 1위</div>
-        <div class="ar-sc-num ar-sc-num-r" id="ar-sc-sido-r">—</div>
-      </div>
-    </div>
+    <!-- 대선 히어로: 당선자 강조 + 전체 후보 구도 막대. pres.js renderHero가 채움. -->
+    <div class="ar-hero-scorecard ar-pres-sc" id="ar-scorecard" hidden></div>
     <div class="ar-hero-meta" id="ar-hero-meta">
-      <span class="ar-hm-item"><span class="ar-hm-label">격차</span> <span class="ar-hm-value" id="ar-margin">—</span></span>
-      <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
       <span class="ar-hm-item" id="ar-hm-exit" hidden><span class="ar-hm-label">출구조사 적중</span> <span class="ar-hm-value" id="ar-exit-hit">—</span></span>
       <span class="ar-hm-item" id="ar-hm-polls" hidden><span class="ar-hm-label">여론조사</span> <span class="ar-hm-value" id="ar-polls-count">—</span></span>
     </div>

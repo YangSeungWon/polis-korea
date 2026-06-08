@@ -19,30 +19,37 @@
     const top = cands[0], second = cands[1];
     if (!top) return;
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
-    const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
     const sc = document.getElementById('ar-scorecard');
-    if (sc) sc.removeAttribute('hidden');
-    const renderParty = (party) => {
-      const col = pcol(party);
-      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
-    };
-    setHTML('ar-sc-p1', renderParty(top.party));
-    setText('ar-sc-name-l', top.name);
-    setText('ar-sc-pct-l', (top.pct || 0).toFixed(1) + '%');
-    setText('ar-sc-votes-l', (top.votes || 0).toLocaleString());
-    if (second) {
-      setHTML('ar-sc-p2', renderParty(second.party));
-      setText('ar-sc-name-r', second.name);
-      setText('ar-sc-pct-r', (second.pct || 0).toFixed(1) + '%');
-      setText('ar-sc-votes-r', (second.votes || 0).toLocaleString());
-    }
-    const sidos = sidoRaces(results, sgTypecode);
-    // '시도 1위 N/17'은 미스리딩(대선은 전국 득표로 당선 — 시도 수 아님) → scorecard 행 제거.
-    // 지역별 우세는 지도 시각화로 표현(미국 선거인단처럼 오인 방지).
-    document.getElementById('ar-sc-sido-l')?.closest('.ar-sc-row')?.remove();
+    if (!sc) return;
+    sc.removeAttribute('hidden');
 
-    if (second) setHTML('ar-margin', `${(top.pct - second.pct).toFixed(2)}<span style="font-size:11px;color:var(--ink-soft)">%p</span>`);
-    if (nat.electors > 0) setText('ar-turnout', (nat.voters / nat.electors * 100).toFixed(1) + '%');
+    // 당선자 강조 + 전체 후보 '구도 막대'. 1·2위 2칸 대결은 다자구도(13대 등)에서
+    // 공동 2위(예: 김대중 27.04 ≈ 김영삼 28.03)를 가려 왜곡 → 폐기.
+    const margin = second ? (top.pct - second.pct) : null;
+    const turnout = nat.electors > 0 ? (nat.voters / nat.electors * 100) : null;
+    const LABEL_MIN = 2;                        // 라벨은 ≥2% 후보(당선자는 항상)
+    const shown = cands.filter((c, i) => i === 0 || (c.pct || 0) >= LABEL_MIN);
+    const restPct = Math.max(0, 100 - shown.reduce((s, c) => s + (c.pct || 0), 0));
+    const segOf = (c) => `<span class="ar-pres-seg" style="flex:${(c.pct || 0).toFixed(3)};background:${pcol(c.party)}" title="${c.name} ${c.party} ${(c.pct || 0).toFixed(2)}%"></span>`;
+    const segs = shown.map(segOf).join('')
+      + (restPct > 0.3 ? `<span class="ar-pres-seg ar-pres-seg-etc" style="flex:${restPct.toFixed(3)}" title="기타 ${restPct.toFixed(1)}%"></span>` : '');
+    const labs = shown.map((c, i) => `<span class="ar-pres-lab${i === 0 ? ' is-win' : ''}" style="color:${pcol(c.party)}"><b>${c.name}</b> ${(c.pct || 0).toFixed(1)}<span class="u">%</span></span>`).join('')
+      + (restPct >= 1 ? `<span class="ar-pres-lab ar-pres-lab-etc">기타 ${restPct.toFixed(1)}<span class="u">%</span></span>` : '');
+    const wcol = pcol(top.party);
+    sc.innerHTML = `
+      <div class="ar-pres-winner">
+        <span class="ar-pres-wname">${top.name}</span>
+        <span class="ar-pres-wparty" style="color:${wcol};border-color:${wcol}">${top.party}</span>
+        <span class="ar-pres-badge">당선</span>
+      </div>
+      <div class="ar-pres-wstat">
+        <b class="ar-pres-wpct" style="color:${wcol}">${(top.pct || 0).toFixed(1)}<span class="u">%</span></b>
+        <span class="ar-pres-wmeta">${(top.votes || 0).toLocaleString()}표${margin != null ? ` · 2위와 +${margin.toFixed(2)}%p` : ''}${turnout != null ? ` · 투표율 ${turnout.toFixed(1)}%` : ''}</span>
+      </div>
+      <div class="ar-pres-racebar">${segs}</div>
+      <div class="ar-pres-racelabs">${labs}</div>`;
+
+    const sidos = sidoRaces(results, sgTypecode);
     // 출구조사 적중
     if (exitData?.sources?.length && sidos.length) {
       const actual = {};

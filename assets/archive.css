@@ -549,6 +549,37 @@
 .ar-sc-pname { font-size: 15px; font-weight: 800; padding-bottom: 2px; }
 .ar-sc-foot .ar-sc-num { font-size: 26px; }
 
+/* === 대선 히어로 — 당선자 강조 + 구도 막대 === */
+.ar-pres-sc { display: flex; flex-direction: column; gap: 10px; }
+.ar-pres-winner { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+.ar-pres-wname { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
+.ar-pres-wparty {
+  font-size: 13px; font-weight: 700;
+  padding: 1px 7px; border: 1.5px solid; border-radius: 3px;
+}
+.ar-pres-badge {
+  font-size: 11px; font-weight: 800; color: #fff; background: var(--ink);
+  padding: 2px 7px; border-radius: 3px; letter-spacing: 0.02em;
+}
+.ar-pres-wstat { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; }
+.ar-pres-wpct { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ar-pres-wpct .u { font-size: 16px; font-weight: 700; margin-left: 1px; }
+.ar-pres-wmeta { font-size: 13px; color: var(--ink-soft); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ar-pres-racebar {
+  display: flex; height: 16px; border-radius: 3px; overflow: hidden;
+  background: var(--rule); margin-top: 2px;
+}
+.ar-pres-seg { display: block; min-width: 1px; }
+.ar-pres-seg-etc { background: var(--rule-strong); }
+.ar-pres-racelabs {
+  display: flex; flex-wrap: wrap; gap: 3px 14px;
+  font-size: 13px; font-variant-numeric: tabular-nums;
+}
+.ar-pres-lab b { font-weight: 700; margin-right: 3px; }
+.ar-pres-lab.is-win b { font-weight: 800; }
+.ar-pres-lab .u { font-size: 11px; opacity: 0.8; margin-left: 1px; }
+.ar-pres-lab-etc { color: var(--ink-soft); }
+
 .ar-hero-meta {
   display: flex; flex-wrap: wrap; gap: 16px 24px;
   margin-top: 12px;
