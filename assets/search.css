@@ -51,3 +51,59 @@
   .s-party{ grid-column: 1 / -1; grid-row: 2; justify-self: start; }
   .s-meta { grid-column: 1 / -1; grid-row: 3; }
 }
+
+/* 인물 그룹 카드 */
+.s-group summary {
+  display: grid;
+  grid-template-columns: minmax(90px, 1.5fr) auto 1fr auto auto;
+  gap: 12px; align-items: center;
+  padding: 10px 6px;
+  cursor: pointer;
+  list-style: none;
+}
+.s-group summary::-webkit-details-marker { display: none; }
+.s-group summary:hover { background: var(--bg2); }
+.s-group-count {
+  font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  background: var(--bg2); padding: 2px 8px; border-radius: 2px;
+  white-space: nowrap;
+}
+.s-group-parties { display: flex; gap: 4px; flex-wrap: wrap; }
+.s-group-link {
+  font-size: 12px; font-weight: 600; color: var(--accent, #c8553d);
+  text-decoration: none; padding: 3px 8px;
+  border: 1px solid var(--accent, #c8553d); border-radius: 2px;
+}
+.s-group-link:hover { background: var(--accent, #c8553d); color: var(--bg); }
+
+.s-sub-list { background: var(--bg2); padding: 4px 0; }
+.s-sub {
+  display: grid;
+  grid-template-columns: 60px minmax(100px,1fr) auto minmax(100px,1.4fr) 60px;
+  gap: 10px; align-items: center;
+  padding: 5px 14px 5px 24px;
+  font-size: 12px;
+  text-decoration: none; color: inherit;
+  border-bottom: 1px solid var(--rule);
+}
+.s-sub:last-child { border-bottom: none; }
+.s-sub:hover { background: var(--bg3, var(--bg2)); }
+.s-sub-yr { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.s-sub-rd { font-weight: 600; }
+.s-sub-place { color: var(--ink-soft); }
+.s-sub-pct { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+
+@media (max-width: 600px) {
+  .s-group summary {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 8px;
+  }
+  .s-name { grid-column: 1; grid-row: 1; }
+  .s-group-count { grid-column: 2; grid-row: 1; }
+  .s-group-parties { grid-column: 1 / -1; grid-row: 2; }
+  .s-group-link, .s-group summary .s-meta { display: none; }
+  .s-sub { grid-template-columns: 50px 1fr 50px; row-gap: 2px; }
+  .s-sub-place { grid-column: 1/-1; font-size: 11px; }
+  .s-sub .pp-party, .s-sub .s-party { display: none; }
+}
