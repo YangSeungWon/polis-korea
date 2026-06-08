@@ -42,14 +42,14 @@ function renderSigunguHex() {
   for (const d of data) cellAt.set(`${d.c},${d.r}`, d);
   // nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
-  // 사이즈 모드 3가지: 격자 (multiple small hexes per sigungu·기본) / 반지름 (hex radius scale) / dorling (circles)
-  const sizingMode = state.sizing || '격자';
+  // 사이즈 모드 2가지: 격자 (multiple small hexes per sigungu·기본) / dorling (circles).
+  // 그 외(stale URL·무투표 fallback)는 격자로 정규화 — '반지름'·'동일' 모드는 제거됨.
+  const sizingMode = state.sizing === 'dorling' ? 'dorling' : '격자';
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
     if (result?.voted) maxVoted = Math.max(maxVoted, result.voted);
   }
-  const minRatio = 0.20;
 
   // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 2만표)
   if (sizingMode === '격자' && maxVoted > 0) {
@@ -377,7 +377,7 @@ function renderSigunguHex() {
     return;
   }
 
-  // 동일·반지름 모드 — 시도 라벨 백그라운드 (cells보다 먼저 그려 spiral·hex 위에 덮이도록).
+  // fallback(무투표·결과없음) — 시도 라벨 백그라운드 (cells보다 먼저 그려 hex 위에 덮이도록).
   {
     const sidoCenters = new Map();
     for (const d of data) {
@@ -414,14 +414,7 @@ function renderSigunguHex() {
     const gap = top && sec ? top.pct - sec.pct : null;
     const fill = top ? partyColor(top.party) : '#e6e9ef';
     const opacity = top ? gapOpacity(gap) : 1;
-    // 반지름 결정
-    let cellR = r - 0.7;
-    if (sizingMode === '반지름' && maxVoted > 0 && result?.voted) {
-      const ratio = Math.max(minRatio, Math.sqrt(result.voted / maxVoted));
-      cellR = (r - 0.7) * ratio;
-    } else if (sizingMode === '반지름') {
-      cellR = (r - 0.7) * minRatio;  // 데이터 없는 셀
-    }
+    const cellR = r - 0.7;  // 균일 단일 hex (무투표·결과없음 fallback)
     const isSelected = state.selected
       && state.selected.sido === d.sido && state.selected.name === d.name;
 
