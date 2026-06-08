@@ -187,7 +187,7 @@
     const parties = Object.keys(series);
     if (!parties.length) return '<div class="tk-empty">데이터 없음</div>';
     yMax = Math.min(60, Math.ceil(yMax / 10) * 10 + 5);
-    const W = 960, H = 380, P = { l: 30, r: 88, t: 16, b: 22 };
+    const W = 960, H = 380, P = { l: 30, r: 100, t: 16, b: 22 };  // r: 풀네임 라벨 여백
     const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
     const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
     const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
@@ -195,28 +195,43 @@
     const mean = (ps) => ps.reduce((s, p) => s + p.v, 0) / ps.length;
     parties.sort((a, b) => mean(series[b].sm) - mean(series[a].sm));
     HOVER['tk-party'] = [];
-    let lastLabelY = -99, dots = '', lines = '';
+    let dots = '', lines = '';
+    const GONE = 200 * 864e5;   // 마지막 조사가 최신보다 200일+ 전이면 '사라진 정당'
+    const labelsArr = [];       // {party, x, y, color, gone}
     for (const party of parties) {
       const { pts, sm } = series[party];
       const color = partyColor(party, new Date(tMax).toISOString().slice(0, 10));
-      const pshort = (typeof PARTY_SHORT !== 'undefined' && PARTY_SHORT[party]) || party;
       // 개별 조사 = 옅은 점 (house effect 산포)
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
-        HOVER['tk-party'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${pshort} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
+        HOVER['tk-party'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${party} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
       }
       // 평활 추세선 (공백 끊김 segment별)
       for (const seg of kernelSmooth(pts, 30)) {
         if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
       }
       const last = sm[sm.length - 1];
-      if (!last) continue;
-      let ly = yOf(last.v) + 3;
-      if (ly - lastLabelY < 11) ly = lastLabelY + 11;
-      lastLabelY = ly;
-      lines += `<text x="${(W - P.r + 4).toFixed(1)}" y="${ly.toFixed(1)}" font-size="9.5" fill="${color}" font-weight="700">${(typeof PARTY_SHORT !== 'undefined' && PARTY_SHORT[party]) || party}</text>`;
+      if (last) labelsArr.push({ party, x: xOf(last.t), y: yOf(last.v), color, gone: (tMax - last.t) > GONE });
     }
-    const body = dots + lines;  // 점 먼저(아래), 선 위에
+    // 라벨(풀네임): 현역 정당은 우측 끝(세로 충돌 회피), 사라진 정당은 선이 끝난 지점에.
+    let labels = '';
+    const activeL = labelsArr.filter((L) => !L.gone).sort((a, b) => a.y - b.y);
+    let ly = -99;
+    for (const L of activeL) {
+      let yy = L.y + 3; if (yy - ly < 11) yy = ly + 11; ly = yy;
+      labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="9.5" fill="${L.color}" font-weight="700">${L.party}</text>`;
+    }
+    const goneL = labelsArr.filter((L) => L.gone).sort((a, b) => a.x - b.x || a.y - b.y);
+    const placed = [];
+    for (const L of goneL) {
+      let yy = L.y;
+      for (const q of placed) if (Math.abs(q.x - L.x) < 72 && Math.abs(q.yy - yy) < 11) yy = q.yy + 11;
+      placed.push({ x: L.x, yy });
+      labels += `<circle cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" r="1.8" fill="${L.color}"/>`;
+      if (yy - L.y > 2) labels += `<line x1="${L.x.toFixed(1)}" y1="${L.y.toFixed(1)}" x2="${(L.x + 4).toFixed(1)}" y2="${(yy).toFixed(1)}" stroke="${L.color}" stroke-width="0.5" stroke-opacity="0.4"/>`;
+      labels += `<text x="${(L.x + 5).toFixed(1)}" y="${(yy + 3).toFixed(1)}" font-size="9" fill="${L.color}" font-weight="700">${L.party}</text>`;
+    }
+    const body = dots + lines + labels;  // 점 먼저(아래), 선·라벨 위에
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${body}`, '정당 지지도 추이');
   }
 
