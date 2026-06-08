@@ -49,7 +49,7 @@
       : `${items.length.toLocaleString()}건 (검색어 입력)`;
     const html = cap.map((it) => `
       <li class="s-item">
-        <a class="s-link" href="${archiveHref(it.e)}">
+        <a class="s-link" href="/person.html?name=${encodeURIComponent(it.n)}">
           <span class="s-name">${escapeHtml(it.n)}</span>
           ${partyBadge(it.p)}
           <span class="s-meta">${it.y || ''} · ${it.r} · ${escapeHtml(it.d)}</span>

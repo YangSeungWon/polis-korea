@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 인물</title>
+<meta name="description" content="역대 선거 후보·당선인 인물별 타임라인.">
+<link rel="canonical" href="/person.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/person.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
+    <a href="/" class="hdr-link">홈</a>
+    <span data-nav-urgent></span>
+    <a href="/polls.html" class="hdr-link">여론조사</a>
+    <a href="/byelection/" class="hdr-link">재·보궐</a>
+    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+    <a href="/history.html" class="hdr-link">역대 결과</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+    <a href="/search.html" class="hdr-link">검색</a>
+    <!-- NAV_END -->
+  </nav>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1 id="person-title">인물 타임라인</h1>
+    <p class="lede" id="person-sub">URL ?name=… 으로 인물 지정. 역대 회차 출마·정당·결과 한눈에.</p>
+  </section>
+
+  <section id="person-body">
+    <div class="detail-empty">불러오는 중…</div>
+  </section>
+
+  <footer class="foot">
+    <p class="fine">이름 기준 cluster — 동명이인은 시도·정당 패턴으로 분리해 표시. NEC 후보ID 부재로 완벽 분리는 불가.</p>
+  </footer>
+</main>
+
+<script src="assets/parties.js"></script>
+<script src="assets/person.js"></script>
+</body>
+</html>
