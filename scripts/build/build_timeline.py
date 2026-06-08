@@ -362,37 +362,56 @@ def main():
     except Exception:
         pass
 
-    # 주기 기반 예측 — 대선 5년, 총선 4년, 지선 4년. 마지막 회차 + 주기.
-    # 홈 타임라인 strip이 미래 위치 표시에 사용. 역대 페이지 list는 consumer에서 필터.
-    CYCLE = {"presidential": 5, "national_assembly": 4, "local": 4}
+    # 주기 기반 예측 — 공직선거법 §34에 따라 임기만료일 N일 전 이후 첫 수요일.
+    # 대선 70일·총선 50일·지선 30일. 마지막 회차의 임기만료일에서 시작.
+    # 홈 타임라인 strip이 미래 위치 표시에 사용. 역대 list는 consumer에서 필터.
+    from datetime import date as _date, timedelta as _td
+
+    # (cycle_years, days_before_term_end_for_election)
+    CYCLE_RULE = {
+        "presidential": (5, 70),
+        "national_assembly": (4, 50),
+        "local": (4, 30),
+    }
+    # 마지막 회차의 임기만료일 — 다음 회차 추정 anchor.
+    #   대선 21대(이재명, 2025-06-04 보궐 취임) → 2030-06-03 만료
+    #   총선 22대 임기 2024-05-30~2028-05-29
+    #   지선 9회 임기 2026-07-01~2030-06-30
+    LAST_TERM_END = {
+        "presidential": _date(2030, 6, 3),
+        "national_assembly": _date(2028, 5, 29),
+        "local": _date(2030, 6, 30),
+    }
     HORIZON_YEARS = 10
-    from datetime import date as _date
     today = _date(2026, 6, 3)
     horizon = today.replace(year=today.year + HORIZON_YEARS)
-    for kind, cycle in CYCLE.items():
-        kdata = elections.get(kind, {})
-        elist = kdata.get("elections", [])
+
+    def first_wed_on_or_after(dt: _date) -> _date:
+        return dt + _td(days=(2 - dt.weekday()) % 7)
+
+    for kind, (cycle, before_days) in CYCLE_RULE.items():
+        elist = elections.get(kind, {}).get("elections", [])
         if not elist:
             continue
-        last = elist[-1]
-        last_n = last["n"]
-        last_date = last.get("date", "")
-        if not last_date:
+        cur_n = elist[-1]["n"]
+        cur_term_end = LAST_TERM_END.get(kind)
+        if not cur_term_end:
             continue
-        y, m, d = map(int, last_date.split("-"))
-        cur_n = last_n
-        cur_date = _date(y, m, d)
         while True:
             cur_n += 1
-            cur_date = cur_date.replace(year=cur_date.year + cycle)
-            if cur_date > horizon:
+            # 현재 회차 임기만료 기준 N일 전 첫 수요일 = 다음 회차 선거일
+            elec_date = first_wed_on_or_after(cur_term_end - _td(days=before_days))
+            if elec_date > horizon:
                 break
+            # 다음 사이클: 임기 만료 = (당선 후 임기 시작) + cycle년 − 1일
+            # 단순화: 현 만료 + cycle년 (월·일 동일).
+            cur_term_end = cur_term_end.replace(year=cur_term_end.year + cycle)
             if any(r["kind"] == kind and r["n"] == cur_n for r in out_rounds + future):
                 continue
             future.append({
                 "kind": kind,
                 "n": cur_n,
-                "date": cur_date.isoformat(),
+                "date": elec_date.isoformat(),
                 "label": f"{cur_n}{KIND_UNIT[kind]} {KIND_LABEL[kind]}",
                 "winner": None, "winner_party": None, "turnout": None,
                 "sidoWinners": {},
