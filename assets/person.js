@@ -81,7 +81,8 @@
       const tag = r.won ? '<span class="pp-tag pp-won">당선</span>' : '<span class="pp-tag pp-lost">낙선</span>';
       const pct = r.pct != null ? `${(+r.pct).toFixed(1)}%` : '—';
       const rank = r.rank && r.rank < 99 ? `${r.rank}위` : '';
-      return `<div class="pp-race">
+      // 행 전체를 archive 링크로 — 모바일에서도 탭 가능
+      return `<a class="pp-race" href="/archive/${r.eid}/">
         <div class="pp-yr">${r.year || '?'}</div>
         <div class="pp-round">${escapeHtml(r.round || r.eid)}</div>
         <div class="pp-place">${escapeHtml(r.place || '')}</div>
@@ -89,8 +90,8 @@
         <div class="pp-rk">${rank}</div>
         <div class="pp-pct">${pct}</div>
         <div class="pp-tag-cell">${tag}</div>
-        <div class="pp-link"><a href="/archive/${r.eid}/">→</a></div>
-      </div>`;
+        <div class="pp-link">→</div>
+      </a>`;
     }).join('');
 
     return `<section class="pp-card">

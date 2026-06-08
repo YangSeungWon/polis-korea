@@ -33,8 +33,11 @@
   padding: 8px 4px;
   border-bottom: 1px solid var(--rule);
   font-size: 13px;
+  text-decoration: none; color: inherit;
 }
 .pp-race:hover { background: var(--bg2); }
+.pp-link { color: var(--ink-soft); text-align: center; }
+.pp-race:hover .pp-link { color: var(--ink); }
 .pp-yr { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
 .pp-round { font-weight: 600; color: var(--ink); }
 .pp-place { color: var(--ink); }
@@ -60,4 +63,5 @@
   .pp-pct { grid-row: 2; grid-column: 3; text-align: right; }
   .pp-pty { grid-row: 3; grid-column: 1 / 3; }
   .pp-rk, .pp-link { display: none; }
+  /* 모바일에서도 row 전체가 링크라 탭 가능 (link 아이콘만 숨김) */
 }
