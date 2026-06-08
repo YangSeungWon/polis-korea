@@ -85,6 +85,12 @@ jobs:
           echo "=== 8. build_static + optimize ==="
           python scripts/build/build_static.py
           python scripts/build/optimize_data.py
+          echo "=== 9. 기초의원 9회 확정 회수 (NEC OpenAPI 게시 시 — 미게시(INFO-03)면 자동 skip) ==="
+          python scripts/fetch/fetch_council_winners.py --rebuild --n 9 || true
+          if ! git diff --quiet data/results/9th-local-2026.json; then
+            echo "  → 9회 기초의원 확정 회수됨 → timeline 재집계 (아카이브는 result JSON 런타임 fetch)"
+            python scripts/build/build_timeline.py
+          fi
 
       - name: Golden tests (회귀 검출)
         run: |
@@ -99,7 +105,7 @@ jobs:
         run: |
           git config user.name "polis-bot"
           git config user.email "noreply@anthropic.com"
-          git add data/polls/ data/audits/ sitemap.xml
+          git add data/polls/ data/audits/ sitemap.xml data/results/9th-local-2026.json data/timeline.json
           if git diff --staged --quiet; then
             echo "변경 없음 — push skip"
           else
