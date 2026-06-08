@@ -100,6 +100,24 @@
     render();
   }
 
+  // hex 클릭 등 외부에서 호출 — 지역(sido)·검색어(q·시군구명)·직급(level)로 필터 + 스크롤.
+  function focus({ sido, q, level } = {}) {
+    const host = document.getElementById('ar-winners-section');
+    if (!host || host.hasAttribute('hidden')) return;
+    const sidoEl = document.getElementById('ar-winners-sido');
+    const qEl = document.getElementById('ar-winners-q');
+    const lvlEl = document.getElementById('ar-winners-level');
+    const partyEl = document.getElementById('ar-winners-party');
+    if (!sidoEl) return;
+    // sido 옵션에 있으면 설정(없으면 전체 — q·level로만 필터).
+    sidoEl.value = (sido && [...sidoEl.options].some((o) => o.value === sido)) ? sido : '';
+    if (qEl) qEl.value = q || '';
+    if (lvlEl) lvlEl.value = level || '';
+    if (partyEl) partyEl.value = '';
+    (qEl || sidoEl).dispatchEvent(new Event('input', { bubbles: true }));  // render() 트리거
+    host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   window.Archive = window.Archive || {};
-  window.Archive.winners = { init };
+  window.Archive.winners = { init, focus };
 })();

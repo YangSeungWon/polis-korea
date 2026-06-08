@@ -172,6 +172,11 @@
       const seats = sigunguSeats.get(normalizeKey(cell.sido, cell.name));
       const [cx, cy] = hexCenter(cell.c, cell.r);
       const g = document.createElementNS(NS, 'g');
+      // 클릭 → 아래 당선인 섹션을 그 시군구 기초의원으로 필터·스크롤(의석 있는 셀만).
+      if (seats && seats.size) {
+        g.style.cursor = 'pointer';
+        g.addEventListener('click', () => window.Archive?.winners?.focus?.({ sido: cell.sido, q: cell.name, level: '기초의원' }));
+      }
       // 부모 outline
       const outline = document.createElementNS(NS, 'polygon');
       outline.setAttribute('points', hexPoints(cx, cy, PARENT_R));
@@ -246,7 +251,7 @@
         return `<span class="ch-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-council-hex-total');
-      if (tot) tot.textContent = `${totalSeats}석 (시군구 의회)`;
+      if (tot) tot.textContent = `${totalSeats}석 (시군구 의회) · hex 클릭 → 당선인`;
     }
   }
 

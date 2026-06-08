@@ -141,6 +141,9 @@
       for (const [p, n] of sorted) partyTotal.set(p, (partyTotal.get(p) || 0) + n);
 
       const g = document.createElementNS(NS, 'g');
+      // 클릭 → 아래 당선인 섹션을 그 시도 광역의원으로 필터·스크롤.
+      g.style.cursor = 'pointer';
+      g.addEventListener('click', () => window.Archive?.winners?.focus?.({ sido: sd, level: '광역의원' }));
       // smallR 고정 → cluster 실제 외곽 반경 = L * sqrt(3) * smallR (axial L 레이어).
       const L_est = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
       const clusterR = Math.max(14, (L_est + 0.6) * Math.sqrt(3) * SMALL_R);
@@ -213,7 +216,7 @@
         return `<span class="mh-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-metro-hex-total');
-      if (tot) tot.textContent = `${totalSeats}석 (시·도의회)`;
+      if (tot) tot.textContent = `${totalSeats}석 (시·도의회) · hex 클릭 → 당선인`;
     }
   }
 
