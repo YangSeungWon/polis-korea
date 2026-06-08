@@ -237,11 +237,9 @@ body {
 .sbar-seg-n { padding: 0 4px; }
 .sleg { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sleg b { font-weight: 800; margin-right: 2px; }
-.sleg-tail {
-  font-size: 10px; color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-}
-.sleg-tail b { font-weight: 700; margin-right: 1px; }
+/* 소수정당 칩 — 머리(1·2위)와 같은 줄흐름, 작게. 정당색은 inline. */
+.sleg-sub { font-size: 10px; opacity: .82; }
+.sleg-sub b { font-weight: 700; }
 /* 홈 통합 검색 바 */
 .home-search {
   display: flex; gap: 0; margin: 0 0 18px;

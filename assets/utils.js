@@ -189,17 +189,13 @@ function partyStackBar(counts, total) {
   }).join('');
   return `<div class="sbar">${segs}</div>`;
 }
-// 1·N위 inline, 나머지(1석 소수정당 포함)는 "+ …" tail로 전부 표시.
+// 1·N위 + 나머지 소수정당 모두 같은 흐름의 개별 칩으로. 소수정당은 작게(.sleg-sub).
+// '+' 접두·한 덩어리 tail 없음 → flex-wrap 컨테이너에서 머리 뒤로 자연스레 흐르고 칩 단위로 줄바꿈.
 function partyStackLegend(counts, top = 2) {
   const sorted = counts.slice().sort((a, b) => b[1] - a[1]);
-  const head = sorted.slice(0, top), tail = sorted.slice(top);
-  const headHTML = head.map(([p, c]) =>
-    `<span class="sleg" style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`).join(' ');
-  const tailHTML = tail.length
-    ? '<span class="sleg-tail">+ ' + tail.map(([p, c]) =>
-        `<span style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`).join(' · ') + '</span>'
-    : '';
-  return headHTML + (tailHTML ? ' ' + tailHTML : '');
+  const chip = ([p, c], cls) =>
+    `<span class="sleg ${cls}" style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`;
+  return sorted.map((e, i) => chip(e, i < top ? '' : 'sleg-sub')).join(' ');
 }
 
 // === 시계열 산점도 SVG ===
