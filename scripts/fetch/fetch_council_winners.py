@@ -76,10 +76,74 @@ def fetch_winners(key: str, sg_id: str):
     return out, total
 
 
+# API 시도명(선거 당시) → 우리 데이터 현행명(render-winners SIDO_ORDER·hex 레이아웃 기준).
+_API_TO_CURRENT = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+
+
+def fetch_winners_full(key: str, sg_id: str):
+    """tc=6 당선인 전체 필드 리스트 (재구성용)."""
+    out, page, total = [], 1, 0
+    while True:
+        url = (f"{API}?serviceKey={key}&sgId={sg_id}&sgTypecode=6"
+               f"&pageNo={page}&numOfRows=100")
+        root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read())
+        if root.findtext("header/resultCode") != "INFO-00":
+            break
+        items = root.findall("body/items/item")
+        if not items:
+            break
+        for it in items:
+            sd = (it.findtext("sdName") or "").strip()
+            out.append({
+                "sido": _API_TO_CURRENT.get(sd, sd),
+                "sigungu": (it.findtext("wiwName") or "").strip(),
+                "district": (it.findtext("sggName") or "").strip(),
+                "name": (it.findtext("name") or "").strip(),
+                "party": (it.findtext("jdName") or "무소속").strip(),
+                "votes": int(it.findtext("dugsu") or 0),
+                "pct": round(float(it.findtext("dugyul") or 0), 2),
+            })
+        total = int(root.findtext("body/totalCount") or 0)
+        if page * 100 >= total:
+            break
+        page += 1
+    return out, total
+
+
+def rebuild_tc6(n: int, winners):
+    """당선인 리스트 → tc=6 race 재구성. 기존 tc=6 제거 후 교체. (당선인만, 낙선자 없음.)"""
+    from collections import defaultdict
+    by_race = defaultdict(list)
+    for w in winners:
+        by_race[(w["sido"], w["sigungu"], w["district"])].append(w)
+    new_races = []
+    for (sido, sigungu, district), ws in sorted(by_race.items()):
+        ws.sort(key=lambda x: -x["votes"])
+        # seats:1 — won 기반(render-winners)·seats 기반(의회 hex·local.js) 카운터 모두 호환.
+        cands = [{"name": w["name"], "party": w["party"], "votes": w["votes"],
+                  "pct": w["pct"], "rank": i + 1, "won": True, "seats": 1} for i, w in enumerate(ws)]
+        new_races.append({"sg_typecode": "6", "sido": sido, "sigungu": sigungu,
+                          "scope": "district", "district": district,
+                          "candidates": cands, "seats_total": len(cands)})
+    main_f = ROOT / f"data/results/{ORD[n]}-local-{YEAR[n]}.json"
+    sgg_f = ROOT / f"data/results/{ORD[n]}-local-{YEAR[n]}.sigungu.json"
+    target = main_f
+    if not any(r.get("sg_typecode") == "6" for r in json.loads(main_f.read_text())["races"]):
+        target = sgg_f
+    d = json.loads(target.read_text(encoding="utf-8"))
+    old = sum(1 for r in d["races"] if r.get("sg_typecode") == "6")
+    d["races"] = [r for r in d["races"] if r.get("sg_typecode") != "6"] + new_races
+    target.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    seats = sum(len(r["candidates"]) for r in new_races)
+    print(f"  재구성: tc=6 race {old}→{len(new_races)}, 당선 {seats}명 → {target.name}", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, required=True, help="지선 회차 5/6/7/8/9")
     ap.add_argument("--force", action="store_true", help="매칭률 낮아도 강제 저장")
+    ap.add_argument("--rebuild", action="store_true",
+                    help="tc=6 race를 당선인 API로 재구성(기존 교체·당선자만). 후보 누락 회차용.")
     args = ap.parse_args()
     key = os.environ.get("NEC_API_KEY")
     if not key:
@@ -89,6 +153,15 @@ def main():
     if n not in SGID:
         print(f"ERR: 미지원 회차 {n}", file=sys.stderr)
         sys.exit(1)
+
+    if args.rebuild:
+        winners, total = fetch_winners_full(key, SGID[n])
+        if not winners:
+            print(f"{n}회: API 당선인 없음(INFO-03 — 미게시?). skip.", file=sys.stderr)
+            return
+        print(f"{n}회 기초의원 당선인 API: {total}명 (재구성 모드)", file=sys.stderr)
+        rebuild_tc6(n, winners)
+        return
 
     wset, total = fetch_winners(key, SGID[n])
     if not wset:

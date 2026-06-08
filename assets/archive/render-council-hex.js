@@ -82,8 +82,14 @@
         if (r.scope === 'sigungu_summary') {
           for (const c of r.candidates || []) add(sd, sg, c.party || '무소속', c.seats || 0);
         } else if (r.scope === 'district') {
-          const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
-          if (top) add(sd, sg, top.party || '무소속', 1);
+          // 중선거구 — 당선자(won) 전원 = 의석. won 없으면 1위만(fallback).
+          const won = (r.candidates || []).filter((c) => c.won);
+          if (won.length) {
+            for (const c of won) add(sd, sg, c.party || '무소속', 1);
+          } else {
+            const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+            if (top) add(sd, sg, top.party || '무소속', 1);
+          }
         }
       } else if (r.sg_typecode === '9' && r.scope === 'proportional_sigungu') {
         for (const c of r.candidates || []) add(sd, sg, c.party || '무소속', c.seats || 0);

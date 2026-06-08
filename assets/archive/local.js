@@ -430,11 +430,15 @@
       for (const r of races) {
         if (r.sg_typecode !== row.tc || r.scope !== useScope) continue;
         if (useMode === 'winner') {
-          const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-          if (!cs[0]) continue;
-          const p = cs[0].party || '무소속';
-          ctr[p] = (ctr[p] || 0) + 1;
-          total += 1;
+          // 중선거구(기초의원) — 당선자(won) 전원. won 없으면 1위만(fallback).
+          const won = (r.candidates || []).filter((c) => c.won);
+          const winners = won.length ? won
+            : (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0)).slice(0, 1);
+          for (const c of winners) {
+            const p = c.party || '무소속';
+            ctr[p] = (ctr[p] || 0) + 1;
+            total += 1;
+          }
         } else {  // seats
           for (const c of r.candidates || []) {
             const s = c.seats || 0;
