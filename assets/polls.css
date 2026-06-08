@@ -5,6 +5,22 @@
   margin-bottom: 10px;
   border-bottom: 1px solid var(--rule);
 }
+/* 실제 결과 카드 — 여론조사와 구분(강조 테두리 + 배지). */
+.actual-result-card {
+  border-left-width: 4px;
+  border-left-color: var(--ink, #0a0e1a);
+  background: var(--bg2, #f1f3f6);
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 16px;
+}
+.actual-result-card .arc-hdr {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.actual-result-card .arc-badge {
+  font-size: 11px; font-weight: 800; color: var(--bg, #fff);
+  background: var(--ink, #0a0e1a); padding: 2px 8px; border-radius: 3px; letter-spacing: -0.01em;
+}
+.actual-result-card .arc-sub { font-size: 11px; color: var(--ink-soft, #5a6378); }
 .poll-card .pc-hdr {
   display: flex;
   justify-content: space-between;
@@ -113,14 +129,6 @@
 .result-accuracy b { font-weight: 800; font-variant-numeric: tabular-nums; }
 .result-accuracy .ra-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-left: 4px; }
 
-/* detail-pane 추세 차트 하단 house effect 보정 토글 */
-.trend-toggle {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; color: var(--ink-soft);
-  padding: 4px 0 8px;
-  user-select: none; cursor: pointer;
-}
-.trend-toggle input { accent-color: var(--ink); margin: 0; }
 
 /* detail-pane 기관별 lean mini-표 */
 .lean-mini { margin: 4px 0 14px; font-size: 11px; }

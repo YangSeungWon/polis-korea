@@ -28,18 +28,19 @@ function renderDetail() {
     return;
   }
 
-  // 시계열 차트 — 정당지지는 정당별 추이 선, 그 외는 후보 산점도 (조사 ≥ 2건).
-  // 평활 + 밴드 + house effect 토글 (PollStats 사용).
-  const adjustHouse = !!state.adjustHouse;
-  const toggleHtml = `<label class="trend-toggle">
-    <input type="checkbox" id="trend-house"${adjustHouse ? ' checked' : ''}>
-    <span>house effect 보정</span>
-  </label>`;
+  // 실제 결과 — '실제 1위' 모드면 맨 위에 별도 카드(여론조사와 구분).
+  const actual = (state.mode === 'result' && typeof window.actualResultFor === 'function')
+    ? window.actualResultFor(state.selectedSido, state.selectedSigungu, state.office) : null;
+  if (actual && actual.candidates && actual.candidates.length) {
+    html += renderActualResultCard(actual);
+  }
+
+  // 시계열 차트 — 정당지지는 정당별 추이 선, 그 외는 후보 산점도(조사 ≥ 2건). 실제결과는 ◆로 오버레이.
   if (state.office === '정당지지') {
-    const svg = buildPartyTrendSVG(officePolls, { adjustHouse, showBand: true });
-    if (svg) html += `<div class="scatter-wrap">${svg}${toggleHtml}</div>`;
+    const svg = buildPartyTrendSVG(officePolls, { showBand: true });
+    if (svg) html += `<div class="scatter-wrap">${svg}</div>`;
   } else if (officePolls.length >= 2) {
-    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls, state.roster)}${toggleHtml}</div>`;
+    html += `<div class="scatter-wrap">${buildScatterSVG(officePolls, state.roster, actual)}</div>`;
   }
   // 기관별 lean mini-표 — 상위 1·2위 후보(또는 정당)별 잔차 평균.
   const leanHtml = buildLeanTableHTML(officePolls);
@@ -53,8 +54,27 @@ function renderDetail() {
     html += renderPollCard(p, p.office_label);  // renderPollCard → utils.js (공용)
   }
   pane.innerHTML = html;
-  const tg = document.getElementById('trend-house');
-  if (tg) tg.addEventListener('change', () => { state.adjustHouse = tg.checked; renderDetail(); });
+}
+
+// 실제 결과 카드 — 개표 확정(NEC). 여론조사 카드와 구분되는 헤더(실제 결과 배지).
+function renderActualResultCard(actual) {
+  const cands = (actual.candidates || []).filter((c) => c.pct != null)
+    .sort((a, b) => (b.pct || 0) - (a.pct || 0));
+  if (!cands.length) return '';
+  const maxPct = Math.max(...cands.map((c) => c.pct || 0)) || 100;
+  const bars = cands.map((c) => {
+    const color = partyColor(c.party);
+    const w = maxPct > 0 ? (c.pct / maxPct) * 100 : 0;
+    return `<div class="pc-bar-row">
+      <span class="name">${c.name || c.party || ''}</span>
+      <span class="pc-bar"><span class="pc-bar-fill" style="width:${w}%;background:${color}"></span></span>
+      <span class="pct" style="color:${partyTextColor(c.party)}">${c.pct}%</span>
+    </div>`;
+  }).join('');
+  return `<div class="poll-card actual-result-card">
+    <div class="arc-hdr"><span class="arc-badge">실제 결과</span><span class="arc-sub">개표 확정 · NEC</span></div>
+    ${bars}
+  </div>`;
 }
 
 // 기관별 lean mini-표 — 현 region+office 폴 안에서 상위 1·2 (후보 또는 정당)의

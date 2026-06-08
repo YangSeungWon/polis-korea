@@ -17,8 +17,9 @@
       for (const race of d.races || []) {
         const office = TC_TO_OFFICE[race.sg_typecode];
         if (!office) continue;
-        const top = (race.candidates || []).slice()
-          .sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+        const cands = (race.candidates || []).slice()
+          .sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        const top = cands[0];
         if (!top) continue;
         const cell = {
           party: top.party,
@@ -28,6 +29,7 @@
           gap: 99,
           effective_gap: 99,
           actual: true,
+          candidates: cands.slice(0, 8).map((c) => ({ name: c.name, party: c.party, pct: c.pct, votes: c.votes })),
         };
         if (race.scope === 'sido') {
           actualBySidoOffice[`${race.sido}|${office}`] = cell;
@@ -63,6 +65,23 @@
       return v || null;
     }
     return _origSigungu(sido, sigungu, office);
+  };
+  // 선택 지역의 실제 결과(전체 후보) — detail 패널·산점도가 mode=result일 때 사용.
+  window.actualResultFor = function (sido, sigungu, office) {
+    if (sigungu) {
+      let v = actualBySigunguOffice[`${sido}|${sigungu}|${office}`];
+      if (!v && typeof parentSigungu === 'function') {
+        const p = parentSigungu(sigungu);
+        if (p) v = actualBySigunguOffice[`${sido}|${p}|${office}`];
+      }
+      return v || null;
+    }
+    let v = actualBySidoOffice[`${sido}|${office}`];
+    if (!v) {
+      const m = (typeof SIDO_MERGE !== 'undefined' && SIDO_MERGE[sido]) ? SIDO_MERGE[sido] : null;
+      if (m) v = actualBySidoOffice[`${m}|${office}`];
+    }
+    return v || null;
   };
 
   // 적중률 계산 (시도 단위 — 광역단체장·기초단체장·교육감)

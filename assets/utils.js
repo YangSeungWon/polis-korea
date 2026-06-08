@@ -207,8 +207,11 @@ function partyStackLegend(counts, top = 2) {
 // 같은 ts 여러 점 약간 jitter, hover 메타. (parties.js의 partyColor 의존)
 // roster: { "sido|name": {sgg,jd,...} or null } — NEC 등록 후보 명부.
 // 등록 후보면 진한 dot + line, 사전 거론은 옅은 dot만.
-function buildScatterSVG(polls, roster = null) {
+function buildScatterSVG(polls, roster = null, actual = null) {
   const W = 380, H = 180, pad_l = 28, pad_r = 12, pad_t = 14, pad_b = 22;
+  const actualCands = (actual && actual.candidates)
+    ? actual.candidates.filter((c) => c.pct != null).sort((a, b) => (b.pct || 0) - (a.pct || 0)).slice(0, 4) : [];
+  const rightReserve = actualCands.length ? 22 : 0;  // 우측에 실제결과(◆) strip 확보
   const points = [];
   for (const p of polls) {
     if (!p.period_end || !p.candidates) continue;
@@ -232,8 +235,8 @@ function buildScatterSVG(polls, roster = null) {
   const maxPct = Math.max(60, Math.ceil(Math.max(...points.map((p) => p.pct)) / 10) * 10);
   // singleTs면 모든 점을 중앙(W/2)으로
   const x = (ts) => singleTs
-    ? (pad_l + W - pad_r) / 2
-    : pad_l + ((ts - minTs) / tsRange) * (W - pad_l - pad_r);
+    ? (pad_l + W - pad_r - rightReserve) / 2
+    : pad_l + ((ts - minTs) / tsRange) * (W - pad_l - pad_r - rightReserve);
   const y = (pct) => pad_t + (1 - pct / maxPct) * (H - pad_t - pad_b);
   const jittered = points.map((p) => ({
     ...p,
@@ -300,7 +303,19 @@ function buildScatterSVG(polls, roster = null) {
     const strokeAttr = isSub ? '' : ` stroke="${color}" stroke-width="0.5"`;
     return `<circle cx="${p.jx.toFixed(1)}" cy="${y(p.pct).toFixed(1)}" r="${r}" fill="${color}" fill-opacity="${fillOp}"${strokeAttr}><title>${p.name || '?'} (${p.party || '?'}) ${p.pct}%${isSub ? ' · 미등록/사전' : ''} · ${p.agency} · ${fmtDate(new Date(p.ts).toISOString().slice(0, 10))}</title></circle>`;
   }).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${lines}${dots}</svg>`;
+  // 실제 결과 — 우측 strip에 마름모(◆)로. 폴(원)과 구분되는 도형 + 점선 분리.
+  let actualMarks = '';
+  if (actualCands.length) {
+    const cx = W - pad_r - rightReserve / 2;
+    const xsep = W - pad_l - pad_r - rightReserve + pad_l;
+    actualMarks += `<line x1="${xsep.toFixed(1)}" y1="${pad_t}" x2="${xsep.toFixed(1)}" y2="${H - pad_b}" stroke="var(--rule,#e6e9ef)" stroke-width="0.6" stroke-dasharray="2,2"/>`;
+    actualMarks += `<text x="${cx.toFixed(1)}" y="${pad_t - 4}" font-size="8" fill="var(--ink-soft,#5a6378)" text-anchor="middle">실제◆</text>`;
+    for (const c of actualCands) {
+      const cy = y(c.pct), s = 4, col = partyColor(c.party);
+      actualMarks += `<polygon points="${cx},${(cy - s).toFixed(1)} ${(cx + s).toFixed(1)},${cy.toFixed(1)} ${cx},${(cy + s).toFixed(1)} ${(cx - s).toFixed(1)},${cy.toFixed(1)}" fill="${col}" stroke="#fff" stroke-width="0.9"><title>실제 ${c.name || ''} (${c.party || ''}) ${c.pct}%</title></polygon>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${lines}${dots}${actualMarks}</svg>`;
 }
 
 // 정당 지지율 추이 — 정당별 시계열 선 (정당지지 office 전용).
