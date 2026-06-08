@@ -17,8 +17,11 @@
   function computeSeatSplit(results, sgTypecode, propSgCode) {
     const dist = {}, prop = {};
     for (const r of districtRaces(results, sgTypecode)) {
-      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) { const p = mainParty(cs[0].party); dist[p] = (dist[p] || 0) + 1; }
+      // 중선거구(9~12대 2인 당선) 대응 — won 후보 전원 카운트. won 없으면 최다득표 1명 fallback.
+      const won = (r.candidates || []).filter((c) => c.won);
+      const winners = won.length ? won
+        : (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0)).slice(0, 1);
+      for (const c of winners) { const p = mainParty(c.party); dist[p] = (dist[p] || 0) + 1; }
     }
     const propNat = propNationRace(results, propSgCode);
     if (propNat?.candidates) {

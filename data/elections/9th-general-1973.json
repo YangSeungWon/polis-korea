@@ -1,0 +1,33 @@
+{
+  "id": "9th-general-1973",
+  "name": "제9대 국회의원선거",
+  "kind": "general_election",
+  "type": "general",
+  "n": 9,
+  "date": "1973-02-27",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 역대 당선인명부(info.nec report.xhtml)에서 지역구 당선인 회수"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/9th-general-1973.json",
+  "_source_note": "중선거구제 + 유정회(통일주체국민회의 선출)",
+  "archive": {
+    "page": "/archive/9th-general-1973/",
+    "results_path": "data/results/9th-general-1973.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "2",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정",
+    "context_note": "중선거구제 + 유정회(통일주체국민회의 선출) — 민주공화당 73 · 신민당 52 · 무소속 19 · 민주통일당 2",
+    "data_source_note": "NEC 역대 당선인명부 — 지역구 당선인(당선자 기준) · 전국구/유정회 미반영(지역구만)"
+  }
+}

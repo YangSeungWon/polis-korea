@@ -1,0 +1,33 @@
+{
+  "id": "2nd-general-1950",
+  "name": "제2대 국회의원선거",
+  "kind": "general_election",
+  "type": "general",
+  "n": 2,
+  "date": "1950-05-30",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 역대 당선인명부(info.nec report.xhtml)에서 지역구 당선인 회수"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/2nd-general-1950.json",
+  "_source_note": "한국전쟁 직전",
+  "archive": {
+    "page": "/archive/2nd-general-1950/",
+    "results_path": "data/results/2nd-general-1950.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "2",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정",
+    "context_note": "한국전쟁 직전 — 무소속 124 · 민주국민당 26 · 대한국민당 18 · 국민회 13",
+    "data_source_note": "NEC 역대 당선인명부 — 지역구 당선인(당선자 기준) · 전국구/유정회 미반영(지역구만)"
+  }
+}

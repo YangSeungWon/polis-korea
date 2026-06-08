@@ -1,0 +1,33 @@
+{
+  "id": "5th-general-1960",
+  "name": "제5대 국회의원선거",
+  "kind": "general_election",
+  "type": "general",
+  "n": 5,
+  "date": "1960-07-29",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 역대 당선인명부(info.nec report.xhtml)에서 지역구 당선인 회수"
+  },
+  "offices": [
+    {
+      "level": "국회의원",
+      "sg_typecode": "2",
+      "scope": "district"
+    }
+  ],
+  "results_file": "data/results/5th-general-1960.json",
+  "_source_note": "4·19 후 양원제(민의원, 참의원 별도)",
+  "archive": {
+    "page": "/archive/5th-general-1960/",
+    "results_path": "data/results/5th-general-1960.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "2",
+    "proportional_sg_typecode": "7",
+    "list_label": "확정",
+    "context_note": "4·19 후 양원제(민의원, 참의원 별도) — 민주당 171 · 무소속 53 · 사회대중당 4 · 자유당 2",
+    "data_source_note": "NEC 역대 당선인명부 — 지역구 당선인(당선자 기준) · 전국구/유정회 미반영(지역구만)"
+  }
+}
