@@ -26,6 +26,8 @@ data/*.xls
 !data/raw/nec_roster_22gen.json
 # 예외: raw 카탈로그 — 다른 머신·새 clone에서 재현 가능하도록 manifest 추적
 !data/raw/MANIFEST.json
+# 예외: VT012 정기조사 목록 — CI cold run이 scrape를 증분으로 시작하게(0부터 재스크랩 방지). tracker 소스 list.
+!data/raw/nesdc_etc_polls.csv
 *.manual.bak
 !data/raw/nec_roster_21gen.json
 !data/raw/nec_roster_20gen.json
