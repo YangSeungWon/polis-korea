@@ -80,13 +80,21 @@ def main():
             return race["sigungu"]
         return DISTRICT_SUFFIX.sub("", race.get("district") or "")
 
-    # tc=6 race per (sido, sigungu)
+    # 통합시 일반구(수원시장안구 등)는 quota가 parent 시(수원시)로 키잉됨 → parent로 묶어
+    # 그 시 전체 일반구 race에 시 총정수를 배분. (안 그러면 통합시 일반구가 통째로 skip→과소.)
+    PARENT_GU = re.compile(r"^([가-힣]+시)[가-힣]+구$")
+
+    def quota_sigungu(sg):
+        m = PARENT_GU.match(sg)
+        return m.group(1) if m else sg
+
+    # tc=6 race per (sido, quota-sigungu) — 통합시는 parent 시로 그룹
     races_by_sgg: dict[tuple, list] = {}
     for r in d.get("races", []):
         if r.get("sg_typecode") != "6" or r.get("scope") != "district":
             continue
         sd = SIDO_ALIAS.get(r["sido"], r["sido"])
-        sg = sigungu_of(r)
+        sg = quota_sigungu(sigungu_of(r))
         if not sg:
             continue
         races_by_sgg.setdefault((sd, sg), []).append(r)
