@@ -507,6 +507,8 @@
 .ar-winner-party { font-weight: 600; }
 .ar-winner-pct { color: var(--ink-soft); font-variant-numeric: tabular-nums; font-weight: 600; }
 .ar-winners-more { padding: 10px; text-align: center; color: var(--ink-soft); font-size: 12px; background: var(--bg2); }
+.ar-winners-hint { padding: 18px 16px; text-align: center; color: var(--ink-soft); font-size: 13px; line-height: 1.6; background: var(--bg2); border-radius: 4px; }
+.ar-winners-hint b { color: var(--ink); font-weight: 700; }
 
 /* Hero scorecard — 1당 vs 2당 의석 비교 */
 /* 의회 구성 — 의석 반원(총선 아카이브). */

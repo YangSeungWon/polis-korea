@@ -40,6 +40,11 @@
       '전북특별자치도', '전라남도', '경상북도', '경상남도', '제주특별자치도',
     ];
     const parties = Array.from(new Set(winners.map((w) => w.party))).sort();
+    // 지역(시도)순 → 직급(광역<기초) → 선거구. 필터 시 그 지역의 광역·기초가 함께 정렬돼 나옴.
+    const sidoIdx = (s) => { const i = SIDO_ORDER.indexOf(s); return i < 0 ? 99 : i; };
+    winners.sort((a, b) => sidoIdx(a.sido) - sidoIdx(b.sido)
+      || a.level.localeCompare(b.level)
+      || (a.district || '').localeCompare(b.district || '', 'ko'));
 
     // filter controls
     const ctrl = document.createElement('div');
@@ -80,6 +85,11 @@
         return true;
       });
       document.getElementById('ar-winners-count').textContent = `${filtered.length}명`;
+      // 필터 없으면 2,661명 통째 dump 대신 안내(지도 클릭·검색 유도) — 광역의원만 500개 깔리는 문제 방지.
+      if (!(q || sido || party || level)) {
+        grid.innerHTML = `<div class="ar-winners-hint">총 <b>${winners.length.toLocaleString()}명</b>. 위 <b>지도(시·도의회·시군구의회 hex)</b>를 클릭하거나, 검색·시도·정당·직급으로 좁혀 보세요.</div>`;
+        return;
+      }
       grid.innerHTML = filtered.slice(0, 500).map((w) => {
         const col = (typeof partyColor === 'function') ? partyColor(w.party) : '#999';
         const lvlBadge = w.level === '광역의원' ? '광' : '기';
