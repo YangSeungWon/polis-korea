@@ -18,6 +18,13 @@
   const today = new Date();
   const daysBetween = (d) => Math.ceil((new Date(d) - today) / 86400000);
 
+  // 카드 클릭 → 그 종류 최신 회차 아카이브(/archive/{id}/). id = {n}{서수}-{slug}-{year}.
+  const ORD = (n) => { const s = n % 100; if (s >= 11 && s <= 13) return n + 'th'; return n + ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'); };
+  const ARCH_SLUG = { presidential: 'pres', national_assembly: 'general', local: 'local' };
+  const setCardHref = (card, r) => {
+    if (card && r && ARCH_SLUG[r.kind] && r.date) card.setAttribute('href', `/archive/${ORD(r.n)}-${ARCH_SLUG[r.kind]}-${r.date.slice(0, 4)}/`);
+  };
+
   // 1) 대통령 — 가장 최근 대선. 카드 layout: 회차+날짜 헤딩 → 결과 가운데 → 잔여 작게.
   const lastPres = past.find((r) => r.kind === 'presidential');
   if (lastPres) {
@@ -25,6 +32,7 @@
       ? partyColor(lastPres.winner_party) : '#5a6378';
     const party = lastPres.winner_party || '';
     const card = document.querySelector('[data-slot="president"]');
+    setCardHref(card, lastPres);
     if (card) {
       const headingEl = card.querySelector('.card-heading') || (() => {
         const e = document.createElement('div');
@@ -74,6 +82,7 @@
     }
     const total = sorted.reduce((s, [, v]) => s + v, 0);
     const card = document.querySelector('[data-slot="assembly"]');
+    setCardHref(card, lastAsm);
     if (card) {
       const headingEl = card.querySelector('.card-heading') || (() => {
         const e = document.createElement('div');
@@ -113,6 +122,7 @@
     }
     const sorted = Object.entries(partyCount).sort((a, b) => b[1] - a[1]);
     const card = document.querySelector('[data-slot="local"]');
+    setCardHref(card, lastLocal);
     if (card) {
       const headingEl = card.querySelector('.card-heading') || (() => {
         const e = document.createElement('div');
