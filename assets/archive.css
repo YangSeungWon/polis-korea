@@ -644,3 +644,15 @@
 .gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
 .metro-hex-label { fill: var(--ink); }
 .council-hex-sido-label { fill: var(--ink); opacity: 0.35; }
+
+/* scorecard 기타 정당 line — sport-card row 아래 작은 글씨 */
+.ar-sc-other {
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 2px 0 6px;
+  border-bottom: 1px dashed var(--rule);
+  line-height: 1.4;
+}
+.ar-sc-row + .ar-sc-other { border-top: none; margin-top: -4px; }
+.ar-sc-oseg { font-weight: 600; }

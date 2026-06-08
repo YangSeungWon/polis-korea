@@ -52,12 +52,31 @@
         const r = p2 ? (byTc[tc][p2] || 0) : 0;
         // 해당 tc race 없으면 row 숨김
         const rowEl = document.querySelector(`.ar-sc-row[data-level="${tc}"]`);
+        const otherEl = document.getElementById(`ar-sc-${tc}-other`);
         if (rowEl && Object.keys(byTc[tc]).length === 0) {
           rowEl.setAttribute('hidden', '');
+          if (otherEl) otherEl.setAttribute('hidden', '');
         } else if (rowEl) {
           rowEl.removeAttribute('hidden');
           setText(`ar-sc-${tc}-l`, l ? l.toLocaleString() : '—');
           setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
+          // 기타 정당 합산
+          const others = Object.entries(byTc[tc])
+            .filter(([party, n]) => party !== p1 && party !== p2 && n > 0)
+            .sort((a, b) => b[1] - a[1]);
+          const otherTotal = others.reduce((s, [, n]) => s + n, 0);
+          if (otherEl) {
+            if (otherTotal > 0) {
+              const breakdown = others.map(([party, n]) => {
+                const col = pcol(party);
+                return `<span class="ar-sc-oseg" style="color:${col}">${party} ${n.toLocaleString()}</span>`;
+              }).join(' · ');
+              otherEl.innerHTML = `기타 ${otherTotal.toLocaleString()} (${breakdown})`;
+              otherEl.removeAttribute('hidden');
+            } else {
+              otherEl.setAttribute('hidden', '');
+            }
+          }
         }
       }
     }

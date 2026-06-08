@@ -133,21 +133,25 @@ HERO_LOCAL = """
         <div class="ar-sc-label">광역단체장</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-3-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-3-other" hidden></div>
       <div class="ar-sc-row" data-level="4">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-4-l">—</div>
         <div class="ar-sc-label">기초단체장</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-4-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-4-other" hidden></div>
       <div class="ar-sc-row" data-level="5">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-5-l">—</div>
         <div class="ar-sc-label">광역의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-5-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-5-other" hidden></div>
       <div class="ar-sc-row" data-level="6">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-6-l">—</div>
         <div class="ar-sc-label">기초의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-6-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-6-other" hidden></div>
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
@@ -218,26 +222,31 @@ HERO_BYELECTION = """
         <div class="ar-sc-label">국회의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-2-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-2-other" hidden></div>
       <div class="ar-sc-row" data-level="3">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-3-l">—</div>
         <div class="ar-sc-label">광역단체장</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-3-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-3-other" hidden></div>
       <div class="ar-sc-row" data-level="4">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-4-l">—</div>
         <div class="ar-sc-label">기초단체장</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-4-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-4-other" hidden></div>
       <div class="ar-sc-row" data-level="5">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-5-l">—</div>
         <div class="ar-sc-label">광역의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-5-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-5-other" hidden></div>
       <div class="ar-sc-row" data-level="6">
         <div class="ar-sc-num ar-sc-num-l" id="ar-sc-6-l">—</div>
         <div class="ar-sc-label">기초의원</div>
         <div class="ar-sc-num ar-sc-num-r" id="ar-sc-6-r">—</div>
       </div>
+      <div class="ar-sc-other" id="ar-sc-6-other" hidden></div>
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">실시 사유</span> <span class="ar-hm-value" id="ar-by-reasons-count">—</span></span>

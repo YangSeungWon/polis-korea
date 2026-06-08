@@ -68,6 +68,24 @@
       const r = p2 ? (byTc[tc][p2] || 0) : 0;
       setText(`ar-sc-${tc}-l`, l ? l.toLocaleString() : '—');
       setText(`ar-sc-${tc}-r`, r ? r.toLocaleString() : '—');
+      // 기타 정당 합산 — 1·2당 제외 ≥1석.
+      const others = Object.entries(byTc[tc])
+        .filter(([party, n]) => party !== p1 && party !== p2 && n > 0)
+        .sort((a, b) => b[1] - a[1]);
+      const otherTotal = others.reduce((s, [, n]) => s + n, 0);
+      const otherEl = document.getElementById(`ar-sc-${tc}-other`);
+      if (otherEl) {
+        if (otherTotal > 0) {
+          const breakdown = others.map(([party, n]) => {
+            const col = pcol(party);
+            return `<span class="ar-sc-oseg" style="color:${col}">${party} ${n.toLocaleString()}</span>`;
+          }).join(' · ');
+          otherEl.innerHTML = `기타 ${otherTotal.toLocaleString()} (${breakdown})`;
+          otherEl.removeAttribute('hidden');
+        } else {
+          otherEl.setAttribute('hidden', '');
+        }
+      }
     }
 
     // 하단 meta
