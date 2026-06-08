@@ -29,6 +29,7 @@ warnings.filterwarnings("ignore")
 ROOT = Path(__file__).resolve().parents[2]
 XLSX_HISTORICAL = ROOT / "data/raw/assembly/데이터_역대 국회의원 현황.xlsx"
 XLSX_CURRENT = ROOT / "data/raw/assembly/데이터_국회의원 의원이력.xlsx"
+XLSX_PROFILE = ROOT / "data/raw/assembly/데이터_국회의원 인적사항.xlsx"
 OUT = ROOT / "data/raw/assembly_member_map.json"
 
 # 현황: "제N대[국회의원] (지역구) [정당]"
@@ -149,6 +150,45 @@ def main():
             continue
         # 매칭 없음 → 새 entry (hanja-based key)
         merge_or_add(name, hanja, None, [career])
+    # 3. 인적사항 (22대 현역) — dob 보강
+    wb = openpyxl.load_workbook(XLSX_PROFILE)
+    ws = wb.active
+    n_dob_filled = 0
+    for i, row in enumerate(ws.iter_rows(values_only=True)):
+        if i == 0 or not row or not row[0]:
+            continue
+        name = (row[0] or "").strip()
+        hanja = (row[1] or "").strip()
+        dob_raw = row[4]
+        if not dob_raw:
+            continue
+        # YYYY-MM-DD or datetime
+        if hasattr(dob_raw, "strftime"):
+            dob = dob_raw.strftime("%Y-%m-%d")
+        else:
+            dob = str(dob_raw).strip()[:10]
+        # 기존 entry 찾기 — hanja 매칭 우선
+        targets = []
+        for k, v in by_key.items():
+            if v["name"] == name and v.get("hanja") == hanja:
+                targets.append(v)
+        if not targets:
+            for k, v in by_key.items():
+                if v["name"] == name and not v.get("dob"):
+                    targets.append(v)
+        # dob 부재 entry만 보강 (이미 있으면 안 건드림)
+        for t in targets:
+            if not t.get("dob"):
+                t["dob"] = dob
+                # key 재배정 — name_hanja → name_dob
+                old_id = t["id"]
+                new_id = f"{name}_{dob}"
+                if new_id != old_id and new_id not in by_key:
+                    t["id"] = new_id
+                    by_key[new_id] = t
+                    by_key.pop(old_id, None)
+                n_dob_filled += 1
+
     persons = list(by_key.values())
     # careers 회차 정렬
     for p in persons:

@@ -96,6 +96,15 @@ def url_block(loc: str, freq: str, priority: str, lastmod: str) -> str:
     )
 
 
+def person_urls() -> list[tuple[str, str, str, str]]:
+    """build_person_pages가 만든 sitemap_person.txt 소비."""
+    p = ROOT / "data/sitemap_person.txt"
+    if not p.exists():
+        return []
+    return [(loc.strip(), "monthly", "0.5", TODAY)
+            for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
+
+
 def main():
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -105,11 +114,15 @@ def main():
         lines.append(url_block(loc, freq, priority, lastmod))
     for loc, freq, priority, lastmod in history_urls():
         lines.append(url_block(loc, freq, priority, lastmod))
+    persons = person_urls()
+    for loc, freq, priority, lastmod in persons:
+        lines.append(url_block(loc, freq, priority, lastmod))
     lines.append('</urlset>')
     out = "\n".join(lines) + "\n"
     (ROOT / "sitemap.xml").write_text(out, encoding="utf-8")
     print(f"→ sitemap.xml: {len(STATIC)} static + "
-          f"{len(archive_urls())} archive + {len(history_urls())} history")
+          f"{len(archive_urls())} archive + {len(history_urls())} history + "
+          f"{len(persons)} person")
 
 
 if __name__ == "__main__":

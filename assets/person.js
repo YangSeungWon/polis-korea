@@ -3,7 +3,10 @@
 (function () {
   const $ = (s) => document.querySelector(s);
   const params = new URLSearchParams(location.search);
-  const targetName = params.get('name') || '';
+  // 정적 페이지면 inline JSON 사용, 동적 fallback이면 ?name= 으로 fetch
+  const inlineEl = document.getElementById('person-data');
+  const inlineData = inlineEl ? JSON.parse(inlineEl.textContent) : null;
+  const targetName = (inlineData && inlineData.persons[0]?.name) || params.get('name') || '';
 
   function escapeHtml(s) {
     return String(s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -110,8 +113,13 @@
       return;
     }
     try {
-      const r = await fetch('assets/person-index.json');
-      const j = await r.json();
+      let j;
+      if (inlineData) {
+        j = inlineData;
+      } else {
+        const r = await fetch('assets/person-index.json');
+        j = await r.json();
+      }
       const person = (j.persons || []).find((p) => p.name === targetName);
       if (!person) {
         $('#person-body').innerHTML =
