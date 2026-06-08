@@ -1,0 +1,32 @@
+{
+  "id": "2nd-pres-1952",
+  "name": "제2대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 2,
+  "date": "1952-08-05",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 역대 개표현황(info.nec)에서 시도별 후보 득표 회수"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/2nd-pres-1952.json",
+  "_source_note": "발췌개헌 후 첫 직선 — 이승만 재선",
+  "archive": {
+    "page": "/archive/2nd-pres-1952/",
+    "results_path": "data/results/2nd-pres-1952.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "1",
+    "list_label": "확정",
+    "context_note": "발췌개헌 후 첫 직선 — 이승만 재선 — 이승만(자유당) 74.62% / 조봉암 11.36%",
+    "data_source_note": "NEC 역대 개표현황 — 시도별 후보 득표(합계)"
+  }
+}
