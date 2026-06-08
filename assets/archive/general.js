@@ -64,6 +64,19 @@
     const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
     const sc = document.getElementById('ar-scorecard');
     if (sc) sc.removeAttribute('hidden');
+    // 의회 구성 — 의석 반원(hemicycle). scorecard 카드 맨 위에(보이는 컨테이너 안).
+    if (sc && typeof renderParliamentChart === 'function' && !sc.querySelector('.ar-parliament')) {
+      const totalSeats = sorted.reduce((s, [, n]) => s + n, 0);
+      if (totalSeats > 0) {
+        const pp = sorted.map(([party, seats]) => ({ party, seats, color: pcol(party) }));
+        const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
+          .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}"></span><b>${seats}</b> ${party}</span>`).join('');
+        sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
+          + renderParliamentChart(pp, totalSeats, 440, 200)
+          + `<div class="ar-pl-total">${totalSeats}석</div>`
+          + `<div class="ar-pl-legend">${legend}</div></div>`);
+      }
+    }
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
     const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
     const renderParty = (party) => {
