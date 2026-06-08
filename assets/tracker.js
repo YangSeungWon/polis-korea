@@ -69,10 +69,7 @@
 
   // 평활·house effect — assets/poll-stats.js 공유 모듈 사용.
   const kernelSmooth = (pts, bwDays) => PollStats.kernelSmooth(pts, bwDays);
-  const houseEffects = (pts) => PollStats.houseEffects(pts, { bwDays: 30, shrinkK: 10, minN: 3 });
-  const applyHouse = PollStats.applyHouse;
-
-  const state = { adjust: false };
+  const houseEffects = (pts) => PollStats.houseEffects(pts, { bwDays: 30, shrinkK: 10, minN: 3 });  // 아래 lean 표 전용
 
   // ===== 인터랙션: hover 툴팁 (차트별 점 좌표 저장 → 최근접 점 표시) =====
   const HOVER = {};  // chartId → [{x,y,tip,color}]
@@ -109,15 +106,9 @@
   const fmtD = (t) => new Date(t).toISOString().slice(0, 10);
 
   // ===== ① 국정평가 =====
-  function renderApproval(records, adjust) {
+  function renderApproval(records) {
     if (!records.length) return '<div class="tk-empty">데이터 없음</div>';
-    // house effect (긍정·부정 각각) — 보정 on이면 점/추세에 적용.
-    const houseOf = {};
-    if (adjust) {
-      for (const key of ['positive', 'negative']) {
-        houseOf[key] = houseEffects(records.map((r) => ({ t: ms(r.period_end), v: r[key], ag: r.agency })));
-      }
-    }
+    const houseOf = {};   // house effect는 아래 표로만 노출 — 추세선엔 미적용(원자료 그대로).
     const W = 960, H = 360, P = { l: 30, r: 64, t: 28, b: 22 };
     const tMin = Math.min(...records.map((r) => ms(r.period_end)));
     const tMax = Math.max(...records.map((r) => ms(r.period_end)));
@@ -169,7 +160,7 @@
   }
 
   // ===== ② 정당지지 =====
-  function renderPartySupport(polls, adjust) {
+  function renderPartySupport(polls) {
     // 개별 조사 점(전국) — party -> [{t,v,ag}]
     const byParty = {};
     for (const p of polls) {
@@ -185,7 +176,6 @@
     for (let [party, pts] of Object.entries(byParty)) {
       if (NON_PARTY.has(party)) continue;
       pts.sort((a, b) => a.t - b.t);
-      if (adjust) pts = applyHouse(pts, houseEffects(pts));
       // 주요 정당만 — 평활 추세 최고 ≥ 5% (단발 이상치 말고 추세 기준).
       const sm = kernelSmooth(pts, 30).flat();
       const peak = Math.max(...sm.map((p) => p.v), 0);
@@ -358,21 +348,17 @@
     }
 
     function renderAll() {
-      document.getElementById('tk-approval').innerHTML = renderApproval(recs, state.adjust);
-      document.getElementById('tk-party').innerHTML = renderPartySupport(polls, state.adjust);
+      document.getElementById('tk-approval').innerHTML = renderApproval(recs);
+      document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
-      const tag = state.adjust ? ' · house 보정' : '';
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
-      document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}${tag}`;
-      document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사${tag}`;
+      document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
+      document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
       document.getElementById('tk-cand-meta').textContent = `다자대결 기준 · 대선 국면`;
       ['tk-approval', 'tk-party', 'tk-cand'].forEach(attachHover);
     }
     renderAll();
     renderLeanTable(recs, polls);
-
-    const tg = document.getElementById('tk-adjust');
-    if (tg) tg.addEventListener('change', () => { state.adjust = tg.checked; renderAll(); });
     document.getElementById('tk-loading')?.remove();
   }
 
