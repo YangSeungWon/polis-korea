@@ -522,6 +522,9 @@
   border-bottom: 1px dashed var(--rule);
 }
 .ar-sc-row:last-child { border-bottom: none; }
+/* 직위 행 바로 아래 자기 '기타' 줄이 오면 그 사이 점선 제거 — 직위+기타를 한 묶음으로(구분선은 기타 줄 아래에). */
+.ar-sc-row:has(+ .ar-sc-other:not([hidden])) { border-bottom: none; }
+.ar-sc-other:last-child { border-bottom: none; }
 .ar-sc-head, .ar-sc-foot { font-weight: 800; padding: 8px 0; border-bottom: 2px solid var(--rule-strong); }
 .ar-sc-foot { border-top: 2px solid var(--rule-strong); border-bottom: none; padding-top: 12px; }
 .ar-sc-num { font-size: 22px; font-weight: 800; }
