@@ -89,6 +89,17 @@ NEC 국가선거정보 개방포털의 **Linked Open Data**. OpenAPI(당선인·
 - **회수**: `NEC_LOD_COOKIE='...' python scripts/fetch/fetch_lod_assembly.py` (curl 경유 — urllib은 500).
 - **정당명 시대차**: LOD 지역구명 ≠ 기존 nation total명일 때 합산 분리됨(예: 15대 통합민주당↔민주당)
   → 스크립트 `PARTY_ALIAS`로 정규화.
+- **당선 판정**: `?c rdf:type neco:WinCandidate`(권위 플래그) 사용. '최다 득표'로 하면 재선거·
+  중복행 때문에 공식과 어긋남(14·15·16 모두 WinCandidate로 공식 의석 정확 일치).
+
+## info.nec 역대 당선인명부 (report.xhtml) — LOD가 못 미치는 더 옛 회차
+
+LOD 후보 데이터는 14대(1992)~. **13대(1988) 이하**는 `info.nec.go.kr/electioninfo/electionInfo_report.xhtml`
+(역대 당선인명부, **제헌 1948~**)에서 회수. `scripts/fetch/fetch_report_assembly.mjs`(Playwright):
+showDocument EPEI01 세션 → 폼 select JS value+change cascade → report.xhtml POST(statementId=EPEI01_#1,
+electionType=2, electionName=YYYYMMDD, electionCode=2, cityCode=시도) → 9컬럼 표. **당선자만**(승자지도·의석 O,
+scatter X). 13대 지역구 224명 회수(민정87·평민54·통민46·공화27·무소속9·한겨레1) + 전국구는 공식값
+주입(민정38·평민16·통민13·공화8=75) → 총 299 정확. → **13~22대 총선 의석 분리 완성.**
 
 ## 수집 스크립트 (`scripts/`)
 
