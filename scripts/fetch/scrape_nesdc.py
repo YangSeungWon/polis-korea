@@ -10,6 +10,7 @@ VT026 = 제9회 전국동시지방선거 (2026-06-03).
 from __future__ import annotations
 import argparse
 import csv
+import json
 import re
 import sys
 import time
@@ -297,30 +298,37 @@ def load_existing_ids(csv_path: Path) -> set[str]:
         return {row["ntt_id"] for row in csv.DictReader(f)}
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--max-pages", type=int, default=None, help="목록 페이지 상한 (테스트용)")
-    ap.add_argument("--limit", type=int, default=None, help="신규 처리 건수 상한 (테스트용)")
-    ap.add_argument("--skip-pdf", action="store_true", help="PDF 다운로드 생략")
-    ap.add_argument("--all-pdf", action="store_true",
-                    help="결과 PDF뿐 아니라 질문지 PDF도 전부 다운로드")
-    ap.add_argument("--delay", type=float, default=1.5,
-                    help="요청 간 지연 초 (default 1.5, DOS 방지)")
-    ap.add_argument("--pdf-delay", type=float, default=0.8, help="PDF 다운로드 간격")
-    ap.add_argument("--stop-after-known-pages", type=int, default=0,
-                    help="마지막 신규 이후 N페이지 연속 기존이면 조기 종료(증분용·0=전체 순회)")
-    ap.add_argument("--gubun", default=POLL_GUBUN_9TH_LOCAL,
-                    help="선거구분 코드 (VT026=9회지선, VT039=2026재보궐)")
-    ap.add_argument("--csv", default=str(CSV_PATH), help="출력 CSV 경로")
-    args = ap.parse_args()
+ELECTIONS_DIR = ROOT / "data" / "elections"
 
-    csv_path = Path(args.csv)
 
+def load_active_targets() -> list[tuple[str, Path, str]]:
+    """data/elections/index.json의 active 선거들 → [(gubun, csv_path, id)].
+    각 메타의 nesdc.{gubun,csv}에서 읽음 — 워크플로가 선거별 코드를 하드코딩 안 하게.
+    NESDC 미개설(gubun/csv 미설정) 선거는 경고 후 skip."""
+    idx = json.loads((ELECTIONS_DIR / "index.json").read_text(encoding="utf-8"))
+    targets = []
+    for eid in idx.get("active", []):
+        meta_path = ELECTIONS_DIR / f"{eid}.json"
+        if not meta_path.exists():
+            print(f"  ! active '{eid}': 메타 파일 없음 — skip", file=sys.stderr)
+            continue
+        n = json.loads(meta_path.read_text(encoding="utf-8")).get("nesdc") or {}
+        gubun, csv_rel = n.get("gubun"), n.get("csv")
+        if not (gubun and csv_rel):
+            print(f"  ! active '{eid}': nesdc.gubun/csv 미설정 — skip (NESDC 미개설?)",
+                  file=sys.stderr)
+            continue
+        targets.append((gubun, ROOT / csv_rel, eid))
+    return targets
+
+
+def scrape_one(gubun: str, csv_path: Path, args) -> None:
+    """단일 (gubun, csv) 스크랩 — 목록 순회 → 상세·PDF → CSV append."""
     PDF_DIR.mkdir(parents=True, exist_ok=True)
     RAW.mkdir(parents=True, exist_ok=True)
 
     existing = load_existing_ids(csv_path)
-    print(f"기존 CSV: {len(existing)}건 / gubun={args.gubun}", file=sys.stderr)
+    print(f"기존 CSV: {len(existing)}건 / gubun={gubun}", file=sys.stderr)
 
     # 신규 nttId 수집 (목록 순회). 목록은 최신순(pageIndex=1=최신)이라 신규는 앞쪽에 몰림.
     # --stop-after-known-pages N: 마지막 신규 이후 N페이지 연속 전부 기존이면 조기 종료
@@ -328,7 +336,7 @@ def main():
     list_rows = []
     last_new_page = 1
     for row, page, total in list_iter(
-        args.gubun, max_pages=args.max_pages, delay=args.delay
+        gubun, max_pages=args.max_pages, delay=args.delay
     ):
         if args.stop_after_known_pages and page - last_new_page >= args.stop_after_known_pages:
             print(f"  조기종료: {page}p까지 {args.stop_after_known_pages}p 연속 기존 — 중단", file=sys.stderr)
@@ -414,6 +422,39 @@ def main():
                     print(f"  ntt={nid} PDF {len(saved)}개", file=sys.stderr)
 
     print("완료", file=sys.stderr)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max-pages", type=int, default=None, help="목록 페이지 상한 (테스트용)")
+    ap.add_argument("--limit", type=int, default=None, help="신규 처리 건수 상한 (테스트용)")
+    ap.add_argument("--skip-pdf", action="store_true", help="PDF 다운로드 생략")
+    ap.add_argument("--all-pdf", action="store_true",
+                    help="결과 PDF뿐 아니라 질문지 PDF도 전부 다운로드")
+    ap.add_argument("--delay", type=float, default=1.5,
+                    help="요청 간 지연 초 (default 1.5, DOS 방지)")
+    ap.add_argument("--pdf-delay", type=float, default=0.8, help="PDF 다운로드 간격")
+    ap.add_argument("--stop-after-known-pages", type=int, default=0,
+                    help="마지막 신규 이후 N페이지 연속 기존이면 조기 종료(증분용·0=전체 순회)")
+    ap.add_argument("--active", action="store_true",
+                    help="elections/index.json의 active 선거들 gubun·csv 자동 순회(daily용·"
+                         "선거 코드 하드코딩 제거)")
+    ap.add_argument("--gubun", default=POLL_GUBUN_9TH_LOCAL,
+                    help="선거구분 코드 (VT026=9회지선, VT039=2026재보궐). --active면 무시")
+    ap.add_argument("--csv", default=str(CSV_PATH), help="출력 CSV 경로. --active면 무시")
+    args = ap.parse_args()
+
+    if args.active:
+        targets = load_active_targets()
+        if not targets:
+            print("active 선거 중 NESDC 설정(gubun/csv)된 게 없음 — 종료", file=sys.stderr)
+            return
+        print(f"active 선거 {len(targets)}개: {', '.join(t[2] for t in targets)}", file=sys.stderr)
+        for gubun, csv_path, eid in targets:
+            print(f"\n=== {eid} (gubun={gubun}) → {csv_path.name} ===", file=sys.stderr)
+            scrape_one(gubun, csv_path, args)
+    else:
+        scrape_one(args.gubun, Path(args.csv), args)
 
 
 if __name__ == "__main__":

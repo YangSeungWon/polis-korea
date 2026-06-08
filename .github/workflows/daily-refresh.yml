@@ -68,8 +68,8 @@ jobs:
           NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
         run: |
           set -e
-          echo "=== 1. scrape_nesdc ==="
-          python scripts/fetch/scrape_nesdc.py
+          echo "=== 1. scrape_nesdc (active 선거 gubun 자동 — 메타에서 읽음) ==="
+          python scripts/fetch/scrape_nesdc.py --active --stop-after-known-pages 3
           echo "=== 2. refresh_pending_pdfs ==="
           python scripts/fetch/refresh_pending_pdfs.py
           echo "=== 3. parse_pdf (신규만) ==="
