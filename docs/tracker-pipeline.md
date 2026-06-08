@@ -96,6 +96,13 @@ records.sort(...)
 
 → Release 복원/체크포인트 불필요. cold run도 "신규만" → 수 분.
 
+추가로 `scrape_nesdc --stop-after-known-pages 3`: 목록은 최신순이라 신규는 앞쪽에
+몰림 → 마지막 신규 이후 3p 연속 기존이면 **조기 종료**. 이게 없으면 신규 0건이어도
+매주 전체 ~260p를 페이징(~20분). 적용 후 scrape는 ~40초. (daily는 기본 0=전체 순회.)
+`refresh_pending_pdfs --csv …etc.csv --max-days 14`: 목록 먼저·PDF 나중 첨부 패턴 회수
+(9회 전용이던 걸 `--csv` 인자화). 검증된 1회 run: 총 ~1분 42초(scrape 42s·pending 36s·
+extract 2s).
+
 > **NESDC 늦은 PDF 첨부**: 폴 목록(메타)은 먼저 등록되고 결과표 PDF는 며칠 뒤
 > 붙는 경우가 많다(주간집계 등). 그래서 `scrape` 직후엔 PDF가 없어 추출 0건일 수
 > 있고, `refresh_pending_pdfs`(최근 30일 pending 재시도)가 다음 run에서 회수한다.
