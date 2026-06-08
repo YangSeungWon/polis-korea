@@ -91,29 +91,41 @@
       .filter((r) => r.t >= 1)
       .sort((a, b) => b.t - a.t || b.pr - a.pr);
     if (!rows.length) return;
-    // 비례 의석 배분이 데이터에 있는 회차(22대~)만 비례/계 열 표시. 이전은 지역구만(비례는 득표율만 존재).
+    // 데이터 체제별 3모드:
+    //  split  지역구·비례 둘 다 (17대~)  → 정당/지역구/비례/계
+    //  dist   지역구만, 비례 의석 없음    → 정당/지역구 당선
+    //  total  지역구 없음, 정당 총합만(13~16대) → 정당/의석
+    const hasDist = rows.some((r) => r.d > 0);
     const hasProp = rows.some((r) => r.pr > 0);
+    const mode = hasDist && hasProp ? 'split' : (hasDist ? 'dist' : 'total');
     const sumD = rows.reduce((s, r) => s + r.d, 0);
     const sumP = rows.reduce((s, r) => s + r.pr, 0);
     const grand = rows.reduce((s, r) => s + r.t, 0);
-    const head = hasProp
-      ? '<span></span><span>정당</span><span>지역구</span><span>비례</span><span>계</span>'
-      : '<span></span><span>정당</span><span>지역구 당선</span>';
-    const cells = (r) => hasProp
-      ? `<span class="ar-parl-n">${r.d || '·'}</span><span class="ar-parl-n">${r.pr || '·'}</span><span class="ar-parl-n ar-parl-tot">${r.t}</span>`
-      : `<span class="ar-parl-n ar-parl-tot">${r.d}</span>`;
-    const foot = hasProp
-      ? `<span class="ar-parl-n">${sumD}</span><span class="ar-parl-n">${sumP}</span><span class="ar-parl-n ar-parl-tot">${grand}</span>`
-      : `<span class="ar-parl-n ar-parl-tot">${sumD}</span>`;
+    let head, cells, foot, note = '';
+    if (mode === 'split') {
+      head = '<span></span><span>정당</span><span>지역구</span><span>비례</span><span>계</span>';
+      cells = (r) => `<span class="ar-parl-n">${r.d || '·'}</span><span class="ar-parl-n">${r.pr || '·'}</span><span class="ar-parl-n ar-parl-tot">${r.t}</span>`;
+      foot = `<span class="ar-parl-n">${sumD}</span><span class="ar-parl-n">${sumP}</span><span class="ar-parl-n ar-parl-tot">${grand}</span>`;
+    } else if (mode === 'dist') {
+      head = '<span></span><span>정당</span><span>지역구 당선</span>';
+      cells = (r) => `<span class="ar-parl-n ar-parl-tot">${r.d}</span>`;
+      foot = `<span class="ar-parl-n ar-parl-tot">${sumD}</span>`;
+      note = '비례대표는 정당 득표율만 기록 — 의석 배분 미집계. 지역구 당선만 표시.';
+    } else {
+      head = '<span></span><span>정당</span><span>의석</span>';
+      cells = (r) => `<span class="ar-parl-n ar-parl-tot">${r.t}</span>`;
+      foot = `<span class="ar-parl-n ar-parl-tot">${grand}</span>`;
+      note = '정당별 총 의석만 기록 — 지역구·비례(전국구) 미분리.';
+    }
     const table = document.getElementById('ar-parliament-table');
-    table.innerHTML = `<div class="ar-parl-table${hasProp ? '' : ' two-col'}">
+    table.innerHTML = `<div class="ar-parl-table${mode === 'split' ? '' : ' two-col'}">
       <div class="ar-parl-thead">${head}</div>
       ${rows.map((r) => `<div class="ar-parl-trow">
         <span class="ar-parl-swatch" style="background:${pcol(r.p)}"></span>
         <span class="ar-parl-name">${r.p}</span>${cells(r)}
       </div>`).join('')}
       <div class="ar-parl-trow ar-parl-foot"><span></span><span class="ar-parl-name">합계</span>${foot}</div>
-    </div>${hasProp ? '' : '<p class="ar-parl-note">비례대표는 정당 득표율만 기록 — 의석 배분 미집계. 지역구 당선만 표시.</p>'}`;
+    </div>${note ? `<p class="ar-parl-note">${note}</p>` : ''}`;
     document.getElementById('ar-parliament').hidden = false;
   }
 
