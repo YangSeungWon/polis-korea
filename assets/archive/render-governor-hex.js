@@ -13,26 +13,18 @@
     return pts.join(' ');
   }
 
-  // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 시도 hex 재사용(지선·대선 공용).
-  function init(ctx, opts) {
-    const tc = (opts && opts.tc) || '3';
-    const hostId = (opts && opts.hostId) || 'ar-governor-hex';
-    const host = document.getElementById(hostId);
+  // 시도 hex 그리기 (host 엘리먼트 + races). sidoView가 호출.
+  function draw(host, races) {
     if (!host) return;
     if (typeof SIDO_HEX_LAYOUT !== 'object') return;
-    const races = (ctx?.results?.races || []).filter(
-      (r) => r.scope === 'sido' && r.sg_typecode === tc
-    );
-    if (!races.length) {
-      host.parentElement?.setAttribute('hidden', '');
-      return;
-    }
-    host.parentElement?.removeAttribute('hidden');
-    // sido alias: 강원도/강원특별자치도, 전라북도/전북특별자치도 양방향
+    // 강원/전북 특별자치도 → 레이아웃 옛 명칭으로 정규화
+    const norm = (n) => (n || '')
+      .replace('강원특별자치도', '강원도')
+      .replace('전북특별자치도', '전라북도');
     const bySido = {};
     for (const r of races) {
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) bySido[r.sido] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
+      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
     }
 
     const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
@@ -105,6 +97,23 @@
     host.appendChild(svg);
   }
 
+  // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).
+  function init(ctx, opts) {
+    const tc = (opts && opts.tc) || '3';
+    const hostId = (opts && opts.hostId) || 'ar-governor-hex';
+    const host = document.getElementById(hostId);
+    if (!host) return;
+    const races = (ctx?.results?.races || []).filter(
+      (r) => r.scope === 'sido' && r.sg_typecode === tc
+    );
+    if (!races.length) {
+      host.parentElement?.setAttribute('hidden', '');
+      return;
+    }
+    host.parentElement?.removeAttribute('hidden');
+    draw(host, races);
+  }
+
   window.Archive = window.Archive || {};
-  window.Archive.governorHex = { init };
+  window.Archive.governorHex = { init, draw };
 })();

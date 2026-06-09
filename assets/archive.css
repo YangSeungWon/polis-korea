@@ -696,6 +696,17 @@
 .gov-hex-label.no-data { fill: var(--ink-soft); }
 .gov-hex-name { fill: var(--bg); text-anchor: middle; pointer-events: none; }
 .gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
+/* 시도 헥스/지도 토글 */
+.ar-sido-toggle { display: flex; justify-content: center; margin: 0 0 14px; }
+.ar-sido-tab { font: inherit; font-size: 13px; line-height: 1; padding: 6px 18px; border: 1px solid var(--rule-strong); background: var(--bg); color: var(--ink-soft); cursor: pointer; }
+.ar-sido-tab:first-child { border-radius: 6px 0 0 6px; }
+.ar-sido-tab:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+.ar-sido-tab.is-active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.ar-sido-view { width: 100%; }
+.sido-map-svg { width: 100%; height: auto; max-width: 520px; display: block; margin: 0 auto; }
+.sido-map-region { stroke: var(--bg); stroke-width: 0.8; }
+.sido-map-region.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
+.sido-map-label { fill: #fff; font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(0,0,0,0.55); stroke-width: 2.6px; stroke-linejoin: round; }
 .metro-hex-label { fill: var(--ink); }
 .council-hex-sido-label { fill: var(--ink); opacity: 0.35; }
 

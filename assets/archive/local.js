@@ -469,7 +469,8 @@
       // → archive는 선출직 분포·출구조사·재보궐·폴 link만 표시
       renderHero(ctx);
       renderOffices(ctx);
-      if (window.Archive.governorHex) await window.Archive.governorHex.init(ctx);
+      if (window.Archive.sidoView) await window.Archive.sidoView.init(ctx);
+      else if (window.Archive.governorHex) await window.Archive.governorHex.init(ctx);
       if (window.Archive.metroHex) await window.Archive.metroHex.init(ctx);
       if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
       if (window.Archive.winners) await window.Archive.winners.init(ctx);
