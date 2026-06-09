@@ -47,8 +47,8 @@ function renderHistoryLegend() {
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
-  // 지도 view 지원 회차 — 21·22(OhmyNews) + 18·19·20(SGIS 읍면동 복원).
-  const GEO_GENERAL = [18, 19, 20, 21, 22];
+  // 지도 view 지원 회차 — 21·22(OhmyNews) + 17·18·19·20(SGIS 읍면동 복원).
+  const GEO_GENERAL = [17, 18, 19, 20, 21, 22];
   const geoSupported = state.type === 'national_assembly' && GEO_GENERAL.includes(state.n);
   // 요소 누락(캐시된 옛 HTML 등)에도 깨지지 않게 null guard
   const toggle = (sel, hide) => { const el = $(sel); if (el) el.toggleAttribute('hidden', hide); };

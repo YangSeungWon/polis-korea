@@ -30,6 +30,10 @@ CFG = {
              # 선거시점(2016-02) 경계 — SGIS 2016-4Q가 재코딩한 동(부천 구폐지) fallback
              fallback=ROOT / "data/raw/admdongkor/hangjeongdong_20160201.geojson",
              results=ROOT / "data/results/national_assembly_20.json"),
+    17: dict(mode="nec_emd", year=2004,
+             emd=ROOT / "data/raw/nec/district_emd_17.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2004/bnd_dong_00_2004.shp",
+             results=ROOT / "data/results/national_assembly_17.json"),
     19: dict(mode="nec_emd", year=2012,
              emd=ROOT / "data/raw/nec/district_emd_19.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_2012/bnd_dong_00_2012.shp",
