@@ -13,12 +13,15 @@
     return pts.join(' ');
   }
 
-  function init(ctx) {
-    const host = document.getElementById('ar-governor-hex');
+  // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 시도 hex 재사용(지선·대선 공용).
+  function init(ctx, opts) {
+    const tc = (opts && opts.tc) || '3';
+    const hostId = (opts && opts.hostId) || 'ar-governor-hex';
+    const host = document.getElementById(hostId);
     if (!host) return;
     if (typeof SIDO_HEX_LAYOUT !== 'object') return;
     const races = (ctx?.results?.races || []).filter(
-      (r) => r.scope === 'sido' && r.sg_typecode === '3'
+      (r) => r.scope === 'sido' && r.sg_typecode === tc
     );
     if (!races.length) {
       host.parentElement?.setAttribute('hidden', '');

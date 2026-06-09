@@ -219,6 +219,10 @@
     render(ctx) {
       // 시도별 결과 grid·여론조사 추이는 /history.html에서 시각화로 더 강력
       renderHero(ctx);
+      // 시도 hex 지도(시도 race 있을 때 — 직선 대선). governor-hex 렌더러 재사용(tc=1).
+      if (window.Archive.governorHex) {
+        window.Archive.governorHex.init(ctx, { tc: ctx.sgTypecode, hostId: 'ar-pres-sido-hex' });
+      }
       renderNation(ctx);
       renderExitPoll(ctx);
     },

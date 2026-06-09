@@ -332,6 +332,12 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
 """
 
 SECTIONS_PRES = HISTORY_LINK_PRES + """
+  <section class="ar-section" id="ar-pres-sido-hex-section" hidden>
+    <h2 class="ar-section-title">시도별 결과</h2>
+    <p class="ar-source-line">17개 시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <div class="ar-governor-hex" id="ar-pres-sido-hex"></div>
+  </section>
+
   <section class="ar-section" id="ar-nation" hidden>
     <h2 class="ar-section-title">전국 결과</h2>
     <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템 ↗</a></p>
