@@ -337,6 +337,43 @@ def main(n: int):
             if nfb:
                 print(f"시군구 폴백 복원: {nfb}개 선거구", file=sys.stderr)
 
+        # Pass 5: 잔여 미배정 SGIS 동 → 기하 인접 선거구 흡수.
+        # NEC 투표구별(VCCP08)이 SGIS 동보다 적은 회차(18·19대 등)는 매칭 안 된 SGIS 동이
+        # 흰 구멍으로 남음. 각 미배정 동을, 경계를 가장 길게 공유하는 인접 배정-동의 선거구로
+        # 흡수(선거구는 연속이라 내부 미배정 동은 둘러싼 선거구 1개로 귀속). 여러 라운드 반복.
+        from shapely.strtree import STRtree
+        cd_to_key = {}
+        for k, cds in district_cds.items():
+            for c in cds:
+                cd_to_key[c] = k
+        unassigned = [c for c in geom_by_cd if c not in cd_to_key]
+        infilled = 0
+        for _rnd in range(8):
+            if not unassigned:
+                break
+            a_cds = [c for c in cd_to_key if c in geom_by_cd]
+            a_geoms = [geom_by_cd[c] for c in a_cds]
+            tree = STRtree(a_geoms)
+            newly, still = {}, []
+            for c in unassigned:
+                g = geom_by_cd[c]
+                best_k, best_len = None, 0.0
+                for j in tree.query(g.buffer(1)):
+                    inter = g.boundary.intersection(a_geoms[int(j)].boundary)
+                    ln = 0.0 if inter.is_empty else inter.length
+                    if ln > best_len:
+                        best_len, best_k = ln, cd_to_key[a_cds[int(j)]]
+                (newly.__setitem__(c, best_k) if best_k else still.append(c))
+            if not newly:
+                break
+            for c, k in newly.items():
+                district_cds[k].add(c)
+                cd_to_key[c] = k
+            infilled += len(newly)
+            unassigned = still
+        if infilled:
+            print(f"기하 인접 흡수: {infilled}개 동 (잔여 {len(unassigned)})", file=sys.stderr)
+
     # 4) 선거구별 union
     features = []
     name_to_code = {}
