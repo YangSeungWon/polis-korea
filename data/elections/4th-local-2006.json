@@ -7,18 +7,33 @@
   "date": "2006-05-31",
   "status": "archive",
   "nec": {
-    "_note": "NEC 당선인명부 — 광역단체장(시도지사) 당선자"
+    "_note": "NEC 당선인명부 — 단체장·지역구의원(한자명 포함)"
   },
   "offices": [
     {
       "level": "광역단체장",
       "sg_typecode": "3",
       "scope": "sido"
+    },
+    {
+      "level": "기초단체장",
+      "sg_typecode": "4",
+      "scope": "sigungu"
+    },
+    {
+      "level": "광역의원",
+      "sg_typecode": "5",
+      "scope": "district"
+    },
+    {
+      "level": "기초의원",
+      "sg_typecode": "6",
+      "scope": "district"
     }
   ],
   "results_file": "data/results/4th-local-2006.json",
-  "_source_note": "한나라당 광역 석권 — 열린우리당 참패",
-  "_data_caveat": "광역단체장만 회수(기초장·광역/기초의원 미수집 — 추후).",
+  "_source_note": "한나라당 석권 — 기초의원 정당공천·중선거구 도입",
+  "_data_caveat": "비례대표(광역·기초) 미반영 — 단체장·지역구의원만(당선자 기준).",
   "archive": {
     "page": "/archive/4th-local-2006/",
     "results_path": "data/results/4th-local-2006.json",
@@ -28,7 +43,7 @@
     "sg_typecode": "3",
     "proportional_sg_typecode": "8",
     "list_label": "확정",
-    "context_note": "한나라당 광역 석권 — 열린우리당 참패 — 광역단체장 한나라당 12 · 민주당 2 · 열린우리당 1 · 무소속 1",
-    "data_source_note": "NEC 당선인명부 — 광역단체장. 기초장·의원은 추후 수집."
+    "context_note": "한나라당 석권 — 기초의원 정당공천·중선거구 도입 — 광역단체장 한나라당 12 · 민주당 2 · 열린우리당 1",
+    "data_source_note": "NEC 당선인명부 — 단체장·지역구의원(비례 미반영)."
   }
 }
