@@ -10,8 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "data" / "results"
 
-# n → 아카이브 id. 9~12대는 중선거구(1구 2인) → winners 리스트로 다중 당선 보존.
-IDS = {9: "9th-general-1973", 10: "10th-general-1978",
+# n → 아카이브 id. 9~12대 중선거구(1구 2인) → winners[]. 5~8대 소선거구(시군구 union용).
+IDS = {5: "5th-general-1960", 6: "6th-general-1963", 7: "7th-general-1967", 8: "8th-general-1971",
+       9: "9th-general-1973", 10: "10th-general-1978",
        11: "11th-general-1981", 12: "12th-general-1985",
        13: "13th-general-1988", 14: "14th-general-1992",
        15: "15th-general-1996", 16: "16th-general-2000"}
