@@ -1,0 +1,21 @@
+복원 선거구 경계 (district_20_geojson.json 등) — 출처·라이선스
+================================================================
+
+생성: 읍면동 경계를 선거구별로 union (scripts/build/build_district_geojson.py).
+
+원천 데이터 (자유 이용 · 출처 표시 의무):
+  1. 통계청 SGIS(통계지리정보서비스, sgis.kostat.go.kr) — 센서스용 행정구역경계(읍면동)
+     · 연도별 경계(1975~). 좌표 UTM-K(EPSG:5179) → WGS84 재투영.
+     · 이용조건: "제공 자료 출처 명시". 공공데이터법 3조, 영리 이용 가능.
+  2. vuski/admdongkor (https://github.com/vuski/admdongkor)
+     · 선관위 동이름↔통계청 adm_cd 매칭표, 재코딩 동(부천 구폐지 등) fallback 경계.
+     · SGIS 경계 기반 수정본. 자유 이용, 주소 표시 권장.
+  3. WWolf/korea-election (https://github.com/WWolf/korea-election)
+     · 읍면동→선거구 매핑 (20대: 2016general_cand_full.tsv).
+
+사이트 표기: "선거구 경계 — 통계청 SGIS · vuski/admdongkor · WWolf/korea-election 기반 재구성".
+
+회차별:
+  20대(2016) — SGIS 2016 + WWolf 2016 + admdongkor 2016-02 fallback. 252/253 (통영시고성군 제외).
+  19·18대 — SGIS 2012·2008 + NEC VCCP08(선거구→동) 예정.
+  21·22대 — 별도 (OhmyNews GeoJSON, district_2X_geojson.LICENSE 참조).
