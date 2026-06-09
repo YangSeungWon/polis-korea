@@ -347,7 +347,7 @@ def main(n: int):
             for c in cds:
                 cd_to_key[c] = k
         unassigned = [c for c in geom_by_cd if c not in cd_to_key]
-        infilled = 0
+        infilled = cross_sgg = 0
         for _rnd in range(8):
             if not unassigned:
                 break
@@ -357,13 +357,26 @@ def main(n: int):
             newly, still = {}, []
             for c in unassigned:
                 g = geom_by_cd[c]
-                best_k, best_len = None, 0.0
+                sgg = c[:4]
+                # 같은 시군구(code[:4]) 선거구 우선 — 교차 시군구로 번지는 오배정 차단.
+                # 같은 시군구 후보가 없을 때만 인접 시군구로(드묾·통째 미매칭 군). 둘 다 공유경계 최장.
+                same = (None, 0.0); other = (None, 0.0)
                 for j in tree.query(g.buffer(1)):
+                    ac = a_cds[int(j)]
                     inter = g.boundary.intersection(a_geoms[int(j)].boundary)
                     ln = 0.0 if inter.is_empty else inter.length
-                    if ln > best_len:
-                        best_len, best_k = ln, cd_to_key[a_cds[int(j)]]
-                (newly.__setitem__(c, best_k) if best_k else still.append(c))
+                    if ln <= 0:
+                        continue
+                    if ac[:4] == sgg:
+                        if ln > same[1]: same = (cd_to_key[ac], ln)
+                    elif ln > other[1]:
+                        other = (cd_to_key[ac], ln)
+                if same[0]:
+                    newly[c] = same[0]
+                elif other[0]:
+                    newly[c] = other[0]; cross_sgg += 1   # 같은 시군구 배정-동 없음 → 교차(불확실)
+                else:
+                    still.append(c)
             if not newly:
                 break
             for c, k in newly.items():
@@ -372,7 +385,7 @@ def main(n: int):
             infilled += len(newly)
             unassigned = still
         if infilled:
-            print(f"기하 인접 흡수: {infilled}개 동 (잔여 {len(unassigned)})", file=sys.stderr)
+            print(f"기하 인접 흡수: {infilled}개 동 (같은시군구 {infilled-cross_sgg}·교차 {cross_sgg}·잔여 {len(unassigned)})", file=sys.stderr)
 
     # 4) 선거구별 union
     features = []
