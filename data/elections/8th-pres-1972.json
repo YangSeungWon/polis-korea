@@ -1,0 +1,32 @@
+{
+  "id": "8th-pres-1972",
+  "name": "제8대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 8,
+  "date": "1972-12-23",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 당선인명부 — 간선 당선자"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/8th-pres-1972.json",
+  "_source_note": "[간선] 통일주체국민회의 간선 (유신헌법) — 유신체제 첫 대선 — 통일주체국민회의 대의원 2,359인이 단일후보 찬반 투표",
+  "archive": {
+    "page": "/archive/8th-pres-1972/",
+    "results_path": "data/results/8th-pres-1972.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "1",
+    "list_label": "간선",
+    "context_note": "[통일주체국민회의 간선 (유신헌법)] 유신체제 첫 대선 — 통일주체국민회의 대의원 2,359인이 단일후보 찬반 투표",
+    "data_source_note": "간접선거 — 통일주체국민회의 간선 (유신헌법). 시도별 직접투표 없음(당선자·득표 기준)."
+  }
+}

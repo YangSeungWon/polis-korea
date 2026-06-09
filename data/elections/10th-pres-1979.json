@@ -1,0 +1,32 @@
+{
+  "id": "10th-pres-1979",
+  "name": "제10대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 10,
+  "date": "1979-12-06",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 당선인명부 — 간선 당선자"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/10th-pres-1979.json",
+  "_source_note": "[간선] 통일주체국민회의 간선 — 10·26 박정희 시해 후 — 통일주체국민회의가 최규하 권한대행 선출",
+  "archive": {
+    "page": "/archive/10th-pres-1979/",
+    "results_path": "data/results/10th-pres-1979.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "1",
+    "list_label": "간선",
+    "context_note": "[통일주체국민회의 간선] 10·26 박정희 시해 후 — 통일주체국민회의가 최규하 권한대행 선출",
+    "data_source_note": "간접선거 — 통일주체국민회의 간선. 시도별 직접투표 없음(당선자·득표 기준)."
+  }
+}

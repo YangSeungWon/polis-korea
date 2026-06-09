@@ -1,0 +1,32 @@
+{
+  "id": "12th-pres-1981",
+  "name": "제12대 대통령선거",
+  "kind": "presidential",
+  "type": "pres",
+  "n": 12,
+  "date": "1981-02-25",
+  "status": "archive",
+  "nec": {
+    "_note": "NEC 당선인명부 — 간선 당선자"
+  },
+  "offices": [
+    {
+      "level": "대통령",
+      "sg_typecode": "1",
+      "scope": "nation"
+    }
+  ],
+  "results_file": "data/results/12th-pres-1981.json",
+  "_source_note": "[간선] 대통령선거인단 간선 — 신헌법 — 대통령선거인단 5,278인 투표, 전두환 90.2%(야당 3인 출마)",
+  "archive": {
+    "page": "/archive/12th-pres-1981/",
+    "results_path": "data/results/12th-pres-1981.json",
+    "polls_path": null,
+    "exit_poll_path": null,
+    "polls_window": null,
+    "sg_typecode": "1",
+    "list_label": "간선",
+    "context_note": "[대통령선거인단 간선] 신헌법 — 대통령선거인단 5,278인 투표, 전두환 90.2%(야당 3인 출마)",
+    "data_source_note": "간접선거 — 대통령선거인단 간선. 시도별 직접투표 없음(당선자·득표 기준)."
+  }
+}

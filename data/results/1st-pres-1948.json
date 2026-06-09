@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "source": "nec-당선인명부",
+    "is_final": true,
+    "election_date": "1948-07-20",
+    "indirect_election": "제헌국회 간접선거"
+  },
+  "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "전국",
+      "sigungu": "전국",
+      "scope": "nation",
+      "valid_votes": 195,
+      "candidates": [
+        {
+          "name": "이승만",
+          "party": "대한독립촉성국민회",
+          "votes": 180,
+          "pct": 92.31,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "김구",
+          "party": "한국독립당",
+          "votes": 13,
+          "pct": 6.67,
+          "rank": 2,
+          "won": false
+        },
+        {
+          "name": "안재홍",
+          "party": "무소속",
+          "votes": 2,
+          "pct": 1.03,
+          "rank": 3,
+          "won": false
+        }
+      ],
+      "_indirect": "제헌국회 간접선거"
+    }
+  ]
+}

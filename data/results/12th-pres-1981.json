@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "source": "nec-당선인명부",
+    "is_final": true,
+    "election_date": "1981-02-25",
+    "indirect_election": "대통령선거인단 간선"
+  },
+  "races": [
+    {
+      "sg_typecode": "1",
+      "sido": "전국",
+      "sigungu": "전국",
+      "scope": "nation",
+      "valid_votes": 5270,
+      "candidates": [
+        {
+          "name": "전두환",
+          "party": "민주정의당",
+          "votes": 4755,
+          "pct": 90.23,
+          "rank": 1,
+          "won": true
+        },
+        {
+          "name": "유치송",
+          "party": "민주한국당",
+          "votes": 404,
+          "pct": 7.67,
+          "rank": 2,
+          "won": false
+        },
+        {
+          "name": "김종철",
+          "party": "한국국민당",
+          "votes": 85,
+          "pct": 1.61,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "김의택",
+          "party": "민권당",
+          "votes": 26,
+          "pct": 0.49,
+          "rank": 4,
+          "won": false
+        }
+      ],
+      "_indirect": "대통령선거인단 간선"
+    }
+  ]
+}
