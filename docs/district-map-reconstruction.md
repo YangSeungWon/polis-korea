@@ -73,6 +73,14 @@ VCCP08 동-레벨이 9대부터. 5~8대는 시군구-union만 가능(농촌·통
   인접 시군구 최소거리 병합. 4~6회 제주/세종 회색 = 기초단체장 없음(제주특별자치도 2006·세종)으로 정확.
 - html script 태그 변경 시 `build_static.py` 재생성 필수(clean-URL 정적 페이지).
 
+## 대선 geo 지도 (margin 명도)
+대선은 전국 1명 당선이라 지역 1위 단색은 49:48을 압승처럼 호도 → **승자독식 단색 금지**(no-winner-take-all-pres).
+`renderPresGeoMap`/`_presStyleFor`: 1위 정당색을 격차(1위-2위 %p)/40으로 흰색쪽 보간(`_mixWhite`) —
+박빙=옅음·압승=원색(미국 purple-map). **16~20대만**(13~15대는 scope=nation 전국 합산만이라 지도 불가).
+회차→경계: 16→2002·17→2006·18→2013(세종 출범·당진시 승격 후)·19·20→2018. 경계가 시 단위(일반구 dissolve)여도
+resultForSigungu **reverse-merge**(시 경계→일반구/분구 데이터 집계, data.js line 155)로 대선 일반구 개표 집계.
+`build_sigungu_geojson_years.py`로 sigungu_2013도 생성(18대용). main.js `presGeoSupported`로 분기.
+
 ## 출처·라이선스
 통계청 SGIS(출처표시·영리가능) · NEC 개표현황(공개) · vuski/admdongkor · WWolf/korea-election ·
 OhmyNews(21·22, MIT). `data/geo/district_reconstructed.LICENSE` 참조.
