@@ -156,9 +156,23 @@ function adaptNewSchema(raw, type) {
     const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '7');
     const sidoProp = races.filter((r) => r.scope === 'sido' && r.sg_typecode === '7');
     out.national = nation ? _raceToOldNation(nation) : _aggSidoToNation(sidoProp);
-    // 비례 의석 — _meta.proportional_seats (NEC API fetch 결과를 새 schema에 백필)
+    // 비례 의석 — _meta 우선, 없으면 비례(7) race candidates의 proportional_seats 집계.
+    // (20대 등 새 schema는 nation tc7 candidates에 party별 proportional_seats가 들어있음)
     if (raw._meta?.proportional_seats) {
       out.national.proportional_seats = raw._meta.proportional_seats;
+    } else {
+      const seatMap = new Map();
+      const srcs = nation ? [nation] : sidoProp;
+      for (const r of srcs) {
+        for (const c of (r.candidates || [])) {
+          if ((c.proportional_seats || 0) > 0) {
+            seatMap.set(c.party, (seatMap.get(c.party) || 0) + c.proportional_seats);
+          }
+        }
+      }
+      if (seatMap.size) {
+        out.national.proportional_seats = [...seatMap.entries()].map(([party, seats]) => ({ party, seats }));
+      }
     }
     out.district = races.filter((r) => r.scope === 'district' && r.sg_typecode === '2')
                         .map(_raceToOldDistrict);

@@ -214,11 +214,12 @@ function renderDetail() {
       .map(([party, seats]) => ({ party, seats, color: partyColor(party) }))
       .sort((a, b) => b.seats - a.seats);
     const total = parties.reduce((s, p) => s + p.seats, 0);
-    const top = parties[0];
-    html += `<div class="national-summary" style="border-left-color:${top ? top.color : 'var(--ink)'}">
-      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국 의석</div>
-      <div class="ns-name" style="color:${top ? top.color : 'var(--ink)'}">${top ? top.party : '—'}</div>
-      <div class="ns-party">${top ? `${top.seats}석 / 총 ${total}석` : ''}</div>
+    // 비례대표 — geo 모드엔 hex의 비례 컬럼이 없으니 상세 패널에 표기.
+    const propSeats = [...(nat.proportional_seats || [])].sort((a, b) => (b.seats || 0) - (a.seats || 0));
+    const propTotal = propSeats.reduce((s, p) => s + (p.seats || 0), 0);
+    // 큰 정당 헤드라인(ns-name/ns-party)은 도넛 차트와 중복 → 제거. 제목+투표율만.
+    html += `<div class="national-summary">
+      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국 의석 (총 ${total}석)</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}
@@ -231,6 +232,12 @@ function renderDetail() {
           <span class="ps-dot" style="background:${p.color}"></span>${p.party} <b>${p.seats}</b>
         </span>`).join('')}
       </div>
+      ${propTotal ? `<div class="party-seats prop-seats">
+        <span class="prop-label">비례 ${propTotal}석 —</span>
+        ${propSeats.map((p) => `<span class="ps-item" title="${p.party} 비례 ${p.seats}석">
+          <span class="ps-dot" style="background:${partyColor(p.party)}"></span>${p.party} <b>${p.seats}</b>
+        </span>`).join('')}
+      </div>` : ''}
     </div>`;
   } else if (state.type === 'local') {
     // 지선 — 광역단체장·기초단체장·교육감 winner_party 카운트 (정당별 당선 곳 수)

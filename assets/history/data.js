@@ -163,10 +163,10 @@ function resultForSigungu(sido, name) {
   return null;
 }
 
-// 지역구 결과 (총선만)
+// 지역구 결과 (총선만). 양쪽 canonSido — geo 클릭이 저장한 raw '강원도'가 데이터 canon과 매칭.
 function resultForDistrict(sido, name) {
   if (!state.results?.district) return null;
-  return state.results.district.find((r) => canonSido(r.sido) === sido && r.name === name) || null;
+  return state.results.district.find((r) => canonSido(r.sido) === canonSido(sido) && r.name === name) || null;
 }
 
 // 시도 단위 합산 — 시군구 결과를 시도별 합산해서 1위 정당 결정

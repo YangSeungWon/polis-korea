@@ -121,6 +121,14 @@ function _mountSggGeo(geoData, infoFor, styleFor, labelFor) {
     onEachFeature: (f, l) => _attachLocalInteraction(f, l, infoFor(f.properties), labelFor(f.properties)),
   });
   localGeoLayer.addTo(geoLeafletMap);
+  // 선택 강조 재적용 (office/회차 전환 시 stale ref 제거 + 같은 지역 재강조)
+  _geoReapplySelection(localGeoLayer, (p) => {
+    const info = infoFor(p);
+    if (!info) return false;
+    return info.race.scope === 'sido'
+      ? (info.sido === state.selected?.sido && !state.selected?.name)
+      : (info.sido === state.selected?.sido && info.name === state.selected?.name);
+  });
 
   // 시도 외곽선 overlay
   if (!geoSidoOutlineLayer && state.geoSido) {
@@ -179,12 +187,13 @@ function _attachLocalInteraction(feature, layer, info, label) {
   }
   layer.bindTooltip(tip, { className: 'sigungu-tooltip', sticky: true, direction: 'auto' });
   if (info) {
-    layer.on('mouseover', () => layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }));
-    layer.on('mouseout', () => layer.setStyle({ weight: 0.6, color: 'rgba(10,14,26,0.35)' }));
+    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }); });
+    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
     layer.on('click', () => {
       state.selected = info.race.scope === 'sido'
         ? { sido: info.sido }
         : { sido: info.sido, name: info.name, kind: 'sigungu' };
+      _geoSelect(layer);
       renderDetail();
     });
   }

@@ -59,6 +59,29 @@ let geoDistrictByN = {};        // n → L.geoJSON layer (캐시, 재방문 시 
 let geoSidoOutlineLayer = null;
 let geoMiniMapCtrl = null;
 let geoInitialZoom = null;
+
+// === geo 선택 강조 (총선·지선·대선 공통) — 흰 테두리 + 글로우 + 최상위 ===
+let geoSelLayer = null;
+const _GEO_BASE = { weight: 0.6, color: 'rgba(10,14,26,0.35)' };
+function _geoDeselect() {
+  if (geoSelLayer) {
+    try { geoSelLayer.setStyle(_GEO_BASE); geoSelLayer._path?.classList.remove('geo-sel'); } catch {}
+    geoSelLayer = null;
+  }
+}
+function _geoSelect(layer) {
+  _geoDeselect();
+  layer.setStyle({ weight: 3, color: '#fff' });
+  layer._path?.classList.add('geo-sel');
+  layer.bringToFront();
+  geoSelLayer = layer;
+}
+// 회차/office 전환 등 layer 재생성 시 호출 — stale ref 제거 후, state.selected 있으면 재강조.
+function _geoReapplySelection(layerGroup, matchFn) {
+  geoSelLayer = null;
+  if (!state.selected || !layerGroup) return;
+  layerGroup.eachLayer((l) => { if (matchFn(l.feature?.properties)) _geoSelect(l); });
+}
 const KOREA_BOUNDS_GEO = [[32.5, 123.5], [39.5, 132.5]];
 
 // 중선거구(1구 2인) — 두 당선당 색의 대각 줄무늬 패턴. document 전역 <defs>에 lazy 생성.
@@ -110,10 +133,11 @@ function _attachDistrictInteraction(feature, layer, info, label) {
     { className: 'sigungu-tooltip', sticky: true, direction: 'auto' }
   );
   if (info) {
-    layer.on('mouseover', () => layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }));
-    layer.on('mouseout', () => layer.setStyle({ weight: 0.6, color: 'rgba(10,14,26,0.35)' }));
+    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }); });
+    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
     layer.on('click', () => {
       state.selected = { sido: info.race.sido, name: info.race.name, kind: 'district' };
+      _geoSelect(layer);
       renderDetail();
     });
   }
@@ -214,6 +238,11 @@ async function renderGeoMap() {
   }
   geoDistrictLayer = geoDistrictByN[n];
   geoDistrictLayer.addTo(geoLeafletMap);
+  // 선택 강조 재적용 (회차 전환 시 stale ref 제거 + 같은 선거구 재강조)
+  _geoReapplySelection(geoDistrictLayer, (p) => {
+    const info = sggToWinner[String(p?.SGG_Code)];
+    return info && info.race.sido === state.selected?.sido && info.race.name === state.selected?.name;
+  });
 
   // 시도 외곽선 overlay (한 번만 생성)
   if (!geoSidoOutlineLayer && state.geoSido) {

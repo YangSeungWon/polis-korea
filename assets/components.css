@@ -244,9 +244,14 @@
 /* 선택 셀 — 흰 테두리 + 글로우 halo. 권역(시도) 다크 경계선과 헷갈리지 않게 확연히 구분. */
 .hex-pane .hex-cell.is-selected {
   stroke: var(--bg);
-  stroke-width: 3;
+  stroke-width: 4;
   paint-order: stroke;
-  filter: drop-shadow(0 0 3.5px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 0 2px #0a0e1a) drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+}
+/* geo(지도) 선택 폴리곤 — 흰 테두리(setStyle) + 글로우. Leaflet path에 직접 클래스 부여. */
+.geo-sel {
+  paint-order: stroke;
+  filter: drop-shadow(0 0 2px #0a0e1a) drop-shadow(0 0 5px rgba(0, 0, 0, 0.55));
 }
 .hex-pane .hex-cell.no-data {
   fill: var(--bg2);
