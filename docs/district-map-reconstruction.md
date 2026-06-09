@@ -66,9 +66,11 @@ VCCP08 동-레벨이 9대부터. 5~8대는 시군구-union만 가능(농촌·통
 - **광역장/교육감(시도, `sido_simple`)**: 전 회차. 단 옛 지선은 광역장이 scope sido만이라
   adaptNewSchema가 offices.sigungu(scope sigungu 필터)에서 누락 → fallback(시군구 breakdown 없으면
   scope-sido 행)으로 1~4회 복원. resultForSido는 양쪽 canonSido 정규화.
-- **기초장(시군구, `sigungu_simple` base_year 2018)**: 7~9회만 게이트(LOCAL_SGG_GEO_ROUNDS).
-  옛 회차(1~6회)는 통합전 시군구(마산·진해·여천·청원…)라 현재 경계로 못 그림 → **회차별 SGIS 시군구 경계
-  복원이 후속 과제**(bnd_sigungu 1995/2000/2002/2006/2010/2014, 총선 sgg_fallback과 동일 소스). 그 전엔 hex.
+- **기초장(시군구)**: 전 회차. 회차별 period-correct SGIS 시군구 경계(`build_sigungu_geojson_years.py` →
+  `data/geo/sigungu_{1995,2000,2002,2006,2010}.json`, 6~9회는 `sigungu_simple` 2018). render-local-geo
+  `LOCAL_SGG_GEO_YEAR`: 1→1995·2→2000(울산 광역시)·3→2002·4→2006·5→2010·6~9→2018(통합 청주 당선이라).
+  일반구('수원시 장안구'·'고양시일산동')는 기초장이 시 단위라 **시로 dissolve**, 출장소(증평·계룡·효자)는
+  인접 시군구 최소거리 병합. 4~6회 제주/세종 회색 = 기초단체장 없음(제주특별자치도 2006·세종)으로 정확.
 - html script 태그 변경 시 `build_static.py` 재생성 필수(clean-URL 정적 페이지).
 
 ## 출처·라이선스
