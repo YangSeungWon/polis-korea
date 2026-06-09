@@ -4,7 +4,21 @@
 
 let localGeoLayer = null;        // 현재 표시 중 layer
 let localGeoSidoData = null;     // sido_simple.json (광역장/교육감)
-let localGeoSggData = null;      // sigungu_simple.json (기초장)
+const localGeoSggCache = {};     // year|'simple' → sigungu GeoJSON (기초장, 회차별 period-correct 경계)
+
+// 기초장 시군구 geo — 회차별 SGIS 시군구 경계 연도(통합전 시군구 반영).
+//   1회1995→1995  2회1998→2000(울산 광역시)  3회2002→2002  4회2006→2006  5회2010→2010
+//   6~9회→sigungu_simple(2018). 6회는 통합 청주시(2014-07) 당선이라 2018 경계가 맞음.
+const LOCAL_SGG_GEO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010 };
+
+async function loadLocalSggGeo(n) {
+  const y = LOCAL_SGG_GEO_YEAR[n];
+  const key = y || 'simple';
+  if (!localGeoSggCache[key]) {
+    localGeoSggCache[key] = await loadJson(y ? `data/geo/sigungu_${y}.json` : 'data/geo/sigungu_simple.json');
+  }
+  return localGeoSggCache[key];
+}
 
 // 통계청 시도 2자리 코드 → canon 시도명 (resultForSigungu는 canonSido(data.sido)와 === 비교).
 const LOCAL_SIDO_CODE2 = {
@@ -15,26 +29,16 @@ const LOCAL_SIDO_CODE2 = {
   '39': '제주특별자치도',
 };
 
-// 기초장 시군구 geo 지원 회차 — sigungu_simple(base_year 2018) 경계와 정합한 최근 회차만.
-// 옛 회차(1~6회)는 통합전 시군구(마산·진해·여천·청원 등)라 현재 경계로 못 그림 →
-// 회차별 SGIS 시군구 경계 복원 필요(총선 선거구 복원과 동형, 후속 작업). 그 전엔 hex 사용.
-const LOCAL_SGG_GEO_ROUNDS = [7, 8, 9];
-
 function localGeoSupported(unit, n) {
   if (state.type !== 'local') return false;
-  if (unit === 'sido') return true;            // 시도 경계 안정 — 전 회차
-  return LOCAL_SGG_GEO_ROUNDS.includes(n);     // 시군구 — 최근 회차만
+  return true;   // 시도(전 회차) + 시군구(1~6 회차별 복원경계, 7~9 현재경계) 모두 지원
 }
 
 async function renderLocalGeoMap(unit) {
   const isSido = unit === 'sido';
-  if (isSido) {
-    if (!localGeoSidoData) localGeoSidoData = await loadJson('data/geo/sido_simple.json');
-  } else if (!localGeoSggData) {
-    localGeoSggData = await loadJson('data/geo/sigungu_simple.json');
-  }
+  if (isSido && !localGeoSidoData) localGeoSidoData = await loadJson('data/geo/sido_simple.json');
   await loadSidoGeo();
-  const geoData = isSido ? localGeoSidoData : localGeoSggData;
+  const geoData = isSido ? localGeoSidoData : await loadLocalSggGeo(state.n);
   if (!geoData?.features?.length) return;
 
   const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
