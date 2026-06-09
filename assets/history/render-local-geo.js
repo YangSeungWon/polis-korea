@@ -84,7 +84,7 @@ async function renderLocalGeoMap(unit) {
   }
 
   localGeoLayer = L.geoJSON(geoData, {
-    style: (f) => _districtStyleFor(infoFor(f.properties)),
+    style: (f) => _localStyleFor(infoFor(f.properties)),
     onEachFeature: (f, l) => {
       const info = infoFor(f.properties);
       const label = isSido ? f.properties.name : `${LOCAL_SIDO_CODE2[String(f.properties.code).slice(0, 2)] || ''} ${f.properties.name}`;
@@ -115,6 +115,14 @@ async function renderLocalGeoMap(unit) {
     };
     geoLeafletMap.on('moveend', finalize);
   }
+}
+
+// 지선 단색 스타일 — 당선자 있으면 partyColor(없는당='' → 교육감 #777777, hex와 동일),
+// 데이터 없으면 no-data 회색. (_districtStyleFor는 빈 party를 no-data로 처리해 교육감이
+// 데이터 없는 곳과 구분 안 됐음 → 별도 스타일.)
+function _localStyleFor(info) {
+  const fill = info ? partyColor(info.winner?.party || '') : 'rgba(154,163,179,0.65)';
+  return { color: 'rgba(10,14,26,0.35)', weight: 0.6, fillColor: fill, fillOpacity: 0.85 };
 }
 
 function _attachLocalInteraction(feature, layer, info, label) {
