@@ -50,7 +50,7 @@ async function renderAll() {
   // 지도 view 지원 회차 — 21·22(OhmyNews) + 9~20(SGIS 읍면동 복원).
   // 9~12 중선거구(1구 2인)는 당선 2당 줄무늬, 13~22 소선거구는 1위 단색.
   const GEO_GENERAL = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-  const HEX_DISTRICT = [17, 18, 19, 20, 21, 22];  // 지역구 hex 레이아웃 보유(나머지는 지도 전용)
+  const HEX_DISTRICT = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];  // 지역구 hex 레이아웃 보유
   const geoSupported = state.type === 'national_assembly' && GEO_GENERAL.includes(state.n);
   const hexSupported = geoSupported && HEX_DISTRICT.includes(state.n);
   // 요소 누락(캐시된 옛 HTML 등)에도 깨지지 않게 null guard

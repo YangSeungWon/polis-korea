@@ -272,7 +272,9 @@ async function renderDistrictHex() {
     const top = topCandidate(result);
     const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
     const gap = top && sec ? top.pct - sec.pct : null;
-    const fill = top ? partyColor(top.party) : '#e6e9ef';
+    let fill = top ? partyColor(top.party) : '#e6e9ef';
+    const ws = result?.winners;  // 중선거구(1구 2인) → 당선 2당 줄무늬
+    if (ws && ws.length >= 2 && ws[0].party !== ws[1].party) fill = _jungPattern([ws[0].party, ws[1].party]);
     const opacity = top ? 1 : 1;
     const isSelected = state.selected
       && state.selected.sido === d.sido && state.selected.name === d.name;

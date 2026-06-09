@@ -93,6 +93,8 @@ def load_centroids():
 
 
 def cell_centroid(cell, by_code, by_name):
+    if cell.get('_cen'):  # 선거구 geojson에서 직접 계산한 centroid(옛 회차·폐지 시군구 대응)
+        return tuple(cell['_cen'])
     if 'sigungus' in cell and cell['sigungus']:
         lons, lats = [], []
         for nm in cell['sigungus']:
