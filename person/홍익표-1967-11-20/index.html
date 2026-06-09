@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"홍익표","id":"홍익표","wins":3,"losses":1,"parties":["민주통합당","더불어민주당"],"sidos":["서울특별시"],"likely_namesake":false,"races":[{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"성동구을","party":"민주통합당","pct":49.66,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"중구성동구갑","party":"더불어민주당","pct":45.08,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"중구성동구갑","party":"더불어민주당","pct":54.25,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"22nd-general-2024","year":2024,"round":"22대 총선","place":"서초구을","party":"더불어민주당","pct":42.51,"rank":2,"won":false,"tc":"2"}],"assembly_id":"홍익표_1967-11-20","hanja":"洪翼杓","dob":"1967-11-20"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"홍익표","id":"홍익표_1967-11-20","wins":3,"losses":1,"parties":["민주통합당","더불어민주당"],"sidos":["경기도","서울특별시","충청북도"],"likely_namesake":false,"races":[{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"성동구을","party":"민주통합당","pct":49.66,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"중구성동구갑","party":"더불어민주당","pct":45.08,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"중구성동구갑","party":"더불어민주당","pct":54.25,"rank":1,"won":true,"tc":"2","assembly_id":"홍익표_1967-11-20"},{"eid":"22nd-general-2024","year":2024,"round":"22대 총선","place":"서초구을","party":"더불어민주당","pct":42.51,"rank":2,"won":false,"tc":"2"}],"assembly_id":"홍익표_1967-11-20","hanja":"洪翼杓","dob":"1967-11-20"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -33,6 +33,9 @@
     <a href="/search.html" class="hdr-link">검색</a>
     <!-- NAV_END -->
   </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
 </header>
 <main class="page">
   <section class="intro">
@@ -48,5 +51,7 @@
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/person.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>

@@ -54,6 +54,9 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/search.html" class="hdr-link">검색</a>
     <!-- NAV_END -->
   </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
 </header>
 <main class="page">
   <section class="intro">
@@ -69,6 +72,8 @@ TEMPLATE = """<!DOCTYPE html>
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/person.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>
 """

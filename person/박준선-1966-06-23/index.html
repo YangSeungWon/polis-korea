@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"박준선","id":"박준선","wins":1,"losses":1,"parties":["한나라당","새누리당"],"sidos":["경기도","서울특별시"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"용인시기흥구","party":"한나라당","pct":47.59,"rank":1,"won":true,"tc":"2","assembly_id":"박준선_1966-06-23"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"동대문구을","party":"새누리당","pct":38.16,"rank":2,"won":false,"tc":"2"}],"assembly_id":"박준선_1966-06-23","hanja":"朴俊宣","dob":"1966-06-23"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"박준선","id":"박준선_1966-06-23","wins":1,"losses":1,"parties":["한나라당","새누리당"],"sidos":["경기도","서울특별시","충청남도"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"용인시기흥구","party":"한나라당","pct":47.59,"rank":1,"won":true,"tc":"2","assembly_id":"박준선_1966-06-23"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"동대문구을","party":"새누리당","pct":38.16,"rank":2,"won":false,"tc":"2"}],"assembly_id":"박준선_1966-06-23","hanja":"朴俊宣","dob":"1966-06-23"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -33,6 +33,9 @@
     <a href="/search.html" class="hdr-link">검색</a>
     <!-- NAV_END -->
   </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
 </header>
 <main class="page">
   <section class="intro">
@@ -48,5 +51,7 @@
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/person.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>

@@ -104,17 +104,24 @@ def main():
         m = re.match(r"^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))", place)
         return sido or (m.group(1) if m else "") or place[:2]
 
+    # '전국구'·'비례대표' 같은 시스템 토큰은 지리 매칭 제외 — 무관 race 잘못 끌어붙음.
+    SYSTEM_TOKENS = {"전국", "전국구", "비례", "비례대표"}
+
     def career_sido_tokens(career_district):
         """career district에서 시도/지명 토큰 집합 — 부분 매칭용."""
         # "경남 창원시성산구" → {"경남","창원","성산"}
         tokens = set()
         for t in re.split(r"\s+", career_district or ""):
             if t:
-                tokens.add(t)
+                if t not in SYSTEM_TOKENS:
+                    tokens.add(t)
                 # 시군구 prefix
                 for sub in re.findall(r"[가-힣]+?(?:시|군|구)", t):
-                    tokens.add(sub.rstrip("시군구"))
-                    tokens.add(sub)
+                    stripped = sub.rstrip("시군구")
+                    if stripped not in SYSTEM_TOKENS:
+                        tokens.add(stripped)
+                    if sub not in SYSTEM_TOKENS:
+                        tokens.add(sub)
         return tokens
 
     PARTY_FAMILY = {
@@ -127,8 +134,10 @@ def main():
         "자유선진당": "C",
     }
 
-    def aid_score(aid, race, race_group_parties):
-        """unassigned race와 aid 그룹의 sido / party family overlap score."""
+    def aid_score(aid, race, race_group_parties, group_years):
+        """unassigned race와 aid 그룹의 attach score.
+        sido/place overlap + 정당 패밀리 match/mismatch + 시간 근접도.
+        """
         asm_p = asm_lookup.get(aid)
         if not asm_p:
             return 0
@@ -144,10 +153,21 @@ def main():
                     score += 2
                 if tk in rplace or rplace in tk:
                     score += 1
-        # 정당 패밀리 매칭 — race·group 동일 가족이면 보너스
+        # 정당 패밀리 — race·group 동일이면 +3, 다르면 -4 (동명이인 차단).
         r_fam = PARTY_FAMILY.get(race.get("party") or "")
-        if r_fam and r_fam in race_group_parties:
-            score += 2
+        if r_fam:
+            if r_fam in race_group_parties:
+                score += 3
+            elif race_group_parties:
+                score -= 4
+        # 시간 근접도 — race 연도와 group 회차 연도 차.
+        r_year = race.get("year")
+        if r_year and group_years:
+            min_gap = min(abs(r_year - y) for y in group_years)
+            if min_gap <= 5:
+                score += 2
+            elif min_gap >= 30:
+                score -= 5  # 30년+ 격차는 다른 사람일 가능성 큼
         return score
 
     new_persons = []
@@ -163,10 +183,14 @@ def main():
         if not groups:
             new_persons.append(entry)
             continue
-        # unassigned를 sido overlap 또는 party family 높은 aid 그룹에 attach. 0이면 orphan.
-        # 그룹별 정당 패밀리 set 미리 계산.
+        # unassigned를 attach score 높은 aid 그룹에 attach. 0 이하면 orphan.
         group_families = {
             aid: {PARTY_FAMILY.get(r.get("party") or "") for r in races if r.get("party")}
+            for aid, races in groups.items()
+        }
+        # 그룹별 연도 셋 (시간 근접도 산정용)
+        group_years = {
+            aid: {r.get("year") for r in races if r.get("year")}
             for aid, races in groups.items()
         }
         orphans = []
@@ -174,11 +198,11 @@ def main():
             best_aid = None
             best_score = 0
             for aid in groups:
-                s = aid_score(aid, r, group_families.get(aid, set()))
+                s = aid_score(aid, r, group_families.get(aid, set()), group_years.get(aid, set()))
                 if s > best_score:
                     best_score = s
                     best_aid = aid
-            if best_aid and best_score >= 1:
+            if best_aid and best_score >= 2:
                 groups[best_aid].append(r)
             else:
                 orphans.append(r)

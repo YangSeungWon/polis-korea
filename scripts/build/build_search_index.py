@@ -30,6 +30,19 @@ def round_label(eid: str) -> str:
 
 
 def main():
+    # 인물 인덱스 로드 — (eid, name) → assembly_id·dob 룩업.
+    person_lookup = {}
+    pi_path = ROOT / "assets/person-index.json"
+    if pi_path.exists():
+        pi = json.loads(pi_path.read_text(encoding="utf-8"))
+        for p in pi.get('persons', []):
+            aid = p.get('assembly_id')
+            dob = p.get('dob')
+            if not aid or not dob:
+                continue
+            for r in p.get('races', []):
+                person_lookup[(r['eid'], p['name'])] = {'aid': aid, 'dob': dob}
+
     items = []
     seen = set()
 
@@ -46,9 +59,22 @@ def main():
         year = int(date[:4]) if date and date[:4].isdigit() else None
         rlbl = round_label(eid)
 
+        # tc별 canonical scope — 그 외 scope의 race는 인덱스에서 제외.
+        # 대선 시도별·총선 시도 summary 같은 보조 row가 1위 entries로
+        # 잡혀 한 사람 한 회차가 17건이 되는 문제 방지.
+        CANON_SCOPE = {
+            '1': 'nation',     # 대선 전국
+            '2': 'district',   # 총선 지역구
+            '3': 'sido',       # 지선 광역단체장
+            '4': 'sigungu',    # 지선 기초단체장
+        }
+
         for race in d.get('races', []):
             tc = race.get('sg_typecode', '')
             scope = race.get('scope', '')
+            expected = CANON_SCOPE.get(tc)
+            if expected and scope != expected:
+                continue
             sido = race.get('sido', '')
             sigungu = race.get('sigungu', '') or ''
             district = race.get('district', '') or ''
@@ -64,7 +90,7 @@ def main():
             key = (eid, scope, sido, sigungu, district, tc, nm)
             if key in seen: continue
             seen.add(key)
-            items.append({
+            entry = {
                 'n': nm,
                 'p': party,
                 'y': year,
@@ -73,7 +99,13 @@ def main():
                 'd': f"{sido} {place}".strip() if sido and place != sido else place,
                 'tc': tc,
                 'pct': top.get('pct'),
-            })
+            }
+            # 의원 매칭 → assembly_id·dob 부착 (검색 결과 그룹핑·정적 페이지 링크용)
+            pl = person_lookup.get((eid, nm))
+            if pl:
+                entry['aid'] = pl['aid']
+                entry['dob'] = pl['dob']
+            items.append(entry)
 
     items.sort(key=lambda x: (x.get('y') or 0, x['e']), reverse=True)
     out = {

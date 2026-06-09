@@ -73,12 +73,20 @@ def main():
         year = int(date[:4]) if date and date[:4].isdigit() else None
         eid_meta[eid] = {"year": year, "round": round_label(eid)}
 
+        # tc별 canonical scope — 그 외 scope race는 무시 (시도별 부분집계는
+        # 1위로 잡혀 false 'won' 표시되는 문제 방지).
+        CANON_SCOPE = {"1": "nation", "2": "district", "3": "sido", "4": "sigungu"}
+
         for race in d.get("races", []):
+            tc = race.get("sg_typecode", "")
+            scope = race.get("scope", "")
+            expected = CANON_SCOPE.get(tc)
+            if expected and scope != expected:
+                continue
             sido = race.get("sido", "") or ""
             sigungu = race.get("sigungu", "") or ""
             district = race.get("district", "") or ""
             place = sigungu or district or sido or "전국"
-            tc = race.get("sg_typecode", "")
             for c in race.get("candidates", []):
                 nm = (c.get("name") or "").strip()
                 if not nm:

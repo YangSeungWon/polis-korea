@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"김호연","id":"김호연","wins":1,"losses":2,"parties":["한나라당","새누리당"],"sidos":["충청남도"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"천안시을","party":"한나라당","pct":35.79,"rank":2,"won":false,"tc":"2","assembly_id":"김호연_1955-04-29"},{"eid":"byelection-2010-07-28","year":2010,"round":"2010-07-28 재보궐","place":"천안시을","party":"한나라당","pct":46.91,"rank":1,"won":true,"tc":"2"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"천안시을","party":"새누리당","pct":40.02,"rank":2,"won":false,"tc":"2"}],"assembly_id":"김호연_1955-04-29","hanja":"金昊淵","dob":"1955-04-29"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"김호연","id":"김호연_1955-04-29","wins":1,"losses":2,"parties":["한나라당","새누리당"],"sidos":["경상북도","충청남도"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"천안시을","party":"한나라당","pct":35.79,"rank":2,"won":false,"tc":"2","assembly_id":"김호연_1955-04-29"},{"eid":"byelection-2010-07-28","year":2010,"round":"2010-07-28 재보궐","place":"천안시을","party":"한나라당","pct":46.91,"rank":1,"won":true,"tc":"2"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"천안시을","party":"새누리당","pct":40.02,"rank":2,"won":false,"tc":"2"}],"assembly_id":"김호연_1955-04-29","hanja":"金昊淵","dob":"1955-04-29"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -33,6 +33,9 @@
     <a href="/search.html" class="hdr-link">검색</a>
     <!-- NAV_END -->
   </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
 </header>
 <main class="page">
   <section class="intro">
@@ -48,5 +51,7 @@
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/person.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>

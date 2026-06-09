@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"이상민","id":"이상민","wins":5,"losses":3,"parties":["열린우리당","자유선진당","민주통합당","더불어민주당","국민의당","국민의힘"],"sidos":["경기도","대전광역시","충청남도"],"likely_namesake":true,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","place":"유성구","party":"열린우리당","pct":32.15,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"유성구","party":"자유선진당","pct":41.3,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"유성구","party":"민주통합당","pct":52.55,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"유성구을","party":"더불어민주당","pct":56.87,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"안성시","party":"국민의당","pct":13.53,"rank":3,"won":false,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"유성구을","party":"더불어민주당","pct":55.86,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"22nd-general-2024","year":2024,"round":"22대 총선","place":"유성구을","party":"국민의힘","pct":37.2,"rank":2,"won":false,"tc":"2"},{"eid":"9th-local-2026","year":2026,"round":"9회 지선","place":"금산군","party":"더불어민주당","pct":12.58,"rank":5,"won":false,"tc":"6"}],"assembly_id":"이상민_1958-01-22","hanja":"李相珉","dob":"1958-01-22"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"이상민","id":"이상민_1958-01-22","wins":5,"losses":3,"parties":["열린우리당","자유선진당","민주통합당","더불어민주당","국민의당","국민의힘"],"sidos":["경기도","경상남도","대전광역시","충청남도"],"likely_namesake":false,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","place":"유성구","party":"열린우리당","pct":32.15,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"유성구","party":"자유선진당","pct":41.3,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"유성구","party":"민주통합당","pct":52.55,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"유성구을","party":"더불어민주당","pct":56.87,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"20th-general-2016","year":2016,"round":"20대 총선","place":"안성시","party":"국민의당","pct":13.53,"rank":3,"won":false,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"유성구을","party":"더불어민주당","pct":55.86,"rank":1,"won":true,"tc":"2","assembly_id":"이상민_1958-01-22"},{"eid":"22nd-general-2024","year":2024,"round":"22대 총선","place":"유성구을","party":"국민의힘","pct":37.2,"rank":2,"won":false,"tc":"2"},{"eid":"9th-local-2026","year":2026,"round":"9회 지선","place":"금산군","party":"더불어민주당","pct":12.58,"rank":5,"won":false,"tc":"6"}],"assembly_id":"이상민_1958-01-22","hanja":"李相珉","dob":"1958-01-22"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -33,6 +33,9 @@
     <a href="/search.html" class="hdr-link">검색</a>
     <!-- NAV_END -->
   </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
 </header>
 <main class="page">
   <section class="intro">
@@ -48,5 +51,7 @@
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/person.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
 </body>
 </html>

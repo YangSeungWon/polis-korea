@@ -43,40 +43,37 @@
       if (filterRound && it.r !== filterRound) return false;
       return match(it, q);
     });
-    // 이름 단위로 group — 같은 이름이 N≥2 race면 인물 카드로 묶고 펼치기 가능.
-    const byName = new Map();
+    // 인물 단위 group — assembly_id 있으면 그 ID, 없으면 (name + 'unmatched') 키.
+    // 같은 이름이라도 aid 다르면 동명이인 → 별도 카드. 항상 펴진 상태.
+    const byPerson = new Map();
     for (const it of filtered) {
-      if (!byName.has(it.n)) byName.set(it.n, []);
-      byName.get(it.n).push(it);
+      const key = it.aid || `${it.n}__unmatched`;
+      if (!byPerson.has(key)) byPerson.set(key, { name: it.n, aid: it.aid, dob: it.dob, items: [] });
+      byPerson.get(key).items.push(it);
     }
-    const groups = Array.from(byName.entries()); // [[name, [items]]]
+    const groups = Array.from(byPerson.values());
     // 정렬: race 많은 사람 먼저, 동수면 최근 연도
-    groups.sort((a, b) => b[1].length - a[1].length
-      || (Math.max(...b[1].map((x) => x.y || 0)) - Math.max(...a[1].map((x) => x.y || 0))));
+    groups.sort((a, b) => b.items.length - a.items.length
+      || (Math.max(...b.items.map((x) => x.y || 0)) - Math.max(...a.items.map((x) => x.y || 0))));
     const capGroups = groups.slice(0, MAX_RESULTS);
     $('#meta').textContent = q || filterRound
       ? `${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
       : `${items.length.toLocaleString()}건 (검색어 입력)`;
-    const html = capGroups.map(([name, list]) => {
-      list.sort((a, b) => (b.y || 0) - (a.y || 0));
-      if (list.length === 1) {
-        const it = list[0];
-        // 특정 회차 결과 → archive 직행. 오른쪽 끝에 인물 페이지 보조 링크 별도.
-        return `<li class="s-item s-single">
-          <a class="s-link" href="/archive/${it.e}/">
-            <span class="s-name">${escapeHtml(it.n)}</span>
-            ${partyBadge(it.p)}
-            <span class="s-meta">${it.y || ''} · ${it.r} · ${escapeHtml(it.d)}</span>
-            ${it.pct != null ? `<span class="s-pct">${(+it.pct).toFixed(1)}%</span>` : ''}
-          </a>
-          <a class="s-aside-link" href="/person.html?name=${encodeURIComponent(it.n)}">인물</a>
-        </li>`;
-      }
-      // 인물 카드 — 정당색 색띠로 시각 비교, 클릭하면 펼치기
-      const parties = [...new Set(list.map((x) => x.p).filter(Boolean))].slice(0, 3);
+
+    const personHref = (g) =>
+      (g.aid && g.dob) ? `/person/${encodeURIComponent(g.name + '-' + g.dob)}/`
+                       : `/person.html?name=${encodeURIComponent(g.name)}`;
+
+    const html = capGroups.map((g) => {
+      const list = g.items.slice().sort((a, b) => (b.y || 0) - (a.y || 0));
+      const parties = [...new Set(list.map((x) => x.p).filter(Boolean))].slice(0, 4);
       const years = list.map((x) => x.y).filter(Boolean);
       const yspan = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : '';
-      // 회차별 sub-row는 해당 archive로 직행 — 특정 race를 명시했으므로
+      const meta = [];
+      if (g.dob) meta.push(g.dob);
+      if (g.aid) meta.push('국회');
+      const metaTxt = meta.length ? meta.join(' · ') : (list.length === 1 ? list[0].r : '');
+      // 회차 sub-rows → archive 직행
       const sub = list.map((it) => `
         <a class="s-sub" href="/archive/${it.e}/">
           <span class="s-sub-yr">${it.y || ''}</span>
@@ -86,16 +83,14 @@
           ${it.pct != null ? `<span class="s-sub-pct">${(+it.pct).toFixed(1)}%</span>` : ''}
         </a>`).join('');
       return `<li class="s-item s-group">
-        <details>
-          <summary class="s-link s-group-hdr">
-            <span class="s-name">${escapeHtml(name)}</span>
-            <span class="s-group-count">${list.length}회</span>
-            <span class="s-group-parties">${parties.map(partyBadge).join('')}</span>
-            <span class="s-meta">${yspan}</span>
-            <a class="s-group-link" href="/person.html?name=${encodeURIComponent(name)}" onclick="event.stopPropagation()">인물 →</a>
-          </summary>
-          <div class="s-sub-list">${sub}</div>
-        </details>
+        <a class="s-link s-group-hdr" href="${personHref(g)}">
+          <span class="s-name">${escapeHtml(g.name)}</span>
+          <span class="s-group-count">${list.length}회 · ${yspan}</span>
+          <span class="s-group-parties">${parties.map(partyBadge).join('')}</span>
+          <span class="s-meta">${escapeHtml(metaTxt)}</span>
+          <span class="s-group-arrow">인물 →</span>
+        </a>
+        <div class="s-sub-list">${sub}</div>
       </li>`;
     }).join('');
     $('#list').innerHTML = html;
