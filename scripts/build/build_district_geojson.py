@@ -55,8 +55,21 @@ SIDO_SHORT = {
 
 
 def _ndong(s):
-    """동명 정규화 — '창신제1동'→'창신1동' (NEC vs SGIS 제N동 표기 차이)."""
-    return re.sub(r"제(\d)", r"\1", s)
+    """동명 정규화 — 제N동('창신제1동'→'창신1동'), 구분자(·ㆍ/→,), 구시군 접두('연기군 부용면'→'부용면')."""
+    s = re.sub(r"^[가-힣]+[시군구] ", "", s)  # NEC '연기군 부용면' 접두 제거
+    s = re.sub(r"제(\d)", r"\1", s)
+    s = re.sub(r"[·ㆍ./]", ",", s)            # 두류1·2동 ↔ 두류1,2동
+    return s
+
+
+# NEC 투표구 동명 → SGIS 행정동명 (개명·분동·표기변형). [목록]=1:다.
+# 세종: 2012-04(연기군)→2012-07(세종) 면 개명. 인천 청라동→분동. 경남 벌용동→SGIS 벌룡동.
+DONG_ALIAS = {
+    ("세종", "남면"): ["연기면"], ("세종", "동면"): ["연동면"], ("세종", "서면"): ["연서면"],
+    ("세종", "부용면"): ["부강면"], ("세종", "장기면"): ["장군면"],
+    ("인천", "청라동"): ["청라1동", "청라2동"],
+    ("경남", "벌용동"): ["벌룡동"],
+}
 
 
 def round_coords(geom, ndigits):
@@ -93,6 +106,7 @@ def main(n: int):
     NM = "ADM_NM" if "ADM_NM" in fields else "adm_dr_nm"
     geom_by_cd = {}
     sido_dong_idx = defaultdict(list)  # (SGIS시도2, 동명변형) → [adm_cd] (nec_emd 조인용)
+    sido_names = defaultdict(list)     # SGIS시도2 → [(adm_cd, 정규화동명)] (퍼지 fallback)
     for sr in sf.iterShapeRecords():
         cd = str(sr.record[CD]).strip()
         g = shape(sr.shape.__geo_interface__)
@@ -103,6 +117,7 @@ def main(n: int):
         sido_dong_idx[(cd[:2], nm)].append(cd)
         if _ndong(nm) != nm:
             sido_dong_idx[(cd[:2], _ndong(nm))].append(cd)
+        sido_names[cd[:2]].append((cd, _ndong(nm)))
     print(f"SGIS 동: {len(geom_by_cd)}개 (필드 {CD}/{NM})", file=sys.stderr)
 
     def reproj(geom):
@@ -141,18 +156,31 @@ def main(n: int):
                 district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
     else:  # nec_emd: NEC 투표구별 (시도, 동) → SGIS. 시도코드 변환(행정표준→통계청)
         for r in json.loads(cfg["emd"].read_text(encoding="utf-8")):
-            key = (SIDO_SHORT.get(r["sido"], r["sido"]), r["district"])
+            sido_short = SIDO_SHORT.get(r["sido"], r["sido"])
+            key = (sido_short, r["district"])
             nec_sgg = str(r["sgg_code"])
             s2 = NEC2SGIS.get(nec_sgg[:2], nec_sgg[:2])
             for dong in r["dongs"]:
                 total_dong += 1
-                cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
-                if not cands:
-                    miss_dong += 1; continue
-                if len(cands) > 1:  # 동명 충돌 → 구코드 변환 tiebreak
+                dong = re.sub(r"^[가-힣]+[시군구] ", "", dong)  # '연기군 부용면' 접두 제거(alias 앞)
+                alias = DONG_ALIAS.get((sido_short, dong))
+                if alias:  # 개명·분동 — 지정 SGIS 동(들) 전부
+                    got = [c for t in alias for c in sido_dong_idx.get((s2, t), [])]
+                else:
+                    cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
+                    if len(cands) > 1:  # 동명 충돌 → 구코드 변환 tiebreak
+                        cands = [c for c in cands if c[:4] == s2 + nec_sgg[2:]] or cands
+                    got = cands[:1]
+                if not got:  # 퍼지 fallback — 동 통합/개명(청운동→청운효자동). base가 SGIS명에 포함
                     conv = s2 + nec_sgg[2:]
-                    cands = [c for c in cands if c[:4] == conv] or cands
-                district_cds[key].add(cands[0])
+                    b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
+                    if len(b) >= 2:
+                        fz = [c for c, nm in sido_names.get(s2, []) if nm.startswith(b)]
+                        fz = [c for c in fz if c[:4] == conv] or fz  # 구코드 우선
+                        got = fz[:1]
+                if not got:
+                    miss_dong += 1; continue
+                district_cds[key].update(got)
 
     # 4) 선거구별 union
     features = []
