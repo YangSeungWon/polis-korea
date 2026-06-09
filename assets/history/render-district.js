@@ -61,11 +61,45 @@ let geoMiniMapCtrl = null;
 let geoInitialZoom = null;
 const KOREA_BOUNDS_GEO = [[32.5, 123.5], [39.5, 132.5]];
 
+// 중선거구(1구 2인) — 두 당선당 색의 대각 줄무늬 패턴. document 전역 <defs>에 lazy 생성.
+const _jungPatIds = {};
+let _jungPatN = 0;
+function _jungPattern(parties) {
+  const key = parties[0] + '|' + parties[1];
+  if (_jungPatIds[key]) return `url(#${_jungPatIds[key]})`;
+  let host = document.getElementById('jung-pat-defs');
+  if (!host) {
+    host = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    host.id = 'jung-pat-defs';
+    host.setAttribute('style', 'position:absolute;width:0;height:0;overflow:hidden');
+    host.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'defs'));
+    document.body.appendChild(host);
+  }
+  const id = 'jp' + (_jungPatN++);
+  _jungPatIds[key] = id;
+  const NS = 'http://www.w3.org/2000/svg';
+  const p = document.createElementNS(NS, 'pattern');
+  p.id = id;
+  p.setAttribute('width', '8'); p.setAttribute('height', '8');
+  p.setAttribute('patternUnits', 'userSpaceOnUse');
+  p.setAttribute('patternTransform', 'rotate(45)');
+  p.innerHTML = `<rect width="8" height="8" fill="${partyColor(parties[0])}"/>`
+    + `<rect width="4" height="8" fill="${partyColor(parties[1])}"/>`;
+  host.querySelector('defs').appendChild(p);
+  return `url(#${id})`;
+}
+
 function _districtStyleFor(info) {
+  let fill = info?.winner?.party ? partyColor(info.winner.party) : 'rgba(154,163,179,0.65)';
+  const ws = info?.race?.winners;  // 중선거구: 당선당 2개 → 줄무늬
+  if (ws && ws.length >= 2) {
+    const ps = ws.map((w) => w.party);
+    fill = (ps[0] !== ps[1]) ? _jungPattern([ps[0], ps[1]]) : partyColor(ps[0]);
+  }
   return {
     color: 'rgba(10,14,26,0.35)',
     weight: 0.6,
-    fillColor: info?.winner?.party ? partyColor(info.winner.party) : 'rgba(154,163,179,0.65)',
+    fillColor: fill,
     fillOpacity: 0.85,
   };
 }

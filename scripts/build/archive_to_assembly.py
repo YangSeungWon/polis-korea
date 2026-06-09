@@ -10,8 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "data" / "results"
 
-# n → 아카이브 id
-IDS = {13: "13th-general-1988", 14: "14th-general-1992",
+# n → 아카이브 id. 9~12대는 중선거구(1구 2인) → winners 리스트로 다중 당선 보존.
+IDS = {9: "9th-general-1973", 10: "10th-general-1978",
+       11: "11th-general-1981", 12: "12th-general-1985",
+       13: "13th-general-1988", 14: "14th-general-1992",
        15: "15th-general-1996", 16: "16th-general-2000"}
 
 
@@ -24,13 +26,16 @@ def convert(n, aid):
         cands = r.get("candidates", [])
         won = [c for c in cands if c.get("won")]
         w = won[0] if won else (cands[0] if cands else None)
-        out.append({
+        rec = {
             "sido": r["sido"],
             "name": r.get("district") or r.get("sigungu"),
             "winner": w["name"] if w else None,
             "winner_party": w.get("party") if w else None,
             "candidates": cands,
-        })
+        }
+        if len(won) > 1:  # 중선거구(1구 2인) — 당선자 전원 보존
+            rec["winners"] = [{"name": c["name"], "party": c.get("party")} for c in won]
+        out.append(rec)
     dst = RES / f"national_assembly_{n}.json"
     dst.write_text(json.dumps({"_meta": {"source": f"archive {aid}", "from": "archive_to_assembly"},
                                "district": out}, ensure_ascii=False, indent=1), encoding="utf-8")
