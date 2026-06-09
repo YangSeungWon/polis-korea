@@ -36,6 +36,8 @@ CFG = {
     9: dict(mode="nec_emd", year=1975,
             emd=ROOT / "data/raw/nec/district_emd_9.json",
             shp=ROOT / "data/raw/sgis/bnd_dong_1975/bnd_dong_00_1975_4Q.shp",
+            # NEC 투표구별 공백 선거구(연천권·의령권 등 통째 군) → 시군구 경계 union 폴백
+            sgg_fallback=ROOT / "data/raw/sgis/bnd_sigungu_1975/bnd_sigungu_00_1975_4Q.shp",
             results=ROOT / "data/results/national_assembly_9.json"),
     10: dict(mode="nec_emd", year=1980,
              emd=ROOT / "data/raw/nec/district_emd_10.json",
@@ -44,6 +46,7 @@ CFG = {
     11: dict(mode="nec_emd", year=1980,
              emd=ROOT / "data/raw/nec/district_emd_11.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_1980/bnd_dong_00_1980_4Q.shp",
+             sgg_fallback=ROOT / "data/raw/sgis/bnd_sigungu_1980/bnd_sigungu_00_1980_4Q.shp",  # 부산북구 등 공백
              results=ROOT / "data/results/national_assembly_11.json"),
     12: dict(mode="nec_emd", year=1985,
              emd=ROOT / "data/raw/nec/district_emd_12.json",
@@ -52,6 +55,8 @@ CFG = {
     13: dict(mode="nec_emd", year=1990,
              emd=ROOT / "data/raw/nec/district_emd_13.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_1990/bnd_dong_00_1990_4Q.shp",
+             # 대전 직할시 승격(1989)이 SGIS 1990과 엇갈림 — 대전시 선거구 동은 SGIS 대전(25)
+             sido_override={"대전시": "25"},
              results=ROOT / "data/results/national_assembly_13.json"),
     14: dict(mode="nec_emd", year=1990,
              emd=ROOT / "data/raw/nec/district_emd_14.json",
@@ -233,10 +238,16 @@ def main(n: int):
                 district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
     else:  # nec_emd: NEC 투표구별. 하드코딩 conv 대신 데이터로 NEC구→SGIS구 학습 + 기하 소거.
         recs = json.loads(cfg["emd"].read_text(encoding="utf-8"))
+        sido_ov = cfg.get("sido_override", {})  # 시도승격 보정: 선거구명 substr → SGIS 시도2
+        def _s2(sgg_code, name):
+            for pre, ov in sido_ov.items():
+                if pre in name:
+                    return ov
+            return NEC2SGIS.get(sgg_code[:2], sgg_code[:2])
         # Pass 1: 고유(단일 후보) 동매칭으로 NEC sgg_code → SGIS 구코드 학습 (구 번호 불일치 대응)
         gu_vote = defaultdict(Counter)
         for r in recs:
-            s2 = NEC2SGIS.get(str(r["sgg_code"])[:2], str(r["sgg_code"])[:2])
+            s2 = _s2(str(r["sgg_code"]), r["district"])
             for dong in r["dongs"]:
                 d = re.sub(r"^[가-힣]+[시군구] ", "", dong)
                 cands = sido_dong_idx.get((s2, d)) or sido_dong_idx.get((s2, _ndong(d))) or []
@@ -250,7 +261,7 @@ def main(n: int):
             sido_short = SIDO_SHORT.get(r["sido"], r["sido"])
             key = (sido_short, r["district"])
             nec_sgg = str(r["sgg_code"])
-            s2 = NEC2SGIS.get(nec_sgg[:2], nec_sgg[:2])
+            s2 = _s2(nec_sgg, r["district"])
             gu = gu_map.get(nec_sgg)
             for dong in r["dongs"]:
                 total_dong += 1
@@ -300,6 +311,31 @@ def main(n: int):
                 filled += len(orphans)
         if filled:
             print(f"소거 확정 고아 동: {filled}개", file=sys.stderr)
+
+        # Pass 4: NEC 투표구별 공백 선거구 — SGIS 시군구 경계 union 폴백(통째 군/구)
+        if cfg.get("sgg_fallback") and cfg["sgg_fallback"].exists():
+            ssf = shapefile.Reader(str(cfg["sgg_fallback"]), encoding="cp949")
+            sgg_g = {}
+            for sr in ssf.iterShapeRecords():
+                scd = str(sr.record["sigungu_cd"]).strip()
+                g = shape(sr.shape.__geo_interface__)
+                geom_by_cd[scd] = g if g.is_valid else g.buffer(0)
+                sgg_g[(scd[:2], _nsgg(str(sr.record["sigungu_nm"]).strip()))] = scd
+            nfb = 0
+            for (skey, name), race in by_key.items():
+                if district_cds.get((skey, name)):
+                    continue
+                s2 = SIDO_SGIS2.get(race["sido"])
+                m = re.search(r"\((.+)\)", name)
+                sggs = re.split(r"[·∙•・,]", m.group(1)) if m else [re.sub(r"[갑을병정]$", "", name)]
+                for sgg in sggs:
+                    scd = sgg_g.get((s2, _nsgg(sgg.strip())))
+                    if scd:
+                        district_cds[(skey, name)].add(scd)
+                if district_cds.get((skey, name)):
+                    nfb += 1
+            if nfb:
+                print(f"시군구 폴백 복원: {nfb}개 선거구", file=sys.stderr)
 
     # 4) 선거구별 union
     features = []
