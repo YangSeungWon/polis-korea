@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # 캐노니컬 메뉴 — 회차 번호·시간 의존 표현 금지 (장기 안정).
 MENU = [
-    ("홈", "/", "home"),
+    # 홈은 좌측 polis 로고가 이미 / 링크 — nav 중복 제거 (모바일 폭 절약).
     ("여론조사", "/polls.html", "polls"),
     ("재·보궐", "/byelection/", "byelection"),
     ("지지율 추이", "/tracker.html", "tracker"),

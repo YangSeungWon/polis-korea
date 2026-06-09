@@ -195,6 +195,10 @@ body {
 @media (max-width: 900px) {
   .page { padding: 18px 14px 60px; }
   .site-hdr { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  /* 2줄 헤더: row1=[polis · meta(검색·자동·카운트다운)], row2=[nav]. */
+  .brand { order: 1; }
+  .hdr-meta { order: 2; margin-left: auto; }
+  .hdr-nav { order: 3; }
   /* 7개 메뉴를 줄바꿈 없이 한 줄로 — 넘치면 가로 스크롤(스크롤바 숨김). */
   .hdr-nav {
     gap: 14px; margin-left: 0; margin-right: 0;
