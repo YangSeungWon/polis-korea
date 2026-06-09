@@ -707,6 +707,13 @@
 .sido-map-region { stroke: var(--bg); stroke-width: 0.8; }
 .sido-map-region.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
 .sido-map-label { fill: #fff; font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(0,0,0,0.55); stroke-width: 2.6px; stroke-linejoin: round; }
+/* 시도 비례 뷰 (대선 — 격자/dorling) */
+.sido-prop-svg { width: 100%; height: auto; max-width: 560px; display: block; margin: 0 auto; }
+.sido-prop-hex { stroke: none; }
+.sido-prop-ring { fill: none; stroke: var(--ink); stroke-width: 0.6; }
+.sido-prop-label { fill: var(--ink); font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+.sido-prop-label.on-disc { fill: #fff; stroke: rgba(0,0,0,0.5); stroke-width: 2.4px; }
+.sido-prop-legend { fill: var(--ink-soft); font-size: 9px; }
 .metro-hex-label { fill: var(--ink); }
 .council-hex-sido-label { fill: var(--ink); opacity: 0.35; }
 

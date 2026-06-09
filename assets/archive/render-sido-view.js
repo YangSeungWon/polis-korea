@@ -1,7 +1,23 @@
-// 시도 결과 — 헥스/지도 토글. races(scope=sido) 계산·섹션 표시 후 두 렌더러에 위임.
-// opts: {tc='3'(광역단체장)|'1'(대선), hostId}. governorHex.draw + sidoMap.draw 사용.
+// 시도 결과 뷰 — 모드 토글. races(scope=sido) 계산·섹션 표시 후 렌더러 위임.
+//   대선(tc=1): 격자 / dorling — 둘 다 득표 비례(승자독식 단색 거부).
+//   지선 광역장(tc=3): 헥스 / 지도 — 시도마다 1명 실제 당선이라 1위 단색이 사실에 맞음.
+// opts: {tc, hostId}.
 
 (function () {
+  // tc별 모드 정의: {key, label, draw(viewEl, races)}
+  function modesFor(tc, A) {
+    if (tc === '1') {
+      return [
+        { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
+        { key: 'dorling', label: 'dorling', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
+      ];
+    }
+    return [
+      { key: 'hex', label: '헥스', draw: (el, rs) => A.governorHex?.draw?.(el, rs) },
+      { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs) },
+    ];
+  }
+
   function init(ctx, opts) {
     opts = opts || {};
     const tc = opts.tc || '3';
@@ -16,20 +32,21 @@
     if (!races.length) { section?.setAttribute('hidden', ''); return; }
     section?.removeAttribute('hidden');
 
-    host.innerHTML = `
-      <div class="ar-sido-toggle" role="tablist" aria-label="보기 전환">
-        <button type="button" class="ar-sido-tab is-active" data-view="hex" aria-selected="true">헥스</button>
-        <button type="button" class="ar-sido-tab" data-view="map" aria-selected="false">지도</button>
-      </div>
-      <div class="ar-sido-view" data-view="hex"></div>
-      <div class="ar-sido-view" data-view="map" hidden></div>`;
+    const modes = modesFor(tc, A).filter((m) => typeof m.draw === 'function');
+    if (!modes.length) return;
 
-    const hexView = host.querySelector('.ar-sido-view[data-view="hex"]');
-    const mapView = host.querySelector('.ar-sido-view[data-view="map"]');
-    A.governorHex?.draw?.(hexView, races);
-    const mapDrawn = A.sidoMap?.draw?.(mapView, races);
-    // 지도 모듈 없거나 실패하면 토글 숨김 (헥스만)
-    if (!A.sidoMap) host.querySelector('.ar-sido-toggle')?.setAttribute('hidden', '');
+    const tabs = modes.map((m, i) =>
+      `<button type="button" class="ar-sido-tab${i === 0 ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${i === 0}">${m.label}</button>`
+    ).join('');
+    const views = modes.map((m, i) =>
+      `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
+    ).join('');
+    host.innerHTML = `<div class="ar-sido-toggle" role="tablist" aria-label="보기 전환">${tabs}</div>${views}`;
+
+    for (const m of modes) {
+      const el = host.querySelector(`.ar-sido-view[data-view="${m.key}"]`);
+      if (el) m.draw(el, races);
+    }
 
     host.querySelectorAll('.ar-sido-tab').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -44,7 +61,6 @@
         });
       });
     });
-    return mapDrawn;
   }
 
   window.Archive = window.Archive || {};
