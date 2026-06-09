@@ -58,6 +58,19 @@ VCCP08 동-레벨이 9대부터. 5~8대는 시군구-union만 가능(농촌·통
 동-레벨 필요해 미해결**). build `sgg_union` 모드 + 5~8 결과는 기반만(미게이트). 도심 분할은
 나무위키/관보 국회의원선거법 별표의 선거구별 법정동 구역 → 행정동 변환 필요.
 
+## 지선 geo 지도 (history, 별도 단위)
+총선이 선거구 단위라면 지선은 **광역장/교육감=시도, 기초장=시군구** 단위. `render-local-geo.js`
+`renderLocalGeoMap(unit)`가 총선 Leaflet 인프라(geoLeafletMap·mini-map·시도 외곽선·_districtStyleFor)를
+재사용해 단색 chloropleth로 그린다(단체장 1명 당선 → 승자독식 단색이 정확). hex의 lifecycle/alias
+(effectiveCell·resultForSido/resultForSigungu) 그대로 적용.
+- **광역장/교육감(시도, `sido_simple`)**: 전 회차. 단 옛 지선은 광역장이 scope sido만이라
+  adaptNewSchema가 offices.sigungu(scope sigungu 필터)에서 누락 → fallback(시군구 breakdown 없으면
+  scope-sido 행)으로 1~4회 복원. resultForSido는 양쪽 canonSido 정규화.
+- **기초장(시군구, `sigungu_simple` base_year 2018)**: 7~9회만 게이트(LOCAL_SGG_GEO_ROUNDS).
+  옛 회차(1~6회)는 통합전 시군구(마산·진해·여천·청원…)라 현재 경계로 못 그림 → **회차별 SGIS 시군구 경계
+  복원이 후속 과제**(bnd_sigungu 1995/2000/2002/2006/2010/2014, 총선 sgg_fallback과 동일 소스). 그 전엔 hex.
+- html script 태그 변경 시 `build_static.py` 재생성 필수(clean-URL 정적 페이지).
+
 ## 출처·라이선스
 통계청 SGIS(출처표시·영리가능) · NEC 개표현황(공개) · vuski/admdongkor · WWolf/korea-election ·
 OhmyNews(21·22, MIT). `data/geo/district_reconstructed.LICENSE` 참조.
