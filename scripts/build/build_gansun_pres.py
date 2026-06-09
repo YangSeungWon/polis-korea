@@ -39,9 +39,14 @@ GAN = {
 }
 
 
+HANJA = {"이승만": "李承晩", "김구": "金九", "안재홍": "安在鴻", "박정희": "朴正熙",
+         "최규하": "崔圭夏", "전두환": "全斗煥", "유치송": "柳致松", "김종철": "金鍾哲", "김의택": "金義澤"}
+
+
 def build(n):
     slug, date, method, desc, cands = GAN[n]
-    nat_cands = [{"name": nm, "party": pty, "votes": v, "pct": pct, "rank": i + 1, "won": i == 0}
+    nat_cands = [{"name": nm, "party": pty, "votes": v, "pct": pct, "rank": i + 1, "won": i == 0,
+                  **({"name_hanja": HANJA[nm]} if nm in HANJA else {})}
                  for i, (nm, pty, v, pct) in enumerate(cands)]
     total = sum(c[2] for c in cands)
     nation = {"sg_typecode": "1", "sido": "전국", "sigungu": "전국", "scope": "nation",

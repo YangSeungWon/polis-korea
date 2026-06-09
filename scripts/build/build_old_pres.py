@@ -49,6 +49,10 @@ ROUNDS = {
     7: ("7th-pres-1971", "1971-04-27", "박정희 vs 김대중"),
 }
 DATE = {n: v[1].replace("-", "") for n, v in ROUNDS.items()}
+# 직선 대선 주요 후보 한자(확정). 개표현황엔 한자 없어 별도 맵.
+HANJA = {"이승만": "李承晩", "조봉암": "曺奉岩", "이시영": "李始榮", "신흥우": "申興雨",
+         "박정희": "朴正熙", "윤보선": "尹潽善", "변영태": "卞榮泰", "김대중": "金大中",
+         "신익희": "申翼熙", "김준연": "金俊淵", "전진한": "錢鎭漢"}
 SIDO_ORDER = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "경기도",
               "강원특별자치도", "충청북도", "충청남도", "전북특별자치도", "전라남도",
               "경상북도", "경상남도", "제주특별자치도"]
@@ -78,7 +82,8 @@ def build(n):
         total = sum(c["votes"] for c in cs) or 1
         scs = sorted(cs, key=lambda c: -c["votes"])
         cands = [{"name": c["name"], "party": c["party"], "votes": c["votes"],
-                  "pct": round(c["votes"] / total * 100, 2), "rank": i + 1, "won": i == 0}
+                  "pct": round(c["votes"] / total * 100, 2), "rank": i + 1, "won": i == 0,
+                  **({"name_hanja": HANJA[c["name"]]} if c["name"] in HANJA else {})}
                  for i, c in enumerate(scs)]
         sido_races.append({"sg_typecode": "1", "sido": sido, "sigungu": sido, "scope": "sido",
                            "valid_votes": total, "candidates": cands})
@@ -91,7 +96,8 @@ def build(n):
     ntotal = sum(natv.values()) or 1
     nat = sorted(natv.items(), key=lambda x: -x[1])
     nat_cands = [{"name": nm, "party": party_of[nm], "votes": v,
-                  "pct": round(v / ntotal * 100, 2), "rank": i + 1, "won": i == 0}
+                  "pct": round(v / ntotal * 100, 2), "rank": i + 1, "won": i == 0,
+                  **({"name_hanja": HANJA[nm]} if nm in HANJA else {})}
                  for i, (nm, v) in enumerate(nat)]
     nation = {"sg_typecode": "1", "sido": "전국", "sigungu": "전국", "scope": "nation",
               "valid_votes": ntotal, "candidates": nat_cands}
