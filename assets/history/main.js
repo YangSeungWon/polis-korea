@@ -53,20 +53,25 @@ async function renderAll() {
   const HEX_DISTRICT = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];  // 지역구 hex 레이아웃 보유
   const geoSupported = state.type === 'national_assembly' && GEO_GENERAL.includes(state.n);
   const hexSupported = geoSupported && HEX_DISTRICT.includes(state.n);
-  // 지선 geo — 광역장/교육감 시도(전 회차), 기초장 시군구(최근 회차). render-local-geo.js.
+  // 지선 geo — 광역장/교육감 시도(전 회차), 기초장 시군구(회차별). 대선 geo — 시군구 margin 명도(16~20대).
   const localGeo = (typeof localGeoSupported === 'function') && localGeoSupported(unit, state.n);
+  const presGeo = (typeof presGeoSupported === 'function') && presGeoSupported(state.n);
   // 요소 누락(캐시된 옛 HTML 등)에도 깨지지 않게 null guard
   const toggle = (sel, hide) => { const el = $(sel); if (el) el.toggleAttribute('hidden', hide); };
-  // Hex+지도 토글: 총선은 둘 다 있는 회차(17~22), 지선은 localGeo 회차. 9~16 총선은 지도 전용 → 숨김·강제.
-  toggle('#display-seg', !(hexSupported || localGeo));
+  // Hex+지도 토글: 총선 9~22·지선 전회차·대선 16~20. 9~16 총선은 지도 전용 → 숨김·강제.
+  toggle('#display-seg', !(hexSupported || localGeo || presGeo));
   const effDisplay = (geoSupported && !hexSupported) ? 'geo' : state.display;
-  const showGeo = (geoSupported || localGeo) && effDisplay === 'geo';
+  const showGeo = (geoSupported || localGeo || presGeo) && effDisplay === 'geo';
   toggle('#hex', showGeo || unit !== 'sido');
   toggle('#hex2', showGeo || unit === 'sido');
   toggle('#geomap', !showGeo);
   // 사이즈 토글은 시군구 hex + 표심 분포 의미 있는 type만 (대선·옛 총선). 지선·geo 모드는 숨김.
   toggle('#sizing-seg', showGeo || unit !== 'sigungu' || state.type === 'local');
-  if (showGeo) await (state.type === 'local' ? renderLocalGeoMap(unit) : renderGeoMap());
+  if (showGeo) {
+    if (state.type === 'local') await renderLocalGeoMap(unit);
+    else if (state.type === 'presidential') await renderPresGeoMap();
+    else await renderGeoMap();
+  }
   else if (unit === 'sido') renderSidoHex();
   else if (unit === 'district') await renderDistrictHex();
   else renderSigunguHex();
