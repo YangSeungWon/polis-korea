@@ -68,8 +68,11 @@ def build(n: int):
         cs = sorted(cs, key=lambda c: -(c.get("votes") or 0))
         cands = []
         for i, c in enumerate(cs):
-            cands.append({"name": c["name"], "party": c["party"], "votes": c.get("votes") or 0,
-                          "pct": c.get("pct"), "rank": i + 1, "won": True})  # 당선인명부=전원 당선
+            cd = {"name": c["name"], "party": c["party"], "votes": c.get("votes") or 0,
+                  "pct": c.get("pct"), "rank": i + 1, "won": True}  # 당선인명부=전원 당선
+            if c.get("hanja"):
+                cd["name_hanja"] = c["hanja"]
+            cands.append(cd)
             seat[c["party"]] += 1
         races.append({"sg_typecode": "2", "scope": "district", "sido": sido, "sigungu": sgg,
                       "district": sgg, "candidates": cands})
