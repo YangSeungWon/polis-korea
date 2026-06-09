@@ -14,6 +14,8 @@ function activeOfficeData() {
 const SIGUNGU_SIDO_HISTORY = {
   '군위군': ['대구광역시', '경상북도'],
 };
+// 시도 통합(전남·광주 → 전남광주특별시)은 assets/regions.js의 전역 SIDO_MERGE 재사용
+// (polls 코드도 동일 전역 사용). 분리된 광주/전남 조회 시 통합 시도 결과 broadcast 용도 — resultForSido.
 // 행정구역 변경 — hex name → 데이터 name 후보들 (list).
 const SIGUNGU_NAME_HISTORY = {
   '세종시':         ['세종특별자치시', '연기군'],  // 데이터 name 형식 차이 + 옛 충남 연기군
@@ -172,7 +174,11 @@ function resultForSido(sido) {
   const data = activeOfficeData();
   if (!data?.sigungu) return null;
   // 양쪽 정규화 — layout key가 옛 명칭('강원도')이어도 데이터('강원도'→canon '강원특별자치도')와 매칭.
-  const matched = data.sigungu.filter((r) => canonSido(r.sido) === canonSido(sido));
+  let matched = data.sigungu.filter((r) => canonSido(r.sido) === canonSido(sido));
+  // 통합 시도 fallback — 광주/전남 분리 조회인데 데이터는 전남광주특별시 병합(9회). regions.js 전역.
+  if (!matched.length && typeof SIDO_MERGE !== 'undefined' && SIDO_MERGE[sido]) {
+    matched = data.sigungu.filter((r) => canonSido(r.sido) === SIDO_MERGE[sido]);
+  }
   if (!matched.length) return null;
   // broadcast (같은 시도 시군구 모두 동일) 인 경우는 첫 결과 그대로
   if (data._meta?.granularity === 'sido_broadcast' || state.results?._meta?.granularity === 'sido_broadcast') {
