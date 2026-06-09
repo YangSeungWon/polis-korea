@@ -316,7 +316,7 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. 3사(KBS·MBC·SBS)와 JTBC 분리 표시. 시도별 1위 일치율·평균 오차 자동 계산.</p>
+    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(한국리서치·입소스·코리아리서치 컨소시엄, 1,980개 투표소) — 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>이라 값이 다름. JTBC는 별도. 시도별 1위 일치율·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -346,7 +346,7 @@ SECTIONS_PRES = HISTORY_LINK_PRES + """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. KBS·MBC·SBS 방송 3사, JTBC 권역별. 전국 적중·평균 오차 자동 계산.</p>
+    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(한국리서치·입소스·코리아리서치 컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>. JTBC는 별도. 전국 적중·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 """
@@ -401,7 +401,7 @@ SECTIONS_GENERAL = HISTORY_LINK_GENERAL + """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. 방송사별 정당 의석 예측 범위 vs 실제. 범위 안 적중 자동 계산.</p>
+    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>(기준점·접전구 처리 차이). JTBC는 별도. 범위 안 적중 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 """
