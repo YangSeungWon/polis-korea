@@ -58,7 +58,8 @@ def _ndong(s):
     """동명 정규화 — 제N동('창신제1동'→'창신1동'), 구분자(·ㆍ/→,), 구시군 접두('연기군 부용면'→'부용면')."""
     s = re.sub(r"^[가-힣]+[시군구] ", "", s)  # NEC '연기군 부용면' 접두 제거
     s = re.sub(r"제(\d)", r"\1", s)
-    s = re.sub(r"[·ㆍ./]", ",", s)            # 두류1·2동 ↔ 두류1,2동
+    s = re.sub(r"[·ㆍ.,/]", "", s)            # 구분자 제거: 용담·명암·산성동 ↔ 용담명암산성동, 두류1·2동↔두류1,2동
+    s = s.replace("릉", "능")                 # 정릉↔정능 등 능/릉(陵) 표기 변종
     return s
 
 
@@ -171,13 +172,17 @@ def main(n: int):
                     if len(cands) > 1:  # 동명 충돌 → 구코드 변환 tiebreak
                         cands = [c for c in cands if c[:4] == s2 + nec_sgg[2:]] or cands
                     got = cands[:1]
-                if not got:  # 퍼지 fallback — 동 통합/개명(청운동→청운효자동). base가 SGIS명에 포함
-                    conv = s2 + nec_sgg[2:]
+                conv = s2 + nec_sgg[2:]
+                if not got:  # 정방향 퍼지 — NEC 동통합(청운동→청운효자동): base가 SGIS명 prefix
                     b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
-                    if len(b) >= 2:
-                        fz = [c for c, nm in sido_names.get(s2, []) if nm.startswith(b)]
-                        fz = [c for c in fz if c[:4] == conv] or fz  # 구코드 우선
-                        got = fz[:1]
+                    if len(b) >= 2:  # conv 구로 제한 — 엉뚱한 구 동명 오매칭 방지(분당 vs 남양주 금곡동)
+                        got = [c for c, nm in sido_names.get(s2, []) if nm.startswith(b) and c[:4] == conv][:1]
+                if not got:  # 역방향 퍼지 — NEC 통합명(용담명암산성동) ⊇ SGIS 분리동 base들
+                    nn = _ndong(dong)
+                    for c, nm in sido_names.get(s2, []):
+                        bb = re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm)
+                        if c[:4] == conv and len(bb) >= 2 and bb in nn:
+                            got.append(c)
                 if not got:
                     miss_dong += 1; continue
                 district_cds[key].update(got)

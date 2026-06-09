@@ -69,11 +69,12 @@ def parse_report(html):
             out.setdefault(cur, set())
         if cur is None or tugu in ("", "계", "소계") or SKIP_ROW.search(tugu):
             continue
-        m = re.match(r"^(.+?[동읍면리가])제?\d*투?$", tugu)
-        dong = m.group(1) if m else tugu
-        dong = re.sub(r"제\d+$", "", dong)
-        if dong:
-            out[cur].add(dong)
+        clean = re.sub(r"제\d+투$", "", tugu)  # 끝 투표구번호 제거
+        if len(re.findall(r"[동읍면리]", clean)) <= 1:
+            out[cur].add(clean)  # 단일 동 (종로1·2·3·4가동 등 · 포함명 보존)
+        else:  # 합동투표구(잠실제3동제5투잠실1동잠실2동) — 동 토큰 모두 추출
+            for d in re.findall(r"[가-힣]+\d*[동읍면리]", re.sub(r"제\d+투", "", clean)):
+                out[cur].add(d)
     return out
 
 
