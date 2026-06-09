@@ -170,10 +170,14 @@ function adaptNewSchema(raw, type) {
     const officeTc = { '광역단체장': '3', '기초단체장': '4', '교육감': '11' };
     for (const [office, tc] of Object.entries(officeTc)) {
       const sidoRaces = races.filter((r) => r.scope === 'sido' && r.sg_typecode === tc);
+      const sggRows = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === tc)
+                           .map(_raceToOldRow);
       out.offices[office] = {
         national: _aggSidoToNation(sidoRaces),
-        sigungu: races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === tc)
-                      .map(_raceToOldRow),
+        // 시군구 breakdown 있으면 그걸 사용(시도 집계 + 시군구 드릴) — 5~8회.
+        // 없으면(옛 1~4회·9회 광역장/교육감은 scope sido만) 시도 행으로 fallback →
+        // resultForSido가 시도당 1행을 그대로 집계해 광역장/교육감 시도뷰가 뜬다.
+        sigungu: sggRows.length ? sggRows : sidoRaces.map(_raceToOldRow),
       };
     }
   }

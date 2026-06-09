@@ -171,7 +171,8 @@ function resultForDistrict(sido, name) {
 function resultForSido(sido) {
   const data = activeOfficeData();
   if (!data?.sigungu) return null;
-  const matched = data.sigungu.filter((r) => canonSido(r.sido) === sido);
+  // 양쪽 정규화 — layout key가 옛 명칭('강원도')이어도 데이터('강원도'→canon '강원특별자치도')와 매칭.
+  const matched = data.sigungu.filter((r) => canonSido(r.sido) === canonSido(sido));
   if (!matched.length) return null;
   // broadcast (같은 시도 시군구 모두 동일) 인 경우는 첫 결과 그대로
   if (data._meta?.granularity === 'sido_broadcast' || state.results?._meta?.granularity === 'sido_broadcast') {
