@@ -90,7 +90,8 @@ function renderSidoHex() {
     t1.setAttribute('x', cx);
     t1.setAttribute('y', cy + 2);
     t1.setAttribute('text-anchor', 'middle');
-    t1.setAttribute('fill', top ? '#fff' : '#1b2237');
+    const txtCol = top ? pickTextColor(fill, opacity) : 'var(--ink)';
+    t1.setAttribute('fill', txtCol);
     t1.setAttribute('font-weight', '700');
     t1.setAttribute('font-size', '15');
     t1.setAttribute('pointer-events', 'none');
@@ -103,7 +104,7 @@ function renderSidoHex() {
       t2.setAttribute('x', cx);
       t2.setAttribute('y', cy + 20);
       t2.setAttribute('text-anchor', 'middle');
-      t2.setAttribute('fill', '#fff');
+      t2.setAttribute('fill', txtCol);
       t2.setAttribute('font-size', '11');
       t2.setAttribute('pointer-events', 'none');
       const lbl = candLabel(top);

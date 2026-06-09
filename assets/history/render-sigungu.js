@@ -114,7 +114,7 @@ function renderSigunguHex() {
         t.setAttribute('dominant-baseline', 'middle');
         t.setAttribute('font-size', '44');
         t.setAttribute('font-weight', '800');
-        t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+        t.setAttribute('class', 'hist-sido-bg-label');
         t.setAttribute('pointer-events', 'none');
         t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
         t.textContent = lbl;
@@ -177,10 +177,8 @@ function renderSigunguHex() {
         txt.setAttribute('y', cy0 - 8);
         txt.setAttribute('font-size', label.short.length > 3 ? '6' : '8');
         txt.setAttribute('font-weight', '700');
-        txt.setAttribute('fill', '#0a0e1a');
-        txt.setAttribute('stroke', 'rgba(255,255,255,0.92)');
-        txt.setAttribute('stroke-width', '3');
-        txt.setAttribute('paint-order', 'stroke fill');
+        // 격자 모드 시군구 라벨 — bg halo로 모든 배경 위에 가독성 (테마-인지).
+        txt.setAttribute('class', 'hist-sigungu-label');
         txt.setAttribute('pointer-events', 'none');
         txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
         txt.textContent = label.short;
@@ -295,7 +293,7 @@ function renderSigunguHex() {
       t.setAttribute('dominant-baseline', 'middle');
       t.setAttribute('font-size', '44');
       t.setAttribute('font-weight', '800');
-      t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+      t.setAttribute('class', 'hist-sido-bg-label');
       t.setAttribute('pointer-events', 'none');
       t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       t.textContent = lbl;
@@ -365,7 +363,8 @@ function renderSigunguHex() {
           txt.setAttribute('text-anchor', 'middle');
           txt.setAttribute('font-size', '7');
           txt.setAttribute('font-weight', '600');
-          txt.setAttribute('fill', '#fff');
+          // dorling 원 내부 텍스트 — 배경(1위 정당색)에 맞춰 자동.
+          txt.setAttribute('fill', n.fill ? pickTextColor(n.fill) : 'var(--ink)');
           txt.setAttribute('pointer-events', 'none');
           txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
           txt.textContent = lbl.short;
@@ -398,7 +397,7 @@ function renderSigunguHex() {
       t.setAttribute('dominant-baseline', 'middle');
       t.setAttribute('font-size', '44');
       t.setAttribute('font-weight', '800');
-      t.setAttribute('fill', 'rgba(10,14,26,0.42)');
+      t.setAttribute('class', 'hist-sido-bg-label');
       t.setAttribute('pointer-events', 'none');
       t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       t.textContent = lbl;
@@ -448,7 +447,8 @@ function renderSigunguHex() {
       txt.setAttribute('x', cx);
       txt.setAttribute('text-anchor', 'middle');
       txt.setAttribute('font-weight', '600');
-      txt.setAttribute('fill', top ? '#fff' : '#0a0e1a');
+      // 단일 hex 셀 라벨 — 배경(정당색·투명도)에 맞춰 흰/검 자동.
+      txt.setAttribute('fill', top ? pickTextColor(fill, opacity) : 'var(--ink)');
       txt.setAttribute('pointer-events', 'none');
       txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       if (label.prefix) {

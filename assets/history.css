@@ -230,3 +230,17 @@
   .hist-close-cand { font-size: 10px; }
   .hist-close-cand:last-of-type { text-align: right; }
 }
+
+/* === history hex 텍스트 — 테마 인지 === */
+/* 시도 배경 큰 라벨 (시군구 hex 격자 모드의 cluster centroid) */
+.hist-sido-bg-label {
+  fill: var(--ink);
+  opacity: 0.35;
+}
+/* 시군구 격자 모드 작은 라벨 — bg halo 두껍게 둘러 어떤 정당색 위에도 읽힘 */
+.hist-sigungu-label {
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-width: 3;
+  paint-order: stroke fill;
+}
