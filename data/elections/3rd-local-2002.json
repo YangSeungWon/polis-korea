@@ -7,33 +7,18 @@
   "date": "2002-06-13",
   "status": "archive",
   "nec": {
-    "_note": "NEC OpenAPI 미가용 — 위키백과 infobox에서 추출"
+    "_note": "NEC 당선인명부 — 광역단체장(시도지사) 당선자"
   },
   "offices": [
     {
       "level": "광역단체장",
       "sg_typecode": "3",
       "scope": "sido"
-    },
-    {
-      "level": "기초단체장",
-      "sg_typecode": "4",
-      "scope": "sigungu"
-    },
-    {
-      "level": "광역의원",
-      "sg_typecode": "5",
-      "scope": "district"
-    },
-    {
-      "level": "기초의원",
-      "sg_typecode": "6",
-      "scope": "district"
     }
   ],
   "results_file": "data/results/3rd-local-2002.json",
-  "_source_note": "한나라당 11 · 새천년민주당 4 · 자민련 1 — 보수 압승 (월드컵 직후)",
-  "_data_caveat": "위키백과 infobox — office별 정당 합산 의석만. 시도/시군구별 break·득표 없음 (2회는 광역단체장 득표 부분 있음).",
+  "_source_note": "한나라당 광역 압승",
+  "_data_caveat": "광역단체장만 회수(기초장·광역/기초의원 미수집 — 추후).",
   "archive": {
     "page": "/archive/3rd-local-2002/",
     "results_path": "data/results/3rd-local-2002.json",
@@ -41,9 +26,9 @@
     "exit_poll_path": null,
     "polls_window": null,
     "sg_typecode": "3",
-    "proportional_sg_typecode": null,
+    "proportional_sg_typecode": "8",
     "list_label": "확정",
-    "context_note": "광역단체장 16: 한나라당 11 · 새천년민주당 4 · 자민련 1",
-    "data_source_note": "위키백과 — nation 단위 집계 (시도/시군구 break 없음)"
+    "context_note": "한나라당 광역 압승 — 광역단체장 한나라당 11 · 새천년민주당 4 · 자민련 1",
+    "data_source_note": "NEC 당선인명부 — 광역단체장. 기초장·의원은 추후 수집."
   }
 }

@@ -3,136 +3,266 @@
     "election": "제2회 전국동시지방선거",
     "election_id": "2nd-local-1998",
     "election_date": "1998-06-04",
-    "source": "wikipedia-ko-infobox",
-    "_note": "옛 지선 — 위키백과 infobox에서 office별 (광역·기초·광역의원·기초의원) 정당별 nation 합산. 시도/시군구별 break 없음.",
-    "n_rows": 3
+    "is_final": true,
+    "source": "nec-당선인명부",
+    "_caveat": "광역단체장만 — 기초장·의원 미수집"
   },
   "races": [
     {
       "sg_typecode": "3",
-      "sido": "",
+      "sido": "서울특별시",
       "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 15102011,
-      "valid_votes": 15102011,
-      "invalid_votes": 0,
-      "abstain": 0,
+      "scope": "sido",
       "candidates": [
         {
-          "name": "",
+          "name": "고건",
           "party": "새정치국민회의",
-          "seats": 6,
-          "proportional_seats": 6,
-          "votes": 5768126,
-          "pct": 34.5,
+          "votes": 18383485350,
+          "pct": 53.5,
           "rank": 1,
           "won": true
-        },
-        {
-          "name": "",
-          "party": "한나라당",
-          "seats": 6,
-          "proportional_seats": 6,
-          "votes": 6784348,
-          "pct": 40.6,
-          "rank": 2
-        },
-        {
-          "name": "",
-          "party": "자유민주연합",
-          "seats": 4,
-          "proportional_seats": 4,
-          "votes": 2549537,
-          "pct": 15.3,
-          "rank": 3
         }
-      ],
-      "turnout_pct": 52.7
+      ]
     },
     {
-      "sg_typecode": "4",
-      "sido": "",
+      "sg_typecode": "3",
+      "sido": "부산광역시",
       "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 0,
-      "valid_votes": 0,
-      "invalid_votes": 0,
-      "abstain": 0,
+      "scope": "sido",
       "candidates": [
         {
-          "name": "",
-          "party": "새정치국민회의",
-          "seats": 84,
-          "proportional_seats": 84,
-          "votes": 0,
-          "pct": 0.0,
+          "name": "안상영",
+          "party": "한나라당",
+          "votes": 5589094510,
+          "pct": 45.1,
           "rank": 1,
           "won": true
-        },
-        {
-          "name": "",
-          "party": "한나라당",
-          "seats": 74,
-          "proportional_seats": 74,
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 2
-        },
-        {
-          "name": "",
-          "party": "자유민주연합",
-          "seats": 29,
-          "proportional_seats": 29,
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 3
         }
-      ],
-      "turnout_pct": 52.7
+      ]
     },
     {
-      "sg_typecode": "5",
-      "sido": "",
+      "sg_typecode": "3",
+      "sido": "대구광역시",
       "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 0,
-      "valid_votes": 0,
-      "invalid_votes": 0,
-      "abstain": 0,
+      "scope": "sido",
       "candidates": [
         {
-          "name": "",
-          "party": "새정치국민회의",
-          "seats": 303,
-          "proportional_seats": 303,
-          "votes": 0,
-          "pct": 0.0,
+          "name": "문희갑",
+          "party": "한나라당",
+          "votes": 5701677200,
+          "pct": 72,
           "rank": 1,
           "won": true
-        },
-        {
-          "name": "",
-          "party": "한나라당",
-          "seats": 253,
-          "proportional_seats": 253,
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 2
-        },
-        {
-          "name": "",
-          "party": "자유민주연합",
-          "seats": 95,
-          "proportional_seats": 95,
-          "votes": 0,
-          "pct": 0.0,
-          "rank": 3
         }
-      ],
-      "turnout_pct": 52.7
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "최기선",
+          "party": "자유민주연합",
+          "votes": 3750515350,
+          "pct": 53.5,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "고재유",
+          "party": "새정치국민회의",
+          "votes": 2615786720,
+          "pct": 67.2,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "홍선기",
+          "party": "자유민주연합",
+          "votes": 2862557370,
+          "pct": 73.7,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "울산광역시",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "심완구",
+          "party": "한나라당",
+          "votes": 1604914270,
+          "pct": 42.7,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "경기도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "임창열",
+          "party": "새정치국민회의",
+          "votes": 15491895430,
+          "pct": 54.3,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "강원도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "김진선",
+          "party": "한나라당",
+          "votes": 2685593930,
+          "pct": 39.3,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "충청북도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "이원종",
+          "party": "자유민주연합",
+          "votes": 4515337410,
+          "pct": 74.1,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "충청남도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "심대평",
+          "party": "자유민주연합",
+          "votes": 6567958460,
+          "pct": 84.6,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "전라북도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "유종근",
+          "party": "새정치국민회의",
+          "votes": 75814110000,
+          "pct": 100,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "전라남도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "허경만",
+          "party": "새정치국민회의",
+          "votes": 91830010000,
+          "pct": 100,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "경상북도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "이의근",
+          "party": "한나라당",
+          "votes": 9117287200,
+          "pct": 72,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "경상남도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "김혁규",
+          "party": "한나라당",
+          "votes": 9393587460,
+          "pct": 74.6,
+          "rank": 1,
+          "won": true
+        }
+      ]
+    },
+    {
+      "sg_typecode": "3",
+      "sido": "제주도",
+      "sigungu": "",
+      "scope": "sido",
+      "candidates": [
+        {
+          "name": "우근민",
+          "party": "새정치국민회의",
+          "votes": 1396955280,
+          "pct": 52.8,
+          "rank": 1,
+          "won": true
+        }
+      ]
     }
   ]
 }

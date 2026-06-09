@@ -7,28 +7,18 @@
   "date": "1995-06-27",
   "status": "archive",
   "nec": {
-    "_note": "NEC OpenAPI 미가용 — 위키백과 article body에서 추출"
+    "_note": "NEC 당선인명부 — 광역단체장(시도지사) 당선자"
   },
   "offices": [
     {
       "level": "광역단체장",
       "sg_typecode": "3",
       "scope": "sido"
-    },
-    {
-      "level": "기초단체장",
-      "sg_typecode": "4",
-      "scope": "sigungu"
-    },
-    {
-      "level": "광역의원",
-      "sg_typecode": "5",
-      "scope": "district"
     }
   ],
   "results_file": "data/results/1st-local-1995.json",
-  "_source_note": "민자 5·민주 4·자민련 4·무소속 2 — 김영삼 정부 평가, 첫 동시지방선거",
-  "_data_caveat": "위키백과 article body wikitable — 광역단체장 15 시도 1위 후보·득표 + 기초단체장·광역의원 정당 합산. 기초의원은 정당공천 없음 (4541명 무소속).",
+  "_source_note": "첫 전국동시지방선거 — 민선 자치 부활",
+  "_data_caveat": "광역단체장만 회수(기초장·광역/기초의원 미수집 — 추후).",
   "archive": {
     "page": "/archive/1st-local-1995/",
     "results_path": "data/results/1st-local-1995.json",
@@ -36,9 +26,9 @@
     "exit_poll_path": null,
     "polls_window": null,
     "sg_typecode": "3",
-    "proportional_sg_typecode": null,
+    "proportional_sg_typecode": "8",
     "list_label": "확정",
-    "context_note": "광역단체장 15: 민자당 5 · 민주당 4 · 자민련 4 · 무소속 2 — 첫 동시지방선거",
-    "data_source_note": "위키백과 — nation 단위 집계 (시도/시군구 break 없음)"
+    "context_note": "첫 전국동시지방선거 — 민선 자치 부활 — 광역단체장 민주자유당 5 · 민주당 4 · 자유민주연합 4 · 무소속 2",
+    "data_source_note": "NEC 당선인명부 — 광역단체장. 기초장·의원은 추후 수집."
   }
 }
