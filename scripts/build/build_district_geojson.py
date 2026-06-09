@@ -11,7 +11,7 @@
 """
 from __future__ import annotations
 import csv, json, re, sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import shapefile  # pyshp
@@ -155,37 +155,75 @@ def main(n: int):
                 if not cds:
                     miss_dong += 1; continue
                 district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
-    else:  # nec_emd: NEC 투표구별 (시도, 동) → SGIS. 시도코드 변환(행정표준→통계청)
-        for r in json.loads(cfg["emd"].read_text(encoding="utf-8")):
+    else:  # nec_emd: NEC 투표구별. 하드코딩 conv 대신 데이터로 NEC구→SGIS구 학습 + 기하 소거.
+        recs = json.loads(cfg["emd"].read_text(encoding="utf-8"))
+        # Pass 1: 고유(단일 후보) 동매칭으로 NEC sgg_code → SGIS 구코드 학습 (구 번호 불일치 대응)
+        gu_vote = defaultdict(Counter)
+        for r in recs:
+            s2 = NEC2SGIS.get(str(r["sgg_code"])[:2], str(r["sgg_code"])[:2])
+            for dong in r["dongs"]:
+                d = re.sub(r"^[가-힣]+[시군구] ", "", dong)
+                cands = sido_dong_idx.get((s2, d)) or sido_dong_idx.get((s2, _ndong(d))) or []
+                if len(cands) == 1:
+                    gu_vote[str(r["sgg_code"])][cands[0][:4]] += 1
+        gu_map = {sgg: cnt.most_common(1)[0][0] for sgg, cnt in gu_vote.items()}
+
+        # Pass 2: 학습된 구로 매칭(충돌 tiebreak·퍼지 제한). 미매칭 추적.
+        unmatched = defaultdict(list)  # key → [(SGIS구, dong)]
+        for r in recs:
             sido_short = SIDO_SHORT.get(r["sido"], r["sido"])
             key = (sido_short, r["district"])
             nec_sgg = str(r["sgg_code"])
             s2 = NEC2SGIS.get(nec_sgg[:2], nec_sgg[:2])
+            gu = gu_map.get(nec_sgg)
             for dong in r["dongs"]:
                 total_dong += 1
-                dong = re.sub(r"^[가-힣]+[시군구] ", "", dong)  # '연기군 부용면' 접두 제거(alias 앞)
+                dong = re.sub(r"^[가-힣]+[시군구] ", "", dong)  # '연기군 부용면' 접두 제거
                 alias = DONG_ALIAS.get((sido_short, dong))
-                if alias:  # 개명·분동 — 지정 SGIS 동(들) 전부
+                if alias:  # 개명·분동 — 지정 SGIS 동(들)
                     got = [c for t in alias for c in sido_dong_idx.get((s2, t), [])]
                 else:
                     cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
-                    if len(cands) > 1:  # 동명 충돌 → 구코드 변환 tiebreak
-                        cands = [c for c in cands if c[:4] == s2 + nec_sgg[2:]] or cands
+                    if len(cands) > 1 and gu:  # 동명 충돌 → 학습된 구로 tiebreak (conv 가정 대신)
+                        cands = [c for c in cands if c[:4] == gu] or cands
                     got = cands[:1]
-                conv = s2 + nec_sgg[2:]
-                if not got:  # 정방향 퍼지 — NEC 동통합(청운동→청운효자동): base가 SGIS명 prefix
+                if not got and gu:  # 정방향 퍼지(학습 구 제한): 동통합 청운동→청운효자동
                     b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
-                    if len(b) >= 2:  # conv 구로 제한 — 엉뚱한 구 동명 오매칭 방지(분당 vs 남양주 금곡동)
-                        got = [c for c, nm in sido_names.get(s2, []) if nm.startswith(b) and c[:4] == conv][:1]
-                if not got:  # 역방향 퍼지 — NEC 통합명(용담명암산성동) ⊇ SGIS 분리동 base들
+                    if len(b) >= 2:
+                        got = [c for c, nm in sido_names.get(s2, []) if nm.startswith(b) and c[:4] == gu][:1]
+                if not got and gu:  # 역방향 퍼지(학습 구 제한): 용담명암산성동 ⊇ 용담동+…
                     nn = _ndong(dong)
-                    for c, nm in sido_names.get(s2, []):
-                        bb = re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm)
-                        if c[:4] == conv and len(bb) >= 2 and bb in nn:
-                            got.append(c)
+                    got = [c for c, nm in sido_names.get(s2, [])
+                           if c[:4] == gu and len(re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm)) >= 2
+                           and re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm) in nn]
                 if not got:
-                    miss_dong += 1; continue
+                    miss_dong += 1
+                    if gu:
+                        unmatched[key].append((gu, dong))
+                    continue
                 district_cds[key].update(got)
+
+        # Pass 3: 기하 소거 — 고아 SGIS 동(어느 선거구에도 미배정)을, 그 구에서 미매칭 선거구가
+        # 하나뿐일 때 그 선거구로 강제(이름 추측 0·소거로 정답). count 가드로 과배정 방지.
+        assigned = set().union(*district_cds.values()) if district_cds else set()
+        all_in_gu = defaultdict(list)
+        for c in geom_by_cd:
+            all_in_gu[c[:4]].append(c)
+        gu_unmatched_sgg = defaultdict(lambda: defaultdict(int))  # 구 → {선거구: 미매칭수}
+        for k, lst in unmatched.items():
+            for gu, d in lst:
+                gu_unmatched_sgg[gu][k] += 1
+        filled = 0
+        for gu, sgg_cnt in gu_unmatched_sgg.items():
+            if len(sgg_cnt) != 1:
+                continue  # 두 선거구가 미매칭 → 애매, 건너뜀
+            k, ucnt = next(iter(sgg_cnt.items()))
+            orphans = [c for c in all_in_gu.get(gu, []) if c not in assigned]
+            if orphans and len(orphans) <= ucnt:  # 과배정 방지(김천류 conv오염 차단)
+                district_cds[k].update(orphans)
+                filled += len(orphans)
+        if filled:
+            print(f"소거 확정 고아 동: {filled}개", file=sys.stderr)
 
     # 4) 선거구별 union
     features = []
