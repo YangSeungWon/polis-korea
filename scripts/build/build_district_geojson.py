@@ -10,7 +10,7 @@
 사용(venv): /tmp/geoenv/bin/python scripts/build/build_district_geojson.py 20
 """
 from __future__ import annotations
-import csv, json, sys
+import csv, json, re, sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -23,16 +23,28 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # 회차별 입력
 CFG = {
-    20: dict(year=2016,
+    20: dict(mode="wwolf", year=2016,
              wwolf=ROOT / "data/raw/wwolf/2016general_cand_full.tsv",
              match=ROOT / "data/raw/admdongkor/match_20.csv",
              shp=ROOT / "data/raw/sgis/bnd_dong_2016/bnd_dong_00_2016_4Q.shp",
              # 선거시점(2016-02) 경계 — SGIS 2016-4Q가 재코딩한 동(부천 구폐지) fallback
              fallback=ROOT / "data/raw/admdongkor/hangjeongdong_20160201.geojson",
              results=ROOT / "data/results/national_assembly_20.json"),
+    19: dict(mode="nec_emd", year=2012,
+             emd=ROOT / "data/raw/nec/district_emd_19.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2012/bnd_dong_00_2012.shp",
+             results=ROOT / "data/results/national_assembly_19.json"),
+    18: dict(mode="nec_emd", year=2008,
+             emd=ROOT / "data/raw/nec/district_emd_18.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2008/bnd_dong_00_2008.shp",
+             results=ROOT / "data/results/national_assembly_18.json"),
 }
 
 CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+# NEC 행정표준 시도코드 → SGIS 통계청 시도코드 (앞 2자리). nec_emd 조인용.
+NEC2SGIS = {"11": "11", "26": "21", "27": "22", "28": "23", "29": "24", "30": "25",
+            "31": "26", "51": "29", "41": "31", "42": "32", "43": "33", "44": "34",
+            "45": "35", "46": "36", "47": "37", "48": "38", "49": "39"}
 SIDO_SHORT = {
     "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구", "인천광역시": "인천",
     "광주광역시": "광주", "대전광역시": "대전", "울산광역시": "울산", "세종특별자치시": "세종",
@@ -40,6 +52,11 @@ SIDO_SHORT = {
     "충청남도": "충남", "전라북도": "전북", "전북특별자치도": "전북", "전라남도": "전남",
     "경상북도": "경북", "경상남도": "경남", "제주특별자치도": "제주",
 }
+
+
+def _ndong(s):
+    """동명 정규화 — '창신제1동'→'창신1동' (NEC vs SGIS 제N동 표기 차이)."""
+    return re.sub(r"제(\d)", r"\1", s)
 
 
 def round_coords(geom, ndigits):
@@ -65,78 +82,88 @@ def main(n: int):
         by_key[(SIDO_SHORT.get(r["sido"], r["sido"]), r["name"])] = r
     print(f"결과 선거구: {len(by_key)}개", file=sys.stderr)
 
-    # 2) WWolf: (시도약칭, 선거구명) → {선관위 동 full name}
-    sgn_to_dongs = defaultdict(set)
-    with cfg["wwolf"].open(encoding="utf-8") as f:
-        for row in csv.DictReader(f, delimiter="\t"):
-            sido = (row.get("광역") or "").strip()
-            sgg = (row.get("시군구") or "").strip()
-            emd = (row.get("읍면동") or "").strip()
-            sgn = (row.get("선거구") or "").strip()
-            # 비지리 투표분류(거소·선상·관외사전·재외 등) 제외
-            if not sgn or not emd or emd in {"합계", "계"} or "투표" in emd:
-                continue
-            sgn_to_dongs[(SIDO_SHORT.get(sido, sido), sgn)].add(f"{sido} {sgg} {emd}")
-
-    # 3) 매칭표: 선관위 동 full → [adm_cd]
-    dong_to_cd = defaultdict(list)
-    with cfg["match"].open(encoding="utf-8-sig") as f:
-        for row in csv.DictReader(f):
-            cd = (row.get("adm_cd") or "").strip()
-            sm = (row.get("선거관리위원회 동이름") or "").strip()
-            if cd and sm:
-                dong_to_cd[sm].append(cd)
-
-    # 4) SGIS SHP: adm_cd → geom (5179, validity 보정)
-    sf = shapefile.Reader(str(cfg["shp"]), encoding="cp949")
+    # 2) SGIS SHP: adm_cd → geom (5179). 필드명·인코딩 연도별 자동감지
+    try:
+        sf = shapefile.Reader(str(cfg["shp"]), encoding="cp949")
+        sf.record(0)  # 인코딩 확인
+    except UnicodeDecodeError:
+        sf = shapefile.Reader(str(cfg["shp"]), encoding="utf-8")
+    fields = [f[0] for f in sf.fields[1:]]
+    CD = "ADM_CD" if "ADM_CD" in fields else "adm_dr_cd"
+    NM = "ADM_NM" if "ADM_NM" in fields else "adm_dr_nm"
     geom_by_cd = {}
+    sido_dong_idx = defaultdict(list)  # (SGIS시도2, 동명변형) → [adm_cd] (nec_emd 조인용)
     for sr in sf.iterShapeRecords():
-        cd = str(sr.record["ADM_CD"]).strip()
+        cd = str(sr.record[CD]).strip()
         g = shape(sr.shape.__geo_interface__)
         if not g.is_valid:
             g = g.buffer(0)
         geom_by_cd[cd] = g
-    print(f"SGIS 동: {len(geom_by_cd)}개", file=sys.stderr)
+        nm = str(sr.record[NM]).strip()
+        sido_dong_idx[(cd[:2], nm)].append(cd)
+        if _ndong(nm) != nm:
+            sido_dong_idx[(cd[:2], _ndong(nm))].append(cd)
+    print(f"SGIS 동: {len(geom_by_cd)}개 (필드 {CD}/{NM})", file=sys.stderr)
 
     def reproj(geom):
         return shp_transform(lambda x, y, z=None: transformer.transform(x, y), geom)
 
-    # 4b) fallback geometry — SGIS가 재코딩한 adm_cd(부천 구폐지 등). admdongkor WGS84 → 5179
-    if cfg.get("fallback") and cfg["fallback"].exists():
-        to5179 = Transformer.from_crs(4326, 5179, always_xy=True)
-        fb = json.loads(cfg["fallback"].read_text(encoding="utf-8"))
-        added = 0
-        for ft in fb.get("features", []):
-            cd = str(ft["properties"].get("adm_cd", "")).strip()
-            if not cd or cd in geom_by_cd:
-                continue
-            g = shape(ft["geometry"])
-            if not g.is_valid:
-                g = g.buffer(0)
-            geom_by_cd[cd] = shp_transform(lambda x, y, z=None: to5179.transform(x, y), g)
-            added += 1
-        print(f"fallback 추가 동: {added}개", file=sys.stderr)
+    # 3) 선거구 → {adm_cd} (모드별)
+    district_cds = defaultdict(set)
+    miss_dong = total_dong = 0
+    if cfg["mode"] == "wwolf":
+        dong_to_cd = defaultdict(list)
+        with cfg["match"].open(encoding="utf-8-sig") as f:
+            for row in csv.DictReader(f):
+                cd = (row.get("adm_cd") or "").strip()
+                sm = (row.get("선거관리위원회 동이름") or "").strip()
+                if cd and sm:
+                    dong_to_cd[sm].append(cd)
+        if cfg.get("fallback") and cfg["fallback"].exists():  # 재코딩 동(부천 구폐지) 보강
+            to5179 = Transformer.from_crs(4326, 5179, always_xy=True)
+            for ft in json.loads(cfg["fallback"].read_text(encoding="utf-8")).get("features", []):
+                cd = str(ft["properties"].get("adm_cd", "")).strip()
+                if not cd or cd in geom_by_cd:
+                    continue
+                g = shape(ft["geometry"])
+                geom_by_cd[cd] = shp_transform(lambda x, y, z=None: to5179.transform(x, y),
+                                               g if g.is_valid else g.buffer(0))
+        with cfg["wwolf"].open(encoding="utf-8") as f:
+            for row in csv.DictReader(f, delimiter="\t"):
+                sido = (row.get("광역") or "").strip(); sgg = (row.get("시군구") or "").strip()
+                emd = (row.get("읍면동") or "").strip(); sgn = (row.get("선거구") or "").strip()
+                if not sgn or not emd or emd in {"합계", "계"} or "투표" in emd:
+                    continue
+                total_dong += 1
+                cds = dong_to_cd.get(f"{sido} {sgg} {emd}")
+                if not cds:
+                    miss_dong += 1; continue
+                district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
+    else:  # nec_emd: NEC 투표구별 (시도, 동) → SGIS. 시도코드 변환(행정표준→통계청)
+        for r in json.loads(cfg["emd"].read_text(encoding="utf-8")):
+            key = (SIDO_SHORT.get(r["sido"], r["sido"]), r["district"])
+            nec_sgg = str(r["sgg_code"])
+            s2 = NEC2SGIS.get(nec_sgg[:2], nec_sgg[:2])
+            for dong in r["dongs"]:
+                total_dong += 1
+                cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
+                if not cands:
+                    miss_dong += 1; continue
+                if len(cands) > 1:  # 동명 충돌 → 구코드 변환 tiebreak
+                    conv = s2 + nec_sgg[2:]
+                    cands = [c for c in cands if c[:4] == conv] or cands
+                district_cds[key].add(cands[0])
 
-    # 5) 선거구별 union
+    # 4) 선거구별 union
     features = []
     name_to_code = {}
-    miss_dong = 0
-    total_dong = 0
     incomplete = []
     for i, ((skey, name), race) in enumerate(sorted(by_key.items())):
-        dongs = sgn_to_dongs.get((skey, name))
-        if not dongs:
-            incomplete.append((f"{skey} {name}", "WWolf 동 없음"))
+        cds = district_cds.get((skey, name))
+        if not cds:
+            incomplete.append((f"{skey} {name}", "매핑 없음"))
             continue
-        cds = []
-        for full in dongs:
-            total_dong += 1
-            got = dong_to_cd.get(full)
-            if not got:
-                miss_dong += 1
-                continue
-            cds.extend(got)
-        geoms = [geom_by_cd[c] for c in set(cds) if c in geom_by_cd]
+        geoms = [geom_by_cd[c] for c in cds if c in geom_by_cd]
         if not geoms:
             incomplete.append((name, "geom 0"))
             continue

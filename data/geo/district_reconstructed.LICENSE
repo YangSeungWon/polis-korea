@@ -17,5 +17,9 @@
 
 회차별:
   20대(2016) — SGIS 2016 + WWolf 2016 + admdongkor 2016-02 fallback. 252/253 (통영시고성군 제외).
-  19·18대 — SGIS 2012·2008 + NEC VCCP08(선거구→동) 예정.
+  19대(2012) — SGIS 2012 + NEC 투표구별(VCCP08) 선거구→동. 246/246.
+  18대(2008) — SGIS 2008 + NEC 투표구별(VCCP08) 선거구→동. 245/245.
   21·22대 — 별도 (OhmyNews GeoJSON, district_2X_geojson.LICENSE 참조).
+
+NEC 투표구별(개표현황) 선거구→읍면동 매핑: data/raw/nec/district_emd_{n}.json
+  (info.nec.go.kr electionInfo_report.xhtml VCCP08, 공개 선거데이터).

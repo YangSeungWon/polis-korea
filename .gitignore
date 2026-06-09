@@ -32,6 +32,8 @@ data/*.xls
 !data/raw/nec_roster_21gen.json
 !data/raw/nec_roster_20gen.json
 !data/raw/nec_roster_7th.json
+# 예외: NEC 투표구별 선거구→읍면동 매핑 (옛 총선 경계복원 입력·공개데이터·재스크랩 방지)
+!data/raw/nec/
 # 예외: 5~8회 기초의회 정당 의석 (위키 scrape — 재현 가능하지만 fetch 시간 절약)
 !data/raw/5th_council_party_seats.json
 !data/raw/6th_council_party_seats.json
