@@ -228,6 +228,9 @@ def main(n: int):
                 g = shape(ft["geometry"])
                 geom_by_cd[cd] = shp_transform(lambda x, y, z=None: to5179.transform(x, y),
                                                g if g.is_valid else g.buffer(0))
+        # 1차: match표(admdongkor). 실패분은 SGIS 직접매칭 폴백(match표 누락 시군구 = 밀양 등).
+        wf_fail = []                                  # 폴백 후보: (sido_short, sgn, s2, sgg, emd, cands)
+        wf_sgg_vote = defaultdict(Counter)            # (시도2, 시군구명) → {시군구코드: n} — 유일매칭 학습
         with cfg["wwolf"].open(encoding="utf-8") as f:
             for row in csv.DictReader(f, delimiter="\t"):
                 sido = (row.get("광역") or "").strip(); sgg = (row.get("시군구") or "").strip()
@@ -236,9 +239,30 @@ def main(n: int):
                     continue
                 total_dong += 1
                 cds = dong_to_cd.get(f"{sido} {sgg} {emd}")
-                if not cds:
+                if cds:
+                    district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
+                    continue
+                # 폴백: SGIS 동 직접매칭 (시도2, 동명). 시군구 모호는 학습으로 해소.
+                s2 = SIDO_SGIS2.get(sido)
+                cands = sido_dong_idx.get((s2, emd)) or sido_dong_idx.get((s2, _ndong(emd))) or []
+                if not cands:
                     miss_dong += 1; continue
-                district_cds[(SIDO_SHORT.get(sido, sido), sgn)].update(cds)
+                sgg5 = {c[:5] for c in cands}
+                if len(sgg5) == 1:
+                    wf_sgg_vote[(s2, sgg)][next(iter(sgg5))] += 1   # 유일 → 그 시군구 코드 학습
+                wf_fail.append((SIDO_SHORT.get(sido, sido), sgn, s2, sgg, emd, cands))
+        # 2차: 학습된 시군구 코드로 폴백 확정(모호 동은 같은 시군구 코드만 채택)
+        wf_learned = {k: v.most_common(1)[0][0] for k, v in wf_sgg_vote.items()}
+        wf_filled = 0
+        for sido_short, sgn, s2, sgg, emd, cands in wf_fail:
+            learned = wf_learned.get((s2, sgg))
+            chosen = [c for c in cands if c[:5] == learned] if learned else cands
+            if chosen:
+                district_cds[(sido_short, sgn)].update(chosen); wf_filled += 1
+            else:
+                miss_dong += 1
+        if wf_filled:
+            print(f"wwolf SGIS 직접매칭 폴백: {wf_filled}개 동 (match표 누락 시군구)", file=sys.stderr)
     else:  # nec_emd: NEC 투표구별. 하드코딩 conv 대신 데이터로 NEC구→SGIS구 학습 + 기하 소거.
         recs = json.loads(cfg["emd"].read_text(encoding="utf-8"))
         sido_ov = cfg.get("sido_override", {})  # 시도승격 보정: 선거구명 substr → SGIS 시도2
@@ -416,11 +440,9 @@ def main(n: int):
     #            (동이 SGIS 한 소스라 edge 정확히 공유 → mapshaper가 깨끗이 처리.)
     #   wwolf(20대)/sgg_union(8대): SGIS+admdongkor 혼합·동 매칭실패로 구조적 구멍이 있어 mapshaper가
     #            무익(틈 못 메우고 용량만 ↑). per-polygon DP로 빠르게 축소(원래 방식 유지).
-    use_mapshaper = cfg["mode"] == "nec_emd"
-    if use_mapshaper:
-        simp_geoms = [r[3].buffer(0) for r in raw]
-    else:
-        simp_geoms = [r[3].simplify(0.0035, preserve_topology=False).buffer(0) for r in raw]
+    # 매칭을 근본 보강(wwolf SGIS 폴백 등)해 커버리지를 완전히 한 뒤로는 전 모드 mapshaper 적용.
+    use_mapshaper = True
+    simp_geoms = [r[3].buffer(0) for r in raw]
     # 4c) feature 작성
     for i, ((skey, name, race, _), u) in enumerate(zip(raw, simp_geoms)):
         code = f"D{n}{i:04d}"
@@ -449,7 +471,10 @@ def main(n: int):
         _ms = ROOT / "node_modules/.bin/mapshaper"
         try:
             # snap: 근접 정점 병합(슬리버 → 공유 arc 인식) → -clean이 틈 제거.
-            subprocess.run([str(_ms), str(out_geo), "snap", "-simplify", "2%", "keep-shapes",
+            # nec_emd는 동이 SGIS 단일소스라 2%로 ~400KB. wwolf(20대)는 admdongkor 혼합·고해상이라
+            # raw 정점이 훨씬 많아 같은 2%면 1.5MB → 더 공격적으로(0.6%) 줄여 용량 맞춤(위상은 보존).
+            pct = "2%" if cfg["mode"] == "nec_emd" else "0.2%"
+            subprocess.run([str(_ms), str(out_geo), "snap", "-simplify", pct, "keep-shapes",
                             "-clean", "gap-fill-area=2km2", "-o", str(out_geo), "force"],
                            check=True, capture_output=True, timeout=300)
         except Exception as e:
