@@ -106,9 +106,23 @@ function renderRoundsSeg() {
   }
 }
 
+// 교육감은 5회(2010)부터 전국 직선 동시선거 — 1~4회엔 office 선택지에서 숨기고,
+// 그때 교육감을 보고 있었으면 기초단체장으로 전환.
+function updateOfficeAvailability(n) {
+  const supBtn = document.querySelector('[data-office="교육감"]');
+  const hasSup = state.type === 'local' && n >= 5;
+  if (supBtn) supBtn.toggleAttribute('hidden', !hasSup);
+  if (!hasSup && state.office === '교육감') {
+    state.office = '기초단체장';
+    document.querySelectorAll('[data-office]').forEach((b) =>
+      b.classList.toggle('is-active', b.dataset.office === state.office));
+  }
+}
+
 async function setRound(n) {
   state.n = n;
   state.selected = null;
+  updateOfficeAvailability(n);
   updateURL();
   document.querySelectorAll('#rounds-seg [data-n]').forEach((b) => {
     b.classList.toggle('is-active', +b.dataset.n === n);

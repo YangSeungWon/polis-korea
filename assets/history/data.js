@@ -191,6 +191,16 @@ function resultForSido(sido) {
       candidates: r.candidates,
     };
   }
+  // 이미 시도 단위 행(name 비어있음 = 광역장·교육감)이면 합산·재계산 불필요 — 저장된 pct 사용.
+  //   1~4회 광역장은 당선자 1명만 저장(+votes 깨짐)이라 votes 합산 재계산 시 100%로 잘못 나옴.
+  //   5회+ 는 votes가 실제라 재계산해도 같지만, 일관되게 저장 pct를 그대로 쓴다.
+  //   (기초장 fallback은 시군구별 행이라 name이 있어 이 분기를 안 타고 정상 합산.)
+  if (matched.every((r) => !r.name)) {
+    const r0 = matched[0];
+    const candidates = matched.flatMap((r) => r.candidates || [])
+      .slice().sort((a, b) => (b.pct || 0) - (a.pct || 0));
+    return { sido, electors: r0.electors, voted: r0.voted, turnout: r0.turnout, candidates };
+  }
   // 시군구 합산
   let electors = 0, voted = 0;
   const cands = new Map(); // key=`${party}|${name}` → {party,name,votes}

@@ -129,6 +129,9 @@ def build_history(manifest: dict, elections: dict, urls: list):
             el_date = meta.get('date', '')
             if type_key == 'local':
                 for office_ko, off_slug in LOCAL_OFFICE_SLUG.items():
+                    # 교육감 전국 직선 동시선거는 5회(2010)부터 — 1~4회 교육감 페이지는 생성 안 함.
+                    if off_slug == 'superintendent' and n < 5:
+                        continue
                     title = f'polis · {n}회 {type_short} {office_ko} ({el_date})'
                     desc = f'{n}회 전국동시지방선거 {office_ko} 결과 ({el_date}) — 시군구 hex 격자 시각화.'
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
