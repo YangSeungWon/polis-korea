@@ -133,7 +133,19 @@ async function setRound(n) {
     // 정당색 시대 맥락 — 회차 변경할 때마다 그 회차 날짜로 partyColor periods 활성.
     if (typeof setPartyColorContext === 'function') setPartyColorContext(el.date);
   }
+  // 캐시 — 본 회차 재방문은 즉시(역대선거 왔다갔다 매끄럽게). adapt 결과를 type|n 키로 저장.
+  if (!state.roundCache) state.roundCache = new Map();
+  const cacheKey = `${state.type}|${n}`;
+  if (state.roundCache.has(cacheKey)) {
+    state.results = state.roundCache.get(cacheKey);
+    renderAll();
+    return;
+  }
+
   state.results = null;
+  // 첫 로드만 로딩 표시 — 180ms 넘게 걸릴 때만(빠른 로드 깜빡임 방지). 캐시 히트는 위에서 즉시 return.
+  const loadingEl = $('#loading');
+  const loadingTimer = setTimeout(() => { if (loadingEl) loadingEl.hidden = false; }, 180);
   // 1차: 새 schema (통일 path) — data/results/{Nth}-{kind}-{year}.json
   const newPath = newSchemaPath(state.type, n);
   if (newPath) {
@@ -163,6 +175,10 @@ async function setRound(n) {
       state.results = null;
     }
   }
+  clearTimeout(loadingTimer);
+  if (loadingEl) loadingEl.hidden = true;
+  // 이 회차 결과가 바뀌었어도(같은 세션) 다시 안 받게 캐시. 회차당 1회만 페치.
+  if (state.results) state.roundCache.set(cacheKey, state.results);
   renderAll();
 }
 
