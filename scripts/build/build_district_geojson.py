@@ -89,13 +89,18 @@ CFG = {
              emd=ROOT / "data/raw/nec/district_emd_21.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_2020/bnd_dong_00_2020_4Q.shp",
              results=ROOT / "data/results/national_assembly_21.json"),
+    22: dict(mode="nec_emd", year=2022,   # OhmyNews 대조용 (SGIS 2024 없어 2022 근사)
+             emd=ROOT / "data/raw/nec/district_emd_22.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2022/bnd_dong_00_2022_4Q.shp",
+             results=ROOT / "data/results/national_assembly_22.json"),
 }
 
 CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
 # NEC 행정표준 시도코드 → SGIS 통계청 시도코드 (앞 2자리). nec_emd 조인용.
 NEC2SGIS = {"11": "11", "26": "21", "27": "22", "28": "23", "29": "24", "30": "25",
             "31": "26", "51": "29", "41": "31", "42": "32", "43": "33", "44": "34",
-            "45": "35", "46": "36", "47": "37", "48": "38", "49": "39"}
+            "45": "35", "46": "36", "47": "37", "48": "38", "49": "39",
+            "52": "32", "53": "35"}  # 22대 특별자치도 새 코드: 강원52·전북53 → SGIS 32·35
 # 시도 풀네임 → SGIS 통계청 시도2 (시군구 union 모드: SGIS sigungu_cd[:2] 매칭)
 SIDO_SGIS2 = {"서울특별시": "11", "부산광역시": "21", "대구광역시": "22", "인천광역시": "23",
               "광주광역시": "24", "대전광역시": "25", "울산광역시": "26", "세종특별자치시": "29",
@@ -177,6 +182,7 @@ def main(n: int):
     NM = _fld("sigungu_nm") if is_sgg else _fld("adm_nm", "adm_dr_nm")
     geom_by_cd = {}
     sido_dong_idx = defaultdict(list)  # (SGIS시도2, 동명변형) → [adm_cd] (nec_emd)
+    dong_global = defaultdict(list)    # 동명변형 → [adm_cd] (시도 무관 — 이동 시군구 fallback)
     sido_names = defaultdict(list)     # SGIS시도2 → [(adm_cd, 정규화동명)] (퍼지)
     sgg_idx = {}                       # (SGIS시도2, 시군구명) → sigungu_cd (sgg_union)
     for sr in sf.iterShapeRecords():
@@ -190,8 +196,10 @@ def main(n: int):
             sgg_idx[(cd[:2], _nsgg(nm))] = cd
         else:
             sido_dong_idx[(cd[:2], nm)].append(cd)
+            dong_global[nm].append(cd)
             if _ndong(nm) != nm:
                 sido_dong_idx[(cd[:2], _ndong(nm))].append(cd)
+                dong_global[_ndong(nm)].append(cd)
             sido_names[cd[:2]].append((cd, _ndong(nm)))
     print(f"SGIS {'시군구' if is_sgg else '동'}: {len(geom_by_cd)}개 (필드 {CD}/{NM})", file=sys.stderr)
 
@@ -319,6 +327,10 @@ def main(n: int):
                     got = [c for c, nm in sido_names.get(s2, [])
                            if c[:4] == gu and len(re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm)) >= 2
                            and re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm) in nn]
+                if not got:  # 이동 시군구(군위 2023 경북→대구 등 — SGIS연도 시도≠선거시점) — 전국 유일 동명이면 시도무관 매칭
+                    g2 = set(dong_global.get(dong, [])) | set(dong_global.get(_ndong(dong), []))
+                    if len(g2) == 1:
+                        got = [next(iter(g2))]
                 if not got:
                     miss_dong += 1
                     if gu:

@@ -17,7 +17,7 @@ OUT = ROOT / "data/raw/nec"
 ELECTIONS = {9: "19730227", 10: "19781212", 11: "19810325", 12: "19850212",
              13: "19880426", 14: "19920324", 15: "19960411", 16: "20000413",
              17: "20040415", 18: "20080409", 19: "20120411", 20: "20160413",
-             21: "20200415"}
+             21: "20200415", 22: "20240410"}
 SIDO = [  # (cityCode 4자리, 시도명)
     ("1100", "서울특별시"), ("2600", "부산광역시"), ("2700", "대구광역시"),
     ("2800", "인천광역시"), ("2900", "광주광역시"), ("3000", "대전광역시"),
@@ -26,6 +26,9 @@ SIDO = [  # (cityCode 4자리, 시도명)
     ("4500", "전라북도"), ("4600", "전라남도"), ("4700", "경상북도"),
     ("4800", "경상남도"), ("4900", "제주특별자치도"),
 ]
+# 회차별 cityCode 오버라이드 — 특별자치도 승격으로 NEC 코드 변경.
+#   강원특별자치도 2023-06(4200→5200), 전북특별자치도 2024-01(4500→5300). 22대(2024)부터 적용.
+SIDO_OVERRIDE = {22: {"강원도": "5200", "전라북도": "5300"}}
 UA = "Mozilla/5.0"
 BASE = "https://info.nec.go.kr"
 REF = f"{BASE}/main/showDocument.xhtml?electionId=0000000000&topMenuId=VC&secondMenuId=VCCP08"
@@ -86,7 +89,9 @@ def main(n):
     date = ELECTIONS[n]
     OUT.mkdir(parents=True, exist_ok=True)
     records = []
+    ov = SIDO_OVERRIDE.get(n, {})
     for sido4, sido_name in SIDO:
+        sido4 = ov.get(sido_name, sido4)  # 특별자치도 승격 회차 cityCode 보정
         try:
             sggs = sgg_list(date, sido4)
         except Exception as e:
