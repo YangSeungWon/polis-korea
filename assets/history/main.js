@@ -178,6 +178,14 @@ const ARCHIVE_PAGES = {};
   });
 })();
 
+// 비지역구 의석 제도 — 회차별 명칭·배분 규칙 설명. (유정회/전국구/비례대표)
+function propSystemInfo(n) {
+  if (n <= 10) return { label: '유정회', note: '유신정우회 — 선거 아님. 대통령이 추천하고 통일주체국민회의가 선출. 지역구 정수의 1/2.' };
+  if (n <= 12) return { label: '전국구', note: '지역구의 1/2. 제1당이 2/3를 자동 배분받고, 나머지는 지역구 5석 이상 정당에 의석 비율로. (정당 득표 아님)' };
+  if (n <= 16) return { label: '전국구', note: '지역구 의석·득표 비율로 배분.' };
+  return { label: '비례대표', note: '정당 득표율에 따른 비례 배분 (1인 2표 정당명부, 2004~).' };
+}
+
 function renderDetail() {
   const pane = $('#detail-pane');
   const list = state.elections[state.type]?.elections || [];
@@ -218,12 +226,18 @@ function renderDetail() {
       .map(([party, seats]) => ({ party, seats, color: partyColor(party) }))
       .sort((a, b) => b.seats - a.seats);
     const total = parties.reduce((s, p) => s + p.seats, 0);
-    // 비례대표 — geo 모드엔 hex의 비례 컬럼이 없으니 상세 패널에 표기.
+    // 비지역구 의석(유정회/전국구/비례) — geo 모드엔 hex 비례 컬럼이 없으니 상세 패널에 표기.
     const propSeats = [...(nat.proportional_seats || [])].sort((a, b) => (b.seats || 0) - (a.seats || 0));
     const propTotal = propSeats.reduce((s, p) => s + (p.seats || 0), 0);
+    const distSeats = total - propTotal;
+    const prop = propSystemInfo(state.n);
     // 큰 정당 헤드라인(ns-name/ns-party)은 도넛 차트와 중복 → 제거. 제목+투표율만.
     html += `<div class="national-summary">
       <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국 의석 (총 ${total}석)</div>
+      ${propTotal ? `<div class="seat-split" title="${prop.note}">
+        <span class="ss-seg ss-dist" style="flex:${distSeats}">지역구 ${distSeats}</span>
+        <span class="ss-seg ss-prop" style="flex:${propTotal}">${prop.label} ${propTotal}</span>
+      </div>` : ''}
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}
@@ -237,11 +251,12 @@ function renderDetail() {
         </span>`).join('')}
       </div>
       ${propTotal ? `<div class="party-seats prop-seats">
-        <span class="prop-label">비례 ${propTotal}석 —</span>
-        ${propSeats.map((p) => `<span class="ps-item" title="${p.party} 비례 ${p.seats}석">
+        <span class="prop-label">${prop.label} ${propTotal}석 —</span>
+        ${propSeats.map((p) => `<span class="ps-item" title="${p.party} ${prop.label} ${p.seats}석">
           <span class="ps-dot" style="background:${partyColor(p.party)}"></span>${p.party} <b>${p.seats}</b>
         </span>`).join('')}
-      </div>` : ''}
+      </div>
+      <div class="prop-note"><b>${prop.label}</b> ${prop.note}</div>` : ''}
     </div>`;
   } else if (state.type === 'local') {
     // 지선 — 광역단체장·기초단체장·교육감 winner_party 카운트 (정당별 당선 곳 수)

@@ -172,6 +172,36 @@
   font-weight: 700;
   white-space: nowrap;
 }
+/* 의석 분할 막대 — 지역구(직접 선출) vs 유정회/전국구/비례(할당). flex로 비율 시각화(2:1 등). */
+.seat-split {
+  display: flex;
+  margin: 7px 0 2px;
+  border-radius: 5px;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: help;
+  min-width: 180px;
+  max-width: 320px;
+}
+.seat-split .ss-seg {
+  padding: 3px 8px;
+  white-space: nowrap;
+  text-align: center;
+  color: #fff;
+}
+.seat-split .ss-dist { background: #3a4257; }       /* 직접 선출 = solid */
+.seat-split .ss-prop {                                /* 할당 = 빗금(직접 선출 아님 표시) */
+  background: repeating-linear-gradient(45deg, #8a93a6 0 5px, #707889 5px 10px);
+}
+/* 비지역구 의석 제도 설명 */
+.prop-note {
+  margin-top: 7px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.prop-note b { color: var(--ink); }
 
 /* 회차 선택자가 길어지면 scroll */
 .seg-rounds {
