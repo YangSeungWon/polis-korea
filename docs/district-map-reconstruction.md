@@ -81,6 +81,15 @@ VCCP08 동-레벨이 9대부터. 5~8대는 시군구-union만 가능(농촌·통
 resultForSigungu **reverse-merge**(시 경계→일반구/분구 데이터 집계, data.js line 155)로 대선 일반구 개표 집계.
 `build_sigungu_geojson_years.py`로 sigungu_2013도 생성(18대용). main.js `presGeoSupported`로 분기.
 
+## 검증 — OhmyNews 21대 대조 (IoU)
+복원 방법의 신뢰도를 권위본으로 검증: 21대를 내 파이프라인(NEC VCCP08 동 + SGIS 2020 union)으로
+빌드해 OhmyNews 권위본(VW-Lab 행정동 dissolve, MIT)과 253개 선거구 전수 IoU(겹침도) 비교.
+- **평균 IoU 0.889 · 중앙 0.906**, IoU>0.8 = 224/253(88%), >0.7 = 244/253.
+- 서로 다른 동 소스(통계청 SGIS ↔ VW-Lab)인데 ~89% 일치 → 동-union 방법 타당, 9~20대 복원 신뢰.
+- IoU<0.7(9개)은 전부 **도심 갑/을/병 분할**(진주·여수·익산·화성·안산단원·통영고성·대전 동구) —
+  시를 동 단위로 쪼개는 경계라 두 동 소스의 미세 차이가 가장 크게 드러남(예상된 결과).
+- 21대 생산 지도는 OhmyNews 권위본 유지(내 복원본은 검증용). CFG[21]·district_emd_21은 대조 재현용.
+
 ## 출처·라이선스
 통계청 SGIS(출처표시·영리가능) · NEC 개표현황(공개) · vuski/admdongkor · WWolf/korea-election ·
 OhmyNews(21·22, MIT). `data/geo/district_reconstructed.LICENSE` 참조.

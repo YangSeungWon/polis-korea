@@ -85,6 +85,10 @@ CFG = {
              emd=ROOT / "data/raw/nec/district_emd_18.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_2008/bnd_dong_00_2008.shp",
              results=ROOT / "data/results/national_assembly_18.json"),
+    21: dict(mode="nec_emd", year=2020,   # OhmyNews 대조용 (내 복원 vs 권위본)
+             emd=ROOT / "data/raw/nec/district_emd_21.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2020/bnd_dong_00_2020_4Q.shp",
+             results=ROOT / "data/results/national_assembly_21.json"),
 }
 
 CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
@@ -163,9 +167,14 @@ def main(n: int):
     except UnicodeDecodeError:
         sf = shapefile.Reader(str(cfg["shp"]), encoding="utf-8")
     fields = [f[0] for f in sf.fields[1:]]
-    is_sgg = "sigungu_cd" in fields  # 시군구 경계 파일(sgg_union 모드)
-    CD = "sigungu_cd" if is_sgg else ("ADM_CD" if "ADM_CD" in fields else "adm_dr_cd")
-    NM = "sigungu_nm" if is_sgg else ("ADM_NM" if "ADM_NM" in fields else "adm_dr_nm")
+    _fl = {f.lower(): f for f in fields}  # 대소문자 무관 필드명 (연도별 ADM_DR_CD/adm_dr_cd/ADM_CD 혼재)
+    is_sgg = "sigungu_cd" in _fl  # 시군구 경계 파일(sgg_union 모드)
+    def _fld(*cands):
+        for c in cands:
+            if c.lower() in _fl: return _fl[c.lower()]
+        raise KeyError(f"필드 없음 {cands} / 실제 {fields}")
+    CD = _fld("sigungu_cd") if is_sgg else _fld("adm_cd", "adm_dr_cd")
+    NM = _fld("sigungu_nm") if is_sgg else _fld("adm_nm", "adm_dr_nm")
     geom_by_cd = {}
     sido_dong_idx = defaultdict(list)  # (SGIS시도2, 동명변형) → [adm_cd] (nec_emd)
     sido_names = defaultdict(list)     # SGIS시도2 → [(adm_cd, 정규화동명)] (퍼지)
