@@ -120,9 +120,12 @@ def main():
     lines.append('</urlset>')
     out = "\n".join(lines) + "\n"
     (ROOT / "sitemap.xml").write_text(out, encoding="utf-8")
-    print(f"→ sitemap.xml: {len(STATIC)} static + "
-          f"{len(archive_urls())} archive + {len(history_urls())} history + "
-          f"{len(persons)} person")
+    (ROOT / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
+    n_arch, n_hist = len(archive_urls()), len(history_urls())
+    total = len(STATIC) + n_arch + n_hist + len(persons)
+    print(f"→ sitemap.xml: {total} URLs ({len(STATIC)} static + {n_arch} archive + "
+          f"{n_hist} history + {len(persons)} person) · robots.txt")
 
 
 if __name__ == "__main__":

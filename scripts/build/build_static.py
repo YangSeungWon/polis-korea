@@ -20,8 +20,12 @@ polls.html / history.html 자체는 그대로 — 기본(광역/대선) 페이�
 """
 from __future__ import annotations
 import json
+import sys
 from datetime import date
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_sitemap as _sitemap   # noqa: E402  포괄 sitemap(+robots) 단일 출처
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_TEMPLATE = ROOT / 'polls.html'   # 지선 직위 페이지(/governor/ 등) 템플릿. 루트 index.html은 대시보드(별도, 프리렌더 안 함)
@@ -147,37 +151,15 @@ def build_history(manifest: dict, elections: dict, urls: list):
     print(f'history: {n_made}')
 
 
-def build_sitemap(urls: list):
-    """sitemap.xml · robots.txt 생성."""
-    today = date.today().isoformat()
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for path, priority, changefreq in urls:
-        lines.append('  <url>')
-        lines.append(f'    <loc>{SITE}{path}</loc>')
-        lines.append(f'    <lastmod>{today}</lastmod>')
-        lines.append(f'    <changefreq>{changefreq}</changefreq>')
-        lines.append(f'    <priority>{priority}</priority>')
-        lines.append('  </url>')
-    lines.append('</urlset>')
-    (ROOT / 'sitemap.xml').write_text('\n'.join(lines), encoding='utf-8')
-
-    robots = f"""User-agent: *
-Allow: /
-
-Sitemap: {SITE}/sitemap.xml
-"""
-    (ROOT / 'robots.txt').write_text(robots, encoding='utf-8')
-    print(f'sitemap: {len(urls)} URLs, robots.txt')
-
-
 def main():
     manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
     elections = json.loads(ELECTIONS.read_text(encoding='utf-8'))
     urls = []
-    build_polls(urls)
-    build_history(manifest, elections, urls)
-    build_sitemap(urls)
+    build_polls(urls)             # /, /governor/ 등 페이지 생성
+    build_history(manifest, elections, urls)   # history/**/index.html 생성
+    # sitemap·robots는 포괄 생성기에 위임 — archive·person 포함 전수(56개로 덮어쓰던 버그 수정).
+    # build_polls/build_history가 페이지를 먼저 써야 디렉터리 스캔이 잡힘.
+    _sitemap.main()
 
 
 if __name__ == '__main__':
