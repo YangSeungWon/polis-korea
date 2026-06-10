@@ -83,12 +83,13 @@ function newSchemaPath(type, n) {
 }
 
 function _raceToOldRow(race) {
+  const voted = race.voters ?? race.voted ?? 0;   // NEC schema=voters, 옛 백필=voted 둘 다 수용
   return {
     sido: race.sido,
     name: race.sigungu || '',
     electors: race.electors || 0,
-    voted: race.voters || 0,
-    turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
+    voted,
+    turnout: race.electors ? +(voted / race.electors * 100).toFixed(2) : 0,
     invalid: race.invalid_votes || 0,
     candidates: race.candidates || [],
     is_uncontested: race.is_uncontested || false,   // 무투표 당선 플래그 보존
@@ -99,15 +100,16 @@ function _raceToOldDistrict(race) {
   const cands = race.candidates || [];
   const won = cands.filter((c) => c.won);
   const winner = won[0] || cands[0];
+  const voted = race.voters ?? race.voted ?? 0;
   const out = {
     sido: race.sido,
     name: race.district || '',
     winner: winner?.name || '',
     winner_party: winner?.party || '',
     electors: race.electors || 0,
-    voted: race.voters || 0,
+    voted,
     invalid: race.invalid_votes || 0,
-    turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
+    turnout: race.electors ? +(voted / race.electors * 100).toFixed(2) : 0,
     candidates: cands,
     is_uncontested: race.is_uncontested || false,   // 무투표 당선 플래그 보존
   };
