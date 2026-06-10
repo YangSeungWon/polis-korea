@@ -81,11 +81,12 @@
   // col,row를 pixel로 변환. SPACING은 cluster radius 보다 크게.
   const SIDO_GAP = 120;  // 시도 hex 간 거리
   const SMALL_R = 3.5;   // 모든 시도 공통 hex 크기 (1석 = 1 hex 동일 면적)
-  function sidoCentroidsFromLayout() {
-    if (typeof SIDO_HEX_LAYOUT !== 'object') return null;
+  function sidoCentroidsFromLayout(layout) {
+    const lay = layout || (typeof SIDO_HEX_LAYOUT === 'object' ? SIDO_HEX_LAYOUT : null);
+    if (!lay) return null;
     const out = new Map();
     const seen = new Set();
-    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+    for (const [sido, pos] of Object.entries(lay)) {
       const k = `${pos.col},${pos.row}`;
       if (seen.has(k)) continue;
       seen.add(k);
@@ -96,9 +97,10 @@
     return out;
   }
 
-  // 시도명 정규화 — 통합특별시 → 분리 sido로 분기 (광주·전남)
+  // 전남광주 통합 셀('전남광주특별시')은 광주 지역구 + 전남 지역구 + 통합 비례를 모두 합산.
+  //   (지역구는 광주/전남 라벨 분리, 비례는 '전남광주통합특별시' 한 배분 — 시도의회는 1개.)
   function aliasSido(name) {
-    if (name === '전남광주통합특별시' || name === '전남광주특별시') return ['광주광역시', '전라남도'];
+    if (name === '전남광주통합특별시' || name === '전남광주특별시') return ['광주광역시', '전라남도', '전남광주통합특별시'];
     return [name];
   }
 
@@ -107,7 +109,11 @@
   }
 
   function render(svg, _hexCells, sidoSeats) {
-    const centroids = sidoCentroidsFromLayout();
+    // 전남광주 통합 배분(비례)이 데이터에 있으면 '전남광주' 한 셀 레이아웃(9회+). 그 전은 분리 유지.
+    const hasMerged = sidoSeats.has('전남광주통합특별시') || sidoSeats.has('전남광주특별시');
+    const layout = (hasMerged && typeof honamMergedLayout === 'function')
+      ? honamMergedLayout(SIDO_HEX_LAYOUT) : null;
+    const centroids = sidoCentroidsFromLayout(layout);
     if (!centroids) return { totalSeats: 0, partyTotal: new Map() };
     // viewBox — top 라벨 + bottom legend 위해 padding 충분히
     const xs = Array.from(centroids.values()).map((c) => c.cx);
