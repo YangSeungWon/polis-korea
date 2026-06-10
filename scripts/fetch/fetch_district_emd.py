@@ -31,7 +31,8 @@ BASE = "https://info.nec.go.kr"
 REF = f"{BASE}/main/showDocument.xhtml?electionId=0000000000&topMenuId=VC&secondMenuId=VCCP08"
 
 # 투표구명에 있으면 비지리(투표분류). '계'는 월계·중계·하계동 등 오탐이라 substring 금지 — 정확매칭만.
-SKIP_ROW = re.compile(r"투표|부재자|명부|선상|잘못")
+# 특수 집계행만 스킵 — '투표' 단독은 안 됨('명석면투표소' 같은 실제 면 투표구가 걸림).
+SKIP_ROW = re.compile(r"부재자|명부|선상|잘못|거소|관외|국외|재외|사전투표|우편")
 
 
 def _get(url):
