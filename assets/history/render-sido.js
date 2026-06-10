@@ -57,7 +57,6 @@ function renderSidoHex() {
   const layout = getActiveSidoLayout(electionDate);
 
   for (const [sido, pos] of Object.entries(layout)) {
-    if (sido === '전라북도') continue; // 전북특별자치도와 중복 alias
     const since = SIDO_HEX_SINCE[sido];
     if (since && electionDate && electionDate < since) continue;
     const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
