@@ -81,35 +81,38 @@ def main():
             place = sigungu or district or sido or '전국'
             cands = race.get('candidates', [])
             if not cands: continue
-            # 당선자(rank=1)만 인덱싱 — 후보 전체는 너무 큼
+            # 당선자 전원 + 알려진 정치인(person-index 매칭)의 낙선 인덱싱.
+            #   낙선 이력도 검색 결과에 보이게(인물 카드에 당선+낙선). 무명 낙선자는 제외(인덱스 비대 방지).
             sorted_cs = sorted(cands, key=lambda c: c.get('rank') or 99)
-            top = sorted_cs[0]
-            nm = (top.get('name') or '').strip()
-            party = (top.get('party') or '').strip()
-            if not nm: continue
-            key = (eid, scope, sido, sigungu, district, tc, nm)
-            if key in seen: continue
-            seen.add(key)
-            entry = {
-                'n': nm,
-                'p': party,
-                'y': year,
-                'e': eid,
-                'r': rlbl,
-                'd': f"{sido} {place}".strip() if sido and place != sido else place,
-                'tc': tc,
-                'pct': top.get('pct'),
-            }
-            # 의원 매칭 → assembly_id·dob 부착 (검색 결과 그룹핑·정적 페이지 링크용)
-            pl = person_lookup.get((eid, nm))
-            if pl:
-                entry['aid'] = pl['aid']
-                entry['dob'] = pl['dob']
-            items.append(entry)
+            for c in sorted_cs:
+                nm = (c.get('name') or '').strip()
+                if not nm: continue
+                won = bool(c.get('won')) or c.get('rank') == 1
+                pl = person_lookup.get((eid, nm))
+                if not won and not pl:
+                    continue
+                key = (eid, scope, sido, sigungu, district, tc, nm)
+                if key in seen: continue
+                seen.add(key)
+                entry = {
+                    'n': nm,
+                    'p': (c.get('party') or '').strip(),
+                    'y': year,
+                    'e': eid,
+                    'r': rlbl,
+                    'd': f"{sido} {place}".strip() if sido and place != sido else place,
+                    'tc': tc,
+                    'pct': c.get('pct'),
+                    'w': 1 if won else 0,
+                }
+                if pl:
+                    entry['aid'] = pl['aid']
+                    entry['dob'] = pl['dob']
+                items.append(entry)
 
     items.sort(key=lambda x: (x.get('y') or 0, x['e']), reverse=True)
     out = {
-        '_meta': {'n': len(items), 'description': '회차별 당선인 통합 검색 인덱스'},
+        '_meta': {'n': len(items), 'description': '회차별 당선인 + 정치인 낙선 이력 통합 검색 인덱스'},
         'items': items,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

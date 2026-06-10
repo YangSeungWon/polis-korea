@@ -77,7 +77,7 @@
       if (m) sidos.add(m[0]);
     }
 
-    const rows = races.slice().reverse().map((r) => {   // 검색과 통일 — 최근이 위로(내림차순). 요약·정당연혁 계산은 위 오름차순 유지
+    const rows = races.map((r) => {   // 최근이 아래로(오름차순) — 검색과 통일
       const tag = r.won ? '<span class="pp-tag pp-won">당선</span>' : '<span class="pp-tag pp-lost">낙선</span>';
       const pct = r.pct != null ? `${(+r.pct).toFixed(1)}%` : '—';
       const rank = r.rank && r.rank < 99 ? `${r.rank}위` : '';

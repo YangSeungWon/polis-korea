@@ -65,27 +65,29 @@
                        : `/person.html?name=${encodeURIComponent(g.name)}`;
 
     const html = capGroups.map((g) => {
-      const list = g.items.slice().sort((a, b) => (b.y || 0) - (a.y || 0));
+      const list = g.items.slice().sort((a, b) => (a.y || 0) - (b.y || 0));  // 최근이 아래로(오름차순)
       const parties = [...new Set(list.map((x) => x.p).filter(Boolean))].slice(0, 4);
       const years = list.map((x) => x.y).filter(Boolean);
       const yspan = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : '';
+      const wins = list.filter((x) => x.w).length;
       const meta = [];
       if (g.dob) meta.push(g.dob);
       if (g.aid) meta.push('국회');
       const metaTxt = meta.length ? meta.join(' · ') : (list.length === 1 ? list[0].r : '');
-      // 회차 sub-rows → archive 직행
+      // 회차 sub-rows → archive 직행. 당선/낙선 태그.
       const sub = list.map((it) => `
-        <a class="s-sub" href="/archive/${it.e}/">
+        <a class="s-sub${it.w ? '' : ' s-sub-lost'}" href="/archive/${it.e}/">
           <span class="s-sub-yr">${it.y || ''}</span>
           <span class="s-sub-rd">${it.r}</span>
           ${partyBadge(it.p)}
           <span class="s-sub-place">${escapeHtml(it.d)}</span>
           ${it.pct != null ? `<span class="s-sub-pct">${(+it.pct).toFixed(1)}%</span>` : ''}
+          <span class="s-sub-tag ${it.w ? 's-won' : 's-lost'}">${it.w ? '당선' : '낙선'}</span>
         </a>`).join('');
       return `<li class="s-item s-group">
         <a class="s-link s-group-hdr" href="${personHref(g)}">
           <span class="s-name">${escapeHtml(g.name)}</span>
-          <span class="s-group-count">${list.length}회 · ${yspan}</span>
+          <span class="s-group-count">${wins === list.length ? `${wins}회` : `당선 ${wins} · 출마 ${list.length}`} · ${yspan}</span>
           <span class="s-group-parties">${parties.map(partyBadge).join('')}</span>
           <span class="s-meta">${escapeHtml(metaTxt)}</span>
           <span class="s-group-arrow">인물 →</span>
