@@ -167,9 +167,13 @@ function renderGovernor(polls, results) {
       if (top) bySido[s] = top;
     }
   }
+  // 메인은 현 회차(9회·2026) — 광주·전남은 '전남광주' 한 셀(통합 광역단체장 1선거).
+  const layout = honamMergedLayout(SIDO_HEX_LAYOUT);
+  // 데이터 sido명 변형(전남광주특별시/통합특별시) 모두 '전남광주특별시' 셀로 수렴.
+  if (!bySido['전남광주특별시'] && bySido['전남광주통합특별시']) bySido['전남광주특별시'] = bySido['전남광주통합특별시'];
   const seen = new Set();
   const cells = [];
-  for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+  for (const [sido, pos] of Object.entries(layout)) {
     const key = `${pos.col},${pos.row}`;
     if (seen.has(key)) continue;
     seen.add(key);

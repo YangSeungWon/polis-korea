@@ -28,10 +28,12 @@ const SIDO_HEX_LAYOUT_PRE_SEJONG = {
 
 function getActiveSidoLayout(electionDate) {
   let layout = { ...SIDO_HEX_LAYOUT };
-  // 9회 이전 — 광주·전남 별개
-  if (electionDate && electionDate < '2026-06-03') {
+  if (electionDate && electionDate >= HONAM_MERGE_DATE) {
+    // 9회+ — 광주·전남 통합 '전남광주' 한 셀(광역단체장 1선거)
+    layout = honamMergedLayout(layout);
+  } else if (electionDate && electionDate < '2026-06-03') {
+    // 9회 이전 — 광주·전남 별개
     layout = { ...layout, ...SIDO_HEX_LAYOUT_LEGACY };
-    delete layout['전남광주특별시'];
   }
   // 세종 신설 전 — row 1 가운데 정렬, 세종 cell 자체 제거
   if (electionDate && electionDate < '2012-07-01') {

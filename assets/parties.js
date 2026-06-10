@@ -266,6 +266,19 @@ const SIDO_HEX_LAYOUT = {
   '제주특별자치도': { col: 2, row: 4, label: '제주' },
 };
 
+// 전남광주 통합(2026-06-03 신설) — 이후 선거는 광주·전남을 '전남광주' 한 셀로 병합.
+//   광역단체장은 통합 1선거(전남광주특별시)이므로 두 셀이 아니라 한 셀이 맞음.
+//   기초장(구청장·시장·군수)은 시군구별 별개 선거라 시군구 hex는 그대로 분리.
+const HONAM_MERGE_DATE = '2026-06-03';
+function honamMergedLayout(layout) {
+  const m = { ...layout };
+  const pos = layout['전라남도'] || layout['광주광역시'];   // 전남 자리에 통합 셀
+  delete m['광주광역시'];
+  delete m['전라남도'];
+  if (pos) m['전남광주특별시'] = { col: pos.col, row: pos.row, label: '전남광주' };
+  return m;
+}
+
 const SIDO_HEX_BLANKS = [];
 
 // === SATELLITE_TO_MAIN auto-generated ===
