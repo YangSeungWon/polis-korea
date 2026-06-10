@@ -326,7 +326,7 @@ async function renderDistrictHex() {
 
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
     title.textContent = top
-      ? `${d.sido} ${d.name} · ${top.name} (${top.party}) ${result.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
+      ? `${d.sido} ${d.name} · ${top.name} (${top.party}) ${(result.uncontested || result.is_uncontested) ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
       : `${d.sido} ${d.name} · 데이터 없음`;
     g.appendChild(title);
 

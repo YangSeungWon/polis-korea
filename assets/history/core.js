@@ -91,6 +91,7 @@ function _raceToOldRow(race) {
     turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
     invalid: race.invalid_votes || 0,
     candidates: race.candidates || [],
+    is_uncontested: race.is_uncontested || false,   // 무투표 당선 플래그 보존
   };
 }
 
@@ -108,6 +109,7 @@ function _raceToOldDistrict(race) {
     invalid: race.invalid_votes || 0,
     turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
     candidates: cands,
+    is_uncontested: race.is_uncontested || false,   // 무투표 당선 플래그 보존
   };
   // 중선거구(9~12대 1구 2인) — 당선자 2명 보존(의석 카운트·hex 줄무늬용).
   if (won.length >= 2) out.winners = won.map((c) => ({ name: c.name, party: c.party }));

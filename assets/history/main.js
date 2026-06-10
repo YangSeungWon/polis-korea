@@ -353,19 +353,22 @@ function renderDetail() {
       const maxPct = sorted[0].pct;
       const top = sorted[0];
       const leftColor = partyColor(top.party);
+      const unopposed = result.uncontested || result.is_uncontested;  // 데이터 플래그명은 is_uncontested
       const barRows = sorted.slice(0, 10).map((c) => {
         const color = partyColor(c.party);
-        const w = result.uncontested ? 100 : (maxPct > 0 ? (c.pct / maxPct) * 100 : 0);
+        const w = unopposed ? 100 : (maxPct > 0 ? (c.pct / maxPct) * 100 : 0);
+        const pctTxt = (unopposed || c.uncontested) ? '무투표'
+          : (c.pct != null ? c.pct.toFixed(1) + '%' : '무투표');
         return `<div class="rc-bar-row">
           <span class="name">${candLabel(c)}</span>
           <span class="rc-bar"><span class="rc-bar-fill" style="width:${w}%;background:${color}"></span></span>
-          <span class="pct" style="color:${color}">${c.pct != null ? c.pct.toFixed(1) + '%' : '무투표'}</span>
+          <span class="pct" style="color:${color}">${pctTxt}</span>
         </div>`;
       }).join('');
       html += `<div class="result-card" style="border-left-color:${leftColor}">
         <div class="rc-hdr">
-          <span class="rc-name">${candLabel(top)} ${result.uncontested ? '무투표 당선' : '1위'}</span>
-          <span class="rc-meta">${result.uncontested ? '단독 출마' : '투표율 ' + turnoutLabel(result.turnout, el)}</span>
+          <span class="rc-name">${candLabel(top)} ${unopposed ? '무투표 당선' : '1위'}</span>
+          <span class="rc-meta">${unopposed ? '단독 출마' : '투표율 ' + turnoutLabel(result.turnout, el)}</span>
         </div>
         ${barRows}
       </div>`;
