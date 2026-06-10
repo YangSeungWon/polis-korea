@@ -77,8 +77,9 @@ def build_year(year):
     for it in raw:
         if it["name"].endswith("출장소"):
             outjang.append(it); continue
-        key = _parent_si(it["name"]) or it["name"]
-        gr = groups.setdefault(key, {"code": it["code"], "name": key, "geoms": []})
+        disp = _parent_si(it["name"]) or it["name"]
+        key = (it["code"][:2], disp)   # 시도(code 앞 2자리)로 동명 시군구 구분 — 중구·동구 등 시도별 분리
+        gr = groups.setdefault(key, {"code": it["code"], "name": disp, "geoms": []})
         gr["geoms"].append(it["geom"])
         # 일반구 dissolve 시 시도2 코드만 유지되면 됨 — 첫 code 사용
 
