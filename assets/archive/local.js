@@ -474,6 +474,10 @@
       if (window.Archive.metroHex) await window.Archive.metroHex.init(ctx);
       if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
       if (window.Archive.winners) await window.Archive.winners.init(ctx);
+    },
+    // 2차 데이터(여론조사·출구조사·재보궐사유) 도착 후 — 코어(선출직 분포·hex) 재렌더 안 함.
+    async renderDeferred(ctx) {
+      renderHero(ctx);          // 여론조사 건수 갱신 (append 없어 idempotent)
       renderExitPoll(ctx);
       renderPollsLink(ctx);
       await renderByelection(ctx);

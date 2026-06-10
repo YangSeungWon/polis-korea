@@ -272,6 +272,11 @@
       renderHero(ctx);
       renderParliament(ctx);
       renderProportional(ctx);
+      renderExitPoll(ctx);   // 코어 단계엔 exitData=null → 스킵
+    },
+    // 2차 데이터(여론조사 건수·출구조사) 도착 후 — 코어 섹션 재렌더 안 함.
+    renderDeferred(ctx) {
+      renderHero(ctx);       // 여론조사 건수 갱신 (setText·차트 가드라 idempotent)
       renderExitPoll(ctx);
     },
   };

@@ -1,5 +1,7 @@
 // archive 엔트리 — window.__ARCHIVE__ = { id } + data/elections/{id}.json 메타로
-// results · polls · byelection · 출구조사 fetch 후 모드(local/pres/general) dispatch.
+// 결과(+시군구 chunk)만 먼저 받아 상단·결과를 즉시 렌더하고,
+// 무거운 2차 데이터(여론조사 2.5MB·출구조사·재보궐사유)는 백그라운드 병렬 로드 후
+// 해당 섹션만 채운다(renderDeferred). → 체감 지연 최소화.
 //
 // 로드 순서: shared.js → local.js → pres.js → general.js → core.js.
 
@@ -28,7 +30,19 @@
     pollsWindow: ar.polls_window ? { start: ar.polls_window[0], end: ar.polls_window[1] } : null,
   };
 
-  // 1. 결과 — _meta.chunked 플래그 있으면 .sigungu.json chunk 합치기
+  const isPres = meta.electionKind === 'presidential';
+  const isGeneral = meta.electionKind === 'general_election' || meta.electionKind === 'national_assembly';
+  const isByelection = meta.electionKind === 'byelection';
+  const sgTypecode = meta.sgTypecode || (isPres ? '1' : isGeneral ? '2' : '3');
+  const mode = isPres ? window.Archive.pres
+    : isGeneral ? window.Archive.general
+      : isByelection ? window.Archive.byelection
+        : window.Archive.local;
+
+  // 정당색 시대 맥락 — 이 회차 날짜로 partyColor periods lookup 활성.
+  if (typeof setPartyColorContext === 'function') setPartyColorContext(meta.date);
+
+  // === 1단계: 결과(+시군구 chunk) — 이것만 받고 즉시 코어 렌더 ===
   let results = null;
   try {
     results = await fetch(meta.resultsPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null);
@@ -39,44 +53,26 @@
     }
   } catch { results = null; }
 
-  // 2. 폴 (회차별 path)
-  let polls = null;
-  try {
-    // 활성 회차(9회) archive는 후보 race만 → lite chunk. 옛 회차는 회차별 path.
-    const path = meta.pollsPath || 'data/polls/aggregated_candidates.json';
-    const all = await fetch(path).then((r) => r.json());
-    polls = (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta));
-  } catch { polls = null; }
+  const ctx = { meta, results, polls: null, byReasons: [], exitData: null, sgTypecode };
+  if (mode) await mode.render(ctx);   // 여론조사·출구조사 없이 상단·결과 먼저(가드로 2차 섹션 스킵)
 
-  // 3. 재보궐 사유
-  let byReasons = [];
-  try {
-    const br = await fetch('data/byelection_reasons.json').then((r) => r.json());
-    byReasons = (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, ''));
-  } catch {}
-
-  // 4. 출구조사 — meta에서 명시적으로 null이면 fetch 스킵 (해당 회차 출구조사 없음)
-  let exitData = null;
-  if (meta.exitPollPath !== null) {
-    try {
-      const path = meta.exitPollPath || `data/exit_polls/${meta.id}.json`;
-      exitData = await fetch(path).then((r) => r.ok ? r.json() : null);
-    } catch {}
-  }
-
-  const isPres = meta.electionKind === 'presidential';
-  const isGeneral = meta.electionKind === 'general_election' || meta.electionKind === 'national_assembly';
-  const isByelection = meta.electionKind === 'byelection';
-  const sgTypecode = meta.sgTypecode || (isPres ? '1' : isGeneral ? '2' : '3');
-
-  // 정당색 시대 맥락 — 이 회차 날짜로 partyColor periods lookup 활성.
-  if (typeof setPartyColorContext === 'function') setPartyColorContext(meta.date);
-
-  const ctx = { meta, results, polls, byReasons, exitData, sgTypecode };
-
-  if (isPres) window.Archive.pres.render(ctx);
-  else if (isGeneral) window.Archive.general.render(ctx);
-  else if (isByelection) await window.Archive.byelection.render(ctx);
-  else await window.Archive.local.render(ctx);
-  // 조사 60건 list section 제거됨 — 사용자 거의 안 보던 영역.
+  // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
+  (async () => {
+    const pollsPath = meta.pollsPath || 'data/polls/aggregated_candidates.json';
+    const [polls, byReasons, exitData] = await Promise.all([
+      fetch(pollsPath).then((r) => r.json())
+        .then((all) => (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta)))
+        .catch(() => null),
+      fetch('data/byelection_reasons.json').then((r) => r.json())
+        .then((br) => (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, '')))
+        .catch(() => []),
+      (meta.exitPollPath !== null
+        ? fetch(meta.exitPollPath || `data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null).catch(() => null)
+        : Promise.resolve(null)),
+    ]);
+    ctx.polls = polls;
+    ctx.byReasons = byReasons;
+    ctx.exitData = exitData;
+    if (mode && mode.renderDeferred) await mode.renderDeferred(ctx);
+  })();
 })();

@@ -226,6 +226,11 @@
         window.Archive.governorHex.init(ctx, { tc: ctx.sgTypecode, hostId: 'ar-pres-sido-hex' });
       }
       renderNation(ctx);
+      renderExitPoll(ctx);   // 코어 단계엔 exitData=null → 스킵
+    },
+    // 2차 데이터(여론조사 건수·출구조사) 도착 후 — 코어 섹션 재렌더 안 함.
+    renderDeferred(ctx) {
+      renderHero(ctx);       // 여론조사 건수·시도 출구조사 요약 갱신 (idempotent)
       renderExitPoll(ctx);
     },
     renderExitPoll,  // 총선이 재사용
