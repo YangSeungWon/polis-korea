@@ -17,7 +17,7 @@ const LOCAL_SGG_GEO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010 };
 //   19대2017·20대2022→2018(sigungu_simple).
 // 경계가 시 단위(일반구 dissolve)여도 resultForSigungu reverse-merge로 대선 일반구 데이터 집계.
 const PRES_SGG_GEO_YEAR = { 16: 2002, 17: 2006, 18: 2013 };
-const PRES_GEO_ROUNDS = [16, 17, 18, 19, 20];
+const PRES_GEO_ROUNDS = [16, 17, 18, 19, 20, 21];   // 21대=2025 조기대선(sigungu_simple 경계)
 
 async function loadSggGeoByYear(y) {
   const key = y || 'simple';
