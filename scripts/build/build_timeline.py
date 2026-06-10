@@ -53,7 +53,11 @@ NEW_PATHS = {
     (19, "presidential"): "19th-pres-2017.json",
     (20, "presidential"): "20th-pres-2022.json",
     (21, "presidential"): "21st-pres-2025.json",
-    # national_assembly — 13~16 위키 정당 합산, 17~ NEC + 지역구
+    # national_assembly — 9~12 중선거구(LOD 지역구), 13~16 위키 정당 합산, 17~ NEC + 지역구
+    (9, "national_assembly"): "9th-general-1973.json",
+    (10, "national_assembly"): "10th-general-1978.json",
+    (11, "national_assembly"): "11th-general-1981.json",
+    (12, "national_assembly"): "12th-general-1985.json",
     (13, "national_assembly"): "13th-general-1988.json",
     (14, "national_assembly"): "14th-general-1992.json",
     (15, "national_assembly"): "15th-general-1996.json",
@@ -258,14 +262,16 @@ def party_total_seats(races, kind, n):
         return []
     from collections import Counter
     counter = Counter()
-    # 지역구 race(scope=district, tc=2)에서 winner 카운트
+    # 지역구 race(scope=district, tc=2)에서 winner 카운트 — 중선거구(9~12대 1구 2인)는 당선자 전원.
     for r in races:
         if r.get("scope") != "district" or r.get("sg_typecode") != "2":
             continue
         cands = r.get("candidates") or []
-        won = next((c for c in cands if c.get("rank") == 1 or c.get("won")), None) or (cands[0] if cands else None)
-        if won:
-            p = SATELLITE_TO_MAIN.get(won.get("party", ""), won.get("party", ""))
+        won_list = [c for c in cands if c.get("won")]
+        if not won_list and cands:
+            won_list = [cands[0]]   # won 플래그 없는 옛 데이터 — 1위만(단선거구 가정)
+        for c in won_list:
+            p = SATELLITE_TO_MAIN.get(c.get("party", ""), c.get("party", ""))
             counter[p] += 1
     # 비례 의석은 옛 schema에서 (national_assembly_N.json)
     old_path = ROOT / f"data/results/national_assembly_{n}.json"
