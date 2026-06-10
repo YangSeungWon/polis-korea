@@ -80,6 +80,9 @@
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
     }
+    // 전남광주 통합(2026) — geo는 광주·전남 분리 폴리곤이라 병합 못 함 → 두 폴리곤에 통합 결과 칠함.
+    const mergedHonam = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
+    if (mergedHonam) { bySido['광주광역시'] = bySido['광주광역시'] || mergedHonam; bySido['전라남도'] = bySido['전라남도'] || mergedHonam; }
 
     const feats = geo.features;
     const { mnX, mnY, mxX, mxY } = bbox(feats);

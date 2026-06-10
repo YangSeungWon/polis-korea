@@ -25,17 +25,20 @@
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       if (cs[0]) bySido[canon(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
     }
-    // 전남광주 통합(2026) — 병합 race를 광주·전남 양 셀에 매핑('통합' 표기 변형도 수용).
-    const merged = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
+    // 전남광주 통합(2026) — 데이터에 병합 race가 있으면 '전남광주' 한 셀 레이아웃 사용
+    // ('통합특별시' 표기 변형 수용). 대선·통합 전 지선은 광주·전남 분리 유지.
+    if (!bySido['전남광주특별시'] && bySido['전남광주통합특별시']) bySido['전남광주특별시'] = bySido['전남광주통합특별시'];
+    const layout = (bySido['전남광주특별시'] && typeof honamMergedLayout === 'function')
+      ? honamMergedLayout(SIDO_HEX_LAYOUT) : SIDO_HEX_LAYOUT;
 
     const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
     const cells = [];
     const seen = new Set();
-    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+    for (const [sido, pos] of Object.entries(layout)) {
       const key = `${pos.col},${pos.row}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      const win = bySido[sido] || ((sido === '광주광역시' || sido === '전라남도') ? merged : undefined);
+      const win = bySido[sido];
       const cx = OFF_X + pos.col * COL_W + (pos.row % 2 ? COL_W / 2 : 0);
       const cy = OFF_Y + pos.row * ROW_H * 0.87;
       cells.push({ sido, pos, cx, cy, label: pos.label, win });
