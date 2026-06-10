@@ -89,9 +89,9 @@ CFG = {
              emd=ROOT / "data/raw/nec/district_emd_21.json",
              shp=ROOT / "data/raw/sgis/bnd_dong_2020/bnd_dong_00_2020_4Q.shp",
              results=ROOT / "data/results/national_assembly_21.json"),
-    22: dict(mode="nec_emd", year=2022,   # OhmyNews 대조용 (SGIS 2024 없어 2022 근사)
+    22: dict(mode="nec_emd", year=2025,   # OhmyNews 대조용. SGIS 2025-2Q = 부천 일반구 부활(2024-01) 반영
              emd=ROOT / "data/raw/nec/district_emd_22.json",
-             shp=ROOT / "data/raw/sgis/bnd_dong_2022/bnd_dong_00_2022_4Q.shp",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2025/bnd_dong_00_2025_2Q.shp",
              results=ROOT / "data/results/national_assembly_22.json"),
 }
 
