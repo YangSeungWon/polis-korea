@@ -201,11 +201,15 @@ function renderDetail() {
   const nat = data?.national;
   let html = archiveBanner;
   if (state.type === 'national_assembly' && nat) {
-    // 정당별 총 의석 (지역구 winner_party 카운트 + 비례 의석)
+    // 정당별 총 의석 (지역구 + 비례). 중선거구(9~12대)는 winners[]에 1구 2인 → 둘 다 카운트.
     const seatsByParty = new Map();
     for (const d of state.results?.district || []) {
-      if (!d.winner_party) continue;
-      seatsByParty.set(d.winner_party, (seatsByParty.get(d.winner_party) || 0) + 1);
+      const wins = (d.winners && d.winners.length) ? d.winners
+        : (d.winner_party ? [{ party: d.winner_party }] : []);
+      for (const w of wins) {
+        if (!w.party) continue;
+        seatsByParty.set(w.party, (seatsByParty.get(w.party) || 0) + 1);
+      }
     }
     for (const p of nat.proportional_seats || []) {
       seatsByParty.set(p.party, (seatsByParty.get(p.party) || 0) + (p.seats || 0));

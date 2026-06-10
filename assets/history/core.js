@@ -95,8 +95,10 @@ function _raceToOldRow(race) {
 }
 
 function _raceToOldDistrict(race) {
-  const winner = race.candidates?.[0];
-  return {
+  const cands = race.candidates || [];
+  const won = cands.filter((c) => c.won);
+  const winner = won[0] || cands[0];
+  const out = {
     sido: race.sido,
     name: race.district || '',
     winner: winner?.name || '',
@@ -105,8 +107,11 @@ function _raceToOldDistrict(race) {
     voted: race.voters || 0,
     invalid: race.invalid_votes || 0,
     turnout: race.electors ? +(race.voters / race.electors * 100).toFixed(2) : 0,
-    candidates: race.candidates || [],
+    candidates: cands,
   };
+  // 중선거구(9~12대 1구 2인) — 당선자 2명 보존(의석 카운트·hex 줄무늬용).
+  if (won.length >= 2) out.winners = won.map((c) => ({ name: c.name, party: c.party }));
+  return out;
 }
 
 function _raceToOldNation(race) {
