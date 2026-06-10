@@ -8,7 +8,7 @@ sigungu_simple.json(현재 2018 경계)과 동형: props {code, name, base_year}
 UTM-K(EPSG:5179) → WGS84(4326). 투영좌표에서 simplify(80m) 후 5자리 반올림, 미세 도서 sub-polygon 제거.
 출력: data/geo/sigungu_{year}.json
 """
-import json, glob, sys, re
+import json, glob, sys, re, subprocess
 from pathlib import Path
 import shapefile
 from shapely.geometry import shape, mapping
@@ -89,14 +89,14 @@ def build_year(year):
         host = min(merged_pre, key=lambda k: merged_pre[k].distance(it["geom"]))
         groups[host]["geoms"].append(it["geom"])
 
-    # 4) union → simplify → island filter → WGS84
+    # 4) union → island filter → WGS84 (raw, 단순화 안 함). 인접 시군구가 동/sigungu edge를
+    #    정확히 공유 → mapshaper(아래)가 위상 보존 단순화로 틈 0 + 용량↓.
     feats = []
     for gr in groups.values():
         g = unary_union(gr["geoms"])
         if not g.is_valid:
             g = g.buffer(0)
         g = drop_tiny_islands(g)
-        g = g.simplify(80, preserve_topology=True)   # 투영(m) 단위
         if g.is_empty:
             continue
         feats.append({
@@ -107,6 +107,14 @@ def build_year(year):
     out = {"type": "FeatureCollection", "features": feats}
     p = ROOT / f"data/geo/sigungu_{year}.json"
     p.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
+    # mapshaper 위상 보존 단순화 — 공유 경계 함께 줄여 인접 시군구 틈 0 + 용량 ~400KB.
+    _ms = ROOT / "node_modules/.bin/mapshaper"
+    try:
+        subprocess.run([str(_ms), str(p), "snap", "-simplify", "2%", "keep-shapes",
+                        "-clean", "gap-fill-area=2km2", "-o", str(p), "force"],
+                       check=True, capture_output=True, timeout=300)
+    except Exception as e:
+        print(f"  ⚠ mapshaper 실패: {e}", file=sys.stderr)
     print(f"{year}: {len(feats)} 시군구 → {p.name} ({round(p.stat().st_size/1e6,2)}MB)")
 
 if __name__ == "__main__":
