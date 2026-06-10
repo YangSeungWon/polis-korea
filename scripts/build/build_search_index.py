@@ -59,21 +59,32 @@ def main():
         year = int(date[:4]) if date and date[:4].isdigit() else None
         rlbl = round_label(eid)
 
-        # tc별 canonical scope — 그 외 scope의 race는 인덱스에서 제외.
-        # 대선 시도별·총선 시도 summary 같은 보조 row가 1위 entries로
-        # 잡혀 한 사람 한 회차가 17건이 되는 문제 방지.
+        # 기초장(tc4)·의원 등 sigungu-level race는 별도 청크 파일에 — 같이 읽는다.
+        # (안 읽으면 5~8회·1~4회 기초단체장 당선자가 검색에서 통째로 누락됨.)
+        races = list(d.get('races', []))
+        sgg_f = Path(f).with_suffix('').as_posix() + '.sigungu.json'
+        if Path(sgg_f).exists():
+            try:
+                races += json.load(open(sgg_f, encoding='utf-8')).get('races', [])
+            except Exception:
+                pass
+
+        # tc별 canonical scope — 이 5종(대통령·국회의원·광역장·기초장·교육감)만 인덱싱.
+        #   의원(5·6)은 수천 명 minor, 비례(7·8·9)는 '이름'이 정당명이라 인물검색 부적합 → 제외.
+        #   보조 scope row(시도별 breakdown 등)도 canonical scope만 통과시켜 중복 방지.
         CANON_SCOPE = {
             '1': 'nation',     # 대선 전국
             '2': 'district',   # 총선 지역구
             '3': 'sido',       # 지선 광역단체장
             '4': 'sigungu',    # 지선 기초단체장
+            '11': 'sido',      # 지선 교육감
         }
 
-        for race in d.get('races', []):
+        for race in races:
             tc = race.get('sg_typecode', '')
             scope = race.get('scope', '')
             expected = CANON_SCOPE.get(tc)
-            if expected and scope != expected:
+            if not expected or scope != expected:
                 continue
             sido = race.get('sido', '')
             sigungu = race.get('sigungu', '') or ''

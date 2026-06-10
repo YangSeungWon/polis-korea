@@ -73,15 +73,24 @@ def main():
         year = int(date[:4]) if date and date[:4].isdigit() else None
         eid_meta[eid] = {"year": year, "round": round_label(eid)}
 
-        # tc별 canonical scope — 그 외 scope race는 무시 (시도별 부분집계는
-        # 1위로 잡혀 false 'won' 표시되는 문제 방지).
-        CANON_SCOPE = {"1": "nation", "2": "district", "3": "sido", "4": "sigungu"}
+        # 기초장(tc4) 등 sigungu-level race는 청크 파일에 — 같이 읽어야 기초단체장 이력이 들어옴.
+        races = list(d.get("races", []))
+        sgg_f = Path(f).with_suffix("").as_posix() + ".sigungu.json"
+        if Path(sgg_f).exists():
+            try:
+                races += json.load(open(sgg_f, encoding="utf-8")).get("races", [])
+            except Exception:
+                pass
 
-        for race in d.get("races", []):
+        # 인물 타임라인에 넣을 직위: 대통령·국회의원·광역장·기초장·교육감만.
+        #   의원(5·6)·비례(7·8·9)는 제외(수천 명·정당명 행). canonical scope만 통과.
+        CANON_SCOPE = {"1": "nation", "2": "district", "3": "sido", "4": "sigungu", "11": "sido"}
+
+        for race in races:
             tc = race.get("sg_typecode", "")
             scope = race.get("scope", "")
             expected = CANON_SCOPE.get(tc)
-            if expected and scope != expected:
+            if not expected or scope != expected:
                 continue
             sido = race.get("sido", "") or ""
             sigungu = race.get("sigungu", "") or ""
