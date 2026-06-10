@@ -31,7 +31,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="profile">
 <link rel="canonical" href="/person/{slug}/">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
