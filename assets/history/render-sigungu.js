@@ -141,7 +141,7 @@ function renderSigunguHex() {
       });
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       tt.textContent = top
-        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.pct?.toFixed(1)}% · ${N}석/표`
+        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'} · ${N}석/표`
         : `${d.sido} ${d.name}`;
       g.appendChild(tt);
       // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
@@ -350,7 +350,7 @@ function renderSigunguHex() {
       }
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       tt.textContent = n.top
-        ? `${n.d.sido} ${n.d.name} · ${candLabel(n.top)} (${n.top.party}) ${n.top.pct?.toFixed(1)}%`
+        ? `${n.d.sido} ${n.d.name} · ${candLabel(n.top)} (${n.top.party}) ${n.top.uncontested ? '무투표 당선' : n.top.pct?.toFixed(1) + '%'}`
         : `${n.d.sido} ${n.d.name}`;
       g.appendChild(tt);
       // 라벨 — 큰 원만
@@ -436,7 +436,7 @@ function renderSigunguHex() {
 
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
     title.textContent = top
-      ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.pct?.toFixed(1)}%`
+      ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
       : `${d.sido} ${d.name} · 데이터 없음`;
     g.appendChild(title);
 
