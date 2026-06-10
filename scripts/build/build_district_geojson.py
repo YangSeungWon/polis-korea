@@ -10,7 +10,7 @@
 사용(venv): /tmp/geoenv/bin/python scripts/build/build_district_geojson.py 20
 """
 from __future__ import annotations
-import csv, json, re, sys
+import csv, json, re, subprocess, sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -18,6 +18,9 @@ import shapefile  # pyshp
 from shapely.geometry import shape, mapping, MultiPolygon
 from shapely.ops import unary_union, transform as shp_transform
 from pyproj import Transformer
+
+# 단순화: build는 raw union을 내보내고 mapshaper(node_modules/.bin/mapshaper)가 위상 보존
+# -simplify 2% -clean으로 후처리 → 인접 선거구 틈 0 + 용량 ~400KB. 빌드 끝에서 자동 호출.
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -387,11 +390,13 @@ def main(n: int):
         if infilled:
             print(f"기하 인접 흡수: {infilled}개 동 (같은시군구 {infilled-cross_sgg}·교차 {cross_sgg}·잔여 {len(unassigned)})", file=sys.stderr)
 
-    # 4) 선거구별 union
+    # 4) 선거구별 union → 전체 topology 공유 arc 단순화
     features = []
     name_to_code = {}
     incomplete = []
-    for i, ((skey, name), race) in enumerate(sorted(by_key.items())):
+    # 4a) 풀해상도 선거구 폴리곤 수집 (5179 union → 도서 제거 → WGS84)
+    raw = []  # (skey, name, race, geom_wgs)
+    for (skey, name), race in sorted(by_key.items()):
         cds = district_cds.get((skey, name))
         if not cds:
             incomplete.append((f"{skey} {name}", "매핑 없음"))
@@ -405,8 +410,19 @@ def main(n: int):
             parts = [p for p in u.geoms if p.area > 200000]  # 0.2km² 미만 도서 제거
             if parts:
                 u = parts[0] if len(parts) == 1 else MultiPolygon(parts)
-        # preserve_topology=False: 슬리버 union에서도 점 대폭 축소(266배). buffer(0)로 유효성 복구.
-        u = reproj(u).simplify(0.0035, preserve_topology=False).buffer(0)
+        raw.append((skey, name, race, reproj(u)))
+    # 4b) 단순화 — 모드별 분기.
+    #   nec_emd: raw 그대로 내보내고 mapshaper(위상 보존)가 공유 arc를 함께 줄여 인접 선거구 틈 0.
+    #            (동이 SGIS 한 소스라 edge 정확히 공유 → mapshaper가 깨끗이 처리.)
+    #   wwolf(20대)/sgg_union(8대): SGIS+admdongkor 혼합·동 매칭실패로 구조적 구멍이 있어 mapshaper가
+    #            무익(틈 못 메우고 용량만 ↑). per-polygon DP로 빠르게 축소(원래 방식 유지).
+    use_mapshaper = cfg["mode"] == "nec_emd"
+    if use_mapshaper:
+        simp_geoms = [r[3].buffer(0) for r in raw]
+    else:
+        simp_geoms = [r[3].simplify(0.0035, preserve_topology=False).buffer(0) for r in raw]
+    # 4c) feature 작성
+    for i, ((skey, name, race, _), u) in enumerate(zip(raw, simp_geoms)):
         code = f"D{n}{i:04d}"
         sido_full = race["sido"]
         sido_short = SIDO_SHORT.get(sido_full, sido_full)
@@ -426,6 +442,18 @@ def main(n: int):
     out_geo = ROOT / f"data/geo/district_{n}_geojson.json"
     out_map = ROOT / f"data/geo/district_{n}_geojson_map.json"
     out_geo.write_text(json.dumps(fc, ensure_ascii=False), encoding="utf-8")
+    # nec_emd만 mapshaper 위상 보존 단순화 — raw union(공유 동 edge)을 함께 줄여 인접 선거구 틈 0 + 용량↓.
+    # (per-polygon은 공유 경계 어긋나 틈 생김, topojson은 일부 회차 OOM → mapshaper 채택.)
+    if use_mapshaper:
+        raw_kb = out_geo.stat().st_size // 1024
+        _ms = ROOT / "node_modules/.bin/mapshaper"
+        try:
+            # snap: 근접 정점 병합(슬리버 → 공유 arc 인식) → -clean이 틈 제거.
+            subprocess.run([str(_ms), str(out_geo), "snap", "-simplify", "2%", "keep-shapes",
+                            "-clean", "gap-fill-area=2km2", "-o", str(out_geo), "force"],
+                           check=True, capture_output=True, timeout=300)
+        except Exception as e:
+            print(f"  ⚠ mapshaper 실패(raw {raw_kb}KB 유지): {e}", file=sys.stderr)
     out_map.write_text(json.dumps({
         "_meta": {
             "description": f"{n}대 선거구 경계 — SGIS {cfg['year']} 읍면동 union. key '{{canonSido}}|{{name}}' → SGG_Code.",

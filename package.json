@@ -1,0 +1,9 @@
+{
+  "name": "polis-korea-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "빌드 도구 — 선거구 geojson 위상 보존 단순화(mapshaper). scripts/build/build_district_geojson.py가 node_modules/.bin/mapshaper 호출.",
+  "devDependencies": {
+    "mapshaper": "^0.7.22"
+  }
+}
