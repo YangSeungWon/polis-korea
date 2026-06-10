@@ -1,55 +1,1061 @@
 {
-  "_meta": {
-    "election": "제14대 대통령선거",
-    "election_id": "14th-pres-1992",
-    "election_date": "1992-12-18",
-    "source": "wikipedia-ko-infobox",
-    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
-    "n_rows": 1
-  },
-  "races": [
+ "_meta": {
+  "election": "제14대 대통령선거",
+  "election_id": "14th-pres-1992",
+  "election_date": "1992-12-18",
+  "source": "wikipedia-ko-infobox",
+  "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+  "n_rows": 1,
+  "sido_source": "nec-개표현황(VCCP09) 시도별"
+ },
+ "races": [
+  {
+   "sg_typecode": "1",
+   "sido": "",
+   "sigungu": "",
+   "scope": "nation",
+   "electors": 0,
+   "voters": 23414730,
+   "valid_votes": 23414730,
+   "invalid_votes": 0,
+   "abstain": 0,
+   "candidates": [
     {
-      "sg_typecode": "1",
-      "sido": "",
-      "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 23414730,
-      "valid_votes": 23414730,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "candidates": [
-        {
-          "name": "김영삼",
-          "party": "민주자유당",
-          "votes": 9977332,
-          "pct": 41.96,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "김대중",
-          "party": "민주당",
-          "votes": 8041284,
-          "pct": 33.82,
-          "rank": 2
-        },
-        {
-          "name": "정주영",
-          "party": "통일국민당",
-          "votes": 3880067,
-          "pct": 16.31,
-          "rank": 3
-        },
-        {
-          "name": "박찬종",
-          "party": "신정치개혁당",
-          "votes": 1516047,
-          "pct": 6.37,
-          "rank": 4
-        }
-      ],
-      "turnout_pct": 81.9
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 9977332,
+     "pct": 41.96,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 8041284,
+     "pct": 33.82,
+     "rank": 2
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 3880067,
+     "pct": 16.31,
+     "rank": 3
+    },
+    {
+     "name": "박찬종",
+     "party": "신정치개혁당",
+     "votes": 1516047,
+     "pct": 6.37,
+     "rank": 4
     }
-  ]
+   ],
+   "turnout_pct": 81.9
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "서울특별시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 7394554,
+   "voters": 6021311,
+   "valid_votes": 5951777,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 2246636,
+     "pct": 37.7,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 2167298,
+     "pct": 36.4,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 1070629,
+     "pct": 18.0,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 381535,
+     "pct": 6.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 67784,
+     "pct": 1.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 13098,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 4797,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "부산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2565831,
+   "voters": 2135546,
+   "valid_votes": 2115389,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 1551473,
+     "pct": 73.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 265055,
+     "pct": 12.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 139004,
+     "pct": 6.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 133907,
+     "pct": 6.3,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 21736,
+     "pct": 1.0,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 3236,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 978,
+     "pct": 0.0,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대구광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1494057,
+   "voters": 1172636,
+   "valid_votes": 1158193,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 690245,
+     "pct": 59.6,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 224642,
+     "pct": 19.4,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 136037,
+     "pct": 11.7,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 90641,
+     "pct": 7.8,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 12772,
+     "pct": 1.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 2753,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 1103,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "인천광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1346964,
+   "voters": 1081011,
+   "valid_votes": 1066288,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 397361,
+     "pct": 37.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 338538,
+     "pct": 31.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 228505,
+     "pct": 21.4,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 84211,
+     "pct": 7.9,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 12455,
+     "pct": 1.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 3867,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 1351,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "광주광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 769300,
+   "voters": 685797,
+   "valid_votes": 680600,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 652337,
+     "pct": 95.8,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 14504,
+     "pct": 2.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 8085,
+     "pct": 1.2,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 2827,
+     "pct": 0.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 1565,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 1149,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 133,
+     "pct": 0.0,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대전광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 725583,
+   "voters": 582613,
+   "valid_votes": 574403,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 202137,
+     "pct": 35.2,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 165067,
+     "pct": 28.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 133646,
+     "pct": 23.3,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 64526,
+     "pct": 11.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 5772,
+     "pct": 1.0,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 2294,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 961,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경기도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 4354271,
+   "voters": 3502774,
+   "valid_votes": 3451395,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 1254025,
+     "pct": 36.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 1103498,
+     "pct": 32.0,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 798356,
+     "pct": 23.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 239140,
+     "pct": 6.9,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 36392,
+     "pct": 1.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 13685,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 6299,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "강원도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1025018,
+   "voters": 834891,
+   "valid_votes": 820255,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 340528,
+     "pct": 41.5,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 279610,
+     "pct": 34.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 127265,
+     "pct": 15.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 56199,
+     "pct": 6.9,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 9599,
+     "pct": 1.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 4007,
+     "pct": 0.5,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 3047,
+     "pct": 0.4,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 922701,
+   "voters": 750483,
+   "valid_votes": 736171,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 281678,
+     "pct": 38.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 191743,
+     "pct": 26.0,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 175767,
+     "pct": 23.9,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 68900,
+     "pct": 9.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 8671,
+     "pct": 1.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 4844,
+     "pct": 0.7,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 4568,
+     "pct": 0.6,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1232586,
+   "voters": 973070,
+   "valid_votes": 952454,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 351789,
+     "pct": 36.9,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 271921,
+     "pct": 28.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 240400,
+     "pct": 25.2,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 64117,
+     "pct": 6.7,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 10185,
+     "pct": 1.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 9899,
+     "pct": 1.0,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 4143,
+     "pct": 0.4,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1321778,
+   "voters": 1126597,
+   "valid_votes": 1112350,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 991483,
+     "pct": 89.1,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 63175,
+     "pct": 5.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 35923,
+     "pct": 3.2,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 9320,
+     "pct": 0.8,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 7130,
+     "pct": 0.6,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 4232,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 1087,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1500662,
+   "voters": 1285110,
+   "valid_votes": 1270023,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 1170398,
+     "pct": 92.2,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 53360,
+     "pct": 4.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 26686,
+     "pct": 2.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 8010,
+     "pct": 0.6,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 7210,
+     "pct": 0.6,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 3311,
+     "pct": 0.3,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 1048,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1934544,
+   "voters": 1559478,
+   "valid_votes": 1531637,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 991424,
+     "pct": 64.7,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 240646,
+     "pct": 15.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 147440,
+     "pct": 9.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 124858,
+     "pct": 8.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 17664,
+     "pct": 1.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 6240,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 3365,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2504339,
+   "voters": 2118601,
+   "valid_votes": 2093590,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 1514043,
+     "pct": 72.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 241135,
+     "pct": 11.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 193373,
+     "pct": 9.2,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 115086,
+     "pct": 5.5,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 22863,
+     "pct": 1.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 5070,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 2020,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "제주도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 330470,
+   "voters": 265252,
+   "valid_votes": 260884,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "민주자유당",
+     "votes": 104292,
+     "pct": 40.0,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김대중",
+     "party": "민주당",
+     "votes": 85889,
+     "pct": 32.9,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "정주영",
+     "party": "통일국민당",
+     "votes": 42130,
+     "pct": 16.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "박찬종",
+     "party": "신정당",
+     "votes": 23077,
+     "pct": 8.8,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "백기완",
+     "party": "무소속",
+     "votes": 3647,
+     "pct": 1.4,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김옥선",
+     "party": "무소속",
+     "votes": 1286,
+     "pct": 0.5,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "이병호",
+     "party": "대한정의당",
+     "votes": 563,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  }
+ ]
 }

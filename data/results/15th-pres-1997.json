@@ -1,48 +1,1121 @@
 {
-  "_meta": {
-    "election": "제15대 대통령선거",
-    "election_id": "15th-pres-1997",
-    "election_date": "1997-12-18",
-    "source": "wikipedia-ko-infobox",
-    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
-    "n_rows": 1
-  },
-  "races": [
+ "_meta": {
+  "election": "제15대 대통령선거",
+  "election_id": "15th-pres-1997",
+  "election_date": "1997-12-18",
+  "source": "wikipedia-ko-infobox",
+  "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+  "n_rows": 1,
+  "sido_source": "nec-개표현황(VCCP09) 시도별"
+ },
+ "races": [
+  {
+   "sg_typecode": "1",
+   "sido": "",
+   "sigungu": "",
+   "scope": "nation",
+   "electors": 0,
+   "voters": 25187584,
+   "valid_votes": 25187584,
+   "invalid_votes": 0,
+   "abstain": 0,
+   "candidates": [
     {
-      "sg_typecode": "1",
-      "sido": "",
-      "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 25187584,
-      "valid_votes": 25187584,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "candidates": [
-        {
-          "name": "김대중",
-          "party": "새정치국민회의",
-          "votes": 10326275,
-          "pct": 40.27,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "한나라당",
-          "votes": 9935718,
-          "pct": 38.74,
-          "rank": 2
-        },
-        {
-          "name": "이인제",
-          "party": "국민신당",
-          "votes": 4925591,
-          "pct": 19.2,
-          "rank": 3
-        }
-      ],
-      "turnout_pct": 80.7
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 10326275,
+     "pct": 40.27,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 9935718,
+     "pct": 38.74,
+     "rank": 2
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 4925591,
+     "pct": 19.2,
+     "rank": 3
     }
-  ]
+   ],
+   "turnout_pct": 80.7
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "서울특별시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 7358547,
+   "voters": 5926743,
+   "valid_votes": 5854773,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 2627308,
+     "pct": 44.9,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 2394309,
+     "pct": 40.9,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 747856,
+     "pct": 12.8,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 65656,
+     "pct": 1.1,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 8978,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 5432,
+     "pct": 0.1,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 5234,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "부산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2692311,
+   "voters": 2124010,
+   "valid_votes": 2094406,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 1117069,
+     "pct": 53.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 623756,
+     "pct": 29.8,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 320178,
+     "pct": 15.3,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 25581,
+     "pct": 1.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 3359,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 2252,
+     "pct": 0.1,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 2211,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대구광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1707338,
+   "voters": 1347018,
+   "valid_votes": 1329088,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 965607,
+     "pct": 72.7,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 173649,
+     "pct": 13.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 166576,
+     "pct": 12.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 16258,
+     "pct": 1.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 4108,
+     "pct": 0.3,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 1661,
+     "pct": 0.1,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 1229,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "인천광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1639655,
+   "voters": 1311512,
+   "valid_votes": 1292611,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 497839,
+     "pct": 38.5,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 470560,
+     "pct": 36.4,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 297739,
+     "pct": 23.0,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 20340,
+     "pct": 1.6,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 2356,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 1915,
+     "pct": 0.1,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 1862,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "광주광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 870554,
+   "voters": 783025,
+   "valid_votes": 775199,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 754159,
+     "pct": 97.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 13294,
+     "pct": 1.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 5181,
+     "pct": 0.7,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 1478,
+     "pct": 0.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 660,
+     "pct": 0.1,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 273,
+     "pct": 0.0,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 154,
+     "pct": 0.0,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대전광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 881474,
+   "voters": 692821,
+   "valid_votes": 682893,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 307493,
+     "pct": 45.0,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 199266,
+     "pct": 29.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 164374,
+     "pct": 24.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 8444,
+     "pct": 1.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 1352,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 1028,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 936,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "울산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 654125,
+   "voters": 530459,
+   "valid_votes": 523763,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 268998,
+     "pct": 51.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 139824,
+     "pct": 26.7,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 80751,
+     "pct": 15.4,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 32145,
+     "pct": 6.1,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 991,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 627,
+     "pct": 0.1,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 427,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경기도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 5707087,
+   "voters": 4600005,
+   "valid_votes": 4535524,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 1781577,
+     "pct": 39.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 1612108,
+     "pct": 35.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 1071704,
+     "pct": 23.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 47608,
+     "pct": 1.0,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 8035,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 7415,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 7077,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "강원도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1077853,
+   "voters": 846596,
+   "valid_votes": 830943,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 358921,
+     "pct": 43.2,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 257140,
+     "pct": 30.9,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 197438,
+     "pct": 23.8,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 8231,
+     "pct": 1.0,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 4161,
+     "pct": 0.5,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 3201,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 1851,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1015921,
+   "voters": 805496,
+   "valid_votes": 789816,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 295666,
+     "pct": 37.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 243210,
+     "pct": 30.8,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 232254,
+     "pct": 29.4,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 10232,
+     "pct": 1.3,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 3357,
+     "pct": 0.4,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 2784,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 2313,
+     "pct": 0.3,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1330627,
+   "voters": 1023990,
+   "valid_votes": 1001198,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 483093,
+     "pct": 48.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 261802,
+     "pct": 26.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 235457,
+     "pct": 23.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 9604,
+     "pct": 1.0,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 4122,
+     "pct": 0.4,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 4109,
+     "pct": 0.4,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 3011,
+     "pct": 0.3,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1391537,
+   "voters": 1190190,
+   "valid_votes": 1169189,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 1078957,
+     "pct": 92.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 53114,
+     "pct": 4.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 25037,
+     "pct": 2.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 4981,
+     "pct": 0.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 4189,
+     "pct": 0.4,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 1968,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 943,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1519292,
+   "voters": 1325731,
+   "valid_votes": 1301836,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 1231726,
+     "pct": 94.6,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 41534,
+     "pct": 3.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 18305,
+     "pct": 1.4,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 4790,
+     "pct": 0.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 2255,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 2199,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 1027,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1988379,
+   "voters": 1574454,
+   "valid_votes": 1539608,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 953360,
+     "pct": 61.9,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 335087,
+     "pct": 21.8,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 210403,
+     "pct": 13.7,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 22382,
+     "pct": 1.5,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 11723,
+     "pct": 0.8,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 4177,
+     "pct": 0.3,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 2476,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2094036,
+   "voters": 1681584,
+   "valid_votes": 1648014,
+   "candidates": [
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 908808,
+     "pct": 55.1,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 515869,
+     "pct": 31.3,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 182102,
+     "pct": 11.0,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 27823,
+     "pct": 1.7,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 8047,
+     "pct": 0.5,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 3215,
+     "pct": 0.2,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 2150,
+     "pct": 0.1,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "제주도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 361680,
+   "voters": 278999,
+   "valid_votes": 273577,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "새정치국민회의",
+     "votes": 111009,
+     "pct": 40.6,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "한나라당",
+     "votes": 100103,
+     "pct": 36.6,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "이인제",
+     "party": "국민신당",
+     "votes": 56014,
+     "pct": 20.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "권영길",
+     "party": "건설국민승리21",
+     "votes": 3856,
+     "pct": 1.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "통일한국당",
+     "votes": 1245,
+     "pct": 0.5,
+     "rank": 5,
+     "won": false
+    },
+    {
+     "name": "김한식",
+     "party": "바른정치연합",
+     "votes": 799,
+     "pct": 0.3,
+     "rank": 6,
+     "won": false
+    },
+    {
+     "name": "허경영",
+     "party": "공화당",
+     "votes": 551,
+     "pct": 0.2,
+     "rank": 7,
+     "won": false
+    }
+   ]
+  }
+ ]
 }

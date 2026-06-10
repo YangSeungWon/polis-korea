@@ -1,55 +1,770 @@
 {
-  "_meta": {
-    "election": "제13대 대통령선거",
-    "election_id": "13th-pres-1987",
-    "election_date": "1987-12-16",
-    "source": "wikipedia-ko-infobox",
-    "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
-    "n_rows": 1
-  },
-  "races": [
+ "_meta": {
+  "election": "제13대 대통령선거",
+  "election_id": "13th-pres-1987",
+  "election_date": "1987-12-16",
+  "source": "wikipedia-ko-infobox",
+  "_note": "옛 회차 — NEC OpenAPI 미가용으로 위키백과 infobox에서 nation 합계만 채움. 시도/시군구 별 break 없음.",
+  "n_rows": 1,
+  "sido_source": "nec-개표현황(VCCP09) 시도별"
+ },
+ "races": [
+  {
+   "sg_typecode": "1",
+   "sido": "",
+   "sigungu": "",
+   "scope": "nation",
+   "electors": 0,
+   "voters": 22556761,
+   "valid_votes": 22556761,
+   "invalid_votes": 0,
+   "abstain": 0,
+   "candidates": [
     {
-      "sg_typecode": "1",
-      "sido": "",
-      "sigungu": "",
-      "scope": "nation",
-      "electors": 0,
-      "voters": 22556761,
-      "valid_votes": 22556761,
-      "invalid_votes": 0,
-      "abstain": 0,
-      "candidates": [
-        {
-          "name": "노태우",
-          "party": "민주정의당",
-          "votes": 8282738,
-          "pct": 36.64,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "김영삼",
-          "party": "통일민주당",
-          "votes": 6337581,
-          "pct": 28.03,
-          "rank": 2
-        },
-        {
-          "name": "김대중",
-          "party": "평화민주당",
-          "votes": 6113375,
-          "pct": 27.04,
-          "rank": 3
-        },
-        {
-          "name": "김종필",
-          "party": "신민주공화당",
-          "votes": 1823067,
-          "pct": 8.06,
-          "rank": 4
-        }
-      ],
-      "turnout_pct": 89.2
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 8282738,
+     "pct": 36.64,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 6337581,
+     "pct": 28.03,
+     "rank": 2
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 6113375,
+     "pct": 27.04,
+     "rank": 3
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 1823067,
+     "pct": 8.06,
+     "rank": 4
     }
-  ]
+   ],
+   "turnout_pct": 89.2
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "서울특별시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 6486710,
+   "voters": 5717805,
+   "valid_votes": 5618729,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 1833010,
+     "pct": 32.6,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 1682824,
+     "pct": 30.0,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 1637347,
+     "pct": 29.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 460988,
+     "pct": 8.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 4560,
+     "pct": 0.1,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "부산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2290038,
+   "voters": 2024324,
+   "valid_votes": 1995317,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 1117011,
+     "pct": 56.0,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 640622,
+     "pct": 32.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 182409,
+     "pct": 9.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 51663,
+     "pct": 2.6,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 3612,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대구광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1275293,
+   "voters": 1146652,
+   "valid_votes": 1132078,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 800363,
+     "pct": 70.7,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 274880,
+     "pct": 24.3,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 29831,
+     "pct": 2.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 23230,
+     "pct": 2.1,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 3774,
+     "pct": 0.3,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "인천광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 955271,
+   "voters": 841983,
+   "valid_votes": 828860,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 326186,
+     "pct": 39.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 248604,
+     "pct": 30.0,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 176611,
+     "pct": 21.3,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 76333,
+     "pct": 9.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 1126,
+     "pct": 0.1,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "광주광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 520488,
+   "voters": 481126,
+   "valid_votes": 476153,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 449554,
+     "pct": 94.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 22943,
+     "pct": 4.8,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 2471,
+     "pct": 0.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 1111,
+     "pct": 0.2,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 74,
+     "pct": 0.0,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경기도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 3352554,
+   "voters": 2962014,
+   "valid_votes": 2905323,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 1204235,
+     "pct": 41.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 800274,
+     "pct": 27.5,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 647934,
+     "pct": 22.3,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 247259,
+     "pct": 8.5,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 5621,
+     "pct": 0.2,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "강원도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1040632,
+   "voters": 943379,
+   "valid_votes": 921214,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 546569,
+     "pct": 59.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 240585,
+     "pct": 26.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 81478,
+     "pct": 8.8,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 49954,
+     "pct": 5.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 2628,
+     "pct": 0.3,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 854232,
+   "voters": 777739,
+   "valid_votes": 757457,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 355222,
+     "pct": 46.9,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 213851,
+     "pct": 28.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 102456,
+     "pct": 13.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 83132,
+     "pct": 11.0,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 2796,
+     "pct": 0.4,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1788014,
+   "voters": 1578557,
+   "valid_votes": 1534906,
+   "candidates": [
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 691214,
+     "pct": 45.0,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 402491,
+     "pct": 26.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 246527,
+     "pct": 16.1,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 190772,
+     "pct": 12.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 3902,
+     "pct": 0.3,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1298522,
+   "voters": 1172867,
+   "valid_votes": 1136975,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 948955,
+     "pct": 83.5,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 160760,
+     "pct": 14.1,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 17130,
+     "pct": 1.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 8629,
+     "pct": 0.8,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 1501,
+     "pct": 0.1,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1659767,
+   "voters": 1498755,
+   "valid_votes": 1459870,
+   "candidates": [
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 1317990,
+     "pct": 90.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 119229,
+     "pct": 8.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 16826,
+     "pct": 1.2,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 4831,
+     "pct": 0.3,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 994,
+     "pct": 0.1,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1878025,
+   "voters": 1709244,
+   "valid_votes": 1669019,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 1108035,
+     "pct": 66.4,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 470189,
+     "pct": 28.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 43227,
+     "pct": 2.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 39756,
+     "pct": 2.4,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 7812,
+     "pct": 0.5,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2193206,
+   "voters": 1963376,
+   "valid_votes": 1925412,
+   "candidates": [
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 987042,
+     "pct": 51.3,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 792757,
+     "pct": 41.2,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 86804,
+     "pct": 4.5,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 51242,
+     "pct": 2.7,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 7567,
+     "pct": 0.4,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "제주도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 280872,
+   "voters": 248598,
+   "valid_votes": 242098,
+   "candidates": [
+    {
+     "name": "노태우",
+     "party": "민주정의당",
+     "votes": 120502,
+     "pct": 49.8,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "김영삼",
+     "party": "통일민주당",
+     "votes": 64844,
+     "pct": 26.8,
+     "rank": 2,
+     "won": false
+    },
+    {
+     "name": "김대중",
+     "party": "평화민주당",
+     "votes": 45139,
+     "pct": 18.6,
+     "rank": 3,
+     "won": false
+    },
+    {
+     "name": "김종필",
+     "party": "신민주공화당",
+     "votes": 10930,
+     "pct": 4.5,
+     "rank": 4,
+     "won": false
+    },
+    {
+     "name": "신정일",
+     "party": "한주의통일한국당",
+     "votes": 683,
+     "pct": 0.3,
+     "rank": 5,
+     "won": false
+    }
+   ]
+  }
+ ]
 }
