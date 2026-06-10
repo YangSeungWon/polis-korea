@@ -7,9 +7,8 @@
   const NS = 'http://www.w3.org/2000/svg';
   const COL_W = 118, ROW_H = 104, OFF_X = 64, OFF_Y = 58;
 
-  const norm = (n) => (n || '')
-    .replace('강원특별자치도', '강원도')
-    .replace('전북특별자치도', '전라북도');
+  // 레이아웃 키 = 현 캐노니컬명. 데이터 시도명(옛 강원도/전라북도 포함)을 canonSido로 정규화해 매칭.
+  const norm = (typeof canonSido === 'function') ? canonSido : (n) => (n || '');
 
   function hexPoints(cx, cy, R) {
     const pts = [];

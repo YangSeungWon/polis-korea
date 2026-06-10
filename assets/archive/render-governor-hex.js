@@ -17,15 +17,16 @@
   function draw(host, races) {
     if (!host) return;
     if (typeof SIDO_HEX_LAYOUT !== 'object') return;
-    // 강원/전북 특별자치도 → 레이아웃 옛 명칭으로 정규화
-    const norm = (n) => (n || '')
-      .replace('강원특별자치도', '강원도')
-      .replace('전북특별자치도', '전라북도');
+    // 레이아웃 키 = 현 캐노니컬명(강원특별자치도·전북특별자치도). 데이터 시도명(옛 강원도/전라북도 포함)을
+    // canonSido로 정규화해 매칭.
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
     const bySido = {};
     for (const r of races) {
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
+      if (cs[0]) bySido[canon(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
     }
+    // 전남광주 통합(2026) — 병합 race를 광주·전남 양 셀에 매핑('통합' 표기 변형도 수용).
+    const merged = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
 
     const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
     const cells = [];
@@ -34,7 +35,7 @@
       const key = `${pos.col},${pos.row}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      const win = bySido[sido];
+      const win = bySido[sido] || ((sido === '광주광역시' || sido === '전라남도') ? merged : undefined);
       const cx = OFF_X + pos.col * COL_W + (pos.row % 2 ? COL_W / 2 : 0);
       const cy = OFF_Y + pos.row * ROW_H * 0.87;
       cells.push({ sido, pos, cx, cy, label: pos.label, win });
