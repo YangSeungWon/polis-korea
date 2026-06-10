@@ -246,14 +246,14 @@ const SIDO_HEX_LAYOUT = {
   '인천광역시':     { col: 1, row: 0, label: '인천' },
   '서울특별시':     { col: 2, row: 0, label: '서울' },
   '경기도':         { col: 3, row: 0, label: '경기' },
-  '강원도':         { col: 4, row: 0, label: '강원' },
+  '강원특별자치도': { col: 4, row: 0, label: '강원' },  // 현 캐노니컬명(옛 '강원도' 데이터는 canonSido로 매칭)
 
   '충청남도':       { col: 1, row: 1, label: '충남' },
   '세종특별자치시': { col: 2, row: 1, label: '세종' },
   '충청북도':       { col: 3, row: 1, label: '충북' },
   '경상북도':       { col: 4, row: 1, label: '경북' },
 
-  '전라북도':       { col: 2, row: 2, label: '전북' },
+  '전북특별자치도': { col: 2, row: 2, label: '전북' },  // 현 캐노니컬명(옛 '전라북도' 데이터는 canonSido로 매칭)
   '대전광역시':     { col: 3, row: 2, label: '대전' },
   '대구광역시':     { col: 4, row: 2, label: '대구' },
   '울산광역시':     { col: 5, row: 2, label: '울산' },

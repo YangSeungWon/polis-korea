@@ -101,7 +101,6 @@
     } else {
       if (!Object.keys(actualBySidoOffice).length) return null;
       for (const [sido] of Object.entries(SIDO_HEX_LAYOUT)) {
-        if (sido === '전라북도') continue;
         const polls = _origSido(sido, office);
         const actual = actualBySidoOffice[`${sido}|${office}`];
         if (!polls || !actual) continue;

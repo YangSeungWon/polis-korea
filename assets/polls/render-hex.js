@@ -25,8 +25,6 @@ function renderHex() {
   }
 
   for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
-    // skip 전라북도 duplicate (사용은 전북특별자치도)
-    if (sido === '전라북도') continue;
     const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
     const result = sidoLastWinningParty(sido, state.office);
     const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
