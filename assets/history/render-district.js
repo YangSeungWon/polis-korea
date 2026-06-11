@@ -302,8 +302,13 @@ async function renderDistrictHex() {
     const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
     const gap = top && sec ? top.pct - sec.pct : null;
     let fill = top ? partyColor(top.party) : '#e6e9ef';
-    const ws = result?.winners;  // 중선거구(1구 2인) → 당선 2당 줄무늬
-    if (ws && ws.length >= 2 && ws[0].party !== ws[1].party) fill = _jungPattern([ws[0].party, ws[1].party]);
+    const ws = result?.winners;  // 중선거구(1구 2인)
+    if (d.wi !== undefined && ws && ws[d.wi]) {
+      // 조랭이떡: 각 칸 = 당선자 1명 → 그 당 단색.
+      fill = partyColor(ws[d.wi].party);
+    } else if (ws && ws.length >= 2 && ws[0].party !== ws[1].party) {
+      fill = _jungPattern([ws[0].party, ws[1].party]);  // (조랭이떡 데이터 없을 때) 줄무늬 fallback
+    }
     const opacity = top ? 1 : 1;
     const isSelected = state.selected
       && state.selected.sido === d.sido && state.selected.name === d.name;
@@ -324,13 +329,17 @@ async function renderDistrictHex() {
     poly.setAttribute('fill-opacity', opacity);
     g.appendChild(poly);
 
+    // 조랭이떡 칸은 그 칸의 당선자 기준 라벨·툴팁 (선거구 대신 당선자명).
+    const cellWin = (d.wi !== undefined && ws && ws[d.wi]) ? ws[d.wi] : null;
     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    title.textContent = top
+    title.textContent = cellWin
+      ? `${d.sido} ${d.name} · ${cellWin.name} (${cellWin.party}) 당선`
+      : top
       ? `${d.sido} ${d.name} · ${top.name} (${top.party}) ${(result.uncontested || result.is_uncontested) ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
       : `${d.sido} ${d.name} · 데이터 없음`;
     g.appendChild(title);
 
-    const lbl = shortDistrictLabel(d.name, d.sido);
+    const lbl = cellWin ? { prefix: '', short: cellWin.name } : shortDistrictLabel(d.name, d.sido);
     const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     txt.setAttribute('x', cx);
     txt.setAttribute('text-anchor', 'middle');
