@@ -1206,12 +1206,14 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     sido_positions = {}
     for (c, r), sido in grid_map.items():
         sido_positions.setdefault(sido, []).append((c, r))
-    # 충청은 left-align (col 0 N-S 좌측 boundary 보존)
+    # 충청 right-align — 호남과 동일하게 우측(영남 boundary) 정렬. 충청 W < 호남 W일 때
+    # 좌측정렬하면 충북이 영남에서 1칸 떨어져 T경계가 어긋남(충북이 왼쪽으로 밀림).
+    ch_col_shift = plan['w_left'] - w_ch
     for sido, positions in sido_positions.items():
         cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
         positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
         for cell, (c, r) in zip(cells_list, positions_sorted):
-            cell['c'] = col_offset + c
+            cell['c'] = col_offset + ch_col_shift + c
             cell['r'] = row_offset + r
     # 호남 right-align: W_ho < w_left 면 좌측 비고 우측 정렬 (영남 boundary와 일치)
     ho_plan = plan['ho_plan']
