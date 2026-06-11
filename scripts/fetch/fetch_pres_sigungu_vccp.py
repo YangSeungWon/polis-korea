@@ -20,6 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SIDO = {11: '서울특별시', 26: '부산광역시', 27: '대구광역시', 28: '인천광역시', 29: '광주광역시',
+        30: '대전광역시', 31: '울산광역시',  # 대전 1989·울산 1997 승격 — 옛 회차엔 0건 반환(무해)
         41: '경기도', 42: '강원특별자치도', 43: '충청북도', 44: '충청남도', 45: '전북특별자치도',
         46: '전라남도', 47: '경상북도', 48: '경상남도', 49: '제주특별자치도'}
 ENDPOINT = 'https://info.nec.go.kr/electioninfo/electionInfo_report.xhtml'
