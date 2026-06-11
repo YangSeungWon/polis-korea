@@ -1240,12 +1240,24 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
     # 충청 right-align — 호남과 동일하게 우측(영남 boundary) 정렬. 충청 W < 호남 W일 때
     # 좌측정렬하면 충북이 영남에서 1칸 떨어져 T경계가 어긋남(충북이 왼쪽으로 밀림).
     ch_col_shift = plan['w_left'] - w_ch
+    # 2-pass 배치 (영남 blob과 동일): (1) 셀을 위도순으로 행에 분배(북→남),
+    # (2) 같은 행 안에서 경도순으로 열 배정(서→동). 전역 zip은 행 안 동서가 위도순위로
+    # 뒤섞여(서해안이 동쪽 열에 박힘) — 2-pass로 교정. 중선거구 쌍(같은 _cen)은 위도·경도가
+    # 같아 같은 행이면 인접 열에 나란히(조랭이떡 유지).
     for sido, positions in sido_positions.items():
-        cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: (-c['lat'], c['lon']))
-        positions_sorted = sorted(positions, key=lambda p: (p[1], p[0]))
-        for cell, (c, r) in zip(cells_list, positions_sorted):
-            cell['c'] = col_offset + ch_col_shift + c
-            cell['r'] = row_offset + r
+        cells_list = sorted(zone_cells_by_sido.get(sido, []), key=lambda c: -c['lat'])
+        row_to_pos = {}
+        for p in positions:
+            row_to_pos.setdefault(p[1], []).append(p)
+        idx = 0
+        for row in sorted(row_to_pos):
+            row_pos = sorted(row_to_pos[row], key=lambda p: p[0])  # 서→동
+            row_cells = cells_list[idx:idx + len(row_pos)]
+            row_cells.sort(key=lambda c: c['lon'])  # 서→동
+            for cell, p in zip(row_cells, row_pos):
+                cell['c'] = col_offset + ch_col_shift + p[0]
+                cell['r'] = row_offset + p[1]
+            idx += len(row_pos)
     # 호남 right-align: W_ho < w_left 면 좌측 비고 우측 정렬 (영남 boundary와 일치)
     ho_plan = plan['ho_plan']
     ho_col_shift = plan['w_left'] - ho_plan['W_ho']
