@@ -127,10 +127,13 @@ function loadJson(p) {
         seg.style.flexGrow = String(p.value);
         seg.style.background = col;
         seg.title = `${p.party} ${p.label}`;
-        // 폭에 따라 풀네임 / 약칭 / 없음 단계.
+        // 당명은 축약하지 않고 풀네임. 좁으면 overflow:hidden로 자연 클립(약칭 X).
         const ratio = p.value / stack.total;
-        if (ratio >= 0.20) seg.textContent = p.party;
-        else if (ratio >= 0.10) seg.textContent = p.short || p.party.slice(0, 3);
+        if (ratio >= 0.08) seg.textContent = p.party;
+        // 바 색이 밝으면 검은 글씨 (자동 대비).
+        const txtCol = (typeof pickTextColor === 'function') ? pickTextColor(col) : '#fff';
+        seg.style.color = txtCol;
+        seg.style.textShadow = txtCol === '#fff' ? '0 0 2px rgba(0,0,0,0.45)' : 'none';
         sidosBox.appendChild(seg);
       }
     } else {
