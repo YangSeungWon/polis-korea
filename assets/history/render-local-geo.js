@@ -80,7 +80,7 @@ async function renderLocalGeoMap(unit) {
   _mountSggGeo(geoData, infoFor, _localStyleFor, labelFor);
 }
 
-// 대선 시군구 geo — margin 명도. 13~15대는 전국 합산만 있어 미지원.
+// 대선 시군구 geo — margin 명도(16~21). 13~15대는 시군구 미수집 → 시도 hex(margin 명도)로 표시(activeUnit).
 async function renderPresGeoMap() {
   await loadSidoGeo();
   const geoData = await loadSggGeoByYear(PRES_SGG_GEO_YEAR[state.n]);

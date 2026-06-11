@@ -22,6 +22,12 @@ function activeUnit(type, office, results) {
   }
   // 21대 총선처럼 broadcast 데이터는 시도만 의미
   if (results?._meta?.granularity === 'sido_broadcast') return 'sido';
+  // 대선: 시군구 행이 실제 시군구명을 가질 때만 시군구 margin 지도(16~21). 시도 행(name='')뿐이면
+  // (13~15대·옛 회차 — 시군구 미수집) 시도 hex.
+  if (type === 'presidential') {
+    const sgg = results?.sigungu || [];
+    if (!sgg.length || sgg.every((r) => !r.name)) return 'sido';
+  }
   return 'sigungu';
 }
 
@@ -158,8 +164,10 @@ function adaptNewSchema(raw, type) {
     const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '1');
     const sidoRaces = races.filter((r) => r.scope === 'sido' && r.sg_typecode === '1');
     out.national = nation ? _raceToOldNation(nation) : _aggSidoToNation(sidoRaces);
-    out.sigungu = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === '1')
-                       .map(_raceToOldRow);
+    const sggRaces = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === '1');
+    // 시군구 있으면 시군구 margin 지도(16~21). 없으면(13~15·옛 회차) 시도 race를 시도단위 행으로 →
+    // resultForSido가 집계해 시도 hex(margin 명도) 표시. (승자독식 단색 아님 — [[no_winner_take_all_pres]])
+    out.sigungu = (sggRaces.length ? sggRaces : sidoRaces).map(_raceToOldRow);
   } else if (type === 'national_assembly') {
     // 옛 schema의 national은 비례 전국 합계
     const nation = races.find((r) => r.scope === 'nation' && r.sg_typecode === '7');
