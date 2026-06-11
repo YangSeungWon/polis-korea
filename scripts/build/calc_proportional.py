@@ -71,20 +71,23 @@ def hare_niemeyer(seats: int, votes: dict[str, int]) -> dict[str, int]:
         fracs = sorted(qualified.keys(), key=lambda p: -(quota[p] - floors[p]))
         for p in fracs[:remaining]:
             floors[p] += 1
-    # 2/3 상한
+    # 2/3 상한 — 단 의석정수 1석이면 cap=int(1×2/3)=0이 돼 최다득표 정당의 유일한
+    # 의석까지 빼앗아 2위에 넘기는 오류가 남(예: 서울 중구 비례 1석 → 실제 민주당
+    # 당선인데 국힘으로 뒤바뀜). 1석은 상한 미적용 = 최다득표 정당이 차지(NEC 실무).
     cap = int(seats * CAP_RATIO)  # 2/3 정수부 (예: 10 × 2/3 = 6.67 → 6)
-    over = []
-    for p, s in floors.items():
-        if s > cap:
-            over.append((p, s - cap))
-            floors[p] = cap
-    if over:
-        excess = sum(e for _, e in over)
-        over_parties = {p for p, _ in over}
-        receivers = sorted((p for p in qualified if p not in over_parties),
-                           key=lambda p: -(quota[p] - int(quota[p])))
-        for p in receivers[:excess]:
-            floors[p] += 1
+    if cap >= 1:
+        over = []
+        for p, s in floors.items():
+            if s > cap:
+                over.append((p, s - cap))
+                floors[p] = cap
+        if over:
+            excess = sum(e for _, e in over)
+            over_parties = {p for p, _ in over}
+            receivers = sorted((p for p in qualified if p not in over_parties),
+                               key=lambda p: -(quota[p] - int(quota[p])))
+            for p in receivers[:excess]:
+                floors[p] += 1
     for p, s in floors.items():
         result[p] = s
     return result
