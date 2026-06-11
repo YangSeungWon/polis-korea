@@ -43,7 +43,18 @@ KIND_UNIT = {"presidential": "대", "national_assembly": "대", "local": "회"}
 
 # 새 schema 파일 path (Nth-{kind}-YYYY.json) 우선, 옛 schema fallback.
 NEW_PATHS = {
-    # presidential — 13~15 위키 nation 합산, 16~ NEC + 시도 분해
+    # presidential — 1·8~12 간선(전국만), 2·3·5·6·7 직선(시도), 13~15 위키 nation, 16~ NEC
+    (1, "presidential"): "1st-pres-1948.json",
+    (2, "presidential"): "2nd-pres-1952.json",
+    (3, "presidential"): "3rd-pres-1956.json",
+    (5, "presidential"): "5th-pres-1963.json",
+    (6, "presidential"): "6th-pres-1967.json",
+    (7, "presidential"): "7th-pres-1971.json",
+    (8, "presidential"): "8th-pres-1972.json",
+    (9, "presidential"): "9th-pres-1978.json",
+    (10, "presidential"): "10th-pres-1979.json",
+    (11, "presidential"): "11th-pres-1980.json",
+    (12, "presidential"): "12th-pres-1981.json",
     (13, "presidential"): "13th-pres-1987.json",
     (14, "presidential"): "14th-pres-1992.json",
     (15, "presidential"): "15th-pres-1997.json",
@@ -328,6 +339,8 @@ def main():
                 "turnout": e.get("turnout") if e.get("turnout") not in (None, 0) else computed_turnout,
                 "sidoWinners": sido_winners,
             }
+            if e.get("indirect"):
+                entry["indirect"] = True   # 간선(국회·통대·선거인단) — 직선 아님
             if party_seats:
                 entry["partySeats"] = party_seats
             if pres_cands:

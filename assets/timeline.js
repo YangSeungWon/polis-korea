@@ -107,6 +107,13 @@ function loadJson(p) {
     // 지선만 '회', 대선·총선은 '대' — 사람·기관 연속성(대) vs 반복행사(회).
     num.textContent = `${r.n}${r.kind === 'local' ? '회' : '대'}`;
     lbl.appendChild(num);
+    if (r.indirect) {
+      const ind = document.createElement('span');
+      ind.className = 'tl-indirect';
+      ind.textContent = '간선';
+      ind.title = '간접선거 — 국민 직접투표 아님 (국회·통일주체국민회의·선거인단이 선출). 막대는 선거인 득표.';
+      lbl.appendChild(ind);
+    }
     const date = document.createElement('div');
     date.className = 'tl-date';
     date.textContent = r.date;
