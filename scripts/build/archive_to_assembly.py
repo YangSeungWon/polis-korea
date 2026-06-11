@@ -34,6 +34,14 @@ def convert(n, aid):
             "winner_party": w.get("party") if w else None,
             "candidates": cands,
         }
+        # 선거구별 투표율 — archive에 electors/voters 있으면 통과(없으면 전국 fallback).
+        electors, voters = r.get("electors") or 0, r.get("voters") or 0
+        if electors:
+            rec["electors"] = electors
+            rec["voters"] = voters
+            rec["turnout"] = round(voters / electors * 100, 1)
+        if r.get("is_uncontested"):
+            rec["is_uncontested"] = True
         if len(won) > 1:  # 중선거구(1구 2인) — 당선자 전원 보존
             rec["winners"] = [{"name": c["name"], "party": c.get("party")} for c in won]
         out.append(rec)
