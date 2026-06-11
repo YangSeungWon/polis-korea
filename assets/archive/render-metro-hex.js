@@ -67,8 +67,14 @@
         if (r.scope === 'sido_summary') {
           for (const c of r.candidates || []) add(sd, c.party || '무소속', c.seats || 0);
         } else if (r.scope === 'district') {
-          const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
-          if (top) add(sd, top.party || '무소속', 1);
+          // 당선자 전원 — 전남광주통합 시도의회는 중선거구(1선거구 2~4명). won 없으면 top-1 fallback.
+          const wonCs = (r.candidates || []).filter((c) => c.won);
+          if (wonCs.length) {
+            for (const c of wonCs) add(sd, c.party || '무소속', 1);
+          } else {
+            const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+            if (top) add(sd, top.party || '무소속', 1);
+          }
         }
       } else if (r.sg_typecode === '8' && r.scope === 'proportional_sido') {
         for (const c of r.candidates || []) add(sd, c.party || '무소속', c.seats || 0);
