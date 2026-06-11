@@ -25,12 +25,14 @@ else
 fi
 
 echo
-echo "=== 2/6 기초의원 당선인 확정 (중선거구 magnitude·비례 의석) ==="
-# 라이브 개표엔 중선거구 정수·당선·무투표가 없음 → 확정 당선인 명부로 오버레이.
+echo "=== 2/6 당선인 확정 (무투표·중선거구 정수·비례 의석 — 라이브 개표 누락분) ==="
+# 라이브 개표엔 무투표 선거구·중선거구 정수·당선이 없음 → 확정 당선인 명부로 오버레이.
 # 추정(infer_council_winners·calc_proportional)은 부정확하므로 명부가 우선. 명부 없을 때만 추정 fallback.
 if [[ "$EID" == 9th-* ]]; then
-  # OpenAPI 미게시 → NEC 개표방송 포털 당선인 명부(EPEI01). tc6 지역구 + tc9 비례.
-  python3 scripts/fetch/fetch_council_winners_live.py
+  # OpenAPI 미게시 → NEC 개표방송 포털 당선인 명부(EPEI01).
+  python3 scripts/fetch/fetch_single_winners_live.py   # tc4 기초장 + tc5 광역의원(무투표 보충)
+  python3 scripts/fetch/fetch_council_winners_live.py   # tc6 기초의원 지역구 + tc9 비례
+  # tc8 광역의원 비례는 calc_proportional 추정 유지 (명부 EPEI01_#8 불명확 — 교육의원 등 혼입).
 else
   # 5~8회: OpenAPI 당선인. tc6 지역구(rebuild) + tc9 비례.
   N="${EID%%th-*}"
