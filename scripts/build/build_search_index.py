@@ -109,6 +109,7 @@ def main():
                     'n': nm,
                     'p': (c.get('party') or '').strip(),
                     'y': year,
+                    'dt': date,   # 정렬용(같은 해 대선 3월·재보궐 6월 구분) — 정렬 후 제거.
                     'e': eid,
                     'r': rlbl,
                     'd': f"{sido} {place}".strip() if sido and place != sido else place,
@@ -121,7 +122,10 @@ def main():
                     entry['dob'] = pl['dob']
                 items.append(entry)
 
-    items.sort(key=lambda x: (x.get('y') or 0, x['e']), reverse=True)
+    # 실제 선거일 내림차순(최신 먼저) — 같은 해는 월까지 구분. 정렬 후 dt 제거(용량).
+    items.sort(key=lambda x: (x.get('dt') or str(x.get('y') or ''), x['e']), reverse=True)
+    for it in items:
+        it.pop('dt', None)
     out = {
         '_meta': {'n': len(items), 'description': '회차별 당선인 + 정치인 낙선 이력 통합 검색 인덱스'},
         'items': items,

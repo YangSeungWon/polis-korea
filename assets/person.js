@@ -64,7 +64,9 @@
   }
 
   function renderTimelineCard(races, label) {
-    races = races.slice().sort((a, b) => (a.year || 0) - (b.year || 0));
+    // 실제 선거일순 — 같은 해 대선(3월)·재보궐(6월) 등 월까지 구분. date 없으면 year fallback.
+    const dkey = (r) => r.date || (r.year ? String(r.year) : '');
+    races = races.slice().sort((a, b) => dkey(a).localeCompare(dkey(b)));
     const wins = races.filter((r) => r.won).length;
     const losses = races.length - wins;
     const lastRace = races[races.length - 1];

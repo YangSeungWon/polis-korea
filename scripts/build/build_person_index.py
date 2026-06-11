@@ -71,7 +71,7 @@ def main():
         meta = d.get("_meta", {})
         date = meta.get("election_date", "") or ""
         year = int(date[:4]) if date and date[:4].isdigit() else None
-        eid_meta[eid] = {"year": year, "round": round_label(eid)}
+        eid_meta[eid] = {"year": year, "round": round_label(eid), "date": date}
 
         # 기초장(tc4) 등 sigungu-level race는 청크 파일에 — 같이 읽어야 기초단체장 이력이 들어옴.
         races = list(d.get("races", []))
@@ -120,7 +120,7 @@ def main():
             won_any = any(r["won"] for r in rows)
             flat.append({
                 "name": nm, "party": party,
-                "eid": eid, "year": m.get("year"), "round": m.get("round"),
+                "eid": eid, "year": m.get("year"), "round": m.get("round"), "date": m.get("date"),
                 "place": best["place"], "sidos": sidos,
                 "pct": best.get("pct"), "rank": best["rank"],
                 "won": won_any,
@@ -134,7 +134,8 @@ def main():
 
     persons = []
     for nm, rows in by_name.items():
-        rows.sort(key=lambda r: (r["year"] or 0, r["eid"]))
+        # 실제 선거일순 — 같은 해 대선(3월)·재보궐(6월) 등 월 구분. date 없으면 year fallback.
+        rows.sort(key=lambda r: (r.get("date") or str(r["year"] or ""), r["eid"]))
         wins = sum(1 for r in rows if r["won"])
         losses = sum(1 for r in rows if not r["won"])
         parties = []
@@ -170,7 +171,7 @@ def main():
             "sidos": all_sidos,
             "likely_namesake": likely_namesake,
             "races": [{
-                "eid": r["eid"], "year": r["year"], "round": r["round"],
+                "eid": r["eid"], "year": r["year"], "round": r["round"], "date": r.get("date"),
                 "place": r["place"], "party": r["party"],
                 "pct": r["pct"], "rank": r["rank"], "won": r["won"],
                 "tc": r["tc"],
