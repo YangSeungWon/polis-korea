@@ -320,12 +320,18 @@ async function renderDistrictHex() {
       renderAll();
     });
 
+    const isZorangi = d.wi !== undefined;  // 중선거구 조랭이떡 칸
     const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     poly.setAttribute('class', 'hex-cell ' + (top ? 'has-data' : 'no-data') + (isSelected ? ' is-selected' : ''));
-    poly.setAttribute('points', hexPoints(cx, cy, r - 0.7));
+    // 조랭이떡: full r(쌍 두 칸 맞붙음) + 셀 stroke 없음(내부 선 제거) → 쌍 외곽선은 아래서 그림.
+    poly.setAttribute('points', hexPoints(cx, cy, isZorangi ? r : r - 0.7));
     poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', '#0a0e1a');
-    poly.setAttribute('stroke-width', isSelected ? '1.6' : '0.7');
+    if (isZorangi) {
+      poly.setAttribute('stroke', 'none');
+    } else {
+      poly.setAttribute('stroke', '#0a0e1a');
+      poly.setAttribute('stroke-width', isSelected ? '1.6' : '0.7');
+    }
     poly.setAttribute('fill-opacity', opacity);
     g.appendChild(poly);
 
@@ -371,6 +377,32 @@ async function renderDistrictHex() {
     }
     g.appendChild(txt);
     svg.appendChild(g);
+  }
+
+  // 조랭이떡 쌍 외곽선 — 같은 선거구(name·sido) 두 칸 사이 edge는 skip(한 덩이),
+  // 다른 선거구·외곽엔 테두리. 1구 2인이 두 색이면 조랭이떡(두 lobe), 같은 당이면 단색 한 덩이.
+  if (layout.some((d) => d.wi !== undefined)) {
+    for (const d of layout) {
+      if (d.wi === undefined) continue;
+      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+      const ns = nbrs(d.c, d.r);
+      const selPair = state.selected && state.selected.sido === d.sido && state.selected.name === d.name;
+      for (let i = 0; i < 6; i++) {
+        const nb = cellAt.get(`${ns[i][0]},${ns[i][1]}`);
+        if (nb && nb.name === d.name && nb.sido === d.sido) continue;  // 쌍 내부 → 선 없음
+        const e = NBR_TO_EDGE[i];
+        const [x1, y1] = corner(cx, cy, r, e);
+        const [x2, y2] = corner(cx, cy, r, (e + 1) % 6);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+        line.setAttribute('stroke', selPair ? '#0a0e1a' : 'rgba(10,14,26,0.5)');
+        line.setAttribute('stroke-width', selPair ? '2' : '0.9');
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('pointer-events', 'none');
+        svg.appendChild(line);
+      }
+    }
   }
 
   // 시도 경계 굵은 선 + 한반도 외곽 — drawHexBorders (hexgrid.js)
