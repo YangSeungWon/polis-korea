@@ -1,11 +1,15 @@
-"""기초의원(tc=6) 중선거구 multi-winner 추정.
+"""기초의원(tc=6) 중선거구 multi-winner 추정. ⚠ FALLBACK 전용 — 확정 명부 우선.
 
 NEC live API는 race당 won=True를 1위에만 자동 부여. 한국 기초의원은 중선거구
 (race당 2-4명 당선)이지만 magnitude 정보가 API에 없음. 위키 룩업의 시군구
 district 정수 / race 수 = 평균 magnitude. 각 race에 평균값 정수로 top-K 당선.
 
-caveat: race마다 실제 magnitude는 ±1 차이 있을 수 있음 (인구 분배에 따라).
-대략 95%+ 정확 추정. 정확값은 NEC 사후 PDF에서 회수해야.
+⚠ 이 추정은 부정확함 — 선거구별 실제 정수가 평균과 ±1 달라, 9회 기준 90개
+선거구에서 당선자가 틀렸음(예: 정원 2석을 3석으로 추정 → 낙선자를 당선 처리).
+**확정 당선인이 나오면 반드시 교체**:
+  - 5~8회: scripts/fetch/fetch_council_winners.py (data.go.kr OpenAPI 당선인)
+  - 9회:   scripts/fetch/fetch_council_winners_live.py (NEC 개표방송 EPEI01 명부)
+이 스크립트는 명부가 아직 없는 선거 직후 임시 표시용으로만 사용.
 
 사용:
   .venv/bin/python scripts/build/infer_council_winners.py

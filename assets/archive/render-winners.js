@@ -1,5 +1,6 @@
 // 시·도의원·시·군·구의원 당선인 list — 검색/filter UI.
-// 9회: NEC live winner (tc=5는 정확, tc=6는 infer_council_winners.py가 추정 magnitude로 top-K won 마킹).
+// 기초의원(tc=6 지역구·tc=9 비례)은 NEC 확정 당선인 명부로 회수 — 9회 EPEI01 라이브,
+// 5~8회 OpenAPI (fetch_council_winners_live/_winners/_prop). 추정 아님. docs/local-seats-provenance.md
 // 8회 이전: 위키 inject는 정당별 의석만 — 개별 명단 없음 → list 표시 안 됨.
 
 (function () {

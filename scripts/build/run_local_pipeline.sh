@@ -17,7 +17,7 @@ cd "$(dirname "$0")/../.."
 # .env 자동 로드
 [ -f .env ] && set -a && source .env && set +a
 
-echo "=== 1/5 NEC 라이브/OpenAPI fetch ==="
+echo "=== 1/6 NEC 라이브/OpenAPI fetch (개표·득표) ==="
 if [[ "$EID" == 9th-* ]]; then
   python3 scripts/fetch/fetch_nec_live.py --election "$EID"
 else
@@ -25,20 +25,34 @@ else
 fi
 
 echo
-echo "=== 2/5 무투표 inject ==="
+echo "=== 2/6 기초의원 당선인 확정 (중선거구 magnitude·비례 의석) ==="
+# 라이브 개표엔 중선거구 정수·당선·무투표가 없음 → 확정 당선인 명부로 오버레이.
+# 추정(infer_council_winners·calc_proportional)은 부정확하므로 명부가 우선. 명부 없을 때만 추정 fallback.
+if [[ "$EID" == 9th-* ]]; then
+  # OpenAPI 미게시 → NEC 개표방송 포털 당선인 명부(EPEI01). tc6 지역구 + tc9 비례.
+  python3 scripts/fetch/fetch_council_winners_live.py
+else
+  # 5~8회: OpenAPI 당선인. tc6 지역구(rebuild) + tc9 비례.
+  N="${EID%%th-*}"
+  python3 scripts/fetch/fetch_council_winners.py --n "$N" --rebuild || true
+  python3 scripts/fetch/fetch_council_prop.py --n "$N" || true
+fi
+
+echo
+echo "=== 3/6 무투표 inject (기초장·광역의원 등 — 기초의원은 위 명부가 처리) ==="
 python3 scripts/fetch/fetch_local_uncontested.py --election "$EID" || \
   echo "  ! 무투표 fetch 실패 (graceful — API 미공개 가능)"
 
 echo
-echo "=== 3/5 chunk results ==="
+echo "=== 4/6 chunk results ==="
 python3 scripts/build/chunk_results.py --id "$EID"
 
 echo
-echo "=== 4/5 timeline 재빌드 ==="
+echo "=== 5/6 timeline 재빌드 ==="
 python3 scripts/build/build_timeline.py
 
 echo
-echo "=== 5/5 archive HTML 동기화 ==="
+echo "=== 6/6 archive HTML 동기화 ==="
 python3 scripts/build/sync_archive_html.py
 
 echo
