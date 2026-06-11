@@ -115,9 +115,11 @@ function resultForSigungu(sido, name) {
     canonSido(r.sido) === sido && r.name.replace(/\([^)]+\)$/, '') === name
   );
   if (disambig) return disambig;
-  // 데이터 sigungu='세종특별자치시' (시도와 동일) → hex '세종시' 매칭
+  // 데이터 sigungu='세종특별자치시' (시도와 동일) → hex '세종시' 매칭.
+  // 2012 출범 전(16·17대 등)엔 세종 = 옛 충남 연기군 → 그쪽으로 fallback.
   if (name === '세종시' && sido === '세종특별자치시') {
-    const r = data.sigungu.find((rr) => rr.sido === '세종특별자치시');
+    const r = data.sigungu.find((rr) => rr.sido === '세종특별자치시')
+      || data.sigungu.find((rr) => canonSido(rr.sido) === '충청남도' && rr.name === '연기군');
     if (r) return r;
   }
   // 시도 이동 fallback (예: 군위군 대구↔경북)
