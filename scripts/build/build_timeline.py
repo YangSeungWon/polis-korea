@@ -47,6 +47,7 @@ NEW_PATHS = {
     (1, "presidential"): "1st-pres-1948.json",
     (2, "presidential"): "2nd-pres-1952.json",
     (3, "presidential"): "3rd-pres-1956.json",
+    (4, "presidential"): "4th-pres-1960.json",
     (5, "presidential"): "5th-pres-1963.json",
     (6, "presidential"): "6th-pres-1967.json",
     (7, "presidential"): "7th-pres-1971.json",
@@ -341,6 +342,10 @@ def main():
             }
             if e.get("indirect"):
                 entry["indirect"] = True   # 간선(국회·통대·선거인단) — 직선 아님
+            if e.get("annulled"):
+                entry["annulled"] = True   # 무효 선거(4대 3·15 부정선거)
+                if e.get("annul_note"):
+                    entry["annulNote"] = e["annul_note"]
             if party_seats:
                 entry["partySeats"] = party_seats
             if pres_cands:

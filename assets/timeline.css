@@ -51,6 +51,17 @@
   border: 1px dashed currentColor;
   cursor: help;
 }
+.tl-meta .tl-annulled {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  margin-left: 4px;
+  border-radius: 2px;
+  color: #fff;
+  background: #c0392b;
+  cursor: help;
+}
 .tl-meta .tl-date {
   font-size: 11px;
   color: var(--ink-soft);

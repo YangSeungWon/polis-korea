@@ -114,6 +114,13 @@ function loadJson(p) {
       ind.title = '간접선거 — 국민 직접투표 아님 (국회·통일주체국민회의·선거인단이 선출). 막대는 선거인 득표.';
       lbl.appendChild(ind);
     }
+    if (r.annulled) {
+      const an = document.createElement('span');
+      an.className = 'tl-annulled';
+      an.textContent = '무효';
+      an.title = r.annulNote || '무효 선거';
+      lbl.appendChild(an);
+    }
     const date = document.createElement('div');
     date.className = 'tl-date';
     date.textContent = r.date;
