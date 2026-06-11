@@ -1,13 +1,16 @@
-"""info.nec.go.kr 당선인 명부(EPEI01) → 단일 당선직(tc4 기초장·tc5 광역의원) 확정.
+"""info.nec.go.kr 당선인 명부(EPEI01) → 광역의원·기초장 확정 (tc4·tc5·tc8).
 
-라이브 개표(fetch_nec_live)는 무투표 선거구를 빼먹어 단일 당선직도 누락이 생긴다
-(9회 tc5 광역의원 686 vs 명부 804, tc4 기초장 224 vs 226). 소선거구라 당선자는
-선거구당 1명 — 확정 명부로 won을 맞추고 누락(무투표) 선거구를 보충한다.
+라이브 개표(fetch_nec_live)는 무투표 선거구를 빼먹고, calc_proportional은 8회 baseline
+정수를 써서 9회 비례를 과소집계한다:
+- tc4 기초장 224→227, tc5 광역의원 686→804 (무투표 선거구 보충).
+- tc8 광역비례 87→129 (9회 정수 증가분; calc 추정 대체).
+확정 명부(EPEI01_#4/#5/#8)로 won·seats를 실값으로 교체. 전남광주통합 시도의회는
+중선거구라 tc5는 시군구로 광주/전남 분리·다중당선, tc8은 통합 1 entity로 둠.
 
 기초의원(tc6 중선거구·tc9 비례)은 fetch_council_winners_live.py 참고.
 
 사용:
-  .venv/bin/python scripts/fetch/fetch_single_winners_live.py            # 9회 tc4+tc5
+  .venv/bin/python scripts/fetch/fetch_single_winners_live.py            # 9회 tc4+tc5+tc8
   .venv/bin/python scripts/fetch/fetch_single_winners_live.py --dry-run
 """
 from __future__ import annotations
@@ -99,6 +102,53 @@ def fetch_winners(s: requests.Session, eid: str, code: str):
     return out, total
 
 
+def fetch_prop8(s: requests.Session, eid: str):
+    """EPEI01_#8 광역의원 비례 당선인 → {canon sido: {party: 의석}}. SGGNAME=시도(전남광주 통합).
+    HUBOID로 중복제거(DI cityCode가 통합/분리 중복 반환)."""
+    rc = s.get(f"{BASE}/m/bizcommon/selectbox/selectbox_cityCodeDIBySgJson.json",
+               params={"electionId": eid, "electionCode": "8"}, timeout=20)
+    cities = rc.json().get("jsonResult", {}).get("body") or []
+    by_sido: dict[str, dict] = defaultdict(lambda: defaultdict(int))
+    seen = set()
+    for c in cities:
+        data = {"electionId": eid, "secondMenuId": "EPEI01", "topMenuId": "EP",
+                "statementId": "EPEI01_#8", "electionCode": "8",
+                "cityCode": str(c.get("CODE")), "sggCityCode": "-1", "townCode": "-1"}
+        r = s.post(f"{BASE}{REPORT}", data=data, timeout=30)
+        for row in r.json().get("jsonResult", {}).get("body") or []:
+            hid = row.get("HUBOID")
+            if hid in seen:
+                continue
+            seen.add(hid)
+            sido = canon_sido(row.get("SGGNAME", ""))
+            party = (row.get("JDNAME") or "무소속").strip()
+            if sido:
+                by_sido[sido][party] += 1
+    return by_sido, len(seen)
+
+
+def process_prop8(d: dict, by_sido: dict):
+    """tc8 광역의원 비례 — 명부 의석으로 교체 (calc_proportional 추정 대체).
+    9회 비례 정수 증가(87→129)를 calc이 8회 baseline으로 과소집계했음."""
+    marked = 0
+    by_party: dict[str, int] = defaultdict(int)
+    for r in d.get("races", []):
+        if r.get("sg_typecode") != "8":
+            continue
+        seats_map = by_sido.get(canon_sido(r.get("sido")))
+        if not seats_map:
+            continue
+        for c in (r.get("candidates") or []):
+            sv = seats_map.get(c.get("party"), 0)
+            c["seats"] = sv
+            c["won"] = sv > 0
+            if sv:
+                marked += sv
+                by_party[c.get("party")] += sv
+        r["seats_total"] = sum(seats_map.values())
+    return marked, by_party
+
+
 def process(d: dict, tc: str, race_unit: str, winners: dict):
     """tc 당선직: 명부로 won 확정 + 누락(무투표) race 추가. 단위당 1명(보통)~N명(통합 중선거구)."""
     seen, marked = set(), 0
@@ -176,6 +226,14 @@ def main():
             print(f"    {p}: {c}", file=sys.stderr)
         if marked != total:
             ok = False
+    # tc8 광역의원 비례 — 명부 의석(_#8)으로 교체
+    p8, t8 = fetch_prop8(s, eid)
+    m8, bp8 = process_prop8(d, p8)
+    print(f"[tc8 광역의원 비례] 명부 {t8} · 확정 의석 {m8}/{t8} ({m8/t8:.1%})", file=sys.stderr)
+    for p, c in sorted(bp8.items(), key=lambda x: -x[1])[:6]:
+        print(f"    {p}: {c}", file=sys.stderr)
+    if m8 != t8:
+        ok = False
     if args.dry_run:
         print("  (dry-run)", file=sys.stderr); return
     if not ok:

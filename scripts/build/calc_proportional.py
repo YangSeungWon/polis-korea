@@ -30,9 +30,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# 시도별 광역의원 비례정원 — 9회 지선 (행안부 공시 기준, 8회와 동일).
-# 광주·전남은 9회 행정통합으로 'transmgp광주특별시'(NEC: 전남광주통합특별시)
-# 한 entity. 비례정원 = 광주(3) + 전남(4) = 7. 추후 NEC 공식 확인 시 보정.
+# 시도별 광역의원 비례정원 — ⚠ 8회 baseline (구식). 9회는 정수 증가(합계 87→129:
+# 서울 10→15·경기 13→21·제주 2→13)라 이 값으로는 42석 과소집계됨. 9회 광역비례는
+# fetch_single_winners_live.py가 EPEI01_#8 명부로 교체 — 이 추정은 명부 미게시 fallback 전용.
+# 광주·전남은 9회 행정통합으로 NEC '전남광주통합특별시' 한 entity.
 GWANGYK_BIRYE_QUOTA = {
     "서울특별시": 10,
     "부산광역시": 6,
