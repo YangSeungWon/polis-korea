@@ -254,7 +254,7 @@ def fill_horizontal_stack(sido_cell_pairs, col_start, row_start, H, sort_key=Non
     return cur_col - col_start
 
 
-def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h, right_w, bot_h, bot_extra_left=0, top_extra_left=0, in_extra_top_row=0, in_extra_w=0):
+def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h, right_w, bot_h, bot_extra_left=0, top_extra_left=0, in_extra_top_row=0, in_extra_w=0, inner_holes=None):
     """경기 wrap — inner block 위·우·아래 둘러쌈.
     top/bot_extra_left: top/bot 좌측 확장 cols.
     in_extra_top_row: top wrap에 인천 위 추가 1 row 포함 (cols 0..in_extra_w-1).
@@ -283,6 +283,20 @@ def fill_wrap_top_right_bot(cells, inner_col, inner_row, inner_W, inner_H, top_h
     bot_pool = leftover_by_lon[take_right:]
     take_bot = min(N_bot, len(bot_pool))
     bot_cells = bot_pool[:take_bot]
+
+    # inner block(서울) 직사각형의 빈칸 → 경기 최북단 bot 셀로 메움.
+    # 서울 바로 아래/안쪽 = 남부 경기 북단이라 지리적으로 자연스럽고, 서울·경기 사이
+    # 갇힌 구멍을 없앤다. 사용한 셀은 bot pool에서 빼 bot wrap은 그만큼 서측이 비게 됨(외곽 notch).
+    if inner_holes:
+        bot_by_lat = sorted(bot_cells, key=lambda c: -c['lat'])
+        n_hole = min(len(inner_holes), len(bot_by_lat))
+        hole_cells = bot_by_lat[:n_hole]
+        holes_sorted = sorted(inner_holes, key=lambda p: (p[1], p[0]))
+        for cell, (hc, hr) in zip(hole_cells, holes_sorted):
+            cell['c'] = hc
+            cell['r'] = hr
+        used = {id(c) for c in hole_cells}
+        bot_cells = [c for c in bot_cells if id(c) not in used]
 
     # top wrap: top_h rows + 추가 row (인천 위 1 row, cols 0..in_extra_w-1)
     # cells을 2 그룹으로 — 추가 row (인천 위, 가장 lat 큰 in_extra_w 개? 아니면 중간 위치라 단순화)
@@ -1098,13 +1112,22 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
                 cell['r'] = inner_row + 1 + row_idx
     # 서울 — 인천 우측, inner row range
     seoul_col0 = col_offset + plan['w_in']
+    seoul_cells = zone_cells_by_sido.get('서울특별시', [])
     fill_rect(
-        zone_cells_by_sido.get('서울특별시', []),
+        seoul_cells,
         col_start=seoul_col0, row_start=inner_row,
         W=plan['w_seoul'], H=plan['inner_H'],
         sort_key=None,
         partial_align='left_bot',
     )
+    # 서울 직사각형의 빈칸(셀 수 < W×H일 때 마지막 줄 우측) → 경기가 메우게 위치 수집.
+    seoul_filled = {(c['c'], c['r']) for c in seoul_cells}
+    seoul_holes = [
+        (seoul_col0 + cc, inner_row + rr)
+        for rr in range(plan['inner_H'])
+        for cc in range(plan['w_seoul'])
+        if (seoul_col0 + cc, inner_row + rr) not in seoul_filled
+    ]
     # 경기 wrap — top은 절반(extra row가 위 가득) + bot은 인천 전체 폭 영역 확보.
     # bot column-major에서 cells 부족 시 westmost col은 자연 탈락 (빈 col로 남음).
     top_extra = (plan['w_in'] + 1) // 2
@@ -1116,6 +1139,7 @@ def layout_zone_N(zone_cells_by_sido, plan, col_offset, row_offset):
         top_h=plan['top_h'], right_w=plan['right_w'], bot_h=plan['bot_h'],
         bot_extra_left=bot_extra, top_extra_left=top_extra,
         in_extra_top_row=1, in_extra_w=plan['w_in'],
+        inner_holes=seoul_holes,
     )
     # 강원 — 경기 right 옆, bot 정렬 (N zone 하단 = S zone 경북과 접촉)
     gw_cells = zone_cells_by_sido.get('강원특별자치도', []) + zone_cells_by_sido.get('강원도', [])
