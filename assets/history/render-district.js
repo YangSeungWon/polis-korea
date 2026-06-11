@@ -335,7 +335,9 @@ async function renderDistrictHex() {
     txt.setAttribute('x', cx);
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('font-weight', '600');
-    txt.setAttribute('fill', top ? '#fff' : '#0a0e1a');
+    // 배경(정당색·명도)에 따라 흰/검 자동 — 밝은 색에서 흰 글씨 안 보이던 문제. (render-sido와 동일)
+    // 중선거구(9~12대) 줄무늬 패턴 fill은 hex가 아니라 url() → 흰색 유지.
+    txt.setAttribute('fill', top ? (fill.charAt(0) === '#' ? pickTextColor(fill, opacity) : '#fff') : '#0a0e1a');
     txt.setAttribute('pointer-events', 'none');
     txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
     // 시군구 hex와 동일 패턴: prefix(시도, 작게·옅게) 위 + short(지역구+갑) 아래
