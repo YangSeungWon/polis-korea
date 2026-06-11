@@ -618,17 +618,15 @@ def design_yeongnam(zone_cells_by_sido):
     n_bs = len(zone_cells_by_sido.get('부산광역시', []))
     n_us = len(zone_cells_by_sido.get('울산광역시', []))
 
-    # 대구 직사각형 — 정사각 가까이, 가로 ≤ 세로 선호 (vertical blob)
-    dg_pairs = []
-    for h in range(2, n_dg + 1):
-        if n_dg % h == 0:
-            w = n_dg // h
-            dg_pairs.append((abs(h - w), -h, h, w))
-    dg_pairs.sort()
-    if dg_pairs:
-        h_dg, w_dg = dg_pairs[0][2], dg_pairs[0][3]
-    else:
-        h_dg, w_dg = n_dg, 1
+    # 대구 직사각형 — near-square (빈칸 최소 + 정사각 가까이). 소수/난수 셀(13·11 등)도
+    # 1×N 기둥(영남 길쭉) 회피. 정확 약수면 빈칸 0이라 자연 우선. 배정부가 남는 칸을 비움.
+    dg_cands = []
+    for h in range(1, n_dg + 1):
+        w = math.ceil(n_dg / h)
+        waste = h * w - n_dg
+        dg_cands.append((waste + abs(h - w) * 0.5, h, w))
+    dg_cands.sort()
+    h_dg, w_dg = (dg_cands[0][1], dg_cands[0][2]) if dg_cands else (max(n_dg, 1), 1)
 
     # 울산: 5셀이면 L자 (3×2 -1 corner), 6셀이면 3×2 직사각, 그 외 정사각 가까이
     if n_us == 5:
@@ -642,7 +640,9 @@ def design_yeongnam(zone_cells_by_sido):
     else:
         h_us = max(2, round(math.sqrt(n_us)))
         w_us = math.ceil(n_us / h_us)
-        us_l = (w_us * h_us > n_us)
+        # L-corner(경북 bridge)는 n_us=5 전용. 그 외 빈칸은 울산 영역으로 둠 — 안 그러면
+        # corner 경북 셀이 위쪽 빈칸과 만나 고립됨(예: 16대 울산 3석 2×2 L → 경북 1셀 분리).
+        us_l = False
 
     inner_h = max(h_dg, h_us)
     inner_w = w_dg + w_us
@@ -657,7 +657,11 @@ def design_yeongnam(zone_cells_by_sido):
                 W = left_w + inner_w + W_extra
                 H_top = top_h + inner_h
                 top_slots = W * H_top
-                top_taken = n_dg + n_us + n_kb
+                # 대구·울산은 직사각 면적(빈칸 포함)을 차지 — near-square라 면적 > 셀수일 수 있음.
+                # n_dg/n_us로 계산하면 경북 공간을 과대평가해 경북 셀이 넘쳐 고립됨.
+                dg_area = w_dg * h_dg
+                us_area = w_us * h_us - (1 if us_l else 0)
+                top_taken = dg_area + us_area + n_kb
                 if top_slots < top_taken:
                     continue
                 top_empties = top_slots - top_taken
@@ -859,9 +863,13 @@ def partition_yeongnam_blob(by_sido, plan):
     for r in range(top_h, us_row0):
         for c in range(us_col0, us_col0 + w_us):
             add((c, r))
-    # (4) L-corner
+    # (4) L-corner + 그 위 연결 col — 대구가 짧으면(near-square) bridge가 안 깔려 corner가
+    #     위쪽 빈칸과 만나 고립됨. L-corner 위 col을 채워 row 0(T경계 경북)과 직접 연결.
     if us_l:
-        add((us_col0 + w_us - 1, us_row0))
+        l_col = us_col0 + w_us - 1
+        add((l_col, us_row0))
+        for r in range(us_row0):
+            add((l_col, r))
     # (5) 나머지 top cells (top-first / inner-first 우선 → cluster 유지)
     for r in range(H_top):
         for c in range(W):
