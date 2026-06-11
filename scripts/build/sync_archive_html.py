@@ -289,7 +289,7 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
 
   <section class="ar-section" id="ar-governor-hex-section" hidden>
     <h2 class="ar-section-title">광역단체장 결과</h2>
-    <p class="ar-source-line">17개 시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <p class="ar-source-line">시·도 hex — 1위 후보·득표율. 정당별 색.</p>
     <div class="ar-governor-hex" id="ar-governor-hex"></div>
   </section>
 
@@ -333,7 +333,7 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
 SECTIONS_PRES = HISTORY_LINK_PRES + """
   <section class="ar-section" id="ar-pres-sido-hex-section" hidden>
     <h2 class="ar-section-title">시도별 결과</h2>
-    <p class="ar-source-line">17개 시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <p class="ar-source-line">시·도 hex — 1위 후보·득표율. 정당별 색.</p>
     <div class="ar-governor-hex" id="ar-pres-sido-hex"></div>
   </section>
 

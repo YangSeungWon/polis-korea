@@ -99,6 +99,11 @@
     }
     host.innerHTML = '';
     host.appendChild(svg);
+    // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신 — 회차별로 다름(9회 전남광주 통합=16,
+    // 세종 신설 전 옛 회차는 더 적음). 정적 '17개'는 오해 소지.
+    const cap = host.parentElement?.querySelector('.ar-source-line');
+    const nData = cells.filter((c) => c.win).length;
+    if (cap && nData) cap.textContent = `${nData}개 시·도 hex — 1위 후보·득표율. 정당별 색.`;
   }
 
   // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).
