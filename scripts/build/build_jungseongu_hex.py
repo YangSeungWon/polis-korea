@@ -82,6 +82,81 @@ def repair_pairs(placed, rounds=300):
     return placed
 
 
+def _perfect_matching(positions):
+    """positions(셀 (c,r) 목록)을 인접한 쌍(도미노)으로 완전매칭. 백트래킹.
+    불가하면 None."""
+    posset = set(positions)
+    adj = {p: [q for q in _nbrs(*p) if q in posset] for p in positions}
+    matched = {}
+
+    def bt(remaining):
+        if not remaining:
+            return True
+        # 선택지 가장 적은 칸부터 (실패 빠르게)
+        p = min(remaining, key=lambda x: sum(1 for q in adj[x] if q in remaining))
+        for q in [q for q in adj[p] if q in remaining]:
+            remaining.discard(p); remaining.discard(q)
+            matched[p] = q; matched[q] = p
+            if bt(remaining):
+                return True
+            remaining.add(p); remaining.add(q)
+            del matched[p]; del matched[q]
+        return False
+
+    if not bt(set(positions)):
+        return None
+    seen, dominoes = set(), []
+    for p in positions:
+        if p in seen:
+            continue
+        q = matched[p]
+        seen.add(p); seen.add(q)
+        dominoes.append((p, q))
+    return dominoes
+
+
+def retile_split_sidos(placed):
+    """분리쌍이 남은 시도를 도미노 타일링으로 재배치 — 위치를 인접 쌍으로 완전매칭하고,
+    선거구를 현재 centroid 기준으로 도미노에 배정(이동 최소). 경기 wrap처럼 스왑으로
+    못 붙는 쌍을 보장 인접화. 점유 위치 집합 불변 → 시도 연결성 보존."""
+    try:
+        import numpy as np
+        from scipy.optimize import linear_sum_assignment
+    except Exception:
+        return placed
+    bysido = defaultdict(list)
+    for c in placed:
+        bysido[c["sido"]].append(c)
+    for sido, cells in bysido.items():
+        bydist = defaultdict(list)
+        for c in cells:
+            bydist[c["name"]].append(c)
+        if any(len(v) != 2 for v in bydist.values()):
+            continue  # 쌍이 아닌 게 있으면 건드리지 않음
+        if all(_pair_adjacent(v) for v in bydist.values()):
+            continue  # 이미 전부 인접
+        positions = [(c["c"], c["r"]) for c in cells]
+        dominoes = _perfect_matching(positions)
+        if not dominoes:
+            continue  # 타일링 불가 → 그대로
+        names = list(bydist.keys())
+        dcent = {nm: (sum(c["c"] for c in v) / 2, sum(c["r"] for c in v) / 2)
+                 for nm, v in bydist.items()}
+        mcent = [((p[0] + q[0]) / 2, (p[1] + q[1]) / 2) for p, q in dominoes]
+        cost = np.zeros((len(names), len(dominoes)))
+        for i, nm in enumerate(names):
+            dc = dcent[nm]
+            for j, mc in enumerate(mcent):
+                cost[i][j] = (dc[0] - mc[0]) ** 2 + (dc[1] - mc[1]) ** 2
+        ri, cj = linear_sum_assignment(cost)
+        for i, j in zip(ri, cj):
+            cellpair = bydist[names[i]]
+            pospair = sorted(dominoes[j])
+            for cell, pos in zip(cellpair, pospair):
+                cell["c"], cell["r"] = pos
+    return placed
+
+
 def build(n):
     hex_path = ROOT / f"data/geo/district_hex_{n}.json"
     cells = json.loads(hex_path.read_text(encoding="utf-8"))
@@ -89,9 +164,10 @@ def build(n):
     if any(c.get("wi") is not None for c in cells):
         seen, base = set(), []
         for c in cells:
-            if c["name"] in seen:
+            key = (c["sido"], c["name"])  # name만 쓰면 동명 선거구(시도 다른) 1개 드롭됨
+            if key in seen:
                 continue
-            seen.add(c["name"])
+            seen.add(key)
             base.append({k: c[k] for k in ("sido", "name", "_cen") if k in c})
         cells = base
     n_sgg = len(cells)
@@ -107,6 +183,8 @@ def build(n):
     # 3) 분리 쌍 repair (시도 내부 스왑 — 홀수 행 경계에서 갈라진 쌍 인접화)
     placed = json.loads(hex_path.read_text(encoding="utf-8"))
     repair_pairs(placed)
+    # 3.5) 스왑으로 못 붙은 쌍(경기 wrap 등) → 도미노 타일링 재배치로 보장 인접
+    retile_split_sidos(placed)
 
     # 4) 위치로 wi 부여 (서=0·동=1). 같은 선거구 두 칸을 c(있으면 r)로 정렬.
     by_name = defaultdict(list)
