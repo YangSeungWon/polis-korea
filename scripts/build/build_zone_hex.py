@@ -955,21 +955,26 @@ def partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch):
 
     return: dict {(c,r): sido_name}"""
     grid = {}
-    # 충남 좌, bot_anchor
-    w_cn = math.ceil(n_cn / h_ch) if n_cn else 0
+    # 빈칸(waste)은 충남 남서(col 0 bottom)부터 위로 — 서해안 외곽 notch (갇힌 구멍 아님).
+    waste = max(0, w_ch * h_ch - (n_cn + n_sj + n_dj + n_cb))
+    blocked = {(0, h_ch - 1 - i) for i in range(min(waste, h_ch))}
+    # 충남 좌, column-major bot_anchor (남서 blocked 회피 → 서해안 코너만 빔)
     cn_rem = n_cn
     last_cn_col = -1
     cn_last_col_cells = 0
-    for col in range(w_cn):
-        cells_in_col = min(cn_rem, h_ch)
-        for offset in range(cells_in_col):
-            grid[(col, h_ch - 1 - offset)] = '충청남도'
+    col = 0
+    while cn_rem > 0 and col < w_ch:
+        free = [h_ch - 1 - o for o in range(h_ch) if (col, h_ch - 1 - o) not in blocked]
+        cells_in_col = min(cn_rem, len(free))
+        for i in range(cells_in_col):
+            grid[(col, free[i])] = '충청남도'
         cn_rem -= cells_in_col
         if cn_rem == 0:
             last_cn_col = col
             cn_last_col_cells = cells_in_col
-            break
-    cn_last_col_empty = h_ch - cn_last_col_cells if last_cn_col >= 0 else 0
+        col += 1
+    last_free = len([1 for o in range(h_ch) if (last_cn_col, h_ch - 1 - o) not in blocked]) if last_cn_col >= 0 else 0
+    cn_last_col_empty = last_free - cn_last_col_cells if last_cn_col >= 0 else 0
 
     # 세종+대전 통합 영역: 충남 last col top 빈자리 + 추가 col(들).
     # 충남 last col에 남는 빈자리 cn_last_col_empty 셀, 추가 cells = sj+dj - 그것.
@@ -1006,25 +1011,27 @@ def partition_chungcheong(n_cn, n_sj, n_dj, n_cb, w_ch, h_ch):
         for r in range(h_ch):
             if cb_rem == 0:
                 break
-            if (col, r) not in grid:
+            if (col, r) not in grid and (col, r) not in blocked:
                 grid[(col, r)] = '충청북도'
                 cb_rem -= 1
     return grid
 
 
-def find_chungcheong_wh(n_total, prefer_h_range=None):
-    """n_total의 (W, H) 인수쌍 — 정사각 가까운 것 우선. h ∈ prefer_h_range 안에서 우선."""
-    factors = [(n_total // h, h) for h in range(2, n_total + 1) if n_total % h == 0]
-    if not factors:
-        # prime — fallback to 1×N
-        factors = [(n_total, 1), (1, n_total)]
-    # 정사각 가까운 것 + prefer_h_range 안 우선
-    def score(wh):
-        w, h = wh
-        in_range = 0 if (prefer_h_range and prefer_h_range[0] <= h <= prefer_h_range[1]) else 1
-        return (in_range, abs(w - h))
-    factors.sort(key=score)
-    return factors[0]
+def find_chungcheong_wh(n_total, prefer_h=4, max_waste=3):
+    """충청 W×H. 정사각보다 '하우스 높이'(prefer_h≈4행) 통일을 우선 — 회차마다 충청이
+    3·4·5행으로 들쭉날쭉하지 않게. 정확 인수쌍이 없어도 빈칸 ≤ max_waste 허용하고,
+    그 빈칸은 partition_chungcheong이 충남 남서(서해안) 외곽 notch로 둔다(갇힌 구멍 아님).
+    예: 27석=4×7(빈칸1), 24석=4×6·28석=4×7(빈칸0)."""
+    best = None
+    for h in range(1, n_total + 1):
+        w = math.ceil(n_total / h)
+        waste = w * h - n_total
+        if waste > max_waste:
+            continue
+        score = (abs(h - prefer_h), waste, abs(w - h))
+        if best is None or score < best[0]:
+            best = (score, w, h)
+    return best[1], best[2]
 
 
 def design_zone_S(zone_cells_by_sido):
@@ -1040,8 +1047,8 @@ def design_zone_S(zone_cells_by_sido):
     yn_plan = design_yeongnam(zone_cells_by_sido)
     w_yn = yn_plan['W_yn']
 
-    # 충청 perfect-fit: n_total의 인수쌍 W×H. 빈자리 0.
-    w_ch, h_ch = find_chungcheong_wh(n_ch, prefer_h_range=(3, max(3, yn_plan['H_yn'] // 2)))
+    # 충청: 하우스 높이 4행 우선(회차 간 통일). 빈칸은 충남 남서 외곽 notch.
+    w_ch, h_ch = find_chungcheong_wh(n_ch, prefer_h=4)
 
     # 호남: 충청 W에 맞춰 + 영남 H에 맞춤 (Left H = 영남 H로 stretch)
     target_H_ho = yn_plan['H_yn'] - h_ch
