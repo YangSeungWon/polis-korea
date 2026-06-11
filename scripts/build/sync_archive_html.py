@@ -98,8 +98,8 @@ HEAD = """<!DOCTYPE html>
   </div>
   <nav class="hdr-nav">
     <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
-    <span data-nav-urgent></span>
     <a href="/polls.html" class="hdr-link">여론조사</a>
+    <span data-nav-urgent></span>
     <a href="/byelection/" class="hdr-link">재·보궐</a>
     <a href="/tracker.html" class="hdr-link">지지율 추이</a>
     <a href="/history.html" class="hdr-link is-current">역대 결과</a>

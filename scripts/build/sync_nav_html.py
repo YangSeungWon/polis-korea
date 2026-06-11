@@ -65,7 +65,9 @@ LEGACY_NAV_RE = re.compile(
 
 
 def render_nav(current_key: str | None) -> str:
-    lines = ['  <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->']
+    # NAV_START 줄은 prefix 없이 — MARKER_RE가 줄 앞 들여쓰기를 보존하므로, 여기 prefix를
+    # 두면 매 실행마다 누적돼 비멱등이 됨. 들여쓰기는 페이지의 기존 NAV_START 위치를 따름.
+    lines = ['<!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->']
     for i, (label, href, key) in enumerate(MENU):
         cls = "hdr-link is-current" if key == current_key else "hdr-link"
         lines.append(f'  <a href="{href}" class="{cls}">{label}</a>')

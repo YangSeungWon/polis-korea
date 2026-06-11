@@ -53,8 +53,13 @@ echo "=== 5/6 timeline 재빌드 ==="
 python3 scripts/build/build_timeline.py
 
 echo
-echo "=== 6/6 archive HTML 동기화 ==="
+echo "=== 6/7 archive HTML 동기화 ==="
 python3 scripts/build/sync_archive_html.py
+
+echo
+echo "=== 7/7 nav 동기화 (모든 페이지 — 정식 nav single source of truth) ==="
+# sync_archive_html이 박은 nav를 정식(sync_nav_html)으로 덮어써 일관성 보장.
+python3 scripts/build/sync_nav_html.py
 
 echo
 echo "✓ 완료: $EID"
