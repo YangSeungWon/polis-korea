@@ -9,6 +9,9 @@ const TAG_CLASS = {
 };
 const WIKI = 'https://ko.wikipedia.org/wiki/';
 
+// 회차 키 — 같은 n에 변형(4대 3·15 무효·윤보선 간선)이 있어 flag로 구분.
+const keyOf = (x) => `${x.kind}|${x.n}|${x.annulled ? 'a' : x.indirect ? 'i' : ''}`;
+
 function yearOf(d) { return (d || '').slice(0, 4); }
 function mdOf(d) {
   const m = (d || '').slice(5).replace('-', '.');
@@ -21,9 +24,10 @@ function mdOf(d) {
     fetch('data/elections.json').then((r) => r.json()),
     fetch('data/timeline.json').then((r) => r.json()).catch(() => ({ rounds: [] })),
   ]);
-  // 총선=최다의석당, 지선=최다 광역단체장 당 — '분위기' 색·이름. (대선은 winner 사용)
+  // 총선=최다의석당, 지선=최다 광역단체장 당 + 결과 바. (대선은 후보 득표율 바)
+  // 4대 대선처럼 같은 n에 둘(3·15 무효·윤보선 간선)이면 flag로 구분.
   const tlByKey = {};
-  for (const r of (tl.rounds || [])) tlByKey[`${r.kind}|${r.n}`] = r;
+  for (const r of (tl.rounds || [])) tlByKey[keyOf(r)] = r;
 
   // 선거 flatten (대선·총선·지선) — 날짜 있는 것만, 미래/예측 제외
   const elections = [];
@@ -119,7 +123,7 @@ function eventRow(it) {
 
 // 총선=최다 의석당, 지선=최다 광역단체장 당 → {party, detail}. 대선은 null(winner 사용).
 function leadInfo(it, tlByKey) {
-  const r = tlByKey[`${it.kind}|${it.n}`];
+  const r = tlByKey[keyOf(it)];
   if (!r) return null;
   if (it.kind === 'national_assembly' && r.partySeats?.length) {
     const [party, seats] = r.partySeats[0];
@@ -134,6 +138,29 @@ function leadInfo(it, tlByKey) {
     if (top) return { party: top[0], detail: `${top[0]} ${top[1]}곳` };
   }
   return null;
+}
+
+// 작은 100% 결과 바 — 대선=후보 득표율, 총선=정당 의석, 지선=광역단체장 정당별 시도 수.
+function resultBar(it, tlByKey) {
+  const r = tlByKey[keyOf(it)];
+  if (!r) return '';
+  let segs = [];
+  if (it.kind === 'presidential' && r.presCandidates?.length) {
+    segs = r.presCandidates.slice(0, 6).map((c) => ({ party: c.party, val: c.pct || 0 }));
+  } else if (it.kind === 'national_assembly' && r.partySeats?.length) {
+    segs = r.partySeats.slice(0, 8).map(([p, s]) => ({ party: p, val: s }));
+  } else if (it.kind === 'local' && r.sidoWinners) {
+    const c = {};
+    for (const v of Object.values(r.sidoWinners)) if (v?.party) c[v.party] = (c[v.party] || 0) + 1;
+    segs = Object.entries(c).sort((a, b) => b[1] - a[1]).map(([p, n]) => ({ party: p, val: n }));
+  }
+  const total = segs.reduce((s, x) => s + x.val, 0);
+  if (!total) return '';
+  const inner = segs.filter((s) => s.val > 0).map((s) => {
+    const col = (typeof partyColor === 'function') ? partyColor(s.party, it.date) : '#999';
+    return `<span style="flex:${s.val};background:${col}" title="${s.party}"></span>`;
+  }).join('');
+  return `<span class="chr-bar" aria-hidden="true">${inner}</span>`;
 }
 
 function electionRow(it, tlByKey) {
@@ -157,6 +184,7 @@ function electionRow(it, tlByKey) {
     + `<a class="chr-body chr-link" href="${href}">`
     + `<span class="chr-dot" style="background:${col}"></span>`
     + `<span class="chr-num">${it.btn ? it.btn + ' ' : ''}${num}</span>${marks}${detail}`
+    + resultBar(it, tlByKey)
     + `<span class="chr-go">→</span></a>`;
   return row;
 }
