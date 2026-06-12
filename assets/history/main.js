@@ -564,8 +564,100 @@ function computeCloseRaces(N = 5) {
 }
 
 
+// 모바일 핀치 확대·드래그 — 빽빽한 전국 hex를 viewBox 조작으로 확대(렌더 시 자동 리셋).
+//  2손가락: 핀치 줌 + 드래그 pan. 확대 상태에서만 1손가락 pan(아니면 페이지 스크롤 허용).
+//  더블탭: 리셋. 셀 탭은 그대로 선택, 제스처 직후 합성 click은 억제.
+function enablePinchZoom(svg) {
+  if (!svg || svg._pz) return;
+  svg._pz = true;
+  const MAX = 8;
+  let base, vb, lastSet;
+  const read = () => (svg.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
+  function updateTA() { svg.style.touchAction = (vb && base && vb[2] < base[2] - 0.5) ? 'none' : 'pan-y'; }
+  function clamp(b) {
+    let [x, y, w, h] = b;
+    if (w >= base[2]) return base.slice();
+    const minW = base[2] / MAX;
+    if (w < minW) { const s = minW / w; w *= s; h *= s; }
+    const padX = base[2] * 0.12, padY = base[3] * 0.12;
+    x = Math.min(Math.max(x, base[0] - padX), base[0] + base[2] - w + padX);
+    y = Math.min(Math.max(y, base[1] - padY), base[1] + base[3] - h + padY);
+    return [x, y, w, h];
+  }
+  function set(b) { vb = clamp(b); lastSet = vb.map((v) => +v.toFixed(2)).join(' '); svg.setAttribute('viewBox', lastSet); updateTA(); }
+  function sync() { base = read(); vb = base.slice(); lastSet = svg.getAttribute('viewBox'); updateTA(); }
+  sync();
+  new MutationObserver(() => { const cur = svg.getAttribute('viewBox'); if (cur && cur !== lastSet) sync(); })
+    .observe(svg, { attributes: true, attributeFilter: ['viewBox'] });
+
+  const rect = () => svg.getBoundingClientRect();
+  const toSvg = (cx, cy, b, r) => [b[0] + (cx - r.left) / r.width * b[2], b[1] + (cy - r.top) / r.height * b[3]];
+  const dist2 = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  let moved = false, mode = null, startD = 0, startVb = null, anchor = null, pan0 = null, lastTap = 0;
+
+  svg.addEventListener('touchstart', (e) => {
+    moved = false;
+    const r = rect();
+    if (e.touches.length === 2) {
+      mode = 'pinch'; startD = dist2(e.touches); startVb = vb.slice();
+      anchor = toSvg((e.touches[0].clientX + e.touches[1].clientX) / 2, (e.touches[0].clientY + e.touches[1].clientY) / 2, vb, r);
+      e.preventDefault();
+    } else if (e.touches.length === 1) {
+      const now = Date.now();
+      if (now - lastTap < 300 && vb[2] < base[2] - 0.5) { set(base.slice()); e.preventDefault(); }
+      lastTap = now;
+      mode = (vb[2] < base[2] - 0.5) ? 'pan' : 'tap';
+      pan0 = { x: e.touches[0].clientX, y: e.touches[0].clientY, vb: vb.slice() };
+    }
+  }, { passive: false });
+
+  svg.addEventListener('touchmove', (e) => {
+    const r = rect();
+    if (mode === 'pinch' && e.touches.length === 2) {
+      e.preventDefault(); moved = true;
+      const s = dist2(e.touches) / (startD || 1);
+      const w = startVb[2] / s, h = startVb[3] / s;
+      const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2, my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      const fx = (mx - r.left) / r.width, fy = (my - r.top) / r.height;
+      set([anchor[0] - fx * w, anchor[1] - fy * h, w, h]);
+    } else if (mode === 'pan' && e.touches.length === 1) {
+      const dx = e.touches[0].clientX - pan0.x, dy = e.touches[0].clientY - pan0.y;
+      if (!moved && Math.hypot(dx, dy) < 6) return;
+      e.preventDefault(); moved = true;
+      set([pan0.vb[0] - dx / r.width * vb[2], pan0.vb[1] - dy / r.height * vb[3], vb[2], vb[3]]);
+    }
+  }, { passive: false });
+
+  svg.addEventListener('touchend', () => { mode = null; });
+  svg.addEventListener('click', (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  svg.addEventListener('wheel', (e) => {
+    if (!base || !(e.ctrlKey || e.metaKey)) return;   // 데스크톱: Ctrl+휠만 줌(일반 휠=페이지 스크롤)
+    e.preventDefault();
+    const r = rect();
+    const s = e.deltaY < 0 ? 1 / 1.2 : 1.2;
+    const w = vb[2] * s, h = vb[3] * s;
+    const fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+    set([vb[0] + fx * vb[2] - fx * w, vb[1] + fy * vb[3] - fy * h, w, h]);
+  }, { passive: false });
+}
+
 // === Bootstrap ===
 async function init() {
+  enablePinchZoom($('#hex'));
+  enablePinchZoom($('#hex2'));
+  // 모바일 핀치 힌트 — 한 번만, 첫 터치/5초 후 사라짐.
+  if (matchMedia('(hover: none)').matches) {
+    const viz = document.querySelector('.viz');
+    if (viz && !viz.querySelector('.pz-hint')) {
+      const hint = document.createElement('div');
+      hint.className = 'pz-hint';
+      hint.textContent = '✥ 두 손가락으로 확대 · 더블탭 리셋';
+      viz.appendChild(hint);
+      const kill = () => hint.remove();
+      viz.addEventListener('touchstart', kill, { once: true, passive: true });
+      setTimeout(kill, 5000);
+    }
+  }
   const [elections, hex, hexLegacy, manifest] = await Promise.all([
     loadJson('data/elections.json'),
     loadJson('data/geo/sigungu_hex.json'),
