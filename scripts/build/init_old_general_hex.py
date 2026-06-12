@@ -48,15 +48,22 @@ def sgg_centroid(nm):
         if k[:2] == base: return v
     return None
 
+# 옛→현행 시도명 (geojson SIDO는 현행명. lookup·정식화 공용)
+SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도", "제주도": "제주특별자치도"}
+
+
 def load_geo_cen(n):
-    """district_{n}_geojson.json 선거구 폴리곤 centroid (SGIS 1975 경계). {선거구명: (lon,lat)}."""
+    """district_{n}_geojson.json 선거구 폴리곤 centroid (SGIS 1975 경계).
+    {(SIDO, SGG): (lon,lat)} — 동명이의(고성군 강원/경남 등) 분리. SGG-only key도 보존(fallback)."""
     p = GEO / f"district_{n}_geojson.json"
     if not p.exists():
         return {}
     out = {}
     for f in json.loads(p.read_text(encoding="utf-8")).get("features", []):
+        pr = f["properties"]
         c = centroid(f["geometry"])
-        out[f["properties"]["SGG"]] = c
+        out[(pr.get("SIDO", ""), pr["SGG"])] = c
+        out.setdefault(pr["SGG"], c)   # 동명이의 없을 때용 name-only fallback
     return out
 
 
@@ -70,7 +77,8 @@ def build(n):
     for r in races:
         # 3·4·5대는 별표 통합으로 sigungu_area 보유 → 우선 사용(이름엔 괄호 없음)
         sido = r["sido"]; sggs = r.get("sigungu_area") or sggs_of(r["name"])
-        cen = geo_cen.get(r["name"])  # 1순위: 실제 선거구 경계 중심
+        # 1순위: 실제 선거구 경계 중심. (sido,name)으로 동명이의 분리(고성군 강원/경남) 후 name-only fallback.
+        cen = geo_cen.get((SIDO_CANON.get(sido, sido), r["name"])) or geo_cen.get(r["name"])
         if cen:
             pass
         elif (cens := [c for c in (sgg_centroid(s) for s in sggs) if c]):
