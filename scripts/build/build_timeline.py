@@ -305,7 +305,7 @@ def main():
         kdata = elections.get(kind, {})
         for e in kdata.get("elections", []):
             n = e["n"]
-            path_name = NEW_PATHS.get((n, kind))
+            path_name = e.get("file") or NEW_PATHS.get((n, kind))  # file 오버라이드 (같은 n 두 회차 등)
             sido_winners = {}
             party_seats = []
             pres_cands = []
