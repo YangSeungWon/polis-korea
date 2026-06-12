@@ -424,16 +424,22 @@
           "pct": 53.1,
           "seats": 17,
           "total": 32
+        },
+        "제주특별자치도": {
+          "party": "무소속",
+          "pct": 66.7,
+          "seats": 2,
+          "total": 3
         }
       },
       "partySeats": [
         [
           "자유당",
-          110
+          111
         ],
         [
           "무소속",
-          68
+          70
         ],
         [
           "민주국민당",
@@ -580,20 +586,26 @@
           "pct": 47.5,
           "seats": 19,
           "total": 40
+        },
+        "제주특별자치도": {
+          "party": "민주당",
+          "pct": 33.3,
+          "seats": 1,
+          "total": 3
         }
       },
       "partySeats": [
         [
           "자유당",
-          125
+          126
         ],
         [
           "민주당",
-          78
+          79
         ],
         [
           "무소속",
-          25
+          26
         ],
         [
           "통일당",
@@ -725,6 +737,12 @@
           "pct": 75.0,
           "seats": 30,
           "total": 40
+        },
+        "제주특별자치도": {
+          "party": "민주당",
+          "pct": 33.3,
+          "seats": 1,
+          "total": 3
         }
       },
       "bicameral": true,
@@ -732,11 +750,11 @@
       "partySeats": [
         [
           "민주당",
-          170
+          171
         ],
         [
           "무소속",
-          52
+          53
         ],
         [
           "사회대중당",
@@ -752,6 +770,10 @@
         ],
         [
           "통일당",
+          1
+        ],
+        [
+          "한국사회당",
           1
         ]
       ]
@@ -5832,7 +5854,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "presidential",
@@ -5844,7 +5867,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "local",
@@ -5856,7 +5880,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "national_assembly",
@@ -5868,7 +5893,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "local",
@@ -5880,7 +5906,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "presidential",
@@ -5892,7 +5919,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     },
     {
       "kind": "national_assembly",
@@ -5904,7 +5932,8 @@
       "turnout": null,
       "sidoWinners": {},
       "upcoming": true,
-      "predicted": true
+      "predicted": true,
+      "pollsUrl": null
     }
   ]
 }
