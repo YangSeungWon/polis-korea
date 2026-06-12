@@ -25,9 +25,10 @@ ROOT = Path(__file__).resolve().parents[2]
 # 캐노니컬 메뉴 — 회차 번호·시간 의존 표현 금지 (장기 안정).
 MENU = [
     # 홈은 좌측 polis 로고가 이미 / 링크 — nav 중복 제거 (모바일 폭 절약).
+    # 순서: 현재 여론(상시 추세 → 폴 허브) → 선거 결과(보궐 → 역대 → 개관) → 역사 맥락.
+    ("지지율 추이", "/tracker.html", "tracker"),
     ("여론조사", "/polls.html", "polls"),
     ("재·보궐", "/byelection/", "byelection"),
-    ("지지율 추이", "/tracker.html", "tracker"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),
     ("근현대사", "/chronology.html", "chronology"),
@@ -74,7 +75,7 @@ def render_nav(current_key: str | None) -> str:
     for i, (label, href, key) in enumerate(MENU):
         cls = "hdr-link is-current" if key == current_key else "hdr-link"
         lines.append(f'  <a href="{href}" class="{cls}">{label}</a>')
-        if i == 0:  # 홈 직후 urgent slot
+        if key == "polls":  # 여론조사(선거·폴 허브) 직후 — 임박/방금끝난 선거 urgent 뱃지 자리
             lines.append('  <span data-nav-urgent></span>')
     lines.append('  <!-- NAV_END -->')
     return "\n".join(lines)
