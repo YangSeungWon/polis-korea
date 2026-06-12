@@ -315,3 +315,8 @@
 .ind-row .ind-bar > span { display: block; height: 100%; }
 .ind-row .ind-pct { text-align: right; font-variant-numeric: tabular-nums; }
 .ind-row .ind-pct small { color: var(--ink-soft, #999); }
+.indirect-card .ind-extra {
+  margin-top: 14px; padding: 8px 10px;
+  background: var(--surface-2, #f4f6fa); border-radius: 6px;
+  font-size: 12px; color: var(--ink-soft, #555); line-height: 1.5;
+}

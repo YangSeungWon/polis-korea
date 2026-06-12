@@ -92,6 +92,7 @@ function renderSeatsCard(el, district) {
     <h3>${el.n}대 국회의원선거 <span class="ind-date">${el.date || ''}</span></h3>
     <p class="ind-note">옛 회차라 선거구 경계 지도가 없습니다. 지역구 당선 <b>정당별 의석</b> (총 ${total}석):</p>
     <div class="ind-rows">${rows}</div>
+    ${el.note ? `<p class="ind-extra">📌 ${el.note}</p>` : ''}
   </div>`;
 }
 

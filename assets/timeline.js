@@ -121,6 +121,13 @@ function loadJson(p) {
       an.title = r.annulNote || '무효 선거';
       lbl.appendChild(an);
     }
+    if (r.bicameral) {
+      const bc = document.createElement('span');
+      bc.className = 'tl-indirect';
+      bc.textContent = '양원제';
+      bc.title = r.note || '양원제 — 민의원·참의원';
+      lbl.appendChild(bc);
+    }
     const date = document.createElement('div');
     date.className = 'tl-date';
     date.textContent = r.date;

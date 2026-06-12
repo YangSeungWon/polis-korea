@@ -354,6 +354,10 @@ def main():
                 entry["annulled"] = True   # 무효 선거(4대 3·15 부정선거)
                 if e.get("annul_note"):
                     entry["annulNote"] = e["annul_note"]
+            if e.get("bicameral"):
+                entry["bicameral"] = True   # 양원제(5대 — 민의원·참의원)
+            if e.get("note"):
+                entry["note"] = e["note"]
             if party_seats:
                 entry["partySeats"] = party_seats
             if pres_cands:
