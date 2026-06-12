@@ -69,6 +69,32 @@ function renderIndirectCard(el, nat) {
   </div>`;
 }
 
+// 옛 총선 — 지도 대신 지역구 당선 정당별 의석 카드.
+function renderSeatsCard(el, district) {
+  const seats = new Map();
+  for (const d of district || []) {
+    const wins = (d.winners && d.winners.length) ? d.winners : (d.winner_party ? [{ party: d.winner_party }] : []);
+    for (const w of wins) if (w.party) seats.set(w.party, (seats.get(w.party) || 0) + 1);
+  }
+  const parties = [...seats.entries()].sort((a, b) => b[1] - a[1]);
+  const total = parties.reduce((s, p) => s + p[1], 0);
+  const rows = parties.slice(0, 14).map(([p, n]) => {
+    const pct = total ? (n / total * 100) : 0;
+    const col = (typeof partyColor === 'function') ? partyColor(p, el.date) : '#999';
+    return `<div class="ind-row">
+      <span class="ind-name">${p}</span>
+      <span class="ind-bar"><span style="width:${pct.toFixed(1)}%;background:${col}"></span></span>
+      <span class="ind-pct">${n}석<small> (${pct.toFixed(1)}%)</small></span>
+    </div>`;
+  }).join('');
+  return `<div class="indirect-card">
+    <div class="ind-badge" style="background:#2d6e7e">옛 총선 · 지역구 지도 없음</div>
+    <h3>${el.n}대 국회의원선거 <span class="ind-date">${el.date || ''}</span></h3>
+    <p class="ind-note">옛 회차라 선거구 경계 지도가 없습니다. 지역구 당선 <b>정당별 의석</b> (총 ${total}석):</p>
+    <div class="ind-rows">${rows}</div>
+  </div>`;
+}
+
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
@@ -82,6 +108,19 @@ async function renderAll() {
     $('#sizing-seg')?.toggleAttribute('hidden', true);
     const gm = $('#geomap');
     if (gm) gm.innerHTML = renderIndirectCard(elMeta0, activeOfficeData()?.national);
+    renderDetail();
+    renderHistoryLegend();
+    return;
+  }
+  // 옛 총선(1~8대) — 선거구 경계 geojson이 없어 hex 지도 불가 → 정당별 의석 정보 카드.
+  if (state.type === 'national_assembly' && state.n < 9 && state.results?.district) {
+    $('#hex')?.toggleAttribute('hidden', true);
+    $('#hex2')?.toggleAttribute('hidden', true);
+    $('#geomap')?.toggleAttribute('hidden', false);
+    $('#display-seg')?.toggleAttribute('hidden', true);
+    $('#sizing-seg')?.toggleAttribute('hidden', true);
+    const gm = $('#geomap');
+    if (gm) gm.innerHTML = renderSeatsCard(elMeta0, state.results.district);
     renderDetail();
     renderHistoryLegend();
     return;

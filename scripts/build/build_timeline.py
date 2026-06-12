@@ -65,7 +65,15 @@ NEW_PATHS = {
     (19, "presidential"): "19th-pres-2017.json",
     (20, "presidential"): "20th-pres-2022.json",
     (21, "presidential"): "21st-pres-2025.json",
-    # national_assembly — 9~12 중선거구(LOD 지역구), 13~16 위키 정당 합산, 17~ NEC + 지역구
+    # national_assembly — 1~8 옛총선(VCCP09 선거구), 9~12 중선거구, 13~16 위키, 17~ NEC
+    (1, "national_assembly"): "1st-general-1948.json",
+    (2, "national_assembly"): "2nd-general-1950.json",
+    (3, "national_assembly"): "3rd-general-1954.json",
+    (4, "national_assembly"): "4th-general-1958.json",
+    (5, "national_assembly"): "5th-general-1960.json",
+    (6, "national_assembly"): "6th-general-1963.json",
+    (7, "national_assembly"): "7th-general-1967.json",
+    (8, "national_assembly"): "8th-general-1971.json",
     (9, "national_assembly"): "9th-general-1973.json",
     (10, "national_assembly"): "10th-general-1978.json",
     (11, "national_assembly"): "11th-general-1981.json",
