@@ -41,6 +41,30 @@
 .chr-era-name { font-weight: 800; font-size: 1.06em; letter-spacing: -0.01em; }
 .chr-era-note { color: var(--ink-mute); font-size: 0.82em; }
 
+/* 정부(행정부) 하위 구분 — 공화국보다 작게, 정당색 마디 */
+.chr-gov {
+  position: relative;
+  display: flex; align-items: baseline; gap: 8px;
+  margin: 11px 0 3px;
+  padding-left: calc(var(--rail) + 18px);
+  min-height: 20px;
+}
+.chr-gov::before {
+  content: "";
+  position: absolute;
+  left: var(--rail); top: 4px;
+  width: 10px; height: 10px;
+  background: var(--gc, var(--rule-strong));
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--gc, var(--rule-strong));
+  transform: translateX(-6px);
+}
+.chr-gov-yr { font-variant-numeric: tabular-nums; color: var(--ink-mute); font-size: 0.78em; min-width: 34px; }
+.chr-gov-name { font-weight: 700; font-size: 0.96em; color: var(--ink); text-decoration: none; }
+.chr-gov-name.chr-wiki { display: inline-flex; align-items: center; gap: 4px; padding: 1px 4px; border-radius: 5px; }
+.chr-gov-pres { color: var(--ink-mute); font-size: 0.8em; }
+
 /* 행 공통 */
 .chr-row {
   position: relative;

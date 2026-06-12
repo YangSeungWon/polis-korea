@@ -37,20 +37,28 @@ function mdOf(d) {
   // 같은 날짜는 사건 먼저(맥락) → 선거
   const items = [...events, ...elections].sort((a, b) =>
     a.date.localeCompare(b.date) || (a.type === 'event' ? -1 : 1));
-  const reps = (ev.republics || []).slice().sort((a, b) => a.start.localeCompare(b.start));
+  // 시대 구분: 공화국(상위) + 정부(제6공화국 하위, 행정부) — 시작일순 병합
+  const dividers = [
+    ...(ev.republics || []).map((r) => ({ k: 'rep', date: r.start, data: r })),
+    ...(ev.governments || []).map((g) => ({ k: 'gov', date: g.start, data: g })),
+  ].sort((a, b) => a.date.localeCompare(b.date) || (a.k === 'rep' ? -1 : 1));
 
   $('#loading').hidden = true;
   const root = $('#chrono');
   root.hidden = false;
 
-  let repIdx = -1;
-  for (const it of items) {
-    while (repIdx + 1 < reps.length && it.date >= reps[repIdx + 1].start) {
-      repIdx++;
-      root.appendChild(repHeader(reps[repIdx]));
+  let di = 0;
+  const emitDividers = (upto) => {
+    while (di < dividers.length && dividers[di].date <= upto) {
+      const dv = dividers[di++];
+      root.appendChild(dv.k === 'rep' ? repHeader(dv.data) : govHeader(dv.data));
     }
+  };
+  for (const it of items) {
+    emitDividers(it.date);
     root.appendChild(it.type === 'election' ? electionRow(it) : eventRow(it));
   }
+  emitDividers('9999');  // 마지막 항목 뒤 시대(예: 국민주권정부 출범 후) 처리
 
   // 필터 (전체/선거/사건) — 행·헤더 토글
   document.querySelectorAll('[data-filter]').forEach((btn) => {
@@ -71,6 +79,21 @@ function repHeader(rep) {
   d.innerHTML = `<span class="chr-era-yr">${yearOf(rep.start)}</span>`
     + `<span class="chr-era-name">${rep.name}</span>`
     + (rep.note ? `<span class="chr-era-note">${rep.note}</span>` : '');
+  return d;
+}
+
+function govHeader(g) {
+  // 정부(행정부) 하위 구분 — 제6공화국이 길어(1987~현행) 정부별로 쪼갬. 정당색 마디.
+  const d = document.createElement('div');
+  d.className = 'chr-gov';
+  d.dataset.type = 'era';
+  const col = (typeof partyColor === 'function' && g.party) ? partyColor(g.party, g.start) : 'var(--rule-strong)';
+  d.style.setProperty('--gc', col);
+  const name = g.wiki
+    ? `<a class="chr-gov-name chr-wiki" href="${WIKI}${encodeURIComponent(g.wiki)}" target="_blank" rel="noopener">${g.name}<span class="chr-ext">↗</span></a>`
+    : `<span class="chr-gov-name">${g.name}</span>`;
+  d.innerHTML = `<span class="chr-gov-yr">${yearOf(g.start)}</span>${name}`
+    + (g.president ? `<span class="chr-gov-pres">${g.president}</span>` : '');
   return d;
 }
 
