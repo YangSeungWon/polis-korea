@@ -67,9 +67,8 @@
     if (days < -6) continue;                     // CAMPAIGN 이하 — slot 안 띄움
     else if (days < 0) phase = 'BLACKOUT';       // D-6 ~ D-1
     else if (days === 0) phase = 'ELECTION';     // 투표마감 ~ 익일
-    else if (days <= 7) phase = 'POST';          // D+1 ~ D+7
-    else if (days <= 30) phase = 'RECENT';       // D+8 ~ D+30
-    else continue;                               // 30일+ — slot 내림
+    else if (days <= 7) phase = 'POST';          // D+1 ~ D+7 — 개표 직후 일주일만 '결과' 칩
+    else continue;                               // D+8+ — slot 내림(결과는 역대결과로 상시 접근)
     const short = shortName(meta);
     const label = labelFor(phase, short, days);
     // archive page 없으면 kind별 hub (재보궐 → byelection.html, 그 외 → home)
@@ -106,10 +105,9 @@ function labelFor(phase, short, days) {
   if (phase === 'BLACKOUT') return `🔴 ${short} D${days}`;  // days < 0
   if (phase === 'ELECTION') return `🔴 LIVE ${short} 개표`;
   if (phase === 'POST') return `${short} 결과`;
-  if (phase === 'RECENT') return `${short} 결과`;
   return short;
 }
 
 function phaseOrder(p) {
-  return { ELECTION: 0, BLACKOUT: 1, POST: 2, RECENT: 3 }[p] ?? 9;
+  return { ELECTION: 0, BLACKOUT: 1, POST: 2 }[p] ?? 9;
 }
