@@ -328,7 +328,8 @@ def scrape_one(gubun: str, csv_path: Path, args) -> None:
     RAW.mkdir(parents=True, exist_ok=True)
 
     existing = load_existing_ids(csv_path)
-    print(f"기존 CSV: {len(existing)}건 / gubun={gubun}", file=sys.stderr)
+    print(f"기존 CSV: {len(existing)}건 / gubun={gubun or '전체(전국필터)'}", file=sys.stderr)
+    n_region_skip = 0
 
     # 신규 nttId 수집 (목록 순회). 목록은 최신순(pageIndex=1=최신)이라 신규는 앞쪽에 몰림.
     # --stop-after-known-pages N: 마지막 신규 이후 N페이지 연속 전부 기존이면 조기 종료
@@ -341,6 +342,13 @@ def scrape_one(gubun: str, csv_path: Path, args) -> None:
         if args.stop_after_known_pages and page - last_new_page >= args.stop_after_known_pages:
             print(f"  조기종료: {page}p까지 {args.stop_after_known_pages}p 연속 기존 — 중단", file=sys.stderr)
             break
+        # --all-list: 목록 sido 칸(cell 7)이 '전국'인 정기조사만. 지역(지선·재보선 후보) 제외.
+        if getattr(args, "all_list", False):
+            cells = row.get("cells", [])
+            sido = cells[7] if len(cells) > 7 else ""
+            if "전국" not in sido:
+                n_region_skip += 1
+                continue
         if row["ntt_id"] in existing:
             continue
         last_new_page = page
@@ -349,7 +357,8 @@ def scrape_one(gubun: str, csv_path: Path, args) -> None:
             break
         if len(list_rows) % 50 == 0:
             print(f"  ... 목록 {page}/{total} 진행, 신규 {len(list_rows)}건", file=sys.stderr)
-    print(f"신규 nttId: {len(list_rows)}건", file=sys.stderr)
+    print(f"신규 nttId: {len(list_rows)}건"
+          + (f" (지역 폴 {n_region_skip}건 제외)" if n_region_skip else ""), file=sys.stderr)
 
     # 상세 + PDF
     cell_keys = ["reg_no_list", "agency_list", "requester_list", "method_list",
@@ -439,6 +448,10 @@ def main():
     ap.add_argument("--active", action="store_true",
                     help="elections/index.json의 active 선거들 gubun·csv 자동 순회(daily용·"
                          "선거 코드 하드코딩 제거)")
+    ap.add_argument("--all-list", action="store_true",
+                    help="gubun 필터 없이 전체 목록 순회 + sido='전국'만 채택. NESDC가 정기조사를 "
+                         "언급 선거(대선 등) gubun으로 분류해 VT012 밖에 두는 폴(갤럽 자체조사 등)을 "
+                         "회수. 트래커 소스용 — --csv는 nesdc_etc_polls.csv 권장.")
     ap.add_argument("--gubun", default=POLL_GUBUN_9TH_LOCAL,
                     help="선거구분 코드 (VT026=9회지선, VT039=2026재보궐). --active면 무시")
     ap.add_argument("--csv", default=str(CSV_PATH), help="출력 CSV 경로. --active면 무시")
@@ -453,6 +466,9 @@ def main():
         for gubun, csv_path, eid in targets:
             print(f"\n=== {eid} (gubun={gubun}) → {csv_path.name} ===", file=sys.stderr)
             scrape_one(gubun, csv_path, args)
+    elif args.all_list:
+        print(f"전체목록 모드 — gubun 무시, 전국 정기조사만 → {Path(args.csv).name}", file=sys.stderr)
+        scrape_one("", Path(args.csv), args)
     else:
         scrape_one(args.gubun, Path(args.csv), args)
 

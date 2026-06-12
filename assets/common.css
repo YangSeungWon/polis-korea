@@ -284,20 +284,3 @@ body {
 /* 소수정당 칩 — 머리(1·2위)와 같은 줄흐름, 작게. 정당색은 inline. */
 .sleg-sub { font-size: 10px; opacity: .82; }
 .sleg-sub b { font-weight: 700; }
-/* 홈 통합 검색 바 */
-.home-search {
-  display: flex; gap: 0; margin: 0 0 18px;
-  border: 1.5px solid var(--rule-strong); border-radius: 3px;
-  background: var(--bg);
-}
-.home-search input {
-  flex: 1; border: none; background: transparent; color: var(--ink);
-  padding: 12px 14px; font-size: 14px; font-family: inherit;
-}
-.home-search input:focus { outline: none; }
-.home-search button {
-  background: var(--ink); color: var(--bg); border: none;
-  padding: 0 16px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.home-search button:hover { opacity: 0.85; }
