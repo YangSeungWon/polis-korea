@@ -511,9 +511,10 @@ function renderDetail() {
           const col1 = partyColor(top.party), col2 = partyColor(second.party);
           return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${r.name}" data-kind="${r.scope}">
             <span class="hist-close-loc">${r.sido} ${r.name}</span>
-            <span class="hist-close-cand" style="color:${col1}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
-            <span class="hist-close-vs">vs</span>
-            <span class="hist-close-cand" style="color:${col2}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
+            <span class="hist-close-cands">
+              <span class="hist-close-cand" style="color:${col1}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
+              <span class="hist-close-cand" style="color:${col2}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
+            </span>
             <span class="hist-close-margin">+${r.margin.toFixed(2)}%p</span>
           </a>`;
         }).join('')}
