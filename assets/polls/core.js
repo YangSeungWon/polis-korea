@@ -41,14 +41,32 @@ function setCountdown() {
 
 // 페이지 성격을 선거일 기준 자동 전환 — 폴링 중="여론조사", 선거 후="여론 vs 실제" 회고.
 // 하드코딩 대신 날짜 기반이라 다음 선거로 갈아타도(ELECTION/ELECTION_NAME만 갱신) 자동 적용.
+const POLL_SEASON_DAYS = 180;   // 선거 N일 전부터 = 활성 폴링 시즌(전면 승격)
 function setPhase() {
-  const post = new Date() >= ELECTION;
+  const now = new Date();
+  const post = now >= ELECTION;
   const h1 = $('#poll-h1'), lede = $('#poll-lede'), banner = $('#post-banner');
   if (h1) h1.textContent = post ? `${ELECTION_NAME} · 여론조사 vs 실제` : `${ELECTION_NAME} 여론조사`;
   if (lede) lede.textContent = post
     ? 'NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지. 셀 색=1위 정당.'
     : 'NESDC 등록 조사. 셀 색=마지막 조사 1위 정당.';
   if (banner) banner.hidden = !post;
+
+  // 활성 폴링 시즌이면 그 선거를 상단 전면 배너로 승격(사람 몰리는 선거를 끌어올림).
+  const seasonStart = new Date(ELECTION);
+  seasonStart.setDate(seasonStart.getDate() - POLL_SEASON_DAYS);
+  const polling = now >= seasonStart && now < ELECTION;
+  const apb = $('#active-poll-banner');
+  if (apb) {
+    apb.hidden = !polling;
+    if (polling) {
+      const days = Math.ceil((ELECTION - now) / 86400000);
+      apb.innerHTML = `<span class="apb-dot"></span>`
+        + `<b>${ELECTION_NAME} 여론조사 진행 중</b>`
+        + `<span class="apb-dday">D-${days}</span>`
+        + `<span class="apb-go">상세 보기 ↓</span>`;
+    }
+  }
 }
 
 async function loadData() {

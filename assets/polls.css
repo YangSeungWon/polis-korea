@@ -159,3 +159,24 @@
 /* 선거별 상세 섹션 — 상시 피드와 구분선 */
 .election-intro { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--rule); }
 .election-intro h2 { font-size: 20px; font-weight: 800; margin: 0 0 4px; color: var(--ink); }
+
+/* 활성 폴링 시즌 — 그 선거 전면 배너(상단). 시즌 아니면 hidden. */
+.active-poll-banner {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 4px 0 18px; padding: 12px 16px;
+  border: 1px solid var(--accent, #c8553d); border-left-width: 4px; border-radius: 4px;
+  background: var(--bg2); color: var(--ink); text-decoration: none; font-size: 14px;
+}
+.active-poll-banner:hover { background: var(--bg3); }
+.active-poll-banner b { font-weight: 800; }
+.active-poll-banner .apb-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: #e0322b; flex: 0 0 auto;
+  animation: apb-pulse 1.8s infinite;
+}
+@keyframes apb-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(224,50,43,0.5); }
+  70% { box-shadow: 0 0 0 7px rgba(224,50,43,0); }
+  100% { box-shadow: 0 0 0 0 rgba(224,50,43,0); }
+}
+.active-poll-banner .apb-dday { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent, #c8553d); }
+.active-poll-banner .apb-go { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
