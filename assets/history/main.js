@@ -591,7 +591,12 @@ function enablePinchZoom(svg) {
   const MAX = 8;
   let base, vb, lastSet;
   const read = () => (svg.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
-  function updateTA() { svg.style.touchAction = (vb && base && vb[2] < base[2] - 0.5) ? 'none' : 'pan-y'; updateResetBtn(); }
+  function updateTA() {
+    const zoomed = vb && base && vb[2] < base[2] - 0.5;
+    svg.style.touchAction = zoomed ? 'none' : 'pan-y';
+    svg.style.cursor = zoomed ? 'grab' : '';
+    updateResetBtn();
+  }
   function clamp(b) {
     let [x, y, w, h] = b;
     if (w >= base[2]) return base.slice();
@@ -658,6 +663,26 @@ function enablePinchZoom(svg) {
     const fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
     set([vb[0] + fx * vb[2] - fx * w, vb[1] + fy * vb[3] - fy * h, w, h]);
   }, { passive: false });
+
+  // 데스크톱 마우스 드래그 pan — 확대 상태에서만.
+  let mDrag = null;
+  svg.addEventListener('mousedown', (e) => {
+    if (!base || vb[2] >= base[2] - 0.5) return;
+    mDrag = { x: e.clientX, y: e.clientY, vb: vb.slice() };
+    moved = false;
+    svg.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!mDrag) return;
+    const r = rect();
+    const dx = e.clientX - mDrag.x, dy = e.clientY - mDrag.y;
+    if (!moved && Math.hypot(dx, dy) < 4) return;
+    moved = true;
+    const w = mDrag.vb[2], h = mDrag.vb[3];
+    set([mDrag.vb[0] - dx / r.width * w, mDrag.vb[1] - dy / r.height * h, w, h]);
+  });
+  window.addEventListener('mouseup', () => { if (mDrag) { mDrag = null; updateTA(); } });
 }
 
 // === Bootstrap ===
