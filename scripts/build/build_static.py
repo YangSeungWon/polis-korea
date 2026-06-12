@@ -119,13 +119,18 @@ def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
     n_made = 0
     urls.append(('/history.html', '0.7', 'monthly'))
-    for type_key, ns in manifest.items():
+    # manifest(지도 데이터 보유분) 대신 elections.json 전체 회차를 페이지로 — 간선 대선(1·4·8~12 등)
+    # 도 직접 URL 접근 가능. variant(4대 3·15)·predicted(예측)는 별도 URL 없음.
+    for type_key in ('presidential', 'national_assembly', 'local'):
+        els = elections.get(type_key, {}).get('elections', [])
         type_short = TYPE_LABEL.get(type_key, type_key)
         type_slug = TYPE_SLUG.get(type_key, type_key)
-        for n in ns:
-            meta = next((e for e in elections[type_key]['elections'] if e['n'] == n), None)
-            if not meta:
+        seen = set()
+        for meta in els:
+            n = meta.get('n')
+            if n is None or n in seen or meta.get('variant') or meta.get('predicted'):
                 continue
+            seen.add(n)
             el_date = meta.get('date', '')
             if type_key == 'local':
                 for office_ko, off_slug in LOCAL_OFFICE_SLUG.items():
