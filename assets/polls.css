@@ -142,3 +142,20 @@
 .lean-mini-tbl td.neg { color: #c0392b; font-weight: 600; }
 .lean-mini-tbl td.z { color: var(--ink-soft); }
 .lean-mini-tbl td.n { color: var(--ink-soft); font-size: 10px; }
+
+/* === 최근 여론조사 피드 (여론조사 허브 상시 섹션) === */
+.recent-polls { margin: 8px 0 24px; }
+.rp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.rp-title { font-size: 18px; font-weight: 800; color: var(--ink); margin: 0; }
+.rp-filter { flex-wrap: wrap; }
+.rp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; align-items: start; }
+.rp-more {
+  display: block; margin: 16px auto 0; padding: 8px 20px;
+  border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--bg2);
+  color: var(--ink); font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.rp-more:hover { background: var(--bg3); }
+.rp-empty { color: var(--ink-mute); font-size: 13px; padding: 16px 0; }
+/* 선거별 상세 섹션 — 상시 피드와 구분선 */
+.election-intro { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--rule); }
+.election-intro h2 { font-size: 20px; font-weight: 800; margin: 0 0 4px; color: var(--ink); }

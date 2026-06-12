@@ -55,6 +55,7 @@ function setupSegFades() {
 
 async function init() {
   setCountdown();
+  setPhase();
   setInterval(setCountdown, 60_000);
   await loadData();
   document.querySelectorAll('[data-view]').forEach((b) => {

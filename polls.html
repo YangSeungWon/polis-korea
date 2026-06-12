@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="/">
-<title>vote · 9회 지선 여론조사</title>
-<meta name="description" content="2026 제9회 전국동시지방선거 여론조사를 시도·시군구 단위로. NESDC 등록 조사 인용.">
-<meta property="og:title" content="vote · 9회 지선 여론조사">
-<meta property="og:description" content="2026 제9회 전국동시지방선거 여론조사를 시도·시군구 단위로.">
+<title>polis · 여론조사</title>
+<meta name="description" content="NESDC 등록 여론조사 — 최근 정당지지·차기주자 조사 흐름과 선거별 여론. 추세는 지지율 추이.">
+<meta property="og:title" content="polis · 여론조사">
+<meta property="og:description" content="NESDC 등록 여론조사 — 최근 조사 흐름과 선거별 여론을 한 곳에.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="/governor/">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -44,9 +44,29 @@
 
 <main class="page">
   <section class="intro">
-    <h1>9회 전국동시지방선거 여론조사</h1>
-    <p class="lede">NESDC 등록 조사. 셀 색=마지막 조사 1위 정당.</p>
-    <div class="post-election-banner">
+    <h1>여론조사</h1>
+    <p class="lede">NESDC 등록 조사. 최근 조사 흐름과 선거별 여론을 한 곳에 — 추세는 <a href="/tracker.html">지지율 추이</a>.</p>
+  </section>
+
+  <!-- 상시 누적 개별 조사 피드 (선거 무관, 계속 최신) -->
+  <section class="recent-polls" id="recent-polls">
+    <div class="rp-head">
+      <h2 class="rp-title">최근 여론조사</h2>
+      <div class="seg rp-filter" role="tablist" aria-label="조사 종류">
+        <button class="seg-btn is-active" data-rp="all">전체</button>
+        <button class="seg-btn" data-rp="party">정당지지</button>
+        <button class="seg-btn" data-rp="cand">차기주자</button>
+      </div>
+    </div>
+    <div class="rp-grid" id="recent-feed-host"></div>
+    <button class="rp-more" id="rp-more" type="button" hidden>더 보기</button>
+  </section>
+
+  <!-- 선거별 상세 (활성 선거 시즌이면 그 선거, 아니면 직전 선거 회고) -->
+  <section class="election-intro">
+    <h2 id="poll-h1">9회 전국동시지방선거 · 여론조사 vs 실제</h2>
+    <p class="lede" id="poll-lede">NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지. 셀 색=1위 정당.</p>
+    <div class="post-election-banner" id="post-banner">
       <span class="peb-tag">2026-06-03</span>
       <span class="peb-text">선거 종료</span>
       <a class="peb-link" href="/archive/9th-local-2026/">결과 보기 →</a>
@@ -122,6 +142,7 @@
 <script src="assets/polls/render-map.js"></script>
 <script src="assets/polls/result-overlay.js"></script>
 <script src="assets/polls/chrome.js"></script>
+<script src="assets/polls/recent-feed.js"></script>
 <script src="assets/polls/main.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>

@@ -178,6 +178,8 @@ body {
   font-size: 13px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums;
   padding: 4px 10px; border: 1px solid var(--rule-strong); border-radius: 2px;
 }
+/* 선거 종료 후 — 카운트다운 chip을 muted로 (지난 선거라 덜 중요) */
+.countdown.is-ended { color: var(--ink-mute); border-color: var(--rule); font-weight: 500; }
 .blackout-tag {
   background: var(--ink); color: #fff; padding: 4px 10px; border-radius: 2px;
   font-size: 12px; font-weight: 700; 
