@@ -29,20 +29,41 @@
     const n = parseInt(m[1], 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
-  function _lum([r, g, b]) {
-    const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
-    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  function _rgb2hsl([r, g, b]) {
+    r /= 255; g /= 255; b /= 255;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    let h = 0, s = 0; const l = (mx + mn) / 2;
+    if (mx !== mn) {
+      const d = mx - mn;
+      s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+      h /= 6;
+    }
+    return [h, s, l];
   }
-  function _mix([r, g, b], [R, G, B], t) {
-    return [Math.round(r + (R - r) * t), Math.round(g + (G - g) * t), Math.round(b + (B - b) * t)];
+  function _hsl2rgb(h, s, l) {
+    if (s === 0) { const v = Math.round(l * 255); return [v, v, v]; }
+    const hue = (p, q, t) => {
+      if (t < 0) t += 1; if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+    return [hue(p, q, h + 1 / 3), hue(p, q, h), hue(p, q, h - 1 / 3)].map((v) => Math.round(v * 255));
   }
+  // 명도만 올려(채도 유지·약간 부스트) 다크 배경서 선명하게 — 흰색 혼합(허여멀개) 대신 HSL.
   function legible(hex) {
     const c = _rgb(hex);
     if (!c) return hex;
-    const L = _lum(c);
-    let out = c;
-    if (isDark()) { if (L < 0.38) out = _mix(c, [255, 255, 255], Math.min(0.6, (0.38 - L) * 1.7 + 0.12)); }
-    else if (L > 0.82) out = _mix(c, [10, 14, 26], 0.22);
+    let [h, s, l] = _rgb2hsl(c);
+    if (isDark()) {
+      if (l < 0.55) { l = 0.62; s = Math.min(1, s * 1.08 + 0.05); }  // 어두운 색 → 밝고 선명하게
+    } else if (l > 0.82) {
+      l = 0.7;  // 라이트 배경서 너무 밝은 색만 살짝 내림
+    }
+    const out = _hsl2rgb(h, s, l);
     return `rgb(${out[0]},${out[1]},${out[2]})`;
   }
   // 테마 변경 시 차트 재렌더(legible는 _dark 캐시라 무효화 후 다시 그림). data-theme 속성·시스템 둘 다.

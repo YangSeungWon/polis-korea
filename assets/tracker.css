@@ -34,11 +34,11 @@
 .tk-leg-dot.pos { background: #1f7a4d; }
 .tk-leg-dot.neg { background: #c0392b; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .tk-leg-dot.pos { background: #3fbf7a; }
-  :root:not([data-theme="light"]) .tk-leg-dot.neg { background: #f0685c; }
+  :root:not([data-theme="light"]) .tk-leg-dot.pos { background: #5be19f; }
+  :root:not([data-theme="light"]) .tk-leg-dot.neg { background: #e56457; }
 }
-:root[data-theme="dark"] .tk-leg-dot.pos { background: #3fbf7a; }
-:root[data-theme="dark"] .tk-leg-dot.neg { background: #f0685c; }
+:root[data-theme="dark"] .tk-leg-dot.pos { background: #5be19f; }
+:root[data-theme="dark"] .tk-leg-dot.neg { background: #e56457; }
 
 /* 차트 데이터 라벨(당명·수치) — 배경색 외곽선(halo)로 선·격자 위에서도 읽힘. 축 라벨은 bg 위라 무해. */
 .tk-body text { paint-order: stroke; stroke: var(--bg); stroke-width: 2.2px; stroke-linejoin: round; }
