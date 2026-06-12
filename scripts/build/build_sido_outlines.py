@@ -21,9 +21,11 @@ def simplify(path):
     ms = ROOT / "node_modules/.bin/mapshaper"
     if not ms.exists():
         return
+    # 원본 선거구 geojson이 이미 단순화돼 있어 — dissolve 외곽선을 또 단순화하면 fill보다 거칠어져
+    # 시도선이 선거구를 안 따라감(듬성듬성). snap+clean으로 위상만 정리하고 단순화는 생략.
     try:
-        subprocess.run([str(ms), str(path), "snap", "-simplify", "3%", "keep-shapes",
-                        "-o", str(path), "force"], check=True, capture_output=True, timeout=300)
+        subprocess.run([str(ms), str(path), "snap", "-clean", "-o", str(path), "force"],
+                       check=True, capture_output=True, timeout=300)
     except Exception as e:
         print(f"  ⚠ mapshaper 실패({path.name}): {e}", file=sys.stderr)
 
