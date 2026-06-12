@@ -18,7 +18,7 @@ ALIAS_1975: 1955~56 시승격 개명(강릉군→명주군 등) 환원. 이북·
 import json, re, subprocess, sys
 from pathlib import Path
 import shapefile  # pyshp
-from shapely.geometry import shape, mapping, MultiPoint
+from shapely.geometry import shape, mapping, MultiPoint, box
 from shapely.ops import unary_union, transform as shp_transform, voronoi_diagram
 from pyproj import Transformer
 
@@ -116,6 +116,7 @@ SIDO_CODE = {"서울특별시": "11", "부산직할시": "21", "부산광역시"
              "전라남도": "36", "경상북도": "37", "경상남도": "38", "제주도": "39"}
 METRO_CODE = {"서울": "11", "부산": "21", "대구": "37", "인천": "31", "광주": "36", "대전": "34"}
 CITY_WHOLE = {"부산시", "대구시", "인천시", "광주시", "대전시"}  # 1975 분할 → 시 전체 union
+SOUTH_OF_38 = box(123.0, 32.0, 132.0, 38.0)  # 38선 이남(1·2대 ROK 영역) 클립용
 # 1954~60 시군명 → 1975 시군명(들). 1955~56 시승격 개명·1962 통폐합 반영.
 ALIAS = {"강릉군": ["명주군"], "경주군": ["월성군"], "원주군": ["원성군"], "충주군": ["중원군"],
          "천안군": ["천안시", "천원군"], "울산군": ["울산시", "울주군"], "부천군": ["부천시"],
@@ -345,6 +346,12 @@ def build(n):
         if approx:
             props["approx"] = True  # 추정 경계 → 렌더 점선
         geom = unary_union(polys)
+        # 1·2대(1948·50)는 38선이 국경 — 38선 이남만 ROK 투표 영역. 장단·연백 등 걸친 군은
+        # 위도 38.0 이남으로 클립(전체 군을 그리면 북한 측까지 색칠돼 오해). 3대+(휴전선)는 클립 X.
+        if n in (1, 2):
+            clipped = geom.intersection(SOUTH_OF_38)
+            if not clipped.is_empty:
+                geom = clipped
         feats.append({"type": "Feature", "properties": props, "geometry": mapping(geom)})
         sido_shapes[sido].append(geom)
         nmap[f'{sido}|{r["name"]}'] = code
