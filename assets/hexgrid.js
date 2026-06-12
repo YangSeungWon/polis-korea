@@ -35,18 +35,22 @@ function corner(cx, cy, rad, i) {
   return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)];
 }
 
-// 시도 경계 굵은 선 — 다른 시도와 닿는 면을 그림.
+// 경계 굵은 선 — keyFn 값이 다른 이웃과 닿는 면을 그림 (기본 = 시도 경계).
+// keyFn을 구 키로 주면 구 영역 경계(옛 회차 병합 구 윤곽)에 재사용.
 // includeOutline=true면 한반도 외곽(neighbor 없는 edge)도 같이 그림 (권역 윤곽 강조).
 // cells: {c,r,sido} 배열, cellAt: "c,r"→cell Map.
-function drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, strokeWidth, includeOutline = false) {
+// lineClass 주면 stroke 색을 CSS에 위임(테마 인지) — 안 주면 기존 하드코딩 색.
+function drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, strokeWidth, includeOutline = false, keyFn, lineClass) {
+  const key = keyFn || ((d) => d.sido);
   for (const d of cells) {
     const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
     const ns = nbrs(d.c, d.r);
+    const dk = key(d);
     for (let i = 0; i < 6; i++) {
       const [nc, nr] = ns[i];
       const neighbor = cellAt.get(`${nc},${nr}`);
-      // 같은 시도 내부 edge → skip
-      if (neighbor && neighbor.sido === d.sido) continue;
+      // 같은 key(시도/구) 내부 edge → skip
+      if (neighbor && key(neighbor) === dk) continue;
       // 외곽 (neighbor 없음) → includeOutline일 때만 그림
       if (!neighbor && !includeOutline) continue;
       const e = NBR_TO_EDGE[i];
@@ -55,7 +59,8 @@ function drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, strokeWid
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', x1); line.setAttribute('y1', y1);
       line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', '#0a0e1a');
+      if (lineClass) line.setAttribute('class', lineClass);
+      else line.setAttribute('stroke', '#0a0e1a');
       line.setAttribute('stroke-width', strokeWidth);
       line.setAttribute('stroke-linecap', 'round');
       line.setAttribute('pointer-events', 'none');

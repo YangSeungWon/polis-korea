@@ -21,17 +21,20 @@ function renderSigunguHex() {
   data = data.flatMap((d) => {
     const eff = effectiveCell(d, electionDate);
     if (!eff) return [];
+    // _borrowed: 그 시점 부모 구로 해석된 셀(예 5대 강남→성동). 같은 구로 묶이는 여러 셀 중
+    // 원래 이름이 그 구인 셀(canonical)만 클러스터/원, 나머지는 색만 — 중복카운트 방지.
+    const borrowed = eff.sido !== d.sido || eff.name !== d.name;
     if (!resultForSigungu(eff.sido, eff.name)) {
       // 현재 직(office) 데이터 없음 — 그 시점 '존재하는' 시군구(광역단체장 데이터 보유)면
       // 숨기지 말고 no-data 회색 셀로 유지(내부 구멍 방지). 세종은 기초단체장이 없어
       // 기초장 뷰에서 구멍이었음. 미존재(통폐합 전 등)는 광역장도 없어 그대로 숨김.
       const gov = state.type === 'local' ? state.results?.offices?.['광역단체장'] : null;
       if (gov && resultForSigungu(eff.sido, eff.name, gov)) {
-        return [{ ...d, sido: eff.sido, name: eff.name }];
+        return [{ ...d, sido: eff.sido, name: eff.name, _borrowed: borrowed }];
       }
       return [];
     }
-    return [{ ...d, sido: eff.sido, name: eff.name }];
+    return [{ ...d, sido: eff.sido, name: eff.name, _borrowed: borrowed }];
   });
   if (!data.length) return;  // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
   const cs = data.map((d) => d.c);
@@ -135,7 +138,9 @@ function renderSigunguHex() {
     for (const d of data) {
       const result = resultForSigungu(d.sido, d.name);
       if (!result?.voted) continue;
-      const isFill = !!result._fill;   // 모도시 차용 셀 — 득표비례 N 대신 단일 색 hex.
+      // 단일 hex로 그릴 셀: 모도시 broadcast(_fill) 또는 그 시점 부모 구로 병합된 셀(_borrowed).
+      // 같은 구의 canonical 셀만 클러스터 → 중복카운트 없음.
+      const isFill = !!result._fill || d._borrowed;
       const N = isFill ? 1 : Math.max(1, Math.ceil(result.voted / unit));
       const [cx0, cy0] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
       const cands = (result.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
@@ -151,21 +156,23 @@ function renderSigunguHex() {
       });
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       tt.textContent = top
-        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${isFill ? ' · 모도시 결과(당시 미분리)' : ' · ' + N + '석/표'}`
+        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${result._fill ? ' · 모도시 결과(당시 미분리)' : d._borrowed ? ' · 당시 미분리(부모 구)' : ' · ' + N + '석/표'}`
         : `${d.sido} ${d.name}`;
       g.appendChild(tt);
-      // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
-      const sigOutline = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-      sigOutline.setAttribute('points', hexPoints(cx0, cy0, 22));
-      sigOutline.setAttribute('class', 'sig-outline' + (isSelected ? ' is-selected' : ''));
-      sigOutline.setAttribute('stroke-width', isSelected ? '3.5' : '1.0');
-      g.appendChild(sigOutline);
+      // 셀별 footprint(테마 반투명 흰 배경) — stroke 없이 fill만. 같은 구 인접 셀끼리 이어져
+      // 병합 구가 한 면처럼 보임. 구 경계선은 루프 후 drawHexBorders(구 키)로 일괄.
+      const fp = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      fp.setAttribute('points', hexPoints(cx0, cy0, 22));
+      fp.setAttribute('class', 'sig-outline');
+      fp.setAttribute('stroke', 'none');
+      g.appendChild(fp);
       if (isFill) {
-        // 그 구 자체 득표 없음(당시 미분리) — 모도시 1위 색 단일 hex. 득표비례 누적/넘침 없음.
+        // 그 구 자체 득표 없음(당시 미분리) — 부모/모도시 1위 색으로 셀 채움. 병합 구가 하나의
+        // 면으로 보이게 cell 거의 가득(21). 클러스터는 canonical 셀에만 → 중복카운트/넘침 없음.
         const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        poly.setAttribute('points', hexPoints(cx0, cy0, 16));
+        poly.setAttribute('points', hexPoints(cx0, cy0, 21));
         poly.setAttribute('fill', top ? partyColor(top.party) : '#e6e9ef');
-        poly.setAttribute('opacity', '0.8');   // 차용임을 살짝 구분
+        poly.setAttribute('opacity', '0.85');   // 차용(자체 득표 없음)임을 살짝 구분
         g.appendChild(poly);
       } else {
         // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
@@ -191,9 +198,9 @@ function renderSigunguHex() {
           g.appendChild(poly);
         }
       }
-      // 시군구 라벨 — short(시군구 약칭)만 cell 상단에 작게. 시도 prefix는 cluster centroid에 별도(아래).
+      // 시군구 라벨 — canonical 셀(클러스터 있는)에만. 병합 구의 차용 셀은 같은 이름 중복이라 생략.
       const label = shortSigunguLabel(d.name, d.sido);
-      if (label.short) {
+      if (label.short && !isFill) {
         const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         txt.setAttribute('x', cx0);
         txt.setAttribute('text-anchor', 'middle');
@@ -210,17 +217,27 @@ function renderSigunguHex() {
       svg.appendChild(g);
       if (isSelected) selectedG = g;
     }
+    // 구 영역 외곽선 (옛 회차 병합 구는 내부선 없이 하나로) — 같은 시점-구끼리 묶음. 테마 인지.
+    const guKey = (x) => `${x.sido}|${x.name}`;
+    drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.0', false, guKey, 'gu-outline');
     // 시도 경계 굵은 선 — 격자 모드도 cell 위치가 동일 모드와 같으므로 적용 가능.
     drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
-    // 선택 cell을 마지막에 다시 append → SVG z-order 최상위 (인접 cell·경계선이
-    // selected outline 가리지 않게).
+    // 선택 cell cluster를 위로 + 선택 구 영역 외곽선을 맨 위에 — 경계·인접 셀이 가리지 않게.
     if (selectedG) svg.appendChild(selectedG);
+    if (state.selected) {
+      const selCells = data.filter((x) => x.sido === state.selected.sido && x.name === state.selected.name);
+      if (selCells.length) {
+        const selAt = new Map(selCells.map((x) => [`${x.c},${x.r}`, x]));
+        drawHexBorders(svg, selCells, selAt, colW, rowH, offX, offY, r, '3.5', true, guKey, 'gu-outline is-selected');
+      }
+    }
     return;
   }
 
   // Dorling cartogram: 원, force-directed packing
   if (sizingMode === 'dorling' && maxVoted > 0) {
-    const nodes = data.map((d) => {
+    // 차용 셀(병합 구) 제외 — 구당 원 하나(canonical 셀 위치)로 중복 방지.
+    const nodes = data.filter((d) => !d._borrowed).map((d) => {
       const result = resultForSigungu(d.sido, d.name);
       // 차용(_fill) 셀은 모도시 전체 득표라 v-비례 금지 — 작은 대표 원.
       const v = (result && !result._fill) ? (result.voted || 0) : 0;

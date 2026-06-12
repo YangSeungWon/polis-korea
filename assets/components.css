@@ -362,6 +362,9 @@
   stroke: #0a0e1a;
   stroke-width: 3.5;
 }
+/* 구 영역 경계선 (격자 — 옛 회차 병합 구 윤곽). sig-outline stroke와 같은 테마 색. */
+.gu-outline { stroke: rgba(27,34,55,0.45); fill: none; stroke-linecap: round; }
+.gu-outline.is-selected { stroke: #0a0e1a; }
 .metro-outline {
   fill: rgba(255,255,255,0.45);
   stroke: rgba(27,34,55,0.45);
@@ -384,6 +387,8 @@
     fill: rgba(255,255,255,0.25);
     stroke: var(--ink);
   }
+  :root:not([data-theme="light"]) .gu-outline { stroke: rgba(255,255,255,0.20); }
+  :root:not([data-theme="light"]) .gu-outline.is-selected { stroke: var(--ink); }
   :root:not([data-theme="light"]) .metro-outline {
     fill: rgba(255,255,255,0.10);
     stroke: rgba(255,255,255,0.18);
@@ -404,6 +409,8 @@
   fill: rgba(255,255,255,0.25);
   stroke: var(--ink);
 }
+[data-theme="dark"] .gu-outline { stroke: rgba(255,255,255,0.20); }
+[data-theme="dark"] .gu-outline.is-selected { stroke: var(--ink); }
 [data-theme="dark"] .metro-outline {
   fill: rgba(255,255,255,0.10);
   stroke: rgba(255,255,255,0.18);

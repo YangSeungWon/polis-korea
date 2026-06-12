@@ -63,18 +63,43 @@ const SIGUNGU_HEX_LIFECYCLE = {
   '인천광역시|검단구':   { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '서구' } },
   '인천광역시|영종구':   { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '중구' } },
   '인천광역시|제물포구': { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '동구' } },
+
+  // === 서울 자치구 신설 계보 (옛 대선 회차 — 그 시점 부모 구로 재귀 해석) ===
+  // beforeAs가 또 신설구면 effectiveCell이 그 시점 존재 구까지 재귀로 거슬러 올라감.
+  // 대선은 1971↔1987 사이가 비어 분할 날짜 정밀도보다 부모 체인이 중요(데이터로 검증).
+  '서울특별시|관악구': { since: '1973-07-01', beforeAs: { sido: '서울특별시', name: '영등포구' } },
+  '서울특별시|도봉구': { since: '1973-07-01', beforeAs: { sido: '서울특별시', name: '성북구' } },
+  '서울특별시|강남구': { since: '1975-10-01', beforeAs: { sido: '서울특별시', name: '성동구' } },
+  '서울특별시|강서구': { since: '1977-09-01', beforeAs: { sido: '서울특별시', name: '영등포구' } },
+  '서울특별시|은평구': { since: '1979-10-01', beforeAs: { sido: '서울특별시', name: '서대문구' } },
+  '서울특별시|강동구': { since: '1979-10-01', beforeAs: { sido: '서울특별시', name: '강남구' } },
+  '서울특별시|구로구': { since: '1980-04-01', beforeAs: { sido: '서울특별시', name: '영등포구' } },
+  '서울특별시|동작구': { since: '1980-04-01', beforeAs: { sido: '서울특별시', name: '관악구' } },
+  '서울특별시|노원구': { since: '1988-01-01', beforeAs: { sido: '서울특별시', name: '도봉구' } },
+  '서울특별시|중랑구': { since: '1988-01-01', beforeAs: { sido: '서울특별시', name: '동대문구' } },
+  '서울특별시|서초구': { since: '1988-01-01', beforeAs: { sido: '서울특별시', name: '강남구' } },
+  '서울특별시|송파구': { since: '1988-01-01', beforeAs: { sido: '서울특별시', name: '강동구' } },
+  '서울특별시|양천구': { since: '1988-01-01', beforeAs: { sido: '서울특별시', name: '강서구' } },
+  '서울특별시|강북구': { since: '1995-03-01', beforeAs: { sido: '서울특별시', name: '도봉구' } },
+  '서울특별시|광진구': { since: '1995-03-01', beforeAs: { sido: '서울특별시', name: '성동구' } },
+  '서울특별시|금천구': { since: '1995-03-01', beforeAs: { sido: '서울특별시', name: '구로구' } },
 };
 
 // cell의 회차 시점 effective 정보 — null이면 hide, 객체면 {sido, name} 그 시점 행정구역.
-function effectiveCell(d, electionDate) {
+// beforeAs/afterAs가 또 다른 lifecycle 구면 재귀로 그 시점 실제 존재 구까지 거슬러 올라감
+// (예: 서초 1988→강남, 강남 1975→성동 ⇒ 1963엔 서초 셀이 성동구로 해석).
+function effectiveCell(d, electionDate, _depth) {
   if (!electionDate) return { sido: d.sido, name: d.name };
+  if ((_depth || 0) > 16) return { sido: d.sido, name: d.name };  // 순환 안전망
   const lc = SIGUNGU_HEX_LIFECYCLE[`${d.sido}|${d.name}`];
   if (!lc) return { sido: d.sido, name: d.name };
   if (lc.since && electionDate < lc.since) {
-    return lc.beforeAs ? { sido: lc.beforeAs.sido, name: lc.beforeAs.name } : null;
+    if (!lc.beforeAs) return null;
+    return effectiveCell(lc.beforeAs, electionDate, (_depth || 0) + 1);
   }
   if (lc.until && electionDate >= lc.until) {
-    return lc.afterAs ? { sido: lc.afterAs.sido, name: lc.afterAs.name } : null;
+    if (!lc.afterAs) return null;
+    return effectiveCell(lc.afterAs, electionDate, (_depth || 0) + 1);
   }
   return { sido: d.sido, name: d.name };
 }
