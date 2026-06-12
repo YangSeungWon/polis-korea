@@ -44,7 +44,7 @@
 .tk-body text { paint-order: stroke; stroke: var(--bg); stroke-width: 2.2px; stroke-linejoin: round; }
 
 .tk-empty { color: var(--ink-mute); font-size: 13px; padding: 20px 0; }
-#tk-loading { color: var(--ink-soft); font-size: 13px; padding: 16px 0; }
+#tk-loading { display: flex; align-items: center; color: var(--ink-soft); font-size: 13px; padding: 16px 0; }
 
 /* 기관별 lean 표 */
 
