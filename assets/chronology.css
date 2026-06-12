@@ -1,0 +1,111 @@
+/* chronology.html — 한국 근현대사 연표 */
+
+.chrono-controls { margin: 14px 0 8px; }
+.chrono-viz { position: relative; min-height: 200px; }
+
+.chrono {
+  --rail: 78px;            /* 날짜열 폭 = 레일 위치 */
+  position: relative;
+  padding: 4px 0 24px;
+}
+/* 세로 레일 */
+.chrono::before {
+  content: "";
+  position: absolute;
+  left: var(--rail);
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--rule);
+  transform: translateX(-1px);
+}
+
+/* 시대(공화국) 구분 헤더 */
+.chr-era {
+  position: relative;
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 22px 0 6px;
+  padding-left: calc(var(--rail) + 18px);
+  min-height: 26px;
+}
+.chr-era::before {            /* 레일 위 큰 마디 */
+  content: "";
+  position: absolute;
+  left: var(--rail); top: 4px;
+  width: 12px; height: 12px;
+  background: var(--bg);
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  transform: translateX(-7px);
+}
+.chr-era-yr { font-variant-numeric: tabular-nums; color: var(--ink-mute); font-size: 0.82em; min-width: 34px; }
+.chr-era-name { font-weight: 800; font-size: 1.06em; letter-spacing: -0.01em; }
+.chr-era-note { color: var(--ink-mute); font-size: 0.82em; }
+
+/* 행 공통 */
+.chr-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail) 24px 1fr;
+  align-items: center;
+  min-height: 30px;
+  padding: 1px 0;
+}
+.chr-row.is-hidden { display: none; }
+.chr-date {
+  text-align: right; padding-right: 14px;
+  font-variant-numeric: tabular-nums; line-height: 1.05;
+}
+.chr-date b { font-size: 0.9em; }
+.chr-date small { display: block; color: var(--ink-mute); font-size: 0.7em; }
+
+/* 레일 위 마디 */
+.chr-node {
+  justify-self: center;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--rule-strong);
+}
+.chr-election .chr-node { border-color: var(--pc, var(--rule-strong)); }
+
+/* 본문 */
+.chr-body { display: inline-flex; align-items: center; gap: 7px; padding: 3px 2px; min-width: 0; }
+
+/* 사건 — 위키 링크 */
+.chr-event .chr-title { color: var(--ink-soft); font-size: 0.92em; }
+.chr-wiki { text-decoration: none; border-radius: 5px; transition: background .12s; }
+.chr-wiki:hover { background: var(--bg2); }
+.chr-wiki:hover .chr-title { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+.chr-ext { color: var(--ink-mute); font-size: 0.74em; opacity: .7; }
+
+/* 선거 — 상세 링크 */
+.chr-link { text-decoration: none; border-radius: 6px; transition: background .12s; }
+.chr-link:hover { background: var(--bg2); }
+.chr-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+.chr-num { font-weight: 700; font-size: 0.9em; color: var(--ink); white-space: nowrap; }
+.chr-winner { color: var(--ink-soft); font-size: 0.88em; }
+.chr-link:hover .chr-winner { color: var(--ink); }
+.chr-go { color: var(--ink-mute); font-size: 0.8em; margin-left: 2px; opacity: 0; transition: opacity .12s; }
+.chr-link:hover .chr-go { opacity: 1; }
+.chr-mk { font-size: 0.66em; font-weight: 700; padding: 1px 5px; border-radius: 999px; }
+.chr-mk.ind { background: var(--bg2); color: var(--ink-mute); border: 1px solid var(--rule); }
+.chr-mk.ann { background: rgba(230,30,43,0.12); color: #c0392b; }
+
+/* 태그 chip (사건 분류) */
+.chr-tag {
+  font-size: 0.66em; font-weight: 700; padding: 1px 6px; border-radius: 999px;
+  flex: 0 0 auto; letter-spacing: -0.02em;
+  background: var(--bg2); color: var(--ink-mute); border: 1px solid var(--rule);
+}
+.chr-tag.tg-state   { background: #eef1f6; color: #46506a; }
+.chr-tag.tg-war     { background: #3a3f4b; color: #fff; border-color: transparent; }
+.chr-tag.tg-amend   { background: #e8eefc; color: #2a4d9b; }
+.chr-tag.tg-revolt  { background: #fdeede; color: #b25e10; }
+.chr-tag.tg-coup    { background: #f3e3e3; color: #9a3b3b; }
+.chr-tag.tg-impeach { background: rgba(230,30,43,0.12); color: #c0392b; }
+.chr-tag.tg-econ    { background: #e6f1ec; color: #2f6b4f; }
+
+@media (max-width: 560px) {
+  .chrono { --rail: 56px; }
+  .chr-winner { font-size: 0.82em; }
+  .chr-era-note { display: none; }
+}

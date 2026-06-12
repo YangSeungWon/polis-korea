@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 한국 근현대사 연표</title>
+<meta name="description" content="광복 이후 공화국·개헌·항쟁·정변과 모든 선거를 한 줄로. 선거는 클릭하면 상세 결과로.">
+<meta property="og:title" content="polis · 한국 근현대사 연표">
+<meta property="og:description" content="공화국 시대·개헌·4·19·유신·6월항쟁과 역대 선거를 연대순 길잡이로.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/chronology.html">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/chronology.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="index.html" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+              <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link is-current">근현대사</a>
+  <!-- NAV_END -->
+</nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>한국 근현대사 연표</h1>
+    <p class="lede">광복 이후 공화국·개헌·항쟁·정변과 역대 선거를 연대순으로. <b>선거는 클릭하면 상세 결과</b>로 갑니다. 사건은 길잡이만 — 자세한 건 직접 찾아보세요.</p>
+  </section>
+
+  <section class="chrono-controls">
+    <div class="seg" role="tablist" aria-label="표시 필터">
+      <button class="seg-btn is-active" data-filter="all">전체</button>
+      <button class="seg-btn" data-filter="election">선거</button>
+      <button class="seg-btn" data-filter="event">사건</button>
+    </div>
+  </section>
+
+  <section class="chrono-viz">
+    <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
+    <div id="chrono" class="chrono" hidden></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">선거 데이터 · 중앙선거관리위원회</a>
+    </div>
+    <p class="fine">공화국 구분·사건은 길잡이용 큐레이션(개헌 차수 포함). 선거 행 클릭 시 그 회차 상세(역대 결과)로. 사건 설명은 의도적으로 생략 — 연표는 맥락만 짚고 깊이는 직접.</p>
+  </footer>
+</main>
+
+<script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/chronology.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>
