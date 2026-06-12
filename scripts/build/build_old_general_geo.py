@@ -89,6 +89,13 @@ def dong_union(race_sido, tokens):
     return polys, ratio
 
 
+# 이북(개성·개풍·장단·연백) — SGIS 1975(휴전선 이남)에 없어 HGIS 1919(38선 이남 ROK)에서 보강
+IBUK = {}
+_ip = ROOT / "data/geo/hgis_ibuk_1919.json"
+if _ip.exists():
+    for f in json.loads(_ip.read_text(encoding="utf-8")).get("features", []):
+        IBUK[f["properties"]["name"]] = shape(f["geometry"])
+
 CANON = {"전라북도": "전북특별자치도", "강원도": "강원특별자치도", "제주도": "제주특별자치도"}
 DECANON = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도", "제주특별자치도": "제주도"}
 SIDO_CODE = {"서울특별시": "11", "부산직할시": "21", "경기도": "31", "강원도": "32",
@@ -129,6 +136,8 @@ def pick(name, codepref):
 
 def resolve(race_sido, sgg):
     sgg = sgg.strip()
+    if sgg in IBUK:  # 이북 — HGIS 1919 폴리곤
+        return [IBUK[sgg]]
     if sgg in CITY_WHOLE:
         return city_whole(sgg)
     m = re.match(r"(부산시|대구시|인천시|광주시|대전시)\s+(\S+)", sgg)  # '부산시 동구'
