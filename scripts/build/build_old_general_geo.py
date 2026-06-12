@@ -15,7 +15,7 @@ ALIAS_1975: 1955~56 시승격 개명(강릉군→명주군 등) 환원. 이북·
 한계: 도시 갑/을/병 다선거구는 같은 시군 폴리곤에 중첩 → 지도엔 최상위 1개만 표시(hex 정본).
 재현: python scripts/build/build_old_general_geo.py
 """
-import json, re
+import json, re, subprocess, sys
 from pathlib import Path
 import shapefile  # pyshp
 from shapely.geometry import shape, mapping, MultiPoint
@@ -251,6 +251,21 @@ def voronoi_split(races, sido, sggs, area_by, n, hgis_pts):
     return out
 
 
+def simplify(path):
+    """mapshaper 위상보존 단순화 — SGIS 1975 원본 좌표는 회차당 40~70MB라 fetch 불가.
+    snap+simplify 2% keep-shapes로 ~1MB. -clean은 좌표중복(동래군=동래구 등)·기계분할 직선
+    경계를 슬리버로 오인해 feature를 날려 제외(keep-shapes가 폴리곤 보존)."""
+    ms = ROOT / "node_modules/.bin/mapshaper"
+    if not ms.exists():
+        print(f"  ⚠ mapshaper 없음 — {path.name} 단순화 생략(용량 큼)", file=sys.stderr)
+        return
+    try:
+        subprocess.run([str(ms), str(path), "snap", "-simplify", "2%", "keep-shapes",
+                        "-o", str(path), "force"], check=True, capture_output=True, timeout=300)
+    except Exception as e:
+        print(f"  ⚠ mapshaper 실패({path.name}): {e}", file=sys.stderr)
+
+
 def build(n):
     d = json.loads((RES / f"national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]
     # 별표(선거구역 텍스트) — 선거구명으로 lookup (3·4·5대만 보유)
@@ -333,6 +348,7 @@ def build(n):
         json.dumps({"type": "FeatureCollection", "features": feats}, ensure_ascii=False), encoding="utf-8")
     (GEO / f"district_{n}_geojson_map.json").write_text(
         json.dumps({"name_to_sgg_code": nmap}, ensure_ascii=False), encoding="utf-8")
+    simplify(GEO / f"district_{n}_geojson.json")
     print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, 보로노이 {vor_n}, 기계분할 {mech_n}, skip {skipped} {miss if miss else ''}")
 
 
