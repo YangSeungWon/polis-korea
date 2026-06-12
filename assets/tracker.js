@@ -12,6 +12,45 @@
     { name: '이재명', a: '2025-06-04', b: '2030-12-31' },
   ];
   const POS = '#1f7a4d', NEG = '#c0392b';
+  // 테마 인지 색 보정 — 다크 배경(#0d1018)에선 어두운 당색·긍부정색을 밝게 올려 선·라벨 가독성 확보
+  // (당색이 공식 다크 미대응이라 그대로면 거의 안 보임). 라이트에선 너무 밝은 색만 살짝 어둡게.
+  let _dark = null;
+  function isDark() {
+    if (_dark === null) {
+      const t = document.documentElement.getAttribute('data-theme');
+      _dark = t === 'dark' ? true : t === 'light' ? false
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return _dark;
+  }
+  function _rgb(hex) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) return null;
+    const n = parseInt(m[1], 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function _lum([r, g, b]) {
+    const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  }
+  function _mix([r, g, b], [R, G, B], t) {
+    return [Math.round(r + (R - r) * t), Math.round(g + (G - g) * t), Math.round(b + (B - b) * t)];
+  }
+  function legible(hex) {
+    const c = _rgb(hex);
+    if (!c) return hex;
+    const L = _lum(c);
+    let out = c;
+    if (isDark()) { if (L < 0.38) out = _mix(c, [255, 255, 255], Math.min(0.6, (0.38 - L) * 1.7 + 0.12)); }
+    else if (L > 0.82) out = _mix(c, [10, 14, 26], 0.22);
+    return `rgb(${out[0]},${out[1]},${out[2]})`;
+  }
+  // 테마 변경 시 차트 재렌더(legible는 _dark 캐시라 무효화 후 다시 그림). data-theme 속성·시스템 둘 다.
+  let _rerender = null;
+  function _onThemeChange() { _dark = null; if (_rerender) _rerender(); }
+  new MutationObserver(_onThemeChange).observe(document.documentElement,
+    { attributes: true, attributeFilter: ['data-theme'] });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', _onThemeChange);
   const AGG_FILES = ['19pres', '20pres', '21pres', '20th', '21st', '22nd', '7th', '8th', 'etc']
     .map((s) => `data/polls/aggregated_${s}.json`);
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
@@ -39,7 +78,7 @@
     for (let v = 0; v <= yMax; v += yStep) {
       const y = yOf(v);
       g += `<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W - P.r}" y2="${y.toFixed(1)}" stroke="var(--rule,#e6e9ef)" stroke-width="0.5"/>`;
-      g += `<text x="${P.l - 6}" y="${(y + 3).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
+      g += `<text x="${P.l - 6}" y="${(y + 3).toFixed(1)}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
     }
     if (opts.noYears) return g;   // 차기주자: 연도선은 클러스터별 라벨로 별도 처리
     const y0 = new Date(tMin).getFullYear(), y1 = new Date(tMax).getFullYear();
@@ -48,7 +87,7 @@
       if (t < tMin || t > tMax) continue;
       const x = xOf(t);
       g += `<line x1="${x.toFixed(1)}" y1="${P.t}" x2="${x.toFixed(1)}" y2="${H - P.b}" stroke="var(--rule,#e6e9ef)" stroke-width="0.4" stroke-dasharray="2 3"/>`;
-      g += `<text x="${x.toFixed(1)}" y="${H - P.b + 14}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${yr}</text>`;
+      g += `<text x="${x.toFixed(1)}" y="${H - P.b + 14}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${yr}</text>`;
     }
     return g;
   }
@@ -58,7 +97,7 @@
   function wrapChart(W, H, P, yMax, yStep, yOf, inner, aria) {
     let ax = `<rect x="0" y="0" width="${P.l}" height="${H}" fill="var(--bg,#fff)"/>`;
     for (let v = 0; v <= yMax; v += yStep) {
-      ax += `<text x="${P.l - 6}" y="${(yOf(v) + 3).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
+      ax += `<text x="${P.l - 6}" y="${(yOf(v) + 3).toFixed(1)}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v}</text>`;
     }
     return `<svg class="tk-axisfix" viewBox="0 0 ${P.l} ${H}" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">${ax}</svg>`
       + `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${aria}">${inner}</svg></div>`;
@@ -131,6 +170,7 @@
     const grid = gridAxes(W, H, P, tMin, tMax, yMax, 20, xOf, yOf);
     HOVER['tk-approval'] = [];
     function lineFor(key, color) {
+      color = legible(color);
       let body = '';
       const house = houseOf[key] || {};
       const klabel = key === 'positive' ? '긍정' : '부정';
@@ -150,7 +190,7 @@
         const last = tail && tail[tail.length - 1];
         if (last) {
           body += `<circle cx="${xOf(last.t).toFixed(1)}" cy="${yOf(last.v).toFixed(1)}" r="2.6" fill="${color}"/>`;
-          body += `<text x="${(xOf(last.t) + 4).toFixed(1)}" y="${(yOf(last.v) + 3).toFixed(1)}" font-size="9" fill="${color}" font-weight="700">${Math.round(last.v)}</text>`;
+          body += `<text x="${(xOf(last.t) + 4).toFixed(1)}" y="${(yOf(last.v) + 3).toFixed(1)}" font-size="11.5" fill="${color}" font-weight="700">${Math.round(last.v)}</text>`;
         }
       }
       return body;
@@ -200,7 +240,7 @@
     const labelsArr = [];       // {party, x, y, color, gone}
     for (const party of parties) {
       const { pts, sm } = series[party];
-      const color = partyColor(party, new Date(tMax).toISOString().slice(0, 10));
+      const color = legible(partyColor(party, new Date(tMax).toISOString().slice(0, 10)));
       // 개별 조사 = 옅은 점 (house effect 산포)
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
@@ -218,18 +258,18 @@
     const activeL = labelsArr.filter((L) => !L.gone).sort((a, b) => a.y - b.y);
     let ly = -99;
     for (const L of activeL) {
-      let yy = L.y + 3; if (yy - ly < 11) yy = ly + 11; ly = yy;
-      labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="9.5" fill="${L.color}" font-weight="700">${L.party}</text>`;
+      let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy;
+      labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.party}</text>`;
     }
     const goneL = labelsArr.filter((L) => L.gone).sort((a, b) => a.x - b.x || a.y - b.y);
     const placed = [];
     for (const L of goneL) {
       let yy = L.y;
-      for (const q of placed) if (Math.abs(q.x - L.x) < 72 && Math.abs(q.yy - yy) < 11) yy = q.yy + 11;
+      for (const q of placed) if (Math.abs(q.x - L.x) < 72 && Math.abs(q.yy - yy) < 13) yy = q.yy + 13;
       placed.push({ x: L.x, yy });
       labels += `<circle cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" r="1.8" fill="${L.color}"/>`;
       if (yy - L.y > 2) labels += `<line x1="${L.x.toFixed(1)}" y1="${L.y.toFixed(1)}" x2="${(L.x + 4).toFixed(1)}" y2="${(yy).toFixed(1)}" stroke="${L.color}" stroke-width="0.5" stroke-opacity="0.4"/>`;
-      labels += `<text x="${(L.x + 5).toFixed(1)}" y="${(yy + 3).toFixed(1)}" font-size="9" fill="${L.color}" font-weight="700">${L.party}</text>`;
+      labels += `<text x="${(L.x + 5).toFixed(1)}" y="${(yy + 3).toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.party}</text>`;
     }
     const body = dots + lines + labels;  // 점 먼저(아래), 선·라벨 위에
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${body}`, '정당 지지도 추이');
@@ -298,7 +338,7 @@
     clusters.forEach((c, i) => {
       const ya = new Date(c.tStart).getFullYear(), yb = new Date(c.tEnd).getFullYear();
       const lab = ya === yb ? `${ya}` : `${ya}–${String(yb).slice(2)}`;
-      grid += `<text x="${((c.x0 + c.x1) / 2).toFixed(1)}" y="${(H - P.b + 16).toFixed(1)}" font-size="10" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${lab}</text>`;
+      grid += `<text x="${((c.x0 + c.x1) / 2).toFixed(1)}" y="${(H - P.b + 16).toFixed(1)}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${lab}</text>`;
       if (i > 0) grid += `<text x="${(c.x0 - BREAK / 2).toFixed(1)}" y="${((P.t + H - P.b) / 2).toFixed(1)}" font-size="15" fill="var(--rule-strong,#c4c9d2)" text-anchor="middle" font-weight="700">∥</text>`;
     });
 
@@ -308,7 +348,7 @@
     const ends = clusters.map(() => []);  // 클러스터별 [{x,y,name,color}] (선 끝 라벨)
     for (const name of names) {
       const { pts, party } = series[name];
-      const color = party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888';
+      const color = legible(party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888');
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
         HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
@@ -328,12 +368,12 @@
     let labels = '';
     ends.forEach((arr, k) => {
       arr.sort((a, b) => a.y - b.y);
-      for (let i = 1; i < arr.length; i++) if (arr[i].y - arr[i - 1].y < 10.5) arr[i].y = arr[i - 1].y + 10.5;
+      for (let i = 1; i < arr.length; i++) if (arr[i].y - arr[i - 1].y < 13) arr[i].y = arr[i - 1].y + 13;
       const lx = (k === clusters.length - 1) ? (W - P.r + 5) : (clusters[k].x1 + 5);
       for (const L of arr) {
         labels += `<circle cx="${L.x.toFixed(1)}" cy="${L.y.toFixed(1)}" r="1.8" fill="${L.color}"/>`;
         if (lx - L.x > 6) labels += `<line x1="${(L.x + 2).toFixed(1)}" y1="${L.y.toFixed(1)}" x2="${(lx - 1).toFixed(1)}" y2="${L.y.toFixed(1)}" stroke="${L.color}" stroke-width="0.5" stroke-opacity="0.4"/>`;
-        labels += `<text x="${lx.toFixed(1)}" y="${(L.y + 3).toFixed(1)}" font-size="9" fill="${L.color}" font-weight="700">${L.name}</text>`;
+        labels += `<text x="${lx.toFixed(1)}" y="${(L.y + 3).toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.name}</text>`;
       }
     });
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, '차기 대선주자 선호 추이');
@@ -380,6 +420,7 @@
         }
       });
     }
+    _rerender = renderAll;
     renderAll();
     renderLeanTable(recs, polls);
     document.getElementById('tk-loading')?.remove();

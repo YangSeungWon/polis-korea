@@ -29,7 +29,19 @@
 /* 국정평가 긍/부정 범례 */
 .tk-legend { display: flex; gap: 16px; margin: 4px 0 10px; font-size: 12px; }
 .tk-legend .tk-leg { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); }
-.tk-legend .tk-leg-dot { width: 10px; height: 3px; border-radius: 1px; display: inline-block; }
+.tk-legend .tk-leg-dot { width: 14px; height: 4px; border-radius: 1px; display: inline-block; }
+/* 긍·부정 색 — 라이트/다크 분리 (차트의 legible() 보정과 시각적으로 맞춤) */
+.tk-leg-dot.pos { background: #1f7a4d; }
+.tk-leg-dot.neg { background: #c0392b; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tk-leg-dot.pos { background: #3fbf7a; }
+  :root:not([data-theme="light"]) .tk-leg-dot.neg { background: #f0685c; }
+}
+:root[data-theme="dark"] .tk-leg-dot.pos { background: #3fbf7a; }
+:root[data-theme="dark"] .tk-leg-dot.neg { background: #f0685c; }
+
+/* 차트 데이터 라벨(당명·수치) — 배경색 외곽선(halo)로 선·격자 위에서도 읽힘. 축 라벨은 bg 위라 무해. */
+.tk-body text { paint-order: stroke; stroke: var(--bg); stroke-width: 2.2px; stroke-linejoin: round; }
 
 .tk-empty { color: var(--ink-mute); font-size: 13px; padding: 20px 0; }
 #tk-loading { color: var(--ink-soft); font-size: 13px; padding: 16px 0; }
