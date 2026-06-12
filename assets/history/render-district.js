@@ -251,7 +251,7 @@ async function renderGeoMap() {
   // 시도 외곽선 — 옛총선(1~7대)은 그 회차 선거구 dissolve 외곽선(당시 영토·이북 포함, 현대
   // 휴전선 X). 그 외(8~22대, 휴전선 이남)는 현대 sido_simple 공용 외곽선.
   const SIDO_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
-  const OLD_TERRITORY = [1, 2, 3, 4, 5, 6, 7];
+  const OLD_TERRITORY = [1, 2, 3, 4, 5, 6, 7, 8];
   let outline = null;
   if (OLD_TERRITORY.includes(n)) {
     if (geoSidoByN[n] === undefined) {

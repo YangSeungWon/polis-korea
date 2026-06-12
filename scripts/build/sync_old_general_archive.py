@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "data" / "results"
-IDS = {3: ("3rd", 1954), 4: ("4th", 1958), 5: ("5th", 1960)}
+IDS = {3: ("3rd", 1954), 4: ("4th", 1958), 5: ("5th", 1960),
+       6: ("6th", 1963), 7: ("7th", 1967), 8: ("8th", 1971)}
 CANON = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도", "제주특별자치도": "제주도"}
 
 

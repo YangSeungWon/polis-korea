@@ -15,14 +15,15 @@ ROOT = Path(__file__).resolve().parents[2]
 GEO = ROOT / "data/geo"
 UA = "vote-via-data-research/1.0 (election history; hislab.mueller@gmail.com)"
 
-PROVS = ["서울특별시", "경기도", "강원도", "충청북도", "충청남도",
+PROVS = ["서울특별시", "부산직할시", "경기도", "강원도", "충청북도", "충청남도",
          "전라북도", "전라남도", "경상북도", "경상남도", "제주도"]
+# 부산직할시 = 1963 승격(6대~). 3·4·5대엔 페이지 없어 자동 skip(부산=경남에 포함).
 ORD = {1: "제1대", 2: "제2대", 3: "제3대", 4: "제4대", 5: "제5대",
        6: "제6대", 7: "제7대", 8: "제8대"}
 
 
 def fetch(page):
-    u = ("https://ko.wikipedia.org/w/api.php?action=parse&page="
+    u = ("https://ko.wikipedia.org/w/api.php?action=parse&redirects=1&page="
          + urllib.parse.quote(page) + "&prop=wikitext&format=json")
     req = urllib.request.Request(u, headers={"User-Agent": UA})
     return json.loads(urllib.request.urlopen(req, timeout=25).read())["parse"]["wikitext"]["*"]
