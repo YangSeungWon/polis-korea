@@ -28,6 +28,11 @@ from cid_decode import build_cid_table  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 RAW_PDF = ROOT / "data/raw/pdf"
 PARSED = ROOT / "data/raw/parsed"
+# negative/결과 캐시: _FNAME_PAT 매칭 PDF(여론조사꽃·자체결과표 ~729개)를 매 run pdfplumber로
+# 전부 열어 가상대결 A를 찾던 게 ~1h 병목(대부분 미스). 파일명→결과(None or [c1,c2,p1,p2,sido])를
+# 기록해, None은 재오픈 skip·추출분은 PDF 재오픈 없이 캐시값으로 멱등 재패치. PDF는 파일명당
+# 불변이라 안전. data/raw/parsed는 gitignore+actions/cache로 run 간 보존(커밋·서빙 X).
+CACHE = PARSED / ".cross_tab_cache.json"
 
 _CID_TABLE = None
 _CID_RE = re.compile(r"\(cid:(\d+)\)")
@@ -190,26 +195,55 @@ def _patch_parsed(json_path: Path, sido: str, cand1: str, cand2: str, pct1: floa
 
 def main():
     import glob
-    n_ok = 0
-    n_skip = 0
+    cache: dict = {}
+    if CACHE.exists():
+        try:
+            cache = json.loads(CACHE.read_text(encoding="utf-8"))
+        except Exception:
+            cache = {}
+
+    n_ok = n_skip = n_hit = 0
+    seen: set[str] = set()
     for pf in sorted(glob.glob(str(RAW_PDF / "*.pdf"))):
         p = Path(pf)
         if not _FNAME_PAT.search(p.name):
             continue
-        # 자체조사 가능성 있음 → PDF에서 가상대결 A 패턴 시도
+        seen.add(p.name)
+
+        if p.name in cache:
+            n_hit += 1
+            cached = cache[p.name]
+            if cached is None:           # 가상대결 A 없음 — 재오픈 불필요
+                n_skip += 1
+                continue
+            cand1, cand2, pct1, pct2, sido = cached   # 캐시값으로 멱등 재패치(PDF 재오픈 X)
+            jpath = PARSED / (p.stem + ".json")
+            if jpath.exists():
+                _patch_parsed(jpath, sido, cand1, cand2, pct1, pct2)
+                n_ok += 1
+            continue
+
+        # 캐시 미스 — PDF 열어 가상대결 A 패턴 시도
         result = _extract_vs_a(p)
         if not result:
+            cache[p.name] = None
             n_skip += 1
             continue
         cand1, cand2, pct1, pct2 = result
         sido = _detect_sido(p)
+        cache[p.name] = [cand1, cand2, pct1, pct2, sido]
         jpath = PARSED / (p.stem + ".json")
         if not jpath.exists():
             continue
         _patch_parsed(jpath, sido, cand1, cand2, pct1, pct2)
         print(f"  {p.name[:50]} | {sido} | {cand1} {pct1} vs {cand2} {pct2}", file=sys.stderr)
         n_ok += 1
-    print(f"cross-tab patch: {n_ok} PDF 적용, {n_skip} skip", file=sys.stderr)
+
+    # 회전돼 사라진 PDF의 stale 엔트리 제거(무한 성장 방지)
+    cache = {k: v for k, v in cache.items() if k in seen}
+    CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+    print(f"cross-tab patch: {n_ok} PDF 적용, {n_skip} skip "
+          f"({n_hit} 캐시히트 — PDF 재오픈 회피)", file=sys.stderr)
 
 
 if __name__ == "__main__":
