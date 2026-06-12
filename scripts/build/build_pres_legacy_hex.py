@@ -149,7 +149,8 @@ def build_cells(n, path):
     for r in d["races"]:
         if r.get("scope") != "sigungu" or not r.get("sigungu"):
             continue
-        sido = r.get("sido"); nm = jachi(r["sigungu"])
+        # disambig 괄호 제거('중구(서울)'→'중구') 후 갑/을 병합.
+        sido = r.get("sido"); nm = jachi(re.sub(r"\s*\([^)]*\)\s*$", "", r["sigungu"]).strip())
         key = (sido, nm)
         if key in seen: continue
         seen[key] = {"sido": sido, "name": nm, "_cen": list(resolve(sido, nm) or ())}
@@ -168,13 +169,17 @@ if __name__ == "__main__":
     targets = {}
     for f in glob.glob(str(RES / "*-pres-*.json")):
         num = int(re.match(r"(\d+)", Path(f).name).group(1))
-        if num >= 15: continue
-        # 같은 회차 여러 파일이면 races 많은 쪽
+        # 19대(2017)+ 는 행정구역이 현대와 사실상 동일(+데이터 노이즈) → 모던 hex 그대로. period는 2~18만.
+        if num >= 19:
+            continue
+        # 같은 회차 여러 파일이면 sigungu races 많은 쪽 (16~21대는 .sigungu.json에 있음).
         d = json.loads(Path(f).read_text(encoding="utf-8"))
         cnt = sum(1 for r in d.get("races", []) if r.get("scope") == "sigungu")
         if num not in targets or cnt > targets[num][1]:
             targets[num] = (f, cnt)
     import build_zone_hex
+    # 현대 hex(legacy) 시군구 집합 — 이와 동일한 회차는 hand-tuned 모던 hex 그대로 씀(skip).
+    modern_set = {(c.get("sido"), c.get("name")) for c in _hex}
     want = [int(a) for a in sys.argv[1:]] or sorted(targets)
     combined = {}
     for n in want:
@@ -182,6 +187,9 @@ if __name__ == "__main__":
             continue
         cells = build_cells(n, targets[n][0])
         if not cells:
+            continue
+        if {(c["sido"], c["name"]) for c in cells} == modern_set:
+            print(f"{n}대: 현대 시군구와 동일 — 모던 hex 사용(생성 skip)")
             continue
         # 시도별 주먹밥 배치(build_zone_hex.process) — _cen 직접 사용, pretty 저장.
         per = GEO / f"_pres_tmp_{n}.json"
