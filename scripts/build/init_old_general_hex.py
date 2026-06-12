@@ -26,7 +26,8 @@ def load_cen(path, key="name"):
 
 SIDO_CEN = load_cen("sido_simple.json")
 SGG_CEN = load_cen("sigungu_simple.json")
-SIDO_ALIAS = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도"}
+SIDO_ALIAS = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도",
+              "제주도": "제주특별자치도", "강원도": "강원도", "전라북도": "전라북도"}
 def sido_cen(sido):
     return SIDO_CEN.get(sido) or SIDO_CEN.get(SIDO_ALIAS.get(sido, ""))
 
@@ -54,7 +55,8 @@ def build(n):
     cells, fallback = [], 0
     sido_idx = {}  # 시도 내 fallback 선거구 순번 (격자 분산용)
     for r in races:
-        sido = r["sido"]; sggs = sggs_of(r["name"])
+        # 3·4·5대는 별표 통합으로 sigungu_area 보유 → 우선 사용(이름엔 괄호 없음)
+        sido = r["sido"]; sggs = r.get("sigungu_area") or sggs_of(r["name"])
         cens = [c for c in (sgg_centroid(s) for s in sggs) if c]
         if cens:
             cen = (sum(c[0] for c in cens)/len(cens), sum(c[1] for c in cens)/len(cens))

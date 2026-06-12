@@ -116,8 +116,8 @@ async function renderAll() {
   // 옛 총선(1~8대) — 정확 경계는 없지만 시군/시도 centroid로 만든 근사 hex(district_hex_1~8) 사용.
   // 지도 view 지원 회차 — 21·22(OhmyNews) + 9~20(SGIS 읍면동 복원).
   // 9~12 중선거구(1구 2인)는 당선 2당 줄무늬, 13~22 소선거구는 1위 단색.
-  // 1·2·6·7·8대 = 옛총선 근사 geo(시군 union). 3·4·5대는 선거구명에 시군 없어 geo 불가(hex만).
-  const GEO_GENERAL = [1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+  // 1~8대 = 옛총선 근사 geo(시군 union). 3·4·5대는 위키 별표(선거구역)로 시군 획정 확보.
+  const GEO_GENERAL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
   const HEX_DISTRICT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];  // 지역구 hex 레이아웃 보유
   const geoSupported = state.type === 'national_assembly' && GEO_GENERAL.includes(state.n);
   const hexSupported = geoSupported && HEX_DISTRICT.includes(state.n);
