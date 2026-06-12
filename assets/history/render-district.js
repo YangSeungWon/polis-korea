@@ -468,15 +468,27 @@ async function renderDistrictHex() {
     sectionLabel.textContent = `비례대표 ${totalProp}석 · 총 ${totalSeats}석`;
     svg.appendChild(sectionLabel);
 
-    // 정당당 2 col 블록 — 의석 zigzag 배치(좌→우→좌→…)로 세로 길이 절반, 라벨 폭 확보.
-    const blockW = 2 * propColW;        // 정당당 2 col 폭
-    const blockGap = propColW * 0.35;   // 정당 블록 사이 여백
+    // 정당당 N col 블록 — 의석 많으면 col 수를 늘려(2~6) 세로 길이를 지역구 hex 높이에 맞춤.
+    // (유정회·민정당 전국구 73석을 2열로 하면 37줄로 과도하게 길어짐 → 3·4열로 적응.)
+    // flat-top 육각형(30° 회전) — 세로 column 정렬에 벌집처럼 맞물림(지역구는 pointy-top).
+    const flatHex = (cx, cy, rr) => {
+      const p = [];
+      for (let i = 0; i < 6; i++) {
+        const a = (Math.PI / 3) * i;
+        p.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+      }
+      return p.join(' ');
+    };
+    const fColPitch = r * 1.5;                       // flat-top 열 간격(폭 2r의 3/4)
+    const fRowPitch = r * Math.sqrt(3);              // flat-top 행 간격(높이)
+    const hexRows = Math.max(1, maxR - minR + 1);   // 지역구 hex 높이(행) = 비례 블록 목표 높이
+    const blockGap = r * 0.7;                        // 정당 블록 사이 여백
     let maxColH = 0;
-    sorted.forEach((ps, pi) => {
+    let blockX = propStartX;
+    sorted.forEach((ps) => {
+      const cols = Math.min(6, Math.max(2, Math.ceil(ps.seats / hexRows)));
+      const blockW = (cols - 1) * fColPitch + 2 * r;
       const color = partyColor(ps.party);
-      const blockX = propStartX + pi * (blockW + blockGap);
-      const col0Cx = blockX + propColW * 0.5;        // 좌 col 중심
-      const col1Cx = blockX + propColW * 1.5;        // 우 col 중심
       const labelCx = blockX + blockW / 2;
       // 정당 라벨 (블록 중앙 위)
       const nm = document.createElementNS(ns, 'text');
@@ -489,14 +501,14 @@ async function renderDistrictHex() {
       nm.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
       nm.textContent = `${ps.party} ${ps.seats}`;
       svg.appendChild(nm);
-      // 의석 hex zigzag: 짝수 j → 좌 col, 홀수 j → 우 col (0.5 row shift).
+      // 의석 flat-top hex — row-major(좌→우 채우고 다음 행), 홀수 col 0.5행 내려 벌집 맞물림.
       for (let j = 0; j < ps.seats; j++) {
-        const isRight = j % 2 === 1;
-        const rowIdx = Math.floor(j / 2);
-        const cx = isRight ? col1Cx : col0Cx;
-        const cy = rowIdx * propRowH + r + (isRight ? rowH / 2 : 0);
+        const col = j % cols;
+        const row = Math.floor(j / cols);
+        const cx = blockX + r + col * fColPitch;
+        const cy = row * fRowPitch + r + (col % 2) * (fRowPitch / 2);
         const poly = document.createElementNS(ns, 'polygon');
-        poly.setAttribute('points', hexPoints(cx, cy, r - 0.7));
+        poly.setAttribute('points', flatHex(cx, cy, r - 0.7));
         poly.setAttribute('fill', color);
         poly.setAttribute('stroke', '#fff');
         poly.setAttribute('stroke-width', '1');
@@ -505,13 +517,14 @@ async function renderDistrictHex() {
         poly.appendChild(tt);
         svg.appendChild(poly);
       }
-      const rows = Math.ceil(ps.seats / 2);
-      const colH = rows * propRowH + rowH / 2 + r;
+      const rows = Math.ceil(ps.seats / cols);
+      const colH = rows * fRowPitch + fRowPitch / 2 + r;
       if (colH > maxColH) maxColH = colH;
+      blockX += blockW + blockGap;
     });
 
     // viewBox 확장 — 우측 비례 + 위쪽 라벨 영역까지
-    const newW = propStartX + sorted.length * (blockW + blockGap) + propGap;
+    const newW = blockX + propGap;
     const topPad = -headerY + 8;
     const newH = Math.max(h, maxColH) + topPad;
     const minY = headerY - 8;
