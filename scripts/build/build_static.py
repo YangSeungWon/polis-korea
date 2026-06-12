@@ -55,6 +55,8 @@ TYPE_LABEL = {
     'national_assembly': '총선',
     'local':             '지선',
 }
+# 회차 단위 — 대선·총선은 '대'(사람·기관 연속), 지선은 '회'(반복 행사).
+TYPE_UNIT = {'presidential': '대', 'national_assembly': '대', 'local': '회'}
 TYPE_SLUG = {
     'presidential':      'presidential',
     'national_assembly': 'national-assembly',
@@ -148,8 +150,9 @@ def build_history(manifest: dict, elections: dict, urls: list):
             else:
                 winner = meta.get('winner', '')
                 winner_str = f' · {winner} 당선' if winner else ''
-                title = f'polis · {n}{type_short} ({el_date}){winner_str}'
-                desc = f'{n}{type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
+                unit = TYPE_UNIT.get(type_key, '대')
+                title = f'polis · {n}{unit} {type_short} ({el_date}){winner_str}'
+                desc = f'{n}{unit} {type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
                 canon = f'/history/{type_slug}/{n}/'
                 init_state = {'type': type_key, 'n': n}
                 html = replace_meta(template, title, desc, canon, init_state)

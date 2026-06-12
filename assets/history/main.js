@@ -330,7 +330,7 @@ function renderDetail() {
 
   if (!state.results) {
     pane.innerHTML = `<div class="detail-empty">
-      <strong>${TYPE_LABEL[state.type].ko} ${state.n}회</strong>
+      <strong>${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko}</strong>
       ${el ? `(${el.date})` : ''}
       <br><br>데이터를 아직 수집하지 않았습니다.
       ${archiveBanner}
@@ -366,7 +366,7 @@ function renderDetail() {
     const prop = propSystemInfo(state.n);
     // 큰 정당 헤드라인(ns-name/ns-party)은 도넛 차트와 중복 → 제거. 제목+투표율만.
     html += `<div class="national-summary">
-      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국 의석 (총 ${total}석)</div>
+      <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · 전국 의석 (총 ${total}석)</div>
       ${propTotal ? `<div class="seat-split" title="${prop.note}">
         <span class="ss-seg ss-dist" style="flex:${distSeats}">지역구 ${distSeats}</span>
         <span class="ss-seg ss-prop" style="flex:${propTotal}">${prop.label} ${propTotal}</span>
@@ -406,7 +406,7 @@ function renderDetail() {
     const total = parties.reduce((s, p) => s + p.wins, 0);
     const top = parties[0];
     html += `<div class="national-summary" style="border-left-color:${top ? top.color : 'var(--ink)'}">
-      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · ${state.office}</div>
+      <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · ${state.office}</div>
       <div class="ns-name" style="color:${top ? top.color : 'var(--ink)'}">${top ? top.party : '—'}</div>
       <div class="ns-party">${top ? `${top.wins}곳 / 총 ${total}곳` : (el?.date || '')}</div>
       <div class="ns-stat">
@@ -435,7 +435,7 @@ function renderDetail() {
       </div>`;
     }).join('');
     html += `<div class="national-summary" style="border-left-color:${color}">
-      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회 · 전국</div>
+      <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · 전국</div>
       <div class="ns-name" style="color:${color}">${candLabel(top) || el?.winner || '—'}</div>
       <div class="ns-party">${top.party} · ${top.pct?.toFixed(1)}%</div>
       <div class="ns-stat">
@@ -446,7 +446,7 @@ function renderDetail() {
     <div class="result-card" style="border-left-color:${color}">${barRows}</div>`;
   } else if (el) {
     html += `<div class="national-summary">
-      <div class="ns-title">${TYPE_LABEL[state.type].ko} ${state.n}회</div>
+      <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko}</div>
       <div class="ns-name">${el.winner || '—'}</div>
       <div class="ns-party">${el.winner_party || ''} · 투표율 ${el.turnout ?? '—'}%</div>
       <div class="ns-stat"><span>${el.date}</span></div>
