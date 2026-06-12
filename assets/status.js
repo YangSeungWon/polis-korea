@@ -207,6 +207,16 @@
   root.hidden = false;
 })();
 
+// 회차 점/셀 클릭 목적지 — 단일 규칙(스트립·모바일 list 공용).
+//  지난 선거: 그 회차 결과(history).
+//  다음 선거: '그 선거 여론조사 정리 페이지(r.pollsUrl)'가 있으면 거기, 없으면 정당지지(tracker).
+//    pollsUrl은 timeline.json의 upcoming 회차에 둠(없으면 null). 그 선거 여론조사 페이지를
+//    세우면 거기서 pollsUrl을 채우면 자동 전환 — 폴링 전(예: 2년 뒤 총선)엔 tracker로.
+function electionHref(r) {
+  if (r.upcoming) return r.pollsUrl || 'tracker.html';
+  return `history.html?type=${r.kind}&n=${r.n}`;
+}
+
 function renderTimelineStrip(rounds, today, tStart, tEnd) {
   const W = 900, H = 130;
   const padL = 26, padR = 26;
@@ -238,7 +248,7 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
     const labelName = `${r.n}${unitOf[r.kind]} ${kindShort[r.kind]}`;
     const year = r.date.slice(0, 4);
     dots += `
-      <g class="tl-dot" data-href="history.html?type=${r.kind}&n=${r.n}" data-kind="${r.kind}">
+      <g class="tl-dot" data-href="${electionHref(r)}" data-kind="${r.kind}">
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
         <circle class="tl-dot-hit" cx="${x}" cy="${H/2}" r="${rHit}" fill="transparent"/>
         <circle class="tl-dot-vis" cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.8}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
@@ -298,7 +308,7 @@ function renderTimelineList(rounds, today) {
   const cell = (r, label, mode) => {
     if (!r) return `<div class="tl-cell tl-cell-empty"><span class="tl-cell-label">${label}</span><span class="tl-cell-date">—</span></div>`;
     const col = kindCol(r.kind);
-    const url = `history.html?type=${r.kind}&n=${r.n}`;
+    const url = electionHref(r);
     const gap = daysBetween(today, r.date);  // past → negative, future → positive
     const gapLabel = formatGap(gap, mode);
     return `<a class="tl-cell" href="${url}">

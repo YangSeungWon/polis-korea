@@ -400,6 +400,9 @@ def main():
                 "winner": None, "winner_party": None, "turnout": None,
                 "sidoWinners": {},
                 "upcoming": True,
+                # 그 선거 여론조사 정리 페이지 URL. 폴링 시작해 페이지를 세우면 채움(예: '/polls.html').
+                # null이면 홈 타임라인 클릭이 정당지지(tracker)로 — assets/status.js electionHref 참조.
+                "pollsUrl": None,
             })
     except Exception:
         pass
@@ -459,6 +462,7 @@ def main():
                 "sidoWinners": {},
                 "upcoming": True,
                 "predicted": True,
+                "pollsUrl": None,  # 폴링 페이지 세우면 채움 — status.js electionHref 참조.
             })
 
     out_rounds.extend(future)
