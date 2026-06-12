@@ -1,7 +1,9 @@
 name: Weekly tracker refresh
 
-# tracker(국정평가·정당지지·차기주자)의 상시 소스 VT012("기타" 전국 정기조사)를 주간 갱신.
-# VT012는 매주 차오르므로 주 1회면 충분. daily-refresh(선거 폴+빌드)와 별개.
+# tracker(국정평가·정당지지·차기주자)의 상시 소스 = 전국 정기(정례)조사를 주간 갱신.
+# NESDC는 정기조사를 '언급 선거'로 분류해 VT012("기타") 밖(대선 등)에도 흩어두므로, gubun
+# 필터 없이 전체 목록 + sido='전국'으로 긁는다(--all-list). 갤럽 자체조사 등 VT012 누락분 회수.
+# 매주 차오르므로 주 1회면 충분. daily-refresh(선거 폴+빌드)와 별개.
 #
 # ⚠ 핵심: PDF 코퍼스를 CI에 들고 오지 않는다(과거 PDF는 로컬에만). 대신
 #   - data/raw/nesdc_etc_polls.csv (목록)를 git에 커밋 → scrape가 항상 증분(0부터 재스크랩 X)
@@ -44,12 +46,14 @@ jobs:
           key: tracker-pdf-${{ github.run_id }}
           restore-keys: tracker-pdf-
 
-      # 목록 최신순 → 마지막 신규 이후 3p 연속 기존이면 조기 종료(전체 ~260p 페이징 회피).
-      - name: Scrape VT012 (커밋된 CSV 기준 증분 — 신규 폴만)
+      # 전체 목록(gubun 무시) + sido='전국' 필터로 증분 스크랩. NESDC가 정기조사를 언급 선거
+      # (대선 등) gubun으로 분류해 VT012 밖에 두는 폴(갤럽 자체조사 등)까지 회수. 목록 최신순 →
+      # 마지막 신규 이후 5p 연속 기존이면 조기 종료(지역 폴이 페이지를 채워 3p는 빠듯 → 5p 마진).
+      - name: Scrape 전국 정기조사 (전체목록·전국필터, 커밋 CSV 기준 증분)
         run: |
           python scripts/fetch/scrape_nesdc.py \
-            --gubun VT012 --csv data/raw/nesdc_etc_polls.csv \
-            --stop-after-known-pages 3
+            --all-list --csv data/raw/nesdc_etc_polls.csv \
+            --stop-after-known-pages 5
 
       # NESDC는 목록을 먼저 등록하고 결과 PDF를 나중에 첨부하는 경우가 많음(주간집계 등).
       # scrape 당시 PDF 없던 pending 건을 재시도 — 못 받으면 다음 주 run이 회수.
