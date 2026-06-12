@@ -48,6 +48,9 @@ data/
 | **위키백과 ‘제N회 전국동시지방선거 X의회’** | 5~8회 기초의회 정당별 의석 | HTML scrape | `scripts/fetch/fetch_8th_council_seats.py` → `data/raw/{5,6,7,8}th_council_party_seats.json` |
 | **open.assembly.go.kr 국회정보 일괄 다운로드** | 13~22대 국회의원 unique ID(한자명·생년월일·정당이력) | xlsx 묶음 (수동 다운로드) | `data/raw/assembly/`. parse → `data/raw/assembly_member_map.json` (4,587명·9,486 careers) |
 | **data.nec.go.kr LOD (SPARQL)** | 14·15·16대 총선 **선거구별 후보·득표**(OpenAPI·다운로드가 못 미치는 옛 총선) | SPARQL RDF/XML | `scripts/fetch/fetch_lod_assembly.py` → `results/{14,15,16}th-general-*.json` district race. 아래 전용 섹션 |
+| **SGIS 시점별 행정구역 경계** (통계청·국가데이터처) | 옛 총선(1~7대) geo 지도 — 시군 경계 union. 1975·1980·1985… 시점별 SHP(UTM-K 5179) | SHP (pyshp) | `data/raw/sgis/bnd_sigungu_1975/` 등. `build_old_general_geo.py`(1954~71엔 1975가 시대정합) ·`build_district_geojson.py`(8~20대). data.go.kr 15129688 |
+| **국사편찬위 한국근대지리정보 (HGIS, 1919)** | 이북 선거구(개성·개풍·장단·연백) 경계 — SGIS(휴전선 이남)에 없는 38선 이남 ROK 영토 | GeoJSON | `scripts/fetch/fetch_hgis_ibuk.py` (비인증 `gisSearch.do`) → `data/geo/hgis_ibuk_1919.json`. 1·2대 이북 복원. 아래 전용 섹션 |
+| **위키백과 시도별 ‘선거구역’ 표** | 3·4·5대 총선 **선거구 획정 별표**(선거구→시군/동·면) + 제주 backfill | wikitext API | `scrape_old_district_boundaries.py`·`integrate_old_district_boundaries.py` → `data/geo/old_district_boundaries_{3,4,5}.json`. UA 헤더 필수 |
 
 ## data.go.kr OpenAPI (NEC) — 활성
 
@@ -100,6 +103,22 @@ showDocument EPEI01 세션 → 폼 select JS value+change cascade → report.xht
 electionType=2, electionName=YYYYMMDD, electionCode=2, cityCode=시도) → 9컬럼 표. **당선자만**(승자지도·의석 O,
 scatter X). 13대 지역구 224명 회수(민정87·평민54·통민46·공화27·무소속9·한겨레1) + 전국구는 공식값
 주입(민정38·평민16·통민13·공화8=75) → 총 299 정확. → **13~22대 총선 의석 분리 완성.**
+
+## 옛 총선 geo 경계 — SGIS 시점별 + HGIS 이북
+
+1~7대 총선(1948~67) 지역구 지도는 정확한 당시 선거구 경계가 없어 **시군 폴리곤 union**으로 근사.
+
+- **시점 정합**: 1954~71 선거엔 modern(1995+) 경계가 시대착오(광역시 분리·군 통폐합 후) → **SGIS 1975**
+  (`bnd_sigungu_1975`, 보유 最古)를 씀. 1975엔 대구∈경북·인천∈경기·광주∈전남·대전∈충남(출장소),
+  옛 군명(옥구·선산·월성)도 통폐합 전이라 별표 시군명이 직접 매칭. `build_old_general_geo.py`.
+- **선거구명 시군**: 1·2·6·7대는 선거구명 괄호, 3·4·5대는 위키 별표(선거구역)에서 획득.
+- **농촌 갑/을 분할**: 별표 동·면을 `bnd_dong_1975`에 매칭(분할그룹 전원 매칭률 ≥90%일 때만 면 union로
+  실제 분리, 도시 가-동은 변동 커 시군 단위 유지).
+- **이북(개성·개풍·장단·연백)**: 1·2대(1948·50)는 38선 이남 ROK였으나 전후 북한·DMZ → SGIS(휴전선
+  이남)에 없음. **국사편찬위 HGIS 1919**(전국 부·군·면 복원, WGS84)에서 보강. 비인증 GeoJSON
+  엔드포인트 `POST https://hgis.history.go.kr/pro_g1/gis/gisSearch.do` (`keyword=&mode=hgis`,
+  헤더 `X-Requested-With`). `lv`(2=부/군·3=면)·`type`(府/郡/面)로 선택 — 개성시=府, 나머지=郡.
+  1919↔1948 군계 거의 불변. → 1·2대 skip 0(이북 포함 완전).
 
 ## 수집 스크립트 (`scripts/`)
 
@@ -237,6 +256,19 @@ for n in 19 20 21 22; do .venv/bin/python scripts/_legacy/build_district_hex_v2.
 > `optimize_data.py`는 **빌드 후 마지막에** 돌린다. 빌드 스크립트들이 가독성용 indent=2로
 > 쓰기 때문에, 최적화는 그 뒤 minify/절삭하는 후처리 단계. 멱등이라 여러 번 돌려도 안전.
 > 분리된 `national_assembly_*_sigungu.json`(비례 시군구 득표)은 보존되지만 페이지가 fetch하지 않음.
+
+## 라이선스 (데이터 출처)
+
+| 출처 | 라이선스 | 확인 |
+|---|---|---|
+| **SGIS 행정구역 경계** (통계청/국가데이터처) | data.go.kr **이용허락범위 제한 없음** (무료·상업/2차가공 자유, 공공누리 1유형 상당) | data.go.kr/data/15129688 |
+| **국사편찬위 한국근대지리정보(HGIS)** | data.go.kr **이용허락범위 제한 없음** (무료). 단 HGIS 사이트 고지 “연구 참고용·법적 효력 없음” | data.go.kr/data/15080850 · 제공: 교육부 국사편찬위원회 |
+| **위키백과 (선거구역·결과)** | **CC BY-SA 4.0** (출처표시+동일조건) | ko.wikipedia.org |
+| **data.go.kr NEC OpenAPI / NEC LOD** | 공공데이터 (NEC 제공) | 위 NEC 섹션 |
+| **vuski/admdongkor** | 공개 GeoJSON (저장소 라이선스 준수) | github.com/vuski/admdongkor |
+
+공공누리·CC BY-SA 모두 **출처표시 필수** — 배포·페이지에 출처 명기 권장. SGIS/HGIS는 상업·2차가공
+제한 없음(union·단순화 가공 OK). 위키 파생물은 CC BY-SA 승계.
 
 ## 알려진 누락
 
