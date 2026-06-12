@@ -68,10 +68,15 @@ jobs:
           NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
         run: |
           set -e
+          # 1·2단계는 NESDC 접속에 의존 — GitHub 러너 IP가 차단/타임아웃되는 일이 잦다.
+          # 실패해도 job을 죽이지 않고(|| echo) 기존 데이터로 빌드를 계속한다(놓친 신규는
+          # 다음 run이 증분 회수). timeout으로 hang도 차단해 60분 job timeout 방지.
           echo "=== 1. scrape_nesdc (active 선거 gubun 자동 — 메타에서 읽음) ==="
-          python scripts/fetch/scrape_nesdc.py --active --stop-after-known-pages 3
+          timeout 600 python scripts/fetch/scrape_nesdc.py --active --stop-after-known-pages 3 \
+            || echo "⚠ scrape 실패/타임아웃 — NESDC 접속 불가 추정, 기존 데이터로 계속"
           echo "=== 2. refresh_pending_pdfs ==="
-          python scripts/fetch/refresh_pending_pdfs.py
+          timeout 600 python scripts/fetch/refresh_pending_pdfs.py \
+            || echo "⚠ refresh_pending 실패/타임아웃 — 계속"
           echo "=== 3. parse_pdf (신규만) ==="
           python scripts/parse/parse_pdf.py --skip-existing --jobs 4 'data/raw/pdf/*.pdf'
           echo "=== 4. patch_cross_tab ==="
@@ -82,9 +87,12 @@ jobs:
           python scripts/build/build_polls.py
           echo "=== 7. build_byelection ==="
           python scripts/build/build_byelection.py
-          echo "=== 8. build_static + optimize ==="
+          echo "=== 8. build_static ==="
           python scripts/build/build_static.py
-          python scripts/build/optimize_data.py
+          # optimize_data(data/*.json in-place minify) 제거: 서빙=커밋(master 루트)이고
+          # 레포 컨벤션은 pretty(indent=2). minify를 커밋하면 39k줄 diff로 컨벤션 붕괴.
+          # Pages는 gzip 서빙이라 공백 minify의 전송 이득은 사실상 0. geo 좌표절삭이
+          # 필요하면 별도 수동/배포 단계로 분리할 것.
           echo "=== 9. 기초의원 9회 확정 회수 (NEC OpenAPI 게시 시 — 미게시(INFO-03)면 자동 skip) ==="
           python scripts/fetch/fetch_council_winners.py --rebuild --n 9 || true
           if ! git diff --quiet data/results/9th-local-2026.json; then
