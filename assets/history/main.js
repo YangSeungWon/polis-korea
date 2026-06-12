@@ -119,16 +119,24 @@ function renderSeatsCard(el, district) {
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
+  // 간선 카드 — 전용 컨테이너(#indirect-card)에 그린다. 매 렌더 시작에 숨김·비움해 회차 전환 시
+  // 잔류 방지. (#geomap에 직접 주입하면 Leaflet 지도 컨테이너가 망가지고 다른 회차로 가도 안 지워짐.)
+  let icard = document.getElementById('indirect-card');
+  if (!icard && $('#geomap')) {
+    icard = document.createElement('div');
+    icard.id = 'indirect-card';
+    $('#geomap').after(icard);
+  }
+  if (icard) { icard.hidden = true; icard.innerHTML = ''; }
   // 간선(국회·통대·선거인단) 대선 — 지역별 개표가 없어 지도 대신 "어떤 선거였는지" 정보 카드.
   const elMeta0 = currentEl();
   if (state.type === 'presidential' && elMeta0?.indirect && state.results) {
     $('#hex')?.toggleAttribute('hidden', true);
     $('#hex2')?.toggleAttribute('hidden', true);
-    $('#geomap')?.toggleAttribute('hidden', false);
+    $('#geomap')?.toggleAttribute('hidden', true);
     $('#display-seg')?.toggleAttribute('hidden', true);
     $('#sizing-seg')?.toggleAttribute('hidden', true);
-    const gm = $('#geomap');
-    if (gm) gm.innerHTML = renderIndirectCard(elMeta0, activeOfficeData()?.national);
+    if (icard) { icard.hidden = false; icard.innerHTML = renderIndirectCard(elMeta0, activeOfficeData()?.national); }
     renderDetail();
     renderHistoryLegend();
     return;
