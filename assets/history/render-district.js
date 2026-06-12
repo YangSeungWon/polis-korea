@@ -112,16 +112,18 @@ function _jungPattern(parties) {
   return `url(#${id})`;
 }
 
-function _districtStyleFor(info) {
+function _districtStyleFor(info, approx) {
   let fill = info?.winner?.party ? partyColor(info.winner.party) : 'rgba(154,163,179,0.65)';
   const ws = info?.race?.winners;  // 중선거구: 당선당 2개 → 줄무늬
   if (ws && ws.length >= 2) {
     const ps = ws.map((w) => w.party);
     fill = (ps[0] !== ps[1]) ? _jungPattern([ps[0], ps[1]]) : partyColor(ps[0]);
   }
+  // approx=옛 도시 갑/을 보로노이 추정 경계 → 점선·약간 진하게(실측 아님 표시)
   return {
-    color: 'rgba(10,14,26,0.35)',
-    weight: 0.6,
+    color: approx ? 'rgba(10,14,26,0.6)' : 'rgba(10,14,26,0.35)',
+    weight: approx ? 1.0 : 0.6,
+    dashArray: approx ? '3 3' : null,
     fillColor: fill,
     fillOpacity: 0.85,
   };
@@ -220,7 +222,7 @@ async function renderGeoMap() {
   // 회차별 layer 캐시 — winner 색만 재적용
   if (!geoDistrictByN[n]) {
     geoDistrictByN[n] = L.geoJSON(state.geoCache[n], {
-      style: (f) => _districtStyleFor(sggToWinner[String(f.properties.SGG_Code)]),
+      style: (f) => _districtStyleFor(sggToWinner[String(f.properties.SGG_Code)], f.properties.approx),
       onEachFeature: (f, l) => {
         const info = sggToWinner[String(f.properties.SGG_Code)];
         _attachDistrictInteraction(f, l, info, _geoDisplayName(f.properties, n));
@@ -231,7 +233,7 @@ async function renderGeoMap() {
     geoDistrictByN[n].eachLayer((l) => {
       const f = l.feature;
       const info = sggToWinner[String(f.properties.SGG_Code)];
-      l.setStyle(_districtStyleFor(info));
+      l.setStyle(_districtStyleFor(info, f.properties.approx));
       l.unbindTooltip();
       _attachDistrictInteraction(f, l, info, _geoDisplayName(f.properties, n));
     });

@@ -18,8 +18,8 @@ ALIAS_1975: 1955~56 시승격 개명(강릉군→명주군 등) 환원. 이북·
 import json, re
 from pathlib import Path
 import shapefile  # pyshp
-from shapely.geometry import shape, mapping
-from shapely.ops import unary_union, transform as shp_transform
+from shapely.geometry import shape, mapping, MultiPoint
+from shapely.ops import unary_union, transform as shp_transform, voronoi_diagram
 from pyproj import Transformer
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,10 +62,23 @@ for sr in _dsf.shapeRecords():
 
 
 def parse_area_tokens(area, sigungu):
-    """선거구역 텍스트 → canon dong key 리스트(시군 prefix 제거, 콤마 분할)."""
+    """선거구역 텍스트 → canon dong key 리스트. 시군 prefix 제거, 콤마 분할,
+    '동인동1,2,3,4가'처럼 콤마로 끊긴 가-리스트는 직전 동 base에 붙여 재구성."""
     for s in sigungu:
         area = area.replace(s, "", 1)
-    toks = [t.strip() for t in re.split(r"[,，]", area) if t.strip()]
+    raw = [t.strip() for t in re.split(r"[,，]", area) if t.strip()]
+    toks, base = [], None
+    for t in raw:
+        if re.match(r"^\d+가?$", t) and base:        # 순수 숫자(2 / 4가) → 직전 동 base
+            toks.append(f"{base}{re.sub('[^0-9]', '', t)}가")
+            continue
+        m = re.match(r"^(.+?)(\d+)가$", t)            # 동인동1가 / 동성로3가
+        if m and m.group(1)[-1:] not in "면읍리":
+            base = re.sub(r"동$", "", m.group(1))
+            toks.append(f"{base}{m.group(2)}가")
+        else:
+            base = None
+            toks.append(t)
     out = []
     for t in toks:
         out += canon_dong(t)
@@ -158,6 +171,51 @@ def sggs_of(name):
     return [re.sub(r"\s*[갑을병정무]\s*구?$", "", s.strip()) for s in re.split(r"[·,.]", m.group(1))]
 
 
+def is_city_group(sido, sggs):
+    """도시(서울 구·광역시) 분할 그룹 — 동 변동 커 시군 단위로 폴백되는 대상."""
+    return sido == "서울특별시" or any(
+        s in CITY_WHOLE or re.match(r"(부산시|대구시|인천시|광주시|대전시)", s) for s in sggs)
+
+
+def voronoi_split(races, sido, sggs, area_by, n, hgis_pts):
+    """도시 갑/을 — 별표 동을 1975 동 점으로 찍어 보로노이로 구 폴리곤을 근사 분할.
+    1975 동 점0인 선거구는 HGIS 1919 동리 점으로 보충. 반환 [(race, geom)...] 또는 None(폴백).
+    경계는 추정(approx)."""
+    from shapely.geometry import Point
+    container = unary_union([g for s in sggs for g in resolve(sido, s)])
+    if container.is_empty:
+        return None
+    pts, owner = [], []
+    for i, r in enumerate(races):
+        area = r.get("area") or area_by.get(r["name"], "")
+        polys, _ = dong_union(sido, parse_area_tokens(area, sggs)) if area else ([], 0)
+        rp = [p.representative_point() for p in polys]
+        rp = [p for p in rp if container.contains(p)]
+        if not rp:  # 1975 점0 → HGIS 보충
+            rp = [Point(lon, lat) for lon, lat in hgis_pts.get(f"{n}|{r['name']}", [])
+                  if container.contains(Point(lon, lat))]
+        for p in rp:
+            pts.append(p); owner.append(i)
+    if len(set(owner)) < len(races) or len(pts) < 2:
+        return None  # 모든 선거구가 동 점을 못 가지면 근사 불가 → 시군 폴백
+    cells = list(voronoi_diagram(MultiPoint(pts), envelope=container).geoms)
+    race_cells = [[] for _ in races]
+    for cell in cells:
+        for j, pt in enumerate(pts):
+            if cell.contains(pt):
+                race_cells[owner[j]].append(cell)
+                break
+    out = []
+    for i, r in enumerate(races):
+        if not race_cells[i]:
+            return None
+        g = unary_union(race_cells[i]).intersection(container)
+        if g.is_empty:
+            return None
+        out.append((r, g))
+    return out
+
+
 def build(n):
     d = json.loads((RES / f"national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]
     # 별표(선거구역 텍스트) — 선거구명으로 lookup (3·4·5대만 보유)
@@ -184,13 +242,27 @@ def build(n):
     for key, ids in groups.items():
         if len(ids) > 1 and all(info[i]["ratio"] >= 0.9 and len(info[i]["dpolys"]) >= 2 for i in ids):
             dong_ok.update(ids)
-    feats, nmap, skipped, miss, dong_split = [], {}, 0, [], 0
+    # 도시 분할(동매칭 미달) — 별표 동 점 보로노이로 근사 분할(추정 경계, approx)
+    hp = GEO / "hgis_city_dong_points.json"
+    hgis_pts = json.loads(hp.read_text(encoding="utf-8")) if hp.exists() else {}
+    vor_geom = {}
+    for (sido, sg), ids in groups.items():
+        if len(ids) > 1 and not (set(ids) & dong_ok) and is_city_group(sido, list(sg)):
+            res = voronoi_split([d[i] for i in ids], sido, list(sg), area_by, n, hgis_pts)
+            if res:
+                for (r, g), i in zip(res, ids):
+                    vor_geom[i] = g
+    feats, nmap, skipped, miss, dong_split, vor_n = [], {}, 0, [], 0, 0
     for i, r in enumerate(d):
         sggs = info[i]["sggs"]
-        polys = []
+        polys, approx = [], False
         if i in dong_ok:  # 농촌 갑/을 — 동/면 union으로 실제 분리
             polys = info[i]["dpolys"]
             dong_split += 1
+        elif i in vor_geom:  # 도시 갑/을 — 보로노이 추정 분할(점선 표시)
+            polys = [vor_geom[i]]
+            approx = True
+            vor_n += 1
         if not polys:
             for s in sggs:
                 polys += resolve(r["sido"], s)
@@ -200,15 +272,17 @@ def build(n):
             continue
         code = f"G{n}_{len(feats):03d}"
         sido = CANON.get(r["sido"], r["sido"])
-        feats.append({"type": "Feature",
-                      "properties": {"SGG_Code": code, "SGG": r["name"], "SIDO": sido},
+        props = {"SGG_Code": code, "SGG": r["name"], "SIDO": sido}
+        if approx:
+            props["approx"] = True  # 추정 경계 → 렌더 점선
+        feats.append({"type": "Feature", "properties": props,
                       "geometry": mapping(unary_union(polys))})
         nmap[f'{sido}|{r["name"]}'] = code
     (GEO / f"district_{n}_geojson.json").write_text(
         json.dumps({"type": "FeatureCollection", "features": feats}, ensure_ascii=False), encoding="utf-8")
     (GEO / f"district_{n}_geojson_map.json").write_text(
         json.dumps({"name_to_sgg_code": nmap}, ensure_ascii=False), encoding="utf-8")
-    print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, skip {skipped} {miss if miss else ''}")
+    print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, 보로노이근사 {vor_n}, skip {skipped} {miss if miss else ''}")
 
 
 if __name__ == "__main__":
