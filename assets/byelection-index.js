@@ -18,6 +18,9 @@
   };
   // 직 표시 순서 (높은 직부터)
   const LEVEL_ORDER = ['국회의원', '광역단체장', '교육감', '기초단체장', '광역의원', '기초의원'];
+  // sg_typecode → 직 라벨 + race 식별 대표 scope (시도/시군구 요약행=race; 하위 breakdown 제외).
+  const CODE_LEVEL = { '2': '국회의원', '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원', '11': '교육감' };
+  const PRIMARY_SCOPE = { '2': 'district', '3': 'sido', '4': 'sigungu', '5': 'district', '6': 'district', '11': 'sido' };
 
   const idx = await Elections.loadElectionsIndex();
   const allIds = [...(idx.active || []), ...(idx.archive || [])];
@@ -35,9 +38,11 @@
     calendar = await fetch('/data/byelection_calendar.json').then((r) => r.ok ? r.json() : null);
   } catch {}
 
-  // 단독 회차 결과 요약(직·당선 정당) 선로드 — 타임라인·목록 공용.
+  // 회차별 결과 요약(직·당선 정당) 선로드 — 단독·통합 모두 byelection-{date}.json로 일률 처리.
   const summaries = {};
-  await Promise.all(standalone.map(async (m) => { summaries[m.id] = await loadSummary(m); }));
+  await Promise.all([...standalone, ...integrated].map(async (m) => {
+    summaries[m.date] = await loadSummary(m.date);
+  }));
 
   renderTimeline(standalone, integrated);
   renderList(standalone, integrated);
@@ -49,26 +54,28 @@
     return (typeof window.partyColor === 'function') ? window.partyColor(party) : '#999';
   }
 
-  // 결과 요약 — meta.offices의 (scope, sg_typecode)로 race를 식별해 직별 건수·당선 정당 집계.
-  async function loadSummary(meta) {
-    const path = meta.archive?.results_path || `data/results/${meta.id}.json`;
+  // 결과 요약 — byelection-{date}.json에서 직별 race(대표 scope)만 세 직별 건수·당선 정당 집계.
+  // 단독·통합 동일 파일 규약이라 한 함수로. 데이터 없는 회차(옛 통합 등)는 null.
+  async function loadSummary(date) {
     let res;
-    try { res = await fetch(path).then((r) => r.ok ? r.json() : null); } catch { res = null; }
+    try { res = await fetch(`data/results/byelection-${date}.json`).then((r) => r.ok ? r.json() : null); } catch { res = null; }
     if (!res?.races) return null;
-    const present = [];   // {level, n}
+    const cnt = {};       // level → n
     const winners = {};   // party → count
     let total = 0;
-    for (const o of (meta.offices || [])) {
-      const races = res.races.filter((r) => r.scope === o.scope && r.sg_typecode === o.sg_typecode);
-      if (!races.length) continue;
-      present.push({ level: o.level, n: races.length });
-      total += races.length;
-      for (const r of races) {
-        const w = (r.candidates || []).find((c) => c.won) || (r.candidates || []).find((c) => c.rank === 1);
-        if (w?.party) winners[w.party] = (winners[w.party] || 0) + 1;
-      }
+    for (const r of res.races) {
+      const tc = r.sg_typecode;
+      if (r.scope !== PRIMARY_SCOPE[tc]) continue;   // 대표 scope만 = race 단위
+      const level = CODE_LEVEL[tc];
+      if (!level) continue;
+      cnt[level] = (cnt[level] || 0) + 1;
+      total++;
+      const w = (r.candidates || []).find((c) => c.won) || (r.candidates || []).find((c) => c.rank === 1);
+      if (w?.party) winners[w.party] = (winners[w.party] || 0) + 1;
     }
-    present.sort((a, b) => LEVEL_ORDER.indexOf(a.level) - LEVEL_ORDER.indexOf(b.level));
+    if (!total) return null;
+    const present = Object.entries(cnt).map(([level, n]) => ({ level, n }))
+      .sort((a, b) => LEVEL_ORDER.indexOf(a.level) - LEVEL_ORDER.indexOf(b.level));
     return { present, winners, total };
   }
 
@@ -126,8 +133,8 @@
         : `/archive/${m.id}/#ar-byelection`;
 
       let facts = '';
-      const s = summaries[m.id];
-      if (m._type === 'standalone' && s && s.total) {
+      const s = summaries[m.date];
+      if (s && s.total) {
         const offices = s.present.map((o) => `${o.level} ${o.n}`).join(' · ');
         const wins = Object.entries(s.winners)
           .sort((a, b) => b[1] - a[1])
@@ -135,7 +142,7 @@
           .join('');
         facts = `<span class="bx-list-offices">${offices}</span><span class="bx-list-wins">${wins}</span>`;
       } else if (m._type === 'integrated') {
-        facts = `<span class="bx-list-offices">동시 재·보궐 (${m.name})</span>`;
+        facts = `<span class="bx-list-offices">동시 재·보궐 (${m.name}) · 결과는 회차 아카이브</span>`;
       }
 
       row.innerHTML = `
