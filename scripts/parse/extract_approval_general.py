@@ -33,6 +33,10 @@ from extract_approval import load_meta  # noqa: E402
 from extract_approval_gallup import subject_for  # noqa: E402
 
 OUT = ROOT / "data" / "polls" / "approval_general.json"
+# negative 스캔 캐시: '전국·미캡처'이지만 국정평가 표가 없는(정당지지도 등) PDF는 매 run
+# find_job_pages로 다시 열려 CPU를 태운다. 한 번 연 nid→파일명을 기록해, 같은 파일이면
+# 재스캔 skip. OUT은 브라우저가 직접 fetch하므로 캐시는 서빙만 되고 fetch 안 되는 사이드카로 분리.
+SCANCACHE = ROOT / "data" / "polls" / "approval_general.scancache.json"
 _JOB = re.compile(r"국정\s*운영|국정\s*수행|직무\s*수행|국정\s*지지")
 # 제목에 있으면 직무평가 아님 — 잘하는/잘못하는 점·신뢰·평가이유·정당대표·지수,
 # 정권심판/책임론·국정안정론, 전 대통령 회고/계엄·탄핵 평가, 후보 능력평가.
@@ -150,9 +154,13 @@ def main():
     args = ap.parse_args()
 
     prev, done = [], set()
-    if args.incremental and OUT.exists():
-        prev = json.loads(OUT.read_text()).get("records", [])
-        done = {r["ntt_id"] for r in prev}
+    scanned: dict[str, str] = {}   # nid → 마지막으로 스캔한 PDF 파일명(결과 유무 무관)
+    if args.incremental:
+        if OUT.exists():
+            prev = json.loads(OUT.read_text()).get("records", [])
+            done = {r["ntt_id"] for r in prev}
+        if SCANCACHE.exists():
+            scanned = json.loads(SCANCACHE.read_text()).get("scanned", {})
 
     meta = load_meta()
     fmap = {}
@@ -171,8 +179,11 @@ def main():
     if args.only:
         ids = args.only.split(",")
     else:
+        # done(결과 보유) + scancache(같은 PDF로 이미 스캔, 결과 無)는 incremental 시 제외 →
+        # 정당지지도 등 국정평가 없는 대량 PDF를 매번 다시 열지 않는다.
         ids = [nid for nid, m in meta.items()
-               if is_nat(m) and nid in fmap and nid not in captured]
+               if is_nat(m) and nid in fmap and nid not in captured
+               and nid not in done and scanned.get(nid) != fmap[nid]]
     pdfs = sorted(str(ROOT / "data/raw/pdf" / fmap[nid]) for nid in ids if nid in fmap)
     if args.limit:
         pdfs = pdfs[:args.limit]
@@ -180,9 +191,11 @@ def main():
 
     by_ntt: dict[str, dict] = {}
     for i, pp in enumerate(pdfs):
-        nid = Path(pp).name.split("_", 1)[0]
+        fname = Path(pp).name
+        nid = fname.split("_", 1)[0]
         if nid in by_ntt or nid in done:
             continue
+        scanned[nid] = fname   # 결과 유무와 무관하게 '이 PDF는 검사함' 기록
         pages = find_job_pages(pp)
         if not pages:
             continue
@@ -243,6 +256,10 @@ def main():
             return
     OUT.write_text(json.dumps({"_meta": {"metric": "대통령 국정평가 (범용·기타 기관)",
                    "n": len(records)}, "records": records}, ensure_ascii=False, indent=2), encoding="utf-8")
+    # negative 스캔 캐시 저장(compact). 다음 incremental run이 같은 PDF를 다시 안 연다.
+    SCANCACHE.write_text(json.dumps({"scanned": scanned}, ensure_ascii=False),
+                         encoding="utf-8")
+    print(f"→ scancache {len(scanned)} nid", file=sys.stderr)
     print(f"→ {OUT.relative_to(ROOT)}", file=sys.stderr)
 
 

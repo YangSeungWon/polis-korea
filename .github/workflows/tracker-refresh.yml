@@ -74,7 +74,8 @@ jobs:
           git add data/raw/nesdc_etc_polls.csv \
                   data/polls/approval_gallup.json data/polls/approval_realmeter.json \
                   data/polls/approval_nbs.json data/polls/approval_hrc.json \
-                  data/polls/approval_general.json data/polls/aggregated_etc.json
+                  data/polls/approval_general.json data/polls/aggregated_etc.json \
+                  data/polls/approval_general.scancache.json
           if git diff --staged --quiet; then
             echo "tracker 변경 없음 — push skip"
           else

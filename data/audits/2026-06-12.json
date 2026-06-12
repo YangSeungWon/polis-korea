@@ -1,0 +1,52 @@
+{
+  "date": "2026-06-12",
+  "polls_total": 1801,
+  "polls_data": 1703,
+  "polls_pending": 98,
+  "checks": [
+    {
+      "name": "시계열 outlier (시간 windowed)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "메이저정당 4+ 후보 잔존",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "정당명-as-후보",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "office 분류 false positive",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "합계 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "NEC roster 누락 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "build_golden 회귀",
+      "severity": "info",
+      "count": 0,
+      "items": [
+        "총 19 cases: 15 pass, 4 warn, 0 fail"
+      ]
+    }
+  ]
+}
