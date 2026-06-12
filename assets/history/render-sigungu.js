@@ -9,8 +9,10 @@ function renderSigunguHex() {
   svg.setAttribute('height', '100%');
   // 대선만 일반구별 개표 단위 (legacy sigungu hex). 지선은 통합 시장이라 base hex.
   // 총선은 지역구(district_hex_*.json) — renderDistrictHex가 별도 처리.
+  // 대선 옛 회차(2~14대)는 그 시점 자치구 레이아웃(1셀=1구)으로. 없으면 현대 legacy(25구).
+  const periodHex = (state.type === 'presidential' && state.hexPres) ? state.hexPres[state.n] : null;
   const useLegacy = state.hexLegacy && state.type === 'presidential';
-  let data = useLegacy ? state.hexLegacy : state.hexData;
+  let data = periodHex || (useLegacy ? state.hexLegacy : state.hexData);
   if (!data?.length) return;
   // 회차별 자동 hide:
   //   1) lifecycle since/until — 행정구역 신설·폐지 (확장 가능, SIGUNGU_HEX_LIFECYCLE 참조)
