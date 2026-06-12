@@ -56,6 +56,10 @@ def generate(n, aspect=2.3, fill=1.3):
         if not placed:
             cell["c"], cell["r"] = c0, r0
 
+    # 비닝이 남긴 둘러싸인 빈칸(hole) slide-fill로 제거
+    from fill_district_hex_holes import fill as _fill_holes
+    _fill_holes(cells)
+
     # c,r를 0 기준으로 정규화
     cs = [c["c"] for c in cells]; rs = [c["r"] for c in cells]
     mc, mr = min(cs), min(rs)

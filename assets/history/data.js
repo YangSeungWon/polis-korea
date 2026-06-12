@@ -13,6 +13,7 @@ function activeOfficeData() {
 // 군위: 2023.7.1 경북 → 대구. 8회까지 경북 데이터.
 const SIGUNGU_SIDO_HISTORY = {
   '군위군': ['대구광역시', '경상북도'],
+  '달성군': ['대구광역시', '경상북도'],  // 1995 대구 편입 전 경북 달성군
 };
 // 시도 통합(전남·광주 → 전남광주특별시)은 assets/regions.js의 전역 SIDO_MERGE 재사용
 // (polls 코드도 동일 전역 사용). 분리된 광주/전남 조회 시 통합 시도 결과 broadcast 용도 — resultForSido.
@@ -24,6 +25,23 @@ const SIGUNGU_NAME_HISTORY = {
   '청주시청원구':   ['청원군'],          // 2014.7 통합 전 (5/6회)
   '미추홀구':       ['남구'],            // 인천 2018 개명 전 (5/6/7회 → '남구')
   '남구':           ['미추홀구'],        // 인천 — hex가 옛 vuski GeoJSON '남구', 8회+ 데이터엔 '미추홀구'
+  '증평군':         ['괴산군'],          // 2003.8 괴산군서 분리 전 (16대 대선 2002 등)
+  '계룡시':         ['논산시', '논산군'], // 2003.9 논산서 분리 전
+  // 시 승격 전 군명 (13~15대 대선 등). 데이터에 시가 있으면 그게 먼저 매칭, 없으면 옛 군.
+  '보령시': ['보령군', '대천시'], '아산시': ['아산군', '온양시'], '김제시': ['김제군'],
+  '정읍시': ['정읍군', '정주시'], '익산시': ['이리시', '익산군'], '나주시': ['나주군', '금성시'],
+  '남원시': ['남원군'], '광양시': ['광양군', '동광양시'], '화성시': ['화성군'],
+  '광주시': ['광주군'], '안성시': ['안성군'], '이천시': ['이천군'], '양산시': ['양산군'],
+  '군포시': ['시흥군', '시흥시'], '의왕시': ['시흥군', '시흥시'], '오산시': ['화성군', '화성시'],
+  '문경시': ['문경군', '점촌시'],
+  '제천시': ['제천군'], '평택시': ['평택군'], '상주시': ['상주군'], '충주시': ['충주군', '중원군'],
+  '밀양시': ['밀양군'], '김천시': ['김천군', '금릉군'], '하남시': ['광주군'], '용인시': ['용인군'],
+  '성남시': ['광주군'], '구리시': ['양주군'], '영주시': ['영주군'], '구미시': ['선산군'],
+  '울주군': ['울산군', '울산시'], '시흥시': ['시흥군'], '안산시': ['시흥군'], '과천시': ['시흥군'],
+  '경산시': ['경산군'],
+  // 서울 1995 신설구 → 분리 전 모구 (13·14대 대선)
+  '강북구': ['도봉구'], '금천구': ['구로구'], '광진구': ['성동구'],
+  '광산구': ['광산군'],  // 광주 — 1988 편입 전 전남 광산군
 };
 // 시군구 hex cell lifecycle — 등장(since)/폐지(until) 시점 + 이전·이후 대체 이름.
 // since: 이 날짜 이전 회차 → cell hide (신설), beforeAs 있으면 옛 행정구역 이름으로 표시.
@@ -39,10 +57,12 @@ const SIGUNGU_HEX_LIFECYCLE = {
     since: '2012-07-01',
     beforeAs: { sido: '충청남도', name: '연기군' },
   },
-  // 인천 2026-07-01 신설 — 남구 분할 → 검단·제물포구, 중구 일부 → 영종구.
-  '인천광역시|검단구':   { since: '2026-07-01' },
-  '인천광역시|영종구':   { since: '2026-07-01' },
-  '인천광역시|제물포구': { since: '2026-07-01' },
+  // 인천 2026-07-01 개편 — 중구(육지)+동구→제물포구, 중구 영종도→영종구, 서구 북부→검단구.
+  // 그 전 회차(9회 2026-06 포함)는 옛 행정구역으로 표시(beforeAs) — 안 그러면 중구·동구
+  // 데이터가 안 뜨고 검단 칸이 내부 구멍이 됨. 영종도=옛 중구, 제물포=옛 동구, 검단=옛 서구.
+  '인천광역시|검단구':   { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '서구' } },
+  '인천광역시|영종구':   { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '중구' } },
+  '인천광역시|제물포구': { since: '2026-07-01', beforeAs: { sido: '인천광역시', name: '동구' } },
 };
 
 // cell의 회차 시점 effective 정보 — null이면 hide, 객체면 {sido, name} 그 시점 행정구역.
@@ -104,8 +124,8 @@ function mergeSigunguResults(parts) {
   };
 }
 
-function resultForSigungu(sido, name) {
-  const data = activeOfficeData();
+function resultForSigungu(sido, name, data) {
+  data = data || activeOfficeData();
   if (!data?.sigungu) return null;
   const exact = data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === name);
   if (exact) return exact;
@@ -151,7 +171,20 @@ function resultForSigungu(sido, name) {
   const m = name.match(/^([가-힣]+시)[가-힣]+(구|군)$/);
   if (m) {
     const parent = m[1];
-    return data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === parent) || null;
+    const exact = data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === parent);
+    if (exact) return exact;
+    // 모도시 행도 없으면 형제 분구 합산 — 후신설 구(수원영통 2003·청주서원 2014 등)를 그 시점
+    // 형제 구 데이터로 채워 구멍 방지. (현대 legacy hex가 옛 대선 회차보다 구가 많아 생기던 빈칸)
+    const esc = parent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const subRe = new RegExp(`^${esc}(?:[가-힣]+(?:구|군)|[갑을병정무])$`);
+    const parts = data.sigungu.filter((r) => canonSido(r.sido) === sido && subRe.test(r.name));
+    if (parts.length) return mergeSigunguResults(parts);
+    // 모도시의 옛 군명 (용인시수지구 → 용인시 → 용인군)
+    for (const old of (SIGUNGU_NAME_HISTORY[parent] || [])) {
+      const r = data.sigungu.find((rr) => canonSido(rr.sido) === sido && rr.name === old);
+      if (r) return r;
+    }
+    return null;
   }
   // Reverse-merge — hex name이 통합 시(name이 '○○시')인데 데이터에 분구만 있음.
   // 21대 대선의 '화성시'(데이터: 화성시갑/을), '부천시'(부천시오정/원미/소사구) 케이스.
@@ -161,6 +194,37 @@ function resultForSigungu(sido, name) {
     const subRe = new RegExp(`^${escape}(?:[가-힣]+(?:구|군)|[갑을병정무])$`);
     const parts = data.sigungu.filter((r) => canonSido(r.sido) === sido && subRe.test(r.name));
     if (parts.length) return mergeSigunguResults(parts);
+  }
+  // 광역시 자치구(bare 구명) — 옛 회차(구 신설·승격 전)엔 통합 시(또는 시 갑/을구). 데이터 sido는
+  // 그 시점 모도(광주직할시 전엔 전남, 부산직할시 전엔 경남 등)라 모도 family로 제한해 동명(경기
+  // 광주시 등) 오매칭 차단. '광주광역시 남구'→ 전남 '광주시갑/을구' 합산 broadcast.
+  const METRO_FAMILY = {
+    '서울특별시': { city: '서울', sidos: ['서울특별시'] },
+    '부산광역시': { city: '부산', sidos: ['부산광역시', '부산직할시', '경상남도'] },
+    '대구광역시': { city: '대구', sidos: ['대구광역시', '대구직할시', '경상북도'] },
+    '인천광역시': { city: '인천', sidos: ['인천광역시', '인천직할시', '경기도'] },
+    '광주광역시': { city: '광주', sidos: ['광주광역시', '광주직할시', '전라남도'] },
+    '대전광역시': { city: '대전', sidos: ['대전광역시', '대전직할시', '충청남도'] },
+    '울산광역시': { city: '울산', sidos: ['울산광역시', '울산시', '경상남도'] },
+  };
+  const mf = METRO_FAMILY[sido];
+  // 울산광역시 울주군 — 옛엔 경남 울산시(군부 별도 데이터 없음) → 울산시로. (강화·옹진·달성 등
+  // 다른 광역시 군은 모도 매핑이 따로 있어 bare 구만 일반 처리, 울주군만 명시 포함.)
+  if (mf && (/^[가-힣]+구$/.test(name) || (sido === '울산광역시' && name === '울주군'))) {
+    // 옛 '시+구' 형식 직접 매칭: '대구광역시 중구' → 경북 '대구시중구'.
+    const direct = data.sigungu.find((rr) => mf.sidos.includes(rr.sido) && rr.name === `${mf.city}시${name}`);
+    if (direct) return direct;
+    // 통합시(또는 시 갑/을구) 합산: '광주시', '광주시갑구'.
+    const re2 = new RegExp(`^${mf.city}시(?:[갑을병정무]?구)?$`);
+    let parts = data.sigungu.filter((rr) => mf.sidos.includes(rr.sido) && re2.test(rr.name));
+    if (!parts.length) {
+      // 통합시 행 없음 — 그 광역시(또는 모도 sido의 '○○시○구')의 다른 자치구 합산 broadcast.
+      // 1988 구 신설 직전(13대 광주 남구·광산구·서울 서초/송파, 대전 유성/대덕 등)을 채워 구멍 방지.
+      parts = data.sigungu.filter((rr) =>
+        (canonSido(rr.sido) === sido && /^[가-힣]+구$/.test(rr.name) && rr.name !== name)
+        || (mf.sidos.includes(rr.sido) && rr.name.startsWith(`${mf.city}시`) && rr.name !== `${mf.city}시${name}`));
+    }
+    if (parts.length) return parts.length === 1 ? parts[0] : mergeSigunguResults(parts);
   }
   return null;
 }

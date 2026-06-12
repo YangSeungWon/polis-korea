@@ -21,7 +21,16 @@ function renderSigunguHex() {
   data = data.flatMap((d) => {
     const eff = effectiveCell(d, electionDate);
     if (!eff) return [];
-    if (!resultForSigungu(eff.sido, eff.name)) return [];
+    if (!resultForSigungu(eff.sido, eff.name)) {
+      // 현재 직(office) 데이터 없음 — 그 시점 '존재하는' 시군구(광역단체장 데이터 보유)면
+      // 숨기지 말고 no-data 회색 셀로 유지(내부 구멍 방지). 세종은 기초단체장이 없어
+      // 기초장 뷰에서 구멍이었음. 미존재(통폐합 전 등)는 광역장도 없어 그대로 숨김.
+      const gov = state.type === 'local' ? state.results?.offices?.['광역단체장'] : null;
+      if (gov && resultForSigungu(eff.sido, eff.name, gov)) {
+        return [{ ...d, sido: eff.sido, name: eff.name }];
+      }
+      return [];
+    }
     return [{ ...d, sido: eff.sido, name: eff.name }];
   });
   if (!data.length) return;  // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
