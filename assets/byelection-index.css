@@ -11,23 +11,6 @@
   margin: 0 0 18px;
 }
 
-/* 변곡점 카드 */
-.bx-hot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-}
-.bx-hot-card {
-  display: block;
-  padding: 12px 16px;
-  border: 1px solid var(--rule);
-  text-decoration: none; color: inherit;
-  transition: background 0.1s;
-}
-.bx-hot-card:hover { background: var(--bg2); }
-.bx-hot-date { font-size: 11px; font-weight: 700; color: var(--ink-soft); }
-.bx-hot-title { font-size: 14px; font-weight: 700; margin: 4px 0 6px; }
-.bx-hot-lead { font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
 
 /* 시간축 SVG */
 .bx-timeline-host {
@@ -42,10 +25,10 @@
 .bx-list { display: flex; flex-direction: column; gap: 2px; }
 .bx-list-row {
   display: grid;
-  grid-template-columns: 110px 1fr 60px 1.5fr;
+  grid-template-columns: 100px 48px 1fr;
   gap: 12px;
   align-items: baseline;
-  padding: 8px 12px;
+  padding: 9px 12px;
   text-decoration: none;
   color: inherit;
   border-bottom: 1px solid var(--rule);
@@ -53,7 +36,6 @@
 }
 .bx-list-row:hover { background: var(--bg2); }
 .bx-list-date { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-.bx-list-name { font-weight: 600; }
 .bx-list-tag {
   font-size: 10px;
   font-weight: 700;
@@ -63,11 +45,18 @@
 }
 .bx-list-tag-standalone { color: var(--ink); }
 .bx-list-tag-integrated { color: var(--ink-soft); border-style: dashed; }
-.bx-list-note { font-size: 11px; color: var(--ink-soft); }
+/* 팩트: 직별 건수(좌) + 당선 정당(우) */
+.bx-list-facts {
+  display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; min-width: 0;
+}
+.bx-list-offices { color: var(--ink-soft); font-size: 12px; }
+.bx-list-wins { display: inline-flex; flex-wrap: wrap; gap: 4px 10px; }
+.bx-win { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.bx-win-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
 
 @media (max-width: 700px) {
-  .bx-list-row { grid-template-columns: 90px 1fr 50px; }
-  .bx-list-note { display: none; }
+  .bx-list-row { grid-template-columns: 84px 42px 1fr; gap: 8px; }
+  .bx-list-facts { flex-direction: column; gap: 3px; }
 }
 
 /* 커버리지 — 연도별 grid */
