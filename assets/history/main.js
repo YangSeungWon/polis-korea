@@ -23,7 +23,7 @@ function renderHistoryLegend() {
       const vizParent = detailPane?.parentElement;
       if (vizParent && el.parentElement !== vizParent) vizParent.insertBefore(el, detailPane);
       el.hidden = false;
-      el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선 = 추정 경계 (옛 도시 갑·을 분할)</span>';
+      el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선 = 추정 경계 (갑·을 등 다인선거구 분할)</span>';
     } else {
       el.hidden = true; el.innerHTML = '';
     }

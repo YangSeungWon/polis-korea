@@ -171,6 +171,41 @@ def sggs_of(name):
     return [re.sub(r"\s*[갑을병정무]\s*구?$", "", s.strip()) for s in re.split(r"[·,.]", m.group(1))]
 
 
+def mechanical_split(geom, k):
+    """경계자료 없는 분할 — 긴 축 따라 등면적 k조각으로 기계 절단(임의·추정)."""
+    from shapely.geometry import box
+    minx, miny, maxx, maxy = geom.bounds
+    vert = (maxx - minx) >= (maxy - miny)  # 가로가 길면 세로 절단(동서)
+    lo, hi = (minx, maxx) if vert else (miny, maxy)
+    total = geom.area
+    cuts = [lo]
+    for j in range(1, k):
+        target = total * j / k
+        a, b = cuts[-1], hi
+        for _ in range(40):  # 누적면적 = target 되는 절단선 이분탐색
+            c = (a + b) / 2
+            strip = box(minx, miny, c, maxy) if vert else box(minx, miny, maxx, c)
+            if geom.intersection(strip).area < target:
+                a = c
+            else:
+                b = c
+        cuts.append((a + b) / 2)
+    cuts.append(hi)
+    pieces = []
+    for j in range(k):
+        strip = (box(minx, miny, cuts[j + 1], maxy) if vert
+                 else box(minx, miny, maxx, cuts[j + 1]))
+        prev = (box(minx, miny, cuts[j], maxy) if vert
+                else box(minx, miny, maxx, cuts[j]))
+        pieces.append(geom.intersection(strip).difference(prev))
+    return pieces
+
+
+def gabeul_idx(name):
+    m = re.search(r"[갑을병정무기]", name)
+    return "갑을병정무기".index(m.group()) if m else 0
+
+
 def is_city_group(sido, sggs):
     """도시(서울 구·광역시) 분할 그룹 — 동 변동 커 시군 단위로 폴백되는 대상."""
     return sido == "서울특별시" or any(
@@ -252,7 +287,19 @@ def build(n):
             if res:
                 for (r, g), i in zip(res, ids):
                     vor_geom[i] = g
-    feats, nmap, skipped, miss, dong_split, vor_n = [], {}, 0, [], 0, 0
+    # 나머지 분할 그룹(별표·동점 없음) — 등면적 기계 분할(임의·추정, 겹침 방지)
+    mech_geom = {}
+    for (sido, sg), ids in groups.items():
+        if len(ids) <= 1 or (set(ids) & dong_ok) or (set(ids) & set(vor_geom)):
+            continue
+        container = unary_union([g for s in sg for g in resolve(sido, s)])
+        if container.is_empty:
+            continue
+        order = sorted(ids, key=lambda i: gabeul_idx(d[i]["name"]))
+        for i, pc in zip(order, mechanical_split(container, len(order))):
+            if not pc.is_empty:
+                mech_geom[i] = pc
+    feats, nmap, skipped, miss, dong_split, vor_n, mech_n = [], {}, 0, [], 0, 0, 0
     for i, r in enumerate(d):
         sggs = info[i]["sggs"]
         polys, approx = [], False
@@ -263,6 +310,10 @@ def build(n):
             polys = [vor_geom[i]]
             approx = True
             vor_n += 1
+        elif i in mech_geom:  # 경계자료 없음 — 등면적 기계 분할(점선 추정)
+            polys = [mech_geom[i]]
+            approx = True
+            mech_n += 1
         if not polys:
             for s in sggs:
                 polys += resolve(r["sido"], s)
@@ -282,7 +333,7 @@ def build(n):
         json.dumps({"type": "FeatureCollection", "features": feats}, ensure_ascii=False), encoding="utf-8")
     (GEO / f"district_{n}_geojson_map.json").write_text(
         json.dumps({"name_to_sgg_code": nmap}, ensure_ascii=False), encoding="utf-8")
-    print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, 보로노이근사 {vor_n}, skip {skipped} {miss if miss else ''}")
+    print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, 보로노이 {vor_n}, 기계분할 {mech_n}, skip {skipped} {miss if miss else ''}")
 
 
 if __name__ == "__main__":
