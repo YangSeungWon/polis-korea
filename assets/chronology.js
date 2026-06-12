@@ -16,10 +16,14 @@ function mdOf(d) {
 }
 
 (async function init() {
-  const [ev, el] = await Promise.all([
+  const [ev, el, tl] = await Promise.all([
     fetch('data/history_events.json').then((r) => r.json()),
     fetch('data/elections.json').then((r) => r.json()),
+    fetch('data/timeline.json').then((r) => r.json()).catch(() => ({ rounds: [] })),
   ]);
+  // 총선=최다의석당, 지선=최다 광역단체장 당 — '분위기' 색·이름. (대선은 winner 사용)
+  const tlByKey = {};
+  for (const r of (tl.rounds || [])) tlByKey[`${r.kind}|${r.n}`] = r;
 
   // 선거 flatten (대선·총선·지선) — 날짜 있는 것만, 미래/예측 제외
   const elections = [];
@@ -56,7 +60,7 @@ function mdOf(d) {
   };
   for (const it of items) {
     emitDividers(it.date);
-    root.appendChild(it.type === 'election' ? electionRow(it) : eventRow(it));
+    root.appendChild(it.type === 'election' ? electionRow(it, tlByKey) : eventRow(it));
   }
   emitDividers('9999');  // 마지막 항목 뒤 시대(예: 국민주권정부 출범 후) 처리
 
@@ -113,22 +117,46 @@ function eventRow(it) {
   return row;
 }
 
-function electionRow(it) {
+// 총선=최다 의석당, 지선=최다 광역단체장 당 → {party, detail}. 대선은 null(winner 사용).
+function leadInfo(it, tlByKey) {
+  const r = tlByKey[`${it.kind}|${it.n}`];
+  if (!r) return null;
+  if (it.kind === 'national_assembly' && r.partySeats?.length) {
+    const [party, seats] = r.partySeats[0];
+    return { party, detail: `${party} ${seats}석` };
+  }
+  if (it.kind === 'local' && r.sidoWinners) {
+    const counts = {};
+    for (const v of Object.values(r.sidoWinners)) {
+      if (v?.party) counts[v.party] = (counts[v.party] || 0) + 1;
+    }
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    if (top) return { party: top[0], detail: `${top[0]} ${top[1]}곳` };
+  }
+  return null;
+}
+
+function electionRow(it, tlByKey) {
   const row = document.createElement('div');
   row.className = 'chr-row chr-election';
   row.dataset.type = 'election';
   const md = mdOf(it.date);
-  const col = (typeof partyColor === 'function' && it.party) ? partyColor(it.party, it.date) : '#9aa3b3';
+  // 대선=당선자·소속당색 / 총선·지선=우세 정당색·정당명(분위기)
+  let party = it.party, detail = it.winner ? `<span class="chr-winner">${it.winner}</span>` : '';
+  if (it.kind !== 'presidential') {
+    const li = leadInfo(it, tlByKey);
+    if (li) { party = li.party; detail = `<span class="chr-winner chr-lead">${li.detail}</span>`; }
+  }
+  const col = (typeof partyColor === 'function' && party) ? partyColor(party, it.date) : '#9aa3b3';
   const num = `${it.n}${KIND_UNIT[it.kind]} ${KIND_KO[it.kind]}`;
   const marks = (it.indirect ? '<span class="chr-mk ind">간선</span>' : '')
     + (it.annulled ? '<span class="chr-mk ann">무효</span>' : '');
-  const winner = it.winner ? `<span class="chr-winner">${it.winner}</span>` : '';
   const href = `history.html?type=${it.kind}&n=${it.n}`;
   row.innerHTML = `<span class="chr-date"><b>${yearOf(it.date)}</b>${md ? `<small>${md}</small>` : ''}</span>`
     + `<span class="chr-node" style="--pc:${col}"></span>`
     + `<a class="chr-body chr-link" href="${href}">`
     + `<span class="chr-dot" style="background:${col}"></span>`
-    + `<span class="chr-num">${it.btn ? it.btn + ' ' : ''}${num}</span>${marks}${winner}`
+    + `<span class="chr-num">${it.btn ? it.btn + ' ' : ''}${num}</span>${marks}${detail}`
     + `<span class="chr-go">→</span></a>`;
   return row;
 }
