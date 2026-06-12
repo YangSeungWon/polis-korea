@@ -101,6 +101,15 @@ NEC2SGIS = {"11": "11", "26": "21", "27": "22", "28": "23", "29": "24", "30": "2
             "31": "26", "51": "29", "41": "31", "42": "32", "43": "33", "44": "34",
             "45": "35", "46": "36", "47": "37", "48": "38", "49": "39",
             "52": "32", "53": "35"}  # 22대 특별자치도 새 코드: 강원52·전북53 → SGIS 32·35
+# SGIS 시도2 권역(family) — 광역시는 모도(母道)에서 승격(경기↔인천, 경북↔대구, 경남↔부산·울산,
+# 전남↔광주, 충남↔대전·세종). 시도무관 동매칭 fallback을 이 권역 안으로만 제한해, DMZ·경계시차로
+# 자기 시도 SGIS에 없는 동이 먼 시도 동음이의(파주 진동면津東面→경남 마산 진동면鎭東面)로 잘못
+# 매칭되는 것을 차단. 시군구 이동(군위 경북37→대구22 2023)은 권역 내라 유지.
+SGIS_FAM = {}
+for _grp in [{"11"}, {"21", "26", "38"}, {"22", "37"}, {"23", "31"}, {"24", "36"},
+             {"25", "29", "34"}, {"32"}, {"33"}, {"35"}, {"39"}]:
+    for _s in _grp:
+        SGIS_FAM[_s] = _grp
 # 시도 풀네임 → SGIS 통계청 시도2 (시군구 union 모드: SGIS sigungu_cd[:2] 매칭)
 SIDO_SGIS2 = {"서울특별시": "11", "부산광역시": "21", "대구광역시": "22", "인천광역시": "23",
               "광주광역시": "24", "대전광역시": "25", "울산광역시": "26", "세종특별자치시": "29",
@@ -316,7 +325,10 @@ def main(n: int):
                 else:
                     cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
                     if len(cands) > 1 and gu:  # 동명 충돌 → 학습된 구로 tiebreak (conv 가정 대신)
-                        cands = [c for c in cands if c[:4] == gu] or cands
+                        f = [c for c in cands if c[:4] == gu]
+                        # 학습 구와 불일치하는 다중후보(서산 '남면'→연기·대덕 등 먼 동음이의)는
+                        # cands[0] 난수배정 대신 미매칭으로 두고 Pass5 기하 인접해결에 위임.
+                        cands = f if f else []
                     got = cands[:1]
                 if not got and gu:  # 정방향 퍼지(학습 구 제한): 동통합 청운동→청운효자동
                     b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
@@ -327,8 +339,11 @@ def main(n: int):
                     got = [c for c, nm in sido_names.get(s2, [])
                            if c[:4] == gu and len(re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm)) >= 2
                            and re.sub(r"(제?\d+)?가?[동읍면리]$", "", nm) in nn]
-                if not got:  # 이동 시군구(군위 2023 경북→대구 등 — SGIS연도 시도≠선거시점) — 전국 유일 동명이면 시도무관 매칭
+                if not got:  # 이동 시군구(군위 2023 경북→대구 등 — SGIS연도 시도≠선거시점) — 전국 유일 동명이면 시도무관 매칭.
+                    # 단 같은 권역(모도↔승격광역시)으로 제한 — 동음이의(파주 진동면→경남 마산) 차단.
                     g2 = set(dong_global.get(dong, [])) | set(dong_global.get(_ndong(dong), []))
+                    fam = SGIS_FAM.get(s2, {s2})
+                    g2 = {c for c in g2 if c[:2] in fam}
                     if len(g2) == 1:
                         got = [next(iter(g2))]
                 if not got:
@@ -434,6 +449,28 @@ def main(n: int):
             unassigned = still
         if infilled:
             print(f"기하 인접 흡수: {infilled}개 동 (같은시군구 {infilled-cross_sgg}·교차 {cross_sgg}·잔여 {len(unassigned)})", file=sys.stderr)
+
+        # Pass 5b: 잔여(경계 정점 불일치로 공유길이 0) — 버퍼(≈10m) 면적 겹침으로 인접 선거구 흡수.
+        # 내부 구멍(전주 효자2동·인천 계양동·양산 상북동 등 둘러싼 선거구와 미세 틈) 메움.
+        if unassigned:
+            eps = 1e-4  # ≈10m
+            a_cds = [c for c in cd_to_key if c in geom_by_cd]
+            a_geoms = [geom_by_cd[c] for c in a_cds]
+            tree = STRtree(a_geoms)
+            b_filled = 0
+            for c in list(unassigned):
+                g = geom_by_cd[c].buffer(eps)
+                best = (None, 0.0)
+                for j in tree.query(g):
+                    ov = g.intersection(a_geoms[int(j)].buffer(eps)).area
+                    if ov > best[1]:
+                        best = (cd_to_key[a_cds[int(j)]], ov)
+                if best[0]:
+                    district_cds[best[0]].add(c)
+                    cd_to_key[c] = best[0]
+                    b_filled += 1
+            if b_filled:
+                print(f"버퍼 인접 흡수(Pass5b): {b_filled}개 동", file=sys.stderr)
 
     # 4) 선거구별 union → 전체 topology 공유 arc 단순화
     features = []
