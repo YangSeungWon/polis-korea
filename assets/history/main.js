@@ -2,12 +2,31 @@
 // 마지막에 로드: state·routing·data·render-* 모두 정의된 후 init() 호출.
 
 function renderHistoryLegend() {
-  const el = $('#history-legend');
-  if (!el) return;
+  // detail-pane 안에 있었다가 회차/종류 전환 시 함께 지워질 수 있어 — 없으면 재생성.
+  let el = $('#history-legend');
+  if (!el) {
+    const viz = document.querySelector('.viz');
+    if (!viz) return;
+    el = document.createElement('div');
+    el.id = 'history-legend';
+    el.className = 'hist-legend';
+    el.hidden = true;
+    viz.appendChild(el);
+  }
   const type = state.type;
-  // 총선은 범례 안 보임 (지역구 색 자체로 충분)
+  // 총선은 기본 범례 없음. 단 옛총선 geo에 보로노이 추정 경계(점선)가 있으면 그 설명만 표시.
   if (type === 'national_assembly') {
-    el.hidden = true; el.innerHTML = '';
+    const feats = state.geoCache?.[state.n]?.features || [];
+    const hasApprox = state.effDisplay === 'geo' && feats.some((f) => f.properties?.approx);
+    if (hasApprox) {
+      const detailPane = $('#detail-pane');
+      const vizParent = detailPane?.parentElement;
+      if (vizParent && el.parentElement !== vizParent) vizParent.insertBefore(el, detailPane);
+      el.hidden = false;
+      el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선 = 추정 경계 (옛 도시 갑·을 분할)</span>';
+    } else {
+      el.hidden = true; el.innerHTML = '';
+    }
     return;
   }
   // 대선은 detail-pane(우측 그래프) 아래로 이동, 그 외는 viz 안 기본 위치
@@ -129,6 +148,7 @@ async function renderAll() {
   // Hex+지도 토글: 총선 9~22·지선 전회차·대선 16~20. 9~16 총선은 지도 전용 → 숨김·강제.
   toggle('#display-seg', !(hexSupported || localGeo || presGeo));
   const effDisplay = (geoSupported && !hexSupported) ? 'geo' : state.display;
+  state.effDisplay = effDisplay;  // 범례(점선 추정경계)가 참조
   const showGeo = (geoSupported || localGeo || presGeo) && effDisplay === 'geo';
   toggle('#hex', showGeo || unit !== 'sido');
   toggle('#hex2', showGeo || unit === 'sido');

@@ -20,6 +20,12 @@
   flex: 0 0 auto;
   border: 1px solid var(--rule-strong);
 }
+/* 점선 = 추정 경계(옛 도시 갑·을 보로노이) 범례 swatch */
+.hist-legend .leg-dash {
+  width: 16px; height: 0;
+  flex: 0 0 auto;
+  border-top: 1.5px dashed rgba(10, 14, 26, 0.7);
+}
 
 
 /* 회차 segmented는 좁게 (회차가 9~10개) */

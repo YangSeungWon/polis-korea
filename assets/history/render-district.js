@@ -270,6 +270,8 @@ async function renderGeoMap() {
     };
     geoLeafletMap.on('moveend', finalize);
   }
+  // geo 로드 완료 후 범례 갱신 (옛총선 점선 추정경계 안내 — geoCache 준비된 뒤라야 감지)
+  if (typeof renderHistoryLegend === 'function') renderHistoryLegend();
 }
 
 
