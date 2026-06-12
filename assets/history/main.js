@@ -119,7 +119,7 @@ function renderSeatsCard(el, district) {
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
   // 간선(국회·통대·선거인단) 대선 — 지역별 개표가 없어 지도 대신 "어떤 선거였는지" 정보 카드.
-  const elMeta0 = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
+  const elMeta0 = currentEl();
   if (state.type === 'presidential' && elMeta0?.indirect && state.results) {
     $('#hex')?.toggleAttribute('hidden', true);
     $('#hex2')?.toggleAttribute('hidden', true);
@@ -177,6 +177,12 @@ async function loadDistrictHex(n) {
   return state.districtHex[n];
 }
 
+// 현재 선택 회차의 election 메타 — n + variant(예 4대 3·15 부정선거)로 구분.
+function currentEl() {
+  const list = state.elections[state.type]?.elections || [];
+  return list.find((x) => x.n === state.n && (x.variant || null) === (state.variant || null)) || null;
+}
+
 function renderRoundsSeg() {
   const seg = $('#rounds-seg');
   seg.innerHTML = '';
@@ -184,15 +190,20 @@ function renderRoundsSeg() {
   const available = state.elections._available?.[state.type] || [];
   const seen = new Set();
   for (const e of list) {
-    if (seen.has(e.n)) continue;   // 같은 n 중복(예 4대 이승만·윤보선) — 버튼 하나만
-    seen.add(e.n);
+    // variant(별도 키, 예 4대 3·15)는 같은 n이어도 별 버튼으로. 일반 회차는 n당 하나.
+    if (!e.variant) {
+      if (seen.has(e.n)) continue;
+      seen.add(e.n);
+    }
     const btn = document.createElement('button');
     btn.className = 'seg-btn';
-    if (!available.includes(e.n)) btn.classList.add('no-data');
+    if (e.variant) btn.classList.add('seg-variant');
+    if (!e.variant && !available.includes(e.n)) btn.classList.add('no-data');
     btn.dataset.n = e.n;
-    btn.textContent = `${e.n}`;
-    btn.title = `${e.date}${e.note ? ' · ' + e.note : ''}${available.includes(e.n) ? '' : ' · 데이터 미수집'}`;
-    btn.addEventListener('click', () => setRound(e.n));
+    if (e.variant) btn.dataset.variant = e.variant;
+    btn.textContent = e.btn || `${e.n}`;
+    btn.title = `${e.date}${e.note ? ' · ' + e.note : ''}${(e.variant || available.includes(e.n)) ? '' : ' · 데이터 미수집'}`;
+    btn.addEventListener('click', () => setRound(e.n, e.variant || null));
     seg.appendChild(btn);
   }
 }
@@ -210,15 +221,16 @@ function updateOfficeAvailability(n) {
   }
 }
 
-async function setRound(n) {
+async function setRound(n, variant = null) {
   state.n = n;
+  state.variant = variant || null;
   state.selected = null;
   updateOfficeAvailability(n);
   updateURL();
   document.querySelectorAll('#rounds-seg [data-n]').forEach((b) => {
-    b.classList.toggle('is-active', +b.dataset.n === n);
+    b.classList.toggle('is-active', +b.dataset.n === n && (b.dataset.variant || '') === (variant || ''));
   });
-  const el = (state.elections[state.type]?.elections || []).find((x) => x.n === n);
+  const el = currentEl();
   if (el) {
     $('#election-date').textContent = `${el.date}${el.note ? ' · ' + el.note : ''}`;
     // 정당색 시대 맥락 — 회차 변경할 때마다 그 회차 날짜로 partyColor periods 활성.
@@ -226,7 +238,7 @@ async function setRound(n) {
   }
   // 캐시 — 본 회차 재방문은 즉시(역대선거 왔다갔다 매끄럽게). adapt 결과를 type|n 키로 저장.
   if (!state.roundCache) state.roundCache = new Map();
-  const cacheKey = `${state.type}|${n}`;
+  const cacheKey = `${state.type}|${n}|${variant || ''}`;
   if (state.roundCache.has(cacheKey)) {
     state.results = state.roundCache.get(cacheKey);
     renderAll();
@@ -237,8 +249,8 @@ async function setRound(n) {
   // 첫 로드만 로딩 표시 — 180ms 넘게 걸릴 때만(빠른 로드 깜빡임 방지). 캐시 히트는 위에서 즉시 return.
   const loadingEl = $('#loading');
   const loadingTimer = setTimeout(() => { if (loadingEl) loadingEl.hidden = false; }, 180);
-  // 1차: 새 schema (통일 path) — data/results/{Nth}-{kind}-{year}.json
-  const newPath = newSchemaPath(state.type, n);
+  // 1차: election 메타에 file 지정(예 4대 윤보선·3·15) 우선, 없으면 새 schema path.
+  const newPath = el?.file ? `data/results/${el.file}` : newSchemaPath(state.type, n);
   if (newPath) {
     try {
       const raw = await loadJson(newPath);
@@ -309,8 +321,7 @@ function propSystemInfo(n) {
 
 function renderDetail() {
   const pane = $('#detail-pane');
-  const list = state.elections[state.type]?.elections || [];
-  const el = list.find((x) => x.n === state.n);
+  const el = currentEl();
   const archiveHref = ARCHIVE_PAGES[`${state.type}|${state.n}`];
   const archiveBanner = archiveHref
     ? `<a class="archive-banner" href="${archiveHref}">이 회차 아카이브 →</a>`

@@ -42,6 +42,15 @@
   text-decoration-color: var(--rule);
   opacity: 0.55;
 }
+/* variant 회차(예 4대 3·15 부정선거) — 본 회차와 구분되게 작게·점선 테두리 */
+.seg-rounds .seg-btn.seg-variant {
+  min-width: 0;
+  padding: 6px 7px;
+  font-size: 0.82em;
+  font-weight: 500;
+  border: 1px dashed var(--rule-strong);
+  color: var(--ink-soft);
+}
 .seg-rounds .seg-btn.no-data.is-active {
   background: var(--bg2);
   color: var(--ink-soft);
