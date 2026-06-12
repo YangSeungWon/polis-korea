@@ -315,6 +315,7 @@ def build(n):
             if not pc.is_empty:
                 mech_geom[i] = pc
     feats, nmap, skipped, miss, dong_split, vor_n, mech_n = [], {}, 0, [], 0, 0, 0
+    sido_shapes = defaultdict(list)  # 시도 dissolve 외곽선용(당시 영토·이북 포함)
     for i, r in enumerate(d):
         sggs = info[i]["sggs"]
         polys, approx = [], False
@@ -341,14 +342,21 @@ def build(n):
         props = {"SGG_Code": code, "SGG": r["name"], "SIDO": sido}
         if approx:
             props["approx"] = True  # 추정 경계 → 렌더 점선
-        feats.append({"type": "Feature", "properties": props,
-                      "geometry": mapping(unary_union(polys))})
+        geom = unary_union(polys)
+        feats.append({"type": "Feature", "properties": props, "geometry": mapping(geom)})
+        sido_shapes[sido].append(geom)
         nmap[f'{sido}|{r["name"]}'] = code
     (GEO / f"district_{n}_geojson.json").write_text(
         json.dumps({"type": "FeatureCollection", "features": feats}, ensure_ascii=False), encoding="utf-8")
     (GEO / f"district_{n}_geojson_map.json").write_text(
         json.dumps({"name_to_sgg_code": nmap}, ensure_ascii=False), encoding="utf-8")
+    # 시도 외곽선 — 그 회차 선거구를 시도별 dissolve. 옛총선은 당시 영토(이북 포함·현대 휴전선 X).
+    sido_feats = [{"type": "Feature", "properties": {"SIDO": s},
+                   "geometry": mapping(unary_union(sh))} for s, sh in sido_shapes.items()]
+    (GEO / f"district_{n}_sido.json").write_text(
+        json.dumps({"type": "FeatureCollection", "features": sido_feats}, ensure_ascii=False), encoding="utf-8")
     simplify(GEO / f"district_{n}_geojson.json")
+    simplify(GEO / f"district_{n}_sido.json")
     print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, 보로노이 {vor_n}, 기계분할 {mech_n}, skip {skipped} {miss if miss else ''}")
 
 

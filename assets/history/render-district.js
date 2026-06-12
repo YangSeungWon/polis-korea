@@ -57,6 +57,8 @@ let geoLeafletMap = null;
 let geoDistrictLayer = null;    // 현재 회차 layer
 let geoDistrictByN = {};        // n → L.geoJSON layer (캐시, 재방문 시 재생성 안 함)
 let geoSidoOutlineLayer = null;
+let geoSidoByN = {};            // 옛총선(1~7대) 회차별 시도 외곽선(당시 영토·이북 포함)
+let geo38Layer = null;          // 38선 참조선(1·2대 = 38선이 국경이던 시기)
 let geoMiniMapCtrl = null;
 let geoInitialZoom = null;
 
@@ -246,17 +248,45 @@ async function renderGeoMap() {
     return info && info.race.sido === state.selected?.sido && info.race.name === state.selected?.name;
   });
 
-  // 시도 외곽선 overlay (한 번만 생성)
-  if (!geoSidoOutlineLayer && state.geoSido) {
-    geoSidoOutlineLayer = L.geoJSON(state.geoSido, {
-      style: { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' },
-      interactive: false,
-    });
+  // 시도 외곽선 — 옛총선(1~7대)은 그 회차 선거구 dissolve 외곽선(당시 영토·이북 포함, 현대
+  // 휴전선 X). 그 외(8~22대, 휴전선 이남)는 현대 sido_simple 공용 외곽선.
+  const SIDO_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
+  const OLD_TERRITORY = [1, 2, 3, 4, 5, 6, 7];
+  let outline = null;
+  if (OLD_TERRITORY.includes(n)) {
+    if (geoSidoByN[n] === undefined) {
+      geoSidoByN[n] = await loadJson(`data/geo/district_${n}_sido.json`)
+        .then((od) => L.geoJSON(od, { style: SIDO_STYLE, interactive: false }))
+        .catch(() => null);
+    }
+    outline = geoSidoByN[n];
   }
-  if (geoSidoOutlineLayer && !geoLeafletMap.hasLayer(geoSidoOutlineLayer)) {
-    geoSidoOutlineLayer.addTo(geoLeafletMap);
+  if (!outline) {
+    if (!geoSidoOutlineLayer && state.geoSido) {
+      geoSidoOutlineLayer = L.geoJSON(state.geoSido, { style: SIDO_STYLE, interactive: false });
+    }
+    outline = geoSidoOutlineLayer;
   }
-  if (geoSidoOutlineLayer) geoSidoOutlineLayer.bringToFront();
+  // 회차 전환 시 다른 외곽선 제거 후 현재 것만 표시 (모던 ↔ 회차별)
+  for (const l of [geoSidoOutlineLayer, ...Object.values(geoSidoByN)]) {
+    if (l && l !== outline && geoLeafletMap.hasLayer(l)) geoLeafletMap.removeLayer(l);
+  }
+  if (outline && !geoLeafletMap.hasLayer(outline)) outline.addTo(geoLeafletMap);
+  if (outline) outline.bringToFront();
+
+  // 38선 참조선 — 1·2대(1948·50)는 38선이 국경이었음. 그 이후는 휴전선이라 미표시.
+  if (!geo38Layer) {
+    geo38Layer = L.layerGroup([
+      L.polyline([[38.0, 124.2], [38.0, 130.9]],
+        { color: '#c0392b', weight: 1.5, dashArray: '6 5', opacity: 0.75, interactive: false }),
+      L.marker([38.0, 124.5], { interactive: false, icon: L.divIcon({
+        className: 'line38-label', html: '38선', iconSize: [34, 16], iconAnchor: [0, 18] }) }),
+    ]);
+  }
+  const show38 = [1, 2].includes(n);
+  if (show38 && !geoLeafletMap.hasLayer(geo38Layer)) geo38Layer.addTo(geoLeafletMap);
+  else if (!show38 && geoLeafletMap.hasLayer(geo38Layer)) geoLeafletMap.removeLayer(geo38Layer);
+  if (show38) geo38Layer.eachLayer((l) => l.bringToFront && l.bringToFront());
 
   // 초기 fitBounds + minimap (한 번만)
   if (geoInitialZoom == null) {
