@@ -221,6 +221,44 @@ body {
   .hdr-link-urgent { font-size: 12px; padding: 2px 7px; }
 }
 
+/* 모바일 nav 더보기 토글 (nav.js 주입) — 데스크톱·태블릿은 숨김 */
+.nav-toggle {
+  display: none; align-items: center; gap: 5px; position: relative;
+  background: none; border: 1px solid var(--rule-strong); border-radius: 8px;
+  padding: 5px 11px; font-size: 13px; font-weight: 600; color: var(--ink-soft); cursor: pointer;
+}
+.nav-toggle::after { content: '▾'; font-size: 10px; line-height: 1; transition: transform .15s; }
+.site-hdr.is-open .nav-toggle::after { transform: rotate(180deg); }
+.nav-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.nav-toggle.has-urgent::before {  /* 긴급(선거 임박/개표) 빨간 점 */
+  content: ''; position: absolute; top: -3px; right: -3px;
+  width: 8px; height: 8px; border-radius: 50%; background: #e61e2b; border: 1.5px solid var(--bg);
+}
+
+/* 폰(≤640px): nav 링크를 더보기 드롭다운으로 — 위 ≤900 가로스크롤 행을 덮어씀 */
+@media (max-width: 640px) {
+  .site-hdr { position: relative; }
+  .nav-toggle { display: inline-flex; }
+  .hdr-nav {
+    position: absolute; top: 100%; right: 12px; left: auto;
+    flex: 0 0 auto; width: max-content; min-width: 170px; max-width: 78vw;
+    flex-direction: column; align-items: stretch; flex-wrap: nowrap;
+    gap: 2px; margin: 6px 0 0; padding: 6px;
+    background: var(--bg); border: 1px solid var(--rule-strong); border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+    overflow: visible; z-index: 60;
+    display: none;
+  }
+  .site-hdr.is-open .hdr-nav { display: flex; }
+  .hdr-nav .hdr-link {
+    font-size: 14px; padding: 9px 12px; border-radius: 8px; border-bottom: none; width: 100%;
+  }
+  .hdr-nav .hdr-link:hover,
+  .hdr-nav .hdr-link.is-current { background: var(--bg2); border-bottom: none; }
+  .hdr-nav [data-nav-urgent] { display: flex; flex-direction: column; gap: 2px; }
+  .hdr-link-urgent { text-align: left; }
+}
+
 /* === 정당 누적 비율 막대 + 범례 (utils.js partyStackBar/partyStackLegend 공용) ===
    메인 status 카드·지선 archive 선출직 분포가 함께 씀. 바깥 배치만 각 페이지가 정함. */
 .sbar {

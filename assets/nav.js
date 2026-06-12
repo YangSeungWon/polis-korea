@@ -21,6 +21,31 @@
   meta.insertBefore(form, meta.firstChild);
 })();
 
+// 모바일 nav 더보기 — 폭 좁으면(≤640px) nav 링크를 드롭다운으로 접음. CSS: .nav-toggle/.is-open.
+// nav.js가 전 페이지 공통이라 89개 HTML 안 건드리고 여기서 토글만 주입.
+(function injectNavToggle() {
+  const hdr = document.querySelector('.site-hdr');
+  const nav = document.querySelector('.hdr-nav');
+  const meta = document.querySelector('.hdr-meta');
+  if (!hdr || !nav || !meta || meta.querySelector('.nav-toggle')) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'nav-toggle';
+  btn.setAttribute('aria-label', '메뉴');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.textContent = '더보기';
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = hdr.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.addEventListener('click', () => hdr.classList.remove('is-open'));        // 항목 선택 시 닫기
+  document.addEventListener('click', (e) => {                                  // 바깥 클릭 닫기
+    if (!hdr.contains(e.target)) hdr.classList.remove('is-open');
+  });
+  meta.appendChild(btn);
+})();
+
 (async function fillNavUrgent() {
   const slot = document.querySelector('[data-nav-urgent]');
   if (!slot) return;
@@ -59,6 +84,8 @@
   slot.innerHTML = items.slice(0, 2).map((it) =>
     `<a href="${it.href}" class="hdr-link hdr-link-urgent hdr-link-urgent-${it.phase.toLowerCase()}">${it.label}</a>`
   ).join('');
+  // 모바일 더보기 안에 긴급 칩이 숨으므로 토글에 빨간 점 표시(선거 임박/개표).
+  document.querySelector('.nav-toggle')?.classList.add('has-urgent');
 })();
 
 function shortName(meta) {
