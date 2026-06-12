@@ -44,9 +44,48 @@ function renderHistoryLegend() {
   ).join('') + '<span class="leg-item"><span class="leg-dot" style="background:#9aa3b3"></span>데이터 없음</span>';
 }
 
+// 간선 대선 — 지도 대신 선거 방식·선거인 득표 정보 카드.
+function renderIndirectCard(el, nat) {
+  const cands = (nat?.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+  const total = cands.reduce((s, c) => s + (c.votes || 0), 0);
+  const rows = cands.slice(0, 12).map((c) => {
+    const pct = total ? (c.votes / total * 100) : 0;
+    const col = (typeof partyColor === 'function') ? partyColor(c.party, el.date) : '#999';
+    return `<div class="ind-row">
+      <span class="ind-name">${c.name}${c.party && c.party !== '무소속' ? ` <small>${c.party}</small>` : ''}</span>
+      <span class="ind-bar"><span style="width:${pct.toFixed(1)}%;background:${col}"></span></span>
+      <span class="ind-pct">${(c.votes || 0).toLocaleString()}<small> (${pct.toFixed(1)}%)</small></span>
+    </div>`;
+  }).join('');
+  const kind = el.indirect_kind || '간접선거';
+  const elec = total ? `선거인 ${total.toLocaleString()}명` : '';
+  return `<div class="indirect-card">
+    <div class="ind-badge">간접선거 · ${kind}</div>
+    <h3>${el.n}대 대통령선거 <span class="ind-date">${el.date || ''}</span></h3>
+    <p class="ind-note">국민 직접투표가 아니라 <b>${kind}</b>가 대통령을 선출했습니다.
+      지역별(시·도/시·군·구) 개표가 없습니다. ${elec}</p>
+    <div class="ind-winner">당선 <b>${el.winner || ''}</b>${el.winner_party ? ` <small>${el.winner_party}</small>` : ''}</div>
+    <div class="ind-rows">${rows}</div>
+  </div>`;
+}
+
 // 현재 단위에 맞는 hex 렌더 + detail
 async function renderAll() {
   const unit = activeUnit(state.type, state.office, state.results);
+  // 간선(국회·통대·선거인단) 대선 — 지역별 개표가 없어 지도 대신 "어떤 선거였는지" 정보 카드.
+  const elMeta0 = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
+  if (state.type === 'presidential' && elMeta0?.indirect && state.results) {
+    $('#hex')?.toggleAttribute('hidden', true);
+    $('#hex2')?.toggleAttribute('hidden', true);
+    $('#geomap')?.toggleAttribute('hidden', false);
+    $('#display-seg')?.toggleAttribute('hidden', true);
+    $('#sizing-seg')?.toggleAttribute('hidden', true);
+    const gm = $('#geomap');
+    if (gm) gm.innerHTML = renderIndirectCard(elMeta0, activeOfficeData()?.national);
+    renderDetail();
+    renderHistoryLegend();
+    return;
+  }
   // 지도 view 지원 회차 — 21·22(OhmyNews) + 9~20(SGIS 읍면동 복원).
   // 9~12 중선거구(1구 2인)는 당선 2당 줄무늬, 13~22 소선거구는 1위 단색.
   const GEO_GENERAL = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
@@ -94,7 +133,10 @@ function renderRoundsSeg() {
   seg.innerHTML = '';
   const list = state.elections[state.type]?.elections || [];
   const available = state.elections._available?.[state.type] || [];
+  const seen = new Set();
   for (const e of list) {
+    if (seen.has(e.n)) continue;   // 같은 n 중복(예 4대 이승만·윤보선) — 버튼 하나만
+    seen.add(e.n);
     const btn = document.createElement('button');
     btn.className = 'seg-btn';
     if (!available.includes(e.n)) btn.classList.add('no-data');
