@@ -82,6 +82,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 너비는 flex-grow(=의석/득표 비율)에만 비례 — basis 0으로 둬 당명 길이가 폭에 영향 못 줌
+     (auto면 긴 당명 '개혁신당'이 basis를 키워 바가 과대해짐). 당명은 nowrap 한 줄, 좁으면 클립. */
+  flex-basis: 0;
+  white-space: nowrap;
   font-size: 11px;
   font-weight: 700;
   color: #fff;
