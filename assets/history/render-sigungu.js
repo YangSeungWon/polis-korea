@@ -58,7 +58,7 @@ function renderSigunguHex() {
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
-    if (result?.voted) maxVoted = Math.max(maxVoted, result.voted);
+    if (result?.voted && !result._fill) maxVoted = Math.max(maxVoted, result.voted);  // 차용 셀 제외(전체 모도시라 스케일 왜곡)
   }
 
   // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 2만표)
@@ -135,7 +135,8 @@ function renderSigunguHex() {
     for (const d of data) {
       const result = resultForSigungu(d.sido, d.name);
       if (!result?.voted) continue;
-      const N = Math.max(1, Math.ceil(result.voted / unit));
+      const isFill = !!result._fill;   // 모도시 차용 셀 — 득표비례 N 대신 단일 색 hex.
+      const N = isFill ? 1 : Math.max(1, Math.ceil(result.voted / unit));
       const [cx0, cy0] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
       const cands = (result.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       const alloc = allocateByVotes(cands, N);
@@ -150,7 +151,7 @@ function renderSigunguHex() {
       });
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       tt.textContent = top
-        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'} · ${N}석/표`
+        ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${isFill ? ' · 모도시 결과(당시 미분리)' : ' · ' + N + '석/표'}`
         : `${d.sido} ${d.name}`;
       g.appendChild(tt);
       // 시군구 boundary outline — 작은 hex cluster 둘러쌈 (시각 통합, 인접 격자 겹침 방지)
@@ -159,23 +160,36 @@ function renderSigunguHex() {
       sigOutline.setAttribute('class', 'sig-outline' + (isSelected ? ' is-selected' : ''));
       sigOutline.setAttribute('stroke-width', isSelected ? '3.5' : '1.0');
       g.appendChild(sigOutline);
-      // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
-      const spiral = hexSpiral(N);
-      const fills = [];
-      for (let i = 0; i < cands.length; i++) {
-        for (let k = 0; k < alloc[i]; k++) fills.push(partyColor(cands[i].party));
-      }
-      while (fills.length < N) fills.push('#e6e9ef');  // 안전 fallback
-      for (let i = 0; i < spiral.length; i++) {
-        const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
-        const dy = smallR * 1.5 * ar;
-        const sx = cx0 + dx, sy = cy0 + dy;
+      if (isFill) {
+        // 그 구 자체 득표 없음(당시 미분리) — 모도시 1위 색 단일 hex. 득표비례 누적/넘침 없음.
         const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        poly.setAttribute('points', hexPoints(sx, sy, smallR - 0.4));
-        poly.setAttribute('fill', fills[i] || '#e6e9ef');
-        // 작은 hex는 stroke 없음 — selected는 큰 outline에서만 강조.
+        poly.setAttribute('points', hexPoints(cx0, cy0, 16));
+        poly.setAttribute('fill', top ? partyColor(top.party) : '#e6e9ef');
+        poly.setAttribute('opacity', '0.8');   // 차용임을 살짝 구분
         g.appendChild(poly);
+      } else {
+        // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
+        const spiral = hexSpiral(N);
+        const fills = [];
+        for (let i = 0; i < cands.length; i++) {
+          for (let k = 0; k < alloc[i]; k++) fills.push(partyColor(cands[i].party));
+        }
+        while (fills.length < N) fills.push('#e6e9ef');  // 안전 fallback
+        // smallR 클램프 — 큰 셀(합산 등)이 셀 반경(22) 밖으로 넘치지 않게.
+        let ext = 0;
+        for (const [q, ar] of spiral) ext = Math.max(ext, Math.hypot(Math.sqrt(3) * (q + ar / 2), 1.5 * ar));
+        const sr = Math.min(smallR, 20 / (ext + 1));
+        for (let i = 0; i < spiral.length; i++) {
+          const [q, ar] = spiral[i];
+          const dx = sr * Math.sqrt(3) * (q + ar / 2);
+          const dy = sr * 1.5 * ar;
+          const sx = cx0 + dx, sy = cy0 + dy;
+          const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+          poly.setAttribute('points', hexPoints(sx, sy, sr - 0.4));
+          poly.setAttribute('fill', fills[i] || '#e6e9ef');
+          // 작은 hex는 stroke 없음 — selected는 큰 outline에서만 강조.
+          g.appendChild(poly);
+        }
       }
       // 시군구 라벨 — short(시군구 약칭)만 cell 상단에 작게. 시도 prefix는 cluster centroid에 별도(아래).
       const label = shortSigunguLabel(d.name, d.sido);
@@ -208,7 +222,8 @@ function renderSigunguHex() {
   if (sizingMode === 'dorling' && maxVoted > 0) {
     const nodes = data.map((d) => {
       const result = resultForSigungu(d.sido, d.name);
-      const v = result?.voted || 0;
+      // 차용(_fill) 셀은 모도시 전체 득표라 v-비례 금지 — 작은 대표 원.
+      const v = (result && !result._fill) ? (result.voted || 0) : 0;
       const top = topCandidate(result);
       const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
       const gap = top && sec ? top.pct - sec.pct : null;

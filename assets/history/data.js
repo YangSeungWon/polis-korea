@@ -124,6 +124,11 @@ function mergeSigunguResults(parts) {
   };
 }
 
+// 모도시/통합시 결과를 그 구 자체 데이터가 없는 셀에 broadcast(차용)할 때 표시.
+// 격자 모드는 _fill 셀을 득표비례 N개 대신 단일 색 hex로 그림 — 같은 모도시가
+// 미래 구 셀마다 중복 카운트되며 셀 밖으로 넘치는 것 방지.
+function fillResult(r) { return r ? { ...r, _fill: true } : r; }
+
 function resultForSigungu(sido, name, data) {
   data = data || activeOfficeData();
   if (!data?.sigungu) return null;
@@ -172,17 +177,17 @@ function resultForSigungu(sido, name, data) {
   if (m) {
     const parent = m[1];
     const exact = data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === parent);
-    if (exact) return exact;
+    if (exact) return fillResult(exact);
     // 모도시 행도 없으면 형제 분구 합산 — 후신설 구(수원영통 2003·청주서원 2014 등)를 그 시점
     // 형제 구 데이터로 채워 구멍 방지. (현대 legacy hex가 옛 대선 회차보다 구가 많아 생기던 빈칸)
     const esc = parent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const subRe = new RegExp(`^${esc}(?:[가-힣]+(?:구|군)|[갑을병정무])$`);
     const parts = data.sigungu.filter((r) => canonSido(r.sido) === sido && subRe.test(r.name));
-    if (parts.length) return mergeSigunguResults(parts);
+    if (parts.length) return fillResult(mergeSigunguResults(parts));
     // 모도시의 옛 군명 (용인시수지구 → 용인시 → 용인군)
     for (const old of (SIGUNGU_NAME_HISTORY[parent] || [])) {
       const r = data.sigungu.find((rr) => canonSido(rr.sido) === sido && rr.name === old);
-      if (r) return r;
+      if (r) return fillResult(r);
     }
     return null;
   }
@@ -214,6 +219,12 @@ function resultForSigungu(sido, name, data) {
     // 옛 '시+구' 형식 직접 매칭: '대구광역시 중구' → 경북 '대구시중구'.
     const direct = data.sigungu.find((rr) => mf.sidos.includes(rr.sido) && rr.name === `${mf.city}시${name}`);
     if (direct) return direct;
+    // 같은 구의 갑/을/병 분구 합산 우선 — '동대문구' ← '동대문갑구'·'동대문을구' (그 구 자체 데이터, 차용 아님).
+    // 모도시 전체 broadcast로 빠지기 전에 자기 선거구 데이터부터 잡음.
+    const selfBase = name.replace(/구$/, '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const selfRe = new RegExp(`^${selfBase}[갑을병정무]구$`);
+    const selfParts = data.sigungu.filter((rr) => canonSido(rr.sido) === sido && selfRe.test(rr.name));
+    if (selfParts.length) return selfParts.length === 1 ? selfParts[0] : mergeSigunguResults(selfParts);
     // 통합시(또는 시 갑/을구) 합산: '광주시', '광주시갑구'.
     const re2 = new RegExp(`^${mf.city}시(?:[갑을병정무]?구)?$`);
     let parts = data.sigungu.filter((rr) => mf.sidos.includes(rr.sido) && re2.test(rr.name));
@@ -224,7 +235,7 @@ function resultForSigungu(sido, name, data) {
         (canonSido(rr.sido) === sido && /^[가-힣]+구$/.test(rr.name) && rr.name !== name)
         || (mf.sidos.includes(rr.sido) && rr.name.startsWith(`${mf.city}시`) && rr.name !== `${mf.city}시${name}`));
     }
-    if (parts.length) return parts.length === 1 ? parts[0] : mergeSigunguResults(parts);
+    if (parts.length) return fillResult(parts.length === 1 ? parts[0] : mergeSigunguResults(parts));
   }
   return null;
 }
