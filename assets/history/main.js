@@ -113,19 +113,7 @@ async function renderAll() {
     renderHistoryLegend();
     return;
   }
-  // 옛 총선(1~8대) — 선거구 경계 geojson이 없어 hex 지도 불가 → 정당별 의석 정보 카드.
-  if (state.type === 'national_assembly' && state.n < 9 && state.results?.district) {
-    $('#hex')?.toggleAttribute('hidden', true);
-    $('#hex2')?.toggleAttribute('hidden', true);
-    $('#geomap')?.toggleAttribute('hidden', false);
-    $('#display-seg')?.toggleAttribute('hidden', true);
-    $('#sizing-seg')?.toggleAttribute('hidden', true);
-    const gm = $('#geomap');
-    if (gm) gm.innerHTML = renderSeatsCard(elMeta0, state.results.district);
-    renderDetail();
-    renderHistoryLegend();
-    return;
-  }
+  // 옛 총선(1~8대) — 정확 경계는 없지만 시군/시도 centroid로 만든 근사 hex(district_hex_1~8) 사용.
   // 지도 view 지원 회차 — 21·22(OhmyNews) + 9~20(SGIS 읍면동 복원).
   // 9~12 중선거구(1구 2인)는 당선 2당 줄무늬, 13~22 소선거구는 1위 단색.
   const GEO_GENERAL = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
@@ -354,6 +342,7 @@ function renderDetail() {
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}
       </div>
+      ${el?.note ? `<div class="ns-note">📌 ${el.note}</div>` : ''}
     </div>
     <div class="parliament-wrap">
       ${renderParliamentChart(parties, total)}

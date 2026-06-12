@@ -1197,6 +1197,16 @@ def layout_zone_S(zone_cells_by_sido, plan, col_offset, row_offset):
                     cell['c'] = yn_col0 + pos[0]
                     cell['r'] = row_offset + pos[1]
                 cell_idx += n_in_row
+    elif yn_plan.get('mode') == 'fallback':
+        # 옛 시도(대구·부산·울산 직할시 전 — 1~5대) — blob 설계 실패. 영남 전체를
+        # W×H 격자에 2-pass(북→남 행, 행 안 서→동) 단순 배치. 경북(북)·경남(남) 자연 분리.
+        W = max(1, yn_plan['W_yn'])
+        cs = sorted(yn_cells, key=lambda c: -c['lat'])
+        for ri in range(0, len(cs), W):
+            row_cells = sorted(cs[ri:ri + W], key=lambda c: c['lon'])
+            for ci, cell in enumerate(row_cells):
+                cell['c'] = yn_col0 + ci
+                cell['r'] = row_offset + ri // W
     else:
         # wrap mode: 대구 inner + 경북 wrap + 경남/부산/울산 bottom stack
         dg_col = yn_col0 + yn_plan['left_w']
