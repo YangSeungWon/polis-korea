@@ -48,17 +48,32 @@ def sgg_centroid(nm):
         if k[:2] == base: return v
     return None
 
+def load_geo_cen(n):
+    """district_{n}_geojson.json 선거구 폴리곤 centroid (SGIS 1975 경계). {선거구명: (lon,lat)}."""
+    p = GEO / f"district_{n}_geojson.json"
+    if not p.exists():
+        return {}
+    out = {}
+    for f in json.loads(p.read_text(encoding="utf-8")).get("features", []):
+        c = centroid(f["geometry"])
+        out[f["properties"]["SGG"]] = c
+    return out
+
+
 def build(n):
     aid = {1:"1st-general-1948",2:"2nd-general-1950",3:"3rd-general-1954",4:"4th-general-1958",
            5:"5th-general-1960",6:"6th-general-1963",7:"7th-general-1967",8:"8th-general-1971"}[n]
     races = [r for r in json.loads((RES/f"national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]]
+    geo_cen = load_geo_cen(n)  # 실제 선거구 폴리곤 centroid 우선 (geo와 hex 위치 일치)
     cells, fallback = [], 0
     sido_idx = {}  # 시도 내 fallback 선거구 순번 (격자 분산용)
     for r in races:
         # 3·4·5대는 별표 통합으로 sigungu_area 보유 → 우선 사용(이름엔 괄호 없음)
         sido = r["sido"]; sggs = r.get("sigungu_area") or sggs_of(r["name"])
-        cens = [c for c in (sgg_centroid(s) for s in sggs) if c]
-        if cens:
+        cen = geo_cen.get(r["name"])  # 1순위: 실제 선거구 경계 중심
+        if cen:
+            pass
+        elif (cens := [c for c in (sgg_centroid(s) for s in sggs) if c]):
             cen = (sum(c[0] for c in cens)/len(cens), sum(c[1] for c in cens)/len(cens))
         else:
             base = sido_cen(sido)
@@ -70,6 +85,9 @@ def build(n):
         if not cen: continue
         # 동일 centroid 방지 미세 jitter (안정 정렬 보존)
         cen = (cen[0] + (len(cells) % 13) * 0.0008, cen[1] + (len(cells) % 7) * 0.0008)
+        # 정식 시도명으로 통일(build_zone_hex 존 분류·기존 hex 규약 일치). 렌더는 canonSido로 매칭.
+        sido = {"전라북도": "전북특별자치도", "강원도": "강원특별자치도",
+                "제주도": "제주특별자치도"}.get(sido, sido)
         cells.append({"sido": sido, "name": r["name"], "sigungus": sggs,
                       "_cen": [round(cen[0],5), round(cen[1],5)], "c":0, "r":0})
     (GEO/f"district_hex_{n}.json").write_text(json.dumps(cells, ensure_ascii=False), encoding="utf-8")

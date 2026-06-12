@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[2]
 GEO = ROOT / "data/geo"
 RES = ROOT / "data/results"
 SHP = ROOT / "data/raw/sgis/bnd_sigungu_1975/bnd_sigungu_00_1975_4Q.shp"
+DONG_SHP = ROOT / "data/raw/sgis/bnd_dong_1975/bnd_dong_00_1975_4Q.shp"
 
 _tr = Transformer.from_crs(5179, 4326, always_xy=True)
 
@@ -40,6 +41,53 @@ for sr in _sf.shapeRecords():
     g = shp_transform(lambda x, y, z=None: _tr.transform(x, y), shape(sr.shape.__geo_interface__))
     POLY.setdefault(nm, []).append((cd, g))
     _REC.append((cd, nm, g))
+
+# 1975 읍면동 — 농촌 군 갑/을 분할용. canon key -> [(code, shape)]
+def canon_dong(nm):
+    nm = nm.strip().replace("·", ",").replace(" ", "")
+    m = re.match(r"^(.+?)(\d[\d,]*)가동?$", nm)  # 동인1,2가동 → {동인1가,동인2가}
+    if m:
+        base = re.sub(r"동$", "", m.group(1))
+        return [f"{base}{d}가" for d in re.findall(r"\d+", m.group(2))]
+    return [re.sub(r"동$", "", nm)]  # 봉산동→봉산, 안계면=안계면, 교동→교
+
+
+DONG = {}
+_dsf = shapefile.Reader(str(DONG_SHP), encoding="cp949")
+for sr in _dsf.shapeRecords():
+    cd = str(sr.record["adm_dr_cd"])
+    g = shp_transform(lambda x, y, z=None: _tr.transform(x, y), shape(sr.shape.__geo_interface__))
+    for k in canon_dong(sr.record["adm_dr_nm"]):
+        DONG.setdefault(k, []).append((cd, g))
+
+
+def parse_area_tokens(area, sigungu):
+    """선거구역 텍스트 → canon dong key 리스트(시군 prefix 제거, 콤마 분할)."""
+    for s in sigungu:
+        area = area.replace(s, "", 1)
+    toks = [t.strip() for t in re.split(r"[,，]", area) if t.strip()]
+    out = []
+    for t in toks:
+        out += canon_dong(t)
+    return out
+
+
+def dong_union(race_sido, tokens):
+    """동/면 토큰 → (매칭 폴리곤들, 매칭률). 시도 code로 동명 disambiguate."""
+    pref = SIDO_CODE.get(DECANON.get(race_sido, race_sido))
+    polys, hit = [], 0
+    for t in tokens:
+        cand = DONG.get(t)
+        if not cand and t.endswith("읍"):  # 안동읍 등 1963 시승격 → 시 폴리곤
+            cand = POLY.get(t[:-1] + "시")
+        if not cand:
+            continue
+        sel = [g for (c, g) in cand if pref and c.startswith(pref)] or [cand[0][1]]
+        polys += sel
+        hit += 1
+    ratio = hit / len(tokens) if tokens else 0
+    return polys, ratio
+
 
 CANON = {"전라북도": "전북특별자치도", "강원도": "강원특별자치도", "제주도": "제주특별자치도"}
 DECANON = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도", "제주특별자치도": "제주도"}
@@ -103,12 +151,40 @@ def sggs_of(name):
 
 def build(n):
     d = json.loads((RES / f"national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]
-    feats, nmap, skipped, miss = [], {}, 0, []
-    for r in d:
+    # 별표(선거구역 텍스트) — 선거구명으로 lookup (3·4·5대만 보유)
+    area_by = {}
+    bpath = GEO / f"old_district_boundaries_{n}.json"
+    if bpath.exists():
+        for sido, rows in json.loads(bpath.read_text(encoding="utf-8")).items():
+            for row in rows:
+                area_by[row["district"]] = row.get("area", "")
+    from collections import Counter, defaultdict
+    # race별 (시군집합, 동토큰, 매칭폴리곤, 매칭률) 사전계산
+    info = {}
+    groups = defaultdict(list)  # (시도, 시군집합) → [race id...]
+    for i, r in enumerate(d):
         sggs = r.get("sigungu_area") or sggs_of(r["name"])
+        area = r.get("area") or area_by.get(r["name"], "")
+        toks = parse_area_tokens(area, sggs) if area else []
+        dpolys, ratio = dong_union(r["sido"], toks) if toks else ([], 0)
+        info[i] = dict(sggs=sggs, dpolys=dpolys, ratio=ratio)
+        if sggs:
+            groups[(r["sido"], tuple(sorted(sggs)))].append(i)
+    # 분할 그룹은 '전원 동매칭 양호'일 때만 동분할 — 하나라도 미달이면 전원 시군 폴백(겹침 방지)
+    dong_ok = set()
+    for key, ids in groups.items():
+        if len(ids) > 1 and all(info[i]["ratio"] >= 0.9 and len(info[i]["dpolys"]) >= 2 for i in ids):
+            dong_ok.update(ids)
+    feats, nmap, skipped, miss, dong_split = [], {}, 0, [], 0
+    for i, r in enumerate(d):
+        sggs = info[i]["sggs"]
         polys = []
-        for s in sggs:
-            polys += resolve(r["sido"], s)
+        if i in dong_ok:  # 농촌 갑/을 — 동/면 union으로 실제 분리
+            polys = info[i]["dpolys"]
+            dong_split += 1
+        if not polys:
+            for s in sggs:
+                polys += resolve(r["sido"], s)
         if not polys:
             skipped += 1
             miss.append((r["sido"], r["name"], sggs))
@@ -123,7 +199,7 @@ def build(n):
         json.dumps({"type": "FeatureCollection", "features": feats}, ensure_ascii=False), encoding="utf-8")
     (GEO / f"district_{n}_geojson_map.json").write_text(
         json.dumps({"name_to_sgg_code": nmap}, ensure_ascii=False), encoding="utf-8")
-    print(f"{n}대: {len(feats)} feature, skip {skipped} {miss if miss else ''}")
+    print(f"{n}대: {len(feats)} feature, 동분할 {dong_split}, skip {skipped} {miss if miss else ''}")
 
 
 if __name__ == "__main__":
