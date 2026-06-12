@@ -564,6 +564,24 @@ function computeCloseRaces(N = 5) {
 }
 
 
+// 확대 시 "전체" 리셋 버튼 — 공용 1개, 보이는 지도가 확대돼 있으면 표시.
+const _zoomables = [];
+let _resetBtn = null;
+function updateResetBtn() {
+  const viz = document.querySelector('.viz');
+  if (!viz) return;
+  if (!_resetBtn) {
+    _resetBtn = document.createElement('button');
+    _resetBtn.type = 'button';
+    _resetBtn.className = 'pz-reset';
+    _resetBtn.innerHTML = '⤢ 전체';
+    _resetBtn.hidden = true;
+    _resetBtn.addEventListener('click', () => _zoomables.forEach((z) => z.reset()));
+    viz.appendChild(_resetBtn);
+  }
+  _resetBtn.hidden = !_zoomables.some((z) => !z.svg.hasAttribute('hidden') && z.isZoomed());
+}
+
 // 모바일 핀치 확대·드래그 — 빽빽한 전국 hex를 viewBox 조작으로 확대(렌더 시 자동 리셋).
 //  2손가락: 핀치 줌 + 드래그 pan. 확대 상태에서만 1손가락 pan(아니면 페이지 스크롤 허용).
 //  더블탭: 리셋. 셀 탭은 그대로 선택, 제스처 직후 합성 click은 억제.
@@ -573,7 +591,7 @@ function enablePinchZoom(svg) {
   const MAX = 8;
   let base, vb, lastSet;
   const read = () => (svg.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
-  function updateTA() { svg.style.touchAction = (vb && base && vb[2] < base[2] - 0.5) ? 'none' : 'pan-y'; }
+  function updateTA() { svg.style.touchAction = (vb && base && vb[2] < base[2] - 0.5) ? 'none' : 'pan-y'; updateResetBtn(); }
   function clamp(b) {
     let [x, y, w, h] = b;
     if (w >= base[2]) return base.slice();
@@ -587,6 +605,7 @@ function enablePinchZoom(svg) {
   function set(b) { vb = clamp(b); lastSet = vb.map((v) => +v.toFixed(2)).join(' '); svg.setAttribute('viewBox', lastSet); updateTA(); }
   function sync() { base = read(); vb = base.slice(); lastSet = svg.getAttribute('viewBox'); updateTA(); }
   sync();
+  _zoomables.push({ svg, reset: () => set(base.slice()), isZoomed: () => base && vb[2] < base[2] - 0.5 });
   new MutationObserver(() => { const cur = svg.getAttribute('viewBox'); if (cur && cur !== lastSet) sync(); })
     .observe(svg, { attributes: true, attributeFilter: ['viewBox'] });
 
