@@ -19,9 +19,10 @@ function renderHistoryLegend() {
     const feats = state.geoCache?.[state.n]?.features || [];
     const hasApprox = state.effDisplay === 'geo' && feats.some((f) => f.properties?.approx);
     if (hasApprox) {
-      const detailPane = $('#detail-pane');
-      const vizParent = detailPane?.parentElement;
-      if (vizParent && el.parentElement !== vizParent) vizParent.insertBefore(el, detailPane);
+      // .viz는 display:flex(가로)라 그 안에 두면 지도·detail 사이 칸으로 끼어 어색.
+      // .viz 바로 아래(전체폭 행)로 빼서 '지도 아래 범례'로.
+      const viz = document.querySelector('.viz');
+      if (viz) viz.insertAdjacentElement('afterend', el);
       el.hidden = false;
       el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선 = 추정 경계 (갑·을 등 다인선거구 분할)</span>';
     } else {
