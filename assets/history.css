@@ -316,6 +316,14 @@
   fill: var(--ink);
   opacity: 0.35;
 }
+/* 시도명 외곽 라벨 — 무리 위쪽 바깥에 작게. 불투명 셀(총선·지선) 위에서도 보임. bg halo로 가독 */
+.hist-sido-edge-label {
+  fill: var(--ink);
+  opacity: 0.55;
+  stroke: var(--bg);
+  stroke-width: 2.5;
+  paint-order: stroke fill;
+}
 /* 시군구 격자 모드 작은 라벨 — bg halo 두껍게 둘러 어떤 정당색 위에도 읽힘 */
 .hist-sigungu-label {
   fill: var(--ink);

@@ -50,6 +50,32 @@ function periodSidoName(sido, date) {
   return (r && date && String(date) < r[1]) ? r[0] : sido;
 }
 
+// 시도명 외곽 라벨 — 각 시도 셀 무리의 '위쪽 바깥'에 작게(불투명 셀 위에서도 보이게). 대선·총선·지선 공통.
+// pts: [{sido, cx, cy}] (셀 픽셀중심). 무리별 중앙x·최상단y 위에 라벨.
+function drawSidoEdgeLabels(svg, pts) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const by = new Map();
+  for (const p of pts) {
+    const g = by.get(p.sido) || { sx: 0, n: 0, minY: Infinity };
+    g.sx += p.cx; g.n += 1; if (p.cy < g.minY) g.minY = p.cy;
+    by.set(p.sido, g);
+  }
+  for (const [sido, g] of by) {
+    const lbl = (typeof SIDO_LABEL_SHORT !== 'undefined' && SIDO_LABEL_SHORT[sido]) || sido;
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('x', g.sx / g.n);
+    t.setAttribute('y', g.minY - 30);          // 무리 최상단 셀 위쪽 바깥
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('font-size', '14');
+    t.setAttribute('font-weight', '800');
+    t.setAttribute('class', 'hist-sido-edge-label');
+    t.setAttribute('pointer-events', 'none');
+    t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+    t.textContent = lbl;
+    svg.appendChild(t);
+  }
+}
+
 // 옛 도시 선거구(당시 구 없음): '부산시제1'→'부산시 제1선거구', '부산시갑구'→'부산시 갑선거구'.
 function fmtUnitName(name) {
   if (!name) return name;

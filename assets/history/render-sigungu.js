@@ -108,35 +108,11 @@ function renderSigunguHex() {
       for (let k = 0; k < rem; k++) floors[fracs[k].i] += 1;
       return floors;
     }
-    // 시도 라벨 백그라운드 — cells보다 먼저 그려 spiral 색이 위에 덮이도록.
-    // cluster centroid 큰 글씨, spiral 사이/외곽에서 살짝 비침.
-    {
-      const sidoCenters = new Map();
-      for (const d of data) {
-        const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-        const k = d.sido;
-        const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
-        c.sx += cx; c.sy += cy; c.n += 1;
-        sidoCenters.set(k, c);
-      }
-      for (const [sido, c] of sidoCenters) {
-        const lbl = SIDO_LABEL_SHORT[sido] || sido;
-        const tx = c.sx / c.n;
-        const ty = c.sy / c.n;
-        const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        t.setAttribute('x', tx);
-        t.setAttribute('y', ty);
-        t.setAttribute('text-anchor', 'middle');
-        t.setAttribute('dominant-baseline', 'middle');
-        t.setAttribute('font-size', '44');
-        t.setAttribute('font-weight', '800');
-        t.setAttribute('class', 'hist-sido-bg-label');
-        t.setAttribute('pointer-events', 'none');
-        t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-        t.textContent = lbl;
-        svg.appendChild(t);
-      }
-    }
+    // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — 대선·총선·지선 공통.
+    drawSidoEdgeLabels(svg, data.map((d) => {
+      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+      return { sido: d.sido, cx, cy };
+    }));
 
     let selectedG = null;
     for (const d of data) {
@@ -327,24 +303,9 @@ function renderSigunguHex() {
       poly.setAttribute('pointer-events', 'none');
       svg.appendChild(poly);
     }
-    // 시도 라벨 백그라운드 — 권역 테두리 안 centroid에 큰 글씨
-    for (const [sido, list] of sidoGroups) {
-      const cx = list.reduce((s, n) => s + n.cx, 0) / list.length;
-      const cy = list.reduce((s, n) => s + n.cy, 0) / list.length;
-      const lbl = SIDO_LABEL_SHORT[sido] || sido;
-      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      t.setAttribute('x', cx);
-      t.setAttribute('y', cy);
-      t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('dominant-baseline', 'middle');
-      t.setAttribute('font-size', '44');
-      t.setAttribute('font-weight', '800');
-      t.setAttribute('class', 'hist-sido-bg-label');
-      t.setAttribute('pointer-events', 'none');
-      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      t.textContent = lbl;
-      svg.appendChild(t);
-    }
+    // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — grid 모드와 동일.
+    drawSidoEdgeLabels(svg, [...sidoGroups].flatMap(([s, list]) =>
+      list.map((n) => ({ sido: s, cx: n.cx, cy: n.cy }))));
     // 파이 슬라이스 path (top 기준 시계방향). 면적=표수(원), 파이=후보 구성.
     const pieSlice = (cx, cy, rad, a0, a1) => {
       const x0 = cx + rad * Math.cos(a0), y0 = cy + rad * Math.sin(a0);

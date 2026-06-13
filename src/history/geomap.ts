@@ -33,6 +33,7 @@ declare function nbrs(c: number, r: number): Array<[number, number]>;
 declare const NBR_TO_EDGE: number[];
 declare function corner(cx: number, cy: number, rad: number, i: number): [number, number];
 declare function drawHexBorders(svg: any, cells: any[], cellAt: Map<string, any>, colW: number, rowH: number, offX: number, offY: number, r: number, strokeWidth: string | number, includeOutline?: boolean, keyFn?: (d: any) => string | undefined, lineClass?: string): void;
+declare function drawSidoEdgeLabels(svg: any, pts: Array<{ sido: string; cx: number; cy: number }>): void;
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 type DistrictLabel = { prefix: string; short: string; fullName?: string };
@@ -491,6 +492,12 @@ async function renderDistrictHex(): Promise<void> {
 
   // 시도 경계 굵은 선 + 한반도 외곽 — drawHexBorders (hexgrid.js)
   drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true);
+
+  // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — 대선·지선과 공통.
+  drawSidoEdgeLabels(svg, layout.map((d: any) => {
+    const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+    return { sido: d.sido, cx, cy };
+  }));
 
   // 비례대표 — 정당별 세로 col, 지역구 hex 우측에 배치. 사이즈는 지역구와 동일(r=22).
   // 같은 col 안 vertical pitch = 1.5r (격자 hex 표준, odd col 0.5 row shift로 interlock).
