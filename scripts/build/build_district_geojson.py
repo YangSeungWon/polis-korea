@@ -10,7 +10,7 @@
 사용(venv): /tmp/geoenv/bin/python scripts/build/build_district_geojson.py 20
 """
 from __future__ import annotations
-import csv, json, re, subprocess, sys
+import csv, json, os, re, subprocess, sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -303,9 +303,13 @@ def main(n: int):
         sgg_name_map = {}   # (시도2, 정규화시군명) → SGIS 4자리코드
         _sggshp = cfg.get("sgg_fallback") or (ROOT / f"data/raw/sgis/bnd_sigungu_{cfg.get('year')}/bnd_sigungu_00_{cfg.get('year')}_4Q.shp")
         if _sggshp and Path(_sggshp).exists():
-            for sr in shapefile.Reader(str(_sggshp), encoding="cp949").iterRecords():
-                scd = str(sr["sigungu_cd"]).strip()
-                sgg_name_map[(scd[:2], _nsgg(str(sr["sigungu_nm"]).strip()))] = scd[:4]
+            _rdr = shapefile.Reader(str(_sggshp), encoding="cp949")
+            _fn = {f[0].lower(): f[0] for f in _rdr.fields[1:]}  # 필드명 대소문자 무관(1985~95는 대문자)
+            _cf, _nf = _fn.get("sigungu_cd"), _fn.get("sigungu_nm")
+            if _cf and _nf:
+                for sr in _rdr.iterRecords():
+                    scd = str(sr[_cf]).strip()
+                    sgg_name_map[(scd[:2], _nsgg(str(sr[_nf]).strip()))] = scd[:4]
         gu_vote = defaultdict(Counter)
         for r in recs:
             s2 = _s2(str(r["sgg_code"]), r["district"])
@@ -321,6 +325,12 @@ def main(n: int):
             auth = sgg_name_map.get((s2, _nsgg(r.get("sgg_name", ""))))
             if auth:
                 gu_map[str(r["sgg_code"])] = auth
+        # 시군 코드(4자리) → 그 시군을 명시한 선거구 집합. 이동시군구 fallback·Pass4.5 권위배정 공용 가드.
+        sgg2district = defaultdict(set)
+        for r in recs:
+            c4 = sgg_name_map.get((_s2(str(r["sgg_code"]), r["district"]), _nsgg(r.get("sgg_name", ""))))
+            if c4:
+                sgg2district[c4].add((SIDO_SHORT.get(r["sido"], r["sido"]), r["district"]))
 
         # Pass 2: 학습된 구로 매칭(충돌 tiebreak·퍼지 제한). 미매칭 추적.
         unmatched = defaultdict(list)  # key → [(SGIS구, dong)]
@@ -338,10 +348,12 @@ def main(n: int):
                     got = [c for t in alias for c in sido_dong_idx.get((s2, t), [])]
                 else:
                     cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
-                    if len(cands) > 1:  # 동명 충돌(같은 시도 다른 군의 남면·북면 등)
-                        # 학습 구로 tiebreak. 구 미학습이면 cands[0] 난수배정 금지(춘천 동음이의 stray
-                        # 원인) → 미매칭으로 두고 Pass3 기하 인접해결에 위임.
-                        cands = [c for c in cands if c[:4] == gu] if gu else []
+                    if gu:
+                        # 학습 구(권위 앵커)로 한정 — 동명충돌 tiebreak 겸, 유일하지만 타시군인 동음이의
+                        # (정선군 '사북면'이 SGIS엔 춘성 사북면뿐 → 춘성 오배정) 차단. 빈 결과는 퍼지/Pass5 위임.
+                        cands = [c for c in cands if c[:4] == gu]
+                    elif len(cands) > 1:  # 구 미학습 + 동명 충돌 → cands[0] 난수배정 금지(춘천 stray 원인)
+                        cands = []        # 미매칭으로 두고 Pass3 기하 인접해결에 위임.
                     got = cands[:1]
                 if not got and gu:  # 정방향 퍼지(학습 구 제한): 동통합 청운동→청운효자동
                     b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
@@ -357,6 +369,9 @@ def main(n: int):
                     g2 = set(dong_global.get(dong, [])) | set(dong_global.get(_ndong(dong), []))
                     fam = SGIS_FAM.get(s2, {s2})
                     g2 = {c for c in g2 if c[:2] in fam}
+                    # 다른 선거구가 명시한 시군은 차용 금지 — 용인 외서면(SGIS 1985 부재)이 권역 유일
+                    # 가평 외서면을 잡아 제7→가평 stray 만들던 것 차단(가평은 제10 소유). 무소속 코드는 허용.
+                    g2 = {c for c in g2 if not (sgg2district.get(c[:4]) and key not in sgg2district[c[:4]])}
                     if len(g2) == 1:
                         got = [next(iter(g2))]
                 if not got:
@@ -412,6 +427,20 @@ def main(n: int):
                     nfb += 1
             if nfb:
                 print(f"시군구 폴백 복원: {nfb}개 선거구", file=sys.stderr)
+
+        # Pass 4.5: 시군 코드 권위배정 — 미배정 SGIS 동을, 그 시군(code[:4])을 단독 보유한
+        # 선거구로 먼저 귀속(이름매칭 실패한 화천 등 → 그 시군 명시한 선거구). 기하흡수(Pass5)가
+        # 작은 동들을 교차-시군 누적 흡수해 큰 쪼가리(영월 제5에 화천조각) 만들던 것 차단.
+        assigned = set().union(*district_cds.values()) if district_cds else set()
+        auth_n = 0
+        for c in geom_by_cd:
+            if c in assigned:
+                continue
+            ds = sgg2district.get(c[:4])
+            if ds and len(ds) == 1:
+                district_cds[next(iter(ds))].add(c); auth_n += 1
+        if auth_n:
+            print(f"시군 권위배정 고아: {auth_n}개", file=sys.stderr)
 
         # Pass 5: 잔여 미배정 SGIS 동 → 기하 인접 선거구 흡수.
         # NEC 투표구별(VCCP08)이 SGIS 동보다 적은 회차(18·19대 등)는 매칭 안 된 SGIS 동이
