@@ -40,7 +40,8 @@ const state = {
   elections: null,
   hexData: null,            // sigungu_hex.json (9회 기준 통합도시)
   hexLegacy: null,          // sigungu_hex_legacy.json (옛 회차 — 일반구 분할)
-  hexPres: null,            // sigungu_hex_pres.json (옛 대선 2~14대 회차별 period 구 레이아웃)
+  hexPres: null,            // sigungu_hex_pres.json (옛 대선 2~18대 회차별 period 구 레이아웃)
+  hexLocal: null,           // sigungu_hex_local.json (지선 기초장 1~9회 회차별 period 시군구 레이아웃)
   districtHex: {},          // {22: [...]} 지역구별 hex layout
   results: null,
   selected: null,

@@ -702,18 +702,20 @@ async function init() {
       setTimeout(kill, 5000);
     }
   }
-  const [elections, hex, hexLegacy, hexPres, manifest] = await Promise.all([
+  const [elections, hex, hexLegacy, hexPres, hexLocal, manifest] = await Promise.all([
     loadJson('data/elections.json'),
     loadJson('data/geo/sigungu_hex.json'),
     loadJson('data/geo/sigungu_hex_legacy.json').catch(() => null),
     loadJson('data/geo/sigungu_hex_pres.json').catch(() => null),
+    loadJson('data/geo/sigungu_hex_local.json').catch(() => null),
     loadJson('data/results/manifest.json').catch(() => ({ presidential: [], national_assembly: [], local: [] })),
   ]);
   state.elections = elections;
   state.elections._available = manifest;
   state.hexData = hex;
   state.hexLegacy = hexLegacy;
-  state.hexPres = hexPres;   // 옛 대선 회차별 period 구 레이아웃 (회차→셀). 2~14대.
+  state.hexPres = hexPres;   // 옛 대선 회차별 period 구 레이아웃 (회차→셀). 2~18대.
+  state.hexLocal = hexLocal; // 지선 기초장 회차별 period 시군구 레이아웃 (회차→셀). 1~9회.
 
   document.querySelectorAll('[data-type]').forEach((b) => {
     b.addEventListener('click', () => setType(b.dataset.type));
