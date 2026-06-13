@@ -590,7 +590,7 @@ function updateResetBtn() {
 function enablePinchZoom(svg) {
   if (!svg || svg._pz) return;
   svg._pz = true;
-  const MAX = 8;
+  const MAX = 4;   // 최대 확대 배율 (8 → 4, 과도 확대 방지)
   let base, vb, lastSet;
   const read = () => (svg.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
   function updateTA() {

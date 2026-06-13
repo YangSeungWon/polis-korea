@@ -320,7 +320,7 @@
 .hist-sigungu-label {
   fill: var(--ink);
   stroke: var(--bg);
-  stroke-width: 3;
+  stroke-width: 1.6;          /* halo 얇게 — 인접 셀 라벨을 가리지 않게 */
   paint-order: stroke fill;
 }
 
