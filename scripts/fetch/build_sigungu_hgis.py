@@ -235,6 +235,7 @@ def build(round_n, date, assembly_n=None):
                                "sido": data_sido, "borrowed_from": f"district_{assembly_n}"},
                 "geometry": geom})
             borrowed += 1
+    feats_out = clean_partition(feats_out)   # 평면분할 위상정리 (fill 틈·슬리버 제거)
     out = GEO / f"sigungu_hgis_{round_n}.json"
     out.write_text(json.dumps({"type": "FeatureCollection", "features": feats_out},
                               ensure_ascii=False), encoding="utf-8")
@@ -249,7 +250,44 @@ def build(round_n, date, assembly_n=None):
     build_sido(out, round_n)
 
 
-def _close_sido(g, eps=0.006, min_area=0.0004, min_hole=0.0006):
+def clean_partition(feats):
+    """평면분할 위상정리 — HGIS 개별수집 폴리곤의 겹침·틈 제거. 모든 경계를 noding 후 polygonize,
+    각 face를 포함하는(없으면 최근접) 원 시군구에 귀속 → 인접끼리 경계 공유하는 깔끔한 타일링.
+    (fill 틈선·슬리버 소멸, 이걸 dissolve한 sido 외곽선도 자동으로 깨끗.)"""
+    from shapely.geometry import shape, mapping
+    from shapely.ops import unary_union, polygonize
+    from shapely.strtree import STRtree
+    from shapely.validation import make_valid
+    geoms = []
+    for f in feats:
+        g = shape(f["geometry"])
+        geoms.append(g if g.is_valid else make_valid(g))
+    net = unary_union([g.boundary for g in geoms])
+    faces = list(polygonize(net))
+    tree = STRtree(geoms)
+    buckets = {i: [] for i in range(len(geoms))}
+    for face in faces:
+        pt = face.representative_point()
+        owner = None
+        for ci in tree.query(pt):
+            ci = int(ci)
+            if geoms[ci].contains(pt):
+                owner = ci
+                break
+        if owner is None:                       # 틈 face → 최근접 시군구로 흡수
+            nn = tree.query_nearest(face)
+            owner = int(nn[0] if hasattr(nn, "__len__") else nn)
+        buckets[owner].append(face)
+    out = []
+    for i, f in enumerate(feats):
+        nf = dict(f)
+        if buckets[i]:
+            nf["geometry"] = mapping(unary_union(buckets[i]))
+        out.append(nf)
+    return out
+
+
+def _close_sido(g, eps=0.0015, min_area=0.0004, min_hole=0.0006):
     """HGIS 시군구 개별수집으로 생긴 시도내 틈/슬리버 제거 — 형태학적 close(buffer +eps→-eps)로
     인접 군 사이 틈 메우고 슬리버 흡수, 잔여 미세조각·미세 hole 제거(실제 섬·만은 유지)."""
     from shapely.geometry import Polygon
