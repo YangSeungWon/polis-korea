@@ -20,15 +20,20 @@ RAW.mkdir(parents=True, exist_ok=True)
 EP = "https://hgis.history.go.kr/pro_g1/gis/gisSearch.do"
 UA = "Mozilla/5.0"
 
-# 결과데이터 모던 canon 시도 → (HGIS 역사 시도명, 시도 2자리코드)
+# 결과데이터 모던 canon 시도 → (HGIS name 매칭용 부분문자열, 시도 2자리코드)
+# 광역시는 승격 전엔 道 소속이라 HGIS name에 '부산직할시'/'경상남도 부산시' 등 다양 → 도시명 부분일치.
 SIDO = {
-    "서울특별시": ("서울특별시", "11"), "경기도": ("경기도", "31"),
-    "강원특별자치도": ("강원도", "32"), "충청북도": ("충청북도", "33"),
+    "서울특별시": ("서울", "11"), "부산광역시": ("부산", "21"), "대구광역시": ("대구", "22"),
+    "인천광역시": ("인천", "23"), "광주광역시": ("광주", "24"), "대전광역시": ("대전", "25"),
+    "경기도": ("경기", "31"), "강원특별자치도": ("강원", "32"), "충청북도": ("충청북도", "33"),
     "충청남도": ("충청남도", "34"), "전북특별자치도": ("전라북도", "35"),
     "전라남도": ("전라남도", "36"), "경상북도": ("경상북도", "37"),
-    "경상남도": ("경상남도", "38"), "제주특별자치도": ("제주도", "39"),
+    "경상남도": ("경상남도", "38"), "제주특별자치도": ("제주", "39"),
 }
 WANT_TYPES = {"郡", "府", "市", "區", "邑"}
+CITY_PREFIXES = ["부산시", "대구시", "인천시", "광주시", "대전시"]
+SIDO_CITY = {"부산광역시": "부산", "대구광역시": "대구", "인천광역시": "인천",
+             "광주광역시": "광주", "대전광역시": "대전"}
 
 
 def hgis(keyword):
@@ -60,20 +65,52 @@ def pick_version(feats, date):
     return min(cand, key=b)                      # 전부 이후면 가장 이른
 
 
-def resolve_nm(data_sido, target_nm, date, types, keyword=None):
-    """HGIS에서 nm==target_nm·해당 type·sido 일치 중 선거일 유효(또는 최근접) 버전 feature."""
+def resolve_nm(data_sido, target_nm, date, types, keyword=None, city_hint=None):
+    """HGIS에서 nm==target_nm·해당 type·(sido부분 또는 도시힌트 일치) 중 선거일 유효(최근접) 버전."""
     hsido = SIDO[data_sido][0]
     feats = []
     for arr in hgis(keyword or target_nm):
         for f in arr.get("features", []):
             p = f.get("properties", {})
-            if p.get("nm") == target_nm and p.get("type") in types and hsido in str(p.get("name", "")):
+            name = str(p.get("name", ""))
+            if p.get("nm") == target_nm and p.get("type") in types \
+                    and (hsido in name or (city_hint and city_hint in name)):
                 feats.append(f)
     return pick_version(feats, date) if feats else None
 
 
+def name_candidates(data_sido, sigungu):
+    """(target_nm, city_hint) 후보 — 시접두 분리·구 보충으로 HGIS nm에 맞춤.
+    '부산시동구'→('동구','부산'), '동래'(부산광역시)→('동래구','부산'). 선거구(제N·갑을)는 매칭X→차용."""
+    import re
+    city = SIDO_CITY.get(data_sido)
+    leaf = sigungu
+    for cp in CITY_PREFIXES:
+        if sigungu.startswith(cp) and len(sigungu) > len(cp):
+            leaf = sigungu[len(cp):]; city = cp[:2]; break
+    cands = [(leaf, city)]
+    if leaf and not re.search(r"[갑을병정무]|제\d", leaf) and not leaf.endswith(("구", "군", "시")):
+        cands.append((leaf + "구", city))          # 동래→동래구, 부산진→부산진구
+    if leaf.endswith("시"):                          # 데이터 시승격 표기 vs HGIS 당시 군 (공주시↔공주군)
+        cands.append((leaf[:-1] + "군", city))
+    elif leaf.endswith("군"):                        # 속초군↔속초시
+        cands.append((leaf[:-1] + "시", city))
+    if leaf != sigungu:
+        cands.append((sigungu, None))
+    seen, out = set(), []
+    for nm, ch in cands:
+        if nm not in seen:
+            seen.add(nm); out.append((nm, ch))
+    return out
+
+
 def resolve(data_sido, sigungu, date):
-    return resolve_nm(data_sido, sigungu, date, WANT_TYPES), SIDO[data_sido][1]
+    code2 = SIDO[data_sido][1]
+    for nm, city in name_candidates(data_sido, sigungu):
+        v = resolve_nm(data_sido, nm, date, WANT_TYPES, keyword=nm, city_hint=city)
+        if v:
+            return v, code2
+    return None, code2
 
 
 def parent_city_mask(data_sido, name, date):
@@ -81,27 +118,52 @@ def parent_city_mask(data_sido, name, date):
     부산시갑구→부산시(市/府), 동대문갑구→동대문구(區). 그 시점 도시 범위로 가둬 인접 군과 겹침 방지."""
     import re
     from shapely.geometry import shape
-    base = re.sub(r"[갑을병정무]구$", "", name)          # 부산시갑구→부산시, 동대문갑구→동대문
-    parent = base if base.endswith("시") else base + "구"  # 부산시 / 동대문구
-    kw = re.sub(r"(시|구)$", "", parent)                  # HGIS 검색어: 부산 / 동대문
+    s = re.sub(r"제\d+선거구", "", name).replace("(", "").replace(")", "")
+    s = re.sub(r"[갑을병정무]|제\d+", "", s)              # 마커 제거: 부산시갑구→부산시구, 부산시제1→부산시
+    s = re.sub(r"\s+", "", s)
+    parent = re.sub(r"(시|구)구$", r"\1", s)             # 부산시구→부산시, 부산진구구→부산진구, 동대문구 유지
+    kw = re.sub(r"(시|구)$", "", parent)                  # HGIS 검색어: 부산 / 동대문 / 부산진
     v = resolve_nm(data_sido, parent, date, {"市", "府", "區", "郡"}, keyword=kw)
     return shape(v["geometry"]) if v else None
 
 
+_JM = {"갑": 1, "을": 2, "병": 3, "정": 4, "무": 5}
+
+
+def seon_key(s):
+    """선거구명 정규화 → (도시base, 선거구번호). 표기차 흡수: 데이터 '동대문갑구'·'부산시제1'·
+    총선geo '동대문구 갑'·'제1선거구(부산시 갑구)' 모두 동일 키. 갑=1·을=2…무=5, 제N=N."""
+    import re
+    s = re.sub(r"제\d+선거구", "", s).replace("(", "").replace(")", "")  # 총선 wrapper 제거
+    m = re.search(r"[갑을병정무]", s)
+    if m:
+        marker = _JM[m.group(0)]
+    else:
+        m2 = re.search(r"제(\d+)", s)               # 데이터 '제N' 방식(3대 부산·인천·대구)
+        marker = int(m2.group(1)) if m2 else 0
+    base = re.sub(r"[갑을병정무]|제\d+", "", s)
+    base = re.sub(r"\s+", "", base)
+    base = re.sub(r"(구|시)+$", "", base)   # 동대문구→동대문, 부산시→부산, 부산진구구→부산진
+    return (base, marker)
+
+
 def borrow_assembly(unmatched, assembly_n, date):
-    """HGIS 무매칭 선거구(부산 갑~무 등 행정구역 아닌 선거구)를 동시대 총선 geo의 voronoi 폴리곤으로.
-    district_{m}_geojson은 도시 선거구를 동 점 voronoi로 이미 분할 보유 → 같은 선거구명 매칭해 차용.
-    단 voronoi는 1975 도시범위 기반이라 그 시점 부모도시 HGIS 폴리곤으로 clip(예: 부산이 동래군과 겹침 방지)."""
+    """HGIS 무매칭 선거구(부산 갑~무·서울구 갑/을 등 행정구역 아닌 선거구)를 동시대 총선 voronoi로.
+    district_{m}_geojson이 도시 선거구를 voronoi 분할 보유 → seon_key 정규화로 매칭해 차용.
+    voronoi는 1975 도시범위 기반이라 그 시점 부모도시 HGIS 폴리곤으로 clip(부산↔동래군 겹침 방지)."""
     from shapely.geometry import shape, mapping
     p = ROOT / "data/geo" / f"district_{assembly_n}_geojson.json"
     if not p.exists():
         return {}, unmatched
     feats = json.loads(p.read_text(encoding="utf-8")).get("features", [])
+    idx = {}
+    for f in feats:
+        k = seon_key(str(f["properties"].get("SGG", "")))
+        if k[1] and f.get("geometry"):
+            idx[k] = f
     got, still = {}, []
     for data_sido, name, why in unmatched:
-        sgg_target = name.replace(" ", "")
-        hit = next((f for f in feats
-                    if sgg_target in str(f["properties"].get("SGG", "")).replace(" ", "") and f.get("geometry")), None)
+        hit = idx.get(seon_key(name))
         if not hit:
             still.append((data_sido, name, why)); continue
         geom = shape(hit["geometry"])
@@ -129,9 +191,17 @@ def simplify(path, pct="3%"):
 def build(round_n, date, assembly_n=None):
     # 결과 파일 — 서수 접두({n}nd-pres-*) 우선
     suf = {1: "st", 2: "nd", 3: "rd"}.get(round_n, "th")
-    cands = list((ROOT / "data/results").glob(f"{round_n}{suf}-pres-*.json")) or \
-            list((ROOT / "data/results").glob(f"*pres*_{round_n}.json"))
-    src = next((c for c in cands if "sigungu" not in c.name), cands[0] if cands else None)
+    cands = [c for c in (list((ROOT / "data/results").glob(f"{round_n}{suf}-pres-*.json")) or
+                         list((ROOT / "data/results").glob(f"*pres*_{round_n}.json")))
+             if "sigungu" not in c.name]
+    # sigungu-scope race 가장 많은 파일 (4대: 3.15 popular > 8.12 간선 0)
+    def n_sgg(c):
+        try:
+            return sum(1 for r in json.loads(c.read_text(encoding="utf-8")).get("races", [])
+                       if r.get("scope") == "sigungu")
+        except Exception:
+            return -1
+    src = max(cands, key=n_sgg) if cands else None
     if not src:
         print(f"결과 파일 못 찾음 (round {round_n})", file=sys.stderr); return
     print(f"소스: {src.name} | 선거일 {date}", file=sys.stderr)

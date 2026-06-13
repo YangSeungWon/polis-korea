@@ -601,7 +601,7 @@ const PRES_SGG_GEO_YEAR: Record<number, number> = {
 const PRES_GEO_ROUNDS = [2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 // HGIS 시간축 경계로 복원된 옛 대선 회차 — sigungu_hgis_{n} + sido_hgis_{n} 사용(그 선거일 실제 경계).
 // 그 외(13~21)는 PRES_SGG_GEO_YEAR의 SGIS 연도 경계. (build_sigungu_hgis.py로 회차 추가 시 여기 등록.)
-const PRES_HGIS_ROUNDS = new Set([2]);
+const PRES_HGIS_ROUNDS = new Set([2, 3, 4, 5, 6, 7]);
 
 async function loadSggGeoByYear(y: number | undefined): Promise<any> {
   const key = y || 'simple';
