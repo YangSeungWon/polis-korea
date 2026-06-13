@@ -124,9 +124,8 @@ function _mountSggGeo(geoData, infoFor, styleFor, labelFor) {
   } else {
     geoLeafletMap.invalidateSize();
   }
-  // 다른 layer(총선 지역구 / 이전 layer) 제거
-  if (geoDistrictLayer && geoLeafletMap.hasLayer(geoDistrictLayer)) geoLeafletMap.removeLayer(geoDistrictLayer);
-  if (localGeoLayer && geoLeafletMap.hasLayer(localGeoLayer)) geoLeafletMap.removeLayer(localGeoLayer);
+  // 모든 geo 오버레이 제거(총선 지역구·38선·옛 시도외곽선 등 잔류 방지) → 아래서 필요한 것만 재추가.
+  clearGeoLayers();
 
   localGeoLayer = L.geoJSON(geoData, {
     style: (f) => styleFor(infoFor(f.properties)),
