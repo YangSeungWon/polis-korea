@@ -14,9 +14,10 @@ const LOCAL_SGG_GEO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010 };
 
 // 대선 시군구 geo — 16대(2002)부터만(13~15대는 전국 합산만 있어 지도 불가).
 //   16대2002→2002  17대2007→2006  18대2012→2013(세종 출범·당진시 승격 후, 청주통합 전)
-//   19대2017·20대2022→2018(sigungu_simple).
-// 경계가 시 단위(일반구 dissolve)여도 resultForSigungu reverse-merge로 대선 일반구 데이터 집계.
-const PRES_SGG_GEO_YEAR = { 16: 2002, 17: 2006, 18: 2013 };
+//   19대2017·20대2022·21대2025→2025(SGIS 2025-2Q 동→시군구 dissolve, 상세 80m급).
+// 이전엔 19~21이 sigungu_simple(과단순화 30정점/폴리곤)을 써 해안선이 엉기설기했음.
+// 시-단위 250유닛은 2018~2025 안정 → 한 파일로 19~21 공용. 일반구는 reverse-merge로 집계.
+const PRES_SGG_GEO_YEAR = { 16: 2002, 17: 2006, 18: 2013, 19: 2025, 20: 2025, 21: 2025 };
 const PRES_GEO_ROUNDS = [16, 17, 18, 19, 20, 21];   // 21대=2025 조기대선(sigungu_simple 경계)
 
 async function loadSggGeoByYear(y) {
