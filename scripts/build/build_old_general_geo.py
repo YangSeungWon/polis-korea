@@ -207,9 +207,21 @@ def parse_area_tokens(area, sigungu):
     return out
 
 
+# 권역: 도 race_sido(2자리) → 허용 동 시도코드(자기 + 자식 광역시). 그 밖의 시도 동은 동음이의로 차용 금지.
+DONG_REGION = {
+    "31": {"31", "23"},            # 경기 + 인천
+    "37": {"37", "22"},            # 경북 + 대구
+    "36": {"36", "24"},            # 전남 + 광주
+    "34": {"34", "25", "29"},      # 충남 + 대전·세종
+    "38": {"38", "21", "26"},      # 경남 + 부산·울산
+}
+
+
 def dong_union(race_sido, tokens):
-    """동/면 토큰 → (매칭 폴리곤들, 매칭률). 시도 code로 동명 disambiguate."""
+    """동/면 토큰 → (매칭 폴리곤들, 매칭률). 시도(권역) code로 동명 disambiguate.
+    그 권역에 없는 동명(예: 강릉을 별표의 '신서면'=연천 경기)은 차용 안 함 — 타시도 동음이의 stray 방지."""
     pref = SIDO_CODE.get(DECANON.get(race_sido, race_sido))
+    allowed = DONG_REGION.get(pref, {pref}) if pref else None
     polys, hit = [], 0
     for t in tokens:
         cand = DONG.get(t)
@@ -217,7 +229,9 @@ def dong_union(race_sido, tokens):
             cand = POLY.get(t[:-1] + "시")
         if not cand:
             continue
-        sel = [g for (c, g) in cand if pref and c.startswith(pref)] or [cand[0][1]]
+        sel = [g for (c, g) in cand if allowed and c[:2] in allowed]
+        if not sel:
+            continue   # 권역 밖 동명 — 동음이의 타시도 폴리곤 차용 금지(헐거운 fallback 제거)
         polys += sel
         hit += 1
     ratio = hit / len(tokens) if tokens else 0

@@ -297,7 +297,15 @@ def main(n: int):
                 if pre in name:
                     return ov
             return NEC2SGIS.get(sgg_code[:2], sgg_code[:2])
-        # Pass 1: 고유(단일 후보) 동매칭으로 NEC sgg_code → SGIS 구코드 학습 (구 번호 불일치 대응)
+        # Pass 1: NEC sgg_code → SGIS 구코드(4자리). 권위적: rec의 sgg_name(영월군 등)을 SGIS 시군명에
+        # 직접 매칭(bnd_sigungu). 일반 면명(남·북·동면)만 가진 선거구가 같은 시도 동음이의(춘성·홍천
+        # 남면)로 오매칭되던 것 차단. 시군명 소스 없으면 고유 동매칭 학습으로 폴백.
+        sgg_name_map = {}   # (시도2, 정규화시군명) → SGIS 4자리코드
+        _sggshp = cfg.get("sgg_fallback") or (ROOT / f"data/raw/sgis/bnd_sigungu_{cfg.get('year')}/bnd_sigungu_00_{cfg.get('year')}_4Q.shp")
+        if _sggshp and Path(_sggshp).exists():
+            for sr in shapefile.Reader(str(_sggshp), encoding="cp949").iterRecords():
+                scd = str(sr["sigungu_cd"]).strip()
+                sgg_name_map[(scd[:2], _nsgg(str(sr["sigungu_nm"]).strip()))] = scd[:4]
         gu_vote = defaultdict(Counter)
         for r in recs:
             s2 = _s2(str(r["sgg_code"]), r["district"])
@@ -307,6 +315,12 @@ def main(n: int):
                 if len(cands) == 1:
                     gu_vote[str(r["sgg_code"])][cands[0][:4]] += 1
         gu_map = {sgg: cnt.most_common(1)[0][0] for sgg, cnt in gu_vote.items()}
+        # 권위적 앵커로 덮어쓰기 (sgg_name 직접 매칭이 있으면 우선)
+        for r in recs:
+            s2 = _s2(str(r["sgg_code"]), r["district"])
+            auth = sgg_name_map.get((s2, _nsgg(r.get("sgg_name", ""))))
+            if auth:
+                gu_map[str(r["sgg_code"])] = auth
 
         # Pass 2: 학습된 구로 매칭(충돌 tiebreak·퍼지 제한). 미매칭 추적.
         unmatched = defaultdict(list)  # key → [(SGIS구, dong)]
@@ -324,11 +338,10 @@ def main(n: int):
                     got = [c for t in alias for c in sido_dong_idx.get((s2, t), [])]
                 else:
                     cands = sido_dong_idx.get((s2, dong)) or sido_dong_idx.get((s2, _ndong(dong))) or []
-                    if len(cands) > 1 and gu:  # 동명 충돌 → 학습된 구로 tiebreak (conv 가정 대신)
-                        f = [c for c in cands if c[:4] == gu]
-                        # 학습 구와 불일치하는 다중후보(서산 '남면'→연기·대덕 등 먼 동음이의)는
-                        # cands[0] 난수배정 대신 미매칭으로 두고 Pass5 기하 인접해결에 위임.
-                        cands = f if f else []
+                    if len(cands) > 1:  # 동명 충돌(같은 시도 다른 군의 남면·북면 등)
+                        # 학습 구로 tiebreak. 구 미학습이면 cands[0] 난수배정 금지(춘천 동음이의 stray
+                        # 원인) → 미매칭으로 두고 Pass3 기하 인접해결에 위임.
+                        cands = [c for c in cands if c[:4] == gu] if gu else []
                     got = cands[:1]
                 if not got and gu:  # 정방향 퍼지(학습 구 제한): 동통합 청운동→청운효자동
                     b = re.sub(r"(제?\d+)?가?(동|읍|면|리)$", "", _ndong(dong)) or _ndong(dong)
@@ -436,8 +449,8 @@ def main(n: int):
                         other = (cd_to_key[ac], ln)
                 if same[0]:
                     newly[c] = same[0]
-                elif other[0]:
-                    newly[c] = other[0]; cross_sgg += 1   # 같은 시군구 배정-동 없음 → 교차(불확실)
+                elif other[0] and g.area < 0.002:        # 교차-시군구는 작은 슬리버만(큰 orphan을 인접
+                    newly[c] = other[0]; cross_sgg += 1   # 타시군 선거구에 흡수해 생기던 큰 쪼가리 방지)
                 else:
                     still.append(c)
             if not newly:
