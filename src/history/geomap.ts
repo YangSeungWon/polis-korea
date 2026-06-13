@@ -599,6 +599,9 @@ const PRES_SGG_GEO_YEAR: Record<number, number> = {
   13: 1985, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013, 19: 2025, 20: 2025, 21: 2025,
 };
 const PRES_GEO_ROUNDS = [2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+// HGIS 시간축 경계로 복원된 옛 대선 회차 — sigungu_hgis_{n} + sido_hgis_{n} 사용(그 선거일 실제 경계).
+// 그 외(13~21)는 PRES_SGG_GEO_YEAR의 SGIS 연도 경계. (build_sigungu_hgis.py로 회차 추가 시 여기 등록.)
+const PRES_HGIS_ROUNDS = new Set([2]);
 
 async function loadSggGeoByYear(y: number | undefined): Promise<any> {
   const key = y || 'simple';
@@ -606,6 +609,11 @@ async function loadSggGeoByYear(y: number | undefined): Promise<any> {
     localGeoSggCache[key] = await loadJson(y ? `data/geo/sigungu_${y}.json` : 'data/geo/sigungu_simple.json');
   }
   return localGeoSggCache[key];
+}
+// 임의 경계 파일 캐시 로더 (HGIS 회차 등).
+async function loadSggGeoFile(cacheKey: string, path: string): Promise<any> {
+  if (!localGeoSggCache[cacheKey]) localGeoSggCache[cacheKey] = await loadJson(path);
+  return localGeoSggCache[cacheKey];
 }
 const loadLocalSggGeo = (n: number) => loadSggGeoByYear(LOCAL_SGG_GEO_YEAR[n]);
 
@@ -665,7 +673,13 @@ async function renderLocalGeoMap(unit: string): Promise<void> {
 // 대선 시군구 geo — margin 명도(16~21). 13~15대는 시군구 미수집 → 시도 hex(margin 명도)로 표시(activeUnit).
 async function renderPresGeoMap(): Promise<void> {
   await loadSidoGeo();
-  const geoData = await loadSggGeoByYear(PRES_SGG_GEO_YEAR[state.n]);
+  const n = state.n;
+  // HGIS 회차는 그 선거일 실제 경계(sigungu_hgis_{n}), 그 외는 SGIS 연도 경계(sigungu_{year}).
+  const useHgis = PRES_HGIS_ROUNDS.has(n);
+  const geoData = useHgis
+    ? await loadSggGeoFile(`hgis_${n}`, `data/geo/sigungu_hgis_${n}.json`)
+    : await loadSggGeoByYear(PRES_SGG_GEO_YEAR[n]);
+  const outlineKey = useHgis ? `hgis_${n}` : PRES_SGG_GEO_YEAR[n];
   if (!geoData?.features?.length) return;
   const el = (state.elections[state.type]?.elections || []).find((x: any) => x.n === state.n);
   const electionDate = el?.date || '';
@@ -680,20 +694,22 @@ async function renderPresGeoMap(): Promise<void> {
              race: { sido: eff.sido, name: eff.name, candidates: r.candidates, scope: 'sigungu' } };
   };
   const labelFor = (props: any) => `${LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || ''} ${props.name}`.trim();
-  _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, PRES_SGG_GEO_YEAR[state.n]);
+  _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, outlineKey);
 }
 
 const SIDO_OUTLINE_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
-// 대선·지선 시도 외곽선 — period(sido_{year}) 있으면 그 시점 경계로(세종2012·울산1997·군위 등 시대 정합),
-// 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시.
-async function _sidoOutlineForYear(year: number | null): Promise<any> {
-  if (year && PERIOD_SIDO_YEARS.has(year)) {
-    if (periodSidoByYear[year] === undefined) {
-      periodSidoByYear[year] = await loadJson(`data/geo/sido_${year}.json`)
+// 대선·지선 시도 외곽선 — key가 연도(sido_{year}) 또는 'hgis_{n}'(sido_hgis_{n}, 옛 회차 HGIS 경계)면
+// 그 시점 경계로, 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시(key 문자열).
+async function _sidoOutline(key: string | number | null): Promise<any> {
+  const k = key == null ? null : String(key);
+  const attempt = k != null && (k.startsWith('hgis_') || PERIOD_SIDO_YEARS.has(Number(k)));
+  if (attempt && k) {
+    if (periodSidoByYear[k] === undefined) {
+      periodSidoByYear[k] = await loadJson(`data/geo/sido_${k}.json`)
         .then((od) => L.geoJSON(od, { style: SIDO_OUTLINE_STYLE, interactive: false }))
         .catch(() => null);
     }
-    if (periodSidoByYear[year]) return periodSidoByYear[year];
+    if (periodSidoByYear[k]) return periodSidoByYear[k];
   }
   if (!geoSidoOutlineLayer && state.geoSido) {
     geoSidoOutlineLayer = L.geoJSON(state.geoSido, { style: SIDO_OUTLINE_STYLE, interactive: false });
@@ -702,8 +718,8 @@ async function _sidoOutlineForYear(year: number | null): Promise<any> {
 }
 
 // Leaflet 마운트 공유 — layer 교체·시도 외곽선·fit·minimap. (지선/대선 공통)
-// periodYear: 시도 외곽선을 그 연도 경계로(sido_{year}); null이면 현대 sido_simple.
-async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (info: any) => any, labelFor: (p: any) => string, periodYear: number | null = null): Promise<void> {
+// outlineKey: 시도 외곽선 소스 — 연도(sido_{year}) 또는 'hgis_{n}'(sido_hgis_{n}); null이면 현대 sido_simple.
+async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (info: any) => any, labelFor: (p: any) => string, outlineKey: string | number | null = null): Promise<void> {
   if (!geoLeafletMap) {
     geoLeafletMap = L.map('geomap', {
       zoomControl: true, attributionControl: false,
@@ -730,8 +746,8 @@ async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (i
       : (info.sido === state.selected?.sido && info.name === state.selected?.name);
   });
 
-  // 시도 외곽선 overlay — period 우선(sido_{year}), 없으면 현대 sido_simple.
-  const outline = await _sidoOutlineForYear(periodYear);
+  // 시도 외곽선 overlay — period 우선(sido_{year}/sido_hgis_{n}), 없으면 현대 sido_simple.
+  const outline = await _sidoOutline(outlineKey);
   // 회차/연도 전환 시 다른 시도 외곽선(현대/타 연도) 제거 후 현재 것만 표시.
   for (const l of [geoSidoOutlineLayer, ...Object.values(periodSidoByYear)]) {
     if (l && l !== outline && geoLeafletMap.hasLayer(l)) geoLeafletMap.removeLayer(l);
