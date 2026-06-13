@@ -90,7 +90,8 @@ def name_candidates(data_sido, sigungu):
             leaf = sigungu[len(cp):]; city = cp[:2]; break
     cands = [(leaf, city)]
     if leaf and not re.search(r"[갑을병정무]|제\d", leaf) and not leaf.endswith(("구", "군", "시")):
-        cands.append((leaf + "구", city))          # 동래→동래구, 부산진→부산진구
+        # 접미사 없는 옛 선거구명(서산·고양 등) — 군/구/시 보충 (총선 '제N선거구(서산 갑구)'→'서산')
+        cands += [(leaf + "군", city), (leaf + "구", city), (leaf + "시", city)]
     if leaf.endswith("시"):                          # 데이터 시승격 표기 vs HGIS 당시 군 (공주시↔공주군)
         cands.append((leaf[:-1] + "군", city))
     elif leaf.endswith("군"):                        # 속초군↔속초시

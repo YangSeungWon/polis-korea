@@ -52,8 +52,9 @@ def raw_dong_names(area, sigungu):
 
 def main():
     from shapely.geometry import Point
+    rounds = [int(x) for x in sys.argv[1:]] or [2, 3, 4, 5]   # 출력 통째 덮어쓰므로 보존할 회차 모두 지정
     out = {}
-    for n in (3, 4, 5):
+    for n in rounds:
         bdy = json.loads((ROOT / f"data/geo/old_district_boundaries_{n}.json").read_text(encoding="utf-8"))
         area_by = {r["district"]: r.get("area", "") for s, rs in bdy.items() for r in rs}
         d = json.loads((ROOT / f"data/results/national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]

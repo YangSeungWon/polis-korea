@@ -44,6 +44,41 @@ for sr in _sf.shapeRecords():
     POLY.setdefault(nm, []).append((cd, g))
     _REC.append((cd, nm, g))
 
+# === HGIS 모드 — 옛 총선을 그 선거일 실제 시군 경계로 (build_sigungu_hgis.resolve 재사용, 5179 재투영).
+# 1975 SGIS 대신 HGIS 그 시점 폴리곤을 resolve가 반환 → 선거구 union/voronoi/fill 로직은 그대로.
+# 서울이 1963 대확장 전 작은 모양(강남=경기 광주군)으로 정합. ===
+sys.path.insert(0, str(ROOT / "scripts/fetch"))
+import build_sigungu_hgis as _bsh   # noqa: E402
+HGIS_DATES = {1: 19480510, 2: 19500530, 3: 19540520, 4: 19580502,
+              5: 19600729, 6: 19631126, 7: 19670608, 8: 19710525}
+# 파이프라인은 4326(WGS84)으로 동작 — 1975 SHP도 로드 시 5179→4326 변환됨. HGIS도 4326 native라 그대로.
+_HGIS_DATE = None
+_hgis_cache = {}
+
+
+_SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도", "제주도": "제주특별자치도"}
+
+
+def hgis_resolve(race_sido, sgg):
+    key = (race_sido, sgg)
+    if key not in _hgis_cache:
+        sido = _SIDO_CANON.get(race_sido, race_sido)   # build_sigungu_hgis.SIDO는 모던 canon
+        geoms = []
+        for part in re.split(r"[·,]", sgg):            # '대구시 북구·서구' 결합 선거구 분할
+            p = part.replace(" ", "").strip()          # '부산시 중구'→'부산시중구' (bsh가 시접두 분리)
+            if not p:
+                continue
+            try:
+                v, _ = _bsh.resolve(sido, p, _HGIS_DATE)
+            except Exception:
+                v = None
+            if v:
+                g = shape(v["geometry"]).simplify(0.0005, preserve_topology=True)   # 55m 솎기 — union 비용·invalid 절감
+                geoms.append(g if g.is_valid else g.buffer(0))
+        _hgis_cache[key] = [unary_union(geoms)] if geoms else []
+    return _hgis_cache[key]
+
+
 # 1975 읍면동 — 농촌 군 갑/을 분할용. canon key -> [(code, shape)]
 def canon_dong(nm):
     nm = nm.strip().replace("·", ",").replace(" ", "")
@@ -134,6 +169,18 @@ def fill_enclosed(feat_geoms, n):
                 feat_geoms[best[0]] = unary_union([feat_geoms[best[0]], h])
                 absorbed += 1
     return absorbed
+
+
+def seon_norm(name):
+    """선거구명 정규화 키 — 별표('중구 갑')와 결과데이터('제1선거구(중구 갑구)') 표기차 흡수 → '중구|갑'."""
+    s = re.sub(r"제\d+선거구", "", name).replace("(", "").replace(")", "").strip()
+    m = re.search(r"([가-힣]+?[구군시]?)\s*([갑을병정무])\s*구?$", s)
+    if not m:
+        return None
+    base = m.group(1)
+    if base and base[-1] not in "구군시":
+        base += "구"
+    return f"{base}|{m.group(2)}"
 
 
 def parse_area_tokens(area, sigungu):
@@ -231,6 +278,8 @@ def resolve(race_sido, sgg):
     sgg = sgg.strip()
     if sgg in IBUK:  # 이북 — HGIS 1919 폴리곤
         return [IBUK[sgg]]
+    if _HGIS_DATE:   # HGIS 모드 — 그 선거일 실제 시군 경계
+        return hgis_resolve(race_sido, sgg)
     if sgg in CITY_WHOLE:
         return city_whole(sgg)
     m = re.match(r"(부산시|대구시|인천시|광주시|대전시)\s+(\S+)", sgg)  # '인천시 북구'·'부산시 동구'
@@ -348,22 +397,29 @@ def simplify(path):
         print(f"  ⚠ mapshaper 실패({path.name}): {e}", file=sys.stderr)
 
 
-def build(n):
+def build(n, hgis=False):
+    global _HGIS_DATE
+    _HGIS_DATE = HGIS_DATES.get(n) if hgis else None
     d = json.loads((RES / f"national_assembly_{n}.json").read_text(encoding="utf-8"))["district"]
     # 별표(선거구역 텍스트) — 선거구명으로 lookup (3·4·5대만 보유)
-    area_by = {}
+    area_by, area_norm = {}, {}   # area_norm: 정규화 키('중구|갑')로도 매칭 (이름 표기차 흡수)
     bpath = GEO / f"old_district_boundaries_{n}.json"
     if bpath.exists():
         for sido, rows in json.loads(bpath.read_text(encoding="utf-8")).items():
             for row in rows:
                 area_by[row["district"]] = row.get("area", "")
+                k = seon_norm(row["district"])
+                if k:
+                    area_norm[k] = row.get("area", "")
     from collections import Counter, defaultdict
     # race별 (시군집합, 동토큰, 매칭폴리곤, 매칭률) 사전계산
     info = {}
     groups = defaultdict(list)  # (시도, 시군집합) → [race id...]
     for i, r in enumerate(d):
         sggs = r.get("sigungu_area") or sggs_of(r["name"])
-        area = r.get("area") or area_by.get(r["name"], "")
+        area = r.get("area") or area_by.get(r["name"]) or area_norm.get(seon_norm(r["name"]) or "", "")
+        if area:
+            area_by[r["name"]] = area   # voronoi_split이 결과명으로 조회 → 채워줌(표기차 흡수)
         toks = parse_area_tokens(area, sggs) if area else []
         dpolys, ratio = dong_union(r["sido"], toks) if toks else ([], 0)
         info[i] = dict(sggs=sggs, dpolys=dpolys, ratio=ratio)
@@ -439,9 +495,13 @@ def build(n):
     nabs = fill_enclosed(geoms, n)
     for fo, g in zip(feat_objs, geoms):
         fo[2] = g
+    # (총선은 선거구가 시군 union+분할이라 평면분할은 과도·느림·invalid 유발 → fill_enclosed로 틈만
+    #  메우고 per-feature make_valid. HGIS 겹침은 경미. 시군구 단위인 대선은 clean_partition 사용.)
     feats = []
     sido_shapes = defaultdict(list)  # 시도 dissolve 외곽선용(당시 영토·이북 포함)
     for props, sido, geom in feat_objs:
+        if not geom.is_valid:
+            geom = geom.buffer(0)
         feats.append({"type": "Feature", "properties": props, "geometry": mapping(geom)})
         sido_shapes[sido].append(geom)
     (GEO / f"district_{n}_geojson.json").write_text(
@@ -459,6 +519,8 @@ def build(n):
 
 
 if __name__ == "__main__":
-    import sys
-    for n in (int(x) for x in sys.argv[1:]) if len(sys.argv) > 1 else (1, 2, 3, 4, 5, 6, 7, 8):
-        build(n)
+    args = sys.argv[1:]
+    hgis = "--hgis" in args
+    nums = [int(x) for x in args if x.isdigit()]
+    for n in (nums or (1, 2, 3, 4, 5, 6, 7, 8)):
+        build(n, hgis)
