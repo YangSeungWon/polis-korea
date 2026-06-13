@@ -2,7 +2,7 @@
 """지선 history 옛 회차용 — SGIS 시군구 경계(연도별)를 simplified WGS84 GeoJSON으로.
 
 sigungu_simple.json(현재 2018 경계)과 동형: props {code, name, base_year}, MultiPolygon.
-회차→연도 매핑은 render-local-geo.js의 LOCAL_SGG_GEO_YEAR가 사용.
+회차→연도 매핑은 geomap.ts의 LOCAL_SGG_GEO_YEAR가 사용.
   1회1995→1995  2회1998→2000(울산 광역시)  3회2002→2002  4회2006→2006  5회2010→2010  6회2014→2013(청주통합 전)
 
 UTM-K(EPSG:5179) → WGS84(4326). 투영좌표에서 simplify(80m) 후 5자리 반올림, 미세 도서 sub-polygon 제거.
