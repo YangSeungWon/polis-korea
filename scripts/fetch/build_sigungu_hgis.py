@@ -113,16 +113,23 @@ def resolve(data_sido, sigungu, date):
     return None, code2
 
 
-def parent_city_mask(data_sido, name, date):
-    """차용 선거구의 부모 도시(부산시·동대문구 등) HGIS 폴리곤 — voronoi clip 마스크.
-    부산시갑구→부산시(市/府), 동대문갑구→동대문구(區). 그 시점 도시 범위로 가둬 인접 군과 겹침 방지."""
+def parent_unit(name):
+    """선거구명 → (부모 행정단위, 구인가). 성동갑구→('성동구',True), 부산시갑구→('부산시',False),
+    부산시제1→('부산시',False), 부산진구갑구→('부산진구',True)."""
     import re
-    from shapely.geometry import shape
     s = re.sub(r"제\d+선거구", "", name).replace("(", "").replace(")", "")
-    s = re.sub(r"[갑을병정무]|제\d+", "", s)              # 마커 제거: 부산시갑구→부산시구, 부산시제1→부산시
+    s = re.sub(r"[갑을병정무]|제\d+", "", s)              # 마커 제거
     s = re.sub(r"\s+", "", s)
     parent = re.sub(r"(시|구)구$", r"\1", s)             # 부산시구→부산시, 부산진구구→부산진구, 동대문구 유지
-    kw = re.sub(r"(시|구)$", "", parent)                  # HGIS 검색어: 부산 / 동대문 / 부산진
+    return parent, parent.endswith("구")
+
+
+def parent_city_mask(data_sido, name, date):
+    """차용 선거구의 부모 도시(부산시 등) HGIS 폴리곤 — voronoi clip 마스크 (인접 군 겹침 방지)."""
+    import re
+    from shapely.geometry import shape
+    parent, _ = parent_unit(name)
+    kw = re.sub(r"(시|구)$", "", parent)
     v = resolve_nm(data_sido, parent, date, {"市", "府", "區", "郡"}, keyword=kw)
     return shape(v["geometry"]) if v else None
 
@@ -225,7 +232,33 @@ def build(round_n, date, assembly_n=None):
                            "hgis_end": v["properties"].get("end")},
             "geometry": v["geometry"]})
         matched.append((data_sido, name, v["properties"].get("begin"), v["properties"].get("end")))
-    # 무매칭(선거구 등)을 동시대 총선 voronoi로 차용
+    # 실재한 구를 쪼갠 선거구(성동갑/을구·동대문갑/을구 등)는 HGIS 그 시점 '구' 폴리곤으로 합산표시.
+    # (resultForSigungu가 bare 구명으로 갑/을 자동합산.) 1975 voronoi 차용은 옛 거대 구
+    # — 1963~73 성동구=강남·송파·강동 포함 — 범위를 못 살려 서울 남동부에 빈칸 발생하던 것 교정.
+    import re as _re
+    gu_resolved, seen_parent, rest = 0, set(), []
+    for data_sido, name, why in unmatched:
+        if data_sido not in SIDO:
+            rest.append((data_sido, name, why)); continue
+        parent, is_gu = parent_unit(name)
+        if is_gu:
+            key = (data_sido, parent)
+            if key in seen_parent:
+                continue                       # 같은 구의 다른 선거구 — 이미 추가됨
+            v = resolve_nm(data_sido, parent, date, {"區"},
+                           keyword=_re.sub(r"구$", "", parent), city_hint=SIDO_CITY.get(data_sido))
+            if v:
+                seen_parent.add(key)
+                feats_out.append({"type": "Feature",
+                    "properties": {"code": SIDO[data_sido][1] + "000", "name": parent,
+                                   "sido": data_sido, "agg_gu": True},
+                    "geometry": v["geometry"]})
+                gu_resolved += 1
+                continue
+        rest.append((data_sido, name, why))
+    unmatched = rest
+
+    # 남은 무매칭(구 없는 도시 선거구: 부산 1952·인천/대구 구제 전)은 동시대 총선 voronoi로 차용
     borrowed = 0
     if assembly_n and unmatched:
         got, unmatched = borrow_assembly(unmatched, assembly_n, date)
@@ -239,7 +272,7 @@ def build(round_n, date, assembly_n=None):
     out = GEO / f"sigungu_hgis_{round_n}.json"
     out.write_text(json.dumps({"type": "FeatureCollection", "features": feats_out},
                               ensure_ascii=False), encoding="utf-8")
-    print(f"\nHGIS매칭 {len(matched)} + 총선차용 {borrowed} = {len(feats_out)}/{len(uniq)} → {out.name}", file=sys.stderr)
+    print(f"\nHGIS매칭 {len(matched)} + 구합산 {gu_resolved} + 총선차용 {borrowed} = {len(feats_out)}개 ({len(uniq)} 데이터) → {out.name}", file=sys.stderr)
     if unmatched:
         print(f"미매칭 {len(unmatched)}개:", file=sys.stderr)
         for s, n, why in unmatched:
