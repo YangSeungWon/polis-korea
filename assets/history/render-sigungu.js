@@ -50,7 +50,8 @@ function renderSigunguHex() {
   const rowH = r * 1.5;
   const w = (maxC - minC + 2) * colW;
   const h = (maxR - minR + 2) * rowH;
-  svg.setAttribute('viewBox', `0 0 ${Math.ceil(w)} ${Math.ceil(h)}`);
+  const M = SIDO_EDGE_MARGIN;   // 좌우 시도 라벨 세로줄 공간
+  svg.setAttribute('viewBox', `${-M} 0 ${Math.ceil(w) + 2 * M} ${Math.ceil(h)}`);
   const offX = -minC * colW + colW / 2;
   const offY = -minR * rowH + rowH;
 

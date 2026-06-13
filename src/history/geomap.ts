@@ -34,6 +34,7 @@ declare const NBR_TO_EDGE: number[];
 declare function corner(cx: number, cy: number, rad: number, i: number): [number, number];
 declare function drawHexBorders(svg: any, cells: any[], cellAt: Map<string, any>, colW: number, rowH: number, offX: number, offY: number, r: number, strokeWidth: string | number, includeOutline?: boolean, keyFn?: (d: any) => string | undefined, lineClass?: string): void;
 declare function drawSidoEdgeLabels(svg: any, pts: Array<{ sido: string; cx: number; cy: number }>): void;
+declare const SIDO_EDGE_MARGIN: number;
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 type DistrictLabel = { prefix: string; short: string; fullName?: string };
@@ -372,7 +373,7 @@ async function renderDistrictHex(): Promise<void> {
   const rowH = r * 1.5;
   const w = (maxC - minC + 2) * colW;
   const h = (maxR - minR + 2) * rowH;
-  svg.setAttribute('viewBox', `0 0 ${Math.ceil(w)} ${Math.ceil(h)}`);
+  svg.setAttribute('viewBox', `${-SIDO_EDGE_MARGIN} 0 ${Math.ceil(w) + 2 * SIDO_EDGE_MARGIN} ${Math.ceil(h)}`);
   const offX = -minC * colW + colW / 2;
   const offY = -minR * rowH + rowH;
 
@@ -508,7 +509,7 @@ async function renderDistrictHex(): Promise<void> {
     const sorted = [...propSeats].sort((a: any, b: any) => b.seats - a.seats);
     const ns = SVGNS;
 
-    const propGap = colW * 0.8;          // 지역구와 비례 영역 사이 여백
+    const propGap = colW * 0.8 + SIDO_EDGE_MARGIN;   // 지역구와 비례 영역 사이 여백(+동쪽 시도 라벨 열 공간)
     const propStartX = w + propGap;      // 비례 첫 col 좌측 base
     const labelOffsetY = -rowH * 0.6;    // 정당 라벨 baseline (첫 hex 위쪽)
 
@@ -584,7 +585,7 @@ async function renderDistrictHex(): Promise<void> {
     const topPad = -headerY + 8;
     const newH = Math.max(h, maxColH) + topPad;
     const minY = headerY - 8;
-    svg.setAttribute('viewBox', `0 ${Math.floor(minY)} ${Math.ceil(newW)} ${Math.ceil(newH)}`);
+    svg.setAttribute('viewBox', `${-SIDO_EDGE_MARGIN} ${Math.floor(minY)} ${Math.ceil(newW) + SIDO_EDGE_MARGIN} ${Math.ceil(newH)}`);
   }
 }
 
