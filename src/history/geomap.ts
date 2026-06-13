@@ -95,6 +95,9 @@ let geoDistrictLayer: any = null;    // 현재 회차 layer
 const geoDistrictByN: Record<string, any> = {};  // n → L.geoJSON layer (캐시, 재방문 시 재생성 안 함)
 let geoSidoOutlineLayer: any = null;
 const geoSidoByN: Record<string, any> = {};       // 옛총선(1~7대) 회차별 시도 외곽선(당시 영토·이북 포함)
+const periodSidoByYear: Record<string, any> = {}; // 대선·지선 연도별 시도 외곽선(sido_{year}) layer 캐시
+// sido_{year} 파일이 있는 연도 — 그 외(2025/2026=현재 경계)는 현대 sido_simple 폴백.
+const PERIOD_SIDO_YEARS = new Set([1975, 1985, 1990, 1995, 2000, 2002, 2006, 2010, 2013]);
 let geo38Layer: any = null;          // 38선 참조선(1·2대 = 38선이 국경이던 시기)
 let geoMiniMapCtrl: any = null;
 let geoInitialZoom: number | null = null;
@@ -103,7 +106,8 @@ let geoInitialZoom: number | null = null;
 // 각 geo render가 시작 시 호출 → 필요한 layer만 다시 추가. (한 모듈 내 공유 가변 상태.)
 function clearGeoLayers(): void {
   if (typeof geoLeafletMap === 'undefined' || !geoLeafletMap) return;
-  const ls = [geoDistrictLayer, geoSidoOutlineLayer, geo38Layer, ...Object.values(geoSidoByN || {})];
+  const ls = [geoDistrictLayer, geoSidoOutlineLayer, geo38Layer,
+    ...Object.values(geoSidoByN || {}), ...Object.values(periodSidoByYear || {})];
   if (typeof localGeoLayer !== 'undefined') ls.push(localGeoLayer);
   for (const l of ls) {
     if (l && geoLeafletMap.hasLayer(l)) geoLeafletMap.removeLayer(l);
@@ -654,7 +658,8 @@ async function renderLocalGeoMap(unit: string): Promise<void> {
   const labelFor = (props: any) => isSido
     ? props.name
     : `${LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || ''} ${props.name}`.trim();
-  _mountSggGeo(geoData, infoFor, _localStyleFor, labelFor);
+  // 시도(광역장) base는 sido_simple 자체 → period 외곽선 불필요(null). 기초장 시군구는 그 회차 연도 경계.
+  _mountSggGeo(geoData, infoFor, _localStyleFor, labelFor, isSido ? null : LOCAL_SGG_GEO_YEAR[state.n]);
 }
 
 // 대선 시군구 geo — margin 명도(16~21). 13~15대는 시군구 미수집 → 시도 hex(margin 명도)로 표시(activeUnit).
@@ -675,11 +680,30 @@ async function renderPresGeoMap(): Promise<void> {
              race: { sido: eff.sido, name: eff.name, candidates: r.candidates, scope: 'sigungu' } };
   };
   const labelFor = (props: any) => `${LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || ''} ${props.name}`.trim();
-  _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor);
+  _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, PRES_SGG_GEO_YEAR[state.n]);
+}
+
+const SIDO_OUTLINE_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
+// 대선·지선 시도 외곽선 — period(sido_{year}) 있으면 그 시점 경계로(세종2012·울산1997·군위 등 시대 정합),
+// 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시.
+async function _sidoOutlineForYear(year: number | null): Promise<any> {
+  if (year && PERIOD_SIDO_YEARS.has(year)) {
+    if (periodSidoByYear[year] === undefined) {
+      periodSidoByYear[year] = await loadJson(`data/geo/sido_${year}.json`)
+        .then((od) => L.geoJSON(od, { style: SIDO_OUTLINE_STYLE, interactive: false }))
+        .catch(() => null);
+    }
+    if (periodSidoByYear[year]) return periodSidoByYear[year];
+  }
+  if (!geoSidoOutlineLayer && state.geoSido) {
+    geoSidoOutlineLayer = L.geoJSON(state.geoSido, { style: SIDO_OUTLINE_STYLE, interactive: false });
+  }
+  return geoSidoOutlineLayer;
 }
 
 // Leaflet 마운트 공유 — layer 교체·시도 외곽선·fit·minimap. (지선/대선 공통)
-function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (info: any) => any, labelFor: (p: any) => string): void {
+// periodYear: 시도 외곽선을 그 연도 경계로(sido_{year}); null이면 현대 sido_simple.
+async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (info: any) => any, labelFor: (p: any) => string, periodYear: number | null = null): Promise<void> {
   if (!geoLeafletMap) {
     geoLeafletMap = L.map('geomap', {
       zoomControl: true, attributionControl: false,
@@ -706,15 +730,14 @@ function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (info: a
       : (info.sido === state.selected?.sido && info.name === state.selected?.name);
   });
 
-  // 시도 외곽선 overlay
-  if (!geoSidoOutlineLayer && state.geoSido) {
-    geoSidoOutlineLayer = L.geoJSON(state.geoSido, {
-      style: { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' },
-      interactive: false,
-    });
+  // 시도 외곽선 overlay — period 우선(sido_{year}), 없으면 현대 sido_simple.
+  const outline = await _sidoOutlineForYear(periodYear);
+  // 회차/연도 전환 시 다른 시도 외곽선(현대/타 연도) 제거 후 현재 것만 표시.
+  for (const l of [geoSidoOutlineLayer, ...Object.values(periodSidoByYear)]) {
+    if (l && l !== outline && geoLeafletMap.hasLayer(l)) geoLeafletMap.removeLayer(l);
   }
-  if (geoSidoOutlineLayer && !geoLeafletMap.hasLayer(geoSidoOutlineLayer)) geoSidoOutlineLayer.addTo(geoLeafletMap);
-  if (geoSidoOutlineLayer) geoSidoOutlineLayer.bringToFront();
+  if (outline && !geoLeafletMap.hasLayer(outline)) outline.addTo(geoLeafletMap);
+  if (outline) outline.bringToFront();
 
   if (geoInitialZoom == null) {
     geoLeafletMap.fitBounds(localGeoLayer.getBounds(), { padding: [12, 12] });
