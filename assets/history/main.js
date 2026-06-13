@@ -470,8 +470,9 @@ function renderDetail() {
       : isDistrict
         ? resultForDistrict(state.selected.sido, state.selected.name)
         : resultForSigungu(state.selected.sido, state.selected.name);
-    const titleText = isSido ? state.selected.sido : `${state.selected.sido} · ${state.selected.name}`;
-    const tag = isSido ? '시도 합산' : isDistrict ? '지역구' : '시군구';
+    const isSeon = !isSido && !isDistrict && /시(제\d+|[갑을병정무]구)$/.test(state.selected.name || '');
+    const titleText = isSido ? state.selected.sido : `${state.selected.sido} · ${fmtUnitName(state.selected.name)}`;
+    const tag = isSido ? '시도 합산' : isDistrict ? '지역구' : isSeon ? '선거구' : '시군구';
     html += `<div class="detail-hdr">
       <h2>${titleText}</h2>
       <span class="count">${tag}</span>

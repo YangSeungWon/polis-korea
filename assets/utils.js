@@ -43,9 +43,24 @@ const SIDO_LABEL_SHORT = {
   '제주특별자치도': '제주',
 };
 
+// 옛 도시 선거구(당시 구 없음): '부산시제1'→'부산시 제1선거구', '부산시갑구'→'부산시 갑선거구'.
+function fmtUnitName(name) {
+  if (!name) return name;
+  let m = name.match(/^([가-힣]+)시제(\d+)$/);
+  if (m) return m[1] + '시 제' + m[2] + '선거구';
+  m = name.match(/^([가-힣]+)시([갑을병정무])구$/);
+  if (m) return m[1] + '시 ' + m[2] + '선거구';
+  return name;
+}
+
 function shortSigunguLabel(name, sido) {
   if (!name) return { prefix: '', short: '' };
   const sidoShort = SIDO_LABEL_SHORT[sido] || '';
+  // 옛 도시 선거구 — 셀이 좁으니 컴팩트: '부산시제1'→'부산 제1', '부산시갑구'→'부산 갑'.
+  let sm = name.match(/^([가-힣]+)시제(\d+)$/);
+  if (sm) return { prefix: sidoShort, short: sm[1] + ' 제' + sm[2] };
+  sm = name.match(/^([가-힣]+)시([갑을병정무])구$/);
+  if (sm) return { prefix: sidoShort, short: sm[1] + ' ' + sm[2] };
   // 일반구 "OOO시XX구" → prefix=시도 약어, short="모도시 일반구"
   // (시도가 빠지면 다른 시도와 헷갈림. "전주 덕진"이 어느 권역인지 권역 표시 필요)
   const m = name.match(/^([가-힣]+)시([가-힣]+구)$/);
