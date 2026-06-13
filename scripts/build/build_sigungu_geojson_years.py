@@ -24,8 +24,8 @@ def _parent_si(name):
     return m.group(1) if m else None
 
 ROOT = Path(__file__).resolve().parents[2]
-YEARS = [1995, 2000, 2002, 2006, 2010, 2013]
-ENC = {1995: "cp949", 2000: "cp949", 2002: "cp949", 2006: "utf-8", 2010: "cp949", 2013: "cp949"}
+YEARS = [1975, 1980, 1985, 1990, 1995, 2000, 2002, 2006, 2010, 2013]
+ENC = {1975: "cp949", 1980: "cp949", 1985: "cp949", 1990: "cp949", 1995: "cp949", 2000: "cp949", 2002: "cp949", 2006: "utf-8", 2010: "cp949", 2013: "cp949"}
 
 _tf = Transformer.from_crs("EPSG:5179", "EPSG:4326", always_xy=True)
 def to_wgs(geom):
