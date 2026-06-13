@@ -71,24 +71,26 @@ def build_year(year):
             continue
         raw.append({"code": code, "name": name, "geom": g})
 
-    # 2) 그룹핑 — 일반구는 시로, 그 외는 자기 이름. 출장소는 보류(기하 포함으로 후처리).
-    groups = {}   # key=기초단체명 → {"code","name","geoms":[...]}
+    # 2) 그룹핑 — 일반구·출장소는 모도시로(이름에서 시 추출), 그 외는 자기 이름.
+    #    출장소도 _parent_si로 시 그룹 생성('안양시만안출장소'→'안양시'): 기준 시 레코드 없어도
+    #    출장소만으로 시가 만들어짐(1990 안양 등 누락 방지). 시 prefix 없는 출장소만 spatial fallback.
+    groups = {}   # key=(시도2, 기초단체명) → {"code","name","geoms":[...]}
     outjang = []
     for it in raw:
-        if it["name"].endswith("출장소"):
+        disp = _parent_si(it["name"])
+        if it["name"].endswith("출장소") and not disp:
             outjang.append(it); continue
-        disp = _parent_si(it["name"]) or it["name"]
+        disp = disp or it["name"]
         key = (it["code"][:2], disp)   # 시도(code 앞 2자리)로 동명 시군구 구분 — 중구·동구 등 시도별 분리
         gr = groups.setdefault(key, {"code": it["code"], "name": disp, "geoms": []})
         gr["geoms"].append(it["geom"])
-        # 일반구 dissolve 시 시도2 코드만 유지되면 됨 — 첫 code 사용
 
-    # 3) 출장소 → 인접 그룹에 병합. 출장소는 시군구에서 카브아웃된 별도 폴리곤이라 contains 실패 →
-    #    최소거리(인접=거리0) 그룹에 흡수.
-    merged_pre = {k: unary_union(v["geoms"]) for k, v in groups.items()}
-    for it in outjang:
-        host = min(merged_pre, key=lambda k: merged_pre[k].distance(it["geom"]))
-        groups[host]["geoms"].append(it["geom"])
+    # 3) 시 prefix 없는 출장소(군 출장소·도서 등) → 인접 그룹에 흡수(최소거리).
+    if outjang:
+        merged_pre = {k: unary_union(v["geoms"]) for k, v in groups.items()}
+        for it in outjang:
+            host = min(merged_pre, key=lambda k: merged_pre[k].distance(it["geom"]))
+            groups[host]["geoms"].append(it["geom"])
 
     # 4) union → island filter → WGS84 (raw, 단순화 안 함). 인접 시군구가 동/sigungu edge를
     #    정확히 공유 → mapshaper(아래)가 위상 보존 단순화로 틈 0 + 용량↓.
