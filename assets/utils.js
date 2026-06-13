@@ -43,6 +43,13 @@ const SIDO_LABEL_SHORT = {
   '제주특별자치도': '제주',
 };
 
+// 선거일 기준 시도 명칭 — 최근 개칭(강원특별자치도2023·전북2024·제주2006) 이전 선거엔 옛 이름 표시.
+function periodSidoName(sido, date) {
+  const R = { '강원특별자치도': ['강원도', '2023-06-11'], '전북특별자치도': ['전라북도', '2024-01-18'], '제주특별자치도': ['제주도', '2006-07-01'] };
+  const r = R[sido];
+  return (r && date && String(date) < r[1]) ? r[0] : sido;
+}
+
 // 옛 도시 선거구(당시 구 없음): '부산시제1'→'부산시 제1선거구', '부산시갑구'→'부산시 갑선거구'.
 function fmtUnitName(name) {
   if (!name) return name;

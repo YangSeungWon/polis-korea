@@ -21,6 +21,7 @@ declare function effectiveCell(cell: { sido: string; name: string }, date: strin
 declare function topCandidate(result: any): any;
 declare function candLabel(cand: any): string;
 declare function fmtUnitName(name: string): string;
+declare function periodSidoName(sido: string, date: string): string;
 declare function loadDistrictHex(n: number): Promise<any[]>;
 declare function renderDetail(): void;
 declare function renderAll(): void;
@@ -666,7 +667,7 @@ async function renderLocalGeoMap(unit: string): Promise<void> {
   };
   const labelFor = (props: any) => isSido
     ? props.name
-    : `${LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || ''} ${fmtUnitName(props.name)}`.trim();
+    : `${periodSidoName(LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || '', electionDate)} ${fmtUnitName(props.name)}`.trim();
   // 시도(광역장) base는 sido_simple 자체 → period 외곽선 불필요(null). 기초장 시군구는 그 회차 연도 경계.
   _mountSggGeo(geoData, infoFor, _localStyleFor, labelFor, isSido ? null : LOCAL_SGG_GEO_YEAR[state.n]);
 }
@@ -694,7 +695,7 @@ async function renderPresGeoMap(): Promise<void> {
     return { sido: eff.sido, name: eff.name, winner: r.candidates[0], second: r.candidates[1] || null,
              race: { sido: eff.sido, name: eff.name, candidates: r.candidates, scope: 'sigungu' } };
   };
-  const labelFor = (props: any) => `${LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || ''} ${fmtUnitName(props.name)}`.trim();
+  const labelFor = (props: any) => `${periodSidoName(LOCAL_SIDO_CODE2[String(props.code).slice(0, 2)] || '', electionDate)} ${fmtUnitName(props.name)}`.trim();
   _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, outlineKey);
 }
 

@@ -159,9 +159,10 @@ function renderSigunguHex() {
         renderAll(); renderDetail();
       });
       const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      const _psido = periodSidoName(d.sido, electionDate);
       tt.textContent = top
-        ? `${d.sido} ${fmtUnitName(d.name)} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${result._fill ? ' · 모도시 결과(당시 미분리)' : d._borrowed ? ' · 당시 미분리(부모 구)' : ' · ' + N + '석/표'}`
-        : `${d.sido} ${fmtUnitName(d.name)}`;
+        ? `${_psido} ${fmtUnitName(d.name)} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${result._fill ? ' · 모도시 결과(당시 미분리)' : d._borrowed ? ' · 당시 미분리(부모 구)' : ' · ' + N + '석/표'}`
+        : `${_psido} ${fmtUnitName(d.name)}`;
       g.appendChild(tt);
       // 셀별 footprint(테마 반투명 흰 배경) — stroke 없이 fill만. 같은 구 인접 셀끼리 이어져
       // 병합 구가 한 면처럼 보임. 구 경계선은 루프 후 drawHexBorders(구 키)로 일괄.

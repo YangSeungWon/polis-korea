@@ -139,7 +139,12 @@ def resolve(sido, name):
 
 def jachi(name):
     m = re.match(r"^(.+?)[갑을병정무]구$", name)
-    return m.group(1) + "구" if m else name
+    if not m:
+        return name
+    base = m.group(1)
+    # 부산시갑구 등 '시'로 끝나는 base는 선거구 marker일 뿐(구 아님) → 도시명 유지(부산시).
+    # resultForSigungu가 '부산시'로 갑/을/병/정/무 자동합산. (동대문갑구→동대문구는 실재 구.)
+    return base if base.endswith("시") else base + "구"
 
 
 def build_cells(n, path):
