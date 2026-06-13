@@ -13,10 +13,6 @@ permissions:
   pages: write
   id-token: write
 
-# JS 액션들을 Node 24 런타임으로 (2026-06-16 강제 전환 예정 경고 선제 해소).
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
-
 # 진행 중 배포는 취소하지 않음 (프로덕션 배포 보호). 새 푸시는 큐잉.
 concurrency:
   group: pages
@@ -30,10 +26,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
           cache: 'npm'
@@ -51,13 +47,13 @@ jobs:
         run: rm -rf node_modules
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
 
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
