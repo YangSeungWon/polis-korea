@@ -65,20 +65,32 @@ function drawSidoEdgeLabels(svg, pts) {
     g.sx += p.cx; g.sy += p.cy; g.n += 1;
     by.set(p.sido, g);
   }
+  // 좌/우 분류 + 같은 쪽 라벨 수직 충돌 해소 (centroid 기준 정렬 후 최소간격 MINGAP로 밀어냄)
+  const sides = { left: [], right: [] };
   for (const [sido, g] of by) {
-    const ccx = g.sx / g.n, ccy = g.sy / g.n, left = ccx < cen;
-    const t = document.createElementNS(NS, 'text');
-    t.setAttribute('x', left ? minX - 20 : maxX + 20);   // 좌/우 가장자리 세로줄
-    t.setAttribute('y', ccy);
-    t.setAttribute('text-anchor', left ? 'end' : 'start');
-    t.setAttribute('dominant-baseline', 'middle');
-    t.setAttribute('font-size', '14');
-    t.setAttribute('font-weight', '800');
-    t.setAttribute('class', 'hist-sido-edge-label');
-    t.setAttribute('pointer-events', 'none');
-    t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-    t.textContent = (typeof SIDO_LABEL_SHORT !== 'undefined' && SIDO_LABEL_SHORT[sido]) || sido;
-    svg.appendChild(t);
+    const ccx = g.sx / g.n, ccy = g.sy / g.n;
+    (ccx < cen ? sides.left : sides.right).push({ sido, ccy });
+  }
+  const MINGAP = 18;
+  for (const key of ['left', 'right']) {
+    const arr = sides[key].sort((a, b) => a.ccy - b.ccy);
+    let prevY = -1e9;
+    for (const it of arr) {
+      const y = Math.max(it.ccy, prevY + MINGAP);   // 위에서부터 밀어 겹침 방지
+      prevY = y;
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', key === 'left' ? minX - 20 : maxX + 20);
+      t.setAttribute('y', y);
+      t.setAttribute('text-anchor', key === 'left' ? 'end' : 'start');
+      t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '14');
+      t.setAttribute('font-weight', '800');
+      t.setAttribute('class', 'hist-sido-edge-label');
+      t.setAttribute('pointer-events', 'none');
+      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+      t.textContent = (typeof SIDO_LABEL_SHORT !== 'undefined' && SIDO_LABEL_SHORT[it.sido]) || it.sido;
+      svg.appendChild(t);
+    }
   }
 }
 
