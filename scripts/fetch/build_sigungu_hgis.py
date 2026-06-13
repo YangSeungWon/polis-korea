@@ -249,8 +249,27 @@ def build(round_n, date, assembly_n=None):
     build_sido(out, round_n)
 
 
+def _close_sido(g, eps=0.006, min_area=0.0004, min_hole=0.0006):
+    """HGIS 시군구 개별수집으로 생긴 시도내 틈/슬리버 제거 — 형태학적 close(buffer +eps→-eps)로
+    인접 군 사이 틈 메우고 슬리버 흡수, 잔여 미세조각·미세 hole 제거(실제 섬·만은 유지)."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    m = g.buffer(eps).buffer(-eps)
+    polys = list(m.geoms) if m.geom_type == "MultiPolygon" else [m]
+    out = []
+    for p in polys:
+        if p.area < min_area:
+            continue
+        interiors = [r for r in p.interiors if Polygon(r).area >= min_hole]
+        out.append(Polygon(p.exterior, interiors))
+    if not out:
+        return m
+    return unary_union(out) if len(out) > 1 else out[0]
+
+
 def build_sido(out_sigungu, round_n):
-    """단순화된 HGIS 시군구를 시도2자리코드로 dissolve → sido_hgis_{n}.json (외곽선, fill과 정합)."""
+    """단순화된 HGIS 시군구를 시도2자리코드로 dissolve → sido_hgis_{n}.json (외곽선, fill과 정합).
+    HGIS 틈/슬리버는 _close_sido로 정리(대전·서울 등 가짜 내부선 제거)."""
     from collections import defaultdict
     from shapely.geometry import shape, mapping
     from shapely.ops import unary_union
@@ -262,11 +281,13 @@ def build_sido(out_sigungu, round_n):
         g = shape(f["geometry"])
         by[s2].append(g if g.is_valid else make_valid(g))
     feats = [{"type": "Feature", "properties": {"code2": s2},
-              "geometry": mapping(unary_union(sh))} for s2, sh in sorted(by.items())]
+              "geometry": mapping(_close_sido(unary_union(sh)))} for s2, sh in sorted(by.items())]
     sp = GEO / f"sido_hgis_{round_n}.json"
     sp.write_text(json.dumps({"type": "FeatureCollection", "features": feats},
                              ensure_ascii=False), encoding="utf-8")
-    print(f"시도 외곽선 {len(feats)}개 → {sp.name}", file=sys.stderr)
+    simplify(sp, "8%")   # buffer-close가 정점 densify → mapshaper로 축소(외곽선이라 8%면 충분)
+    import os
+    print(f"시도 외곽선 {len(feats)}개 → {sp.name} ({os.path.getsize(sp)//1024}KB)", file=sys.stderr)
 
 
 if __name__ == "__main__":
