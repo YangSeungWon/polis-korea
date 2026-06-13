@@ -60,26 +60,39 @@ def pick_version(feats, date):
     return min(cand, key=b)                      # 전부 이후면 가장 이른
 
 
-def resolve(data_sido, sigungu, date):
-    hsido, code2 = SIDO[data_sido]
+def resolve_nm(data_sido, target_nm, date, types, keyword=None):
+    """HGIS에서 nm==target_nm·해당 type·sido 일치 중 선거일 유효(또는 최근접) 버전 feature."""
+    hsido = SIDO[data_sido][0]
     feats = []
-    for arr in hgis(sigungu):
+    for arr in hgis(keyword or target_nm):
         for f in arr.get("features", []):
             p = f.get("properties", {})
-            if p.get("nm") != sigungu:
-                continue
-            if p.get("type") not in WANT_TYPES:
-                continue
-            if hsido not in str(p.get("name", "")):
-                continue
-            feats.append(f)
-    v = pick_version(feats, date) if feats else None
-    return v, code2
+            if p.get("nm") == target_nm and p.get("type") in types and hsido in str(p.get("name", "")):
+                feats.append(f)
+    return pick_version(feats, date) if feats else None
 
 
-def borrow_assembly(unmatched, assembly_n, sido_code):
+def resolve(data_sido, sigungu, date):
+    return resolve_nm(data_sido, sigungu, date, WANT_TYPES), SIDO[data_sido][1]
+
+
+def parent_city_mask(data_sido, name, date):
+    """차용 선거구의 부모 도시(부산시·동대문구 등) HGIS 폴리곤 — voronoi clip 마스크.
+    부산시갑구→부산시(市/府), 동대문갑구→동대문구(區). 그 시점 도시 범위로 가둬 인접 군과 겹침 방지."""
+    import re
+    from shapely.geometry import shape
+    base = re.sub(r"[갑을병정무]구$", "", name)          # 부산시갑구→부산시, 동대문갑구→동대문
+    parent = base if base.endswith("시") else base + "구"  # 부산시 / 동대문구
+    kw = re.sub(r"(시|구)$", "", parent)                  # HGIS 검색어: 부산 / 동대문
+    v = resolve_nm(data_sido, parent, date, {"市", "府", "區", "郡"}, keyword=kw)
+    return shape(v["geometry"]) if v else None
+
+
+def borrow_assembly(unmatched, assembly_n, date):
     """HGIS 무매칭 선거구(부산 갑~무 등 행정구역 아닌 선거구)를 동시대 총선 geo의 voronoi 폴리곤으로.
-    district_{m}_geojson은 도시 선거구를 동 점 voronoi로 이미 분할 보유 → 같은 선거구명 매칭해 차용."""
+    district_{m}_geojson은 도시 선거구를 동 점 voronoi로 이미 분할 보유 → 같은 선거구명 매칭해 차용.
+    단 voronoi는 1975 도시범위 기반이라 그 시점 부모도시 HGIS 폴리곤으로 clip(예: 부산이 동래군과 겹침 방지)."""
+    from shapely.geometry import shape, mapping
     p = ROOT / "data/geo" / f"district_{assembly_n}_geojson.json"
     if not p.exists():
         return {}, unmatched
@@ -87,15 +100,19 @@ def borrow_assembly(unmatched, assembly_n, sido_code):
     got, still = {}, []
     for data_sido, name, why in unmatched:
         sgg_target = name.replace(" ", "")
-        hit = None
-        for f in feats:
-            sgg = str(f["properties"].get("SGG", "")).replace(" ", "")
-            if sgg_target in sgg and f.get("geometry"):
-                hit = f; break
-        if hit:
-            got[(data_sido, name)] = hit["geometry"]
-        else:
-            still.append((data_sido, name, why))
+        hit = next((f for f in feats
+                    if sgg_target in str(f["properties"].get("SGG", "")).replace(" ", "") and f.get("geometry")), None)
+        if not hit:
+            still.append((data_sido, name, why)); continue
+        geom = shape(hit["geometry"])
+        if not geom.is_valid:
+            geom = geom.buffer(0)
+        mask = parent_city_mask(data_sido, name, date)
+        if mask is not None:
+            clipped = geom.intersection(mask)
+            if not clipped.is_empty:
+                geom = clipped
+        got[(data_sido, name)] = mapping(geom)
     return got, still
 
 
@@ -141,7 +158,7 @@ def build(round_n, date, assembly_n=None):
     # 무매칭(선거구 등)을 동시대 총선 voronoi로 차용
     borrowed = 0
     if assembly_n and unmatched:
-        got, unmatched = borrow_assembly(unmatched, assembly_n, None)
+        got, unmatched = borrow_assembly(unmatched, assembly_n, date)
         for (data_sido, name), geom in got.items():
             feats_out.append({"type": "Feature",
                 "properties": {"code": SIDO[data_sido][1] + "000", "name": name,
