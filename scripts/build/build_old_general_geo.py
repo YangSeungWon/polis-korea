@@ -217,9 +217,20 @@ DONG_REGION = {
 }
 
 
-def dong_union(race_sido, tokens):
-    """동/면 토큰 → (매칭 폴리곤들, 매칭률). 시도(권역) code로 동명 disambiguate.
-    그 권역에 없는 동명(예: 강릉을 별표의 '신서면'=연천 경기)은 차용 안 함 — 타시도 동음이의 stray 방지."""
+def sgg_codes_of(sggs):
+    """선거구의 시군 1975 코드(5자리) 집합 — dong_union 시군 스코프용. ALIAS 확장 포함."""
+    codes = set()
+    for s in sggs:
+        for t in (ALIAS.get(s, [s])):
+            for (c, _g) in POLY.get(t, []):
+                codes.add(c[:5])
+    return codes
+
+
+def dong_union(race_sido, tokens, sgg_codes=None):
+    """동/면 토큰 → (매칭 폴리곤들, 매칭률).
+    sgg_codes(선거구 시군 5자리코드) 주면 그 시군으로 한정 — 같은 시도 동음이의(정읍을 '북면'→김제 북면)
+    차단. 없으면 시도(권역) 스코프. 권역 밖 동명(강릉을 '신서면'=연천)은 차용 안 함."""
     pref = SIDO_CODE.get(DECANON.get(race_sido, race_sido))
     allowed = DONG_REGION.get(pref, {pref}) if pref else None
     polys, hit = [], 0
@@ -229,9 +240,12 @@ def dong_union(race_sido, tokens):
             cand = POLY.get(t[:-1] + "시")
         if not cand:
             continue
-        sel = [g for (c, g) in cand if allowed and c[:2] in allowed]
+        if sgg_codes:
+            sel = [g for (c, g) in cand if c[:5] in sgg_codes]   # 시군 스코프(동음이의 차단)
+        else:
+            sel = [g for (c, g) in cand if allowed and c[:2] in allowed]
         if not sel:
-            continue   # 권역 밖 동명 — 동음이의 타시도 폴리곤 차용 금지(헐거운 fallback 제거)
+            continue   # 그 시군/권역에 없는 동명 — 동음이의 폴리곤 차용 금지
         polys += sel
         hit += 1
     ratio = hit / len(tokens) if tokens else 0
@@ -368,7 +382,7 @@ def voronoi_split(races, sido, sggs, area_by, n, hgis_pts):
     pts, owner = [], []
     for i, r in enumerate(races):
         area = r.get("area") or area_by.get(r["name"], "")
-        polys, _ = dong_union(sido, parse_area_tokens(area, sggs)) if area else ([], 0)
+        polys, _ = dong_union(sido, parse_area_tokens(area, sggs), sgg_codes_of(sggs)) if area else ([], 0)
         rp = [p.representative_point() for p in polys]
         rp = [p for p in rp if container.contains(p)]
         if not rp:  # 1975 점0 → HGIS 보충
@@ -435,7 +449,7 @@ def build(n, hgis=False):
         if area:
             area_by[r["name"]] = area   # voronoi_split이 결과명으로 조회 → 채워줌(표기차 흡수)
         toks = parse_area_tokens(area, sggs) if area else []
-        dpolys, ratio = dong_union(r["sido"], toks) if toks else ([], 0)
+        dpolys, ratio = dong_union(r["sido"], toks, sgg_codes_of(sggs)) if toks else ([], 0)
         info[i] = dict(sggs=sggs, dpolys=dpolys, ratio=ratio)
         if sggs:
             groups[(r["sido"], tuple(sorted(sggs)))].append(i)
