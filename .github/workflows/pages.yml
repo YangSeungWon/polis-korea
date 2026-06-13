@@ -1,0 +1,59 @@
+name: Deploy to GitHub Pages
+
+# 정적 사이트 배포 — master push마다 TS 지도 모듈을 빌드(esbuild)해 산출물 포함 후 배포.
+# 기존 legacy(브랜치 직접 서빙) 대체: 이제 assets/hexgrid.js는 커밋 안 하고 CI가 생성.
+# 데이터 갱신 워크플로(daily-refresh 등)가 master에 push하면 이 워크플로가 자동 재배포.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 진행 중 배포는 취소하지 않음 (프로덕션 배포 보호). 새 푸시는 큐잉.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build map module
+        run: npm run build:map
+
+      - name: Prune build deps (정적 산출물만 배포)
+        run: rm -rf node_modules
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

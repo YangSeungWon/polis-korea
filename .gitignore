@@ -41,3 +41,6 @@ data/*.xls
 !data/raw/8th_council_party_seats.json
 # 예외: 의원 unique ID 룩업 (assembly xlsx 파싱 결과 — xlsx는 수동 다운로드)
 !data/raw/assembly_member_map.json
+
+# CI 생성물 (src/history/hexgrid.ts → npm run build:map). 커밋 안 함.
+assets/hexgrid.js

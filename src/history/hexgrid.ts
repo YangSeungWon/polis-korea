@@ -1,10 +1,20 @@
-// hexgrid.js — pointy-top, odd-r offset 육각격자 공용 헬퍼.
-// polls.js·history.js가 공유 (이전엔 각 render 함수에 복붙돼 있었음).
-// 노빌드 환경 — 전역 함수로 노출, 사용하는 페이지가 다른 스크립트보다 먼저 <script> 로드.
+// hexgrid — pointy-top, odd-r offset 육각격자 공용 헬퍼 (TS 포팅, 지도 모듈 첫 슬라이스).
+// 빌드: esbuild → assets/hexgrid.js (IIFE). 바닐라 스크립트 interop 위해 globalThis에 노출.
+// polls.js·history.js가 공유 (hexPoints·hexCenter·nbrs·NBR_TO_EDGE·corner·drawHexBorders).
+// 사용 페이지가 다른 render-*.js보다 먼저 <script>로 로드 (노빌드 시절 규약 유지).
+
+export interface HexCell {
+  c: number;
+  r: number;
+  sido?: string;
+  name?: string;
+  code?: string;
+  [k: string]: unknown;
+}
 
 // 중심 (cx,cy)·반지름 r 육각형의 SVG points 문자열.
-function hexPoints(cx, cy, r) {
-  const pts = [];
+function hexPoints(cx: number, cy: number, r: number): string {
+  const pts: string[] = [];
   for (let i = 0; i < 6; i++) {
     const a = Math.PI / 6 + (Math.PI / 3) * i;
     pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
@@ -13,35 +23,39 @@ function hexPoints(cx, cy, r) {
 }
 
 // offset (col,row) → 픽셀 중심 [cx, cy]. 홀수 row 오른쪽 +colW/2.
-function hexCenter(col, row, colW, rowH, offX, offY) {
+function hexCenter(col: number, row: number, colW: number, rowH: number, offX: number, offY: number): [number, number] {
   return [offX + col * colW + (row % 2 ? colW / 2 : 0), offY + row * rowH];
 }
 
-// odd-r offset 이웃 6칸 (홀수 row 오른쪽 offset). 순서: NW, N, W, E, SW, S 류.
-function nbrs(c, r) {
+// odd-r offset 이웃 6칸. 순서: NW, N, W, E, SW, S 류.
+function nbrs(c: number, r: number): Array<[number, number]> {
   return r % 2 === 0
     ? [[c - 1, r - 1], [c, r - 1], [c - 1, r], [c + 1, r], [c - 1, r + 1], [c, r + 1]]
     : [[c, r - 1], [c + 1, r - 1], [c - 1, r], [c + 1, r], [c, r + 1], [c + 1, r + 1]];
 }
 
-// pointy-top corner 순서 (hexPoints와 동일): 0=SE, 1=S, 2=SW, 3=NW, 4=N, 5=NE.
-// edge i = corner i → corner (i+1)%6.
-// 이웃 인덱스(nbrs 순서) → 그 이웃과 맞닿는 edge 인덱스: NW→3, N→4, W→2, E→5, SW→1, SE→0.
+// 이웃 인덱스(nbrs 순서) → 그 이웃과 맞닿는 edge 인덱스.
 const NBR_TO_EDGE = [3, 4, 2, 5, 1, 0];
 
 // 중심 (cx,cy)·반지름 rad 육각형의 i번째 꼭짓점 [x, y].
-function corner(cx, cy, rad, i) {
+function corner(cx: number, cy: number, rad: number, i: number): [number, number] {
   const a = Math.PI / 6 + (Math.PI / 3) * i;
   return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)];
 }
 
 // 경계 굵은 선 — keyFn 값이 다른 이웃과 닿는 면을 그림 (기본 = 시도 경계).
-// keyFn을 구 키로 주면 구 영역 경계(옛 회차 병합 구 윤곽)에 재사용.
-// includeOutline=true면 한반도 외곽(neighbor 없는 edge)도 같이 그림 (권역 윤곽 강조).
-// cells: {c,r,sido} 배열, cellAt: "c,r"→cell Map.
 // lineClass 주면 stroke 색을 CSS에 위임(테마 인지) — 안 주면 기존 하드코딩 색.
-function drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, strokeWidth, includeOutline = false, keyFn, lineClass) {
-  const key = keyFn || ((d) => d.sido);
+function drawHexBorders(
+  svg: SVGElement,
+  cells: HexCell[],
+  cellAt: Map<string, HexCell>,
+  colW: number, rowH: number, offX: number, offY: number, r: number,
+  strokeWidth: string | number,
+  includeOutline = false,
+  keyFn?: (d: HexCell) => string | undefined,
+  lineClass?: string,
+): void {
+  const key = keyFn || ((d: HexCell) => d.sido);
   for (const d of cells) {
     const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
     const ns = nbrs(d.c, d.r);
@@ -49,22 +63,25 @@ function drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, strokeWid
     for (let i = 0; i < 6; i++) {
       const [nc, nr] = ns[i];
       const neighbor = cellAt.get(`${nc},${nr}`);
-      // 같은 key(시도/구) 내부 edge → skip
       if (neighbor && key(neighbor) === dk) continue;
-      // 외곽 (neighbor 없음) → includeOutline일 때만 그림
       if (!neighbor && !includeOutline) continue;
       const e = NBR_TO_EDGE[i];
       const [x1, y1] = corner(cx, cy, r, e);
       const [x2, y2] = corner(cx, cy, r, (e + 1) % 6);
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+      line.setAttribute('x1', String(x1)); line.setAttribute('y1', String(y1));
+      line.setAttribute('x2', String(x2)); line.setAttribute('y2', String(y2));
       if (lineClass) line.setAttribute('class', lineClass);
       else line.setAttribute('stroke', '#0a0e1a');
-      line.setAttribute('stroke-width', strokeWidth);
+      line.setAttribute('stroke-width', String(strokeWidth));
       line.setAttribute('stroke-linecap', 'round');
       line.setAttribute('pointer-events', 'none');
       svg.appendChild(line);
     }
   }
 }
+
+// 바닐라 스크립트(render-*.js)가 전역으로 호출 — 빌드 IIFE가 노출.
+Object.assign(globalThis as unknown as Record<string, unknown>, {
+  hexPoints, hexCenter, nbrs, NBR_TO_EDGE, corner, drawHexBorders,
+});

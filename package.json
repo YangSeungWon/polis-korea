@@ -2,8 +2,14 @@
   "name": "polis-korea-build",
   "version": "1.0.0",
   "private": true,
-  "description": "빌드 도구 — 선거구 geojson 위상 보존 단순화(mapshaper). scripts/build/build_district_geojson.py가 node_modules/.bin/mapshaper 호출.",
+  "description": "빌드 도구 — 선거구 geojson 위상 보존 단순화(mapshaper). scripts/build/build_district_geojson.py가 node_modules/.bin/mapshaper 호출. 지도 모듈 TS화 실험: src/history/*.ts → esbuild → assets/*.js.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:map": "esbuild src/history/hexgrid.ts --bundle --format=iife --target=es2019 --banner:js=\"// ⚠️ 생성 파일 — 편집 금지. 소스: src/history/hexgrid.ts, 빌드: npm run build:map\" --outfile=assets/hexgrid.js"
+  },
   "devDependencies": {
-    "mapshaper": "^0.7.22"
+    "esbuild": "^0.28.1",
+    "mapshaper": "^0.7.22",
+    "typescript": "^6.0.3"
   }
 }
