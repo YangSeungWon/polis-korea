@@ -97,7 +97,7 @@ let geoSidoOutlineLayer: any = null;
 const geoSidoByN: Record<string, any> = {};       // 옛총선(1~7대) 회차별 시도 외곽선(당시 영토·이북 포함)
 const periodSidoByYear: Record<string, any> = {}; // 대선·지선 연도별 시도 외곽선(sido_{year}) layer 캐시
 // sido_{year} 파일이 있는 연도 — 그 외(2025/2026=현재 경계)는 현대 sido_simple 폴백.
-const PERIOD_SIDO_YEARS = new Set([1975, 1985, 1990, 1995, 2000, 2002, 2006, 2010, 2013]);
+const PERIOD_SIDO_YEARS = new Set([1975, 1985, 1987, 1990, 1995, 2000, 2002, 2006, 2010, 2013]);
 let geo38Layer: any = null;          // 38선 참조선(1·2대 = 38선이 국경이던 시기)
 let geoMiniMapCtrl: any = null;
 let geoInitialZoom: number | null = null;
@@ -596,7 +596,7 @@ const LOCAL_SGG_GEO_YEAR: Record<number, number> = { 1: 1995, 2: 2000, 3: 2002, 
 // 대선 시군구 geo — 15대(1997)부터. (13·14대는 1995 도농통합 전 시군구라 맞는 경계 파일 없음.)
 const PRES_SGG_GEO_YEAR: Record<number, number> = {
   2: 1975, 3: 1975, 4: 1975, 5: 1975, 6: 1975, 7: 1975,
-  13: 1985, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013, 19: 2025, 20: 2025, 21: 2025,
+  13: 1987, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013, 19: 2025, 20: 2025, 21: 2025,
 };
 const PRES_GEO_ROUNDS = [2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 // HGIS 시간축 경계로 복원된 옛 대선 회차 — sigungu_hgis_{n} + sido_hgis_{n} 사용(그 선거일 실제 경계).
