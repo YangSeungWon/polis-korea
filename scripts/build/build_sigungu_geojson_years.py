@@ -57,11 +57,15 @@ def build_year(year):
     r = shapefile.Reader(shp[0], encoding=ENC[year])
     fl = [f[0].lower() for f in r.fields[1:]]
     ci, ni = fl.index("sigungu_cd"), fl.index("sigungu_nm")
+    # SGIS 원본 오기 보정 (코드는 맞고 이름만 틀린 경우). {(year,code): 정정명}
+    SGG_NAME_FIX = {
+        (1985, "36460"): "나주군",   # 원본이 '춘성군'(강원) 오기 — 위치는 전남 나주(무안↔함평 사이)
+    }
     # 1) raw 수집 (투영좌표 유지 — dissolve·geometric containment용)
     raw = []
     for sr in r.shapeRecords():
         rec = sr.record
-        code, name = str(rec[ci]), rec[ni]
+        code = str(rec[ci]); name = SGG_NAME_FIX.get((year, code), rec[ni])
         if not sr.shape.points:
             continue
         g = shape(sr.shape.__geo_interface__)
