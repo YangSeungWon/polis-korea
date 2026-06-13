@@ -54,6 +54,14 @@ function periodSidoName(sido, date) {
 // 불투명 셀(총선·지선) 위에서도 보임. pts: [{sido, cx, cy}] (셀 픽셀중심). 대선·총선·지선 공통.
 // 라벨이 viewBox 밖으로 나가므로 호출부에서 viewBox 좌우 여백(SIDO_EDGE_MARGIN) 확보 필요.
 var SIDO_EDGE_MARGIN = 78;
+// 라벨 좌/우 열 고정 배치(경도 기준, 회차 무관 일관) — 중앙 근처 시도(서울 등)가 레이아웃에 따라
+// 좌우로 튀는 것 방지. 서·남부→왼쪽, 동부→오른쪽. (미정의 시도는 centroid로 폴백.)
+var SIDO_SIDE = {
+  '서울특별시': 'L', '인천광역시': 'L', '경기도': 'L', '충청남도': 'L', '대전광역시': 'L',
+  '전북특별자치도': 'L', '전라북도': 'L', '전라남도': 'L', '광주광역시': 'L', '제주특별자치도': 'L', '제주도': 'L',
+  '강원특별자치도': 'R', '강원도': 'R', '충청북도': 'R', '세종특별자치시': 'R',
+  '경상북도': 'R', '대구광역시': 'R', '경상남도': 'R', '부산광역시': 'R', '울산광역시': 'R',
+};
 function drawSidoEdgeLabels(svg, pts) {
   if (!pts.length) return;
   const NS = 'http://www.w3.org/2000/svg';
@@ -69,7 +77,8 @@ function drawSidoEdgeLabels(svg, pts) {
   const sides = { left: [], right: [] };
   for (const [sido, g] of by) {
     const ccx = g.sx / g.n, ccy = g.sy / g.n;
-    (ccx < cen ? sides.left : sides.right).push({ sido, ccy });
+    const left = SIDO_SIDE[sido] ? SIDO_SIDE[sido] === 'L' : ccx < cen;   // 고정 맵 우선, 없으면 centroid
+    (left ? sides.left : sides.right).push({ sido, ccy });
   }
   const MINGAP = 18;
   for (const key of ['left', 'right']) {
