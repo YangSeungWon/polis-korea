@@ -212,6 +212,8 @@ if __name__ == "__main__":
         per.unlink()
         out = [{"sido": c["sido"], "name": c["name"], "c": c["c"], "r": c["r"]}
                for c in packed if "c" in c]
+        from fill_district_hex_holes import fill as _fill_holes
+        _fill_holes(out)   # 둘러싸인 내부 빈칸 slide-fill (지역구 hex와 동일) — 경북/경남 등 구멍 제거
         combined[str(n)] = out
         print(f"{n}대: {len(out)}셀 → {info['bbox']}, 미배치 {len(packed)-len(out)}")
     # 통합 파일 (렌더러가 회차별로 조회) — 회차→셀 배열. pretty(리포 컨벤션, minify 금지).
