@@ -232,7 +232,8 @@ function resultForSigungu(sido, name, data) {
   // name+자치구/선거구 분구 entries 자동 합산.
   if (/^[가-힣]+시$/.test(name)) {
     const escape = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const subRe = new RegExp(`^${escape}(?:[가-힣]+(?:구|군)|[갑을병정무])$`);
+    // 분구(갑/을구)·선거구(제N) 자동합산 — 2·3·4대 부산시제1~5, 인천시제N 등(구제 전 도시 선거구).
+    const subRe = new RegExp(`^${escape}(?:[가-힣]+(?:구|군)|[갑을병정무]|제\\d+)$`);
     const parts = data.sigungu.filter((r) => canonSido(r.sido) === sido && subRe.test(r.name));
     if (parts.length) return mergeSigunguResults(parts);
   }

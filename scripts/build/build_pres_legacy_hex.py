@@ -138,12 +138,16 @@ def resolve(sido, name):
 
 
 def jachi(name):
+    # 구제 전 도시 선거구 → 도시 한 칸으로 합산. '부산시제1'→'부산시'(3·4대), '부산시갑구'→'부산시'(2대).
+    # (헥스=행정구역 단위. 1957 구제 전 부산은 구 없는 한 시 → 선거구는 합산. resultForSigungu가 처리.)
+    m = re.match(r"^(.+?시)제\d+$", name)
+    if m:
+        return m.group(1)
     m = re.match(r"^(.+?)[갑을병정무]구$", name)
     if not m:
         return name
     base = m.group(1)
-    # 부산시갑구 등 '시'로 끝나는 base는 선거구 marker일 뿐(구 아님) → 도시명 유지(부산시).
-    # resultForSigungu가 '부산시'로 갑/을/병/정/무 자동합산. (동대문갑구→동대문구는 실재 구.)
+    # '시'로 끝나는 base는 선거구 marker일 뿐(구 아님) → 도시명 유지(부산시). (동대문갑구→동대문구는 실재 구.)
     return base if base.endswith("시") else base + "구"
 
 
