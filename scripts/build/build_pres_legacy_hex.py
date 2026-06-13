@@ -149,8 +149,12 @@ def build_cells(n, path):
     for r in d["races"]:
         if r.get("scope") != "sigungu" or not r.get("sigungu"):
             continue
-        # disambig 괄호 제거('중구(서울)'→'중구') 후 갑/을 병합.
-        sido = r.get("sido"); nm = jachi(re.sub(r"\s*\([^)]*\)\s*$", "", r["sigungu"]).strip())
+        # disambig 괄호 제거('중구(서울)'→'중구'). 선거구 갑/을 병합(동대문갑구→동대문구)은
+        # 옛 회차(2~7대)에만 — 13대+ 일반구(수정구·오정구 등 '정'을 선거구 letter로 오인 금지)는 보존.
+        sido = r.get("sido")
+        nm = re.sub(r"\s*\([^)]*\)\s*$", "", r["sigungu"]).strip()
+        if n <= 7:
+            nm = jachi(nm)
         key = (sido, nm)
         if key in seen: continue
         seen[key] = {"sido": sido, "name": nm, "_cen": list(resolve(sido, nm) or ())}
