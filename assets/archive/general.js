@@ -292,17 +292,35 @@
       sec.className = 'ar-section';
       sec.id = 'ar-general-hex';
       sec.innerHTML = '<h2 class="ar-section-title">지역구 의석 — 시도별</h2>'
-        + '<div class="ar-genhex-host"></div><div class="ar-genhex-legend ch-leg-row"></div>';
+        + '<div class="ar-genhex-toggle"></div><div class="ar-genhex-legend ch-leg-row"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
+    const toggleHost = sec.querySelector('.ar-genhex-toggle');
+    const modes = [
+      { key: 'hex', label: '헥스', draw: (el) => drawGenHexInto(el, bySido) },
+      { key: 'dorling', label: 'dorling', draw: (el) => window.Archive.drawSidoDorling(el, bySido, { seedGap: 72, rmax: 38 }) },
+    ];
+    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(toggleHost, modes);
+    else drawGenHexInto(toggleHost, bySido);
+    const partyTotal = {};
+    for (const sd of Object.keys(bySido)) for (const [p, c] of Object.entries(bySido[sd])) partyTotal[p] = (partyTotal[p] || 0) + c;
+    const legend = sec.querySelector('.ar-genhex-legend');
+    if (legend) {
+      legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
+        .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ')
+        + ' <span class="ar-genhex-note">· 헥스=1석1hex · dorling=원크기 의석·파이 정당</span>';
+    }
+  }
+
+  // 시도별 의석 spiral SVG를 el에 렌더 (헥스 모드). 권역 seed → packClusters 가변 packing.
+  function drawGenHexInto(el, bySido) {
     const NS = 'http://www.w3.org/2000/svg';
-    const SEED_GAP = 85, SMALL_R = 6;   // seed=권역 격자(촘촘). packing이 간격 처리해 큰 SMALL_R 가능.
+    const SEED_GAP = 85, SMALL_R = 6;
     const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
     const hexRing = (L) => { const ring = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { ring.push([q, r]); q += dq; r += dr; } } return ring; };
     const hexSpiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const ring = hexRing(L); const rem = N - out.length; if (rem >= ring.length) out.push(...ring); else for (let i = 0; i < rem; i++) out.push(ring[Math.round(i * ring.length / rem) % ring.length]); } return out; };
     const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
     const clusterRof = (N) => { const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3)); return Math.max(9, (L + 0.6) * Math.sqrt(3) * SMALL_R); };
-    // 권역 격자 seed → 크기대로 force-packing(작은 권역 가까이, 경기만 벌어짐).
     const nodes = []; const seen = new Set();
     for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
       const key = `${pos.col},${pos.row}`;
@@ -313,14 +331,13 @@
     }
     window.Archive.packClusters(nodes, { pad: 4 });
     const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
-    const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;   // 위 라벨 여백
+    const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;
     const vbW = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
     const vbH = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS);
     svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}`);
     svg.setAttribute('class', 'ar-genhex-svg');
-    const partyTotal = {};
     for (const n of nodes) {
       const entries = Object.entries(n.seats || {}).sort((a, b) => b[1] - a[1]);
       const g = document.createElementNS(NS, 'g');
@@ -332,7 +349,7 @@
       tt.textContent = n.N ? `${n.sido} ${n.N}석 · ${entries.map(([p, c]) => `${p} ${c}`).join(', ')}` : `${n.sido} · 데이터 없음`;
       g.appendChild(tt);
       const fills = [];
-      for (const [p, c] of entries) { for (let k = 0; k < c; k++) fills.push(pcol(p)); partyTotal[p] = (partyTotal[p] || 0) + c; }
+      for (const [p, c] of entries) for (let k = 0; k < c; k++) fills.push(pcol(p));
       const spiral = hexSpiral(n.N);
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
@@ -351,14 +368,7 @@
       g.appendChild(t);
       svg.appendChild(g);
     }
-    const host = sec.querySelector('.ar-genhex-host');
-    host.innerHTML = ''; host.appendChild(svg);
-    const legend = sec.querySelector('.ar-genhex-legend');
-    if (legend) {
-      legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
-        .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ')
-        + ' <span class="ar-genhex-note">· 1석 = 1 hex (정당색) · 시도 hex 수 = 의석</span>';
-    }
+    el.innerHTML = ''; el.appendChild(svg);
   }
 
   window.Archive.general = {

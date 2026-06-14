@@ -18,23 +18,10 @@
     ];
   }
 
-  function init(ctx, opts) {
-    opts = opts || {};
-    const tc = opts.tc || '3';
-    const hostId = opts.hostId || 'ar-governor-hex';
-    const host = document.getElementById(hostId);
-    if (!host) return;
-    const A = window.Archive || {};
-    const races = (ctx?.results?.races || []).filter(
-      (r) => r.scope === 'sido' && r.sg_typecode === tc
-    );
-    const section = host.closest('.ar-section') || host.parentElement;
-    if (!races.length) { section?.setAttribute('hidden', ''); return; }
-    section?.removeAttribute('hidden');
-
-    const modes = modesFor(tc, A).filter((m) => typeof m.draw === 'function');
+  // 토글 UI를 host에 깔고 각 모드를 hidden view에 렌더. drawArg = 각 모드 draw(el)에 넘길 인자.
+  function mount(host, modes, drawArg) {
+    modes = modes.filter((m) => typeof m.draw === 'function');
     if (!modes.length) return;
-
     const tabs = modes.map((m, i) =>
       `<button type="button" class="ar-sido-tab${i === 0 ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${i === 0}">${m.label}</button>`
     ).join('');
@@ -42,12 +29,10 @@
       `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
     ).join('');
     host.innerHTML = `<div class="ar-sido-toggle" role="tablist" aria-label="보기 전환">${tabs}</div>${views}`;
-
     for (const m of modes) {
       const el = host.querySelector(`.ar-sido-view[data-view="${m.key}"]`);
-      if (el) m.draw(el, races);
+      if (el) m.draw(el, drawArg);
     }
-
     host.querySelectorAll('.ar-sido-tab').forEach((btn) => {
       btn.addEventListener('click', () => {
         const v = btn.dataset.view;
@@ -63,6 +48,26 @@
     });
   }
 
+  function init(ctx, opts) {
+    opts = opts || {};
+    // 신규: opts.modes 직접 제공 → race-filter 없이 토글만 (총선·광역의회용). draw(el) 시그니처.
+    if (opts.modes && opts.host) { mount(opts.host, opts.modes, null); return; }
+    const tc = opts.tc || '3';
+    const hostId = opts.hostId || 'ar-governor-hex';
+    const host = document.getElementById(hostId);
+    if (!host) return;
+    const A = window.Archive || {};
+    const races = (ctx?.results?.races || []).filter(
+      (r) => r.scope === 'sido' && r.sg_typecode === tc
+    );
+    const section = host.closest('.ar-section') || host.parentElement;
+    if (!races.length) { section?.setAttribute('hidden', ''); return; }
+    section?.removeAttribute('hidden');
+
+    const modes = modesFor(tc, A).filter((m) => typeof m.draw === 'function');
+    mount(host, modes, races);
+  }
+
   window.Archive = window.Archive || {};
-  window.Archive.sidoView = { init };
+  window.Archive.sidoView = { init, mount };
 })();

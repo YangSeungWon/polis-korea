@@ -645,6 +645,11 @@
   paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
 .ar-genhex-legend { margin-top: 10px; font-size: 13px; line-height: 1.9; }
 .ar-genhex-note { color: var(--ink-mute); font-size: 12px; }
+/* dorling (시도별 원+파이) — 헥스 토글의 다른 보기 (대선·총선·광역의회 공용) */
+.ar-dorling-svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 4px auto 0; }
+.ar-dorling-ring { fill: none; stroke: rgba(0,0,0,0.2); stroke-width: 1; }
+.ar-dorling-label { font-size: 11px; font-weight: 700; fill: #fff; pointer-events: none;
+  paint-order: stroke; stroke: rgba(0,0,0,0.4); stroke-width: 2.4; stroke-linejoin: round; }
 
 /* 시도명 외곽 세로줄 라벨 (history 방식, councilHex·sido-map 공용) */
 .hist-sido-edge-label {

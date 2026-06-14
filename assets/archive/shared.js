@@ -195,4 +195,79 @@
     }
     return nodes;
   };
+
+  // 시도별 dorling — 권역 seed에서 크기(√합계) 원 packing + 정당 파이. 대선·총선·지선 공용.
+  //   host: 그릴 element / bySido: {시도:{정당:수}} / opts: {rmax, seedGap}
+  Archive.drawSidoDorling = function (host, bySido, opts) {
+    if (!host || typeof SIDO_HEX_LAYOUT !== 'object') return false;
+    opts = opts || {};
+    const NS = 'http://www.w3.org/2000/svg';
+    const Rmax = opts.rmax || 40, seedGap = opts.seedGap || 80;
+    const pcol = Archive.pcol, ssh = Archive.ssh;
+    let maxTot = 1; const ent0 = [];
+    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
+      const seats = bySido[sido]; if (!seats) continue;
+      const tot = Object.values(seats).reduce((s, n) => s + n, 0);
+      if (!tot) continue;
+      maxTot = Math.max(maxTot, tot); ent0.push({ sido, seats, tot, pos });
+    }
+    if (!ent0.length) return false;
+    const nodes = ent0.map((e) => ({
+      sido: e.sido, seats: e.seats, tot: e.tot,
+      r: Math.max(7, Rmax * Math.sqrt(e.tot / maxTot)),
+      cx0: e.pos.col * seedGap + (e.pos.row % 2 ? seedGap / 2 : 0),
+      cy0: e.pos.row * seedGap * 0.87,
+    }));
+    Archive.packClusters(nodes, { pad: 3 });
+    const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
+    const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 6;
+    const W = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
+    const H = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('xmlns', NS);
+    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}`);
+    svg.setAttribute('class', 'ar-dorling-svg');
+    const pie = (cx, cy, r, a0, a1) => {
+      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+      const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+      const lg = (a1 - a0) > Math.PI ? 1 : 0;
+      return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
+    };
+    for (const n of nodes) {
+      const e = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
+      const g = document.createElementNS(NS, 'g');
+      const tt = document.createElementNS(NS, 'title');
+      tt.textContent = `${n.sido} ${n.tot}석 · ${e.map(([p, c]) => `${p} ${c}`).join(', ')}`;
+      g.appendChild(tt);
+      if (e.length > 1) {
+        let a0 = -Math.PI / 2;
+        for (const [p, c] of e) {
+          const a1 = a0 + (c / n.tot) * 2 * Math.PI;
+          const path = document.createElementNS(NS, 'path');
+          path.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1));
+          path.setAttribute('fill', pcol(p));
+          g.appendChild(path); a0 = a1;
+        }
+      } else {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.r.toFixed(1));
+        c.setAttribute('fill', e[0] ? pcol(e[0][0]) : '#e6e9ef');
+        g.appendChild(c);
+      }
+      const ring = document.createElementNS(NS, 'circle');
+      ring.setAttribute('cx', n.cx.toFixed(1)); ring.setAttribute('cy', n.cy.toFixed(1)); ring.setAttribute('r', n.r.toFixed(1));
+      ring.setAttribute('class', 'ar-dorling-ring');
+      g.appendChild(ring);
+      if (n.r >= 11) {
+        const t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
+        t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-dorling-label');
+        t.textContent = ssh(n.sido);
+        g.appendChild(t);
+      }
+      svg.appendChild(g);
+    }
+    host.innerHTML = ''; host.appendChild(svg);
+    return true;
+  };
 })();

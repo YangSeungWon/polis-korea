@@ -229,12 +229,24 @@
       return;
     }
     host.parentElement?.removeAttribute('hidden');
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS);
-    svg.setAttribute('class', 'metro-hex-svg');
-    const { totalSeats, partyTotal } = render(svg, null, seats);
-    host.innerHTML = '';
-    host.appendChild(svg);
+    // dorling용 {시도:{party:count}} (병합 시도 제외 — SIDO_HEX_LAYOUT 키 기준)
+    const bySidoObj = {};
+    for (const [sd, m] of seats) bySidoObj[sd] = Object.fromEntries(m);
+    let agg = null;
+    const drawHex = (el) => {
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('xmlns', NS);
+      svg.setAttribute('class', 'metro-hex-svg');
+      agg = render(svg, null, seats);
+      el.innerHTML = ''; el.appendChild(svg);
+    };
+    const modes = [
+      { key: 'hex', label: '헥스', draw: drawHex },
+      { key: 'dorling', label: 'dorling', draw: (el) => window.Archive.drawSidoDorling(el, bySidoObj, { seedGap: 78, rmax: 40 }) },
+    ];
+    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes);
+    else drawHex(host);
+    const { totalSeats, partyTotal } = agg || { totalSeats: 0, partyTotal: new Map() };
     const legend = document.getElementById('ar-metro-hex-legend');
     if (legend) {
       const sorted = Array.from(partyTotal.entries()).sort((a, b) => b[1] - a[1]);
