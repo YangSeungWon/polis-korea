@@ -44,7 +44,8 @@ def main():
             if not aid or not dob:
                 continue
             for r in p.get('races', []):
-                person_lookup[(r['eid'], p['name'])] = {'aid': aid, 'dob': dob}
+                # 키에 tc·지역 포함 — 같은 선거 같은 이름 동명이인(강원지사 최문순 vs 화천군수 최문순) 구분.
+                person_lookup[(r['eid'], p['name'], str(r.get('tc')), r.get('place', ''))] = {'aid': aid, 'dob': dob}
 
     items = []
     seen = set()
@@ -102,7 +103,7 @@ def main():
                 nm = (c.get('name') or '').strip()
                 if not nm: continue
                 won = bool(c.get('won')) or c.get('rank') == 1
-                pl = person_lookup.get((eid, nm))
+                pl = person_lookup.get((eid, nm, str(tc), place))
                 # 낙선 포함 조건: 의원ID 보유 or 2회+ 출마하며 이 선거 득표 5%↑(군소 난립 제외)
                 if not won and not pl and not (nm in multi_race_names and (c.get('pct') or 0) >= 5):
                     continue
