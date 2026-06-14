@@ -113,10 +113,29 @@
     // 최대 시도가 ~46개 hex가 되도록 단위 결정 (만 단위로 정리)
     const unit = Math.max(10000, Math.ceil(maxVoted / 46 / 10000) * 10000);
     const smallR = 3.5;
-    const svg = svgFor(host, cells, 24);
+    // 권역 격자 seed → 크기대로 force-packing(작은 권역 가까이). N·반경 먼저 계산 후 pack.
+    for (const cell of cells) {
+      cell.N = Math.max(1, Math.round(cell.voted / unit));
+      const L = Math.ceil(Math.sqrt(Math.max(cell.N - 1, 0) / 3));
+      cell.r = Math.max(9, (L + 0.6) * Math.sqrt(3) * smallR);
+    }
+    if (window.Archive && typeof window.Archive.packClusters === 'function') {
+      const SEED = 0.7;
+      const pn = cells.map((c) => ({ c, r: c.r, cx0: c.cx * SEED, cy0: c.cy * SEED }));
+      window.Archive.packClusters(pn, { pad: 4 });
+      for (const n of pn) { n.c.cx = n.cx; n.c.cy = n.cy; }
+    }
+    const minX = Math.min(...cells.map((c) => c.cx - c.r)) - 6;
+    const minY = Math.min(...cells.map((c) => c.cy - c.r)) - 16;
+    const vbW = Math.max(...cells.map((c) => c.cx + c.r)) - minX + 6;
+    const vbH = Math.max(...cells.map((c) => c.cy + c.r)) - minY + 6;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('xmlns', NS);
+    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}`);
+    svg.setAttribute('class', 'sido-prop-svg');
 
     for (const cell of cells) {
-      const N = Math.max(1, Math.round(cell.voted / unit));
+      const N = cell.N;
       const alloc = allocateByVotes(cell.cands, N);
       const fills = [];
       for (let i = 0; i < cell.cands.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(pcolor(cell.cands[i].party));
@@ -141,7 +160,7 @@
     }
     // 단위 범례
     const leg = document.createElementNS(NS, 'text');
-    leg.setAttribute('x', '4'); leg.setAttribute('y', '14');
+    leg.setAttribute('x', (minX + 4).toFixed(1)); leg.setAttribute('y', (minY + 12).toFixed(1));
     leg.setAttribute('class', 'sido-prop-legend');
     leg.textContent = `■ 1개 = ${(unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`;
     svg.appendChild(leg);
