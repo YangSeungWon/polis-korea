@@ -11,22 +11,34 @@
     return (state.data.polls || []).filter((p) => p.office_level === '대통령' && !p.sido && (p.candidates || []).length);
   }
 
-  // 헤드라인: 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆)
+  // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆)
+  // 본선 horse-race만 — 실제 결과 후보(권위)를 본선 집합으로, 상위 2인(당선·차점) 모두
+  // 등장 + 본선후보 합≥70 인 폴만. 경선·가상대결·truncated/단독적합 자동 제외(날짜 하드코딩 X).
   function renderTrend() {
     let host = document.getElementById('pres-trend');
     if (!host) return;
     if (typeof buildPartyTrendSVG !== 'function') { host.hidden = true; return; }
-    const polls = nationalCandPolls();
+    const finalCands = ((ps.nationRace && ps.nationRace.candidates) || [])
+      .filter((c) => c.pct != null).slice().sort((a, b) => b.pct - a.pct);
+    if (finalCands.length < 2) { host.hidden = true; return; }
+    const finalSet = new Set(finalCands.map((c) => c.name));
+    const top2 = [finalCands[0].name, finalCands[1].name];
+    const polls = nationalCandPolls().filter((p) => {
+      const named = (p.candidates || []).filter((c) => c.pct != null);
+      const names = new Set(named.map((c) => c.name));
+      if (!top2.every((n) => names.has(n))) return false;              // 본선 양강 모두 있어야
+      const s = named.filter((c) => finalSet.has(c.name)).reduce((a, c) => a + c.pct, 0);
+      return s >= 70;                                                  // 본선후보 합 정상 (truncated/적합 컷)
+    }).map((p) => ({ ...p, candidates: (p.candidates || []).filter((c) => finalSet.has(c.name)) }));
     if (!polls.length) { host.hidden = true; return; }
-    const actual = (ps.nationRace && ps.nationRace.candidates || [])
-      .filter((c) => c.pct != null).map((c) => ({ key: c.name, pct: c.pct }));
+    const actual = finalCands.map((c) => ({ key: c.name, pct: c.pct }));
     const electionTs = Date.parse(POLL_ELECTION.date + 'T18:00:00+09:00');
     const svg = buildPartyTrendSVG(polls, {
-      keyBy: 'candidate', showBand: true, minPts: 15, topN: 6,
+      keyBy: 'candidate', showBand: true, minPts: 5, topN: 6,
       actual, electionTs: isFinite(electionTs) ? electionTs : null,
       w: 720, h: 300,
     });
-    host.innerHTML = `<h3 class="pres-trend-title">후보 지지율 추이 <span class="pres-trend-sub">전국 여론조사 · ◆ 선거일 실제 득표</span></h3>`
+    host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="pres-trend-sub">전국 여론조사(본선 구도) · ◆ 선거일 실제 득표</span></h3>`
       + `<div class="pres-trend-chart">${svg}</div>`;
     host.hidden = false;
   }
