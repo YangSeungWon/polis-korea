@@ -254,7 +254,12 @@ def main():
     ej = json.loads((ROOT / "data/elections.json").read_text(encoding="utf-8"))
     TERM_DATE = {e["n"]: e.get("date", "") for e in ej.get("national_assembly", {}).get("elections", []) if e.get("date")}
     by_aid = {p["assembly_id"]: p for p in new_persons if p.get("assembly_id")}
-    n_bir_add = n_bir_new = 0
+    # aid 못 받은(재보궐·지선만 있는) entry — 비례 의원과 동일인일 수 있어 병합 후보.
+    unmatched_by_name = {}
+    for p in new_persons:
+        if not p.get("assembly_id"):
+            unmatched_by_name.setdefault(p["name"], []).append(p)
+    n_bir_add = n_bir_new = n_bir_merge = 0
     for asm_p in asm["persons"]:
         birs = [c for c in asm_p["careers"]
                 if "비례" in (c.get("district") or "") or "전국" in (c.get("district") or "")]
@@ -270,20 +275,42 @@ def main():
                           "party": disambiguate_party(c.get("party") or "", dt),
                           "pct": None, "rank": None, "won": True, "tc": "7"})
         entry = by_aid.get(aid)
+        # 동일인의 미매칭(재보궐·지선 등 aid 못 받은) entry 흡수 — 강화 가드:
+        # 비례 정당(무소속 제외) 정확 일치 + 시기 ±8년. 옛 동명이인·무소속겹침 오병합 방지.
+        bir_parties = {r["party"] for r in races if r["party"] and r["party"] != "무소속"}
+        bir_years = [r["year"] for r in races if r.get("year")]
+        orphans = []
+        for c in list(unmatched_by_name.get(asm_p["name"], [])):
+            if any(r.get("party") in bir_parties and r.get("year")
+                   and any(abs(r["year"] - y) <= 8 for y in bir_years)
+                   for r in c["races"]):
+                orphans.append(c)
+                unmatched_by_name[asm_p["name"]].remove(c)
+        if entry is None and orphans:   # 비례 entry 없으면 orphan을 승격(재보궐 기록 보존)
+            entry = orphans.pop(0)
+            entry["assembly_id"] = aid
+            entry["id"] = aid
+            entry["dob"] = asm_p.get("dob")
+            entry["hanja"] = asm_p.get("hanja")
+            entry["likely_namesake"] = False
+            by_aid[aid] = entry
+            n_bir_merge += 1
         if entry is not None:
+            for o in orphans:           # 남은 orphan race 흡수
+                entry["races"] += o["races"]
+                o["_remove"] = True
+                n_bir_merge += 1
             have = {(r.get("round"), r.get("tc")) for r in entry["races"]}
-            fresh = [r for r in races if (r["round"], "7") not in have]
-            if fresh:
-                entry["races"] += fresh
-                entry["races"].sort(key=lambda r: (r.get("date") or "", r.get("eid")))
-                seen = []
-                for r in entry["races"]:
-                    if r["party"] and r["party"] not in seen:
-                        seen.append(r["party"])
-                entry["parties"] = seen[:6]
-                entry["wins"] = sum(1 for r in entry["races"] if r["won"])
-                entry["losses"] = sum(1 for r in entry["races"] if not r["won"])
-                n_bir_add += 1
+            entry["races"] += [r for r in races if (r["round"], "7") not in have]
+            entry["races"].sort(key=lambda r: (r.get("date") or "", r.get("eid")))
+            seen = []
+            for r in entry["races"]:
+                if r["party"] and r["party"] not in seen:
+                    seen.append(r["party"])
+            entry["parties"] = seen[:6]
+            entry["wins"] = sum(1 for r in entry["races"] if r["won"])
+            entry["losses"] = sum(1 for r in entry["races"] if not r["won"])
+            n_bir_add += 1
         else:  # 비례-only → 새 인물 entry
             races.sort(key=lambda r: (r.get("date") or "", r.get("eid")))
             seen = []
@@ -298,7 +325,8 @@ def main():
             })
             by_aid[aid] = new_persons[-1]
             n_bir_new += 1
-    print(f"  비례 보강: 기존인물 +{n_bir_add} · 신규 비례인물 {n_bir_new}")
+    new_persons = [p for p in new_persons if not p.get("_remove")]   # 흡수된 orphan 제거
+    print(f"  비례 보강: 기존인물 +{n_bir_add} · 신규 {n_bir_new} · orphan(재보궐 등) 병합 {n_bir_merge}")
 
     new_persons.sort(key=lambda p: (-len(p["races"]), -p.get("wins", 0), p["name"]))
     person["persons"] = new_persons
