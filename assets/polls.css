@@ -216,5 +216,16 @@
 .pres-trend-title .pres-trend-sub { font-size: 11px; font-weight: 500; color: var(--ink-soft); margin-left: 8px; }
 .pres-trend-chart { width: 100%; max-width: 760px; }
 .pres-secondary-label { font-size: 13px; font-weight: 700; color: var(--ink-soft); margin: 8px 0 6px; padding-top: 12px; border-top: 1px solid var(--rule); }
-/* 총선 Phase 1 — 비례 실제결과 바 */
+/* 총선 — 비례 실제결과 바 */
 .gen-prop { margin: 8px 0 24px; max-width: 560px; }
+/* 총선 — 254 지역구 hex */
+.gen-district { margin: 8px 0 24px; }
+.gen-dist-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 8px; }
+.gen-dist-note { font-size: 11px; color: var(--ink-soft); }
+.gen-dist-svg { width: 100%; height: auto; max-width: 760px; display: block; }
+.gen-dist-readout { margin-top: 8px; font-size: 13px; display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline; }
+.gen-dist-readout .gdr-head { width: 100%; font-weight: 800; }
+.gen-dist-readout .gdr-lab { font-size: 11px; color: var(--ink-soft); }
+.gen-dist-readout .gdr-ok { font-size: 11px; color: #2e7d32; font-weight: 700; }
+.gen-dist-readout .gdr-miss { font-size: 11px; color: #d32f2f; font-weight: 700; }
+.gen-dist-hint { color: var(--ink-soft); }

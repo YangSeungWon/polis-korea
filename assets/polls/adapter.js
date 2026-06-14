@@ -99,5 +99,41 @@
     return { polls: kept, actual };
   }
 
-  window.PollAdapter = { cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend };
+  // [지역구] 254 hex resultFn — (sido,name) → { candidates 정렬 } | null. drawDistrictHex 입력.
+  //   결과: races[scope=district], 폴: 국회의원 지역구별 최신 1건. 키 = "sido|선거구명".
+  function districtResultFromResults(races) {
+    const m = new Map();
+    for (const r of races || []) {
+      if (r.scope !== 'district') continue;
+      const name = r.district || r.name;
+      if (!name) continue;
+      const cands = (r.candidates || []).filter((c) => c.votes != null || c.pct != null)
+        .slice().sort((a, b) => (b.votes || b.pct || 0) - (a.votes || a.pct || 0));
+      m.set(r.sido + '|' + name, { candidates: cands });
+    }
+    return (sido, name) => m.get(sido + '|' + name) || null;
+  }
+
+  function districtResultFromPolls(polls) {
+    const latest = {};
+    for (const p of polls || []) {
+      if (p.office_level !== '국회의원' || !p.district) continue;
+      if (!(p.candidates || []).length) continue;
+      const key = p.sido + '|' + p.district;
+      if (!latest[key] || (p.period_end || '') > (latest[key].period_end || '')) latest[key] = p;
+    }
+    const m = new Map();
+    for (const key in latest) {
+      const p = latest[key];
+      const cands = (p.candidates || []).filter((c) => c.pct != null)
+        .slice().sort((a, b) => (b.pct || 0) - (a.pct || 0));
+      m.set(key, { candidates: cands, period_end: p.period_end });
+    }
+    return (sido, name) => m.get(sido + '|' + name) || null;
+  }
+
+  window.PollAdapter = {
+    cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend,
+    districtResultFromResults, districtResultFromPolls,
+  };
 })();
