@@ -36,7 +36,7 @@ RESULTS = ROOT / "data/results"
 
 # 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from party_canon import canon_party  # noqa: E402
+from party_canon import canon_party, disambiguate_party  # noqa: E402
 
 KIND_LABEL = {
     "presidential": "대선",
@@ -185,27 +185,30 @@ SATELLITE_TO_MAIN = json.loads(
     (ROOT / "data/parties/satellites.json").read_text(encoding="utf-8")
 )["satellite_to_main"]
 
-def _canon_count_list(pairs):
-    """[[정당, 수], ...] 정규화 + 동일 정당 합산(순서·내림차순 유지)."""
+def _canon_count_list(pairs, date):
+    """[[정당, 수], ...] 정규화(재사용 이름 날짜분기) + 동일 정당 합산."""
     from collections import Counter
     ctr = Counter()
     for item in pairs or []:
-        ctr[canon_party(item[0])] += item[1]
+        ctr[disambiguate_party(item[0], date)] += item[1]
     return [[p, c] for p, c in ctr.most_common()]
 
 
 def canonicalize_round(r):
-    """타임라인 한 회차의 모든 정당명 필드를 정식명으로 정규화."""
-    r["winner_party"] = canon_party(r.get("winner_party"))
+    """타임라인 한 회차의 모든 정당명 필드 정규화 — 별칭+재사용 이름 날짜분기(회차일 기준)."""
+    date = r.get("date")
+    r["winner_party"] = disambiguate_party(r.get("winner_party"), date) if r.get("winner_party") else r.get("winner_party")
     for sw in (r.get("sidoWinners") or {}).values():
-        sw["party"] = canon_party(sw.get("party"))
+        if sw.get("party"):
+            sw["party"] = disambiguate_party(sw["party"], date)
     for c in (r.get("presCandidates") or []):
-        c["party"] = canon_party(c.get("party"))
+        if c.get("party"):
+            c["party"] = disambiguate_party(c["party"], date)
     for key in ("partySeats", "mayorPartyCounts", "metroCouncilPartyCounts",
                 "localCouncilPartyCounts", "metroProportionalPartyCounts",
                 "localProportionalPartyCounts"):
         if r.get(key):
-            r[key] = _canon_count_list(r[key])
+            r[key] = _canon_count_list(r[key], date)
     return r
 
 

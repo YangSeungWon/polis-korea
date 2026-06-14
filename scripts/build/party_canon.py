@@ -9,6 +9,7 @@ build_person_pages.py 등 정당명을 출력하는 모든 빌드 스크립트.
 """
 from __future__ import annotations
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,8 +63,32 @@ def disambiguate_minjoo(date):
     return "더불어민주당"   # 2014-03 이후
 
 
+# 재사용된 정당명(같은 이름·다른 시기) — registry의 시기노드로 자동 분기.
+# 베이스명(괄호 연도 제거) 기준으로 2개+ 노드가 있으면 '재사용 이름'.
+# 예: 새누리당[2012] vs 새누리당(2017), 정의당[2012] vs 정의당(1967).
+_BASE_ERAS: dict[str, list] = {}
+for _name, _info in _registry["parties"].items():
+    _base = re.sub(r"\(\d{4}\)$", "", _name)
+    _f = (_info.get("founded") or "")[:7]
+    _d = (_info.get("dissolved") or "9999-99")[:7]
+    _BASE_ERAS.setdefault(_base, []).append((_name, _f, _d))
+_REUSED_BASES = {b for b, v in _BASE_ERAS.items() if len(v) >= 2}
+
+
 def disambiguate_party(name, date):
-    """정당명 정규화 + '민주당' 날짜 분기. date 없으면 별칭 정규화만."""
+    """정당명 정규화 + 재사용 이름 날짜 분기. date 없으면 별칭 정규화만.
+
+    - '민주당': 시기별로 정식명이 달라(통합민주당·민주통합당 등) 전용 맵 사용.
+    - 그 외 재사용 이름(새누리당·정의당·국민의당 등): registry 시기노드 범위로 분기.
+    - 이미 (연도) 붙은 이름이나 단일 노드 이름은 그대로(별칭만 정규화).
+    """
     if name == "민주당":
         return disambiguate_minjoo(date) or name
+    if name in _REUSED_BASES:
+        ym = (date or "")[:7]
+        if ym:
+            for nm, f, d in _BASE_ERAS[name]:
+                if f and f <= ym <= d:
+                    return nm
+        return name
     return canon_party(name)
