@@ -50,8 +50,7 @@
   function renderProp() {
     const host = document.getElementById('gen-prop');
     if (!host) return;
-    const cands = ((gs.propRace && gs.propRace.candidates) || [])
-      .filter((c) => c.pct != null).slice().sort((a, b) => b.pct - a.pct).slice(0, 10);
+    const cands = PollAdapter.propSummary(gs.propRace, 10).candidates;
     if (!cands.length) { host.hidden = true; return; }
     const maxPct = Math.max(...cands.map((c) => c.pct)) || 100;
     const bars = cands.map((c) => `<div class="pc-bar-row">

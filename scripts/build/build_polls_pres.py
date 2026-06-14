@@ -204,6 +204,11 @@ def accept_party_race(q: dict) -> list[dict] | None:
     return [{"name": "", "party": c["party"], "pct": c["pct"]} for c in cands]
 
 
+# 확인된 파싱 오류 레코드 — 컬럼 밀림으로 후보-득표가 뒤섞임(예: 16276 강원, 이준석 46%
+# 등 비현실값). 재파싱 불가(소스 표 정렬 문제)라 집계에서 제외. 새로 확인되면 추가.
+BAD_RECORDS = {'16276'}
+
+
 def build(csv_path: Path, parsed_dir: Path) -> dict:
     meta = load_meta(csv_path)
     parsed = load_parsed(parsed_dir, set(meta))
@@ -214,6 +219,8 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
     skipped_pre_campaign = 0
 
     for ntt_id, m in meta.items():
+        if ntt_id in BAD_RECORDS:    # 확인된 mis-parse(컬럼 밀림 등) 제외
+            continue
         p = parsed.get(ntt_id)
         if not p:
             skipped_no_pdf += 1

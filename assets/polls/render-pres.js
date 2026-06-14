@@ -80,22 +80,7 @@
   function renderDetail() {
     const pane = document.getElementById('detail-pane');
     if (!pane) return;
-    let cands = [];
-    let title = '';
-    if (ps.mode === 'result') {
-      cands = (ps.nationRace && ps.nationRace.candidates || []).map((c) => ({ name: c.name, party: c.party, pct: c.pct }));
-      title = '전국 실제 결과';
-    } else {
-      // 최신 전국 대선 폴
-      let best = null;
-      for (const p of state.data.polls || []) {
-        if (p.office_level !== '대통령' || p.sido) continue;
-        if (!best || (p.period_end || '') > (best.period_end || '')) best = p;
-      }
-      cands = (best && best.candidates || []).map((c) => ({ name: c.name, party: c.party, pct: c.pct }));
-      title = best ? `전국 여론조사 (최신 ${best.period_end || ''})` : '전국 여론조사';
-    }
-    cands = cands.filter((c) => c.pct != null).sort((a, b) => (b.pct || 0) - (a.pct || 0));
+    const { title, candidates: cands } = PollAdapter.presNationalSummary(state.data.polls || [], ps.nationRace, ps.mode);
     if (!cands.length) { pane.innerHTML = '<div class="detail-empty">전국 데이터가 없습니다.</div>'; return; }
     const maxPct = Math.max(...cands.map((c) => c.pct || 0)) || 100;
     const pc = (p) => (typeof partyColor === 'function' ? partyColor(p) : '#888');

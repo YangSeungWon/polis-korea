@@ -202,10 +202,39 @@
     return v || null;
   }
 
+  // [요약 바] 대선 전국 — detail 패널. 모드별 출처(실제=nationRace / 폴=최신 전국). {title, candidates}
+  function presNationalSummary(polls, nationRace, mode) {
+    let cands, title;
+    if (mode === 'result') {
+      cands = (nationRace && nationRace.candidates) || [];
+      title = '전국 실제 결과';
+    } else {
+      let best = null;
+      for (const p of polls || []) {
+        if (p.office_level !== '대통령' || p.sido) continue;
+        if (!best || (p.period_end || '') > (best.period_end || '')) best = p;
+      }
+      cands = (best && best.candidates) || [];
+      title = best ? `전국 여론조사 (최신 ${best.period_end || ''})` : '전국 여론조사';
+    }
+    cands = cands.filter((c) => c.pct != null)
+      .map((c) => ({ name: c.name, party: c.party, pct: c.pct }))
+      .sort((a, b) => (b.pct || 0) - (a.pct || 0));
+    return { title, candidates: cands };
+  }
+  // [요약 바] 총선 비례 실제 결과 — top N 정렬
+  function propSummary(propRace, topN) {
+    const cands = ((propRace && propRace.candidates) || [])
+      .filter((c) => c.pct != null).slice()
+      .sort((a, b) => b.pct - a.pct).slice(0, topN || 10);
+    return { candidates: cands };
+  }
+
   window.PollAdapter = {
     cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend,
     districtResultFromResults, districtResultFromPolls,
     localPollsByOffice, localPollsByRegion, parentSigungu, localSidoWinner, localSigunguWinner,
     localActualMaps, localActualSido, localActualSigungu,
+    presNationalSummary, propSummary,
   };
 })();

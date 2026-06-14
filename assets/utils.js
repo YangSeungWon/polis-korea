@@ -406,6 +406,7 @@ function buildPartyTrendSVG(polls, opts) {
   const showBand = opts.showBand !== false;
   const bw = opts.bwDays || 21;
   const keyBy = opts.keyBy || 'party';
+  const bandMinPts = opts.bandMinPts || 6;   // 점 적은 시리즈(신생정당 등)는 밴드 생략 — 우측 잡음 방지
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
   // key → [{t,v,ag,n}] (개별 조사 점), meta: key → {color,label}
   const byKey = {};
@@ -445,7 +446,7 @@ function buildPartyTrendSVG(polls, opts) {
     const pts = byKey[k].slice().sort((a, b) => a.t - b.t);
     const segs = (typeof PollStats !== 'undefined')
       ? PollStats.kernelSmooth(pts, bw) : [pts.map((p) => ({ t: p.t, v: p.v }))];
-    const bands = showBand && typeof PollStats !== 'undefined' ? PollStats.kernelBand(pts, bw) : [];
+    const bands = (showBand && typeof PollStats !== 'undefined' && pts.length >= bandMinPts) ? PollStats.kernelBand(pts, bw) : [];
     series[k] = { pts, segs, bands };
     for (const p of pts) { minTs = Math.min(minTs, p.t); maxTs = Math.max(maxTs, p.t); maxPct = Math.max(maxPct, p.v); }
   }
