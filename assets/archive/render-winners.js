@@ -4,15 +4,18 @@
 // 8회 이전: 위키 inject는 정당별 의석만 — 개별 명단 없음 → list 표시 안 됨.
 
 (function () {
+  // 전남광주 통합(9회+) — 지역구는 광주/전남 분리·비례는 전남광주통합특별시. 한 의회라 시도 정규화.
+  // init에서 _merged 설정, focus()도 같은 정규화 사용(메트로 셀='전남광주특별시', council 셀='광주광역시').
+  let _merged = false;
+  const normSido = (s) => (_merged
+    ? ({ '광주광역시': '전남광주특별시', '전라남도': '전남광주특별시', '전남광주통합특별시': '전남광주특별시' }[s] || s)
+    : s);
+
   function init(ctx) {
     const host = document.getElementById('ar-winners-section');
     if (!host) return;
     const races = ctx?.results?.races || [];
-    // 전남광주 통합(9회+) — 지역구는 광주/전남 분리·비례는 전남광주통합특별시. 한 의회라 시도 정규화.
-    const honamMerged = races.some((r) => (r.sido || '').startsWith('전남광주'));
-    const normSido = (s) => (honamMerged
-      ? ({ '광주광역시': '전남광주특별시', '전라남도': '전남광주특별시', '전남광주통합특별시': '전남광주특별시' }[s] || s)
-      : s);
+    _merged = races.some((r) => (r.sido || '').startsWith('전남광주'));
     const winners = [];
     for (const r of races) {
       const tc = r.sg_typecode;
@@ -128,8 +131,9 @@
     const lvlEl = document.getElementById('ar-winners-level');
     const partyEl = document.getElementById('ar-winners-party');
     if (!sidoEl) return;
-    // sido 옵션에 있으면 설정(없으면 전체 — q·level로만 필터).
-    sidoEl.value = (sido && [...sidoEl.options].some((o) => o.value === sido)) ? sido : '';
+    // sido 정규화(전남광주 통합) 후 옵션에 있으면 설정 — council 셀(광주광역시)·메트로 셀(전남광주특별시) 공통.
+    const ns = normSido(sido);
+    sidoEl.value = (ns && [...sidoEl.options].some((o) => o.value === ns)) ? ns : '';
     if (qEl) qEl.value = q || '';
     if (lvlEl) lvlEl.value = level || '';
     if (partyEl) partyEl.value = '';
