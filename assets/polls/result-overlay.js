@@ -11,7 +11,7 @@
     if (loaded) return;
     loaded = true;
     try {
-      const r = await fetch('data/results/9th-local-2026.json');
+      const r = await fetch(POLL_ELECTION.results_path);
       if (!r.ok) return;
       const d = await r.json();
       for (const race of d.races || []) {

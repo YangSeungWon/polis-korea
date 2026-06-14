@@ -66,6 +66,12 @@
     <button class="rp-more" id="rp-more" type="button" hidden>더 보기</button>
   </section>
 
+  <!-- 선거별 여론조사 디렉터리 — election-index.js가 data/polls/election_index.json으로 채움 -->
+  <section class="poll-index-sec" aria-label="선거별 여론조사">
+    <h2 class="rp-title">선거별 여론조사 vs 실제</h2>
+    <div class="poll-index-grid" id="poll-election-index"></div>
+  </section>
+
   <!-- 선거별 상세 (활성 선거 시즌이면 그 선거, 아니면 직전 선거 회고) -->
   <section class="election-intro" id="election-intro">
     <h2 id="poll-h1">9회 전국동시지방선거 · 여론조사 vs 실제</h2>
@@ -147,6 +153,7 @@
 <script src="assets/polls/result-overlay.js"></script>
 <script src="assets/polls/chrome.js"></script>
 <script src="assets/polls/recent-feed.js"></script>
+<script src="assets/polls/election-index.js"></script>
 <script src="assets/polls/main.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>

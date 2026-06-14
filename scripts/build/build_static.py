@@ -117,6 +117,69 @@ def build_polls(urls: list):
     print(f'polls: {n_made}')
 
 
+ELECTIONS_DIR = ROOT / 'data' / 'elections'
+
+
+def _poll_election_meta(el: dict) -> dict | None:
+    """elections/{id}.json → per-election 폴 페이지 __INITIAL_STATE__.election.
+    지선이면서 aggregated 폴 데이터가 실재하는 회차만 (대선·총선 viz는 후속)."""
+    if el.get('kind') != 'local':
+        return None
+    ar = el.get('archive') or {}
+    polls_path = ar.get('polls_path')
+    if not polls_path or not (ROOT / polls_path).exists():
+        return None
+    bo = el.get('blackout') or {}
+    date_s = el.get('date', '')
+    # 블랙아웃 없으면(옛 회차) 선거일 기준 기본값 — 과거라 어차피 비활성.
+    bstart = bo.get('start') or (date_s + 'T00:00:00+09:00')
+    bend = bo.get('end') or (date_s + 'T18:00:00+09:00')
+    roster = f'data/raw/nec_roster_{el.get("n")}th.json'
+    return {
+        'slug': el['id'],
+        'name': el['name'],
+        'date': date_s,
+        'n': el.get('n'),
+        'blackout_start': bstart,
+        'blackout_end': bend,
+        'polls_path': polls_path,
+        'results_path': ar.get('results_path') or '',
+        'roster_path': roster if (ROOT / roster).exists() else None,
+        'kind': el['kind'],
+    }
+
+
+def build_poll_elections(urls: list):
+    """선거별 여론조사 vs 실제 페이지 /polls/{id}/ + 디렉터리 index.json 생성."""
+    template = INDEX_TEMPLATE.read_text(encoding='utf-8')
+    made = []
+    for fp in sorted(ELECTIONS_DIR.glob('*.json')):
+        if fp.name in ('index.json',):
+            continue
+        try:
+            el = json.loads(fp.read_text(encoding='utf-8'))
+        except Exception:
+            continue
+        meta = _poll_election_meta(el)
+        if not meta:
+            continue
+        slug = meta['slug']
+        n, date_s = meta['n'], meta['date']
+        title = f'polis · {n}회 지선 여론조사 vs 실제 ({date_s})'
+        desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도·시군구 hex로 비교.'
+        canon = f'/polls/{slug}/'
+        # __INITIAL_STATE__.election 주입 — core.js POLL_ELECTION 기본값을 덮어씀.
+        html = replace_meta(template, title, desc, canon, {'election': meta})
+        write_page(ROOT / 'polls' / slug / 'index.html', html)
+        urls.append((canon, '0.6', 'monthly'))
+        made.append({'slug': slug, 'name': meta['name'], 'date': date_s, 'n': n})
+    # 디렉터리 — 루트 /polls.html·각 페이지가 fetch (날짜 desc).
+    made_sorted = sorted(made, key=lambda m: m['date'], reverse=True)
+    idx_path = ROOT / 'data' / 'polls' / 'election_index.json'
+    idx_path.write_text(json.dumps(made_sorted, ensure_ascii=False), encoding='utf-8')
+    print(f'poll-elections: {len(made)} ({", ".join(m["slug"] for m in made_sorted)})')
+
+
 def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
     n_made = 0
@@ -167,6 +230,7 @@ def main():
     elections = json.loads(ELECTIONS.read_text(encoding='utf-8'))
     urls = []
     build_polls(urls)             # /, /governor/ 등 페이지 생성
+    build_poll_elections(urls)    # /polls/{id}/ 선거별 여론조사 vs 실제 + 디렉터리
     build_history(manifest, elections, urls)   # history/**/index.html 생성
     # sitemap·robots는 포괄 생성기에 위임 — archive·person 포함 전수(56개로 덮어쓰던 버그 수정).
     # build_polls/build_history가 페이지를 먼저 써야 디렉터리 스캔이 잡힘.

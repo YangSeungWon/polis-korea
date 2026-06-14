@@ -315,8 +315,8 @@
     if (!polls.length) return;
     const host = document.getElementById('ar-polls-link-host');
     if (!host) return;
-    const isCurrentActive = ctx.meta.id === '9th-local-2026';
-    const pollsPageHref = isCurrentActive ? '/polls.html' : null;
+    // 회차별 여론조사 vs 실제 페이지 (/polls/{id}/) — build_static가 폴 데이터 있는 지선마다 생성.
+    const pollsPageHref = `/polls/${ctx.meta.id}/`;
     const byOffice = {};
     for (const p of polls) {
       const lvl = p.office_level || '기타';
@@ -330,7 +330,7 @@
       <div class="ar-polls-link-card">
         <div class="ar-polls-link-stat">NESDC 등록 여론조사 <b>${polls.length}건</b></div>
         ${officeRows}
-        ${pollsPageHref ? `<a class="ar-polls-link-cta" href="${pollsPageHref}">시도·시군구 시각화 ↗</a>` : ''}
+        ${pollsPageHref ? `<a class="ar-polls-link-cta" href="${pollsPageHref}">여론조사 vs 실제 상세 — 시도·시군구 hex →</a>` : ''}
       </div>
     `;
     document.getElementById('ar-polls-link').hidden = false;

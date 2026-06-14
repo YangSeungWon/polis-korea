@@ -180,3 +180,23 @@
 }
 .active-poll-banner .apb-dday { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent, #c8553d); }
 .active-poll-banner .apb-go { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+
+/* 선거별 여론조사 디렉터리 — 회차 카드 그리드 */
+.poll-index-sec { margin: 28px 0; }
+.poll-index-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.poll-index-card {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule); border-radius: 3px;
+  background: var(--bg2); text-decoration: none; color: var(--ink);
+  transition: background .12s, border-color .12s;
+}
+.poll-index-card:hover { background: var(--bg3); border-color: var(--rule-strong); }
+.poll-index-card.is-current { border-color: var(--rule-strong); background: var(--bg3); cursor: default; }
+.pic-name { font-size: 14px; font-weight: 800; }
+.pic-date { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.pic-go { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
+.pic-tag { font-size: 11px; font-weight: 700; color: var(--accent, #c8553d); }

@@ -5,10 +5,24 @@
 // 데이터: data/polls/aggregated.json (build_polls.py 산출물).
 // 의존: regions.js, parties.js, utils.js, Leaflet.
 
-const ELECTION = new Date('2026-06-03T00:00:00+09:00');
-const ELECTION_NAME = '9회 전국동시지방선거';   // 다음 선거로 갈아탈 때 ELECTION/aggregated와 함께 갱신
-const BLACKOUT_START = new Date('2026-05-28T00:00:00+09:00');
-const BLACKOUT_END = new Date('2026-06-03T18:00:00+09:00');
+// 선거 메타 — 정적 prerender(build_static)가 per-election 페이지에 __INITIAL_STATE__.election 주입.
+// 주입 없으면(루트 /polls.html·office 서브페이지) 9회 지선 기본값.
+const POLL_ELECTION = Object.assign({
+  slug: '9th-local-2026',
+  name: '9회 전국동시지방선거',
+  date: '2026-06-03',
+  blackout_start: '2026-05-28T00:00:00+09:00',
+  blackout_end: '2026-06-03T18:00:00+09:00',
+  polls_path: 'data/polls/aggregated.json',
+  results_path: 'data/results/9th-local-2026.json',
+  roster_path: 'data/raw/nec_roster_9th.json',
+  kind: 'local',
+}, ((typeof window !== 'undefined' && window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election) || {}));
+
+const ELECTION = new Date(POLL_ELECTION.date + 'T00:00:00+09:00');
+const ELECTION_NAME = POLL_ELECTION.name;
+const BLACKOUT_START = new Date(POLL_ELECTION.blackout_start);
+const BLACKOUT_END = new Date(POLL_ELECTION.blackout_end);
 
 const state = {
   data: null,
@@ -51,6 +65,11 @@ function setPhase() {
     ? 'NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지. 셀 색=1위 정당.'
     : 'NESDC 등록 조사. 셀 색=마지막 조사 1위 정당.';
   if (banner) banner.hidden = !post;
+  // post-banner 날짜·결과링크를 회차별로 (정적 마크업은 9회 기본 — per-election 페이지에서 교체)
+  const pebTag = banner && banner.querySelector('.peb-tag');
+  const pebLink = banner && banner.querySelector('.peb-link');
+  if (pebTag) pebTag.textContent = POLL_ELECTION.date;
+  if (pebLink) pebLink.href = `/archive/${POLL_ELECTION.slug}/`;
 
   // 활성 폴링 시즌이면 그 선거를 상단 전면 배너로 승격(사람 몰리는 선거를 끌어올림).
   const seasonStart = new Date(ELECTION);
@@ -71,24 +90,28 @@ function setPhase() {
 
 async function loadData() {
   try {
-    const r = await fetch('data/polls/aggregated.json');
+    const r = await fetch(POLL_ELECTION.polls_path);
     if (!r.ok) throw new Error('데이터 없음');
     state.data = await r.json();
   } catch (e) {
     state.data = { _meta: {}, polls: [] };
   }
-  // NEC 등록 후보 명부 (있으면 산점도에 진한/옅은 구분)
-  try {
-    const r = await fetch('data/raw/nec_roster_9th.json');
-    state.roster = r.ok ? await r.json() : null;
-  } catch (e) {
-    state.roster = null;
+  // NEC 등록 후보 명부 (있으면 산점도에 진한/옅은 구분). 경로 없는 회차는 생략.
+  state.roster = null;
+  if (POLL_ELECTION.roster_path) {
+    try {
+      const r = await fetch(POLL_ELECTION.roster_path);
+      state.roster = r.ok ? await r.json() : null;
+    } catch (e) {
+      state.roster = null;
+    }
   }
-  // 블랙아웃이면 5/28 이전 조사만 노출
+  // 블랙아웃이면 공표금지 시작일 이전 조사만 노출
   if (state.blackoutActive) {
+    const cutoff = POLL_ELECTION.blackout_start.slice(0, 10);
     state.data.polls = state.data.polls.filter((p) => {
       if (!p.period_end) return false;
-      return p.period_end < '2026-05-28';
+      return p.period_end < cutoff;
     });
   }
   // 정당·후보 자체 의뢰 제외

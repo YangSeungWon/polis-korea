@@ -85,6 +85,18 @@ def history_urls() -> list[tuple[str, str, str]]:
     return out
 
 
+def poll_election_urls() -> list[tuple[str, str, str, str]]:
+    """polls/{election-id}/ prerender 디렉토리 스캔 (선거별 여론조사 vs 실제)."""
+    out = []
+    proot = ROOT / "polls"
+    if not proot.exists():
+        return out
+    for d in sorted(proot.iterdir()):
+        if (d / "index.html").exists():
+            out.append((f"/polls/{d.name}/", "monthly", "0.6", TODAY))
+    return out
+
+
 def url_block(loc: str, freq: str, priority: str, lastmod: str) -> str:
     return (
         f"  <url>\n"
@@ -113,6 +125,8 @@ def main():
     for loc, freq, priority, lastmod in archive_urls():
         lines.append(url_block(loc, freq, priority, lastmod))
     for loc, freq, priority, lastmod in history_urls():
+        lines.append(url_block(loc, freq, priority, lastmod))
+    for loc, freq, priority, lastmod in poll_election_urls():
         lines.append(url_block(loc, freq, priority, lastmod))
     persons = person_urls()
     for loc, freq, priority, lastmod in persons:

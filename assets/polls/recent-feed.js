@@ -29,6 +29,11 @@
 
   async function load() {
     if (!host()) return;
+    // per-election 페이지(특정 회차 viz)에선 전역 최근 피드 숨김 — 허브(/polls.html)에만.
+    if (typeof window !== 'undefined' && window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election) {
+      document.getElementById('recent-polls')?.remove();
+      return;
+    }
     const files = ['data/polls/aggregated_etc.json', 'data/polls/aggregated_candidates.json'];
     try {
       const parts = await Promise.all(files.map((f) =>
