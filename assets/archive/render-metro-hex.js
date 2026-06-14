@@ -233,19 +233,14 @@
     const bySidoObj = {};
     for (const [sd, m] of seats) bySidoObj[sd] = Object.fromEntries(m);
     let agg = null;
-    const drawHex = (el) => {
-      const svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('xmlns', NS);
-      svg.setAttribute('class', 'metro-hex-svg');
-      agg = render(svg, null, seats);
-      el.innerHTML = ''; el.appendChild(svg);
-    };
+    // 헥스·dorling 모두 공유 sidoCluster — 같은 layout/viewBox라 토글해도 권역 위치 고정.
+    const SC = window.Archive.sidoCluster;
     const modes = [
-      { key: 'hex', label: '헥스', draw: drawHex },
-      { key: 'dorling', label: 'dorling', draw: (el) => window.Archive.drawSidoDorling(el, bySidoObj, { seedGap: 78, rmax: 40 }) },
+      { key: 'hex', label: '헥스', draw: (el) => { agg = SC.drawHex(el, bySidoObj); } },
+      { key: 'dorling', label: 'dorling', draw: (el) => { agg = SC.drawDorling(el, bySidoObj); } },
     ];
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes);
-    else drawHex(host);
+    else { agg = SC.drawHex(host, bySidoObj); }
     const { totalSeats, partyTotal } = agg || { totalSeats: 0, partyTotal: new Map() };
     const legend = document.getElementById('ar-metro-hex-legend');
     if (legend) {

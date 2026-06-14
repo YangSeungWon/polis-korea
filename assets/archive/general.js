@@ -296,12 +296,13 @@
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
     const toggleHost = sec.querySelector('.ar-genhex-toggle');
+    const SC = window.Archive.sidoCluster;
     const modes = [
-      { key: 'hex', label: '헥스', draw: (el) => drawGenHexInto(el, bySido) },
-      { key: 'dorling', label: 'dorling', draw: (el) => window.Archive.drawSidoDorling(el, bySido, { seedGap: 72, rmax: 38 }) },
+      { key: 'hex', label: '헥스', draw: (el) => SC.drawHex(el, bySido) },
+      { key: 'dorling', label: 'dorling', draw: (el) => SC.drawDorling(el, bySido) },
     ];
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(toggleHost, modes);
-    else drawGenHexInto(toggleHost, bySido);
+    else SC.drawHex(toggleHost, bySido);
     const partyTotal = {};
     for (const sd of Object.keys(bySido)) for (const [p, c] of Object.entries(bySido[sd])) partyTotal[p] = (partyTotal[p] || 0) + c;
     const legend = sec.querySelector('.ar-genhex-legend');
@@ -312,64 +313,6 @@
     }
   }
 
-  // 시도별 의석 spiral SVG를 el에 렌더 (헥스 모드). 권역 seed → packClusters 가변 packing.
-  function drawGenHexInto(el, bySido) {
-    const NS = 'http://www.w3.org/2000/svg';
-    const SEED_GAP = 85, SMALL_R = 6;
-    const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
-    const hexRing = (L) => { const ring = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { ring.push([q, r]); q += dq; r += dr; } } return ring; };
-    const hexSpiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const ring = hexRing(L); const rem = N - out.length; if (rem >= ring.length) out.push(...ring); else for (let i = 0; i < rem; i++) out.push(ring[Math.round(i * ring.length / rem) % ring.length]); } return out; };
-    const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
-    const clusterRof = (N) => { const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3)); return Math.max(9, (L + 0.6) * Math.sqrt(3) * SMALL_R); };
-    const nodes = []; const seen = new Set();
-    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
-      const key = `${pos.col},${pos.row}`;
-      if (seen.has(key)) continue; seen.add(key);
-      const seats = bySido[sido];
-      const N = seats ? Object.values(seats).reduce((s, c) => s + c, 0) : 0;
-      nodes.push({ sido, seats, N, r: clusterRof(N), cx0: pos.col * SEED_GAP + (pos.row % 2 ? SEED_GAP / 2 : 0), cy0: pos.row * SEED_GAP * 0.87 });
-    }
-    window.Archive.packClusters(nodes, { pad: 4 });
-    const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
-    const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;
-    const vbW = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
-    const vbH = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}`);
-    svg.setAttribute('class', 'ar-genhex-svg');
-    for (const n of nodes) {
-      const entries = Object.entries(n.seats || {}).sort((a, b) => b[1] - a[1]);
-      const g = document.createElementNS(NS, 'g');
-      const outline = document.createElementNS(NS, 'circle');
-      outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
-      outline.setAttribute('class', 'ar-genhex-outline');
-      g.appendChild(outline);
-      const tt = document.createElementNS(NS, 'title');
-      tt.textContent = n.N ? `${n.sido} ${n.N}석 · ${entries.map(([p, c]) => `${p} ${c}`).join(', ')}` : `${n.sido} · 데이터 없음`;
-      g.appendChild(tt);
-      const fills = [];
-      for (const [p, c] of entries) for (let k = 0; k < c; k++) fills.push(pcol(p));
-      const spiral = hexSpiral(n.N);
-      for (let i = 0; i < spiral.length; i++) {
-        const [q, ar] = spiral[i];
-        const sx = n.cx + SMALL_R * Math.sqrt(3) * (q + ar / 2);
-        const sy = n.cy + SMALL_R * 1.5 * ar;
-        const poly = document.createElementNS(NS, 'polygon');
-        poly.setAttribute('points', hexPts(sx, sy, SMALL_R * 0.92));
-        poly.setAttribute('fill', fills[i] || '#e6e9ef');
-        poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
-        g.appendChild(poly);
-      }
-      const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r - 4).toFixed(1));
-      t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
-      t.textContent = n.N ? `${ssh(n.sido)} ${n.N}` : ssh(n.sido);
-      g.appendChild(t);
-      svg.appendChild(g);
-    }
-    el.innerHTML = ''; el.appendChild(svg);
-  }
 
   window.Archive.general = {
     render(ctx) {

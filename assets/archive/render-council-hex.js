@@ -44,14 +44,8 @@
       const ring = hexRing(layer);
       const ringSize = ring.length;  // 6 * layer
       const remaining = N - out.length;
-      if (remaining >= ringSize) {
-        for (const p of ring) out.push(p);
-      } else {
-        for (let i = 0; i < remaining; i++) {
-          const idx = Math.round(i * ringSize / remaining) % ringSize;
-          out.push(ring[idx]);
-        }
-      }
+      // 연속 채움 — 마지막 부분 링도 한쪽부터 이어서(듬성듬성 분산 안 함).
+      for (let i = 0; i < Math.min(remaining, ringSize); i++) out.push(ring[i]);
     }
     return out;
   }

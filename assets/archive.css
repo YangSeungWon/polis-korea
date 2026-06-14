@@ -625,6 +625,8 @@
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
 /* 총선 지역구 의석 — 시도별 의석 spiral 지도(1석=1 hex) */
 .ar-genhex-svg { display: block; width: 100%; max-width: 600px; height: auto; margin: 4px auto 0; }
+/* 공유 시도 클러스터(헥스·dorling 동일 크기 → 토글 시 권역 위치 고정) */
+.ar-sidocluster-svg { display: block; width: 100%; max-width: 680px; height: auto; margin: 4px auto 0; }
 .ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
 .ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
   paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }

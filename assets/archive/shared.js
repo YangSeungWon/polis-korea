@@ -196,92 +196,144 @@
     return nodes;
   };
 
-  // 시도별 dorling — 권역 seed에서 크기(√합계) 원 packing + 정당 파이. 대선·총선·지선 공용.
-  //   host: 그릴 element / bySido: {시도:{정당:수}} / opts: {rmax, seedGap}
-  Archive.drawSidoDorling = function (host, bySido, opts) {
-    if (!host || typeof SIDO_HEX_LAYOUT !== 'object') return false;
-    opts = opts || {};
+  // ── 시도 클러스터 (의석 기반 헥스/dorling 공용) ────────────────────────────────
+  // layout()이 위치·viewBox를 한 번 계산 → drawHex/drawDorling이 공유 → 토글해도 권역 위치 고정.
+  // bySido = {시도:{정당:석수}}. 헥스=연속 스파이럴(1 hex=1석), dorling=원+파이. 둘 다 r=clusterR(석수).
+  Archive.sidoCluster = (function () {
     const NS = 'http://www.w3.org/2000/svg';
-    const Rmax = opts.rmax || 40, seedGap = opts.seedGap || 80;
-    const pcol = Archive.pcol, ssh = Archive.ssh;
-    // 전남광주 통합(2026 지선) — 데이터에 통합 키 있으면 광주+전남+통합을 한 셀로 합치고
-    // honamMergedLayout 사용 (hex 렌더러와 동일). 그 외 회차는 분리 유지.
-    let data = bySido, layout = SIDO_HEX_LAYOUT;
-    if ((bySido['전남광주특별시'] || bySido['전남광주통합특별시']) && typeof honamMergedLayout === 'function') {
-      layout = honamMergedLayout(SIDO_HEX_LAYOUT);
+    const SMALL_R = 6, SEED_GAP = 85, PAD = 4;
+    const clusterR = (N) => { const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3)); return Math.max(9, (L + 0.6) * Math.sqrt(3) * SMALL_R); };
+    const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+    const ring = (L) => { const out = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { out.push([q, r]); q += dq; r += dr; } } return out; };
+    // 연속 스파이럴 — 중심 + 꽉 찬 링 + 마지막 부분 링은 연속(slice). 듬성듬성 분산 안 함.
+    const spiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const rg = ring(L); const rem = N - out.length; out.push(...(rem >= rg.length ? rg : rg.slice(0, rem))); } return out; };
+    const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
+
+    // 전남광주 통합(2026 지선) → 광주+전남+통합 한 셀 + honamMergedLayout. 그 외 분리 유지.
+    function mergeHonam(bySido) {
+      if (!((bySido['전남광주특별시'] || bySido['전남광주통합특별시']) && typeof honamMergedLayout === 'function')) {
+        return { data: bySido, layout: SIDO_HEX_LAYOUT };
+      }
       const merged = {};
       for (const src of ['광주광역시', '전라남도', '전남광주특별시', '전남광주통합특별시']) {
         const s = bySido[src]; if (!s) continue;
         for (const [p, c] of Object.entries(s)) merged[p] = (merged[p] || 0) + c;
       }
-      data = Object.assign({}, bySido);
+      const data = Object.assign({}, bySido);
       delete data['광주광역시']; delete data['전라남도']; delete data['전남광주통합특별시'];
       data['전남광주특별시'] = merged;
+      return { data, layout: honamMergedLayout(SIDO_HEX_LAYOUT) };
     }
-    let maxTot = 1; const ent0 = [];
-    for (const [sido, pos] of Object.entries(layout)) {
-      const seats = data[sido]; if (!seats) continue;
-      const tot = Object.values(seats).reduce((s, n) => s + n, 0);
-      if (!tot) continue;
-      maxTot = Math.max(maxTot, tot); ent0.push({ sido, seats, tot, pos });
+
+    // 공유 레이아웃 — 위치(packClusters)·viewBox를 한 번 계산. 헥스·dorling이 동일 호출 → 위치 고정.
+    function layout(bySido) {
+      if (typeof SIDO_HEX_LAYOUT !== 'object') return null;
+      const { data, layout: lay } = mergeHonam(bySido);
+      const nodes = [];
+      for (const [sido, pos] of Object.entries(lay)) {
+        const seats = data[sido]; if (!seats) continue;
+        const tot = Object.values(seats).reduce((s, n) => s + n, 0);
+        if (!tot) continue;
+        nodes.push({
+          sido, seats, tot, label: pos.label, r: clusterR(tot),
+          cx0: pos.col * SEED_GAP + (pos.row % 2 ? SEED_GAP / 2 : 0), cy0: pos.row * SEED_GAP * 0.87,
+        });
+      }
+      if (!nodes.length) return null;
+      Archive.packClusters(nodes, { pad: PAD });
+      const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
+      const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;
+      const W = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
+      const H = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
+      return { nodes, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}` };
     }
-    if (!ent0.length) return false;
-    const nodes = ent0.map((e) => ({
-      sido: e.sido, seats: e.seats, tot: e.tot, label: e.pos.label,
-      r: Math.max(7, Rmax * Math.sqrt(e.tot / maxTot)),
-      cx0: e.pos.col * seedGap + (e.pos.row % 2 ? seedGap / 2 : 0),
-      cy0: e.pos.row * seedGap * 0.87,
-    }));
-    Archive.packClusters(nodes, { pad: 3 });
-    const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
-    const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 6;
-    const W = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
-    const H = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}`);
-    svg.setAttribute('class', 'ar-dorling-svg');
+
+    function legendOf(nodes) {
+      const partyTotal = new Map(); let totalSeats = 0;
+      for (const n of nodes) for (const [p, c] of Object.entries(n.seats)) { partyTotal.set(p, (partyTotal.get(p) || 0) + c); totalSeats += c; }
+      return { totalSeats, partyTotal };
+    }
+
+    function newSvg(viewBox) {
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('xmlns', NS); svg.setAttribute('viewBox', viewBox); svg.setAttribute('class', 'ar-sidocluster-svg');
+      return svg;
+    }
+
+    // 헥스 — 1 hex = 1석, 정당 의석 desc로 중심부터 연속 채움(큰 당이 안쪽).
+    function drawHex(host, bySido) {
+      const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
+      const svg = newSvg(L.viewBox);
+      for (const n of L.nodes) {
+        const entries = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
+        const g = document.createElementNS(NS, 'g');
+        const outline = document.createElementNS(NS, 'circle');
+        outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
+        outline.setAttribute('class', 'ar-genhex-outline'); g.appendChild(outline);
+        const tt = document.createElementNS(NS, 'title');
+        tt.textContent = `${n.sido} ${n.tot}석 · ${entries.map(([p, c]) => `${p} ${c}`).join(', ')}`; g.appendChild(tt);
+        const fills = [];
+        for (const [p, c] of entries) for (let k = 0; k < c; k++) fills.push(Archive.pcol(p));
+        const sp = spiral(n.tot);
+        for (let i = 0; i < sp.length; i++) {
+          const [q, ar] = sp[i];
+          const sx = n.cx + SMALL_R * Math.sqrt(3) * (q + ar / 2), sy = n.cy + SMALL_R * 1.5 * ar;
+          const poly = document.createElementNS(NS, 'polygon');
+          poly.setAttribute('points', hexPts(sx, sy, SMALL_R * 0.92));
+          poly.setAttribute('fill', fills[i] || '#e6e9ef');
+          poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
+          g.appendChild(poly);
+        }
+        const t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r - 4).toFixed(1));
+        t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
+        t.textContent = `${n.label || Archive.ssh(n.sido)} ${n.tot}`; g.appendChild(t);
+        svg.appendChild(g);
+      }
+      host.innerHTML = ''; host.appendChild(svg);
+      return legendOf(L.nodes);
+    }
+
     const pie = (cx, cy, r, a0, a1) => {
-      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
-      const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
       const lg = (a1 - a0) > Math.PI ? 1 : 0;
       return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
     };
-    for (const n of nodes) {
-      const e = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
-      const g = document.createElementNS(NS, 'g');
-      const tt = document.createElementNS(NS, 'title');
-      tt.textContent = `${n.sido} ${n.tot}석 · ${e.map(([p, c]) => `${p} ${c}`).join(', ')}`;
-      g.appendChild(tt);
-      if (e.length > 1) {
-        let a0 = -Math.PI / 2;
-        for (const [p, c] of e) {
-          const a1 = a0 + (c / n.tot) * 2 * Math.PI;
-          const path = document.createElementNS(NS, 'path');
-          path.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1));
-          path.setAttribute('fill', pcol(p));
-          g.appendChild(path); a0 = a1;
+    // dorling — 같은 layout(위치·viewBox 동일) → 토글해도 권역 고정. 원 r=clusterR + 정당 파이.
+    function drawDorling(host, bySido) {
+      const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
+      const svg = newSvg(L.viewBox);
+      for (const n of L.nodes) {
+        const e = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
+        const g = document.createElementNS(NS, 'g');
+        const tt = document.createElementNS(NS, 'title');
+        tt.textContent = `${n.sido} ${n.tot}석 · ${e.map(([p, c]) => `${p} ${c}`).join(', ')}`; g.appendChild(tt);
+        if (e.length > 1) {
+          let a0 = -Math.PI / 2;
+          for (const [p, c] of e) { const a1 = a0 + (c / n.tot) * 2 * Math.PI; const path = document.createElementNS(NS, 'path'); path.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1)); path.setAttribute('fill', Archive.pcol(p)); g.appendChild(path); a0 = a1; }
+        } else {
+          const c = document.createElementNS(NS, 'circle');
+          c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.r.toFixed(1));
+          c.setAttribute('fill', e[0] ? Archive.pcol(e[0][0]) : '#e6e9ef'); g.appendChild(c);
         }
-      } else {
-        const c = document.createElementNS(NS, 'circle');
-        c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.r.toFixed(1));
-        c.setAttribute('fill', e[0] ? pcol(e[0][0]) : '#e6e9ef');
-        g.appendChild(c);
+        const rng = document.createElementNS(NS, 'circle');
+        rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1)); rng.setAttribute('r', n.r.toFixed(1));
+        rng.setAttribute('class', 'ar-dorling-ring'); g.appendChild(rng);
+        if (n.r >= 11) {
+          const t = document.createElementNS(NS, 'text');
+          t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
+          t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-dorling-label');
+          t.textContent = n.label || Archive.ssh(n.sido); g.appendChild(t);
+        }
+        svg.appendChild(g);
       }
-      const ring = document.createElementNS(NS, 'circle');
-      ring.setAttribute('cx', n.cx.toFixed(1)); ring.setAttribute('cy', n.cy.toFixed(1)); ring.setAttribute('r', n.r.toFixed(1));
-      ring.setAttribute('class', 'ar-dorling-ring');
-      g.appendChild(ring);
-      if (n.r >= 11) {
-        const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
-        t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-dorling-label');
-        t.textContent = n.label || ssh(n.sido);
-        g.appendChild(t);
-      }
-      svg.appendChild(g);
+      host.innerHTML = ''; host.appendChild(svg);
+      return legendOf(L.nodes);
     }
-    host.innerHTML = ''; host.appendChild(svg);
-    return true;
-  };
+
+    return { layout, drawHex, drawDorling, spiral, clusterR };
+  })();
+
+  // (구) drawSidoDorling — sidoCluster.drawDorling로 위임(하위호환).
+  Archive.drawSidoDorling = function (host, bySido) { return Archive.sidoCluster.drawDorling(host, bySido); };
 })();
