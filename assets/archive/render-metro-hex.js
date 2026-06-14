@@ -121,13 +121,29 @@
       ? honamMergedLayout(SIDO_HEX_LAYOUT) : null;
     const centroids = sidoCentroidsFromLayout(layout);
     if (!centroids) return { totalSeats: 0, partyTotal: new Map() };
-    // viewBox — top 라벨 + bottom legend 위해 padding 충분히
-    const xs = Array.from(centroids.values()).map((c) => c.cx);
-    const ys = Array.from(centroids.values()).map((c) => c.cy);
-    const w = Math.max(...xs) + 80;
-    const h = Math.max(...ys) + 100;
-    svg.setAttribute('viewBox', `0 -10 ${w} ${h + 10}`);
-    svg.setAttribute('width', w); svg.setAttribute('height', h + 10);
+    // 권역 격자 seed → 크기대로 force-packing(작은 권역 가까이, 큰 권역만 벌어짐). 균일 간격 낭비 제거.
+    if (window.Archive && typeof window.Archive.packClusters === 'function') {
+      const SEED = 0.72;
+      const pn = [];
+      for (const [sd, info] of centroids) {
+        let s = sidoSeats.get(sd);
+        if (!s) { const al = aliasSido(sd); if (al.length > 1) { const mg = new Map(); for (const a of al) { const m = sidoSeats.get(a); if (m) for (const [p, c] of m) mg.set(p, (mg.get(p) || 0) + c); } if (mg.size) s = mg; } }
+        const N = s ? Array.from(s.values()).reduce((x, c) => x + c, 0) : 0;
+        const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
+        info.r = Math.max(14, (L + 0.6) * Math.sqrt(3) * SMALL_R);
+        pn.push({ info, r: info.r, cx0: info.cx * SEED, cy0: info.cy * SEED });
+      }
+      window.Archive.packClusters(pn, { pad: 5 });
+      for (const n of pn) { n.info.cx = n.cx; n.info.cy = n.cy; }
+    }
+    // viewBox — 클러스터 bbox + 라벨 여백
+    const cs = Array.from(centroids.values());
+    const minX = Math.min(...cs.map((c) => c.cx - (c.r || 40))) - 6;
+    const minY = Math.min(...cs.map((c) => c.cy - (c.r || 40))) - 22;
+    const w = Math.max(...cs.map((c) => c.cx + (c.r || 40))) - minX + 6;
+    const h = Math.max(...cs.map((c) => c.cy + (c.r || 40))) - minY + 16;
+    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+    svg.setAttribute('width', w.toFixed(0)); svg.setAttribute('height', h.toFixed(0));
     let totalSeats = 0;
     const partyTotal = new Map();
 
