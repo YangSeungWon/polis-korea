@@ -70,7 +70,7 @@
 /* sections */
 /* 아카이브 본문 단일 칸 — 컴포넌트가 모바일 최적(440~760)이라 PC 넓은 .page(1320)에선
    가운데 떠 허전. 본문 블록을 ~800px 중앙 칸으로 통일(시군구의회 지도 포함). */
-.ar-hero, .ar-history-link, .ar-section {
+.ar-hero, .ar-section {
   max-width: 820px;
   margin-left: auto;
   margin-right: auto;
@@ -250,44 +250,7 @@
 .ar-dist-cand { font-weight: 700; }
 .ar-dist-meta { font-variant-numeric: tabular-nums; font-size: 11px; color: var(--ink-soft); text-align: right; }
 
-/* history 진입 link 카드 — 페이지 하단, 시도별 요약보다 세밀한 단위로 유도 */
-.ar-history-link { margin: 0 0 28px; }
-.ar-history-link-btn {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 14px 18px;
-  border: 1px solid var(--rule-strong, var(--ink));
-  background: var(--bg2);
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.1s;
-}
-.ar-history-link-btn:hover { background: var(--bg3); }
-.ar-history-link-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.ar-history-link-sub {
-  font-size: 12px;
-  color: var(--ink-soft);
-}
-/* 하단 변형 — 섹션 다 본 뒤 "더 자세히" 콜투액션 */
-.ar-history-link-foot { margin: 4px 0 28px; border-top: 1px solid var(--rule); padding-top: 24px; }
-.ar-history-link-foot .ar-history-link-btn {
-  flex-direction: column; align-items: stretch; gap: 4px;
-}
-.ar-history-link-kicker {
-  font-size: 11px; font-weight: 800; letter-spacing: .05em;
-  color: var(--ink-soft); text-transform: uppercase;
-}
-.ar-history-link-foot .ar-history-link-label { font-size: 15px; }
-@media (min-width: 560px) {
-  /* 넓은 화면: 라벨·설명 한 줄, kicker는 위에 */
-  .ar-history-link-foot .ar-history-link-btn { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: baseline; }
-  .ar-history-link-foot .ar-history-link-kicker { grid-column: 1 / -1; }
-}
+/* (시도/시군구 시각화 진입은 하단 nav 센터 '더 자세히' 셀로 통합 → .ar-nav-detail) */
 
 /* 여론조사 link 카드 — archive에 폴 N건 통계 + active이면 시각화 페이지 link */
 .ar-polls-link-card {
@@ -703,7 +666,18 @@
   .ar-hero-meta { gap: 8px 14px; font-size: 12px; }
 }
 
-/* Archive 회차 타임라인 nav — 이전 · [지금] · 다음 */
+/* 상단: 히어로(현재 회차 제목) 좌우에 이전·다음 회차 */
+.ar-tophead {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 820px) 1fr;
+  gap: 16px; align-items: start;
+  max-width: 1180px; margin: 0 auto;
+}
+.ar-tophead > .ar-hero { max-width: none; margin: 0; }
+/* 양옆 회차 셀을 히어로 제목 줄 높이에 맞춤 */
+.ar-tophead > .ar-nav-cell { margin-top: 30px; }
+
+/* Archive 회차 nav — 이전 · [더 자세히] · 다음 */
 .ar-nav {
   display: grid; grid-template-columns: 1fr minmax(0, 1.05fr) 1fr;
   gap: 10px; margin: 24px 0; align-items: stretch;
@@ -724,20 +698,29 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 }
 .ar-nav-prev { text-align: left; }
 .ar-nav-next { text-align: right; }
-/* 가운데: 지금 보는 회차 — 강조, 링크 아님 */
-.ar-nav-current {
-  background: var(--bg3); border-color: var(--rule-strong);
-  text-align: center; align-items: center; cursor: default;
+/* 하단 가운데: 더 자세히 — history 진입 (강조 링크) */
+.ar-nav-detail {
+  text-align: center; align-items: center;
+  border-color: var(--rule-strong); background: var(--bg2);
 }
-.ar-nav-current .ar-nav-label { color: var(--ink); letter-spacing: .03em; }
+.ar-nav-detail .ar-nav-label { color: var(--ink); letter-spacing: .03em; }
+.ar-nav-detail .ar-nav-name { font-size: 15px; }
+.ar-nav-detail-sub { font-size: 11px; color: var(--ink-soft); }
+/* 더 자세히 없는 하단 nav(재보궐) — 2칸 */
+.ar-nav-nodetail { grid-template-columns: 1fr 1fr; }
 .ar-nav-label { font-size: 11px; font-weight: 700; color: var(--ink-soft); }
 .ar-nav-name { font-size: 14px; font-weight: 800; color: var(--ink); }
-.ar-nav-current .ar-nav-name { font-size: 15px; }
 .ar-nav-date { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  /* 좁은 화면: 상단 히어로 위로, 이전·다음은 아래에 가로로 */
+  .ar-tophead { grid-template-columns: 1fr 1fr; max-width: 820px; gap: 8px; }
+  .ar-tophead > .ar-hero { grid-column: 1 / -1; order: -1; }
+  .ar-tophead > .ar-nav-cell { margin-top: 0; }
+}
 @media (max-width: 520px) {
-  /* 좁은 화면: 세로 스택, 지금 보는 회차를 맨 위로 */
+  /* 하단 nav 세로 스택, 더 자세히를 맨 위로 */
   .ar-nav { grid-template-columns: 1fr; gap: 8px; }
-  .ar-nav-current { order: -1; }
+  .ar-nav-detail { order: -1; }
   .ar-nav-prev, .ar-nav-next { text-align: left; }
   .ar-nav-next .ar-nav-label { text-align: left; }
   .ar-nav-name { font-size: 13px; }

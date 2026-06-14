@@ -253,36 +253,7 @@ HERO_GENERAL = """
 
 NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={election_id_full}&topMenuId=VC&secondMenuId=VCCP09"
 
-# 페이지 하단 — 위 시도별 요약보다 더 세밀한 단위로 보러 가는 링크 (역대 비교 포함)
-HISTORY_LINK_PRES = """
-  <section class="ar-history-link ar-history-link-foot">
-    <a href="/history.html?type=presidential&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-kicker">더 자세히 ↘</span>
-      <span class="ar-history-link-label">시군구·동 단위 득표 지도</span>
-      <span class="ar-history-link-sub">위는 시도별 요약 · 득표 비례 hex·지도 + 역대 회차 비교</span>
-    </a>
-  </section>
-"""
-
-HISTORY_LINK_LOCAL = """
-  <section class="ar-history-link ar-history-link-foot">
-    <a href="/history.html?type=local&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-kicker">더 자세히 ↘</span>
-      <span class="ar-history-link-label">광역·기초·교육감 단위 지도</span>
-      <span class="ar-history-link-sub">위는 시도별 요약 · 시군구 hex·지도 + 역대 회차 비교</span>
-    </a>
-  </section>
-"""
-
-HISTORY_LINK_GENERAL = """
-  <section class="ar-history-link ar-history-link-foot">
-    <a href="/history.html?type=national_assembly&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-kicker">더 자세히 ↘</span>
-      <span class="ar-history-link-label">지역구 단위 hex·지도</span>
-      <span class="ar-history-link-sub">위는 시도별 요약 · 지역구 하나하나 hex·지도 + 역대 회차 비교</span>
-    </a>
-  </section>
-"""
+# 시도/시군구 시각화 진입은 하단 nav 센터 '더 자세히' 셀로 통합 (render_bottom_nav · DETAIL_CELL)
 
 SECTIONS_LOCAL = """
   <section class="ar-section" id="ar-offices" hidden>
@@ -444,8 +415,6 @@ FOOT = """
 
 KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
 KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
-# byelection은 시도/시군구 시각화 history 페이지가 없어 하단 링크 없음.
-KIND_TO_HISTORY_LINK = {"local": HISTORY_LINK_LOCAL, "presidential": HISTORY_LINK_PRES, "general_election": HISTORY_LINK_GENERAL}
 
 
 def source_caveat_block(meta: dict) -> str:
@@ -477,49 +446,71 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         if d["wiki_url"] else ""
     )
     d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
-    d["nav_block"] = render_nav_block(neighbors or {}, d)
-    history_link = KIND_TO_HISTORY_LINK.get(d["kind"], "").format(**d)
+    hero_html = KIND_TO_HERO[d["kind"]].format(**d)
+    nbrs = neighbors or {}
 
     return (
         HEAD.format(**d)
-        + KIND_TO_HERO[d["kind"]].format(**d)
+        + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
         + source_caveat_block(meta)
-        + d["nav_block"]
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
-        + history_link
-        + d["nav_block"]
+        + render_bottom_nav(nbrs, d)                # 이전 · [더 자세히] · 다음
         + FOOT.format(**d)
     )
 
 
-def render_nav_block(neighbors: dict, current: dict | None = None) -> str:
-    """회차 타임라인 nav — 현재 회차를 가운데 두고 양옆에 이전·다음.
-    neighbors = {'prev': meta or None, 'next': meta or None}, current = derive(meta) dict."""
+# kind → 하단 '더 자세히' 센터 셀 (history.html type, 제목, 보조설명). byelection은 없음 → 센터 비움.
+DETAIL_CELL = {
+    "general_election": ("national_assembly", "지역구 단위 hex·지도", "시도별 요약보다 세밀 · 역대 회차 비교"),
+    "local": ("local", "광역·기초·교육감 지도", "시도별 요약보다 세밀 · 역대 회차 비교"),
+    "presidential": ("presidential", "시군구·동 단위 득표 지도", "시도별 요약보다 세밀 · 역대 회차 비교"),
+}
+
+
+def nav_cell(m: dict | None, side: str) -> str:
+    """이전·다음 회차 셀 (상·하단 공통)."""
+    label = "이전 회차" if side == "prev" else "다음 회차"
+    if not m:
+        none_txt = "이전 없음" if side == "prev" else "다음 없음"
+        return f'<span class="ar-nav-cell ar-nav-{side} ar-nav-empty">{none_txt}</span>'
+    date = m.get("date", "")
+    name = m.get("name", "")
+    page = m.get("archive", {}).get("page", "#")
+    arrow = "←" if side == "prev" else "→"
+    lbl = f'{arrow} {label}' if side == "prev" else f'{label} {arrow}'
+    return (f'<a class="ar-nav-cell ar-nav-{side}" href="{page}">'
+            f'<span class="ar-nav-label">{lbl}</span>'
+            f'<span class="ar-nav-name">{name}</span>'
+            f'<span class="ar-nav-date">{date}</span></a>')
+
+
+def render_tophead(neighbors: dict, hero_html: str) -> str:
+    """상단: 히어로(현재 회차 제목) 좌우에 이전·다음. 양옆 모두 없으면 히어로만."""
     prev_meta = neighbors.get("prev")
     next_meta = neighbors.get("next")
     if not prev_meta and not next_meta:
+        return hero_html
+    return (f'  <div class="ar-tophead">'
+            f'{nav_cell(prev_meta, "prev")}{hero_html}{nav_cell(next_meta, "next")}'
+            f'</div>\n')
+
+
+def render_bottom_nav(neighbors: dict, current: dict) -> str:
+    """하단: 이전 · [더 자세히(history 진입)] · 다음. 더 자세히 없으면(재보궐) 센터 비움."""
+    prev_meta = neighbors.get("prev")
+    next_meta = neighbors.get("next")
+    d = DETAIL_CELL.get(current.get("kind"))
+    center = ""
+    if d:
+        htype, name, sub = d
+        center = (f'<a class="ar-nav-cell ar-nav-detail" href="/history.html?type={htype}&n={current.get("n")}">'
+                  f'<span class="ar-nav-label">더 자세히 ↘</span>'
+                  f'<span class="ar-nav-name">{name}</span>'
+                  f'<span class="ar-nav-detail-sub">{sub}</span></a>')
+    if not prev_meta and not next_meta and not center:
         return ""
-    def cell(m, side):
-        label = "이전 회차" if side == "prev" else "다음 회차"
-        if not m:
-            none_txt = "이전 없음" if side == "prev" else "다음 없음"
-            return f'<span class="ar-nav-cell ar-nav-{side} ar-nav-empty">{none_txt}</span>'
-        date = m.get("date", "")
-        name = m.get("name", "")
-        page = m.get("archive", {}).get("page", "#")
-        arrow = "←" if side == "prev" else "→"
-        lbl = f'{arrow} {label}' if side == "prev" else f'{label} {arrow}'
-        return (f'<a class="ar-nav-cell ar-nav-{side}" href="{page}">'
-                f'<span class="ar-nav-label">{lbl}</span>'
-                f'<span class="ar-nav-name">{name}</span>'
-                f'<span class="ar-nav-date">{date}</span></a>')
-    cur = ""
-    if current:
-        cur = (f'<span class="ar-nav-cell ar-nav-current" aria-current="page">'
-               f'<span class="ar-nav-label">지금 보는 중</span>'
-               f'<span class="ar-nav-name">{current.get("name", "")}</span>'
-               f'<span class="ar-nav-date">{current.get("date", "")}</span></span>')
-    return f'<nav class="ar-nav ar-nav-tl">{cell(prev_meta, "prev")}{cur}{cell(next_meta, "next")}</nav>\n'
+    cls = "ar-nav ar-nav-tl ar-nav-bottom" + ("" if center else " ar-nav-nodetail")
+    return f'<nav class="{cls}">{nav_cell(prev_meta, "prev")}{center}{nav_cell(next_meta, "next")}</nav>\n'
 
 
 def render_ar_list(metas: list[dict]) -> str:
