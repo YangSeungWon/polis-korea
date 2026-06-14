@@ -171,4 +171,28 @@
     }
     return any;
   };
+
+  // 시도 클러스터 force-packing — 권역 격자 seed에서 크기대로 가변 간격으로 뭉침.
+  // 작은 권역(세종·제주)은 가까이, 큰 권역(경기)만 필요한 만큼 벌어짐 → 균일 간격 낭비 제거.
+  // nodes: [{cx0, cy0, r, ...}] 의 cx/cy를 갱신(겹침 반발 + seed 앵커). 대선 dorling과 동일 알고리즘.
+  Archive.packClusters = function (nodes, opts) {
+    opts = opts || {};
+    const iters = opts.iters || 120;
+    const pad = opts.pad != null ? opts.pad : 4;
+    const anchor = opts.anchor != null ? opts.anchor : 0.05;
+    for (const n of nodes) { n.cx = n.cx0; n.cy = n.cy0; }
+    for (let it = 0; it < iters; it++) {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = b.cx - a.cx, dy = b.cy - a.cy;
+          const dist = Math.hypot(dx, dy) || 0.01;
+          const ov = a.r + b.r + pad - dist;
+          if (ov > 0) { const p = ov * 0.5 / dist; a.cx -= p * dx; a.cy -= p * dy; b.cx += p * dx; b.cy += p * dy; }
+        }
+      }
+      for (const n of nodes) { n.cx += (n.cx0 - n.cx) * anchor; n.cy += (n.cy0 - n.cy) * anchor; }
+    }
+    return nodes;
+  };
 })();
