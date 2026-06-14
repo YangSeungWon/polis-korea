@@ -45,6 +45,19 @@ def round_label(eid: str) -> str:
     return f"{n}{NTH_UNIT.get(kind, '')} {KIND_SHORT.get(kind, kind)}".strip()
 
 
+def hanja_variant(a, b):
+    """두 한자명이 표기 변이체인가 — 같은 길이 + ≤1글자 차이(勳 U+52F3 / 勲 U+52F2 등).
+    NEC가 동일인 한자를 회차마다 변이체로 주므로, 같은 생일이면 이를 동일인으로 본다.
+    HTML 엔티티(&#NNN;)는 1글자로 정규화 후 비교. 둘 다 있을 때만 판정(미상은 호출측 처리)."""
+    if not a or not b:
+        return False
+    a2 = re.sub(r"&#\d+;", "?", a)
+    b2 = re.sub(r"&#\d+;", "?", b)
+    if len(a2) != len(b2):
+        return False
+    return sum(1 for x, y in zip(a2, b2) if x != y) <= 1
+
+
 # 정당 캐노니컬 — 통합 후 같은 가족으로 보일 라벨 (선택적).
 PARTY_FAMILY = {
     "통일민주당": "민주계열", "민주당": "민주계열", "새정치국민회의": "민주계열",
@@ -169,18 +182,21 @@ def main():
                     adob, ahanja = match_assembly(nm, eid, place)
                     dob = dob or adob
                     hanja = hanja or ahanja
-                per_eid[eid][(nm, party)].append({
+                # 키에 sido+place(지역구) 포함 — 같은 선거·같은 정당이라도 다른 지역구면 다른 사람.
+                #   (옛 총선 동명이인이 한 행으로 뭉쳐 도(道)를 가로질러 잘못 병합되던 것 차단.
+                #    sido까지 넣어 '중구(서울) vs 중구(부산)' 동음 지역구 교차병합도 방지)
+                per_eid[eid][(nm, party, sido, place)].append({
                     "sido": sido, "place": place, "tc": tc,
                     "rank": rank, "won": won,
                     "pct": c.get("pct"), "votes": votes,
                     "dob": dob, "hanja": hanja,
                 })
 
-    # 2단계: per (eid, name, party) → 1건으로 통합 (최다득표 row 기준)
+    # 2단계: per (eid, name, party, sido, place) → 1건으로 통합 (최다득표 row 기준)
     flat = []
     for eid, by_np in per_eid.items():
         m = eid_meta.get(eid, {})
-        for (nm, party), rows in by_np.items():
+        for (nm, party, _sido, _place), rows in by_np.items():
             best = max(rows, key=lambda r: r["votes"] or 0)
             sidos = sorted(set(r["sido"] for r in rows if r["sido"]))
             won_any = any(r["won"] for r in rows)
@@ -221,11 +237,14 @@ def main():
                 da, db = a.get("dob"), b.get("dob")
                 ha, hb = a.get("hanja"), b.get("hanja")
                 if da and db:
-                    link = da == db   # 둘 다 dob 있음 → dob가 결정적(한자 변이체 무시)
+                    # 둘 다 dob 있으면 dob가 결정적 — 같은 이름+정확히 같은 생년월일은 사실상
+                    # 동일인(NEC 한자는 같은 사람도 회차마다 다르게 기록: 나경원 羅卿瑗/羅景垣 등).
+                    link = da == db
                 else:
-                    if ha and hb and ha != hb:
+                    # dob 미상 측 — 한자가 둘 다 있을 때만 한자로 판단(미상은 시도+연도로).
+                    if ha and hb and ha != hb and not hanja_variant(ha, hb):
                         continue
-                    link = bool(ha and ha == hb)
+                    link = bool(ha and hb and (ha == hb or hanja_variant(ha, hb)))
                     if not link:
                         sa, sb = set(a["sidos"]), set(b["sidos"])
                         link = bool(sa & sb) and abs((a["year"] or 0) - (b["year"] or 0)) <= 16
