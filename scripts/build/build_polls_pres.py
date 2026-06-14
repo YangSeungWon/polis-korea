@@ -184,7 +184,9 @@ def accept_candidate_race(q: dict) -> list[dict] | None:
         return None
     if not normalize_pcts(keep):
         return None
-    return [{"name": c["name"], "party": c.get("party") or ROSTER[c["name"]],
+    # 정당은 ROSTER(권위 단일출처) 우선 — 파싱된 정당은 컬럼 밀림/별칭("민주당")으로
+    # 틀릴 수 있고, keep이 이미 roster 후보만 남기므로 항상 정답이 있음. 파싱값은 폴백만.
+    return [{"name": c["name"], "party": ROSTER.get(c["name"]) or c.get("party"),
              "pct": c["pct"]} for c in keep]
 
 
