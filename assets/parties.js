@@ -310,7 +310,7 @@ const SIDO_HEX_LAYOUT = {
 const HONAM_MERGE_DATE = '2026-06-03';
 function honamMergedLayout(layout) {
   const m = { ...layout };
-  const pos = layout['전라남도'] || layout['광주광역시'];   // 전남 자리에 통합 셀
+  const pos = layout['광주광역시'] || layout['전라남도'];   // 광주 자리(col2)에 통합 셀 — 위 row(전북·대전)와 정렬·빈틈 제거
   delete m['광주광역시'];
   delete m['전라남도'];
   if (pos) m['전남광주특별시'] = { col: pos.col, row: pos.row, label: '전남광주' };
