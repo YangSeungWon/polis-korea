@@ -522,7 +522,11 @@ async function renderDistrictHex(): Promise<void> {
     sectionLabel.setAttribute('font-weight', '700');
     sectionLabel.setAttribute('fill', '#0a0e1a');
     sectionLabel.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-    sectionLabel.textContent = `비례대표 ${totalProp}석 · 총 ${totalSeats}석`;
+    // 비지역구 의석 명칭 — 시대별(총선): 6~8·11~16대 전국구, 9·10대 유정회, 17대~ 비례대표.
+    const propKind = state.type === 'national_assembly'
+      ? (state.n === 9 || state.n === 10 ? '유정회' : state.n <= 16 ? '전국구' : '비례대표')
+      : '비례대표';
+    sectionLabel.textContent = `${propKind} ${totalProp}석 · 총 ${totalSeats}석`;
     svg.appendChild(sectionLabel);
 
     // 정당당 N col 블록 — 의석 많으면 col 수를 늘려(2~6) 세로 길이를 지역구 hex 높이에 맞춤.
@@ -570,7 +574,7 @@ async function renderDistrictHex(): Promise<void> {
         poly.setAttribute('stroke', '#fff');
         poly.setAttribute('stroke-width', '1');
         const tt = document.createElementNS(ns, 'title');
-        tt.textContent = `비례 ${ps.party} ${j + 1}/${ps.seats}석`;
+        tt.textContent = `${propKind} ${ps.party} ${j + 1}/${ps.seats}석`;
         poly.appendChild(tt);
         svg.appendChild(poly);
       }
