@@ -167,7 +167,7 @@ PAGE = """<!DOCTYPE html>
   {elections}
   {members}
   <footer class="foot">
-    <p class="fine">정당 메타·계보: <code>data/parties/registry.json</code> · 회차 등장: 역대 결과 · 소속 인물: 의원 ID 매핑(당선·낙선 포함은 <a href="/search.html?q={qname}">검색</a>).</p>
+    <p class="fine">소속 인물은 당선 국회의원 기준 — 낙선·기타 후보는 <a href="/search.html?q={qname}">검색</a>에서.</p>
   </footer>
 </main>
 <script src="assets/parties.js"></script>
@@ -273,8 +273,14 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(render(name, info, known, appearances, members), encoding="utf-8")
         urls.append(purl(name))
+    import shutil   # stale 제거 — 개명·삭제된 정당 디렉터리 잔존분.
+    n_stale = 0
+    for dch in OUT_DIR.iterdir():
+        if dch.is_dir() and dch.name not in reg:
+            shutil.rmtree(dch)
+            n_stale += 1
     SITEMAP_OUT.write_text("\n".join(urls), encoding="utf-8")
-    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {len(urls)} 정당 페이지")
+    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {len(urls)} 정당 페이지 (stale 제거 {n_stale})")
     # 커버리지 경고 — timeline 등장하나 registry에 없어 페이지 없는 정당
     missing = sorted(set(appearances) - known)
     if missing:

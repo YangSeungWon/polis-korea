@@ -67,7 +67,7 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="detail-empty">불러오는 중…</div>
   </section>
   <footer class="foot">
-    <p class="fine">국회 OpenAPI 의원 ID 기반 매핑. 비의원 후보·낙선자는 <a href="/person.html?name={name}">통합 검색</a>에서 조회.</p>
+    <p class="fine">비의원·낙선 이력은 <a href="/person.html?name={name}">검색</a>에서.</p>
   </footer>
 </main>
 <script src="assets/parties.js"></script>
@@ -92,8 +92,10 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     sitemap_urls = []
     n_written = 0
+    valid_slugs = set()
     for p in persons:
         slug = slugify(p["name"], p["dob"])
+        valid_slugs.add(slug)
         page_dir = OUT_DIR / slug
         page_dir.mkdir(parents=True, exist_ok=True)
         # 그 인물 entry만 inline (소형)
@@ -116,8 +118,16 @@ def main():
         sitemap_urls.append(f"/person/{slug}/")
         n_written += 1
 
+    # stale 디렉터리 제거 — 옛 빌드(생년월일 보정·동명이인 분리 등)로 슬러그가 바뀐 잔존분.
+    import shutil
+    n_stale = 0
+    for dch in OUT_DIR.iterdir():
+        if dch.is_dir() and dch.name not in valid_slugs:
+            shutil.rmtree(dch)
+            n_stale += 1
+
     SITEMAP_OUT.write_text("\n".join(sitemap_urls), encoding="utf-8")
-    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {n_written} pages")
+    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {n_written} pages (stale 제거 {n_stale})")
     print(f"→ {SITEMAP_OUT.relative_to(ROOT)} : {n_written} URLs (sitemap 통합용)")
 
 
