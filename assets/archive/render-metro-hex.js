@@ -51,12 +51,14 @@
     let agg = null;
     // 헥스·dorling 모두 공유 sidoCluster — 같은 layout/viewBox라 토글해도 권역 위치 고정.
     const SC = window.Archive.sidoCluster;
+    // hex/dorling 셀 클릭 → 당선인 섹션 그 시도(광역의원)로 필터·스크롤.
+    const onSelect = (sido) => window.Archive.winners && window.Archive.winners.focus({ sido, level: '광역의원' });
     const modes = [
-      { key: 'hex', label: '헥스', draw: (el) => { agg = SC.drawHex(el, bySidoObj); } },
-      { key: 'dorling', label: 'dorling', draw: (el) => { agg = SC.drawDorling(el, bySidoObj); } },
+      { key: 'hex', label: '헥스', draw: (el) => { agg = SC.drawHex(el, bySidoObj, { onSelect }); } },
+      { key: 'dorling', label: 'dorling', draw: (el) => { agg = SC.drawDorling(el, bySidoObj, { onSelect }); } },
     ];
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes);
-    else { agg = SC.drawHex(host, bySidoObj); }
+    else { agg = SC.drawHex(host, bySidoObj, { onSelect }); }
     const { totalSeats, partyTotal } = agg || { totalSeats: 0, partyTotal: new Map() };
     const legend = document.getElementById('ar-metro-hex-legend');
     if (legend) {

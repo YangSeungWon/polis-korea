@@ -260,13 +260,15 @@
       return svg;
     }
 
-    // 헥스 — 1 hex = 1석, 정당 의석 desc로 중심부터 연속 채움(큰 당이 안쪽).
-    function drawHex(host, bySido) {
+    // 헥스 — 1 hex = 1석, 정당 의석 desc로 중심부터 연속 채움(큰 당이 안쪽). opts.onSelect(sido) 클릭.
+    function drawHex(host, bySido, opts) {
+      opts = opts || {};
       const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
         const entries = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
         const g = document.createElementNS(NS, 'g');
+        if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const outline = document.createElementNS(NS, 'circle');
         outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
         outline.setAttribute('class', 'ar-genhex-outline'); g.appendChild(outline);
@@ -300,12 +302,14 @@
       return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
     };
     // dorling — 같은 layout(위치·viewBox 동일) → 토글해도 권역 고정. 원 r=clusterR + 정당 파이.
-    function drawDorling(host, bySido) {
+    function drawDorling(host, bySido, opts) {
+      opts = opts || {};
       const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
         const e = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
         const g = document.createElementNS(NS, 'g');
+        if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const tt = document.createElementNS(NS, 'title');
         tt.textContent = `${n.sido} ${n.tot}석 · ${e.map(([p, c]) => `${p} ${c}`).join(', ')}`; g.appendChild(tt);
         if (e.length > 1) {

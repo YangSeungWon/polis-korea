@@ -8,22 +8,30 @@
     const host = document.getElementById('ar-winners-section');
     if (!host) return;
     const races = ctx?.results?.races || [];
-    // tc=5/6 race winners
+    // 전남광주 통합(9회+) — 지역구는 광주/전남 분리·비례는 전남광주통합특별시. 한 의회라 시도 정규화.
+    const honamMerged = races.some((r) => (r.sido || '').startsWith('전남광주'));
+    const normSido = (s) => (honamMerged
+      ? ({ '광주광역시': '전남광주특별시', '전라남도': '전남광주특별시', '전남광주통합특별시': '전남광주특별시' }[s] || s)
+      : s);
     const winners = [];
     for (const r of races) {
-      if (!['5', '6'].includes(r.sg_typecode)) continue;
-      if (r.scope !== 'district') continue;
-      const level = r.sg_typecode === '5' ? '광역의원' : '기초의원';
-      for (const c of r.candidates || []) {
-        if (!c.won) continue;
-        winners.push({
-          level,
-          sido: r.sido || '',
-          district: r.district || r.sigungu || '',
-          name: c.name,
-          party: c.party || '무소속',
-          pct: c.pct,
-        });
+      const tc = r.sg_typecode;
+      // 지역구 당선인 (tc5 광역·tc6 기초)
+      if (['5', '6'].includes(tc) && r.scope === 'district') {
+        const level = tc === '5' ? '광역의원' : '기초의원';
+        for (const c of r.candidates || []) {
+          if (!c.won) continue;
+          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct });
+        }
+      } else if (['8', '9'].includes(tc)) {
+        // 비례 당선인 (tc8 광역·tc9 기초) — 정당 명부(개인명 없음) → 정당별 seats 만큼 행. hex와 일치.
+        const level = tc === '8' ? '광역의원' : '기초의원';
+        const dist = (tc === '9' && r.sigungu) ? `${r.sigungu} 비례` : '비례대표';
+        for (const c of r.candidates || []) {
+          for (let k = 0; k < (c.seats || 0); k++) {
+            winners.push({ level, sido: normSido(r.sido || ''), district: dist, name: '비례대표', party: c.party || '무소속' });
+          }
+        }
       }
     }
     if (winners.length === 0) {
@@ -38,7 +46,7 @@
       '서울특별시', '부산광역시', '대구광역시', '인천광역시', '광주광역시',
       '대전광역시', '울산광역시', '세종특별자치시',
       '경기도', '강원특별자치도', '충청북도', '충청남도',
-      '전북특별자치도', '전라남도', '경상북도', '경상남도', '제주특별자치도',
+      '전북특별자치도', '전라남도', '전남광주특별시', '경상북도', '경상남도', '제주특별자치도',
     ];
     const parties = Array.from(new Set(winners.map((w) => w.party))).sort();
     // 지역(시도)순 → 직급(광역<기초) → 선거구. 필터 시 그 지역의 광역·기초가 함께 정렬돼 나옴.
