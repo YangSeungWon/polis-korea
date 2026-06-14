@@ -32,6 +32,7 @@ const state = {
   selectedSido: null,
   selectedSigungu: null,
   blackoutActive: false,
+  actualMaps: null,   // 실제결과 1위 맵 {bySido,bySigungu} — result-overlay가 채움(실제 모드)
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -120,16 +121,22 @@ async function loadData() {
   $('#loading').hidden = true;
 }
 
-// 지선 출처-가공은 PollAdapter로 통일(대선·총선과 동일 패턴). 여기선 state.data.polls를
-// 주입하는 thin wrapper만 — render-hex/map·chrome 호출처 및 result-overlay 몽키패치 무변.
-// summarizeLatest(시간감쇠 가중 1위) → utils.js, 일반구→모도시 매핑 등 로직은 adapter.js 참고.
-function pollsByOffice(office) { return PollAdapter.localPollsByOffice(state.data.polls, office); }
+// 지선 출처-가공은 PollAdapter로 통일(대선·총선과 동일 패턴). state.data.polls 주입 wrapper.
+// summarizeLatest(시간감쇠 가중 1위) → utils.js, 일반구→모도시 매핑 등 로직은 adapter.js.
 function pollsByRegion(sido, sigungu = null) { return PollAdapter.localPollsByRegion(state.data.polls, sido, sigungu); }
 function parentSigungu(sigungu) { return PollAdapter.parentSigungu(sigungu); }
-function sidoLastWinningParty(sido, office) {
-  return PollAdapter.localSidoWinner(state.data.polls, sido, office, typeof SIDO_MERGE !== 'undefined' ? SIDO_MERGE : null);
+
+// 모드 인식 지역 1위 — render-hex/map이 호출. state.mode='result'면 실제결과(state.actualMaps),
+// 아니면 폴. 출처 swap을 여기서(주입) — 옛 result-overlay 몽키패치 대체.
+const _sidoMerge = () => (typeof SIDO_MERGE !== 'undefined' ? SIDO_MERGE : null);
+function regionSidoWinner(sido, office) {
+  return state.mode === 'result'
+    ? PollAdapter.localActualSido(state.actualMaps, sido, office, _sidoMerge())
+    : PollAdapter.localSidoWinner(state.data.polls, sido, office, _sidoMerge());
 }
-function sigunguLastWinningParty(sido, sigungu, office = '기초단체장') {
-  return PollAdapter.localSigunguWinner(state.data.polls, sido, sigungu, office);
+function regionSigunguWinner(sido, sigungu, office = '기초단체장') {
+  return state.mode === 'result'
+    ? PollAdapter.localActualSigungu(state.actualMaps, sido, sigungu, office)
+    : PollAdapter.localSigunguWinner(state.data.polls, sido, sigungu, office);
 }
 

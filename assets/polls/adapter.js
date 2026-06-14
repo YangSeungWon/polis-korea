@@ -168,9 +168,44 @@
     return null;
   }
 
+  // [지선] 실제 결과(NEC) → 시도/시군구·office별 1위 맵. 폴↔실제 토글의 '실제' 출처.
+  const _TC_TO_OFFICE = { '3': '광역단체장', '4': '기초단체장', '11': '교육감' };
+  function localActualMaps(races) {
+    const bySido = {}, bySigungu = {};
+    for (const race of races || []) {
+      const office = _TC_TO_OFFICE[race.sg_typecode];
+      if (!office) continue;
+      const cands = (race.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      const top = cands[0];
+      if (!top) continue;
+      const cell = {
+        party: top.party, name: top.name, pct: top.pct,
+        n_polls: 1, gap: 99, effective_gap: 99, actual: true,
+        candidates: cands.slice(0, 8).map((c) => ({ name: c.name, party: c.party, pct: c.pct, votes: c.votes })),
+      };
+      if (race.scope === 'sido') bySido[`${race.sido}|${office}`] = cell;
+      else if (race.scope === 'sigungu') bySigungu[`${race.sido}|${race.sigungu}|${office}`] = cell;
+    }
+    return { bySido, bySigungu };
+  }
+  function localActualSido(maps, sido, office, sidoMerge) {
+    if (!maps) return null;
+    const merged = (sidoMerge && sidoMerge[sido]) ? sidoMerge[sido] : null;
+    return maps.bySido[`${sido}|${office}`] || (merged && maps.bySido[`${merged}|${office}`]) || null;
+  }
+  function localActualSigungu(maps, sido, sigungu, office) {
+    if (!maps) return null;
+    let v = maps.bySigungu[`${sido}|${sigungu}|${office}`];
+    if (v) return v;
+    const p = parentSigungu(sigungu);            // 일반구 → 모도시 fallback
+    if (p) v = maps.bySigungu[`${sido}|${p}|${office}`];
+    return v || null;
+  }
+
   window.PollAdapter = {
     cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend,
     districtResultFromResults, districtResultFromPolls,
     localPollsByOffice, localPollsByRegion, parentSigungu, localSidoWinner, localSigunguWinner,
+    localActualMaps, localActualSido, localActualSigungu,
   };
 })();

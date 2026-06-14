@@ -28,7 +28,7 @@ main.js           → setOffice/setScope · seg fades · init · entry
 ```
 main           → 모두 (init이 setView/setOffice/setScope dispatch)
 chrome         → render-hex/map (setView 가 호출)
-render-X       → core (state · pollsByRegion · sidoLastWinningParty 등)
+render-X       → core (state · regionSidoWinner/regionSigunguWinner — 모드 인식, PollAdapter 위임)
 core           → (없음)
 ```
 

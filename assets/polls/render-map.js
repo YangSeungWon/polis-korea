@@ -146,7 +146,7 @@ function attachSigunguClick(feat, layer) {
 
 function updateSidoTooltip(layer) {
   const sido = canonSido((layer.feature.properties.name || '').trim());
-  const result = sidoLastWinningParty(sido, state.office);
+  const result = regionSidoWinner(sido, state.office);
   const lbl = result ? (result.name || result.party || '') : '';
   const tip = result
     ? `<b>${sido}</b><br>${lbl}${result.name && result.party ? ' (' + result.party + ')' : ''} ${result.pct}%<br>${fmtDate(result.period)} 조사`
@@ -158,7 +158,7 @@ function updateSigunguTooltip(layer) {
   const code = layer.feature.properties.code || '';
   const sido = sigunguSidoFromCode(code);
   const name = layer.feature.properties.name || '';
-  const result = sigunguLastWinningParty(sido, name, state.office);
+  const result = regionSigunguWinner(sido, name, state.office);
   const tip = result
     ? `<b>${sido} ${name}</b><br>${result.name} (${result.party}) ${result.pct}%<br>${fmtDate(result.period)} 조사`
     : `<b>${sido} ${name}</b><br>조사 없음`;
@@ -167,7 +167,7 @@ function updateSigunguTooltip(layer) {
 
 function sidoStyle(feat) {
   const sido = canonSido((feat.properties.name || '').trim());
-  const result = sidoLastWinningParty(sido, state.office);
+  const result = regionSidoWinner(sido, state.office);
   const sel = state.selectedSido === sido && !state.selectedSigungu;
   const low = result && result.n_polls <= 2;
   return {
@@ -184,7 +184,7 @@ function sigunguStyle(feat) {
   const code = feat.properties.code || '';
   const sido = sigunguSidoFromCode(code);
   const name = feat.properties.name || '';
-  const result = sigunguLastWinningParty(sido, name, state.office);
+  const result = regionSigunguWinner(sido, name, state.office);
   const selected = state.selectedSido === sido && state.selectedSigungu === name;
   const low = result && result.n_polls <= 2;
   return {

@@ -26,7 +26,7 @@ function renderHex() {
 
   for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
     const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
-    const result = sidoLastWinningParty(sido, state.office);
+    const result = regionSidoWinner(sido, state.office);
     const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
     const cls = result ? 'hex-cell has-data' : 'hex-cell no-data';
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -122,8 +122,8 @@ async function renderSigunguHex() {
     const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
     const result =
       isSigunguMode()
-        ? sigunguLastWinningParty(d.sido, d.name, state.office)
-        : sidoLastWinningParty(d.sido, state.office);
+        ? regionSigunguWinner(d.sido, d.name, state.office)
+        : regionSidoWinner(d.sido, state.office);
     const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
     const cls = result ? 'hex-cell has-data' : 'hex-cell no-data';
     const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
