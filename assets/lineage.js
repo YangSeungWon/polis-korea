@@ -140,12 +140,20 @@
       out.push(`<a href="/party/${encodeURIComponent(name)}/" class="lin-node">`);
       out.push(`<rect x="${n.x.toFixed(1)}" y="${yT.toFixed(1)}" width="${BAR_W.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col}" class="lin-bar"><title>${esc(name)}${n.info.abbr ? ' (' + esc(n.info.abbr) + ')' : ''} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')}</title></rect>`);
       if (showLabels) {
-        const lx = (n.x + BAR_W + 1).toFixed(1);
-        const chars = [...name];
-        const maxCh = Math.max(2, Math.floor((h + 16) / labelFS));   // 막대 높이(+여유)만큼만 — 짧은 정당 과도 overflow 방지
-        const disp = chars.length > maxCh ? chars.slice(0, maxCh - 1).join('') + '…' : name;
-        const tsp = [...disp].map((ch, i) => `<tspan x="${lx}" dy="${i ? '1em' : '0'}">${esc(ch)}</tspan>`).join('');
+        const lxN = n.x + BAR_W + 1, lx = lxN.toFixed(1);
+        // 이름과 동음이의 연도괄호 분리 — '민중당(2017)' → 이름 '민중당'(세로 스택) + '(2017)'(통회전).
+        const mp = name.match(/^(.+?)\s*(\([^)]*\))\s*$/);
+        const base = mp ? mp[1] : name, paren = mp ? mp[2] : '';
+        const baseCh = [...base];
+        const maxCh = Math.max(2, Math.floor((h + 16) / labelFS) - (paren ? 4 : 0));  // 연도블록 자리 확보
+        const disp = baseCh.length > maxCh ? baseCh.slice(0, maxCh - 1).concat('…') : baseCh;
+        const tsp = disp.map((ch, i) => `<tspan x="${lx}" dy="${i ? '1em' : '0'}">${esc(ch)}</tspan>`).join('');
         out.push(`<text x="${lx}" y="${(yT + labelFS).toFixed(1)}" class="lin-bar-label" style="font-size:${labelFS.toFixed(1)}px">${tsp}</text>`);
+        if (paren) {   // 연도괄호: 통으로 rotate(90) — 왼쪽이 위, 위→아래로 읽힘. 이름 아래에.
+          const py = yT + labelFS + disp.length * labelFS - labelFS * 0.15;
+          const pfs = labelFS * 0.82;
+          out.push(`<text x="${lx}" y="${py.toFixed(1)}" transform="rotate(90 ${lx} ${py.toFixed(1)})" class="lin-bar-label" style="font-size:${pfs.toFixed(1)}px">${esc(paren)}</text>`);
+        }
       }
       out.push(`</a>`);
     }
