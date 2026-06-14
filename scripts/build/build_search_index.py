@@ -37,15 +37,19 @@ def main():
     if pi_path.exists():
         pi = json.loads(pi_path.read_text(encoding="utf-8"))
         for p in pi.get('persons', []):
-            if len(p.get('races', [])) >= 2:
+            races = p.get('races', [])
+            if len(races) >= 2:
                 multi_race_names.add(p['name'])
             aid = p.get('assembly_id')
             dob = p.get('dob')
-            if not aid or not dob:
-                continue
-            for r in p.get('races', []):
+            if not aid and not dob:
+                continue   # 정적 식별자 없음 — 룩업 불필요(검색은 name__unmatched로)
+            # 정적 인물 페이지 존재 여부 — build_person_pages와 동일 필터(dob + (의원 or 당선)).
+            has_page = bool(dob and (aid or any(r.get('won') for r in races)))
+            for r in races:
                 # 키에 tc·지역 포함 — 같은 선거 같은 이름 동명이인(강원지사 최문순 vs 화천군수 최문순) 구분.
-                person_lookup[(r['eid'], p['name'], str(r.get('tc')), r.get('place', ''))] = {'aid': aid, 'dob': dob}
+                person_lookup[(r['eid'], p['name'], str(r.get('tc')), r.get('place', ''))] = {
+                    'aid': aid, 'dob': dob, 'page': has_page}
 
     items = []
     seen = set()
@@ -104,8 +108,10 @@ def main():
                 if not nm: continue
                 won = bool(c.get('won')) or c.get('rank') == 1
                 pl = person_lookup.get((eid, nm, str(tc), place))
-                # 낙선 포함 조건: 의원ID 보유 or 2회+ 출마하며 이 선거 득표 5%↑(군소 난립 제외)
-                if not won and not pl and not (nm in multi_race_names and (c.get('pct') or 0) >= 5):
+                # 낙선 포함 조건: 의원ID 보유 or 2회+ 출마하며 이 선거 득표 5%↑(군소 난립 제외).
+                #   단순 dob 보유 낙선자(무명)는 제외 — 인덱스 비대 방지(pl.aid 기준).
+                if (not won and not (pl and pl.get('aid'))
+                        and not (nm in multi_race_names and (c.get('pct') or 0) >= 5)):
                     continue
                 key = (eid, scope, sido, sigungu, district, tc, nm)
                 if key in seen: continue
@@ -123,8 +129,12 @@ def main():
                     'w': 1 if won else 0,
                 }
                 if pl:
-                    entry['aid'] = pl['aid']
-                    entry['dob'] = pl['dob']
+                    if pl.get('aid'):
+                        entry['aid'] = pl['aid']
+                    if pl.get('dob'):
+                        entry['dob'] = pl['dob']
+                    if pl.get('page'):
+                        entry['pg'] = 1   # 정적 인물 페이지 존재 → search.js가 직링크
                 items.append(entry)
 
     # 실제 선거일 내림차순(최신 먼저) — 같은 해는 월까지 구분. 정렬 후 dt 제거(용량).

@@ -82,13 +82,16 @@
       if (filterRound && it.r !== filterRound) return false;
       return match(it, q);
     });
-    // 인물 단위 group — assembly_id 있으면 그 ID, 없으면 (name + 'unmatched') 키.
-    // 같은 이름이라도 aid 다르면 동명이인 → 별도 카드. 항상 펴진 상태.
+    // 인물 단위 group — assembly_id 있으면 그 ID, 없으면 생년월일(name_dob), 둘 다 없으면
+    // name__unmatched. 같은 이름이라도 dob/aid 다르면 동명이인 → 별도 카드(단체장 동명이인도 분리).
     const byPerson = new Map();
     for (const it of filtered) {
-      const key = it.aid || `${it.n}__unmatched`;
-      if (!byPerson.has(key)) byPerson.set(key, { name: it.n, aid: it.aid, dob: it.dob, items: [] });
-      byPerson.get(key).items.push(it);
+      const key = it.aid || (it.dob ? `${it.n}_${it.dob}` : `${it.n}__unmatched`);
+      if (!byPerson.has(key)) byPerson.set(key, { name: it.n, aid: it.aid, dob: it.dob, page: it.pg, items: [] });
+      const g = byPerson.get(key);
+      g.items.push(it);
+      if (it.dob && !g.dob) g.dob = it.dob;
+      if (it.pg) g.page = 1;   // 한 회차라도 정적 페이지 있으면(=당선 이력) 직링크
     }
     const groups = Array.from(byPerson.values());
     // 정렬: race 많은 사람 먼저, 동수면 최근 연도
@@ -100,9 +103,10 @@
       ? `${partyMeta}${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
       : `${items.length.toLocaleString()}건 (검색어 입력)`;
 
+    // 정적 페이지(/person/{name-dob}/)는 dob + 당선 이력(pg) 있을 때만. 없으면 동적 검색.
     const personHref = (g) =>
-      (g.aid && g.dob) ? `/person/${encodeURIComponent(g.name + '-' + g.dob)}/`
-                       : `/person.html?name=${encodeURIComponent(g.name)}`;
+      (g.dob && g.page) ? `/person/${encodeURIComponent(g.name + '-' + g.dob)}/`
+                        : `/person.html?name=${encodeURIComponent(g.name)}`;
 
     const html = capGroups.map((g) => {
       const list = g.items.slice().sort((a, b) => (a.y || 0) - (b.y || 0));  // 최근이 아래로(오름차순)
