@@ -296,7 +296,8 @@
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
     const NS = 'http://www.w3.org/2000/svg';
-    const SIDO_GAP = 120, SMALL_R = 3.5;   // 시도 클러스터 간격 · 1석 hex 크기 (지선 metroHex와 동일)
+    const SIDO_GAP = 120, SMALL_R = 5;   // 1석 hex 크기 — 경기(60석) 클러스터가 GAP 한계라 SMALL_R≈5가 최대
+    // (GAP 빈 공간을 채워 hex 키움. 더 키우면 경기-서울 클러스터 겹침.)
     const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
     const hexRing = (L) => { const ring = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { ring.push([q, r]); q += dq; r += dr; } } return ring; };
     const hexSpiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const ring = hexRing(L); const rem = N - out.length; if (rem >= ring.length) out.push(...ring); else for (let i = 0; i < rem; i++) out.push(ring[Math.round(i * ring.length / rem) % ring.length]); } return out; };
