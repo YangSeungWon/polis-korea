@@ -96,6 +96,11 @@ CFG = {
 }
 
 CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+# 회차별 SGIS 동라벨 오류 수동 교정 — {회차: {SGIS_cd: (시도short, 선거구명)}}.
+# bnd_dong_1995는 '풍세면'(3401031)·'광덕면'(3401032) 라벨을 북부 폴리곤(성환 옆)에 잘못 붙임
+# (2000년본은 남부로 정상). 이름매칭이 이 둘을 천안시갑(풍세·광덕 명시)에 보내 성환읍(을)을
+# 도심에서 끊어 쪼가리화 → 지리적 실제대로 천안시을에 강제 재배정.
+CD_FIX = {15: {"3401031": ("충남", "천안시을"), "3401032": ("충남", "천안시을")}}
 # NEC 행정표준 시도코드 → SGIS 통계청 시도코드 (앞 2자리). nec_emd 조인용.
 NEC2SGIS = {"11": "11", "26": "21", "27": "22", "28": "23", "29": "24", "30": "25",
             "31": "26", "51": "29", "41": "31", "42": "32", "43": "33", "44": "34",
@@ -513,6 +518,15 @@ def main(n: int):
                     b_filled += 1
             if b_filled:
                 print(f"버퍼 인접 흡수(Pass5b): {b_filled}개 동", file=sys.stderr)
+
+        # 회차별 SGIS 동라벨 오류 교정 — 잘못된 이름매칭 결과를 지리적 실제 선거구로 강제 재배정.
+        for cd, tgt in (CD_FIX.get(n) or {}).items():
+            if cd not in geom_by_cd:
+                continue
+            for k in list(district_cds):
+                district_cds[k].discard(cd)
+            district_cds[tgt].add(cd)
+            print(f"라벨오류 교정: {cd} → {tgt[1]}", file=sys.stderr)
 
     # 4) 선거구별 union → 전체 topology 공유 arc 단순화
     features = []
