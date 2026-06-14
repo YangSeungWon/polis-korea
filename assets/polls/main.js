@@ -58,8 +58,9 @@ async function init() {
   setPhase();
   setInterval(setCountdown, 60_000);
   await loadData();
-  // 대선 페이지면 비례(시도) 렌더 경로가 인계 — 지선 모놀리식 스킵.
+  // 대선/총선 페이지면 전용 렌더 경로가 인계 — 지선 모놀리식 스킵.
   if (typeof initPresIfNeeded === 'function' && await initPresIfNeeded()) return;
+  if (typeof initGenIfNeeded === 'function' && await initGenIfNeeded()) return;
   document.querySelectorAll('[data-view]').forEach((b) => {
     b.addEventListener('click', () => setView(b.dataset.view));
   });

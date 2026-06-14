@@ -77,5 +77,27 @@
     return { polls: kept, actual: fin.map((c) => ({ key: c.name, pct: c.pct })) };
   }
 
-  window.PollAdapter = { cellsFromResults, cellsFromPolls, weightsFromResults, presTrend };
+  // 21·22대 비례 위성정당 → 본당. 정당지지(본당) 추이와 비례 실제결과(위성) ◆ 정렬용.
+  // 20대 이전은 위성 없음(매핑 시 self). 새 위성 생기면 여기 추가.
+  const SATELLITE = {
+    '국민의미래': '국민의힘', '더불어민주연합': '더불어민주당',
+    '미래한국당': '미래통합당', '더불어시민당': '더불어민주당',
+  };
+
+  // [시간] 총선 정당 지지율 추이 — 정당지지(전국·본당, 풀사이클) → buildPartyTrendSVG party 모드.
+  //   actual ◆ = 비례 실제 결과(위성→본당 매핑). 반환 { polls, actual:[{key=정당, pct}] }.
+  function genTrend(polls, propNationRace) {
+    const kept = (polls || []).filter((p) =>
+      p.office_level === '정당지지' && !p.sido && (p.candidates || []).length);
+    const acc = {};
+    for (const c of ((propNationRace && propNationRace.candidates) || [])) {
+      if (c.pct == null || !c.party) continue;
+      const key = SATELLITE[c.party] || c.party;
+      acc[key] = (acc[key] || 0) + c.pct;
+    }
+    const actual = Object.entries(acc).map(([key, pct]) => ({ key, pct: Math.round(pct * 100) / 100 }));
+    return { polls: kept, actual };
+  }
+
+  window.PollAdapter = { cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend };
 })();

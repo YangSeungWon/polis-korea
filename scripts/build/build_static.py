@@ -120,8 +120,8 @@ def build_polls(urls: list):
 ELECTIONS_DIR = ROOT / 'data' / 'elections'
 
 
-# 폴 viz 지원 종류 — 지선(시도/시군구 단색)·대선(시도 비례). 총선(지역구)은 후속.
-POLL_VIZ_KINDS = ('local', 'presidential')
+# 폴 viz 지원 종류 — 지선(시도/시군구)·대선(시도 비례+후보추이)·총선(정당추이; 지역구 hex는 후속).
+POLL_VIZ_KINDS = ('local', 'presidential', 'general_election')
 
 
 def _poll_election_meta(el: dict) -> dict | None:
@@ -170,8 +170,8 @@ def build_poll_elections(urls: list):
             continue
         slug = meta['slug']
         n, date_s = meta['n'], meta['date']
-        unit = '대' if meta['kind'] == 'presidential' else '회'
-        short = '대선' if meta['kind'] == 'presidential' else '지선'
+        unit = '회' if meta['kind'] == 'local' else '대'
+        short = {'presidential': '대선', 'general_election': '총선'}.get(meta['kind'], '지선')
         title = f'polis · {n}{unit} {short} 여론조사 vs 실제 ({date_s})'
         desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도 비례로 비교.'
         canon = f'/polls/{slug}/'
