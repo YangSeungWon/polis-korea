@@ -85,15 +85,6 @@
     return cells;
   }
 
-  function svgFor(host, cells, extra) {
-    const W = Math.max(...cells.map((c) => c.cx)) + OFF_X + extra;
-    const H = Math.max(...cells.map((c) => c.cy)) + OFF_Y + extra;
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `0 0 ${W.toFixed(0)} ${H.toFixed(0)}`);
-    svg.setAttribute('class', 'sido-prop-svg');
-    return svg;
-  }
   function titleText(cell) {
     const t = cell.cands.slice(0, 3)
       .map((c) => `${c.name}(${c.party}) ${(c.pct || 0).toFixed(1)}%`).join(' / ');
