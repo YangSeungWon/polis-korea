@@ -42,9 +42,9 @@
   }
   // 후보별 hex 개수 — 큰 정수 잔여(largest remainder)로 N에 정확히 맞춤
   function allocateByVotes(cands, N) {
-    const total = cands.reduce((s, c) => s + (c.votes || 0), 0);
+    const total = cands.reduce((s, c) => s + _v(c), 0);
     if (!total) return cands.map(() => 0);
-    const raw = cands.map((c) => (c.votes || 0) * N / total);
+    const raw = cands.map((c) => _v(c) * N / total);
     const floors = raw.map(Math.floor);
     const rem = N - floors.reduce((a, b) => a + b, 0);
     const fracs = raw.map((v, i) => ({ i, f: v - Math.floor(v) })).sort((a, b) => b.f - a.f);
@@ -59,8 +59,12 @@
       + `A ${rad.toFixed(2)} ${rad.toFixed(2)} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
   }
   const pcolor = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#888';
+  // 비례 기준값 — 일반화: 결과=votes, 폴=share(pct). 셀 크기 weight 도 일반화(없으면 valid_votes).
+  const _v = (c) => (c && c.share != null ? c.share : ((c && c.votes) || 0));
+  const _w = (race, cands) => (race.weight != null ? race.weight
+    : (race.valid_votes != null ? race.valid_votes : cands.reduce((s, c) => s + _v(c), 0)));
 
-  // races → 셀(위치+후보+투표수)
+  // races → 셀(위치+후보+가중치). race: {sido, candidates:[{party, votes|share, pct}], valid_votes|weight}
   function layoutCells(races) {
     if (typeof SIDO_HEX_LAYOUT !== 'object') return [];
     const bySido = {};
@@ -69,8 +73,8 @@
     for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
       const race = bySido[sido];
       if (!race) continue;
-      const cands = (race.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      const voted = race.valid_votes || cands.reduce((s, c) => s + (c.votes || 0), 0);
+      const cands = (race.candidates || []).slice().sort((a, b) => _v(b) - _v(a));
+      const voted = _w(race, cands);
       if (!voted) continue;
       cells.push({
         sido, label: pos.label, cands, voted,
@@ -104,8 +108,8 @@
     svg.appendChild(t);
   }
 
-  // === 격자 모드 ===
-  function drawGrid(host, races) {
+  // === 격자 모드 === (opts.legend 로 범례 문구 override — 폴 모드용)
+  function drawGrid(host, races, opts) {
     if (!host) return;
     const cells = layoutCells(races);
     if (!cells.length) { host.parentElement?.setAttribute('hidden', ''); return; }
@@ -162,13 +166,13 @@
     const leg = document.createElementNS(NS, 'text');
     leg.setAttribute('x', (minX + 4).toFixed(1)); leg.setAttribute('y', (minY + 12).toFixed(1));
     leg.setAttribute('class', 'sido-prop-legend');
-    leg.textContent = `■ 1개 = ${(unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`;
+    leg.textContent = (opts && opts.legend) || `■ 1개 = ${(unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`;
     svg.appendChild(leg);
     host.innerHTML = ''; host.appendChild(svg);
   }
 
-  // === dorling 모드 ===
-  function drawDorling(host, races) {
+  // === dorling 모드 === (opts.legend override)
+  function drawDorling(host, races, opts) {
     if (!host) return;
     const cells = layoutCells(races);
     if (!cells.length) { host.parentElement?.setAttribute('hidden', ''); return; }
@@ -200,12 +204,12 @@
       const cell = n.cell;
       const g = document.createElementNS(NS, 'g');
       const tt = document.createElementNS(NS, 'title'); tt.textContent = titleText(cell); g.appendChild(tt);
-      const cands = cell.cands.filter((c) => (c.votes || 0) > 0);
-      const total = cands.reduce((s, c) => s + (c.votes || 0), 0);
+      const cands = cell.cands.filter((c) => _v(c) > 0);
+      const total = cands.reduce((s, c) => s + _v(c), 0);
       if (total > 0 && cands.length > 1) {
         let a0 = -Math.PI / 2;
         for (const c of cands) {
-          const a1 = a0 + (c.votes / total) * 2 * Math.PI;
+          const a1 = a0 + (_v(c) / total) * 2 * Math.PI;
           const p = document.createElementNS(NS, 'path');
           p.setAttribute('d', pieSlice(n.cx, n.cy, n.radius, a0, a1));
           p.setAttribute('fill', pcolor(c.party));
@@ -238,7 +242,7 @@
     const leg = document.createElementNS(NS, 'text');
     leg.setAttribute('x', '4'); leg.setAttribute('y', '14');
     leg.setAttribute('class', 'sido-prop-legend');
-    leg.textContent = '● 크기=투표수 · 파이=후보 득표 구성';
+    leg.textContent = (opts && opts.legend) || '● 크기=투표수 · 파이=후보 득표 구성';
     svg.appendChild(leg);
     host.innerHTML = ''; host.appendChild(svg);
   }

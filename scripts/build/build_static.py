@@ -120,10 +120,15 @@ def build_polls(urls: list):
 ELECTIONS_DIR = ROOT / 'data' / 'elections'
 
 
+# 폴 viz 지원 종류 — 지선(시도/시군구 단색)·대선(시도 비례). 총선(지역구)은 후속.
+POLL_VIZ_KINDS = ('local', 'presidential')
+
+
 def _poll_election_meta(el: dict) -> dict | None:
     """elections/{id}.json → per-election 폴 페이지 __INITIAL_STATE__.election.
-    지선이면서 aggregated 폴 데이터가 실재하는 회차만 (대선·총선 viz는 후속)."""
-    if el.get('kind') != 'local':
+    aggregated 폴 데이터가 실재하고 viz 지원 종류인 회차만."""
+    kind = el.get('kind')
+    if kind not in POLL_VIZ_KINDS:
         return None
     ar = el.get('archive') or {}
     polls_path = ar.get('polls_path')
@@ -134,7 +139,7 @@ def _poll_election_meta(el: dict) -> dict | None:
     # 블랙아웃 없으면(옛 회차) 선거일 기준 기본값 — 과거라 어차피 비활성.
     bstart = bo.get('start') or (date_s + 'T00:00:00+09:00')
     bend = bo.get('end') or (date_s + 'T18:00:00+09:00')
-    roster = f'data/raw/nec_roster_{el.get("n")}th.json'
+    roster = f'data/raw/nec_roster_{el.get("n")}th.json' if kind == 'local' else None
     return {
         'slug': el['id'],
         'name': el['name'],
@@ -144,8 +149,8 @@ def _poll_election_meta(el: dict) -> dict | None:
         'blackout_end': bend,
         'polls_path': polls_path,
         'results_path': ar.get('results_path') or '',
-        'roster_path': roster if (ROOT / roster).exists() else None,
-        'kind': el['kind'],
+        'roster_path': roster if (roster and (ROOT / roster).exists()) else None,
+        'kind': kind,
     }
 
 
@@ -165,8 +170,10 @@ def build_poll_elections(urls: list):
             continue
         slug = meta['slug']
         n, date_s = meta['n'], meta['date']
-        title = f'polis · {n}회 지선 여론조사 vs 실제 ({date_s})'
-        desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도·시군구 hex로 비교.'
+        unit = '대' if meta['kind'] == 'presidential' else '회'
+        short = '대선' if meta['kind'] == 'presidential' else '지선'
+        title = f'polis · {n}{unit} {short} 여론조사 vs 실제 ({date_s})'
+        desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도 비례로 비교.'
         canon = f'/polls/{slug}/'
         # __INITIAL_STATE__.election 주입 — core.js POLL_ELECTION 기본값을 덮어씀.
         html = replace_meta(template, title, desc, canon, {'election': meta})

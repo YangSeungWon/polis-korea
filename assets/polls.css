@@ -200,3 +200,12 @@
 .pic-date { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .pic-go { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .pic-tag { font-size: 11px; font-weight: 700; color: var(--accent, #c8553d); }
+
+/* 대선 비례 viz — render-sido-prop 재사용 (archive.css 미로드라 폴 페이지용 복제) */
+.pres-host { width: 100%; }
+.sido-prop-svg { width: 100%; height: auto; max-width: 560px; display: block; margin: 0 auto; }
+.sido-prop-hex { stroke: none; }
+.sido-prop-ring { fill: none; stroke: var(--ink); stroke-width: 0.6; }
+.sido-prop-label { fill: var(--ink); font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+.sido-prop-label.on-disc { fill: #fff; stroke: rgba(0,0,0,0.5); stroke-width: 2.4px; }
+.sido-prop-legend { fill: var(--ink-soft); font-size: 9px; }
