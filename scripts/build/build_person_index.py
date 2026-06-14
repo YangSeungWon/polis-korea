@@ -108,21 +108,26 @@ def main():
             for c in p.get("careers", []):
                 asm_careers[(p["name"], c["n"])].append((p.get("dob"), p.get("hanja"), c.get("district", "")))
 
-    def match_assembly(name, eid, place):
-        """총선 race → assembly_map(이름+회차+지역구)로 (dob, 한자). 비의원·미매칭이면 (None, None)."""
+    def match_assembly(name, eid, place, won):
+        """총선 race → assembly_map(이름+회차+지역구)로 (dob, 한자). 비의원·미매칭이면 (None, None).
+
+        지역구 일치를 우선 — 같은 회차에 동명 의원이 1명뿐이어도 지역구가 다르면(같은 이름의
+        낙선자) 그 의원으로 보지 않는다. 옛 의원 dob가 같은 회차 타지역구 낙선자에게 잘못
+        퍼지던 것 차단(이상철 1893 → 개풍·부산·청양에 모두 부여되던 버그). 단 당선자이고
+        동명 의원이 1명뿐이면 지역구 표기차를 보정해 그 사람으로 인정."""
         m = re.match(r"(\d+)(?:st|nd|rd|th)-general-", eid)
         if not m:
             return None, None
         recs = asm_careers.get((name, int(m.group(1))))
         if not recs:
             return None, None
-        if len(recs) == 1:
-            return recs[0][0], recs[0][1]
         p = _nm(place)
         for dob, hanja, dist in recs:  # 동명 의원 — 지역구로 분별
             d = _nm(dist)
             if p and d and (d in p or p in d):
                 return dob, hanja
+        if won and len(recs) == 1:     # 당선자 + 동명 의원 1명 → 지역구 표기차 보정
+            return recs[0][0], recs[0][1]
         return None, None
 
     # 1단계: per (eid, name, party) 통합 — 시도별 분해 row → 1건
@@ -179,7 +184,7 @@ def main():
                 won = bool(c.get("won")) or (rank == 1)
                 dob, hanja = match_bio(nm, date, place, tc)
                 if (not dob or not hanja) and tc == "2":   # 총선 → assembly_map 보강(옛 의원)
-                    adob, ahanja = match_assembly(nm, eid, place)
+                    adob, ahanja = match_assembly(nm, eid, place, won)
                     dob = dob or adob
                     hanja = hanja or ahanja
                 # 키에 sido+place(지역구) 포함 — 같은 선거·같은 정당이라도 다른 지역구면 다른 사람.
@@ -241,13 +246,19 @@ def main():
                     # 동일인(NEC 한자는 같은 사람도 회차마다 다르게 기록: 나경원 羅卿瑗/羅景垣 등).
                     link = da == db
                 else:
-                    # dob 미상 측 — 한자가 둘 다 있을 때만 한자로 판단(미상은 시도+연도로).
+                    # dob 미상 — 같은 지역에서만 동일인 추정(다른 도 연쇄 차단: 이상철 李相喆 등).
+                    #   옛 선거는 sido가 'None'으로 비어 모두 같은 시도로 오인되므로, 빈 시도는
+                    #   지역구명(place)을 지역 토큰으로 폴백해 도(道)를 가로지른 병합을 막는다.
+                    ra = {s for s in a["sidos"] if s and s != "None"} or {a.get("place", "")}
+                    rb = {s for s in b["sidos"] if s and s != "None"} or {b.get("place", "")}
+                    if not (ra & rb):
+                        continue
+                    # 같은 지역 안: 한자 둘 다 있고 '진짜' 다르면 타인. 아니면 한자일치/변이체
+                    #   또는 가까운 연도(≤16)로 동일인 추정.
                     if ha and hb and ha != hb and not hanja_variant(ha, hb):
                         continue
-                    link = bool(ha and hb and (ha == hb or hanja_variant(ha, hb)))
-                    if not link:
-                        sa, sb = set(a["sidos"]), set(b["sidos"])
-                        link = bool(sa & sb) and abs((a["year"] or 0) - (b["year"] or 0)) <= 16
+                    link = (bool(ha and hb and (ha == hb or hanja_variant(ha, hb)))
+                            or abs((a["year"] or 0) - (b["year"] or 0)) <= 16)
                 if link:
                     parent[find(i)] = find(j)
         comp = defaultdict(list)
