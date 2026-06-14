@@ -638,6 +638,12 @@
 .ar-exit-arrow { color: var(--ink-mute); text-align: center; }
 .ar-exit-actual-pct { text-align: right; }
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
+/* 시도명 외곽 세로줄 라벨 (history 방식, councilHex·sido-map 공용) */
+.hist-sido-edge-label {
+  fill: var(--ink); opacity: 0.55;
+  stroke: var(--bg); stroke-width: 2.5; paint-order: stroke fill;
+}
+
 .ar-exit-mark { font-weight: 800; text-align: center; font-size: 13px; }
 .ar-exit-dbb.is-hit .ar-exit-mark { color: #2e7d6f; }
 .ar-exit-miss-mark { color: #fff; background: #d32f2f; border-radius: 3px; padding: 1px 4px; }

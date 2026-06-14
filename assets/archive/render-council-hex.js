@@ -115,8 +115,9 @@
     const maxR = Math.max(...hexCells.map((c) => c.r));
     const w = OFF_X * 2 + (maxC + 1) * COL_W;
     const h = OFF_Y * 2 + (maxR + 1) * ROW_H;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.setAttribute('width', w);
+    const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;  // 좌우 외곽 라벨 여백
+    svg.setAttribute('viewBox', `${-EM} 0 ${w + 2 * EM} ${h}`);
+    svg.setAttribute('width', w + 2 * EM);
     svg.setAttribute('height', h);
 
     // 부모 hex 격자 콜리전 — pointy-top tiling spacing 정확:
@@ -125,51 +126,7 @@
     const PARENT_R = 13.85;
     const SMALL_R = 2.4;  // 모든 시군구 공통 hex 크기 (1석 = 1 hex 동일)
 
-    // 시도 라벨 백그라운드 — cells보다 먼저 그려 위에 hex 덮이게.
-    const SIDO_LABEL_SHORT = {
-      '서울특별시': '서울', '부산광역시': '부산', '대구광역시': '대구',
-      '인천광역시': '인천', '광주광역시': '광주', '대전광역시': '대전',
-      '울산광역시': '울산', '세종특별자치시': '세종', '경기도': '경기',
-      '강원특별자치도': '강원', '강원도': '강원',
-      '충청북도': '충북', '충청남도': '충남',
-      '전북특별자치도': '전북', '전라북도': '전북', '전라남도': '전남',
-      '경상북도': '경북', '경상남도': '경남', '제주특별자치도': '제주',
-    };
-    const sidoCenters = new Map();
-    for (const c of hexCells) {
-      const [cx, cy] = hexCenter(c.c, c.r);
-      const e = sidoCenters.get(c.sido) || { sx: 0, sy: 0, n: 0, minC: Infinity, maxC: -Infinity, minR: Infinity, maxR: -Infinity };
-      e.sx += cx; e.sy += cy; e.n += 1;
-      e.minC = Math.min(e.minC, c.c); e.maxC = Math.max(e.maxC, c.c);
-      e.minR = Math.min(e.minR, c.r); e.maxR = Math.max(e.maxR, c.r);
-      sidoCenters.set(c.sido, e);
-    }
-    // 경기는 서울 둘러쌈 → 평균 centroid 겹침. 외곽 (서남쪽) 으로 oneset.
-    const LABEL_OFFSET_HEX = {
-      '경기도': { dc: 0, dr: 3 },  // 서울 아래 (남쪽 외곽)
-    };
-    for (const [sd, e] of sidoCenters) {
-      const off = LABEL_OFFSET_HEX[sd];
-      let tx, ty;
-      if (off) {
-        const [hx, hy] = hexCenter((e.minC + e.maxC) / 2 + off.dc, (e.minR + e.maxR) / 2 + off.dr);
-        tx = hx; ty = hy;
-      } else {
-        tx = e.sx / e.n; ty = e.sy / e.n;
-      }
-      const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', tx);
-      t.setAttribute('y', ty);
-      t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('dominant-baseline', 'middle');
-      t.setAttribute('font-size', '38');
-      t.setAttribute('font-weight', '800');
-      t.setAttribute('class', 'council-hex-sido-label');
-      t.setAttribute('pointer-events', 'none');
-      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      t.textContent = SIDO_LABEL_SHORT[sd] || sd;
-      svg.appendChild(t);
-    }
+    // 시도명은 중앙 워터마크 대신 좌우 외곽 세로줄 라벨(history 방식)로 — 아래 hex 뒤 drawSidoEdgeLabels.
 
     let totalSeats = 0;
     const partyTotal = new Map();
@@ -225,6 +182,11 @@
         g.appendChild(poly);
       }
       svg.appendChild(g);
+    }
+    // 시도명 외곽 세로줄 라벨 (history 방식) — 헥스 위(여백)에.
+    if (typeof drawSidoEdgeLabels === 'function') {
+      const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
+      drawSidoEdgeLabels(svg, pts);
     }
     return { totalSeats, partyTotal };
   }

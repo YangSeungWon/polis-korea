@@ -98,7 +98,8 @@
 
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `0 0 ${W} ${H.toFixed(1)}`);
+    const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;  // 좌우 외곽 라벨 여백
+    svg.setAttribute('viewBox', `${-EM} 0 ${(W + 2 * EM).toFixed(1)} ${H.toFixed(1)}`);
     svg.setAttribute('class', 'sido-map-svg');
 
     const labels = [];
@@ -121,16 +122,10 @@
       path.appendChild(tt);
       svg.appendChild(path);
       const c = centroid(f.geometry);
-      if (c) labels.push({ x: px(c[0]), y: py(c[1]), text: shortSido(f.properties.name) });
+      if (c) labels.push({ sido: f.properties.name, cx: px(c[0]), cy: py(c[1]) });
     }
-    // 라벨은 path 위에
-    for (const l of labels) {
-      const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', l.x.toFixed(1)); t.setAttribute('y', l.y.toFixed(1));
-      t.setAttribute('class', 'sido-map-label');
-      t.textContent = l.text;
-      svg.appendChild(t);
-    }
+    // 시도명 외곽 세로줄 라벨 (history 방식) — 중앙 centroid 라벨 대신.
+    if (typeof drawSidoEdgeLabels === 'function') drawSidoEdgeLabels(svg, labels);
     host.innerHTML = '';
     host.appendChild(svg);
   }
