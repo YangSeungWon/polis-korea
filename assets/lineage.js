@@ -139,18 +139,21 @@
       const col = color(name);
       out.push(`<a href="/party/${encodeURIComponent(name)}/" class="lin-node">`);
       out.push(`<rect x="${n.x.toFixed(1)}" y="${yT.toFixed(1)}" width="${BAR_W.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col}" class="lin-bar"><title>${esc(name)}${n.info.abbr ? ' (' + esc(n.info.abbr) + ')' : ''} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')}</title></rect>`);
-      if (showLabels) {
+      // 세로 라벨 — 막대 높이(h)로 들어가는 글자수(cap)만큼만. 넘치면 들어가는 만큼만(막대 밖 overflow 방지).
+      // 이름과 동음이의 연도괄호 분리 — '민중당(2017)' → 이름 세로스택 + '(2017)' 통회전.
+      const mp = name.match(/^(.+?)\s*(\([^)]*\))\s*$/);
+      const base = mp ? mp[1] : name, paren = mp ? mp[2] : '';
+      const baseCh = [...base];
+      const cap = Math.floor((h + labelFS * 0.5) / labelFS);   // 막대에 들어갈 글자수(약간만 여유)
+      if (showLabels && cap >= 1) {
         const lxN = n.x + BAR_W + 1, lx = lxN.toFixed(1);
-        // 이름과 동음이의 연도괄호 분리 — '민중당(2017)' → 이름 '민중당'(세로 스택) + '(2017)'(통회전).
-        const mp = name.match(/^(.+?)\s*(\([^)]*\))\s*$/);
-        const base = mp ? mp[1] : name, paren = mp ? mp[2] : '';
-        const baseCh = [...base];
-        const maxCh = Math.max(2, Math.floor((h + 16) / labelFS) - (paren ? 4 : 0));  // 연도블록 자리 확보
-        const disp = baseCh.length > maxCh ? baseCh.slice(0, maxCh - 1).concat('…') : baseCh;
-        const tsp = disp.map((ch, i) => `<tspan x="${lx}" dy="${i ? '1em' : '0'}">${esc(ch)}</tspan>`).join('');
+        const showCh = baseCh.slice(0, cap);   // 넘치면 들어가는 만큼만(생략부호 없이 — 짧으면 한두 글자)
+        const tsp = showCh.map((ch, i) => `<tspan x="${lx}" dy="${i ? '1em' : '0'}">${esc(ch)}</tspan>`).join('');
         out.push(`<text x="${lx}" y="${(yT + labelFS).toFixed(1)}" class="lin-bar-label" style="font-size:${labelFS.toFixed(1)}px">${tsp}</text>`);
-        if (paren) {   // 연도괄호: 통으로 rotate(90) — 왼쪽이 위, 위→아래로 읽힘. 이름 아래에.
-          const py = yT + labelFS + disp.length * labelFS - labelFS * 0.15;
+        // 연도괄호: 이름이 다 들어가고 + 막대에 연도 들어갈 여유까지 있을 때만(짧으면 생략 — 호버 툴팁으로 확인).
+        const yearLines = Math.ceil(paren.length * 0.45);   // 회전 연도의 세로 줄수 근사
+        if (paren && cap >= baseCh.length + yearLines) {
+          const py = yT + (baseCh.length + 0.4) * labelFS;   // 이름 바로 아래(간격 최소화)
           const pfs = labelFS * 0.82;
           out.push(`<text x="${lx}" y="${py.toFixed(1)}" transform="rotate(90 ${lx} ${py.toFixed(1)})" class="lin-bar-label" style="font-size:${pfs.toFixed(1)}px">${esc(paren)}</text>`);
         }
