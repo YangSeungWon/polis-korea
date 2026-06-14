@@ -147,7 +147,14 @@
     let t = null;
     input.addEventListener('input', () => {
       clearTimeout(t);
-      t = setTimeout(() => render(input.value), 80);
+      t = setTimeout(() => render(input.value), 250);   // 입력 멈춤 후 실행(디바운스)
+    });
+    // 엔터 → 디바운스 무시하고 즉시 검색
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        clearTimeout(t);
+        render(input.value);
+      }
     });
     document.querySelectorAll('[data-round]').forEach((b) => {
       b.addEventListener('click', () => {
