@@ -23,6 +23,7 @@ declare function candLabel(cand: any): string;
 declare function fmtUnitName(name: string): string;
 declare function periodSidoName(sido: string, date: string): string;
 declare function loadDistrictHex(n: number): Promise<any[]>;
+declare function drawDistrictHex(svg: any, layout: any[], resultFn: (s: string, n: string) => any, opts?: any): any;
 declare function renderDetail(): void;
 declare function renderAll(): void;
 declare function renderHistoryLegend(): void;
@@ -37,38 +38,11 @@ declare function drawSidoEdgeLabels(svg: any, pts: Array<{ sido: string; cx: num
 declare const SIDO_EDGE_MARGIN: number;
 
 const SVGNS = 'http://www.w3.org/2000/svg';
-type DistrictLabel = { prefix: string; short: string; fullName?: string };
 
 // =====================================================================================
-// === 지역구 hex (총선 전용) ===
+// === 지역구 hex (총선) — 셀 렌더는 공유 drawDistrictHex(assets/render-district-hex.js).
+//     이 파일은 wrapper(renderDistrictHex) + 비례 컬럼만. shortDistrictLabel은 공유로 이관.
 // =====================================================================================
-
-// 지역구명 축약: '동해시태백시삼척시정선군' → '동해/태백/삼척/정선' (길면)
-// 시도 prefix는 SIDO_HEX_LAYOUT.label에서 추출하여 별도로 추가 (시군구 hex 라벨 패턴과 동일).
-function shortDistrictLabel(name: string, sido?: string): DistrictLabel {
-  // 분할 suffix 분리
-  const m = name.match(/^(.+?)([갑을병정무])$/);
-  const base = m ? m[1] : name;
-  const suf = m ? m[2] : '';
-  // 시/군/구 단위로 split
-  const parts = base.match(/[가-힣]+?(?:특별자치시|특별시|광역시|특별자치도|시|군|구)/g) || [base];
-  let body: string;
-  if (parts.length === 1) {
-    body = parts[0].replace(/(시|군|구)$/, '');
-  } else {
-    body = parts.map((p) => p.replace(/(시|군|구)$/, '').slice(0, 2)).join('/');
-  }
-  // 갑/을 suffix는 body에 붙임 ('평택갑')
-  if (suf) body = body + suf;
-  // SIDO_HEX_LAYOUT에 '전라남도'·'광주광역시'는 9회 통합으로 인해 '전남광주특별시' 키만
-  // 등록됨. 22대 이전 회차 cells가 '전라남도'·'광주광역시' sido이라 fallback 필요.
-  const SIDO_LABEL_FALLBACK: Record<string, string> = {
-    '전라남도': '전남', '광주광역시': '광주',
-    '강원도': '강원', '제주도': '제주', '전라북도': '전북',
-  };
-  const sidoAbbr = sido ? (SIDO_HEX_LAYOUT[sido]?.label || SIDO_LABEL_FALLBACK[sido] || sido.slice(0, 2)) : '';
-  return { prefix: sidoAbbr, short: body, fullName: name };
-}
 
 // === 21·22대 GeoJSON chloropleth (OhmyNews MIT) + 시도 경계 overlay ===
 async function loadGeo(n: number): Promise<void> {
@@ -360,145 +334,15 @@ async function renderGeoMap(): Promise<void> {
 async function renderDistrictHex(): Promise<void> {
   const layout = await loadDistrictHex(state.n);
   const svg = $('#hex2');
-  svg.innerHTML = '';
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
-  if (!layout?.length) return;
-  const cs = layout.map((d: any) => d.c);
-  const rs = layout.map((d: any) => d.r);
-  const minC = Math.min(...cs), minR = Math.min(...rs);
-  const maxC = Math.max(...cs), maxR = Math.max(...rs);
-  const r = 22;
-  const colW = r * Math.sqrt(3);
-  const rowH = r * 1.5;
-  const w = (maxC - minC + 2) * colW;
-  const h = (maxR - minR + 2) * rowH;
-  svg.setAttribute('viewBox', `${-SIDO_EDGE_MARGIN} 0 ${Math.ceil(w) + 2 * SIDO_EDGE_MARGIN} ${Math.ceil(h)}`);
-  const offX = -minC * colW + colW / 2;
-  const offY = -minR * rowH + rowH;
-
-  const cellAt = new Map<string, any>();
-  for (const d of layout) cellAt.set(`${d.c},${d.r}`, d);
-  // nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
-
-  for (const d of layout) {
-    const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-    const result = resultForDistrict(d.sido, d.name);
-    const top = topCandidate(result);
-    const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
-    const gap = top && sec ? top.pct - sec.pct : null;
-    let fill = top ? partyColor(top.party) : '#e6e9ef';
-    const ws = result?.winners;  // 중선거구(1구 2인)
-    if (d.wi !== undefined && ws && ws[d.wi]) {
-      // 조랭이떡: 각 칸 = 당선자 1명 → 그 당 단색.
-      fill = partyColor(ws[d.wi].party);
-    } else if (ws && ws.length >= 2 && ws[0].party !== ws[1].party) {
-      fill = _jungPattern([ws[0].party, ws[1].party]);  // (조랭이떡 데이터 없을 때) 줄무늬 fallback
-    }
-    const opacity = top ? 1 : 1;
-    const isSelected = state.selected
-      && state.selected.sido === d.sido && state.selected.name === d.name;
-
-    const g = document.createElementNS(SVGNS, 'g');
-    g.style.cursor = result ? 'pointer' : 'default';
-    g.addEventListener('click', () => {
-      state.selected = { sido: d.sido, name: d.name, kind: 'district' };
-      renderAll();
-    });
-
-    const isZorangi = d.wi !== undefined;  // 중선거구 조랭이떡 칸
-    const poly = document.createElementNS(SVGNS, 'polygon');
-    poly.setAttribute('class', 'hex-cell ' + (top ? 'has-data' : 'no-data') + (isSelected ? ' is-selected' : ''));
-    // 조랭이떡: full r(쌍 두 칸 맞붙음) + 셀 stroke 없음(내부 선 제거) → 쌍 외곽선은 아래서 그림.
-    poly.setAttribute('points', hexPoints(cx, cy, isZorangi ? r : r - 0.7));
-    poly.setAttribute('fill', fill);
-    if (isZorangi) {
-      poly.setAttribute('stroke', 'none');
-    } else {
-      poly.setAttribute('stroke', '#0a0e1a');
-      poly.setAttribute('stroke-width', isSelected ? '1.6' : '0.7');
-    }
-    poly.setAttribute('fill-opacity', String(opacity));
-    g.appendChild(poly);
-
-    // 조랭이떡 칸은 그 칸의 당선자 기준 라벨·툴팁 (선거구 대신 당선자명).
-    const cellWin = (d.wi !== undefined && ws && ws[d.wi]) ? ws[d.wi] : null;
-    const title = document.createElementNS(SVGNS, 'title');
-    title.textContent = cellWin
-      ? `${d.sido} ${d.name} · ${cellWin.name} (${cellWin.party}) 당선`
-      : top
-      ? `${d.sido} ${d.name} · ${top.name} (${top.party}) ${(result.uncontested || result.is_uncontested) ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
-      : `${d.sido} ${d.name} · 데이터 없음`;
-    g.appendChild(title);
-
-    const lbl: DistrictLabel = cellWin ? { prefix: '', short: cellWin.name } : shortDistrictLabel(d.name, d.sido);
-    const txt = document.createElementNS(SVGNS, 'text');
-    txt.setAttribute('x', String(cx));
-    txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('font-weight', '600');
-    // 배경(정당색·명도)에 따라 흰/검 자동 — 밝은 색에서 흰 글씨 안 보이던 문제. (render-sido와 동일)
-    // 중선거구(9~12대) 줄무늬 패턴 fill은 hex가 아니라 url() → 흰색 유지.
-    txt.setAttribute('fill', top ? (fill.charAt(0) === '#' ? pickTextColor(fill, opacity) : '#fff') : '#0a0e1a');
-    txt.setAttribute('pointer-events', 'none');
-    txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-    // 시군구 hex와 동일 패턴: prefix(시도, 작게·옅게) 위 + short(지역구+갑) 아래
-    if (lbl.prefix) {
-      const tp1 = document.createElementNS(SVGNS, 'tspan');
-      tp1.setAttribute('x', String(cx));
-      tp1.setAttribute('y', String(cy - 2));
-      tp1.setAttribute('font-size', '6');
-      tp1.setAttribute('opacity', '0.75');
-      tp1.textContent = lbl.prefix;
-      txt.appendChild(tp1);
-      const tp2 = document.createElementNS(SVGNS, 'tspan');
-      tp2.setAttribute('x', String(cx));
-      tp2.setAttribute('y', String(cy + 8));
-      tp2.setAttribute('font-size', lbl.short.length > 4 ? '6' : lbl.short.length > 3 ? '7' : '9');
-      tp2.textContent = lbl.short;
-      txt.appendChild(tp2);
-    } else {
-      txt.setAttribute('y', String(cy + 3));
-      txt.setAttribute('font-size', lbl.short.length > 4 ? '6' : '8');
-      txt.textContent = lbl.short;
-    }
-    g.appendChild(txt);
-    svg.appendChild(g);
-  }
-
-  // 조랭이떡 쌍 외곽선 — 같은 선거구(name·sido) 두 칸 사이 edge는 skip(한 덩이),
-  // 다른 선거구·외곽엔 테두리. 1구 2인이 두 색이면 조랭이떡(두 lobe), 같은 당이면 단색 한 덩이.
-  if (layout.some((d: any) => d.wi !== undefined)) {
-    for (const d of layout) {
-      if (d.wi === undefined) continue;
-      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      const ns = nbrs(d.c, d.r);
-      const selPair = state.selected && state.selected.sido === d.sido && state.selected.name === d.name;
-      for (let i = 0; i < 6; i++) {
-        const nb = cellAt.get(`${ns[i][0]},${ns[i][1]}`);
-        if (nb && nb.name === d.name && nb.sido === d.sido) continue;  // 쌍 내부 → 선 없음
-        const e = NBR_TO_EDGE[i];
-        const [x1, y1] = corner(cx, cy, r, e);
-        const [x2, y2] = corner(cx, cy, r, (e + 1) % 6);
-        const line = document.createElementNS(SVGNS, 'line');
-        line.setAttribute('x1', String(x1)); line.setAttribute('y1', String(y1));
-        line.setAttribute('x2', String(x2)); line.setAttribute('y2', String(y2));
-        line.setAttribute('stroke', selPair ? '#0a0e1a' : 'rgba(10,14,26,0.5)');
-        line.setAttribute('stroke-width', selPair ? '2' : '0.9');
-        line.setAttribute('stroke-linecap', 'round');
-        line.setAttribute('pointer-events', 'none');
-        svg.appendChild(line);
-      }
-    }
-  }
-
-  // 시도 경계 굵은 선 + 한반도 외곽 — drawHexBorders (hexgrid.js)
-  drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true);
-
-  // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — 대선·지선과 공통.
-  drawSidoEdgeLabels(svg, layout.map((d: any) => {
-    const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-    return { sido: d.sido, cx, cy };
-  }));
+  // 254 지역구 셀 코어(+중선거구 조랭이떡·시도경계·라벨)는 공유 렌더러 재사용.
+  const geom = drawDistrictHex(svg, layout, resultForDistrict, {
+    topFn: topCandidate,
+    textColor: (fill: string, op?: number) => pickTextColor(fill, op),
+    selected: state.selected,
+    onSelect: (sido: string, name: string) => { state.selected = { sido, name, kind: 'district' }; renderAll(); },
+  });
+  if (!geom) return;
+  const { colW, rowH, w, h, r, minR, maxR } = geom;
 
   // 비례대표 — 정당별 세로 col, 지역구 hex 우측에 배치. 사이즈는 지역구와 동일(r=22).
   // 같은 col 안 vertical pitch = 1.5r (격자 hex 표준, odd col 0.5 row shift로 interlock).
