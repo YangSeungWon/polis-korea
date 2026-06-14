@@ -296,10 +296,10 @@ const SIDO_HEX_LAYOUT = {
   '대구광역시':     { col: 4, row: 2, label: '대구' },
   '울산광역시':     { col: 5, row: 2, label: '울산' },
 
-  '광주광역시':     { col: 0, row: 3, label: '광주' },
   '전라남도':       { col: 1, row: 3, label: '전남' },
-  '경상남도':       { col: 2, row: 3, label: '경남' },
-  '부산광역시':     { col: 3, row: 3, label: '부산' },
+  '광주광역시':     { col: 2, row: 3, label: '광주' },
+  '경상남도':       { col: 3, row: 3, label: '경남' },
+  '부산광역시':     { col: 4, row: 3, label: '부산' },
 
   '제주특별자치도': { col: 2, row: 4, label: '제주' },
 };
