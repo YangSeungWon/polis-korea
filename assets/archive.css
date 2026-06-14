@@ -68,8 +68,15 @@
 }
 
 /* sections */
+/* 아카이브 본문 단일 칸 — 컴포넌트가 모바일 최적(440~760)이라 PC 넓은 .page(1320)에선
+   가운데 떠 허전. 본문 블록을 ~800px 중앙 칸으로 통일(시군구의회 지도 포함). */
+.ar-hero, .ar-history-link, .ar-section {
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .ar-section {
-  margin: 0 0 40px;
+  margin-bottom: 40px;
   padding-top: 8px;
 }
 .ar-section-title {
