@@ -314,7 +314,17 @@ def main(n: int):
             if _cf and _nf:
                 for sr in _rdr.iterRecords():
                     scd = str(sr[_cf]).strip()
-                    sgg_name_map[(scd[:2], _nsgg(str(sr[_nf]).strip()))] = scd[:4]
+                    nm = _nsgg(str(sr[_nf]).strip())
+                    sgg_name_map[(scd[:2], nm)] = scd[:4]
+                    base = re.sub(r"[시군]$", "", nm)   # 시/군 접미 제거 base — 시승격 전환(고양군↔고양시) 매칭
+                    if base and base != nm:
+                        sgg_name_map.setdefault((scd[:2], "§" + base), scd[:4])
+
+        def _sgg_auth(s2, name):
+            """시군명 → SGIS 4자리코드. 정확 우선, 없으면 시/군 접미 제거 base(고양시→고양군)로."""
+            nm = _nsgg(name)
+            return sgg_name_map.get((s2, nm)) or sgg_name_map.get((s2, "§" + re.sub(r"[시군]$", "", nm)))
+
         gu_vote = defaultdict(Counter)
         for r in recs:
             s2 = _s2(str(r["sgg_code"]), r["district"])
@@ -327,13 +337,13 @@ def main(n: int):
         # 권위적 앵커로 덮어쓰기 (sgg_name 직접 매칭이 있으면 우선)
         for r in recs:
             s2 = _s2(str(r["sgg_code"]), r["district"])
-            auth = sgg_name_map.get((s2, _nsgg(r.get("sgg_name", ""))))
+            auth = _sgg_auth(s2, r.get("sgg_name", ""))
             if auth:
                 gu_map[str(r["sgg_code"])] = auth
         # 시군 코드(4자리) → 그 시군을 명시한 선거구 집합. 이동시군구 fallback·Pass4.5 권위배정 공용 가드.
         sgg2district = defaultdict(set)
         for r in recs:
-            c4 = sgg_name_map.get((_s2(str(r["sgg_code"]), r["district"]), _nsgg(r.get("sgg_name", ""))))
+            c4 = _sgg_auth(_s2(str(r["sgg_code"]), r["district"]), r.get("sgg_name", ""))
             if c4:
                 sgg2district[c4].add((SIDO_SHORT.get(r["sido"], r["sido"]), r["district"]))
 
@@ -518,6 +528,32 @@ def main(n: int):
                     b_filled += 1
             if b_filled:
                 print(f"버퍼 인접 흡수(Pass5b): {b_filled}개 동", file=sys.stderr)
+
+        # Pass 5c: 잔여 미배정 동이 같은 시군 단일 선거구에 경계 과반 둘러싸인 '내부 구멍'이면 흡수.
+        # 동명 SGIS연도 불일치로 미매칭된 개별 동(광명 은행동 등)이 흰 구멍으로 남던 것 메움.
+        # 같은 시군(c[:4]) 한정 — 교차시군 둘러쌈(고양 읍이 김포에 둘러싸임)은 stray라 제외(구멍 유지가 정답).
+        rem = [c for c in geom_by_cd if c not in cd_to_key]
+        if rem:
+            a_cds = [c for c in cd_to_key if c in geom_by_cd]
+            a_geoms = [geom_by_cd[c] for c in a_cds]
+            tree = STRtree(a_geoms)
+            c_filled = 0
+            for c in rem:
+                g = geom_by_cd[c]; per = g.boundary.length or 1
+                share = defaultdict(float)
+                for j in tree.query(g.buffer(1)):
+                    ac = a_cds[int(j)]
+                    if ac[:4] != c[:4]:
+                        continue
+                    inter = g.boundary.intersection(a_geoms[int(j)].boundary)
+                    if not inter.is_empty:
+                        share[cd_to_key[ac]] += inter.length
+                if share:
+                    best = max(share, key=share.get)
+                    if share[best] / per > 0.5:
+                        district_cds[best].add(c); cd_to_key[c] = best; c_filled += 1
+            if c_filled:
+                print(f"내부구멍 흡수(Pass5c): {c_filled}개 동", file=sys.stderr)
 
         # 회차별 SGIS 동라벨 오류 교정 — 잘못된 이름매칭 결과를 지리적 실제 선거구로 강제 재배정.
         for cd, tgt in (CD_FIX.get(n) or {}).items():
