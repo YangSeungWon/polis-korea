@@ -274,59 +274,77 @@ def main():
                           "round": f"{n}대 총선", "date": dt, "place": "비례대표",
                           "party": disambiguate_party(c.get("party") or "", dt),
                           "pct": None, "rank": None, "won": True, "tc": "7"})
-        entry = by_aid.get(aid)
-        # 동일인의 미매칭(재보궐·지선 등 aid 못 받은) entry 흡수 — 강화 가드:
-        # 비례 정당(무소속 제외) 정확 일치 + 시기 ±8년. 옛 동명이인·무소속겹침 오병합 방지.
         bir_parties = {r["party"] for r in races if r["party"] and r["party"] != "무소속"}
-        bir_years = [r["year"] for r in races if r.get("year")]
-        orphans = []
-        for c in list(unmatched_by_name.get(asm_p["name"], [])):
-            if any(r.get("party") in bir_parties and r.get("year")
-                   and any(abs(r["year"] - y) <= 8 for y in bir_years)
-                   for r in c["races"]):
-                orphans.append(c)
-                unmatched_by_name[asm_p["name"]].remove(c)
-        if entry is None and orphans:   # 비례 entry 없으면 orphan을 승격(재보궐 기록 보존)
-            entry = orphans.pop(0)
-            entry["assembly_id"] = aid
-            entry["id"] = aid
-            entry["dob"] = asm_p.get("dob")
-            entry["hanja"] = asm_p.get("hanja")
-            entry["likely_namesake"] = False
-            by_aid[aid] = entry
+        person_fams = {PARTY_FAMILY.get(p) for p in bir_parties if PARTY_FAMILY.get(p)}
+        known_years = {r["year"] for r in races if r.get("year")}
+
+        def belongs(r):
+            # 동일인 판정: 시기 ±8년 + (정당 정확일치 또는 같은 계열). 동명이인·무소속 차단.
+            if not r.get("year") or not any(abs(r["year"] - y) <= 8 for y in known_years):
+                return False
+            rp = r.get("party")
+            fam = PARTY_FAMILY.get(rp)
+            return rp in bir_parties or (fam is not None and fam in person_fams)
+
+        # 미매칭 entry에서 '맞는 race만' 흡수 — 나머지(다른 동명이인)는 별도 인물로 남김.
+        # 흡수된 연도로 시기범위 확장하며 반복(예: 비례2008→강원지사 2011·2014 흡수→2018도 근접).
+        absorbed = []
+        while True:
+            grew = False
+            for c in list(unmatched_by_name.get(asm_p["name"], [])):
+                match = [r for r in c["races"] if belongs(r)]
+                if not match:
+                    continue
+                absorbed += match
+                for r in match:
+                    if r.get("year"):
+                        known_years.add(r["year"])
+                rest = [r for r in c["races"] if r not in match]
+                c["races"] = rest
+                if rest:                       # 잔여는 다음 라운드 재검사 위해 유지
+                    s2 = []
+                    for r in rest:
+                        if r["party"] and r["party"] not in s2:
+                            s2.append(r["party"])
+                    c["parties"] = s2[:6]
+                    c["wins"] = sum(1 for r in rest if r["won"])
+                    c["losses"] = sum(1 for r in rest if not r["won"])
+                else:
+                    c["_remove"] = True
+                    unmatched_by_name[asm_p["name"]].remove(c)
+                grew = True
+            if not grew:
+                break
+        if absorbed:
             n_bir_merge += 1
+
+        entry = by_aid.get(aid)
+        all_races = (entry["races"] if entry else []) + absorbed
+        have = {(r.get("round"), r.get("tc")) for r in all_races}
+        all_races = all_races + [r for r in races if (r["round"], "7") not in have]
+        all_races.sort(key=lambda r: (r.get("date") or "", r.get("eid")))
+        seen = []
+        for r in all_races:
+            if r["party"] and r["party"] not in seen:
+                seen.append(r["party"])
         if entry is not None:
-            for o in orphans:           # 남은 orphan race 흡수
-                entry["races"] += o["races"]
-                o["_remove"] = True
-                n_bir_merge += 1
-            have = {(r.get("round"), r.get("tc")) for r in entry["races"]}
-            entry["races"] += [r for r in races if (r["round"], "7") not in have]
-            entry["races"].sort(key=lambda r: (r.get("date") or "", r.get("eid")))
-            seen = []
-            for r in entry["races"]:
-                if r["party"] and r["party"] not in seen:
-                    seen.append(r["party"])
+            entry["races"] = all_races
             entry["parties"] = seen[:6]
-            entry["wins"] = sum(1 for r in entry["races"] if r["won"])
-            entry["losses"] = sum(1 for r in entry["races"] if not r["won"])
+            entry["wins"] = sum(1 for r in all_races if r["won"])
+            entry["losses"] = sum(1 for r in all_races if not r["won"])
             n_bir_add += 1
-        else:  # 비례-only → 새 인물 entry
-            races.sort(key=lambda r: (r.get("date") or "", r.get("eid")))
-            seen = []
-            for r in races:
-                if r["party"] and r["party"] not in seen:
-                    seen.append(r["party"])
+        else:
             new_persons.append({
                 "name": asm_p["name"], "id": aid, "assembly_id": aid,
                 "hanja": asm_p.get("hanja"), "dob": asm_p.get("dob"),
-                "wins": sum(1 for r in races if r["won"]), "losses": 0,
-                "parties": seen[:6], "sidos": [], "likely_namesake": False, "races": races,
+                "wins": sum(1 for r in all_races if r["won"]),
+                "losses": sum(1 for r in all_races if not r["won"]),
+                "parties": seen[:6], "sidos": [], "likely_namesake": False, "races": all_races,
             })
             by_aid[aid] = new_persons[-1]
             n_bir_new += 1
-    new_persons = [p for p in new_persons if not p.get("_remove")]   # 흡수된 orphan 제거
-    print(f"  비례 보강: 기존인물 +{n_bir_add} · 신규 {n_bir_new} · orphan(재보궐 등) 병합 {n_bir_merge}")
+    new_persons = [p for p in new_persons if not p.get("_remove")]   # 완전 흡수된 orphan 제거
+    print(f"  비례 보강: 기존인물 +{n_bir_add} · 신규 {n_bir_new} · orphan race 흡수 {n_bir_merge}")
 
     new_persons.sort(key=lambda p: (-len(p["races"]), -p.get("wins", 0), p["name"]))
     person["persons"] = new_persons
