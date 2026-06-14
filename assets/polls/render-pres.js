@@ -1,4 +1,4 @@
-// 대선 폴 페이지 — 시도 비례(격자/dorling)를 PollCellAdapter + Archive.sidoProp로 렌더.
+// 대선 폴 페이지 — 시도 비례(격자/dorling)를 PollAdapter + Archive.sidoProp로 렌더.
 //   여론조사(pct) ↔ 실제(votes) 토글. 지선 모놀리식 경로를 타지 않고 별도 init(initPresIfNeeded).
 //   PoC: 시도 비례 + 전국 요약 패널. (지도 모드·시군구는 후속.)
 (function () {
@@ -6,32 +6,14 @@
 
   const ps = { mode: 'polls', viewmode: 'dorling', sidoRaces: [], nationRace: null, weights: {} };
 
-  // 전국 대통령(후보) 폴만 — 추이선용
-  function nationalCandPolls() {
-    return (state.data.polls || []).filter((p) => p.office_level === '대통령' && !p.sido && (p.candidates || []).length);
-  }
-
-  // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆)
-  // 본선 horse-race만 — 실제 결과 후보(권위)를 본선 집합으로, 상위 2인(당선·차점) 모두
-  // 등장 + 본선후보 합≥70 인 폴만. 경선·가상대결·truncated/단독적합 자동 제외(날짜 하드코딩 X).
+  // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆).
+  // 본선 선별·정규화는 PollAdapter.presTrend가 담당 — 여기선 형태만 렌더로 넘김.
   function renderTrend() {
-    let host = document.getElementById('pres-trend');
+    const host = document.getElementById('pres-trend');
     if (!host) return;
-    if (typeof buildPartyTrendSVG !== 'function') { host.hidden = true; return; }
-    const finalCands = ((ps.nationRace && ps.nationRace.candidates) || [])
-      .filter((c) => c.pct != null).slice().sort((a, b) => b.pct - a.pct);
-    if (finalCands.length < 2) { host.hidden = true; return; }
-    const finalSet = new Set(finalCands.map((c) => c.name));
-    const top2 = [finalCands[0].name, finalCands[1].name];
-    const polls = nationalCandPolls().filter((p) => {
-      const named = (p.candidates || []).filter((c) => c.pct != null);
-      const names = new Set(named.map((c) => c.name));
-      if (!top2.every((n) => names.has(n))) return false;              // 본선 양강 모두 있어야
-      const s = named.filter((c) => finalSet.has(c.name)).reduce((a, c) => a + c.pct, 0);
-      return s >= 70;                                                  // 본선후보 합 정상 (truncated/적합 컷)
-    }).map((p) => ({ ...p, candidates: (p.candidates || []).filter((c) => finalSet.has(c.name)) }));
+    if (typeof buildPartyTrendSVG !== 'function' || !window.PollAdapter) { host.hidden = true; return; }
+    const { polls, actual } = PollAdapter.presTrend(state.data.polls || [], ps.nationRace);
     if (!polls.length) { host.hidden = true; return; }
-    const actual = finalCands.map((c) => ({ key: c.name, pct: c.pct }));
     const electionTs = Date.parse(POLL_ELECTION.date + 'T18:00:00+09:00');
     const svg = buildPartyTrendSVG(polls, {
       keyBy: 'candidate', showBand: true, minPts: 5, topN: 6,
@@ -63,14 +45,14 @@
       const races = d.races || [];
       ps.sidoRaces = races.filter((x) => x.scope === 'sido');
       ps.nationRace = races.find((x) => x.scope === 'nation') || null;
-      ps.weights = PollCellAdapter.weightsFromResults(races);
+      ps.weights = PollAdapter.weightsFromResults(races);
     } catch (e) { /* 결과 없으면 폴 모드만 */ }
   }
 
   function cells() {
     return ps.mode === 'result'
-      ? PollCellAdapter.cellsFromResults(ps.sidoRaces)
-      : PollCellAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령', weights: ps.weights });
+      ? PollAdapter.cellsFromResults(ps.sidoRaces)
+      : PollAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령', weights: ps.weights });
   }
 
   function render() {
