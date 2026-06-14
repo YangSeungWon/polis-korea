@@ -5,12 +5,11 @@
 (function () {
   const NOW = 2026.5;
   const REL_COLOR = { merge: '#d08700', split: '#2c82c9', rename: '#8a8f98', new: '#8a8f98', dissolve: '#8a8f98' };
-  const COLS = ['진보', '중도진보', '중도', '중도보수', '보수'];  // 좌→우 이념 스펙트럼 (기타는 축 밖·전체폭)
+  const COLS = ['진보', '중도진보', '중도', '중도보수', '보수'];  // 좌→우 이념 스펙트럼 (기타는 그래프 밖 텍스트)
   const PXY = 9.5;       // 1년당 px (세로)
-  const BAR_W = 11;
-  const LANE_W = 98;     // 서브레인 폭(막대 + 라벨)
-  const COL_GAP = 16;
-  const PAD_T = 50, PAD_L = 44, PAD_B = 28;
+  const COL_GAP = 10;
+  const PAD_T = 50, PAD_L = 40, PAD_R = 14, PAD_B = 28;
+  const LABEL_MIN = 56;  // lane 폭이 이 이상일 때만 라벨 표시(모바일은 막대 탭)
 
   function pyear(s) {
     if (!s) return null;
@@ -64,11 +63,11 @@
     const plotH = (maxY - minY) * PXY;
     const yScale = (yr) => PAD_T + (maxY - yr) * PXY;   // 현재→위, 과거→아래
 
-    // 계열 컬럼 + 서브레인(시간 겹침 회피) 패킹, x 배치
+    // 계열 컬럼 + 서브레인(시간 겹침 회피) 패킹
     const colMembers = {};
     for (const name of names) (colMembers[node[name].stream] || (colMembers[node[name].stream] = [])).push(name);
     const cols = COLS.filter((s) => colMembers[s]);
-    let xCur = PAD_L;
+    let totalLanes = 0;
     const colInfo = [];
     for (const s of cols) {
       const sorted = colMembers[s].slice().sort((a, b) => node[a].f - node[b].f);
@@ -80,14 +79,19 @@
         laneEnd[lane] = n.d; n.lane = lane;
       }
       const nLanes = laneEnd.length || 1;
-      const w = nLanes * LANE_W;
-      colInfo.push({ stream: s, x: xCur, w });
-      for (const nm of colMembers[s]) node[nm].x = xCur + node[nm].lane * LANE_W;
-      xCur += w + COL_GAP;
+      colInfo.push({ stream: s, nLanes, startLane: totalLanes });
+      totalLanes += nLanes;
     }
-    const etc = colMembers["기타"] || [];   // 축 밖(분류불가) — 전체폭. 엣지 좌표용 fallback x.
-    for (const nm of etc) node[nm].x = PAD_L;
-    const W = xCur + 8;
+    // 컨테이너 폭에 맞춰 lane 폭 산출 — 항상 진보↔보수 한 화면에. 라벨은 폭 여유 시만.
+    const W = Math.max(host.clientWidth || 900, 320);
+    const laneW = Math.max((W - PAD_L - PAD_R - (cols.length - 1) * COL_GAP) / totalLanes, 6);
+    const BAR_W = Math.max(3, Math.min(10, laneW * 0.55));
+    const showLabels = laneW >= LABEL_MIN;
+    colInfo.forEach((c, i) => {
+      c.x = PAD_L + c.startLane * laneW + i * COL_GAP;
+      for (const nm of colMembers[c.stream]) node[nm].x = c.x + node[nm].lane * laneW;
+    });
+    const etc = colMembers["기타"] || [];   // 그래프 밖(분류불가) — 아래 텍스트로.
     const H = PAD_T + plotH + PAD_B;
 
     const out = [`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" class="lin-svg" xmlns="http://www.w3.org/2000/svg">`];
@@ -115,31 +119,29 @@
       out.push(`<path d="M${x1.toFixed(1)},${y1.toFixed(1)} C${x1.toFixed(1)},${(y1 - dy).toFixed(1)} ${x2.toFixed(1)},${(y2 + dy).toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" class="lin-edge" stroke="${col}"/>`);
     }
 
-    // 막대(세로) + 라벨(오른쪽) — 스펙트럼 컬럼만
+    // 막대(세로) + 라벨(폭 여유 시) — 스펙트럼 컬럼만
     for (const name of names) {
       const n = node[name];
       if (n.stream === "기타") continue;
       const yT = yScale(n.d), h = Math.max(yScale(n.f) - yT, 4);
       const col = color(name);
       out.push(`<a href="/party/${encodeURIComponent(name)}/" class="lin-node">`);
-      out.push(`<rect x="${n.x.toFixed(1)}" y="${yT.toFixed(1)}" width="${BAR_W}" height="${h.toFixed(1)}" rx="4" fill="${col}" class="lin-bar"><title>${esc(name)}${n.info.abbr ? ' (' + esc(n.info.abbr) + ')' : ''} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')}</title></rect>`);
-      out.push(`<text x="${(n.x + BAR_W + 4).toFixed(1)}" y="${(yT + 10).toFixed(1)}" class="lin-bar-label">${esc(name)}</text>`);
-      out.push(`</a>`);
-    }
-
-    // 기타(축 밖) — 전체 폭 가로 막대(분류불가, 옅게). 스펙트럼 위치 없음.
-    for (const name of etc) {
-      const n = node[name];
-      const yT = yScale(n.d), h = Math.max(yScale(n.f) - yT, 4);
-      const col = color(name);
-      out.push(`<a href="/party/${encodeURIComponent(name)}/" class="lin-node">`);
-      out.push(`<rect x="${PAD_L}" y="${yT.toFixed(1)}" width="${(W - PAD_L - 6).toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col}" class="lin-etc-bar"><title>${esc(name)} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')} (기타·축 밖)</title></rect>`);
-      out.push(`<text x="${(PAD_L + 8).toFixed(1)}" y="${(yT + 11).toFixed(1)}" class="lin-bar-label lin-etc-label">${esc(name)} · 기타</text>`);
+      out.push(`<rect x="${n.x.toFixed(1)}" y="${yT.toFixed(1)}" width="${BAR_W.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col}" class="lin-bar"><title>${esc(name)}${n.info.abbr ? ' (' + esc(n.info.abbr) + ')' : ''} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')}</title></rect>`);
+      if (showLabels) {
+        out.push(`<text x="${(n.x + BAR_W + 3).toFixed(1)}" y="${(yT + 10).toFixed(1)}" class="lin-bar-label">${esc(name)}</text>`);
+      }
       out.push(`</a>`);
     }
 
     out.push('</svg>');
-    host.innerHTML = out.length > 1 ? out.join('') : '<p class="lin-loading">표시할 계보가 없습니다.</p>';
+    // 분류 외(기타) — 그래프 밖 텍스트로
+    let etcHtml = '';
+    if (etc.length) {
+      const links = etc.sort((a, b) => node[a].f - node[b].f)
+        .map((nm) => `<a href="/party/${encodeURIComponent(nm)}/">${esc(nm)}</a>`).join(' · ');
+      etcHtml = `<p class="lin-etc-note"><span>분류 외</span> ${links}</p>`;
+    }
+    host.innerHTML = out.length > 1 ? out.join('') + etcHtml : '<p class="lin-loading">표시할 계보가 없습니다.</p>';
   }
 
   document.addEventListener('DOMContentLoaded', main);
