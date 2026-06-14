@@ -112,7 +112,10 @@
     // 엣지 — pred 끝(위) → succ 시작(아래보다 위). 세로 베지어.
     for (const [a, c] of edges) {
       const na = node[a], nc = node[c];
-      const x1 = na.x + BAR_W / 2, y1 = yScale(na.d);
+      // 분당(split): 모정당이 존속하므로 분당 시점(자식 창당년)에서 가지치기.
+      // 합당·개명: 모정당이 끝나며 이어지므로 모정당 종료점에서.
+      const isSplit = nc.info.relation === 'split';
+      const x1 = na.x + BAR_W / 2, y1 = yScale(isSplit ? Math.min(nc.f, na.d) : na.d);
       const x2 = nc.x + BAR_W / 2, y2 = yScale(nc.f);
       const col = REL_COLOR[nc.info.relation] || '#8a8f98';
       const dy = Math.max(12, Math.abs(y1 - y2) * 0.4);
