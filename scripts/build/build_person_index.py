@@ -202,9 +202,10 @@ def main():
 
     persons = []
     for nm, rows in by_name.items():
-        # 동명이인 분리 — union-find. 같은 생년 또는 같은 한자면 동일인; 둘 다 미상이면
-        # 같은 시도 + 가까운 연도(≤16년)면 동일인(한 정치인의 연속 경력). 다른 생년/다른 한자는
-        # 절대 병합 금지. (옛 선거 낙선자는 생년·한자 미상이라 시도+연도로 군집해야 함.)
+        # 동명이인 분리 — union-find. 생년월일이 둘 다 있으면 dob가 결정적(같으면 동일인,
+        # 다르면 타인) — NEC 한자는 같은 사람도 회차마다 변이체(勳 U+52F3 / 勲 U+52F2)로 와
+        # 한자 비교만으론 동일인이 쪼개짐. dob 미상 측은 한자(있으면) 일치, 둘 다 미상이면
+        # 같은 시도 + 가까운 연도(≤16년)로 군집(옛 선거 낙선자). 다른 한자/연도는 병합 금지.
         n = len(rows)
         parent = list(range(n))
 
@@ -219,14 +220,15 @@ def main():
                 a, b = rows[i], rows[j]
                 da, db = a.get("dob"), b.get("dob")
                 ha, hb = a.get("hanja"), b.get("hanja")
-                if da and db and da != db:
-                    continue
-                if ha and hb and ha != hb:
-                    continue
-                link = (da and da == db) or (ha and ha == hb)
-                if not link:
-                    sa, sb = set(a["sidos"]), set(b["sidos"])
-                    link = bool(sa & sb) and abs((a["year"] or 0) - (b["year"] or 0)) <= 16
+                if da and db:
+                    link = da == db   # 둘 다 dob 있음 → dob가 결정적(한자 변이체 무시)
+                else:
+                    if ha and hb and ha != hb:
+                        continue
+                    link = bool(ha and ha == hb)
+                    if not link:
+                        sa, sb = set(a["sidos"]), set(b["sidos"])
+                        link = bool(sa & sb) and abs((a["year"] or 0) - (b["year"] or 0)) <= 16
                 if link:
                     parent[find(i)] = find(j)
         comp = defaultdict(list)
