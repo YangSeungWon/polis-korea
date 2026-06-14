@@ -397,54 +397,69 @@ const PARTY_SHORT = {
   '개혁신당': '개혁', '진보당': '진보', '기본소득당': '기본소득',
   '사회민주당': '사민', '새로운미래': '새미래', '정의당': '정의', '무소속': '무소속',
 };
+// 지지율 추이선 — 기본 정당 키(정당지지). opts.keyBy='candidate'면 후보 키(대선 후보 경쟁).
+// opts: { keyBy:'party'|'candidate', adjustHouse, showBand, bwDays, minPts, topN,
+//         actual:[{key,pct}](선거일 ◆ 오버레이), electionTs(x축을 선거일까지 연장), w, h }
 function buildPartyTrendSVG(polls, opts) {
   opts = opts || {};
   const adjustHouse = !!opts.adjustHouse;
   const showBand = opts.showBand !== false;
   const bw = opts.bwDays || 21;
+  const keyBy = opts.keyBy || 'party';
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
-  // party → [{t, v, ag, n}] (개별 조사 점)
-  const byParty = {};
+  // key → [{t,v,ag,n}] (개별 조사 점), meta: key → {color,label}
+  const byKey = {};
+  const meta = {};
   for (const p of polls) {
     if (!p.period_end || !p.candidates) continue;
     const t = Date.parse(p.period_end);
     if (!isFinite(t)) continue;
     for (const c of p.candidates) {
-      if (c.pct == null || !c.party) continue;
-      const party = CANON[c.party] || c.party;
-      (byParty[party] = byParty[party] || []).push({
-        t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0,
-      });
+      if (c.pct == null) continue;
+      let key, color, label;
+      if (keyBy === 'candidate') {
+        if (!c.name) continue;
+        key = c.name; color = partyColor(c.party); label = c.name;
+      } else {
+        if (!c.party) continue;
+        key = CANON[c.party] || c.party; color = partyColor(key); label = PARTY_SHORT[key] || key;
+      }
+      (byKey[key] = byKey[key] || []).push({ t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0 });
+      meta[key] = { color, label };
     }
   }
-  const parties = Object.keys(byParty);
-  if (!parties.length) return '';
-  // (옵션) house effect 보정 — 정당별 lean 계산 후 점 보정.
-  let perPartyHouse = {};
+  let keys = Object.keys(byKey);
+  if (opts.minPts) keys = keys.filter((k) => byKey[k].length >= opts.minPts);
+  if (!keys.length) return '';
+  // (옵션) house effect 보정
   if (adjustHouse && typeof PollStats !== 'undefined') {
-    for (const party of parties) {
-      perPartyHouse[party] = PollStats.houseEffects(byParty[party], { bwDays: bw, shrinkK: 8, minN: 2 });
-      byParty[party] = PollStats.applyHouse(byParty[party], perPartyHouse[party]);
+    for (const k of keys) {
+      const h = PollStats.houseEffects(byKey[k], { bwDays: bw, shrinkK: 8, minN: 2 });
+      byKey[k] = PollStats.applyHouse(byKey[k], h);
     }
   }
   // 평활 + 밴드
-  const series = {}; // party → {pts, segs, bands}
+  const series = {}; // key → {pts, segs, bands}
   let minTs = Infinity, maxTs = -Infinity, maxPct = 0;
-  for (const party of parties) {
-    const pts = byParty[party].slice().sort((a, b) => a.t - b.t);
+  for (const k of keys) {
+    const pts = byKey[k].slice().sort((a, b) => a.t - b.t);
     const segs = (typeof PollStats !== 'undefined')
       ? PollStats.kernelSmooth(pts, bw) : [pts.map((p) => ({ t: p.t, v: p.v }))];
-    const bands = showBand && typeof PollStats !== 'undefined'
-      ? PollStats.kernelBand(pts, bw) : [];
-    series[party] = { pts, segs, bands };
-    for (const p of pts) {
-      minTs = Math.min(minTs, p.t); maxTs = Math.max(maxTs, p.t);
-      maxPct = Math.max(maxPct, p.v);
-    }
+    const bands = showBand && typeof PollStats !== 'undefined' ? PollStats.kernelBand(pts, bw) : [];
+    series[k] = { pts, segs, bands };
+    for (const p of pts) { minTs = Math.min(minTs, p.t); maxTs = Math.max(maxTs, p.t); maxPct = Math.max(maxPct, p.v); }
   }
-  const W = 380, H = 210, pl = 28, pr = 56, pt = 12, pb = 24;
+  const meanV = (s) => s.pts.reduce((a, p) => a + p.v, 0) / s.pts.length;
+  keys.sort((a, b) => meanV(series[b]) - meanV(series[a]));
+  if (opts.topN) keys = keys.slice(0, opts.topN);
+  // 실제 결과 (선거일 ◆) + x축 연장
+  const actual = {};
+  if (Array.isArray(opts.actual)) for (const a of opts.actual) { if (a && a.pct != null) { actual[a.key] = a.pct; maxPct = Math.max(maxPct, a.pct); } }
+  const endTs = opts.electionTs && opts.electionTs > maxTs ? opts.electionTs : maxTs;
+
+  const W = opts.w || 380, H = opts.h || 210, pl = 28, pr = 56, pt = 12, pb = 24;
   maxPct = Math.max(50, Math.ceil(maxPct / 10) * 10);
-  const tsRange = (maxTs - minTs) || 86_400_000 * 7;
+  const tsRange = (endTs - minTs) || 86_400_000 * 7;
   const x = (ts) => pl + ((ts - minTs) / tsRange) * (W - pl - pr);
   const y = (pct) => pt + (1 - pct / maxPct) * (H - pt - pb);
   let grid = '';
@@ -455,40 +470,50 @@ function buildPartyTrendSVG(polls, opts) {
     grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="end">${v}</text>`;
   }
   let xax = '';
-  for (const ts of [minTs, (minTs + maxTs) / 2, maxTs]) {
+  for (const ts of [minTs, (minTs + endTs) / 2, endTs]) {
     const d = new Date(ts);
     xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${d.getMonth() + 1}/${d.getDate()}</text>`;
   }
-  const meanV = (s) => s.pts.reduce((a, p) => a + p.v, 0) / s.pts.length;
-  parties.sort((a, b) => meanV(series[b]) - meanV(series[a]));
+  // 선거일 세로선 (actual 있을 때)
+  if (Object.keys(actual).length && opts.electionTs) {
+    const ex = x(opts.electionTs);
+    grid += `<line x1="${ex.toFixed(1)}" y1="${pt}" x2="${ex.toFixed(1)}" y2="${H - pb}" stroke="var(--ink-mute, #8a93a3)" stroke-width="0.7" stroke-dasharray="3 2"/>`;
+    grid += `<text x="${ex.toFixed(1)}" y="${pt + 8}" font-size="8" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">선거일</text>`;
+  }
   let lastLabelY = -99, body = '';
-  for (const party of parties) {
-    const { pts, segs, bands } = series[party];
-    const color = partyColor(party);
-    // 밴드 (가중 std) — 정당색 옅게 채움
+  for (const k of keys) {
+    const { pts, segs, bands } = series[k];
+    const color = meta[k].color, label = meta[k].label;
     for (const band of bands) {
       if (band.length < 2) continue;
       const upper = band.map((p) => `${x(p.t).toFixed(1)},${y(Math.min(maxPct, p.v + p.sd)).toFixed(1)}`);
       const lower = band.slice().reverse().map((p) => `${x(p.t).toFixed(1)},${y(Math.max(0, p.v - p.sd)).toFixed(1)}`);
       body += `<polygon points="${upper.concat(lower).join(' ')}" fill="${color}" fill-opacity="0.10" stroke="none"/>`;
     }
-    // 개별 조사 점 (옅게)
     for (const p of pts) {
-      body += `<circle cx="${x(p.t).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="1.8" fill="${color}" fill-opacity="0.35"><title>${PARTY_SHORT[party] || party} ${p.v.toFixed(1)}% · ${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtDate(new Date(p.t).toISOString().slice(0, 10))}</title></circle>`;
+      body += `<circle cx="${x(p.t).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="1.8" fill="${color}" fill-opacity="0.35"><title>${label} ${p.v.toFixed(1)}% · ${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtDate(new Date(p.t).toISOString().slice(0, 10))}</title></circle>`;
     }
-    // 평활 선
     for (const seg of segs) {
       if (seg.length < 2) continue;
       const dpath = seg.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
       body += `<path d="${dpath}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
     }
+    // 실제 결과 ◆ (선거일) — 평활 마지막점에서 점선으로 이어 표시
+    if (actual[k] != null && opts.electionTs) {
+      const lastSeg0 = segs[segs.length - 1];
+      const lp = lastSeg0 && lastSeg0[lastSeg0.length - 1];
+      const ax = x(opts.electionTs), ay = y(actual[k]);
+      if (lp) body += `<path d="M${x(lp.t).toFixed(1)},${y(lp.v).toFixed(1)} L${ax.toFixed(1)},${ay.toFixed(1)}" fill="none" stroke="${color}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.6"/>`;
+      body += `<path d="M${ax.toFixed(1)},${(ay - 3.4).toFixed(1)} L${(ax + 3.4).toFixed(1)},${ay.toFixed(1)} L${ax.toFixed(1)},${(ay + 3.4).toFixed(1)} L${(ax - 3.4).toFixed(1)},${ay.toFixed(1)} Z" fill="${color}" stroke="var(--bg,#fff)" stroke-width="0.8"><title>${label} 실제 ${actual[k].toFixed(1)}%</title></path>`;
+    }
     const lastSeg = segs[segs.length - 1];
     const last = lastSeg && lastSeg[lastSeg.length - 1];
-    if (!last) continue;
-    let ly = y(last.v) + 3;
+    const labY0 = actual[k] != null ? y(actual[k]) : (last ? y(last.v) : null);
+    if (labY0 == null) continue;
+    let ly = labY0 + 3;
     if (ly - lastLabelY < 11) ly = lastLabelY + 11;
     lastLabelY = ly;
-    body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${PARTY_SHORT[party] || party}</text>`;
+    body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${label}</text>`;
   }
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${body}</svg>`;
 }

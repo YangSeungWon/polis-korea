@@ -209,3 +209,10 @@
 .sido-prop-label { fill: var(--ink); font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
 .sido-prop-label.on-disc { fill: #fff; stroke: rgba(0,0,0,0.5); stroke-width: 2.4px; }
 .sido-prop-legend { fill: var(--ink-soft); font-size: 9px; }
+
+/* 대선 헤드라인 — 후보 지지율 추이 */
+.pres-trend { margin: 8px 0 24px; }
+.pres-trend-title { font-size: 15px; font-weight: 800; margin: 0 0 8px; }
+.pres-trend-title .pres-trend-sub { font-size: 11px; font-weight: 500; color: var(--ink-soft); margin-left: 8px; }
+.pres-trend-chart { width: 100%; max-width: 760px; }
+.pres-secondary-label { font-size: 13px; font-weight: 700; color: var(--ink-soft); margin: 8px 0 6px; padding-top: 12px; border-top: 1px solid var(--rule); }

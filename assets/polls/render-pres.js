@@ -6,6 +6,31 @@
 
   const ps = { mode: 'polls', viewmode: 'dorling', sidoRaces: [], nationRace: null, weights: {} };
 
+  // 전국 대통령(후보) 폴만 — 추이선용
+  function nationalCandPolls() {
+    return (state.data.polls || []).filter((p) => p.office_level === '대통령' && !p.sido && (p.candidates || []).length);
+  }
+
+  // 헤드라인: 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆)
+  function renderTrend() {
+    let host = document.getElementById('pres-trend');
+    if (!host) return;
+    if (typeof buildPartyTrendSVG !== 'function') { host.hidden = true; return; }
+    const polls = nationalCandPolls();
+    if (!polls.length) { host.hidden = true; return; }
+    const actual = (ps.nationRace && ps.nationRace.candidates || [])
+      .filter((c) => c.pct != null).map((c) => ({ key: c.name, pct: c.pct }));
+    const electionTs = Date.parse(POLL_ELECTION.date + 'T18:00:00+09:00');
+    const svg = buildPartyTrendSVG(polls, {
+      keyBy: 'candidate', showBand: true, minPts: 15, topN: 6,
+      actual, electionTs: isFinite(electionTs) ? electionTs : null,
+      w: 720, h: 300,
+    });
+    host.innerHTML = `<h3 class="pres-trend-title">후보 지지율 추이 <span class="pres-trend-sub">전국 여론조사 · ◆ 선거일 실제 득표</span></h3>`
+      + `<div class="pres-trend-chart">${svg}</div>`;
+    host.hidden = false;
+  }
+
   function vizMain() { return document.querySelector('.viz-main'); }
   function presHost() {
     let h = document.getElementById('pres-host');
@@ -113,13 +138,33 @@
   }
 
   // main.js init()에서 호출 — 대선이면 인계받아 true, 아니면 false.
+  // 헤드라인 추이 컨테이너를 controls 앞에 1회 삽입
+  function ensureTrendHost() {
+    if (document.getElementById('pres-trend')) return;
+    const controls = document.querySelector('.controls');
+    const sec = document.createElement('section');
+    sec.id = 'pres-trend';
+    sec.className = 'pres-trend';
+    if (controls && controls.parentElement) controls.parentElement.insertBefore(sec, controls);
+    // 보조(지역·비례) 섹션 라벨
+    if (controls && !document.getElementById('pres-secondary-label')) {
+      const lab = document.createElement('div');
+      lab.id = 'pres-secondary-label';
+      lab.className = 'pres-secondary-label';
+      lab.textContent = '지역·비례 분포';
+      controls.parentElement.insertBefore(lab, controls);
+    }
+  }
+
   async function initPresIfNeeded() {
     if (!(typeof POLL_ELECTION === 'object' && POLL_ELECTION.kind === 'presidential')) return false;
     // 지선 전용 보기 토글(지도/격자) 숨김 — 자체 컨트롤 사용
     const vt = document.querySelector('.view-toggle'); if (vt) vt.hidden = true;
+    ensureTrendHost();
     buildControls();
     await loadResults();
-    render();
+    renderTrend();   // 헤드라인 (모드 무관 — 폴 추이 + 실제 ◆)
+    render();        // 보조 (지역·비례 dorling/격자 + 전국 바)
     return true;
   }
 
