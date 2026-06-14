@@ -638,16 +638,11 @@
 .ar-exit-arrow { color: var(--ink-mute); text-align: center; }
 .ar-exit-actual-pct { text-align: right; }
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
-/* 총선 지역구 의석 — 시도별 hex 지도 */
-.ar-genhex-svg { display: block; width: 100%; max-width: 460px; height: auto; margin: 4px auto 0; }
-.ar-genhex-cell { stroke: var(--bg); stroke-width: 2; }
-.ar-genhex-cell.no-data { fill: var(--bg3); }
-.ar-genhex-cell:hover { stroke: var(--ink); stroke-width: 2.5; }
-.ar-genhex-label { font-size: 13px; font-weight: 700; fill: #fff; pointer-events: none;
-  paint-order: stroke; stroke: rgba(0,0,0,0.4); stroke-width: 2.6; stroke-linejoin: round; }
-.ar-genhex-label.no-data { fill: var(--ink-mute); stroke: var(--bg); }
-.ar-genhex-seats { font-size: 12px; font-weight: 800; fill: #fff; pointer-events: none;
-  paint-order: stroke; stroke: rgba(0,0,0,0.4); stroke-width: 2.6; stroke-linejoin: round; }
+/* 총선 지역구 의석 — 시도별 의석 spiral 지도(1석=1 hex) */
+.ar-genhex-svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 4px auto 0; }
+.ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
+.ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
+  paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
 .ar-genhex-legend { margin-top: 10px; font-size: 13px; line-height: 1.9; }
 .ar-genhex-note { color: var(--ink-mute); font-size: 12px; }
 

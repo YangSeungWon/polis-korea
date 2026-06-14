@@ -266,7 +266,8 @@
     }
   }
 
-  // 지역구 의석 — 시도별 hex 지도(SIDO_HEX_LAYOUT). 각 시도 = 1 hex, 최다 정당색 + 의석수.
+  // 지역구 의석 — 시도별 의석 spiral 지도(지선 metroHex 방식). 각 시도 = N개 1석 hex(정당색) —
+  // 단색이 아니라 규모(hex 수)·분포(색) 둘 다 표현(시도 단위 승자독식 왜곡 없음).
   // HTML 템플릿 변경 없이 #ar-parliament 뒤에 섹션 동적 주입(멱등).
   function renderGeneralHex(ctx) {
     const { results } = ctx;
@@ -295,51 +296,56 @@
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
     const NS = 'http://www.w3.org/2000/svg';
-    const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
-    const hexPoints = (cx, cy, rr) => {
-      const p = [];
-      for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + rr * Math.cos(a)},${cy + rr * Math.sin(a)}`); }
-      return p.join(' ');
-    };
+    const SIDO_GAP = 120, SMALL_R = 3.5;   // 시도 클러스터 간격 · 1석 hex 크기 (지선 metroHex와 동일)
+    const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+    const hexRing = (L) => { const ring = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { ring.push([q, r]); q += dq; r += dr; } } return ring; };
+    const hexSpiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const ring = hexRing(L); const rem = N - out.length; if (rem >= ring.length) out.push(...ring); else for (let i = 0; i < rem; i++) out.push(ring[Math.round(i * ring.length / rem) % ring.length]); } return out; };
+    const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
     const cells = []; const seen = new Set();
     for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
       const key = `${pos.col},${pos.row}`;
       if (seen.has(key)) continue; seen.add(key);
-      cells.push({ sido, cx: OFF_X + pos.col * COL_W + (pos.row % 2 ? COL_W / 2 : 0), cy: OFF_Y + pos.row * ROW_H * 0.87, seats: bySido[sido] });
+      cells.push({ sido, cx: 80 + pos.col * SIDO_GAP + (pos.row % 2 ? SIDO_GAP / 2 : 0), cy: 70 + pos.row * SIDO_GAP * 0.87, seats: bySido[sido] });
     }
-    const maxCx = Math.max(...cells.map((c) => c.cx)) + R + 20;
-    const maxCy = Math.max(...cells.map((c) => c.cy)) + R + 20;
+    const W = Math.max(...cells.map((c) => c.cx)) + 80;
+    const H = Math.max(...cells.map((c) => c.cy)) + 80;
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `0 0 ${maxCx} ${maxCy}`);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     svg.setAttribute('class', 'ar-genhex-svg');
     const partyTotal = {};
     for (const cell of cells) {
       const entries = Object.entries(cell.seats || {}).sort((a, b) => b[1] - a[1]);
-      const tot = entries.reduce((s, e) => s + e[1], 0);
-      const topParty = entries[0] ? entries[0][0] : null;
-      const poly = document.createElementNS(NS, 'polygon');
-      poly.setAttribute('points', hexPoints(cell.cx, cell.cy, R));
-      poly.setAttribute('fill', topParty ? pcol(topParty) : 'var(--bg3)');
-      poly.setAttribute('class', topParty ? 'ar-genhex-cell has-data' : 'ar-genhex-cell no-data');
+      const N = entries.reduce((s, e) => s + e[1], 0);
+      const g = document.createElementNS(NS, 'g');
+      const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3));
+      const clusterR = Math.max(9, (L + 0.6) * Math.sqrt(3) * SMALL_R);
+      const outline = document.createElementNS(NS, 'circle');
+      outline.setAttribute('cx', cell.cx); outline.setAttribute('cy', cell.cy); outline.setAttribute('r', clusterR.toFixed(1));
+      outline.setAttribute('class', 'ar-genhex-outline');
+      g.appendChild(outline);
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = tot ? `${cell.sido} · ${entries.map(([p, n]) => `${p} ${n}`).join(', ')} (${tot}석)` : `${cell.sido} · 데이터 없음`;
-      poly.appendChild(tt);
-      svg.appendChild(poly);
-      const t1 = document.createElementNS(NS, 'text');
-      t1.setAttribute('x', cell.cx); t1.setAttribute('y', cell.cy - 3);
-      t1.setAttribute('text-anchor', 'middle');
-      t1.setAttribute('class', 'ar-genhex-label' + (topParty ? '' : ' no-data'));
-      t1.textContent = ssh(cell.sido);
-      svg.appendChild(t1);
-      if (tot) {
-        const t2 = document.createElementNS(NS, 'text');
-        t2.setAttribute('x', cell.cx); t2.setAttribute('y', cell.cy + 13);
-        t2.setAttribute('text-anchor', 'middle'); t2.setAttribute('class', 'ar-genhex-seats');
-        t2.textContent = `${tot}`;
-        svg.appendChild(t2);
+      tt.textContent = N ? `${cell.sido} ${N}석 · ${entries.map(([p, n]) => `${p} ${n}`).join(', ')}` : `${cell.sido} · 데이터 없음`;
+      g.appendChild(tt);
+      const fills = [];
+      for (const [p, n] of entries) { for (let k = 0; k < n; k++) fills.push(pcol(p)); partyTotal[p] = (partyTotal[p] || 0) + n; }
+      const spiral = hexSpiral(N);
+      for (let i = 0; i < spiral.length; i++) {
+        const [q, ar] = spiral[i];
+        const sx = cell.cx + SMALL_R * Math.sqrt(3) * (q + ar / 2);
+        const sy = cell.cy + SMALL_R * 1.5 * ar;
+        const poly = document.createElementNS(NS, 'polygon');
+        poly.setAttribute('points', hexPts(sx, sy, SMALL_R * 0.92));
+        poly.setAttribute('fill', fills[i] || '#e6e9ef');
+        poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
+        g.appendChild(poly);
       }
-      for (const [p, n] of entries) partyTotal[p] = (partyTotal[p] || 0) + n;
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', cell.cx); t.setAttribute('y', (cell.cy - clusterR - 5).toFixed(1));
+      t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
+      t.textContent = N ? `${ssh(cell.sido)} ${N}` : ssh(cell.sido);
+      g.appendChild(t);
+      svg.appendChild(g);
     }
     const host = sec.querySelector('.ar-genhex-host');
     host.innerHTML = ''; host.appendChild(svg);
@@ -347,7 +353,7 @@
     if (legend) {
       legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
         .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ')
-        + ` <span class="ar-genhex-note">· 지역구 1위 정당 색 · hex hover로 분포</span>`;
+        + ' <span class="ar-genhex-note">· 1석 = 1 hex (정당색) · 시도 hex 수 = 의석</span>';
     }
   }
 
