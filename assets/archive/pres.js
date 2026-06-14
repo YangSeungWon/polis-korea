@@ -130,12 +130,11 @@
     document.getElementById('ar-counting').hidden = false;
   }
 
-  // 출구조사 vs 실제 — 전국 + 시도 후보별. 총선이 동일 schema로 재사용.
+  // 출구조사 vs 실제 — 전국 + 시도 후보별 덤벨(공유). 총선이 동일 schema로 재사용.
   function renderExitPoll(ctx) {
     const { exitData, results, sgTypecode } = ctx;
     if (!exitData?.sources) return;
     const host = document.getElementById('ar-exitpoll-grid');
-    const now = new Date();
     const nat = nationRace(results, sgTypecode);
     const sidos = sidoRaces(results, sgTypecode);
     const actual = {};
@@ -147,50 +146,9 @@
       const c = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
       if (c) actual[r.sido] = { name: c.name, party: c.party, pct: c.pct };
     }
-    let anyBlock = false;
-    for (const ep of exitData.sources) {
-      const qa = ep.quote_after ? new Date(ep.quote_after) : null;
-      if (qa && now < qa) continue;
-      const res = ep.results || {};
-      if (!Object.keys(res).length) continue;
-      anyBlock = true;
-      const card = document.createElement('div');
-      card.className = 'ar-exit-block';
-      let hits = 0, tot = 0, errSum = 0, errN = 0;
-      for (const [sido, cands] of Object.entries(res)) {
-        const a = actual[sido];
-        const top = cands?.[0];
-        if (a && top) {
-          tot += 1;
-          if (a.name === top.name) hits += 1;
-          if (a.pct != null && top.pct != null) { errSum += Math.abs(a.pct - top.pct); errN += 1; }
-        }
-      }
-      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 적중 · 평균 오차 ${errN ? (errSum / errN).toFixed(2) : '—'}%p</span>` : '';
-      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}${stats}</h3>`;
-      const grid = document.createElement('div');
-      grid.className = 'ar-exit-rows';
-      for (const sido of ['전국', ...SIDO_ORDER]) {
-        const cands = res[sido];
-        if (!cands?.[0]) continue;
-        const top = cands[0];
-        const a = actual[sido];
-        const hit = a && a.name === top.name;
-        const row = document.createElement('div');
-        row.className = 'ar-exit-row ' + (a ? (hit ? 'is-hit' : 'is-miss') : '');
-        if (sido === '전국') row.classList.add('is-nation');
-        const col = pcol(top.party);
-        row.innerHTML = `
-          <span class="ar-exit-sido">${sido === '전국' ? '전국' : ssh(sido)}</span>
-          <span class="ar-exit-pred" style="color:${col}">${top.name} ${(top.pct || 0).toFixed(1)}</span>
-          ${a ? `<span class="ar-exit-actual">실제 ${a.name} ${(a.pct || 0).toFixed(1)}${hit ? ' ✓' : ' ✗'}</span>` : ''}
-        `;
-        grid.appendChild(row);
-      }
-      card.appendChild(grid);
-      host.appendChild(card);
-    }
-    if (anyBlock) document.getElementById('ar-exitpoll').hidden = false;
+    const any = window.Archive.renderExitDumbbell(host, exitData.sources, actual,
+      { order: ['전국', ...SIDO_ORDER], matchBy: 'name' });
+    if (any) document.getElementById('ar-exitpoll').hidden = false;
   }
 
   function renderTrend(ctx) {

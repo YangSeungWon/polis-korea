@@ -103,4 +103,72 @@
     host.innerHTML = svg;
     return true;
   };
+
+  // 출구조사 vs 실제 — 시도별 덤벨(예측 ●━ line ━● 실제). 대선·지선 공용.
+  //   host: 그리드 element / sources: exitData.sources / actual: {sido:{name,party,pct}}
+  //   opts: { order:[sido...], matchBy:'name'|'party' }
+  // 미스(1위 빗나감)는 빨강(행·연결선·✗ 배지)으로 강조, 적중은 초록 ✓.
+  Archive.renderExitDumbbell = function (host, sources, actual, opts) {
+    const order = (opts && opts.order) || Archive.SIDO_ORDER;
+    const matchBy = (opts && opts.matchBy) || 'party';
+    const now = new Date();
+    let any = false;
+    for (const ep of sources) {
+      const qa = ep.quote_after ? new Date(ep.quote_after) : null;
+      if (qa && now < qa) continue;
+      const res = ep.results || {};
+      if (!Object.keys(res).length) continue;
+      let hits = 0, total = 0, errSum = 0, errN = 0;
+      const rows = [];
+      for (const sido of order) {
+        const e = res[sido] && res[sido][0];
+        const a = actual[sido];
+        if (!e || !a) continue;
+        const hit = matchBy === 'name' ? (e.name === a.name) : (e.party === a.party);
+        total += 1; if (hit) hits += 1;
+        if (e.pct != null && a.pct != null) { errSum += Math.abs(e.pct - a.pct); errN += 1; }
+        rows.push({ sido, e, a, hit });
+      }
+      if (!rows.length) continue;
+      any = true;
+      const rate = total ? Math.round(hits / total * 100) : 0;
+      const avgErr = errN ? (errSum / errN).toFixed(2) : '—';
+      const card = document.createElement('div');
+      card.className = 'ar-exit-block';
+      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}
+        <span class="ar-exit-hitrate">${hits}/${total} 적중 ${rate}%</span>
+        <span class="ar-exit-err">평균 오차 ${avgErr}%p</span></h3>`;
+      const chart = document.createElement('div');
+      chart.className = 'ar-exit-dumbbell';
+      let rowsHtml = '';
+      for (const r of rows) {
+        const e = r.e, a = r.a, hit = r.hit, sido = r.sido;
+        const ePct = e.pct || 0, aPct = a.pct || 0;
+        const eCol = Archive.pcol(e.party), aCol = Archive.pcol(a.party);
+        const lo = Math.min(ePct, aPct), hi = Math.max(ePct, aPct);
+        const diff = (e.pct != null && a.pct != null) ? Math.abs(ePct - aPct).toFixed(1) : '';
+        const cls = (hit ? 'is-hit' : 'is-miss') + (sido === '전국' ? ' is-nation' : '');
+        const mark = hit ? '<span class="ar-exit-mark">✓</span>'
+          : '<span class="ar-exit-mark ar-exit-miss-mark">✗</span>';
+        rowsHtml += `
+          <div class="ar-exit-dbb ${cls}">
+            <span class="ar-exit-sido">${sido === '전국' ? '전국' : Archive.ssh(sido)}</span>
+            <div class="ar-exit-track">
+              <div class="ar-exit-line ${hit ? '' : 'is-miss'}" style="left:${lo}%;width:${hi - lo}%"></div>
+              <div class="ar-exit-dot ar-exit-dot-pred" style="left:${ePct}%;background:${eCol}" title="예측 ${e.name || e.party} ${ePct.toFixed(1)}%"></div>
+              <div class="ar-exit-dot ar-exit-dot-actual" style="left:${aPct}%;background:${aCol}" title="실제 ${a.name || a.party} ${aPct.toFixed(1)}%"></div>
+            </div>
+            <span class="ar-exit-pred-pct" style="color:${eCol}">${ePct.toFixed(1)}</span>
+            <span class="ar-exit-arrow">→</span>
+            <span class="ar-exit-actual-pct" style="color:${aCol}">${aPct.toFixed(1)}</span>
+            <span class="ar-exit-diff">${diff}%p</span>
+            ${mark}
+          </div>`;
+      }
+      chart.innerHTML = rowsHtml;
+      card.appendChild(chart);
+      host.appendChild(card);
+    }
+    return any;
+  };
 })();

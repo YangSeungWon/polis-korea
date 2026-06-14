@@ -214,81 +214,16 @@
     const { exitData, results } = ctx;
     if (!exitData?.sources) return;
     const host = document.getElementById('ar-exitpoll-grid');
-    const now = new Date();
-    const blocks = [];
-    for (const ep of exitData.sources) {
-      const qa = ep.quote_after ? new Date(ep.quote_after) : null;
-      if (qa && now < qa) continue;
-      if (!ep.results || !Object.keys(ep.results).length) continue;
-      blocks.push(ep);
-    }
-    if (!blocks.length) return;
     const actual = {};
     if (results?.races) {
       for (const r of sidoRaces(results)) {
         const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-        if (cs[0]) actual[r.sido] = { party: cs[0].party, pct: cs[0].pct };
+        if (cs[0]) actual[r.sido] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
       }
     }
-    // Dumbbell chart per source: 17 시도 × (예측 dot ●━ line ━● 실제 dot).
-    const W = 100;  // bar 영역 폭 %
-    for (const ep of blocks) {
-      const card = document.createElement('div');
-      card.className = 'ar-exit-block';
-      // 적중률·평균 오차 계산
-      let hits = 0, total = 0, errSum = 0, errN = 0;
-      const rows = [];
-      for (const sido of SIDO_ORDER) {
-        const e = (ep.results || {})[sido]?.[0];
-        const a = actual[sido];
-        if (!e || !a) { if (e || a) rows.push({ sido, e, a }); continue; }
-        const hit = e.party === a.party;
-        if (hit) hits++;
-        total++;
-        if (e.pct != null && a.pct != null) {
-          errSum += Math.abs(e.pct - a.pct);
-          errN++;
-        }
-        rows.push({ sido, e, a, hit });
-      }
-      const hitRate = total ? (hits / total * 100).toFixed(0) : '—';
-      const avgErr = errN ? (errSum / errN).toFixed(2) : '—';
-      card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}
-        <span class="ar-exit-hitrate">${hits}/${total} 적중 (${hitRate}%)</span>
-        <span class="ar-exit-err">평균 오차 ${avgErr}%p</span></h3>`;
-      const chart = document.createElement('div');
-      chart.className = 'ar-exit-dumbbell';
-      // 큰 오차 미스 사례부터 위쪽으로 정렬 (옵션 — 일단 SIDO_ORDER 유지)
-      for (const row of rows) {
-        const { sido, e, a } = row;
-        if (!e || !a) continue;
-        const ePct = e.pct || 0;
-        const aPct = a.pct || 0;
-        const eCol = pcol(e.party);
-        const aCol = pcol(a.party);
-        const lo = Math.min(ePct, aPct);
-        const hi = Math.max(ePct, aPct);
-        const diff = (e.pct != null && a.pct != null) ? Math.abs(ePct - aPct).toFixed(1) : '';
-        const hitMark = row.hit ? '<span class="ar-exit-mark">✓</span>' : '<span class="ar-exit-mark ar-exit-miss-mark">✗</span>';
-        chart.innerHTML += `
-          <div class="ar-exit-dbb ${row.hit ? 'is-hit' : 'is-miss'}">
-            <span class="ar-exit-sido">${ssh(sido)}</span>
-            <div class="ar-exit-track">
-              <div class="ar-exit-line" style="left:${lo}%;width:${hi - lo}%"></div>
-              <div class="ar-exit-dot ar-exit-dot-pred" style="left:${ePct}%;background:${eCol}" title="예측 ${e.party} ${ePct.toFixed(1)}%"></div>
-              <div class="ar-exit-dot ar-exit-dot-actual" style="left:${aPct}%;background:${aCol}" title="실제 ${a.party} ${aPct.toFixed(1)}%"></div>
-            </div>
-            <span class="ar-exit-pred-pct" style="color:${eCol}">${ePct.toFixed(1)}</span>
-            <span class="ar-exit-arrow">→</span>
-            <span class="ar-exit-actual-pct" style="color:${aCol}">${aPct.toFixed(1)}</span>
-            <span class="ar-exit-diff">${diff}%p</span>
-            ${hitMark}
-          </div>`;
-      }
-      card.appendChild(chart);
-      host.appendChild(card);
-    }
-    document.getElementById('ar-exitpoll').hidden = false;
+    const any = window.Archive.renderExitDumbbell(host, exitData.sources, actual,
+      { order: SIDO_ORDER, matchBy: 'party' });
+    if (any) document.getElementById('ar-exitpoll').hidden = false;
   }
 
   async function renderByelection(ctx) {

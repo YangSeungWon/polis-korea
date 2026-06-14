@@ -606,13 +606,15 @@
 .ar-exit-dumbbell { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
 .ar-exit-dbb {
   display: grid;
-  grid-template-columns: 70px 1fr 50px 18px 50px 60px 20px;
+  grid-template-columns: 70px 1fr 50px 18px 50px 60px 26px;
   gap: 10px; align-items: center;
   padding: 6px 12px; background: var(--bg);
   font-size: 12px; font-variant-numeric: tabular-nums;
 }
 .ar-exit-dbb:nth-child(even) { background: var(--bg2); }
-.ar-exit-dbb.is-miss { background: rgba(230,30,43,0.06); }
+.ar-exit-dbb.is-hit { box-shadow: inset 3px 0 0 #2e7d6f; }
+.ar-exit-dbb.is-miss { background: rgba(211,47,47,0.13); box-shadow: inset 3px 0 0 #d32f2f; }
+.ar-exit-dbb.is-nation { border-top: 2px solid var(--ink); }
 .ar-exit-dbb .ar-exit-sido { font-weight: 700; color: var(--ink); }
 .ar-exit-track {
   position: relative; height: 14px;
@@ -622,6 +624,7 @@
   position: absolute; top: 6px; height: 2px;
   background: var(--ink-soft);
 }
+.ar-exit-line.is-miss { background: #d32f2f; height: 3px; top: 5.5px; }
 .ar-exit-dot {
   position: absolute; top: 2px; width: 10px; height: 10px;
   border-radius: 50%; transform: translateX(-50%);
@@ -635,13 +638,14 @@
 .ar-exit-arrow { color: var(--ink-mute); text-align: center; }
 .ar-exit-actual-pct { text-align: right; }
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
-.ar-exit-mark { font-weight: 800; text-align: center; }
-.ar-exit-miss-mark { color: #c81825; }
+.ar-exit-mark { font-weight: 800; text-align: center; font-size: 13px; }
+.ar-exit-dbb.is-hit .ar-exit-mark { color: #2e7d6f; }
+.ar-exit-miss-mark { color: #fff; background: #d32f2f; border-radius: 3px; padding: 1px 4px; }
 
 @media (max-width: 480px) {
   /* Dumbbell mobile — track 영역 보존, 우측 텍스트 컴팩트 */
   .ar-exit-dbb {
-    grid-template-columns: 38px 1fr 36px 36px 16px;
+    grid-template-columns: 38px 1fr 36px 36px 22px;
     gap: 6px; padding: 5px 8px; font-size: 11px;
   }
   .ar-exit-dbb .ar-exit-arrow,
