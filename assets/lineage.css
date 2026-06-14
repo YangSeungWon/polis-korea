@@ -1,5 +1,5 @@
-/* 정당사 계보도 — /parties.html. lineage.js가 SVG 생성. */
-.lin-page { max-width: 1180px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+/* 정당사 계보도 (세로형) — /parties.html. lineage.js가 SVG 생성. */
+.lin-page { max-width: 1280px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
 .lin-toolbar { display: flex; gap: 1.1rem; align-items: center; margin: 0.5rem 0 1rem; flex-wrap: wrap; }
 .lin-legend { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--ink-soft); }
@@ -12,19 +12,23 @@
 .lin-loading { padding: 2rem; text-align: center; color: var(--ink-mute); }
 .lin-svg { display: block; }
 
+/* 연도 가로 그리드(좌측 라벨) */
 .lin-grid { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; }
-.lin-year { fill: var(--ink-mute); font-size: 11px; text-anchor: middle; font-variant-numeric: tabular-nums; }
-.lin-band { fill: color-mix(in srgb, var(--ink) 4%, transparent); }
-.lin-fam-label { font-size: 13px; font-weight: 800; dominant-baseline: middle; fill: var(--ink-soft); opacity: 0.9; }
+.lin-year { fill: var(--ink-mute); font-size: 11px; text-anchor: start; font-variant-numeric: tabular-nums; }
 
+/* 계열 컬럼 배경 + 헤더 */
+.lin-band { fill: color-mix(in srgb, var(--ink) 4%, transparent); }
+.lin-col-label { font-size: 13px; font-weight: 800; text-anchor: middle; fill: var(--ink-soft); opacity: 0.9; }
+
+/* 계승 연결선 */
 .lin-edge { fill: none; stroke-width: 1.6; opacity: 0.6; }
 .lin-edge[stroke="#8a8f98"] { stroke-dasharray: 3 3; }
 
+/* 정당 막대(세로) + 라벨(오른쪽) */
 .lin-bar { stroke: rgba(0, 0, 0, 0.12); stroke-width: 0.5; transition: opacity 0.12s; }
 .lin-node:hover .lin-bar { opacity: 0.82; }
-.lin-bar-label { font-size: 11.5px; font-weight: 600; pointer-events: none; }
-.lin-bar-label.lin-in { fill: #fff; paint-order: stroke; }
-.lin-bar-label.lin-out { fill: var(--ink); dominant-baseline: middle; }
+.lin-bar-label { font-size: 11.5px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+.lin-node:hover .lin-bar-label { fill: var(--accent); }
 .lin-node { cursor: pointer; }
 
 @media (max-width: 640px) {

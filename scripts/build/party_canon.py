@@ -36,3 +36,34 @@ def canon_party(p):
     if not p:
         return p
     return PARTY_ALIAS.get(p, p)
+
+
+# "민주당" 동명 정당 — 선거일 기준 시기별 정당으로 분기(이름 재사용 11회+).
+# 상한(YYYY-MM) 미만이면 해당 시기. None=그 구간엔 분기 안 함(그대로 '민주당').
+_MINJOO_ERAS = [
+    ("1991-01", "민주당(1955)"),       # ~1990: 장면·박순천 민주당계(1955·63·67 재편 포함)
+    ("1995-09", "민주당(1991)"),       # 1991~1995.08: 이기택·DJ (DJ 탈당 전)
+    ("1997-11", "통합민주당(1995)"),   # 1995.09~1997: 이기택·조순 (DJ 탈당 후)
+    ("2005-05", None),                  # 1998~2005.04: 데이터 없음
+    ("2008-02", "민주당(2005)"),       # 2005~2008.01: 새천년민주당 후신(호남계)
+    ("2011-12", "통합민주당"),         # 2008~2011: 손학규(2008 통합민주당, 명칭 '민주당')
+    ("2014-03", "민주통합당"),         # 2011.12~2014: 민주통합당(2013 '민주당' 개명)
+]
+
+
+def disambiguate_minjoo(date):
+    """'민주당' → 선거일(YYYY-MM-DD/YYYY) 기준 시기별 정당. 분기 불가면 None."""
+    ym = (date or "")[:7]
+    if not ym:
+        return None
+    for upper, name in _MINJOO_ERAS:
+        if ym < upper:
+            return name
+    return "더불어민주당"   # 2014-03 이후
+
+
+def disambiguate_party(name, date):
+    """정당명 정규화 + '민주당' 날짜 분기. date 없으면 별칭 정규화만."""
+    if name == "민주당":
+        return disambiguate_minjoo(date) or name
+    return canon_party(name)

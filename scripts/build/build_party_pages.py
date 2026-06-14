@@ -77,19 +77,45 @@ def build_appearances(timeline: dict) -> dict:
     return out
 
 
+def member_title(races: list):
+    """경력 전체에서 대표 직함 + 정렬 우선순위. (title, rank). 당선 기준."""
+    tcs = {}
+    for r in races:
+        if r.get("won"):
+            tcs.setdefault(str(r.get("tc")), []).append(r)
+    if "1" in tcs:
+        return "대통령", 6
+    if "3" in tcs:  # 광역단체장
+        pl = tcs["3"][-1].get("place", "")
+        t = pl + "지사" if pl.endswith("도") else (pl + "장" if pl.endswith("시") else "광역단체장")
+        return t, 5
+    n = len(tcs.get("2", [])) + len(tcs.get("7", []))  # 국회의원(지역구+전국구) 선수
+    if n:
+        return f"{n}선", 4
+    if "4" in tcs:  # 기초단체장
+        pl = tcs["4"][-1].get("place", "")
+        return (pl + " 단체장") if pl else "기초단체장", 3
+    if "5" in tcs:
+        return "광역의원", 2
+    if "6" in tcs:
+        return "기초의원", 1
+    return None, 0  # 낙선만
+
+
 def build_members(persons: list) -> dict:
-    """party → [{name, dob, wins, losses}] (페이지 보유 인물만, 당선많은순)."""
+    """party → [{name, dob, title, rank, wins}] (페이지 보유 인물만, 직위·당선순)."""
     out = {}
     for p in persons:
         if not (p.get("assembly_id") and p.get("dob")):
             continue
+        title, rank = member_title(p.get("races", []))
         for party in set(canon_party(x) for x in p.get("parties", [])):
             out.setdefault(party, []).append({
                 "name": p["name"], "dob": p["dob"],
-                "wins": p.get("wins", 0), "losses": p.get("losses", 0),
+                "title": title, "rank": rank, "wins": p.get("wins", 0),
             })
     for party in out:
-        out[party].sort(key=lambda m: (-m["wins"], -m["losses"], m["name"]))
+        out[party].sort(key=lambda m: (-m["rank"], -m["wins"], m["name"]))
     return out
 
 
@@ -215,9 +241,9 @@ def render(name, info, known, appearances, members):
         items = []
         for m in shown:
             slug = f'{m["name"]}-{m["dob"]}'
+            badge = f'<span class="pty-mem-wl">{esc(m["title"])}</span>' if m.get("title") else ""
             items.append(
-                f'<li><a href="/person/{quote(slug)}/">{esc(m["name"])}'
-                f'<span class="pty-mem-wl">{m["wins"]}승</span></a></li>'
+                f'<li><a href="/person/{quote(slug)}/">{esc(m["name"])}{badge}</a></li>'
             )
         more = f'<p class="pty-more">외 {len(mem) - len(shown)}명</p>' if len(mem) > len(shown) else ""
         members_html = (f'<section class="pty-sec"><h2>소속 인물 <span class="pty-cnt">{len(mem)}</span></h2>'
