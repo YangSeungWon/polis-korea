@@ -20,6 +20,7 @@
   "parties": {
     "더불어민주당": {
       "stream": "중도진보",
+      "order": 40,
       "abbr": "민주당",
       "founded": "2015-12",
       "predecessors": [
@@ -30,6 +31,7 @@
     },
     "새정치민주연합": {
       "stream": "중도진보",
+      "order": 40,
       "abbr": "새정치연합",
       "founded": "2014-03",
       "dissolved": "2015-12",
@@ -45,6 +47,7 @@
     },
     "민주통합당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "2011-12",
       "dissolved": "2013-05",
       "successors": [
@@ -55,6 +58,7 @@
     },
     "대통합민주신당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "2007-08",
       "dissolved": "2008-02",
       "predecessors": [
@@ -68,6 +72,7 @@
     },
     "열린우리당": {
       "stream": "중도진보",
+      "order": 30,
       "founded": "2003-11",
       "dissolved": "2007-08",
       "predecessors": [
@@ -81,6 +86,7 @@
     },
     "통합민주당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "2008-02",
       "dissolved": "2011-12",
       "predecessors": [
@@ -95,6 +101,7 @@
     },
     "새천년민주당": {
       "stream": "중도진보",
+      "order": 40,
       "abbr": "민주당",
       "founded": "2000-01",
       "dissolved": "2005-05",
@@ -110,6 +117,7 @@
     },
     "새정치국민회의": {
       "stream": "중도진보",
+      "order": 40,
       "abbr": "국민회의",
       "aliases": [
         "국민회의"
@@ -127,6 +135,7 @@
     },
     "평화민주당": {
       "stream": "중도진보",
+      "order": 40,
       "abbr": "평민당",
       "founded": "1987-11",
       "dissolved": "1991-09",
@@ -141,6 +150,7 @@
     },
     "통일민주당": {
       "stream": "중도진보",
+      "order": 50,
       "founded": "1987-05",
       "dissolved": "1990-02",
       "successors": [
@@ -151,6 +161,7 @@
     },
     "더불어시민당": {
       "stream": "중도진보",
+      "order": 30,
       "founded": "2020-03",
       "dissolved": "2020-05",
       "successors": [
@@ -161,6 +172,7 @@
     },
     "더불어민주연합": {
       "stream": "중도진보",
+      "order": 30,
       "founded": "2024-02",
       "dissolved": "2024-05",
       "successors": [
@@ -171,6 +183,7 @@
     },
     "열린민주당": {
       "stream": "중도진보",
+      "order": 30,
       "founded": "2020-03",
       "dissolved": "2022-01",
       "successors": [
@@ -351,6 +364,7 @@
     },
     "통합진보당": {
       "stream": "진보",
+      "order": 30,
       "abbr": "통진당",
       "founded": "2011-12",
       "dissolved": "2014-12",
@@ -362,6 +376,7 @@
     },
     "민중연합당": {
       "stream": "진보",
+      "order": 30,
       "founded": "2016-02",
       "dissolved": "2017-10",
       "predecessors": [
@@ -375,6 +390,7 @@
     },
     "민중당(2017)": {
       "stream": "진보",
+      "order": 30,
       "founded": "2017-10",
       "dissolved": "2020-06",
       "predecessors": [
@@ -388,6 +404,7 @@
     },
     "민주노동당": {
       "stream": "진보",
+      "order": 30,
       "abbr": "민노당",
       "founded": "2000-01",
       "dissolved": "2011-12",
@@ -399,6 +416,7 @@
     },
     "정의당": {
       "stream": "진보",
+      "order": 40,
       "founded": "2012-10",
       "predecessors": [
         "통합진보당"
@@ -408,6 +426,7 @@
     },
     "진보신당": {
       "stream": "진보",
+      "order": 10,
       "founded": "2008-03",
       "predecessors": [
         "민주노동당"
@@ -487,6 +506,7 @@
     },
     "조국혁신당": {
       "stream": "중도진보",
+      "order": 30,
       "founded": "2024-03",
       "relation": "new",
       "note": "조국 창당. 22대 총선 비례 12석."
@@ -535,6 +555,7 @@
     },
     "신민당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1967-02",
       "dissolved": "1980-10",
       "relation": "dissolve",
@@ -542,6 +563,7 @@
     },
     "민정당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1963-05",
       "dissolved": "1965",
       "relation": "merge",
@@ -555,6 +577,7 @@
     },
     "한국민주당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1945-09",
       "dissolved": "1949-02",
       "successors": [
@@ -565,6 +588,7 @@
     },
     "민주국민당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1949-02",
       "dissolved": "1955-09",
       "predecessors": [
@@ -592,6 +616,7 @@
     },
     "민주당(1955)": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1955-09",
       "note": "신익희·장면·박순천의 민주당계(1955 창당). 1965 민중당·1967 신민당으로 재편된 1950~60년대 야당.",
       "dissolved": "1967",
@@ -602,6 +627,7 @@
     },
     "민주당(1991)": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1991-09",
       "dissolved": "1995-12",
       "predecessors": [
@@ -616,6 +642,7 @@
     },
     "통합민주당(1995)": {
       "stream": "중도진보",
+      "order": 50,
       "founded": "1995-12",
       "dissolved": "1997-11",
       "predecessors": [
@@ -629,6 +656,7 @@
     },
     "민주당(2005)": {
       "stream": "중도진보",
+      "order": 50,
       "founded": "2005-05",
       "dissolved": "2008-02",
       "predecessors": [
@@ -665,6 +693,7 @@
     },
     "민주노동당(2020)": {
       "stream": "진보",
+      "order": 30,
       "founded": "2020",
       "note": "2020년대 부활 민주노동당. 2000~2011 민주노동당과 별개·이름 재사용."
     },
@@ -722,6 +751,7 @@
     },
     "사회대중당": {
       "stream": "진보",
+      "order": 10,
       "founded": "1960-06",
       "dissolved": "1961-05",
       "note": "4·19 후 혁신계(조봉암 진보당 후신). 5대 4석. 5·16으로 해산."
@@ -734,12 +764,14 @@
     },
     "통일당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1958",
       "dissolved": "1961",
       "note": "1950~60년대 군소 야당."
     },
     "민중당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1965-06",
       "dissolved": "1967-02",
       "predecessors": [
@@ -753,6 +785,7 @@
     },
     "민주통일당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1973-01",
       "dissolved": "1980-10",
       "note": "양일동 야당(통일당계). 9·10대. 1980 신군부 해산."
@@ -776,6 +809,7 @@
     },
     "신한민주당": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "1985-01",
       "dissolved": "1988-05",
       "successors": [
@@ -786,6 +820,7 @@
     },
     "민주사회당": {
       "stream": "진보",
+      "order": 10,
       "founded": "1981-01",
       "dissolved": "1985",
       "note": "고정훈 혁신계. 11대 2석."
@@ -810,18 +845,21 @@
     },
     "사회당": {
       "stream": "진보",
+      "order": 10,
       "founded": "1948",
       "dissolved": "1950",
       "note": "제헌기 혁신계. ※2002 동명 사회당과 별개."
     },
     "사회당(2002)": {
       "stream": "진보",
+      "order": 10,
       "founded": "1998",
       "dissolved": "2012",
       "note": "청년진보당→2000 사회당. 16대 대선(0.1%). 1950 사회당과 별개."
     },
     "건설국민승리21": {
       "stream": "진보",
+      "order": 10,
       "founded": "1997-11",
       "dissolved": "2000-01",
       "successors": [
@@ -905,6 +943,7 @@
     },
     "진보당": {
       "stream": "진보",
+      "order": 30,
       "founded": "2020-06",
       "predecessors": [
         "민중당(2017)"
@@ -914,6 +953,7 @@
     },
     "민주당(2013)": {
       "stream": "중도진보",
+      "order": 40,
       "founded": "2013-05",
       "dissolved": "2014-03",
       "predecessors": [
@@ -927,6 +967,7 @@
     },
     "기본소득당": {
       "stream": "진보",
+      "order": 40,
       "founded": "2020-01",
       "note": "용혜인. 현존 진보 원내정당(비례). 2020 창당."
     },
@@ -937,6 +978,7 @@
     },
     "노동당": {
       "stream": "진보",
+      "order": 10,
       "founded": "2013-07",
       "predecessors": [
         "진보신당"
@@ -946,6 +988,7 @@
     },
     "녹색당": {
       "stream": "진보",
+      "order": 20,
       "founded": "2012-03",
       "note": "환경·생태 진보정당(2012~). 원외."
     }

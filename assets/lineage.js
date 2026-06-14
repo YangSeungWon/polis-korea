@@ -69,12 +69,19 @@
     let totalLanes = 0;
     const colInfo = [];
     for (const s of cols) {
-      const sorted = colMembers[s].slice().sort((a, b) => node[a].f - node[b].f);
-      const laneEnd = [];
+      // lane 좌우 = 이념순(info.order, 낮을수록 왼쪽). 없으면(중도·보수 등) 창당연도순.
+      // order 오름차순 처리 + 같은 order lane만 시간겹침 없을 때 재사용 → 다른 이념과 안 섞여
+      // 좌우 단조 보장(낮은 order가 항상 왼쪽). 새 order는 뒤에 append되어 자연히 좌→우 정렬.
+      const ord = (x) => (node[x].info.order != null ? node[x].info.order : 1e3);
+      const sorted = colMembers[s].slice().sort((a, b) => (ord(a) - ord(b)) || (node[a].f - node[b].f));
+      const laneEnd = [], laneOrd = [];
       for (const nm of sorted) {
-        const n = node[nm];
-        let lane = laneEnd.findIndex((e) => e <= n.f + 0.01);
-        if (lane < 0) { lane = laneEnd.length; laneEnd.push(0); }
+        const n = node[nm], o = ord(nm);
+        let lane = -1;
+        for (let i = 0; i < laneEnd.length; i++) {
+          if (laneOrd[i] === o && laneEnd[i] <= n.f + 0.01) { lane = i; break; }
+        }
+        if (lane < 0) { lane = laneEnd.length; laneEnd.push(0); laneOrd.push(o); }
         laneEnd[lane] = n.d; n.lane = lane;
       }
       const nLanes = laneEnd.length || 1;
