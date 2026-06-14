@@ -1,19 +1,18 @@
-"""국회 역대 의원 데이터(assembly_member_map)로 person-index의 국회의원 row를
-unique ID로 매칭. 매칭은 이름 + 회차 N + 지역구 keyword 기반.
+"""person-index에 국회의원 assembly_id·한자·비례 보강.
 
-Output: assets/person-index.json (덮어씀) — 각 race에 assembly_id 필드 추가.
-race가 assembly_id를 가지면 person.js가 그것 기준으로 cluster (동명이인 정확 분리).
+build_person_index가 이미 (이름+생년월일)로 인물을 분리하므로, 여기서는 재클러스터링 없이:
+  1. 각 인물 entry에 assembly_id 부여 — 생년월일이 assembly_map(MONA 기준)과 일치하면 그 id,
+     없으면(옛 선거·dob 미상) 총선 경력(회차+지역구)으로 best-effort 매칭.
+  2. 비례대표·전국구 국회의원 보강 — 결과 데이터엔 개별 비례 인물이 없어, assembly_map에서
+     해당 인물(같은 dob)에 비례 race 주입(없으면 신규 entry).
 
-매칭 정책:
-1. 우리 데이터의 (eid=Nth-general-YYYY, name) → assembly persons 후보 추출
-   (assembly person의 careers 중 n==N 이고 name 일치한 case)
-2. district keyword (시도 약어·시군구 명) overlap으로 disambig
-3. 정확 1명 → assembly_id 부여. 0/2+명 → 매칭 없음.
+Output: assets/person-index.json (덮어씀).
 """
 from __future__ import annotations
 import json
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,335 +24,114 @@ ASSEMBLY_MAP = ROOT / "data/raw/assembly_member_map.json"
 
 
 def normalize_district(s: str) -> str:
-    """공백·시·구 같은 일반 토큰 제거 → 핵심 키워드만."""
-    s = s or ""
-    s = re.sub(r"\s+", "", s)
-    # 시도 prefix는 우리 데이터에서 별도로 sido 필드에 있어 빠질 수 있음 — 양쪽에서 동등 처리.
-    return s
+    return re.sub(r"\s+", "", s or "")
 
 
-def eid_to_assembly_n(eid: str) -> int | None:
-    """13th-general-1988 → 13."""
+def eid_to_assembly_n(eid: str):
     m = re.match(r"(\d+)(?:st|nd|rd|th)-general-", eid)
     return int(m.group(1)) if m else None
+
+
+def match_by_career(nm, dob, races, by_name):
+    """dob 미일치/미상 entry → 총선 경력(회차+지역구)으로 assembly_id best-effort."""
+    cands = by_name.get(nm, [])
+    if dob:
+        cands = [p for p in cands if p.get("dob") == dob] or cands
+    if not cands:
+        return None
+    votes = defaultdict(int)
+    for r in races:
+        n = eid_to_assembly_n(r["eid"])
+        if n is None:
+            continue
+        place = normalize_district(r.get("place", ""))
+        for p in cands:
+            for c in p["careers"]:
+                if c["n"] != n:
+                    continue
+                their = normalize_district(c.get("district", ""))
+                if their and place and (their in place or place in their
+                                        or ("비례" in place and "비례" in their)):
+                    votes[p["id"]] += 1
+    return max(votes, key=votes.get) if votes else None
 
 
 def main():
     person = json.loads(PERSON_IDX.read_text(encoding="utf-8"))
     asm = json.loads(ASSEMBLY_MAP.read_text(encoding="utf-8"))
-
-    # name → 후보 assembly persons list (회차별 careers와 함께)
-    by_name = {}
+    asm_by_id = {p["id"]: p for p in asm["persons"]}
+    by_name = defaultdict(list)
     for p in asm["persons"]:
-        nm = p["name"]
-        by_name.setdefault(nm, []).append(p)
+        by_name[p["name"]].append(p)
 
-    n_matched = 0
-    n_ambig = 0
-    n_total_general = 0
-    # 적용
-    for person_entry in person["persons"]:
-        nm = person_entry["name"]
-        candidates_for_name = by_name.get(nm, [])
-        for race in person_entry["races"]:
-            # 총선만 매핑 (assembly는 국회의원 한정)
-            n = eid_to_assembly_n(race["eid"])
-            if n is None:
-                continue
-            n_total_general += 1
-            # 후보 — careers에 (n=N, name=nm) 있는 person들
-            possible = []
-            for asm_p in candidates_for_name:
-                for c in asm_p["careers"]:
-                    if c["n"] != n:
-                        continue
-                    possible.append((asm_p, c))
-            if not possible:
-                continue
-            if len(possible) == 1:
-                race["assembly_id"] = possible[0][0]["id"]
-                n_matched += 1
-                continue
-            # 다수 — 지역구 keyword overlap으로 분리
-            our_place = normalize_district(race.get("place", ""))
-            best = []
-            for asm_p, c in possible:
-                their = normalize_district(c["district"])
-                # 양쪽이 비례면 그대로 매치
-                if "비례" in our_place and "비례" in their:
-                    best.append(asm_p)
-                    continue
-                # substring overlap 충분?
-                if their and our_place and (their in our_place or our_place in their
-                        or any(t for t in their.replace("시", " ").replace("구", " ").split() if t and t in our_place)):
-                    best.append(asm_p)
-            if len(best) == 1:
-                race["assembly_id"] = best[0]["id"]
-                n_matched += 1
-            elif len(best) >= 2:
-                n_ambig += 1
-
-    person["_meta"]["assembly_matched"] = n_matched
-    person["_meta"]["assembly_ambiguous"] = n_ambig
-    person["_meta"]["assembly_total_general"] = n_total_general
-
-    # 재cluster — assembly_id 있으면 그걸 기준으로 인물 분리/통합.
-    # unassigned race는 sido overlap으로 가장 가까운 assembly 그룹에 attach.
-    asm_lookup = {p["id"]: p for p in asm["persons"]}
-
-    def race_sido(r):
-        place = r.get("place", "") or ""
-        sido = r.get("sido", "") or ""
-        # place 앞 토큰에서 시도명 후보
-        m = re.match(r"^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))", place)
-        return sido or (m.group(1) if m else "") or place[:2]
-
-    # '전국구'·'비례대표' 같은 시스템 토큰은 지리 매칭 제외 — 무관 race 잘못 끌어붙음.
-    SYSTEM_TOKENS = {"전국", "전국구", "비례", "비례대표"}
-
-    def career_sido_tokens(career_district):
-        """career district에서 시도/지명 토큰 집합 — 부분 매칭용."""
-        # "경남 창원시성산구" → {"경남","창원","성산"}
-        tokens = set()
-        for t in re.split(r"\s+", career_district or ""):
-            if t:
-                if t not in SYSTEM_TOKENS:
-                    tokens.add(t)
-                # 시군구 prefix
-                for sub in re.findall(r"[가-힣]+?(?:시|군|구)", t):
-                    stripped = sub.rstrip("시군구")
-                    if stripped not in SYSTEM_TOKENS:
-                        tokens.add(stripped)
-                    if sub not in SYSTEM_TOKENS:
-                        tokens.add(sub)
-        return tokens
-
-    PARTY_FAMILY = {
-        "통일민주당": "M", "민주당": "M", "새정치국민회의": "M", "새천년민주당": "M",
-        "열린우리당": "M", "민주통합당": "M", "새정치민주연합": "M", "더불어민주당": "M",
-        "더불어민주연합": "M", "통합민주당": "M", "열린민주당": "M",
-        "새로운미래": "M", "조국혁신당": "M",  # 민주 분당계열
-        "민주자유당": "C", "신한국당": "C", "한나라당": "C", "새누리당": "C",
-        "자유한국당": "C", "미래통합당": "C", "국민의힘": "C", "국민의미래": "C",
-        "자유선진당": "C",
-    }
-
-    def aid_score(aid, race, race_group_parties, group_years):
-        """unassigned race와 aid 그룹의 attach score.
-        sido/place overlap + 정당 패밀리 match/mismatch + 시간 근접도.
-        """
-        asm_p = asm_lookup.get(aid)
-        if not asm_p:
-            return 0
-        rs = race_sido(race)
-        rplace = (race.get("place") or "").replace(" ", "")
-        score = 0
-        for c in asm_p["careers"]:
-            tokens = career_sido_tokens(c["district"])
-            for tk in tokens:
-                if not tk:
-                    continue
-                if rs and (tk in rs or rs in tk):
-                    score += 2
-                if tk in rplace or rplace in tk:
-                    score += 1
-        # 정당 패밀리 — race·group 동일이면 +3, 다르면 -4 (동명이인 차단).
-        r_fam = PARTY_FAMILY.get(race.get("party") or "")
-        if r_fam:
-            if r_fam in race_group_parties:
-                score += 3
-            elif race_group_parties:
-                score -= 4
-        # 시간 근접도 — race 연도와 group 회차 연도 차.
-        r_year = race.get("year")
-        if r_year and group_years:
-            min_gap = min(abs(r_year - y) for y in group_years)
-            if min_gap <= 5:
-                score += 2
-            elif min_gap >= 30:
-                score -= 5  # 30년+ 격차는 다른 사람일 가능성 큼
-        return score
-
-    new_persons = []
-    for entry in person["persons"]:
-        groups: dict = {}
-        unassigned = []
-        for r in entry["races"]:
-            aid = r.get("assembly_id")
-            if aid:
-                groups.setdefault(aid, []).append(r)
-            else:
-                unassigned.append(r)
-        if not groups:
-            new_persons.append(entry)
-            continue
-        # unassigned를 attach score 높은 aid 그룹에 attach. 0 이하면 orphan.
-        group_families = {
-            aid: {PARTY_FAMILY.get(r.get("party") or "") for r in races if r.get("party")}
-            for aid, races in groups.items()
-        }
-        # 그룹별 연도 셋 (시간 근접도 산정용)
-        group_years = {
-            aid: {r.get("year") for r in races if r.get("year")}
-            for aid, races in groups.items()
-        }
-        orphans = []
-        for r in unassigned:
-            best_aid = None
-            best_score = 0
-            for aid in groups:
-                s = aid_score(aid, r, group_families.get(aid, set()), group_years.get(aid, set()))
-                if s > best_score:
-                    best_score = s
-                    best_aid = aid
-            if best_aid and best_score >= 2:
-                groups[best_aid].append(r)
-            else:
-                orphans.append(r)
-        # 한 그룹 + orphan = 그대로 entry로 유지 (단일 인물 + 일부 매칭 안된 race)
-        if len(groups) == 1 and not orphans:
-            aid = next(iter(groups))
-            asm_person = asm_lookup.get(aid)
-            entry["assembly_id"] = aid
-            entry["hanja"] = asm_person.get("hanja") if asm_person else None
-            entry["dob"] = asm_person.get("dob") if asm_person else None
-            entry["races"] = groups[aid]
-            entry["wins"] = sum(1 for r in entry["races"] if r["won"])
-            entry["losses"] = sum(1 for r in entry["races"] if not r["won"])
-            new_persons.append(entry)
-            continue
-        # split — 각 group + orphan 별도
-        for aid, races in groups.items():
-            asm_person = asm_lookup.get(aid)
-            sub = dict(entry)
-            sub["id"] = aid
-            sub["assembly_id"] = aid
-            sub["hanja"] = asm_person.get("hanja") if asm_person else None
-            sub["dob"] = asm_person.get("dob") if asm_person else None
-            sub["races"] = races
-            sub["wins"] = sum(1 for r in races if r["won"])
-            sub["losses"] = sum(1 for r in races if not r["won"])
-            sub["likely_namesake"] = False
-            seen_p = set(); parties = []
-            for r in races:
-                if r["party"] and r["party"] not in seen_p:
-                    seen_p.add(r["party"]); parties.append(r["party"])
-            sub["parties"] = parties[:6]
-            new_persons.append(sub)
-        if orphans:
-            tail = dict(entry)
-            tail["id"] = entry["id"] + "_unmatched"
-            tail["races"] = orphans
-            tail["wins"] = sum(1 for r in orphans if r["won"])
-            tail["losses"] = sum(1 for r in orphans if not r["won"])
-            tail.pop("assembly_id", None)
-            new_persons.append(tail)
-
-    # === 비례대표(전국구) 국회의원 보강 ===
-    # 결과 데이터의 비례는 '정당명 행'이라 개별 인물이 없음 → assembly_map에서 주입.
     ej = json.loads((ROOT / "data/elections.json").read_text(encoding="utf-8"))
     TERM_DATE = {e["n"]: e.get("date", "") for e in ej.get("national_assembly", {}).get("elections", []) if e.get("date")}
-    by_aid = {p["assembly_id"]: p for p in new_persons if p.get("assembly_id")}
-    # aid 못 받은(재보궐·지선만 있는) entry — 비례 의원과 동일인일 수 있어 병합 후보.
-    unmatched_by_name = {}
-    for p in new_persons:
-        if not p.get("assembly_id"):
-            unmatched_by_name.setdefault(p["name"], []).append(p)
-    n_bir_add = n_bir_new = n_bir_merge = 0
-    for asm_p in asm["persons"]:
-        birs = [c for c in asm_p["careers"]
+
+    # 1) assembly_id 부여 — dob 우선, 없으면 경력 매칭
+    n_aid = 0
+    for e in person["persons"]:
+        nm, dob = e["name"], e.get("dob")
+        aid = f"{nm}_{dob}" if dob and f"{nm}_{dob}" in asm_by_id else None
+        if not aid:
+            aid = match_by_career(nm, dob, e["races"], by_name)
+        if aid:
+            ap = asm_by_id[aid]
+            e["assembly_id"] = aid
+            e["id"] = aid
+            if not e.get("dob"):
+                e["dob"] = ap.get("dob")
+            if not e.get("hanja"):
+                e["hanja"] = ap.get("hanja")
+            n_aid += 1
+
+    # 2) 비례대표·전국구 보강
+    by_aid = {e["assembly_id"]: e for e in person["persons"] if e.get("assembly_id")}
+    n_bir_add = n_bir_new = 0
+    for ap in asm["persons"]:
+        birs = [c for c in ap["careers"]
                 if "비례" in (c.get("district") or "") or "전국" in (c.get("district") or "")]
         if not birs:
             continue
-        aid = asm_p["id"]
         races = []
         for c in birs:
-            n = c["n"]
-            dt = TERM_DATE.get(n, "")
-            races.append({"eid": f"general-{n}", "year": int(dt[:4]) if dt[:4].isdigit() else None,
-                          "round": f"{n}대 총선", "date": dt, "place": "비례대표",
+            dt = TERM_DATE.get(c["n"], "")
+            races.append({"eid": f"general-{c['n']}", "year": int(dt[:4]) if dt[:4].isdigit() else None,
+                          "round": f"{c['n']}대 총선", "date": dt, "place": "비례대표",
                           "party": disambiguate_party(c.get("party") or "", dt),
                           "pct": None, "rank": None, "won": True, "tc": "7"})
-        bir_parties = {r["party"] for r in races if r["party"] and r["party"] != "무소속"}
-        person_fams = {PARTY_FAMILY.get(p) for p in bir_parties if PARTY_FAMILY.get(p)}
-        known_years = {r["year"] for r in races if r.get("year")}
 
-        def belongs(r):
-            # 동일인 판정: 시기 ±8년 + (정당 정확일치 또는 같은 계열). 동명이인·무소속 차단.
-            if not r.get("year") or not any(abs(r["year"] - y) <= 8 for y in known_years):
-                return False
-            rp = r.get("party")
-            fam = PARTY_FAMILY.get(rp)
-            return rp in bir_parties or (fam is not None and fam in person_fams)
-
-        # 미매칭 entry에서 '맞는 race만' 흡수 — 나머지(다른 동명이인)는 별도 인물로 남김.
-        # 흡수된 연도로 시기범위 확장하며 반복(예: 비례2008→강원지사 2011·2014 흡수→2018도 근접).
-        absorbed = []
-        while True:
-            grew = False
-            for c in list(unmatched_by_name.get(asm_p["name"], [])):
-                match = [r for r in c["races"] if belongs(r)]
-                if not match:
-                    continue
-                absorbed += match
-                for r in match:
-                    if r.get("year"):
-                        known_years.add(r["year"])
-                rest = [r for r in c["races"] if r not in match]
-                c["races"] = rest
-                if rest:                       # 잔여는 다음 라운드 재검사 위해 유지
-                    s2 = []
-                    for r in rest:
-                        if r["party"] and r["party"] not in s2:
-                            s2.append(r["party"])
-                    c["parties"] = s2[:6]
-                    c["wins"] = sum(1 for r in rest if r["won"])
-                    c["losses"] = sum(1 for r in rest if not r["won"])
-                else:
-                    c["_remove"] = True
-                    unmatched_by_name[asm_p["name"]].remove(c)
-                grew = True
-            if not grew:
-                break
-        if absorbed:
-            n_bir_merge += 1
-
-        entry = by_aid.get(aid)
-        all_races = (entry["races"] if entry else []) + absorbed
-        have = {(r.get("round"), r.get("tc")) for r in all_races}
-        all_races = all_races + [r for r in races if (r["round"], "7") not in have]
-        all_races.sort(key=lambda r: (r.get("date") or "", r.get("eid")))
-        seen = []
-        for r in all_races:
-            if r["party"] and r["party"] not in seen:
-                seen.append(r["party"])
-        if entry is not None:
-            entry["races"] = all_races
+        def rebuild(entry):
+            entry["races"].sort(key=lambda r: (r.get("date") or "", r.get("eid")))
+            seen = []
+            for r in entry["races"]:
+                if r["party"] and r["party"] not in seen:
+                    seen.append(r["party"])
             entry["parties"] = seen[:6]
-            entry["wins"] = sum(1 for r in all_races if r["won"])
-            entry["losses"] = sum(1 for r in all_races if not r["won"])
-            n_bir_add += 1
+            entry["wins"] = sum(1 for r in entry["races"] if r["won"])
+            entry["losses"] = sum(1 for r in entry["races"] if not r["won"])
+
+        e = by_aid.get(ap["id"])
+        if e:
+            have = {(r.get("round"), r.get("tc")) for r in e["races"]}
+            fresh = [r for r in races if (r["round"], "7") not in have]
+            if fresh:
+                e["races"] += fresh
+                rebuild(e)
+                n_bir_add += 1
         else:
-            new_persons.append({
-                "name": asm_p["name"], "id": aid, "assembly_id": aid,
-                "hanja": asm_p.get("hanja"), "dob": asm_p.get("dob"),
-                "wins": sum(1 for r in all_races if r["won"]),
-                "losses": sum(1 for r in all_races if not r["won"]),
-                "parties": seen[:6], "sidos": [], "likely_namesake": False, "races": all_races,
-            })
-            by_aid[aid] = new_persons[-1]
+            entry = {"name": ap["name"], "id": ap["id"], "assembly_id": ap["id"],
+                     "dob": ap.get("dob"), "hanja": ap.get("hanja"),
+                     "sidos": [], "likely_namesake": False, "races": races}
+            rebuild(entry)
+            person["persons"].append(entry)
+            by_aid[ap["id"]] = entry
             n_bir_new += 1
-    new_persons = [p for p in new_persons if not p.get("_remove")]   # 완전 흡수된 orphan 제거
-    print(f"  비례 보강: 기존인물 +{n_bir_add} · 신규 {n_bir_new} · orphan race 흡수 {n_bir_merge}")
 
-    new_persons.sort(key=lambda p: (-len(p["races"]), -p.get("wins", 0), p["name"]))
-    person["persons"] = new_persons
-    person["_meta"]["n_persons"] = len(new_persons)
-
+    person["persons"].sort(key=lambda p: (-len(p["races"]), -p.get("wins", 0), p["name"]))
+    person["_meta"]["n_persons"] = len(person["persons"])
+    person["_meta"]["assembly_matched"] = n_aid
     PERSON_IDX.write_text(json.dumps(person, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    sz = PERSON_IDX.stat().st_size
-    print(f"→ {PERSON_IDX.relative_to(ROOT)}: {len(new_persons)} persons · {sz/1024:.1f} KB")
-    print(f"  총선 race 중 assembly 매칭: {n_matched} · 모호: {n_ambig} · 총선 race total: {n_total_general}")
+    print(f"→ {PERSON_IDX.relative_to(ROOT)}: {len(person['persons'])} persons · aid {n_aid} · 비례 보강 +{n_bir_add}/{n_bir_new}")
 
 
 if __name__ == "__main__":

@@ -57,6 +57,36 @@ PARTY_FAMILY = {
 
 
 def main():
+    # 후보 생년월일·한자 (NEC bio) — 동명이인 dob 분리용.
+    bio_by = defaultdict(list)
+    bio_path = ROOT / "data/raw/nec_candidate_bio.json"
+    if bio_path.exists():
+        for r in json.loads(bio_path.read_text(encoding="utf-8")).get("records", []):
+            bio_by[(r["name"], r["sgId"])].append(r)
+
+    def _nm(s):
+        return re.sub(r"\s", "", s or "")
+
+    def match_bio(name, date, place, tc):
+        """(이름, 선거일, 선거구, 직위tc) → (생년월일 YYYY-MM-DD, 한자) 또는 (None, None)."""
+        recs = bio_by.get((name, (date or "").replace("-", "")[:8]))
+        if not recs:
+            return None, None
+        if len(recs) == 1:
+            r = recs[0]
+        else:  # 같은 선거 동명이인 — 직위(tc) + 선거구로 분별
+            cand = [x for x in recs if str(x.get("tc")) == str(tc)] or recs
+            p = _nm(place)
+            r = next((x for x in cand if p and (_nm(x["sgg"]) == p or _nm(x["sd"]) == p
+                      or p in _nm(x["sgg"]) or _nm(x["sgg"]) in p)), None)
+            if r is None and len(cand) == 1:
+                r = cand[0]
+            if r is None:
+                return None, None
+        bd = r.get("birthday") or ""
+        dob = f"{bd[:4]}-{bd[4:6]}-{bd[6:8]}" if len(bd) == 8 else None
+        return dob, (r.get("hanja") or None)
+
     # 1단계: per (eid, name, party) 통합 — 시도별 분해 row → 1건
     per_eid: dict = defaultdict(lambda: defaultdict(list))
     eid_meta = {}
@@ -109,10 +139,12 @@ def main():
                 votes = c.get("votes", 0) or 0
                 rank = c.get("rank") or 99
                 won = bool(c.get("won")) or (rank == 1)
+                dob, hanja = match_bio(nm, date, place, tc)
                 per_eid[eid][(nm, party)].append({
                     "sido": sido, "place": place, "tc": tc,
                     "rank": rank, "won": won,
                     "pct": c.get("pct"), "votes": votes,
+                    "dob": dob, "hanja": hanja,
                 })
 
     # 2단계: per (eid, name, party) → 1건으로 통합 (최다득표 row 기준)
@@ -130,58 +162,51 @@ def main():
                 "pct": best.get("pct"), "rank": best["rank"],
                 "won": won_any,
                 "tc": best.get("tc"),
+                "dob": next((r["dob"] for r in rows if r.get("dob")), None),
+                "hanja": next((r["hanja"] for r in rows if r.get("hanja")), None),
             })
 
-    # 3단계: 이름 기준 cluster (MVP). 한 이름 = 한 인물 (동명이인은 UI에서 분리 표시).
+    # 3단계: (이름+생년월일) cluster — dob 있으면 동명이인 분리, 없으면(옛 선거) 이름 단위.
     by_name = defaultdict(list)
     for r in flat:
         by_name[r["name"]].append(r)
 
     persons = []
     for nm, rows in by_name.items():
-        # 실제 선거일순 — 같은 해 대선(3월)·재보궐(6월) 등 월 구분. date 없으면 year fallback.
-        rows.sort(key=lambda r: (r.get("date") or str(r["year"] or ""), r["eid"]))
-        wins = sum(1 for r in rows if r["won"])
-        losses = sum(1 for r in rows if not r["won"])
-        parties = []
-        seen_p = set()
-        for r in rows:
-            if r["party"] and r["party"] not in seen_p:
-                seen_p.add(r["party"])
-                parties.append(r["party"])
-        all_sidos = sorted(set(s for r in rows for s in r["sidos"]))
-        # 동명이인 의심: 시도 set이 disjoint한 group이 여럿이면 split candidate
-        # MVP: 단순 1 cluster. flag만 추가.
-        per_sido_groups = []
-        for r in rows:
-            if not r["sidos"]:
-                continue
-            matched = False
-            for g in per_sido_groups:
-                if any(s in g for s in r["sidos"]):
-                    g.update(r["sidos"])
-                    matched = True
-                    break
-            if not matched:
-                per_sido_groups.append(set(r["sidos"]))
-        # 시도 group 2개 이상이고 정당 가족도 다르면 동명이인 가능성 높음
-        family = {PARTY_FAMILY.get(p) for p in parties if p in PARTY_FAMILY}
-        likely_namesake = len(per_sido_groups) >= 2 and len(family) >= 2
-
-        persons.append({
-            "name": nm,
-            "id": nm,  # slug = 이름 그대로 (URL encode)
-            "wins": wins, "losses": losses,
-            "parties": parties[:6],
-            "sidos": all_sidos,
-            "likely_namesake": likely_namesake,
-            "races": [{
-                "eid": r["eid"], "year": r["year"], "round": r["round"], "date": r.get("date"),
-                "place": r["place"], "party": r["party"],
-                "pct": r["pct"], "rank": r["rank"], "won": r["won"],
-                "tc": r["tc"],
-            } for r in rows],
-        })
+        dobs = {r["dob"] for r in rows if r.get("dob")}
+        if len(dobs) <= 1:                       # 동일인(또는 dob 미상) → 한 명
+            groups = [(next(iter(dobs)) if dobs else None, rows)]
+        else:                                    # 동명이인 → 생년월일별 분리(미상은 별도)
+            gd = defaultdict(list)
+            for r in rows:
+                gd[r.get("dob")].append(r)
+            groups = list(gd.items())
+        for dob, grp in groups:
+            grp.sort(key=lambda r: (r.get("date") or str(r["year"] or ""), r["eid"]))
+            wins = sum(1 for r in grp if r["won"])
+            losses = sum(1 for r in grp if not r["won"])
+            parties = []
+            seen_p = set()
+            for r in grp:
+                if r["party"] and r["party"] not in seen_p:
+                    seen_p.add(r["party"])
+                    parties.append(r["party"])
+            persons.append({
+                "name": nm,
+                "id": f"{nm}-{dob}" if dob else nm,
+                "dob": dob,
+                "hanja": next((r["hanja"] for r in grp if r.get("hanja")), None),
+                "wins": wins, "losses": losses,
+                "parties": parties[:6],
+                "sidos": sorted(set(s for r in grp for s in r["sidos"])),
+                "likely_namesake": False,
+                "races": [{
+                    "eid": r["eid"], "year": r["year"], "round": r["round"], "date": r.get("date"),
+                    "place": r["place"], "party": r["party"],
+                    "pct": r["pct"], "rank": r["rank"], "won": r["won"],
+                    "tc": r["tc"],
+                } for r in grp],
+            })
 
     # 인기순 (race 많은 사람 우선)
     persons.sort(key=lambda p: (-len(p["races"]), -p["wins"], p["name"]))
