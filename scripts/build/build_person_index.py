@@ -173,14 +173,47 @@ def main():
 
     persons = []
     for nm, rows in by_name.items():
-        dobs = {r["dob"] for r in rows if r.get("dob")}
-        if len(dobs) <= 1:                       # 동일인(또는 dob 미상) → 한 명
-            groups = [(next(iter(dobs)) if dobs else None, rows)]
-        else:                                    # 동명이인 → 생년월일별 분리(미상은 별도)
-            gd = defaultdict(list)
-            for r in rows:
-                gd[r.get("dob")].append(r)
-            groups = list(gd.items())
+        # 동명이인 분리 — union-find. 같은 생년 또는 같은 한자면 동일인; 둘 다 미상이면
+        # 같은 시도 + 가까운 연도(≤16년)면 동일인(한 정치인의 연속 경력). 다른 생년/다른 한자는
+        # 절대 병합 금지. (옛 선거 낙선자는 생년·한자 미상이라 시도+연도로 군집해야 함.)
+        n = len(rows)
+        parent = list(range(n))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                a, b = rows[i], rows[j]
+                da, db = a.get("dob"), b.get("dob")
+                ha, hb = a.get("hanja"), b.get("hanja")
+                if da and db and da != db:
+                    continue
+                if ha and hb and ha != hb:
+                    continue
+                link = (da and da == db) or (ha and ha == hb)
+                if not link:
+                    sa, sb = set(a["sidos"]), set(b["sidos"])
+                    link = bool(sa & sb) and abs((a["year"] or 0) - (b["year"] or 0)) <= 16
+                if link:
+                    parent[find(i)] = find(j)
+        comp = defaultdict(list)
+        for i, r in enumerate(rows):
+            comp[find(i)].append(r)
+        groups = []
+        for grp in comp.values():               # 컴포넌트 내 생년 충돌이면 생년별 재분리
+            cdobs = {r["dob"] for r in grp if r.get("dob")}
+            if len(cdobs) <= 1:
+                groups.append((next(iter(cdobs)) if cdobs else None, grp))
+            else:
+                gd = defaultdict(list)
+                for r in grp:
+                    gd[r.get("dob")].append(r)
+                groups.extend(gd.items())
+        namesake = len(groups) > 1               # 같은 이름이 여러 인물로 갈림 → 동명이인 표시
         for dob, grp in groups:
             grp.sort(key=lambda r: (r.get("date") or str(r["year"] or ""), r["eid"]))
             wins = sum(1 for r in grp if r["won"])
@@ -199,7 +232,7 @@ def main():
                 "wins": wins, "losses": losses,
                 "parties": parties[:6],
                 "sidos": sorted(set(s for r in grp for s in r["sidos"])),
-                "likely_namesake": False,
+                "likely_namesake": namesake,
                 "races": [{
                     "eid": r["eid"], "year": r["year"], "round": r["round"], "date": r.get("date"),
                     "place": r["place"], "party": r["party"],
