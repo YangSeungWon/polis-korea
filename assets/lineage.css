@@ -17,8 +17,9 @@
 .lin-year { fill: var(--ink-mute); font-size: 11px; text-anchor: start; font-variant-numeric: tabular-nums; }
 
 /* 계열 컬럼 배경 + 헤더 */
-.lin-band { fill: color-mix(in srgb, var(--ink) 4%, transparent); }
-.lin-col-label { font-size: 13px; font-weight: 800; text-anchor: middle; fill: var(--ink-soft); opacity: 0.9; }
+/* 스펙트럼 양 끝(진보/보수)만 — 중간은 라벨 없이 위치로만 */
+.lin-axis { stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 1 5; stroke-linecap: round; }
+.lin-pole { font-size: 13px; font-weight: 800; fill: var(--ink-soft); dominant-baseline: middle; }
 
 /* 계승 연결선 */
 .lin-edge { fill: none; stroke-width: 1.6; opacity: 0.6; }

@@ -99,11 +99,11 @@
       out.push(`<text x="6" y="${(y + 4).toFixed(1)}" class="lin-year">${yr}</text>`);
     }
 
-    // 컬럼 배경 + 계열 헤더
-    colInfo.forEach((c, i) => {
-      if (i % 2 === 1) out.push(`<rect x="${(c.x - COL_GAP / 2).toFixed(1)}" y="${PAD_T - 6}" width="${(c.w + COL_GAP).toFixed(1)}" height="${(plotH + 12).toFixed(1)}" class="lin-band"/>`);
-      out.push(`<text x="${(c.x + c.w / 2).toFixed(1)}" y="${PAD_T - 24}" class="lin-col-label">${esc(c.stream)}</text>`);
-    });
+    // 스펙트럼 양 끝(진보/보수)만 표시 — 중도 위치는 주관적이라 중간 라벨·구획 생략.
+    const ay = PAD_T - 22;
+    out.push(`<line x1="${(PAD_L + 48).toFixed(1)}" y1="${ay - 4}" x2="${(W - 60).toFixed(1)}" y2="${ay - 4}" class="lin-axis"/>`);
+    out.push(`<text x="${PAD_L}" y="${ay}" class="lin-pole" text-anchor="start">◀ 진보</text>`);
+    out.push(`<text x="${W - 8}" y="${ay}" class="lin-pole" text-anchor="end">보수 ▶</text>`);
 
     // 엣지 — pred 끝(위) → succ 시작(아래보다 위). 세로 베지어.
     for (const [a, c] of edges) {
