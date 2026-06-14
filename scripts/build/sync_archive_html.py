@@ -253,34 +253,38 @@ HERO_GENERAL = """
 
 NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={election_id_full}&topMenuId=VC&secondMenuId=VCCP09"
 
+# 페이지 하단 — 위 시도별 요약보다 더 세밀한 단위로 보러 가는 링크 (역대 비교 포함)
 HISTORY_LINK_PRES = """
-  <section class="ar-history-link">
+  <section class="ar-history-link ar-history-link-foot">
     <a href="/history.html?type=presidential&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-label">시도·시군구 시각화</span>
-      <span class="ar-history-link-sub">/history 에서 hex·지도로 →</span>
+      <span class="ar-history-link-kicker">더 자세히 ↘</span>
+      <span class="ar-history-link-label">시군구·동 단위 득표 지도</span>
+      <span class="ar-history-link-sub">위는 시도별 요약 · 득표 비례 hex·지도 + 역대 회차 비교</span>
     </a>
   </section>
 """
 
 HISTORY_LINK_LOCAL = """
-  <section class="ar-history-link">
+  <section class="ar-history-link ar-history-link-foot">
     <a href="/history.html?type=local&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-label">시도·시군구 시각화</span>
-      <span class="ar-history-link-sub">/history 에서 광역·기초·교육감 hex로 →</span>
+      <span class="ar-history-link-kicker">더 자세히 ↘</span>
+      <span class="ar-history-link-label">광역·기초·교육감 단위 지도</span>
+      <span class="ar-history-link-sub">위는 시도별 요약 · 시군구 hex·지도 + 역대 회차 비교</span>
     </a>
   </section>
 """
 
 HISTORY_LINK_GENERAL = """
-  <section class="ar-history-link">
+  <section class="ar-history-link ar-history-link-foot">
     <a href="/history.html?type=national_assembly&n={n}" class="ar-history-link-btn">
-      <span class="ar-history-link-label">지역구·시도 시각화</span>
-      <span class="ar-history-link-sub">/history 에서 254 지역구 hex·지도로 →</span>
+      <span class="ar-history-link-kicker">더 자세히 ↘</span>
+      <span class="ar-history-link-label">지역구 단위 hex·지도</span>
+      <span class="ar-history-link-sub">위는 시도별 요약 · 지역구 하나하나 hex·지도 + 역대 회차 비교</span>
     </a>
   </section>
 """
 
-SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
+SECTIONS_LOCAL = """
   <section class="ar-section" id="ar-offices" hidden>
     <h2 class="ar-section-title">선출직 정당 분포</h2>
     <p class="ar-source-line">광역단체장 · 기초단체장 · 광역의원 (지역구·비례) · 기초의원 (지역구·비례). 교육감 제외.</p>
@@ -330,7 +334,7 @@ SECTIONS_LOCAL = HISTORY_LINK_LOCAL + """
   </section>
 """
 
-SECTIONS_PRES = HISTORY_LINK_PRES + """
+SECTIONS_PRES = """
   <section class="ar-section" id="ar-pres-sido-hex-section" hidden>
     <h2 class="ar-section-title">시도별 결과</h2>
     <p class="ar-source-line">시·도 hex — 1위 후보·득표율. 정당별 색.</p>
@@ -386,7 +390,7 @@ SECTIONS_BYELECTION = """
   </section>
 """
 
-SECTIONS_GENERAL = HISTORY_LINK_GENERAL + """
+SECTIONS_GENERAL = """
   <section class="ar-section" id="ar-parliament" hidden>
     <h2 class="ar-section-title">의회 구성</h2>
     <p class="ar-source-line">정당별 지역구·비례대표 의석. 데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
@@ -440,6 +444,8 @@ FOOT = """
 
 KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
 KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
+# byelection은 시도/시군구 시각화 history 페이지가 없어 하단 링크 없음.
+KIND_TO_HISTORY_LINK = {"local": HISTORY_LINK_LOCAL, "presidential": HISTORY_LINK_PRES, "general_election": HISTORY_LINK_GENERAL}
 
 
 def source_caveat_block(meta: dict) -> str:
@@ -471,7 +477,8 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         if d["wiki_url"] else ""
     )
     d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
-    d["nav_block"] = render_nav_block(neighbors or {})
+    d["nav_block"] = render_nav_block(neighbors or {}, d)
+    history_link = KIND_TO_HISTORY_LINK.get(d["kind"], "").format(**d)
 
     return (
         HEAD.format(**d)
@@ -479,31 +486,40 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         + source_caveat_block(meta)
         + d["nav_block"]
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
+        + history_link
         + d["nav_block"]
         + FOOT.format(**d)
     )
 
 
-def render_nav_block(neighbors: dict) -> str:
-    """이전·다음 회차 nav. neighbors = {'prev': meta or None, 'next': meta or None}."""
+def render_nav_block(neighbors: dict, current: dict | None = None) -> str:
+    """회차 타임라인 nav — 현재 회차를 가운데 두고 양옆에 이전·다음.
+    neighbors = {'prev': meta or None, 'next': meta or None}, current = derive(meta) dict."""
     prev_meta = neighbors.get("prev")
     next_meta = neighbors.get("next")
     if not prev_meta and not next_meta:
         return ""
     def cell(m, side):
+        label = "이전 회차" if side == "prev" else "다음 회차"
         if not m:
-            return f'<span class="ar-nav-cell ar-nav-empty">—</span>'
+            none_txt = "이전 없음" if side == "prev" else "다음 없음"
+            return f'<span class="ar-nav-cell ar-nav-{side} ar-nav-empty">{none_txt}</span>'
         date = m.get("date", "")
         name = m.get("name", "")
         page = m.get("archive", {}).get("page", "#")
         arrow = "←" if side == "prev" else "→"
-        label = "이전 회차" if side == "prev" else "다음 회차"
-        align = "left" if side == "prev" else "right"
+        lbl = f'{arrow} {label}' if side == "prev" else f'{label} {arrow}'
         return (f'<a class="ar-nav-cell ar-nav-{side}" href="{page}">'
-                f'<span class="ar-nav-label">{arrow if side == "prev" else ""} {label} {arrow if side == "next" else ""}</span>'
+                f'<span class="ar-nav-label">{lbl}</span>'
                 f'<span class="ar-nav-name">{name}</span>'
                 f'<span class="ar-nav-date">{date}</span></a>')
-    return f'<nav class="ar-nav">{cell(prev_meta, "prev")}{cell(next_meta, "next")}</nav>\n'
+    cur = ""
+    if current:
+        cur = (f'<span class="ar-nav-cell ar-nav-current" aria-current="page">'
+               f'<span class="ar-nav-label">지금 보는 중</span>'
+               f'<span class="ar-nav-name">{current.get("name", "")}</span>'
+               f'<span class="ar-nav-date">{current.get("date", "")}</span></span>')
+    return f'<nav class="ar-nav ar-nav-tl">{cell(prev_meta, "prev")}{cur}{cell(next_meta, "next")}</nav>\n'
 
 
 def render_ar_list(metas: list[dict]) -> str:

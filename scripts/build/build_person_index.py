@@ -87,6 +87,31 @@ def main():
         dob = f"{bd[:4]}-{bd[4:6]}-{bd[6:8]}" if len(bd) == 8 else None
         return dob, (r.get("hanja") or None)
 
+    # 국회의원 명부(assembly_map) — 옛 의원 dob/한자(전 시대). 총선 race 분리에 보강.
+    asm_careers = defaultdict(list)
+    asm_path = ROOT / "data/raw/assembly_member_map.json"
+    if asm_path.exists():
+        for p in json.loads(asm_path.read_text(encoding="utf-8")).get("persons", []):
+            for c in p.get("careers", []):
+                asm_careers[(p["name"], c["n"])].append((p.get("dob"), p.get("hanja"), c.get("district", "")))
+
+    def match_assembly(name, eid, place):
+        """총선 race → assembly_map(이름+회차+지역구)로 (dob, 한자). 비의원·미매칭이면 (None, None)."""
+        m = re.match(r"(\d+)(?:st|nd|rd|th)-general-", eid)
+        if not m:
+            return None, None
+        recs = asm_careers.get((name, int(m.group(1))))
+        if not recs:
+            return None, None
+        if len(recs) == 1:
+            return recs[0][0], recs[0][1]
+        p = _nm(place)
+        for dob, hanja, dist in recs:  # 동명 의원 — 지역구로 분별
+            d = _nm(dist)
+            if p and d and (d in p or p in d):
+                return dob, hanja
+        return None, None
+
     # 1단계: per (eid, name, party) 통합 — 시도별 분해 row → 1건
     per_eid: dict = defaultdict(lambda: defaultdict(list))
     eid_meta = {}
@@ -140,6 +165,10 @@ def main():
                 rank = c.get("rank") or 99
                 won = bool(c.get("won")) or (rank == 1)
                 dob, hanja = match_bio(nm, date, place, tc)
+                if (not dob or not hanja) and tc == "2":   # 총선 → assembly_map 보강(옛 의원)
+                    adob, ahanja = match_assembly(nm, eid, place)
+                    dob = dob or adob
+                    hanja = hanja or ahanja
                 per_eid[eid][(nm, party)].append({
                     "sido": sido, "place": place, "tc": tc,
                     "rank": rank, "won": won,

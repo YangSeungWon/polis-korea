@@ -86,7 +86,10 @@ def slugify(name: str, dob: str) -> str:
 
 def main():
     pi = json.loads(INDEX.read_text(encoding="utf-8"))
-    persons = [p for p in pi["persons"] if p.get("assembly_id") and p.get("dob")]
+    # 당선 선출직(국회의원·단체장·교육감·대통령 등) — dob 있고 + 의원이거나 무언가 당선.
+    # 낙선만 한 후보는 페이지 없이 검색에만(노이즈 방지).
+    persons = [p for p in pi["persons"]
+               if p.get("dob") and (p.get("assembly_id") or any(r.get("won") for r in p.get("races", [])))]
     print(f"의원 entry: {len(persons)} (전체 {len(pi['persons'])} 중)")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
