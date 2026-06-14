@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"강기정","id":"강기정","wins":4,"losses":1,"parties":["무소속","열린우리당","통합민주당","민주통합당","더불어민주당"],"sidos":["광주광역시"],"likely_namesake":false,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","place":"북구갑","party":"열린우리당","pct":59.82,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"북구갑","party":"통합민주당","pct":63.28,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"북구갑","party":"민주통합당","pct":57.72,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","place":"북구갑","party":"무소속","pct":19.9,"rank":2,"won":false,"tc":"2"},{"eid":"8th-local-2022","year":2022,"round":"8회 지선","place":"광주광역시","party":"더불어민주당","pct":74.92,"rank":1,"won":true,"tc":"3"}],"assembly_id":"강기정_1964-12-03","hanja":"姜琪正","dob":"1964-12-03"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"강기정","id":"강기정","wins":4,"losses":1,"parties":["무소속","열린우리당","통합민주당","민주통합당","더불어민주당"],"sidos":["광주광역시"],"likely_namesake":false,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","date":"2004-04-15","place":"북구갑","party":"열린우리당","pct":59.82,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"북구갑","party":"통합민주당","pct":63.28,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","date":"2012-04-11","place":"북구갑","party":"민주통합당","pct":57.72,"rank":1,"won":true,"tc":"2","assembly_id":"강기정_1964-12-03"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","date":"2000-04-13","place":"북구갑","party":"무소속","pct":19.9,"rank":2,"won":false,"tc":"2"},{"eid":"8th-local-2022","year":2022,"round":"8회 지선","date":"2022-06-01","place":"광주광역시","party":"더불어민주당","pct":74.92,"rank":1,"won":true,"tc":"3"}],"assembly_id":"강기정_1964-12-03","hanja":"姜琪正","dob":"1964-12-03"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

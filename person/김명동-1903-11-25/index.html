@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"김명동","id":"김명동","wins":2,"losses":0,"parties":["무소속","대한국민당"],"sidos":["충청남도"],"likely_namesake":false,"races":[{"eid":"2nd-general-1950","year":1950,"round":"2대 총선","place":"제5선거구(공주군 을구)","party":"대한국민당","pct":20.9,"rank":1,"won":true,"tc":"2","assembly_id":"김명동_1903-11-25"},{"eid":"1st-general-1948","year":1948,"round":"1대 총선","place":"제4선거구(공주군 갑구)","party":"무소속","pct":37.6,"rank":1,"won":true,"tc":"2"}],"assembly_id":"김명동_1903-11-25","hanja":"金明東","dob":"1903-11-25"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"김명동","id":"김명동","wins":2,"losses":0,"parties":["무소속","대한국민당"],"sidos":["충청남도"],"likely_namesake":false,"races":[{"eid":"1st-general-1948","year":1948,"round":"1대 총선","date":"1948-05-10","place":"제4선거구(공주군 갑구)","party":"무소속","pct":37.58,"rank":1,"won":true,"tc":"2","assembly_id":"김명동_1903-11-25"},{"eid":"2nd-general-1950","year":1950,"round":"2대 총선","date":"1950-05-30","place":"제5선거구(공주군 을구)","party":"대한국민당","pct":20.95,"rank":1,"won":true,"tc":"2","assembly_id":"김명동_1903-11-25"}],"assembly_id":"김명동_1903-11-25","hanja":"金明東","dob":"1903-11-25"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

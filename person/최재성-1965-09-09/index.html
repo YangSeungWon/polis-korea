@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"최재성","id":"최재성","wins":4,"losses":1,"parties":["열린우리당","통합민주당","민주통합당","더불어민주당"],"sidos":["경기도","서울특별시"],"likely_namesake":false,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","place":"남양주시갑","party":"열린우리당","pct":39.76,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"남양주시갑","party":"통합민주당","pct":45.16,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"남양주시갑","party":"민주통합당","pct":53.28,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"byelection-2018-06-13","year":2018,"round":"2018-06-13 재보궐","place":"송파구을","party":"더불어민주당","pct":54.41,"rank":1,"won":true,"tc":"2"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"송파구을","party":"더불어민주당","pct":46.04,"rank":2,"won":false,"tc":"2"}],"assembly_id":"최재성_1965-09-09","hanja":"崔宰誠","dob":"1965-09-09"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"최재성","id":"최재성","wins":4,"losses":1,"parties":["열린우리당","통합민주당","민주통합당","더불어민주당"],"sidos":["경기도","서울특별시"],"likely_namesake":false,"races":[{"eid":"17th-general-2004","year":2004,"round":"17대 총선","date":"2004-04-15","place":"남양주시갑","party":"열린우리당","pct":39.76,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"남양주시갑","party":"통합민주당","pct":45.16,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","date":"2012-04-11","place":"남양주시갑","party":"민주통합당","pct":53.28,"rank":1,"won":true,"tc":"2","assembly_id":"최재성_1965-09-09"},{"eid":"byelection-2018-06-13","year":2018,"round":"2018-06-13 재보궐","date":"2018-06-13","place":"송파구을","party":"더불어민주당","pct":54.41,"rank":1,"won":true,"tc":"2"},{"eid":"21st-general-2020","year":2020,"round":"21대 총선","date":"2020-04-15","place":"송파구을","party":"더불어민주당","pct":46.04,"rank":2,"won":false,"tc":"2"}],"assembly_id":"최재성_1965-09-09","hanja":"崔宰誠","dob":"1965-09-09"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

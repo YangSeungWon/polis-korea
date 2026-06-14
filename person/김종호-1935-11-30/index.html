@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"김종호","id":"김종호_1935-11-30","wins":4,"losses":3,"parties":["민주정의당","무소속","민주자유당","신한국당","친박연대"],"sidos":["강원특별자치도","경기도","대구광역시","서울특별시","충청북도"],"likely_namesake":false,"races":[{"eid":"12th-general-1985","year":1985,"round":"12대 총선","place":"제4선거구(괴산군·진천군·음성군)","party":"민주정의당","pct":67,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"13th-general-1988","year":1988,"round":"13대 총선","place":"괴산군","party":"민주정의당","pct":68.4,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","place":"시흥시·군포시","party":"무소속","pct":1.22,"rank":7,"won":false,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","place":"괴산군","party":"민주자유당","pct":63.86,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","place":"북구을","party":"무소속","pct":10.44,"rank":4,"won":false,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","place":"괴산군","party":"신한국당","pct":53.58,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"증평군진천군괴산군음성군","party":"친박연대","pct":13.56,"rank":3,"won":false,"tc":"2"}],"assembly_id":"김종호_1935-11-30","hanja":"金宗鎬","dob":"1935-11-30"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"김종호","id":"김종호_1935-11-30","wins":4,"losses":3,"parties":["민주정의당","무소속","민주자유당","신한국당","친박연대"],"sidos":["강원특별자치도","경기도","경상남도","대구광역시","서울특별시","전라남도","충청북도"],"likely_namesake":false,"races":[{"eid":"12th-general-1985","year":1985,"round":"12대 총선","date":"1985-02-12","place":"제4선거구(괴산군·진천군·음성군)","party":"민주정의당","pct":67.01,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"13th-general-1988","year":1988,"round":"13대 총선","date":"1988-04-26","place":"괴산군","party":"민주정의당","pct":68.43,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","date":"1992-03-24","place":"시흥시·군포시","party":"무소속","pct":1.22,"rank":7,"won":false,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","date":"1992-03-24","place":"괴산군","party":"민주자유당","pct":63.86,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","date":"1996-04-11","place":"북구을","party":"무소속","pct":10.44,"rank":4,"won":false,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","date":"1996-04-11","place":"괴산군","party":"신한국당","pct":53.58,"rank":1,"won":true,"tc":"2","assembly_id":"김종호_1935-11-30"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"증평군진천군괴산군음성군","party":"친박연대","pct":13.56,"rank":3,"won":false,"tc":"2"}],"assembly_id":"김종호_1935-11-30","hanja":"金宗鎬","dob":"1935-11-30"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

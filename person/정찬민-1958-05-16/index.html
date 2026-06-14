@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"정찬민","id":"정찬민","wins":2,"losses":2,"parties":["새누리당","자유한국당","미래통합당"],"sidos":["경기도"],"likely_namesake":false,"races":[{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"용인시갑","party":"미래통합당","pct":53.14,"rank":1,"won":true,"tc":"2","assembly_id":"정찬민_1958-05-16"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"용인시을","party":"새누리당","pct":45.92,"rank":2,"won":false,"tc":"2"},{"eid":"6th-local-2014","year":2014,"round":"6회 지선","place":"용인시","party":"새누리당","pct":47.48,"rank":1,"won":true,"tc":"4"},{"eid":"7th-local-2018","year":2018,"round":"7회 지선","place":"용인시","party":"자유한국당","pct":41.16,"rank":2,"won":false,"tc":"4"}],"assembly_id":"정찬민_1958-05-16","hanja":"鄭燦敏","dob":"1958-05-16"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"정찬민","id":"정찬민","wins":2,"losses":2,"parties":["새누리당","자유한국당","미래통합당"],"sidos":["경기도"],"likely_namesake":false,"races":[{"eid":"21st-general-2020","year":2020,"round":"21대 총선","date":"2020-04-15","place":"용인시갑","party":"미래통합당","pct":53.14,"rank":1,"won":true,"tc":"2","assembly_id":"정찬민_1958-05-16"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","date":"2012-04-11","place":"용인시을","party":"새누리당","pct":45.92,"rank":2,"won":false,"tc":"2"},{"eid":"6th-local-2014","year":2014,"round":"6회 지선","date":"2014-06-04","place":"용인시","party":"새누리당","pct":47.48,"rank":1,"won":true,"tc":"4"},{"eid":"7th-local-2018","year":2018,"round":"7회 지선","date":"2018-06-13","place":"용인시","party":"자유한국당","pct":41.16,"rank":2,"won":false,"tc":"4"}],"assembly_id":"정찬민_1958-05-16","hanja":"鄭燦敏","dob":"1958-05-16"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

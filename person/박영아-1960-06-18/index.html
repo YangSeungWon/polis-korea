@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"박영아","id":"박영아","wins":1,"losses":0,"parties":["한나라당"],"sidos":["서울특별시"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"송파구갑","party":"한나라당","pct":61.62,"rank":1,"won":true,"tc":"2","assembly_id":"박영아_1960-06-18"}],"assembly_id":"박영아_1960-06-18","hanja":"朴英娥","dob":"1960-06-18"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"박영아","id":"박영아","wins":1,"losses":0,"parties":["한나라당"],"sidos":["서울특별시"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"송파구갑","party":"한나라당","pct":61.62,"rank":1,"won":true,"tc":"2","assembly_id":"박영아_1960-06-18"}],"assembly_id":"박영아_1960-06-18","hanja":"朴英娥","dob":"1960-06-18"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

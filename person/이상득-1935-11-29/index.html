@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"이상득","id":"이상득","wins":6,"losses":0,"parties":["민주정의당","민주자유당","신한국당","한나라당"],"sidos":["경상북도"],"likely_namesake":false,"races":[{"eid":"13th-general-1988","year":1988,"round":"13대 총선","place":"영일군·울릉군","party":"민주정의당","pct":51.7,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","place":"영일군·울릉군","party":"민주자유당","pct":52.89,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","place":"포항시남구·울릉군","party":"신한국당","pct":48.78,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","place":"포항시남구·울릉군","party":"한나라당","pct":53.46,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"17th-general-2004","year":2004,"round":"17대 총선","place":"포항시남구·울릉군","party":"한나라당","pct":50.1,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"포항시남구울릉군","party":"한나라당","pct":69.63,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"}],"assembly_id":"이상득_1935-11-29","hanja":"李相得","dob":"1935-11-29"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"이상득","id":"이상득","wins":6,"losses":0,"parties":["민주정의당","민주자유당","신한국당","한나라당"],"sidos":["경상북도"],"likely_namesake":false,"races":[{"eid":"13th-general-1988","year":1988,"round":"13대 총선","date":"1988-04-26","place":"영일군·울릉군","party":"민주정의당","pct":51.67,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"14th-general-1992","year":1992,"round":"14대 총선","date":"1992-03-24","place":"영일군·울릉군","party":"민주자유당","pct":52.89,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","date":"1996-04-11","place":"포항시남구·울릉군","party":"신한국당","pct":48.78,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","date":"2000-04-13","place":"포항시남구·울릉군","party":"한나라당","pct":53.46,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"17th-general-2004","year":2004,"round":"17대 총선","date":"2004-04-15","place":"포항시남구·울릉군","party":"한나라당","pct":50.1,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"},{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"포항시남구울릉군","party":"한나라당","pct":69.63,"rank":1,"won":true,"tc":"2","assembly_id":"이상득_1935-11-29"}],"assembly_id":"이상득_1935-11-29","hanja":"李相得","dob":"1935-11-29"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

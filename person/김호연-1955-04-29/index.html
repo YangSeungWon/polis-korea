@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"김호연","id":"김호연_1955-04-29","wins":3,"losses":2,"parties":["한나라당","민주자유당","새누리당"],"sidos":["강원특별자치도","경상북도","충청남도"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","place":"천안시을","party":"한나라당","pct":35.79,"rank":2,"won":false,"tc":"2","assembly_id":"김호연_1955-04-29"},{"eid":"1st-local-1995","year":1995,"round":"1회 지선","place":"철원군","party":"민주자유당","pct":35.6,"rank":1,"won":true,"tc":"4"},{"eid":"3rd-local-2002","year":2002,"round":"3회 지선","place":"철원군","party":"한나라당","pct":45.7,"rank":1,"won":true,"tc":"4"},{"eid":"byelection-2010-07-28","year":2010,"round":"2010-07-28 재보궐","place":"천안시을","party":"한나라당","pct":46.91,"rank":1,"won":true,"tc":"2"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","place":"천안시을","party":"새누리당","pct":40.02,"rank":2,"won":false,"tc":"2"}],"assembly_id":"김호연_1955-04-29","hanja":"金昊淵","dob":"1955-04-29"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"김호연","id":"김호연_1955-04-29","wins":3,"losses":2,"parties":["한나라당","민주자유당","새누리당"],"sidos":["강원특별자치도","경상북도","충청남도"],"likely_namesake":false,"races":[{"eid":"18th-general-2008","year":2008,"round":"18대 총선","date":"2008-04-09","place":"천안시을","party":"한나라당","pct":35.79,"rank":2,"won":false,"tc":"2","assembly_id":"김호연_1955-04-29"},{"eid":"1st-local-1995","year":1995,"round":"1회 지선","date":"1995-06-27","place":"철원군","party":"민주자유당","pct":35.6,"rank":1,"won":true,"tc":"4"},{"eid":"3rd-local-2002","year":2002,"round":"3회 지선","date":"2002-06-13","place":"철원군","party":"한나라당","pct":45.7,"rank":1,"won":true,"tc":"4"},{"eid":"byelection-2010-07-28","year":2010,"round":"2010-07-28 재보궐","date":"2010-07-28","place":"천안시을","party":"한나라당","pct":46.91,"rank":1,"won":true,"tc":"2"},{"eid":"19th-general-2012","year":2012,"round":"19대 총선","date":"2012-04-11","place":"천안시을","party":"새누리당","pct":40.02,"rank":2,"won":false,"tc":"2"}],"assembly_id":"김호연_1955-04-29","hanja":"金昊淵","dob":"1955-04-29"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"김영수","id":"김영수_1942-05-10","wins":0,"losses":2,"parties":["민중당","무소속"],"sidos":["경상북도","광주광역시","부산광역시","전라남도"],"likely_namesake":false,"races":[{"eid":"14th-general-1992","year":1992,"round":"14대 총선","place":"부산진구을","party":"민중당","pct":11.43,"rank":3,"won":false,"tc":"2","assembly_id":"김영수_1942-05-10"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","place":"남구갑","party":"무소속","pct":6.24,"rank":4,"won":false,"tc":"2"}],"assembly_id":"김영수_1942-05-10","hanja":"金榮秀","dob":"1942-05-10"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"김영수","id":"김영수_1942-05-10","wins":0,"losses":2,"parties":["민중당","무소속"],"sidos":["경상남도","경상북도","광주광역시","부산광역시","전라남도","전북특별자치도","충청남도"],"likely_namesake":false,"races":[{"eid":"14th-general-1992","year":1992,"round":"14대 총선","date":"1992-03-24","place":"부산진구을","party":"민중당","pct":11.43,"rank":3,"won":false,"tc":"2","assembly_id":"김영수_1942-05-10"},{"eid":"15th-general-1996","year":1996,"round":"15대 총선","date":"1996-04-11","place":"남구갑","party":"무소속","pct":6.24,"rank":4,"won":false,"tc":"2"}],"assembly_id":"김영수_1942-05-10","hanja":"金榮秀","dob":"1942-05-10"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>

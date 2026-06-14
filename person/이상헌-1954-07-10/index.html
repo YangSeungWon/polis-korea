@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
-<script id="person-data" type="application/json">{"persons":[{"name":"이상헌","id":"이상헌_1954-07-10","wins":2,"losses":2,"parties":["더불어민주당","새천년민주당","정의당"],"sidos":["경기도","울산광역시","충청남도"],"likely_namesake":false,"races":[{"eid":"21st-general-2020","year":2020,"round":"21대 총선","place":"북구","party":"더불어민주당","pct":46.35,"rank":1,"won":true,"tc":"2","assembly_id":"이상헌_1954-07-10"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","place":"북구","party":"새천년민주당","pct":9.24,"rank":3,"won":false,"tc":"2"},{"eid":"7th-local-2018","year":2018,"round":"7회 지선","place":"파주시","party":"정의당","pct":3.66,"rank":4,"won":false,"tc":"4"},{"eid":"byelection-2018-06-13","year":2018,"round":"2018-06-13 재보궐","place":"북구","party":"더불어민주당","pct":48.47,"rank":1,"won":true,"tc":"2"}],"assembly_id":"이상헌_1954-07-10","hanja":"李相憲","dob":"1954-07-10"}]}</script>
+<script id="person-data" type="application/json">{"persons":[{"name":"이상헌","id":"이상헌_1954-07-10","wins":2,"losses":2,"parties":["더불어민주당","새천년민주당","정의당"],"sidos":["경기도","울산광역시","충청남도"],"likely_namesake":false,"races":[{"eid":"21st-general-2020","year":2020,"round":"21대 총선","date":"2020-04-15","place":"북구","party":"더불어민주당","pct":46.35,"rank":1,"won":true,"tc":"2","assembly_id":"이상헌_1954-07-10"},{"eid":"16th-general-2000","year":2000,"round":"16대 총선","date":"2000-04-13","place":"북구","party":"새천년민주당","pct":9.24,"rank":3,"won":false,"tc":"2"},{"eid":"7th-local-2018","year":2018,"round":"7회 지선","date":"2018-06-13","place":"파주시","party":"정의당","pct":3.66,"rank":4,"won":false,"tc":"4"},{"eid":"byelection-2018-06-13","year":2018,"round":"2018-06-13 재보궐","date":"2018-06-13","place":"북구","party":"더불어민주당","pct":48.47,"rank":1,"won":true,"tc":"2"}],"assembly_id":"이상헌_1954-07-10","hanja":"李相憲","dob":"1954-07-10"}]}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -22,15 +22,16 @@
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
-    <span data-nav-urgent></span>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/history.html" class="hdr-link">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/search.html" class="hdr-link">검색</a>
-    <!-- NAV_END -->
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <span data-nav-urgent></span>
+  <a href="/byelection/" class="hdr-link">재·보궐</a>
+  <a href="/history.html" class="hdr-link">역대 결과</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
+  <a href="/chronology.html" class="hdr-link">근현대사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
+  <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
