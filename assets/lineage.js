@@ -6,7 +6,7 @@
   const NOW = 2026.5;
   const REL_COLOR = { merge: '#d08700', split: '#2c82c9', rename: '#8a8f98', new: '#8a8f98', dissolve: '#8a8f98' };
   const COLS = ['진보', '중도진보', '중도', '중도보수', '보수'];  // 좌→우 이념 스펙트럼 (기타는 그래프 밖 텍스트)
-  const PXY = 9.5;       // 1년당 px (세로)
+  const PXY = 12;        // 1년당 px (세로) — 세로 라벨 공간 확보 위해 키움
   const COL_GAP = 10;
   const PAD_T = 50, PAD_L = 40, PAD_R = 14, PAD_B = 28;
 
@@ -109,7 +109,7 @@
     for (let yr = Math.ceil(minY / 10) * 10; yr <= maxY; yr += 10) {
       const y = yScale(yr);
       out.push(`<line x1="${PAD_L - 8}" y1="${y.toFixed(1)}" x2="${W}" y2="${y.toFixed(1)}" class="lin-grid"/>`);
-      out.push(`<text x="6" y="${(y + 4).toFixed(1)}" class="lin-year">${yr}</text>`);
+      out.push(`<text x="12" y="${y.toFixed(1)}" transform="rotate(-90 12 ${y.toFixed(1)})" text-anchor="middle" class="lin-year">${yr}</text>`);
     }
 
     // 스펙트럼 양 끝(진보/보수)만 표시 — 중도 위치는 주관적이라 중간 라벨·구획 생략.

@@ -14,7 +14,7 @@
 
 /* 연도 가로 그리드(좌측 라벨) */
 .lin-grid { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 4; }
-.lin-year { fill: var(--ink-mute); font-size: 11px; text-anchor: start; font-variant-numeric: tabular-nums; }
+.lin-year { fill: var(--ink-mute); font-size: 11px; text-anchor: middle; dominant-baseline: central; font-variant-numeric: tabular-nums; }
 
 /* 계열 컬럼 배경 + 헤더 */
 /* 스펙트럼 양 끝(진보/보수)만 — 중간은 라벨 없이 위치로만 */
