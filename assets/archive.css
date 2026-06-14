@@ -479,7 +479,7 @@
 
 /* 광역의원 시도 hex cluster — render-metro-hex.js */
 .ar-metro-hex { margin-top: 12px; }
-.metro-hex-svg { width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto; }
+.metro-hex-svg { width: 100%; height: auto; max-width: 760px; display: block; margin: 0 auto; }
 .ar-metro-hex-meta {
   display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 12px;
   font-size: 12px; color: var(--ink-soft);
@@ -639,14 +639,14 @@
 .ar-exit-actual-pct { text-align: right; }
 .ar-exit-diff { color: var(--ink-soft); font-size: 11px; text-align: right; }
 /* 총선 지역구 의석 — 시도별 의석 spiral 지도(1석=1 hex) */
-.ar-genhex-svg { display: block; width: 100%; max-width: 720px; height: auto; margin: 4px auto 0; }
+.ar-genhex-svg { display: block; width: 100%; max-width: 600px; height: auto; margin: 4px auto 0; }
 .ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
 .ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
   paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
 .ar-genhex-legend { margin-top: 10px; font-size: 13px; line-height: 1.9; }
 .ar-genhex-note { color: var(--ink-mute); font-size: 12px; }
 /* dorling (시도별 원+파이) — 헥스 토글의 다른 보기 (대선·총선·광역의회 공용) */
-.ar-dorling-svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 4px auto 0; }
+.ar-dorling-svg { display: block; width: 100%; max-width: 680px; height: auto; margin: 4px auto 0; }
 .ar-dorling-ring { fill: none; stroke: rgba(0,0,0,0.2); stroke-width: 1; }
 .ar-dorling-label { font-size: 11px; font-weight: 700; fill: #fff; pointer-events: none;
   paint-order: stroke; stroke: rgba(0,0,0,0.4); stroke-width: 2.4; stroke-linejoin: round; }
