@@ -25,17 +25,20 @@ def round_label(eid: str) -> str:
     if 'pres' in eid: return '대선'
     if 'general' in eid: return '총선'
     if 'local' in eid: return '지선'
-    if eid.startswith('byelection'): return '재보궐'
+    if 'byelection' in eid: return '재보궐'
     return '기타'
 
 
 def main():
     # 인물 인덱스 로드 — (eid, name) → assembly_id·dob 룩업.
     person_lookup = {}
+    multi_race_names = set()   # 2회+ 출마자 — 의원 당선 없어도(황교안 등) 낙선 이력 검색 포함
     pi_path = ROOT / "assets/person-index.json"
     if pi_path.exists():
         pi = json.loads(pi_path.read_text(encoding="utf-8"))
         for p in pi.get('persons', []):
+            if len(p.get('races', [])) >= 2:
+                multi_race_names.add(p['name'])
             aid = p.get('assembly_id')
             dob = p.get('dob')
             if not aid or not dob:
@@ -100,7 +103,8 @@ def main():
                 if not nm: continue
                 won = bool(c.get('won')) or c.get('rank') == 1
                 pl = person_lookup.get((eid, nm))
-                if not won and not pl:
+                # 낙선 포함 조건: 의원ID 보유 or 2회+ 출마하며 이 선거 득표 5%↑(군소 난립 제외)
+                if not won and not pl and not (nm in multi_race_names and (c.get('pct') or 0) >= 5):
                     continue
                 key = (eid, scope, sido, sigungu, district, tc, nm)
                 if key in seen: continue
