@@ -39,7 +39,11 @@ async function init() {
   // countdown 라벨
   const days = Math.floor((Date.now() - ELECTION.getTime()) / 86_400_000);
   const cd = $('#countdown');
-  if (cd) cd.textContent = days < 0 ? `지선 D${days}` : (days === 0 ? '선거 당일' : `선거 후 ${days}일`);
+  // D+8부터는 카운트다운 내림 (개표 직후 일주일만 '선거 후 N일' — nav urgent와 동일 규칙)
+  if (cd) cd.textContent = days < 0 ? `지선 D${days}`
+    : days === 0 ? '선거 당일'
+    : days <= 7 ? `선거 후 ${days}일`
+    : '';
 
   // 섹션 title 갱신
   const titleEl = document.querySelector('.dash-section .dash-section-title');
