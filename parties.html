@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 정당사 — 한국 정당 계보</title>
+<meta name="description" content="대한민국 주요 정당의 창당·합당·분당·해산 계보를 시간축으로 한눈에. 보수·민주·진보·충청 계열.">
+<meta property="og:title" content="polis · 정당사 계보">
+<meta property="og:description" content="한국 정당의 합당·분당·해산을 시간축 계보도로.">
+<link rel="canonical" href="/parties.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/lineage.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
+    <span data-nav-urgent></span>
+    <a href="/polls.html" class="hdr-link">여론조사</a>
+    <a href="/byelection/" class="hdr-link">재·보궐</a>
+    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+    <a href="/history.html" class="hdr-link">역대 결과</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+    <a href="/parties.html" class="hdr-link is-current">정당사</a>
+    <a href="/search.html" class="hdr-link">검색</a>
+    <!-- NAV_END -->
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+<main class="page lin-page">
+  <section class="intro">
+    <h1>정당사 — 한국 정당 계보</h1>
+    <p class="lede">주요 정당의 창당·합당·분당·해산을 시간축으로. 막대 = 존속 기간, 선 = 계승(합당·분당·개명). 계열은 계보 연결로 자동 분리. 막대를 누르면 정당 페이지로.</p>
+  </section>
+  <div class="lin-toolbar">
+    <span class="lin-legend"><i class="lin-lg lin-lg-merge"></i> 합당</span>
+    <span class="lin-legend"><i class="lin-lg lin-lg-split"></i> 분당</span>
+    <span class="lin-legend"><i class="lin-lg lin-lg-rename"></i> 개명</span>
+  </div>
+  <div id="lin-graph" class="lin-graph"><p class="lin-loading">불러오는 중…</p></div>
+  <footer class="foot">
+    <p class="fine">출처: <code>data/parties/registry.json</code> (정식명·등록약칭·창당/해산·전신/후신). 주요 계보 중심 — 군소·단명 정당 일부는 미수록.</p>
+  </footer>
+</main>
+<script src="assets/parties.js"></script>
+<script src="assets/lineage.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>

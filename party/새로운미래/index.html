@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 새로운미래</title>
+<meta name="description" content="새로운미래(새미래) — 2024-02 ~ 현재 · 분당. 이낙연 창당(더민주 탈당). 22대 총선.">
+<meta property="og:title" content="polis · 새로운미래">
+<meta property="og:description" content="새로운미래(새미래) — 2024-02 ~ 현재 · 분당. 이낙연 창당(더민주 탈당). 22대 총선.">
+<link rel="canonical" href="/party/%EC%83%88%EB%A1%9C%EC%9A%B4%EB%AF%B8%EB%9E%98/">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/party.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. -->
+    <span data-nav-urgent></span>
+    <a href="/polls.html" class="hdr-link">여론조사</a>
+    <a href="/byelection/" class="hdr-link">재·보궐</a>
+    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
+    <a href="/history.html" class="hdr-link">역대 결과</a>
+    <a href="/timeline.html" class="hdr-link">타임라인</a>
+    <a href="/parties.html" class="hdr-link">정당사</a>
+    <a href="/search.html" class="hdr-link">검색</a>
+    <!-- NAV_END -->
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+<main class="page pty-page">
+  <section class="pty-hero" data-party="새로운미래">
+    <div class="pty-bar" data-party="새로운미래"></div>
+    <h1 class="pty-name">새로운미래 <span class="pty-abbr" data-party="새로운미래">새미래</span></h1>
+    <p class="pty-life">2024-02 ~ 현재 · 분당</p>
+    <p class="pty-note">이낙연 창당(더민주 탈당). 22대 총선.</p>
+  </section>
+  
+  <section class="pty-sec"><h2>등장 선거 <span class="pty-cnt">1</span></h2><ul class="pty-elections"><li><a href="/history.html?type=national_assembly&n=22"><span class="pty-el-lab">22대 총선</span><span class="pty-el-k">총선</span><span class="pty-el-m">1석</span></a></li></ul></section>
+  <section class="pty-sec"><h2>소속 인물 <span class="pty-cnt">7</span></h2><ul class="pty-members"><li><a href="/person/%EB%B0%95%EB%B3%91%EC%84%9D-1952-01-25/">박병석<span class="pty-mem-wl">6승</span></a></li><li><a href="/person/%EC%9D%B4%EB%82%99%EC%97%B0-1952-12-20/">이낙연<span class="pty-mem-wl">6승</span></a></li><li><a href="/person/%EC%84%A4%ED%9B%88-1953-04-23/">설훈<span class="pty-mem-wl">5승</span></a></li><li><a href="/person/%EA%B9%80%EC%A2%85%EB%AF%BC-1964-05-12/">김종민<span class="pty-mem-wl">3승</span></a></li><li><a href="/person/%ED%99%8D%EC%98%81%ED%91%9C-1957-04-30/">홍영표<span class="pty-mem-wl">3승</span></a></li><li><a href="/person/%EC%A0%84%EB%B3%91%ED%97%8C-1958-03-17/">전병헌<span class="pty-mem-wl">3승</span></a></li><li><a href="/person/%EC%9C%A0%EC%8A%B9%ED%9D%AC-1960-04-26/">유승희<span class="pty-mem-wl">2승</span></a></li></ul></section>
+  <footer class="foot">
+    <p class="fine">정당 메타·계보: <code>data/parties/registry.json</code> · 회차 등장: 역대 결과 · 소속 인물: 의원 ID 매핑(당선·낙선 포함은 <a href="/search.html?q=%EC%83%88%EB%A1%9C%EC%9A%B4%EB%AF%B8%EB%9E%98">검색</a>).</p>
+  </footer>
+</main>
+<script src="assets/parties.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+<script>
+// [data-party] 요소에 정당색 입히기 (parties.js partyColor).
+(function () {
+  if (typeof partyColor !== 'function') return;
+  document.querySelectorAll('[data-party]').forEach(function (el) {
+    var c = partyColor(el.dataset.party);
+    if (el.classList.contains('pty-bar')) el.style.background = c;
+    else if (el.classList.contains('pty-rel')) { el.style.color = c; el.style.borderColor = c; }
+    else el.style.setProperty('--pty-c', c);
+  });
+})();
+</script>
+</body>
+</html>

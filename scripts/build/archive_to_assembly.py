@@ -8,6 +8,10 @@ import json, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+# 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from party_canon import canon_party  # noqa: E402
+
 RES = ROOT / "data" / "results"
 
 # n → 아카이브 id. 9~12대 중선거구(1구 2인) → winners[]. 5~8대 소선거구(시군구 union용).
@@ -26,6 +30,9 @@ def convert(n, aid):
         if r.get("scope") != "district" or str(r.get("sg_typecode")) != "2":
             continue
         cands = r.get("candidates", [])
+        for c in cands:  # 정당명 정규화 (별칭→정식명)
+            if c.get("party"):
+                c["party"] = canon_party(c["party"])
         won = [c for c in cands if c.get("won")]
         w = won[0] if won else (cands[0] if cands else None)
         rec = {

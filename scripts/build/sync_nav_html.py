@@ -31,6 +31,7 @@ MENU = [
     ("재·보궐", "/byelection/", "byelection"),
     ("역대 결과", "/history.html", "history"),
     ("타임라인", "/timeline.html", "timeline"),
+    ("정당사", "/parties.html", "parties"),
     ("근현대사", "/chronology.html", "chronology"),
     # '검색'은 nav 링크 대신 헤더 우측 검색창(nav.js가 .hdr-meta에 주입)으로 대체.
 ]
@@ -40,8 +41,10 @@ def menu_for_path(rel_path: str) -> str | None:
     p = "/" + rel_path.lstrip("/")
     if p == "/index.html" or p == "/":
         return "home"
-    if p == "/polls.html" or any(p.startswith(x) for x in ("/governor/", "/mayor/", "/party/", "/superintendent/")):
+    if p == "/polls.html" or any(p.startswith(x) for x in ("/governor/", "/mayor/", "/superintendent/")):
         return "polls"
+    if p == "/parties.html" or p.startswith("/party/"):
+        return "parties"
     if p == "/byelection.html" or p.startswith("/byelection/"):
         return "byelection"
     if p == "/tracker.html":

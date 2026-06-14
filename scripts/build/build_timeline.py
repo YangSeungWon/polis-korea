@@ -28,10 +28,15 @@ client는 한 파일만 fetch하면 timeline 전체 시각화 가능.
 """
 from __future__ import annotations
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "data/results"
+
+# 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from party_canon import canon_party  # noqa: E402
 
 KIND_LABEL = {
     "presidential": "대선",
@@ -179,6 +184,29 @@ def sido_winners_from_new_schema(races: list[dict], kind: str) -> dict:
 SATELLITE_TO_MAIN = json.loads(
     (ROOT / "data/parties/satellites.json").read_text(encoding="utf-8")
 )["satellite_to_main"]
+
+def _canon_count_list(pairs):
+    """[[정당, 수], ...] 정규화 + 동일 정당 합산(순서·내림차순 유지)."""
+    from collections import Counter
+    ctr = Counter()
+    for item in pairs or []:
+        ctr[canon_party(item[0])] += item[1]
+    return [[p, c] for p, c in ctr.most_common()]
+
+
+def canonicalize_round(r):
+    """타임라인 한 회차의 모든 정당명 필드를 정식명으로 정규화."""
+    r["winner_party"] = canon_party(r.get("winner_party"))
+    for sw in (r.get("sidoWinners") or {}).values():
+        sw["party"] = canon_party(sw.get("party"))
+    for c in (r.get("presCandidates") or []):
+        c["party"] = canon_party(c.get("party"))
+    for key in ("partySeats", "mayorPartyCounts", "metroCouncilPartyCounts",
+                "localCouncilPartyCounts", "metroProportionalPartyCounts",
+                "localProportionalPartyCounts"):
+        if r.get(key):
+            r[key] = _canon_count_list(r[key])
+    return r
 
 
 def mayor_party_counts(races):
@@ -466,6 +494,9 @@ def main():
             })
 
     out_rounds.extend(future)
+    # 정당명 정규화 (별칭→정식명, registry.json) — 출력 직전 단일 chokepoint.
+    for r in out_rounds:
+        canonicalize_round(r)
     # 시간순 정렬
     out_rounds.sort(key=lambda r: r["date"])
     out = {"rounds": out_rounds}

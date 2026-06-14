@@ -11,9 +11,14 @@ from __future__ import annotations
 import json
 import re
 from collections import Counter, defaultdict
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+# 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from party_canon import canon_party  # noqa: E402
+
 RAW = ROOT / "data" / "raw" / "lod"
 RESULTS = ROOT / "data" / "results"
 ELECTIONS = ROOT / "data" / "elections"
@@ -21,7 +26,7 @@ INDEX = ELECTIONS / "index.json"
 
 ROUNDS = {
     1: ("1st-local-1995", "1995-06-27", "첫 전국동시지방선거 — 민선 자치 부활"),
-    2: ("2nd-local-1998", "1998-06-04", "IMF 직후 — 국민회의·자민련 공조"),
+    2: ("2nd-local-1998", "1998-06-04", "IMF 직후 — 국민회의·자유민주연합 공조"),
     3: ("3rd-local-2002", "2002-06-13", "한나라당 광역 압승"),
     4: ("4th-local-2006", "2006-05-31", "한나라당 석권 — 기초의원 정당공천·중선거구 도입"),
 }
@@ -43,7 +48,7 @@ def vp(cell):
 def cand(name_cell, party, vcell, won=True):
     nm, hj = split_name(name_cell)
     v, p = vp(vcell)
-    c = {"name": nm, "party": party, "votes": v, "pct": p, "won": won}
+    c = {"name": nm, "party": canon_party(party), "votes": v, "pct": p, "won": won}
     if hj:
         c["name_hanja"] = hj
     return c
@@ -56,6 +61,8 @@ def build(n):
     if not gov:
         print(f"  {n}회: gov 없음")
         return None
+    for g in gov:  # 정당명 정규화 (별칭→정식명)
+        g["party"] = canon_party(g.get("party"))
     # tc=3 광역단체장 (main)
     tc3 = [{"sg_typecode": "3", "sido": g["sido"], "sigungu": "", "scope": "sido",
             "candidates": [{"name": g["name"], "party": g["party"], "votes": g["votes"],

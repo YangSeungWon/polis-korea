@@ -1,0 +1,62 @@
+/* 정당 페이지 — /party/{정식명}/. build_party_pages.py 생성. */
+.pty-page { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+.pty-hero { position: relative; padding: 1.25rem 0 1rem 0.9rem; margin-bottom: 1.5rem; }
+.pty-bar {
+  position: absolute; left: 0; top: 0.4rem; bottom: 0.4rem; width: 5px;
+  border-radius: 3px; background: var(--rule-strong);
+}
+.pty-name {
+  font-size: 1.9rem; font-weight: 800; line-height: 1.15; margin: 0 0 0.4rem;
+  color: var(--ink); display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+}
+.pty-abbr {
+  font-size: 0.95rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 999px;
+  color: #fff; background: var(--pty-c, var(--ink-mute));
+}
+.pty-life { font-size: 0.95rem; color: var(--ink-soft); margin: 0 0 0.5rem; font-variant-numeric: tabular-nums; }
+.pty-note { font-size: 0.98rem; color: var(--ink); line-height: 1.55; margin: 0.6rem 0 0; }
+
+.pty-sec { margin: 1.75rem 0; }
+.pty-sec > h2 {
+  font-size: 1.05rem; font-weight: 700; color: var(--ink); margin: 0 0 0.75rem;
+  padding-bottom: 0.35rem; border-bottom: 1px solid var(--rule); display: flex; gap: 0.5rem; align-items: baseline;
+}
+.pty-cnt { font-size: 0.8rem; font-weight: 600; color: var(--ink-mute); }
+
+/* 계보 */
+.pty-lineage { display: flex; flex-direction: column; gap: 0.6rem; }
+.pty-lin-row { font-size: 0.98rem; color: var(--ink); }
+.pty-lin-k {
+  display: inline-block; min-width: 2.6rem; font-size: 0.8rem; font-weight: 700;
+  color: var(--ink-mute); margin-right: 0.5rem;
+}
+.pty-rel {
+  display: inline-block; padding: 0.12rem 0.55rem; margin: 0.15rem 0.1rem; border-radius: 999px;
+  border: 1.5px solid var(--rule-strong); font-size: 0.9rem; font-weight: 600;
+  text-decoration: none; color: var(--ink);
+}
+a.pty-rel:hover { filter: brightness(1.1); text-decoration: none; }
+
+/* 등장 선거 */
+.pty-elections { list-style: none; margin: 0; padding: 0; }
+.pty-elections li { border-bottom: 1px solid var(--rule); }
+.pty-elections a {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0.25rem;
+  text-decoration: none; color: var(--ink);
+}
+.pty-elections a:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.pty-el-lab { font-weight: 600; min-width: 6.5rem; }
+.pty-el-k { font-size: 0.78rem; color: var(--ink-mute); min-width: 2.2rem; }
+.pty-el-m { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+
+/* 소속 인물 */
+.pty-members { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.pty-members a {
+  display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.3rem 0.65rem;
+  border: 1px solid var(--rule); border-radius: 999px; text-decoration: none;
+  color: var(--ink); font-size: 0.9rem;
+}
+.pty-members a:hover { border-color: var(--rule-strong); }
+.pty-mem-wl { font-size: 0.75rem; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+.pty-more { font-size: 0.85rem; color: var(--ink-mute); margin: 0.6rem 0 0; }

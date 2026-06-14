@@ -3,6 +3,7 @@
 (function () {
   const $ = (s) => document.querySelector(s);
   let items = [];
+  let partyList = [];   // registry.json parties — 정당명 검색 최상단 노출용
   let filterRound = '';
   const MAX_RESULTS = 200;
 
@@ -15,7 +16,44 @@
       $('#meta').textContent = '인덱스 로드 실패';
       return;
     }
+    // 정당 메타(단일 출처) — 정당명/등록약칭 매칭 → 정당 페이지 카드. 실패해도 인물검색은 동작.
+    try {
+      const rp = await fetch('data/parties/registry.json');
+      const jp = await rp.json();
+      partyList = Object.entries(jp.parties || {}).map(([name, info]) => ({ name, ...info }));
+    } catch (e) { partyList = []; }
     render($('#q').value || '');
+  }
+
+  // 정당명·등록약칭 매칭 — 정확>접두>부분 순. 상위 6개.
+  function matchParties(q) {
+    if (!q) return [];
+    const scored = [];
+    for (const p of partyList) {
+      const n = normalize(p.name), a = normalize(p.abbr || '');
+      let score = -1;
+      if (n === q || (a && a === q)) score = 0;
+      else if (n.startsWith(q) || (a && a.startsWith(q))) score = 1;
+      else if (n.includes(q) || (a && a.includes(q))) score = 2;
+      if (score >= 0) scored.push({ p, score });
+    }
+    scored.sort((x, y) => x.score - y.score || (x.p.founded || '').localeCompare(y.p.founded || ''));
+    return scored.slice(0, 6).map((s) => s.p);
+  }
+
+  function partyCard(p) {
+    const col = (typeof partyColor === 'function') ? partyColor(p.name) : '#888';
+    const life = (p.founded || '') + (p.dissolved ? ` ~ ${p.dissolved}` : (p.founded ? ' ~ 현재' : ''));
+    const abbr = p.abbr ? ` <span class="s-pty-abbr" style="background:${col}">${escapeHtml(p.abbr)}</span>` : '';
+    return `<li class="s-item s-party-card">
+      <a class="s-link" href="/party/${encodeURIComponent(p.name)}/">
+        <span class="s-pty-bar" style="background:${col}"></span>
+        <span class="s-name">${escapeHtml(p.name)}</span>${abbr}
+        <span class="s-pty-life">${escapeHtml(life)}</span>
+        <span class="s-meta">${escapeHtml((p.note || '').slice(0, 60))}</span>
+        <span class="s-group-arrow">정당 →</span>
+      </a>
+    </li>`;
   }
 
   function normalize(s) {
@@ -39,6 +77,7 @@
 
   function render(rawQ) {
     const q = normalize(rawQ);
+    const partyMatches = filterRound ? [] : matchParties(q);
     const filtered = items.filter((it) => {
       if (filterRound && it.r !== filterRound) return false;
       return match(it, q);
@@ -56,8 +95,9 @@
     groups.sort((a, b) => b.items.length - a.items.length
       || (Math.max(...b.items.map((x) => x.y || 0)) - Math.max(...a.items.map((x) => x.y || 0))));
     const capGroups = groups.slice(0, MAX_RESULTS);
+    const partyMeta = partyMatches.length ? `정당 ${partyMatches.length} · ` : '';
     $('#meta').textContent = q || filterRound
-      ? `${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
+      ? `${partyMeta}${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
       : `${items.length.toLocaleString()}건 (검색어 입력)`;
 
     const personHref = (g) =>
@@ -95,7 +135,7 @@
         <div class="s-sub-list">${sub}</div>
       </li>`;
     }).join('');
-    $('#list').innerHTML = html;
+    $('#list').innerHTML = partyMatches.map(partyCard).join('') + html;
   }
 
   function escapeHtml(s) {

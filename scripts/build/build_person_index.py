@@ -19,9 +19,14 @@ import json
 import glob
 import re
 from collections import defaultdict
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+# 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from party_canon import canon_party  # noqa: E402
+
 OUT = ROOT / "assets/person-index.json"
 
 
@@ -100,7 +105,7 @@ def main():
                 nm = (c.get("name") or "").strip()
                 if not nm:
                     continue
-                party = (c.get("party") or "").strip()
+                party = canon_party((c.get("party") or "").strip())  # 별칭→정식명 (parties 배열 seen_p dedup도 함께)
                 votes = c.get("votes", 0) or 0
                 rank = c.get("rank") or 99
                 won = bool(c.get("won")) or (rank == 1)

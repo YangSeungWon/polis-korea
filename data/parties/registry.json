@@ -1,0 +1,554 @@
+{
+  "_note": "정당 단일 출처 — 정식명/등록약칭/별칭/계보(전신·후신·창당·해산). 색은 assets/parties.js(PARTY_COLORS), 위성정당은 satellites.json. 점진 통합 예정.",
+  "_schema": {
+    "key": "정식명(데이터에 쓰이는 캐노니컬 표기)",
+    "abbr": "등록약칭 — 선관위 등록 또는 관용. 정보용(표시 토글). 동음이의 가능 → dedup에 자동 사용 금지.",
+    "aliases": "데이터에 섞여 들어온 같은 정당의 다른 표기. build_timeline이 이 키들을 정식명으로 정규화(dedup). 동음이의 정당과 겹치지 않게 엄선.",
+    "founded": "창당 YYYY-MM (불명확하면 YYYY)",
+    "dissolved": "소멸 YYYY-MM (현존이면 생략)",
+    "predecessors": "직전 정당 정식명들(합당 전신·개명 전·분당 모체)",
+    "successors": "후신 정당 정식명들(합당체·개명 후·분당체)",
+    "relation": "new(신설)|rename(개명)|merge(합당)|split(분당)|dissolve(해산/소멸)",
+    "note": "한 줄 설명(대표·맥락)"
+  },
+  "_collisions": {
+    "민정당": "1963 윤보선 民政黨(5대대선·6대총선) ↔ 민주정의당 약칭 민정당(1981~). 별개 정당 — 병합 금지.",
+    "공화당": "1997 군소 공화당 ↔ 민주공화당(박정희 1963~80). 별개 — 병합 금지.",
+    "신민당": "1967 통합야당 신민당 ↔ 신한민주당 약칭 신민당(1985~). 별개 — 병합 금지.",
+    "민주당": "1955·1991·2008·2011 등 여러 시점 '민주당'이 데이터에서 동명. 시점별 별개 — 자동 dedup 불가, 회차 맥락으로 구분."
+  },
+  "parties": {
+    "더불어민주당": {
+      "stream": "민주",
+      "abbr": "민주당",
+      "founded": "2015-12",
+      "predecessors": [
+        "새정치민주연합"
+      ],
+      "relation": "rename",
+      "note": "새정치민주연합 개명. 현존 원내 1당 민주계 본류."
+    },
+    "새정치민주연합": {
+      "stream": "민주",
+      "abbr": "새정치연합",
+      "founded": "2014-03",
+      "dissolved": "2015-12",
+      "predecessors": [
+        "민주통합당",
+        "새정치연합"
+      ],
+      "successors": [
+        "더불어민주당"
+      ],
+      "relation": "merge",
+      "note": "민주당(민주통합당 후신) + 안철수 새정치연합 합당. 2015 더민주로 개명."
+    },
+    "민주통합당": {
+      "stream": "민주",
+      "founded": "2011-12",
+      "dissolved": "2013-05",
+      "successors": [
+        "새정치민주연합"
+      ],
+      "relation": "merge",
+      "note": "민주당 + 시민통합당 합당. 2013 '민주당' 개명 후 2014 새정치민주연합."
+    },
+    "대통합민주신당": {
+      "stream": "민주",
+      "founded": "2007-08",
+      "dissolved": "2008-02",
+      "predecessors": [
+        "열린우리당"
+      ],
+      "successors": [
+        "통합민주당"
+      ],
+      "relation": "merge",
+      "note": "17대 대선 민주계 통합신당(정동영). 2008 통합민주당."
+    },
+    "열린우리당": {
+      "stream": "민주",
+      "founded": "2003-11",
+      "dissolved": "2007-08",
+      "predecessors": [
+        "새천년민주당"
+      ],
+      "successors": [
+        "대통합민주신당"
+      ],
+      "relation": "split",
+      "note": "새천년민주당 분당(친노). 노무현 집권여당."
+    },
+    "통합민주당": {
+      "stream": "민주",
+      "founded": "2008-02",
+      "dissolved": "2011-12",
+      "predecessors": [
+        "대통합민주신당"
+      ],
+      "successors": [
+        "민주통합당"
+      ],
+      "relation": "merge",
+      "note": "대통합민주신당 + 민주당 합당. 18대 총선. 2008-07 '민주당' 개명."
+    },
+    "새천년민주당": {
+      "stream": "민주",
+      "abbr": "민주당",
+      "founded": "2000-01",
+      "dissolved": "2005-05",
+      "predecessors": [
+        "새정치국민회의"
+      ],
+      "successors": [
+        "열린우리당"
+      ],
+      "relation": "rename",
+      "note": "DJ 새정치국민회의 확대개편. 16대 총선·노무현 당선. 열린우리당 분당으로 약화."
+    },
+    "새정치국민회의": {
+      "stream": "민주",
+      "abbr": "국민회의",
+      "aliases": [
+        "국민회의"
+      ],
+      "founded": "1995-09",
+      "dissolved": "2000-01",
+      "successors": [
+        "새천년민주당"
+      ],
+      "relation": "rename",
+      "note": "김대중 창당(민주당 분당). 15대 대선 DJ 당선."
+    },
+    "평화민주당": {
+      "stream": "민주",
+      "abbr": "평민당",
+      "founded": "1987-11",
+      "dissolved": "1991-09",
+      "successors": [
+        "민주당"
+      ],
+      "relation": "merge",
+      "note": "김대중 창당. 13대 총선 제1야당. 1991 신민주연합당 거쳐 민주당 통합."
+    },
+    "통일민주당": {
+      "stream": "민주",
+      "founded": "1987-05",
+      "dissolved": "1990-02",
+      "successors": [
+        "민주자유당"
+      ],
+      "relation": "merge",
+      "note": "김영삼 창당(13대). 3당합당으로 민자당 합류(YS계). 잔류 일부는 민주당계."
+    },
+    "더불어시민당": {
+      "stream": "민주",
+      "founded": "2020-03",
+      "dissolved": "2020-05",
+      "successors": [
+        "더불어민주당"
+      ],
+      "relation": "merge",
+      "note": "21대 총선 더민주 비례 위성정당. satellites.json 참조."
+    },
+    "더불어민주연합": {
+      "stream": "민주",
+      "founded": "2024-02",
+      "dissolved": "2024-05",
+      "successors": [
+        "더불어민주당"
+      ],
+      "relation": "merge",
+      "note": "22대 총선 더민주 비례 위성연합. satellites.json 참조."
+    },
+    "열린민주당": {
+      "stream": "민주",
+      "founded": "2020-03",
+      "dissolved": "2022-01",
+      "successors": [
+        "더불어민주당"
+      ],
+      "relation": "merge",
+      "note": "21대 총선 독자 비례정당(3석). 2022 더민주 합당. 선거 당시는 위성 아님."
+    },
+    "국민의힘": {
+      "stream": "보수",
+      "founded": "2020-09",
+      "predecessors": [
+        "미래통합당"
+      ],
+      "relation": "rename",
+      "note": "미래통합당 개명. 현존 보수 본류. 2022 윤석열 당선."
+    },
+    "미래통합당": {
+      "stream": "보수",
+      "founded": "2020-02",
+      "dissolved": "2020-09",
+      "predecessors": [
+        "자유한국당",
+        "새로운보수당"
+      ],
+      "successors": [
+        "국민의힘"
+      ],
+      "relation": "merge",
+      "note": "자유한국당 + 새로운보수당 + 전진당 합당. 2020-09 국민의힘 개명."
+    },
+    "미래한국당": {
+      "stream": "보수",
+      "founded": "2020-02",
+      "dissolved": "2020-05",
+      "successors": [
+        "미래통합당"
+      ],
+      "relation": "merge",
+      "note": "21대 총선 미래통합당 비례 위성. satellites.json 참조."
+    },
+    "국민의미래": {
+      "stream": "보수",
+      "founded": "2024-02",
+      "dissolved": "2024-05",
+      "successors": [
+        "국민의힘"
+      ],
+      "relation": "merge",
+      "note": "22대 총선 국민의힘 비례 위성. satellites.json 참조."
+    },
+    "자유한국당": {
+      "stream": "보수",
+      "abbr": "한국당",
+      "founded": "2017-02",
+      "dissolved": "2020-02",
+      "predecessors": [
+        "새누리당"
+      ],
+      "successors": [
+        "미래통합당"
+      ],
+      "relation": "rename",
+      "note": "새누리당 개명(탄핵 국면). 20대 대선 홍준표."
+    },
+    "새누리당": {
+      "stream": "보수",
+      "founded": "2012-02",
+      "dissolved": "2017-02",
+      "predecessors": [
+        "한나라당"
+      ],
+      "successors": [
+        "자유한국당"
+      ],
+      "relation": "rename",
+      "note": "한나라당 개명. 18대 대선 박근혜 당선. 탄핵 후 자유한국당."
+    },
+    "한나라당": {
+      "stream": "보수",
+      "founded": "1997-11",
+      "dissolved": "2012-02",
+      "predecessors": [
+        "신한국당",
+        "통합민주당"
+      ],
+      "successors": [
+        "새누리당"
+      ],
+      "relation": "merge",
+      "note": "신한국당 + 통합민주당(조순) 신설합당. 2012 새누리당 개명."
+    },
+    "신한국당": {
+      "stream": "보수",
+      "founded": "1995-12",
+      "dissolved": "1997-11",
+      "predecessors": [
+        "민주자유당"
+      ],
+      "successors": [
+        "한나라당"
+      ],
+      "relation": "rename",
+      "note": "민주자유당 개명(YS). 15대 총선. 1997 한나라당 합당."
+    },
+    "민주자유당": {
+      "stream": "보수",
+      "abbr": "민자당",
+      "founded": "1990-02",
+      "dissolved": "1995-12",
+      "predecessors": [
+        "민주정의당",
+        "통일민주당",
+        "신민주공화당"
+      ],
+      "successors": [
+        "신한국당"
+      ],
+      "relation": "merge",
+      "note": "3당합당(민정+통민+신민주공화). 14대 총선·YS 당선. 1995 신한국당 개명."
+    },
+    "민주정의당": {
+      "stream": "보수",
+      "abbr": "민정당",
+      "founded": "1981-01",
+      "dissolved": "1990-02",
+      "successors": [
+        "민주자유당"
+      ],
+      "relation": "merge",
+      "note": "전두환 창당. 11~13대 집권여당(전두환·노태우). 3당합당으로 민자당. ※약칭 민정당은 1963 윤보선 민정당과 동음이의."
+    },
+    "신민주공화당": {
+      "stream": "충청",
+      "founded": "1987-10",
+      "dissolved": "1990-02",
+      "successors": [
+        "민주자유당"
+      ],
+      "relation": "merge",
+      "note": "김종필 창당(13대). 3당합당으로 민자당 합류."
+    },
+    "민주공화당": {
+      "stream": "보수",
+      "founded": "1963-02",
+      "dissolved": "1980-10",
+      "relation": "dissolve",
+      "note": "박정희 창당. 5~10대 집권여당. 1980 신군부 정당 강제해산. ※1997 군소 '공화당'과 동음이의."
+    },
+    "자유민주연합": {
+      "stream": "충청",
+      "abbr": "자민련",
+      "aliases": [
+        "자민련"
+      ],
+      "founded": "1995-03",
+      "dissolved": "2006-04",
+      "successors": [
+        "한나라당"
+      ],
+      "relation": "merge",
+      "note": "김종필 창당(민자당 탈당). 15대 대선 DJ 공조. 2006 한나라당 흡수합당."
+    },
+    "자유선진당": {
+      "stream": "충청",
+      "abbr": "선진당",
+      "founded": "2008-02",
+      "dissolved": "2012-11",
+      "successors": [
+        "새누리당"
+      ],
+      "relation": "merge",
+      "note": "이회창 창당. 충청 기반. 2012 새누리당 흡수합당."
+    },
+    "통합진보당": {
+      "stream": "진보",
+      "abbr": "통진당",
+      "founded": "2011-12",
+      "dissolved": "2014-12",
+      "predecessors": [
+        "민주노동당"
+      ],
+      "relation": "dissolve",
+      "note": "민주노동당 + 국민참여당 + 진보신당 일부 합당. 2014 헌재 위헌정당 해산."
+    },
+    "민주노동당": {
+      "stream": "진보",
+      "abbr": "민노당",
+      "founded": "2000-01",
+      "dissolved": "2011-12",
+      "successors": [
+        "통합진보당"
+      ],
+      "relation": "merge",
+      "note": "진보 원내진입 첫 정당(17대 10석). 2011 통합진보당."
+    },
+    "정의당": {
+      "stream": "진보",
+      "founded": "2012-10",
+      "predecessors": [
+        "통합진보당"
+      ],
+      "relation": "split",
+      "note": "통진당 분당(진보정의당)→2013 정의당 개명. 노회찬·심상정."
+    },
+    "진보신당": {
+      "stream": "진보",
+      "founded": "2008-03",
+      "predecessors": [
+        "민주노동당"
+      ],
+      "relation": "split",
+      "note": "민주노동당 분당(심상정·노회찬 등)."
+    },
+    "국민의당": {
+      "stream": "기타",
+      "founded": "2016-02",
+      "dissolved": "2018-02",
+      "successors": [
+        "바른미래당",
+        "민주평화당"
+      ],
+      "relation": "split",
+      "note": "안철수 창당(20대 호남 돌풍). 2018 바른정당과 합당→바른미래당, 호남계는 민주평화당."
+    },
+    "바른정당": {
+      "stream": "보수",
+      "founded": "2017-01",
+      "dissolved": "2018-02",
+      "predecessors": [
+        "새누리당"
+      ],
+      "successors": [
+        "바른미래당"
+      ],
+      "relation": "split",
+      "note": "새누리당 탈당(유승민·김무성, 탄핵 찬성). 2018 바른미래당."
+    },
+    "바른미래당": {
+      "stream": "기타",
+      "founded": "2018-02",
+      "dissolved": "2020-02",
+      "predecessors": [
+        "국민의당",
+        "바른정당"
+      ],
+      "relation": "merge",
+      "note": "국민의당(안철수) + 바른정당(유승민). 분화로 소멸."
+    },
+    "민주평화당": {
+      "stream": "기타",
+      "abbr": "평화당",
+      "founded": "2018-02",
+      "dissolved": "2020-02",
+      "predecessors": [
+        "국민의당"
+      ],
+      "relation": "split",
+      "note": "국민의당 호남계 분당. 2020 민생당으로 통합."
+    },
+    "민생당": {
+      "stream": "기타",
+      "founded": "2020-02",
+      "predecessors": [
+        "민주평화당",
+        "바른미래당"
+      ],
+      "relation": "merge",
+      "note": "21대 총선 직전 민주평화당+바른미래당 잔류+대안신당 통합."
+    },
+    "새로운미래": {
+      "stream": "민주",
+      "abbr": "새미래",
+      "founded": "2024-02",
+      "relation": "split",
+      "note": "이낙연 창당(더민주 탈당). 22대 총선."
+    },
+    "개혁신당": {
+      "stream": "기타",
+      "founded": "2024-01",
+      "relation": "new",
+      "note": "이준석 창당. 22대 총선 원내진입."
+    },
+    "조국혁신당": {
+      "stream": "진보",
+      "founded": "2024-03",
+      "relation": "new",
+      "note": "조국 창당. 22대 총선 비례 12석."
+    },
+    "통일국민당": {
+      "stream": "기타",
+      "abbr": "국민당",
+      "founded": "1992-01",
+      "dissolved": "1994",
+      "relation": "dissolve",
+      "note": "정주영 창당(14대 총선 31석). 정주영 대선 패배 후 소멸. ※약칭 국민당 동음이의."
+    },
+    "국민신당": {
+      "stream": "기타",
+      "founded": "1997-11",
+      "dissolved": "1998",
+      "successors": [
+        "새정치국민회의"
+      ],
+      "relation": "merge",
+      "note": "이인제 창당(신한국당 경선 불복, 15대 대선 3위). 1998 국민회의 흡수."
+    },
+    "국민통합21": {
+      "stream": "기타",
+      "founded": "2002-11",
+      "dissolved": "2004",
+      "relation": "dissolve",
+      "note": "정몽준 창당(16대 대선). 노무현 단일화."
+    },
+    "창조한국당": {
+      "stream": "기타",
+      "founded": "2007-10",
+      "dissolved": "2012",
+      "relation": "dissolve",
+      "note": "문국현 창당(17대 대선)."
+    },
+    "자유당": {
+      "stream": "보수",
+      "founded": "1951-12",
+      "dissolved": "1970",
+      "relation": "dissolve",
+      "note": "이승만 창당. 1~4대 집권여당. 4·19 후 몰락."
+    },
+    "민주당": {
+      "stream": "민주",
+      "founded": "1955-09",
+      "note": "★동명 다수: 1955 민주당(신익희·장면)·1991 민주당·2008 민주당·2011 민주당 등. 데이터의 '민주당'은 회차 맥락으로 구분 필요. 자동 dedup 불가."
+    },
+    "신민당": {
+      "stream": "민주",
+      "founded": "1967-02",
+      "dissolved": "1980-10",
+      "relation": "dissolve",
+      "note": "통합야당(민중당+신한당). 7~10대 제1야당(YS·DJ). 1980 신군부 해산. ※1985 신한민주당 약칭 신민당과 동음이의."
+    },
+    "민정당": {
+      "stream": "민주",
+      "founded": "1963-05",
+      "dissolved": "1965",
+      "relation": "merge",
+      "note": "윤보선 민정당(民政黨, 5대 대선·6대 총선 야당). 1965 민중당 통합. ※전두환 민주정의당(약칭 민정당)과 별개."
+    },
+    "공화당": {
+      "stream": "기타",
+      "founded": "1997",
+      "note": "1997 15대 대선기 군소 공화당. ※박정희 민주공화당과 별개."
+    },
+    "한국민주당": {
+      "stream": "민주",
+      "founded": "1945-09",
+      "dissolved": "1949-02",
+      "successors": [
+        "민주국민당"
+      ],
+      "relation": "rename",
+      "note": "해방 직후 우익 정당(한민당). 제헌국회 주요세력. 1949 민주국민당."
+    },
+    "민주국민당": {
+      "stream": "민주",
+      "founded": "1949-02",
+      "dissolved": "1955-09",
+      "predecessors": [
+        "한국민주당"
+      ],
+      "successors": [
+        "민주당"
+      ],
+      "relation": "rename",
+      "note": "한민당 후신. 1955 민주당으로 통합."
+    },
+    "한국독립당": {
+      "stream": "기타",
+      "founded": "1940",
+      "relation": "dissolve",
+      "note": "김구 임정 여당계. 제헌국회기."
+    },
+    "대한독립촉성국민회": {
+      "stream": "기타",
+      "founded": "1946-02",
+      "relation": "dissolve",
+      "note": "이승만계 해방정국 단체. 1·2대 총선."
+    }
+  }
+}

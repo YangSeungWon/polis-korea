@@ -124,3 +124,24 @@
 @media (max-width: 600px) {
   .s-single { grid-template-columns: 1fr auto; }
 }
+
+/* 정당 매칭 카드 — 정당명 검색 시 결과 최상단 (build_party_pages /party/{name}/). */
+.s-party-card { margin-bottom: 0.5rem; }
+.s-party-card .s-link {
+  display: flex; align-items: center; gap: 0.6rem; position: relative;
+  padding: 0.7rem 0.9rem 0.7rem 1.1rem;
+  border: 1.5px solid var(--rule-strong); border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.s-party-card .s-link:hover { background: color-mix(in srgb, var(--accent) 11%, transparent); }
+.s-party-card .s-pty-bar {
+  position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem; width: 5px; border-radius: 3px;
+}
+.s-party-card .s-name { font-weight: 800; font-size: 1.05rem; }
+.s-pty-abbr {
+  color: #fff; font-size: 0.75rem; font-weight: 700;
+  padding: 0.08rem 0.45rem; border-radius: 999px;
+}
+.s-pty-life { font-size: 0.82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.s-party-card .s-meta { color: var(--ink-mute); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-party-card .s-group-arrow { margin-left: auto; font-size: 0.8rem; color: var(--accent); font-weight: 700; white-space: nowrap; }
