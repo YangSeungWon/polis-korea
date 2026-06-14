@@ -204,16 +204,30 @@
     const NS = 'http://www.w3.org/2000/svg';
     const Rmax = opts.rmax || 40, seedGap = opts.seedGap || 80;
     const pcol = Archive.pcol, ssh = Archive.ssh;
+    // 전남광주 통합(2026 지선) — 데이터에 통합 키 있으면 광주+전남+통합을 한 셀로 합치고
+    // honamMergedLayout 사용 (hex 렌더러와 동일). 그 외 회차는 분리 유지.
+    let data = bySido, layout = SIDO_HEX_LAYOUT;
+    if ((bySido['전남광주특별시'] || bySido['전남광주통합특별시']) && typeof honamMergedLayout === 'function') {
+      layout = honamMergedLayout(SIDO_HEX_LAYOUT);
+      const merged = {};
+      for (const src of ['광주광역시', '전라남도', '전남광주특별시', '전남광주통합특별시']) {
+        const s = bySido[src]; if (!s) continue;
+        for (const [p, c] of Object.entries(s)) merged[p] = (merged[p] || 0) + c;
+      }
+      data = Object.assign({}, bySido);
+      delete data['광주광역시']; delete data['전라남도']; delete data['전남광주통합특별시'];
+      data['전남광주특별시'] = merged;
+    }
     let maxTot = 1; const ent0 = [];
-    for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
-      const seats = bySido[sido]; if (!seats) continue;
+    for (const [sido, pos] of Object.entries(layout)) {
+      const seats = data[sido]; if (!seats) continue;
       const tot = Object.values(seats).reduce((s, n) => s + n, 0);
       if (!tot) continue;
       maxTot = Math.max(maxTot, tot); ent0.push({ sido, seats, tot, pos });
     }
     if (!ent0.length) return false;
     const nodes = ent0.map((e) => ({
-      sido: e.sido, seats: e.seats, tot: e.tot,
+      sido: e.sido, seats: e.seats, tot: e.tot, label: e.pos.label,
       r: Math.max(7, Rmax * Math.sqrt(e.tot / maxTot)),
       cx0: e.pos.col * seedGap + (e.pos.row % 2 ? seedGap / 2 : 0),
       cy0: e.pos.row * seedGap * 0.87,
@@ -262,7 +276,7 @@
         const t = document.createElementNS(NS, 'text');
         t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
         t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-dorling-label');
-        t.textContent = ssh(n.sido);
+        t.textContent = n.label || ssh(n.sido);
         g.appendChild(t);
       }
       svg.appendChild(g);
