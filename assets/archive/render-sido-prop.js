@@ -108,16 +108,14 @@
     svg.appendChild(t);
   }
 
-  // === 격자 모드 === (opts.legend 로 범례 문구 override — 폴 모드용)
-  function drawGrid(host, races, opts) {
-    if (!host) return;
+  // 공유 레이아웃 — 위치(packClusters)·viewBox 한 번 계산. 격자·dorling 공유 → 토글해도 위치 고정.
+  function propLayout(races) {
     const cells = layoutCells(races);
-    if (!cells.length) { host.parentElement?.setAttribute('hidden', ''); return; }
+    if (!cells.length) return null;
     const maxVoted = Math.max(...cells.map((c) => c.voted));
     // 최대 시도가 ~46개 hex가 되도록 단위 결정 (만 단위로 정리)
     const unit = Math.max(10000, Math.ceil(maxVoted / 46 / 10000) * 10000);
     const smallR = 3.5;
-    // 권역 격자 seed → 크기대로 force-packing(작은 권역 가까이). N·반경 먼저 계산 후 pack.
     for (const cell of cells) {
       cell.N = Math.max(1, Math.round(cell.voted / unit));
       const L = Math.ceil(Math.sqrt(Math.max(cell.N - 1, 0) / 3));
@@ -133,9 +131,18 @@
     const minY = Math.min(...cells.map((c) => c.cy - c.r)) - 16;
     const vbW = Math.max(...cells.map((c) => c.cx + c.r)) - minX + 6;
     const vbH = Math.max(...cells.map((c) => c.cy + c.r)) - minY + 6;
+    return { cells, unit, smallR, minX, minY, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}` };
+  }
+
+  // === 격자 모드 === (opts.legend 로 범례 문구 override — 폴 모드용)
+  function drawGrid(host, races, opts) {
+    if (!host) return;
+    const L = propLayout(races);
+    if (!L) { host.parentElement?.setAttribute('hidden', ''); return; }
+    const { cells, unit, smallR, minX, minY } = L;
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS);
-    svg.setAttribute('viewBox', `${minX.toFixed(1)} ${minY.toFixed(1)} ${vbW.toFixed(1)} ${vbH.toFixed(1)}`);
+    svg.setAttribute('viewBox', L.viewBox);
     svg.setAttribute('class', 'sido-prop-svg');
 
     for (const cell of cells) {
@@ -171,37 +178,18 @@
     host.innerHTML = ''; host.appendChild(svg);
   }
 
-  // === dorling 모드 === (opts.legend override)
+  // === dorling 모드 === 격자와 같은 propLayout(위치·viewBox 동일) → 토글해도 권역 고정.
+  //   원 반지름 = cell.r(격자 클러스터 반경, ∝√득표) · 파이 = 후보 득표 구성.
   function drawDorling(host, races, opts) {
     if (!host) return;
-    const cells = layoutCells(races);
-    if (!cells.length) { host.parentElement?.setAttribute('hidden', ''); return; }
-    const maxVoted = Math.max(...cells.map((c) => c.voted));
-    const Rmax = 44;
-    const nodes = cells.map((c) => ({
-      cell: c, cx: c.cx, cy: c.cy, cx0: c.cx, cy0: c.cy,
-      radius: Math.max(7, Rmax * Math.sqrt(c.voted / maxVoted)),
-    }));
-    // force-directed: 겹침 반발 + 원위치 앵커
-    for (let iter = 0; iter < 60; iter++) {
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = b.cx - a.cx, dy = b.cy - a.cy;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-          const overlap = a.radius + b.radius + 2 - dist;
-          if (overlap > 0) {
-            const push = overlap * 0.5 / dist;
-            a.cx -= push * dx; a.cy -= push * dy;
-            b.cx += push * dx; b.cy += push * dy;
-          }
-        }
-      }
-      for (const n of nodes) { n.cx += (n.cx0 - n.cx) * 0.06; n.cy += (n.cy0 - n.cy) * 0.06; }
-    }
-    const svg = svgFor(host, nodes.map((n) => ({ cx: n.cx, cy: n.cy })), Rmax + 16);
-    for (const n of nodes) {
-      const cell = n.cell;
+    const L = propLayout(races);
+    if (!L) { host.parentElement?.setAttribute('hidden', ''); return; }
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('xmlns', NS);
+    svg.setAttribute('viewBox', L.viewBox);
+    svg.setAttribute('class', 'sido-prop-svg');
+    for (const cell of L.cells) {
+      const R = cell.r;
       const g = document.createElementNS(NS, 'g');
       const tt = document.createElementNS(NS, 'title'); tt.textContent = titleText(cell); g.appendChild(tt);
       const cands = cell.cands.filter((c) => _v(c) > 0);
@@ -211,38 +199,29 @@
         for (const c of cands) {
           const a1 = a0 + (_v(c) / total) * 2 * Math.PI;
           const p = document.createElementNS(NS, 'path');
-          p.setAttribute('d', pieSlice(n.cx, n.cy, n.radius, a0, a1));
-          p.setAttribute('fill', pcolor(c.party));
-          g.appendChild(p);
-          a0 = a1;
+          p.setAttribute('d', pieSlice(cell.cx, cell.cy, R, a0, a1));
+          p.setAttribute('fill', pcolor(c.party)); g.appendChild(p); a0 = a1;
         }
-        const ring = document.createElementNS(NS, 'circle');
-        ring.setAttribute('cx', n.cx.toFixed(1)); ring.setAttribute('cy', n.cy.toFixed(1));
-        ring.setAttribute('r', n.radius.toFixed(1));
-        ring.setAttribute('class', 'sido-prop-ring');
-        g.appendChild(ring);
       } else {
         const c = document.createElementNS(NS, 'circle');
-        c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1));
-        c.setAttribute('r', n.radius.toFixed(1));
-        c.setAttribute('fill', cands[0] ? pcolor(cands[0].party) : '#e6e9ef');
-        c.setAttribute('class', 'sido-prop-ring');
-        g.appendChild(c);
+        c.setAttribute('cx', cell.cx.toFixed(1)); c.setAttribute('cy', cell.cy.toFixed(1)); c.setAttribute('r', R.toFixed(1));
+        c.setAttribute('fill', cands[0] ? pcolor(cands[0].party) : '#e6e9ef'); g.appendChild(c);
       }
+      const ring = document.createElementNS(NS, 'circle');
+      ring.setAttribute('cx', cell.cx.toFixed(1)); ring.setAttribute('cy', cell.cy.toFixed(1)); ring.setAttribute('r', R.toFixed(1));
+      ring.setAttribute('class', 'sido-prop-ring'); g.appendChild(ring);
       svg.appendChild(g);
-      // 라벨 — 원 중심 (반경 충분할 때만)
-      if (n.radius >= 12) {
+      if (R >= 12) {
         const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
-        t.setAttribute('class', 'sido-prop-label on-disc');
-        t.textContent = cell.label;
+        t.setAttribute('x', cell.cx.toFixed(1)); t.setAttribute('y', (cell.cy + 3).toFixed(1));
+        t.setAttribute('class', 'sido-prop-label on-disc'); t.textContent = cell.label;
         svg.appendChild(t);
       }
     }
     const leg = document.createElementNS(NS, 'text');
-    leg.setAttribute('x', '4'); leg.setAttribute('y', '14');
+    leg.setAttribute('x', (L.minX + 4).toFixed(1)); leg.setAttribute('y', (L.minY + 12).toFixed(1));
     leg.setAttribute('class', 'sido-prop-legend');
-    leg.textContent = (opts && opts.legend) || '● 크기=투표수 · 파이=후보 득표 구성';
+    leg.textContent = (opts && opts.legend) || '● 크기=득표 · 파이=후보 득표 구성';
     svg.appendChild(leg);
     host.innerHTML = ''; host.appendChild(svg);
   }
