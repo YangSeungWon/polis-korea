@@ -9,7 +9,6 @@
   const PXY = 9.5;       // 1년당 px (세로)
   const COL_GAP = 10;
   const PAD_T = 50, PAD_L = 40, PAD_R = 14, PAD_B = 28;
-  const LABEL_MIN = 56;  // lane 폭이 이 이상일 때만 라벨 표시(모바일은 막대 탭)
 
   function pyear(s) {
     if (!s) return null;
@@ -86,7 +85,10 @@
     const W = Math.max(host.clientWidth || 900, 320);
     const laneW = Math.max((W - PAD_L - PAD_R - (cols.length - 1) * COL_GAP) / totalLanes, 6);
     const BAR_W = Math.max(3, Math.min(10, laneW * 0.55));
-    const showLabels = laneW >= LABEL_MIN;
+    // 세로(회전) 라벨 — 정당명을 막대 따라 위→아래 업라이트 스택. 가로폭 부족·세로 여유를 활용해
+    // PC 라벨 겹침·모바일 미표시를 동시 해소. 폰트는 lane 안에 글자열이 들어가도록 적응.
+    const labelFS = Math.max(7, Math.min(11, laneW - BAR_W - 2));
+    const showLabels = labelFS >= 7;
     colInfo.forEach((c, i) => {
       c.x = PAD_L + c.startLane * laneW + i * COL_GAP;
       for (const nm of colMembers[c.stream]) node[nm].x = c.x + node[nm].lane * laneW;
@@ -131,7 +133,12 @@
       out.push(`<a href="/party/${encodeURIComponent(name)}/" class="lin-node">`);
       out.push(`<rect x="${n.x.toFixed(1)}" y="${yT.toFixed(1)}" width="${BAR_W.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col}" class="lin-bar"><title>${esc(name)}${n.info.abbr ? ' (' + esc(n.info.abbr) + ')' : ''} · ${esc(n.info.founded || '')}~${esc(n.info.dissolved || '현재')}</title></rect>`);
       if (showLabels) {
-        out.push(`<text x="${(n.x + BAR_W + 3).toFixed(1)}" y="${(yT + 10).toFixed(1)}" class="lin-bar-label">${esc(name)}</text>`);
+        const lx = (n.x + BAR_W + 1).toFixed(1);
+        const chars = [...name];
+        const maxCh = Math.max(2, Math.floor((h + 16) / labelFS));   // 막대 높이(+여유)만큼만 — 짧은 정당 과도 overflow 방지
+        const disp = chars.length > maxCh ? chars.slice(0, maxCh - 1).join('') + '…' : name;
+        const tsp = [...disp].map((ch, i) => `<tspan x="${lx}" dy="${i ? '1em' : '0'}">${esc(ch)}</tspan>`).join('');
+        out.push(`<text x="${lx}" y="${(yT + labelFS).toFixed(1)}" class="lin-bar-label" style="font-size:${labelFS.toFixed(1)}px">${tsp}</text>`);
       }
       out.push(`</a>`);
     }

@@ -28,7 +28,7 @@
 /* 정당 막대(세로) + 라벨(오른쪽) */
 .lin-bar { stroke: rgba(0, 0, 0, 0.12); stroke-width: 0.5; transition: opacity 0.12s; }
 .lin-node:hover .lin-bar { opacity: 0.82; }
-.lin-bar-label { font-size: 11.5px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+.lin-bar-label { font-weight: 600; fill: var(--ink); pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 2.4px; stroke-linejoin: round; }
 .lin-node:hover .lin-bar-label { fill: var(--accent); }
 
 /* 분류 외(기타) — 그래프 밖 텍스트 */
