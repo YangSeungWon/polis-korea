@@ -120,49 +120,16 @@ async function loadData() {
   $('#loading').hidden = true;
 }
 
-function pollsByOffice(office) {
-  return state.data.polls.filter((p) => p.office_level === office);
-}
-
-function pollsByRegion(sido, sigungu = null) {
-  let arr = state.data.polls;
-  if (sido) arr = arr.filter((p) => p.sido === sido);
-  if (sigungu) arr = arr.filter((p) => p.sigungu === sigungu);
-  return arr.sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));
-}
-
-// summarizeLatest (시간감쇠 가중 1위 집계) → utils.js (대시보드와 공용)
-
+// 지선 출처-가공은 PollAdapter로 통일(대선·총선과 동일 패턴). 여기선 state.data.polls를
+// 주입하는 thin wrapper만 — render-hex/map·chrome 호출처 및 result-overlay 몽키패치 무변.
+// summarizeLatest(시간감쇠 가중 1위) → utils.js, 일반구→모도시 매핑 등 로직은 adapter.js 참고.
+function pollsByOffice(office) { return PollAdapter.localPollsByOffice(state.data.polls, office); }
+function pollsByRegion(sido, sigungu = null) { return PollAdapter.localPollsByRegion(state.data.polls, sido, sigungu); }
+function parentSigungu(sigungu) { return PollAdapter.parentSigungu(sigungu); }
 function sidoLastWinningParty(sido, office) {
-  let r = summarizeLatest(pollsByOffice(office).filter((p) => p.sido === sido && !p.sigungu));
-  // 분리 시도(광주·전남)로 못 찾으면 통합키(전남광주특별시)로 — 2026 지선 통합 대응.
-  if (!r && typeof SIDO_MERGE !== 'undefined' && SIDO_MERGE[sido]) {
-    r = summarizeLatest(pollsByOffice(office).filter((p) => p.sido === SIDO_MERGE[sido] && !p.sigungu));
-  }
-  return r;
+  return PollAdapter.localSidoWinner(state.data.polls, sido, office, typeof SIDO_MERGE !== 'undefined' ? SIDO_MERGE : null);
 }
-
-// 시군구 단위 — 기초단체장은 office_level='기초단체장', 그외 메트릭(정당지지/국정평가/투표의향)은
-// office_level이 메트릭 자체. sigungu 필드가 있는 polls만 사용.
-// 일반구 → 모도시 매핑 (통합 도시 기초단체장은 시장 1명. 수원시장안구 → 수원시)
-function parentSigungu(sigungu) {
-  if (!sigungu) return null;
-  const m = sigungu.match(/^([가-힣]+시)[가-힣]+구$/);
-  return m ? m[1] : null;
-}
-
 function sigunguLastWinningParty(sido, sigungu, office = '기초단체장') {
-  const polls = pollsByOffice(office).filter(
-    (p) => p.sido === sido && p.sigungu === sigungu
-  );
-  if (polls.length) return summarizeLatest(polls);
-  // 일반구라면 모도시(통합도시) polls로 fallback
-  const parent = parentSigungu(sigungu);
-  if (parent) {
-    return summarizeLatest(pollsByOffice(office).filter(
-      (p) => p.sido === sido && p.sigungu === parent
-    ));
-  }
-  return null;
+  return PollAdapter.localSigunguWinner(state.data.polls, sido, sigungu, office);
 }
 

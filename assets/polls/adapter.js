@@ -132,8 +132,45 @@
     return (sido, name) => m.get(sido + '|' + name) || null;
   }
 
+  // [지선] 출처-가공 — 시도/시군구·office별 1위(summarizeLatest 시간감쇠 가중). 폴 출처를
+  //   어댑터로 통일(core.js는 thin wrapper). 실제 1위는 result-overlay가 별도 맵에서 swap.
+  function localPollsByOffice(polls, office) {
+    return (polls || []).filter((p) => p.office_level === office);
+  }
+  function localPollsByRegion(polls, sido, sigungu) {
+    let arr = polls || [];
+    if (sido) arr = arr.filter((p) => p.sido === sido);
+    if (sigungu) arr = arr.filter((p) => p.sigungu === sigungu);
+    return arr.slice().sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));
+  }
+  // 일반구 → 모도시 (수원시장안구 → 수원시) — 통합시 기초단체장 1명 대응
+  function parentSigungu(sigungu) {
+    if (!sigungu) return null;
+    const m = sigungu.match(/^([가-힣]+시)[가-힣]+구$/);
+    return m ? m[1] : null;
+  }
+  function localSidoWinner(polls, sido, office, sidoMerge) {
+    if (typeof summarizeLatest !== 'function') return null;
+    const byOff = localPollsByOffice(polls, office);
+    let r = summarizeLatest(byOff.filter((p) => p.sido === sido && !p.sigungu));
+    if (!r && sidoMerge && sidoMerge[sido]) {
+      r = summarizeLatest(byOff.filter((p) => p.sido === sidoMerge[sido] && !p.sigungu));
+    }
+    return r;
+  }
+  function localSigunguWinner(polls, sido, sigungu, office) {
+    if (typeof summarizeLatest !== 'function') return null;
+    const byOff = localPollsByOffice(polls, office);
+    const sel = byOff.filter((p) => p.sido === sido && p.sigungu === sigungu);
+    if (sel.length) return summarizeLatest(sel);
+    const parent = parentSigungu(sigungu);
+    if (parent) return summarizeLatest(byOff.filter((p) => p.sido === sido && p.sigungu === parent));
+    return null;
+  }
+
   window.PollAdapter = {
     cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend,
     districtResultFromResults, districtResultFromPolls,
+    localPollsByOffice, localPollsByRegion, parentSigungu, localSidoWinner, localSigunguWinner,
   };
 })();
