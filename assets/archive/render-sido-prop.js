@@ -113,7 +113,7 @@
       cell.r = Math.max(9, (L + 0.6) * Math.sqrt(3) * smallR);
     }
     if (window.Archive && typeof window.Archive.packClusters === 'function') {
-      const SEED = 0.7;
+      const SEED = 0.55;   // 총선·지선처럼 더 뭉치게(seed 격자 간격 축소 → packClusters가 가깝게)
       const pn = cells.map((c) => ({ c, r: c.r, cx0: c.cx * SEED, cy0: c.cy * SEED }));
       window.Archive.packClusters(pn, { pad: 4 });
       for (const n of pn) { n.c.cx = n.cx; n.c.cy = n.cy; }
@@ -145,21 +145,24 @@
       const spiral = hexSpiral(N);
       const g = document.createElementNS(NS, 'g');
       const tt = document.createElementNS(NS, 'title'); tt.textContent = titleText(cell); g.appendChild(tt);
-      let maxd = 0;
+      // outline 동그라미 — 총선·지선 헥스와 동일(클러스터 경계). 헥스 뒤에 깔림.
+      const outline = document.createElementNS(NS, 'circle');
+      outline.setAttribute('cx', cell.cx.toFixed(1)); outline.setAttribute('cy', cell.cy.toFixed(1)); outline.setAttribute('r', cell.r.toFixed(1));
+      outline.setAttribute('class', 'ar-genhex-outline'); g.appendChild(outline);
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
         const dx = smallR * Math.sqrt(3) * (q + ar / 2);
         const dy = smallR * 1.5 * ar;
-        maxd = Math.max(maxd, Math.abs(dy));
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(cell.cx + dx, cell.cy + dy, smallR - 0.4));
         poly.setAttribute('fill', fills[i] || '#e6e9ef');
         poly.setAttribute('class', 'sido-prop-hex');
         g.appendChild(poly);
       }
-      sidoLabel(svg, cell, -(maxd + 9));
       svg.appendChild(g);
     }
+    // 라벨 별도 패스 — 뭉친 클러스터에서 이웃에 안 가리게(항상 위, halo). outline과 살짝 겹침.
+    for (const cell of cells) sidoLabel(svg, cell, -(cell.r - 3));
     // 단위 범례
     const leg = document.createElementNS(NS, 'text');
     leg.setAttribute('x', (minX + 4).toFixed(1)); leg.setAttribute('y', (minY + 12).toFixed(1));
@@ -202,12 +205,16 @@
       ring.setAttribute('cx', cell.cx.toFixed(1)); ring.setAttribute('cy', cell.cy.toFixed(1)); ring.setAttribute('r', R.toFixed(1));
       ring.setAttribute('class', 'sido-prop-ring'); g.appendChild(ring);
       svg.appendChild(g);
-      if (R >= 12) {
-        const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', cell.cx.toFixed(1)); t.setAttribute('y', (cell.cy + 3).toFixed(1));
-        t.setAttribute('class', 'sido-prop-label on-disc'); t.textContent = cell.label;
-        svg.appendChild(t);
-      }
+    }
+    // 라벨 별도 패스 — 큰 원은 중앙(흰), 작은 원은 바깥 위(검정 halo). 이웃 원에 안 가림.
+    for (const cell of L.cells) {
+      const small = cell.r < 12;
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', cell.cx.toFixed(1)); t.setAttribute('y', (small ? cell.cy - cell.r - 3 : cell.cy + 3).toFixed(1));
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('class', small ? 'sido-prop-label' : 'sido-prop-label on-disc');
+      t.textContent = cell.label;
+      svg.appendChild(t);
     }
     const leg = document.createElementNS(NS, 'text');
     leg.setAttribute('x', (L.minX + 4).toFixed(1)); leg.setAttribute('y', (L.minY + 12).toFixed(1));
