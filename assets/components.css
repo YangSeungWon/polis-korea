@@ -301,6 +301,7 @@
 }
 .lens-chip:hover { color: var(--ink); border-color: var(--ink-soft); background: var(--bg3); }
 .lens-chip.is-current { background: var(--ink); color: var(--bg); border-color: var(--ink); cursor: default; }
+/* 선거별 디렉터리 3레인 타임라인(.poll-tl-*/.ptc-*) 스타일은 common.css — 대시보드 포함 전 페이지 공용. */
 
 /* === 색 범례 (지도/격자 아래) === */
 .poll-legend {

@@ -179,33 +179,8 @@
 .active-poll-banner .apb-dday { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent, #c8553d); }
 .active-poll-banner .apb-go { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
 
-/* 선거별 여론조사 디렉터리 — 대선/총선/지선 3레인 타임라인 (election-index.js) */
+/* 선거별 디렉터리 3레인 타임라인 스타일은 components.css(.poll-tl-*/.ptc-*) — 폴 허브·대시보드 공용. */
 .poll-index-sec { margin: 28px 0; }
-.poll-tl-host { margin-top: 12px; }
-.poll-tl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-/* max-width로 와이드 화면에서 SVG가 .page(1320px)까지 늘어나며 세로가 과하게 커지는 것 방지. */
-.poll-tl-svg { display: block; width: 100%; max-width: 720px; height: auto; }
-.poll-tl-node { cursor: pointer; }
-.poll-tl-node:hover { opacity: 0.78; }
-.poll-tl-node:hover text { text-decoration: underline; }
-.poll-tl-node.is-current { cursor: default; }
-.poll-tl-note { font-size: 12px; color: var(--ink-mute); margin: 8px 0 0; }
-.poll-tl-note a { color: var(--ink-soft); }
-
-/* 모바일 컴팩트 칩 — 기본은 숨김(데스크톱은 SVG), 좁은 화면에서만 노출. */
-.poll-tl-chips { display: none; }
-.ptc-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 7px 0; }
-.ptc-lane { flex: 0 0 28px; font-size: 13px; font-weight: 700; }
-.ptc-chip {
-  font-size: 12.5px; font-weight: 600; line-height: 1; padding: 6px 9px;
-  border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
-  color: var(--c); border-radius: 999px; text-decoration: none; white-space: nowrap;
-}
-.ptc-chip.is-current { background: var(--c); color: #fff; border-color: var(--c); }
-@media (max-width: 560px) {
-  .poll-tl-scroll { display: none; }
-  .poll-tl-chips { display: block; }
-}
 .pic-go { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .pic-tag { font-size: 11px; font-weight: 700; color: var(--accent, #c8553d); }
 

@@ -284,3 +284,28 @@ body {
 /* 소수정당 칩 — 머리(1·2위)와 같은 줄흐름, 작게. 정당색은 inline. */
 .sleg-sub { font-size: 10px; opacity: .82; }
 .sleg-sub b { font-weight: 700; }
+
+/* 선거별 디렉터리 3레인 타임라인 (ElectionTimeline) — 대시보드·폴 허브 등 전 페이지 공용. */
+.poll-tl-host { margin-top: 12px; }
+.poll-tl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.poll-tl-svg { display: block; width: 100%; max-width: 720px; height: auto; }   /* 와이드 화면 과대 방지 */
+.poll-tl-node { cursor: pointer; }
+.poll-tl-node:hover { opacity: 0.78; }
+.poll-tl-node:hover text { text-decoration: underline; }
+.poll-tl-node.is-current { cursor: default; }
+.poll-tl-note { font-size: 12px; color: var(--ink-mute); margin: 8px 0 0; }
+.poll-tl-note a { color: var(--ink-soft); }
+/* 모바일 컴팩트 칩 — 데스크톱은 SVG, 좁은 화면(≤560)에서만 칩. */
+.poll-tl-chips { display: none; }
+.ptc-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 7px 0; }
+.ptc-lane { flex: 0 0 28px; font-size: 13px; font-weight: 700; }
+.ptc-chip {
+  font-size: 12.5px; font-weight: 600; line-height: 1; padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+  color: var(--c); border-radius: 999px; text-decoration: none; white-space: nowrap;
+}
+.ptc-chip.is-current { background: var(--c); color: #fff; border-color: var(--c); }
+@media (max-width: 560px) {
+  .poll-tl-scroll { display: none; }
+  .poll-tl-chips { display: block; }
+}

@@ -314,3 +314,18 @@ function renderLegend() {
 }
 
 init();
+
+// 역대 섹션 '선거 고르기' — 3레인 타임라인(아카이브 있는 전 대선/총선/지선 → 종합 결과).
+//   같은 선거의 여론조사 vs 실제·역대 흐름은 아카이브 안 렌즈 바로 전환.
+(function () {
+  const host = document.getElementById('dash-election-dir');
+  if (!host || !window.ElectionTimeline) { if (host) host.remove(); return; }
+  fetch('data/archive_index.json').then((r) => (r.ok ? r.json() : [])).then((list) => {
+    if (!Array.isArray(list) || !list.length) { host.remove(); return; }
+    window.ElectionTimeline.render(host, list, {
+      hrefFn: (e) => `/archive/${e.slug}/`,
+      ariaFn: (e) => `${e.name} 종합 결과`,
+      note: '노드 클릭 → 그 선거 <b>종합 결과</b>. 여론조사 vs 실제·역대 흐름은 그 안에서 전환.',
+    });
+  }).catch(() => host.remove());
+})();

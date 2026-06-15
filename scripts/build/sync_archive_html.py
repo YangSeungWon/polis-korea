@@ -597,6 +597,17 @@ def main():
                 "next": lst[i + 1] if i < len(lst) - 1 else None,
             }
 
+    # 선거 고르기 디렉터리 인덱스 (대시보드 ElectionTimeline) — 아카이브 있는 대선/총선/지선 전 회차.
+    # 단일 출처: 여기서 만든 슬러그(=아카이브 id)는 그대로 archive 링크라 404 없음. 재보궐 제외.
+    if not args.id:
+        HT = {"presidential": "presidential", "general_election": "national_assembly", "local": "local"}
+        dir_list = sorted(
+            ({"slug": m["id"], "name": m["name"], "date": m["date"], "n": m["n"], "type": HT[m["kind"]]}
+             for m in all_metas if m.get("kind") in HT and m.get("date") and m.get("n") is not None),
+            key=lambda x: x["date"])
+        (ROOT / "data" / "archive_index.json").write_text(
+            json.dumps(dir_list, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
     n_changed = 0
     n_unchanged = 0
     n_skipped = 0
