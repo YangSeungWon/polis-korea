@@ -32,8 +32,10 @@ CACHE = ROOT / "data" / "raw" / "nec_candidate_party.json"
 OFFICE_CACHE = ROOT / "data" / "raw" / "nec_candidate_office.json"
 API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
 
-# NEC sgTypecode → office_level (관심 직위만; 5=광역의원·6=기초의원 등은 무시)
-TYPECODE_OFFICE = {"3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+# NEC sgTypecode → office_level (관심 직위만; 5=광역의원·6=기초의원 등은 무시). 라벨 단일 출처 _geo.TC_OFFICE.
+sys.path.insert(0, str(ROOT / "scripts"))
+from _geo import TC_OFFICE  # noqa: E402
+TYPECODE_OFFICE = {k: TC_OFFICE[k] for k in ("3", "4", "11")}
 
 
 def resolve_office(rows: list[dict], sido: str) -> str:

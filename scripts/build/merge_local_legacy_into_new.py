@@ -12,14 +12,17 @@ local_N.json은 옛 가공(OCR/scraping 포함)으로 287개 시군구 완비.
 from __future__ import annotations
 import argparse
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+from _geo import TC_OFFICE  # noqa: E402
 SG_ID = {5: "20100602", 6: "20140604", 7: "20180613", 8: "20220601"}
 DATE = {5: "2010-06-02", 6: "2014-06-04", 7: "2018-06-13", 8: "2022-06-01"}
 ELECTION_ID = {n: f"{['','1st','2nd','3rd','4th','5th','6th','7th','8th'][n]}-local-{DATE[n].split('-')[0]}"
                for n in (5, 6, 7, 8)}
-OFFICE_TC = {"광역단체장": "3", "기초단체장": "4", "교육감": "11"}
+OFFICE_TC = {TC_OFFICE[k]: k for k in ("3", "4", "11")}  # 라벨 단일 출처 _geo.TC_OFFICE
 
 
 def to_race(rec: dict, tc: str, scope: str) -> dict:

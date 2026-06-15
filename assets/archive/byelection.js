@@ -190,7 +190,7 @@
     if (!reasons.length) return;
     const host = document.getElementById('ar-by-reasons-host');
     // 종류별 그룹
-    const KIND = { '2': '국회의원', '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원', '11': '교육감' };
+    const KIND = (typeof TC_OFFICE !== 'undefined') ? TC_OFFICE : { '2': '국회의원', '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원', '11': '교육감' };  // 단일 출처: parties.js
     const byKind = {};
     for (const r of reasons) {
       const k = KIND[r.elctKndCd] || '기타';

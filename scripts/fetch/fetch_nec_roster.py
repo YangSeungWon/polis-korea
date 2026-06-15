@@ -25,10 +25,12 @@ API = "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire"
 # build_polls의 시도 canonical 재사용 — roster 키를 build의 p["sido"]와 일치시키고,
 # NEC 응답의 시대별 명칭(2018 강원도 ↔ 2026 강원특별자치도)을 canon으로 흡수.
 sys.path.insert(0, str(ROOT / "scripts" / "build"))
+sys.path.insert(0, str(ROOT / "scripts"))
 from build_polls import canon_sido  # noqa: E402
+from _geo import TC_OFFICE  # noqa: E402
 
-# sgTypecode → office_level
-TYPECODE_OFFICE = {"2": "국회의원", "3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+# sgTypecode → office_level (roster 관심 직위 부분집합; 라벨 단일 출처 _geo.TC_OFFICE)
+TYPECODE_OFFICE = {k: TC_OFFICE[k] for k in ("2", "3", "4", "11")}
 
 
 def _load_api_key() -> str:

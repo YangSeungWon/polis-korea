@@ -27,7 +27,8 @@ SG_ID = {  # 지선 회차 → 선거일
     7: "20180613",
     8: "20220601",
 }
-SG_TYPECODE = {  # 우리 office → API code
+# 주의: 무투표 API 전용 코드 — 교육감=5는 표준 sg_typecode 11과 다름. _geo.TC_OFFICE와 통합 금지.
+SG_TYPECODE = {  # 우리 office → 무투표 API code
     "광역단체장": "3",  # 시도지사
     "기초단체장": "4",  # 구시군의장
     "교육감":     "5",

@@ -174,7 +174,7 @@
   }
 
   // [지선] 실제 결과(NEC) → 시도/시군구·office별 1위 맵. 폴↔실제 토글의 '실제' 출처.
-  const _TC_TO_OFFICE = { '3': '광역단체장', '4': '기초단체장', '11': '교육감' };
+  const _TC_TO_OFFICE = (typeof TC_OFFICE !== 'undefined') ? TC_OFFICE : { '3': '광역단체장', '4': '기초단체장', '11': '교육감' };  // 단일 출처: parties.js
   function localActualMaps(races) {
     const cs = norm();
     const bySido = {}, bySigungu = {};

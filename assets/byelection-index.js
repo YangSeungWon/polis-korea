@@ -19,7 +19,7 @@
   // 직 표시 순서 (높은 직부터)
   const LEVEL_ORDER = ['국회의원', '광역단체장', '교육감', '기초단체장', '광역의원', '기초의원'];
   // sg_typecode → 직 라벨 + race 식별 대표 scope (시도/시군구 요약행=race; 하위 breakdown 제외).
-  const CODE_LEVEL = { '2': '국회의원', '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원', '11': '교육감' };
+  const CODE_LEVEL = (typeof TC_OFFICE !== 'undefined') ? TC_OFFICE : { '2': '국회의원', '3': '광역단체장', '4': '기초단체장', '5': '광역의원', '6': '기초의원', '11': '교육감' };  // 단일 출처: parties.js
   const PRIMARY_SCOPE = { '2': 'district', '3': 'sido', '4': 'sigungu', '5': 'district', '6': 'district', '11': 'sido' };
 
   const idx = await Elections.loadElectionsIndex();

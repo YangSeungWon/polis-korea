@@ -200,7 +200,10 @@ function adaptNewSchema(raw, type) {
                        .map(_raceToOldRow);
   } else if (type === 'local') {
     out.offices = {};
-    const officeTc = { '광역단체장': '3', '기초단체장': '4', '교육감': '11' };
+    // 단체장·교육감만 (단일 출처 TC_OFFICE 역참조). 의원(5/6)·국회의원(2)은 지선 office 카드에서 제외.
+    const LOCAL_OFFICES = ['광역단체장', '기초단체장', '교육감'];
+    const officeTc = Object.fromEntries(Object.entries(TC_OFFICE)
+      .filter(([, o]) => LOCAL_OFFICES.includes(o)).map(([tc, o]) => [o, tc]));
     for (const [office, tc] of Object.entries(officeTc)) {
       const sidoRaces = races.filter((r) => r.scope === 'sido' && r.sg_typecode === tc);
       const sggRows = races.filter((r) => r.scope === 'sigungu' && r.sg_typecode === tc)

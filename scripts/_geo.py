@@ -6,6 +6,10 @@ build_sigungu_adjacency, build_sigungu_coastal 등에서 공통으로 import.
 """
 from __future__ import annotations
 
+# NEC sg_typecode → 표준 직위명 단일 출처(JS parties.js TC_OFFICE와 동기).
+#   주의: 무투표 API(교육감=5)·축약 라벨('광역장')·'의원후보'(audit)는 목적이 달라 별개.
+TC_OFFICE = {"2": "국회의원", "3": "광역단체장", "4": "기초단체장", "5": "광역의원", "6": "기초의원", "11": "교육감"}
+
 # 시군구 code 첫 2자리 → 시도 캐노니컬 이름
 SIDO_CODE_TO_NAME = {
     '11': '서울특별시',
