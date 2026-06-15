@@ -1149,6 +1149,14 @@ def main():
         else:
             _NEC_ROSTER = {}
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    # data/raw/*.csv는 gitignore — META_CSV(스크랩 목록)는 로컬에만 존재. CI 러너엔 없으니
+    # build()가 빈 메타로 폴 0건을 만들어 커밋된 aggregated.json(1801폴)을 덮어쓰는 사고를
+    # 막는다. 기존 산출물 보존한 채 비치명적 skip(build_byelection과 동일 "기존 데이터로 계속"
+    # 정책). 폴 재생성은 메타 CSV가 있는 로컬/번들 환경에서만 의미. 진행형 선거의 주기적 폴
+    # 갱신을 CI에서 하려면 tracker처럼 META_CSV를 커밋(+parsed 번들 상시 갱신)해야 함.
+    if not META_CSV.exists():
+        print(f"메타 CSV 없음: {META_CSV} — build_polls skip (기존 aggregated.json 보존)", file=sys.stderr)
+        return
     out = build()
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
