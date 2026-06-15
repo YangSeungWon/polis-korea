@@ -73,6 +73,16 @@
       ? (ps.viewmode === 'grid' ? '■ 면적=유권자 규모 · 색=조사 지지' : '● 크기=유권자 규모 · 파이=조사 지지 구성')
       : undefined;
     sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, legend ? { legend } : undefined);
+    // 실제 모드: 막판 여론조사 시도 1위가 실제 당선과 몇 곳 일치했는지 헤드라인.
+    if (ps.mode === 'result') {
+      const csn = (typeof canonSido === 'function') ? canonSido : (s) => s;
+      const pm = {};
+      PollAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령' })
+        .forEach((c) => { pm[csn(c.sido)] = (c.candidates[0] || {}).party; });
+      let m = 0, t = 0;
+      cs.forEach((c) => { const pp = pm[csn(c.sido)], ap = (c.candidates[0] || {}).party; if (pp && ap) { t++; if (pp === ap) m++; } });
+      if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b>`; h.prepend(cap); }
+    }
     renderDetail();
   }
 

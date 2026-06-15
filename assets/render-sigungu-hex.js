@@ -45,6 +45,9 @@
       poly.setAttribute('stroke-width', isSel(d) ? '1.6' : '0.7');
       poly.setAttribute('fill-opacity', op);
       if (result && opts.dashOf) { const dash = opts.dashOf(result); if (dash) poly.setAttribute('stroke-dasharray', dash); }
+      // 여론조사 빗나감 — 실제 모드에서 막판 조사 1위 ≠ 실제 당선.
+      const missed = opts.missOf && opts.missOf(d.sido, d.name);
+      if (missed) { poly.setAttribute('stroke-width', '2'); poly.setAttribute('stroke-dasharray', '2.5,2'); poly.classList.add('hex-poll-miss'); }
       if (opts.onSelect) {
         poly.style.cursor = 'pointer';
         poly.addEventListener('click', () => opts.onSelect(d.sido, d.name, result, d));

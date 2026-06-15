@@ -225,3 +225,8 @@
 .gen-dist-readout .gdr-ok { font-size: 11px; color: #2e7d32; font-weight: 700; }
 .gen-dist-readout .gdr-miss { font-size: 11px; color: #d32f2f; font-weight: 700; }
 .gen-dist-hint { color: var(--ink-soft); }
+
+/* 여론조사 적중 표시 — 실제 모드 헤드라인/범례 (점선=빗나간 곳 오버레이와 짝) */
+.ra-legend { color: var(--ink-mute, #8a93a3); font-weight: 600; font-size: 0.82em; margin-left: 2px; }
+.pres-acc-note { font-size: 0.86rem; color: var(--ink-mute, #8a93a3); font-weight: 600; text-align: center; margin: 0 0 4px; }
+.pres-acc-note b { color: var(--ink, #0a0e1a); }

@@ -2,22 +2,24 @@
 // '여론조사 1위' vs '실제 NEC 1위' 비교. 선거 종료 후 노출.
 
 (function () {
-  let loaded = false;
+  let actualP = null;   // memoized — 진행 중 fetch를 둘 이상이 await해도 같은 promise 공유(레이스 방지)
 
   // 실제 결과(NEC) → 1위 맵 빌드는 PollAdapter.localActualMaps. state.actualMaps에 저장.
   // (모드별 swap은 core.js regionSidoWinner/regionSigunguWinner가 주입 — 옛 몽키패치 제거.)
-  async function loadActual() {
-    if (loaded) return;
-    loaded = true;
-    try {
-      // 본 결과 + (있으면) 기초단체장 등 시군구 결과(.sigungu.json) 병합 — 7·8회는 tc4가 별도 파일에 있음.
-      const paths = [POLL_ELECTION.results_path];
-      if (POLL_ELECTION.results_sigungu_path) paths.push(POLL_ELECTION.results_sigungu_path);
-      const parts = await Promise.all(paths.map((p) =>
-        fetch(p).then((r) => (r.ok ? r.json() : { races: [] })).catch(() => ({ races: [] }))));
-      const races = parts.flatMap((d) => d.races || []);
-      if (races.length) state.actualMaps = PollAdapter.localActualMaps(races);
-    } catch (e) {}
+  function loadActual() {
+    if (actualP) return actualP;
+    actualP = (async () => {
+      try {
+        // 본 결과 + (있으면) 기초단체장 등 시군구 결과(.sigungu.json) 병합 — 7·8회는 tc4가 별도 파일에 있음.
+        const paths = [POLL_ELECTION.results_path];
+        if (POLL_ELECTION.results_sigungu_path) paths.push(POLL_ELECTION.results_sigungu_path);
+        const parts = await Promise.all(paths.map((p) =>
+          fetch(p).then((r) => (r.ok ? r.json() : { races: [] })).catch(() => ({ races: [] }))));
+        const races = parts.flatMap((d) => d.races || []);
+        if (races.length) state.actualMaps = PollAdapter.localActualMaps(races);
+      } catch (e) {}
+    })();
+    return actualP;
   }
 
   // 선택 지역의 실제 결과(전체 후보) — detail 패널·산점도가 mode=result일 때 사용.
@@ -41,7 +43,7 @@
         const [sd, sgg] = key.split('|');
         const polls = PollAdapter.localSigunguWinner(state.data.polls, sd, sgg, '기초단체장');
         const actual = maps.bySigungu[key];
-        if (!polls || !actual) continue;
+        if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
         total++;
         if (polls.party === actual.party) match++;
       }
@@ -50,7 +52,7 @@
       for (const [sido] of Object.entries(SIDO_HEX_LAYOUT)) {
         const polls = PollAdapter.localSidoWinner(state.data.polls, sido, office, merge);
         const actual = maps.bySido[`${sido}|${office}`];
-        if (!polls || !actual) continue;
+        if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
         total++;
         if (polls.party === actual.party) match++;
       }
@@ -75,7 +77,8 @@
     const acc = accuracyForOffice(state.office);
     if (!acc) { host.textContent = ''; return; }
     const pct = ((acc.match / acc.total) * 100).toFixed(0);
-    host.innerHTML = `여론조사 적중 <b>${acc.match}/${acc.total}</b> <span class="ra-pct">${pct}%</span>`;
+    const legend = (state.mode === 'result' && acc.match < acc.total) ? ' <span class="ra-legend">점선=빗나간 곳</span>' : '';
+    host.innerHTML = `여론조사 적중 <b>${acc.match}/${acc.total}</b> <span class="ra-pct">${pct}%</span>${legend}`;
   }
 
   // 과거 선거 기본 모드(result)일 때 main.js가 첫 렌더 전 실제결과를 미리 로드(빈 화면 깜빡임 방지).

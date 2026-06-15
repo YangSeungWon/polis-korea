@@ -51,9 +51,22 @@
     if (!host) return;
     if (typeof drawDistrictHex !== 'function' || !gs.layout) { host.hidden = true; return; }
     const fn = gs.dmode === 'result' ? gs.resultFn : gs.pollFn;
-    // 조사된 지역구 수 (폴 모드 안내)
-    let polled = 0;
-    for (const d of gs.layout) if (gs.pollFn(d.sido, d.name)) polled++;
+    // 조사된 지역구 수 + 여론조사 적중(조사된 지역구만 폴 1위 vs 실제 1위 비교)
+    let polled = 0, match = 0;
+    const missed = (sido, name) => {
+      const p = gs.pollFn(sido, name), r = gs.resultFn(sido, name);
+      const pt = p && p.candidates[0], rt = r && r.candidates[0];
+      return pt && rt ? pt.party !== rt.party : false;
+    };
+    for (const d of gs.layout) {
+      const p = gs.pollFn(d.sido, d.name); if (!p) continue;
+      polled++;
+      const r = gs.resultFn(d.sido, d.name);
+      if (r && p.candidates[0] && r.candidates[0] && p.candidates[0].party === r.candidates[0].party) match++;
+    }
+    const note = gs.dmode === 'polls'
+      ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
+      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b> (점선=빗나간 곳)` : '확정 결과');
     host.innerHTML = `
       <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span></h3>
       <div class="gen-dist-bar">
@@ -61,13 +74,14 @@
           <button class="seg-btn${gs.dmode === 'polls' ? ' is-active' : ''}" data-dmode="polls">여론조사 1위</button>
           <button class="seg-btn${gs.dmode === 'result' ? ' is-active' : ''}" data-dmode="result">실제 1위</button>
         </div>
-        <span class="gen-dist-note">${gs.dmode === 'polls' ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)` : '확정 결과'}</span>
+        <span class="gen-dist-note">${note}</span>
       </div>
       <svg class="gen-dist-svg" id="gen-dist-svg"></svg>
       <div class="gen-dist-readout" id="gen-dist-readout"></div>`;
     host.hidden = false;
     drawDistrictHex(document.getElementById('gen-dist-svg'), gs.layout, fn, {
       selected: gs.selected,
+      missOf: gs.dmode === 'result' ? missed : null,
       onSelect: (sido, name) => { gs.selected = { sido, name }; renderDistrict(); },
     });
     host.querySelectorAll('[data-dmode]').forEach((b) => b.addEventListener('click', () => {

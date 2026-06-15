@@ -95,6 +95,10 @@
       poly.setAttribute('fill-opacity', String(top ? 1 : emptyOpacity));
       if (isZorangi) { poly.setAttribute('stroke', 'none'); }
       else { poly.setAttribute('stroke', '#0a0e1a'); poly.setAttribute('stroke-width', isSel ? '1.6' : '0.7'); }
+      // 여론조사 빗나감 — 실제 모드에서 막판 조사 1위 ≠ 실제 당선인 지역구.
+      if (opts.missOf && opts.missOf(d.sido, d.name)) {
+        poly.setAttribute('stroke-width', '2'); poly.setAttribute('stroke-dasharray', '2.5,2'); poly.classList.add('hex-poll-miss');
+      }
       g.appendChild(poly);
 
       const title = document.createElementNS(NS, 'title');

@@ -90,11 +90,19 @@
       } else {
         poly.setAttribute('class', 'gov-hex-cell no-data' + selCls);
       }
+      // 여론조사 빗나감 표시 — 실제 모드에서 막판 여론조사 1위 ≠ 실제 당선인 시도.
+      const missed = opts.missOf && opts.missOf(cell.sido);
+      if (missed) {
+        poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
+        poly.setAttribute('stroke-width', '2.4');
+        poly.setAttribute('stroke-dasharray', '3,2.2');
+        poly.classList.add('hex-poll-miss');
+      }
       g.appendChild(poly);
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = cell.win
+      tt.textContent = (cell.win
         ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${(cell.win.pct || 0).toFixed(1)}%`
-        : `${cell.sido} · 데이터 없음`;
+        : `${cell.sido} · 데이터 없음`) + (missed ? ' · 여론조사 빗나감' : '');
       g.appendChild(tt);
       // 시도 라벨
       const t1 = document.createElementNS(NS, 'text');
