@@ -23,6 +23,18 @@ function renderHex() {
 let sigunguHexData = null;
 async function loadSigunguHex() {
   if (sigunguHexData) return sigunguHexData;
+  // 지선 per-election은 그 회차 시점 시군구 레이아웃(period-aware)을 써야 함 — 안 그러면
+  // 현행(2026) 셀이 옛 회차에 팬텀으로 떠서 빈칸이 됨(예: 7·8회의 대구 군위[당시 경북]·
+  // 인천 영종/제물포[2026 신설]). sigungu_hex_local.json[회차]에 그 시점 이름·소속으로 들어있음.
+  const n = POLL_ELECTION.kind === 'local' ? (POLL_ELECTION.n || 9) : null;
+  if (n) {
+    try {
+      const r = await fetch('data/geo/sigungu_hex_local.json');
+      const byRound = await r.json();
+      const cells = byRound[String(n)];
+      if (Array.isArray(cells) && cells.length) { sigunguHexData = cells; return sigunguHexData; }
+    } catch (e) { /* 폴백: 현행 레이아웃 */ }
+  }
   try {
     const r = await fetch('data/geo/sigungu_hex.json');
     sigunguHexData = await r.json();
