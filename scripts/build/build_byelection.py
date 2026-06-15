@@ -126,6 +126,11 @@ def canon_district(region: str, pdf_name_hint: str = "") -> str:
 
 
 def main():
+    # data/raw/는 gitignore — META_CSV는 로컬에만 존재. CI 러너엔 없으니 기존
+    # byelection.json을 보존한 채 비치명적 skip(파이프라인 "기존 데이터로 계속" 정책).
+    if not META_CSV.exists():
+        print(f"목록 CSV 없음: {META_CSV} — build_byelection skip")
+        return
     rows = list(csv.DictReader(open(META_CSV, encoding="utf-8")))
     by_district: dict[str, list] = {}
     n_polls = 0
