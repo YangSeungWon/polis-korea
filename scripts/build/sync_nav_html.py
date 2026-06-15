@@ -30,7 +30,7 @@ MENU = [
     ("여론조사", "/polls.html", "polls"),
     ("재·보궐", "/byelection/", "byelection"),
     ("역대 결과", "/history.html", "history"),
-    ("타임라인", "/timeline.html", "timeline"),
+    ("역대 판세", "/timeline.html", "timeline"),
     ("근현대사", "/chronology.html", "chronology"),
     ("정당사", "/parties.html", "parties"),
     # '검색'은 nav 링크 대신 헤더 우측 검색창(nav.js가 .hdr-meta에 주입)으로 대체.
@@ -107,7 +107,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry", action="store_true")
     args = ap.parse_args()
-    htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html"))
+    htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html")) + sorted(ROOT.glob("person/*/index.html"))
     counts = {"changed": 0, "same": 0, "skip": 0}
     for p in htmls:
         if "node_modules" in str(p) or "/.git/" in str(p):

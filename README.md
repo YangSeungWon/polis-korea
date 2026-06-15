@@ -16,7 +16,7 @@
 | **재·보궐** (`/byelection.html`) | 2026 국회의원 재·보궐 — 선거구별 지도·카드 |
 | **지지율 추이** (`/tracker.html`) | 국정평가·정당지지·차기주자 연속 시계열 + house effect 토글 |
 | **역대 결과** (`/history.html`) | 1987~ 대선·총선·지선 카토그램 (격자/Dorling·hex/지도 토글) |
-| **타임라인** (`/timeline.html`) | 역대 선거 연표 — 회차별 득표율 흐름 |
+| **역대 판세** (`/timeline.html`) | 회차별 정당 세력 흐름(가로 시간축 막대) — 지역별 결과는 역대 결과 |
 | **검색** (`/search.html`) | 당선인·지역·정당 통합 검색 |
 
 페이지별 첫 화면·연결·URL 파라미터는 [docs/page-map.md](docs/page-map.md) 참고.
