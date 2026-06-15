@@ -52,7 +52,16 @@ def derive(meta: dict) -> dict:
     date_label = kday(meta["date"])
     if context:
         date_label += f" · {context}"
+    # breadcrumb — 재보궐은 역대(history/timeline)에 없으니 '재·보궐'로, 나머지는 타임라인·역대 선거.
+    if kind == "byelection":
+        breadcrumb = (f'<a href="/byelection/">재·보궐</a> · '
+                      f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
+    else:
+        breadcrumb = (f'<a href="/timeline.html">타임라인</a> · '
+                      f'<a href="/history.html?type={km["history_type"]}&n={meta["n"]}">역대 선거</a> · '
+                      f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
     return {
+        "breadcrumb": breadcrumb,
         "id": meta["id"],
         "name": meta["name"],
         "date": meta["date"],
@@ -115,8 +124,7 @@ HEAD = """<!DOCTYPE html>
 
 <main class="page">
   <nav class="ar-breadcrumb" aria-label="경로">
-    <a href="/timeline.html">타임라인</a> ·
-    <a href="/history.html?type={history_type}&n={n}">역대 선거</a> · <span>{n}{n_unit} {kind_short} 아카이브</span>
+    {breadcrumb}
   </nav>
   <div id="lens-switcher-host"></div>
 """

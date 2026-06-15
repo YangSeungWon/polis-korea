@@ -45,8 +45,8 @@ def menu_for_path(rel_path: str) -> str | None:
         return "polls"
     if p == "/parties.html" or p.startswith("/party/"):
         return "parties"
-    if p == "/byelection.html" or p.startswith("/byelection/"):
-        return "byelection"
+    if p == "/byelection.html" or p.startswith("/byelection/") or p.startswith("/archive/byelection-"):
+        return "byelection"   # 재보궐 아카이브는 '역대 결과'(hex 탐색기)가 아니라 '재·보궐'로
     if p == "/tracker.html":
         return "tracker"
     if p == "/history.html" or p.startswith("/archive/"):
