@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "desc": "NEC 후보검색·MONA 의원명부에 없는 당선자의 생년월일·한자 수동 백필. build_person_index가 bio·assembly_map 다음 폴백 소스로 읽음(match로 person-index race에 귀속).",
+    "rule": "항목마다 source(검증 출처) 필수. dob=YYYY-MM-DD, hanja 없으면 빈 문자열. match={eid,place,tc}로 정확한 인물 귀속(동명이인 방지).",
+    "source_primary": "한국어 위키백과 (각 항목 source 참조)"
+  },
+  "records": [
+    {"name": "이승만", "dob": "1875-03-26", "hanja": "李承晚", "match": {"eid": "1st-pres-1948", "place": "전국", "tc": "1"}, "source": "https://ko.wikipedia.org/wiki/이승만"},
+    {"name": "윤보선", "dob": "1897-08-26", "hanja": "尹潽善", "match": {"eid": "4th-pres-1960-08", "place": "전국", "tc": "1"}, "source": "https://ko.wikipedia.org/wiki/윤보선"},
+    {"name": "박정희", "dob": "1917-11-14", "hanja": "朴正熙", "match": {"eid": "5th-pres-1963", "place": "전국", "tc": "1"}, "source": "https://ko.wikipedia.org/wiki/박정희"},
+    {"name": "최규하", "dob": "1919-07-16", "hanja": "崔圭夏", "match": {"eid": "10th-pres-1979", "place": "전국", "tc": "1"}, "source": "https://ko.wikipedia.org/wiki/최규하"},
+    {"name": "전두환", "dob": "1931-01-18", "hanja": "全斗煥", "match": {"eid": "11th-pres-1980", "place": "전국", "tc": "1"}, "source": "https://ko.wikipedia.org/wiki/전두환"},
+    {"name": "조순", "dob": "1928-02-01", "hanja": "趙淳", "match": {"eid": "1st-local-1995", "place": "서울특별시", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/조순"},
+    {"name": "고건", "dob": "1938-01-02", "hanja": "高建", "match": {"eid": "2nd-local-1998", "place": "서울특별시", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/고건"},
+    {"name": "최각규", "dob": "1933-11-03", "hanja": "崔珏圭", "match": {"eid": "1st-local-1995", "place": "강원도", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/최각규"},
+    {"name": "임창열", "dob": "1944-05-27", "hanja": "林昌烈", "match": {"eid": "2nd-local-1998", "place": "경기도", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/임창열"},
+    {"name": "유종근", "dob": "1944-03-02", "hanja": "柳鍾根", "match": {"eid": "1st-local-1995", "place": "전라북도", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/유종근_(1944년)"},
+    {"name": "주병덕", "dob": "1936-11-05", "hanja": "朱炳德", "match": {"eid": "1st-local-1995", "place": "충청북도", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/주병덕"},
+    {"name": "송언종", "dob": "1937-04-05", "hanja": "", "match": {"eid": "1st-local-1995", "place": "광주광역시", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/송언종"},
+    {"name": "심완구", "dob": "1938-07-01", "hanja": "沈完求", "match": {"eid": "2nd-local-1998", "place": "울산광역시", "tc": "3"}, "source": "https://ko.wikipedia.org/wiki/심완구"},
+    {"name": "고재유", "dob": "1938-03-20", "hanja": "高在維", "match": {"eid": "1st-local-1995", "place": "광산구", "tc": "4"}, "source": "https://ko.wikipedia.org/wiki/고재유"}
+  ]
+}

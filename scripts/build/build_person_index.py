@@ -158,6 +158,19 @@ def main():
             return recs[0][0], recs[0][1]
         return None, None
 
+    # 수동 백필(manual_bio) — NEC·MONA 미보유 당선자(옛 대통령·1995/1998 단체장 등).
+    # match={eid,place,tc}로 정확한 race에 귀속. bio·assembly가 못 채울 때만 폴백.
+    manual_bio = {}
+    man_path = ROOT / "data/manual_bio.json"
+    if man_path.exists():
+        for r in json.loads(man_path.read_text(encoding="utf-8")).get("records", []):
+            mt = r.get("match", {})
+            manual_bio[(r["name"], mt.get("eid"), mt.get("place"), str(mt.get("tc")))] = (
+                r.get("dob") or None, r.get("hanja") or None)
+
+    def match_manual(name, eid, place, tc):
+        return manual_bio.get((name, eid, place, str(tc)), (None, None))
+
     # 1단계: per (eid, name, party) 통합 — 시도별 분해 row → 1건
     per_eid: dict = defaultdict(lambda: defaultdict(list))
     eid_meta = {}
@@ -215,6 +228,10 @@ def main():
                     adob, ahanja = match_assembly(nm, eid, place, won)
                     dob = dob or adob
                     hanja = hanja or ahanja
+                if not dob or not hanja:                    # 수동 백필(옛 대통령·1995/1998 단체장 등)
+                    mdob, mhanja = match_manual(nm, eid, place, tc)
+                    dob = dob or mdob
+                    hanja = hanja or mhanja
                 # 키에 sido+place(지역구) 포함 — 같은 선거·같은 정당이라도 다른 지역구면 다른 사람.
                 #   (옛 총선 동명이인이 한 행으로 뭉쳐 도(道)를 가로질러 잘못 병합되던 것 차단.
                 #    sido까지 넣어 '중구(서울) vs 중구(부산)' 동음 지역구 교차병합도 방지)

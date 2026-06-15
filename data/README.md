@@ -45,6 +45,7 @@ data/
 | **github.com/vuski/...** (20대 대선) | 시군구 단위 대선 결과 | CSV | `data/raw/wwolf/vuski_20p.csv` |
 | **NESDC (nesdc.go.kr)** | 9회 지선 여론조사 (메인) | 공시 PDF/HTML | `scripts/fetch/scrape_nesdc.py` |
 | **위키백과 + 수동 patch** | PDF·기타 누락 보정 | manual | `data/raw/parsed/` |
+| **위키백과 (수동 백필)** | NEC·MONA 미보유 당선자 생년월일·한자 (옛 대통령·1995/1998 단체장 등). 항목별 `source` URL·`match`{eid,place,tc} 명시 | manual JSON (git 추적) | `data/manual_bio.json` → `build_person_index`가 bio·assembly 다음 폴백 |
 | **위키백과 ‘제N회 전국동시지방선거 X의회’** | 5~8회 기초의회 정당별 의석 | HTML scrape | `scripts/fetch/fetch_8th_council_seats.py` → `data/raw/{5,6,7,8}th_council_party_seats.json` |
 | **open.assembly.go.kr 국회정보 일괄 다운로드** | 13~22대 국회의원 unique ID(한자명·생년월일·정당이력) | xlsx 묶음 (수동 다운로드) | `data/raw/assembly/`. parse → `data/raw/assembly_member_map.json` (4,587명·9,486 careers) |
 | **data.nec.go.kr LOD (SPARQL)** | 14·15·16대 총선 **선거구별 후보·득표**(OpenAPI·다운로드가 못 미치는 옛 총선) | SPARQL RDF/XML | `scripts/fetch/fetch_lod_assembly.py` → `results/{14,15,16}th-general-*.json` district race. 아래 전용 섹션 |
