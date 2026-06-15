@@ -103,6 +103,10 @@
 
   // [지역구] 254 hex resultFn — (sido,name) → { candidates 정렬 } | null. drawDistrictHex 입력.
   //   결과: races[scope=district], 폴: 국회의원 지역구별 최신 1건. 키 = "sido|선거구명".
+  // 시도명 정규화 — hex 레이아웃은 현행명(강원특별자치도·전북특별자치도)인데 옛 회차 결과·폴은
+  //   당시명(강원도·전라북도). 양쪽 canonSido로 맞춰야 매칭됨(안 그러면 강원·전북 지역구 통째 빈칸).
+  const _cs = (s) => (typeof canonSido === 'function' ? canonSido(s) : s);
+
   function districtResultFromResults(races) {
     const m = new Map();
     for (const r of races || []) {
@@ -111,9 +115,9 @@
       if (!name) continue;
       const cands = (r.candidates || []).filter((c) => c.votes != null || c.pct != null)
         .slice().sort((a, b) => (b.votes || b.pct || 0) - (a.votes || a.pct || 0));
-      m.set(r.sido + '|' + name, { candidates: cands });
+      m.set(_cs(r.sido) + '|' + name, { candidates: cands });
     }
-    return (sido, name) => m.get(sido + '|' + name) || null;
+    return (sido, name) => m.get(_cs(sido) + '|' + name) || null;
   }
 
   function districtResultFromPolls(polls) {
@@ -121,7 +125,7 @@
     for (const p of polls || []) {
       if (p.office_level !== '국회의원' || !p.district) continue;
       if (!(p.candidates || []).length) continue;
-      const key = p.sido + '|' + p.district;
+      const key = _cs(p.sido) + '|' + p.district;
       if (!latest[key] || (p.period_end || '') > (latest[key].period_end || '')) latest[key] = p;
     }
     const m = new Map();
@@ -131,7 +135,7 @@
         .slice().sort((a, b) => (b.pct || 0) - (a.pct || 0));
       m.set(key, { candidates: cands, period_end: p.period_end });
     }
-    return (sido, name) => m.get(sido + '|' + name) || null;
+    return (sido, name) => m.get(_cs(sido) + '|' + name) || null;
   }
 
   // [지선] 출처-가공 — 시도/시군구·office별 1위(summarizeLatest 시간감쇠 가중). 폴 출처를
