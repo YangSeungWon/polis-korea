@@ -86,9 +86,11 @@
 
   // [시간] 총선 정당 지지율 추이 — 정당지지(전국·본당, 풀사이클) → buildPartyTrendSVG party 모드.
   //   actual ◆ = 비례 실제 결과(위성→본당 매핑). 반환 { polls, actual:[{key=정당, pct}] }.
-  function genTrend(polls, propNationRace) {
+  function genTrend(polls, propNationRace, electionDate) {
+    // 정당지지는 연속 지표라 선거 후에도 계속 누적 → 이 선거 추이는 선거일까지만(electionDate 상한).
     const kept = (polls || []).filter((p) =>
-      p.office_level === '정당지지' && !p.sido && (p.candidates || []).length);
+      p.office_level === '정당지지' && !p.sido && (p.candidates || []).length
+      && (!electionDate || (p.period_end || '') <= electionDate));
     const acc = {};
     for (const c of ((propNationRace && propNationRace.candidates) || [])) {
       if (c.pct == null || !c.party) continue;

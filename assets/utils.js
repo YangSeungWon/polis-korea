@@ -476,7 +476,7 @@ function buildPartyTrendSVG(polls, opts) {
     const d = new Date(ts);
     // 기간이 길면(>200일, 예: 총선 2년 사이클) 연도 표기 — 안 그러면 6/30→5/21→4/10이 헷갈림
     const lab = (endTs - minTs) > 200 * 864e5
-      ? `${String(d.getFullYear()).slice(2)}.${d.getMonth() + 1}`
+      ? `${String(d.getFullYear()).slice(2)}년 ${d.getMonth() + 1}월`
       : `${d.getMonth() + 1}/${d.getDate()}`;
     xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${lab}</text>`;
   }

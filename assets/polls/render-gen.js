@@ -33,7 +33,7 @@
     const host = document.getElementById('gen-trend');
     if (!host) return;
     if (typeof buildPartyTrendSVG !== 'function' || !window.PollAdapter) { host.hidden = true; return; }
-    const { polls, actual } = PollAdapter.genTrend(state.data.polls || [], gs.propRace);
+    const { polls, actual } = PollAdapter.genTrend(state.data.polls || [], gs.propRace, POLL_ELECTION.date);
     if (!polls.length) { host.hidden = true; return; }
     const electionTs = Date.parse(POLL_ELECTION.date + 'T18:00:00+09:00');
     const svg = buildPartyTrendSVG(polls, {
