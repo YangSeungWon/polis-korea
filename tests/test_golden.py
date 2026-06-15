@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 GRIDS = ROOT / "data/raw/grids"
 GOLDEN = ROOT / "tests/golden"
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "scripts" / "parse"))  # parse_pdf_v2 등은 scripts/parse/ 로 이동됨
 from parse_pdf_v2 import parse_from_grids  # type: ignore
 
 

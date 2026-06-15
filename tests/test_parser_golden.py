@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "scripts" / "parse"))  # parse_pdf 등은 scripts/parse/ 로 이동됨
 from parse_pdf import parse_pdf  # noqa: E402
 
 # 케이스: ntt_id → {desc, must_have: [(이름, 정당), ...]}
