@@ -211,7 +211,7 @@
 
 /* 대선 비례 viz — 공유 Archive.sidoCluster 재사용 (archive.css 미로드라 폴 페이지용 복제) */
 .pres-host { width: 100%; }
-.ar-sidocluster-svg { display: block; width: 100%; max-width: 680px; height: auto; margin: 4px auto 0; }
+.ar-sidocluster-svg { display: block; width: 100%; max-width: 600px; height: auto; margin: 4px auto 0; }
 .ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
 .ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
   paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
@@ -229,6 +229,7 @@
 .poll-climate-lbl { font-size: 12px; font-weight: 700; color: var(--ink-soft); margin-bottom: 4px; }
 .pc-pos { color: #2e7d6f; }
 .pc-neg { color: #c8553d; }
+.pc-actual { color: var(--ink-mute); font-weight: 500; font-size: 11px; }
 
 /* 대선 헤드라인 — 후보 지지율 추이 */
 .pres-trend { margin: 8px 0 24px; }

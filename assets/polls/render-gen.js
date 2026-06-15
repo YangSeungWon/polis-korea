@@ -28,23 +28,7 @@
   function pc(p) { return typeof partyColor === 'function' ? partyColor(p) : '#888'; }
   function ptc(p) { return typeof partyTextColor === 'function' ? partyTextColor(p) : 'inherit'; }
 
-  // 헤드라인: 정당 지지율 추이 (정당지지 + 비례 실제 ◆, 위성→본당)
-  function renderTrend() {
-    const host = document.getElementById('gen-trend');
-    if (!host) return;
-    if (typeof buildPartyTrendSVG !== 'function' || !window.PollAdapter) { host.hidden = true; return; }
-    const { polls, actual } = PollAdapter.genTrend(state.data.polls || [], gs.propRace, POLL_ELECTION.date);
-    if (!polls.length) { host.hidden = true; return; }
-    const electionTs = Date.parse(POLL_ELECTION.date + 'T18:00:00+09:00');
-    const svg = buildPartyTrendSVG(polls, {
-      showBand: true, minPts: 8, topN: 6,
-      actual, electionTs: isFinite(electionTs) ? electionTs : null, w: 720, h: 300,
-    });
-    host.innerHTML = '<h3 class="pres-trend-title">정당 지지율 추이 '
-      + '<span class="pres-trend-sub">전국 정당지지 · ◆ 비례대표 실제 득표(위성정당→본당)</span></h3>'
-      + `<div class="pres-trend-chart">${svg}</div>`;
-    host.hidden = false;
-  }
+  // (정당 지지율 추이 헤드라인은 '선거 무렵 분위기'(climate)로 통합 — 중복 제거.)
 
   // 비례 실제 결과 바
   function renderProp() {
@@ -130,8 +114,11 @@
     await Promise.all([loadResults(), loadLayout()]);
     gs.pollFn = PollAdapter.districtResultFromPolls(state.data.polls || []);
     gs.resultFn = PollAdapter.districtResultFromResults(gs.districtRaces);
-    renderTrend();
-    if (window.PollClimate) PollClimate.mount({ after: 'gen-trend' });  // 선거 무렵 국정·정당 지지
+    // 정당 지지율 추이는 '선거 무렵 분위기'(climate) 한 곳에 통합 — 헤드라인 중복 제거.
+    // 헤드라인이 갖던 ◆비례실제 비교는 climate 정당 차트로 흡수(12개월 + ◆, 정보 손실 없음).
+    const gt = PollAdapter.genTrend(state.data.polls || [], gs.propRace, POLL_ELECTION.date);
+    const gtHost = document.getElementById('gen-trend'); if (gtHost) gtHost.hidden = true;
+    if (window.PollClimate) PollClimate.mount({ after: 'gen-trend', partyActual: gt.actual });
     renderProp();
     renderDistrict();
     return true;

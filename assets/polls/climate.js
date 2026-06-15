@@ -54,8 +54,9 @@
     const apprSvg = apprPolls.length >= 3
       ? buildPartyTrendSVG(apprPolls, { keyBy: 'candidate', colorMap: { '긍정': '#2e7d6f', '부정': '#c8553d' }, bandMinPts: 6, electionTs: endTs })
       : '';
+    // 총선은 정당 지지가 곧 선거 지표 → opts.partyActual(비례 실제, 위성정당→본당)을 ◆로 오버레이.
     const partySvg = partyPolls.length >= 3
-      ? buildPartyTrendSVG(partyPolls, { keyBy: 'party', topN: 6, bandMinPts: 6, electionTs: endTs })
+      ? buildPartyTrendSVG(partyPolls, { keyBy: 'party', topN: 6, bandMinPts: 6, electionTs: endTs, actual: opts.partyActual })
       : '';
 
     if (!apprSvg && !partySvg) { host.remove(); return; }   // 데이터 없으면 섹션 자체 제거(옛 회차)
@@ -66,7 +67,7 @@
       <p class="poll-climate-sub">선거 ${months}개월 전 ~ 선거일 (${range}) · 결과를 만든 국정·정당 지지 배경.</p>
       <div class="poll-climate-grid">
         ${apprSvg ? `<div class="poll-climate-block"><div class="poll-climate-lbl">${subj || ''} 국정 지지율 <span class="pc-pos">긍정</span>·<span class="pc-neg">부정</span></div>${apprSvg}</div>` : ''}
-        ${partySvg ? `<div class="poll-climate-block"><div class="poll-climate-lbl">정당 지지율</div>${partySvg}</div>` : ''}
+        ${partySvg ? `<div class="poll-climate-block"><div class="poll-climate-lbl">정당 지지율${opts.partyActual ? ' <span class="pc-actual">◆ 비례 실제</span>' : ''}</div>${partySvg}</div>` : ''}
       </div>`;
   }
 
