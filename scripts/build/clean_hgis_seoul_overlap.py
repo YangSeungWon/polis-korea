@@ -15,13 +15,25 @@ import json
 import sys
 from pathlib import Path
 
-from shapely.geometry import shape, mapping
+from shapely.geometry import shape, mapping, MultiPolygon
 from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parents[2]
 GEO = ROOT / "data" / "geo"
 # 유의미 중첩 임계 — feature 면적의 0.5% 초과만 클립(좌표 노이즈성 슬리버 보호)
 MIN_FRAC = 0.005
+
+
+def drop_slivers(geom, rel=1e-3):
+    """difference 결과의 면적 0짜리 찌꺼기 조각 제거 — 최대 조각의 rel(0.1%) 미만 part는 버림.
+    경계 절단으로 생기는 수치 노이즈성 slivers만 걸러내고 본체·실제 조각은 보존."""
+    if geom.geom_type != "MultiPolygon":
+        return geom
+    parts = sorted(geom.geoms, key=lambda p: p.area, reverse=True)
+    if not parts:
+        return None
+    keep = [p for p in parts if p.area >= rel * parts[0].area]
+    return keep[0] if len(keep) == 1 else MultiPolygon(keep)
 
 
 def round_geom(geom, nd=9):
@@ -61,6 +73,9 @@ def clean_file(path: Path) -> int:
             continue
         new = g.difference(seoul_union).buffer(0)
         if new.is_empty:
+            continue
+        new = drop_slivers(new)
+        if new is None or new.is_empty:
             continue
         f["geometry"] = round_geom(new)
         p = f["properties"]
