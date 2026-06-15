@@ -95,6 +95,8 @@ jobs:
           python scripts/build/build_byelection.py
           echo "=== 8. build_static ==="
           python scripts/build/build_static.py
+          echo "=== 8.5 canon_agency (조사기관 표기 통일 — (주)/주식회사 제거, house-effect 정확도) ==="
+          python scripts/build/canon_agency.py
           # optimize_data(data/*.json in-place minify) 제거: 서빙=커밋(master 루트)이고
           # 레포 컨벤션은 pretty(indent=2). minify를 커밋하면 39k줄 diff로 컨벤션 붕괴.
           # Pages는 gzip 서빙이라 공백 minify의 전송 이득은 사실상 0. geo 좌표절삭이

@@ -76,6 +76,8 @@ jobs:
           done
           echo "=== extract_party_support ==="
           python scripts/parse/extract_party_support.py --incremental
+          echo "=== canon_agency (조사기관 표기 통일 — house-effect 정확도) ==="
+          python scripts/build/canon_agency.py
 
       # 갱신된 목록 CSV + 추출 JSON을 함께 커밋(CSV가 stale하면 다음 run이 재스크랩하므로 필수).
       - name: Commit & push if changed
