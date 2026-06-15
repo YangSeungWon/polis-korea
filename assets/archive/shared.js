@@ -196,48 +196,80 @@
     return nodes;
   };
 
-  // ── 시도 클러스터 (의석 기반 헥스/dorling 공용) ────────────────────────────────
-  // layout()이 위치·viewBox를 한 번 계산 → drawHex/drawDorling이 공유 → 토글해도 권역 위치 고정.
-  // bySido = {시도:{정당:석수}}. 헥스=연속 스파이럴(1 hex=1석), dorling=원+파이. 둘 다 r=clusterR(석수).
+  // ── 시도 클러스터 (의석·득표비례 공용, mode 옵션) ─────────────────────────────
+  // layout()이 위치·viewBox 1회 계산 → drawHex/drawDorling 공유(토글 위치 고정).
+  //   mode='seats'(기본): bySido={시도:{정당:석}}. 1 hex=1석 (allocate가 정확).
+  //   mode='proportional': races=[{sido,candidates:[{name,party,votes|share,pct}],valid_votes|weight}].
+  //     1 hex≈10만표, allocate가 득표 비율로 배분 (대선 — 승자독식 단색 거부). seedGap·smallR만 mode별.
   Archive.sidoCluster = (function () {
     const NS = 'http://www.w3.org/2000/svg';
-    const SMALL_R = 6, SEED_GAP = 85, PAD = 4;
-    const clusterR = (N) => { const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3)); return Math.max(9, (L + 0.6) * Math.sqrt(3) * SMALL_R); };
+    const PAD = 4;
+    const PARAM = { seats: { smallR: 6, seedGap: 85 }, proportional: { smallR: 3.5, seedGap: 65 } };
+    const clusterR = (N, smallR) => { const L = Math.ceil(Math.sqrt(Math.max(N - 1, 0) / 3)); return Math.max(9, (L + 0.6) * Math.sqrt(3) * smallR); };
     const NB = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
     const ring = (L) => { const out = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { out.push([q, r]); q += dq; r += dr; } } return out; };
-    // 연속 스파이럴 — 중심 + 꽉 찬 링 + 마지막 부분 링은 연속(slice). 듬성듬성 분산 안 함.
     const spiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const rg = ring(L); const rem = N - out.length; out.push(...(rem >= rg.length ? rg : rg.slice(0, rem))); } return out; };
     const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
+    const _v = (c) => (c && c.share != null ? c.share : ((c && c.votes) || 0));
 
-    // 전남광주 통합(2026 지선) → 광주+전남+통합 한 셀 + honamMergedLayout. 그 외 분리 유지.
+    // 전남광주 통합(2026 지선, seats만) — 광주+전남+통합 한 셀 + honamMergedLayout.
     function mergeHonam(bySido) {
-      if (!((bySido['전남광주특별시'] || bySido['전남광주통합특별시']) && typeof honamMergedLayout === 'function')) {
-        return { data: bySido, layout: SIDO_HEX_LAYOUT };
-      }
+      if (!((bySido['전남광주특별시'] || bySido['전남광주통합특별시']) && typeof honamMergedLayout === 'function')) return { data: bySido, layout: SIDO_HEX_LAYOUT };
       const merged = {};
-      for (const src of ['광주광역시', '전라남도', '전남광주특별시', '전남광주통합특별시']) {
-        const s = bySido[src]; if (!s) continue;
-        for (const [p, c] of Object.entries(s)) merged[p] = (merged[p] || 0) + c;
-      }
-      const data = Object.assign({}, bySido);
-      delete data['광주광역시']; delete data['전라남도']; delete data['전남광주통합특별시'];
-      data['전남광주특별시'] = merged;
+      for (const src of ['광주광역시', '전라남도', '전남광주특별시', '전남광주통합특별시']) { const s = bySido[src]; if (!s) continue; for (const [p, c] of Object.entries(s)) merged[p] = (merged[p] || 0) + c; }
+      const data = Object.assign({}, bySido); delete data['광주광역시']; delete data['전라남도']; delete data['전남광주통합특별시']; data['전남광주특별시'] = merged;
       return { data, layout: honamMergedLayout(SIDO_HEX_LAYOUT) };
     }
 
-    // 공유 레이아웃 — 위치(packClusters)·viewBox를 한 번 계산. 헥스·dorling이 동일 호출 → 위치 고정.
-    function layout(bySido) {
+    // 입력 → {bySido:{sido:{slices:[{key,color,value,tip}], sizeTotal}}, hexLayout}
+    function normalize(input, mode) {
+      const out = {}; const ns = (typeof canonSido === 'function') ? canonSido : (s) => s;
+      if (mode === 'proportional') {
+        for (const r of (input || [])) {
+          const cands = (r.candidates || []).slice().sort((a, b) => _v(b) - _v(a)).filter((c) => _v(c) > 0);
+          if (!cands.length) continue;
+          const sizeTotal = r.weight != null ? r.weight : (r.valid_votes != null ? r.valid_votes : cands.reduce((s, c) => s + _v(c), 0));
+          if (!sizeTotal) continue;
+          out[ns(r.sido)] = { slices: cands.map((c) => ({ key: c.name, color: Archive.pcol(c.party), value: _v(c), tip: `${c.name}(${c.party}) ${(c.pct || 0).toFixed(1)}%` })), sizeTotal };
+        }
+        return { bySido: out, hexLayout: SIDO_HEX_LAYOUT };
+      }
+      const m = mergeHonam(input || {});
+      for (const [sido, seats] of Object.entries(m.data)) {
+        const entries = Object.entries(seats).sort((a, b) => b[1] - a[1]);
+        const tot = entries.reduce((s, [, c]) => s + c, 0); if (!tot) continue;
+        out[sido] = { slices: entries.map(([p, c]) => ({ key: p, color: Archive.pcol(p), value: c, tip: `${p} ${c}` })), sizeTotal: tot };
+      }
+      return { bySido: out, hexLayout: m.layout };
+    }
+
+    // 큰 정수 잔여(largest remainder)로 N칸을 value 비율 배분. seats(N=합계)면 정확, prop이면 비례.
+    function allocate(slices, N) {
+      const total = slices.reduce((s, x) => s + x.value, 0);
+      if (!total) return slices.map(() => 0);
+      const raw = slices.map((x) => x.value * N / total);
+      const fl = raw.map(Math.floor);
+      const rem = N - fl.reduce((a, b) => a + b, 0);
+      const order = raw.map((v, i) => ({ i, f: v - Math.floor(v) })).sort((a, b) => b.f - a.f);
+      for (let k = 0; k < rem && order.length; k++) fl[order[k % order.length].i] += 1;
+      return fl;
+    }
+
+    function layout(input, mode) {
       if (typeof SIDO_HEX_LAYOUT !== 'object') return null;
-      const { data, layout: lay } = mergeHonam(bySido);
+      const P = PARAM[mode] || PARAM.seats;
+      const { bySido, hexLayout } = normalize(input, mode);
+      let unit = null;
+      if (mode === 'proportional') {
+        const maxTot = Math.max(1, ...Object.values(bySido).map((c) => c.sizeTotal));
+        unit = Math.max(20000, Math.round(maxTot / 90 / 10000) * 10000);  // 1 hex ≈ 10만표
+      }
       const nodes = [];
-      for (const [sido, pos] of Object.entries(lay)) {
-        const seats = data[sido]; if (!seats) continue;
-        const tot = Object.values(seats).reduce((s, n) => s + n, 0);
-        if (!tot) continue;
-        nodes.push({
-          sido, seats, tot, label: pos.label, r: clusterR(tot),
-          cx0: pos.col * SEED_GAP + (pos.row % 2 ? SEED_GAP / 2 : 0), cy0: pos.row * SEED_GAP * 0.87,
-        });
+      for (const [sido, pos] of Object.entries(hexLayout)) {
+        const cell = bySido[sido]; if (!cell) continue;
+        const N = mode === 'proportional' ? Math.max(1, Math.round(cell.sizeTotal / unit)) : cell.sizeTotal;
+        nodes.push({ sido, label: pos.label, slices: cell.slices, sizeTotal: cell.sizeTotal, N, r: clusterR(N, P.smallR),
+          cx0: pos.col * P.seedGap + (pos.row % 2 ? P.seedGap / 2 : 0), cy0: pos.row * P.seedGap * 0.87 });
       }
       if (!nodes.length) return null;
       Archive.packClusters(nodes, { pad: PAD });
@@ -245,100 +277,89 @@
       const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;
       const W = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
       const H = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
-      return { nodes, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}` };
+      return { nodes, unit, mode, smallR: P.smallR, minX, minY, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}` };
     }
 
-    function legendOf(nodes) {
+    function legendOf(nodes) {  // seats 모드 외부 범례용(정당별 합). prop은 반환 무시됨.
       const partyTotal = new Map(); let totalSeats = 0;
-      for (const n of nodes) for (const [p, c] of Object.entries(n.seats)) { partyTotal.set(p, (partyTotal.get(p) || 0) + c); totalSeats += c; }
+      for (const n of nodes) for (const s of n.slices) { partyTotal.set(s.key, (partyTotal.get(s.key) || 0) + s.value); totalSeats += s.value; }
       return { totalSeats, partyTotal };
     }
+    function newSvg(viewBox) { const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS); svg.setAttribute('viewBox', viewBox); svg.setAttribute('class', 'ar-sidocluster-svg'); return svg; }
+    function tipOf(n, mode) { return `${n.sido}${mode === 'seats' ? ` ${n.sizeTotal}석` : ''} · ${n.slices.slice(0, 3).map((s) => s.tip).join(' · ')}`; }
+    function nameOf(n) { return n.label || Archive.ssh(n.sido); }
+    function addLegend(svg, L, text) { const leg = document.createElementNS(NS, 'text'); leg.setAttribute('x', (L.minX + 4).toFixed(1)); leg.setAttribute('y', (L.minY + 12).toFixed(1)); leg.setAttribute('class', 'sido-prop-legend'); leg.textContent = text; svg.appendChild(leg); }
+    const pie = (cx, cy, r, a0, a1) => { const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1); const lg = (a1 - a0) > Math.PI ? 1 : 0; return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`; };
 
-    function newSvg(viewBox) {
-      const svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('xmlns', NS); svg.setAttribute('viewBox', viewBox); svg.setAttribute('class', 'ar-sidocluster-svg');
-      return svg;
-    }
-
-    // 헥스 — 1 hex = 1석, 정당 의석 desc로 중심부터 연속 채움(큰 당이 안쪽). opts.onSelect(sido) 클릭.
-    function drawHex(host, bySido, opts) {
-      opts = opts || {};
-      const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
+    function drawHex(host, input, opts) {
+      opts = opts || {}; const mode = opts.mode || 'seats';
+      const L = layout(input, mode); if (!host || !L) { if (host) host.innerHTML = ''; return { totalSeats: 0, partyTotal: new Map() }; }
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
-        const entries = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
         const g = document.createElementNS(NS, 'g');
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const outline = document.createElementNS(NS, 'circle');
         outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
         outline.setAttribute('class', 'ar-genhex-outline'); g.appendChild(outline);
-        const tt = document.createElementNS(NS, 'title');
-        tt.textContent = `${n.sido} ${n.tot}석 · ${entries.map(([p, c]) => `${p} ${c}`).join(', ')}`; g.appendChild(tt);
+        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode); g.appendChild(tt);
+        const alloc = allocate(n.slices, n.N);
         const fills = [];
-        for (const [p, c] of entries) for (let k = 0; k < c; k++) fills.push(Archive.pcol(p));
-        const sp = spiral(n.tot);
+        for (let i = 0; i < n.slices.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(n.slices[i].color);
+        while (fills.length < n.N) fills.push('#e6e9ef');
+        const sp = spiral(n.N);
         for (let i = 0; i < sp.length; i++) {
           const [q, ar] = sp[i];
-          const sx = n.cx + SMALL_R * Math.sqrt(3) * (q + ar / 2), sy = n.cy + SMALL_R * 1.5 * ar;
+          const sx = n.cx + L.smallR * Math.sqrt(3) * (q + ar / 2), sy = n.cy + L.smallR * 1.5 * ar;
           const poly = document.createElementNS(NS, 'polygon');
-          poly.setAttribute('points', hexPts(sx, sy, SMALL_R * 0.92));
+          poly.setAttribute('points', hexPts(sx, sy, L.smallR * 0.9));
           poly.setAttribute('fill', fills[i] || '#e6e9ef');
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
         }
         svg.appendChild(g);
       }
-      // 라벨은 모든 클러스터 뒤에 별도 패스 — 이웃 클러스터에 가리지 않게(항상 위, halo 가독).
-      for (const n of L.nodes) {
+      for (const n of L.nodes) {  // 라벨 별도 패스 — 이웃에 안 가림(위, halo, outline과 살짝 겹침)
         const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r + 3).toFixed(1));  // outline 동그라미와 살짝 겹치게
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r + 3).toFixed(1));
         t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
-        t.textContent = `${n.label || Archive.ssh(n.sido)} ${n.tot}`;
+        t.textContent = mode === 'seats' ? `${nameOf(n)} ${n.sizeTotal}` : nameOf(n);
         svg.appendChild(t);
       }
+      if (mode === 'proportional') addLegend(svg, L, opts.legend || `■ 1개 = ${(L.unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`);
       host.innerHTML = ''; host.appendChild(svg);
       return legendOf(L.nodes);
     }
 
-    const pie = (cx, cy, r, a0, a1) => {
-      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
-      const lg = (a1 - a0) > Math.PI ? 1 : 0;
-      return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`;
-    };
-    // dorling — 같은 layout(위치·viewBox 동일) → 토글해도 권역 고정. 원 r=clusterR + 정당 파이.
-    function drawDorling(host, bySido, opts) {
-      opts = opts || {};
-      const L = layout(bySido); if (!host || !L) { host && (host.innerHTML = ''); return { totalSeats: 0, partyTotal: new Map() }; }
+    function drawDorling(host, input, opts) {
+      opts = opts || {}; const mode = opts.mode || 'seats';
+      const L = layout(input, mode); if (!host || !L) { if (host) host.innerHTML = ''; return { totalSeats: 0, partyTotal: new Map() }; }
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
-        const e = Object.entries(n.seats).sort((a, b) => b[1] - a[1]);
         const g = document.createElementNS(NS, 'g');
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
-        const tt = document.createElementNS(NS, 'title');
-        tt.textContent = `${n.sido} ${n.tot}석 · ${e.map(([p, c]) => `${p} ${c}`).join(', ')}`; g.appendChild(tt);
-        if (e.length > 1) {
+        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode); g.appendChild(tt);
+        const total = n.slices.reduce((s, x) => s + x.value, 0);
+        if (total > 0 && n.slices.length > 1) {
           let a0 = -Math.PI / 2;
-          for (const [p, c] of e) { const a1 = a0 + (c / n.tot) * 2 * Math.PI; const path = document.createElementNS(NS, 'path'); path.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1)); path.setAttribute('fill', Archive.pcol(p)); g.appendChild(path); a0 = a1; }
+          for (const s of n.slices) { const a1 = a0 + (s.value / total) * 2 * Math.PI; const p = document.createElementNS(NS, 'path'); p.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1)); p.setAttribute('fill', s.color); g.appendChild(p); a0 = a1; }
         } else {
           const c = document.createElementNS(NS, 'circle');
           c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.r.toFixed(1));
-          c.setAttribute('fill', e[0] ? Archive.pcol(e[0][0]) : '#e6e9ef'); g.appendChild(c);
+          c.setAttribute('fill', n.slices[0] ? n.slices[0].color : '#e6e9ef'); g.appendChild(c);
         }
         const rng = document.createElementNS(NS, 'circle');
         rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1)); rng.setAttribute('r', n.r.toFixed(1));
         rng.setAttribute('class', 'ar-dorling-ring'); g.appendChild(rng);
         svg.appendChild(g);
       }
-      // 라벨 별도 패스 — 이웃 원에 가리지 않게(항상 위). 작은 원(r<11)은 위쪽에 표시.
-      for (const n of L.nodes) {
-        const t = document.createElementNS(NS, 'text');
+      for (const n of L.nodes) {  // 라벨 별도 패스 — 큰 원 중앙(흰), 작은 원 바깥 위(검정 halo)
         const small = n.r < 11;
+        const t = document.createElementNS(NS, 'text');
         t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (small ? n.cy - n.r - 3 : n.cy + 3).toFixed(1));
-        t.setAttribute('text-anchor', 'middle');
-        t.setAttribute('class', small ? 'ar-genhex-label' : 'ar-dorling-label');  // 작은 원은 바깥(검정 halo) 라벨
-        t.textContent = n.label || Archive.ssh(n.sido);
-        svg.appendChild(t);
+        t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', small ? 'ar-genhex-label' : 'ar-dorling-label');
+        t.textContent = nameOf(n); svg.appendChild(t);
       }
+      if (mode === 'proportional') addLegend(svg, L, opts.legend || '● 크기=득표 · 파이=후보 득표 구성');
       host.innerHTML = ''; host.appendChild(svg);
       return legendOf(L.nodes);
     }

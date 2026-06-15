@@ -201,13 +201,15 @@
 .pic-go { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .pic-tag { font-size: 11px; font-weight: 700; color: var(--accent, #c8553d); }
 
-/* 대선 비례 viz — render-sido-prop 재사용 (archive.css 미로드라 폴 페이지용 복제) */
+/* 대선 비례 viz — 공유 Archive.sidoCluster 재사용 (archive.css 미로드라 폴 페이지용 복제) */
 .pres-host { width: 100%; }
-.sido-prop-svg { width: 100%; height: auto; max-width: 560px; display: block; margin: 0 auto; }
-.sido-prop-hex { stroke: none; }
-.sido-prop-ring { fill: none; stroke: var(--ink); stroke-width: 0.6; }
-.sido-prop-label { fill: var(--ink); font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
-.sido-prop-label.on-disc { fill: #fff; stroke: rgba(0,0,0,0.5); stroke-width: 2.4px; }
+.ar-sidocluster-svg { display: block; width: 100%; max-width: 680px; height: auto; margin: 4px auto 0; }
+.ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
+.ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
+  paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
+.ar-dorling-ring { fill: none; stroke: rgba(0,0,0,0.2); stroke-width: 1; }
+.ar-dorling-label { font-size: 11px; font-weight: 700; fill: #fff; pointer-events: none;
+  paint-order: stroke; stroke: rgba(0,0,0,0.4); stroke-width: 2.4; stroke-linejoin: round; }
 .sido-prop-legend { fill: var(--ink-soft); font-size: 9px; }
 
 /* 대선 헤드라인 — 후보 지지율 추이 */
