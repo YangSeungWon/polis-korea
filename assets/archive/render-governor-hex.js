@@ -90,11 +90,12 @@
       } else {
         poly.setAttribute('class', 'gov-hex-cell no-data' + selCls);
       }
-      // 여론조사 빗나감 표시 — 실제 모드에서 막판 여론조사 1위 ≠ 실제 당선인 시도.
-      const missed = opts.missOf && opts.missOf(cell.sido);
-      if (missed) {
-        poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
-        poly.setAttribute('stroke-width', '2.4');
+      // 여론조사 빗나감 — 실제 모드에서 막판 여론조사 1위 ≠ 실제 당선인 시도.
+      //   missOf는 '여론조사가 예측한 정당색'을 반환(빗나감) 또는 falsy. 점선 테두리=그 색.
+      const missCol = opts.missOf && opts.missOf(cell.sido);
+      if (missCol) {
+        poly.setAttribute('stroke', missCol);
+        poly.setAttribute('stroke-width', '2.6');
         poly.setAttribute('stroke-dasharray', '3,2.2');
         poly.classList.add('hex-poll-miss');
       }
@@ -102,7 +103,7 @@
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = (cell.win
         ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${(cell.win.pct || 0).toFixed(1)}%`
-        : `${cell.sido} · 데이터 없음`) + (missed ? ' · 여론조사 빗나감' : '');
+        : `${cell.sido} · 데이터 없음`) + (missCol ? ' · 여론조사는 빗나감(테두리=조사 1위 정당)' : '');
       g.appendChild(tt);
       // 시도 라벨
       const t1 = document.createElementNS(NS, 'text');

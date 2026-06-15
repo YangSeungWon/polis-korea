@@ -53,10 +53,10 @@
     const fn = gs.dmode === 'result' ? gs.resultFn : gs.pollFn;
     // 조사된 지역구 수 + 여론조사 적중(조사된 지역구만 폴 1위 vs 실제 1위 비교)
     let polled = 0, match = 0;
-    const missed = (sido, name) => {
+    const missed = (sido, name) => {   // 빗나가면 '여론조사 1위 정당색' 반환 → 점선 테두리색
       const p = gs.pollFn(sido, name), r = gs.resultFn(sido, name);
       const pt = p && p.candidates[0], rt = r && r.candidates[0];
-      return pt && rt ? pt.party !== rt.party : false;
+      return (pt && rt && pt.party !== rt.party) ? pc(pt.party) : null;
     };
     for (const d of gs.layout) {
       const p = gs.pollFn(d.sido, d.name); if (!p) continue;
@@ -66,7 +66,7 @@
     }
     const note = gs.dmode === 'polls'
       ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
-      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b> (점선=빗나간 곳)` : '확정 결과');
+      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b> (점선 테두리=조사 1위 정당)` : '확정 결과');
     host.innerHTML = `
       <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span></h3>
       <div class="gen-dist-bar">

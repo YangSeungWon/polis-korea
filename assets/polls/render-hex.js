@@ -13,11 +13,12 @@ function renderHex() {
     winnerOf: (sido) => regionSidoWinner(sido, state.office),
     opacityOf: (w) => (w ? (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)) : 1),
     dashOf: (w) => ((w && (w.n_polls <= 2 || w.low_recent)) ? '3,2' : null),
-    // 실제 모드: 막판 여론조사 1위 ≠ 실제 당선인 시도 표시(점선).
+    // 실제 모드: 막판 여론조사 1위 ≠ 실제 당선이면 '여론조사 1위 정당색' 반환 → 점선 테두리색.
     missOf: state.mode === 'result' ? (sido) => {
       const poll = PollAdapter.localSidoWinner(state.data.polls, sido, state.office, merge);
       const actual = regionSidoWinner(sido, state.office);
-      return !!(poll && actual && poll.party && actual.party && poll.party !== actual.party);
+      return (poll && actual && poll.party && actual.party && poll.party !== actual.party)
+        ? partyColor(poll.party) : null;
     } : null,
     onSelect: (sido) => { state.selectedSido = sido; state.selectedSigungu = null; renderHex(); renderDetail(); },
     selected: state.selectedSido,
@@ -62,11 +63,12 @@ async function renderSigunguHex() {
       selected: { sido: state.selectedSido, name: state.selectedSigungu },
       opacityOf: (w) => (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)),
       dashOf: (w) => ((w.n_polls <= 2 || w.low_recent) ? '2,1.5' : null),
-      // 실제 모드: 막판 조사 1위 ≠ 실제 당선 시군구 표시.
+      // 실제 모드: 막판 조사 1위 ≠ 실제 당선이면 조사 1위 정당색 반환 → 점선 테두리색.
       missOf: (state.mode === 'result' && isSigunguMode()) ? (sido, name) => {
         const poll = PollAdapter.localSigunguWinner(state.data.polls, sido, name, state.office);
         const actual = regionSigunguWinner(sido, name, state.office);
-        return !!(poll && actual && poll.party && actual.party && poll.party !== actual.party);
+        return (poll && actual && poll.party && actual.party && poll.party !== actual.party)
+          ? partyColor(poll.party) : null;
       } : null,
       tooltipOf: (sido, name, w) => (w
         ? `${sido} ${name} · ${w.name || w.party || ''}${w.name && w.party ? ' (' + w.party + ')' : ''} ${w.pct}% · ${fmtDate(w.period)}`
