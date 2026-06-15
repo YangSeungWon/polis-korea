@@ -300,8 +300,11 @@
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const outline = document.createElementNS(NS, 'circle');
         outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
-        outline.setAttribute('class', 'ar-genhex-outline'); g.appendChild(outline);
-        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode); g.appendChild(tt);
+        outline.setAttribute('class', 'ar-genhex-outline');
+        const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 테두리
+        if (missCol) { outline.setAttribute('stroke', missCol); outline.setAttribute('stroke-width', '2.4'); outline.setAttribute('stroke-dasharray', '3,2.4'); outline.setAttribute('fill', 'none'); }
+        g.appendChild(outline);
+        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode) + (missCol ? ' · 여론조사 빗나감(테두리=조사 1위 정당)' : ''); g.appendChild(tt);
         const alloc = allocate(n.slices, n.N);
         const fills = [];
         for (let i = 0; i < n.slices.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(n.slices[i].color);
@@ -337,7 +340,8 @@
       for (const n of L.nodes) {
         const g = document.createElementNS(NS, 'g');
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
-        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode); g.appendChild(tt);
+        const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 링
+        const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode) + (missCol ? ' · 여론조사 빗나감(테두리=조사 1위 정당)' : ''); g.appendChild(tt);
         const total = n.slices.reduce((s, x) => s + x.value, 0);
         if (total > 0 && n.slices.length > 1) {
           let a0 = -Math.PI / 2;
@@ -348,8 +352,11 @@
           c.setAttribute('fill', n.slices[0] ? n.slices[0].color : '#e6e9ef'); g.appendChild(c);
         }
         const rng = document.createElementNS(NS, 'circle');
-        rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1)); rng.setAttribute('r', n.r.toFixed(1));
-        rng.setAttribute('class', 'ar-dorling-ring'); g.appendChild(rng);
+        rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1));
+        rng.setAttribute('r', (n.r + (missCol ? 1.5 : 0)).toFixed(1));
+        rng.setAttribute('class', 'ar-dorling-ring');
+        if (missCol) { rng.setAttribute('stroke', missCol); rng.setAttribute('stroke-width', '2.4'); rng.setAttribute('stroke-dasharray', '3,2.4'); rng.setAttribute('fill', 'none'); }
+        g.appendChild(rng);
         svg.appendChild(g);
       }
       for (const n of L.nodes) {  // 라벨 별도 패스 — 큰 원 중앙(흰), 작은 원 바깥 위(검정 halo)

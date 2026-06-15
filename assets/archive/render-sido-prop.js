@@ -5,11 +5,11 @@
 (function () {
   function drawGrid(host, races, opts) {
     opts = opts || {};
-    return window.Archive.sidoCluster.drawHex(host, races, { mode: 'proportional', legend: opts.legend, onSelect: opts.onSelect });
+    return window.Archive.sidoCluster.drawHex(host, races, { mode: 'proportional', legend: opts.legend, onSelect: opts.onSelect, missOf: opts.missOf });
   }
   function drawDorling(host, races, opts) {
     opts = opts || {};
-    return window.Archive.sidoCluster.drawDorling(host, races, { mode: 'proportional', legend: opts.legend, onSelect: opts.onSelect });
+    return window.Archive.sidoCluster.drawDorling(host, races, { mode: 'proportional', legend: opts.legend, onSelect: opts.onSelect, missOf: opts.missOf });
   }
   window.Archive = window.Archive || {};
   window.Archive.sidoProp = { drawGrid, drawDorling };

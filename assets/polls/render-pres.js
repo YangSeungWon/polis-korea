@@ -72,17 +72,19 @@
     const legend = ps.mode === 'polls'
       ? (ps.viewmode === 'grid' ? '■ 면적=유권자 규모 · 색=조사 지지' : '● 크기=유권자 규모 · 파이=조사 지지 구성')
       : undefined;
-    sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, legend ? { legend } : undefined);
-    // 실제 모드: 막판 여론조사 시도 1위가 실제 당선과 몇 곳 일치했는지 헤드라인.
+    // 실제 모드: 막판 여론조사 시도 1위 vs 실제 — 빗나간 시도 점선 마커(조사 1위 정당색) + 적중 헤드라인.
+    let missOf = null, m = 0, t = 0;
+    const csn = (typeof canonSido === 'function') ? canonSido : (s) => s;
     if (ps.mode === 'result') {
-      const csn = (typeof canonSido === 'function') ? canonSido : (s) => s;
-      const pm = {};
+      const pm = {}, am = {};
       PollAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령' })
         .forEach((c) => { pm[csn(c.sido)] = (c.candidates[0] || {}).party; });
-      let m = 0, t = 0;
-      cs.forEach((c) => { const pp = pm[csn(c.sido)], ap = (c.candidates[0] || {}).party; if (pp && ap) { t++; if (pp === ap) m++; } });
-      if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b>`; h.prepend(cap); }
+      cs.forEach((c) => { am[csn(c.sido)] = (c.candidates[0] || {}).party; });
+      for (const k in am) { if (pm[k] && am[k]) { t++; if (pm[k] === am[k]) m++; } }
+      missOf = (sido) => { const k = csn(sido), pp = pm[k], ap = am[k]; return (pp && ap && pp !== ap) ? partyColor(pp) : null; };
     }
+    sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: null, missOf });
+    if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
     renderDetail();
   }
 
