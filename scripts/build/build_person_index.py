@@ -245,6 +245,11 @@ def main():
                     # 둘 다 dob 있으면 dob가 결정적 — 같은 이름+정확히 같은 생년월일은 사실상
                     # 동일인(NEC 한자는 같은 사람도 회차마다 다르게 기록: 나경원 羅卿瑗/羅景垣 등).
                     link = da == db
+                elif (a["tc"] == "4" and b["tc"] == "4"
+                      and a["place"] and a["place"] == b["place"]):
+                    # 같은 시군구 단체장(tc4) + 동명 → 동일인(재선/복귀). 연도·소스공백(1995/1998
+                    # 무dob) 무관 강링크 — 같은 군수/시장 자리가 둘로 갈리던 것 복원.
+                    link = True
                 else:
                     # dob 미상 — 같은 지역에서만 동일인 추정(다른 도 연쇄 차단: 이상철 李相喆 등).
                     #   옛 선거는 sido가 'None'으로 비어 모두 같은 시도로 오인되므로, 빈 시도는
@@ -273,7 +278,28 @@ def main():
                 gd = defaultdict(list)
                 for r in grp:
                     gd[r.get("dob")].append(r)
+                # 무dob 행(예: 1995/1998 지선 — NEC bio 공백)은 별도 그룹으로 버리지 말고,
+                # '같은 지역구(place)' race를 가진 dob 그룹이 유일하면 그쪽에 귀속(같은 단체장이
+                # 소스 공백으로 분리되던 것 복원). 같은 연도 충돌(타인)이거나 후보 dob 그룹이
+                # 둘 이상이면 안전하게 무dob 그룹 유지.
+                none_rows = gd.pop(None, [])
+                place_owner = defaultdict(set)
+                for d, rs in gd.items():
+                    for r in rs:
+                        place_owner[r["place"]].add(d)
+                leftover = []
+                for r in none_rows:
+                    owners = place_owner.get(r["place"])
+                    if owners and len(owners) == 1:
+                        d = next(iter(owners))
+                        if not any(x["place"] == r["place"] and x["year"] == r["year"]
+                                   for x in gd[d]):
+                            gd[d].append(r)
+                            continue
+                    leftover.append(r)
                 groups.extend(gd.items())
+                if leftover:
+                    groups.append((None, leftover))
         namesake = len(groups) > 1               # 같은 이름이 여러 인물로 갈림 → 동명이인 표시
         for dob, grp in groups:
             grp.sort(key=lambda r: (r.get("date") or str(r["year"] or ""), r["eid"]))
