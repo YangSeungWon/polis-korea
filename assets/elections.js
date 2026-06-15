@@ -23,19 +23,5 @@
     return indexPromise;
   }
 
-  // 모든 id (active + archive) 메타 일괄 로드.
-  async function loadAllElectionMetas() {
-    const idx = await loadElectionsIndex();
-    const ids = [...(idx.active || []), ...(idx.archive || [])];
-    const metas = await Promise.all(ids.map(loadElectionMeta));
-    return metas.filter((m) => m);
-  }
-
-  // archive 페이지가 있는 회차만 (meta.archive.page 존재).
-  async function loadArchiveablePages() {
-    const all = await loadAllElectionMetas();
-    return all.filter((m) => m?.archive?.page);
-  }
-
-  root.Elections = { loadElectionMeta, loadElectionsIndex, loadAllElectionMetas, loadArchiveablePages };
+  root.Elections = { loadElectionMeta, loadElectionsIndex };
 })(window);
