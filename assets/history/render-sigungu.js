@@ -384,108 +384,44 @@ function renderSigunguHex() {
     return;
   }
 
-  // fallback(무투표·결과없음) — 시도 라벨 백그라운드 (cells보다 먼저 그려 hex 위에 덮이도록).
-  {
-    const sidoCenters = new Map();
-    for (const d of data) {
-      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      const k = d.sido;
-      const c = sidoCenters.get(k) || { sx: 0, sy: 0, n: 0 };
-      c.sx += cx; c.sy += cy; c.n += 1;
-      sidoCenters.set(k, c);
-    }
-    for (const [sido, c] of sidoCenters) {
-      const lbl = SIDO_LABEL_SHORT[sido] || sido;
-      const tx = c.sx / c.n;
-      const ty = c.sy / c.n;
-      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      t.setAttribute('x', tx);
-      t.setAttribute('y', ty);
-      t.setAttribute('text-anchor', 'middle');
-      t.setAttribute('dominant-baseline', 'middle');
-      t.setAttribute('font-size', '44');
-      t.setAttribute('font-weight', '800');
-      t.setAttribute('class', 'hist-sido-bg-label');
-      t.setAttribute('pointer-events', 'none');
-      t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      t.textContent = lbl;
-      svg.appendChild(t);
-    }
-  }
-
-  for (const d of data) {
-    const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-    const result = resultForSigungu(d.sido, d.name);
-    const top = topCandidate(result);
-    const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
-    const gap = top && sec ? top.pct - sec.pct : null;
-    const fill = top ? partyColor(top.party) : '#e6e9ef';
-    const opacity = top ? gapOpacity(gap) : 1;
-    const cellR = r - 0.7;  // 균일 단일 hex (무투표·결과없음 fallback)
-    const isSelected = state.selected
-      && state.selected.sido === d.sido && state.selected.name === d.name;
-
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.style.cursor = result ? 'pointer' : 'default';
-    g.addEventListener('click', () => {
-      state.selected = { sido: d.sido, name: d.name, code: d.code };
-      renderAll();
-      renderDetail();
+  // 단일 hex (1위 정당색) — 공용 캐논 drawSigunguHex 위임. 시도명 워터마크는 underlay로 셀 뒤에.
+  drawSigunguHex(svg, data,
+    (sido, name) => {
+      const result = resultForSigungu(sido, name);
+      const top = topCandidate(result);
+      if (!top) return null;
+      const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
+      return { party: top.party, pct: top.pct, label: candLabel(top), uncontested: top.uncontested, gap: sec ? top.pct - sec.pct : null };
+    },
+    {
+      r,
+      margin: SIDO_EDGE_MARGIN,
+      borderWidth: '1.8',
+      selected: state.selected ? { sido: state.selected.sido, name: state.selected.name } : null,
+      opacityOf: (w) => gapOpacity(w.gap),
+      tooltipOf: (sido, name, w) => (w
+        ? `${periodSidoName(sido, electionDate)} ${fmtUnitName(name)} · ${w.label} (${w.party}) ${w.uncontested ? '무투표 당선' : (w.pct != null ? w.pct.toFixed(1) + '%' : '')}`
+        : `${periodSidoName(sido, electionDate)} ${fmtUnitName(name)} · 데이터 없음`),
+      onSelect: (sido, name, w, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
+      underlay: (svgEl, geom) => {
+        // 시도명 워터마크 (cells보다 먼저 = 배경) — 시도별 cell centroid.
+        const centers = new Map();
+        for (const d of data) {
+          const [cx, cy] = hexCenter(d.c, d.r, geom.colW, geom.rowH, geom.offX, geom.offY);
+          const c = centers.get(d.sido) || { sx: 0, sy: 0, n: 0 };
+          c.sx += cx; c.sy += cy; c.n += 1; centers.set(d.sido, c);
+        }
+        for (const [sido, c] of centers) {
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', c.sx / c.n); t.setAttribute('y', c.sy / c.n);
+          t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+          t.setAttribute('font-size', '44'); t.setAttribute('font-weight', '800');
+          t.setAttribute('class', 'hist-sido-bg-label'); t.setAttribute('pointer-events', 'none');
+          t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+          t.textContent = SIDO_LABEL_SHORT[sido] || sido;
+          svgEl.appendChild(t);
+        }
+      },
     });
-
-    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-    poly.setAttribute('class', 'hex-cell ' + (top ? 'has-data' : 'no-data') + (isSelected ? ' is-selected' : ''));
-    poly.setAttribute('points', hexPoints(cx, cy, cellR));
-    poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', '#0a0e1a');
-    poly.setAttribute('stroke-width', isSelected ? '1.6' : '0.7');
-    poly.setAttribute('fill-opacity', opacity);
-    g.appendChild(poly);
-
-    const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    title.textContent = top
-      ? `${d.sido} ${d.name} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}`
-      : `${d.sido} ${d.name} · 데이터 없음`;
-    g.appendChild(title);
-
-    // 라벨 — 작은 hex는 라벨 생략 (가독성)
-    const label = shortSigunguLabel(d.name, d.sido);
-    if (label.short && cellR >= 8) {
-      const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      txt.setAttribute('x', cx);
-      txt.setAttribute('text-anchor', 'middle');
-      txt.setAttribute('font-weight', '600');
-      // 단일 hex 셀 라벨 — 배경(정당색·투명도)에 맞춰 흰/검 자동.
-      txt.setAttribute('fill', top ? pickTextColor(fill, opacity) : 'var(--ink)');
-      txt.setAttribute('pointer-events', 'none');
-      txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      if (label.prefix) {
-        const tp1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        tp1.setAttribute('x', cx);
-        tp1.setAttribute('y', cy - 2);
-        tp1.setAttribute('font-size', '6');
-        tp1.setAttribute('opacity', '0.75');
-        tp1.textContent = label.prefix;
-        txt.appendChild(tp1);
-        const tp2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        tp2.setAttribute('x', cx);
-        tp2.setAttribute('y', cy + 8);
-        tp2.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
-        tp2.textContent = label.short;
-        txt.appendChild(tp2);
-      } else {
-        txt.setAttribute('y', cy + 3);
-        txt.setAttribute('font-size', label.short.length > 3 ? '7' : '9');
-        txt.textContent = label.short;
-      }
-      g.appendChild(txt);
-    }
-    svg.appendChild(g);
-  }
-
-  // 시도 경계 굵은 선 + 한반도 외곽 — dorling 제외 (원 위치가 force-directed로 이동해 경계 불일치).
-  // 격자 모드는 spiral 그린 뒤 위쪽에서 별도 호출.
-  if (sizingMode === 'dorling') return;
-  drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
 }
 

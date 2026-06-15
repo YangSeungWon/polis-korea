@@ -23,8 +23,11 @@
     const cs = cells.map((d) => d.c), rs = cells.map((d) => d.r);
     const minC = Math.min(...cs), minR = Math.min(...rs), maxC = Math.max(...cs), maxR = Math.max(...rs);
     const w = (maxC - minC + 2) * colW, h = (maxR - minR + 2) * rowH;
-    svg.setAttribute('viewBox', `0 0 ${Math.ceil(w)} ${Math.ceil(h)}`);
+    const m = opts.margin || 0;   // 좌우 여백(history 시도 워터마크/edge 라벨용)
+    svg.setAttribute('viewBox', `${-m} 0 ${Math.ceil(w) + 2 * m} ${Math.ceil(h)}`);
     const offX = -minC * colW + colW / 2, offY = -minR * rowH + rowH;
+    // underlay: 셀 뒤(배경) 그리기 — history 시도명 워터마크 등. clear 직후·셀 루프 전.
+    if (opts.underlay) opts.underlay(svg, { colW, rowH, offX, offY });
     const sel = opts.selected;
     const isSel = (d) => !!(sel && sel.sido === d.sido && sel.name === d.name);
     const labelFn = opts.labelFn || ((typeof shortSigunguLabel === 'function') ? shortSigunguLabel : (n) => ({ short: n }));
