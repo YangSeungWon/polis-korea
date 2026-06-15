@@ -10,15 +10,15 @@
     && window.__INITIAL_STATE__.election.slug) || null;
 
   const LANE = {
-    pres:    { label: '대선', color: '#5b54d6', y: 46 },
-    general: { label: '총선', color: '#168f8f', y: 92 },
-    local:   { label: '지선', color: '#c98a2e', y: 138 },
+    pres:    { label: '대선', color: '#5b54d6', y: 44 },
+    general: { label: '총선', color: '#168f8f', y: 82 },
+    local:   { label: '지선', color: '#c98a2e', y: 120 },
   };
   const typeOf = (slug) => (/pres/.test(slug) ? 'pres' : /general/.test(slug) ? 'general' : 'local');
   const shortLabel = (e) => (typeOf(e.slug) === 'local' ? `${e.n}회` : `${e.n}대`);
 
   function buildSVG(list) {
-    const W = 720, H = 184, padL = 50, padR = 18, padT = 12, padB = 28;
+    const W = 720, H = 146, padL = 50, padR = 18, padT = 12, padB = 24;
     const ts = (e) => Date.parse(e.date);
     let min = Math.min(...list.map(ts)), max = Math.max(...list.map(ts));
     const span = (max - min) || 1; min -= span * 0.05; max += span * 0.05;
@@ -53,8 +53,25 @@
         + `<text x="${x.toFixed(1)}" y="${(L.y - r - 4).toFixed(1)}" font-size="10.5" font-weight="700" fill="${L.color}" text-anchor="middle">${shortLabel(e)}</text>`
         + '</a>';
     }
+    // 모바일용 컴팩트 칩 — SVG 타임라인 대신 유형별 3줄(연도순). CSS 미디어쿼리로 토글.
+    let chips = '<div class="poll-tl-chips" aria-label="선거별 여론조사 (유형별)">';
+    for (const key of ['pres', 'general', 'local']) {
+      const L = LANE[key];
+      const row = list.filter((e) => typeOf(e.slug) === key).sort((a, b) => ts(a) - ts(b));
+      if (!row.length) continue;
+      chips += `<div class="ptc-row"><span class="ptc-lane" style="color:${L.color}">${L.label}</span>`;
+      for (const e of row) {
+        const isCur = e.slug === curSlug;
+        chips += `<a class="ptc-chip${isCur ? ' is-current' : ''}" href="/polls/${e.slug}/"`
+          + ` style="--c:${L.color}" title="${e.name} · ${e.date}">${shortLabel(e)}${isCur ? ' ★' : ''}</a>`;
+      }
+      chips += '</div>';
+    }
+    chips += '</div>';
+
     return `<div class="poll-tl-scroll"><svg class="poll-tl-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="선거별 여론조사 타임라인">`
       + `${axis}${lanes}${nodes}</svg></div>`
+      + chips
       + '<p class="poll-tl-note">2016년 이후 선거만 (NESDC 등록 시작). 그 이전은 <a href="/history.html">역대 결과 →</a></p>';
   }
 
