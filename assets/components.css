@@ -290,6 +290,18 @@
 .gov-hex-name { fill: var(--bg); text-anchor: middle; pointer-events: none; }
 .gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
 
+/* 선거별 렌즈 전환 바 — 같은 선거의 3가지 보기(종합/여론조사vs실제/역대 흐름) 사이 이동. 전 페이지 공용. */
+.lens-switcher { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 4px; }
+.lens-label { font-size: 12px; font-weight: 700; color: var(--ink-mute); margin-right: 2px; }
+.lens-chip {
+  font-size: 12.5px; font-weight: 600; line-height: 1; padding: 6px 11px;
+  border: 1px solid var(--rule-strong); border-radius: 999px;
+  color: var(--ink-soft); background: var(--bg2); text-decoration: none; white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.lens-chip:hover { color: var(--ink); border-color: var(--ink-soft); background: var(--bg3); }
+.lens-chip.is-current { background: var(--ink); color: var(--bg); border-color: var(--ink); cursor: default; }
+
 /* === 색 범례 (지도/격자 아래) === */
 .poll-legend {
   display: flex;

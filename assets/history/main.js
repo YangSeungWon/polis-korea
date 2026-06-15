@@ -130,6 +130,10 @@ async function renderAll() {
   if (icard) { icard.hidden = true; icard.innerHTML = ''; }
   // 간선(국회·통대·선거인단) 대선 — 지역별 개표가 없어 지도 대신 "어떤 선거였는지" 정보 카드.
   const elMeta0 = currentEl();
+  // 선거별 렌즈 전환 바 — 같은 선거의 종합 결과(archive)·여론조사 vs 실제(polls)로 이동.
+  if (window.LensSwitcher && elMeta0 && elMeta0.date) {
+    window.LensSwitcher.mount({ current: 'history', type: state.type, n: state.n, date: elMeta0.date });
+  }
   if (state.type === 'presidential' && elMeta0?.indirect && state.results) {
     $('#hex')?.toggleAttribute('hidden', true);
     $('#hex2')?.toggleAttribute('hidden', true);

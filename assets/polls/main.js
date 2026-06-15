@@ -57,6 +57,12 @@ async function init() {
   setCountdown();
   setPhase();
   setInterval(setCountdown, 60_000);
+  // 선거별 렌즈 전환 바 — per-election 폴 페이지에서만(허브는 election 없어 no-op).
+  if (window.LensSwitcher && window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election) {
+    const el = window.__INITIAL_STATE__.election;
+    const LT = { presidential: 'presidential', general_election: 'national_assembly', national_assembly: 'national_assembly', local: 'local' };
+    if (LT[el.kind]) window.LensSwitcher.mount({ current: 'polls', id: el.slug, type: LT[el.kind], n: el.n });
+  }
   await loadData();
   // 대선/총선 페이지면 전용 렌더 경로가 인계 — 지선 모놀리식 스킵.
   if (typeof initPresIfNeeded === 'function' && await initPresIfNeeded()) return;

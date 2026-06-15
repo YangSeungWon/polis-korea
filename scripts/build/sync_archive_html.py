@@ -118,6 +118,7 @@ HEAD = """<!DOCTYPE html>
     <a href="/timeline.html">타임라인</a> ·
     <a href="/history.html?type={history_type}&n={n}">역대 선거</a> · <span>{n}{n_unit} {kind_short} 아카이브</span>
   </nav>
+  <div id="lens-switcher-host"></div>
 """
 
 # --- hero 블록 (kind별) ---
@@ -405,6 +406,7 @@ FOOT = """
 <script src="assets/regions.js"></script>
 <script src="assets/parties.js"></script>
 <script src="assets/utils.js"></script>
+<script src="assets/lens-switcher.js"></script>
 {extra_scripts}<script src="assets/elections.js"></script>
 <script src="assets/archive/shared.js"></script>
 <script src="assets/archive/local.js"></script>

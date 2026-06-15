@@ -42,6 +42,12 @@
   // 정당색 시대 맥락 — 이 회차 날짜로 partyColor periods lookup 활성.
   if (typeof setPartyColorContext === 'function') setPartyColorContext(meta.date);
 
+  // 선거별 렌즈 전환 바 — 같은 선거의 다른 보기(여론조사 vs 실제·역대 흐름)로 이동. 재보궐 제외.
+  if (window.LensSwitcher && !isByelection) {
+    const LT = { presidential: 'presidential', general_election: 'national_assembly', national_assembly: 'national_assembly', local: 'local' };
+    window.LensSwitcher.mount({ current: 'archive', id: meta.id, type: LT[meta.electionKind], n: meta.electionN });
+  }
+
   // === 1단계: 결과(+시군구 chunk) — 이것만 받고 즉시 코어 렌더 ===
   let results = null;
   try {
