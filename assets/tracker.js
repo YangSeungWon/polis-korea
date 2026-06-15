@@ -131,8 +131,12 @@
   const kernelSmooth = (pts, bwDays) => PollStats.kernelSmooth(pts, bwDays);
   const houseEffects = (pts) => PollStats.houseEffects(pts, { bwDays: 30, shrinkK: 10, minN: 3 });  // 아래 lean 표 전용
 
+  // 개별 점(=특정 1개 조사) 호버 시 인용공표 참조 한 줄. 클릭하면 그 조사 NESDC 등록페이지로.
+  // (점 단독 노출은 '추세'보다 단독 인용에 가까워 조사기관·일시 + 심의위 참조를 함께 표기.)
+  const srcLine = (su) => `<br><span class="tk-tip-src">중앙선거여론조사심의위원회 등록${su ? ' · 클릭→원자료' : ''}</span>`;
+
   // ===== 인터랙션: hover 툴팁 (차트별 점 좌표 저장 → 최근접 점 표시) =====
-  const HOVER = {};  // chartId → [{x,y,tip,color}]
+  const HOVER = {};  // chartId → [{x,y,tip,color,su}]
   function tipEl() {
     let t = document.getElementById('tk-tip');
     if (!t) { t = document.createElement('div'); t.id = 'tk-tip'; document.body.appendChild(t); }
@@ -144,24 +148,34 @@
     const pts = HOVER[id];
     if (!svg || !pts || !pts.length) return;
     const tip = tipEl();
-    const move = (e) => {
+    const nearest = (e) => {
       const ctm = svg.getScreenCTM();
-      if (!ctm) return;
+      if (!ctm) return null;
       const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
       let best = null, bd = 20 * 20;
       for (const q of pts) {
         const dx = q.x - pt.x, dy = q.y - pt.y, d = dx * dx + dy * dy;
         if (d < bd) { bd = d; best = q; }
       }
+      return best;
+    };
+    const move = (e) => {
+      const best = nearest(e);
       if (best) {
         tip.style.display = 'block';
         tip.style.left = (e.clientX + 14) + 'px';
         tip.style.top = (e.clientY + 12) + 'px';
         tip.innerHTML = `<span class="tk-tip-dot" style="background:${best.color}"></span>${best.tip}`;
-      } else { tip.style.display = 'none'; }
+        svg.style.cursor = best.su ? 'pointer' : 'default';
+      } else { tip.style.display = 'none'; svg.style.cursor = 'default'; }
     };
     svg.addEventListener('mousemove', move);
-    svg.addEventListener('mouseleave', () => { tipEl().style.display = 'none'; });
+    svg.addEventListener('mouseleave', () => { tipEl().style.display = 'none'; svg.style.cursor = 'default'; });
+    // 점 클릭 → 그 조사 NESDC 등록페이지(원자료). 인용공표 '그 밖의 사항은 심의위 홈페이지 참조' 동선.
+    svg.addEventListener('click', (e) => {
+      const best = nearest(e);
+      if (best && best.su) window.open(best.su, '_blank', 'noopener');
+    });
   }
   const fmtD = (t) => new Date(t).toISOString().slice(0, 10);
 
@@ -197,11 +211,11 @@
       const klabel = key === 'positive' ? '긍정' : '부정';
       for (const p of PRES) {
         const pts = records.filter((r) => r.subject === p.name)
-          .map((r) => ({ t: ms(r.period_end), v: r[key] - (house[r.agency] || 0), ag: r.agency }));
+          .map((r) => ({ t: ms(r.period_end), v: r[key] - (house[r.agency] || 0), ag: r.agency, su: r.source_url }));
         if (!pts.length) continue;
         for (const r of pts) {
           body += `<circle cx="${xOf(r.t).toFixed(1)}" cy="${yOf(r.v).toFixed(1)}" r="1.2" fill="${color}" opacity="0.2"/>`;
-          HOVER['tk-approval'].push({ x: xOf(r.t), y: yOf(r.v), color, tip: `${p.name} ${klabel} <b>${r.v.toFixed(1)}%</b><br>${(r.ag || '').replace(/\(주\)/g, '')} · ${fmtD(r.t)}` });
+          HOVER['tk-approval'].push({ x: xOf(r.t), y: yOf(r.v), color, su: r.su, tip: `${p.name} ${klabel} <b>${r.v.toFixed(1)}%</b><br>${r.ag || ''} · ${fmtD(r.t)}${srcLine(r.su)}` });
         }
         const segs = kernelSmooth(pts, 30);
         for (const seg of segs) {
@@ -229,7 +243,7 @@
       const t = ms(p.period_end);
       if (!isFinite(t)) continue;
       for (const c of cleanCands(p)) {
-        (byParty[c.party] ||= []).push({ t, v: c.pct, ag: p.agency || '?' });
+        (byParty[c.party] ||= []).push({ t, v: c.pct, ag: p.agency || '?', su: p.source_url });
       }
     }
     const series = {};
@@ -265,7 +279,7 @@
       // 개별 조사 = 옅은 점 (house effect 산포)
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
-        HOVER['tk-party'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${party} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
+        HOVER['tk-party'].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${party} <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
       }
       // 평활 추세선 (공백 끊김 segment별)
       for (const seg of kernelSmooth(pts, 30)) {
@@ -307,7 +321,7 @@
       const t = ms(p.period_end);
       if (!isFinite(t)) continue;
       for (const c of cs) {
-        (byCand[c.name] ||= { pts: [], party: c.party }).pts.push({ t, v: c.pct, ag: p.agency || '?' });
+        (byCand[c.name] ||= { pts: [], party: c.party }).pts.push({ t, v: c.pct, ag: p.agency || '?', su: p.source_url });
         if (c.party) byCand[c.name].party = c.party;
       }
     }
@@ -372,7 +386,7 @@
       const color = legible(party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888');
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
-        HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${(p.ag || '').replace(/\(주\)/g, '')} · ${fmtD(p.t)}` });
+        HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
       }
       // 클러스터(대선 국면)별로 나눠 평활·라벨 — 라벨이 그 국면 선 끝에 위치.
       const byC = clusters.map(() => []);
