@@ -28,10 +28,13 @@
     // 레이아웃 키 = 현 캐노니컬명(강원특별자치도·전북특별자치도). 데이터 시도명(옛 강원도/전라북도 포함)을
     // canonSido로 정규화해 매칭.
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    // opts.layout: 회차별 레이아웃 override(history — 세종 신설 전·전남광주 분리 등 getActiveSidoLayout).
+    //   없으면 현 캐노니컬 SIDO_HEX_LAYOUT(+ 데이터에 전남광주 병합 race 있으면 honamMergedLayout).
+    const baseLayout = opts.layout || SIDO_HEX_LAYOUT;
     const bySido = {};
     if (opts.winnerOf) {
-      // 폴: 레이아웃 키만 순회(병합 미적용 — 토글 시 셀 구성 고정). 신뢰도 필드 보존.
-      for (const sido of Object.keys(SIDO_HEX_LAYOUT)) { const w = opts.winnerOf(sido); if (w) bySido[sido] = w; }
+      // 폴/history: 레이아웃 키만 순회(병합은 opts.layout이 이미 반영). 신뢰도·gap 필드 보존.
+      for (const sido of Object.keys(baseLayout)) { const w = opts.winnerOf(sido); if (w) bySido[sido] = w; }
     } else {
       for (const r of races || []) {
         const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
@@ -41,13 +44,14 @@
     // 전남광주 통합(2026) — 데이터에 병합 race가 있으면 '전남광주' 한 셀 레이아웃 사용
     // ('통합특별시' 표기 변형 수용). 대선·통합 전 지선은 광주·전남 분리 유지.
     if (!bySido['전남광주특별시'] && bySido['전남광주통합특별시']) bySido['전남광주특별시'] = bySido['전남광주통합특별시'];
-    const layout = (bySido['전남광주특별시'] && typeof honamMergedLayout === 'function')
-      ? honamMergedLayout(SIDO_HEX_LAYOUT) : SIDO_HEX_LAYOUT;
+    const layout = opts.layout || ((bySido['전남광주특별시'] && typeof honamMergedLayout === 'function')
+      ? honamMergedLayout(SIDO_HEX_LAYOUT) : SIDO_HEX_LAYOUT);
 
     const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
     const cells = [];
     const seen = new Set();
     for (const [sido, pos] of Object.entries(layout)) {
+      if (opts.skipSido && opts.skipSido(sido)) continue;   // history: 신설(승격) 전 회차엔 셀 숨김
       const key = `${pos.col},${pos.row}`;
       if (seen.has(key)) continue;
       seen.add(key);

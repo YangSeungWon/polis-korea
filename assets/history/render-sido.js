@@ -48,79 +48,25 @@ function getActiveSidoLayout(electionDate) {
   return layout;
 }
 
+// 시도 1위색 hex — 공용 캐논 Archive.governorHex로 위임(폴·아카이브와 동일 렌더러).
+//   history 고유: 회차 레이아웃(getActiveSidoLayout)·신설 전 숨김(SIDO_HEX_SINCE)을 opts로 주입.
 function renderSidoHex() {
   const svg = $('#hex');
-  svg.innerHTML = '';
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
-  const r = 56;
-  const colW = r * Math.sqrt(3);
-  const rowH = r * 1.5;
-  const offsetX = 75 - colW;
-  const offsetY = 70;
-
+  if (!svg || !window.Archive || !window.Archive.governorHex) return;
   const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
   const electionDate = el?.date || '';
-  const layout = getActiveSidoLayout(electionDate);
-
-  for (const [sido, pos] of Object.entries(layout)) {
-    const since = SIDO_HEX_SINCE[sido];
-    if (since && electionDate && electionDate < since) continue;
-    const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
-    const result = resultForSido(sido);
-    const top = topCandidate(result);
-    const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
-    const gap = top && sec ? top.pct - sec.pct : null;
-    const fill = top ? partyColor(top.party) : '#e6e9ef';
-    const opacity = top ? gapOpacity(gap) : 1;
-    const isSelected = state.selected?.sido === sido && !state.selected?.name;
-
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.style.cursor = result ? 'pointer' : 'default';
-    g.addEventListener('click', () => {
-      state.selected = { sido };
-      renderAll();
-      renderDetail();
-    });
-
-    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-    poly.setAttribute('class', 'hex-cell ' + (top ? 'has-data' : 'no-data') + (isSelected ? ' is-selected' : ''));
-    poly.setAttribute('points', hexPoints(cx, cy, r - 2));
-    poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', '#0a0e1a');
-    poly.setAttribute('stroke-width', isSelected ? '2.2' : '1.2');
-    poly.setAttribute('fill-opacity', opacity);
-    g.appendChild(poly);
-
-    const t1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    t1.setAttribute('class', 'hex-label');
-    t1.setAttribute('x', cx);
-    t1.setAttribute('y', cy + 2);
-    t1.setAttribute('text-anchor', 'middle');
-    const txtCol = top ? pickTextColor(fill, opacity) : 'var(--ink)';
-    t1.setAttribute('fill', txtCol);
-    t1.setAttribute('font-weight', '700');
-    t1.setAttribute('font-size', '15');
-    t1.setAttribute('pointer-events', 'none');
-    t1.textContent = pos.label;
-    g.appendChild(t1);
-
-    if (top) {
-      const t2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      t2.setAttribute('class', 'hex-pct');
-      t2.setAttribute('x', cx);
-      t2.setAttribute('y', cy + 20);
-      t2.setAttribute('text-anchor', 'middle');
-      t2.setAttribute('fill', txtCol);
-      t2.setAttribute('font-size', '11');
-      t2.setAttribute('pointer-events', 'none');
-      const lbl = candLabel(top);
-      // 라벨+pct 총 길이로 폰트 동적 축소 (CSS 덮기 위해 style 사용)
-      const total = lbl.length + (top.pct?.toFixed(1) || '').length + 2;
-      t2.style.fontSize = total >= 14 ? '7px' : total >= 11 ? '9px' : '11px';
-      t2.textContent = `${lbl} ${top.pct?.toFixed(1)}%`;
-      g.appendChild(t2);
-    }
-    svg.appendChild(g);
-  }
+  window.Archive.governorHex.draw(svg, [], {
+    layout: getActiveSidoLayout(electionDate),
+    skipSido: (sido) => { const since = SIDO_HEX_SINCE[sido]; return !!(since && electionDate && electionDate < since); },
+    winnerOf: (sido) => {
+      const result = resultForSido(sido);
+      const top = topCandidate(result);
+      if (!top) return null;
+      const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
+      return { party: top.party, name: candLabel(top), pct: top.pct, gap: sec ? top.pct - sec.pct : null };
+    },
+    opacityOf: (w) => gapOpacity(w.gap),
+    onSelect: (sido) => { state.selected = { sido }; renderAll(); renderDetail(); },
+    selected: (state.selected && !state.selected.name) ? state.selected.sido : null,
+  });
 }
