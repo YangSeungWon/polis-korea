@@ -325,6 +325,11 @@ SECTIONS_PRES = """
     <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(한국리서치·입소스·코리아리서치 컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>. JTBC는 별도. 전국 적중·평균 오차 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
+
+  <section class="ar-section" id="ar-polls-link" hidden>
+    <h2 class="ar-section-title">여론조사</h2>
+    <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
+  </section>
 """
 
 SECTIONS_BYELECTION = """
@@ -379,6 +384,11 @@ SECTIONS_GENERAL = """
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
     <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>(기준점·접전구 처리 차이). JTBC는 별도. 범위 안 적중 자동 계산.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
+  </section>
+
+  <section class="ar-section" id="ar-polls-link" hidden>
+    <h2 class="ar-section-title">여론조사</h2>
+    <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
   </section>
 """
 

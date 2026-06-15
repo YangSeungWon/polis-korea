@@ -173,6 +173,21 @@
     }
   }
 
+  // 회차별 여론조사 vs 실제 페이지 (/polls/{id}/) CTA — 폴 페이지 있는 대선만(core가 ctx.pollPageExists 판정).
+  function renderPollsLink(ctx) {
+    if (!ctx.pollPageExists) return;
+    const host = document.getElementById('ar-polls-link-host');
+    if (!host) return;
+    const n = (ctx.polls || []).length;
+    host.innerHTML = `
+      <div class="ar-polls-link-card">
+        <div class="ar-polls-link-stat">${n ? `NESDC 등록 여론조사 <b>${n}건</b>` : '여론조사 vs 실제 결과'}</div>
+        <div class="ar-polls-link-note">후보 지지율 추이(여론조사 + 실제 ◆)와 시·도별 득표를 비교합니다.</div>
+        <a class="ar-polls-link-cta" href="/polls/${ctx.meta.id}/">여론조사 vs 실제 상세 →</a>
+      </div>`;
+    document.getElementById('ar-polls-link').hidden = false;
+  }
+
   window.Archive.pres = {
     render(ctx) {
       // 시도별 결과 grid·여론조사 추이는 /history.html에서 시각화로 더 강력
@@ -190,6 +205,7 @@
     renderDeferred(ctx) {
       renderHero(ctx);       // 여론조사 건수·시도 출구조사 요약 갱신 (idempotent)
       renderExitPoll(ctx);
+      renderPollsLink(ctx);
     },
     renderExitPoll,  // 총선이 재사용
   };

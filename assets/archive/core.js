@@ -59,7 +59,7 @@
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
     const pollsPath = meta.pollsPath || 'data/polls/aggregated_candidates.json';
-    const [polls, byReasons, exitData] = await Promise.all([
+    const [polls, byReasons, exitData, pollIndex] = await Promise.all([
       fetch(pollsPath).then((r) => r.json())
         .then((all) => (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta)))
         .catch(() => null),
@@ -69,10 +69,13 @@
       (meta.exitPollPath !== null
         ? fetch(meta.exitPollPath || `data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null).catch(() => null)
         : Promise.resolve(null)),
+      // /polls/{id}/ 페이지 존재 여부 — 그 회차만 폴 CTA 노출(없는 회차 링크 404 방지).
+      fetch('data/polls/election_index.json').then((r) => r.ok ? r.json() : []).catch(() => []),
     ]);
     ctx.polls = polls;
     ctx.byReasons = byReasons;
     ctx.exitData = exitData;
+    ctx.pollPageExists = (pollIndex || []).some((e) => e.slug === meta.id);
     if (mode && mode.renderDeferred) await mode.renderDeferred(ctx);
   })();
 })();
