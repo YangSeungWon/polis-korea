@@ -28,8 +28,10 @@ function renderDetail() {
     return;
   }
 
-  // 실제 결과 — '실제 1위' 모드면 맨 위에 별도 카드(여론조사와 구분).
-  const actual = (state.mode === 'result' && typeof window.actualResultFor === 'function')
+  // 실제 결과 — 토글과 무관하게 항상 풀 정보(실제 결과 카드 + 산점도 ◆ 오버레이).
+  // 토글(여론조사 1위 ↔ 실제 1위)은 지도 1위 색만 바꾸고, 패널은 늘 '실제 1위' 보기로 통일.
+  // (선거 전엔 actualResultFor가 null → 카드 자동 생략, 그대로 graceful.)
+  const actual = (typeof window.actualResultFor === 'function')
     ? window.actualResultFor(state.selectedSido, state.selectedSigungu, state.office) : null;
   if (actual && actual.candidates && actual.candidates.length) {
     html += renderActualResultCard(actual);
