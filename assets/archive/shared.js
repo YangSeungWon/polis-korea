@@ -286,11 +286,15 @@
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
         }
+        svg.appendChild(g);
+      }
+      // 라벨은 모든 클러스터 뒤에 별도 패스 — 이웃 클러스터에 가리지 않게(항상 위, halo 가독).
+      for (const n of L.nodes) {
         const t = document.createElementNS(NS, 'text');
         t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r - 4).toFixed(1));
         t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
-        t.textContent = `${n.label || Archive.ssh(n.sido)} ${n.tot}`; g.appendChild(t);
-        svg.appendChild(g);
+        t.textContent = `${n.label || Archive.ssh(n.sido)} ${n.tot}`;
+        svg.appendChild(t);
       }
       host.innerHTML = ''; host.appendChild(svg);
       return legendOf(L.nodes);
@@ -323,13 +327,17 @@
         const rng = document.createElementNS(NS, 'circle');
         rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1)); rng.setAttribute('r', n.r.toFixed(1));
         rng.setAttribute('class', 'ar-dorling-ring'); g.appendChild(rng);
-        if (n.r >= 11) {
-          const t = document.createElementNS(NS, 'text');
-          t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy + 3).toFixed(1));
-          t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-dorling-label');
-          t.textContent = n.label || Archive.ssh(n.sido); g.appendChild(t);
-        }
         svg.appendChild(g);
+      }
+      // 라벨 별도 패스 — 이웃 원에 가리지 않게(항상 위). 작은 원(r<11)은 위쪽에 표시.
+      for (const n of L.nodes) {
+        const t = document.createElementNS(NS, 'text');
+        const small = n.r < 11;
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (small ? n.cy - n.r - 3 : n.cy + 3).toFixed(1));
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('class', small ? 'ar-genhex-label' : 'ar-dorling-label');  // 작은 원은 바깥(검정 halo) 라벨
+        t.textContent = n.label || Archive.ssh(n.sido);
+        svg.appendChild(t);
       }
       host.innerHTML = ''; host.appendChild(svg);
       return legendOf(L.nodes);
