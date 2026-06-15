@@ -19,6 +19,7 @@
     if (!Array.isArray(list) || !list.length) { host.innerHTML = ''; return; }
     const href = opts.hrefFn || ((e) => `/archive/${e.slug}/`);
     const aria = opts.ariaFn || ((e) => e.name);
+    const colorOf = (e, lane) => (opts.nodeColorFn ? opts.nodeColorFn(e, lane) : lane);  // 노드 색(기본=레인색, 대시보드=정당색)
     const ts = (e) => Date.parse(e.date);
     const curSlug = opts.current || list.slice().sort((a, b) => ts(b) - ts(a))[0].slug;
     const W = 720, H = 146, padL = 50, padR = 18, padT = 12, padB = 24;
@@ -46,10 +47,11 @@
       const L = LANE[typeOf(e)];
       const x = X(ts(e)), isCur = e.slug === curSlug;
       const r = isCur ? 7.5 : 5.5;
+      const fill = colorOf(e, L.color);   // 노드 = 당선·1당 정당색(대시보드) 또는 레인색(폴 허브)
       nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}">`
-        + `<title>${e.name} · ${e.date}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
+        + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
         + (isCur ? `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${(r + 3).toFixed(1)}" fill="none" stroke="${L.color}" stroke-width="1.4" opacity="0.5"/>` : '')
-        + `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${r}" fill="${L.color}"/>`
+        + `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${r}" fill="${fill}"/>`
         + (isCur ? `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="2" fill="#fff"/>` : '')
         + `<text x="${x.toFixed(1)}" y="${(L.y - r - 4).toFixed(1)}" font-size="10.5" font-weight="700" fill="${L.color}" text-anchor="middle">${shortLabel(e)}</text>`
         + '</a>';
@@ -62,7 +64,7 @@
       chips += `<div class="ptc-row"><span class="ptc-lane" style="color:${L.color}">${L.label}</span>`;
       for (const e of row) {
         const isCur = e.slug === curSlug;
-        chips += `<a class="ptc-chip${isCur ? ' is-current' : ''}" href="${href(e)}" style="--c:${L.color}" title="${e.name} · ${e.date}">${shortLabel(e)}${isCur ? ' ★' : ''}</a>`;
+        chips += `<a class="ptc-chip${isCur ? ' is-current' : ''}" href="${href(e)}" style="--c:${colorOf(e, L.color)}" title="${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}">${shortLabel(e)}${isCur ? ' ★' : ''}</a>`;
       }
       chips += '</div>';
     }

@@ -599,10 +599,42 @@ def main():
 
     # 선거 고르기 디렉터리 인덱스 (대시보드 ElectionTimeline) — 아카이브 있는 대선/총선/지선 전 회차.
     # 단일 출처: 여기서 만든 슬러그(=아카이브 id)는 그대로 archive 링크라 404 없음. 재보궐 제외.
+    # party = 역대 정당 지형 요약(노드 색): 대선=당선 정당, 총선=지역구 1당, 지선=광역단체장 다수당.
     if not args.id:
+        from collections import Counter as _Counter
         HT = {"presidential": "presidential", "general_election": "national_assembly", "local": "local"}
+        _agg = json.loads((ROOT / "data" / "elections.json").read_text(encoding="utf-8"))
+        _pres_wp = {e.get("n"): e.get("winner_party") for e in _agg.get("presidential", {}).get("elections", [])}
+
+        def _dominant_party(m):
+            kind = m.get("kind")
+            if kind == "presidential":
+                return _pres_wp.get(m.get("n"))
+            rp = (m.get("archive") or {}).get("results_path")
+            if not rp or not (ROOT / rp).exists():
+                return None
+            try:
+                races = json.loads((ROOT / rp).read_text(encoding="utf-8")).get("races", [])
+            except Exception:
+                return None
+            c = _Counter()
+            if kind == "general_election":      # 지역구(tc=2) 당선자 1당
+                for r in races:
+                    if str(r.get("sg_typecode")) == "2" and r.get("scope") == "district":
+                        w = [x for x in (r.get("candidates") or []) if x.get("won")]
+                        if w and w[0].get("party"):
+                            c[w[0]["party"]] += 1
+            elif kind == "local":               # 광역단체장(tc=3) 다수당
+                for r in races:
+                    if str(r.get("sg_typecode")) == "3" and r.get("scope") == "sido":
+                        cs = sorted(r.get("candidates") or [], key=lambda x: -(x.get("votes") or 0))
+                        if cs and cs[0].get("party"):
+                            c[cs[0]["party"]] += 1
+            return c.most_common(1)[0][0] if c else None
+
         dir_list = sorted(
-            ({"slug": m["id"], "name": m["name"], "date": m["date"], "n": m["n"], "type": HT[m["kind"]]}
+            ({"slug": m["id"], "name": m["name"], "date": m["date"], "n": m["n"],
+              "type": HT[m["kind"]], "party": _dominant_party(m)}
              for m in all_metas if m.get("kind") in HT and m.get("date") and m.get("n") is not None),
             key=lambda x: x["date"])
         (ROOT / "data" / "archive_index.json").write_text(

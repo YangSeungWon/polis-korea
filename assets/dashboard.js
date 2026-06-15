@@ -324,8 +324,10 @@ init();
     if (!Array.isArray(list) || !list.length) { host.remove(); return; }
     window.ElectionTimeline.render(host, list, {
       hrefFn: (e) => `/archive/${e.slug}/`,
-      ariaFn: (e) => `${e.name} 종합 결과`,
-      note: '노드 클릭 → 그 선거 <b>종합 결과</b>. 여론조사 vs 실제·역대 흐름은 그 안에서 전환.',
+      ariaFn: (e) => `${e.name} 종합 결과${e.party ? ' · ' + e.party : ''}`,
+      // 노드 색 = 당선·1당 정당(역대 정당 지형 요약). 데이터 없으면 레인색.
+      nodeColorFn: (e, lane) => (e.party && typeof partyColor === 'function' ? partyColor(e.party) : lane),
+      note: '노드 = 당선·1당 정당(대선 당선 / 총선 지역구 1당 / 지선 광역단체장 다수당). 클릭 → 그 선거 <b>종합 결과</b>.',
     });
   }).catch(() => host.remove());
 })();
