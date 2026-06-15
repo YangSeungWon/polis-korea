@@ -3,80 +3,18 @@
 // === HEX 격자 ===
 // hexPoints·nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
+// 시도 1위색 hex — 공용 캐논 Archive.governorHex로 위임(아카이브 광역장 hex와 동일 렌더러).
+//   폴 전용 신뢰도 시각화(불투명도=격차·저신뢰 0.4, 점선=n≤2·저신뢰)는 opts 콜백으로 보존.
 function renderHex() {
-  const svg = $('#hex');
-  svg.innerHTML = '';
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
-  const r = 56; // hex radius — 6행 4컬럼 그리드
-  const colW = r * Math.sqrt(3);  // ≈ 97
-  const rowH = r * 1.5;            // = 84
-  // col 1~4 사용. col 1을 x ≈ 75에 배치.
-  const offsetX = 75 - colW;
-  const offsetY = 70;
-
-  // 빈 자리 dummy 먼저 (z-order 하단)
-  for (const blank of (SIDO_HEX_BLANKS || [])) {
-    const [cx, cy] = hexCenter(blank.col, blank.row, colW, rowH, offsetX, offsetY);
-    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-    poly.setAttribute('class', 'hex-cell no-data');
-    poly.setAttribute('points', hexPoints(cx, cy, r - 2));
-    svg.appendChild(poly);
-  }
-
-  for (const [sido, pos] of Object.entries(SIDO_HEX_LAYOUT)) {
-    const [cx, cy] = hexCenter(pos.col, pos.row, colW, rowH, offsetX, offsetY);
-    const result = regionSidoWinner(sido, state.office);
-    const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
-    const cls = result ? 'hex-cell has-data' : 'hex-cell no-data';
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('data-sido', sido);
-    g.setAttribute('transform', `translate(0,0)`);
-
-    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-    poly.setAttribute('class', cls + (state.selectedSido === sido ? ' is-selected' : ''));
-    poly.setAttribute('points', hexPoints(cx, cy, r - 2));
-    poly.setAttribute('fill', fill);
-    poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
-    poly.setAttribute('stroke-width', '1.2');
-    const fillOp = result ? (result.low_recent ? 0.4 : gapOpacity(result.effective_gap ?? result.gap)) : 1;
-    poly.setAttribute('fill-opacity', fillOp);
-    if (result && (result.n_polls <= 2 || result.low_recent)) poly.setAttribute('stroke-dasharray', '3,2');
-    g.appendChild(poly);
-
-    const textCol = result ? pickTextColor(fill, fillOp) : 'var(--ink, #1b2237)';
-    const t1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    t1.setAttribute('class', 'hex-label');
-    t1.setAttribute('x', cx);
-    t1.setAttribute('y', cy + 2);
-    t1.setAttribute('fill', textCol);
-    t1.textContent = pos.label;
-    g.appendChild(t1);
-
-    if (result) {
-      const t2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      t2.setAttribute('class', 'hex-pct');
-      t2.setAttribute('x', cx);
-      t2.setAttribute('y', cy + 20);
-      t2.setAttribute('fill', textCol);
-      const lbl = result.name || result.party || '';
-      // 긴 정당명·후보명일 때 폰트 동적 축소 (시도 hex radius 56 안에 맞춤)
-      const total = lbl.length + String(result.pct).length + 2;
-      const fs = total >= 14 ? '7px' : total >= 11 ? '9px' : '11px';
-      t2.style.fontSize = fs;  // CSS .hex-pct 덮음
-      t2.textContent = `${lbl} ${result.pct}%`;
-      g.appendChild(t2);
-    }
-
-    g.style.cursor = result ? 'pointer' : 'default';
-    g.addEventListener('click', () => {
-      state.selectedSido = sido;
-      state.selectedSigungu = null;
-      renderHex();
-      renderDetail();
-    });
-    svg.appendChild(g);
-  }
+  const host = $('#hex');
+  if (!host || !window.Archive || !window.Archive.governorHex) return;
+  window.Archive.governorHex.draw(host, [], {
+    winnerOf: (sido) => regionSidoWinner(sido, state.office),
+    opacityOf: (w) => (w ? (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)) : 1),
+    dashOf: (w) => ((w && (w.n_polls <= 2 || w.low_recent)) ? '3,2' : null),
+    onSelect: (sido) => { state.selectedSido = sido; state.selectedSigungu = null; renderHex(); renderDetail(); },
+    selected: state.selectedSido,
+  });
 }
 
 

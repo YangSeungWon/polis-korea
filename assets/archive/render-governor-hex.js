@@ -13,17 +13,30 @@
     return pts.join(' ');
   }
 
-  // 시도 hex 그리기 (host 엘리먼트 + races). sidoView가 호출.
-  function draw(host, races) {
+  // 시도 1위색 hex — 사이트 공용 캐논. 아카이브(sidoView)·폴 페이지 모두 호출.
+  //   draw(host, races)            아카이브: races[{sido,candidates[votes]}]에서 득표 1위.
+  //   draw(host, [], opts)         폴: opts로 1위 출처·신뢰도 시각화·클릭 주입(아래).
+  // opts(전부 선택, 미전달 시 아카이브 동작 그대로):
+  //   winnerOf(sido)  → {party,name,pct,...} | null  (폴 — 여론조사/실제 1위, 신뢰도 필드 포함)
+  //   opacityOf(win)  → fill-opacity   (폴 — 격차·저신뢰 불투명도)
+  //   dashOf(win)     → stroke-dasharray | null  (폴 — n≤2·저신뢰 점선)
+  //   onSelect(sido)  → 클릭 핸들러     selected → is-selected 강조
+  function draw(host, races, opts) {
     if (!host) return;
     if (typeof SIDO_HEX_LAYOUT !== 'object') return;
+    opts = opts || {};
     // 레이아웃 키 = 현 캐노니컬명(강원특별자치도·전북특별자치도). 데이터 시도명(옛 강원도/전라북도 포함)을
     // canonSido로 정규화해 매칭.
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
     const bySido = {};
-    for (const r of races) {
-      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) bySido[canon(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
+    if (opts.winnerOf) {
+      // 폴: 레이아웃 키만 순회(병합 미적용 — 토글 시 셀 구성 고정). 신뢰도 필드 보존.
+      for (const sido of Object.keys(SIDO_HEX_LAYOUT)) { const w = opts.winnerOf(sido); if (w) bySido[sido] = w; }
+    } else {
+      for (const r of races || []) {
+        const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        if (cs[0]) bySido[canon(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
+      }
     }
     // 전남광주 통합(2026) — 데이터에 병합 race가 있으면 '전남광주' 한 셀 레이아웃 사용
     // ('통합특별시' 표기 변형 수용). 대선·통합 전 지선은 광주·전남 분리 유지.
@@ -46,20 +59,32 @@
     const maxCx = Math.max(...cells.map((c) => c.cx)) + R + 20;
     const maxCy = Math.max(...cells.map((c) => c.cy)) + R + 20;
 
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS);
+    // host가 <svg>(폴 #hex)면 그 안에 직접, <div>(아카이브)면 자식 svg 생성.
+    const isSvgHost = host.tagName && host.tagName.toLowerCase() === 'svg';
+    let svg;
+    if (isSvgHost) { svg = host; svg.innerHTML = ''; }
+    else { svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'governor-hex-svg'); }
     svg.setAttribute('viewBox', `0 0 ${maxCx} ${maxCy}`);
-    svg.setAttribute('class', 'governor-hex-svg');
 
     for (const cell of cells) {
       const g = document.createElementNS(NS, 'g');
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('points', hexPoints(cell.cx, cell.cy, R));
+      let textCol = null;
+      const selCls = (opts.selected === cell.sido) ? ' is-selected' : '';
       if (cell.win) {
-        poly.setAttribute('fill', (typeof partyColor === 'function') ? partyColor(cell.win.party) : '#888');
-        poly.setAttribute('class', 'gov-hex-cell has-data');
+        const fill = (typeof partyColor === 'function') ? partyColor(cell.win.party) : '#888';
+        poly.setAttribute('fill', fill);
+        poly.setAttribute('class', 'gov-hex-cell has-data' + selCls);
+        if (opts.opacityOf) {                      // 폴 — 신뢰도 불투명도 + 라벨 대비 보정
+          const op = opts.opacityOf(cell.win);
+          poly.setAttribute('fill-opacity', op);
+          if (typeof pickTextColor === 'function') textCol = pickTextColor(fill, op);
+        }
+        // 저신뢰 점선 — .gov-hex-cell의 밝은 간격 stroke로는 안 보이니 어두운 stroke로 덮어 가시화.
+        if (opts.dashOf) { const dash = opts.dashOf(cell.win); if (dash) { poly.setAttribute('stroke-dasharray', dash); poly.setAttribute('stroke', 'var(--ink, #0a0e1a)'); } }
       } else {
-        poly.setAttribute('class', 'gov-hex-cell no-data');
+        poly.setAttribute('class', 'gov-hex-cell no-data' + selCls);
       }
       g.appendChild(poly);
       const tt = document.createElementNS(NS, 'title');
@@ -74,9 +99,10 @@
       t1.setAttribute('font-size', '11');  // sidoCluster 지역명(.ar-genhex-label)과 렌더 크기 통일(~18px)
       t1.setAttribute('font-weight', '700');
       t1.setAttribute('class', cell.win ? 'gov-hex-label on-data' : 'gov-hex-label no-data');
+      if (textCol) t1.setAttribute('fill', textCol);
       t1.textContent = cell.label;
       g.appendChild(t1);
-      // 후보명
+      // 후보명 + 득표율
       if (cell.win) {
         const t2 = document.createElementNS(NS, 'text');
         t2.setAttribute('x', cell.cx); t2.setAttribute('y', cell.cy + 9);
@@ -84,6 +110,7 @@
         t2.setAttribute('font-size', '10');
         t2.setAttribute('font-weight', '700');
         t2.setAttribute('class', 'gov-hex-name');
+        if (textCol) t2.setAttribute('fill', textCol);
         t2.textContent = cell.win.name;
         g.appendChild(t2);
         const t3 = document.createElementNS(NS, 'text');
@@ -92,17 +119,16 @@
         t3.setAttribute('font-size', '9');
         t3.setAttribute('class', 'gov-hex-pct');
         t3.setAttribute('font-variant-numeric', 'tabular-nums');
+        if (textCol) t3.setAttribute('fill', textCol);
         t3.textContent = `${(cell.win.pct || 0).toFixed(1)}%`;
         g.appendChild(t3);
       }
+      if (opts.onSelect) { g.style.cursor = cell.win ? 'pointer' : 'default'; g.addEventListener('click', () => opts.onSelect(cell.sido)); }
       svg.appendChild(g);
     }
-    host.innerHTML = '';
-    host.appendChild(svg);
-    // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신 — 회차별로 다름(9회 전남광주 통합=16,
-    // 세종 신설 전 옛 회차는 더 적음). 정적 '17개'는 오해 소지.
-    // host는 render-sido-view의 토글 내부 div일 수 있어 closest로 섹션을 찾음.
-    const cap = host.closest('.ar-section')?.querySelector('.ar-source-line');
+    if (!isSvgHost) { host.innerHTML = ''; host.appendChild(svg); }
+    // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신(아카이브 .ar-source-line만 — 폴은 closest null이라 무시).
+    const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const nData = cells.filter((c) => c.win).length;
     if (cap && nData) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
   }

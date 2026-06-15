@@ -278,6 +278,18 @@
 .hex-pane .hex-cell.has-data + .hex-label,
 .hex-pane .hex-cell.has-data + .hex-label + .hex-pct { fill: var(--bg); }
 
+/* 시도 1위색 hex (Archive.governorHex) — 폴·아카이브 공용 캐논. 폴은 archive.css 미로드라 공용 components.css에. */
+.governor-hex-svg { width: 100%; height: auto; }
+.gov-hex-cell { stroke: var(--bg); stroke-width: 1.5; }
+.gov-hex-cell.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
+.gov-hex-cell.is-selected { stroke: var(--ink); stroke-width: 2.4; }
+.gov-hex-cell:hover { opacity: 0.9; }
+.gov-hex-label { text-anchor: middle; pointer-events: none; }
+.gov-hex-label.on-data { fill: var(--bg); }
+.gov-hex-label.no-data { fill: var(--ink-soft); }
+.gov-hex-name { fill: var(--bg); text-anchor: middle; pointer-events: none; }
+.gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
+
 /* === 색 범례 (지도/격자 아래) === */
 .poll-legend {
   display: flex;
