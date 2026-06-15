@@ -58,6 +58,31 @@ def hanja_variant(a, b):
     return sum(1 for x, y in zip(a2, b2) if x != y) <= 1
 
 
+_PROV_PREFIX = re.compile(
+    r"^(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주)\s")
+
+
+def dist_core(s):
+    """선거구/지역구 문자열 → 핵심 지명 토큰 집합.
+
+    MONA('충남 아산', '경기 인천갑')와 결과('아산군', '인천시 갑', '제3선거구(천안시·아산군)')의
+    표기차를 흡수: 맨 앞 도(道) 접두 제거 + '제N선거구' 래퍼·괄호·구분자 제거 + 시/군/구/읍/면 및
+    분구(갑·을·병·정) 접미 제거. 1글자 토큰(중·서 등)은 모호해 제외."""
+    if not s:
+        return set()
+    s = re.sub(r"제\d+선거구", " ", s)
+    s = re.sub(r"[()]", " ", s)
+    s = _PROV_PREFIX.sub("", s.strip())
+    s = re.sub(r"[·,，、\s]+", " ", s).strip()
+    toks = set()
+    for t in s.split(" "):
+        t = re.sub(r"(시|군|구|읍|면|동)$", "", t)
+        t = re.sub(r"(갑|을|병|정)$", "", t)
+        if len(t) >= 2:
+            toks.add(t)
+    return toks
+
+
 # 정당 캐노니컬 — 통합 후 같은 가족으로 보일 라벨 (선택적).
 PARTY_FAMILY = {
     "통일민주당": "민주계열", "민주당": "민주계열", "새정치국민회의": "민주계열",
@@ -122,9 +147,12 @@ def main():
         if not recs:
             return None, None
         p = _nm(place)
+        pcore = dist_core(place)
         for dob, hanja, dist in recs:  # 동명 의원 — 지역구로 분별
             d = _nm(dist)
             if p and d and (d in p or p in d):
+                return dob, hanja
+            if pcore and dist_core(dist) & pcore:   # 핵심 지명 토큰 일치(표기차 흡수)
                 return dob, hanja
         if won and len(recs) == 1:     # 당선자 + 동명 의원 1명 → 지역구 표기차 보정
             return recs[0][0], recs[0][1]
