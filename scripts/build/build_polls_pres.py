@@ -213,6 +213,11 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
     meta = load_meta(csv_path)
     parsed = load_parsed(parsed_dir, set(meta))
 
+    # 전국 조사 권역 cross-tab → 시도 보강(extract_pres_region.py 산출물). 없으면 건너뜀.
+    short = re.sub(r"\D", "", ELECTION_ID.split("-")[0])   # "19th" → "19"
+    region_path = parsed_dir / f"pres_region_{short}pres.json"
+    region_rows = json.loads(region_path.read_text()) if region_path.exists() else {}
+
     polls = []
     skipped_no_pdf = 0
     skipped_no_race = 0
@@ -237,7 +242,7 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
         requester = m.get("requester", "")
         self_poll = is_self_poll(requester)
 
-        def emit(metric, office_level, cands, title, table_no):
+        def emit(metric, office_level, cands, title, table_no, sido_val=None):
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
@@ -253,7 +258,7 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
                 "period_start": period_start,
                 "period_end": period_end,
                 "reg_date": m.get("reg_date", ""),
-                "sido": sido,
+                "sido": sido if sido_val is None else sido_val,
                 "sigungu": "",
                 "office_level": office_level,
                 "office_label": office_level,
@@ -278,6 +283,19 @@ def build(csv_path: Path, parsed_dir: Path) -> dict:
                 if cands:
                     emit("후보지지", "대통령", cands, title, tno)
                     any_emitted = True
+        # 전국 조사 권역 cross-tab → 시도별 후보지지 행 보강(권역값=구성 시도에 동일 배분).
+        # ROSTER 검증·정규화는 national과 동일. sido != "" 라 전국 추이엔 안 섞임.
+        if sido == "" and ntt_id in region_rows:
+            for rr in region_rows[ntt_id]:
+                keep = [c for c in rr.get("candidates", [])
+                        if c.get("name") in ROSTER and c.get("pct") is not None]
+                if not (3 <= len(keep) <= MAX_BALLOT) or not any(c["name"] in ANCHOR for c in keep):
+                    continue
+                cc = [{"name": c["name"], "party": ROSTER.get(c["name"]), "pct": c["pct"]} for c in keep]
+                if not normalize_pcts(cc):
+                    continue
+                emit("후보지지", "대통령", cc, "후보지지도 (권역)", "R", sido_val=rr["sido"])
+                any_emitted = True
         if not any_emitted:
             skipped_no_race += 1
 
