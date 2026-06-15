@@ -384,6 +384,28 @@
 .ar-seat-pred { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
 .ar-seat-actual { font-variant-numeric: tabular-nums; color: var(--ink-soft); text-align: right; }
 
+/* 총선 출구조사 의석 덤벨 — 정당별 예측 범위 막대 + 실제 의석 ● (대선/지선 시도 덤벨과 같은 시각 언어) */
+.ar-seatbar-row {
+  display: grid; grid-template-columns: 124px 1fr 112px;
+  gap: 10px; align-items: center; padding: 6px 12px; background: var(--bg);
+  font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.ar-seatbar-row:nth-child(even) { background: var(--bg2); }
+.ar-seatbar-row.is-hit { box-shadow: inset 3px 0 0 #2e7d6f; }
+.ar-seatbar-row.is-miss { background: rgba(211,47,47,0.10); box-shadow: inset 3px 0 0 #d32f2f; }
+.ar-seatbar-party { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ar-seatbar-track { position: relative; height: 14px; background: var(--bg3); border-radius: 7px; }
+.ar-seatbar-range { position: absolute; top: 0; height: 100%; border-radius: 7px; opacity: 0.4; }   /* 예측 범위 */
+.ar-seatbar-dot {                                                                                    /* 실제 의석 */
+  position: absolute; top: 1px; width: 12px; height: 12px; border-radius: 50%;
+  transform: translateX(-50%); border: 1.5px solid var(--bg); box-shadow: 0 0 0 1.5px var(--ink);
+}
+.ar-seatbar-nums { text-align: right; color: var(--ink-soft); }
+.ar-seatbar-nums b { color: var(--ink); font-weight: 800; }
+@media (max-width: 480px) {
+  .ar-seatbar-row { grid-template-columns: 84px 1fr 86px; gap: 6px; font-size: 11px; }
+}
+
 /* 출구조사 — 전국 행 강조 */
 .ar-exit-row.is-nation { border-top: 1px solid var(--ink); padding-top: 6px; }
 .ar-exit-row.is-nation .ar-exit-sido { color: var(--ink); }

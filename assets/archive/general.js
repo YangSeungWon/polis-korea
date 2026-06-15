@@ -206,11 +206,17 @@
       return;
     }
     const actualSeats = results ? computeSeats(results, sgTypecode, propSg(meta)) : {};
+    // 공통 의석 스케일 — 모든 방송사·정당의 예측 max·실제 중 최대(20 단위 올림). 막대 비교 가능하게.
+    let maxScale = 0;
+    for (const ep of seatBlocks) for (const [p, range] of Object.entries(ep.seats)) {
+      maxScale = Math.max(maxScale, range.max || 0, actualSeats[p] || 0);
+    }
+    maxScale = Math.max(20, Math.ceil(maxScale / 20) * 20);
     const host = document.getElementById('ar-exitpoll-grid');
     for (const ep of seatBlocks) {
       const card = document.createElement('div');
       card.className = 'ar-exit-block';
-      // 적중률 — 실제가 predicted [min, max] 안에 들어오나
+      // 적중률 — 실제가 예측 [min, max] 범위 안에 들어오나
       let hits = 0, tot = 0;
       for (const [party, range] of Object.entries(ep.seats)) {
         const actual = actualSeats[party];
@@ -218,26 +224,31 @@
         tot += 1;
         if (actual >= range.min && actual <= range.max) hits += 1;
       }
-      const stats = tot ? `<span style="color:var(--ink-soft);font-size:12px;margin-left:10px">${hits}/${tot} 범위 적중</span>` : '';
+      const stats = tot ? `<span class="ar-exit-hitrate">${hits}/${tot} 범위 적중</span>` : '';
       card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}${stats}</h3>`;
-      const grid = document.createElement('div');
-      grid.className = 'ar-seat-rows';
+      // 의석 덤벨 — 정당별 예측 범위(막대) + 실제 의석(●). 대선/지선 시도 덤벨과 같은 시각 언어.
+      const chart = document.createElement('div');
+      chart.className = 'ar-exit-dumbbell';
       for (const [party, range] of Object.entries(ep.seats)) {
         const col = pcol(party);
         const actual = actualSeats[party];
         const hit = actual != null && actual >= range.min && actual <= range.max;
         const sat = range.satellite ? ` <span class="ar-seat-sat">+${range.satellite}</span>` : '';
         const predText = range.min === range.max ? `${range.min}` : `${range.min}~${range.max}`;
+        const lo = (range.min / maxScale) * 100, hi = (range.max / maxScale) * 100;
+        const ap = actual != null ? (actual / maxScale) * 100 : null;
         const row = document.createElement('div');
-        row.className = 'ar-seat-row ' + (actual != null ? (hit ? 'is-hit' : 'is-miss') : '');
+        row.className = 'ar-seatbar-row ' + (actual != null ? (hit ? 'is-hit' : 'is-miss') : '');
         row.innerHTML = `
-          <span class="ar-seat-party" style="color:${col};font-weight:700">${party}${sat}</span>
-          <span class="ar-seat-pred">${predText}석</span>
-          ${actual != null ? `<span class="ar-seat-actual">실제 ${actual}석 ${hit ? '✓' : '✗'}</span>` : ''}
-        `;
-        grid.appendChild(row);
+          <span class="ar-seatbar-party" style="color:${col}">${party}${sat}</span>
+          <div class="ar-seatbar-track" title="예측 ${predText}석${actual != null ? ' · 실제 ' + actual + '석' : ''}">
+            <div class="ar-seatbar-range" style="left:${lo.toFixed(1)}%;width:${Math.max(hi - lo, 0.8).toFixed(1)}%;background:${col}"></div>
+            ${ap != null ? `<div class="ar-seatbar-dot" style="left:${ap.toFixed(1)}%;background:${col}"></div>` : ''}
+          </div>
+          <span class="ar-seatbar-nums">${predText}석${actual != null ? ` <b>→ ${actual}</b> ${hit ? '✓' : '✗'}` : ''}</span>`;
+        chart.appendChild(row);
       }
-      card.appendChild(grid);
+      card.appendChild(chart);
       host.appendChild(card);
     }
     document.getElementById('ar-exitpoll').hidden = false;
