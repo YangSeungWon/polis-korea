@@ -24,11 +24,15 @@ const ELECTION_NAME = POLL_ELECTION.name;
 const BLACKOUT_START = new Date(POLL_ELECTION.blackout_start);
 const BLACKOUT_END = new Date(POLL_ELECTION.blackout_end);
 
+// 선거일이 지났으면 '과거 선거' — 기본 모드를 실제 결과로(여론조사는 토글). 대선/총선 렌더도 이 값 사용.
+const IS_PAST = new Date() >= ELECTION;
+
 const state = {
   data: null,
   view: 'hex',   // 메인이 hex이므로 세부 페이지도 격자 기본 (지도는 토글)
   office: '광역단체장',
   scope: '시도',  // 시도 / 시군구 — 정당지지/국정평가/투표의향에 해당
+  mode: IS_PAST ? 'result' : 'polls',   // 과거 선거=실제 1위 기본, 진행/예정=여론조사 1위
   selectedSido: null,
   selectedSigungu: null,
   blackoutActive: false,

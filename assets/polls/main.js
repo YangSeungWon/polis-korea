@@ -77,6 +77,8 @@ async function init() {
     b.addEventListener('click', () => setScope(b.dataset.scope));
   });
   setupSegFades();
+  // 과거 선거는 실제 결과 기본 모드 — 첫 렌더 전 실제결과 맵 로드(빈 회색 깜빡임 방지).
+  if (state.mode === 'result' && typeof window.pollEnsureActual === 'function') await window.pollEnsureActual();
   // 정적 prerender가 주입한 초기 상태 (URL 기반)
   const init0 = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
   if (init0.office) setOffice(init0.office);

@@ -78,11 +78,15 @@
     host.innerHTML = `여론조사 적중 <b>${acc.match}/${acc.total}</b> <span class="ra-pct">${pct}%</span>`;
   }
 
+  // 과거 선거 기본 모드(result)일 때 main.js가 첫 렌더 전 실제결과를 미리 로드(빈 화면 깜빡임 방지).
+  window.pollEnsureActual = loadActual;
+
   function init() {
     if (typeof state === 'undefined') return;
-    state.mode = state.mode || 'polls';
+    state.mode = state.mode || 'polls';   // core.js가 IS_PAST면 'result'로 이미 설정
     document.querySelectorAll('[data-mode]').forEach((b) => {
       b.addEventListener('click', () => setMode(b.dataset.mode));
+      b.classList.toggle('is-active', b.dataset.mode === state.mode);   // 초기 토글 동기화
     });
     // 선거 종료 후 토글 노출
     const past = new Date() >= ELECTION;

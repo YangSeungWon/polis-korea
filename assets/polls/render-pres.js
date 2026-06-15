@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const ps = { mode: 'polls', viewmode: 'dorling', sidoRaces: [], nationRace: null, weights: {} };
+  const ps = { mode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', viewmode: 'dorling', sidoRaces: [], nationRace: null, weights: {} };
 
   // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆).
   // 본선 선별·정규화는 PollAdapter.presTrend가 담당 — 여기선 형태만 렌더로 넘김.
@@ -97,8 +97,8 @@
     if (!controls) return;
     controls.innerHTML = `
       <div class="seg" role="tablist" aria-label="자료">
-        <button class="seg-btn is-active" data-pmode="polls">여론조사</button>
-        <button class="seg-btn" data-pmode="result">실제 결과</button>
+        <button class="seg-btn${ps.mode === 'polls' ? ' is-active' : ''}" data-pmode="polls">여론조사</button>
+        <button class="seg-btn${ps.mode === 'result' ? ' is-active' : ''}" data-pmode="result">실제 결과</button>
       </div>
       <div class="seg" role="tablist" aria-label="방식">
         <button class="seg-btn is-active" data-pview="dorling">dorling</button>

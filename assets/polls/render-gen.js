@@ -3,7 +3,7 @@
 //   drawDistrictHex(render-district-hex.js) 재사용. kind==='general_election' → initGenIfNeeded.
 (function () {
   'use strict';
-  const gs = { propRace: null, districtRaces: [], layout: null, dmode: 'polls', selected: null, pollFn: null, resultFn: null };
+  const gs = { propRace: null, districtRaces: [], layout: null, dmode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', selected: null, pollFn: null, resultFn: null };
 
   async function loadResults() {
     try {
