@@ -253,19 +253,6 @@
 
 /* foot reuse polls.css .foot */
 
-/* archive 회차 페이지 link banner */
-.archive-banner {
-  display: block;
-  border-left: 3px solid var(--accent, #c8553d);
-  padding: 8px 0 8px 12px;
-  margin: 0 0 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent, #c8553d);
-  text-decoration: none;
-}
-.archive-banner:hover { text-decoration: underline; }
-
 /* 박빙 top N — 클릭 시 선택 */
 .hist-close { margin: 12px 0 16px; }
 .hist-close-title {

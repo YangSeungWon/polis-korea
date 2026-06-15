@@ -302,27 +302,7 @@ async function setRound(n, variant = null) {
 // renderParliamentChart → assets/parliament.js (공용)
 
 // === Detail Pane ===
-// 회차별 archive 페이지 매핑 — data/elections 레지스트리에서 startup 시 채움.
-// kind|n 키 → /archive/{id}/ URL. assets/elections.js 필요.
-const ARCHIVE_PAGES = {};
-(function populateArchivePages() {
-  if (typeof Elections === 'undefined') return;
-  Elections.loadArchiveablePages().then((metas) => {
-    // history.js state.type은 'national_assembly' — 레지스트리 'general_election'을 정규화.
-    const KIND_ALIAS = { 'general_election': 'national_assembly' };
-    for (const m of metas) {
-      if (!m || !m.archive || !m.archive.page) continue;
-      const key = (KIND_ALIAS[m.kind] || m.kind) + '|' + m.n;
-      ARCHIVE_PAGES[key] = m.archive.page;
-    }
-    // 비어있던 detail 재렌더 — 일치 회차 detail이 열려있으면 banner 다시.
-    if (typeof renderDetail === 'function' && document.getElementById('detail-pane')) {
-      try { renderDetail(); } catch {}
-    }
-  }).catch((e) => {
-    console.warn('[history] archive populate 실패:', e);
-  });
-})();
+// (회차 아카이브 링크는 상단 렌즈 바가 담당 — 옛 ARCHIVE_PAGES/populateArchivePages 제거.)
 
 // 비지역구 의석 제도 — 회차별 명칭·배분 규칙 설명. (유정회/전국구/비례대표)
 function propSystemInfo(n) {
@@ -336,24 +316,20 @@ function propSystemInfo(n) {
 function renderDetail() {
   const pane = $('#detail-pane');
   const el = currentEl();
-  const archiveHref = ARCHIVE_PAGES[`${state.type}|${state.n}`];
-  const archiveBanner = archiveHref
-    ? `<a class="archive-banner" href="${archiveHref}">이 회차 아카이브 →</a>`
-    : '';
+  // 회차 아카이브 링크는 상단 렌즈 바('종합 결과')가 담당 — detail 패널 banner 제거.
 
   if (!state.results) {
     pane.innerHTML = `<div class="detail-empty">
       <strong>${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko}</strong>
       ${el ? `(${el.date})` : ''}
       <br><br>데이터를 아직 수집하지 않았습니다.
-      ${archiveBanner}
     </div>`;
     return;
   }
 
   const data = activeOfficeData();
   const nat = data?.national;
-  let html = archiveBanner;
+  let html = '';
   if (state.type === 'national_assembly' && nat) {
     // 정당별 총 의석 (지역구 + 비례). 중선거구(9~12대)는 winners[]에 1구 2인 → 둘 다 카운트.
     const seatsByParty = new Map();
