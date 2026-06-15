@@ -24,6 +24,12 @@ function renderDetail() {
   </div>`;
   if (!officePolls.length) {
     html += `<div class="detail-empty">${state.office} 관련 조사가 아직 없습니다.</div>`;
+    // 조사가 없어도 실제 결과(개표 확정)는 보여준다 — 과거 선거에서 빈 패널 방지.
+    const actualNoPoll = (typeof window.actualResultFor === 'function')
+      ? window.actualResultFor(state.selectedSido, state.selectedSigungu, state.office) : null;
+    if (actualNoPoll && actualNoPoll.candidates && actualNoPoll.candidates.length) {
+      html += renderActualResultCard(actualNoPoll);
+    }
     pane.innerHTML = html;
     return;
   }
