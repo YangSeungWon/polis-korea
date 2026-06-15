@@ -288,7 +288,7 @@ body {
 /* 선거별 디렉터리 3레인 타임라인 (ElectionTimeline) — 대시보드·폴 허브 등 전 페이지 공용. */
 .poll-tl-host { margin-top: 12px; }
 .poll-tl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.poll-tl-svg { display: block; width: 100%; max-width: 720px; height: auto; }   /* 와이드 화면 과대 방지 */
+.poll-tl-svg { display: block; width: 100%; height: auto; }   /* full-width — viewBox 비례로 글씨도 함께 커짐 */
 .poll-tl-node { cursor: pointer; }
 .poll-tl-node:hover { opacity: 0.78; }
 .poll-tl-node:hover text { text-decoration: underline; }
