@@ -131,6 +131,7 @@
     gs.pollFn = PollAdapter.districtResultFromPolls(state.data.polls || []);
     gs.resultFn = PollAdapter.districtResultFromResults(gs.districtRaces);
     renderTrend();
+    if (window.PollClimate) PollClimate.mount({ after: 'gen-trend' });  // 선거 무렵 국정·정당 지지
     renderProp();
     renderDistrict();
     return true;

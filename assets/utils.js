@@ -425,6 +425,7 @@ function buildPartyTrendSVG(polls, opts) {
         if (!c.party) continue;
         key = CANON[c.party] || c.party; color = partyColor(key); label = PARTY_SHORT[key] || key;
       }
+      if (opts.colorMap && opts.colorMap[key]) color = opts.colorMap[key];  // 국정 긍정/부정 등 비정당 시리즈 색
       (byKey[key] = byKey[key] || []).push({ t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0 });
       meta[key] = { color, label };
     }

@@ -75,6 +75,8 @@ async function init() {
   const init0 = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
   if (init0.office) setOffice(init0.office);
   setView(init0.view || state.view);  // 기본 hex (prerender가 view 주입 시 그것)
+  // 지선 per-election 페이지 — 선거 무렵 국정·정당 지지 배경(허브는 election 없어 no-op)
+  if (window.PollClimate) PollClimate.mount({ after: 'election-intro' });
 }
 
 init();

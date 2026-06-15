@@ -143,6 +143,7 @@
     buildControls();
     await loadResults();
     renderTrend();   // 헤드라인 (모드 무관 — 폴 추이 + 실제 ◆)
+    if (window.PollClimate) PollClimate.mount({ after: 'pres-trend' });  // 선거 무렵 국정·정당 지지
     render();        // 보조 (지역·비례 dorling/격자 + 전국 바)
     return true;
   }
