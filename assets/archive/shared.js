@@ -366,7 +366,4 @@
 
     return { layout, drawHex, drawDorling, spiral, clusterR };
   })();
-
-  // (구) drawSidoDorling — sidoCluster.drawDorling로 위임(하위호환).
-  Archive.drawSidoDorling = function (host, bySido) { return Archive.sidoCluster.drawDorling(host, bySido); };
 })();
