@@ -3,11 +3,10 @@
 // "여론조사" 허브의 상시 섹션 — 선거 시즌이 아니어도 계속 최신이라 낡지 않음.
 (function () {
   'use strict';
-  const PAGE = 24;
-  let all = [], filter = 'all', shown = PAGE;
+  const SHOW = 3;   // 허브에선 맛보기만 — 연속 추세는 tracker로(rp-more가 정적 링크)
+  let all = [], filter = 'all';
 
   const host = () => document.getElementById('recent-feed-host');
-  const moreBtn = () => document.getElementById('rp-more');
 
   function pass(p) {
     if (filter === 'party') return p.metric_type === '정당지지';
@@ -18,13 +17,10 @@
   function render() {
     const h = host();
     if (!h) return;
-    const list = all.filter(pass);
-    const slice = list.slice(0, shown);
+    const slice = all.filter(pass).slice(0, SHOW);
     h.innerHTML = slice.length
       ? slice.map((p) => renderPollCard(p, p.office_label)).join('')
       : '<p class="rp-empty">표시할 조사가 없습니다.</p>';
-    const m = moreBtn();
-    if (m) m.hidden = shown >= list.length;
   }
 
   async function load() {
@@ -53,12 +49,9 @@
         document.querySelectorAll('.rp-filter [data-rp]').forEach((x) => x.classList.remove('is-active'));
         b.classList.add('is-active');
         filter = b.dataset.rp;
-        shown = PAGE;
         render();
       });
     });
-    const m = moreBtn();
-    if (m) m.addEventListener('click', () => { shown += PAGE; render(); });
     load();
   }
 

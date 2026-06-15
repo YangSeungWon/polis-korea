@@ -149,12 +149,10 @@
 .rp-title { font-size: 18px; font-weight: 800; color: var(--ink); margin: 0; }
 .rp-filter { flex-wrap: wrap; }
 .rp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; align-items: start; }
-.rp-more {
-  display: block; margin: 16px auto 0; padding: 8px 20px;
-  border: 1px solid var(--rule-strong); border-radius: 3px; background: var(--bg2);
-  color: var(--ink); font-size: 13px; font-weight: 600; cursor: pointer;
-}
-.rp-more:hover { background: var(--bg3); }
+.rp-grid-mini { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 700px) { .rp-grid-mini { grid-template-columns: 1fr; } }
+.rp-more-link { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
+.rp-more-link:hover { color: var(--ink); text-decoration: underline; }
 .rp-empty { color: var(--ink-mute); font-size: 13px; padding: 16px 0; }
 /* 선거별 상세 섹션 — 상시 피드와 구분선 */
 .election-intro { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--rule); }
@@ -181,23 +179,17 @@
 .active-poll-banner .apb-dday { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent, #c8553d); }
 .active-poll-banner .apb-go { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
 
-/* 선거별 여론조사 디렉터리 — 회차 카드 그리드 */
+/* 선거별 여론조사 디렉터리 — 대선/총선/지선 3레인 타임라인 (election-index.js) */
 .poll-index-sec { margin: 28px 0; }
-.poll-index-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 10px; margin-top: 12px;
-}
-.poll-index-card {
-  display: flex; flex-direction: column; gap: 3px;
-  padding: 12px 14px;
-  border: 1px solid var(--rule); border-radius: 3px;
-  background: var(--bg2); text-decoration: none; color: var(--ink);
-  transition: background .12s, border-color .12s;
-}
-.poll-index-card:hover { background: var(--bg3); border-color: var(--rule-strong); }
-.poll-index-card.is-current { border-color: var(--rule-strong); background: var(--bg3); cursor: default; }
-.pic-name { font-size: 14px; font-weight: 800; }
-.pic-date { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.poll-tl-host { margin-top: 12px; }
+.poll-tl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.poll-tl-svg { display: block; width: 100%; min-width: 580px; height: auto; }
+.poll-tl-node { cursor: pointer; }
+.poll-tl-node:hover { opacity: 0.78; }
+.poll-tl-node:hover text { text-decoration: underline; }
+.poll-tl-node.is-current { cursor: default; }
+.poll-tl-note { font-size: 12px; color: var(--ink-mute); margin: 8px 0 0; }
+.poll-tl-note a { color: var(--ink-soft); }
 .pic-go { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .pic-tag { font-size: 11px; font-weight: 700; color: var(--accent, #c8553d); }
 
