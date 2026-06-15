@@ -169,6 +169,9 @@ function fillResult(r) { return r ? { ...r, _fill: true } : r; }
 function resultForSigungu(sido, name, data) {
   data = data || activeOfficeData();
   if (!data?.sigungu) return null;
+  // 조회 시도명도 정규화 — hex 레이아웃이 옛 명칭('강원도'·'전라북도')이어도(16~18대 대선 등)
+  // 데이터(canon '강원특별자치도')와 매칭되게. 안 그러면 그 시도 시군구 셀이 통째 숨겨짐(사라짐).
+  sido = canonSido(sido);
   const exact = data.sigungu.find((r) => canonSido(r.sido) === sido && r.name === name);
   if (exact) return exact;
   // disambig 자동 처리: 옛 NEC 데이터 '동구(대전)'·'고성군(강원)' → hex 'name'
