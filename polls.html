@@ -52,6 +52,13 @@
   <!-- 활성 폴링 시즌(선거 6개월 전~선거일)이면 그 선거를 전면에 — setPhase가 표시 -->
   <a class="active-poll-banner" id="active-poll-banner" href="#election-intro" hidden></a>
 
+  <!-- 선거별 여론조사 디렉터리 — election-index.js가 3레인 타임라인(대선/총선/지선)으로 채움.
+       페이지 정체성이라 최상단(최근 피드 위) — 모바일에서 들어오자마자 무슨 페이지인지 보이게. -->
+  <section class="poll-index-sec" aria-label="선거별 여론조사">
+    <h2 class="rp-title">선거별 여론조사 vs 실제</h2>
+    <div class="poll-tl-host" id="poll-election-index"></div>
+  </section>
+
   <!-- 상시 누적 개별 조사 피드 (선거 무관, 계속 최신) -->
   <section class="recent-polls" id="recent-polls">
     <div class="rp-head">
@@ -64,12 +71,6 @@
     </div>
     <div class="rp-grid rp-grid-mini" id="recent-feed-host"></div>
     <a class="rp-more-link" href="/tracker.html">연속 추세는 지지율 추이 →</a>
-  </section>
-
-  <!-- 선거별 여론조사 디렉터리 — election-index.js가 3레인 타임라인(대선/총선/지선)으로 채움 -->
-  <section class="poll-index-sec" aria-label="선거별 여론조사">
-    <h2 class="rp-title">선거별 여론조사 vs 실제</h2>
-    <div class="poll-tl-host" id="poll-election-index"></div>
   </section>
 
   <!-- 선거별 상세 (활성 선거 시즌이면 그 선거, 아니면 직전 선거 회고) -->
