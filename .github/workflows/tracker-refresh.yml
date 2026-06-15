@@ -37,6 +37,11 @@ jobs:
       - name: Install deps
         run: pip install -r requirements.txt
 
+      # cid_decode.py가 NotoSansCJK-Regular.ttc(하드코딩 경로 /usr/share/fonts/opentype/noto)로
+      # 한글 cid 깨진 PDF 복구(extract_party_support 등). 미설치 시 FileNotFoundError로 abort.
+      - name: Install Noto CJK font (cid_decode 한글 복구용)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
       # 신규로 받은 VT012 PDF만 캐시(재시도 시 재다운로드 회피용 — 정합성은 커밋된 CSV/JSON이 보장).
       # daily와 분리된 네임스페이스(restore-keys에 'rawdata-' 없음) — 거대한 daily 캐시 안 끌어옴.
       - name: Cache new VT012 PDFs

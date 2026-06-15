@@ -30,6 +30,12 @@ jobs:
       - name: Install deps
         run: pip install -r requirements.txt
 
+      # cid_decode.py가 NotoSansCJK-Regular.ttc(하드코딩 경로 /usr/share/fonts/opentype/noto)로
+      # 한글 cid 깨진 PDF 복구. 미설치 시 build_cid_table → FileNotFoundError. 폰트 없으면
+      # 깨진 한글이 그대로 커밋되므로 graceful skip이 아니라 폰트 설치가 정답.
+      - name: Install Noto CJK font (cid_decode 한글 복구용)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
       # raw PDF cache (매일 누적). data/raw/* 는 .gitignore — commit 안 들어가지만 cache 유지.
       - name: Cache raw PDFs
         id: cache-raw
