@@ -104,8 +104,8 @@
     const cells = layoutCells(races);
     if (!cells.length) return null;
     const maxVoted = Math.max(...cells.map((c) => c.voted));
-    // 최대 시도가 ~46개 hex가 되도록 단위 결정 (만 단위로 정리)
-    const unit = Math.max(10000, Math.ceil(maxVoted / 46 / 10000) * 10000);
+    // 1 hex ≈ 10만표 — 최대 시도(경기) ~90칸. 만 단위로 정리(회차별 9~10만 근처).
+    const unit = Math.max(20000, Math.round(maxVoted / 90 / 10000) * 10000);
     const smallR = 3.5;
     for (const cell of cells) {
       cell.N = Math.max(1, Math.round(cell.voted / unit));
