@@ -98,6 +98,32 @@ VCCP08 동-레벨이 9대부터. 5~8대는 시군구-union만 가능(농촌·통
 resultForSigungu **reverse-merge**(시 경계→일반구/분구 데이터 집계, data.js line 155)로 대선 일반구 개표 집계.
 `build_sigungu_geojson_years.py`로 sigungu_2013도 생성(18대용). main.js `presGeoSupported`로 분기.
 
+## 대선 HGIS 옛 경계 (2~7대) — 시점 복원 + 정비
+2~7대 직선대선(1952~71)은 SGIS(휴전선 이남·1975~)가 못 미치는 시점이라 **국사편찬위 HGIS 시간축**으로
+그 선거일 실제 시군구 경계를 복원한다. `src/history/geomap.ts` `PRES_HGIS_ROUNDS={2,3,4,5,6,7}` → 이들은
+`sigungu_hgis_{n}.json`+`sido_hgis_{n}.json`(=그 회차 전용) 사용, 13~21대는 `PRES_SGG_GEO_YEAR`의 SGIS 연도.
+`build_sigungu_hgis.py`가 begin/end 버전 중 선거일 포함(또는 최근접) 버전을 골라 조립.
+
+HGIS 재구성본엔 체계적 결함이 있어 **사후 정비 스크립트**(모두 멱등, `.venv` 필요)로 교정. 정비 후 hgis 2~7대 중첩 0:
+- **`clean_hgis_seoul_overlap.py`** — cross-sido 중첩(유일하게 **권역 외곽선까지 깨뜨림**). 1963-01-01 서울
+  대확장으로 편입 전 경기 광주군 폴리곤이 서울 성동구를 100% 덮어, dissolve된 경기 외곽선이 서울로 불룩
+  튀어나옴. 비서울 feature에서 서울 union을 difference(+면적0 sliver 제거). 광주/성동 외 cross-sido 없음.
+- **`clean_hgis_overlaps.py`** — 같은 시도 **시/군 도넛 중첩**(도농분리 시절 군이 안쪽 시를 안 도려냄:
+  금릉군⊃김천시, 청원군⊃청주시)을 `군−시` carve. + `<100 m²`(1e-8 deg²) 미세 조각·퇴화 hole 제거(단,
+  **최대 part는 항상 보존** → feature 안 비움). 화면엔 draw-order(시가 위)로 정상이나 토폴로지 중첩이라 정리.
+- **`fix_hgis_city_geometry.py`** — 깨졌거나 가려진 **도시 지오 splice/carve 복구**:
+  여수시(2~7대 퇴화/과소 → `sigungu_1975` 실경계 + 여천군 carve)·경주군/월성군(3대: 경주군 race=시 →
+  경주시[h4] 주입·월성군 carve)·천안군/천원군(7대: 천안군=천안군−천원군)·대구 북구/서구(6·7대)·
+  원주시(4대 ← hgis_3). 안 그러면 그 도시 개표결과가 지도에 **안 뜨거나 가려짐**(예: 여수시 2·7대 2.3만·4만 표).
+- **`fix_5th_pres_ulsan.py`** — **5대 VCCP09 라벨 오류 정정**. 울산시(1962 승격)가 5대 시군구 수집분에서만
+  `양산시`로 들어옴(6·7대는 양산군+울산시+울주군 정상). 양산군 유권자 ~2.7만(5·6·7대 일관) vs 문제의
+  양산시 4.15만=울산시 규모. `data/results/5th-pres-1963.json` 라벨 + `sigungu_hgis_5.json` feature(개명 +
+  hgis_6 울산시 실경계 주입) 둘 다 정정. 양산시는 1996 승격이라 1963 비존재.
+
+> **⚠️ 식별 함정**: HGIS 복원본의 5자리 `code`는 **시도만** 인코딩(한 도 안 전부 동일). feature 식별·결과
+> 매칭은 `sido`+`name`/geometry로. 또 결과 양쪽에 race가 있는 중첩(경주군/월성군 등)은 함부로 제거 금지 —
+> 한쪽 개표결과가 고아 되므로 carve/splice로 둘 다 살릴 것.
+
 ## 검증 — OhmyNews 21대 대조 (IoU)
 복원 방법의 신뢰도를 권위본으로 검증: 21대를 내 파이프라인(NEC VCCP08 동 + SGIS 2020 union)으로
 빌드해 OhmyNews 권위본(VW-Lab 행정동 dissolve, MIT)과 253개 선거구 전수 IoU(겹침도) 비교.

@@ -73,6 +73,22 @@ NESDC + NEC API → cron → parse → build → polls.json → site
 - **Base seed**: GitHub Release (분기 1회 재업로드)
 - **검증**: tests/test_golden + tests/test_build_golden + scripts/audit_quality (error 시 워크플로 실패 → 자동 알림)
 
+## 빌드 — TS 지도 모듈 + 정적 프리렌더
+
+지도 모듈은 **TypeScript 소스**(`src/history/`)를 esbuild로 번들해 IIFE JS로 생성한다. 생성물은 **직접 편집 금지**(상단 배너 `// ⚠️ 생성 파일`), `.ts`를 고치고 CI가 빌드.
+
+| 소스(.ts) | 생성물(.js) | 빌드 |
+|---|---|---|
+| `src/history/hexgrid.ts` | `assets/hexgrid.js` | `npm run build:hexgrid` |
+| `src/history/geomap.ts` | `assets/history/geomap.js` | `npm run build:geomap` |
+
+- `npm run build:map`(=둘 다) + `npm run typecheck`(`tsc --noEmit`)는 Pages 배포 전 CI에서 실행.
+- `geomap.ts`는 회차→경계 매핑의 단일 출처: `PRES_SGG_GEO_YEAR`(13~21대 SGIS 연도)·`PRES_HGIS_ROUNDS`({2..7}=HGIS)·`LOCAL_SGG_GEO_YEAR`·`PERIOD_SIDO_YEARS`(시도 외곽선)·`LOCAL_SIDO_CODE2`.
+
+정적 프리렌더(Python): `build_static.py`가 `polls.html`/템플릿 + `__INITIAL_STATE__` 주입으로 `/governor`·`/mayor`·`/superintendent`·`/party`·`/polls/{id}/`·`/history/{type}/{n}/` + `sitemap.xml` 생성. `sync_archive_html.py`가 `archive/{id}/index.html` + `data/archive_index.json`(대시보드 역대 타임라인 소스) 생성. `sync_nav_html.py`가 NAV 마커 사이 헤더 nav 동기화(idempotent). HTML `<script>`/메타 바꾸면 `build_static.py` 재생성 필수.
+
+공용 프런트엔드 컴포넌트(ElectionTimeline·LensSwitcher·시도/시군구 hex 캐논)는 `docs/shared-components.md`.
+
 ## 디렉터리 구조
 
 ```
@@ -89,6 +105,7 @@ NESDC + NEC API → cron → parse → build → polls.json → site
 │   ├── geo/                        # 시군구·지역구 hex 좌표
 │   ├── sources.json                # 데이터 출처 레지스트리
 │   └── raw/                        # gitignore (원본 PDF·CSV)
+├── src/history/                    # TS 지도 모듈 소스 (→ esbuild → assets/*.js)
 ├── scripts/                        # Python 파이프라인 + 메타 loader
 ├── tests/                          # golden + build_golden + audit
 └── docs/                           # 이 문서들

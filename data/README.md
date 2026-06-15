@@ -171,10 +171,27 @@ sitemap.xml (person URL 통합)
 
 | 파일 | 생성 | 비고 |
 |---|---|---|
-| `sigungu_hex.json` | `build_sigungu_hex.py` | 250 시군구 17×17 직사각 hex |
+| `sigungu_hex.json` | `build_sigungu_hex.py` | 현행(2026) 250 시군구 17×17 직사각 hex |
+| `sigungu_hex_local.json` | `build_local_period_hex.py` | **회차별** 지선 시군구 hex (키=`"1"`…`"9"`). 그 시점 행정구역명·소속. history 회차 지도 + 폴 per-election 시군구 hex(`assets/polls/render-hex.js`)가 사용 → 옛 회차에 팬텀 셀 방지(예: 7·8회 군위=경북·인천 중구/동구/서구, 9회=대구 군위·영종/제물포/검단구) |
 | `district_hex_{19..22}.json` | `build_district_hex_v2.py` | 회차별 지역구 hex (sigungu_hex 기반) |
 | `sigungu_adjacency.json`, `sigungu_coastal.json` | `build_sigungu_*` | 시군구 그래프 메타 |
+| `sigungu_{1975,1985,1987,1990,1995,2000,2002,2006,2010,2013}.json` | `build_sigungu_geojson_years.py` (특수: `sigungu_1987.json`=`build_sigungu_1987.py`) | SGIS 시점별 시군구 경계. 대선·지선 회차→연도 매핑(`src/history/geomap.ts` `PRES_SGG_GEO_YEAR`·`LOCAL_SGG_GEO_YEAR`)에서 fetch |
+| `sigungu_hgis_{2..7}.json`, `sido_hgis_{2..7}.json` | `build_sigungu_hgis.py` → **정비 스크립트**(아래) | 옛 직선대선 2~7대(1952~71) 그 선거일 실제 경계(HGIS 시간축). 남한 시군구 — 1919 이북 보강(`hgis_ibuk_1919.json`)과 별개 |
+| `sido_{1987,1990,…}.json`, `sido_simple.json` | `build_sido_outlines.py` / dissolve | 시도 외곽선. `sido_simple`=현행 폴백(2025/2026 회차) |
 | `*_simple.json` | `vuski/admdongkor` raw 다운로드 + `mapshaper` 단순화 | 폴 지도 |
+
+### HGIS 옛 대선(2~7대) 경계 정비 — 정비 스크립트 (멱등)
+
+`build_sigungu_hgis.py`의 HGIS 재구성본엔 체계적 결함이 있어 사후 정비 스크립트로 교정한다. `.venv`(shapely) 필요, 모두 멱등. 자세한 케이스는 `docs/district-map-reconstruction.md` 「대선 HGIS 옛 경계」 참조.
+
+| 스크립트 | 고치는 것 |
+|---|---|
+| `clean_hgis_seoul_overlap.py` | **cross-sido 중첩**(권역 외곽선까지 깨뜨림). 1963 서울 대확장으로 경기 광주군이 서울 성동구를 100% 덮음 → 비서울 feature에서 서울 union을 difference + sliver 제거. 광주/성동 외엔 없음 |
+| `clean_hgis_overlaps.py` | 같은 시도 **시/군 도넛 중첩**(군이 안쪽 시를 안 도려냄: 금릉군⊃김천시, 청원군⊃청주시) carve + `<100 m²(1e-8 deg²)` 미세 조각 제거(최대 part는 항상 보존) |
+| `fix_hgis_city_geometry.py` | 깨졌거나 가려진 **도시 지오 복구**(splice/carve): 여수시(2~7대←`sigungu_1975`)·경주군/월성군(3대)·천안군/천원군(7대)·대구 북구/서구(6·7대)·원주시(4대) |
+| `fix_5th_pres_ulsan.py` | **5대 VCCP09 라벨 오류** — 울산시(1962 승격)가 5대만 `양산시`로 수집됨(6·7대는 정상). 결과 JSON·hgis_5 둘 다 울산시로 정정. 양산시는 1996 승격이라 1963 비존재 |
+
+> **⚠️ HGIS 식별 함정**: `sigungu_hgis_*.json`의 5자리 `code`는 **시도만** 인코딩한다(한 도 안 feature가 전부 같은 code). feature 식별·결과 매칭은 반드시 **`sido`+`name`** 또는 geometry로 — code 룩업은 모호. (현행 `sigungu_*.json`은 시군구 고유 code이지만 HGIS 복원본은 다름.)
 
 ## 폴 (여론조사) 파이프라인 — 단계 분리
 

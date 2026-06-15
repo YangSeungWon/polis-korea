@@ -10,15 +10,16 @@
 
 | 라벨 | 경로 |
 |---|---|
-| 홈 | `/` |
-| 여론조사 | `/polls.html` |
-| 재·보궐 | `/byelection.html` |
+| (홈=로고) | `/` |
 | 지지율 추이 | `/tracker.html` |
+| 여론조사 | `/polls.html` |
+| 재·보궐 | `/byelection/` |
 | 역대 결과 | `/history.html` |
 | 타임라인 | `/timeline.html` |
-| 검색 | `/search.html` |
+| 근현대사 | `/chronology.html` |
+| 정당사 | `/parties.html` |
 
-→ 어느 페이지에서든 7개로 직접 이동 가능. 아래 "나가는 링크"는 nav 외 **콘텐츠 링크**만.
+→ hdr-link 7개(+로고=홈). `/search.html`은 페이지로 존재하나 nav엔 없음. 아래 "나가는 링크"는 nav 외 **콘텐츠 링크**만.
 
 ## 메인 페이지 7개
 

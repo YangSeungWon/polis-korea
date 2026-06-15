@@ -1,6 +1,8 @@
 # CSS 구조
 
-`assets/*.css` 8개 파일, 총 ~1690 LOC. 페이지 종류에 따라 필요한 것만 로드.
+`assets/*.css` 17개 파일. 페이지 종류에 따라 필요한 것만 로드. (아래 표는 핵심 공유 파일 위주 —
+페이지 전용 CSS: `tracker`·`search`·`chronology`·`lineage`(정당사)·`person`·`party`·`byelection-index`·`about-coverage` 등.
+선거별 타임라인 스타일 `.poll-tl-*`/`.ptc-*`는 `common.css`에 있음 — 대시보드가 `components.css` 없이 쓰기 때문.)
 
 ## 파일별 역할
 

@@ -1,16 +1,27 @@
 # assets/archive/
 
-회차 아카이브 페이지 JS — 5개 파일로 분리.
+회차 아카이브 페이지 JS — kind 렌더러 + 공용 hex/지도 렌더러.
 
 ```
+core.js     → 엔트리 IIFE: meta load → fetch → kind 분기 dispatch
 shared.js   → SIDO_ORDER · ssh · pcol · mainParty(위성정당)
               · filterPoll · renderPollsList · renderTrendSVG (공용)
 local.js    → Archive.local.render(ctx)    지선 (광역단체장 17 시도)
 pres.js     → Archive.pres.render(ctx)     대선 (전국 1 + 시도 17)
               · renderExitPoll exports (총선이 재사용)
 general.js  → Archive.general.render(ctx)  총선 (지역구 254 + 비례)
-core.js     → 엔트리 IIFE: meta load → fetch → kind 분기 dispatch
+
+# 시각화 렌더러 (일부는 폴·history와 공유 — docs/shared-components.md)
+render-governor-hex.js → Archive.governorHex.draw  시도 1위색 hex (폴·history 공용 캐논)
+render-sido-map.js     → 시도 Leaflet chloropleth
+render-sido-prop.js    → 대선 비례(격자/dorling) — 승자독식 단색 회피
+render-sido-view.js    → 시도 뷰 토글(hex/dorling/map)
+render-metro-hex.js    → 광역의원 hex
+render-council-hex.js  → 기초의원 hex
+render-winners.js      → 당선자 리스트
+byelection.js          → 재·보궐 아카이브
 ```
+※ 시군구 1위색 hex는 `assets/render-sigungu-hex.js`의 `drawSigunguHex`(폴·history와 공용).
 
 ## 로드 순서
 

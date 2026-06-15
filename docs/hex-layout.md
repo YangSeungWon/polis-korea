@@ -284,11 +284,22 @@ grid = {(x['c'],x['r']): LABEL.get(x['sido'],'?') for x in cells}
 
 ## 데이터 파일
 
-- `data/geo/sigungu_hex.json` — 현재 시군구 hex (230여 셀)
+- `data/geo/sigungu_hex.json` — 현행(2026) 시군구 hex (250여 셀)
 - `data/geo/sigungu_hex_legacy.json` — 옛 행정구역 시군구 hex
+- `data/geo/sigungu_hex_local.json` — **회차별 지선 시군구 hex** (키=회차 `"1"`…`"9"`, 아래 참조)
 - `data/geo/district_hex_{17..22}.json` — 17~22대 총선 지역구 hex
 
-각 파일: `[{code, name, sido, c, r}, ...]` 배열. `c`·`r`은 hex offset 좌표.
+각 파일: `[{code, name, sido, c, r}, ...]` 배열(period 파일은 회차→배열 맵). `c`·`r`은 hex offset 좌표.
+`sigungu_hex_local.json` 회차 셀엔 `code`가 없을 수 있음(이름 기반 매칭) — `drawSigunguHex`는 `code` 불필요.
+
+### 회차별(period-aware) 지선 시군구 hex — `sigungu_hex_local.json`
+지선은 회차마다 그 시점 시군구 행정구역을 썼어야 하므로 현행 레이아웃을 옛 회차에 그대로 쓰면 팬텀 셀이
+빈칸으로 뜬다(예: 군위는 2023-07 경북→대구 이동, 영종/제물포/검단은 2026 인천 신설). `build_local_period_hex.py`가
+각 회차 기초단체장 결과에서 그 시점 시군구 셀을 만들어 회차별로 저장. 사용처 둘:
+- **history 회차 지도**(`assets/history/render-sigungu.js`) — `state.hexLocal[회차]`, `effectiveCell`로 옛 이름 alias.
+- **폴 per-election 시군구 hex**(`assets/polls/render-hex.js` `loadSigunguHex()`) — `POLL_ELECTION.kind==='local'`이면
+  `sigungu_hex_local.json[n]` 사용, 없으면 현행 `sigungu_hex.json` 폴백. (7·8회 군위=경북·인천 중/동/서구,
+  9회=대구 군위·영종/제물포/검단구.)
 
 ## 페이지에서 사용
 

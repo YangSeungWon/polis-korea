@@ -8,7 +8,7 @@
 | `build_polls_pres.py` | `data/polls/aggregated_{회차}.json` (대선) |
 | `build_byelection.py` | `data/polls/byelection.json` |
 | `build_timeline.py` | `data/timeline.json` |
-| `build_static.py` | 카드 JSON-LD·정적 메타 |
+| `build_static.py` | 정적 프리렌더 — 메타(title/og/canonical)+`__INITIAL_STATE__` 주입으로 `/governor`·`/mayor`·`/superintendent`·`/party`·`/polls/{id}/`·`/history/{type}/{n}/` + sitemap |
 | `build_zone_hex.py` | hex 좌표 (모든 회차) |
 | `build_district_22.py`·`build_district_20.py` | 지역구 결과 가공 |
 | `build_sigungu_adjacency.py`·`build_sigungu_coastal.py` | 시군구 그래프·해안 |
