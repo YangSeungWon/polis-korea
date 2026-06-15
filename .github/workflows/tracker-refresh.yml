@@ -1,9 +1,11 @@
-name: Weekly tracker refresh
+name: Daily tracker refresh
 
-# tracker(국정평가·정당지지·차기주자)의 상시 소스 = 전국 정기(정례)조사를 주간 갱신.
+# tracker(국정평가·정당지지·차기주자)의 상시 소스 = 전국 정기(정례)조사를 매일 갱신.
 # NESDC는 정기조사를 '언급 선거'로 분류해 VT012("기타") 밖(대선 등)에도 흩어두므로, gubun
 # 필터 없이 전체 목록 + sido='전국'으로 긁는다(--all-list). 갤럽 자체조사 등 VT012 누락분 회수.
-# 매주 차오르므로 주 1회면 충분. daily-refresh(선거 폴+빌드)와 별개.
+# 갤럽(금)·리얼미터(월)·NBS 등 발표 요일이 제각각이라 주1회면 최대 ~6일 지연 → 매일로 변경.
+# 증분이라 신규 폴 없는 날은 push skip(노이즈 0). repo가 PUBLIC이라 Actions 무료.
+# daily-refresh(선거 폴+빌드)와 별개지만 같은 data-pipeline concurrency group이라 큐잉 순차 실행.
 #
 # ⚠ 핵심: PDF 코퍼스를 CI에 들고 오지 않는다(과거 PDF는 로컬에만). 대신
 #   - data/raw/nesdc_etc_polls.csv (목록)를 git에 커밋 → scrape가 항상 증분(0부터 재스크랩 X)
@@ -11,7 +13,7 @@ name: Weekly tracker refresh
 # 따라서 cold run도 "신규 폴만" 처리 → 수 분. (이전 설계는 Release에서 PDF를 받다 5h 초과해 실패.)
 on:
   schedule:
-    - cron: '47 21 * * 0'   # 일요일 UTC 21:47 = 월요일 KST 06:47
+    - cron: '47 21 * * *'   # 매일 UTC 21:47 = KST 06:47 (daily-refresh 21:37 뒤 큐잉)
   workflow_dispatch: {}
 
 # daily-refresh와 같은 그룹 — raw 데이터 동시 접근 방지(큐잉).
