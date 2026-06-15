@@ -291,7 +291,7 @@
       // 라벨은 모든 클러스터 뒤에 별도 패스 — 이웃 클러스터에 가리지 않게(항상 위, halo 가독).
       for (const n of L.nodes) {
         const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r - 4).toFixed(1));
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (n.cy - n.r + 3).toFixed(1));  // outline 동그라미와 살짝 겹치게
         t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', 'ar-genhex-label');
         t.textContent = `${n.label || Archive.ssh(n.sido)} ${n.tot}`;
         svg.appendChild(t);
