@@ -27,13 +27,13 @@
   <nav class="hdr-nav">
               <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
   <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-  <a href="/polls.html" class="hdr-link">여론조사</a>
+  <a href="/polls.html" class="hdr-link is-current">여론조사</a>
   <span data-nav-urgent></span>
   <a href="/byelection/" class="hdr-link">재·보궐</a>
   <a href="/history.html" class="hdr-link">역대 결과</a>
   <a href="/timeline.html" class="hdr-link">타임라인</a>
   <a href="/chronology.html" class="hdr-link">근현대사</a>
-  <a href="/parties.html" class="hdr-link is-current">정당사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
   <!-- NAV_END -->
 </nav>
   <div class="hdr-meta">
@@ -44,7 +44,6 @@
 </header>
 
 <main class="page">
-  <div id="lens-switcher-host"></div><!-- per-election 폴 페이지에서만 렌즈 바 노출(허브는 no-op) -->
   <section class="intro">
     <h1>여론조사</h1>
     <p class="lede">NESDC 등록 조사. 최근 조사 흐름과 선거별 여론을 한 곳에 — 추세는 <a href="/tracker.html">지지율 추이</a>.</p>
@@ -74,6 +73,7 @@
     <a class="rp-more-link" href="/tracker.html">연속 추세는 지지율 추이 →</a>
   </section>
 
+  <div id="lens-switcher-host"></div><!-- per-election 폴 페이지에서만 — 그 선거 제목 바로 위 렌즈 바(허브는 no-op) -->
   <!-- 선거별 상세 (활성 선거 시즌이면 그 선거, 아니면 직전 선거 회고) -->
   <section class="election-intro" id="election-intro">
     <h2 id="poll-h1">9회 전국동시지방선거 · 여론조사 vs 실제</h2>
