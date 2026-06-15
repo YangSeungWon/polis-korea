@@ -6,9 +6,9 @@
 (function () {
   'use strict';
   const LANE = {
-    pres: { label: '대선', color: '#5b54d6', y: 44 },
-    general: { label: '총선', color: '#168f8f', y: 82 },
-    local: { label: '지선', color: '#c98a2e', y: 120 },
+    pres: { label: '대선', color: '#5b54d6', y: 30 },
+    general: { label: '총선', color: '#168f8f', y: 62 },
+    local: { label: '지선', color: '#c98a2e', y: 94 },
   };
   const typeOf = (e) => { const t = e.type || e.slug || ''; return /pres/.test(t) ? 'pres' : (/general|national/.test(t) ? 'general' : 'local'); };
   const shortLabel = (e) => (typeOf(e) === 'local' ? `${e.n}회` : `${e.n}대`);
@@ -22,7 +22,7 @@
     const colorOf = (e, lane, cur) => (opts.nodeColorFn ? opts.nodeColorFn(e, lane, cur) : lane);  // 노드 색(기본=레인색)
     const ts = (e) => Date.parse(e.date);
     const curSlug = opts.current || list.slice().sort((a, b) => ts(b) - ts(a))[0].slug;
-    const W = 720, H = 146, padL = 62, padR = 18, padT = 12, padB = 24;   // padL = 레인 라벨 전용 거터
+    const W = 720, H = 120, padL = 62, padR = 18, padT = 10, padB = 16;   // padL = 레인 라벨 거터. 숫자-인-서클이라 라벨 위 공간 불필요 → 세로 컴팩트
     let min = Math.min(...list.map(ts)), max = Math.max(...list.map(ts));
     const span = (max - min) || 1; min -= span * 0.05; max += span * 0.05;
     const X = (t) => padL + (t - min) / (max - min) * (W - padL - padR);
@@ -43,18 +43,26 @@
       lanes += `<line x1="${padL}" y1="${L.y}" x2="${W - padR}" y2="${L.y}" stroke="${L.color}" stroke-width="1" opacity="0.25"/>`;
       lanes += `<text x="${padL - 14}" y="${L.y + 4}" font-size="12" font-weight="700" fill="${L.color}" text-anchor="end">${L.label}</text>`;
     }
-    for (const e of list) {
-      const L = LANE[typeOf(e)];
-      const x = X(ts(e)), isCur = e.slug === curSlug;
-      const r = 6;   // 노드 크기 균일 — 선택은 외곽 링·중앙 흰점으로만 구분(크기 안 키움)
-      const fill = colorOf(e, L.color, isCur);   // 노드 색(폴 허브=레인색 / 대시보드=중립+최신만 포인트)
-      nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}">`
-        + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
-        + (isCur ? `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${(r + 3).toFixed(1)}" fill="none" stroke="${L.color}" stroke-width="1.4" opacity="0.5"/>` : '')
-        + `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${r}" fill="${fill}"/>`
-        + (isCur ? `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="2" fill="#fff"/>` : '')
-        + `<text x="${x.toFixed(1)}" y="${(L.y - r - 4).toFixed(1)}" font-size="10.5" font-weight="700" fill="${L.color}" text-anchor="middle">${shortLabel(e)}</text>`
-        + '</a>';
+    const r = 10;   // 동그라미 안에 회차 숫자 — 라벨 겹침 해소(레인이 대선/총선/지선 구분, 접미사 불필요)
+    const minGap = 2 * r + 1.5;   // 같은 레인 원이 안 겹치게 최소 간격(촘촘한 1979~81 대선 등)
+    for (const key of ['pres', 'general', 'local']) {
+      const L = LANE[key];
+      const laneEvents = list.filter((e) => typeOf(e) === key).sort((a, b) => ts(a) - ts(b));
+      let prevX = -Infinity;
+      for (const e of laneEvents) {
+        let x = X(ts(e));
+        if (x < prevX + minGap) x = prevX + minGap;   // 겹치면 최소 간격만큼 오른쪽으로 밀어 모두 보이게(시간순 유지)
+        prevX = x;
+        const isCur = e.slug === curSlug;
+        const fill = colorOf(e, L.color, isCur);   // 노드 색(폴 허브=레인색 / 대시보드=중립+최신만 포인트)
+        const cx = x.toFixed(1);
+        nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}">`
+          + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
+          + (isCur ? `<circle cx="${cx}" cy="${L.y}" r="${r + 3.5}" fill="none" stroke="${L.color}" stroke-width="1.6" opacity="0.55"/>` : '')
+          + `<circle cx="${cx}" cy="${L.y}" r="${r}" fill="${fill}"/>`
+          + `<text x="${cx}" y="${L.y}" dy=".34em" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">${e.n}</text>`
+          + '</a>';
+      }
     }
     let chips = '<div class="poll-tl-chips">';
     for (const key of ['pres', 'general', 'local']) {

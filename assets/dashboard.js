@@ -326,7 +326,7 @@ init();
       hrefFn: (e) => `/archive/${e.slug}/`,
       ariaFn: (e) => `${e.name} 종합 결과${e.party ? ' · ' + e.party : ''}`,
       // 노드 = 중립 단색, 최신 회차만 레인색으로 강조(정당색 rainbow는 과함). 정당은 hover 툴팁에만.
-      nodeColorFn: (e, lane, isCur) => (isCur ? lane : 'var(--ink-mute, #9aa3b2)'),
+      nodeColorFn: (e, lane, isCur) => (isCur ? lane : 'var(--ink-soft, #5a6378)'),
       note: '레인 = 대선·총선·지선, 최신 회차만 강조. 노드에 커서를 올리면 당선·1당 정당이 보입니다. 클릭 → 그 선거 <b>종합 결과</b>.',
     });
   }).catch(() => host.remove());
