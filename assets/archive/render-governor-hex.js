@@ -71,7 +71,7 @@
       const t1 = document.createElementNS(NS, 'text');
       t1.setAttribute('x', cell.cx); t1.setAttribute('y', cell.cy - 6);
       t1.setAttribute('text-anchor', 'middle');
-      t1.setAttribute('font-size', '13');
+      t1.setAttribute('font-size', '11');  // sidoCluster 지역명(.ar-genhex-label)과 렌더 크기 통일(~18px)
       t1.setAttribute('font-weight', '700');
       t1.setAttribute('class', cell.win ? 'gov-hex-label on-data' : 'gov-hex-label no-data');
       t1.textContent = cell.label;
@@ -81,7 +81,7 @@
         const t2 = document.createElementNS(NS, 'text');
         t2.setAttribute('x', cell.cx); t2.setAttribute('y', cell.cy + 9);
         t2.setAttribute('text-anchor', 'middle');
-        t2.setAttribute('font-size', '11');
+        t2.setAttribute('font-size', '10');
         t2.setAttribute('font-weight', '700');
         t2.setAttribute('class', 'gov-hex-name');
         t2.textContent = cell.win.name;
@@ -89,7 +89,7 @@
         const t3 = document.createElementNS(NS, 'text');
         t3.setAttribute('x', cell.cx); t3.setAttribute('y', cell.cy + 22);
         t3.setAttribute('text-anchor', 'middle');
-        t3.setAttribute('font-size', '10');
+        t3.setAttribute('font-size', '9');
         t3.setAttribute('class', 'gov-hex-pct');
         t3.setAttribute('font-variant-numeric', 'tabular-nums');
         t3.textContent = `${(cell.win.pct || 0).toFixed(1)}%`;
@@ -104,7 +104,7 @@
     // host는 render-sido-view의 토글 내부 div일 수 있어 closest로 섹션을 찾음.
     const cap = host.closest('.ar-section')?.querySelector('.ar-source-line');
     const nData = cells.filter((c) => c.win).length;
-    if (cap && nData) cap.textContent = `${nData}개 시·도 hex — 1위 후보·득표율. 정당별 색.`;
+    if (cap && nData) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
   }
 
   // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).

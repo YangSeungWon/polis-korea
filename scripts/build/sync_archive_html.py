@@ -266,27 +266,27 @@ SECTIONS_LOCAL = """
 
   <section class="ar-section" id="ar-governor-hex-section" hidden>
     <h2 class="ar-section-title">광역단체장 결과</h2>
-    <p class="ar-source-line">시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <p class="ar-source-line">각 시·도 1위 후보 — 정당색·득표율.</p>
     <div class="ar-governor-hex" id="ar-governor-hex"></div>
   </section>
 
   <section class="ar-section" id="ar-metro-hex-section" hidden>
     <h2 class="ar-section-title">시·도의회 의석 분포</h2>
-    <p class="ar-source-line">각 시도 cluster — 광역의원 지역구(tc=5) + 비례(tc=8). 정당별 색.</p>
+    <p class="ar-source-line">시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.</p>
     <div class="ar-metro-hex" id="ar-metro-hex"></div>
     <div class="ar-metro-hex-meta"><span id="ar-metro-hex-total"></span><span id="ar-metro-hex-legend"></span></div>
   </section>
 
   <section class="ar-section" id="ar-council-hex-section" hidden>
     <h2 class="ar-section-title">시군구의회 의석 분포</h2>
-    <p class="ar-source-line">각 시군구 hex 안에 의석 spiral — 정당별 색. 지역구(tc=6) + 비례(tc=9) 합산.</p>
+    <p class="ar-source-line">시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.</p>
     <div class="ar-council-hex" id="ar-council-hex"></div>
     <div class="ar-council-hex-meta"><span id="ar-council-hex-total"></span><span id="ar-council-hex-legend"></span></div>
   </section>
 
   <section class="ar-section" id="ar-winners-section" hidden>
     <h2 class="ar-section-title">시·도의원·시·군·구의원 당선인</h2>
-    <p class="ar-source-line">광역의원(tc=5)·기초의원(tc=6) 모두 NEC 확정 당선인 명부 기준 — 중선거구 정수·무투표 포함.</p>
+    <p class="ar-source-line">시·도의원·시·군·구의원 모두 NEC 확정 당선인 기준 — 중선거구 정수·무투표 포함.</p>
     <div id="ar-winners-body"></div>
   </section>
 
@@ -310,7 +310,7 @@ SECTIONS_LOCAL = """
 SECTIONS_PRES = """
   <section class="ar-section" id="ar-pres-sido-hex-section" hidden>
     <h2 class="ar-section-title">시도별 결과</h2>
-    <p class="ar-source-line">시·도 hex — 1위 후보·득표율. 정당별 색.</p>
+    <p class="ar-source-line">각 시·도 1위 후보 — 정당색·득표율.</p>
     <div class="ar-governor-hex" id="ar-pres-sido-hex"></div>
   </section>
 
