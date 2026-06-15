@@ -10,10 +10,13 @@
     if (loaded) return;
     loaded = true;
     try {
-      const r = await fetch(POLL_ELECTION.results_path);
-      if (!r.ok) return;
-      const d = await r.json();
-      state.actualMaps = PollAdapter.localActualMaps(d.races || []);
+      // 본 결과 + (있으면) 기초단체장 등 시군구 결과(.sigungu.json) 병합 — 7·8회는 tc4가 별도 파일에 있음.
+      const paths = [POLL_ELECTION.results_path];
+      if (POLL_ELECTION.results_sigungu_path) paths.push(POLL_ELECTION.results_sigungu_path);
+      const parts = await Promise.all(paths.map((p) =>
+        fetch(p).then((r) => (r.ok ? r.json() : { races: [] })).catch(() => ({ races: [] }))));
+      const races = parts.flatMap((d) => d.races || []);
+      if (races.length) state.actualMaps = PollAdapter.localActualMaps(races);
     } catch (e) {}
   }
 

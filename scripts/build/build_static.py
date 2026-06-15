@@ -140,6 +140,9 @@ def _poll_election_meta(el: dict) -> dict | None:
     bstart = bo.get('start') or (date_s + 'T00:00:00+09:00')
     bend = bo.get('end') or (date_s + 'T18:00:00+09:00')
     roster = f'data/raw/nec_roster_{el.get("n")}th.json' if kind == 'local' else None
+    results_path = ar.get('results_path') or ''
+    # 기초단체장 등 시군구 단위 결과가 별도 파일(.sigungu.json)에 있는 회차(7·8회) — 있으면 함께 주입해 병합 로드.
+    sigungu_results = results_path[:-5] + '.sigungu.json' if results_path.endswith('.json') else ''
     return {
         'slug': el['id'],
         'name': el['name'],
@@ -148,7 +151,8 @@ def _poll_election_meta(el: dict) -> dict | None:
         'blackout_start': bstart,
         'blackout_end': bend,
         'polls_path': polls_path,
-        'results_path': ar.get('results_path') or '',
+        'results_path': results_path,
+        'results_sigungu_path': sigungu_results if (sigungu_results and (ROOT / sigungu_results).exists()) else None,
         'roster_path': roster if (roster and (ROOT / roster).exists()) else None,
         'kind': kind,
     }

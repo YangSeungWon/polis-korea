@@ -140,8 +140,9 @@
     return (polls || []).filter((p) => p.office_level === office);
   }
   function localPollsByRegion(polls, sido, sigungu) {
+    const cs = norm();
     let arr = polls || [];
-    if (sido) arr = arr.filter((p) => p.sido === sido);
+    if (sido) arr = arr.filter((p) => cs(p.sido) === cs(sido));   // 옛↔신 시도명 정규화(강원/전북/제주)
     if (sigungu) arr = arr.filter((p) => p.sigungu === sigungu);
     return arr.slice().sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));
   }
@@ -153,26 +154,29 @@
   }
   function localSidoWinner(polls, sido, office, sidoMerge) {
     if (typeof summarizeLatest !== 'function') return null;
+    const cs = norm();
     const byOff = localPollsByOffice(polls, office);
-    let r = summarizeLatest(byOff.filter((p) => p.sido === sido && !p.sigungu));
+    let r = summarizeLatest(byOff.filter((p) => cs(p.sido) === cs(sido) && !p.sigungu));
     if (!r && sidoMerge && sidoMerge[sido]) {
-      r = summarizeLatest(byOff.filter((p) => p.sido === sidoMerge[sido] && !p.sigungu));
+      r = summarizeLatest(byOff.filter((p) => cs(p.sido) === cs(sidoMerge[sido]) && !p.sigungu));
     }
     return r;
   }
   function localSigunguWinner(polls, sido, sigungu, office) {
     if (typeof summarizeLatest !== 'function') return null;
+    const cs = norm();
     const byOff = localPollsByOffice(polls, office);
-    const sel = byOff.filter((p) => p.sido === sido && p.sigungu === sigungu);
+    const sel = byOff.filter((p) => cs(p.sido) === cs(sido) && p.sigungu === sigungu);
     if (sel.length) return summarizeLatest(sel);
     const parent = parentSigungu(sigungu);
-    if (parent) return summarizeLatest(byOff.filter((p) => p.sido === sido && p.sigungu === parent));
+    if (parent) return summarizeLatest(byOff.filter((p) => cs(p.sido) === cs(sido) && p.sigungu === parent));
     return null;
   }
 
   // [지선] 실제 결과(NEC) → 시도/시군구·office별 1위 맵. 폴↔실제 토글의 '실제' 출처.
   const _TC_TO_OFFICE = { '3': '광역단체장', '4': '기초단체장', '11': '교육감' };
   function localActualMaps(races) {
+    const cs = norm();
     const bySido = {}, bySigungu = {};
     for (const race of races || []) {
       const office = _TC_TO_OFFICE[race.sg_typecode];
@@ -185,22 +189,25 @@
         n_polls: 1, gap: 99, effective_gap: 99, actual: true,
         candidates: cands.slice(0, 8).map((c) => ({ name: c.name, party: c.party, pct: c.pct, votes: c.votes })),
       };
-      if (race.scope === 'sido') bySido[`${race.sido}|${office}`] = cell;
-      else if (race.scope === 'sigungu') bySigungu[`${race.sido}|${race.sigungu}|${office}`] = cell;
+      // 시도명 정규화(옛 강원도/전라북도 결과 ↔ 신명칭 쿼리). sigungu_part(일반구 하위행)는 무시 — sigungu(226)가 기초장 단위.
+      if (race.scope === 'sido') bySido[`${cs(race.sido)}|${office}`] = cell;
+      else if (race.scope === 'sigungu') bySigungu[`${cs(race.sido)}|${race.sigungu}|${office}`] = cell;
     }
     return { bySido, bySigungu };
   }
   function localActualSido(maps, sido, office, sidoMerge) {
     if (!maps) return null;
+    const cs = norm();
     const merged = (sidoMerge && sidoMerge[sido]) ? sidoMerge[sido] : null;
-    return maps.bySido[`${sido}|${office}`] || (merged && maps.bySido[`${merged}|${office}`]) || null;
+    return maps.bySido[`${cs(sido)}|${office}`] || (merged && maps.bySido[`${cs(merged)}|${office}`]) || null;
   }
   function localActualSigungu(maps, sido, sigungu, office) {
     if (!maps) return null;
-    let v = maps.bySigungu[`${sido}|${sigungu}|${office}`];
+    const cs = norm();
+    let v = maps.bySigungu[`${cs(sido)}|${sigungu}|${office}`];
     if (v) return v;
     const p = parentSigungu(sigungu);            // 일반구 → 모도시 fallback
-    if (p) v = maps.bySigungu[`${sido}|${p}|${office}`];
+    if (p) v = maps.bySigungu[`${cs(sido)}|${p}|${office}`];
     return v || null;
   }
 
