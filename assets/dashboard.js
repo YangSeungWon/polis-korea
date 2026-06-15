@@ -325,9 +325,9 @@ init();
     window.ElectionTimeline.render(host, list, {
       hrefFn: (e) => `/archive/${e.slug}/`,
       ariaFn: (e) => `${e.name} 종합 결과${e.party ? ' · ' + e.party : ''}`,
-      // 노드 색 = 당선·1당 정당(역대 정당 지형 요약). 데이터 없으면 레인색.
-      nodeColorFn: (e, lane) => (e.party && typeof partyColor === 'function' ? partyColor(e.party) : lane),
-      note: '노드 = 당선·1당 정당(대선 당선 / 총선 지역구 1당 / 지선 광역단체장 다수당). 클릭 → 그 선거 <b>종합 결과</b>.',
+      // 노드 = 중립 단색, 최신 회차만 레인색으로 강조(정당색 rainbow는 과함). 정당은 hover 툴팁에만.
+      nodeColorFn: (e, lane, isCur) => (isCur ? lane : 'var(--ink-mute, #9aa3b2)'),
+      note: '레인 = 대선·총선·지선, 최신 회차만 강조. 노드에 커서를 올리면 당선·1당 정당이 보입니다. 클릭 → 그 선거 <b>종합 결과</b>.',
     });
   }).catch(() => host.remove());
 })();

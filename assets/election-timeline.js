@@ -19,10 +19,10 @@
     if (!Array.isArray(list) || !list.length) { host.innerHTML = ''; return; }
     const href = opts.hrefFn || ((e) => `/archive/${e.slug}/`);
     const aria = opts.ariaFn || ((e) => e.name);
-    const colorOf = (e, lane) => (opts.nodeColorFn ? opts.nodeColorFn(e, lane) : lane);  // 노드 색(기본=레인색, 대시보드=정당색)
+    const colorOf = (e, lane, cur) => (opts.nodeColorFn ? opts.nodeColorFn(e, lane, cur) : lane);  // 노드 색(기본=레인색)
     const ts = (e) => Date.parse(e.date);
     const curSlug = opts.current || list.slice().sort((a, b) => ts(b) - ts(a))[0].slug;
-    const W = 720, H = 146, padL = 50, padR = 18, padT = 12, padB = 24;
+    const W = 720, H = 146, padL = 62, padR = 18, padT = 12, padB = 24;   // padL = 레인 라벨 전용 거터
     let min = Math.min(...list.map(ts)), max = Math.max(...list.map(ts));
     const span = (max - min) || 1; min -= span * 0.05; max += span * 0.05;
     const X = (t) => padL + (t - min) / (max - min) * (W - padL - padR);
@@ -41,13 +41,13 @@
     for (const key of ['pres', 'general', 'local']) {
       const L = LANE[key];
       lanes += `<line x1="${padL}" y1="${L.y}" x2="${W - padR}" y2="${L.y}" stroke="${L.color}" stroke-width="1" opacity="0.25"/>`;
-      lanes += `<text x="${padL - 10}" y="${L.y + 4}" font-size="12" font-weight="700" fill="${L.color}" text-anchor="end">${L.label}</text>`;
+      lanes += `<text x="${padL - 14}" y="${L.y + 4}" font-size="12" font-weight="700" fill="${L.color}" text-anchor="end">${L.label}</text>`;
     }
     for (const e of list) {
       const L = LANE[typeOf(e)];
       const x = X(ts(e)), isCur = e.slug === curSlug;
-      const r = isCur ? 7.5 : 5.5;
-      const fill = colorOf(e, L.color);   // 노드 = 당선·1당 정당색(대시보드) 또는 레인색(폴 허브)
+      const r = 6;   // 노드 크기 균일 — 선택은 외곽 링·중앙 흰점으로만 구분(크기 안 키움)
+      const fill = colorOf(e, L.color, isCur);   // 노드 색(폴 허브=레인색 / 대시보드=중립+최신만 포인트)
       nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}">`
         + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
         + (isCur ? `<circle cx="${x.toFixed(1)}" cy="${L.y}" r="${(r + 3).toFixed(1)}" fill="none" stroke="${L.color}" stroke-width="1.4" opacity="0.5"/>` : '')
@@ -64,7 +64,7 @@
       chips += `<div class="ptc-row"><span class="ptc-lane" style="color:${L.color}">${L.label}</span>`;
       for (const e of row) {
         const isCur = e.slug === curSlug;
-        chips += `<a class="ptc-chip${isCur ? ' is-current' : ''}" href="${href(e)}" style="--c:${colorOf(e, L.color)}" title="${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}">${shortLabel(e)}${isCur ? ' ★' : ''}</a>`;
+        chips += `<a class="ptc-chip${isCur ? ' is-current' : ''}" href="${href(e)}" style="--c:${colorOf(e, L.color, isCur)}" title="${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}">${shortLabel(e)}</a>`;
       }
       chips += '</div>';
     }
