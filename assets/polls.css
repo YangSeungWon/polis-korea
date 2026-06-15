@@ -78,6 +78,8 @@
   font-variant-numeric: tabular-nums;
 }
 .poll-card .pc-meta span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 항목명에 용어 정의 툴팁(title) — 점선 밑줄로 hover 가능 표시 */
+.poll-card .pc-term { border-bottom: 1px dotted currentColor; cursor: help; }
 
 
 

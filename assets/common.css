@@ -193,6 +193,15 @@ body {
 .foot a:hover { text-decoration-color: var(--ink); }
 .foot .foot-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
 .foot .fine { font-size: 11px; color: var(--ink-mute); line-height: 1.6; }
+/* 여론조사 용어 설명 — 접을 수 있는 글로서리(폴·트래커 푸터 공용) */
+.poll-gloss { margin-top: 10px; font-size: 11px; color: var(--ink-mute); }
+.poll-gloss > summary { cursor: pointer; color: var(--ink-soft); font-weight: 600; width: fit-content; }
+.poll-gloss > summary:hover { color: var(--ink); }
+.poll-gloss dl { margin: 8px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 3px 12px; line-height: 1.55; }
+.poll-gloss dt { font-weight: 700; color: var(--ink-soft); white-space: nowrap; }
+.poll-gloss dd { margin: 0; }
+.poll-gloss .gloss-note { margin: 8px 0 0; opacity: 0.85; }
+@media (max-width: 560px) { .poll-gloss dl { grid-template-columns: 1fr; gap: 1px 0; } .poll-gloss dt { margin-top: 5px; } }
 
 @media (max-width: 900px) {
   .page { padding: 18px 14px 60px; }
