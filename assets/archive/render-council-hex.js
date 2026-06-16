@@ -227,12 +227,17 @@
   // 시군구 분해(가장 완전 — 세종/제주 자치구 등 기초장 없는 곳 포함). 없으면 기초장(tc=4).
   function turnoutBySigungu(races) {
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    for (const tc of ['3', '4', '1']) {   // 지선=광역장(3)/기초장(4), 대선=1
-      // sido는 캐논(옛 강원도→강원특별자치도 등)·일반구는 시로 롤업(수원시장안구→수원시,
-      // 투표수·선거인수 합산 후 율 계산) — 레이아웃 키(현행 sido·시 단위)와 매칭.
+    // 투표율은 같은 날 같은 유권자라 어느 투표든 거의 동일 → 가장 완전한 소스부터 누적해
+    // 빈 시군구를 메운다. 우선순위: 광역장 시군구분해(3) → 광역의원 합산(5, 전 시군구 커버) →
+    // 기초장(4, 무투표 구멍) → 기초의원 합산(6) → 대선(1). sido 캐논·일반구→시 롤업(투·선 합산 후 율).
+    const SOURCES = [
+      ['3', 'sigungu'], ['5', 'district'], ['4', 'sigungu'], ['6', 'district'], ['1', 'sigungu'],
+    ];
+    const m = new Map();
+    for (const [tc, scope] of SOURCES) {
       const agg = new Map();
       for (const r of races || []) {
-        if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
+        if (r.scope !== scope || r.sg_typecode !== tc) continue;
         const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
         if (el <= 0 || vt <= 0) continue;
         const sido = canon(r.sido);
@@ -240,13 +245,9 @@
         const a = agg.get(key) || { e: 0, v: 0 };
         a.e += el; a.v += vt; agg.set(key, a);
       }
-      if (agg.size) {
-        const m = new Map();
-        for (const [k, a] of agg) m.set(k, a.v / a.e * 100);
-        return m;
-      }
+      for (const [k, a] of agg) if (!m.has(k)) m.set(k, a.v / a.e * 100);  // 아직 없는 시군구만
     }
-    return new Map();
+    return m;
   }
 
   // 단층제 시(세종특별자치시)는 기초 시군구가 없어 광역장 투표율이 sido scope에만 있음 →
