@@ -43,6 +43,16 @@
     for (let k = 0; k < rem; k++) floors[fr[k].i] += 1;
     return floors;
   }
+  // monotone-chain convex hull (dorling 권역 테두리용).
+  function convexHull(pts) {
+    const arr = [...pts].sort((a, b) => a.x - b.x || a.y - b.y);
+    const cross = (O, A, B) => (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
+    const lower = [];
+    for (const p of arr) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
+    const upper = [];
+    for (let i = arr.length - 1; i >= 0; i--) { const p = arr[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
+    return lower.slice(0, -1).concat(upper.slice(0, -1));
+  }
   // 권역(시도) 테두리 — 인접 셀 시도 다른 변(pointy-top odd-r).
   function sidoBorders(svg, cells, colW, rowH, offX, offY, r) {
     const key = (c, rr) => c + ',' + rr;
@@ -98,7 +108,7 @@
         const cs = (res.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
         const top = cs[0], gap = (cs[0] && cs[1]) ? (cs[0].pct - cs[1].pct) : null;
         const [cx0, cy0] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-        nodes.push({ d, top, cx0, cy0, cx: cx0, cy: cy0,
+        nodes.push({ d, top, cands: cs, cx0, cy0, cx: cx0, cy: cy0,
           radius: Math.max(3, (r - 0.7) * Math.sqrt((res.voted || 0) / maxVoted)),
           fill: top ? pcol(top.party) : '#e6e9ef', op: top ? gapOp(gap) : 1 });
       }
@@ -110,14 +120,36 @@
         }
         for (const n of nodes) { n.cx += (n.cx0 - n.cx) * 0.05; n.cy += (n.cy0 - n.cy) * 0.05; }
       }
+      // 권역(시도) 테두리 — 시도별 convex hull(원 외곽 padding 포함).
+      const groups = new Map();
+      for (const n of nodes) { const k = n.d.sido; (groups.get(k) || groups.set(k, []).get(k)).push(n); }
+      for (const [, list] of groups) {
+        const pts = [];
+        for (const n of list) for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6; pts.push({ x: n.cx + Math.cos(a) * (n.radius + 3), y: n.cy + Math.sin(a) * (n.radius + 3) }); }
+        const hull = convexHull(pts);
+        if (hull.length < 3) continue;
+        const poly = document.createElementNS(NS, 'polygon');
+        poly.setAttribute('points', hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '));
+        poly.setAttribute('fill', 'rgba(10,14,26,0.04)'); poly.setAttribute('stroke', 'rgba(10,14,26,0.4)');
+        poly.setAttribute('stroke-width', '1.4'); poly.setAttribute('stroke-linejoin', 'round'); poly.setAttribute('pointer-events', 'none');
+        svg.appendChild(poly);
+      }
+      // 득표 비례 파이 원 — 후보 구성(승자독식 색 왜곡 제거).
+      const pieSlice = (cx, cy, rad, a0, a1) => {
+        const x0 = cx + rad * Math.cos(a0), y0 = cy + rad * Math.sin(a0), x1 = cx + rad * Math.cos(a1), y1 = cy + rad * Math.sin(a1);
+        return `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${x0.toFixed(2)} ${y0.toFixed(2)} A ${rad.toFixed(2)} ${rad.toFixed(2)} 0 ${(a1 - a0) > Math.PI ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
+      };
       for (const n of nodes) {
         const g = document.createElementNS(NS, 'g'); bindClick(g, n.d);
-        const c = document.createElementNS(NS, 'circle');
-        c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.radius.toFixed(1));
-        c.setAttribute('fill', n.fill); c.setAttribute('fill-opacity', n.op.toFixed(2));
-        c.setAttribute('stroke', 'var(--bg,#fff)'); c.setAttribute('stroke-width', '0.5');
-        g.appendChild(c);
-        const tt = document.createElementNS(NS, 'title'); tt.textContent = titleOf(n.d, n.top, ' · ' + (n.d && rmap.get(n.d).voted || 0).toLocaleString() + '표'); g.appendChild(tt);
+        const cs = n.cands, totalV = cs.reduce((s, c) => s + (c.votes || 0), 0);
+        if (totalV > 0 && cs.filter((c) => (c.votes || 0) > 0).length > 1) {
+          let a0 = -Math.PI / 2;
+          for (const cand of cs) { const frac = (cand.votes || 0) / totalV; if (frac <= 0) continue; const a1 = a0 + frac * 2 * Math.PI; const p = document.createElementNS(NS, 'path'); p.setAttribute('d', pieSlice(n.cx, n.cy, n.radius, a0, a1)); p.setAttribute('fill', pcol(cand.party)); g.appendChild(p); a0 = a1; }
+          const ring = document.createElementNS(NS, 'circle'); ring.setAttribute('cx', n.cx.toFixed(1)); ring.setAttribute('cy', n.cy.toFixed(1)); ring.setAttribute('r', n.radius.toFixed(1)); ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', 'var(--ink,#0a0e1a)'); ring.setAttribute('stroke-width', '0.5'); g.appendChild(ring);
+        } else {
+          const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.radius.toFixed(1)); c.setAttribute('fill', n.fill); c.setAttribute('stroke', 'var(--ink,#0a0e1a)'); c.setAttribute('stroke-width', '0.5'); g.appendChild(c);
+        }
+        const tt = document.createElementNS(NS, 'title'); tt.textContent = titleOf(n.d, n.top, ' · ' + (rmap.get(n.d).voted || 0).toLocaleString() + '표'); g.appendChild(tt);
         svg.appendChild(g);
       }
       return { shown: nodes.length };
