@@ -640,6 +640,19 @@ def main():
         def _dominant_party(m):
             kind = m.get("kind")
             if kind == "presidential":
+                # 아카이브가 보여주는 results_file의 전국 1위 정당으로(n-keyed elections.json은
+                # 4대처럼 같은 n에 2건(3·15 자유당·8월 간선 민주당)이면 충돌). 없으면 fallback.
+                rp = (m.get("archive") or {}).get("results_path")
+                if rp and (ROOT / rp).exists():
+                    try:
+                        races = json.loads((ROOT / rp).read_text(encoding="utf-8")).get("races", [])
+                        nat = [r for r in races if r.get("scope") == "nation"]
+                        cs = sorted((nat[0].get("candidates") if nat else []) or [],
+                                    key=lambda x: -(x.get("votes") or 0))
+                        if cs and cs[0].get("party"):
+                            return cs[0]["party"]
+                    except Exception:
+                        pass
                 return _pres_wp.get(m.get("n"))
             rp = (m.get("archive") or {}).get("results_path")
             if not rp or not (ROOT / rp).exists():
