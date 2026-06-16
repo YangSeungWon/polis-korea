@@ -226,14 +226,25 @@
   // 같은 시군구 hex 레이아웃을 단색(투표율 그라데이션)으로. 소스 = 광역단체장(tc=3)의
   // 시군구 분해(가장 완전 — 세종/제주 자치구 등 기초장 없는 곳 포함). 없으면 기초장(tc=4).
   function turnoutBySigungu(races) {
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
     for (const tc of ['3', '4', '1']) {   // 지선=광역장(3)/기초장(4), 대선=1
-      const m = new Map();
+      // sido는 캐논(옛 강원도→강원특별자치도 등)·일반구는 시로 롤업(수원시장안구→수원시,
+      // 투표수·선거인수 합산 후 율 계산) — 레이아웃 키(현행 sido·시 단위)와 매칭.
+      const agg = new Map();
       for (const r of races || []) {
         if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
         const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
-        if (el > 0 && vt > 0) m.set(normalizeKey(r.sido, r.sigungu), vt / el * 100);
+        if (el <= 0 || vt <= 0) continue;
+        const sido = canon(r.sido);
+        const key = normalizeKey(sido, parentSigungu(sido, r.sigungu));
+        const a = agg.get(key) || { e: 0, v: 0 };
+        a.e += el; a.v += vt; agg.set(key, a);
       }
-      if (m.size) return m;
+      if (agg.size) {
+        const m = new Map();
+        for (const [k, a] of agg) m.set(k, a.v / a.e * 100);
+        return m;
+      }
     }
     return new Map();
   }
@@ -248,14 +259,16 @@
     svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
     const PARENT_R = 13.85;
     const color = window.Archive?.turnout?.color || (() => '#88a');
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const cellKey = (c) => normalizeKey(canon(c.sido), c.name);
     // 상대 스케일 — 표시될 셀들의 최저~최고로 정규화(절대 스케일은 대선처럼 고투표율대에서 뭉침).
-    const shownVals = hexCells.map((c) => tmap.get(normalizeKey(c.sido, c.name))).filter((v) => v != null);
+    const shownVals = hexCells.map((c) => tmap.get(cellKey(c))).filter((v) => v != null);
     const lo = shownVals.length ? Math.min(...shownVals) : 0;
     const hi = shownVals.length ? Math.max(...shownVals) : 1;
     let shown = 0;
     for (const cell of hexCells) {
       const [cx, cy] = hexCenter(cell.c, cell.r);
-      const to = tmap.get(normalizeKey(cell.sido, cell.name));
+      const to = tmap.get(cellKey(cell));
       const g = document.createElementNS(NS, 'g');
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('points', hexPoints(cx, cy, PARENT_R));
