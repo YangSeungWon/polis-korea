@@ -138,12 +138,13 @@
     return byKey;
   }
 
-  // sigungu hex 위치 + 이름. 회차별 period 레이아웃(sigungu_hex_local.json[n])을 우선 —
-  // 그 시점 시군구·이름(연기군·경남 울산시 등, 세종/울산 분리 시점 반영). history와 동일 데이터.
-  // 없으면 현대 sigungu_hex.json fallback.
-  async function loadHexLayout(n) {
+  // sigungu hex 위치 + 이름. 회차별 period 레이아웃을 우선 — 그 시점 시군구·이름(연기군·옛 군·
+  // 도농통합 전 시 등)을 반영. 지선=sigungu_hex_local[회차], 대선=sigungu_hex_pres[회차]
+  // (둘 다 그 시점 지리). 없으면 현대 sigungu_hex.json fallback.
+  async function loadHexLayout(n, kind) {
     if (n != null) {
-      const period = await fetch('data/geo/sigungu_hex_local.json')
+      const file = kind === 'presidential' ? 'sigungu_hex_pres.json' : 'sigungu_hex_local.json';
+      const period = await fetch('data/geo/' + file)
         .then((r) => r.json()).then((m) => m[String(n)]).catch(() => null);
       if (period && period.length) return period;
     }
@@ -277,22 +278,27 @@
     // 투표율은 같은 날 같은 유권자라 어느 투표든 거의 동일 → 가장 완전한 소스부터 누적해
     // 빈 시군구를 메운다. 우선순위: 광역장 시군구분해(3) → 광역의원 합산(5, 전 시군구 커버) →
     // 기초장(4, 무투표 구멍) → 기초의원 합산(6) → 대선(1). sido 캐논·일반구→시 롤업(투·선 합산 후 율).
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const SOURCES = [
       ['3', 'sigungu'], ['5', 'district'], ['4', 'sigungu'], ['6', 'district'], ['1', 'sigungu'],
     ];
     const m = new Map();
     for (const [tc, scope] of SOURCES) {
-      const agg = new Map();
+      // 구 단위(period 레이아웃=수원시장안구)·시 단위(modern=수원시) 둘 다 키로 저장 — 레이아웃
+      // 입도에 맞게 renderTurnout이 골라 씀. exact=접미사만 제거, rolled=일반구→시 합산.
+      const exact = new Map(), rolled = new Map();
       for (const r of races || []) {
         if (r.scope !== scope || r.sg_typecode !== tc) continue;
         const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
         if (el <= 0 || vt <= 0) continue;
         const sido = canon(r.sido);
-        const key = normalizeKey(sido, parentSigungu(sido, r.sigungu));
-        const a = agg.get(key) || { e: 0, v: 0 };
-        a.e += el; a.v += vt; agg.set(key, a);
+        const ek = normalizeKey(sido, stripSfx(r.sigungu));
+        const ea = exact.get(ek) || { e: 0, v: 0 }; ea.e += el; ea.v += vt; exact.set(ek, ea);
+        const rk = normalizeKey(sido, parentSigungu(sido, r.sigungu));
+        const ra = rolled.get(rk) || { e: 0, v: 0 }; ra.e += el; ra.v += vt; rolled.set(rk, ra);
       }
-      for (const [k, a] of agg) if (!m.has(k)) m.set(k, a.v / a.e * 100);  // 아직 없는 시군구만
+      for (const [k, a] of exact) if (!m.has(k)) m.set(k, a.v / a.e * 100);
+      for (const [k, a] of rolled) if (!m.has(k)) m.set(k, a.v / a.e * 100);
     }
     return m;
   }
@@ -324,12 +330,16 @@
     const PARENT_R = 13.85;
     const color = window.Archive?.turnout?.color || (() => '#88a');
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const valueOf = (c) => {
-      const v = tmap.get(normalizeKey(canon(c.sido), c.name));
+      const s = canon(c.sido);
+      // exact(구 단위, period 레이아웃) 먼저 → rolled(시 단위, modern 레이아웃)
+      let v = tmap.get(normalizeKey(s, stripSfx(c.name)));
+      if (v == null) v = tmap.get(normalizeKey(s, parentSigungu(s, c.name)));
       if (v != null) return v;
       // 세종(유일한 특별자치시)은 기초 시군구가 없어 시군구 투표율이 없음 → sido 투표율로 채움.
       // 광역시 자치구 오인 방지로 '특별자치시'로만 한정(period 레이아웃엔 single_tier 플래그 없음).
-      if (sidoMap && canon(c.sido).endsWith('특별자치시')) return sidoMap.get(canon(c.sido));
+      if (sidoMap && s.endsWith('특별자치시')) return sidoMap.get(s);
       return undefined;
     };
     // 상대 스케일 — 표시될 셀들의 최저~최고로 정규화(절대 스케일은 대선처럼 고투표율대에서 뭉침).
@@ -372,7 +382,7 @@
     const races = ctx?.results?.races || [];
     const tmap = turnoutBySigungu(races);
     if (tmap.size < 4) return;                       // 시군구 투표율 데이터 거의 없으면 생략
-    const hexCells = await loadHexLayout(ctx?.meta?.electionN);
+    const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return;
     // 앵커: 지선=#ar-council-hex 섹션 뒤, 대선=시도 투표율 뷰(#ar-pres-sido-hex) 섹션 뒤.
     const base = document.getElementById('ar-council-hex') || document.getElementById('ar-pres-sido-hex');
