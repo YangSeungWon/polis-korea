@@ -4,6 +4,18 @@
 
 (function () {
   const NS = 'http://www.w3.org/2000/svg';
+  // 커서 따라다니는 커스텀 툴팁(네이티브 <title>보다 즉각). 시군구 hex 호버용.
+  let _tip;
+  function tipEl() {
+    if (!_tip) { _tip = document.createElement('div'); _tip.className = 'hex-tip'; _tip.hidden = true; document.body.appendChild(_tip); }
+    return _tip;
+  }
+  function bindTip(g, text) {
+    g.style.cursor = 'default';
+    g.addEventListener('mouseenter', () => { const t = tipEl(); t.textContent = text; t.hidden = false; });
+    g.addEventListener('mousemove', (e) => { const t = tipEl(); t.style.left = (e.clientX + 12) + 'px'; t.style.top = (e.clientY + 14) + 'px'; });
+    g.addEventListener('mouseleave', () => { tipEl().hidden = true; });
+  }
   // hexgrid.js 헬퍼
   const COL_W = 24, ROW_H = 21, OFF_X = 30, OFF_Y = 30;
   function hexCenter(c, r) {
@@ -48,6 +60,39 @@
       for (let i = 0; i < Math.min(remaining, ringSize); i++) out.push(ring[i]);
     }
     return out;
+  }
+
+  // 권역(시도) 테두리 — 같은 시도 시군구 hex 그룹의 외곽선. 인접 셀의 시도가 다르거나(또는 없으면)
+  // 그 변(edge)을 그어 시도 경계를 만든다. pointy-top odd-r 오프셋 격자 기준.
+  function drawSidoBorders(svg, cells, R) {
+    const k = (c, r) => c + ',' + r;
+    const sidoAt = new Map();
+    for (const c of cells) sidoAt.set(k(c.c, c.r), c.sido);
+    // edge i(꼭짓점 i→i+1)가 향하는 이웃 방향. 꼭짓점 각 = PI/6 + i*PI/3.
+    const EDGE_DIR = ['SE', 'SW', 'W', 'NW', 'NE', 'E'];
+    const OFF = {
+      0: { E: [1, 0], W: [-1, 0], SE: [0, 1], SW: [-1, 1], NE: [0, -1], NW: [-1, -1] },  // even row
+      1: { E: [1, 0], W: [-1, 0], SE: [1, 1], SW: [0, 1], NE: [1, -1], NW: [0, -1] },     // odd row
+    };
+    const vert = (cx, cy, j) => [cx + R * Math.cos(Math.PI / 6 + j * Math.PI / 3),
+      cy + R * Math.sin(Math.PI / 6 + j * Math.PI / 3)];
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'sido-border-layer');
+    for (const cell of cells) {
+      const [cx, cy] = hexCenter(cell.c, cell.r);
+      const off = OFF[cell.r % 2];
+      for (let i = 0; i < 6; i++) {
+        const [dc, dr] = off[EDGE_DIR[i]];
+        if (sidoAt.get(k(cell.c + dc, cell.r + dr)) === cell.sido) continue;  // 내부 경계 숨김
+        const [x1, y1] = vert(cx, cy, i), [x2, y2] = vert(cx, cy, (i + 1) % 6);
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', x1.toFixed(1)); ln.setAttribute('y1', y1.toFixed(1));
+        ln.setAttribute('x2', x2.toFixed(1)); ln.setAttribute('y2', y2.toFixed(1));
+        ln.setAttribute('class', 'sido-border');
+        g.appendChild(ln);
+      }
+    }
+    svg.appendChild(g);
   }
 
   // sigungu별 의석 (지역구·비례) by party.
@@ -184,6 +229,7 @@
       svg.appendChild(g);
     }
     // 시도명 외곽 세로줄 라벨 (history 방식) — 헥스 위(여백)에.
+    drawSidoBorders(svg, hexCells, PARENT_R);
     if (typeof drawSidoEdgeLabels === 'function') {
       const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
       drawSidoEdgeLabels(svg, pts);
@@ -305,11 +351,14 @@
       }
       poly.setAttribute('stroke', 'var(--bg, #fff)'); poly.setAttribute('stroke-width', '0.6');
       g.appendChild(poly);
+      const label = `${cell.sido} ${cell.name} · ${to != null ? '투표율 ' + to.toFixed(1) + '%' : '데이터 없음'}`;
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = `${cell.sido} ${cell.name} · ${to != null ? '투표율 ' + to.toFixed(1) + '%' : '데이터 없음'}`;
+      tt.textContent = label;
       g.appendChild(tt);
+      bindTip(g, label);   // 커서 따라 즉각 툴팁(어디·몇 %)
       svg.appendChild(g);
     }
+    drawSidoBorders(svg, hexCells, PARENT_R);
     if (typeof drawSidoEdgeLabels === 'function') {
       const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
       drawSidoEdgeLabels(svg, pts);

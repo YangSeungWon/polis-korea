@@ -476,6 +476,12 @@
 /* 의회 의석 hex cluster — 시군구별 정당별 spiral. render-council-hex.js */
 .ar-council-hex { margin-top: 12px; }
 .council-hex-svg { width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto; }
+/* 권역(시도) 경계 — 시군구 hex 그룹 외곽선 */
+.sido-border { stroke: var(--ink, #0a0e1a); stroke-width: 1.5; stroke-linecap: round; stroke-opacity: 0.72; pointer-events: none; }
+.council-turnout-cell { transition: filter .1s; }
+.council-turnout-cell:hover { filter: brightness(1.12); }
+/* 시군구 hex 커서추적 툴팁 */
+.hex-tip { position: fixed; z-index: 2000; background: var(--ink, #0a0e1a); color: var(--bg, #fff); padding: 4px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,.22); }
 .ar-council-hex-meta {
   display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 12px;
   font-size: 12px; color: var(--ink-soft);
