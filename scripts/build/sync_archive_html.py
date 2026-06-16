@@ -549,9 +549,12 @@ def render_bottom_nav(neighbors: dict, current: dict) -> str:
 
 
 def render_ar_list(metas: list[dict]) -> str:
-    """index.html 회차 아카이브 목록 — 날짜 desc 정렬."""
+    """index.html 회차 아카이브 목록 — 날짜 desc 정렬. 재보궐은 회차가 아니고(날짜 기반)
+    결과지도도 없어 빈 썸네일이 됨 → 제외(전용 허브 /byelection/ 가 따로 있음)."""
     rows = []
     for m in sorted(metas, key=lambda x: x["date"], reverse=True):
+        if m.get("kind") == "byelection":
+            continue
         ar = m["archive"]
         label = ar.get("list_label") or ("진행" if m.get("status") == "active" else "확정")
         # 결과지도 미니 썸네일 — 대표 뷰 우선순위. 없으면(보궐·간선 옛 대선) 빈 칸.
