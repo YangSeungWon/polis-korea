@@ -168,8 +168,9 @@
 .ar-list-title { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
 .ar-list-row {
   display: grid;
-  grid-template-columns: 90px 1fr auto;
+  grid-template-columns: 48px 84px 1fr auto;
   gap: 10px;
+  align-items: center;
   padding: 4px 0;
   border-bottom: 1px solid var(--rule);
   color: var(--ink);
@@ -177,6 +178,8 @@
   font-size: 13px;
   line-height: 1.35;
 }
+.ar-list-thumb { width: 48px; height: 34px; object-fit: contain; border-radius: 4px; }
+.ar-list-thumb.is-empty { visibility: hidden; }
 .ar-list-row:last-child { border-bottom: none; }
 .ar-list-row:hover { color: var(--accent, #c8553d); }
 .ar-list-row > span:first-child { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }

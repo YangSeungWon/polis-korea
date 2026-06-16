@@ -557,8 +557,15 @@ def render_ar_list(metas: list[dict]) -> str:
     for m in sorted(metas, key=lambda x: x["date"], reverse=True):
         ar = m["archive"]
         label = ar.get("list_label") or ("진행" if m.get("status") == "active" else "확정")
+        # 결과지도 미니 썸네일 — 대표 뷰 우선순위. 없으면(보궐·간선 옛 대선) 빈 칸.
+        thumb = '<span class="ar-list-thumb is-empty" aria-hidden="true"></span>'
+        for v in ("governor", "dorling", "seats", "council", "geo"):
+            if (ROOT / "og" / "maps" / m["id"] / f"{v}.png").exists():
+                thumb = (f'<img class="ar-list-thumb" src="/og/maps/{m["id"]}/{v}.png" '
+                         f'alt="" loading="lazy" decoding="async">')
+                break
         rows.append(
-            f'      <a class="ar-list-row" href="{ar["page"]}">'
+            f'      <a class="ar-list-row" href="{ar["page"]}">{thumb}'
             f'<span>{m["date"]}</span><span>{m["name"]}</span>'
             f'<span class="ar-list-tag">{label}</span></a>'
         )
