@@ -141,14 +141,13 @@ HEAD = """<!DOCTYPE html>
   <nav class="ar-breadcrumb" aria-label="경로">
     {breadcrumb}
   </nav>
-  <div id="lens-switcher-host"></div>
 """
 
 # --- hero 블록 (kind별) ---
 
 HERO_LOCAL = """
   <section class="ar-hero">
-    <div class="ar-hero-tag">아카이브</div>
+    <div class="ar-hero-top"><div class="ar-hero-tag">아카이브</div><div id="lens-switcher-host"></div></div>
     <h1 class="ar-hero-title" id="ar-title">{name}</h1>
     <div class="ar-hero-date" id="ar-date">{date_label}</div>
     <div class="ar-hero-scorecard" id="ar-scorecard" hidden>
@@ -195,7 +194,7 @@ HERO_LOCAL = """
 
 HERO_PRES = """
   <section class="ar-hero">
-    <div class="ar-hero-tag">아카이브</div>
+    <div class="ar-hero-top"><div class="ar-hero-tag">아카이브</div><div id="lens-switcher-host"></div></div>
     <h1 class="ar-hero-title" id="ar-title">{name}</h1>
     <div class="ar-hero-date" id="ar-date">{date_label}</div>
     <!-- 대선 히어로: 당선자 강조 + 전체 후보 구도 막대. pres.js renderHero가 채움. -->
@@ -210,7 +209,7 @@ HERO_PRES = """
 
 HERO_BYELECTION = """
   <section class="ar-hero">
-    <div class="ar-hero-tag">아카이브</div>
+    <div class="ar-hero-top"><div class="ar-hero-tag">아카이브</div><div id="lens-switcher-host"></div></div>
     <h1 class="ar-hero-title" id="ar-title">{name}</h1>
     <div class="ar-hero-date" id="ar-date">{date_label}</div>
     <div class="ar-hero-scorecard" id="ar-scorecard" hidden>
@@ -260,7 +259,7 @@ HERO_BYELECTION = """
 
 HERO_GENERAL = """
   <section class="ar-hero">
-    <div class="ar-hero-tag">아카이브</div>
+    <div class="ar-hero-top"><div class="ar-hero-tag">아카이브</div><div id="lens-switcher-host"></div></div>
     <h1 class="ar-hero-title" id="ar-title">{name}</h1>
     <div class="ar-hero-date" id="ar-date">{date_label}</div>
     <!-- 총선 히어로: 의석 반원(전 정당) 헤드라인. general.js renderHero가 채움. 정당별 상세는 '의회 구성' 섹션. -->

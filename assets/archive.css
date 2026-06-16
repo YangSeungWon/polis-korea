@@ -15,6 +15,10 @@
   border-bottom: 1px solid var(--rule);
   margin-bottom: 28px;
 }
+/* hero 상단 행 — 태그(좌) + 렌즈 전환(우, h1 위 우측) */
+.ar-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.ar-hero-top .ar-hero-tag { margin-bottom: 0; }
+.ar-hero-top .lens-switcher { margin: 0; flex-wrap: wrap; justify-content: flex-end; }
 .ar-hero-tag {
   display: inline-block;
   font-size: 12px;
