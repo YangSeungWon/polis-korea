@@ -315,6 +315,13 @@ body {
 .poll-tl-node:hover { opacity: 0.78; }
 .poll-tl-node:hover text { text-decoration: underline; }
 .poll-tl-node.is-current { cursor: default; }
+/* 타임라인 노드 호버 미니맵 (election-timeline.js) */
+#poll-tl-map-tip {
+  position: fixed; z-index: 1000; display: none; pointer-events: none;
+  background: var(--bg); border: 1px solid var(--rule-strong); border-radius: 8px;
+  padding: 7px; box-shadow: 0 8px 24px var(--shadow, rgba(20,20,40,0.28));
+}
+#poll-tl-map-tip img { display: block; width: 190px; height: auto; max-height: 165px; object-fit: contain; }
 .poll-tl-note { font-size: 12px; color: var(--ink-mute); margin: 8px 0 0; }
 .poll-tl-note a { color: var(--ink-soft); }
 /* 모바일 컴팩트 칩 — 데스크톱은 SVG, 좁은 화면(≤560)에서만 칩. */

@@ -12,6 +12,28 @@
   };
   const typeOf = (e) => { const t = e.type || e.slug || ''; return /pres/.test(t) ? 'pres' : (/general|national/.test(t) ? 'general' : 'local'); };
   const shortLabel = (e) => (typeOf(e) === 'local' ? `${e.n}회` : `${e.n}대`);
+  // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 동일 뷰). 지도 없으면 onerror로 숨김.
+  const mapUrl = (e) => `/og/maps/${e.slug}/${typeOf(e) === 'local' ? 'governor' : 'dorling'}.png`;
+
+  function attachMiniMap(host) {
+    let tip = document.getElementById('poll-tl-map-tip');
+    if (!tip) {
+      tip = document.createElement('div'); tip.id = 'poll-tl-map-tip';
+      tip.innerHTML = '<img alt="">'; document.body.appendChild(tip);
+    }
+    const img = tip.querySelector('img');
+    img.addEventListener('error', () => { tip.style.display = 'none'; });
+    host.querySelectorAll('.poll-tl-node[data-map]').forEach((node) => {
+      const url = node.getAttribute('data-map');
+      node.addEventListener('mouseenter', () => { img.src = url; tip.style.display = 'block'; });
+      node.addEventListener('mousemove', (ev) => {
+        const left = ev.clientX > window.innerWidth - 230 ? ev.clientX - 206 : ev.clientX + 16;
+        tip.style.left = left + 'px';
+        tip.style.top = Math.max(8, ev.clientY - 70) + 'px';
+      });
+      node.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    });
+  }
 
   function render(host, list, opts) {
     opts = opts || {};
@@ -56,7 +78,7 @@
         const isCur = e.slug === curSlug;
         const fill = colorOf(e, L.color, isCur);   // 노드 색(폴 허브=레인색 / 대시보드=중립+최신만 포인트)
         const cx = x.toFixed(1);
-        nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}">`
+        nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}" data-map="${mapUrl(e)}">`
           + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
           + (isCur ? `<circle cx="${cx}" cy="${L.y}" r="${r + 3.5}" fill="none" stroke="${L.color}" stroke-width="1.6" opacity="0.55"/>` : '')
           + `<circle cx="${cx}" cy="${L.y}" r="${r}" fill="${fill}"/>`
@@ -80,6 +102,7 @@
 
     host.innerHTML = `<div class="poll-tl-scroll"><svg class="poll-tl-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="선거별 타임라인">${axis}${lanes}${nodes}</svg></div>`
       + chips + (opts.note ? `<p class="poll-tl-note">${opts.note}</p>` : '');
+    attachMiniMap(host);
   }
 
   window.ElectionTimeline = { render };
