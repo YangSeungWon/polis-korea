@@ -26,6 +26,43 @@
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/dashboard.css">
 <link rel="stylesheet" href="assets/status.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://polis.ysw.kr/#website",
+      "url": "https://polis.ysw.kr/",
+      "name": "polis",
+      "alternateName": "polis · 한국 선거 데이터",
+      "description": "NEC·NESDC 데이터로 보는 한국 선거 결과와 여론조사",
+      "inLanguage": "ko",
+      "publisher": { "@id": "https://polis.ysw.kr/#org" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://polis.ysw.kr/search.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://polis.ysw.kr/#org",
+      "name": "polis",
+      "url": "https://polis.ysw.kr/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://polis.ysw.kr/icon-512.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="site-hdr">
