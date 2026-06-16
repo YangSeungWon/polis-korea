@@ -108,18 +108,18 @@ def _card_html(mark_svg, kicker, headline, subline, map_png):
 <style>*{{margin:0;box-sizing:border-box}}
 body{{width:1200px;height:630px;font-family:Pretendard,sans-serif;background:#f6f7fb;display:flex;overflow:hidden;position:relative}}
 .left{{width:500px;padding:60px 44px 60px 64px;display:flex;flex-direction:column;justify-content:space-between}}
-.brand{{display:flex;align-items:center;gap:13px}}.brand .b{{font-size:32px;font-weight:800;letter-spacing:-1px}}
-.brand .d{{font-size:19px;color:#8a93a3;font-weight:600}}
+.brand{{display:flex;align-items:center;gap:13px}}.brand .b{{font-size:34px;font-weight:800;letter-spacing:-1px;white-space:nowrap}}
+.brand .d{{color:#6b73d6;font-weight:800}}
 .ttl .k{{font-size:27px;font-weight:700;color:#5b54d6;margin-bottom:10px;line-height:1.2}}
 .ttl .h{{font-size:47px;font-weight:800;letter-spacing:-2px;line-height:1.12;word-break:keep-all}}
 .ttl .s{{font-size:27px;font-weight:600;color:#4a5160;margin-top:14px}}
-.tag{{font-size:22px;font-weight:600;color:#6b7384}}
+.tag{{font-size:21px;font-weight:700;color:#4a5160;white-space:nowrap}}.tag .u{{color:#5b54d6}}
 .right{{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 36px 28px 0}}
 .right img{{max-width:100%;max-height:540px;filter:drop-shadow(0 8px 24px rgba(40,40,80,.12))}}
 .accent{{position:absolute;left:0;bottom:0;width:100%;height:12px;background:#5b54d6}}</style></head><body>
-<div class="left"><div class="brand">{mark}<span class="b">polis</span><span class="d">ysw.kr</span></div>
+<div class="left"><div class="brand">{mark}<span class="b">polis<span class="d">.ysw.kr</span></span></div>
 <div class="ttl"><div class="k">{kicker}</div><div class="h">{headline}</div><div class="s">{subline}</div></div>
-<div class="tag">NEC 공식 개표 · polis.ysw.kr</div></div>
+<div class="tag">NEC 공식 개표 · <span class="u">polis.ysw.kr</span></div></div>
 <div class="right"><img src="data:image/png;base64,{b64}"></div><div class="accent"></div></body></html>"""
 
 
