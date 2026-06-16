@@ -124,11 +124,22 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#5b54d6">
 <base href="/">
 <title>polis · {name}</title>
 <meta name="description" content="{desc}">
 <meta property="og:title" content="polis · {name}">
 <meta property="og:description" content="{desc}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://polis.ysw.kr/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="{canon}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
