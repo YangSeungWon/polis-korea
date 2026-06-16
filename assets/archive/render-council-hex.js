@@ -434,6 +434,25 @@
   }
   function marginOpacity(margin) { return 0.4 + 0.6 * Math.max(0, Math.min(1, margin / 40)); }
 
+  // cartogram용 — 시군구별 {candidates, voted}(전 후보+총투표). exact·rolled 키.
+  function fullResultBySigungu(races, tc) {
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+    const put = (m, k, v) => { if (!m.has(k)) m.set(k, v); };
+    const m = new Map();
+    for (const r of races || []) {
+      if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
+      const cs = (r.candidates || []).filter((c) => c.party);
+      const voted = r.voters ?? r.voted ?? cs.reduce((s, c) => s + (c.votes || 0), 0);
+      if (!cs.length || !voted) continue;
+      const v = { candidates: cs, voted };
+      const sido = canon(r.sido);
+      put(m, normalizeKey(sido, stripSfx(r.sigungu)), v);
+      put(m, normalizeKey(sido, parentSigungu(sido, r.sigungu)), v);
+    }
+    return m;
+  }
+
   function renderResult(svg, hexCells, rmap) {
     const maxC = Math.max(...hexCells.map((c) => c.c)), maxR = Math.max(...hexCells.map((c) => c.r));
     const w = OFF_X * 2 + (maxC + 1) * COL_W, h = OFF_Y * 2 + (maxR + 1) * ROW_H;
@@ -475,14 +494,23 @@
     return { shown, parties: [...parties] };
   }
 
-  // 시군구 1위 후보 결과 맵. host 주면 거기 렌더(폴), 없으면 아카이브 섹션 자동 생성(종합).
+  // 시군구 결과 맵 — 단색(격차 명도)/격자/dorling(표 비례) 토글. host 주면 거기(폴), 없으면 종합 섹션 자동.
   async function initResult(ctx, host) {
-    const rmap = resultBySigungu(ctx?.results?.races || [], '1');
+    const races = ctx?.results?.races || [];
+    const rmap = resultBySigungu(races, '1');
     if (rmap.size < 4) return null;
+    const fmap = fullResultBySigungu(races, '1');
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return null;
-    let legHost = null, mapHost = host;
-    if (!mapHost) {   // 아카이브(종합) — 시군구 투표율 섹션 앞에 '결과(격차 명도)' 섹션 주입
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+    const resultFn = (sido, name) => fmap.get(normalizeKey(canon(sido), stripSfx(name)))
+      || fmap.get(normalizeKey(canon(sido), parentSigungu(canon(sido), name))) || null;
+    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const parties = [...new Set([...rmap.values()].map((w) => w.party))];
+
+    let mapHost = host;
+    if (!mapHost) {   // 종합(아카이브) — 시군구 투표율 섹션 앞에 주입
       const turn = document.getElementById('ar-sgg-turnout');
       const sidoSec = document.getElementById('ar-pres-sido-hex');
       const anchor = turn || (sidoSec && sidoSec.closest('.ar-section'));
@@ -491,23 +519,36 @@
       if (!sec) {
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
         sec.innerHTML = '<h2 class="ar-section-title">시·군·구 1위 후보</h2>'
-          + '<p class="ar-source-line">1위 후보 정당색 · 짙을수록 1·2위 격차 큼(승자독식 단색 대신 격차 명도).</p>'
-          + '<div class="ar-sgg-result-host"></div><div class="ar-sgg-result-legend ch-leg-row"></div>';
+          + '<p class="ar-source-line">1위 후보 정당색. 단색=격차 명도, 격자·dorling=표(인구) 비례.</p>'
+          + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
       }
       mapHost = sec.querySelector('.ar-sgg-result-host');
-      legHost = sec.querySelector('.ar-sgg-result-legend');
     }
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg result-map');
-    const info = renderResult(svg, hexCells, rmap);
-    mapHost.innerHTML = ''; mapHost.appendChild(svg);
-    if (legHost && info.parties) {
-      const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
-      legHost.innerHTML = info.parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
-        + ' <span class="ar-genhex-note">· 명도 = 1·2위 격차</span>';
+    mapHost.innerHTML = '<div class="sgg-mode-toggle"></div><div class="sgg-map-area"></div><div class="sgg-result-legend ch-leg-row"></div>';
+    const tog = mapHost.querySelector('.sgg-mode-toggle');
+    const area = mapHost.querySelector('.sgg-map-area');
+    const leg = mapHost.querySelector('.sgg-result-legend');
+    const CART = window.Archive && window.Archive.drawSigunguCartogram;
+    const MODES = [['단색', '격차 명도'], ['격자', '표 비례'], ['dorling', '표 비례 원']].filter(([k]) => k === '단색' || CART);
+    let mode = '단색';
+    function redraw() {
+      const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
+      if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); renderResult(svg, hexCells, rmap); }
+      else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); CART(svg, hexCells, resultFn, { mode, r: 22 }); }
+      area.innerHTML = ''; area.appendChild(svg);
     }
-    return info;
+    tog.innerHTML = MODES.map(([k, lbl], i) =>
+      `<button type="button" class="sgg-mode-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${k} <small>${lbl}</small></button>`).join('');
+    tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
+      mode = b.dataset.sgmode;
+      tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));
+      redraw();
+    }));
+    leg.innerHTML = parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
+      + ' <span class="ar-genhex-note">· 단색 명도=격차 · 격자 1칸=2만표</span>';
+    redraw();
+    return { parties };
   }
 
   // archive/local.js render 끝나면 호출. window.Archive 네임스페이스 attach.

@@ -63,20 +63,14 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
-      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 색=후보 정당, 짙을수록 격차 큼</span></h3>'
-        + '<div class="pres-sgg-host"></div><div class="pres-sgg-legend"></div>';
+      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 단색=격차 명도 · 격자/dorling=표 비례</span></h3>'
+        + '<div class="pres-sgg-host"></div>';
       const anchor = document.getElementById('pres-host') || document.querySelector('.viz-main') || document.querySelector('.viz');
       (anchor && anchor.parentElement ? anchor.parentElement : document.body).appendChild(sec);
     }
-    const info = await CH.initResult(
+    await CH.initResult(
       { results: { races: ps.sigunguRaces }, meta: { electionN: POLL_ELECTION.n, electionKind: 'presidential' } },
       sec.querySelector('.pres-sgg-host'));
-    const leg = sec.querySelector('.pres-sgg-legend');
-    if (info && info.parties && leg) {
-      const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
-      leg.innerHTML = info.parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
-        + ' <span class="pres-sgg-note">· 명도 = 1·2위 격차</span>';
-    }
   }
 
   function cells() {
