@@ -767,6 +767,10 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .ar-sido-tab:last-child { border-radius: 0 6px 6px 0; border-left: none; }
 .ar-sido-tab.is-active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .ar-sido-view { width: 100%; }
+/* 투표율 뷰 범례 — 절대 스케일 바 + 이 선거 범위 */
+.ar-turnout-legend { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px auto 0; font-size: 11px; color: var(--ink-soft); flex-wrap: wrap; }
+.ar-turnout-bar { display: inline-block; width: 120px; height: 9px; border-radius: 5px; border: 1px solid var(--rule); }
+.ar-turnout-range { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
 .sido-map-svg { width: 100%; height: auto; max-width: 520px; display: block; margin: 0 auto; }
 .sido-map-region { stroke: var(--bg); stroke-width: 0.8; }
 .sido-map-region.no-data { fill: var(--bg2); stroke: var(--rule-strong); }

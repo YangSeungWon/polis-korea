@@ -59,7 +59,7 @@
       if (seen.has(key)) continue;
       seen.add(key);
       const win = bySido[sido];
-      if (archiveMode && !win) continue;   // 미존재 시도 셀 숨김
+      if ((archiveMode || opts.hideEmpty) && !win) continue;   // 미존재 시도 셀 숨김
 
       const cx = OFF_X + pos.col * COL_W + (pos.row % 2 ? COL_W / 2 : 0);
       const cy = OFF_Y + pos.row * ROW_H * 0.87;
@@ -82,9 +82,12 @@
       let textCol = null;
       const selCls = (opts.selected === cell.sido) ? ' is-selected' : '';
       if (cell.win) {
-        const fill = (typeof partyColor === 'function') ? partyColor(cell.win.party) : '#888';
+        // fillOf: 정당색 대신 임의 채색(투표율 그라데이션 등). 주면 대비 텍스트색도 보정.
+        const fill = opts.fillOf ? opts.fillOf(cell.sido, cell.win)
+          : ((typeof partyColor === 'function') ? partyColor(cell.win.party) : '#888');
         poly.setAttribute('fill', fill);
         poly.setAttribute('class', 'gov-hex-cell has-data' + selCls);
+        if (opts.fillOf && typeof pickTextColor === 'function') textCol = pickTextColor(fill, 1);
         if (opts.opacityOf) {                      // 폴 — 신뢰도 불투명도 + 라벨 대비 보정
           const op = opts.opacityOf(cell.win);
           poly.setAttribute('fill-opacity', op);
@@ -106,9 +109,10 @@
       }
       g.appendChild(poly);
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = (cell.win
-        ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${(cell.win.pct || 0).toFixed(1)}%`
-        : `${cell.sido} · 데이터 없음`) + (missCol ? ' · 여론조사는 빗나감(테두리=조사 1위 정당)' : '');
+      tt.textContent = opts.titleOf ? opts.titleOf(cell.sido, cell.win)
+        : ((cell.win
+          ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${(cell.win.pct || 0).toFixed(1)}%`
+          : `${cell.sido} · 데이터 없음`) + (missCol ? ' · 여론조사는 빗나감(테두리=조사 1위 정당)' : ''));
       g.appendChild(tt);
       // 시도 라벨
       const t1 = document.createElementNS(NS, 'text');
@@ -148,7 +152,7 @@
     // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신(아카이브 .ar-source-line만 — 폴은 closest null이라 무시).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const nData = cells.filter((c) => c.win).length;
-    if (cap && nData) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
+    if (cap && nData && !opts.winnerOf) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
   }
 
   // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).
