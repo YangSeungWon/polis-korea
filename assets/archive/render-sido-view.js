@@ -17,7 +17,8 @@
     const f = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
     const a = TURNOUT_STOPS[seg], b = TURNOUT_STOPS[seg + 1];
     const c = a.map((v, i) => Math.round(v + (b[i] - v) * f));
-    return `rgb(${c[0]},${c[1]},${c[2]})`;
+    // hex로 반환 — pickTextColor가 hex만 파싱(rgb()면 흰검 전환 안 됨).
+    return '#' + c.map((x) => x.toString(16).padStart(2, '0')).join('');
   }
   function turnoutBySido(races) {
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
@@ -31,13 +32,18 @@
   // 시도별 투표율 hex — governorHex 재사용(fillOf/titleOf/hideEmpty 훅).
   function drawTurnout(el, races, A) {
     const tb = turnoutBySido(races);
+    // 전남광주 통합(2026 9회) — 데이터 sido가 통합명이면 honamMergedLayout 셀(전남광주특별시)에 매핑.
+    if (tb['전남광주통합특별시'] != null && tb['전남광주특별시'] == null) tb['전남광주특별시'] = tb['전남광주통합특별시'];
     if (!Object.keys(tb).length || !A.governorHex?.draw) { el.innerHTML = '<p class="ar-empty">투표율 데이터 없음</p>'; return; }
     const vals = Object.values(tb);
     const lo = Math.min(...vals), hi = Math.max(...vals);
     const hostDiv = document.createElement('div');
     el.innerHTML = ''; el.appendChild(hostDiv);
+    const merged = tb['전남광주특별시'] != null && typeof honamMergedLayout === 'function'
+      && typeof SIDO_HEX_LAYOUT === 'object';
     A.governorHex.draw(hostDiv, [], {
       hideEmpty: true,
+      layout: merged ? honamMergedLayout(SIDO_HEX_LAYOUT) : undefined,
       winnerOf: (sido) => (tb[sido] != null ? { name: '', party: null, pct: tb[sido], turnout: tb[sido] } : null),
       fillOf: (sido, win) => turnoutColor(win.turnout, lo, hi),
       titleOf: (sido, win) => (win ? `${sido} · 투표율 ${win.turnout.toFixed(1)}%` : `${sido} · 데이터 없음`),
