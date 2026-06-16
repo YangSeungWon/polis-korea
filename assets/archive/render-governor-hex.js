@@ -47,6 +47,9 @@
     const layout = opts.layout || ((bySido['전남광주특별시'] && typeof honamMergedLayout === 'function')
       ? honamMergedLayout(SIDO_HEX_LAYOUT) : SIDO_HEX_LAYOUT);
 
+    // 아카이브(races 기반): 데이터 없는 시도 = 그 시점에 광역단체로 미존재(세종 2012·울산 1997 등)
+    // → 빈 셀을 그리지 않는다. 폴/history(winnerOf)는 '조사 없음' 회색셀을 의도하므로 제외.
+    const archiveMode = !opts.winnerOf;
     const COL_W = 80, ROW_H = 70, OFF_X = 50, OFF_Y = 50, R = 36;
     const cells = [];
     const seen = new Set();
@@ -56,6 +59,8 @@
       if (seen.has(key)) continue;
       seen.add(key);
       const win = bySido[sido];
+      if (archiveMode && !win) continue;   // 미존재 시도 셀 숨김
+
       const cx = OFF_X + pos.col * COL_W + (pos.row % 2 ? COL_W / 2 : 0);
       const cy = OFF_Y + pos.row * ROW_H * 0.87;
       cells.push({ sido, pos, cx, cy, label: pos.label, win });
