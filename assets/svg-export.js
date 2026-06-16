@@ -55,10 +55,12 @@
     'sido-map-svg': 'geo', 'parliament-chart': 'seats',
   };
   function viewLabel(svg) {
+    if (svg.classList.contains('turnout-map')) return '투표율';   // 결과 hex 클래스 공유 → 먼저 판정
     for (const cls of svg.classList) if (VIEW[cls]) return VIEW[cls];
     return '';
   }
   function shareKey(svg) {
+    if (svg.classList.contains('turnout-map')) return 'turnout';
     for (const cls of svg.classList) if (SHARE_KEY[cls]) return SHARE_KEY[cls];
     return '';
   }
@@ -117,7 +119,7 @@
   // 미리보기(og:image)와 착지 뷰를 일치시킨다. 뷰 키→SVG 클래스로 섹션 역추적(키 중복 회피).
   const KEY2CLASS = {
     governor: 'governor-hex-svg', council: 'council-hex-svg', dorling: 'ar-sidocluster-svg',
-    geo: 'sido-map-svg', seats: 'parliament-chart',
+    geo: 'sido-map-svg', seats: 'parliament-chart', turnout: 'turnout-map',
   };
   function applyHashView() {
     const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');

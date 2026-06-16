@@ -19,7 +19,7 @@ SITE = "https://polis.ysw.kr"
 
 VIEW_LABEL = {
     "governor": "광역단체장", "council": "광역의원", "dorling": "의석 비례",
-    "geo": "지리 지도", "seats": "의석수",
+    "geo": "지리 지도", "seats": "의석수", "turnout": "투표율",
 }
 
 TEMPLATE = """<!DOCTYPE html>

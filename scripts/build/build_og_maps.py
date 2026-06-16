@@ -27,7 +27,9 @@ MAPS = OG / "maps"
 FAVICON = ROOT / "favicon.svg"
 
 # SVG 클래스 substring → 깔끔한 뷰 키·라벨·설명. 토글 캡처분도 같은 클래스라 일관 분류.
+# turnout-map은 governor-hex/council-hex 클래스를 공유(투표율 채색)하므로 반드시 먼저 매칭.
 VIEW_DEFS = [
+    ("turnout-map", "turnout", "투표율", "지역별 투표율(짙을수록 높음)"),
     ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
     ("council-hex", "council", "광역의원", "시도별 의석"),
     ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),

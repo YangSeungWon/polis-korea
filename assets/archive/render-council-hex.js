@@ -301,7 +301,7 @@
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
     const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg');
+    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg turnout-map');
     const { lo, hi, shown } = renderTurnout(svg, hexCells, tmap);
     const host = sec.querySelector('.ar-sgg-turnout-host');
     host.innerHTML = ''; host.appendChild(svg);

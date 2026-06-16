@@ -41,6 +41,7 @@
       fillOf: (sido, win) => turnoutColor(win.turnout, lo, hi),
       titleOf: (sido, win) => (win ? `${sido} · 투표율 ${win.turnout.toFixed(1)}%` : `${sido} · 데이터 없음`),
     });
+    hostDiv.querySelector('svg')?.classList.add('turnout-map');   // og 캡처 분류용(결과 hex와 구분)
     const ramp = `rgb(${TURNOUT_STOPS[0]}), rgb(${TURNOUT_STOPS[1]}), rgb(${TURNOUT_STOPS[2]})`;
     const leg = document.createElement('div');
     leg.className = 'ar-turnout-legend';
