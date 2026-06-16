@@ -133,6 +133,25 @@
     return `${sido}|${sigungu}`;
   }
 
+  // ── 시군구 매칭(공통) ─────────────────────────────────────────
+  // 데이터·레이아웃 시군구를 같은 키로. 두 형태 모두 등록/조회:
+  //   exact = 접미사만 제거('중구(부산)'→'중구'), rolled = parentSigungu(일반구→시·시갑을→시·갑을구→구).
+  // 데이터는 둘 다 저장, 레이아웃 셀은 exact→rolled 순 조회.
+  const _canonSido = (s) => (typeof canonSido === 'function' ? canonSido(s) : s);
+  const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+  function matchKeys(sido, name) {
+    const s = _canonSido(sido);
+    const ek = normalizeKey(s, stripSfx(name)), rk = normalizeKey(s, parentSigungu(s, name));
+    return ek === rk ? [ek] : [ek, rk];
+  }
+  function putKeys(m, sido, name, v, put) {
+    for (const k of matchKeys(sido, name)) put(m, k, v);
+  }
+  function lookupKey(m, sido, name) {
+    for (const k of matchKeys(sido, name)) { const v = m.get(k); if (v != null) return v; }
+    return undefined;
+  }
+
   function render(svg, hexCells, sigunguSeats) {
     const maxC = Math.max(...hexCells.map((c) => c.c));
     const maxR = Math.max(...hexCells.map((c) => c.r));
@@ -250,11 +269,9 @@
   // 같은 시군구 hex 레이아웃을 단색(투표율 그라데이션)으로. 소스 = 광역단체장(tc=3)의
   // 시군구 분해(가장 완전 — 세종/제주 자치구 등 기초장 없는 곳 포함). 없으면 기초장(tc=4).
   function turnoutBySigungu(races) {
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
     // 투표율은 같은 날 같은 유권자라 어느 투표든 거의 동일 → 가장 완전한 소스부터 누적해
     // 빈 시군구를 메운다. 우선순위: 광역장 시군구분해(3) → 광역의원 합산(5, 전 시군구 커버) →
-    // 기초장(4, 무투표 구멍) → 기초의원 합산(6) → 대선(1). sido 캐논·일반구→시 롤업(투·선 합산 후 율).
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+    // 기초장(4, 무투표 구멍) → 기초의원 합산(6) → 대선(1). 키는 matchKeys(투·선 합산 후 율).
     const SOURCES = [
       ['3', 'sigungu'], ['5', 'district'], ['4', 'sigungu'], ['6', 'district'], ['1', 'sigungu'],
     ];
@@ -262,19 +279,16 @@
     for (const [tc, scope] of SOURCES) {
       // 구 단위(period 레이아웃=수원시장안구)·시 단위(modern=수원시) 둘 다 키로 저장 — 레이아웃
       // 입도에 맞게 renderTurnout이 골라 씀. exact=접미사만 제거, rolled=일반구→시 합산.
-      const exact = new Map(), rolled = new Map();
+      const acc = new Map();
       for (const r of races || []) {
         if (r.scope !== scope || r.sg_typecode !== tc) continue;
         const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
         if (el <= 0 || vt <= 0) continue;
-        const sido = canon(r.sido);
-        const ek = normalizeKey(sido, stripSfx(r.sigungu));
-        const ea = exact.get(ek) || { e: 0, v: 0 }; ea.e += el; ea.v += vt; exact.set(ek, ea);
-        const rk = normalizeKey(sido, parentSigungu(sido, r.sigungu));
-        const ra = rolled.get(rk) || { e: 0, v: 0 }; ra.e += el; ra.v += vt; rolled.set(rk, ra);
+        for (const k of matchKeys(r.sido, r.sigungu)) {
+          const a = acc.get(k) || { e: 0, v: 0 }; a.e += el; a.v += vt; acc.set(k, a);
+        }
       }
-      for (const [k, a] of exact) if (!m.has(k)) m.set(k, a.v / a.e * 100);
-      for (const [k, a] of rolled) if (!m.has(k)) m.set(k, a.v / a.e * 100);
+      for (const [k, a] of acc) if (!m.has(k)) m.set(k, a.v / a.e * 100);
     }
     return m;
   }
@@ -305,16 +319,13 @@
     svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
     const PARENT_R = 13.85;
     const color = window.Archive?.turnout?.color || (() => '#88a');
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const valueOf = (c) => {
-      const s = canon(c.sido);
-      // exact(구 단위, period 레이아웃) 먼저 → rolled(시 단위, modern 레이아웃)
-      let v = tmap.get(normalizeKey(s, stripSfx(c.name)));
-      if (v == null) v = tmap.get(normalizeKey(s, parentSigungu(s, c.name)));
+      // matchKeys: exact(구 단위, period 레이아웃) → rolled(시 단위, modern 레이아웃)
+      const v = lookupKey(tmap, c.sido, c.name);
       if (v != null) return v;
       // 세종(유일한 특별자치시)은 기초 시군구가 없어 시군구 투표율이 없음 → sido 투표율로 채움.
       // 광역시 자치구 오인 방지로 '특별자치시'로만 한정(period 레이아웃엔 single_tier 플래그 없음).
+      const s = _canonSido(c.sido);
       if (sidoMap && s.endsWith('특별자치시')) return sidoMap.get(s);
       return undefined;
     };
@@ -388,8 +399,6 @@
   // ── 시군구 1위 후보 결과 맵 (대선) ──────────────────────────────
   // 1위 후보 정당색 + 격차(1위−2위 pct) 명도. 승자독식 단색 금지를 명도로 절충 — 박빙 옅게·압도 진하게.
   function resultBySigungu(races, tc) {
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const put = (m, k, w) => { if (!m.has(k)) m.set(k, w); };
     const m = new Map();
     for (const r of races || []) {
@@ -398,9 +407,7 @@
       if (!cs.length || !cs[0].party) continue;
       const win = { party: cs[0].party, name: cs[0].name, pct: cs[0].pct || 0,
         margin: (cs[0].pct || 0) - (cs[1] ? (cs[1].pct || 0) : 0) };
-      const sido = canon(r.sido);
-      put(m, normalizeKey(sido, stripSfx(r.sigungu)), win);
-      put(m, normalizeKey(sido, parentSigungu(sido, r.sigungu)), win);
+      putKeys(m, r.sido, r.sigungu, win, put);
     }
     return m;
   }
@@ -408,8 +415,6 @@
 
   // cartogram용 — 시군구별 {candidates, voted}(전 후보+총투표). exact·rolled 키.
   function fullResultBySigungu(races, tc) {
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const put = (m, k, v) => { if (!m.has(k)) m.set(k, v); };
     const m = new Map();
     for (const r of races || []) {
@@ -417,10 +422,7 @@
       const cs = (r.candidates || []).filter((c) => c.party);
       const voted = r.voters ?? r.voted ?? cs.reduce((s, c) => s + (c.votes || 0), 0);
       if (!cs.length || !voted) continue;
-      const v = { candidates: cs, voted };
-      const sido = canon(r.sido);
-      put(m, normalizeKey(sido, stripSfx(r.sigungu)), v);
-      put(m, normalizeKey(sido, parentSigungu(sido, r.sigungu)), v);
+      putKeys(m, r.sido, r.sigungu, { candidates: cs, voted }, put);
     }
     return m;
   }
@@ -432,11 +434,8 @@
     svg.setAttribute('viewBox', `${-EM} 0 ${w + 2 * EM} ${h}`);
     svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
     const PARENT_R = 13.85;
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
     const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
-    const valueOf = (c) => rmap.get(normalizeKey(canon(c.sido), stripSfx(c.name)))
-      || rmap.get(normalizeKey(canon(c.sido), parentSigungu(canon(c.sido), c.name)));
+    const valueOf = (c) => lookupKey(rmap, c.sido, c.name);
     let shown = 0; const parties = new Set();
     for (const cell of hexCells) {
       const [cx, cy] = hexCenter(cell.c, cell.r);
@@ -474,10 +473,7 @@
     const fmap = fullResultBySigungu(races, '1');
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return null;
-    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
-    const resultFn = (sido, name) => fmap.get(normalizeKey(canon(sido), stripSfx(name)))
-      || fmap.get(normalizeKey(canon(sido), parentSigungu(canon(sido), name))) || null;
+    const resultFn = (sido, name) => lookupKey(fmap, sido, name) || null;
     const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
     const parties = [...new Set([...rmap.values()].map((w) => w.party))];
 
