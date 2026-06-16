@@ -182,8 +182,9 @@ if __name__ == "__main__":
     targets = {}
     for f in glob.glob(str(RES / "*-pres-*.json")):
         num = int(re.match(r"(\d+)", Path(f).name).group(1))
-        # 19대(2017)+ 는 행정구역이 현대와 사실상 동일(+데이터 노이즈) → 모던 hex 그대로. period는 2~18만.
-        if num >= 19:
+        # 19~21대(2017~2025)도 현대 레이아웃과 다름(2023 군위 대구이관·2026 인천 영종/제물포/검단
+        # 신설은 그때 미존재) → period 생성. 셀 집합이 modern과 같으면 아래서 자동 skip(모던 사용).
+        if num >= 22:
             continue
         # 같은 회차 여러 파일이면 sigungu races 많은 쪽 (16~21대는 .sigungu.json에 있음).
         d = json.loads(Path(f).read_text(encoding="utf-8"))
@@ -194,7 +195,9 @@ if __name__ == "__main__":
     # 현대 hex(legacy) 시군구 집합 — 이와 동일한 회차는 hand-tuned 모던 hex 그대로 씀(skip).
     modern_set = {(c.get("sido"), c.get("name")) for c in _hex}
     want = [int(a) for a in sys.argv[1:]] or sorted(targets)
-    combined = {}
+    # 기존 파일에 머지 — 인자로 일부 회차만 재생성해도 나머지 보존(packing 비결정성에 안전).
+    out_path = GEO / "sigungu_hex_pres.json"
+    combined = json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists() else {}
     for n in want:
         if n not in targets:
             continue
