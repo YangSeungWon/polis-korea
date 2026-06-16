@@ -3,7 +3,7 @@
 //   drawDistrictHex(render-district-hex.js) 재사용. kind==='general_election' → initGenIfNeeded.
 (function () {
   'use strict';
-  const gs = { propRace: null, districtRaces: [], layout: null, dmode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', selected: null, pollFn: null, resultFn: null };
+  const gs = { propRace: null, propSidoRaces: [], pmap: 'dorling', districtRaces: [], layout: null, dmode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', selected: null, pollFn: null, resultFn: null };
 
   async function loadResults() {
     try {
@@ -15,6 +15,9 @@
       nat.sort((a, b) => (b.candidates || []).length - (a.candidates || []).length);
       gs.propRace = nat[0] || null;
       gs.districtRaces = races.filter((x) => x.scope === 'district');
+      // 시도별 비례(1인2표, 17대~) — 격자/dorling 분포 맵용. 옛 총선(전국구 배분)은 없음.
+      const ptc = gs.propRace && gs.propRace.sg_typecode;
+      gs.propSidoRaces = races.filter((x) => x.scope === 'sido' && x.sg_typecode === ptc && (x.candidates || []).length);
     } catch (e) { /* 결과 없으면 추이/폴만 */ }
   }
 
@@ -42,8 +45,28 @@
       <span class="name">${c.name || c.party || ''}</span>
       <span class="pc-bar"><span class="pc-bar-fill" style="width:${(c.pct / maxPct) * 100}%;background:${pc(c.party)}"></span></span>
       <span class="pct" style="color:${ptc(c.party)}">${c.pct}%</span></div>`).join('');
-    host.innerHTML = '<h3 class="pres-trend-title">비례대표 실제 득표</h3>' + `<div class="poll-card">${bars}</div>`;
+    let html = '<h3 class="pres-trend-title">비례대표 실제 득표</h3>' + `<div class="poll-card">${bars}</div>`;
+    // 시도별 비례 분포 맵 — 대선과 동일한 격자/dorling(득표 비례). 비례 여론조사는 전국 단위라 실제 분포.
+    if (window.Archive && window.Archive.sidoProp && (gs.propSidoRaces || []).length >= 4) {
+      html += `<div class="gen-prop-map"><h3 class="pres-trend-title" style="margin-top:16px">시·도별 비례 분포 <span class="pres-trend-sub">실제 · 색=정당, 면적=득표</span></h3>`
+        + `<div class="seg" style="justify-content:flex-end;margin:6px 0"><button class="seg-btn is-active" data-pmap="dorling">dorling</button><button class="seg-btn" data-pmap="grid">격자</button></div>`
+        + `<div id="gen-prop-map-svg"></div></div>`;
+    }
+    host.innerHTML = html;
+    drawPropMap();
+    host.querySelectorAll('[data-pmap]').forEach((b) => b.addEventListener('click', () => {
+      gs.pmap = b.dataset.pmap;
+      host.querySelectorAll('[data-pmap]').forEach((x) => x.classList.toggle('is-active', x === b));
+      drawPropMap();
+    }));
     host.hidden = false;
+  }
+
+  function drawPropMap() {
+    const el = document.getElementById('gen-prop-map-svg');
+    if (!el || !window.Archive || !window.Archive.sidoProp) return;
+    const SP = window.Archive.sidoProp;
+    (gs.pmap === 'grid' ? SP.drawGrid : SP.drawDorling)(el, gs.propSidoRaces, {});
   }
 
   // 254 지역구 hex (여론조사 1위 / 실제 1위 토글)
