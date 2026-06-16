@@ -92,10 +92,16 @@
     return byKey;
   }
 
-  // sigungu hex 위치 + 이름 (legacy 회차는 sigungu_hex_legacy도 시도)
-  async function loadHexLayout() {
-    const main = await fetch('data/geo/sigungu_hex.json').then((r) => r.json()).catch(() => []);
-    return main;
+  // sigungu hex 위치 + 이름. 회차별 period 레이아웃(sigungu_hex_local.json[n])을 우선 —
+  // 그 시점 시군구·이름(연기군·경남 울산시 등, 세종/울산 분리 시점 반영). history와 동일 데이터.
+  // 없으면 현대 sigungu_hex.json fallback.
+  async function loadHexLayout(n) {
+    if (n != null) {
+      const period = await fetch('data/geo/sigungu_hex_local.json')
+        .then((r) => r.json()).then((m) => m[String(n)]).catch(() => null);
+      if (period && period.length) return period;
+    }
+    return await fetch('data/geo/sigungu_hex.json').then((r) => r.json()).catch(() => []);
   }
 
   // 데이터 키 정규화 — 통합특별시·과거 행정명 매핑
@@ -189,7 +195,7 @@
     const host = document.getElementById('ar-council-hex');
     if (!host) return;
     const races = ctx?.results?.races || [];
-    const hexCells = await loadHexLayout();
+    const hexCells = await loadHexLayout(ctx?.meta?.electionN);
     if (!hexCells.length) return;
     const seats = aggregateSigunguSeats(races);
     if (seats.size === 0) {
