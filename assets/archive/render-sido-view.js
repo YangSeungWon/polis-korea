@@ -4,10 +4,14 @@
 // opts: {tc, hostId}.
 
 (function () {
-  // 투표율 절대 스케일(45~80%) → 연한→진한 teal. 정당색과 안 겹치는 중립 단색 계열.
+  // 투표율 → 연한→진한 teal(정당색과 안 겹치는 중립 단색). 상대 스케일: lo·hi를 주면 이 선거
+  // 최저~최고로 정규화(지역차 또렷). 없으면 절대 45~80% fallback. 선거마다 투표율대가 크게
+  // 달라(지선 33~82·대선 71~87) 절대 스케일은 한쪽에 뭉쳐 — 지도당 상대화가 패턴을 드러냄.
   const TURNOUT_STOPS = [[238, 243, 241], [78, 163, 145], [10, 74, 66]];
-  function turnoutColor(pct) {
-    const t = Math.max(0, Math.min(1, (pct - 45) / 35));
+  function turnoutColor(pct, lo, hi) {
+    const t = (hi != null && hi > lo)
+      ? Math.max(0, Math.min(1, (pct - lo) / (hi - lo)))
+      : Math.max(0, Math.min(1, (pct - 45) / 35));
     const seg = t < 0.5 ? 0 : 1;
     const f = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
     const a = TURNOUT_STOPS[seg], b = TURNOUT_STOPS[seg + 1];
@@ -27,21 +31,21 @@
   function drawTurnout(el, races, A) {
     const tb = turnoutBySido(races);
     if (!Object.keys(tb).length || !A.governorHex?.draw) { el.innerHTML = '<p class="ar-empty">투표율 데이터 없음</p>'; return; }
+    const vals = Object.values(tb);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
     const hostDiv = document.createElement('div');
     el.innerHTML = ''; el.appendChild(hostDiv);
     A.governorHex.draw(hostDiv, [], {
       hideEmpty: true,
       winnerOf: (sido) => (tb[sido] != null ? { name: '', party: null, pct: tb[sido], turnout: tb[sido] } : null),
-      fillOf: (sido, win) => turnoutColor(win.turnout),
+      fillOf: (sido, win) => turnoutColor(win.turnout, lo, hi),
       titleOf: (sido, win) => (win ? `${sido} · 투표율 ${win.turnout.toFixed(1)}%` : `${sido} · 데이터 없음`),
     });
-    const vals = Object.values(tb);
-    const lo = Math.min(...vals).toFixed(1), hi = Math.max(...vals).toFixed(1);
     const ramp = `rgb(${TURNOUT_STOPS[0]}), rgb(${TURNOUT_STOPS[1]}), rgb(${TURNOUT_STOPS[2]})`;
     const leg = document.createElement('div');
     leg.className = 'ar-turnout-legend';
-    leg.innerHTML = `<span>45%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span><span>80%+</span>`
-      + `<span class="ar-turnout-range">이 선거 ${lo}–${hi}%</span>`;
+    leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span><span>${hi.toFixed(1)}%</span>`
+      + `<span class="ar-turnout-range">이 선거 최저–최고</span>`;
     el.appendChild(leg);
   }
 
