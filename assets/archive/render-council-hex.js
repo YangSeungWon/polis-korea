@@ -100,6 +100,7 @@
   // hex의 '부천시' key와 매칭 위해 부모 sigungu 추출 (시·군·구 suffix 직전).
   function parentSigungu(sd, sg) {
     if (!sg) return sg;
+    sg = sg.replace(/\([^)]*\)\s*$/, '');   // '중구(부산)' → '중구' (동음이의 구 접미사 — sido가 키에 있어 불필요)
     // '수원시장안구' → '수원시', '청주시상당구' → '청주시', '천안시동남구' → '천안시'
     const m = sg.match(/^(.+?[시군])(.+[구])$/);
     return m ? m[1] : sg;
