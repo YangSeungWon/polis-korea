@@ -49,9 +49,23 @@
     'governor-hex-svg': '광역단체장', 'council-hex-svg': '의원', 'ar-sidocluster-svg': 'dorling',
     'sido-map-svg': '지도', 'parliament-chart': '의석', 'hex-pane': 'hex',
   };
+  // 지도 종류 → 공유페이지 뷰 키(build_share_pages.py와 일치)
+  const SHARE_KEY = {
+    'governor-hex-svg': 'governor', 'council-hex-svg': 'council', 'ar-sidocluster-svg': 'dorling',
+    'sido-map-svg': 'geo', 'parliament-chart': 'seats',
+  };
   function viewLabel(svg) {
     for (const cls of svg.classList) if (VIEW[cls]) return VIEW[cls];
     return '';
+  }
+  function shareKey(svg) {
+    for (const cls of svg.classList) if (SHARE_KEY[cls]) return SHARE_KEY[cls];
+    return '';
+  }
+  // archive 페이지 slug (/archive/{slug}/). 공유페이지는 결과 아카이브 뷰에만 존재.
+  function archiveSlug() {
+    const m = location.pathname.match(/\/archive\/([^/]+)\//);
+    return m ? m[1] : '';
   }
   function fnameBase() {
     // document.title이 이미 'polis · …'라 그대로 정제(중복 prefix 방지)
@@ -59,23 +73,42 @@
       .replace(/[·]/g, '-').replace(/[^0-9a-zA-Z가-힣_-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '').slice(0, 60);
   }
 
+  function mkBtn(text, title, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'svg-save-btn'; b.textContent = text; b.title = title;
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
   function attach(svg) {
     const wrap = svg.parentElement;
     if (!wrap || wrap.dataset.svgSave) return;
     wrap.dataset.svgSave = '1';
     if (getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'svg-save-btn';
-    btn.textContent = '↓ 이미지';
-    btn.title = '이 지도를 PNG로 저장';
-    btn.addEventListener('click', function () {
-      const cur = wrap.querySelector('svg');
-      if (!cur) return;
+    const bar = document.createElement('div');
+    bar.className = 'svg-save-bar';
+    // 이미지 저장 — 보는 뷰 그대로 PNG
+    bar.appendChild(mkBtn('↓ 이미지', '이 지도를 PNG로 저장', function () {
+      const cur = wrap.querySelector('svg'); if (!cur) return;
       const v = viewLabel(cur);
       svgToPng(cur, { filename: fnameBase() + (v ? '_' + v : '') });
-    });
-    wrap.appendChild(btn);
+    }));
+    // 공유 — 그 뷰 미리보기가 뜨는 링크 복사(archive 결과뷰만)
+    const slug = archiveSlug();
+    if (slug) {
+      bar.appendChild(mkBtn('↗ 공유', '이 뷰 미리보기 링크 복사', function (e) {
+        const cur = wrap.querySelector('svg'); if (!cur) return;
+        const k = shareKey(cur); if (!k) return;
+        const url = location.origin + '/share/' + slug + '/' + k + '/';
+        const done = function () {
+          const btn = e.currentTarget; const old = btn.textContent;
+          btn.textContent = '✓ 복사됨'; setTimeout(function () { btn.textContent = old; }, 1400);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
+        else { prompt('공유 링크', url); }
+      }));
+    }
+    wrap.appendChild(bar);
   }
 
   function scan() { document.querySelectorAll(MAP_SEL).forEach(attach); }

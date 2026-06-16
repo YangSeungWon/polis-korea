@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import base64
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -25,8 +26,16 @@ OG = ROOT / "og"
 MAPS = OG / "maps"
 FAVICON = ROOT / "favicon.svg"
 
-# 카드 대표 뷰 우선순위(유형별 가장 상징적인 지도). 없으면 가장 큰 SVG로 폴백.
-PRIMARY_PREF = ["governor-hex-svg", "ar-sidocluster-svg", "council-hex-svg", "parliament-chart"]
+# SVG 클래스 substring → 깔끔한 뷰 키·라벨·설명. 토글 캡처분도 같은 클래스라 일관 분류.
+VIEW_DEFS = [
+    ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
+    ("council-hex", "council", "광역의원", "시도별 의석"),
+    ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),
+    ("sido-map", "geo", "지리 지도", "실제 시도 경계"),
+    ("parliament-chart", "seats", "의석수", "정당별 총 의석"),
+]
+# 대표(overview) 카드로 쓸 뷰 우선순위.
+PRIMARY_ORDER = ["governor", "dorling", "council", "seats", "geo"]
 
 
 def list_slugs() -> list[str]:
@@ -34,64 +43,59 @@ def list_slugs() -> list[str]:
                   if p.is_dir() and (p / "index.html").exists())
 
 
-def _capture_views(page):
-    """현재 페이지의 지도 뷰들을 {view_label: png_bytes}로 캡처. 토글 눌러 대체 뷰도.
-    내용 동일(토글로 안 바뀐 섹션 재캡처)분은 해시로 dedup."""
-    import hashlib
-    views = {}
-    seen = set()
+def _classify(cls_full: str):
+    for sub, key, _label, _desc in VIEW_DEFS:
+        if sub in cls_full:
+            return key
+    return None
 
-    def grab_svgs(prefix):
-        for el in page.query_selector_all("svg, .leaflet-container"):
+
+def view_meta(key: str):
+    for _sub, k, label, desc in VIEW_DEFS:
+        if k == key:
+            return label, desc
+    return key, ""
+
+
+def _capture_views(page):
+    """{view_key: png_bytes} — 지도 SVG를 깔끔한 키로 분류해 캡처. 토글로 대체 뷰도.
+    같은 키 여러 번 잡히면 가장 큰(바이트) 것 유지."""
+    views = {}
+
+    def grab():
+        for el in page.query_selector_all("svg"):
+            key = _classify(el.get_attribute("class") or "")
+            if not key:
+                continue
             try:
                 bb = el.bounding_box()
             except Exception:
                 bb = None
             if not bb or bb["width"] < 200 or bb["height"] < 200:
                 continue
-            cls = (el.get_attribute("class") or "svg").split()[0]
-            label = f"{prefix}{cls}"
-            if label in views:
-                continue
             try:
                 png = el.screenshot(omit_background=True)
             except Exception:
                 continue
-            h = hashlib.md5(png).hexdigest()
-            if h in seen:   # 토글로 안 바뀐 동일 지도 — 중복 저장 안 함
-                continue
-            seen.add(h)
-            views[label] = png
+            if key not in views or len(png) > len(views[key]):
+                views[key] = png
 
-    grab_svgs("")
-    # 토글 그룹마다 비활성 탭을 눌러 대체 뷰 캡처
+    grab()
     groups = page.query_selector_all(".ar-sido-toggle")
     for gi in range(len(groups)):
         groups = page.query_selector_all(".ar-sido-toggle")
         if gi >= len(groups):
             break
-        tabs = groups[gi].query_selector_all(".ar-sido-tab")
-        for tab in tabs:
+        for tab in groups[gi].query_selector_all(".ar-sido-tab"):
             try:
                 if "is-active" in (tab.get_attribute("class") or ""):
                     continue
-                label = (tab.text_content() or "view").strip()
                 tab.click()
                 page.wait_for_timeout(700)
-                grab_svgs(f"{label}-")
+                grab()
             except Exception:
                 pass
     return views
-
-
-def _descriptor(slug: str) -> str:
-    if "pres" in slug:
-        return "시도별 득표 · 면적=득표수"
-    if "general" in slug:
-        return "시도별 의석 분포"
-    if "local" in slug:
-        return "광역단체장 · 시도별 1위"
-    return "시도별 결과"
 
 
 def _card_html(mark_svg, kicker, headline, subline, map_png):
@@ -140,31 +144,32 @@ def main():
             try:
                 pg.goto(f"{base}/{slug}/", wait_until="networkidle", timeout=20000)
                 pg.wait_for_timeout(2200)
+                # 지도 위 저장버튼 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함)
+                pg.add_style_tag(content=".svg-save-btn{display:none!important}")
                 title = (pg.text_content("#ar-title") or "").strip() if pg.query_selector("#ar-title") else ""
                 date_s = (pg.text_content("#ar-date") or "").strip() if pg.query_selector("#ar-date") else ""
                 views = _capture_views(pg)
                 if not views:
                     print(f"  {slug}: 지도 없음 — skip"); pg.close(); continue
-                # 원본 PNG 저장
-                outdir = MAPS / slug
-                outdir.mkdir(parents=True, exist_ok=True)
-                for label, png in views.items():
-                    safe = re.sub(r"[^0-9a-zA-Z가-힣_-]", "_", label)
-                    (outdir / f"{safe}.png").write_bytes(png)
-                # 대표 뷰 선택
-                primary = next((views[k] for pref in PRIMARY_PREF for k in views if k == pref), None)
-                if primary is None:
-                    primary = max(views.values(), key=len)
-                # 카드 합성 — kicker=깨끗한 날짜, headline=선거명, subline=뷰 설명
                 mdate = re.search(r"\d{4}-\d{2}-\d{2}", date_s)
                 kicker = mdate.group(0) if mdate else date_s[:10]
                 headline = title or slug
-                html = _card_html(mark_svg, kicker, headline, _descriptor(slug), primary)
-                pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(400)
-                (OG).mkdir(exist_ok=True)
-                pg.screenshot(path=str(OG / f"{slug}.png"), clip={"x": 0, "y": 0, "width": 1200, "height": 630})
-                made.append(slug)
-                print(f"  {slug}: {len(views)} views + card ✓")
+                raw_dir = MAPS / slug
+                card_dir = OG / slug
+                raw_dir.mkdir(parents=True, exist_ok=True)
+                card_dir.mkdir(parents=True, exist_ok=True)
+                for key, png in views.items():
+                    (raw_dir / f"{key}.png").write_bytes(png)   # 원본(투명)
+                    label, desc = view_meta(key)
+                    html = _card_html(mark_svg, kicker, headline, f"{label} · {desc}", png)
+                    pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(350)
+                    pg.screenshot(path=str(card_dir / f"{key}.png"),
+                                  clip={"x": 0, "y": 0, "width": 1200, "height": 630})
+                # 대표 카드 og/{slug}.png (archive·poll 페이지 기본 og:image)
+                primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
+                shutil.copyfile(card_dir / f"{primary}.png", OG / f"{slug}.png")
+                made.append((slug, list(views)))
+                print(f"  {slug}: {len(views)} views {list(views)} ✓")
             except Exception as e:
                 print(f"  {slug}: ERROR {e}")
             finally:
