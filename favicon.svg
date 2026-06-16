@@ -2,13 +2,16 @@
   <!-- 투표함에 투표용지가 들어가는 모습 — 선거 정체성. 16px에서도 또렷하게 단순화. -->
   <!-- 투표용지 (살짝 기울여 투입구로 들어가는 중) -->
   <g transform="rotate(-13 16 11)">
-    <rect x="10.2" y="2.4" width="11.6" height="13" rx="1.6" fill="#ffffff" stroke="#5b54d6" stroke-width="1.1"/>
+    <rect x="10.2" y="2.4" width="11.6" height="13" rx="1.6" fill="#ffffff" stroke="#0a0e1a" stroke-width="1.8"/>
     <path d="M12.7 8.0l1.9 2.0 3.6-4.1" fill="none" stroke="#168f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <!-- 투표함 본체 -->
-  <rect x="4.5" y="15.2" width="23" height="13.3" rx="2.6" fill="#5b54d6"/>
-  <!-- 상단 면(뚜껑) — 살짝 진하게 입체감 -->
-  <rect x="4.5" y="15.2" width="23" height="4" rx="2" fill="#4640b8"/>
-  <!-- 투입구 슬롯 -->
-  <rect x="11" y="16.5" width="10" height="1.5" rx="0.75" fill="#2b2769"/>
+  <!-- 투표함 — 살짝 작게(상단 기준 0.92 축소, 투입구는 제자리라 용지 투입 관계 유지) -->
+  <g transform="translate(16 15.2) scale(0.92) translate(-16 -15.2)">
+    <!-- 본체 -->
+    <rect x="4.5" y="15.2" width="23" height="13.3" rx="2.6" fill="#5b54d6"/>
+    <!-- 상단 면(뚜껑) — 살짝 진하게 입체감 -->
+    <rect x="4.5" y="15.2" width="23" height="4" rx="2" fill="#4640b8"/>
+    <!-- 투입구 슬롯 -->
+    <rect x="11" y="16.5" width="10" height="1.5" rx="0.75" fill="#2b2769"/>
+  </g>
 </svg>
