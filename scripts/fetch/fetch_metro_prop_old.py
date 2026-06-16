@@ -26,6 +26,11 @@ ELECTIONS = {
     3: ("3rd-local-2002", "20020613"),
     4: ("4th-local-2006", "20060531"),
 }
+# 회차별 정당명 명시 override — NEC API가 시대-구명을 줄 때 데이터셋 표기로 통일.
+#   2006(4회): API '새천년민주당'(2005 개명 전) → 데이터셋 '민주당(2005)'.
+OVERRIDE = {
+    4: {"민주당": "민주당(2005)"},   # 2006 API='민주당' → 데이터셋 '민주당(2005)' (2002는 API='새천년민주당'이라 그대로)
+}
 
 
 def load_key() -> str:
@@ -40,24 +45,39 @@ def load_key() -> str:
     return key
 
 
-def load_party_canon() -> dict:
-    """정당 alias/약칭 → 정식명 (registry.json). 비례 API의 '자민련'을 '자유민주연합'으로 통일."""
+def alias_map() -> dict:
+    """registry.json의 alias/약칭 → 정식명. (자민련→자유민주연합 등)"""
     reg = json.loads((ROOT / "data" / "parties" / "registry.json").read_text()).get("parties", {})
-    canon = {}
+    m = {}
     for name, info in reg.items():
         if name.startswith("_") or not isinstance(info, dict):
             continue
-        canon[name] = name
         if info.get("abbr"):
-            canon[info["abbr"]] = name
+            m[info["abbr"]] = name
         for a in info.get("aliases", []):
-            canon[a] = name
-    return canon
+            m[a] = name
+    return m
 
 
-def fetch_metro_prop(key: str, sg_id: str):
-    """sgTypecode=8 광역 비례 당선인 → {sido: {party: seats}}. 정당명 정규화."""
-    canon = load_party_canon()
+def make_canon(existing: set, override: dict) -> "callable":
+    """그 선거 데이터에 이미 있는 정당명 우선 유지 — 시대별 동명 정당(2006 '민주당' 등)을
+    lineage 캐논으로 과잉 매핑하지 않게. 명시 override(회차별) → existing → registry alias 순."""
+    al = alias_map()
+
+    def cf(party: str) -> str:
+        if party in override:        # 회차별 명시 매핑
+            return override[party]
+        if party in existing:
+            return party
+        c = al.get(party)
+        if c and c in existing:
+            return c
+        return party
+    return cf
+
+
+def fetch_metro_prop(key: str, sg_id: str, canon):
+    """sgTypecode=8 광역 비례 당선인 → {sido: {party: seats}}. 정당명 그 선거 표기로 정규화."""
     by_sido: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     page = 1
     while True:
@@ -72,7 +92,7 @@ def fetch_metro_prop(key: str, sg_id: str):
         for it in items:
             sido = (it.findtext("sdName") or "").strip()
             party = (it.findtext("jdName") or "").strip()
-            party = canon.get(party, party)
+            party = canon(party)
             if sido and party:
                 by_sido[sido][party] += 1
         total = int(root.findtext("body/totalCount") or 0)
@@ -103,10 +123,14 @@ def backfill(n: int, key: str, dry: bool) -> bool:
     path = RESULTS / f"{fid}.json"
     if not path.exists():
         print(f"  {fid}: 파일 없음 — skip"); return False
-    by_sido = fetch_metro_prop(key, sg_id)
+    data = json.loads(path.read_text())
+    # 그 선거에 이미 등장한 정당명 (지역구·단체장 등) — 비례 정당명을 여기에 맞춤.
+    # tc=8(비례)은 제외 — 직전 run이 쓴 값에 자기오염되지 않게.
+    existing = {c.get("party") for r in data.get("races", []) if r.get("sg_typecode") != "8"
+                for c in (r.get("candidates") or []) if c.get("party")}
+    by_sido = fetch_metro_prop(key, sg_id, make_canon(existing, OVERRIDE.get(n, {})))
     if not by_sido:
         print(f"  {fid}: API 비례 결과 없음 — skip"); return False
-    data = json.loads(path.read_text())
     races = data.get("races", [])
     # 기존 tc=8 제거 후 교체(재실행 idempotent)
     races = [r for r in races if r.get("sg_typecode") != "8"]
