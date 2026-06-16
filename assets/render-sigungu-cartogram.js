@@ -15,44 +15,9 @@
   }
   const hexCenter = (col, row, colW, rowH, offX, offY) => [offX + col * colW + (row % 2 ? colW / 2 : 0), offY + row * rowH];
 
-  // 작은 hex 스파이럴(1..N) — axial BFS.
-  function hexSpiral(N) {
-    const out = [[0, 0]]; if (N <= 1) return out;
-    const seen = new Set(['0,0']); let frontier = [[0, 0]];
-    const DIRS = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-    while (out.length < N) {
-      const next = [];
-      for (const [q, ar] of frontier) for (const [dq, dr] of DIRS) {
-        const nq = q + dq, nr = ar + dr, k = nq + ',' + nr;
-        if (seen.has(k)) continue;
-        seen.add(k); next.push([nq, nr]); out.push([nq, nr]);
-        if (out.length >= N) return out;
-      }
-      frontier = next;
-    }
-    return out;
-  }
-  // 후보별 hex 개수 — 큰 정수 잔여(largest remainder)로 N에 정확히.
-  function allocateByVotes(cands, N) {
-    const total = cands.reduce((s, c) => s + (c.votes || 0), 0);
-    if (!total) return cands.map(() => 0);
-    const raw = cands.map((c) => (c.votes || 0) * N / total);
-    const floors = raw.map(Math.floor);
-    const rem = N - floors.reduce((a, b) => a + b, 0);
-    const fr = raw.map((v, i) => ({ i, f: v - Math.floor(v) })).sort((a, b) => b.f - a.f);
-    for (let k = 0; k < rem; k++) floors[fr[k].i] += 1;
-    return floors;
-  }
-  // monotone-chain convex hull (dorling 권역 테두리용).
-  function convexHull(pts) {
-    const arr = [...pts].sort((a, b) => a.x - b.x || a.y - b.y);
-    const cross = (O, A, B) => (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
-    const lower = [];
-    for (const p of arr) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
-    const upper = [];
-    for (let i = arr.length - 1; i >= 0; i--) { const p = arr[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
-    return lower.slice(0, -1).concat(upper.slice(0, -1));
-  }
+  // 공용 알고리즘 — cartogram-util.js (역대 흐름과 단일화).
+  const CU = window.CartogramUtil || {};
+  const hexSpiral = CU.hexSpiral, allocateByVotes = CU.allocateByVotes, convexHull = CU.convexHull;
   // 권역(시도) 테두리 — 인접 셀 시도 다른 변(pointy-top odd-r).
   function sidoBorders(svg, cells, colW, rowH, offX, offY, r) {
     const key = (c, rr) => c + ',' + rr;
@@ -112,14 +77,7 @@
           radius: Math.max(3, (r - 0.7) * Math.sqrt((res.voted || 0) / maxVoted)),
           fill: top ? pcol(top.party) : '#e6e9ef', op: top ? gapOp(gap) : 1 });
       }
-      for (let it = 0; it < 40; it++) {
-        for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j], dx = b.cx - a.cx, dy = b.cy - a.cy;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.01, ov = a.radius + b.radius - dist;
-          if (ov > 0) { const p = ov * 0.5 / dist; a.cx -= p * dx; a.cy -= p * dy; b.cx += p * dx; b.cy += p * dy; }
-        }
-        for (const n of nodes) { n.cx += (n.cx0 - n.cx) * 0.05; n.cy += (n.cy0 - n.cy) * 0.05; }
-      }
+      CU.packCircles(nodes, 40);
       // 권역(시도) 테두리 — 시도별 convex hull(원 외곽 padding 포함).
       const groups = new Map();
       for (const n of nodes) { const k = n.d.sido; (groups.get(k) || groups.set(k, []).get(k)).push(n); }
@@ -134,11 +92,8 @@
         poly.setAttribute('stroke-width', '1.4'); poly.setAttribute('stroke-linejoin', 'round'); poly.setAttribute('pointer-events', 'none');
         svg.appendChild(poly);
       }
-      // 득표 비례 파이 원 — 후보 구성(승자독식 색 왜곡 제거).
-      const pieSlice = (cx, cy, rad, a0, a1) => {
-        const x0 = cx + rad * Math.cos(a0), y0 = cy + rad * Math.sin(a0), x1 = cx + rad * Math.cos(a1), y1 = cy + rad * Math.sin(a1);
-        return `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${x0.toFixed(2)} ${y0.toFixed(2)} A ${rad.toFixed(2)} ${rad.toFixed(2)} 0 ${(a1 - a0) > Math.PI ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
-      };
+      // 득표 비례 파이 원 — 후보 구성(승자독식 색 왜곡 제거). pieSlice는 공용.
+      const pieSlice = CU.pieSlice;
       for (const n of nodes) {
         const g = document.createElementNS(NS, 'g'); bindClick(g, n.d);
         const cs = n.cands, totalV = cs.reduce((s, c) => s + (c.votes || 0), 0);

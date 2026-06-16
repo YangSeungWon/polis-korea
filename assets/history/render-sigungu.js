@@ -73,42 +73,8 @@ function renderSigunguHex() {
   if (sizingMode === '격자' && maxVoted > 0) {
     const unit = 20000;  // 1 hex = 2만표 (고정 — 회차·선거 동일 단위로 비교 가능)
     const smallR = 3.2;  // unit ↓ → N ↑ (×2.5) → 면적 보존 위해 r √2.5 분의 1
-    // axial 좌표 BFS 스파이럴 (1..N hex 배치)
-    function hexSpiral(N) {
-      const out = [[0, 0]];
-      if (N <= 1) return out;
-      const seen = new Set(['0,0']);
-      let frontier = [[0, 0]];
-      const DIRS = [[1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1]];
-      while (out.length < N) {
-        const next = [];
-        for (const [q, ar] of frontier) {
-          for (const [dq, dr] of DIRS) {
-            const nq = q + dq, nr = ar + dr;
-            const key = nq + ',' + nr;
-            if (seen.has(key)) continue;
-            seen.add(key);
-            next.push([nq, nr]);
-            out.push([nq, nr]);
-            if (out.length >= N) return out;
-          }
-        }
-        frontier = next;
-      }
-      return out;
-    }
-    // 후보별 hex 개수 — 큰 정수 잔여(largest remainder) 방식으로 N에 정확히 맞춤.
-    function allocateByVotes(cands, N) {
-      const total = cands.reduce((s, c) => s + (c.votes || 0), 0);
-      if (!total) return cands.map(() => 0);
-      const raw = cands.map((c) => (c.votes || 0) * N / total);
-      const floors = raw.map(Math.floor);
-      let rem = N - floors.reduce((a, b) => a + b, 0);
-      const fracs = raw.map((v, i) => ({ i, f: v - Math.floor(v) }))
-                       .sort((a, b) => b.f - a.f);
-      for (let k = 0; k < rem; k++) floors[fracs[k].i] += 1;
-      return floors;
-    }
+    // 스파이럴·득표배분은 공용(cartogram-util.js) — 종합/폴 카토그램과 단일화.
+    const hexSpiral = CartogramUtil.hexSpiral, allocateByVotes = CartogramUtil.allocateByVotes;
     // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — 대선·총선·지선 공통.
     drawSidoEdgeLabels(svg, data.map((d) => {
       const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
@@ -236,27 +202,7 @@ function renderSigunguHex() {
       };
     });
     for (const n of nodes) { n.cx = n.cx0; n.cy = n.cy0; }
-    // Force-directed (30 iterations): repel overlaps + anchor to original
-    for (let iter = 0; iter < 40; iter++) {
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = b.cx - a.cx, dy = b.cy - a.cy;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-          const overlap = a.radius + b.radius - dist;
-          if (overlap > 0) {
-            const push = overlap * 0.5 / dist;
-            a.cx -= push * dx; a.cy -= push * dy;
-            b.cx += push * dx; b.cy += push * dy;
-          }
-        }
-      }
-      // Anchor towards original position
-      for (const n of nodes) {
-        n.cx += (n.cx0 - n.cx) * 0.05;
-        n.cy += (n.cy0 - n.cy) * 0.05;
-      }
-    }
+    CartogramUtil.packCircles(nodes, 40);   // force-directed 원 패킹 (공용)
     // 시도별 그룹핑 (권역 테두리 + 라벨 centroid 공용)
     const sidoGroups = new Map();
     for (const n of nodes) {
@@ -265,24 +211,8 @@ function renderSigunguHex() {
       list.push(n);
       sidoGroups.set(k, list);
     }
-    // 권역 테두리 — 시도별 convex hull (각 node의 원 외곽 padding 포함).
-    // monotone chain 알고리즘. nodes 적어 성능 부담 X.
-    function _convexHull(pts) {
-      const arr = [...pts].sort((a, b) => a.x - b.x || a.y - b.y);
-      const cross = (O, A, B) => (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
-      const lower = [];
-      for (const p of arr) {
-        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop();
-        lower.push(p);
-      }
-      const upper = [];
-      for (let i = arr.length - 1; i >= 0; i--) {
-        const p = arr[i];
-        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop();
-        upper.push(p);
-      }
-      return lower.slice(0, -1).concat(upper.slice(0, -1));
-    }
+    // 권역 테두리 — 시도별 convex hull (공용 cartogram-util).
+    const _convexHull = CartogramUtil.convexHull;
     for (const [sido, list] of sidoGroups) {
       const expanded = [];
       for (const n of list) {
@@ -308,13 +238,7 @@ function renderSigunguHex() {
     drawSidoEdgeLabels(svg, [...sidoGroups].flatMap(([s, list]) =>
       list.map((n) => ({ sido: s, cx: n.cx, cy: n.cy }))));
     // 파이 슬라이스 path (top 기준 시계방향). 면적=표수(원), 파이=후보 구성.
-    const pieSlice = (cx, cy, rad, a0, a1) => {
-      const x0 = cx + rad * Math.cos(a0), y0 = cy + rad * Math.sin(a0);
-      const x1 = cx + rad * Math.cos(a1), y1 = cy + rad * Math.sin(a1);
-      const large = (a1 - a0) > Math.PI ? 1 : 0;
-      return `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${x0.toFixed(2)} ${y0.toFixed(2)} `
-           + `A ${rad.toFixed(2)} ${rad.toFixed(2)} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
-    };
+    const pieSlice = CartogramUtil.pieSlice;   // 공용
     for (const n of nodes) {
       const isSelected = state.selected
         && state.selected.sido === n.d.sido && state.selected.name === n.d.name;
