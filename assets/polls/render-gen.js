@@ -26,7 +26,8 @@
   }
 
   function pc(p) { return typeof partyColor === 'function' ? partyColor(p) : '#888'; }
-  function ptc(p) { return typeof partyTextColor === 'function' ? partyTextColor(p) : 'inherit'; }
+  function ptc(p) { return typeof partyTextColor === 'function' ? partyTextColor(p) : 'inherit'; }  // 흰 배경용(정당색 글씨)
+  function tc(p) { return typeof pickTextColor === 'function' ? pickTextColor(pc(p), 1) : '#fff'; }  // 정당색 배경 위 대비 글씨
 
   // (정당 지지율 추이 헤드라인은 '선거 무렵 분위기'(climate)로 통합 — 중복 제거.)
 
@@ -99,7 +100,7 @@
     const pr = gs.pollFn(sido, name), rr = gs.resultFn(sido, name);
     const pTop = pr && pr.candidates[0], rTop = rr && rr.candidates[0];
     const chip = (c, lab) => c
-      ? `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> <b style="color:${ptc(c.party)};background:${pc(c.party)};padding:1px 6px;border-radius:3px">${c.name || c.party}</b> ${c.pct != null ? c.pct.toFixed(1) + '%' : ''}</span>`
+      ? `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> <b style="color:${tc(c.party)};background:${pc(c.party)};padding:1px 6px;border-radius:3px">${c.name || c.party}</b> ${c.pct != null ? c.pct.toFixed(1) + '%' : ''}</span>`
       : `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> —</span>`;
     const hit = pTop && rTop ? (pTop.party === rTop.party) : null;
     el.innerHTML = `<div class="gdr-head">${sido} ${name}${hit === false ? ' <span class="gdr-miss">여론조사 빗나감</span>' : (hit ? ' <span class="gdr-ok">적중</span>' : '')}</div>`

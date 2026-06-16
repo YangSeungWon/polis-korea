@@ -57,7 +57,9 @@
     if (!layout || !layout.length) return null;
     const r = opts.r || 22;
     const topFn = opts.topFn || ((res) => res && res.candidates && res.candidates[0]);
-    const tColor = opts.textColor || ((fill, op, party) => (typeof partyTextColor === 'function' ? partyTextColor(party) : '#0a0e1a'));
+    // 채움색(정당색) 위 글씨 — 대비 기반(pickTextColor)이라야 보임. partyTextColor는 정당색을
+    // 그대로 반환(흰 배경용)이라 채운 셀 위에선 채움색==글씨색으로 안 보임.
+    const tColor = opts.textColor || ((fill, op, party) => (typeof pickTextColor === 'function' ? pickTextColor(fill, op) : '#0a0e1a'));
     const emptyOpacity = opts.emptyOpacity != null ? opts.emptyOpacity : 1;
     const emptyFill = opts.emptyFill || '#e6e9ef';
     const colW = r * Math.sqrt(3), rowH = r * 1.5;
