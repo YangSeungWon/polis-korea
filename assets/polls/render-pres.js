@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const ps = { mode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', viewmode: 'dorling', sidoRaces: [], nationRace: null, weights: {} };
+  const ps = { mode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', viewmode: 'dorling', sidoRaces: [], sigunguRaces: [], nationRace: null, weights: {} };
 
   // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆).
   // 본선 선별·정규화는 PollAdapter.presTrend가 담당 — 여기선 형태만 렌더로 넘김.
@@ -42,11 +42,41 @@
       const r = await fetch(POLL_ELECTION.results_path);
       if (!r.ok) return;
       const d = await r.json();
-      const races = d.races || [];
+      let races = d.races || [];
+      if (d._meta && d._meta.chunked) {   // 시군구는 .sigungu.json 청크에 — 결과 맵용
+        const cr = await fetch(POLL_ELECTION.results_path.replace(/\.json$/, '.sigungu.json'))
+          .then((x) => (x.ok ? x.json() : null)).catch(() => null);
+        if (cr && cr.races) races = races.concat(cr.races);
+      }
       ps.sidoRaces = races.filter((x) => x.scope === 'sido');
+      ps.sigunguRaces = races.filter((x) => x.scope === 'sigungu');
       ps.nationRace = races.find((x) => x.scope === 'nation') || null;
       ps.weights = PollAdapter.weightsFromResults(races);
     } catch (e) { /* 결과 없으면 폴 모드만 */ }
+  }
+
+  // 시·군·구 1위 후보 결과 맵 (1위색 + 격차 명도). council-hex 재사용.
+  async function renderSigunguResult() {
+    const CH = window.Archive && window.Archive.councilHex;
+    if (!CH || !CH.initResult || !(ps.sigunguRaces || []).length) return;
+    let sec = document.getElementById('pres-sgg-result');
+    if (!sec) {
+      sec = document.createElement('section');
+      sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
+      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 색=후보 정당, 짙을수록 격차 큼</span></h3>'
+        + '<div class="pres-sgg-host"></div><div class="pres-sgg-legend"></div>';
+      const anchor = document.getElementById('pres-host') || document.querySelector('.viz-main') || document.querySelector('.viz');
+      (anchor && anchor.parentElement ? anchor.parentElement : document.body).appendChild(sec);
+    }
+    const info = await CH.initResult(
+      { results: { races: ps.sigunguRaces }, meta: { electionN: POLL_ELECTION.n, electionKind: 'presidential' } },
+      sec.querySelector('.pres-sgg-host'));
+    const leg = sec.querySelector('.pres-sgg-legend');
+    if (info && info.parties && leg) {
+      const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+      leg.innerHTML = info.parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
+        + ' <span class="pres-sgg-note">· 명도 = 1·2위 격차</span>';
+    }
   }
 
   function cells() {
@@ -157,6 +187,7 @@
     renderTrend();   // 헤드라인 (모드 무관 — 폴 추이 + 실제 ◆)
     if (window.PollClimate) PollClimate.mount({ after: 'pres-trend' });  // 선거 무렵 국정·정당 지지
     render();        // 보조 (지역·비례 dorling/격자 + 전국 바)
+    renderSigunguResult();   // 시군구 1위 후보 결과 맵(비동기)
     return true;
   }
 

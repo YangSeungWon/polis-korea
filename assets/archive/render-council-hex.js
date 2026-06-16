@@ -413,7 +413,82 @@
       + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${shown}개 시군구</span>`;
   }
 
+  // ── 시군구 1위 후보 결과 맵 (대선) ──────────────────────────────
+  // 1위 후보 정당색 + 격차(1위−2위 pct) 명도. 승자독식 단색 금지를 명도로 절충 — 박빙 옅게·압도 진하게.
+  function resultBySigungu(races, tc) {
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+    const put = (m, k, w) => { if (!m.has(k)) m.set(k, w); };
+    const m = new Map();
+    for (const r of races || []) {
+      if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (!cs.length || !cs[0].party) continue;
+      const win = { party: cs[0].party, name: cs[0].name, pct: cs[0].pct || 0,
+        margin: (cs[0].pct || 0) - (cs[1] ? (cs[1].pct || 0) : 0) };
+      const sido = canon(r.sido);
+      put(m, normalizeKey(sido, stripSfx(r.sigungu)), win);
+      put(m, normalizeKey(sido, parentSigungu(sido, r.sigungu)), win);
+    }
+    return m;
+  }
+  function marginOpacity(margin) { return 0.4 + 0.6 * Math.max(0, Math.min(1, margin / 40)); }
+
+  function renderResult(svg, hexCells, rmap) {
+    const maxC = Math.max(...hexCells.map((c) => c.c)), maxR = Math.max(...hexCells.map((c) => c.r));
+    const w = OFF_X * 2 + (maxC + 1) * COL_W, h = OFF_Y * 2 + (maxR + 1) * ROW_H;
+    const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;
+    svg.setAttribute('viewBox', `${-EM} 0 ${w + 2 * EM} ${h}`);
+    svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
+    const PARENT_R = 13.85;
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const valueOf = (c) => rmap.get(normalizeKey(canon(c.sido), stripSfx(c.name)))
+      || rmap.get(normalizeKey(canon(c.sido), parentSigungu(canon(c.sido), c.name)));
+    let shown = 0; const parties = new Set();
+    for (const cell of hexCells) {
+      const [cx, cy] = hexCenter(cell.c, cell.r);
+      const win = valueOf(cell);
+      const g = document.createElementNS(NS, 'g');
+      const poly = document.createElementNS(NS, 'polygon');
+      poly.setAttribute('points', hexPoints(cx, cy, PARENT_R));
+      if (win) {
+        poly.setAttribute('fill', pcol(win.party));
+        poly.setAttribute('fill-opacity', marginOpacity(win.margin).toFixed(2));
+        poly.setAttribute('class', 'council-result-cell');
+        shown += 1; parties.add(win.party);
+      } else { poly.setAttribute('class', 'council-outline no-data'); }
+      poly.setAttribute('stroke', 'var(--bg, #fff)'); poly.setAttribute('stroke-width', '0.6');
+      g.appendChild(poly);
+      const label = win ? `${cell.sido} ${cell.name} · ${win.name}(${win.party}) ${win.pct.toFixed(1)}% · 격차 ${win.margin.toFixed(1)}%p`
+        : `${cell.sido} ${cell.name} · 데이터 없음`;
+      const tt = document.createElementNS(NS, 'title'); tt.textContent = label; g.appendChild(tt);
+      bindTip(g, label);
+      svg.appendChild(g);
+    }
+    drawSidoBorders(svg, hexCells, PARENT_R);
+    if (typeof drawSidoEdgeLabels === 'function') {
+      const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
+      drawSidoEdgeLabels(svg, pts);
+    }
+    return { shown, parties: [...parties] };
+  }
+
+  // host(요소)에 시군구 1위 후보 결과 맵 렌더. ctx={results, meta}. 대선 폴 등에서 호출.
+  async function initResult(ctx, host) {
+    const rmap = resultBySigungu(ctx?.results?.races || [], '1');
+    if (rmap.size < 4 || !host) return null;
+    const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
+    if (!hexCells.length) return null;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg result-map');
+    const info = renderResult(svg, hexCells, rmap);
+    host.innerHTML = ''; host.appendChild(svg);
+    return info;
+  }
+
   // archive/local.js render 끝나면 호출. window.Archive 네임스페이스 attach.
   window.Archive = window.Archive || {};
-  window.Archive.councilHex = { init, initTurnout };
+  window.Archive.councilHex = { init, initTurnout, initResult };
 })();
