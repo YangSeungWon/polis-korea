@@ -222,7 +222,92 @@
     }
   }
 
+  // ── 시군구 투표율 맵 ──────────────────────────────────────────────
+  // 같은 시군구 hex 레이아웃을 단색(투표율 그라데이션)으로. 소스 = 광역단체장(tc=3)의
+  // 시군구 분해(가장 완전 — 세종/제주 자치구 등 기초장 없는 곳 포함). 없으면 기초장(tc=4).
+  function turnoutBySigungu(races) {
+    for (const tc of ['3', '4']) {
+      const m = new Map();
+      for (const r of races || []) {
+        if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
+        const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
+        if (el > 0 && vt > 0) m.set(normalizeKey(r.sido, r.sigungu), vt / el * 100);
+      }
+      if (m.size) return m;
+    }
+    return new Map();
+  }
+
+  function renderTurnout(svg, hexCells, tmap) {
+    const maxC = Math.max(...hexCells.map((c) => c.c));
+    const maxR = Math.max(...hexCells.map((c) => c.r));
+    const w = OFF_X * 2 + (maxC + 1) * COL_W;
+    const h = OFF_Y * 2 + (maxR + 1) * ROW_H;
+    const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;
+    svg.setAttribute('viewBox', `${-EM} 0 ${w + 2 * EM} ${h}`);
+    svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
+    const PARENT_R = 13.85;
+    const color = window.Archive?.turnout?.color || (() => '#88a');
+    let lo = Infinity, hi = -Infinity, shown = 0;
+    for (const cell of hexCells) {
+      const [cx, cy] = hexCenter(cell.c, cell.r);
+      const to = tmap.get(normalizeKey(cell.sido, cell.name));
+      const g = document.createElementNS(NS, 'g');
+      const poly = document.createElementNS(NS, 'polygon');
+      poly.setAttribute('points', hexPoints(cx, cy, PARENT_R));
+      if (to != null) {
+        poly.setAttribute('fill', color(to));
+        poly.setAttribute('class', 'council-turnout-cell');
+        lo = Math.min(lo, to); hi = Math.max(hi, to); shown += 1;
+      } else {
+        poly.setAttribute('class', 'council-outline no-data');
+      }
+      poly.setAttribute('stroke', 'var(--bg, #fff)'); poly.setAttribute('stroke-width', '0.6');
+      g.appendChild(poly);
+      const tt = document.createElementNS(NS, 'title');
+      tt.textContent = `${cell.sido} ${cell.name} · ${to != null ? '투표율 ' + to.toFixed(1) + '%' : '데이터 없음'}`;
+      g.appendChild(tt);
+      svg.appendChild(g);
+    }
+    if (typeof drawSidoEdgeLabels === 'function') {
+      const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
+      drawSidoEdgeLabels(svg, pts);
+    }
+    return { lo, hi, shown };
+  }
+
+  // 동적 섹션 주입 — #ar-council-hex 섹션 뒤(없으면 미주입). HTML 템플릿 변경 불필요.
+  async function initTurnout(ctx) {
+    const races = ctx?.results?.races || [];
+    const tmap = turnoutBySigungu(races);
+    if (tmap.size < 4) return;                       // 시군구 투표율 데이터 거의 없으면 생략
+    const hexCells = await loadHexLayout(ctx?.meta?.electionN);
+    if (!hexCells.length) return;
+    const anchor = document.getElementById('ar-council-hex')?.closest('.ar-section')
+      || document.getElementById('ar-council-hex')?.parentElement;
+    if (!anchor || !anchor.parentElement) return;
+    let sec = document.getElementById('ar-sgg-turnout');
+    if (!sec) {
+      sec = document.createElement('section');
+      sec.className = 'ar-section'; sec.id = 'ar-sgg-turnout';
+      sec.innerHTML = '<h2 class="ar-section-title">시군구 투표율</h2>'
+        + '<p class="ar-source-line">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 광역단체장 기준.</p>'
+        + '<div class="ar-sgg-turnout-host"></div><div class="ar-turnout-legend"></div>';
+      anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+    }
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg');
+    const { lo, hi, shown } = renderTurnout(svg, hexCells, tmap);
+    const host = sec.querySelector('.ar-sgg-turnout-host');
+    host.innerHTML = ''; host.appendChild(svg);
+    const stops = window.Archive?.turnout?.stops || [[238, 243, 241], [78, 163, 145], [10, 74, 66]];
+    const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
+    const leg = sec.querySelector('.ar-turnout-legend');
+    leg.innerHTML = `<span>45%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
+      + `<span>80%+</span><span class="ar-turnout-range">이 선거 ${lo.toFixed(1)}–${hi.toFixed(1)}% · ${shown}개 시군구</span>`;
+  }
+
   // archive/local.js render 끝나면 호출. window.Archive 네임스페이스 attach.
   window.Archive = window.Archive || {};
-  window.Archive.councilHex = { init };
+  window.Archive.councilHex = { init, initTurnout };
 })();

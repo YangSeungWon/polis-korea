@@ -122,4 +122,6 @@
   window.Archive = window.Archive || {};
   // drawTurnout 노출 — 총선(general.js)은 선거구를 시도로 합산한 pseudo-race[{sido,electors,voters}]로 호출.
   window.Archive.sidoView = { init, mount, drawTurnout: (el, races) => drawTurnout(el, races, window.Archive) };
+  // 투표율 색 스케일 공유 — 시군구 투표율 맵(render-council-hex)도 동일 절대 스케일 사용.
+  window.Archive.turnout = { color: turnoutColor, stops: TURNOUT_STOPS };
 })();
