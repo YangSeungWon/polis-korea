@@ -801,3 +801,6 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 }
 .ar-sc-row + .ar-sc-other { border-top: none; margin-top: -4px; }
 .ar-sc-oseg { font-weight: 600; }
+/* 비례 시·도별 분포 맵 (총선) */
+.ar-prop-map { margin-top: 22px; }
+.ar-subhead { font-size: 14px; font-weight: 700; color: var(--ink-soft); margin: 0 0 10px; }

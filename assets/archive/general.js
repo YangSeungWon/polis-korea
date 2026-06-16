@@ -155,6 +155,31 @@
     html += '</div>';
     document.getElementById('ar-proportional-host').innerHTML = html;
     document.getElementById('ar-proportional').hidden = false;
+    renderPropMap(ctx);
+  }
+
+  // 비례 시·도별 분포 — 대선과 동일하게 sidoProp(격자/dorling, 득표 비례). 정당투표의 지리적 분포.
+  function renderPropMap(ctx) {
+    const SP = window.Archive.sidoProp, SV = window.Archive.sidoView;
+    if (!SP) return;
+    const sidoRaces = (ctx.results?.races || []).filter(
+      (r) => r.scope === 'sido' && r.sg_typecode === propSg(ctx.meta) && (r.candidates || []).length);
+    const sec = document.getElementById('ar-proportional');
+    if (sidoRaces.length < 4 || !sec) return;
+    let host = document.getElementById('ar-prop-map');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'ar-prop-map'; host.className = 'ar-prop-map';
+      host.innerHTML = '<h3 class="ar-subhead">시·도별 비례 득표 분포 — 색=정당, 면적=득표</h3>'
+        + '<div class="ar-prop-map-toggle"></div>';
+      sec.appendChild(host);
+    }
+    const modes = [
+      { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, sidoRaces, {}) },
+      { key: 'dorling', label: 'dorling', draw: (el) => SP.drawDorling(el, sidoRaces, {}) },
+    ];
+    if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
+    else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});
   }
 
   function renderDistricts(ctx) {
