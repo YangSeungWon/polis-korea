@@ -60,9 +60,14 @@ def derive(meta: dict) -> dict:
         breadcrumb = (f'<a href="/timeline.html">타임라인</a> · '
                       f'<a href="/history.html?type={km["history_type"]}&n={meta["n"]}">역대 선거</a> · '
                       f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
+    # 선거별 결과지도 og 카드(build_og_maps.py 생성). 없으면(지도 없는 옛 회차) 일반 카드.
+    _og = ROOT / "og" / f'{meta["id"]}.png'
+    og_image = (f'https://polis.ysw.kr/og/{meta["id"]}.png' if _og.exists()
+                else "https://polis.ysw.kr/og.png")
     return {
         "breadcrumb": breadcrumb,
         "id": meta["id"],
+        "og_image": og_image,
         "name": meta["name"],
         "date": meta["date"],
         "date_label": date_label,
@@ -86,12 +91,22 @@ HEAD = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#5b54d6">
 <base href="/">
 <title>polis · {name} ({date})</title>
 <meta name="description" content="{name}({date}) 결과·여론조사·출구조사 비교 아카이브.">
 <meta property="og:title" content="polis · {n}{n_unit} {kind_short} 아카이브">
 <meta property="og:description" content="{n}{n_unit} {kind_short} 결과·여론조사·출구조사 비교.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="{og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{og_image}">
 <link rel="canonical" href="/archive/{id}/">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">

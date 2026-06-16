@@ -64,10 +64,16 @@ TYPE_SLUG = {
 }
 
 
-def replace_meta(html: str, title: str, description: str, canonical: str, init_state: dict) -> str:
-    """템플릿에서 title/desc/og/canonical/initial-state 부분을 새 값으로 치환."""
+def replace_meta(html: str, title: str, description: str, canonical: str, init_state: dict, og_image: str = None) -> str:
+    """템플릿에서 title/desc/og/canonical/initial-state 부분을 새 값으로 치환.
+    og_image 주면 선거별 결과지도 카드로 og:image·twitter:image 교체."""
     import re
     html = re.sub(r'<title>[^<]*</title>', f'<title>{title}</title>', html, count=1)
+    if og_image:
+        html = re.sub(r'<meta property="og:image" content="[^"]*">',
+                      f'<meta property="og:image" content="{og_image}">', html, count=1)
+        html = re.sub(r'<meta name="twitter:image" content="[^"]*">',
+                      f'<meta name="twitter:image" content="{og_image}">', html, count=1)
     html = re.sub(
         r'<meta name="description" content="[^"]*">',
         f'<meta name="description" content="{description}">',
@@ -179,8 +185,11 @@ def build_poll_elections(urls: list):
         title = f'polis · {n}{unit} {short} 여론조사 vs 실제 ({date_s})'
         desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도 비례로 비교.'
         canon = f'/polls/{slug}/'
+        # 선거별 결과지도 카드(build_og_maps.py). 없으면 일반 카드(템플릿 기본값 유지).
+        _og = ROOT / 'og' / f'{slug}.png'
+        og_image = f'{SITE}/og/{slug}.png' if _og.exists() else None
         # __INITIAL_STATE__.election 주입 — core.js POLL_ELECTION 기본값을 덮어씀.
-        html = replace_meta(template, title, desc, canon, {'election': meta})
+        html = replace_meta(template, title, desc, canon, {'election': meta}, og_image=og_image)
         write_page(ROOT / 'polls' / slug / 'index.html', html)
         urls.append((canon, '0.6', 'monthly'))
         made.append({'slug': slug, 'name': meta['name'], 'date': date_s, 'n': n})
