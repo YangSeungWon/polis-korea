@@ -62,7 +62,10 @@
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
     let voters = 0, electors = 0;
     for (const r of districtRaces(results, sgTypecode)) {
-      voters += r.voters || 0; electors += r.electors || 0;
+      electors += r.electors || 0;
+      // 옛 총선(14~16대)은 지역구 voters(투표수)가 없음 — 후보 득표합+무효로 보정(없으면 valid 근사).
+      voters += r.voters
+        || ((r.candidates || []).reduce((s, c) => s + (c.votes || 0), 0) + (r.invalid_votes || 0));
     }
     if (electors > 0) setText('ar-turnout', (voters / electors * 100).toFixed(1) + '%');
     // 박빙 — 1·2위 차이 5%p 미만 지역구
