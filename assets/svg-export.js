@@ -113,7 +113,36 @@
 
   function scan() { document.querySelectorAll(MAP_SEL).forEach(attach); }
 
+  // 공유 링크 딥링크 — /archive/{slug}/#geo 로 들어오면 그 뷰 토글을 활성화하고 스크롤.
+  // 미리보기(og:image)와 착지 뷰를 일치시킨다. 뷰 키→SVG 클래스로 섹션 역추적(키 중복 회피).
+  const KEY2CLASS = {
+    governor: 'governor-hex-svg', council: 'council-hex-svg', dorling: 'ar-sidocluster-svg',
+    geo: 'sido-map-svg', seats: 'parliament-chart',
+  };
+  function applyHashView() {
+    const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');
+    const cls = KEY2CLASS[key];
+    if (!cls) return false;
+    const svg = document.querySelector('.ar-sido-view svg.' + cls) || document.querySelector('svg.' + cls);
+    if (!svg) return false;
+    const view = svg.closest('.ar-sido-view');
+    if (view) {
+      const host = view.parentElement;
+      const tab = host && host.querySelector('.ar-sido-tab[data-view="' + view.dataset.view + '"]');
+      if (tab && !tab.classList.contains('is-active')) tab.click();
+      (view.closest('.ar-section') || view).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      svg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return true;
+  }
+
   const obs = new MutationObserver(scan);
   if (document.body) obs.observe(document.body, { childList: true, subtree: true });
-  document.addEventListener('DOMContentLoaded', function () { setTimeout(scan, 1500); });
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(scan, 1500);
+    // 지도는 비동기 렌더 — 뜰 때까지 몇 번 재시도
+    if (location.hash) [1600, 2600, 3600].forEach(function (t) { setTimeout(applyHashView, t); });
+  });
+  window.addEventListener('hashchange', applyHashView);
 })();

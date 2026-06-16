@@ -41,8 +41,8 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:image" content="{img}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="{target}">
-<meta http-equiv="refresh" content="0; url={target}">
-<script>location.replace("{target}");</script>
+<meta http-equiv="refresh" content="0; url={target_hash}">
+<script>location.replace("{target_hash}");</script>
 </head>
 <body style="font-family:Pretendard,sans-serif;padding:40px">
 <p>{title} — <a href="{target}">결과 보기 →</a></p>
@@ -74,6 +74,7 @@ def main():
                 img=f"{SITE}/og/{slug}/{view}.png",
                 share_url=share_url,
                 target=target,
+                target_hash=f"{target}#{view}",
             )
             out = SHARE / slug / view / "index.html"
             out.parent.mkdir(parents=True, exist_ok=True)
