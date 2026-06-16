@@ -19,10 +19,10 @@
       if (tc === '3' && r.scope === 'sido') {
         const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
         if (top) byTc['3'][top.party] = (byTc['3'][top.party] || 0) + 1;
-        voters += r.voters || 0; electors += r.electors || 0; raceCount++;
+        voters += (r.voters ?? r.voted ?? 0); electors += r.electors || 0; raceCount++;
       } else if (tc === '3' && r.scope === 'nation') {
         for (const c of r.candidates || []) if (c.party && c.seats) byTc['3'][c.party] = (byTc['3'][c.party] || 0) + c.seats;
-        voters += r.voters || 0; electors += r.electors || 0;
+        voters += (r.voters ?? r.voted ?? 0); electors += r.electors || 0;
       } else if (tc === '4' && r.scope === 'sigungu') {
         const top = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
         if (top) byTc['4'][top.party] = (byTc['4'][top.party] || 0) + 1;
@@ -50,7 +50,11 @@
     for (const tc of ['3', '4', '5', '6']) {
       for (const [p, n] of Object.entries(byTc[tc])) totalByParty[p] = (totalByParty[p] || 0) + n;
     }
-    const sorted = Object.entries(totalByParty).sort((a, b) => b[1] - a[1]);
+    // 헤드라인 1·2당은 '정당'만 — 무소속 제외(1~3회 기초의원은 정당공천 금지로 전원 무소속이라
+    // 합산이 무소속에 쏠려 헤드라인을 왜곡함). 무소속 수치는 각 직위 '기타'에 그대로 표시됨.
+    const sorted = Object.entries(totalByParty)
+      .filter(([p]) => p && p !== '무소속')
+      .sort((a, b) => b[1] - a[1]);
     if (sorted.length === 0) return;
     const p1 = sorted[0][0], p2 = sorted[1]?.[0] || null;
     const sc = document.getElementById('ar-scorecard');
@@ -141,7 +145,7 @@
     for (const r of races) {
       const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       const top = cands[0];
-      const electors = r.electors || 0, voted = r.voters || 0;
+      const electors = r.electors || 0, voted = (r.voters ?? r.voted ?? 0);
       const turnout = electors > 0 ? (voted / electors * 100) : 0;
       const countPct = r.count_pct != null ? r.count_pct : null;  // 개표율 (NEC GAEPYOYUL)
       const col = top ? pcol(top.party) : '#999';
