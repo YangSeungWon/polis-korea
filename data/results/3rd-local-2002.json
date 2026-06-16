@@ -646,35 +646,66 @@
       "sido": "서울특별시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 7665343,
+      "voters": 3512670,
+      "valid_votes": 3448067,
+      "invalid_votes": 64603,
+      "abstain": 4152673,
       "seats_total": 10,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 1786587,
+          "pct": 51.81,
           "seats": 5,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 1277362,
+          "pct": 37.04,
           "seats": 4,
+          "rank": 2,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 209042,
+          "pct": 6.06,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 85137,
+          "pct": 2.46,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 61409,
+          "pct": 1.78,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 28530,
+          "pct": 0.82,
+          "seats": 0,
+          "rank": 6,
+          "won": false
         }
       ]
     },
@@ -683,35 +714,57 @@
       "sido": "부산광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 2784721,
+      "voters": 1163397,
+      "valid_votes": 1135211,
+      "invalid_votes": 28186,
+      "abstain": 1621324,
       "seats_total": 4,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 814272,
+          "pct": 71.72,
           "seats": 2,
-          "won": true
-        },
-        {
-          "name": "민주노동당",
-          "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
-          "seats": 1,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 159570,
+          "pct": 14.05,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 121072,
+          "pct": 10.66,
+          "seats": 1,
+          "rank": 3,
+          "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 24083,
+          "pct": 2.12,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 16214,
+          "pct": 1.42,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -720,26 +773,66 @@
       "sido": "대구광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1814278,
+      "voters": 752687,
+      "valid_votes": 732561,
+      "invalid_votes": 20126,
+      "abstain": 1061591,
       "seats_total": 3,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 558498,
+          "pct": 76.23,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "한국미래연합",
           "party": "한국미래연합",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 60483,
+          "pct": 8.25,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "새천년민주당",
+          "party": "새천년민주당",
+          "votes": 56324,
+          "pct": 7.68,
+          "seats": 0,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 37890,
+          "pct": 5.17,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 12038,
+          "pct": 1.64,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 7328,
+          "pct": 1.0,
+          "seats": 0,
+          "rank": 6,
+          "won": false
         }
       ]
     },
@@ -748,26 +841,75 @@
       "sido": "인천광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1809907,
+      "voters": 712047,
+      "valid_votes": 694418,
+      "invalid_votes": 17629,
+      "abstain": 1097860,
       "seats_total": 3,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 377969,
+          "pct": 54.42,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 206895,
+          "pct": 29.79,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 43610,
+          "pct": 6.28,
+          "seats": 0,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 24700,
+          "pct": 3.55,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 18037,
+          "pct": 2.59,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "한국미래연합",
+          "party": "한국미래연합",
+          "votes": 13746,
+          "pct": 1.97,
+          "seats": 0,
+          "rank": 6,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 9461,
+          "pct": 1.36,
+          "seats": 0,
+          "rank": 7,
+          "won": false
         }
       ]
     },
@@ -776,26 +918,66 @@
       "sido": "광주광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 954481,
+      "voters": 404078,
+      "valid_votes": 392759,
+      "invalid_votes": 11319,
+      "abstain": 550403,
       "seats_total": 3,
       "candidates": [
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 276656,
+          "pct": 70.43,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 58089,
+          "pct": 14.78,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 33432,
+          "pct": 8.51,
+          "seats": 0,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 10288,
+          "pct": 2.61,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 9388,
+          "pct": 2.39,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 4906,
+          "pct": 1.24,
+          "seats": 0,
+          "rank": 6,
+          "won": false
         }
       ]
     },
@@ -804,35 +986,57 @@
       "sido": "대전광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 987180,
+      "voters": 418053,
+      "valid_votes": 407761,
+      "invalid_votes": 10292,
+      "abstain": 569127,
       "seats_total": 3,
       "candidates": [
         {
-          "name": "새천년민주당",
-          "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
-          "seats": 1,
-          "won": true
-        },
-        {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 174796,
+          "pct": 42.86,
           "seats": 1,
+          "rank": 1,
           "won": true
         },
         {
           "name": "자유민주연합",
           "party": "자유민주연합",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 142701,
+          "pct": 34.99,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "새천년민주당",
+          "party": "새천년민주당",
+          "votes": 51349,
+          "pct": 12.59,
+          "seats": 1,
+          "rank": 3,
+          "won": true
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 30752,
+          "pct": 7.54,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 8163,
+          "pct": 2.0,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -841,26 +1045,48 @@
       "sido": "울산광역시",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 722806,
+      "voters": 378333,
+      "valid_votes": 369790,
+      "invalid_votes": 8543,
+      "abstain": 344473,
       "seats_total": 3,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 222777,
+          "pct": 60.24,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 106136,
+          "pct": 28.7,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "새천년민주당",
+          "party": "새천년민주당",
+          "votes": 31861,
+          "pct": 8.61,
+          "seats": 0,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 9016,
+          "pct": 2.43,
+          "seats": 0,
+          "rank": 4,
+          "won": false
         }
       ]
     },
@@ -869,35 +1095,66 @@
       "sido": "경기도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 6777575,
+      "voters": 3026860,
+      "valid_votes": 2956196,
+      "invalid_votes": 70664,
+      "abstain": 3750715,
       "seats_total": 10,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 1626024,
+          "pct": 55.0,
           "seats": 6,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 952023,
+          "pct": 32.2,
           "seats": 3,
+          "rank": 2,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 172111,
+          "pct": 5.82,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 114351,
+          "pct": 3.86,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 63722,
+          "pct": 2.15,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 27965,
+          "pct": 0.94,
+          "seats": 0,
+          "rank": 6,
+          "won": false
         }
       ]
     },
@@ -906,35 +1163,57 @@
       "sido": "강원도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1129859,
+      "voters": 671456,
+      "valid_votes": 646506,
+      "invalid_votes": 24950,
+      "abstain": 458403,
       "seats_total": 4,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 394037,
+          "pct": 60.94,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 140352,
+          "pct": 21.7,
           "seats": 1,
+          "rank": 2,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 55889,
+          "pct": 8.64,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 40686,
+          "pct": 6.29,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 15542,
+          "pct": 2.4,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -943,26 +1222,57 @@
       "sido": "충청북도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1076451,
+      "voters": 600802,
+      "valid_votes": 577459,
+      "invalid_votes": 23343,
+      "abstain": 475649,
       "seats_total": 3,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 296503,
+          "pct": 51.34,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "자유민주연합",
           "party": "자유민주연합",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 128186,
+          "pct": 22.19,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "새천년민주당",
+          "party": "새천년민주당",
+          "votes": 93351,
+          "pct": 16.16,
+          "seats": 0,
+          "rank": 3,
+          "won": false
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 42332,
+          "pct": 7.33,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 17087,
+          "pct": 2.95,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -971,35 +1281,75 @@
       "sido": "충청남도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1397105,
+      "voters": 786190,
+      "valid_votes": 750039,
+      "invalid_votes": 36151,
+      "abstain": 610915,
       "seats_total": 4,
       "candidates": [
         {
           "name": "자유민주연합",
           "party": "자유민주연합",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 303497,
+          "pct": 40.46,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 248175,
+          "pct": 33.08,
           "seats": 1,
+          "rank": 2,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 88927,
+          "pct": 11.85,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "한국미래연합",
+          "party": "한국미래연합",
+          "votes": 45182,
+          "pct": 6.02,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 34055,
+          "pct": 4.54,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 18873,
+          "pct": 2.51,
+          "seats": 0,
+          "rank": 6,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 11330,
+          "pct": 1.51,
+          "seats": 0,
+          "rank": 7,
+          "won": false
         }
       ]
     },
@@ -1008,35 +1358,66 @@
       "sido": "전라북도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1431722,
+      "voters": 787529,
+      "valid_votes": 750020,
+      "invalid_votes": 37509,
+      "abstain": 644193,
       "seats_total": 4,
       "candidates": [
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 488909,
+          "pct": 65.18,
           "seats": 2,
+          "rank": 1,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 95744,
+          "pct": 12.76,
           "seats": 1,
+          "rank": 2,
           "won": true
         },
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 72670,
+          "pct": 9.68,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 40530,
+          "pct": 5.4,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "녹색평화당",
+          "party": "녹색평화당",
+          "votes": 36138,
+          "pct": 4.81,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 16029,
+          "pct": 2.13,
+          "seats": 0,
+          "rank": 6,
+          "won": false
         }
       ]
     },
@@ -1045,35 +1426,57 @@
       "sido": "전라남도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 1533059,
+      "voters": 1006554,
+      "valid_votes": 961267,
+      "invalid_votes": 45287,
+      "abstain": 526505,
       "seats_total": 5,
       "candidates": [
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 647760,
+          "pct": 67.38,
           "seats": 3,
-          "won": true
-        },
-        {
-          "name": "한나라당",
-          "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
-          "seats": 1,
+          "rank": 1,
           "won": true
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 144124,
+          "pct": 14.99,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 71489,
+          "pct": 7.43,
+          "seats": 1,
+          "rank": 3,
+          "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 66424,
+          "pct": 6.91,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 31470,
+          "pct": 3.27,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -1082,35 +1485,75 @@
       "sido": "경상북도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 2044215,
+      "voters": 1234781,
+      "valid_votes": 1187581,
+      "invalid_votes": 47200,
+      "abstain": 809434,
       "seats_total": 6,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 889594,
+          "pct": 74.9,
           "seats": 4,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
+          "votes": 93208,
+          "pct": 7.84,
           "seats": 1,
+          "rank": 2,
           "won": true
         },
         {
           "name": "한국미래연합",
           "party": "한국미래연합",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 64850,
+          "pct": 5.46,
           "seats": 1,
+          "rank": 3,
           "won": true
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 53395,
+          "pct": 4.49,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 52378,
+          "pct": 4.41,
+          "seats": 0,
+          "rank": 5,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 23046,
+          "pct": 1.94,
+          "seats": 0,
+          "rank": 6,
+          "won": false
+        },
+        {
+          "name": "노년권익보호당",
+          "party": "노년권익보호당",
+          "votes": 11110,
+          "pct": 0.93,
+          "seats": 0,
+          "rank": 7,
+          "won": false
         }
       ]
     },
@@ -1119,35 +1562,57 @@
       "sido": "경상남도",
       "sigungu": "",
       "scope": "proportional_sido",
-      "votes_pending": true,
+      "electors": 2227548,
+      "voters": 1259701,
+      "valid_votes": 1216956,
+      "invalid_votes": 42745,
+      "abstain": 967847,
       "seats_total": 5,
       "candidates": [
         {
           "name": "한나라당",
           "party": "한나라당",
-          "votes": null,
-          "pct": null,
-          "rank": 1,
+          "votes": 906750,
+          "pct": 74.5,
           "seats": 3,
-          "won": true
-        },
-        {
-          "name": "민주노동당",
-          "party": "민주노동당",
-          "votes": null,
-          "pct": null,
-          "rank": 2,
-          "seats": 1,
+          "rank": 1,
           "won": true
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
-          "votes": null,
-          "pct": null,
-          "rank": 3,
+          "votes": 131285,
+          "pct": 10.78,
           "seats": 1,
+          "rank": 2,
           "won": true
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 108999,
+          "pct": 8.95,
+          "seats": 1,
+          "rank": 3,
+          "won": true
+        },
+        {
+          "name": "자유민주연합",
+          "party": "자유민주연합",
+          "votes": 40721,
+          "pct": 3.34,
+          "seats": 0,
+          "rank": 4,
+          "won": false
+        },
+        {
+          "name": "사회당",
+          "party": "사회당",
+          "votes": 29201,
+          "pct": 2.39,
+          "seats": 0,
+          "rank": 5,
+          "won": false
         }
       ]
     },
@@ -1164,18 +1629,18 @@
           "party": "한나라당",
           "votes": null,
           "pct": null,
-          "rank": 1,
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 1
         },
         {
           "name": "새천년민주당",
           "party": "새천년민주당",
           "votes": null,
           "pct": null,
-          "rank": 2,
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 2
         }
       ]
     }
