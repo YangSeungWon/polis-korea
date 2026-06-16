@@ -198,8 +198,10 @@
       } else if (window.Archive.governorHex) {
         window.Archive.governorHex.init(ctx, { tc: ctx.sgTypecode, hostId: 'ar-pres-sido-hex' });
       }
-      // 시군구 투표율 코로플레스(시군구 개표 있을 때 — 20·21대 등). 시도뷰 섹션 뒤 동적 주입.
-      if (window.Archive.councilHex?.initTurnout) window.Archive.councilHex.initTurnout(ctx);
+      // 시군구 1위 후보 결과(격차 명도) + 투표율 코로플레스. 투표율 섹션 생성 후 그 앞에 결과 주입.
+      const CH = window.Archive.councilHex;
+      if (CH?.initTurnout) Promise.resolve(CH.initTurnout(ctx)).then(() => CH.initResult && CH.initResult(ctx));
+      else if (CH?.initResult) CH.initResult(ctx);
       renderNation(ctx);
       renderExitPoll(ctx);   // 코어 단계엔 exitData=null → 스킵
     },

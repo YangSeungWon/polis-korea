@@ -30,6 +30,7 @@ FAVICON = ROOT / "favicon.svg"
 # turnout-map은 governor-hex/council-hex 클래스를 공유(투표율 채색)하므로 반드시 먼저 매칭.
 VIEW_DEFS = [
     ("turnout-map", "turnout", "투표율", "지역별 투표율(짙을수록 높음)"),
+    ("result-map", "result", "시군구 결과", "1위 후보·격차 명도"),
     ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
     ("council-hex", "council", "광역의원", "시도별 의석"),
     ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),

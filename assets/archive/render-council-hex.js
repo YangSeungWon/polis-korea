@@ -475,16 +475,38 @@
     return { shown, parties: [...parties] };
   }
 
-  // host(요소)에 시군구 1위 후보 결과 맵 렌더. ctx={results, meta}. 대선 폴 등에서 호출.
+  // 시군구 1위 후보 결과 맵. host 주면 거기 렌더(폴), 없으면 아카이브 섹션 자동 생성(종합).
   async function initResult(ctx, host) {
     const rmap = resultBySigungu(ctx?.results?.races || [], '1');
-    if (rmap.size < 4 || !host) return null;
+    if (rmap.size < 4) return null;
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return null;
+    let legHost = null, mapHost = host;
+    if (!mapHost) {   // 아카이브(종합) — 시군구 투표율 섹션 앞에 '결과(격차 명도)' 섹션 주입
+      const turn = document.getElementById('ar-sgg-turnout');
+      const sidoSec = document.getElementById('ar-pres-sido-hex');
+      const anchor = turn || (sidoSec && sidoSec.closest('.ar-section'));
+      if (!anchor || !anchor.parentElement) return null;
+      let sec = document.getElementById('ar-sgg-result');
+      if (!sec) {
+        sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
+        sec.innerHTML = '<h2 class="ar-section-title">시·군·구 1위 후보</h2>'
+          + '<p class="ar-source-line">1위 후보 정당색 · 짙을수록 1·2위 격차 큼(승자독식 단색 대신 격차 명도).</p>'
+          + '<div class="ar-sgg-result-host"></div><div class="ar-sgg-result-legend ch-leg-row"></div>';
+        anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
+      }
+      mapHost = sec.querySelector('.ar-sgg-result-host');
+      legHost = sec.querySelector('.ar-sgg-result-legend');
+    }
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg result-map');
     const info = renderResult(svg, hexCells, rmap);
-    host.innerHTML = ''; host.appendChild(svg);
+    mapHost.innerHTML = ''; mapHost.appendChild(svg);
+    if (legHost && info.parties) {
+      const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+      legHost.innerHTML = info.parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
+        + ' <span class="ar-genhex-note">· 명도 = 1·2위 격차</span>';
+    }
     return info;
   }
 

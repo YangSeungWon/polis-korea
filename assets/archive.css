@@ -804,3 +804,7 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 /* 비례 시·도별 분포 맵 (총선) */
 .ar-prop-map { margin-top: 22px; }
 .ar-subhead { font-size: 14px; font-weight: 700; color: var(--ink-soft); margin: 0 0 10px; }
+/* 대선 종합 — 시군구 1위 후보 결과 맵 */
+.ar-sgg-result-host .council-hex-svg { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
+.ar-sgg-result-legend { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
+.ar-sgg-result-legend .ch-leg { font-weight: 700; }
