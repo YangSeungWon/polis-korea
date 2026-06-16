@@ -249,7 +249,23 @@
     return new Map();
   }
 
-  function renderTurnout(svg, hexCells, tmap) {
+  // 단층제 시(세종특별자치시)는 기초 시군구가 없어 광역장 투표율이 sido scope에만 있음 →
+  // 그 sido 셀을 sido 투표율로 채운다. 제주 행정시(sido=…도)는 도 평균이라 제외(시로 끝나는 sido만).
+  function turnoutBySido(races) {
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    for (const tc of ['3', '4', '1']) {
+      const m = new Map();
+      for (const r of races || []) {
+        if (r.scope !== 'sido' || r.sg_typecode !== tc) continue;
+        const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
+        if (el > 0 && vt > 0) m.set(canon(r.sido), vt / el * 100);
+      }
+      if (m.size) return m;
+    }
+    return new Map();
+  }
+
+  function renderTurnout(svg, hexCells, tmap, sidoMap) {
     const maxC = Math.max(...hexCells.map((c) => c.c));
     const maxR = Math.max(...hexCells.map((c) => c.r));
     const w = OFF_X * 2 + (maxC + 1) * COL_W;
@@ -260,15 +276,22 @@
     const PARENT_R = 13.85;
     const color = window.Archive?.turnout?.color || (() => '#88a');
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const cellKey = (c) => normalizeKey(canon(c.sido), c.name);
+    const valueOf = (c) => {
+      const v = tmap.get(normalizeKey(canon(c.sido), c.name));
+      if (v != null) return v;
+      // 세종(유일한 특별자치시)은 기초 시군구가 없어 시군구 투표율이 없음 → sido 투표율로 채움.
+      // 광역시 자치구 오인 방지로 '특별자치시'로만 한정(period 레이아웃엔 single_tier 플래그 없음).
+      if (sidoMap && canon(c.sido).endsWith('특별자치시')) return sidoMap.get(canon(c.sido));
+      return undefined;
+    };
     // 상대 스케일 — 표시될 셀들의 최저~최고로 정규화(절대 스케일은 대선처럼 고투표율대에서 뭉침).
-    const shownVals = hexCells.map((c) => tmap.get(cellKey(c))).filter((v) => v != null);
+    const shownVals = hexCells.map(valueOf).filter((v) => v != null);
     const lo = shownVals.length ? Math.min(...shownVals) : 0;
     const hi = shownVals.length ? Math.max(...shownVals) : 1;
     let shown = 0;
     for (const cell of hexCells) {
       const [cx, cy] = hexCenter(cell.c, cell.r);
-      const to = tmap.get(cellKey(cell));
+      const to = valueOf(cell);
       const g = document.createElementNS(NS, 'g');
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('points', hexPoints(cx, cy, PARENT_R));
@@ -315,7 +338,7 @@
     }
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg turnout-map');
-    const { lo, hi, shown } = renderTurnout(svg, hexCells, tmap);
+    const { lo, hi, shown } = renderTurnout(svg, hexCells, tmap, turnoutBySido(races));
     const host = sec.querySelector('.ar-sgg-turnout-host');
     host.innerHTML = ''; host.appendChild(svg);
     const stops = window.Archive?.turnout?.stops || [[238, 243, 241], [78, 163, 145], [10, 74, 66]];
