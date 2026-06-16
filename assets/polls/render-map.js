@@ -165,18 +165,32 @@ function updateSigunguTooltip(layer) {
   layer.bindTooltip(tip, { className: 'sigungu-tooltip', sticky: true });
 }
 
+// 여론조사 빗나감(실제 모드) — 막판 조사 1위 ≠ 실제 당선이면 '조사 1위 정당색' 반환(테두리색). 아니면 null.
+function missColorSido(sido, actual) {
+  if (state.mode !== 'result' || !actual || !actual.party) return null;
+  const merge = (typeof SIDO_MERGE !== 'undefined') ? SIDO_MERGE : null;
+  const poll = PollAdapter.localSidoWinner(state.data.polls, sido, state.office, merge);
+  return (poll && poll.party && poll.party !== actual.party) ? partyColor(poll.party) : null;
+}
+function missColorSigungu(sido, name, actual) {
+  if (state.mode !== 'result' || !actual || !actual.party) return null;
+  const poll = PollAdapter.localSigunguWinner(state.data.polls, sido, name, state.office);
+  return (poll && poll.party && poll.party !== actual.party) ? partyColor(poll.party) : null;
+}
+
 function sidoStyle(feat) {
   const sido = canonSido((feat.properties.name || '').trim());
   const result = regionSidoWinner(sido, state.office);
   const sel = state.selectedSido === sido && !state.selectedSigungu;
   const low = result && result.n_polls <= 2;
+  const miss = missColorSido(sido, result);   // 실제 모드 빗나감 테두리
   return {
     fillColor: result ? partyColor(result.party) : 'var(--bg3, #d8dce4)',
     fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
-    color: sel ? 'var(--ink, #0a0e1a)' : 'var(--ink-soft, #2a2f3c)',
-    weight: sel ? 2.5 : 1.4,
-    opacity: sel ? 1 : 0.7,
-    dashArray: low ? '4,3' : null,
+    color: miss || (sel ? 'var(--ink, #0a0e1a)' : 'var(--ink-soft, #2a2f3c)'),
+    weight: miss ? (sel ? 3.4 : 3) : (sel ? 2.5 : 1.4),
+    opacity: sel ? 1 : (miss ? 1 : 0.7),
+    dashArray: miss ? '5,3' : (low ? '4,3' : null),
   };
 }
 
@@ -187,12 +201,13 @@ function sigunguStyle(feat) {
   const result = regionSigunguWinner(sido, name, state.office);
   const selected = state.selectedSido === sido && state.selectedSigungu === name;
   const low = result && result.n_polls <= 2;
+  const miss = missColorSigungu(sido, name, result);
   return {
     fillColor: result ? partyColor(result.party) : 'var(--bg3, #d8dce4)',
     fillOpacity: result ? gapOpacity(result.effective_gap ?? result.gap) : 0.55,
-    color: selected ? 'var(--ink, #0a0e1a)' : 'var(--ink-mute, #7a8090)',
-    weight: selected ? 2.5 : 0.6,
-    dashArray: low ? '3,2' : null,
+    color: miss || (selected ? 'var(--ink, #0a0e1a)' : 'var(--ink-mute, #7a8090)'),
+    weight: miss ? (selected ? 3 : 2.4) : (selected ? 2.5 : 0.6),
+    dashArray: miss ? '4,2.5' : (low ? '3,2' : null),
   };
 }
 
