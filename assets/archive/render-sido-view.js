@@ -120,5 +120,6 @@
   }
 
   window.Archive = window.Archive || {};
-  window.Archive.sidoView = { init, mount };
+  // drawTurnout 노출 — 총선(general.js)은 선거구를 시도로 합산한 pseudo-race[{sido,electors,voters}]로 호출.
+  window.Archive.sidoView = { init, mount, drawTurnout: (el, races) => drawTurnout(el, races, window.Archive) };
 })();

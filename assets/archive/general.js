@@ -315,6 +315,18 @@
       { key: 'hex', label: '헥스', draw: (el) => SC.drawHex(el, bySido) },
       { key: 'dorling', label: 'dorling', draw: (el) => SC.drawDorling(el, bySido) },
     ];
+    // 투표율 — 선거구를 시도로 합산(투표수·선거인수)해 pseudo-race로 시도별 투표율 hex 렌더.
+    const SV = window.Archive.sidoView;
+    if (SV && typeof SV.drawTurnout === 'function') {
+      const agg = {};
+      for (const r of drs) {
+        const sd = canon(r.sido || '기타');
+        const a = (agg[sd] = agg[sd] || { sido: sd, electors: 0, voters: 0 });
+        a.electors += r.electors || 0; a.voters += r.voters || r.voted || 0;
+      }
+      const pseudo = Object.values(agg).filter((a) => a.electors > 0 && a.voters > 0);
+      if (pseudo.length) modes.push({ key: 'turnout', label: '투표율', draw: (el) => SV.drawTurnout(el, pseudo) });
+    }
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(toggleHost, modes);
     else SC.drawHex(toggleHost, bySido);
     const partyTotal = {};
