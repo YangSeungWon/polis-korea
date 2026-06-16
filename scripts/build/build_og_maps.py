@@ -121,12 +121,48 @@ body{{width:1200px;height:630px;font-family:Pretendard,sans-serif;background:#f6
 <div class="right"><img src="data:image/png;base64,{b64}"></div><div class="accent"></div></body></html>"""
 
 
+def recompose():
+    """캐시된 원본 지도(og/maps/{slug}/*.png)로 카드만 재합성 — favicon 마크 바뀔 때 빠른 동기화
+    (아카이브 페이지 재렌더·지도 재캡처 없이 카드 chrome만 다시). 제목·날짜는 archive_index.json."""
+    import json
+    from playwright.sync_api import sync_playwright
+    meta = {e["slug"]: e for e in json.loads((ROOT / "data/archive_index.json").read_text(encoding="utf-8"))}
+    mark_svg = FAVICON.read_text(encoding="utf-8")
+    made = 0
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        pg = b.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=1)
+        for slug_dir in sorted(d for d in MAPS.iterdir() if d.is_dir()):
+            slug = slug_dir.name
+            m = meta.get(slug, {})
+            kicker = (m.get("date") or "")[:10]
+            headline = m.get("name") or slug
+            views = {}
+            for png_path in sorted(slug_dir.glob("*.png")):
+                key = png_path.stem
+                label, desc = view_meta(key)
+                html = _card_html(mark_svg, kicker, headline, f"{label} · {desc}", png_path.read_bytes())
+                pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(300)
+                out = OG / slug / f"{key}.png"
+                out.parent.mkdir(parents=True, exist_ok=True)
+                pg.screenshot(path=str(out), clip={"x": 0, "y": 0, "width": 1200, "height": 630})
+                views[key] = out; made += 1
+            if views:
+                primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
+                shutil.copyfile(OG / slug / f"{primary}.png", OG / f"{slug}.png")
+        b.close()
+    print(f"recompose: {made} cards (캐시 지도 재사용)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", help="한 선거만")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--port", type=int, default=8911)
+    ap.add_argument("--recompose", action="store_true", help="캐시 지도로 카드만 재합성(favicon 동기화)")
     args = ap.parse_args()
+    if args.recompose:
+        recompose(); return
     from playwright.sync_api import sync_playwright
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
