@@ -421,7 +421,7 @@ FOOT = """
     <div class="foot-row">
       <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
       <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467{nesdc_gubun_query}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 ({n}{n_unit} {kind_short})</a>{wiki_link}
-    </div>
+    </div>{source_caveat}
     <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
   </footer>
 </main>
@@ -484,13 +484,13 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         if d["wiki_url"] else ""
     )
     d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
+    d["source_caveat"] = source_caveat_block(meta)   # 데이터 출처 캐비엇 — 상단 아닌 하단 푸터에 통합(FOOT의 {source_caveat})
     hero_html = KIND_TO_HERO[d["kind"]].format(**d)
     nbrs = neighbors or {}
 
     return (
         HEAD.format(**d)
         + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
-        + source_caveat_block(meta)
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
         + render_bottom_nav(nbrs, d)                # 이전 · [더 자세히] · 다음
         + FOOT.format(**d)
