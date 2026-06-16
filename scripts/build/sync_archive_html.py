@@ -419,9 +419,9 @@ SECTIONS_GENERAL = """
 FOOT = """
   <footer class="foot">
     <div class="foot-row">
-      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>
+      <span class="ar-foot-src"><a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>{nec_source_suffix}</span>
       <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467{nesdc_gubun_query}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 ({n}{n_unit} {kind_short})</a>{wiki_link}
-    </div>{source_caveat}
+    </div>
     <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
   </footer>
 </main>
@@ -455,15 +455,12 @@ KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_electio
 KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
 
 
-def source_caveat_block(meta: dict) -> str:
+def nec_source_suffix(meta: dict) -> str:
+    """data_source_note(예 '중앙선거관리위원회 OpenAPI')를 푸터 NEC 링크 옆 인라인 접미로.
+    '중앙선거관리위원회'는 링크 텍스트에 이미 있으니 떼고 방식만(예 'OpenAPI') ' · '로 붙임."""
     note = (meta.get("archive") or {}).get("data_source_note", "")
-    if not note:
-        return ""
-    return (
-        '\n  <p class="ar-source-caveat">'
-        f'<span class="ar-source-caveat-tag">source</span> {note}'
-        '</p>\n'
-    )
+    method = note.replace("중앙선거관리위원회", "").strip().lstrip("·").strip()
+    return f' · {method}' if method else ""
 
 
 def hero_status(d: dict) -> str:
@@ -484,7 +481,7 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         if d["wiki_url"] else ""
     )
     d["extra_scripts"] = '<script src="assets/parliament.js"></script>\n' if d["kind"] == "general_election" else ""
-    d["source_caveat"] = source_caveat_block(meta)   # 데이터 출처 캐비엇 — 상단 아닌 하단 푸터에 통합(FOOT의 {source_caveat})
+    d["nec_source_suffix"] = nec_source_suffix(meta)   # 푸터 NEC 링크 옆 ' · OpenAPI' 인라인(선거통계시스템과 한 줄)
     hero_html = KIND_TO_HERO[d["kind"]].format(**d)
     nbrs = neighbors or {}
 
