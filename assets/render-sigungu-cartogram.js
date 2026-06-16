@@ -19,29 +19,8 @@
   const CU = window.CartogramUtil || {};
   const hexSpiral = CU.hexSpiral, allocateByVotes = CU.allocateByVotes, convexHull = CU.convexHull;
   // 권역(시도) 테두리 — 인접 셀 시도 다른 변(pointy-top odd-r).
-  function sidoBorders(svg, cells, colW, rowH, offX, offY, r) {
-    const key = (c, rr) => c + ',' + rr;
-    const at = new Map(); cells.forEach((c) => at.set(key(c.c, c.r), c.sido));
-    const EDGE = ['SE', 'SW', 'W', 'NW', 'NE', 'E'];
-    const OFF = { 0: { E: [1, 0], W: [-1, 0], SE: [0, 1], SW: [-1, 1], NE: [0, -1], NW: [-1, -1] },
-      1: { E: [1, 0], W: [-1, 0], SE: [1, 1], SW: [0, 1], NE: [1, -1], NW: [0, -1] } };
-    const vert = (cx, cy, j) => [cx + r * Math.cos(Math.PI / 6 + j * Math.PI / 3), cy + r * Math.sin(Math.PI / 6 + j * Math.PI / 3)];
-    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'sido-border-layer');
-    for (const cell of cells) {
-      const [cx, cy] = hexCenter(cell.c, cell.r, colW, rowH, offX, offY);
-      const off = OFF[cell.r % 2];
-      for (let i = 0; i < 6; i++) {
-        const [dc, dr] = off[EDGE[i]];
-        if (at.get(key(cell.c + dc, cell.r + dr)) === cell.sido) continue;
-        const [x1, y1] = vert(cx, cy, i), [x2, y2] = vert(cx, cy, (i + 1) % 6);
-        const ln = document.createElementNS(NS, 'line');
-        ln.setAttribute('x1', x1.toFixed(1)); ln.setAttribute('y1', y1.toFixed(1));
-        ln.setAttribute('x2', x2.toFixed(1)); ln.setAttribute('y2', y2.toFixed(1));
-        ln.setAttribute('class', 'sido-border'); g.appendChild(ln);
-      }
-    }
-    svg.appendChild(g);
-  }
+  const sidoBorders = (svg, cells, colW, rowH, offX, offY, r) =>
+    CU.drawSidoBorders(svg, cells, { colW, rowH, offX, offY, r });
 
   function drawSigunguCartogram(svg, cells, resultFn, opts) {
     opts = opts || {};

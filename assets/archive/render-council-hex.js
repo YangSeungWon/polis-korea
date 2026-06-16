@@ -62,37 +62,9 @@
     return out;
   }
 
-  // 권역(시도) 테두리 — 같은 시도 시군구 hex 그룹의 외곽선. 인접 셀의 시도가 다르거나(또는 없으면)
-  // 그 변(edge)을 그어 시도 경계를 만든다. pointy-top odd-r 오프셋 격자 기준.
+  // 권역(시도) 테두리 — 공용(cartogram-util). council 격자 geometry(COL_W·ROW_H·OFF) 주입.
   function drawSidoBorders(svg, cells, R) {
-    const k = (c, r) => c + ',' + r;
-    const sidoAt = new Map();
-    for (const c of cells) sidoAt.set(k(c.c, c.r), c.sido);
-    // edge i(꼭짓점 i→i+1)가 향하는 이웃 방향. 꼭짓점 각 = PI/6 + i*PI/3.
-    const EDGE_DIR = ['SE', 'SW', 'W', 'NW', 'NE', 'E'];
-    const OFF = {
-      0: { E: [1, 0], W: [-1, 0], SE: [0, 1], SW: [-1, 1], NE: [0, -1], NW: [-1, -1] },  // even row
-      1: { E: [1, 0], W: [-1, 0], SE: [1, 1], SW: [0, 1], NE: [1, -1], NW: [0, -1] },     // odd row
-    };
-    const vert = (cx, cy, j) => [cx + R * Math.cos(Math.PI / 6 + j * Math.PI / 3),
-      cy + R * Math.sin(Math.PI / 6 + j * Math.PI / 3)];
-    const g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'sido-border-layer');
-    for (const cell of cells) {
-      const [cx, cy] = hexCenter(cell.c, cell.r);
-      const off = OFF[cell.r % 2];
-      for (let i = 0; i < 6; i++) {
-        const [dc, dr] = off[EDGE_DIR[i]];
-        if (sidoAt.get(k(cell.c + dc, cell.r + dr)) === cell.sido) continue;  // 내부 경계 숨김
-        const [x1, y1] = vert(cx, cy, i), [x2, y2] = vert(cx, cy, (i + 1) % 6);
-        const ln = document.createElementNS(NS, 'line');
-        ln.setAttribute('x1', x1.toFixed(1)); ln.setAttribute('y1', y1.toFixed(1));
-        ln.setAttribute('x2', x2.toFixed(1)); ln.setAttribute('y2', y2.toFixed(1));
-        ln.setAttribute('class', 'sido-border');
-        g.appendChild(ln);
-      }
-    }
-    svg.appendChild(g);
+    window.CartogramUtil.drawSidoBorders(svg, cells, { colW: COL_W, rowH: ROW_H, offX: OFF_X, offY: OFF_Y, r: R });
   }
 
   // sigungu별 의석 (지역구·비례) by party.
