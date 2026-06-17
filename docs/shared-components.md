@@ -100,3 +100,22 @@ NEC `sg_typecode` → 표준 직위명. **JS `assets/parties.js`** + **Python `s
 | 11 | 교육감 | **sido** |
 
 (교육감은 시·도 단위 선출이라 scope=`sido`. 일부 NEC API는 교육감 코드로 `5`를 쓰지만 결과 데이터/`TC_OFFICE`는 `11`.)
+
+## 줌·포커스·카토그램 공용 인프라
+
+이번 세션(방식 토글 통일)에 들어온 공용 모듈. 자세한 설계·아키텍처는 `docs/zoom-focus-infra.md`.
+
+- **`SvgViewport`** (`assets/svg-viewport.js`) — SVG viewBox 팬/줌. Ctrl/⌘+휠·핀치·드래그·더블탭 리셋·공용
+  리셋버튼. `attach(svg,{baseViewBox,cells})`→{report,focusOn,reset,update}. `captureHost/applyHost`로
+  재렌더 토글(격자↔원형) 줌 보존. **폴·아카이브**가 씀. history는 자체 `enablePinchZoom`(중복 attach 금지).
+- **`Focus`** (`assets/viewport-focus.js`) — 뷰 간 포커스 전이 상태(`{region,scale}`). 폴 `chrome.js setView`가
+  capture→render→apply. 방식 전환 시 보던 지역 유지(지역 앵커, 픽셀 아님).
+- **`Archive.drawSigunguCartogram`** (`assets/render-sigungu-cartogram.js`) — 시군구 표-비례 카토그램(격자/원형)
+  **단일 렌더러**. history·종합·폴 공유(history `render-sigungu.js`가 위임). 셀 라벨·구 외곽선·선택 강조·
+  `_borrowed`/`_fill`(시점성, 데이터 전처리). `{cells,viewBox}` 반환(줌용).
+- **`CartogramUtil`** (`assets/cartogram-util.js`) — 카토그램 순수 함수(hexSpiral·allocateByVotes·convexHull·
+  pieSlice·packCircles·`drawBorders`(시도경계/구외곽선 keyFn)). 종합/폴/역대 공유.
+- 어휘: hex→**균등**, dorling→**원형**(라벨만; 내부 키 hex/dorling/grid·data-* 보존). 위젯은 공용 `.seg/.seg-btn`,
+  방식 토글은 지도 우상단 인맵 오버레이.
+
+> `governorHex.draw`·`drawSigunguHex`도 이제 `{cells,viewBox}`를 반환(줌 앵커용). 기존 호출자는 무시.
