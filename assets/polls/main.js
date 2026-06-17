@@ -90,9 +90,19 @@ async function init() {
   // 대선/총선 페이지면 전용 렌더 경로가 인계 — 지선 모놀리식 스킵.
   if (typeof initPresIfNeeded === 'function' && await initPresIfNeeded()) return;
   if (typeof initGenIfNeeded === 'function' && await initGenIfNeeded()) return;
-  document.querySelectorAll('[data-view]').forEach((b) => {
-    b.addEventListener('click', () => setView(b.dataset.view));
-  });
+  // 시각화 방식 토글(지도/균등) — 공용 EncodingToggle. 둘 다 1위 가족이라 가족 라벨 없이 아이콘 seg로.
+  const vtog = document.querySelector('.view-toggle');
+  if (vtog && window.EncodingToggle) {
+    window.EncodingToggle.render(vtog, {
+      options: [{ key: 'map', label: '지도' }, { key: 'hex', label: '균등' }],
+      active: state.view,
+      onSelect: (v) => setView(v),
+    });
+  } else {
+    document.querySelectorAll('[data-view]').forEach((b) => {
+      b.addEventListener('click', () => setView(b.dataset.view));
+    });
+  }
   document.querySelectorAll('[data-office]').forEach((b) => {
     b.addEventListener('click', () => setOffice(b.dataset.office));
   });

@@ -32,10 +32,12 @@
       if (!g) { g = { fam, items: [] }; groups.push(g); }
       g.items.push(op);
     }
+    // 가족 라벨/구분자는 위계가 실제로 있을 때(둘 이상)만 — 한 가족뿐이면 군더더기라 평범한 아이콘 seg로.
+    const showFam = groups.length > 1;
     let html = '';
     groups.forEach((g, gi) => {
       if (gi > 0) html += '<span class="enc-sep" aria-hidden="true"></span>';
-      const lbl = FAM_LABEL[g.fam] || g.fam;
+      const lbl = showFam ? (FAM_LABEL[g.fam] || g.fam) : '';
       html += `<div class="enc-group">${lbl ? `<span class="enc-fam">${lbl}</span>` : ''}<div class="seg" role="tablist">`;
       for (const op of g.items) {
         const on = op.key === active;
@@ -51,5 +53,15 @@
     }));
   }
 
-  window.EncodingToggle = { render, ENC };
+  // 외부에서 선택 동기화 (프로그램적 전환·초기 상태). render가 건 클릭과 별개로 active만 갱신.
+  function setActive(host, key) {
+    if (!host) return;
+    host.querySelectorAll('[data-enc]').forEach((b) => {
+      const on = b.dataset.enc === key;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on);
+    });
+  }
+
+  window.EncodingToggle = { render, setActive, ENC };
 })();

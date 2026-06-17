@@ -184,9 +184,12 @@ function setView(v) {
   $('#map').toggleAttribute('hidden', v !== 'map');
   $('#hex').toggleAttribute('hidden', !(v === 'hex' && !sigungu));
   $('#hex2').toggleAttribute('hidden', !(v === 'hex' && sigungu));
+  // 활성 버튼 동기화 — 정적 마크업(data-view)·EncodingToggle(.view-toggle data-enc) 모두 처리.
   document.querySelectorAll('[data-view]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.view === v);
   });
+  const vtog = document.querySelector('.view-toggle.enc-toggle');
+  if (vtog && window.EncodingToggle) window.EncodingToggle.setActive(vtog, v);
   // 새 뷰 렌더 후 보던 지역으로 포커스 적용(지도는 비동기 → then).
   const applyFocus = () => { if (window.Focus) Focus.apply(viewHandle(v)); };
   if (v === 'map') Promise.resolve(renderMap()).then(applyFocus);

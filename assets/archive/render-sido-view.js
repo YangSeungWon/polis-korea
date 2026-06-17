@@ -77,20 +77,12 @@
   function mount(host, modes, drawArg) {
     modes = modes.filter((m) => typeof m.draw === 'function');
     if (!modes.length) return;
-    // 두 축으로 분리(전 사이트 공통 멘탈모델) — 「표현 방식」(결과를 '어떻게': 헥스/지도 또는
-    // 격자/dorling) · 「투표율」(보는 '자료'가 다름). 공용 .seg/.seg-btn 위젯으로 다른 토글과 통일.
-    const isTurnout = (m) => m.key === 'turnout';
-    const enc = modes.filter((m) => !isTurnout(m));
-    const turn = modes.filter(isTurnout);
-    const btn = (m, active) =>
-      `<button type="button" class="seg-btn${active ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${active}">${m.label}</button>`;
-    const seg = (label, ms, off) => (ms.length
-      ? `<div class="seg" role="tablist" aria-label="${label}">${ms.map((m, i) => btn(m, off + i === 0)).join('')}</div>` : '');
-    const bar = seg('표현 방식', enc, 0) + seg('투표율', turn, enc.length);
+    // 인코딩 토글(공용) — 아이콘+가족 한 바. 가족 게이팅은 ENC의 fam이 자동 분류:
+    //   1위(균등·지도) / 표 비례(격자·원형) / 자료(투표율). 흩어진 .seg 토글과 단일 컴포넌트로 통일.
     const views = modes.map((m, i) =>
       `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
     ).join('');
-    host.innerHTML = `<div class="ar-sido-toggle">${bar}</div>${views}`;
+    host.innerHTML = `<div class="ar-sido-toggle"></div>${views}`;
     for (const m of modes) {
       const el = host.querySelector(`.ar-sido-view[data-view="${m.key}"]`);
       if (el) m.draw(el, drawArg);
@@ -98,33 +90,54 @@
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
-    const allBtns = () => host.querySelectorAll('.ar-sido-toggle .seg-btn');
-    allBtns().forEach((btnEl) => {
-      btnEl.addEventListener('click', () => {
-        const v = btnEl.dataset.view;
-        // 탭 교차 포커스 전이 — 떠나는(보이는) 뷰의 줌을 capture해 새 뷰에 apply. region=시도라 렌더러
-        // (균등 governorHex·격자/원형 sidoCluster·투표율) 무관하게 같은 키. svg 없는 뷰(leaflet 지도)는 자연 스킵.
-        let keep = null;
-        if (window.SvgViewport) {
-          const cur = host.querySelector('.ar-sido-view:not([hidden]) svg');
-          if (cur && cur.__svgViewport) { const r = cur.__svgViewport.report(); if (r && (r.scale || 1) > 1.05) keep = r; }
-        }
-        allBtns().forEach((b) => {
-          const on = b === btnEl;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        host.querySelectorAll('.ar-sido-view').forEach((el) => {
-          el.toggleAttribute('hidden', el.dataset.view !== v);
-        });
-        if (keep) {
-          const next = host.querySelector(`.ar-sido-view[data-view="${v}"] svg`);
-          if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);
-        }
-        if (cap) cap.textContent = (v === 'turnout')
-          ? '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).' : resultCaption;
+
+    // 모드 전환 — 떠나는 뷰의 줌을 capture해 새 뷰에 apply(탭 교차 포커스 전이). region=시도라
+    // 렌더러(균등 governorHex·격자/원형 sidoCluster·투표율) 무관하게 같은 키. svg 없는 뷰(leaflet)는 자연 스킵.
+    function activate(v) {
+      let keep = null;
+      if (window.SvgViewport) {
+        const cur = host.querySelector('.ar-sido-view:not([hidden]) svg');
+        if (cur && cur.__svgViewport) { const r = cur.__svgViewport.report(); if (r && (r.scale || 1) > 1.05) keep = r; }
+      }
+      host.querySelectorAll('.ar-sido-view').forEach((el) => {
+        el.toggleAttribute('hidden', el.dataset.view !== v);
       });
-    });
+      if (keep) {
+        const next = host.querySelector(`.ar-sido-view[data-view="${v}"] svg`);
+        if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);
+      }
+      if (cap) cap.textContent = (v === 'turnout')
+        ? '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).' : resultCaption;
+    }
+
+    const tog = host.querySelector('.ar-sido-toggle');
+    if (window.EncodingToggle) {
+      window.EncodingToggle.render(tog, {
+        options: modes.map((m) => ({ key: m.key, label: m.label })),
+        active: modes[0].key,
+        onSelect: activate,
+      });
+    } else {
+      // 폴백 — 가족 둘(표현 방식 ┊ 투표율)로 나눈 공용 .seg 바.
+      const isTurnout = (m) => m.key === 'turnout';
+      const enc = modes.filter((m) => !isTurnout(m));
+      const turn = modes.filter(isTurnout);
+      const btn = (m, active) =>
+        `<button type="button" class="seg-btn${active ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${active}">${m.label}</button>`;
+      const seg = (label, ms, off) => (ms.length
+        ? `<div class="seg" role="tablist" aria-label="${label}">${ms.map((m, i) => btn(m, off + i === 0)).join('')}</div>` : '');
+      tog.innerHTML = seg('표현 방식', enc, 0) + seg('투표율', turn, enc.length);
+      tog.querySelectorAll('.seg-btn').forEach((btnEl) => {
+        btnEl.addEventListener('click', () => {
+          tog.querySelectorAll('.seg-btn').forEach((b) => {
+            const on = b === btnEl;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          activate(btnEl.dataset.view);
+        });
+      });
+    }
   }
 
   function init(ctx, opts) {
