@@ -56,32 +56,43 @@
     }
     return nodes;
   }
-  // 권역(시도) 테두리 — 인접 셀 시도 다른 변(pointy-top odd-r). geom={colW,rowH,offX,offY,r}.
-  function drawSidoBorders(svg, cells, geom) {
+  // 셀 그룹 경계선 — 인접 셀의 그룹키가 다른 변에 선(pointy-top odd-r). geom={colW,rowH,offX,offY,r}.
+  //   opts.key(cell)=그룹키(기본 시도) · opts.includeOutline=바깥 경계도 그릴지(기본 true) · opts.lineClass.
+  //   시도 경계(key=시도, outline 포함)·구 외곽선(key=시도|시군구, outline 제외=시도선이 대신)에 공용.
+  function drawBorders(svg, cells, geom, opts) {
+    opts = opts || {};
     const NS = 'http://www.w3.org/2000/svg';
     const { colW, rowH, offX, offY, r } = geom;
+    const keyOf = opts.key || ((c) => c.sido);
+    const includeOutline = opts.includeOutline !== false;
+    const lineClass = opts.lineClass || 'sido-border';
     const center = (c, rr) => [offX + c * colW + (rr % 2 ? colW / 2 : 0), offY + rr * rowH];
-    const key = (c, rr) => c + ',' + rr;
-    const at = new Map(); cells.forEach((c) => at.set(key(c.c, c.r), c.sido));
+    const ck = (c, rr) => c + ',' + rr;
+    const at = new Map(); cells.forEach((c) => at.set(ck(c.c, c.r), keyOf(c)));
     const EDGE = ['SE', 'SW', 'W', 'NW', 'NE', 'E'];
     const OFF = { 0: { E: [1, 0], W: [-1, 0], SE: [0, 1], SW: [-1, 1], NE: [0, -1], NW: [-1, -1] },
       1: { E: [1, 0], W: [-1, 0], SE: [1, 1], SW: [0, 1], NE: [1, -1], NW: [0, -1] } };
     const vert = (cx, cy, j) => [cx + r * Math.cos(Math.PI / 6 + j * Math.PI / 3), cy + r * Math.sin(Math.PI / 6 + j * Math.PI / 3)];
-    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'sido-border-layer');
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', (opts.layerClass || 'sido-border-layer'));
     for (const cell of cells) {
       const [cx, cy] = center(cell.c, cell.r);
       const off = OFF[cell.r % 2];
+      const mine = keyOf(cell);
       for (let i = 0; i < 6; i++) {
         const [dc, dr] = off[EDGE[i]];
-        if (at.get(key(cell.c + dc, cell.r + dr)) === cell.sido) continue;
+        const nb = at.get(ck(cell.c + dc, cell.r + dr));
+        if (nb === mine) continue;
+        if (nb === undefined && !includeOutline) continue;   // 바깥 경계는 outline 옵션일 때만
         const [x1, y1] = vert(cx, cy, i), [x2, y2] = vert(cx, cy, (i + 1) % 6);
         const ln = document.createElementNS(NS, 'line');
         ln.setAttribute('x1', x1.toFixed(1)); ln.setAttribute('y1', y1.toFixed(1));
         ln.setAttribute('x2', x2.toFixed(1)); ln.setAttribute('y2', y2.toFixed(1));
-        ln.setAttribute('class', 'sido-border'); g.appendChild(ln);
+        ln.setAttribute('class', lineClass); g.appendChild(ln);
       }
     }
     svg.appendChild(g);
   }
-  window.CartogramUtil = { hexSpiral, allocateByVotes, convexHull, pieSlice, packCircles, drawSidoBorders };
+  // 권역(시도) 테두리 — drawBorders의 시도키 래퍼(기존 호출 호환).
+  function drawSidoBorders(svg, cells, geom) { drawBorders(svg, cells, geom, { key: (c) => c.sido, lineClass: 'sido-border' }); }
+  window.CartogramUtil = { hexSpiral, allocateByVotes, convexHull, pieSlice, packCircles, drawSidoBorders, drawBorders };
 })();

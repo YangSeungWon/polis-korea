@@ -1,4 +1,6 @@
 // history.js 시군구 hex — 대선·지선 기초단체장 시군구별 결과.
+//   격자/dorling은 공용 Archive.drawSigunguCartogram에 위임(종합/폴과 단일 렌더러).
+//   시점성(회차별 셀·_borrowed/_fill)은 여기서 데이터로 전처리해 주입 — 렌더러는 받은 셀만 그림.
 
 // === 시군구 hex ===
 
@@ -30,8 +32,7 @@ function renderSigunguHex() {
     const borrowed = eff.sido !== d.sido || eff.name !== d.name;
     if (!resultForSigungu(eff.sido, eff.name)) {
       // 현재 직(office) 데이터 없음 — 그 시점 '존재하는' 시군구(광역단체장 데이터 보유)면
-      // 숨기지 말고 no-data 회색 셀로 유지(내부 구멍 방지). 세종은 기초단체장이 없어
-      // 기초장 뷰에서 구멍이었음. 미존재(통폐합 전 등)는 광역장도 없어 그대로 숨김.
+      // 숨기지 말고 no-data 회색 셀로 유지(내부 구멍 방지).
       const gov = state.type === 'local' ? state.results?.offices?.['광역단체장'] : null;
       if (gov && resultForSigungu(eff.sido, eff.name, gov)) {
         return [{ ...d, sido: eff.sido, name: eff.name, _borrowed: borrowed }];
@@ -41,275 +42,32 @@ function renderSigunguHex() {
     return [{ ...d, sido: eff.sido, name: eff.name, _borrowed: borrowed }];
   });
   if (!data.length) return;  // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
-  const cs = data.map((d) => d.c);
-  const rs = data.map((d) => d.r);
-  const minC = Math.min(...cs), minR = Math.min(...rs);
-  const maxC = Math.max(...cs), maxR = Math.max(...rs);
-  const r = 22;
-  const colW = r * Math.sqrt(3);
-  const rowH = r * 1.5;
-  const w = (maxC - minC + 2) * colW;
-  const h = (maxR - minR + 2) * rowH;
-  const M = SIDO_EDGE_MARGIN;   // 좌우 시도 라벨 세로줄 공간
-  svg.setAttribute('viewBox', `${-M} 0 ${Math.ceil(w) + 2 * M} ${Math.ceil(h)}`);
-  const offX = -minC * colW + colW / 2;
-  const offY = -minR * rowH + rowH;
-
-  // (c,r) → cell lookup (시도 경계 감지에 사용)
-  const cellAt = new Map();
-  for (const d of data) cellAt.set(`${d.c},${d.r}`, d);
-  // nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
   // 사이즈 모드: 격자(시군구당 득표 비례 작은 hex·대선 기본) / dorling(원) / 그 외=단일 hex.
-  // 지선·총선은 '동일'(단일 hex, 1위 정당색). 제거된 '반지름' 등 stale 값은 단일 hex로 처리.
   const sizingMode = state.sizing || '동일';
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
-    if (result?.voted && !result._fill) maxVoted = Math.max(maxVoted, result.voted);  // 차용 셀 제외(전체 모도시라 스케일 왜곡)
+    if (result?.voted && !result._fill) maxVoted = Math.max(maxVoted, result.voted);  // 차용 셀 제외
   }
 
-  // 격자 hex 모드: 시군구당 N개 작은 hex 패킹 (1 hex = 2만표)
-  if (sizingMode === '격자' && maxVoted > 0) {
-    const unit = 20000;  // 1 hex = 2만표 (고정 — 회차·선거 동일 단위로 비교 가능)
-    const smallR = 3.2;  // unit ↓ → N ↑ (×2.5) → 면적 보존 위해 r √2.5 분의 1
-    // 스파이럴·득표배분은 공용(cartogram-util.js) — 종합/폴 카토그램과 단일화.
-    const hexSpiral = CartogramUtil.hexSpiral, allocateByVotes = CartogramUtil.allocateByVotes;
-    // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — 대선·총선·지선 공통.
-    drawSidoEdgeLabels(svg, data.map((d) => {
-      const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      return { sido: d.sido, cx, cy };
-    }));
-
-    let selectedG = null;
-    for (const d of data) {
-      const result = resultForSigungu(d.sido, d.name);
-      if (!result?.voted) continue;
-      // 단일 hex로 그릴 셀: 모도시 broadcast(_fill) 또는 그 시점 부모 구로 병합된 셀(_borrowed).
-      // 같은 구의 canonical 셀만 클러스터 → 중복카운트 없음.
-      const isFill = !!result._fill || d._borrowed;
-      const N = isFill ? 1 : Math.max(1, Math.ceil(result.voted / unit));
-      const [cx0, cy0] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      const cands = (result.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      const alloc = allocateByVotes(cands, N);
-      const top = cands[0];
-      const isSelected = state.selected
-        && state.selected.sido === d.sido && state.selected.name === d.name;
-      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      g.style.cursor = 'pointer';
-      g.addEventListener('click', () => {
-        state.selected = { sido: d.sido, name: d.name, code: d.code };
-        renderAll(); renderDetail();
+  // 격자/dorling — 공용 카토그램 렌더러(종합/폴과 단일화). 시점 셀·_borrowed/_fill·선택을 opts로 주입.
+  if ((sizingMode === '격자' || sizingMode === 'dorling') && maxVoted > 0 && window.Archive?.drawSigunguCartogram) {
+    const meta = window.Archive.drawSigunguCartogram(svg, data,
+      (sido, name) => resultForSigungu(sido, name),
+      {
+        mode: sizingMode,
+        date: electionDate,
+        selected: state.selected ? { sido: state.selected.sido, name: state.selected.name } : null,
+        onSelect: (sido, name, result, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
       });
-      const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      const _psido = periodSidoName(d.sido, electionDate);
-      tt.textContent = top
-        ? `${_psido} ${fmtUnitName(d.name)} · ${candLabel(top)} (${top.party}) ${top.uncontested ? '무투표 당선' : top.pct?.toFixed(1) + '%'}${result._fill ? ' · 모도시 결과(당시 미분리)' : d._borrowed ? ' · 당시 미분리(부모 구)' : ' · ' + N + '석/표'}`
-        : `${_psido} ${fmtUnitName(d.name)}`;
-      g.appendChild(tt);
-      // 셀별 footprint(테마 반투명 흰 배경) — stroke 없이 fill만. 같은 구 인접 셀끼리 이어져
-      // 병합 구가 한 면처럼 보임. 구 경계선은 루프 후 drawHexBorders(구 키)로 일괄.
-      const fp = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-      fp.setAttribute('points', hexPoints(cx0, cy0, 22));
-      fp.setAttribute('class', 'sig-outline');
-      fp.setAttribute('stroke', 'none');
-      g.appendChild(fp);
-      if (isFill) {
-        // 그 구 자체 득표 없음(당시 미분리) — 부모/모도시 1위 색으로 셀 채움. 병합 구가 하나의
-        // 면으로 보이게 cell 거의 가득(21). 클러스터는 canonical 셀에만 → 중복카운트/넘침 없음.
-        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        poly.setAttribute('points', hexPoints(cx0, cy0, 21));
-        poly.setAttribute('fill', top ? partyColor(top.party) : '#e6e9ef');
-        poly.setAttribute('opacity', '0.85');   // 차용(자체 득표 없음)임을 살짝 구분
-        g.appendChild(poly);
-      } else {
-        // 후보별 hex 배정 (스파이럴 순서대로 1위→2위→... 채움)
-        const spiral = hexSpiral(N);
-        const fills = [];
-        for (let i = 0; i < cands.length; i++) {
-          for (let k = 0; k < alloc[i]; k++) fills.push(partyColor(cands[i].party));
-        }
-        while (fills.length < N) fills.push('#e6e9ef');  // 안전 fallback
-        // smallR 클램프 — 큰 셀(합산 등)이 셀 반경(22) 밖으로 넘치지 않게.
-        let ext = 0;
-        for (const [q, ar] of spiral) ext = Math.max(ext, Math.hypot(Math.sqrt(3) * (q + ar / 2), 1.5 * ar));
-        const sr = Math.min(smallR, 20 / (ext + 1));
-        for (let i = 0; i < spiral.length; i++) {
-          const [q, ar] = spiral[i];
-          const dx = sr * Math.sqrt(3) * (q + ar / 2);
-          const dy = sr * 1.5 * ar;
-          const sx = cx0 + dx, sy = cy0 + dy;
-          const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-          poly.setAttribute('points', hexPoints(sx, sy, sr - 0.4));
-          poly.setAttribute('fill', fills[i] || '#e6e9ef');
-          // 작은 hex는 stroke 없음 — selected는 큰 outline에서만 강조.
-          g.appendChild(poly);
-        }
-      }
-      // 시군구 라벨 — canonical 셀(클러스터 있는)에만. 병합 구의 차용 셀은 같은 이름 중복이라 생략.
-      const label = shortSigunguLabel(d.name, d.sido);
-      if (label.short && !isFill) {
-        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        txt.setAttribute('x', cx0);
-        txt.setAttribute('text-anchor', 'middle');
-        txt.setAttribute('y', cy0 - 8);
-        txt.setAttribute('font-size', label.short.length > 3 ? '6' : '8');
-        txt.setAttribute('font-weight', '700');
-        // 격자 모드 시군구 라벨 — bg halo로 모든 배경 위에 가독성 (테마-인지).
-        txt.setAttribute('class', 'hist-sigungu-label');
-        txt.setAttribute('pointer-events', 'none');
-        txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-        txt.textContent = label.short;
-        g.appendChild(txt);
-      }
-      svg.appendChild(g);
-      if (isSelected) selectedG = g;
-    }
-    // 구 영역 외곽선 (옛 회차 병합 구는 내부선 없이 하나로) — 같은 시점-구끼리 묶음. 테마 인지.
-    const guKey = (x) => `${x.sido}|${x.name}`;
-    drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.0', false, guKey, 'gu-outline');
-    // 시도 경계 굵은 선 — 격자 모드도 cell 위치가 동일 모드와 같으므로 적용 가능.
-    drawHexBorders(svg, data, cellAt, colW, rowH, offX, offY, r, '1.8', true);
-    // 선택 cell cluster를 위로 + 선택 구 영역 외곽선을 맨 위에 — 경계·인접 셀이 가리지 않게.
-    if (selectedG) svg.appendChild(selectedG);
-    if (state.selected) {
-      const selCells = data.filter((x) => x.sido === state.selected.sido && x.name === state.selected.name);
-      if (selCells.length) {
-        const selAt = new Map(selCells.map((x) => [`${x.c},${x.r}`, x]));
-        drawHexBorders(svg, selCells, selAt, colW, rowH, offX, offY, r, '3.5', true, guKey, 'gu-outline is-selected');
-      }
-    }
-    return;
-  }
-
-  // Dorling cartogram: 원, force-directed packing
-  if (sizingMode === 'dorling' && maxVoted > 0) {
-    // 차용 셀(병합 구) 제외 — 구당 원 하나(canonical 셀 위치)로 중복 방지.
-    const nodes = data.filter((d) => !d._borrowed).map((d) => {
-      const result = resultForSigungu(d.sido, d.name);
-      // 차용(_fill) 셀은 모도시 전체 득표라 v-비례 금지 — 작은 대표 원.
-      const v = (result && !result._fill) ? (result.voted || 0) : 0;
-      const top = topCandidate(result);
-      const sec = result?.candidates?.length >= 2 ? result.candidates[1] : null;
-      const gap = top && sec ? top.pct - sec.pct : null;
-      const [cx0, cy0] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
-      return {
-        d, result, top,
-        cx0, cy0,
-        radius: v > 0 ? Math.max(3, (r - 0.7) * Math.sqrt(v / maxVoted)) : 3,
-        fill: top ? partyColor(top.party) : '#e6e9ef',
-        op: top ? gapOpacity(gap) : 1,
-      };
-    });
-    for (const n of nodes) { n.cx = n.cx0; n.cy = n.cy0; }
-    CartogramUtil.packCircles(nodes, 40);   // force-directed 원 패킹 (공용)
-    // 시도별 그룹핑 (권역 테두리 + 라벨 centroid 공용)
-    const sidoGroups = new Map();
-    for (const n of nodes) {
-      const k = n.d.sido;
-      const list = sidoGroups.get(k) || [];
-      list.push(n);
-      sidoGroups.set(k, list);
-    }
-    // 권역 테두리 — 시도별 convex hull (공용 cartogram-util).
-    const _convexHull = CartogramUtil.convexHull;
-    for (const [sido, list] of sidoGroups) {
-      const expanded = [];
-      for (const n of list) {
-        const pad = n.radius + 3;
-        for (let k = 0; k < 12; k++) {
-          const a = (k * Math.PI * 2) / 12;
-          expanded.push({ x: n.cx + Math.cos(a) * pad, y: n.cy + Math.sin(a) * pad });
-        }
-      }
-      const hull = _convexHull(expanded);
-      if (hull.length < 3) continue;
-      const points = hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-      poly.setAttribute('points', points);
-      poly.setAttribute('fill', 'rgba(10,14,26,0.04)');
-      poly.setAttribute('stroke', 'rgba(10,14,26,0.45)');
-      poly.setAttribute('stroke-width', '1.5');
-      poly.setAttribute('stroke-linejoin', 'round');
-      poly.setAttribute('pointer-events', 'none');
-      svg.appendChild(poly);
-    }
-    // 시도명 외곽 라벨 (무리 위쪽 바깥, 작게) — grid 모드와 동일.
-    drawSidoEdgeLabels(svg, [...sidoGroups].flatMap(([s, list]) =>
-      list.map((n) => ({ sido: s, cx: n.cx, cy: n.cy }))));
-    // 파이 슬라이스 path (top 기준 시계방향). 면적=표수(원), 파이=후보 구성.
-    const pieSlice = CartogramUtil.pieSlice;   // 공용
-    for (const n of nodes) {
-      const isSelected = state.selected
-        && state.selected.sido === n.d.sido && state.selected.name === n.d.name;
-      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      g.style.cursor = 'pointer';
-      g.addEventListener('click', () => {
-        state.selected = { sido: n.d.sido, name: n.d.name, code: n.d.code };
-        renderAll(); renderDetail();
-      });
-      // 득표 비례 파이 — 셀 안에서 후보 구성 표시(승자독식 색 왜곡 제거).
-      const cands = (n.result?.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      const totalV = cands.reduce((s, c) => s + (c.votes || 0), 0);
-      if (totalV > 0 && cands.filter((c) => (c.votes || 0) > 0).length > 1) {
-        let a0 = -Math.PI / 2;
-        for (const cand of cands) {
-          const frac = (cand.votes || 0) / totalV;
-          if (frac <= 0) continue;
-          const a1 = a0 + frac * 2 * Math.PI;
-          const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          p.setAttribute('d', pieSlice(n.cx, n.cy, n.radius, a0, a1));
-          p.setAttribute('fill', partyColor(cand.party));
-          g.appendChild(p);
-          a0 = a1;
-        }
-        const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        ring.setAttribute('cx', n.cx); ring.setAttribute('cy', n.cy); ring.setAttribute('r', n.radius);
-        ring.setAttribute('fill', 'none');
-        ring.setAttribute('stroke', '#0a0e1a');
-        ring.setAttribute('stroke-width', isSelected ? '1.6' : '0.5');
-        g.appendChild(ring);
-      } else {
-        // 단독·무투표 등 후보 1명 — 단색 원
-        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        c.setAttribute('cx', n.cx);
-        c.setAttribute('cy', n.cy);
-        c.setAttribute('r', n.radius);
-        c.setAttribute('fill', n.fill);
-        c.setAttribute('stroke', '#0a0e1a');
-        c.setAttribute('stroke-width', isSelected ? '1.6' : '0.5');
-        g.appendChild(c);
-      }
-      const tt = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      tt.textContent = n.top
-        ? `${n.d.sido} ${n.d.name} · ${candLabel(n.top)} (${n.top.party}) ${n.top.uncontested ? '무투표 당선' : n.top.pct?.toFixed(1) + '%'}`
-        : `${n.d.sido} ${n.d.name}`;
-      g.appendChild(tt);
-      // 라벨 — 큰 원만
-      if (n.radius >= 10 && n.top) {
-        const lbl = shortSigunguLabel(n.d.name, n.d.sido);
-        if (lbl.short) {
-          const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          txt.setAttribute('x', n.cx);
-          txt.setAttribute('y', n.cy + 3);
-          txt.setAttribute('text-anchor', 'middle');
-          txt.setAttribute('font-size', '7');
-          txt.setAttribute('font-weight', '600');
-          // dorling 원 내부 텍스트 — 배경(1위 정당색)에 맞춰 자동.
-          txt.setAttribute('fill', n.fill ? pickTextColor(n.fill) : 'var(--ink)');
-          txt.setAttribute('pointer-events', 'none');
-          txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-          txt.textContent = lbl.short;
-          g.appendChild(txt);
-        }
-      }
-      svg.appendChild(g);
-    }
+    if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
     return;
   }
 
   // 단일 hex (1위 정당색) — 공용 캐논 drawSigunguHex 위임. 시도명 워터마크는 underlay로 셀 뒤에.
-  drawSigunguHex(svg, data,
+  const r = 22;
+  const meta = drawSigunguHex(svg, data,
     (sido, name) => {
       const result = resultForSigungu(sido, name);
       const top = topCandidate(result);
@@ -347,5 +105,6 @@ function renderSigunguHex() {
         }
       },
     });
+  // 단일 hex도 팬·줌 — 폴·종합과 동일.
+  if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
 }
-

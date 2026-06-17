@@ -297,27 +297,8 @@
   .hist-close-cand { font-size: 10px; }
 }
 
-/* === history hex 텍스트 — 테마 인지 === */
-/* 시도 배경 큰 라벨 (시군구 hex 격자 모드의 cluster centroid) */
-.hist-sido-bg-label {
-  fill: var(--ink);
-  opacity: 0.35;
-}
-/* 시도명 외곽 라벨 — 무리 위쪽 바깥에 작게. 불투명 셀(총선·지선) 위에서도 보임. bg halo로 가독 */
-.hist-sido-edge-label {
-  fill: var(--ink);
-  opacity: 0.55;
-  stroke: var(--bg);
-  stroke-width: 2.5;
-  paint-order: stroke fill;
-}
-/* 시군구 격자 모드 작은 라벨 — bg halo 두껍게 둘러 어떤 정당색 위에도 읽힘 */
-.hist-sigungu-label {
-  fill: var(--ink);
-  stroke: var(--bg);
-  stroke-width: 1.6;          /* halo 얇게 — 인접 셀 라벨을 가리지 않게 */
-  paint-order: stroke fill;
-}
+/* history hex 텍스트 라벨 클래스(.hist-sido-bg-label·.hist-sido-edge-label·.hist-sigungu-label)는
+   components.css로 이동 — 종합/폴 카토그램과 공용. */
 
 /* 간선 대선 정보 카드 (지도 대신) — 전용 컨테이너가 viz 영역을 패널처럼 채움 */
 #indirect-card { flex: 1; width: 100%; }
