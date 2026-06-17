@@ -49,9 +49,10 @@
       ? `${psido(d.sido, date)} ${uname(d.name)} · ${top.name || top.party}(${top.party}) ${pctStr(top)}${extra || ''}`
       : `${psido(d.sido, date)} ${uname(d.name)}`);
 
-    // maxVoted — 차용(_fill, 모도시 전체 득표) 제외(스케일 왜곡 방지)
+    // 총투표수 — voted 없으면 voters(live-count는 voters만). maxVoted는 차용(_fill) 제외(스케일 왜곡 방지).
+    const vget = (r) => ((r && r.voted != null) ? r.voted : ((r && r.voters) || 0));
     const rmap = new Map(); let maxVoted = 0;
-    for (const d of cells) { const res = resultFn(d.sido, d.name); if (res && res.voted) { rmap.set(d, res); if (!res._fill) maxVoted = Math.max(maxVoted, res.voted); } }
+    for (const d of cells) { const res = resultFn(d.sido, d.name); if (res && vget(res)) { rmap.set(d, res); if (!res._fill) maxVoted = Math.max(maxVoted, vget(res)); } }
 
     if (typeof drawSidoEdgeLabels === 'function') {
       drawSidoEdgeLabels(svg, cells.map((d) => { const [cx, cy] = ctr(d); return { sido: d.sido, cx, cy }; }));
@@ -64,7 +65,7 @@
         const res = rmap.get(d);
         const cs = (res.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
         const top = cs[0], gap = (cs[0] && cs[1]) ? (cs[0].pct - cs[1].pct) : null;
-        const v = res._fill ? 0 : (res.voted || 0);   // 차용 셀은 v-비례 금지 → 작은 대표 원
+        const v = res._fill ? 0 : vget(res);   // 차용 셀은 v-비례 금지 → 작은 대표 원
         const [cx0, cy0] = ctr(d);
         return { d, res, top, cands: cs, cx0, cy0, cx: cx0, cy: cy0,
           radius: v > 0 ? Math.max(3, (r - 0.7) * Math.sqrt(v / maxVoted)) : 3,
@@ -119,9 +120,9 @@
     const unit = opts.unit || 20000, smallR = 3.2;
     let shown = 0, selectedG = null;
     for (const d of cells) {
-      const res = rmap.get(d); if (!res || !res.voted) continue;
+      const res = rmap.get(d); if (!res || !vget(res)) continue;
       const isFill = !!res._fill || d._borrowed;   // 당시 미분리 구·모도시 broadcast → 단일 hex
-      const N = isFill ? 1 : Math.max(1, Math.ceil(res.voted / unit));
+      const N = isFill ? 1 : Math.max(1, Math.ceil(vget(res) / unit));
       const [cx0, cy0] = ctr(d);
       const cands = (res.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       const top = cands[0];

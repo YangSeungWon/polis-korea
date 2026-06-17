@@ -48,7 +48,8 @@ function renderSigunguHex() {
   let maxVoted = 0;
   for (const d of data) {
     const result = resultForSigungu(d.sido, d.name);
-    if (result?.voted && !result._fill) maxVoted = Math.max(maxVoted, result.voted);  // 차용 셀 제외
+    const v = result ? (result.voted != null ? result.voted : (result.voters || 0)) : 0;  // live-count는 voters만
+    if (v && !result._fill) maxVoted = Math.max(maxVoted, v);  // 차용 셀 제외
   }
 
   // 격자/dorling — 공용 카토그램 렌더러(종합/폴과 단일화). 시점 셀·_borrowed/_fill·선택을 opts로 주입.
