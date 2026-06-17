@@ -241,8 +241,9 @@
 .pres-sgg-note { color: var(--ink-mute); }
 
 /* 시군구 결과 — 단색/격자/dorling 토글 + cartogram */
-/* 버튼은 공용 .seg-btn — 래퍼만 가운데 정렬(다른 방식 토글과 통일). */
-.sgg-mode-toggle { display: flex; justify-content: center; margin: 0 0 10px; }
+/* 버튼은 공용 .seg-btn. 방식 토글을 지도 위(우상단)로 — 인맵 컨트롤. */
+:has(> .sgg-mode-toggle) { position: relative; }
+.sgg-mode-toggle { position: absolute; top: 6px; right: 6px; z-index: 5; display: flex; gap: 6px; margin: 0; }
 .cartogram-map { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
 .sgg-result-legend { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
 .sgg-result-legend .ch-leg { font-weight: 700; }

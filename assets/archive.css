@@ -771,8 +771,10 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .gov-hex-name { fill: var(--bg); text-anchor: middle; pointer-events: none; }
 .gov-hex-pct { fill: var(--bg); opacity: 0.85; text-anchor: middle; pointer-events: none; }
 /* 시도 헥스/지도 토글 */
-/* 공용 .seg/.seg-btn 위젯 두 그룹(표현 방식 · 투표율)을 가운데 정렬 — 전 사이트 토글 통일. */
-.ar-sido-toggle { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+/* 방식 토글을 지도 위(우상단)로 — 포커스 보존되니 '같은 뷰를 다른 방식으로 변형'하는 인맵 컨트롤. */
+:has(> .ar-sido-toggle) { position: relative; }
+.ar-sido-toggle { position: absolute; top: 6px; right: 6px; z-index: 5; display: flex; flex-wrap: wrap;
+  justify-content: flex-end; gap: 6px; margin: 0; }
 .ar-sido-view { width: 100%; }
 /* 투표율 뷰 범례 — 절대 스케일 바 + 이 선거 범위 */
 .ar-turnout-legend { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px auto 0; font-size: 11px; color: var(--ink-soft); flex-wrap: wrap; }
@@ -807,8 +809,9 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .ar-sgg-result-legend .ch-leg { font-weight: 700; }
 
 /* 시군구 결과 — 단색/격자/dorling 토글 + cartogram */
-/* 버튼은 공용 .seg-btn — 래퍼만 가운데 정렬(다른 방식 토글과 통일). */
-.sgg-mode-toggle { display: flex; justify-content: center; margin: 0 0 10px; }
+/* 버튼은 공용 .seg-btn. 방식 토글을 지도 위(우상단)로 — 인맵 컨트롤. */
+:has(> .sgg-mode-toggle) { position: relative; }
+.sgg-mode-toggle { position: absolute; top: 6px; right: 6px; z-index: 5; display: flex; gap: 6px; margin: 0; }
 .cartogram-map { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
 .sgg-result-legend { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
 .sgg-result-legend .ch-leg { font-weight: 700; }
