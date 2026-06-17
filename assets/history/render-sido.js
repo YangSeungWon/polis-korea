@@ -68,6 +68,6 @@ function renderSidoHex() {
     onSelect: (sido) => { state.selected = { sido }; renderAll(); renderDetail(); },
     selected: (state.selected && !state.selected.name) ? state.selected.sido : null,
   });
-  // 팬·줌 — 폴·아카이브와 동일(svg 호스트 재사용, 재렌더 후 줌 복원). 리스너 1회.
-  if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
+  // 줌은 history 자체 enablePinchZoom 사용(SvgViewport와 충돌 금지) — 포커스 전이용 셀만 저장.
+  if (meta) svg._focusCells = meta.cells;
 }

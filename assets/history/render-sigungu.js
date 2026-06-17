@@ -61,7 +61,7 @@ function renderSigunguHex() {
         selected: state.selected ? { sido: state.selected.sido, name: state.selected.name } : null,
         onSelect: (sido, name, result, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
       });
-    if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
+    if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
     return;
   }
 
@@ -105,6 +105,5 @@ function renderSigunguHex() {
         }
       },
     });
-  // 단일 hex도 팬·줌 — 폴·종합과 동일.
-  if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
+  if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
 }
