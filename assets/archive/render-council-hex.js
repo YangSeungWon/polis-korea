@@ -515,13 +515,22 @@
       area.innerHTML = ''; area.appendChild(svg);
       if (window.SvgViewport && meta && meta.cells) window.SvgViewport.applyHost(area, svg, { cells: meta.cells }, keep);
     }
-    tog.innerHTML = MODES.map(([k, lbl], i) =>
-      `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');
-    tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
-      mode = b.dataset.sgmode;
-      tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));
-      redraw();
-    }));
+    // 인코딩 토글 — 아이콘+가족(1위[단색] | 표 비례[격자·원형]). 공용 EncodingToggle, 없으면 폴백.
+    if (window.EncodingToggle) {
+      window.EncodingToggle.render(tog, {
+        options: MODES.map(([k, lbl]) => ({ key: k, label: lbl })),
+        active: mode,
+        onSelect: (k) => { mode = k; redraw(); },
+      });
+    } else {
+      tog.innerHTML = MODES.map(([k, lbl], i) =>
+        `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');
+      tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
+        mode = b.dataset.sgmode;
+        tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));
+        redraw();
+      }));
+    }
     leg.innerHTML = parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
       + ' <span class="ar-genhex-note">· 단색 명도=격차 · 격자 1칸=2만표</span>';
     redraw();

@@ -101,6 +101,13 @@
   background: var(--bg2);
   color: var(--ink);
 }
+/* 인코딩 토글 (EncodingToggle) — 아이콘 + 두 가족(1위 | 표 비례) 한 바. */
+.enc-toggle { display: flex; align-items: flex-end; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.enc-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.enc-fam { font-size: 9px; font-weight: 700; letter-spacing: 0.02em; color: var(--ink-mute, #8a93a3); line-height: 1; }
+.enc-sep { align-self: stretch; width: 1px; background: var(--rule-strong); margin: 0 1px; }
+.enc-toggle .seg-btn { display: inline-flex; align-items: center; gap: 4px; }
+.enc-ic { flex-shrink: 0; }
 .time-anchor {
   margin-left: auto;
   font-size: 12px;

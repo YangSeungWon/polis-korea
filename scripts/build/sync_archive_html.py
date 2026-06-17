@@ -431,6 +431,7 @@ FOOT = """
 <script src="assets/lens-switcher.js"></script>
 {extra_scripts}<script src="assets/elections.js"></script>
 <script src="assets/svg-viewport.js"></script><!-- SVG 팬·줌 (방식 뷰 공용) -->
+<script src="assets/encoding-toggle.js"></script><!-- 인코딩 토글(아이콘+가족) -->
 <script src="assets/archive/shared.js"></script>
 <script src="assets/archive/local.js"></script>
 <script src="assets/archive/render-governor-hex.js"></script>
