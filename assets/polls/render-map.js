@@ -152,8 +152,9 @@ async function renderMap() {
     const acc = new Map();
     sigunguLayer.eachLayer((l) => {
       const code = l.feature?.properties?.code || '';
-      const sd = (typeof canonSido === 'function') ? canonSido(sigunguSidoFromCode(code)) : sigunguSidoFromCode(code);
       let nm = l.feature?.properties?.name || '';
+      const sd0 = periodSido(nm, sigunguSidoFromCode(code));
+      const sd = (typeof canonSido === 'function') ? canonSido(sd0) : sd0;
       const parent = (typeof parentSigungu === 'function') ? parentSigungu(nm) : null;
       if (parent) nm = parent;   // 일반구→시 롤업(다른 시군구는 그대로)
       if (!sd || !nm || !l.getBounds) return;
@@ -200,10 +201,17 @@ function attachSidoClick(feat, layer) {
   });
 }
 
+// 시도 이동 보정 — geo는 현행 경계(군위=대구)지만 회차 시점엔 경북(2023.7.1 전입). 폴 회차 날짜로 보정.
+//   (균등 hex는 회차별 sigungu_hex_local 레이아웃이라 이미 그 시점 sido. geo만 현행이라 어긋남.)
+function periodSido(name, sido) {
+  if (name === '군위군' && (POLL_ELECTION.date || '9999') < '2023-07-01') return '경상북도';
+  return sido;
+}
+
 function attachSigunguClick(feat, layer) {
   const code = feat.properties.code || '';
-  const sido = sigunguSidoFromCode(code);
   const name = feat.properties.name || '';
+  const sido = periodSido(name, sigunguSidoFromCode(code));
   layer.on('click', () => {
     state.selectedSido = sido;
     state.selectedSigungu = name;
@@ -224,8 +232,8 @@ function updateSidoTooltip(layer) {
 
 function updateSigunguTooltip(layer) {
   const code = layer.feature.properties.code || '';
-  const sido = sigunguSidoFromCode(code);
   const name = layer.feature.properties.name || '';
+  const sido = periodSido(name, sigunguSidoFromCode(code));
   const result = regionSigunguWinner(sido, name, state.office);
   const tip = result
     ? `<b>${sido} ${name}</b><br>${result.name} (${result.party}) ${result.pct}%<br>${fmtDate(result.period)} 조사`
@@ -264,8 +272,8 @@ function sidoStyle(feat) {
 
 function sigunguStyle(feat) {
   const code = feat.properties.code || '';
-  const sido = sigunguSidoFromCode(code);
   const name = feat.properties.name || '';
+  const sido = periodSido(name, sigunguSidoFromCode(code));
   const result = regionSigunguWinner(sido, name, state.office);
   const selected = state.selectedSido === sido && state.selectedSigungu === name;
   const low = result && result.n_polls <= 2;
