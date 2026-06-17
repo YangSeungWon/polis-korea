@@ -70,7 +70,11 @@
     }
     await CH.initResult(
       { results: { races: ps.sigunguRaces }, meta: { electionN: POLL_ELECTION.n, electionKind: 'presidential' } },
-      sec.querySelector('.pres-sgg-host'));
+      sec.querySelector('.pres-sgg-host'),
+      { onSelect: (sido, name) => {   // 시군구 클릭 → 그 지역 실제 결과 detail
+        state.selectedSido = sido; state.selectedSigungu = name; state.office = '대통령';
+        if (window.renderDetail) window.renderDetail();
+      } });
   }
 
   function cells() {

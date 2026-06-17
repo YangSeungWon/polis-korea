@@ -427,7 +427,7 @@
     return m;
   }
 
-  function renderResult(svg, hexCells, rmap) {
+  function renderResult(svg, hexCells, rmap, onSelect) {
     const maxC = Math.max(...hexCells.map((c) => c.c)), maxR = Math.max(...hexCells.map((c) => c.r));
     const w = OFF_X * 2 + (maxC + 1) * COL_W, h = OFF_Y * 2 + (maxR + 1) * ROW_H;
     const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;
@@ -455,6 +455,7 @@
         : `${cell.sido} ${cell.name} · 데이터 없음`;
       const tt = document.createElementNS(NS, 'title'); tt.textContent = label; g.appendChild(tt);
       bindTip(g, label);
+      if (onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => onSelect(cell.sido, cell.name)); }
       svg.appendChild(g);
     }
     drawSidoBorders(svg, hexCells, PARENT_R);
@@ -467,7 +468,8 @@
   }
 
   // 시군구 결과 맵 — 단색(격차 명도)/격자/dorling(표 비례) 토글. host 주면 거기(폴), 없으면 종합 섹션 자동.
-  async function initResult(ctx, host) {
+  async function initResult(ctx, host, opts) {
+    const onSelect = (opts && opts.onSelect) || null;
     const races = ctx?.results?.races || [];
     const rmap = resultBySigungu(races, '1');
     if (rmap.size < 4) return null;
@@ -508,8 +510,8 @@
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
       let meta;
-      if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); meta = renderResult(svg, hexCells, rmap); }
-      else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); meta = CART(svg, hexCells, resultFn, { mode, r: 22 }); }
+      if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); meta = renderResult(svg, hexCells, rmap, onSelect); }
+      else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); meta = CART(svg, hexCells, resultFn, { mode, r: 22, onSelect }); }
       area.innerHTML = ''; area.appendChild(svg);
       if (window.SvgViewport && meta && meta.cells) window.SvgViewport.applyHost(area, svg, { cells: meta.cells }, keep);
     }

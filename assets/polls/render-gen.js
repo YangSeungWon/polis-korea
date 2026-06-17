@@ -66,7 +66,12 @@
     const el = document.getElementById('gen-prop-map-svg');
     if (!el || !window.Archive || !window.Archive.sidoProp) return;
     const SP = window.Archive.sidoProp;
-    (gs.pmap === 'grid' ? SP.drawGrid : SP.drawDorling)(el, gs.propSidoRaces, {});
+    // 시도 클릭 → 그 시도 비례 실제 결과 detail(지선 패널 재사용).
+    const onSelect = (sido) => {
+      state.selectedSido = sido; state.selectedSigungu = null; state.office = '비례대표';
+      if (window.renderDetail) window.renderDetail();
+    };
+    (gs.pmap === 'grid' ? SP.drawGrid : SP.drawDorling)(el, gs.propSidoRaces, { onSelect });
   }
 
   // 254 지역구 hex (여론조사 1위 / 실제 1위 토글)
