@@ -329,7 +329,9 @@
         svg.appendChild(t);
       }
       if (mode === 'proportional') addLegend(svg, L, opts.legend || `■ 1개 = ${(L.unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`);
+      const keep = window.SvgViewport ? window.SvgViewport.captureHost(host) : null;
       host.innerHTML = ''; host.appendChild(svg);
+      if (window.SvgViewport) window.SvgViewport.applyHost(host, svg, { cells: L.nodes.map((n) => ({ region: n.sido, cx: n.cx, cy: n.cy })) }, keep);
       return legendOf(L.nodes);
     }
 
@@ -367,7 +369,9 @@
         t.textContent = nameOf(n); svg.appendChild(t);
       }
       if (mode === 'proportional') addLegend(svg, L, opts.legend || '● 크기=득표 · 파이=후보 득표 구성');
+      const keep = window.SvgViewport ? window.SvgViewport.captureHost(host) : null;
       host.innerHTML = ''; host.appendChild(svg);
+      if (window.SvgViewport) window.SvgViewport.applyHost(host, svg, { cells: L.nodes.map((n) => ({ region: n.sido, cx: n.cx, cy: n.cy })) }, keep);
       return legendOf(L.nodes);
     }
 

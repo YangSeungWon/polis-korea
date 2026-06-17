@@ -115,5 +115,22 @@
     return handle;
   }
 
-  window.SvgViewport = { attach };
+  // 재렌더(토글) 시 호스트의 줌을 보존 — 글로벌 Focus 없이 호스트 단위(한 페이지 여러 카토그램 간섭 방지).
+  //   그리기 직전 옛 svg에서 capture → host.__svgFocus에 stash. 새 svg attach 후 같은 지역으로 apply.
+  function captureHost(host) {
+    const old = host && host.querySelector && host.querySelector('svg');
+    if (old && old.__svgViewport && typeof old.__svgViewport.report === 'function') {
+      const r = old.__svgViewport.report();
+      if (r && (r.scale || 1) > 1.05) return r;
+    }
+    return (host && host.__svgFocus) || null;
+  }
+  function applyHost(host, svg, opts, keep) {
+    const h = attach(svg, opts);
+    if (keep && keep.region && (keep.scale || 1) > 1.05) h.focusOn(keep.region, keep.scale);
+    if (host) host.__svgFocus = keep || null;
+    return h;
+  }
+
+  window.SvgViewport = { attach, captureHost, applyHost };
 })();
