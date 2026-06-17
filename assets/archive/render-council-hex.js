@@ -493,12 +493,13 @@
       }
       mapHost = sec.querySelector('.ar-sgg-result-host');
     }
-    mapHost.innerHTML = '<div class="sgg-mode-toggle"></div><div class="sgg-map-area"></div><div class="sgg-result-legend ch-leg-row"></div>';
+    mapHost.innerHTML = '<div class="sgg-mode-toggle seg" role="tablist" aria-label="표현 방식"></div><div class="sgg-map-area"></div><div class="sgg-result-legend ch-leg-row"></div>';
     const tog = mapHost.querySelector('.sgg-mode-toggle');
     const area = mapHost.querySelector('.sgg-map-area');
     const leg = mapHost.querySelector('.sgg-result-legend');
     const CART = window.Archive && window.Archive.drawSigunguCartogram;
-    const MODES = [['단색', '격차 명도'], ['격자', '표 비례'], ['dorling', '표 비례 원']].filter(([k]) => k === '단색' || CART);
+    // 라벨은 단어만(방식 seg 통일) — 의미(격차 명도·표 비례)는 source-line·legend note가 설명.
+    const MODES = ['단색', '격자', 'dorling'].filter((k) => k === '단색' || CART);
     let mode = '단색';
     function redraw() {
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
@@ -506,8 +507,8 @@
       else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); CART(svg, hexCells, resultFn, { mode, r: 22 }); }
       area.innerHTML = ''; area.appendChild(svg);
     }
-    tog.innerHTML = MODES.map(([k, lbl], i) =>
-      `<button type="button" class="sgg-mode-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${k} <small>${lbl}</small></button>`).join('');
+    tog.innerHTML = MODES.map((k, i) =>
+      `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${k}</button>`).join('');
     tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
       mode = b.dataset.sgmode;
       tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));
