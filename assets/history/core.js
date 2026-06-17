@@ -327,9 +327,11 @@ function setSizing(s) {
 }
 
 function setDisplay(d) {
+  // 균등↔지도 전환 시 보던 지역 유지 — 떠나는 뷰 capture → 렌더 후 새 뷰 apply.
+  const keep = (typeof HistoryFocus !== 'undefined') ? HistoryFocus.capture() : null;
   state.display = d;
   document.querySelectorAll('[data-display]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.display === d);
   });
-  renderAll();
+  Promise.resolve(renderAll()).then(() => { if (keep && typeof HistoryFocus !== 'undefined') HistoryFocus.apply(keep); });
 }

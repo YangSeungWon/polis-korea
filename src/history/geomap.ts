@@ -80,6 +80,39 @@ let geo38Layer: any = null;          // 38선 참조선(1·2대 = 38선이 국�
 let geoMiniMapCtrl: any = null;
 let geoInitialZoom: number | null = null;
 
+// 방식 전환(균등↔지도) 포커스 전이 — 현재 geo 레이어의 region→centroid. 키는 hex side와 동일
+//   (시도 / 시도|시군구). 각 geo render가 마운트 후 setGeoFocus로 채움. report/focusOn은 globalThis.geoFocus.
+let geoFocusCentroids = new Map<string, any>();
+function setGeoFocus(layer: any, regionOf: (f: any) => string | null): void {
+  geoFocusCentroids = new Map();
+  if (!layer) return;
+  layer.eachLayer((l: any) => {
+    if (!l.getBounds) return;
+    const reg = regionOf(l.feature);
+    if (reg) geoFocusCentroids.set(reg, l.getBounds().getCenter());
+  });
+}
+const infoRegion = (info: any): string | null =>
+  info ? (info.name ? canonSido(info.sido) + '|' + info.name : canonSido(info.sido)) : null;
+const geoFocus = {
+  report() {
+    if (!geoLeafletMap || !geoFocusCentroids.size || geoInitialZoom == null) return { region: null, scale: 1 };
+    const c = geoLeafletMap.getCenter();
+    const scale = Math.pow(2, geoLeafletMap.getZoom() - (geoInitialZoom as number));
+    let best: string | null = null, bd = Infinity;
+    geoFocusCentroids.forEach((ll: any, nm: string) => {
+      const d = (ll.lat - c.lat) ** 2 + (ll.lng - c.lng) ** 2; if (d < bd) { bd = d; best = nm; }
+    });
+    return { region: best, scale };
+  },
+  focusOn(region: string, scale: number) {
+    if (!geoLeafletMap) return;
+    const ll = region && geoFocusCentroids.get(region);
+    const iz = geoInitialZoom != null ? (geoInitialZoom as number) : geoLeafletMap.getZoom();
+    if (ll) geoLeafletMap.setView(ll, iz + Math.log2(Math.max(1, scale || 1)), { animate: false });
+  },
+};
+
 // 모든 geo 오버레이 제거 — 타입(대선↔총선↔지선)·회차 전환 시 이전 지도 잔류 방지.
 // 각 geo render가 시작 시 호출 → 필요한 layer만 다시 추가. (한 모듈 내 공유 가변 상태.)
 function clearGeoLayers(): void {
@@ -269,6 +302,10 @@ async function renderGeoMap(): Promise<void> {
   }
   geoDistrictLayer = geoDistrictByN[n];
   geoDistrictLayer.addTo(geoLeafletMap);
+  setGeoFocus(geoDistrictLayer, (f: any) => {   // 포커스 전이용 — 선거구 region(시도|선거구명)
+    const info = sggToWinner[String(f.properties.SGG_Code)];
+    return info ? canonSido(info.race.sido) + '|' + info.race.name : null;
+  });
   // 선택 강조 재적용 (회차 전환 시 stale ref 제거 + 같은 선거구 재강조)
   _geoReapplySelection(geoDistrictLayer, (p) => {
     const info = sggToWinner[String(p?.SGG_Code)];
@@ -595,6 +632,7 @@ async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (i
     onEachFeature: (f: any, l: any) => _attachLocalInteraction(f, l, infoFor(f.properties), labelFor(f.properties)),
   });
   localGeoLayer.addTo(geoLeafletMap);
+  setGeoFocus(localGeoLayer, (f: any) => infoRegion(infoFor(f.properties)));   // 포커스 전이용 centroid
   // 선택 강조 재적용 (office/회차 전환 시 stale ref 제거 + 같은 지역 재강조)
   _geoReapplySelection(localGeoLayer, (p) => {
     const info = infoFor(p);
@@ -675,4 +713,5 @@ function _attachLocalInteraction(_feature: any, layer: any, info: any, label: st
 Object.assign(globalThis as unknown as Record<string, unknown>, {
   renderGeoMap, renderDistrictHex,
   renderLocalGeoMap, renderPresGeoMap, presGeoSupported, localGeoSupported,
+  geoFocus,
 });

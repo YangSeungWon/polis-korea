@@ -593,7 +593,27 @@ function enablePinchZoom(svg) {
   function set(b) { vb = clamp(b); lastSet = vb.map((v) => +v.toFixed(2)).join(' '); svg.setAttribute('viewBox', lastSet); updateTA(); }
   function sync() { base = read(); vb = base.slice(); lastSet = svg.getAttribute('viewBox'); updateTA(); }
   sync();
-  _zoomables.push({ svg, reset: () => set(base.slice()), isZoomed: () => base && vb[2] < base[2] - 0.5 });
+  // report/focusOn — 방식 전환(균등↔지도) 포커스 전이용. svg._focusCells(렌더러가 저장)로 지역 앵커.
+  const entry = {
+    svg, reset: () => set(base.slice()), isZoomed: () => base && vb[2] < base[2] - 0.5,
+    report() {
+      const cells = svg._focusCells;
+      if (!cells || !cells.length || !base) return { region: null, scale: 1 };
+      const cxv = vb[0] + vb[2] / 2, cyv = vb[1] + vb[3] / 2, scale = base[2] / vb[2];
+      let best = null, bd = Infinity;
+      for (const c of cells) { const d = (c.cx - cxv) ** 2 + (c.cy - cyv) ** 2; if (d < bd) { bd = d; best = c; } }
+      return { region: best ? best.region : null, scale };
+    },
+    focusOn(region, scale) {
+      const cells = svg._focusCells; if (!cells || !base) return;
+      const c = region && cells.find((x) => x.region === region);
+      if (!c) { set(base.slice()); return; }
+      const w = base[2] / Math.max(1, scale || 1), h = base[3] / Math.max(1, scale || 1);
+      set([c.cx - w / 2, c.cy - h / 2, w, h]);
+    },
+  };
+  _zoomables.push(entry);
+  svg._pzEntry = entry;
   new MutationObserver(() => { const cur = svg.getAttribute('viewBox'); if (cur && cur !== lastSet) sync(); })
     .observe(svg, { attributes: true, attributeFilter: ['viewBox'] });
 
@@ -667,6 +687,23 @@ function enablePinchZoom(svg) {
   });
   window.addEventListener('mouseup', () => { if (mDrag) { mDrag = null; updateTA(); } });
 }
+
+// 방식 전환(균등↔지도) 시 보던 지역 유지 — 현재 보이는 지도(svg #hex/#hex2 또는 #geomap leaflet)의
+// 포커스를 capture → 새 뷰에 apply. region 앵커(시도 / 시도|시군구)라 같은 단위면 키 일치.
+const HistoryFocus = {
+  _visible() {
+    const gm = document.getElementById('geomap');
+    if (gm && !gm.hasAttribute('hidden') && globalThis.geoFocus) return globalThis.geoFocus;
+    for (const id of ['hex2', 'hex']) {
+      const s = document.getElementById(id);
+      if (s && !s.hasAttribute('hidden') && s._pzEntry) return s._pzEntry;
+    }
+    return null;
+  },
+  capture() { const t = this._visible(); const r = t && t.report ? t.report() : null; return (r && (r.scale || 1) > 1.05) ? r : null; },
+  apply(keep) { if (!keep) return; const t = this._visible(); if (t && t.focusOn) t.focusOn(keep.region, keep.scale); },
+};
+window.HistoryFocus = HistoryFocus;
 
 // === Bootstrap ===
 async function init() {
