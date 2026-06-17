@@ -462,7 +462,8 @@
       const pts = hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { sido: c.sido, cx, cy }; });
       drawSidoEdgeLabels(svg, pts);
     }
-    return { shown, parties: [...parties] };
+    return { shown, parties: [...parties],
+      cells: hexCells.map((c) => { const [cx, cy] = hexCenter(c.c, c.r); return { region: c.sido + '|' + c.name, cx, cy }; }) };
   }
 
   // 시군구 결과 맵 — 단색(격차 명도)/격자/dorling(표 비례) 토글. host 주면 거기(폴), 없으면 종합 섹션 자동.
@@ -503,10 +504,14 @@
     const MODES = [['단색', '단색'], ['격자', '격자'], ['dorling', '원형']].filter(([k]) => k === '단색' || CART);
     let mode = '단색';
     function redraw() {
+      // 호스트 단위 줌 보존 — 단색↔격자↔원형 교차에 region(시도|시군구) 앵커(좌표계 달라도 같은 키).
+      const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
-      if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); renderResult(svg, hexCells, rmap); }
-      else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); CART(svg, hexCells, resultFn, { mode, r: 22 }); }
+      let meta;
+      if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); meta = renderResult(svg, hexCells, rmap); }
+      else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); meta = CART(svg, hexCells, resultFn, { mode, r: 22 }); }
       area.innerHTML = ''; area.appendChild(svg);
+      if (window.SvgViewport && meta && meta.cells) window.SvgViewport.applyHost(area, svg, { cells: meta.cells }, keep);
     }
     tog.innerHTML = MODES.map(([k, lbl], i) =>
       `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');

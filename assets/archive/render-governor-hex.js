@@ -148,7 +148,13 @@
       if (opts.onSelect) { g.style.cursor = cell.win ? 'pointer' : 'default'; g.addEventListener('click', () => opts.onSelect(cell.sido)); }
       svg.appendChild(g);
     }
-    if (!isSvgHost) { host.innerHTML = ''; host.appendChild(svg); }
+    if (!isSvgHost) {
+      // 아카이브(div 호스트) — 새 svg에 팬·줌 부여 + 호스트 단위 줌 보존(재렌더 대비). 폴(svg 호스트)은
+      // renderHex가 직접 attach(svg 재사용)하므로 건드리지 않음.
+      const keep = window.SvgViewport ? window.SvgViewport.captureHost(host) : null;
+      host.innerHTML = ''; host.appendChild(svg);
+      if (window.SvgViewport) window.SvgViewport.applyHost(host, svg, { cells: cells.map((c) => ({ region: c.sido, cx: c.cx, cy: c.cy })) }, keep);
+    }
     // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신(아카이브 .ar-source-line만 — 폴은 closest null이라 무시).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const nData = cells.filter((c) => c.win).length;

@@ -32,8 +32,11 @@
     const w = (maxC - minC + 1) * colW + colW, h = (maxR - minR + 1) * rowH + rowH;
     const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;
     svg.innerHTML = '';
-    svg.setAttribute('viewBox', `${-EM} 0 ${Math.ceil(w) + 2 * EM} ${Math.ceil(h)}`);
+    const vb = [-EM, 0, Math.ceil(w) + 2 * EM, Math.ceil(h)];   // base viewBox(줌·포커스용)
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`);
     svg.setAttribute('width', Math.ceil(w) + 2 * EM); svg.setAttribute('height', Math.ceil(h));
+    // 줌·포커스 앵커 — region(시도|시군구)→셀 중심(그리드). 단색/격자/원형 교차 보존에 공통 키.
+    const focusCells = cells.map((d) => { const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY); return { region: d.sido + '|' + d.name, cx, cy }; });
 
     const rmap = new Map(); let maxVoted = 0;
     for (const d of cells) { const res = resultFn(d.sido, d.name); if (res && res.voted) { rmap.set(d, res); maxVoted = Math.max(maxVoted, res.voted); } }
@@ -86,7 +89,7 @@
         const tt = document.createElementNS(NS, 'title'); tt.textContent = titleOf(n.d, n.top, ' · ' + (rmap.get(n.d).voted || 0).toLocaleString() + '표'); g.appendChild(tt);
         svg.appendChild(g);
       }
-      return { shown: nodes.length };
+      return { shown: nodes.length, cells: focusCells, viewBox: vb };
     }
 
     // 격자 — 시군구당 N개 작은 hex
@@ -116,7 +119,7 @@
       }
       svg.appendChild(g);
     }
-    return { shown };
+    return { shown, cells: focusCells, viewBox: vb };
   }
 
   window.Archive = window.Archive || {};
