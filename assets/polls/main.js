@@ -68,8 +68,10 @@ function arrangePerElection() {
     h1.parentNode.insertBefore(row, h1);
     row.appendChild(h1); row.appendChild(lensHost);   // h1 왼쪽 · 렌즈 오른쪽
   }
-  // 위→아래: 선거 제목+렌즈 · 컨트롤 · viz · (하단 네비) 선거별 타임라인 · 최근조사 · 메타(선거종료/결과보기)
-  [elIntro, sel('.controls'), sel('.viz'), sel('.poll-index-sec'), sel('#recent-polls'), sel('#post-banner')]
+  // 위→아래: 선거 제목+렌즈 · 컨트롤 · viz · (하단 네비) 선거별 타임라인 · 최근조사 · 메타 · 푸터(출처/고지/용어).
+  // 안 옮긴 요소는 상대적으로 위로 떠버리므로 푸터까지 명시적으로 맨 끝에.
+  [elIntro, sel('.controls'), sel('.viz'), sel('.poll-index-sec'), sel('#recent-polls'),
+    sel('#post-banner'), sel('footer.foot')]
     .forEach((el) => { if (el) main.appendChild(el); });
 }
 
