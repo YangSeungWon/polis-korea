@@ -709,6 +709,14 @@ window.HistoryFocus = HistoryFocus;
 async function init() {
   enablePinchZoom($('#hex'));
   enablePinchZoom($('#hex2'));
+  // 균등/지도·격자/원형 방식 토글을 지도 위(우상단)로 — 폴·아카이브와 통일. id 유지라 가시성 토글 그대로.
+  (function () {
+    const viz = document.querySelector('.viz'), disp = $('#display-seg'), siz = $('#sizing-seg');
+    if (!viz || !disp) return;
+    const tg = document.createElement('div'); tg.className = 'hist-viz-toggles';
+    tg.appendChild(disp); if (siz) tg.appendChild(siz);
+    viz.appendChild(tg);
+  })();
   // 모바일 핀치 힌트 — 한 번만, 첫 터치/5초 후 사라짐.
   if (matchMedia('(hover: none)').matches) {
     const viz = document.querySelector('.viz');

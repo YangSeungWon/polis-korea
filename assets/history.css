@@ -237,12 +237,21 @@
 }
 /* 확대 시에만 뜨는 전체보기 리셋 버튼 (지도 우상단) */
 .pz-reset {
-  position: absolute; top: 8px; right: 8px; z-index: 450;
+  /* 좌상단 — 방식 토글(우상단)과 안 겹치게. 지도(왼쪽 컬럼) 위. */
+  position: absolute; top: 8px; left: 8px; z-index: 450;
   background: rgba(10, 14, 26, 0.8); color: #fff; border: none;
   font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
   cursor: pointer; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 .pz-reset:hover { background: rgba(10, 14, 26, 0.92); }
+/* 방식 토글(균등/지도·격자/원형)을 지도 위 우상단으로 — 폴·아카이브와 통일.
+   데스크톱은 detail 컬럼(420px)+gap(18px) 비우고, 모바일(≤900px·.viz column)은 전체폭 우상단. */
+.hist-viz-toggles {
+  position: absolute; top: 6px; right: 444px; z-index: 6;
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+}
+@media (max-width: 900px) { .hist-viz-toggles { right: 6px; } }
+.hist-viz-toggles .seg { margin: 0; }
 
 /* 38선 참조선 라벨 (1·2대 geo) */
 .line38-label {
