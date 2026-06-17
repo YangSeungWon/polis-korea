@@ -9,31 +9,38 @@ let sidoOutlineLayer = null;  // 시군구 모드에서 위에 오버레이되�
 let miniMapCtrl = null;
 let initialZoom = null;  // sidoLayer 로드 후 fitBounds로 결정
 // 줌·포커스 인프라(viewport-focus) — 시도 centroid·기준 줌·준비 플래그·대기 포커스.
-let sidoCentroids = null;   // Map(canonSido → LatLng)
+let sidoCentroids = null;     // Map(canonSido → LatLng)
+let sigunguCentroids = null;  // Map('canonSido|시군구명' → LatLng)
 let focusBaseZoom = null;   // scale=1 기준 줌(getBoundsZoom, finalize 무관하게 일찍 확정)
 let mapReady = false;       // 첫 finalize(초기 줌·미니맵) 완료 후 true
 let pendingFocus = null;    // finalize 전에 들어온 포커스는 보류 후 적용(initialZoom 기준 안 틀어지게)
 // 한국 경계 — 제주(33) ~ 강원북 (39), 백령(124) ~ 독도(132). 패닝 제한.
 const KOREA_BOUNDS = [[32.5, 123.5], [39.5, 132.5]];
 
-// 시도 region 앵커 포커스 적용 — region centroid로 setView(배율→줌). 없으면 전국 fit.
+// 현재 모드(시도/시군구)에 맞는 centroid·fit 레이어 — region 키 네임스페이스가 달라(시도 vs 시도|구) 안 겹침.
+function focusCents() { return (typeof isSigunguMode === 'function' && isSigunguMode()) ? sigunguCentroids : sidoCentroids; }
+function focusFitLayer() { return (typeof isSigunguMode === 'function' && isSigunguMode()) ? (sigunguLayer || sidoLayer) : sidoLayer; }
+
+// region 앵커 포커스 적용 — region centroid로 setView(배율→줌). 없으면 현 모드 전체 fit.
 function mapApplyFocus(region, scale) {
   if (!leafletMap) return;
   const iz = (focusBaseZoom != null) ? focusBaseZoom : (initialZoom != null ? initialZoom : leafletMap.getZoom());
-  const ll = region && sidoCentroids && sidoCentroids.get(region);
+  const cents = focusCents();
+  const ll = region && cents && cents.get(region);
   if (ll) leafletMap.setView(ll, iz + Math.log2(Math.max(1, scale || 1)), { animate: false });
-  else if (sidoLayer) leafletMap.fitBounds(sidoLayer.getBounds(), { padding: [12, 12] });
+  else { const lyr = focusFitLayer(); if (lyr) leafletMap.fitBounds(lyr.getBounds(), { padding: [12, 12] }); }
 }
 
-// leaflet 뷰포트 어댑터 — report/focusOn(viewport-focus 규약).
+// leaflet 뷰포트 어댑터 — report/focusOn(viewport-focus 규약). 모드별 centroid 사용.
 window.__mapViewport = {
   report() {
-    if (!leafletMap || !sidoCentroids) return { region: null, scale: 1 };
+    const cents = focusCents();
+    if (!leafletMap || !cents) return { region: null, scale: 1 };
     const c = leafletMap.getCenter();
     const iz = (focusBaseZoom != null) ? focusBaseZoom : leafletMap.getZoom();
     const scale = Math.pow(2, leafletMap.getZoom() - iz);
     let best = null, bd = Infinity;
-    sidoCentroids.forEach((ll, nm) => {
+    cents.forEach((ll, nm) => {
       const d = (ll.lat - c.lat) ** 2 + (ll.lng - c.lng) ** 2;
       if (d < bd) { bd = d; best = nm; }
     });
@@ -140,6 +147,22 @@ async function renderMap() {
       style: (f) => sigunguStyle(f),
       onEachFeature: (f, l) => attachSigunguClick(f, l),
     });
+    // 시군구 region(시도|구) → centroid (포커스 전환용). hex는 일반구를 시 한 칸으로 합치므로
+    // (수원시장안구→수원시) leaflet도 부모 시로 롤업·평균해 입도를 맞춤(키 양방향 일치).
+    const acc = new Map();
+    sigunguLayer.eachLayer((l) => {
+      const code = l.feature?.properties?.code || '';
+      const sd = (typeof canonSido === 'function') ? canonSido(sigunguSidoFromCode(code)) : sigunguSidoFromCode(code);
+      let nm = l.feature?.properties?.name || '';
+      const parent = (typeof parentSigungu === 'function') ? parentSigungu(nm) : null;
+      if (parent) nm = parent;   // 일반구→시 롤업(다른 시군구는 그대로)
+      if (!sd || !nm || !l.getBounds) return;
+      const ctr = l.getBounds().getCenter();
+      const a = acc.get(sd + '|' + nm) || { lat: 0, lng: 0, n: 0 };
+      a.lat += ctr.lat; a.lng += ctr.lng; a.n += 1; acc.set(sd + '|' + nm, a);
+    });
+    sigunguCentroids = new Map();
+    acc.forEach((a, key) => sigunguCentroids.set(key, L.latLng(a.lat / a.n, a.lng / a.n)));
   }
 
   // 시도 외곽 전용 layer (시군구 모드 오버레이용) — 한 번만 생성

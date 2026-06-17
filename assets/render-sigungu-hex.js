@@ -24,8 +24,10 @@
     const minC = Math.min(...cs), minR = Math.min(...rs), maxC = Math.max(...cs), maxR = Math.max(...rs);
     const w = (maxC - minC + 2) * colW, h = (maxR - minR + 2) * rowH;
     const m = opts.margin || 0;   // 좌우 여백(history 시도 워터마크/edge 라벨용)
-    svg.setAttribute('viewBox', `${-m} 0 ${Math.ceil(w) + 2 * m} ${Math.ceil(h)}`);
+    const vb = [-m, 0, Math.ceil(w) + 2 * m, Math.ceil(h)];   // base viewBox(줌·포커스용)
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`);
     const offX = -minC * colW + colW / 2, offY = -minR * rowH + rowH;
+    const outCells = [];   // 줌·포커스 앵커 — region(시도|시군구)→셀 중심
     // underlay: 셀 뒤(배경) 그리기 — history 시도명 워터마크 등. clear 직후·셀 루프 전.
     if (opts.underlay) opts.underlay(svg, { colW, rowH, offX, offY });
     const sel = opts.selected;
@@ -34,6 +36,7 @@
 
     for (const d of cells) {
       const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
+      outCells.push({ region: ((typeof canonSido === 'function') ? canonSido(d.sido) : d.sido) + '|' + d.name, cx, cy });
       const result = resultFn(d.sido, d.name, d);
       const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
       const op = (result && opts.opacityOf) ? opts.opacityOf(result) : 1;
@@ -91,7 +94,7 @@
       for (const d of cells) cellAt.set(`${d.c},${d.r}`, d);
       drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, opts.borderWidth || '1.6', true);
     }
-    return { colW, rowH, offX, offY };
+    return { colW, rowH, offX, offY, cells: outCells, viewBox: vb };
   }
 
   window.drawSigunguHex = drawSigunguHex;

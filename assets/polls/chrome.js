@@ -169,11 +169,11 @@ function hasSigunguData() {
   return state.data.polls.some((p) => p.office_level === state.office && p.sigungu);
 }
 
-// 현재 활성 뷰의 뷰포트 핸들(포커스 capture/apply). Phase 2: 지도·시도 hex만.
+// 현재 활성 뷰의 뷰포트 핸들(포커스 capture/apply). 지도·시도 hex(#hex)·시군구 hex(#hex2).
 function viewHandle(v) {
   if (v === 'map') return window.__mapViewport || null;
-  if (v === 'hex' && !isSigunguMode()) { const el = $('#hex'); return el && el.__svgViewport; }
-  return null;  // 시군구 hex(#hex2)는 Phase 3
+  if (v === 'hex') { const el = isSigunguMode() ? $('#hex2') : $('#hex'); return el && el.__svgViewport; }
+  return null;
 }
 
 function setView(v) {
@@ -190,7 +190,7 @@ function setView(v) {
   // 새 뷰 렌더 후 보던 지역으로 포커스 적용(지도는 비동기 → then).
   const applyFocus = () => { if (window.Focus) Focus.apply(viewHandle(v)); };
   if (v === 'map') Promise.resolve(renderMap()).then(applyFocus);
-  else if (sigungu) renderSigunguHex();
+  else if (sigungu) Promise.resolve(renderSigunguHex()).then(applyFocus);
   else { renderHex(); applyFocus(); }
   renderLegend();
 }

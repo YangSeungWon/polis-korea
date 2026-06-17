@@ -59,7 +59,7 @@ async function renderSigunguHex() {
   const svg = $('#hex2');
   const data = await loadSigunguHex();
   if (!data.length) { svg.innerHTML = ''; return; }
-  drawSigunguHex(svg, data,
+  const meta = drawSigunguHex(svg, data,
     (sido, name) => (isSigunguMode() ? regionSigunguWinner(sido, name, state.office) : regionSidoWinner(sido, state.office)),
     {
       selected: { sido: state.selectedSido, name: state.selectedSigungu },
@@ -83,4 +83,6 @@ async function renderSigunguHex() {
         renderDetail();
       },
     });
+  // 팬·줌 (Phase 3a) — 시군구 hex. 재렌더 후 현재 줌 복원, 리스너 1회.
+  if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
 }
