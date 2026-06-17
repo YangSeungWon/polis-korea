@@ -54,8 +54,8 @@
     // hex/dorling 셀 클릭 → 당선인 섹션 그 시도(광역의원)로 필터·스크롤.
     const onSelect = (sido) => window.Archive.winners && window.Archive.winners.focus({ sido, level: '광역의원' });
     const modes = [
-      { key: 'hex', label: '헥스', draw: (el) => { agg = SC.drawHex(el, bySidoObj, { onSelect }); } },
-      { key: 'dorling', label: 'dorling', draw: (el) => { agg = SC.drawDorling(el, bySidoObj, { onSelect }); } },
+      { key: 'hex', label: '균등', draw: (el) => { agg = SC.drawHex(el, bySidoObj, { onSelect }); } },
+      { key: 'dorling', label: '원형', draw: (el) => { agg = SC.drawDorling(el, bySidoObj, { onSelect }); } },
     ];
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes);
     else { agg = SC.drawHex(host, bySidoObj, { onSelect }); }

@@ -487,7 +487,7 @@
       if (!sec) {
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
         sec.innerHTML = '<h2 class="ar-section-title">시·군·구 1위 후보</h2>'
-          + '<p class="ar-source-line">1위 후보 정당색. 단색=격차 명도, 격자·dorling=표(인구) 비례.</p>'
+          + '<p class="ar-source-line">1위 후보 정당색. 단색=격차 명도, 격자·원형=표(인구) 비례.</p>'
           + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
       }
@@ -498,8 +498,9 @@
     const area = mapHost.querySelector('.sgg-map-area');
     const leg = mapHost.querySelector('.sgg-result-legend');
     const CART = window.Archive && window.Archive.drawSigunguCartogram;
-    // 라벨은 단어만(방식 seg 통일) — 의미(격차 명도·표 비례)는 source-line·legend note가 설명.
-    const MODES = ['단색', '격자', 'dorling'].filter((k) => k === '단색' || CART);
+    // [내부키, 표시라벨] — 키는 redraw/CART 디스패치용('dorling'), 라벨은 방식 seg 통일('원형').
+    // 의미(격차 명도·표 비례)는 source-line·legend note가 설명.
+    const MODES = [['단색', '단색'], ['격자', '격자'], ['dorling', '원형']].filter(([k]) => k === '단색' || CART);
     let mode = '단색';
     function redraw() {
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
@@ -507,8 +508,8 @@
       else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); CART(svg, hexCells, resultFn, { mode, r: 22 }); }
       area.innerHTML = ''; area.appendChild(svg);
     }
-    tog.innerHTML = MODES.map((k, i) =>
-      `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${k}</button>`).join('');
+    tog.innerHTML = MODES.map(([k, lbl], i) =>
+      `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');
     tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
       mode = b.dataset.sgmode;
       tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));

@@ -62,12 +62,12 @@
     if (tc === '1') {
       return [
         { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
-        { key: 'dorling', label: 'dorling', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
+        { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
       ];
     }
     return [
-      { key: 'hex', label: '헥스', draw: (el, rs) => A.governorHex?.draw?.(el, rs) },
+      { key: 'hex', label: '균등', draw: (el, rs) => A.governorHex?.draw?.(el, rs) },
       { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs) },
       { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
     ];

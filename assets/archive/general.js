@@ -176,7 +176,7 @@
     }
     const modes = [
       { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, sidoRaces, {}) },
-      { key: 'dorling', label: 'dorling', draw: (el) => SP.drawDorling(el, sidoRaces, {}) },
+      { key: 'dorling', label: '원형', draw: (el) => SP.drawDorling(el, sidoRaces, {}) },
     ];
     if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
     else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});
@@ -337,8 +337,8 @@
     const toggleHost = sec.querySelector('.ar-genhex-toggle');
     const SC = window.Archive.sidoCluster;
     const modes = [
-      { key: 'hex', label: '헥스', draw: (el) => SC.drawHex(el, bySido) },
-      { key: 'dorling', label: 'dorling', draw: (el) => SC.drawDorling(el, bySido) },
+      { key: 'hex', label: '균등', draw: (el) => SC.drawHex(el, bySido) },
+      { key: 'dorling', label: '원형', draw: (el) => SC.drawDorling(el, bySido) },
     ];
     // 투표율 — 선거구를 시도로 합산(투표수·선거인수)해 pseudo-race로 시도별 투표율 hex 렌더.
     const SV = window.Archive.sidoView;
@@ -360,7 +360,7 @@
     if (legend) {
       legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
         .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ')
-        + ' <span class="ar-genhex-note">· 헥스=1석1hex · dorling=원크기 의석·파이 정당</span>';
+        + ' <span class="ar-genhex-note">· 균등=1석 1칸 · 원형=원 크기 의석·파이 정당</span>';
     }
   }
 

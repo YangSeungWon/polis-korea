@@ -63,7 +63,7 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
-      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 단색=격차 명도 · 격자/dorling=표 비례</span></h3>'
+      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></h3>'
         + '<div class="pres-sgg-host"></div>';
       const anchor = document.getElementById('pres-host') || document.querySelector('.viz-main') || document.querySelector('.viz');
       (anchor && anchor.parentElement ? anchor.parentElement : document.body).appendChild(sec);
@@ -137,7 +137,7 @@
         <button class="seg-btn${ps.mode === 'result' ? ' is-active' : ''}" data-pmode="result">실제 결과</button>
       </div>
       <div class="seg" role="tablist" aria-label="방식">
-        <button class="seg-btn is-active" data-pview="dorling">dorling</button>
+        <button class="seg-btn is-active" data-pview="dorling">원형</button>
         <button class="seg-btn" data-pview="grid">격자</button>
       </div>`;
     controls.querySelectorAll('[data-pmode]').forEach((b) => b.addEventListener('click', () => {
