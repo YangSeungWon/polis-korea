@@ -481,7 +481,7 @@
 .ar-council-hex { margin-top: 12px; }
 .council-hex-svg { width: 100%; height: auto; max-width: 900px; display: block; margin: 0 auto; }
 /* 권역(시도) 경계 — 시군구 hex 그룹 외곽선 */
-.sido-border { stroke: var(--ink, #0a0e1a); stroke-width: 1.5; stroke-linecap: round; stroke-opacity: 0.72; pointer-events: none; }
+/* .sido-border → components.css로 이동(폴 페이지 공용 — archive.css 미로드 대응). */
 .council-turnout-cell { transition: filter .1s; }
 .council-turnout-cell:hover { filter: brightness(1.12); }
 /* 시군구 hex 커서추적 툴팁 */
