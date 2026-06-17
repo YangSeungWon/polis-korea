@@ -47,7 +47,16 @@
       period_end: r.period_end, agency: r.agency,
       candidates: [{ name: '긍정', party: '긍정', pct: r.positive }, { name: '부정', party: '부정', pct: r.negative }],
     }));
-    const partyPolls = party.filter((p) => inWin(p.period_end));
+    // per-election 폴(그 선거 정당지지)을 트래커 데이터와 병합 — 트래커가 듬성한 시즌을 채움(22대
+    // 조국혁신당처럼 신생당이 트래커엔 빠진 경우). ntt_id 스킴이 파일마다 달라 내용키(기관|기간)로 dedup,
+    // per-election을 먼저 둬 같은 폴이면 그쪽(후보 풍부)을 채택.
+    const elParty = (opts.polls || []).filter((p) => (p.metric_type === '정당지지' || p.office_level === '정당지지') && !p.sido && p.period_end);
+    const seen = new Set(); const mergedParty = [];
+    for (const p of [...elParty, ...party]) {
+      const k = `${p.agency || ''}|${p.period_start || ''}|${p.period_end || ''}`;
+      if (seen.has(k)) continue; seen.add(k); mergedParty.push(p);
+    }
+    const partyPolls = mergedParty.filter((p) => inWin(p.period_end));
 
     // 두 차트 x축을 선거일까지 연장 → 오른쪽 끝(선거일) 정렬·연도 라벨 통일.
     //   국정선이 일찍 끝나면 그 자체가 맥락(탄핵 등 임기 중단).

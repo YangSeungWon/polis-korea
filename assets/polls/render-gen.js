@@ -167,7 +167,7 @@
     // 헤드라인이 갖던 ◆비례실제 비교는 climate 정당 차트로 흡수(12개월 + ◆, 정보 손실 없음).
     const gt = PollAdapter.genTrend(state.data.polls || [], gs.propRace, POLL_ELECTION.date);
     const gtHost = document.getElementById('gen-trend'); if (gtHost) gtHost.hidden = true;
-    if (window.PollClimate) PollClimate.mount({ after: 'gen-trend', partyActual: gt.actual });
+    if (window.PollClimate) PollClimate.mount({ after: 'gen-trend', partyActual: gt.actual, polls: state.data.polls });
     renderProp();
     renderDistrict();
     return true;

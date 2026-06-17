@@ -189,7 +189,7 @@
     if (window.pollEnsureActual) window.pollEnsureActual();   // 시도 클릭 detail(지선 로직)용 실제맵 미리 로드
     await loadResults();
     renderTrend();   // 헤드라인 (모드 무관 — 폴 추이 + 실제 ◆)
-    if (window.PollClimate) PollClimate.mount({ after: 'pres-trend' });  // 선거 무렵 국정·정당 지지
+    if (window.PollClimate) PollClimate.mount({ after: 'pres-trend', polls: state.data.polls });  // 선거 무렵 국정·정당 지지
     render();        // 보조 (지역·비례 dorling/격자 + 전국 바)
     renderSigunguResult();   // 시군구 1위 후보 결과 맵(비동기)
     return true;
