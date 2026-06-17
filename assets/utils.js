@@ -521,5 +521,17 @@ function buildPartyTrendSVG(polls, opts) {
     lastLabelY = ly;
     body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${label}</text>`;
   }
+  // 폴 추이엔 없지만 실제 득표가 큰 정당(예: 조국혁신당 2024 — 신생이라 정당지지 추이 없음)도 ◆로 — 누락 방지.
+  if (opts.electionTs) {
+    const inKeys = new Set(keys);
+    const extra = Object.keys(actual).filter((k) => !inKeys.has(k) && actual[k] >= 3)
+      .sort((a, b) => actual[b] - actual[a]).slice(0, 3);
+    for (const k of extra) {
+      const color = (typeof partyColor === 'function') ? partyColor(k) : '#888';
+      const ax = x(opts.electionTs), ay = y(actual[k]);
+      body += `<path d="M${ax.toFixed(1)},${(ay - 3.4).toFixed(1)} L${(ax + 3.4).toFixed(1)},${ay.toFixed(1)} L${ax.toFixed(1)},${(ay + 3.4).toFixed(1)} L${(ax - 3.4).toFixed(1)},${ay.toFixed(1)} Z" fill="${color}" stroke="var(--bg,#fff)" stroke-width="0.8"><title>${k} 실제 ${actual[k].toFixed(1)}%</title></path>`;
+      body += `<text x="${W - pr + 3}" y="${(ay + 3).toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${k}</text>`;
+    }
+  }
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${body}</svg>`;
 }
