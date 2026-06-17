@@ -8,8 +8,43 @@ let sigunguLayer = null;
 let sidoOutlineLayer = null;  // 시군구 모드에서 위에 오버레이되는 시도 외곽선 전용
 let miniMapCtrl = null;
 let initialZoom = null;  // sidoLayer 로드 후 fitBounds로 결정
+// 줌·포커스 인프라(viewport-focus) — 시도 centroid·기준 줌·준비 플래그·대기 포커스.
+let sidoCentroids = null;   // Map(canonSido → LatLng)
+let focusBaseZoom = null;   // scale=1 기준 줌(getBoundsZoom, finalize 무관하게 일찍 확정)
+let mapReady = false;       // 첫 finalize(초기 줌·미니맵) 완료 후 true
+let pendingFocus = null;    // finalize 전에 들어온 포커스는 보류 후 적용(initialZoom 기준 안 틀어지게)
 // 한국 경계 — 제주(33) ~ 강원북 (39), 백령(124) ~ 독도(132). 패닝 제한.
 const KOREA_BOUNDS = [[32.5, 123.5], [39.5, 132.5]];
+
+// 시도 region 앵커 포커스 적용 — region centroid로 setView(배율→줌). 없으면 전국 fit.
+function mapApplyFocus(region, scale) {
+  if (!leafletMap) return;
+  const iz = (focusBaseZoom != null) ? focusBaseZoom : (initialZoom != null ? initialZoom : leafletMap.getZoom());
+  const ll = region && sidoCentroids && sidoCentroids.get(region);
+  if (ll) leafletMap.setView(ll, iz + Math.log2(Math.max(1, scale || 1)), { animate: false });
+  else if (sidoLayer) leafletMap.fitBounds(sidoLayer.getBounds(), { padding: [12, 12] });
+}
+
+// leaflet 뷰포트 어댑터 — report/focusOn(viewport-focus 규약).
+window.__mapViewport = {
+  report() {
+    if (!leafletMap || !sidoCentroids) return { region: null, scale: 1 };
+    const c = leafletMap.getCenter();
+    const iz = (focusBaseZoom != null) ? focusBaseZoom : leafletMap.getZoom();
+    const scale = Math.pow(2, leafletMap.getZoom() - iz);
+    let best = null, bd = Infinity;
+    sidoCentroids.forEach((ll, nm) => {
+      const d = (ll.lat - c.lat) ** 2 + (ll.lng - c.lng) ** 2;
+      if (d < bd) { bd = d; best = nm; }
+    });
+    return { region: best, scale };
+  },
+  focusOn(region, scale) {
+    if (!leafletMap) return;
+    if (!mapReady) { pendingFocus = { region, scale }; return; }  // finalize 후 적용
+    mapApplyFocus(region, scale);
+  },
+};
 
 function setupMiniMap(sidoData) {
   if (miniMapCtrl || typeof L.Control.MiniMap === 'undefined') return;
@@ -78,6 +113,14 @@ async function renderMap() {
       style: (f) => sidoStyle(f),
       onEachFeature: (f, l) => attachSidoClick(f, l),
     });
+    // 시도 region → centroid·기준 줌(포커스 전환용). getBoundsZoom은 맵을 안 움직이는 순수 계산이라
+    // finalize(moveend) 전에 일찍 확정 — 포커스 setView가 initialZoom 산정을 방해하지 않게.
+    sidoCentroids = new Map();
+    sidoLayer.eachLayer((l) => {
+      const nm = (typeof canonSido === 'function') ? canonSido((l.feature?.properties?.name || '').trim()) : (l.feature?.properties?.name || '').trim();
+      if (nm && l.getBounds) sidoCentroids.set(nm, l.getBounds().getCenter());
+    });
+    try { focusBaseZoom = leafletMap.getBoundsZoom(sidoLayer.getBounds(), false, L.point(12, 12)); } catch (e) { focusBaseZoom = null; }
     // fitBounds → maxBounds 자동 보정까지 다 끝난 뒤 zoom 확정.
     leafletMap.invalidateSize();
     leafletMap.fitBounds(sidoLayer.getBounds(), { padding: [12, 12] });
@@ -86,6 +129,8 @@ async function renderMap() {
       initialZoom = leafletMap.getZoom();
       leafletMap.setMinZoom(initialZoom);
       setupMiniMap(sidoData);
+      mapReady = true;
+      if (pendingFocus) { const pf = pendingFocus; pendingFocus = null; mapApplyFocus(pf.region, pf.scale); }
     };
     leafletMap.on('moveend', finalize);
   }
