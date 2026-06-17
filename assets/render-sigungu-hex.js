@@ -50,7 +50,7 @@
       if (result && opts.dashOf) { const dash = opts.dashOf(result); if (dash) poly.setAttribute('stroke-dasharray', dash); }
       // 여론조사 빗나감 — 점선 테두리색 = 여론조사가 예측한 정당색(missOf 반환).
       const missCol = opts.missOf && opts.missOf(d.sido, d.name);
-      if (missCol) { poly.setAttribute('stroke', missCol); poly.setAttribute('stroke-width', '2.2'); poly.setAttribute('stroke-dasharray', '2.5,2'); poly.classList.add('hex-poll-miss'); }
+      if (missCol) poly.classList.add('hex-poll-miss');
       if (opts.onSelect) {
         poly.style.cursor = 'pointer';
         poly.addEventListener('click', () => opts.onSelect(d.sido, d.name, result, d));
@@ -60,6 +60,16 @@
         : `${d.sido} ${d.name}${result ? ' · ' + (result.name || result.party || '') : ''}`;
       poly.appendChild(title);
       svg.appendChild(poly);
+      // 점선 테두리(예측 정당색)를 채움색 위에서도 보이게 — 흰 케이싱 위에 색 점선, 살짝 안쪽.
+      if (missCol) {
+        for (const [wd, col, dash] of [[3.2, '#fff', null], [2, missCol, '2.5,2']]) {
+          const ol = document.createElementNS(NS, 'polygon');
+          ol.setAttribute('points', hexPoints(cx, cy, r - 2));
+          ol.setAttribute('fill', 'none'); ol.setAttribute('stroke', col); ol.setAttribute('stroke-width', String(wd));
+          if (dash) ol.setAttribute('stroke-dasharray', dash);
+          ol.setAttribute('pointer-events', 'none'); svg.appendChild(ol);
+        }
+      }
 
       // 라벨 — prefix 있으면 두 줄
       const label = labelFn(d.name, d.sido);

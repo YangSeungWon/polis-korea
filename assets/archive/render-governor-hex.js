@@ -99,15 +99,20 @@
         poly.setAttribute('class', 'gov-hex-cell no-data' + selCls);
       }
       // 여론조사 빗나감 — 실제 모드에서 막판 여론조사 1위 ≠ 실제 당선인 시도.
-      //   missOf는 '여론조사가 예측한 정당색'을 반환(빗나감) 또는 falsy. 점선 테두리=그 색.
+      //   missOf는 '여론조사가 예측한 정당색'을 반환(빗나감) 또는 falsy.
       const missCol = opts.missOf && opts.missOf(cell.sido);
-      if (missCol) {
-        poly.setAttribute('stroke', missCol);
-        poly.setAttribute('stroke-width', '2.6');
-        poly.setAttribute('stroke-dasharray', '3,2.2');
-        poly.classList.add('hex-poll-miss');
-      }
+      if (missCol) poly.classList.add('hex-poll-miss');
       g.appendChild(poly);
+      // 점선 테두리(예측 정당색)를 채움색 위에서도 보이게 — 흰 케이싱 위에 색 점선, 살짝 안쪽으로.
+      if (missCol) {
+        for (const [w, col, dash] of [[4, '#fff', null], [2.4, missCol, '3,2.4']]) {
+          const ol = document.createElementNS(NS, 'polygon');
+          ol.setAttribute('points', hexPoints(cell.cx, cell.cy, R - 2.5));
+          ol.setAttribute('fill', 'none'); ol.setAttribute('stroke', col); ol.setAttribute('stroke-width', String(w));
+          if (dash) ol.setAttribute('stroke-dasharray', dash);
+          ol.setAttribute('pointer-events', 'none'); g.appendChild(ol);
+        }
+      }
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = opts.titleOf ? opts.titleOf(cell.sido, cell.win)
         : ((cell.win

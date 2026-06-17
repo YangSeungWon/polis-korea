@@ -99,10 +99,18 @@
       else { poly.setAttribute('stroke', '#0a0e1a'); poly.setAttribute('stroke-width', isSel ? '1.6' : '0.7'); }
       // 여론조사 빗나감 — 점선 테두리색 = 여론조사가 예측한 정당색(missOf 반환).
       const missCol = opts.missOf && opts.missOf(d.sido, d.name);
-      if (missCol) {
-        poly.setAttribute('stroke', missCol); poly.setAttribute('stroke-width', '2.2'); poly.setAttribute('stroke-dasharray', '2.5,2'); poly.classList.add('hex-poll-miss');
-      }
+      if (missCol) poly.classList.add('hex-poll-miss');
       g.appendChild(poly);
+      // 점선 테두리(예측 정당색)를 채움색 위에서도 보이게 — 흰 케이싱 위에 색 점선, 살짝 안쪽.
+      if (missCol) {
+        for (const [wd, col, dash] of [[3.2, '#fff', null], [2, missCol, '2.5,2']]) {
+          const ol = document.createElementNS(NS, 'polygon');
+          ol.setAttribute('points', hexPoints(cx, cy, r - 2));
+          ol.setAttribute('fill', 'none'); ol.setAttribute('stroke', col); ol.setAttribute('stroke-width', String(wd));
+          if (dash) ol.setAttribute('stroke-dasharray', dash);
+          ol.setAttribute('pointer-events', 'none'); g.appendChild(ol);
+        }
+      }
 
       const title = document.createElementNS(NS, 'title');
       const unc = result && (result.uncontested || result.is_uncontested);
