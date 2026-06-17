@@ -55,7 +55,7 @@
 <main class="page">
   <section class="intro">
     <h1>역대 선거 결과</h1>
-    <p class="lede">대선·총선·지선 모두 1대~(옛 총선·간선 대선은 정보 카드). hex 색=1위 정당, 명도=격차. 간선 대선은 정보 카드.</p>
+    <p class="lede">대선·총선·지선 1대부터 hex 지도로.</p>
   </section>
 
   <section class="controls">
@@ -73,12 +73,12 @@
       <button class="seg-btn" data-office="교육감">교육감</button>
     </div>
     <div class="seg" role="tablist" aria-label="표시 모드" id="display-seg" hidden>
-      <button class="seg-btn is-active" data-display="hex">Hex</button>
+      <button class="seg-btn is-active" data-display="hex">균등</button>
       <button class="seg-btn" data-display="geo">지도</button>
     </div>
     <div class="seg" role="tablist" aria-label="사이즈" id="sizing-seg" hidden>
-      <button class="seg-btn is-active" data-sizing="격자">격자 hex</button>
-      <button class="seg-btn" data-sizing="dorling">Dorling 원</button>
+      <button class="seg-btn is-active" data-sizing="격자">격자</button>
+      <button class="seg-btn" data-sizing="dorling">원형</button>
     </div>
     <div class="time-anchor">
       <span class="label" id="election-date">—</span>
@@ -124,6 +124,7 @@
 <script src="assets/history/data.js"></script>
 <script src="assets/history/render-sido.js"></script>
 <script src="assets/history/geomap.js"></script>
+<script src="assets/cartogram-util.js"></script>
 <script src="assets/history/render-sigungu.js"></script>
 <script src="assets/history/main.js"></script>
 <script src="assets/theme.js"></script>
