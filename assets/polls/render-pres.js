@@ -107,7 +107,12 @@
       for (const k in am) { if (pm[k] && am[k]) { t++; if (pm[k] === am[k]) m++; } }
       missOf = (sido) => { const k = csn(sido), pp = pm[k], ap = am[k]; return (pp && ap && pp !== ap) ? partyColor(pp) : null; };
     }
-    sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: null, missOf });
+    // 시도 클릭 → 지선 detail 패널 재사용(그 시도 실제 결과). 대선 폴은 전국이라 실제 위주.
+    const pickSido = (sido) => {
+      state.selectedSido = sido; state.selectedSigungu = null; state.office = '대통령';
+      if (window.renderDetail) window.renderDetail();
+    };
+    sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: pickSido, missOf });
     if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
     renderDetail();
   }
@@ -177,6 +182,7 @@
     const vt = document.querySelector('.view-toggle'); if (vt) vt.hidden = true;
     ensureTrendHost();
     buildControls();
+    if (window.pollEnsureActual) window.pollEnsureActual();   // 시도 클릭 detail(지선 로직)용 실제맵 미리 로드
     await loadResults();
     renderTrend();   // 헤드라인 (모드 무관 — 폴 추이 + 실제 ◆)
     if (window.PollClimate) PollClimate.mount({ after: 'pres-trend' });  // 선거 무렵 국정·정당 지지

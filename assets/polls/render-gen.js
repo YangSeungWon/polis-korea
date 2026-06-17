@@ -106,7 +106,12 @@
     drawDistrictHex(document.getElementById('gen-dist-svg'), gs.layout, fn, {
       selected: gs.selected,
       missOf: gs.dmode === 'result' ? missed : null,
-      onSelect: (sido, name) => { gs.selected = { sido, name }; renderDistrict(); },
+      onSelect: (sido, name) => {
+        gs.selected = { sido, name }; renderDistrict();
+        // 지선 detail 패널 재사용 — 그 지역구 실제 결과(+있으면 여론조사)를 #detail-pane에.
+        state.selectedSido = sido; state.selectedSigungu = name; state.office = '국회의원';
+        if (window.renderDetail) window.renderDetail();
+      },
     });
     host.querySelectorAll('[data-dmode]').forEach((b) => b.addEventListener('click', () => {
       gs.dmode = b.dataset.dmode; renderDistrict();
@@ -149,6 +154,7 @@
   async function initGenIfNeeded() {
     if (!(typeof POLL_ELECTION === 'object' && POLL_ELECTION.kind === 'general_election')) return false;
     ensureHosts();
+    if (window.pollEnsureActual) window.pollEnsureActual();   // 지역구 클릭 detail(지선 로직)용 실제맵 미리 로드
     await Promise.all([loadResults(), loadLayout()]);
     gs.pollFn = PollAdapter.districtResultFromPolls(state.data.polls || []);
     gs.resultFn = PollAdapter.districtResultFromResults(gs.districtRaces);

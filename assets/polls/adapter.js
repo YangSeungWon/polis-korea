@@ -179,11 +179,13 @@
 
   // [지선] 실제 결과(NEC) → 시도/시군구·office별 1위 맵. 폴↔실제 토글의 '실제' 출처.
   const _TC_TO_OFFICE = (typeof TC_OFFICE !== 'undefined') ? TC_OFFICE : { '3': '광역단체장', '4': '기초단체장', '11': '교육감' };  // 단일 출처: parties.js
+  // 대선(1)·비례(7)는 TC_OFFICE에 없음 — detail 패널(지선 로직)을 대선/총선까지 재사용하려 별도 매핑.
+  const _TC_OFFICE_EXTRA = { '1': '대통령', '7': '비례대표' };
   function localActualMaps(races) {
     const cs = norm();
     const bySido = {}, bySigungu = {};
     for (const race of races || []) {
-      const office = _TC_TO_OFFICE[race.sg_typecode];
+      const office = _TC_TO_OFFICE[race.sg_typecode] || _TC_OFFICE_EXTRA[race.sg_typecode];
       if (!office) continue;
       const cands = (race.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       const top = cands[0];
@@ -196,6 +198,7 @@
       // 시도명 정규화(옛 강원도/전라북도 결과 ↔ 신명칭 쿼리). sigungu_part(일반구 하위행)는 무시 — sigungu(226)가 기초장 단위.
       if (race.scope === 'sido') bySido[`${cs(race.sido)}|${office}`] = cell;
       else if (race.scope === 'sigungu') bySigungu[`${cs(race.sido)}|${race.sigungu}|${office}`] = cell;
+      else if (race.scope === 'district') bySigungu[`${cs(race.sido)}|${race.district || race.sigungu}|${office}`] = cell;  // 총선 지역구
     }
     return { bySido, bySigungu };
   }
