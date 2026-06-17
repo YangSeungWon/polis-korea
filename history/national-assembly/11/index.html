@@ -72,14 +72,8 @@
       <button class="seg-btn is-active" data-office="기초단체장">기초단체장</button>
       <button class="seg-btn" data-office="교육감">교육감</button>
     </div>
-    <div class="seg" role="tablist" aria-label="표시 모드" id="display-seg" hidden>
-      <button class="seg-btn is-active" data-display="hex">균등</button>
-      <button class="seg-btn" data-display="geo">지도</button>
-    </div>
-    <div class="seg" role="tablist" aria-label="사이즈" id="sizing-seg" hidden>
-      <button class="seg-btn is-active" data-sizing="격자">격자</button>
-      <button class="seg-btn" data-sizing="dorling">원형</button>
-    </div>
+    <!-- 표시(균등/지도)+사이징(격자/원형) 통합 인코딩 토글 — JS(renderEncSeg)가 회차별 옵션 채움. -->
+    <div class="seg" role="tablist" aria-label="표현 방식" id="enc-seg" hidden></div>
     <div class="time-anchor">
       <span class="label" id="election-date">—</span>
     </div>

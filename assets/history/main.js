@@ -138,8 +138,7 @@ async function renderAll() {
     $('#hex')?.toggleAttribute('hidden', true);
     $('#hex2')?.toggleAttribute('hidden', true);
     $('#geomap')?.toggleAttribute('hidden', true);
-    $('#display-seg')?.toggleAttribute('hidden', true);
-    $('#sizing-seg')?.toggleAttribute('hidden', true);
+    $('#enc-seg')?.toggleAttribute('hidden', true);
     if (icard) { icard.hidden = false; icard.innerHTML = renderIndirectCard(elMeta0, activeOfficeData()?.national); }
     renderDetail();
     renderHistoryLegend();
@@ -158,16 +157,26 @@ async function renderAll() {
   const presGeo = (typeof presGeoSupported === 'function') && presGeoSupported(state.n);
   // 요소 누락(캐시된 옛 HTML 등)에도 깨지지 않게 null guard
   const toggle = (sel, hide) => { const el = $(sel); if (el) el.toggleAttribute('hidden', hide); };
-  // Hex+지도 토글: 총선 9~22·지선 전회차·대선 16~20. 9~16 총선은 지도 전용 → 숨김·강제.
-  toggle('#display-seg', !(hexSupported || localGeo || presGeo));
   const effDisplay = (geoSupported && !hexSupported) ? 'geo' : state.display;
   state.effDisplay = effDisplay;  // 범례(점선 추정경계)가 참조
-  const showGeo = (geoSupported || localGeo || presGeo) && effDisplay === 'geo';
+  const geoAvailable = (geoSupported || localGeo || presGeo);
+  const showGeo = geoAvailable && effDisplay === 'geo';
   toggle('#hex', showGeo || unit !== 'sido');
   toggle('#hex2', showGeo || unit === 'sido');
   toggle('#geomap', !showGeo);
-  // 사이즈 토글은 시군구 hex + 표심 분포 의미 있는 type만 (대선·옛 총선). 지선·geo 모드는 숨김.
-  toggle('#sizing-seg', showGeo || unit !== 'sigungu' || state.type === 'local');
+  // 통합 인코딩 토글 — 표시(균등/지도)+사이징(격자/원형) 한 바. 회차별 옵션을 게이팅으로 산출.
+  //   sizingApplicable = 대선 시군구(표심 분포 의미) → 비례 가족(격자/원형), 단색 균등은 회피.
+  //   그 외 = 단일색 1위 가족(균등 hex / 지도 geo).
+  const sizingApplicable = (unit === 'sigungu' && state.type !== 'local');
+  const encOpts = [];
+  if (sizingApplicable) {
+    if (geoAvailable) encOpts.push({ key: 'geo', label: '지도' });
+    encOpts.push({ key: '격자', label: '격자' }, { key: 'dorling', label: '원형' });
+  } else {
+    if (hexSupported || localGeo || presGeo) encOpts.push({ key: 'hex', label: '균등' });
+    if (geoAvailable) encOpts.push({ key: 'geo', label: '지도' });
+  }
+  renderEncSeg(encOpts);
   if (showGeo) {
     if (state.type === 'local') await renderLocalGeoMap(unit);
     else if (state.type === 'presidential') await renderPresGeoMap();
@@ -705,16 +714,34 @@ const HistoryFocus = {
 };
 window.HistoryFocus = HistoryFocus;
 
+// 통합 인코딩 토글 렌더 — 회차별 옵션을 공용 EncodingToggle로. <2 옵션이면 숨김.
+//   active는 현재 (display,sizing) 모드로 clamp(옵션에 없으면 첫 옵션) — 단색-회피 등 게이팅과 무관히 안전.
+function renderEncSeg(options) {
+  const host = $('#enc-seg');
+  if (!host) return;
+  if (!options || options.length < 2) { host.hidden = true; return; }
+  host.hidden = false;
+  const cur = (typeof currentEncMode === 'function') ? currentEncMode() : 'hex';
+  const active = options.some((o) => o.key === cur) ? cur : options[0].key;
+  if (window.EncodingToggle) {
+    window.EncodingToggle.render(host, { options, active, onSelect: setEncMode });
+  } else {
+    host.innerHTML = options.map((o) =>
+      `<button type="button" class="seg-btn${o.key === active ? ' is-active' : ''}" data-enc="${o.key}">${o.label}</button>`).join('');
+    host.querySelectorAll('[data-enc]').forEach((b) => b.addEventListener('click', () => setEncMode(b.dataset.enc)));
+  }
+}
+
 // === Bootstrap ===
 async function init() {
   enablePinchZoom($('#hex'));
   enablePinchZoom($('#hex2'));
-  // 균등/지도·격자/원형 방식 토글을 지도 위(우상단)로 — 폴·아카이브와 통일. id 유지라 가시성 토글 그대로.
+  // 통합 인코딩 토글(균등/지도·격자/원형)을 지도 위(우상단)로 — 폴·아카이브와 통일. id 유지라 가시성 토글 그대로.
   (function () {
-    const viz = document.querySelector('.viz'), disp = $('#display-seg'), siz = $('#sizing-seg');
-    if (!viz || !disp) return;
+    const viz = document.querySelector('.viz'), enc = $('#enc-seg');
+    if (!viz || !enc) return;
     const tg = document.createElement('div'); tg.className = 'hist-viz-toggles';
-    tg.appendChild(disp); if (siz) tg.appendChild(siz);
+    tg.appendChild(enc);
     viz.appendChild(tg);
   })();
   // 모바일 핀치 힌트 — 한 번만, 첫 터치/5초 후 사라짐.
@@ -751,12 +778,7 @@ async function init() {
   document.querySelectorAll('[data-office]').forEach((b) => {
     b.addEventListener('click', () => setOffice(b.dataset.office));
   });
-  document.querySelectorAll('[data-sizing]').forEach((b) => {
-    b.addEventListener('click', () => setSizing(b.dataset.sizing));
-  });
-  document.querySelectorAll('[data-display]').forEach((b) => {
-    b.addEventListener('click', () => setDisplay(b.dataset.display));
-  });
+  // 인코딩 토글(균등/지도/격자/원형)은 renderEncSeg가 EncodingToggle.onSelect=setEncMode로 바인딩.
 
   // 초기 상태 — path 우선 (prerender path 호환), 쿼리스트링·INITIAL_STATE fallback
   // path: /history/presidential/16/ or /history/local/8/governor/

@@ -272,7 +272,7 @@ function updateURL() {
 }
 
 // 대선만 격자 hex 기본(전국 표심을 면적으로 — 1 hex=2만표). 지선·총선은 단일 hex('동일',
-// 시군구당 1위 정당색). 대선 sizing-seg는 격자/Dorling만; 지선은 sizing-seg 자체가 숨김.
+// 시군구당 1위 정당색). 통합 인코딩 토글(enc-seg): 대선 시군구는 격자/원형(+지도), 그 외는 균등/지도.
 function typeDefaultSizing(type) {
   return type === 'presidential' ? '격자' : '동일';
 }
@@ -289,13 +289,9 @@ function setType(type, skipDefaultRound = false) {
   document.querySelectorAll('[data-office]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.office === state.office);
   });
-  // type 전환 시 sizing 기본 재적용 (같은 type 안에서는 사용자 선택 유지)
+  // type 전환 시 sizing 기본 재적용 (같은 type 안에서는 사용자 선택 유지). enc-seg active는 render에서 동기.
   if (prevType !== type) {
-    const def = typeDefaultSizing(type);
-    state.sizing = def;
-    document.querySelectorAll('[data-sizing]').forEach((b) => {
-      b.classList.toggle('is-active', b.dataset.sizing === def);
-    });
+    state.sizing = typeDefaultSizing(type);
   }
   renderRoundsSeg();
   updateURL();
@@ -317,11 +313,9 @@ function setOffice(office) {
   renderAll();
 }
 
+// 저수준 setter (URL·프로그램 초기화용). enc-seg active 동기는 render 흐름(renderEncSeg)에서.
 function setSizing(s) {
   state.sizing = s;
-  document.querySelectorAll('[data-sizing]').forEach((b) => {
-    b.classList.toggle('is-active', b.dataset.sizing === s);
-  });
   updateURL();
   renderAll();
 }
@@ -330,8 +324,30 @@ function setDisplay(d) {
   // 균등↔지도 전환 시 보던 지역 유지 — 떠나는 뷰 capture → 렌더 후 새 뷰 apply.
   const keep = (typeof HistoryFocus !== 'undefined') ? HistoryFocus.capture() : null;
   state.display = d;
-  document.querySelectorAll('[data-display]').forEach((b) => {
-    b.classList.toggle('is-active', b.dataset.display === d);
-  });
+  Promise.resolve(renderAll()).then(() => { if (keep && typeof HistoryFocus !== 'undefined') HistoryFocus.apply(keep); });
+}
+
+// 현재 (display, sizing) → 통합 인코딩 모드. enc-seg active 하이라이트용.
+//   geo→'지도', hex+격자→'격자', hex+dorling→'원형', hex+그외(동일)→'균등'.
+function currentEncMode() {
+  if (state.display === 'geo') return 'geo';
+  if (state.sizing === '격자') return '격자';
+  if (state.sizing === 'dorling') return 'dorling';
+  return 'hex';
+}
+
+// 통합 토글 onSelect — 한 선택이 display·sizing 두 직교 축을 동시에 결정.
+//   지도=display:geo · 균등=hex+동일 · 격자=hex+격자 · 원형=hex+dorling.
+function setEncMode(mode) {
+  let display = 'hex';
+  let sizing = state.sizing;
+  if (mode === 'geo') display = 'geo';
+  else if (mode === 'hex') sizing = '동일';
+  else sizing = mode; // '격자' | 'dorling'
+  const dispChanged = display !== state.display;
+  const keep = (dispChanged && typeof HistoryFocus !== 'undefined') ? HistoryFocus.capture() : null;
+  state.display = display;
+  state.sizing = sizing;
+  updateURL();
   Promise.resolve(renderAll()).then(() => { if (keep && typeof HistoryFocus !== 'undefined') HistoryFocus.apply(keep); });
 }
