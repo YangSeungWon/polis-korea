@@ -54,7 +54,7 @@ function renderSidoHex() {
   if (!svg || !window.Archive || !window.Archive.governorHex) return;
   const el = (state.elections[state.type]?.elections || []).find((x) => x.n === state.n);
   const electionDate = el?.date || '';
-  window.Archive.governorHex.draw(svg, [], {
+  const meta = window.Archive.governorHex.draw(svg, [], {
     layout: getActiveSidoLayout(electionDate),
     skipSido: (sido) => { const since = SIDO_HEX_SINCE[sido]; return !!(since && electionDate && electionDate < since); },
     winnerOf: (sido) => {
@@ -68,4 +68,6 @@ function renderSidoHex() {
     onSelect: (sido) => { state.selected = { sido }; renderAll(); renderDetail(); },
     selected: (state.selected && !state.selected.name) ? state.selected.sido : null,
   });
+  // 팬·줌 — 폴·아카이브와 동일(svg 호스트 재사용, 재렌더 후 줌 복원). 리스너 1회.
+  if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
 }
