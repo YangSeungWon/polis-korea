@@ -9,7 +9,7 @@ function renderHex() {
   const host = $('#hex');
   if (!host || !window.Archive || !window.Archive.governorHex) return;
   const merge = (typeof SIDO_MERGE !== 'undefined') ? SIDO_MERGE : null;
-  window.Archive.governorHex.draw(host, [], {
+  const meta = window.Archive.governorHex.draw(host, [], {
     winnerOf: (sido) => regionSidoWinner(sido, state.office),
     opacityOf: (w) => (w ? (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)) : 1),
     dashOf: (w) => ((w && (w.n_polls <= 2 || w.low_recent)) ? '3,2' : null),
@@ -23,6 +23,8 @@ function renderHex() {
     onSelect: (sido) => { state.selectedSido = sido; state.selectedSigungu = null; renderHex(); renderDetail(); },
     selected: state.selectedSido,
   });
+  // 팬·줌 (Phase 1) — draw가 viewBox를 base로 리셋하므로 매 렌더 후 현재 줌 복원. 리스너는 1회만.
+  if (window.SvgViewport && meta) window.SvgViewport.attach(host, { baseViewBox: meta.viewBox, cells: meta.cells });
 }
 
 

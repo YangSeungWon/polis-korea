@@ -153,6 +153,8 @@
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const nData = cells.filter((c) => c.win).length;
     if (cap && nData && !opts.winnerOf) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
+    // 줌·포커스 인프라(svg-viewport)용 — 지역→셀중심 + base viewBox. 기존 호출자는 반환값 무시.
+    return { cells: cells.map((c) => ({ region: c.sido, cx: c.cx, cy: c.cy })), viewBox: [0, 0, maxCx, maxCy] };
   }
 
   // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).
