@@ -77,13 +77,20 @@
   function mount(host, modes, drawArg) {
     modes = modes.filter((m) => typeof m.draw === 'function');
     if (!modes.length) return;
-    const tabs = modes.map((m, i) =>
-      `<button type="button" class="ar-sido-tab${i === 0 ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${i === 0}">${m.label}</button>`
-    ).join('');
+    // 두 축으로 분리(전 사이트 공통 멘탈모델) — 「표현 방식」(결과를 '어떻게': 헥스/지도 또는
+    // 격자/dorling) · 「투표율」(보는 '자료'가 다름). 공용 .seg/.seg-btn 위젯으로 다른 토글과 통일.
+    const isTurnout = (m) => m.key === 'turnout';
+    const enc = modes.filter((m) => !isTurnout(m));
+    const turn = modes.filter(isTurnout);
+    const btn = (m, active) =>
+      `<button type="button" class="seg-btn${active ? ' is-active' : ''}" data-view="${m.key}" aria-selected="${active}">${m.label}</button>`;
+    const seg = (label, ms, off) => (ms.length
+      ? `<div class="seg" role="tablist" aria-label="${label}">${ms.map((m, i) => btn(m, off + i === 0)).join('')}</div>` : '');
+    const bar = seg('표현 방식', enc, 0) + seg('투표율', turn, enc.length);
     const views = modes.map((m, i) =>
       `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
     ).join('');
-    host.innerHTML = `<div class="ar-sido-toggle" role="tablist" aria-label="보기 전환">${tabs}</div>${views}`;
+    host.innerHTML = `<div class="ar-sido-toggle">${bar}</div>${views}`;
     for (const m of modes) {
       const el = host.querySelector(`.ar-sido-view[data-view="${m.key}"]`);
       if (el) m.draw(el, drawArg);
@@ -91,11 +98,12 @@
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
-    host.querySelectorAll('.ar-sido-tab').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const v = btn.dataset.view;
-        host.querySelectorAll('.ar-sido-tab').forEach((b) => {
-          const on = b === btn;
+    const allBtns = () => host.querySelectorAll('.ar-sido-toggle .seg-btn');
+    allBtns().forEach((btnEl) => {
+      btnEl.addEventListener('click', () => {
+        const v = btnEl.dataset.view;
+        allBtns().forEach((b) => {
+          const on = b === btnEl;
           b.classList.toggle('is-active', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
         });

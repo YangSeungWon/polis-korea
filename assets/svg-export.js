@@ -130,7 +130,7 @@
     const view = svg.closest('.ar-sido-view');
     if (view) {
       const host = view.parentElement;
-      const tab = host && host.querySelector('.ar-sido-tab[data-view="' + view.dataset.view + '"]');
+      const tab = host && host.querySelector('.ar-sido-toggle .seg-btn[data-view="' + view.dataset.view + '"]');
       if (tab && !tab.classList.contains('is-active')) tab.click();
       (view.closest('.ar-section') || view).scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
