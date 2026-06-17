@@ -93,5 +93,11 @@ jobs:
             echo "tracker 변경 없음 — push skip"
           else
             git commit -m "tracker 데이터 갱신 (자동·VT012): $(date +%Y-%m-%d)"
-            git push
+            # 다른 스케줄 잡/배포가 먼저 올라간 경우(fetch first 거부) 대비 — rebase 후 재시도.
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash origin master && git push; then ok=1; break; fi
+              echo "push 레이스 — 재시도 $i/3"; sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "push 3회 실패"; exit 1; }
           fi
