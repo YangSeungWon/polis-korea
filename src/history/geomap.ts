@@ -379,6 +379,7 @@ async function renderDistrictHex(): Promise<void> {
     onSelect: (sido: string, name: string) => { state.selected = { sido, name, kind: 'district' }; renderAll(); },
   });
   if (!geom) return;
+  (svg as any)._focusCells = (geom as any).cells;   // 총선 균등↔지도 포커스 전이 앵커
   const { colW, rowH, w, h, r, minR, maxR } = geom;
 
   // 비례대표 — 정당별 세로 col, 지역구 hex 우측에 배치. 사이즈는 지역구와 동일(r=22).

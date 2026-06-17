@@ -166,7 +166,9 @@
         return { sido: d.sido, cx, cy };
       }));
     }
-    return { colW, rowH, offX, offY, w, h, r, minR, maxR };
+    return { colW, rowH, offX, offY, w, h, r, minR, maxR,
+      // 줌·포커스 앵커 — region(시도|선거구)→셀 중심. 총선 균등↔지도 전이용(geo와 동일 키).
+      cells: layout.map((d) => { const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY); return { region: ((typeof canonSido === 'function') ? canonSido(d.sido) : d.sido) + '|' + d.name, cx, cy }; }) };
   }
 
   window.drawDistrictHex = drawDistrictHex;
