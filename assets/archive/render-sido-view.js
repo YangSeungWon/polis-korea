@@ -102,6 +102,13 @@
     allBtns().forEach((btnEl) => {
       btnEl.addEventListener('click', () => {
         const v = btnEl.dataset.view;
+        // 탭 교차 포커스 전이 — 떠나는(보이는) 뷰의 줌을 capture해 새 뷰에 apply. region=시도라 렌더러
+        // (균등 governorHex·격자/원형 sidoCluster·투표율) 무관하게 같은 키. svg 없는 뷰(leaflet 지도)는 자연 스킵.
+        let keep = null;
+        if (window.SvgViewport) {
+          const cur = host.querySelector('.ar-sido-view:not([hidden]) svg');
+          if (cur && cur.__svgViewport) { const r = cur.__svgViewport.report(); if (r && (r.scale || 1) > 1.05) keep = r; }
+        }
         allBtns().forEach((b) => {
           const on = b === btnEl;
           b.classList.toggle('is-active', on);
@@ -110,6 +117,10 @@
         host.querySelectorAll('.ar-sido-view').forEach((el) => {
           el.toggleAttribute('hidden', el.dataset.view !== v);
         });
+        if (keep) {
+          const next = host.querySelector(`.ar-sido-view[data-view="${v}"] svg`);
+          if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);
+        }
         if (cap) cap.textContent = (v === 'turnout')
           ? '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).' : resultCaption;
       });
