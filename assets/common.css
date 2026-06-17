@@ -195,7 +195,8 @@ body {
 .foot .fine { font-size: 11px; color: var(--ink-mute); line-height: 1.6; }
 /* 지도 저장/공유 버튼 바 (svg-export.js가 지도 래퍼에 부착) */
 .svg-save-bar {
-  position: absolute; top: 6px; right: 6px; z-index: 5;
+  /* 우하단 — 방식 토글(우상단)과 겹치지 않게. */
+  position: absolute; bottom: 6px; right: 6px; z-index: 5;
   display: flex; gap: 5px; opacity: 0.35; transition: opacity .15s;
 }
 .svg-save-bar:hover { opacity: 1; }
