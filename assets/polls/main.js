@@ -53,9 +53,24 @@ function setupSegFades() {
   window.addEventListener('resize', recalcSegFades, { passive: true });
 }
 
+// per-election 폴 페이지 레이아웃 — 그 선거 제목·viz를 위로, 허브 디렉터리(타임라인·최근조사)·메타를 아래로.
+//   허브(election 미주입)는 그대로. per-election lede(TMI)는 제거. 대선/총선 인계 전에 호출해야 적용됨.
+function arrangePerElection() {
+  if (!(window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election)) return;
+  const main = document.querySelector('main.page'); if (!main) return;
+  const sel = (s) => document.querySelector(s);
+  const intro = sel('.intro'); if (intro) intro.hidden = true;     // 허브 generic intro(여론조사) — election-intro가 대체
+  const lede = sel('#poll-lede'); if (lede) lede.remove();          // per-election lede 제거
+  // 위→아래: 렌즈 · 선거 제목 · 컨트롤 · viz · (하단 네비) 선거별 타임라인 · 최근조사 · 메타(선거종료/결과보기)
+  [sel('#lens-switcher-host'), sel('#election-intro'), sel('.controls'), sel('.viz'),
+    sel('.poll-index-sec'), sel('#recent-polls'), sel('#post-banner')]
+    .forEach((el) => { if (el) main.appendChild(el); });
+}
+
 async function init() {
   setCountdown();
   setPhase();
+  arrangePerElection();
   setInterval(setCountdown, 60_000);
   // 선거별 렌즈 전환 바 — per-election 폴 페이지에서만(허브는 election 없어 no-op).
   if (window.LensSwitcher && window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election) {
