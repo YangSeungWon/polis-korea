@@ -61,9 +61,15 @@ function arrangePerElection() {
   const sel = (s) => document.querySelector(s);
   const intro = sel('.intro'); if (intro) intro.hidden = true;     // 허브 generic intro(여론조사) — election-intro가 대체
   const lede = sel('#poll-lede'); if (lede) lede.remove();          // per-election lede 제거
-  // 위→아래: 렌즈 · 선거 제목 · 컨트롤 · viz · (하단 네비) 선거별 타임라인 · 최근조사 · 메타(선거종료/결과보기)
-  [sel('#lens-switcher-host'), sel('#election-intro'), sel('.controls'), sel('.viz'),
-    sel('.poll-index-sec'), sel('#recent-polls'), sel('#post-banner')]
+  // 렌즈 토글을 선거 제목 오른쪽 한 행으로 — 아카이브(.ar-hero-top)와 통일.
+  const elIntro = sel('#election-intro'), h1 = sel('#poll-h1'), lensHost = sel('#lens-switcher-host');
+  if (elIntro && h1 && lensHost) {
+    const row = document.createElement('div'); row.className = 'poll-hero-top';
+    h1.parentNode.insertBefore(row, h1);
+    row.appendChild(h1); row.appendChild(lensHost);   // h1 왼쪽 · 렌즈 오른쪽
+  }
+  // 위→아래: 선거 제목+렌즈 · 컨트롤 · viz · (하단 네비) 선거별 타임라인 · 최근조사 · 메타(선거종료/결과보기)
+  [elIntro, sel('.controls'), sel('.viz'), sel('.poll-index-sec'), sel('#recent-polls'), sel('#post-banner')]
     .forEach((el) => { if (el) main.appendChild(el); });
 }
 

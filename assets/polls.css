@@ -159,6 +159,10 @@
 /* 선거별 상세 섹션 — 상시 피드와 구분선 */
 .election-intro { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--rule); }
 .election-intro h2 { font-size: 20px; font-weight: 800; margin: 0 0 4px; color: var(--ink); }
+/* 선거 제목 + 렌즈 토글 한 행 (아카이브 .ar-hero-top과 통일) — arrangePerElection이 묶음. */
+.poll-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.poll-hero-top h2 { margin: 0; }
+.poll-hero-top .lens-switcher { margin: 0; flex-wrap: wrap; justify-content: flex-end; }
 
 /* 활성 폴링 시즌 — 그 선거 전면 배너(상단). 시즌 아니면 hidden. */
 .active-poll-banner {
