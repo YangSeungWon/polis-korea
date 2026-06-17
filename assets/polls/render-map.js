@@ -27,7 +27,7 @@ function mapApplyFocus(region, scale) {
   const iz = (focusBaseZoom != null) ? focusBaseZoom : (initialZoom != null ? initialZoom : leafletMap.getZoom());
   const cents = focusCents();
   const ll = region && cents && cents.get(region);
-  if (ll) leafletMap.setView(ll, iz + Math.log2(Math.max(1, scale || 1)), { animate: false });
+  if (ll) leafletMap.flyTo(ll, iz + Math.log2(Math.max(1, scale || 1)), { duration: 0.45 });   // 부드러운 전환
   else { const lyr = focusFitLayer(); if (lyr) leafletMap.fitBounds(lyr.getBounds(), { padding: [12, 12] }); }
 }
 

@@ -56,6 +56,22 @@
       updateTA();
       updateResetBtn();
     }
+    // 전환 애니메이션 — viewBox(cx,cy,scale) rAF 트윈. 사용자 조작/새 focusOn 시 취소.
+    let _anim = null;
+    function cancelAnim() { if (_anim) { cancelAnimationFrame(_anim); _anim = null; } }
+    function animateTo(tcx, tcy, ts, ms) {
+      cancelAnim();
+      const f = { cx, cy, scale }, dur = ms || 280; let t0 = 0;
+      const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
+      const step = (now) => {
+        if (!t0) t0 = now;
+        const t = Math.min(1, (now - t0) / dur), k = ease(t);
+        cx = f.cx + (tcx - f.cx) * k; cy = f.cy + (tcy - f.cy) * k; scale = f.scale + (ts - f.scale) * k;
+        applyViewBox();
+        _anim = (t < 1) ? requestAnimationFrame(step) : null;
+      };
+      _anim = requestAnimationFrame(step);
+    }
     function clientToUser(x, y) {
       const m = svg.getScreenCTM(); if (!m) return { x: cx, y: cy };
       const p = svg.createSVGPoint(); p.x = x; p.y = y;
@@ -79,13 +95,14 @@
     // ── 데스크톱: Ctrl/⌘+휠 줌 + 확대 상태 드래그 pan ──────────────────
     function onWheel(e) {
       if (!(e.ctrlKey || e.metaKey)) return;   // 평소 휠은 페이지 스크롤(가로채지 않음)
-      e.preventDefault();
+      e.preventDefault(); cancelAnim();
       zoomAt(e.clientX, e.clientY, scale * Math.exp(-e.deltaY * 0.0015));
     }
     let mDrag = null;
     function onMouseDown(e) {
       if (e.button != null && e.button !== 0) return;
       if (!isZoomed()) return;   // 안 확대면 셀 클릭/페이지에 양보
+      cancelAnim();
       mDrag = { x: e.clientX, y: e.clientY }; moved = false; svg.style.cursor = 'grabbing'; e.preventDefault();
     }
     function onMouseMove(e) {
@@ -101,7 +118,7 @@
     let tmode = null, startD = 0, startScale = 1, pan0 = null, lastTap = 0;
     const dist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
     function onTouchStart(e) {
-      moved = false;
+      moved = false; cancelAnim();
       if (e.touches.length === 2) {
         tmode = 'pinch'; startD = dist(e.touches); startScale = scale; e.preventDefault();
       } else if (e.touches.length === 1) {
@@ -151,15 +168,19 @@
         for (const c of cells) { const d = (c.cx - cx) ** 2 + (c.cy - cy) ** 2; if (d < bd) { bd = d; best = c; } }
         return { region: best ? best.region : null, scale };
       },
-      focusOn(region, s) {
+      focusOn(region, s, o) {
         const c = region && cells.find((x) => x.region === region);
-        if (c) { cx = c.cx; cy = c.cy; scale = clampS(s || 1); }
-        else { cx = base[0] + base[2] / 2; cy = base[1] + base[3] / 2; scale = 1; }
-        applyViewBox();
+        const tcx = c ? c.cx : base[0] + base[2] / 2;
+        const tcy = c ? c.cy : base[1] + base[3] / 2;
+        const ts = c ? clampS(s || 1) : 1;
+        // 보존(applyHost)은 스냅, 교차 전환은 트윈.
+        if (o && o.animate === false) { cancelAnim(); cx = tcx; cy = tcy; scale = ts; applyViewBox(); }
+        else animateTo(tcx, tcy, ts);
       },
       reset,
       isZoomed,
       detach() {
+        cancelAnim();
         svg.removeEventListener('wheel', onWheel);
         svg.removeEventListener('mousedown', onMouseDown);
         window.removeEventListener('mousemove', onMouseMove);
@@ -192,7 +213,7 @@
   }
   function applyHost(host, svg, opts, keep) {
     const h = attach(svg, opts);
-    if (keep && keep.region && (keep.scale || 1) > 1.05) h.focusOn(keep.region, keep.scale);
+    if (keep && keep.region && (keep.scale || 1) > 1.05) h.focusOn(keep.region, keep.scale, { animate: false });   // 보존=스냅
     if (host) host.__svgFocus = keep || null;
     return h;
   }

@@ -109,7 +109,7 @@ const geoFocus = {
     if (!geoLeafletMap) return;
     const ll = region && geoFocusCentroids.get(region);
     const iz = geoInitialZoom != null ? (geoInitialZoom as number) : geoLeafletMap.getZoom();
-    if (ll) geoLeafletMap.setView(ll, iz + Math.log2(Math.max(1, scale || 1)), { animate: false });
+    if (ll) geoLeafletMap.flyTo(ll, iz + Math.log2(Math.max(1, scale || 1)), { duration: 0.45 });   // 부드러운 전환
   },
 };
 
