@@ -31,6 +31,16 @@
     }
     return pts.join(' ');
   }
+  // 평평top(flat-top) 소헥스 — 뾰족top 소헥스를 스파이럴로 모으면 덩어리가 평평top이 돼 뾰족top 부모셀과
+  //   어긋난다. 소헥스를 평평top으로 깔면 덩어리가 뾰족top → 부모셀에 정렬돼 들어찬다.
+  function hexPointsFlat(cx, cy, R) {
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = i * Math.PI / 3;
+      pts.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`);
+    }
+    return pts.join(' ');
+  }
   // 표준 axial hex 이웃 (pointy-top, 시계방향).
   const NEIGHBORS = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
   // 거리 layer의 ring 6L 개 cells 생성. 시작 = layer steps in NEIGHBORS[4] direction = (-L, L).
@@ -213,11 +223,12 @@
       const spiral = hexSpiral(N);
       for (let i = 0; i < spiral.length; i++) {
         const [q, ar] = spiral[i];
-        const dx = smallR * Math.sqrt(3) * (q + ar / 2);
-        const dy = smallR * 1.5 * ar;
+        // flat-top 배치(부모 뾰족top 셀에 덩어리가 정렬되도록) — dx=1.5q, dy=√3(ar+q/2).
+        const dx = smallR * 1.5 * q;
+        const dy = smallR * Math.sqrt(3) * (ar + q / 2);
         const sx = cx + dx, sy = cy + dy;
         const poly = document.createElementNS(NS, 'polygon');
-        poly.setAttribute('points', hexPoints(sx, sy, smallR * 0.95));
+        poly.setAttribute('points', hexPointsFlat(sx, sy, smallR * 0.95));
         poly.setAttribute('fill', fills[i] || '#e6e9ef');
         poly.setAttribute('stroke', 'rgba(255,255,255,0.5)');
         poly.setAttribute('stroke-width', '0.3');

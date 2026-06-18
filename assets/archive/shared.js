@@ -210,6 +210,8 @@
     const ring = (L) => { const out = []; let q = -L, r = L; for (let s = 0; s < 6; s++) { const [dq, dr] = NB[s]; for (let i = 0; i < L; i++) { out.push([q, r]); q += dq; r += dr; } } return out; };
     const spiral = (N) => { if (N <= 0) return []; const out = [[0, 0]]; let L = 0; while (out.length < N) { L++; const rg = ring(L); const rem = N - out.length; out.push(...(rem >= rg.length ? rg : rg.slice(0, rem))); } return out; };
     const hexPts = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
+    // 평평top 소헥스 — 뾰족top 소헥스 덩어리는 평평top이 돼 뾰족top 셀과 어긋남. 평평top으로 깔면 덩어리가 뾰족top → 셀 정렬.
+    const hexPtsFlat = (cx, cy, R) => { const p = []; for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; p.push(`${cx + R * Math.cos(a)},${cy + R * Math.sin(a)}`); } return p.join(' '); };
     const _v = (c) => (c && c.share != null ? c.share : ((c && c.votes) || 0));
 
     // 전남광주 통합(2026 지선, seats만) — 광주+전남+통합 한 셀 + honamMergedLayout.
@@ -349,9 +351,10 @@
         const sr = n.smallR || L.smallR;   // 고정 그리드(seats)는 셀별 소헥스 크기로 균등 셀을 채움
         for (let i = 0; i < sp.length; i++) {
           const [q, ar] = sp[i];
-          const sx = n.cx + sr * Math.sqrt(3) * (q + ar / 2), sy = n.cy + sr * 1.5 * ar;
+          // flat-top 배치 — 덩어리가 뾰족top 셀에 정렬되도록(dx=1.5q, dy=√3(ar+q/2)).
+          const sx = n.cx + sr * 1.5 * q, sy = n.cy + sr * Math.sqrt(3) * (ar + q / 2);
           const poly = document.createElementNS(NS, 'polygon');
-          poly.setAttribute('points', hexPts(sx, sy, sr * 0.9));
+          poly.setAttribute('points', hexPtsFlat(sx, sy, sr * 0.9));
           poly.setAttribute('fill', fills[i] || '#e6e9ef');
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
