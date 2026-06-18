@@ -90,9 +90,13 @@
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
       ];
     }
+    // 광역단체장(tc=3) — 시도별 단일승자라 1위(균등·지도)가 primary. 표비례(격자·원형)는 득표 구성·박빙
+    //   을 보는 보조 뷰로 추가(대선과 달리 1위 단색이 정당함 — [[no_winner_take_all_pres]]).
     return [
       { key: 'hex', label: '균등', draw: (el, rs) => A.governorHex?.draw?.(el, rs) },
       { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { n: geo.n, kind: geo.kind }) },
+      { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
+      { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
       { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
     ];
   }
