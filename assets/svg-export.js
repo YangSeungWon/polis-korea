@@ -74,9 +74,11 @@
     return m ? m[1] : '';
   }
   function fnameBase() {
-    // document.title이 이미 'polis · …'라 그대로 정제(중복 prefix 방지)
+    // document.title 'polis · …'의 앞 브랜드를 풀 도메인 'polis-ysw-kr'로 (파일명에 사이트 표시).
     return (document.title || 'polis-map')
-      .replace(/[·]/g, '-').replace(/[^0-9a-zA-Z가-힣_-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '').slice(0, 60);
+      .replace(/^polis(?=\s|·|$)/, 'polis-ysw-kr')
+      .replace(/\s*·\s*/g, '-')
+      .replace(/[^0-9a-zA-Z가-힣_-]+/g, '_').replace(/_+/g, '_').replace(/^[-_]+|[-_]+$/g, '').slice(0, 60);
   }
 
   function mkBtn(text, title, onClick) {
