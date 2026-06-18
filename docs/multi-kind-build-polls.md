@@ -212,3 +212,22 @@ weird_pct = sum(1 for p in polls if p.get('candidates') and
 - `zero_cand == 0`
 - `weird_pct / total < 5%`
 - `office_level` 분포에 "대통령"(대선 build) 또는 "국회의원"·"비례대표 국회의원"(총선 build) 다수
+
+## 리얼미터류 ASCII 표 복구 (2026-06) — `scripts/parse/recover_realmeter.py`
+
+리얼미터 보도통계표 등은 표를 PDF 선이 아닌 **텍스트 괘선(`+--+ | |`)** 으로 그려
+pdfplumber `extract_tables`가 못 잡아 `parse_pdf`가 `questions:[]`(빈 파싱)으로 끝났다.
+미복구 옛 선거의 파싱 실패율 ~50%의 주범(리얼미터·코리아리서치·입소스). 해법: `extract_text`의
+ASCII 표를 **컬럼 인덱스 정렬**로 파싱 — 헤더는 첫 separator 전까지만 수집(사례수 하위헤더
+조사완료/가중값 오염 차단), '전체' 행 pct를 사례수 칸 수만큼 offset해 후보열에 위치 정렬,
+헤더 토큰을 registry 정당명과 prefix 매칭해 정당/후보 분리, 2단 레이아웃 중복은 (title,pct)로 dedup.
+빈 파싱인 parsed JSON만 덮어씀(정상 파싱 보존).
+
+실행: `python3 scripts/parse/recover_realmeter.py --election 21st-general-2020 [--dry-run]`
+→ `build_polls_gen.py --n 21` 재실행.
+
+결과(21대 총선, 리얼미터): 빈파싱 73 중 **70 ntt / 507표 복구**(후보지지 356·정당지지 73·비례 46·
+적합도 32). aggregated 441→548폴(후보지지 143→172·선거구 74→81·정당지지 184→227·비례 114→149).
+샘플 정확(목포 김원이53.3/박지원33.5, 양산을 김두관47.4/나동연42.6). **남은 병목**: build_polls_gen의
+region→선거구 매칭(문서 상단 "595중 200만")이라 선거구 증가폭이 표 복구량보다 작음. **미해결 변종**:
+"현안조사"류(사례수·`|`가 다른 줄)는 0표 — 별도 레이아웃. 19/20대 대선·20대 총선에도 적용 가능.
