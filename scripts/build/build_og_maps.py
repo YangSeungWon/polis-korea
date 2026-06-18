@@ -37,6 +37,8 @@ VIEW_DEFS = [
     ("cartogram-map", "sgg-prop", "시군구 비례", "표(인구) 비례 격자·원형"),
     ("sigungu-map", "sgg-geo", "시군구 지도", "시군구 경계·격차 명도"),
     ("sido-winner-hex", "sido1", "시도 1위", "시도별 1위·격차 명도"),  # governor-hex 클래스 공유 → 먼저
+    ("district-hex", "district", "선거구 1위", "선거구별 당선 정당"),
+    ("district-map", "district-geo", "선거구 지도", "선거구 경계·당선 정당"),
     ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
     ("council-hex", "council", "광역의원", "시도별 의석"),
     ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),
@@ -104,7 +106,7 @@ def _capture_views(page):
                     if "is-active" in (tab.get_attribute("class") or ""):
                         continue
                     tab.click()
-                    page.wait_for_timeout(1000)
+                    page.wait_for_timeout(1500)   # 큰 geojson(선거구·시군구 geo) 로드 여유
                     grab()
                 except Exception:
                     pass

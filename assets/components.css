@@ -178,6 +178,11 @@
 .sigungu-map-region { stroke: var(--bg); stroke-width: 0.4; }
 .sigungu-map-region.no-data { fill: var(--bg2); stroke: var(--rule); stroke-width: 0.3; }
 .sigungu-map-region.is-selected { stroke: var(--ink); stroke-width: 1.4; paint-order: stroke; }
+.district-map-svg { width: 100%; height: auto; max-width: 540px; display: block; margin: 0 auto; }
+.district-hex-svg { width: 100%; height: auto; display: block; }
+.district-map-region { stroke: var(--bg); stroke-width: 0.4; }
+.district-map-region.no-data { fill: var(--bg2); stroke: var(--rule); stroke-width: 0.3; }
+.district-map-region.is-selected { stroke: var(--ink); stroke-width: 1.4; paint-order: stroke; }
 
 .loading-overlay {
   position: absolute; inset: 0;

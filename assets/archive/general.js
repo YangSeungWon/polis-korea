@@ -384,6 +384,41 @@
     document.getElementById('ar-polls-link').hidden = false;
   }
 
+  // 지역구 선거구별 1위 맵 — 균등(hex, drawDistrictHex)/지도(geo, districtMap). 승자독식 1명 = flat 정당색.
+  async function renderDistrictMap(ctx) {
+    const n = ctx && ctx.meta && ctx.meta.electionN;
+    if (n == null || !(window.Archive.sidoView && window.Archive.sidoView.mount)) return;
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const races = ((ctx.results && ctx.results.races) || []).filter((r) => r.scope === 'district' && (r.candidates || []).length);
+    if (races.length < 10) return;
+    const layout = await fetch(`data/geo/district_hex_${n}.json`).then((r) => r.json()).catch(() => null);
+    const hasHex = !!(layout && layout.length && typeof drawDistrictHex === 'function');
+    const hasGeo = !!window.Archive.districtMap;
+    if (!hasHex && !hasGeo) return;
+    const byKey = {};
+    for (const r of races) byKey[`${canon(r.sido)}|${r.district || r.name || ''}`] = r;
+    const resultFn = (sido, name) => byKey[`${canon(sido)}|${name}`] || null;
+    const anchor = document.getElementById('ar-general-hex') || document.getElementById('ar-proportional') || document.getElementById('ar-parliament');
+    if (!anchor || !anchor.parentElement) return;
+    let sec = document.getElementById('ar-district-map');
+    if (!sec) {
+      sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-district-map';
+      sec.innerHTML = '<h2 class="ar-section-title">지역구 선거구별 1위</h2>'
+        + '<p class="ar-source-line">선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.</p>'
+        + '<div class="ar-district-map-toggle"></div>';
+      anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+    }
+    const modes = [];
+    if (hasHex) modes.push({ key: 'hex', label: '균등', draw: (el) => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'district-hex-svg'); el.innerHTML = ''; el.appendChild(svg);
+      drawDistrictHex(svg, layout, resultFn, {});
+      svg.removeAttribute('height');   // drawDistrictHex의 인라인 height:100%가 auto-height 컨테이너서 0 붕괴 → viewBox 비율로
+    } });
+    if (hasGeo) modes.push({ key: 'map', label: '지도', draw: (el) => window.Archive.districtMap.draw(el, { n, races }) });
+    if (modes.length) window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes);
+  }
+
   window.Archive.general = {
     render(ctx) {
       // 254 지역구·정당지지 추이는 /history.html에서 시각화로 더 강력
@@ -391,6 +426,7 @@
       renderParliament(ctx);
       renderGeneralHex(ctx);
       renderProportional(ctx);
+      renderDistrictMap(ctx);
       renderExitPoll(ctx);   // 코어 단계엔 exitData=null → 스킵
     },
     // 2차 데이터(여론조사 건수·출구조사) 도착 후 — 코어 섹션 재렌더 안 함.
