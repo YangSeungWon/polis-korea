@@ -272,12 +272,33 @@
           cx0: pos.col * P.seedGap + (pos.row % 2 ? P.seedGap / 2 : 0), cy0: pos.row * P.seedGap * 0.87 });
       }
       if (!nodes.length) return null;
-      Archive.packClusters(nodes, { pad: PAD });
+      // seats(시도의회·총선 지역구 의석)는 셀이 정당색으로 꽉 차므로 고정 그리드가 governorHex처럼 깔끔.
+      //   회차마다 같은 자리(충북 추적 용이) — packClusters 표류 대신. 옛 회차에 없는 시도는 자연히 빈 칸.
+      //   prop(대선/총선 비례)은 size=득표가 메시지라 균등화 시 셀 내부가 비어 어색 → 종전 force-pack 유지.
+      const fixed = (mode === 'seats');
+      let Rcell = null;
+      if (fixed) {
+        // 삼각격자(seedGap 간격, 0.87≈√3/2)의 보로노이 = 정육각형. center-to-vertex = seedGap/√3로
+        //   그리면 셀이 빈틈없이 맞물려(governorHex식) 휑한 빈칸이 사라진다. 안의 의석은 inradius(seedGap/2)에 채움.
+        const hexR = P.seedGap / Math.sqrt(3);          // 맞물리는 육각 셀 반지름
+        const fitR = P.seedGap * 0.5;                   // 의석 미니헥스가 채울 반경(육각 내접원)
+        Rcell = hexR;
+        const maxN = Math.max(1, ...nodes.map((n) => n.N));
+        for (const n of nodes) {
+          n.cx = n.cx0; n.cy = n.cy0;                   // 그리드 좌표 그대로 (표류 없음)
+          const Lr = Math.ceil(Math.sqrt(Math.max(n.N - 1, 0) / 3));
+          n.smallR = fitR / ((Lr + 0.6) * Math.sqrt(3));            // 균등 셀을 N석으로 채우는 셀별 소헥스
+          n.rSize = Math.max(fitR * 0.42, fitR * Math.sqrt(n.N / maxN));  // 원형(dorling): 의석∝반지름, 셀 안에
+          n.r = hexR;                                   // 외곽 육각·bbox
+        }
+      } else {
+        Archive.packClusters(nodes, { pad: PAD });
+      }
       const minX = Math.min(...nodes.map((n) => n.cx - n.r)) - 6;
       const minY = Math.min(...nodes.map((n) => n.cy - n.r)) - 16;
       const W = Math.max(...nodes.map((n) => n.cx + n.r)) - minX + 6;
       const H = Math.max(...nodes.map((n) => n.cy + n.r)) - minY + 6;
-      return { nodes, unit, mode, smallR: P.smallR, minX, minY, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}` };
+      return { nodes, unit, mode, smallR: P.smallR, fixed, Rcell, minX, minY, viewBox: `${minX.toFixed(1)} ${minY.toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}` };
     }
 
     function legendOf(nodes) {  // seats 모드 외부 범례용(정당별 합). prop은 반환 무시됨.
@@ -307,8 +328,14 @@
       for (const n of L.nodes) {
         const g = document.createElementNS(NS, 'g');
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
-        const outline = document.createElementNS(NS, 'circle');
-        outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
+        let outline;
+        if (L.fixed) {   // 고정 그리드: 맞물리는 육각 셀(빈칸 없이 벌집처럼)
+          outline = document.createElementNS(NS, 'polygon');
+          outline.setAttribute('points', hexPts(n.cx, n.cy, n.r));
+        } else {
+          outline = document.createElementNS(NS, 'circle');
+          outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
+        }
         outline.setAttribute('class', 'ar-genhex-outline');
         const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 테두리
         if (missCol) { outline.setAttribute('stroke', missCol); outline.setAttribute('stroke-width', '2.4'); outline.setAttribute('stroke-dasharray', '3,2.4'); outline.setAttribute('fill', 'none'); }
@@ -319,11 +346,12 @@
         for (let i = 0; i < n.slices.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(n.slices[i].color);
         while (fills.length < n.N) fills.push('#e6e9ef');
         const sp = spiral(n.N);
+        const sr = n.smallR || L.smallR;   // 고정 그리드(seats)는 셀별 소헥스 크기로 균등 셀을 채움
         for (let i = 0; i < sp.length; i++) {
           const [q, ar] = sp[i];
-          const sx = n.cx + L.smallR * Math.sqrt(3) * (q + ar / 2), sy = n.cy + L.smallR * 1.5 * ar;
+          const sx = n.cx + sr * Math.sqrt(3) * (q + ar / 2), sy = n.cy + sr * 1.5 * ar;
           const poly = document.createElementNS(NS, 'polygon');
-          poly.setAttribute('points', hexPts(sx, sy, L.smallR * 0.9));
+          poly.setAttribute('points', hexPts(sx, sy, sr * 0.9));
           poly.setAttribute('fill', fills[i] || '#e6e9ef');
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
@@ -353,27 +381,29 @@
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 링
         const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode) + (missCol ? ' · 여론조사 빗나감(테두리=조사 1위 정당)' : ''); g.appendChild(tt);
+        const dr = L.fixed ? n.rSize : n.r;   // 고정 그리드(seats)는 의석∝반지름(셀 안), 아니면 cartogram 반지름
         const total = n.slices.reduce((s, x) => s + x.value, 0);
         if (total > 0 && n.slices.length > 1) {
           let a0 = -Math.PI / 2;
-          for (const s of n.slices) { const a1 = a0 + (s.value / total) * 2 * Math.PI; const p = document.createElementNS(NS, 'path'); p.setAttribute('d', pie(n.cx, n.cy, n.r, a0, a1)); p.setAttribute('fill', s.color); g.appendChild(p); a0 = a1; }
+          for (const s of n.slices) { const a1 = a0 + (s.value / total) * 2 * Math.PI; const p = document.createElementNS(NS, 'path'); p.setAttribute('d', pie(n.cx, n.cy, dr, a0, a1)); p.setAttribute('fill', s.color); g.appendChild(p); a0 = a1; }
         } else {
           const c = document.createElementNS(NS, 'circle');
-          c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', n.r.toFixed(1));
+          c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', dr.toFixed(1));
           c.setAttribute('fill', n.slices[0] ? n.slices[0].color : '#e6e9ef'); g.appendChild(c);
         }
         const rng = document.createElementNS(NS, 'circle');
         rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1));
-        rng.setAttribute('r', (n.r + (missCol ? 1.5 : 0)).toFixed(1));
+        rng.setAttribute('r', (dr + (missCol ? 1.5 : 0)).toFixed(1));
         rng.setAttribute('class', 'ar-dorling-ring');
         if (missCol) { rng.setAttribute('stroke', missCol); rng.setAttribute('stroke-width', '2.4'); rng.setAttribute('stroke-dasharray', '3,2.4'); rng.setAttribute('fill', 'none'); }
         g.appendChild(rng);
         svg.appendChild(g);
       }
       for (const n of L.nodes) {  // 라벨 별도 패스 — 큰 원 중앙(흰), 작은 원 바깥 위(검정 halo)
-        const small = n.r < 11;
+        const dr = L.fixed ? n.rSize : n.r;
+        const small = dr < 11;
         const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (small ? n.cy - n.r - 3 : n.cy + 3).toFixed(1));
+        t.setAttribute('x', n.cx.toFixed(1)); t.setAttribute('y', (small ? n.cy - dr - 3 : n.cy + 3).toFixed(1));
         t.setAttribute('text-anchor', 'middle'); t.setAttribute('class', small ? 'ar-genhex-label' : 'ar-dorling-label');
         t.textContent = nameOf(n); svg.appendChild(t);
       }
