@@ -74,6 +74,7 @@ def main():
     ap.add_argument("--csv", default="data/raw/nesdc_9th_polls.csv", help="NESDC 메타 CSV")
     ap.add_argument("--out", default="data/raw/nec_roster_9th.json", help="출력 roster JSON")
     ap.add_argument("--agg", default="data/polls/aggregated.json", help="aggregated.json (있으면 보충)")
+    ap.add_argument("--limit", type=int, default=None, help="대상 수 제한(테스트용)")
     args = ap.parse_args()
     SG_ID = args.sg_id
     META_CSV = ROOT / args.csv
@@ -160,35 +161,46 @@ def main():
             existing = {}
 
     roster: dict[str, dict] = dict(existing)
-    n_new = n_match = 0
-    for i, (sd, nm) in enumerate(sorted(targets), 1):
-        key_str = f"{sd}|{nm}"
-        # 매칭된 entry({sg_typecode:..}) 있으면 skip. 빈 dict는 refetch (TYPECODE_OFFICE 확장 시).
-        if key_str in roster and roster[key_str]:
-            continue
+    # 처리할 (sd,nm) — 이미 매칭된 건 skip(빈 dict는 refetch). 이름 중복 제거 후 병렬 조회(이름→NEC rows 캐시).
+    todo = [(sd, nm) for sd, nm in sorted(targets)
+            if not (f"{sd}|{nm}" in roster and roster[f"{sd}|{nm}"])]
+    if args.limit:
+        todo = todo[:args.limit]
+    uniq_names = sorted({nm for _, nm in todo})
+    print(f"  병렬 조회: 고유 이름 {len(uniq_names)} (대상 {len(todo)})", file=sys.stderr)
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+    name_rows: dict[str, list] = {}
+    lock = threading.Lock()
+    done = [0]
+
+    def _fetch_one(nm):
         rows = fetch_name(key, nm)
-        n_new += 1
-        # sgId=20260603 + sd 매칭 + sgTypecode in 3/4/11
+        with lock:
+            name_rows[nm] = rows
+            done[0] += 1
+            if done[0] % 100 == 0:
+                print(f"  진행 {done[0]}/{len(uniq_names)}", file=sys.stderr)
+
+    with ThreadPoolExecutor(max_workers=8) as ex:  # data.go.kr 동시 8 — IP/키 차단 없이 ~10배 빠름
+        list(ex.map(_fetch_one, uniq_names))
+
+    n_match = 0
+    for sd, nm in todo:
+        rows = name_rows.get(nm, [])
         match = None
-        for r in rows:
-            # NEC sdName을 canon으로 정규화해 시대별 명칭차(강원도↔강원특별자치도) 흡수
+        for r in rows:  # sgId + 시도(canon) + 광역/기초장·교육감(3/4/11)
             if r["sg_id"] == SG_ID and canon_sido(r["sd"]) == sd and r["sg_typecode"] in TYPECODE_OFFICE:
                 match = r
                 break
-        # party-fallback — 광역/기초장·교육감(2/3/4/11) 매칭 없으면 같은 선거 다른 office
-        # (광역의원5·기초의원6·비례7 등)라도 party(jd)는 동일하므로 backfill용으로 채택.
-        # office 분류는 build가 {3,4,11}만 보므로 영향 없음.
-        if match is None:
+        if match is None:  # party-fallback — 같은 선거 다른 office라도 jd(정당)는 backfill용 채택
             for r in rows:
                 if r["sg_id"] == SG_ID and canon_sido(r["sd"]) == sd and r["jd"]:
                     match = r
                     break
-        roster[key_str] = match or {}  # 빈 dict면 등록 후보 아님
+        roster[f"{sd}|{nm}"] = match or {}
         if match:
             n_match += 1
-        if i % 50 == 0:
-            print(f"  진행 {i}/{len(targets)} (신규 fetch {n_new}, 등록 match {n_match})", file=sys.stderr)
-        time.sleep(0.15)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:

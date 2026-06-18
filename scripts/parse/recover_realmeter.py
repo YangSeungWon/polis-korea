@@ -35,6 +35,9 @@ ELECTION_CSV = {
     "20th-general-2016": "nesdc_20gen_polls.csv",
     "21st-general-2020": "nesdc_21gen_polls.csv",
     "22nd-general-2024": "nesdc_22gen_polls.csv",
+    "7th-local-2018": "nesdc_7th_polls.csv",
+    "8th-local-2022": "nesdc_8th_polls.csv",
+    "9th-local-2026": "nesdc_9th_polls.csv",
 }
 
 _REG = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
