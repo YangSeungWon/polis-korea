@@ -280,18 +280,20 @@
       const fixed = (mode === 'seats');
       let Rcell = null;
       if (fixed) {
-        // 삼각격자(seedGap 간격, 0.87≈√3/2)의 보로노이 = 정육각형. center-to-vertex = seedGap/√3로
-        //   그리면 셀이 빈틈없이 맞물려(governorHex식) 휑한 빈칸이 사라진다. 안의 의석은 inradius(seedGap/2)에 채움.
-        const hexR = P.seedGap / Math.sqrt(3);          // 맞물리는 육각 셀 반지름
-        const fitR = P.seedGap * 0.5;                   // 의석 미니헥스가 채울 반경(육각 내접원)
-        Rcell = hexR;
+        // 1석 = 일정 크기 소헥스(전 시도 동일 — 왜곡 없음), 클러스터 크기는 의석수에 비례(원형처럼).
+        //   위치는 고정 그리드(충북 추적 용이). 가장 큰 시도(maxN)가 셀 간격 안에 들어가도록 소헥스 크기를
+        //   정해 이웃과 안 겹치게 — 작은 시도는 자연히 작은 덩어리(세종 등은 휑하지만 의석이 적다는 정직한 표현).
+        const fitR = P.seedGap * 0.5;                   // 최대 클러스터 반경(이웃 셀과 닿되 안 겹침)
         const maxN = Math.max(1, ...nodes.map((n) => n.N));
+        const Lmax = Math.ceil(Math.sqrt(Math.max(maxN - 1, 0) / 3));
+        const uSmallR = fitR / ((Lmax + 0.6) * Math.sqrt(3));   // 전 시도 공통 1석 크기
+        Rcell = fitR;
         for (const n of nodes) {
           n.cx = n.cx0; n.cy = n.cy0;                   // 그리드 좌표 그대로 (표류 없음)
           const Lr = Math.ceil(Math.sqrt(Math.max(n.N - 1, 0) / 3));
-          n.smallR = fitR / ((Lr + 0.6) * Math.sqrt(3));            // 균등 셀을 N석으로 채우는 셀별 소헥스
-          n.rSize = Math.max(fitR * 0.42, fitR * Math.sqrt(n.N / maxN));  // 원형(dorling): 의석∝반지름, 셀 안에
-          n.r = hexR;                                   // 외곽 육각·bbox
+          n.smallR = uSmallR;                           // 균일 1석 크기
+          n.r = (Lr + 0.6) * Math.sqrt(3) * uSmallR;    // 클러스터 반경 ∝ √의석수 (면적 ∝ 의석수)
+          n.rSize = n.r;                                // 원형(dorling)도 같은 footprint
         }
       } else {
         Archive.packClusters(nodes, { pad: PAD });
@@ -330,14 +332,8 @@
       for (const n of L.nodes) {
         const g = document.createElementNS(NS, 'g');
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
-        let outline;
-        if (L.fixed) {   // 고정 그리드: 맞물리는 육각 셀(빈칸 없이 벌집처럼)
-          outline = document.createElementNS(NS, 'polygon');
-          outline.setAttribute('points', hexPts(n.cx, n.cy, n.r));
-        } else {
-          outline = document.createElementNS(NS, 'circle');
-          outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
-        }
+        const outline = document.createElementNS(NS, 'circle');   // 클러스터 경계(크기 ∝ 의석수)
+        outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
         outline.setAttribute('class', 'ar-genhex-outline');
         const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 테두리
         if (missCol) { outline.setAttribute('stroke', missCol); outline.setAttribute('stroke-width', '2.4'); outline.setAttribute('stroke-dasharray', '3,2.4'); outline.setAttribute('fill', 'none'); }
