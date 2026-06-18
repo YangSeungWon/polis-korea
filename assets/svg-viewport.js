@@ -17,18 +17,31 @@
     if (_resetBtn || typeof document === 'undefined') return _resetBtn;
     _resetBtn = document.createElement('button');
     _resetBtn.type = 'button'; _resetBtn.textContent = '⤢ 전체'; _resetBtn.setAttribute('aria-label', '줌 초기화');
-    _resetBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:1200;background:rgba(10,14,26,0.82);'
+    _resetBtn.style.cssText = 'position:fixed;z-index:1200;background:rgba(10,14,26,0.82);'
       + 'color:#fff;border:none;font:600 12px Pretendard,system-ui,sans-serif;padding:6px 12px;border-radius:999px;'
       + 'cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.25);display:none;';
     _resetBtn.addEventListener('click', () => { _viewports.forEach((v) => { if (v.isZoomed()) v.reset(); }); });
     (document.body || document.documentElement).appendChild(_resetBtn);
     return _resetBtn;
   }
+  // 줌된 지도의 우상단에 버튼 배치(화면 우상단 고정 X) — 그 svg의 화면 위치를 실측, 스크롤·리사이즈에 추종.
+  function positionResetBtn() {
+    const btn = _resetBtn; if (!btn || !btn.__svg || btn.style.display === 'none') return;
+    const r = btn.__svg.getBoundingClientRect();
+    btn.style.top = Math.max(8, r.top + 8) + 'px';
+    btn.style.right = Math.max(8, window.innerWidth - r.right + 8) + 'px';
+  }
   function updateResetBtn() {
     // 떨어진(재렌더로 교체된) svg 정리 + 보이는 확대 viewport 있으면 버튼 표시.
     for (let i = _viewports.length - 1; i >= 0; i--) { if (!document.contains(_viewports[i].svg)) _viewports.splice(i, 1); }
-    const show = _viewports.some((v) => v.isZoomed() && v.svg.getClientRects().length > 0);
-    const btn = ensureResetBtn(); if (btn) btn.style.display = show ? '' : 'none';
+    const zoomed = _viewports.find((v) => v.isZoomed() && v.svg.getClientRects().length > 0);
+    const btn = ensureResetBtn(); if (!btn) return;
+    if (zoomed) { btn.__svg = zoomed.svg; btn.style.display = ''; positionResetBtn(); }
+    else { btn.__svg = null; btn.style.display = 'none'; }
+  }
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', positionResetBtn, { passive: true });
+    window.addEventListener('resize', positionResetBtn);
   }
 
   function attach(svg, opts) {

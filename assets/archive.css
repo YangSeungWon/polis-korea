@@ -785,6 +785,7 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .sido-map-label { fill: #fff; font-size: 11px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(0,0,0,0.55); stroke-width: 2.6px; stroke-linejoin: round; }
 /* 시도 비례 뷰 범례 (대선 — sidoCluster mode:proportional이 그림. 나머지 스타일은 .ar-* 공용) */
 .sido-prop-legend { fill: var(--ink-soft); font-size: 9px; }
+.sido-prop-legend-hex { fill: var(--ink-soft); }
 .metro-hex-label { fill: var(--ink); }
 .council-hex-sido-label { fill: var(--ink); opacity: 0.35; }
 

@@ -288,7 +288,16 @@
     function newSvg(viewBox) { const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS); svg.setAttribute('viewBox', viewBox); svg.setAttribute('class', 'ar-sidocluster-svg'); return svg; }
     function tipOf(n, mode) { return `${n.sido}${mode === 'seats' ? ` ${n.sizeTotal}석` : ''} · ${n.slices.slice(0, 3).map((s) => s.tip).join(' · ')}`; }
     function nameOf(n) { return n.label || Archive.ssh(n.sido); }
-    function addLegend(svg, L, text) { const leg = document.createElementNS(NS, 'text'); leg.setAttribute('x', (L.minX + 4).toFixed(1)); leg.setAttribute('y', (L.minY + 12).toFixed(1)); leg.setAttribute('class', 'sido-prop-legend'); leg.textContent = text; svg.appendChild(leg); }
+    function addLegend(svg, L, text, shape) {
+      const x0 = L.minX + 4, y = L.minY + 12; let tx = x0;
+      if (shape === 'hex') {   // 격자 셀과 같은 육각형 마커(■ 대신 실제 모양)
+        const hr = 6, hp = document.createElementNS(NS, 'polygon');
+        hp.setAttribute('points', hexPts(x0 + hr, y - 3.5, hr));
+        hp.setAttribute('class', 'sido-prop-legend-hex');
+        svg.appendChild(hp); tx = x0 + 2 * hr + 5;
+      }
+      const leg = document.createElementNS(NS, 'text'); leg.setAttribute('x', tx.toFixed(1)); leg.setAttribute('y', y.toFixed(1)); leg.setAttribute('class', 'sido-prop-legend'); leg.textContent = text; svg.appendChild(leg);
+    }
     const pie = (cx, cy, r, a0, a1) => { const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1); const lg = (a1 - a0) > Math.PI ? 1 : 0; return `M${cx.toFixed(1)},${cy.toFixed(1)} L${x0.toFixed(1)},${y0.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 ${lg} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z`; };
 
     function drawHex(host, input, opts) {
@@ -328,7 +337,7 @@
         t.textContent = mode === 'seats' ? `${nameOf(n)} ${n.sizeTotal}` : nameOf(n);
         svg.appendChild(t);
       }
-      if (mode === 'proportional') addLegend(svg, L, opts.legend || `■ 1개 = ${(L.unit / 10000).toLocaleString()}만표 · 면적=득표, 색=후보`);
+      if (mode === 'proportional') addLegend(svg, L, opts.legend || `1개 = ${(L.unit / 10000).toLocaleString()}만표`, 'hex');
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(host) : null;
       host.innerHTML = ''; host.appendChild(svg);
       if (window.SvgViewport) window.SvgViewport.applyHost(host, svg, { cells: L.nodes.map((n) => ({ region: n.sido, cx: n.cx, cy: n.cy })) }, keep);
