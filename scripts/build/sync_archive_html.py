@@ -561,9 +561,15 @@ def render_ar_list(metas: list[dict]) -> str:
             continue
         ar = m["archive"]
         label = ar.get("list_label") or ("진행" if m.get("status") == "active" else "확정")
-        # 결과지도 미니 썸네일 — 대표 뷰 우선순위. 없으면(보궐·간선 옛 대선) 빈 칸.
+        # 결과지도 미니 썸네일 — 타입별 대표 뷰 우선순위(라벨은 캡처서 숨김 → 모양만으로 식별).
+        #   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백.
+        THUMB_PRIORITY = {
+            "local": ("governor", "dorling"),
+            "presidential": ("result", "dorling", "geo"),
+            "general_election": ("seats", "dorling"),
+        }
         thumb = '<span class="ar-list-thumb is-empty" aria-hidden="true"></span>'
-        for v in ("governor", "dorling", "seats", "council", "geo"):
+        for v in THUMB_PRIORITY.get(m.get("kind"), ("governor", "dorling", "seats", "council", "geo")):
             if (ROOT / "og" / "maps" / m["id"] / f"{v}.png").exists():
                 thumb = (f'<img class="ar-list-thumb" src="/og/maps/{m["id"]}/{v}.png" '
                          f'alt="" loading="lazy" decoding="async">')

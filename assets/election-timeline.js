@@ -12,8 +12,10 @@
   };
   const typeOf = (e) => { const t = e.type || e.slug || ''; return /pres/.test(t) ? 'pres' : (/general|national/.test(t) ? 'general' : 'local'); };
   const shortLabel = (e) => (typeOf(e) === 'local' ? `${e.n}회` : `${e.n}대`);
-  // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 동일 뷰). 지도 없으면 onerror로 숨김.
-  const mapUrl = (e) => `/og/maps/${e.slug}/${typeOf(e) === 'local' ? 'governor' : 'dorling'}.png`;
+  // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 동일 뷰, 라벨은 캡처서 숨김).
+  //   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백(onerror).
+  const TL_VIEW = { local: 'governor', pres: 'result', general: 'seats' };
+  const mapUrl = (e) => `/og/maps/${e.slug}/${TL_VIEW[typeOf(e)] || 'dorling'}.png`;
 
   function attachMiniMap(host) {
     let tip = document.getElementById('poll-tl-map-tip');
@@ -22,7 +24,11 @@
       tip.innerHTML = '<img alt="">'; document.body.appendChild(tip);
     }
     const img = tip.querySelector('img');
-    img.addEventListener('error', () => { tip.style.display = 'none'; });
+    // result/seats 미생성(옛 회차·재캡처 전)이면 dorling으로 1회 폴백, 그래도 없으면 숨김.
+    img.addEventListener('error', () => {
+      if (!/\/dorling\.png$/.test(img.src)) { img.src = img.src.replace(/\/[^/]+\.png$/, '/dorling.png'); return; }
+      tip.style.display = 'none';
+    });
     host.querySelectorAll('.poll-tl-node[data-map]').forEach((node) => {
       const url = node.getAttribute('data-map');
       node.addEventListener('mouseenter', () => { img.src = url; tip.style.display = 'block'; });
