@@ -227,18 +227,30 @@ function loadJson(p) {
       const leg = parties.slice(0, 4).map((p) => `<span style="color:${partyColor(p.party, r.date)}">■ ${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
       return `<div class="tld-donut">${donut}</div><div class="tld-leg">${total}석 · ${leg}</div>`;
     }
-    if (r.kind === 'local' && r.sidoWinners) {
-      const counter = {};
-      for (const s of Object.keys(r.sidoWinners)) { const w = r.sidoWinners[s]; if (w?.party) counter[w.party] = (counter[w.party] || 0) + 1; }
-      const ent = Object.entries(counter).sort((a, b) => b[1] - a[1]);
-      const max = Math.max(...ent.map((e) => e[1])) || 1;
-      const bars = ent.map(([party, n]) => {
-        const col = partyColor(party, r.date);
-        return `<div class="tld-bar-row"><span class="tld-name">${PARTY_SHORT[party] || party}</span>`
-          + `<span class="tld-bar"><span class="tld-bar-fill" style="width:${(n / max * 100).toFixed(0)}%;background:${col}"></span></span>`
-          + `<span class="tld-pct">${n}</span></div>`;
+    if (r.kind === 'local') {
+      // 광역장은 sidoWinners를 정당별 시도 수로, 나머지 5직위는 *PartyCounts 그대로.
+      const govCounts = (() => {
+        const c = {};
+        for (const s of Object.keys(r.sidoWinners || {})) { const w = r.sidoWinners[s]; if (w?.party) c[w.party] = (c[w.party] || 0) + 1; }
+        return Object.entries(c).sort((a, b) => b[1] - a[1]);
+      })();
+      const offices = [
+        ['광역단체장', govCounts],
+        ['기초단체장', r.mayorPartyCounts],
+        ['광역의원 지역구', r.metroCouncilPartyCounts],
+        ['광역의원 비례', r.metroProportionalPartyCounts],
+        ['기초의원 지역구', r.localCouncilPartyCounts],
+        ['기초의원 비례', r.localProportionalPartyCounts],
+      ].filter(([, c]) => c && c.length);
+      if (!offices.length) return '<div class="tld-empty">데이터 미수집</div>';
+      return offices.map(([name, counts]) => {
+        const total = counts.reduce((s, c) => s + (c[1] || 0), 0);
+        const segs = counts.map(([party, n]) => {
+          const col = (typeof partyColor === 'function') ? partyColor(party, r.date) : '#999';
+          return `<span class="tld-oseg" style="flex-grow:${n};background:${col}" title="${party} ${n}"></span>`;
+        }).join('');
+        return `<div class="tld-office"><div class="tld-orow"><span class="tld-oname">${name}</span><span class="tld-ototal">${total}</span></div><div class="tld-ostack">${segs}</div></div>`;
       }).join('');
-      return `<div class="tld-sub">광역단체장 ${ent.reduce((s, e) => s + e[1], 0)}곳</div><div class="tld-bars">${bars}</div>`;
     }
     return '<div class="tld-empty">데이터 미수집</div>';
   }

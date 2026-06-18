@@ -181,3 +181,9 @@
 .tld-leg span { white-space: nowrap; margin: 0 3px; }
 .tld-sub { font-size: 11px; color: var(--ink-mute); margin-bottom: 4px; }
 .tld-empty { font-size: 11px; color: var(--ink-mute); padding: 8px 0; text-align: center; }
+/* 지선 상세 — 6직위 정당별 의석 스택 */
+.tld-office { margin-bottom: 6px; }
+.tld-orow { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; color: var(--ink-soft); margin-bottom: 2px; }
+.tld-ototal { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
+.tld-ostack { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--bg2); }
+.tld-oseg { display: block; min-width: 1px; }
