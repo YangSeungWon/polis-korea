@@ -32,9 +32,9 @@
   function sidoName(props) { return norm(props.name || props.SIDO || SIDO_CODE2[String(props.code2)] || ''); }
 
   // 회차별 시도 경계 — 세종(2012)·울산(1997)·대전(1989) 신설 등 시점 반영(sido_{year}). 없으면 현대 sido_simple.
-  const SIDO_YEARS = new Set([1975, 1985, 1987, 1990, 1995, 2000, 2002, 2006, 2010, 2013]);
+  const SIDO_YEARS = new Set([1975, 1985, 1987, 1990, 1995, 2000, 2002, 2006, 2010, 2013, 2026]);
   const PRES_SIDO_YEAR = { 13: 1987, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013 };  // 19~21=현대
-  const LOCAL_SIDO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010 };                  // 6~9=현대
+  const LOCAL_SIDO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010, 9: 2026 };          // 6~8=현대, 9=전남광주 통합
   function sidoGeoFile(n, kind) {
     let y;
     if (kind === 'presidential') y = PRES_SIDO_YEAR[n];
