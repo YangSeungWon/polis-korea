@@ -110,8 +110,8 @@
       PollAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령' })
         .forEach((c) => { pm[csn(c.sido)] = (c.candidates[0] || {}).party; });
       cs.forEach((c) => { am[csn(c.sido)] = (c.candidates[0] || {}).party; });
-      for (const k in am) { if (pm[k] && am[k]) { t++; if (pm[k] === am[k]) m++; } }
-      missOf = (sido) => { const k = csn(sido), pp = pm[k], ap = am[k]; return (pp && ap && pp !== ap) ? partyColor(pp) : null; };
+      for (const k in am) { if (pm[k] && am[k]) { t++; if (samePartyName(pm[k], am[k])) m++; } }   // 약칭/정식명 차 흡수
+      missOf = (sido) => { const k = csn(sido), pp = pm[k], ap = am[k]; return (pp && ap && !samePartyName(pp, ap)) ? partyColor(pp) : null; };
     }
     // 시도 클릭 → 지선 detail 패널 재사용(그 시도 실제 결과). 대선 폴은 전국이라 실제 위주.
     const pickSido = (sido) => {

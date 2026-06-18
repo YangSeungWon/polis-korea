@@ -17,7 +17,8 @@ function renderHex() {
     missOf: state.mode === 'result' ? (sido) => {
       const poll = PollAdapter.localSidoWinner(state.data.polls, sido, state.office, merge);
       const actual = regionSidoWinner(sido, state.office);
-      return (poll && actual && poll.party && actual.party && poll.party !== actual.party)
+      // 같은 정당이면 약칭/정식명 표기차('민주당' vs '더불어민주당')라도 빗나감 아님.
+      return (poll && actual && poll.party && actual.party && !samePartyName(poll.party, actual.party))
         ? partyColor(poll.party) : null;
     } : null,
     onSelect: (sido) => { state.selectedSido = sido; state.selectedSigungu = null; renderHex(); renderDetail(); },
@@ -69,7 +70,8 @@ async function renderSigunguHex() {
       missOf: (state.mode === 'result' && isSigunguMode()) ? (sido, name) => {
         const poll = PollAdapter.localSigunguWinner(state.data.polls, sido, name, state.office);
         const actual = regionSigunguWinner(sido, name, state.office);
-        return (poll && actual && poll.party && actual.party && poll.party !== actual.party)
+        // 같은 정당이면 약칭/정식명 표기차('민주당' vs '더불어민주당')라도 빗나감 아님(예: 당진 김기재).
+        return (poll && actual && poll.party && actual.party && !samePartyName(poll.party, actual.party))
           ? partyColor(poll.party) : null;
       } : null,
       tooltipOf: (sido, name, w) => (w

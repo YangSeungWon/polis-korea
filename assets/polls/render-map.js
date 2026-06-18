@@ -246,12 +246,12 @@ function missColorSido(sido, actual) {
   if (state.mode !== 'result' || !actual || !actual.party) return null;
   const merge = (typeof SIDO_MERGE !== 'undefined') ? SIDO_MERGE : null;
   const poll = PollAdapter.localSidoWinner(state.data.polls, sido, state.office, merge);
-  return (poll && poll.party && poll.party !== actual.party) ? partyColor(poll.party) : null;
+  return (poll && poll.party && !samePartyName(poll.party, actual.party)) ? partyColor(poll.party) : null;
 }
 function missColorSigungu(sido, name, actual) {
   if (state.mode !== 'result' || !actual || !actual.party) return null;
   const poll = PollAdapter.localSigunguWinner(state.data.polls, sido, name, state.office);
-  return (poll && poll.party && poll.party !== actual.party) ? partyColor(poll.party) : null;
+  return (poll && poll.party && !samePartyName(poll.party, actual.party)) ? partyColor(poll.party) : null;
 }
 
 function sidoStyle(feat) {

@@ -100,13 +100,13 @@
     const missed = (sido, name) => {   // 빗나가면 '여론조사 1위 정당색' 반환 → 점선 테두리색
       const p = gs.pollFn(sido, name), r = gs.resultFn(sido, name);
       const pt = p && p.candidates[0], rt = r && r.candidates[0];
-      return (pt && rt && pt.party !== rt.party) ? pc(pt.party) : null;
+      return (pt && rt && !samePartyName(pt.party, rt.party)) ? pc(pt.party) : null;  // 약칭/정식명 차는 빗나감 아님
     };
     for (const d of gs.layout) {
       const p = gs.pollFn(d.sido, d.name); if (!p) continue;
       polled++;
       const r = gs.resultFn(d.sido, d.name);
-      if (r && p.candidates[0] && r.candidates[0] && p.candidates[0].party === r.candidates[0].party) match++;
+      if (r && p.candidates[0] && r.candidates[0] && samePartyName(p.candidates[0].party, r.candidates[0].party)) match++;
     }
     const note = gs.dmode === 'polls'
       ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
@@ -150,7 +150,7 @@
     const chip = (c, lab) => c
       ? `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> <b style="color:${tc(c.party)};background:${pc(c.party)};padding:1px 6px;border-radius:3px">${c.name || c.party}</b> ${c.pct != null ? c.pct.toFixed(1) + '%' : ''}</span>`
       : `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> —</span>`;
-    const hit = pTop && rTop ? (pTop.party === rTop.party) : null;
+    const hit = pTop && rTop ? samePartyName(pTop.party, rTop.party) : null;
     el.innerHTML = `<div class="gdr-head">${sido} ${name}${hit === false ? ' <span class="gdr-miss">여론조사 빗나감</span>' : (hit ? ' <span class="gdr-ok">적중</span>' : '')}</div>`
       + chip(pTop, '여론조사') + chip(rTop, '실제');
   }

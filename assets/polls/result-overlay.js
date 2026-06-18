@@ -45,7 +45,7 @@
         const actual = maps.bySigungu[key];
         if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
         total++;
-        if (polls.party === actual.party) match++;
+        if (samePartyName(polls.party, actual.party)) match++;   // 약칭/정식명 차('민주당'='더불어민주당')는 적중
       }
     } else {
       if (!Object.keys(maps.bySido).length) return null;
@@ -54,7 +54,7 @@
         const actual = maps.bySido[`${sido}|${office}`];
         if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
         total++;
-        if (polls.party === actual.party) match++;
+        if (samePartyName(polls.party, actual.party)) match++;   // 약칭/정식명 차('민주당'='더불어민주당')는 적중
       }
     }
     return total ? { match, total } : null;

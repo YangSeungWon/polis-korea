@@ -226,6 +226,17 @@ function partyColor(party, date) {
   return PARTY_FALLBACK;
 }
 
+// 두 정당명이 같은 정당인지 — 약칭/정식명/시대 표기차 흡수. 예: 폴 데이터 '민주당' vs 실제결과 '더불어민주당'.
+//   이름 일치 또는 같은 시대색(period-aware partyColor)으로 판정. registry abbr가 시대별 동음('민주당'→
+//   더불어민주당·새천년민주당)이라 정적 매핑은 위험하나, missOf는 같은 회차 내 비교라 date 문맥색이면 안전.
+//   fallback 회색끼리(둘 다 미매칭)는 같다고 단정 안 함 — 진짜 다른 군소정당 오인 방지.
+function samePartyName(a, b, date) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const ca = partyColor(a, date), cb = partyColor(b, date);
+  return ca === cb && ca !== PARTY_FALLBACK;
+}
+
 // 글씨 색 — fill에 적합한 회색이 글씨로 쓰이면 흰 배경에서 잘 안 보임. 무소속 등 회색계만 더 진하게.
 const PARTY_TEXT_OVERRIDE = {
   '무소속': '#4a4a4a',
