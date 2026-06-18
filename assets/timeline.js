@@ -206,7 +206,71 @@ function loadJson(p) {
     root.appendChild(row);
   }
 
-  // 필터
+  // ── 상세 모드 — 대선/총선/지선 3열, 회차별 결과 카드(메인 상단 status 카드의 역대 나열판) ──
+  function detailCardBody(r) {
+    if (r.kind === 'presidential' && r.presCandidates?.length) {
+      const cs = r.presCandidates.slice(0, 5);
+      const max = Math.max(...cs.map((c) => c.pct || 0)) || 100;
+      const win = cs[0], wc = (typeof partyColor === 'function') ? partyColor(win.party, r.date) : '#999';
+      const bars = cs.map((c) => {
+        const col = partyColor(c.party, r.date);
+        return `<div class="tld-bar-row"><span class="tld-name">${c.name || c.party}</span>`
+          + `<span class="tld-bar"><span class="tld-bar-fill" style="width:${((c.pct || 0) / max * 100).toFixed(1)}%;background:${col}"></span></span>`
+          + `<span class="tld-pct">${(c.pct || 0).toFixed(1)}</span></div>`;
+      }).join('');
+      return `<div class="tld-win">${win.name || ''} <span class="tld-wtag" style="color:${wc};border-color:${wc}">${win.party}</span></div><div class="tld-bars">${bars}</div>`;
+    }
+    if (r.kind === 'national_assembly' && r.partySeats?.length) {
+      const total = r.partySeats.reduce((s, p) => s + (p[1] || 0), 0);
+      const parties = r.partySeats.map(([party, seats]) => ({ party, seats, color: partyColor(party, r.date) }));
+      const donut = (typeof renderParliamentChart === 'function') ? renderParliamentChart(parties, total, 220, 116) : '';
+      const leg = parties.slice(0, 4).map((p) => `<span style="color:${partyColor(p.party, r.date)}">■ ${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
+      return `<div class="tld-donut">${donut}</div><div class="tld-leg">${total}석 · ${leg}</div>`;
+    }
+    if (r.kind === 'local' && r.sidoWinners) {
+      const counter = {};
+      for (const s of Object.keys(r.sidoWinners)) { const w = r.sidoWinners[s]; if (w?.party) counter[w.party] = (counter[w.party] || 0) + 1; }
+      const ent = Object.entries(counter).sort((a, b) => b[1] - a[1]);
+      const max = Math.max(...ent.map((e) => e[1])) || 1;
+      const bars = ent.map(([party, n]) => {
+        const col = partyColor(party, r.date);
+        return `<div class="tld-bar-row"><span class="tld-name">${PARTY_SHORT[party] || party}</span>`
+          + `<span class="tld-bar"><span class="tld-bar-fill" style="width:${(n / max * 100).toFixed(0)}%;background:${col}"></span></span>`
+          + `<span class="tld-pct">${n}</span></div>`;
+      }).join('');
+      return `<div class="tld-sub">광역단체장 ${ent.reduce((s, e) => s + e[1], 0)}곳</div><div class="tld-bars">${bars}</div>`;
+    }
+    return '<div class="tld-empty">데이터 미수집</div>';
+  }
+  (function buildDetail() {
+    const host = $('#tl-detail');
+    if (!host) return;
+    const KINDS = [['presidential', '대선'], ['national_assembly', '총선'], ['local', '지선']];
+    let html = '<div class="tld-cols">';
+    for (const [kind, ko] of KINDS) {
+      const col = sorted.filter((r) => r.kind === kind && !r.upcoming);
+      html += `<div class="tld-col" data-kind="${kind}"><h3 class="tld-coltitle"><span class="tl-kind ${KIND_LABEL[kind].cls}">${ko}</span></h3>`;
+      for (const r of col) {
+        html += `<a class="tld-card" href="history.html?type=${TYPE_SLUG[kind]}&n=${r.n}">`
+          + `<div class="tld-head"><b>${r.n}${kind === 'local' ? '회' : '대'}</b> <span class="tld-date">${(r.date || '').slice(0, 7)}</span>${r.indirect ? ' <span class="tl-indirect">간선</span>' : ''}${r.annulled ? ' <span class="tl-annulled">무효</span>' : ''}</div>`
+          + `<div class="tld-body">${detailCardBody(r)}</div></a>`;
+      }
+      html += '</div>';
+    }
+    host.innerHTML = html + '</div>';
+  })();
+
+  // 모드 토글 (흐름↔상세)
+  document.querySelectorAll('[data-tlmode]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-tlmode]').forEach((b) => b.classList.toggle('is-active', b === btn));
+      const detail = btn.dataset.tlmode === 'detail';
+      $('#tl-table').hidden = detail;
+      $('#tl-detail').hidden = !detail;
+    });
+  });
+
+  // 필터 — 흐름(행 dim)·상세(열 숨김) 양쪽 적용
   document.querySelectorAll('[data-filter]').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-filter]').forEach((b) =>
@@ -215,6 +279,9 @@ function loadJson(p) {
       document.querySelectorAll('.tl-row').forEach((row) => {
         if (!row.dataset.kind) return;  // 헤더 row 무시
         row.classList.toggle('is-dimmed', f !== 'all' && row.dataset.kind !== f);
+      });
+      document.querySelectorAll('.tld-col').forEach((col) => {
+        col.classList.toggle('is-hidden', f !== 'all' && col.dataset.kind !== f);
       });
     });
   });

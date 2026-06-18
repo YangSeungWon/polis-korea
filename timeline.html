@@ -62,11 +62,16 @@
       <button class="seg-btn" data-filter="national_assembly">총선</button>
       <button class="seg-btn" data-filter="local">지선</button>
     </div>
+    <div class="seg" role="tablist" aria-label="표시 방식">
+      <button class="seg-btn is-active" data-tlmode="abstract">흐름</button>
+      <button class="seg-btn" data-tlmode="detail">상세</button>
+    </div>
   </section>
 
   <section class="tl-viz">
     <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
     <div id="tl-table" class="tl-table" hidden></div>
+    <div id="tl-detail" class="tl-detail" hidden></div><!-- 상세: 대선/총선/지선 3열 결과 카드 -->
   </section>
 
   <footer class="foot">
@@ -79,6 +84,7 @@
 
 <script src="assets/parties.js"></script>
 <script src="assets/utils.js"></script>
+<script src="assets/parliament.js"></script><!-- 상세 카드 의석 도넛 -->
 <script src="assets/timeline.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>

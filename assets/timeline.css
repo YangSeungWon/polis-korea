@@ -156,3 +156,28 @@
   .tl-right { font-size: 10px; }
   .tl-header-sidos { font-size: 7px; }
 }
+
+/* ── 상세 모드 — 대선/총선/지선 3열 결과 카드(메인 status 카드의 역대 나열판) ── */
+.tl-detail { margin-top: 8px; }
+.tld-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .tld-cols { grid-template-columns: 1fr; } }
+.tld-col.is-hidden { display: none; }
+.tld-coltitle { position: sticky; top: 0; z-index: 1; margin: 0 0 8px; padding: 6px 0; background: var(--bg); text-align: center; }
+.tld-card { display: block; border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; text-decoration: none; color: inherit; transition: border-color .12s, box-shadow .12s; }
+.tld-card:hover { border-color: var(--rule-strong); box-shadow: 0 2px 8px rgba(40, 40, 80, .08); }
+.tld-head { display: flex; align-items: baseline; gap: 6px; font-size: 13px; margin-bottom: 6px; }
+.tld-head b { font-size: 15px; }
+.tld-date { color: var(--ink-mute); font-size: 11px; font-variant-numeric: tabular-nums; }
+.tld-win { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.tld-wtag { font-size: 11px; font-weight: 600; border: 1px solid; border-radius: 3px; padding: 0 5px; margin-left: 2px; }
+.tld-bars { display: flex; flex-direction: column; gap: 3px; }
+.tld-bar-row { display: grid; grid-template-columns: 54px 1fr 32px; align-items: center; gap: 6px; font-size: 11px; }
+.tld-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-soft); }
+.tld-bar { height: 9px; background: var(--bg2); border-radius: 5px; overflow: hidden; }
+.tld-bar-fill { display: block; height: 100%; border-radius: 5px; }
+.tld-pct { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+.tld-donut { max-width: 240px; margin: 0 auto; }
+.tld-leg { font-size: 10px; color: var(--ink-soft); text-align: center; margin-top: 2px; line-height: 1.5; }
+.tld-leg span { white-space: nowrap; margin: 0 3px; }
+.tld-sub { font-size: 11px; color: var(--ink-mute); margin-bottom: 4px; }
+.tld-empty { font-size: 11px; color: var(--ink-mute); padding: 8px 0; text-align: center; }
