@@ -34,6 +34,39 @@ if NEC_ROSTER_PATH.exists():
     except Exception:
         _NEC_ROSTER = {}
 
+# 정당 단일출처 registry.json — 당내 경선/적합도 판정에 쓸 '전 시대' 정당명(정식명+약칭).
+#   하드코딩 모던 목록은 옛 정당(자유한국당·바른미래당·민주평화당 등)을 놓쳐 7·8회 당내 경선표가
+#   본선으로 새던 원인. registry에서 로드해 회차 무관 자동 커버. 긴 이름 먼저(약칭 substring 중복 방지).
+REGISTRY_PATH = ROOT / "data" / "parties" / "registry.json"
+_PARTY_NAMES: list[str] = []
+def _party_names() -> list[str]:
+    global _PARTY_NAMES
+    if _PARTY_NAMES:
+        return _PARTY_NAMES
+    names: set[str] = set()
+    try:
+        reg = json.load(open(REGISTRY_PATH, encoding="utf-8")).get("parties", {})
+        for full, e in reg.items():
+            names.add(full)
+            if isinstance(e, dict) and e.get("abbr"):
+                names.add(e["abbr"])
+    except Exception:
+        pass
+    names.discard("무소속")
+    _PARTY_NAMES = sorted((n for n in names if n), key=len, reverse=True)
+    return _PARTY_NAMES
+
+def _distinct_parties_in_title(title: str) -> int:
+    """제목에 등장하는 '서로 다른' 정당 수. 긴 이름부터 매칭·제거 → '더불어민주당'이 '민주당'으로 중복 카운트되지 않음."""
+    if not title:
+        return 0
+    t, found = title, 0
+    for nm in _party_names():
+        if nm in t:
+            found += 1
+            t = t.replace(nm, " ")
+    return found
+
 # 2026 지선 통합 광역시도 alias — roster 후보 sd="광주광역시"·"전라남도"이면
 # "전남광주특별시|name" 키로 사본 추가. parse_region이 통합 region을 통합 sido로
 # 반환했을 때 NEC roster lookup이 매치되도록.
@@ -459,22 +492,20 @@ def build() -> dict:
             # 판별: title에 정당명이 정확히 1개 + (후보|적합|경선|단일화). 일반 폴은 정당명이
             # 0개("○○시장 후보 지지도")거나 여러 개(후보별 정당 나열)라 유지됨.
             if metric_type in ("후보지지", "당선가능성", "적합도"):
-                _np = sum(1 for pn in ("더불어민주당", "국민의힘", "조국혁신당", "개혁신당",
-                                       "진보당", "정의당", "기본소득당", "새로운미래", "사회민주당")
-                          if pn in title)
+                # 정당명은 registry(전 시대) 단일출처에서 — 옛 자유한국당·바른미래당 등도 잡힘.
+                _np = _distinct_parties_in_title(title)
                 if (re.search(r"적합|경선|단일화", title) and _np >= 1) or \
                    (_np == 1 and "후보" in title):
                     continue
                 # title이 일반적이어도 후보들의 정당 분포로 적합도/경선 판정:
-                # 메이저 정당(더민주·국힘·조국혁신·진보·개혁신·정의)에 4+ 후보면 본선 아닌
-                # 정당 내부 적합도/경선 race (예: 18068 안산 더민주 5명, 18040 여수 더민주 6명,
-                # 17967 군산 더민주 6명). 3명은 본선 다자 가능성 있어 keep.
-                # 무소속은 다자 본선에 흔하므로 카운트 제외.
-                _MAJOR = {"더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "진보당",
-                          "정의당", "민주당"}
+                # 한 정당에 4+ 후보면 본선 다자대결 아닌 정당 내부 적합도/경선 race
+                # (예: 18068 안산 더민주 5명, 18040 여수 더민주 6명, 17967 군산 더민주 6명).
+                # 3명은 본선 다자 가능성 있어 keep. 무소속은 본선에 흔하므로 제외.
+                # registry 등록 정당만(파싱 노이즈 정당 문자열 배제) — 회차 무관.
+                _real = set(_party_names())
                 from collections import Counter as _Cnt
-                _pc = _Cnt(c.get("party","") for c in cands
-                           if c.get("party") and c.get("party") in _MAJOR)
+                _pc = _Cnt(c.get("party", "") for c in cands
+                           if c.get("party") and c.get("party") != "무소속" and c.get("party") in _real)
                 if any(v >= 4 for v in _pc.values()):
                     continue
             # 가상 양자대결·맞대결 (시나리오 카드) → 헤드라인 아님. 다자대결·적합도·지지는 유지.
