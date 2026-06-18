@@ -277,7 +277,7 @@ function loadJson(p) {
   }
   // ── 상세 = 실제 시간축 그리드 — 3열(대선/총선/지선), 카드를 날짜 y에 절대배치. 같은 연도면 가로 정렬,
   //    같은 해라도 월 따라 살짝 다르게. 카드 높이 가변이라 겹치면 reflowDetail()이 아래로만 밀어 해소. ──
-  const PX_PER_YEAR = 42;
+  const PX_PER_YEAR = 60;
   const YEAR_MS = 365.25 * 864e5;
   const TOP_PAD = 40;
   const detRounds = sorted.filter((r) => !r.upcoming && isFinite(Date.parse(r.date)));
@@ -293,9 +293,10 @@ function loadJson(p) {
     const H = yOf(detMin) + 230;
     const yrMax = new Date(_detMax).getFullYear(), yrMin = new Date(detMin).getFullYear();
     let axis = '';
-    for (let y = Math.floor(yrMax / 5) * 5; y >= yrMin; y -= 5) {
-      const yy = yOf(Date.parse(y + '-07-01')).toFixed(0);
-      axis += `<div class="tld-axline" style="top:${yy}px"></div><div class="tld-axyr" style="top:${yy}px">${y}</div>`;
+    for (let y = yrMax; y >= yrMin; y -= 1) {            // 1년 단위 — 10년 경계는 굵게(is-decade)
+      const yy = yOf(Date.parse(y + '-01-01')).toFixed(0);
+      const dec = (y % 10 === 0) ? ' is-decade' : '';
+      axis += `<div class="tld-axline${dec}" style="top:${yy}px"></div><div class="tld-axyr${dec}" style="top:${yy}px">${y}</div>`;
     }
     const KINDS = [['presidential', '대선'], ['national_assembly', '총선'], ['local', '지선']];
     let cols = '';
