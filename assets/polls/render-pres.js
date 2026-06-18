@@ -18,7 +18,9 @@
     const svg = buildPartyTrendSVG(polls, {
       keyBy: 'candidate', showBand: true, minPts: 5, topN: 6,
       actual, electionTs: isFinite(electionTs) ? electionTs : null,
-      w: 720, h: 300,
+      // 글씨 크기를 '선거 무렵 분위기'(climate, viewBox w=380 기준)와 통일 — viewBox 폭을 줄이면
+      // 같은 font-size가 차트 대비 더 커짐(width:100% 스케일이라 화면 점유 크기는 그대로). 와이드 비율 유지.
+      w: 600, h: 290,
     });
     host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="pres-trend-sub">전국 여론조사(본선 구도) · ◆ 선거일 실제 득표</span></h3>`
       + `<div class="pres-trend-chart">${svg}</div>`;
