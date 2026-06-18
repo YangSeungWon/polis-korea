@@ -116,7 +116,14 @@
       state.selectedSido = sido; state.selectedSigungu = null; state.office = '대통령';
       if (window.renderDetail) window.renderDetail();
     };
-    sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: pickSido, missOf });
+    if (ps.viewmode === 'map') {
+      // 지도 — 시도별 1위 격차명도 코로플레스(flat 단색 아님). missOf 점선은 geo 미지원(후속).
+      const SM = window.Archive && window.Archive.sidoMap;
+      if (SM && SM.draw) SM.draw(h, cs, { margin: true, onSelect: pickSido });
+      else sp.drawDorling(h, cs, { legend, onSelect: pickSido, missOf });
+    } else {
+      sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: pickSido, missOf });
+    }
     if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
     renderDetail();
   }
@@ -145,20 +152,26 @@
         <button class="seg-btn${ps.mode === 'polls' ? ' is-active' : ''}" data-pmode="polls">여론조사</button>
         <button class="seg-btn${ps.mode === 'result' ? ' is-active' : ''}" data-pmode="result">실제 결과</button>
       </div>
-      <div class="seg" role="tablist" aria-label="방식">
-        <button class="seg-btn is-active" data-pview="dorling">원형</button>
-        <button class="seg-btn" data-pview="grid">격자</button>
-      </div>`;
+      <div class="pres-view-enc"></div>`;
     controls.querySelectorAll('[data-pmode]').forEach((b) => b.addEventListener('click', () => {
       ps.mode = b.dataset.pmode;
       controls.querySelectorAll('[data-pmode]').forEach((x) => x.classList.toggle('is-active', x === b));
       render();
     }));
-    controls.querySelectorAll('[data-pview]').forEach((b) => b.addEventListener('click', () => {
-      ps.viewmode = b.dataset.pview;
-      controls.querySelectorAll('[data-pview]').forEach((x) => x.classList.toggle('is-active', x === b));
-      render();
-    }));
+    // 방식 — 표비례(원형·격자) + 1위(지도 격차명도). 공용 EncodingToggle, 없으면 폴백 seg.
+    const encHost = controls.querySelector('.pres-view-enc');
+    const VIEW_OPTS = [{ key: 'dorling', label: '원형' }, { key: 'grid', label: '격자' }, { key: 'map', label: '지도' }];
+    if (window.EncodingToggle) {
+      window.EncodingToggle.render(encHost, { options: VIEW_OPTS, active: ps.viewmode, onSelect: (v) => { ps.viewmode = v; render(); } });
+    } else {
+      encHost.className = 'seg'; encHost.setAttribute('role', 'tablist'); encHost.setAttribute('aria-label', '방식');
+      encHost.innerHTML = VIEW_OPTS.map((o) => `<button class="seg-btn${o.key === ps.viewmode ? ' is-active' : ''}" data-pview="${o.key}">${o.label}</button>`).join('');
+      encHost.querySelectorAll('[data-pview]').forEach((b) => b.addEventListener('click', () => {
+        ps.viewmode = b.dataset.pview;
+        encHost.querySelectorAll('[data-pview]').forEach((x) => x.classList.toggle('is-active', x === b));
+        render();
+      }));
+    }
   }
 
   // main.js init()에서 호출 — 대선이면 인계받아 true, 아니면 false.

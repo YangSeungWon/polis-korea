@@ -490,7 +490,7 @@
       if (!sec) {
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
         sec.innerHTML = '<h2 class="ar-section-title">시·군·구 1위 후보</h2>'
-          + '<p class="ar-source-line">1위 후보 정당색. 단색=격차 명도, 격자·원형=표(인구) 비례.</p>'
+          + '<p class="ar-source-line">1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.</p>'
           + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
       }
@@ -501,13 +501,27 @@
     const area = mapHost.querySelector('.sgg-map-area');
     const leg = mapHost.querySelector('.sgg-result-legend');
     const CART = window.Archive && window.Archive.drawSigunguCartogram;
-    // [내부키, 표시라벨] — 키는 redraw/CART 디스패치용('dorling'), 라벨은 방식 seg 통일('원형').
-    // 의미(격차 명도·표 비례)는 source-line·legend note가 설명.
-    const MODES = [['단색', '단색'], ['격자', '격자'], ['dorling', '원형']].filter(([k]) => k === '단색' || CART);
+    // 지도(geo 코로플레스) — 대선 시군구만(격차명도, flat 단색 아님). 회차별 경계 연도 있을 때.
+    const SGM = window.Archive && window.Archive.sigunguMap;
+    const sggYear = SGM ? SGM.geoYear(ctx?.meta?.electionN, ctx?.meta?.electionKind) : undefined;
+    const GEO = !!(SGM && sggYear != null);
+    // [내부키, 표시라벨] — 키는 redraw/CART 디스패치용('dorling'·'geo'), 라벨은 방식 seg 통일('원형'·'지도').
+    // 가족: 1위[단색·지도(격차명도)] ┊ 표 비례[격자·원형]. 의미는 source-line·legend가 설명.
+    const MODES = [
+      ['단색', '단색'],
+      ...(GEO ? [['geo', '지도']] : []),
+      ...(CART ? [['격자', '격자'], ['dorling', '원형']] : []),
+    ];
     let mode = '단색';
-    function redraw() {
-      // 호스트 단위 줌 보존 — 단색↔격자↔원형 교차에 region(시도|시군구) 앵커(좌표계 달라도 같은 키).
+    async function redraw() {
+      // 호스트 단위 줌 보존 — 단색↔지도↔격자↔원형 교차에 region(시도|시군구) 앵커(좌표계 달라도 같은 키).
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
+      if (mode === 'geo') {
+        const meta = await SGM.draw(area, { year: sggYear, lookup: (s, n) => lookupKey(rmap, s, n), onSelect });
+        const svgEl = area.querySelector('svg');
+        if (window.SvgViewport && svgEl && meta && meta.cells) window.SvgViewport.applyHost(area, svgEl, { cells: meta.cells }, keep);
+        return;
+      }
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
       let meta;
       if (mode === '단색' || !CART) { svg.setAttribute('class', 'council-hex-svg result-map'); meta = renderResult(svg, hexCells, rmap, onSelect); }

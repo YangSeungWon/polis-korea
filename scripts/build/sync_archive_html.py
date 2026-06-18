@@ -436,6 +436,7 @@ FOOT = """
 <script src="assets/archive/local.js"></script>
 <script src="assets/archive/render-governor-hex.js"></script>
 <script src="assets/archive/render-sido-map.js"></script>
+<script src="assets/archive/render-sigungu-map.js"></script><!-- 시군구 지리 코로플레스(대선 시군구 명도 geo) -->
 <script src="assets/archive/render-sido-prop.js"></script>
 <script src="assets/archive/render-sido-view.js"></script>
 <script src="assets/archive/render-metro-hex.js"></script>

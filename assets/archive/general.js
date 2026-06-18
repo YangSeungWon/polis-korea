@@ -174,10 +174,13 @@
         + '<div class="ar-prop-map-toggle"></div>';
       sec.appendChild(host);
     }
+    const SM = window.Archive.sidoMap;
     const modes = [
       { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, sidoRaces, {}) },
       { key: 'dorling', label: '원형', draw: (el) => SP.drawDorling(el, sidoRaces, {}) },
     ];
+    // 지도 — 시도별 선두 정당 격차명도 코로플레스(대선 시도와 동형, flat 단색 아님). 격자 default 유지차 뒤에.
+    if (SM?.draw) modes.push({ key: 'map', label: '지도', draw: (el) => SM.draw(el, sidoRaces, { margin: true }) });
     if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
     else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});
   }

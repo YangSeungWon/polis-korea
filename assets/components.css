@@ -171,6 +171,14 @@
 .view-toggle .seg-btn.is-active svg { opacity: 1; }
 .detail-pane { flex: 0 0 420px; }
 
+/* 지리 코로플레스 (시도·시군구) — sidoMap/sigunguMap SVG. 폴·아카이브 공용(이전 archive.css). */
+.sido-map-svg, .sigungu-map-svg { width: 100%; height: auto; max-width: 540px; display: block; margin: 0 auto; }
+.sido-map-region { stroke: var(--bg); stroke-width: 0.8; }
+.sido-map-region.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
+.sigungu-map-region { stroke: var(--bg); stroke-width: 0.4; }
+.sigungu-map-region.no-data { fill: var(--bg2); stroke: var(--rule); stroke-width: 0.3; }
+.sigungu-map-region.is-selected { stroke: var(--ink); stroke-width: 1.4; paint-order: stroke; }
+
 .loading-overlay {
   position: absolute; inset: 0;
   background: var(--bg);

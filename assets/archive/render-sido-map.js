@@ -78,10 +78,12 @@
     const geo = await loadGeo();
     if (!geo || !geo.features) { host.parentElement?.setAttribute('hidden', ''); return; }
 
+    // 득표 점수 — 원시 race(votes) / 어댑터 cell(share=votes|pct) / 폴(pct) 모두 호환.
+    const score = (c) => (c.votes != null ? c.votes : (c.share != null ? c.share : (c.pct || 0)));
     const bySido = {};
     for (const r of races) {
-      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct, gap: cs[1] ? cs[0].pct - cs[1].pct : null };
+      const cs = (r.candidates || []).slice().sort((a, b) => score(b) - score(a));
+      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct, gap: cs[1] ? (cs[0].pct || 0) - (cs[1].pct || 0) : null };
     }
     // 전남광주 통합(2026) — geo는 광주·전남 분리 폴리곤이라 병합 못 함 → 두 폴리곤에 통합 결과 칠함.
     const mergedHonam = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
