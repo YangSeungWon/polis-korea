@@ -61,9 +61,19 @@
     if (sc) sc.removeAttribute('hidden');
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
     const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
-    const renderParty = (p, side) => {
+    // 연한 정당색(정의당 노랑 등)은 글씨로 안 보임 → 색 배경 pill + 대비 글씨. 어두운 색은 글씨색(무소속 등 partyTextColor 보정).
+    const segStyle = (party) => {
+      const col = pcol(party);
+      if (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff')
+        return `background:${col};color:${pickTextColor(col)};padding:0 5px;border-radius:6px`;
+      return `color:${(typeof partyTextColor === 'function') ? partyTextColor(party) : col}`;
+    };
+    const renderParty = (p) => {
       const col = pcol(p);
-      return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${p}</span>`;
+      const light = (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff');
+      return light
+        ? `<span class="ar-sc-pname" style="background:${col};color:${pickTextColor(col)};padding:0 6px;border-radius:7px">${p}</span>`
+        : `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${p}</span>`;
     };
     setHTML('ar-sc-p1', renderParty(p1, 'l'));
     if (p2) setHTML('ar-sc-p2', renderParty(p2, 'r'));
@@ -80,10 +90,8 @@
       const otherEl = document.getElementById(`ar-sc-${tc}-other`);
       if (otherEl) {
         if (otherTotal > 0) {
-          const breakdown = others.map(([party, n]) => {
-            const col = pcol(party);
-            return `<span class="ar-sc-oseg" style="color:${col}">${party} ${n.toLocaleString()}</span>`;
-          }).join(' · ');
+          const breakdown = others.map(([party, n]) =>
+            `<span class="ar-sc-oseg" style="${segStyle(party)}">${party} ${n.toLocaleString()}</span>`).join(' · ');
           otherEl.innerHTML = `기타 ${otherTotal.toLocaleString()} (${breakdown})`;
           otherEl.removeAttribute('hidden');
         } else {
