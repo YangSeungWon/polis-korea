@@ -36,6 +36,7 @@ VIEW_DEFS = [
     ("result-map", "result", "시군구 결과", "1위 후보·격차 명도"),
     ("cartogram-map", "sgg-prop", "시군구 비례", "표(인구) 비례 격자·원형"),
     ("sigungu-map", "sgg-geo", "시군구 지도", "시군구 경계·격차 명도"),
+    ("sido-winner-hex", "sido1", "시도 1위", "시도별 1위·격차 명도"),  # governor-hex 클래스 공유 → 먼저
     ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
     ("council-hex", "council", "광역의원", "시도별 의석"),
     ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),

@@ -179,7 +179,8 @@
       { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, sidoRaces, {}) },
       { key: 'dorling', label: '원형', draw: (el) => SP.drawDorling(el, sidoRaces, {}) },
     ];
-    // 지도 — 시도별 선두 정당 격차명도 코로플레스(대선 시도와 동형, flat 단색 아님). 격자 default 유지차 뒤에.
+    // 균등(시도 1위 hex 격차명도)·지도(geo) — 선두 정당. 대선 시도와 동형(1위 가족). 격자 default 유지차 뒤에.
+    if (SV?.drawSidoWinnerHex) modes.push({ key: 'hex', label: '균등', draw: (el) => SV.drawSidoWinnerHex(el, sidoRaces) });
     if (SM?.draw) modes.push({ key: 'map', label: '지도', draw: (el) => SM.draw(el, sidoRaces, { margin: true }) });
     if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
     else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});

@@ -57,13 +57,34 @@
     el.appendChild(leg);
   }
 
+  // 시도 1위 hex (격차명도) — 대선 1위·총선 비례 선두. governorHex 재사용(winnerOf+opacityOf).
+  //   마커 클래스 sido-winner-hex → OG/공유 키 'sido1'(지선 governor와 구분, 라벨 '시도 1위').
+  function drawSidoWinnerHex(el, races) {
+    const A = window.Archive || {};
+    if (!A.governorHex || !A.governorHex.draw) return;
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const byS = {};
+    for (const r of races || []) {
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      if (cs[0]) byS[canon(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct, gap: cs[1] ? (cs[0].pct || 0) - (cs[1].pct || 0) : null };
+    }
+    A.governorHex.draw(el, [], {
+      hideEmpty: true,
+      winnerOf: (s) => byS[s] || null,
+      opacityOf: (w) => (typeof gapOpacity === 'function' ? gapOpacity(w.gap) : 1),
+    });
+    const svg = el.querySelector('svg');
+    if (svg) svg.classList.add('sido-winner-hex');
+  }
+
   // tc별 모드 정의: {key, label, draw(viewEl, races)}
   function modesFor(tc, A) {
     if (tc === '1') {
-      // 대선 시도 — 표비례(격자/원형) 기본. 지도는 격차명도 코로플레스(flat 단색 아님). 격자 default 유지차 뒤에.
+      // 대선 시도 — 표비례(격자/원형) 기본. 균등(1위 hex 격차명도)·지도(geo 격차명도)는 1위 가족. 격자 default차 뒤에.
       return [
         { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
         { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
+        { key: 'hex', label: '균등', draw: (el, rs) => drawSidoWinnerHex(el, rs) },
         { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { margin: true }) },
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
       ];
@@ -167,7 +188,7 @@
 
   window.Archive = window.Archive || {};
   // drawTurnout 노출 — 총선(general.js)은 선거구를 시도로 합산한 pseudo-race[{sido,electors,voters}]로 호출.
-  window.Archive.sidoView = { init, mount, drawTurnout: (el, races) => drawTurnout(el, races, window.Archive) };
+  window.Archive.sidoView = { init, mount, drawTurnout: (el, races) => drawTurnout(el, races, window.Archive), drawSidoWinnerHex };
   // 투표율 색 스케일 공유 — 시군구 투표율 맵(render-council-hex)도 동일 절대 스케일 사용.
   window.Archive.turnout = { color: turnoutColor, stops: TURNOUT_STOPS };
 })();
