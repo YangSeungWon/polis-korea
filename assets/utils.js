@@ -269,8 +269,16 @@ function partyStackBar(counts, total) {
 // '+' 접두·한 덩어리 tail 없음 → flex-wrap 컨테이너에서 머리 뒤로 자연스레 흐르고 칩 단위로 줄바꿈.
 function partyStackLegend(counts, top = 2) {
   const sorted = counts.slice().sort((a, b) => b[1] - a[1]);
-  const chip = ([p, c], cls) =>
-    `<span class="sleg ${cls}" style="color:${partyColor(p)}"><b>${c}</b> ${p}</span>`;
+  const ptc = (typeof partyTextColor === 'function') ? partyTextColor : partyColor;
+  const chip = ([p, c], cls) => {
+    const col = partyColor(p);
+    // 밝은 정당색(정의당 노랑 등)은 글씨로 흰 배경에서 안 보임 → 색 배경 pill + 대비 글씨(검정).
+    //   pickTextColor가 검정을 주면 = 그 색이 밝다는 뜻. 어두운 색은 글씨색 그대로(무소속 등은 partyTextColor가 진하게).
+    if (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff') {
+      return `<span class="sleg sleg-pill ${cls}" style="background:${col};color:${pickTextColor(col)}"><b>${c}</b> ${p}</span>`;
+    }
+    return `<span class="sleg ${cls}" style="color:${ptc(p)}"><b>${c}</b> ${p}</span>`;
+  };
   return sorted.map((e, i) => chip(e, i < top ? '' : 'sleg-sub')).join(' ');
 }
 

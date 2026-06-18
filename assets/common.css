@@ -304,6 +304,9 @@ body {
 .sbar-seg-n { padding: 0 4px; }
 .sleg { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sleg b { font-weight: 800; margin-right: 2px; }
+/* 밝은 정당색(노랑 등)은 글씨 대신 색 배경 pill — 검정 글씨로 또렷하게. */
+.sleg-pill { padding: 0 6px; border-radius: 7px; }
+.sleg-pill.sleg-sub { padding: 0 5px; }
 /* 소수정당 칩 — 머리(1·2위)와 같은 줄흐름, 작게. 정당색은 inline. */
 .sleg-sub { font-size: 10px; opacity: .82; }
 .sleg-sub b { font-weight: 700; }
