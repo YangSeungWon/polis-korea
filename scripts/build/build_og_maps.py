@@ -194,12 +194,13 @@ def main():
                 pg.wait_for_timeout(2200)
                 # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
                 #   저장버튼은 display:none. 인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
-                #   시도·시군구명 라벨은 썸네일·카드서 안 읽히는 잡음 → 캡처서 숨김(제목은 카드 헤드라인).
+                #   지도·차트 내 모든 텍스트 라벨(시도·시군구명·후보명·득표율)은 썸네일·카드서 안 읽히는
+                #   잡음 → 캡처서 전부 숨김. 캡처 대상은 전부 색지도/반원이라 텍스트 불필요(추이 라인차트는
+                #   캡처 안 됨). 제목·날짜는 카드 헤드라인(HTML)이 따로 표시.
                 pg.add_style_tag(content=(
                     ".svg-save-btn{display:none!important}"
                     ".ar-sido-toggle,.sgg-mode-toggle{opacity:0!important}"
-                    ".gov-hex-label,.hist-sido-edge-label,.hist-sigungu-label,"
-                    ".sido-map-label,.metro-hex-label,.council-hex-sido-label{display:none!important}"
+                    "svg text{display:none!important}"
                 ))
                 title = (pg.text_content("#ar-title") or "").strip() if pg.query_selector("#ar-title") else ""
                 date_s = (pg.text_content("#ar-date") or "").strip() if pg.query_selector("#ar-date") else ""
