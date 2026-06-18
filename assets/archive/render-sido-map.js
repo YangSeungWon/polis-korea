@@ -70,15 +70,18 @@
     return best ? ringCentroid(best) : null;
   }
 
-  async function draw(host, races) {
+  // opts.margin: 승자색에 격차명도(gapOpacity) 적용 — 대선 시도(승자독식 단색 거부, [[no_winner_take_all_pres]]).
+  //   flat 단색은 광역장(실제 1명 당선)만; 대선은 명도로 박빙/압승 구분해 영토적 오독 완화.
+  async function draw(host, races, opts) {
     if (!host) return;
+    const margin = !!(opts && opts.margin);
     const geo = await loadGeo();
     if (!geo || !geo.features) { host.parentElement?.setAttribute('hidden', ''); return; }
 
     const bySido = {};
     for (const r of races) {
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct };
+      if (cs[0]) bySido[norm(r.sido)] = { name: cs[0].name, party: cs[0].party, pct: cs[0].pct, gap: cs[1] ? cs[0].pct - cs[1].pct : null };
     }
     // 전남광주 통합(2026) — geo는 광주·전남 분리 폴리곤이라 병합 못 함 → 두 폴리곤에 통합 결과 칠함.
     const mergedHonam = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
@@ -111,6 +114,8 @@
       path.setAttribute('fill-rule', 'evenodd');
       if (win) {
         path.setAttribute('fill', (typeof partyColor === 'function') ? partyColor(win.party) : '#888');
+        // 대선: 격차명도 (gapOpacity = 박빙 0.55 ~ 압도 0.95). 광역장: flat(명도 없음).
+        if (margin) path.setAttribute('fill-opacity', ((typeof gapOpacity === 'function') ? gapOpacity(win.gap) : 1).toFixed(3));
         path.setAttribute('class', 'sido-map-region has-data');
       } else {
         path.setAttribute('class', 'sido-map-region no-data');

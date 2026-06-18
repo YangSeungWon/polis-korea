@@ -60,9 +60,11 @@
   // tc별 모드 정의: {key, label, draw(viewEl, races)}
   function modesFor(tc, A) {
     if (tc === '1') {
+      // 대선 시도 — 표비례(격자/원형) 기본. 지도는 격차명도 코로플레스(flat 단색 아님). 격자 default 유지차 뒤에.
       return [
         { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
         { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
+        { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { margin: true }) },
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
       ];
     }
