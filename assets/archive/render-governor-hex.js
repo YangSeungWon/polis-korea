@@ -65,6 +65,9 @@
       const cy = OFF_Y + pos.row * ROW_H * 0.87;
       cells.push({ sido, pos, cx, cy, label: pos.label, win });
     }
+    // 좌우 대칭 여백 — 레이아웃 좌단 셀이 0보다 한참 오른쪽이라 viewBox 왼쪽을 0으로 두면 우측 치우침.
+    // 실제 셀 x범위에 R+20 대칭 여백(sidoCluster와 동일 정렬). 세로는 위 토글 여유 위해 0부터.
+    const minCx = Math.min(...cells.map((c) => c.cx)) - R - 20;
     const maxCx = Math.max(...cells.map((c) => c.cx)) + R + 20;
     const maxCy = Math.max(...cells.map((c) => c.cy)) + R + 20;
 
@@ -73,7 +76,7 @@
     let svg;
     if (isSvgHost) { svg = host; svg.innerHTML = ''; }
     else { svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'governor-hex-svg'); }
-    svg.setAttribute('viewBox', `0 0 ${maxCx} ${maxCy}`);
+    svg.setAttribute('viewBox', `${minCx} 0 ${maxCx - minCx} ${maxCy}`);
 
     for (const cell of cells) {
       const g = document.createElementNS(NS, 'g');
@@ -165,7 +168,7 @@
     const nData = cells.filter((c) => c.win).length;
     if (cap && nData && !opts.winnerOf) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
     // 줌·포커스 인프라(svg-viewport)용 — 지역→셀중심 + base viewBox. 기존 호출자는 반환값 무시.
-    return { cells: cells.map((c) => ({ region: c.sido, cx: c.cx, cy: c.cy })), viewBox: [0, 0, maxCx, maxCy] };
+    return { cells: cells.map((c) => ({ region: c.sido, cx: c.cx, cy: c.cy })), viewBox: [minCx, 0, maxCx - minCx, maxCy] };
   }
 
   // opts: {tc='3'(광역단체장)|'1'(대선), hostId='ar-governor-hex'} — 단독 호출용(sidoView 없이).

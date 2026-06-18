@@ -775,7 +775,8 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 :has(> .ar-sido-toggle) { position: relative; }
 .ar-sido-toggle { position: absolute; top: 6px; right: 6px; z-index: 5; display: flex; flex-wrap: wrap;
   justify-content: flex-end; gap: 6px; margin: 0; }
-.ar-sido-view { width: 100%; }
+/* 인맵 토글(우상단 절대배치)이 지도 상단·캡션을 가리지 않게 위쪽 여유 — 토글 높이(~45)+여백 */
+.ar-sido-view { width: 100%; padding-top: 54px; }
 /* 투표율 뷰 범례 — 절대 스케일 바 + 이 선거 범위 */
 .ar-turnout-legend { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px auto 0; font-size: 11px; color: var(--ink-soft); flex-wrap: wrap; }
 .ar-turnout-bar { display: inline-block; width: 120px; height: 9px; border-radius: 5px; border: 1px solid var(--rule); }
