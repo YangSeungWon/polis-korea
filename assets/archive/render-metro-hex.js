@@ -13,8 +13,9 @@
       m.set(party, (m.get(party) || 0) + n);
       bySido.set(sd, m);
     }
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
     for (const r of races) {
-      const sd = r.sido || '';
+      const sd = canon(r.sido || '');   // 옛 강원도·전라북도 → 현 강원특별자치도·전북특별자치도(레이아웃 키와 일치)
       if (r.sg_typecode === '5') {
         if (r.scope === 'sido_summary') {
           for (const c of r.candidates || []) add(sd, c.party || '무소속', c.seats || 0);
