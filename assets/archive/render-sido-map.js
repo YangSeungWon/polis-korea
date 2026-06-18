@@ -5,11 +5,12 @@
   const NS = 'http://www.w3.org/2000/svg';
   const PAD = 10, W = 520;
 
-  // 강원/전북 특별자치도 ↔ GeoJSON 옛 명칭 정규화
+  // 특별자치도·옛 명칭 정규화 — 데이터(옛 '제주도'/'강원도')와 geojson(현대명·code2 변환명) 통일.
   function norm(n) {
     return (n || '')
       .replace('강원특별자치도', '강원도')
-      .replace('전북특별자치도', '전라북도');
+      .replace('전북특별자치도', '전라북도')
+      .replace('제주특별자치도', '제주도');
   }
   // 시도 약칭 (라벨용)
   function shortSido(n) {
@@ -20,13 +21,31 @@
       .replace('도', '').trim() || n;
   }
 
-  let GEO = null;
-  function loadGeo() {
-    if (GEO) return Promise.resolve(GEO);
-    return fetch('data/geo/sido_simple.json')
-      .then((r) => r.json())
-      .then((g) => (GEO = g))
-      .catch(() => null);
+  // 시도 2자리 코드 → 시도명 (period geojson은 code2만 있을 수 있음 — geomap.ts와 동기).
+  const SIDO_CODE2 = {
+    '11': '서울특별시', '21': '부산광역시', '22': '대구광역시', '23': '인천광역시',
+    '24': '광주광역시', '25': '대전광역시', '26': '울산광역시', '29': '세종특별자치시',
+    '31': '경기도', '32': '강원특별자치도', '33': '충청북도', '34': '충청남도',
+    '35': '전북특별자치도', '36': '전라남도', '37': '경상북도', '38': '경상남도', '39': '제주특별자치도',
+  };
+  // feature → 시도명 (name·SIDO·code2 어느 키든 흡수, norm으로 옛/특별자치 표기 통일).
+  function sidoName(props) { return norm(props.name || props.SIDO || SIDO_CODE2[String(props.code2)] || ''); }
+
+  // 회차별 시도 경계 — 세종(2012)·울산(1997)·대전(1989) 신설 등 시점 반영(sido_{year}). 없으면 현대 sido_simple.
+  const SIDO_YEARS = new Set([1975, 1985, 1987, 1990, 1995, 2000, 2002, 2006, 2010, 2013]);
+  const PRES_SIDO_YEAR = { 13: 1987, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013 };  // 19~21=현대
+  const LOCAL_SIDO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010 };                  // 6~9=현대
+  function sidoGeoFile(n, kind) {
+    let y;
+    if (kind === 'presidential') y = PRES_SIDO_YEAR[n];
+    else if (kind === 'local') y = LOCAL_SIDO_YEAR[n];
+    return (y && SIDO_YEARS.has(y)) ? `data/geo/sido_${y}.json` : 'data/geo/sido_simple.json';
+  }
+  const _geoCache = {};
+  function loadGeo(file) {
+    file = file || 'data/geo/sido_simple.json';
+    if (_geoCache[file]) return Promise.resolve(_geoCache[file]);
+    return fetch(file).then((r) => r.json()).then((g) => (_geoCache[file] = g)).catch(() => null);
   }
 
   function bbox(features) {
@@ -75,7 +94,7 @@
   async function draw(host, races, opts) {
     if (!host) return;
     const margin = !!(opts && opts.margin);
-    const geo = await loadGeo();
+    const geo = await loadGeo(sidoGeoFile(opts && opts.n, opts && opts.kind));   // 회차별 시도 경계(세종 등 시점)
     if (!geo || !geo.features) { host.parentElement?.setAttribute('hidden', ''); return; }
 
     // 득표 점수 — 원시 race(votes) / 어댑터 cell(share=votes|pct) / 폴(pct) 모두 호환.
@@ -109,7 +128,7 @@
 
     const labels = [];
     for (const f of feats) {
-      const name = norm(f.properties.name);
+      const name = sidoName(f.properties);   // name·SIDO·code2 어느 키든 흡수(period geojson은 code2만일 수 있음)
       const win = bySido[name];
       const path = document.createElementNS(NS, 'path');
       path.setAttribute('d', featPath(f.geometry));
@@ -124,12 +143,12 @@
       }
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = win
-        ? `${f.properties.name} · ${win.name}(${win.party}) ${(win.pct || 0).toFixed(1)}%`
-        : `${f.properties.name} · 데이터 없음`;
+        ? `${name} · ${win.name}(${win.party}) ${(win.pct || 0).toFixed(1)}%`
+        : `${name} · 데이터 없음`;
       path.appendChild(tt);
       svg.appendChild(path);
       const c = centroid(f.geometry);
-      if (c) labels.push({ sido: f.properties.name, cx: px(c[0]), cy: py(c[1]) });
+      if (c && name) labels.push({ sido: name, cx: px(c[0]), cy: py(c[1]) });
     }
     // 시도명 외곽 세로줄 라벨 (history 방식) — 중앙 centroid 라벨 대신.
     if (typeof drawSidoEdgeLabels === 'function') drawSidoEdgeLabels(svg, labels);

@@ -181,7 +181,7 @@
     ];
     // 균등(시도 1위 hex 격차명도)·지도(geo) — 선두 정당. 대선 시도와 동형(1위 가족). 격자 default 유지차 뒤에.
     if (SV?.drawSidoWinnerHex) modes.push({ key: 'hex', label: '균등', draw: (el) => SV.drawSidoWinnerHex(el, sidoRaces) });
-    if (SM?.draw) modes.push({ key: 'map', label: '지도', draw: (el) => SM.draw(el, sidoRaces, { margin: true }) });
+    if (SM?.draw) modes.push({ key: 'map', label: '지도', draw: (el) => SM.draw(el, sidoRaces, { margin: true, n: ctx?.meta?.electionN, kind: ctx?.meta?.electionKind }) });
     if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
     else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});
   }

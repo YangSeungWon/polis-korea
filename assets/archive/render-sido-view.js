@@ -77,21 +77,22 @@
     if (svg) svg.classList.add('sido-winner-hex');
   }
 
-  // tc별 모드 정의: {key, label, draw(viewEl, races)}
-  function modesFor(tc, A) {
+  // tc별 모드 정의: {key, label, draw(viewEl, races)}. geo = 회차별 시도 경계(meta.n/kind 전달).
+  function modesFor(tc, A, geo) {
+    geo = geo || {};
     if (tc === '1') {
       // 대선 시도 — 표비례(격자/원형) 기본. 균등(1위 hex 격차명도)·지도(geo 격차명도)는 1위 가족. 격자 default차 뒤에.
       return [
         { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
         { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
         { key: 'hex', label: '균등', draw: (el, rs) => drawSidoWinnerHex(el, rs) },
-        { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { margin: true }) },
+        { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { margin: true, n: geo.n, kind: geo.kind }) },
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
       ];
     }
     return [
       { key: 'hex', label: '균등', draw: (el, rs) => A.governorHex?.draw?.(el, rs) },
-      { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs) },
+      { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { n: geo.n, kind: geo.kind }) },
       { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
     ];
   }
@@ -180,7 +181,8 @@
     section?.removeAttribute('hidden');
 
     const hasTurnout = races.some((r) => (r.electors || 0) > 0 && (r.voters ?? r.voted ?? 0) > 0);
-    const modes = modesFor(tc, A)
+    const geo = { n: ctx?.meta?.electionN, kind: ctx?.meta?.electionKind };   // 회차별 시도 경계용
+    const modes = modesFor(tc, A, geo)
       .filter((m) => typeof m.draw === 'function')
       .filter((m) => m.key !== 'turnout' || hasTurnout);
     mount(host, modes, races);
