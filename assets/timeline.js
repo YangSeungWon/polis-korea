@@ -153,9 +153,10 @@ function loadJson(p) {
         seg.style.flexGrow = String(p.value);
         seg.style.background = col;
         seg.title = `${p.party} ${p.label}`;
-        // 당명은 축약하지 않고 풀네임. 좁으면 overflow:hidden로 자연 클립(약칭 X).
-        const ratio = p.value / stack.total;
-        if (ratio >= 0.08) seg.textContent = p.party;
+        // 단계 축약 — 풀네임 → 약칭(PARTY_SHORT) → 빈칸. 실제 세그먼트 폭은 fitStackLabels()가 렌더 후 측정해 선택.
+        seg.dataset.full = p.party;
+        seg.dataset.short = p.short || PARTY_SHORT[p.party] || p.party;
+        seg.textContent = p.party;
         // 바 색이 밝으면 검은 글씨 (자동 대비).
         const txtCol = (typeof pickTextColor === 'function') ? pickTextColor(col) : '#fff';
         seg.style.color = txtCol;
@@ -205,6 +206,26 @@ function loadJson(p) {
     row.appendChild(right);
     root.appendChild(row);
   }
+
+  // 흐름 막대 당명 단계 축약 — 세그먼트에 풀네임이 안 들어가면 약칭, 그것도 넘치면 빈칸(실측).
+  function fitStackLabels() {
+    document.querySelectorAll('.tl-stack-seg').forEach((seg) => {
+      const full = seg.dataset.full;
+      if (full == null) return;
+      const short = seg.dataset.short || full;
+      seg.textContent = full;                                  // 1) 풀네임
+      if (seg.scrollWidth > seg.clientWidth + 1) {
+        if (short !== full) seg.textContent = short;           // 2) 약칭
+        if (seg.scrollWidth > seg.clientWidth + 1) seg.textContent = '';  // 3) 빈칸
+      }
+    });
+  }
+  requestAnimationFrame(fitStackLabels);   // 레이아웃 후 1회
+  let _fitRaf = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(_fitRaf);
+    _fitRaf = requestAnimationFrame(fitStackLabels);
+  });
 
   // ── 상세 모드 — 대선/총선/지선 3열, 회차별 결과 카드(메인 상단 status 카드의 역대 나열판) ──
   function detailCardBody(r) {
