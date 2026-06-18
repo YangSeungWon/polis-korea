@@ -157,14 +157,19 @@
   .tl-header-sidos { font-size: 7px; }
 }
 
-/* ── 상세 모드 — 대선/총선/지선 3열 결과 카드(메인 status 카드의 역대 나열판) ── */
+/* ── 상세 모드 — 실제 시간축 그리드(대선/총선/지선 3열, 카드를 날짜 y에 절대배치) ── */
 .tl-detail { margin-top: 8px; }
-.tld-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
-@media (max-width: 760px) { .tld-cols { grid-template-columns: 1fr; } }
-.tld-col.is-hidden { display: none; }
-.tld-coltitle { position: sticky; top: 0; z-index: 1; margin: 0 0 8px; padding: 6px 0; background: var(--bg); text-align: center; }
-.tld-card { display: block; border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; text-decoration: none; color: inherit; transition: border-color .12s, box-shadow .12s; }
-.tld-card:hover { border-color: var(--rule-strong); box-shadow: 0 2px 8px rgba(40, 40, 80, .08); }
+.tld-timeline { position: relative; }
+.tld-tcols { display: flex; gap: 12px; margin-left: 40px; height: 100%; }
+.tld-tcol { flex: 1; position: relative; min-width: 0; }
+.tld-tcol.is-hidden { display: none; }
+.tld-coltitle { position: sticky; top: 4px; z-index: 3; margin: 0; padding: 6px 0; background: var(--bg); text-align: center; }
+.tld-card { display: block; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--bg); text-decoration: none; color: inherit; transition: border-color .12s, box-shadow .12s; }
+.tld-card.tld-abs { position: absolute; left: 0; right: 0; z-index: 1; }
+.tld-card:hover { border-color: var(--rule-strong); box-shadow: 0 2px 8px rgba(40, 40, 80, .08); z-index: 2; }
+/* 연도축 — 5년 점선 + 라벨(좌측 gutter) */
+.tld-axline { position: absolute; left: 40px; right: 0; border-top: 1px dashed var(--rule); z-index: 0; pointer-events: none; }
+.tld-axyr { position: absolute; left: 0; width: 34px; text-align: right; font-size: 10px; font-variant-numeric: tabular-nums; color: var(--ink-mute); transform: translateY(-50%); z-index: 0; }
 .tld-head { display: flex; align-items: baseline; gap: 6px; font-size: 13px; margin-bottom: 6px; }
 .tld-head b { font-size: 15px; }
 .tld-date { color: var(--ink-mute); font-size: 11px; font-variant-numeric: tabular-nums; }

@@ -224,7 +224,7 @@ function loadJson(p) {
   let _fitRaf = 0;
   window.addEventListener('resize', () => {
     cancelAnimationFrame(_fitRaf);
-    _fitRaf = requestAnimationFrame(fitStackLabels);
+    _fitRaf = requestAnimationFrame(() => { fitStackLabels(); if (typeof reflowDetail === 'function') reflowDetail(); });
   });
 
   // ── 상세 모드 — 대선/총선/지선 3열, 회차별 결과 카드(메인 상단 status 카드의 역대 나열판) ──
@@ -275,23 +275,60 @@ function loadJson(p) {
     }
     return '<div class="tld-empty">데이터 미수집</div>';
   }
-  (function buildDetail() {
+  // ── 상세 = 실제 시간축 그리드 — 3열(대선/총선/지선), 카드를 날짜 y에 절대배치. 같은 연도면 가로 정렬,
+  //    같은 해라도 월 따라 살짝 다르게. 카드 높이 가변이라 겹치면 reflowDetail()이 아래로만 밀어 해소. ──
+  const PX_PER_YEAR = 42;
+  const YEAR_MS = 365.25 * 864e5;
+  const TOP_PAD = 40;
+  const detRounds = sorted.filter((r) => !r.upcoming && isFinite(Date.parse(r.date)));
+  const _ts = (r) => Date.parse(r.date);
+  let _detMax = 0;
+  function yOf(ts) { return TOP_PAD + ((_detMax - ts) / YEAR_MS) * PX_PER_YEAR; }  // 최근=위
+  function buildDetail() {
     const host = $('#tl-detail');
-    if (!host) return;
+    if (!host || !detRounds.length) return;
+    const tss = detRounds.map(_ts);
+    _detMax = Math.max(...tss);
+    const detMin = Math.min(...tss);
+    const H = yOf(detMin) + 230;
+    const yrMax = new Date(_detMax).getFullYear(), yrMin = new Date(detMin).getFullYear();
+    let axis = '';
+    for (let y = Math.floor(yrMax / 5) * 5; y >= yrMin; y -= 5) {
+      const yy = yOf(Date.parse(y + '-07-01')).toFixed(0);
+      axis += `<div class="tld-axline" style="top:${yy}px"></div><div class="tld-axyr" style="top:${yy}px">${y}</div>`;
+    }
     const KINDS = [['presidential', '대선'], ['national_assembly', '총선'], ['local', '지선']];
-    let html = '<div class="tld-cols">';
+    let cols = '';
     for (const [kind, ko] of KINDS) {
-      const col = sorted.filter((r) => r.kind === kind && !r.upcoming);
-      html += `<div class="tld-col" data-kind="${kind}"><h3 class="tld-coltitle"><span class="tl-kind ${KIND_LABEL[kind].cls}">${ko}</span></h3>`;
-      for (const r of col) {
-        html += `<a class="tld-card" href="history.html?type=${TYPE_SLUG[kind]}&n=${r.n}">`
+      let cards = `<div class="tld-tcol" data-kind="${kind}"><h3 class="tld-coltitle"><span class="tl-kind ${KIND_LABEL[kind].cls}">${ko}</span></h3>`;
+      for (const r of detRounds.filter((r) => r.kind === kind)) {
+        const top = yOf(_ts(r)).toFixed(0);
+        cards += `<a class="tld-card tld-abs" data-top="${top}" style="top:${top}px" href="history.html?type=${TYPE_SLUG[kind]}&n=${r.n}">`
           + `<div class="tld-head"><b>${r.n}${kind === 'local' ? '회' : '대'}</b> <span class="tld-date">${(r.date || '').slice(0, 7)}</span>${r.indirect ? ' <span class="tl-indirect">간선</span>' : ''}${r.annulled ? ' <span class="tl-annulled">무효</span>' : ''}</div>`
           + `<div class="tld-body">${detailCardBody(r)}</div></a>`;
       }
-      html += '</div>';
+      cols += cards + '</div>';
     }
-    host.innerHTML = html + '</div>';
-  })();
+    host.innerHTML = `<div class="tld-timeline" style="height:${H.toFixed(0)}px">${axis}<div class="tld-tcols">${cols}</div></div>`;
+  }
+  // 날짜 위치 기준 아래로만 밀어 겹침 해소(열별). 보일 때만(숨김 시 offsetHeight=0이라 스킵).
+  function reflowDetail() {
+    const host = $('#tl-detail');
+    if (!host || host.hidden) return;
+    document.querySelectorAll('.tld-tcol').forEach((col) => {
+      let prevBottom = TOP_PAD;
+      col.querySelectorAll('.tld-card.tld-abs').forEach((card) => {
+        let top = +card.dataset.top || 0;
+        if (top < prevBottom + 6) top = prevBottom + 6;
+        card.style.top = top + 'px';
+        prevBottom = top + card.offsetHeight;
+      });
+    });
+    let maxB = 0;
+    document.querySelectorAll('.tld-card.tld-abs').forEach((c) => { const b = (parseFloat(c.style.top) || 0) + c.offsetHeight; if (b > maxB) maxB = b; });
+    const tl = document.querySelector('.tld-timeline'); if (tl && maxB) tl.style.height = (maxB + 30) + 'px';
+  }
+  buildDetail();
 
   // 모드 토글 (흐름↔상세)
   document.querySelectorAll('[data-tlmode]').forEach((btn) => {
@@ -300,6 +337,7 @@ function loadJson(p) {
       const detail = btn.dataset.tlmode === 'detail';
       $('#tl-table').hidden = detail;
       $('#tl-detail').hidden = !detail;
+      if (detail) requestAnimationFrame(reflowDetail);   // 보인 뒤 높이 측정해 겹침 해소
     });
   });
 
@@ -313,7 +351,7 @@ function loadJson(p) {
         if (!row.dataset.kind) return;  // 헤더 row 무시
         row.classList.toggle('is-dimmed', f !== 'all' && row.dataset.kind !== f);
       });
-      document.querySelectorAll('.tld-col').forEach((col) => {
+      document.querySelectorAll('.tld-tcol').forEach((col) => {
         col.classList.toggle('is-hidden', f !== 'all' && col.dataset.kind !== f);
       });
     });
