@@ -65,7 +65,13 @@ REJECT_TITLE = re.compile(
 
 def load_roster(roster_path: Path) -> tuple[dict, set]:
     d = json.loads(roster_path.read_text(encoding="utf-8"))
-    return d["districts"], set(d["proportional_parties"])
+    # roster 시도명을 canon으로 통일 — 옛 회차 roster('강원도'·'전라북도')와 region_to_district가 쓰는
+    #   canon_sido('강원특별자치도')의 불일치로 강원·전북 선거구 전체가 매칭 실패하던 것 해소.
+    districts = {}
+    for key, v in d["districts"].items():
+        sido, _, name = key.partition("|")
+        districts[f"{canon_sido(sido)}|{name}"] = v
+    return districts, set(d["proportional_parties"])
 
 
 def load_meta(csv_path: Path) -> dict[str, dict]:
@@ -141,9 +147,31 @@ def region_to_district(region: str, idx: dict | None = None) -> tuple[str, str]:
         parts.append(t)
     joined = "".join(parts)
     if idx is not None:
-        for base, suf, name in idx.get(sido, []):
+        cand = idx.get(sido, [])
+        # 1) base가 joined에 통째로(연속) 들어가고 suffix 맞음 — 가장 긴 base 우선(이미 정렬됨)
+        for base, suf, name in cand:
             if base and base in joined and (suf == suffix or not suffix):
                 return (sido, name)
+        # 2) 결합 선거구 — 시/군/구 컴포넌트 집합으로 매칭(순서·부분표기 흡수). region 컴포넌트가
+        #    그 선거구에 모두 속하고(부분집합) 겹침 최대인 선거구 채택. 예: 과천시의왕시↔의왕시과천시,
+        #    안동시→안동시예천군, 속초시고성군양양군→속초시인제군고성군양양군.
+        reg_comps = set(re.findall(r"[가-힣]+?[시군구]", joined))
+        if reg_comps:
+            best, best_ov = None, 0
+            for base, suf, name in cand:
+                if suf != suffix and suffix:
+                    continue
+                base_comps = set(re.findall(r"[가-힣]+?[시군구]", base))
+                ov = len(reg_comps & base_comps)
+                if ov > best_ov and reg_comps <= base_comps:
+                    best, best_ov = name, ov
+            if best:
+                return (sido, best)
+        # 3) 세종 — region '세종시'/'세종(을)' 등 짧은 표기 ↔ roster '세종특별자치시갑/을'. suffix로 선택.
+        if sido == "세종특별자치시" and suffix:
+            for base, suf, name in cand:
+                if suf == suffix:
+                    return (sido, name)
     return (sido, joined + suffix)
 
 

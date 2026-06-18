@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T16:14:53",
+    "generated_at": "2026-06-18T21:55:29",
     "election": "21st-general-2020",
     "election_date": "2020-04-15",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1122,
       "matched_parsed": 828,
-      "emitted_records": 548,
+      "emitted_records": 550,
       "skipped_no_pdf": 294,
-      "skipped_no_race": 532
+      "skipped_no_race": 531
     }
   },
   "polls": [
@@ -8573,6 +8573,42 @@
           "name": "",
           "party": "정의당",
           "pct": 4.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7603",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7603&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 국민일보, CBS",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 511.0,
+      "response_rate": 4.6,
+      "contact_rate": 43.5,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 후보 지지도",
+      "candidates": [
+        {
+          "name": "이광재",
+          "party": "더불어민주당",
+          "pct": 45.9
+        },
+        {
+          "name": "박정하",
+          "party": "미래통합당",
+          "pct": 30.6
         }
       ]
     },
@@ -30286,6 +30322,42 @@
           "name": "이개호",
           "party": "더불어민주당",
           "pct": 62.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "6643",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=6643&menuNo=200467",
+      "agency": "(주)순천투데이",
+      "co_agency": "",
+      "requester": "주·월간지 : 월간전남",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 502.0,
+      "response_rate": 2.0,
+      "contact_rate": 36.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2019-12-22",
+      "period_end": "2019-12-22",
+      "reg_date": "2019-12-23",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "순천시광양시곡성군구례군갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "표 2-1. 교차분석표",
+      "candidates": [
+        {
+          "name": "김선동",
+          "party": "민중당",
+          "pct": 7.7
+        },
+        {
+          "name": "노관규",
+          "party": "민주당",
+          "pct": 31.5
         }
       ]
     },

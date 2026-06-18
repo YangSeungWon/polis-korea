@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T16:39:53",
+    "generated_at": "2026-06-18T21:55:29",
     "election": "20th-general-2016",
     "election_date": "2016-04-13",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1410,
       "matched_parsed": 1131,
-      "emitted_records": 473,
+      "emitted_records": 492,
       "skipped_no_pdf": 279,
-      "skipped_no_race": 674
+      "skipped_no_race": 660
     }
   },
   "polls": [
@@ -7208,6 +7208,42 @@
       ]
     },
     {
+      "ntt_id": "2414",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2414&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 경기신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 503.0,
+      "response_rate": 2.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-03",
+      "reg_date": "2016-04-04",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "부천시원미구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이사철",
+          "party": "새누리당",
+          "pct": 36.1
+        },
+        {
+          "name": "백현종",
+          "party": "민중연합당",
+          "pct": 3.9
+        }
+      ]
+    },
+    {
       "ntt_id": "2413",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2413&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -9996,6 +10032,139 @@
       ]
     },
     {
+      "ntt_id": "2304",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2304&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전북매일신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 600.0,
+      "response_rate": 6.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-03",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "김제시부안군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "김효성",
+          "party": "새누리당",
+          "pct": 4.0
+        },
+        {
+          "name": "김춘진",
+          "party": "더불어민주당",
+          "pct": 37.5
+        },
+        {
+          "name": "김종회",
+          "party": "국민의당",
+          "pct": 41.9
+        },
+        {
+          "name": "강상구",
+          "party": "정의당",
+          "pct": 4.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "2303",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2303&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전북매일신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 624.0,
+      "response_rate": 7.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.9%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-03",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "김성진",
+          "party": "새누리당",
+          "pct": 8.0
+        },
+        {
+          "name": "김성주",
+          "party": "더불어민주당",
+          "pct": 41.5
+        },
+        {
+          "name": "정동영",
+          "party": "국민의당",
+          "pct": 41.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "2302",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2302&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전북매일신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 607.0,
+      "response_rate": 5.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-03",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "정운천",
+          "party": "새누리당",
+          "pct": 31.0
+        },
+        {
+          "name": "최형재",
+          "party": "더불어민주당",
+          "pct": 29.0
+        },
+        {
+          "name": "장세환",
+          "party": "국민의당",
+          "pct": 26.8
+        },
+        {
+          "name": "성치두",
+          "party": "무소속",
+          "pct": 1.8
+        }
+      ]
+    },
+    {
       "ntt_id": "2300",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2300&menuNo=200467",
       "agency": "주식회사 한길리서치센타",
@@ -11423,6 +11592,72 @@
       ]
     },
     {
+      "ntt_id": "2249",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2249&menuNo=200467",
+      "agency": "윈폴(WINPOLL)",
+      "co_agency": "",
+      "requester": "구·시·군단위 신문 : 남순타임스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 2.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-03-28",
+      "period_end": "2016-03-29",
+      "reg_date": "2016-04-02",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "남원시임실군순창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "■ 남원시,임실군,순창군 지역 국회의원선거 관련 여론조사",
+      "candidates": [
+        {
+          "name": "김용호",
+          "party": "새누리당",
+          "pct": 7.7
+        },
+        {
+          "name": "박희승",
+          "party": "더불어민주당",
+          "pct": 22.1
+        },
+        {
+          "name": "이용호",
+          "party": "국민의당",
+          "pct": 36.4
+        },
+        {
+          "name": "임종천",
+          "party": "민주당",
+          "pct": 0.6
+        },
+        {
+          "name": "오은미",
+          "party": "민중연합당",
+          "pct": 1.6
+        },
+        {
+          "name": "오철기",
+          "party": "무소속",
+          "pct": 1.4
+        },
+        {
+          "name": "강동원",
+          "party": "무소속",
+          "pct": 23.5
+        },
+        {
+          "name": "방경채",
+          "party": "무소속",
+          "pct": 0.8
+        }
+      ]
+    },
+    {
       "ntt_id": "2245",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2245&menuNo=200467",
       "agency": "마크로밀엠브레인",
@@ -12023,6 +12258,57 @@
       "reg_date": "2016-04-01",
       "sido": "전북특별자치도",
       "sigungu": "",
+      "district": "군산시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문 2] 후보지지도",
+      "candidates": [
+        {
+          "name": "채용묵",
+          "party": "새누리당",
+          "pct": 7.8
+        },
+        {
+          "name": "김윤태",
+          "party": "더불어민주당",
+          "pct": 25.5
+        },
+        {
+          "name": "김관영",
+          "party": "국민의당",
+          "pct": 46.6
+        },
+        {
+          "name": "조준호",
+          "party": "정의당",
+          "pct": 7.6
+        },
+        {
+          "name": "함운경",
+          "party": "무소속",
+          "pct": 6.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2219",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2219&menuNo=200467",
+      "agency": "여민리서치컨설팅",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 791.0,
+      "response_rate": 3.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2016-03-30",
+      "period_end": "2016-03-31",
+      "reg_date": "2016-04-01",
+      "sido": "전북특별자치도",
+      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -12596,6 +12882,47 @@
       "reg_date": "2016-03-31",
       "sido": "전북특별자치도",
       "sigungu": "",
+      "district": "전주시병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문 2] 후보지지도",
+      "candidates": [
+        {
+          "name": "김성진",
+          "party": "새누리당",
+          "pct": 6.1
+        },
+        {
+          "name": "김성주",
+          "party": "더불어민주당",
+          "pct": 44.5
+        },
+        {
+          "name": "정동영",
+          "party": "국민의당",
+          "pct": 46.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "2197",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2197&menuNo=200467",
+      "agency": "여민리서치컨설팅",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 820.0,
+      "response_rate": 4.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2016-03-30",
+      "period_end": "2016-03-30",
+      "reg_date": "2016-03-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -12642,6 +12969,52 @@
       "reg_date": "2016-03-31",
       "sido": "전북특별자치도",
       "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문 2] 후보지지도",
+      "candidates": [
+        {
+          "name": "정운천",
+          "party": "새누리당",
+          "pct": 30.3
+        },
+        {
+          "name": "최형재",
+          "party": "더불어민주당",
+          "pct": 33.2
+        },
+        {
+          "name": "장세환",
+          "party": "국민의당",
+          "pct": 30.7
+        },
+        {
+          "name": "성치두",
+          "party": "무소속",
+          "pct": 1.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2196",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2196&menuNo=200467",
+      "agency": "여민리서치컨설팅",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 775.0,
+      "response_rate": 3.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2016-03-30",
+      "period_end": "2016-03-30",
+      "reg_date": "2016-03-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -12668,6 +13041,52 @@
           "name": "",
           "party": "정의당",
           "pct": 6.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2195",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2195&menuNo=200467",
+      "agency": "여민리서치컨설팅",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 776.0,
+      "response_rate": 5.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2016-03-30",
+      "period_end": "2016-03-30",
+      "reg_date": "2016-03-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문 2] 후보지지도",
+      "candidates": [
+        {
+          "name": "전희재",
+          "party": "새누리당",
+          "pct": 8.8
+        },
+        {
+          "name": "김윤덕",
+          "party": "더불어민주당",
+          "pct": 41.7
+        },
+        {
+          "name": "김광수",
+          "party": "국민의당",
+          "pct": 39.0
+        },
+        {
+          "name": "유종근",
+          "party": "무소속",
+          "pct": 5.1
         }
       ]
     },
@@ -13751,6 +14170,42 @@
       ]
     },
     {
+      "ntt_id": "2119",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2119&menuNo=200467",
+      "agency": "강원도민일보 부설 강원사회조사연구소",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 505.0,
+      "response_rate": 21.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-28",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-29",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "속초시고성군양양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "귀하께서는 속초, 고성, 양양 선거구 국회의원으로 다음의 후보들 중 누구에게 투표",
+      "candidates": [
+        {
+          "name": "이양수",
+          "party": "새누리당",
+          "pct": 37.6
+        },
+        {
+          "name": "김주학",
+          "party": "더불어민주당",
+          "pct": 7.9
+        }
+      ]
+    },
+    {
       "ntt_id": "2118",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2118&menuNo=200467",
       "agency": "리얼미터",
@@ -14162,6 +14617,52 @@
           "name": "박민식",
           "party": "새누리당",
           "pct": 46.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "2081",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2081&menuNo=200467",
+      "agency": "강원도민일보 부설 강원사회조사연구소",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 505.0,
+      "response_rate": 29.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-27",
+      "period_end": "2016-03-27",
+      "reg_date": "2016-03-28",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "2",
+      "table_title": "귀하께서는 원주시 을 선거구 국회의원으로 다음의 후보들 중 누구에게 투표하시겠",
+      "candidates": [
+        {
+          "name": "이강후",
+          "party": "새누리당",
+          "pct": 31.1
+        },
+        {
+          "name": "송기헌",
+          "party": "더불어민주당",
+          "pct": 17.0
+        },
+        {
+          "name": "이석규",
+          "party": "국민의당",
+          "pct": 2.6
+        },
+        {
+          "name": "이승재",
+          "party": "민중연합당",
+          "pct": 1.2
         }
       ]
     },
@@ -14904,6 +15405,47 @@
           "name": "",
           "party": "정의당",
           "pct": 1.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2011",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2011&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 전북매일신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 4.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2016-03-24",
+      "period_end": "2016-03-26",
+      "reg_date": "2016-03-26",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "4",
+      "table_title": "조사항목별 결과",
+      "candidates": [
+        {
+          "name": "김성진",
+          "party": "새누리당",
+          "pct": 8.9
+        },
+        {
+          "name": "김성주",
+          "party": "더불어민주당",
+          "pct": 39.9
+        },
+        {
+          "name": "정동영",
+          "party": "국민의당",
+          "pct": 37.9
         }
       ]
     },
@@ -16524,6 +17066,42 @@
       ]
     },
     {
+      "ntt_id": "1860",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1860&menuNo=200467",
+      "agency": "모노커뮤니케이션즈(모노리서치)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 홍천인터넷신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 8.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-12",
+      "period_end": "2016-03-13",
+      "reg_date": "2016-03-14",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "홍천군철원군화천군양구군인제군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 조사항목별 결과",
+      "candidates": [
+        {
+          "name": "정해용",
+          "party": "무소속",
+          "pct": 13.0
+        },
+        {
+          "name": "황영철",
+          "party": "새누리당",
+          "pct": 34.6
+        }
+      ]
+    },
+    {
       "ntt_id": "1854",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1854&menuNo=200467",
       "agency": "리얼미터",
@@ -17933,6 +18511,47 @@
           "name": "",
           "party": "정의당",
           "pct": 2.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "1723",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1723&menuNo=200467",
+      "agency": "주)지앤컴",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 500.0,
+      "response_rate": 2.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.38%P",
+      "period_start": "2016-03-01",
+      "period_end": "2016-03-02",
+      "reg_date": "2016-03-03",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "정읍시고창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2016년 총선 여론조사 – 전북 정읍시고창군",
+      "candidates": [
+        {
+          "name": "하정열",
+          "party": "더불어민주당",
+          "pct": 19.3
+        },
+        {
+          "name": "유성엽",
+          "party": "국민의당",
+          "pct": 39.5
+        },
+        {
+          "name": "이강수",
+          "party": "무소속",
+          "pct": 25.5
         }
       ]
     },
@@ -20947,6 +21566,119 @@
       ]
     },
     {
+      "ntt_id": "1184",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1184&menuNo=200467",
+      "agency": "휴먼리서치",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 512.0,
+      "response_rate": 2.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2015-12-29",
+      "period_end": "2015-12-30",
+      "reg_date": "2015-12-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "익산시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "조사결과 요약",
+      "candidates": [
+        {
+          "name": "박종길",
+          "party": "새누리당",
+          "pct": 8.8
+        },
+        {
+          "name": "조배숙",
+          "party": "국민의당",
+          "pct": 27.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "1183",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1183&menuNo=200467",
+      "agency": "휴먼리서치",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 568.0,
+      "response_rate": 2.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.1%P",
+      "period_start": "2015-12-29",
+      "period_end": "2015-12-30",
+      "reg_date": "2015-12-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "익산시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "조사결과 요약",
+      "candidates": [
+        {
+          "name": "김영일",
+          "party": "새누리당",
+          "pct": 8.6
+        },
+        {
+          "name": "이춘석",
+          "party": "더불어민주당",
+          "pct": 26.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "1181",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1181&menuNo=200467",
+      "agency": "휴먼리서치",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 522.0,
+      "response_rate": 2.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2015-12-29",
+      "period_end": "2015-12-29",
+      "reg_date": "2015-12-31",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "군산시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "조사결과 요약",
+      "candidates": [
+        {
+          "name": "김관영",
+          "party": "국민의당",
+          "pct": 32.3
+        },
+        {
+          "name": "조준호",
+          "party": "정의당",
+          "pct": 4.2
+        },
+        {
+          "name": "함운경",
+          "party": "무소속",
+          "pct": 18.0
+        }
+      ]
+    },
+    {
       "ntt_id": "1169",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1169&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -20979,6 +21711,88 @@
           "name": "김부겸",
           "party": "더불어민주당",
           "pct": 49.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "1140",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1140&menuNo=200467",
+      "agency": "휴먼리서치",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 665.0,
+      "response_rate": 1.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.8%P",
+      "period_start": "2015-12-26",
+      "period_end": "2015-12-27",
+      "reg_date": "2015-12-27",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "조사결과 요약",
+      "candidates": [
+        {
+          "name": "장세환",
+          "party": "국민의당",
+          "pct": 6.6
+        },
+        {
+          "name": "정운천",
+          "party": "새누리당",
+          "pct": 27.1
+        },
+        {
+          "name": "최형재",
+          "party": "더불어민주당",
+          "pct": 13.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "1139",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1139&menuNo=200467",
+      "agency": "휴먼리서치",
+      "co_agency": "",
+      "requester": "통신사 : 뉴스1 전북취재본부",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 711.0,
+      "response_rate": 1.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2015-12-26",
+      "period_end": "2015-12-27",
+      "reg_date": "2015-12-27",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "조사결과 요약",
+      "candidates": [
+        {
+          "name": "김광수",
+          "party": "국민의당",
+          "pct": 15.9
+        },
+        {
+          "name": "김윤덕",
+          "party": "더불어민주당",
+          "pct": 30.2
+        },
+        {
+          "name": "전희재",
+          "party": "새누리당",
+          "pct": 7.8
         }
       ]
     },
