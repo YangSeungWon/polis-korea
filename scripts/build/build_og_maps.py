@@ -28,9 +28,14 @@ FAVICON = ROOT / "favicon.svg"
 
 # SVG 클래스 substring → 깔끔한 뷰 키·라벨·설명. 토글 캡처분도 같은 클래스라 일관 분류.
 # turnout-map은 governor-hex/council-hex 클래스를 공유(투표율 채색)하므로 반드시 먼저 매칭.
+# 순서 주의 — _classify는 첫 substring 매칭이 이김. 더 구체적인 클래스를 위로.
+#   시군구 결과 svg는 'council-hex-svg result-map'·'council-hex-svg cartogram-map'라 'council-hex'(광역의원
+#   의석)보다 result-map·cartogram-map을 먼저 매칭해야 오분류 안 됨. turnout-map도 governor/council 공유라 맨 위.
 VIEW_DEFS = [
     ("turnout-map", "turnout", "투표율", "지역별 투표율(짙을수록 높음)"),
     ("result-map", "result", "시군구 결과", "1위 후보·격차 명도"),
+    ("cartogram-map", "sgg-prop", "시군구 비례", "표(인구) 비례 격자·원형"),
+    ("sigungu-map", "sgg-geo", "시군구 지도", "시군구 경계·격차 명도"),
     ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
     ("council-hex", "council", "광역의원", "시도별 의석"),
     ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),
@@ -84,20 +89,24 @@ def _capture_views(page):
                 views[key] = png
 
     grab()
-    groups = page.query_selector_all(".ar-sido-toggle")
-    for gi in range(len(groups)):
-        groups = page.query_selector_all(".ar-sido-toggle")
-        if gi >= len(groups):
-            break
-        for tab in groups[gi].query_selector_all(".ar-sido-tab"):
-            try:
-                if "is-active" in (tab.get_attribute("class") or ""):
-                    continue
-                tab.click()
-                page.wait_for_timeout(700)
-                grab()
-            except Exception:
-                pass
+    # 인맵 방식 토글을 눌러가며 대체 뷰도 캡처(EncodingToggle/.seg 통일 후 버튼=.seg-btn).
+    #   .ar-sido-toggle = 시도뷰·비례·광역의원, .sgg-mode-toggle = 시군구 결과(단색/지도/격자/원형).
+    #   지도(geo)는 sigungu_{year} geojson 로드라 대기 넉넉히.
+    for sel in (".ar-sido-toggle", ".sgg-mode-toggle"):
+        groups = page.query_selector_all(sel)
+        for gi in range(len(groups)):
+            groups = page.query_selector_all(sel)
+            if gi >= len(groups):
+                break
+            for tab in groups[gi].query_selector_all(".seg-btn"):
+                try:
+                    if "is-active" in (tab.get_attribute("class") or ""):
+                        continue
+                    tab.click()
+                    page.wait_for_timeout(1000)
+                    grab()
+                except Exception:
+                    pass
     return views
 
 
@@ -183,8 +192,12 @@ def main():
             try:
                 pg.goto(f"{base}/{slug}/", wait_until="networkidle", timeout=20000)
                 pg.wait_for_timeout(2200)
-                # 지도 위 저장버튼 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함)
-                pg.add_style_tag(content=".svg-save-btn{display:none!important}")
+                # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
+                #   저장버튼은 display:none. 인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
+                pg.add_style_tag(content=(
+                    ".svg-save-btn{display:none!important}"
+                    ".ar-sido-toggle,.sgg-mode-toggle{opacity:0!important}"
+                ))
                 title = (pg.text_content("#ar-title") or "").strip() if pg.query_selector("#ar-title") else ""
                 date_s = (pg.text_content("#ar-date") or "").strip() if pg.query_selector("#ar-date") else ""
                 views = _capture_views(pg)
