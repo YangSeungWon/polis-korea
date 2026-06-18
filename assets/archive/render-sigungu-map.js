@@ -130,11 +130,13 @@
     return { cells };
   }
 
-  // 대선 시군구 geo 경계 연도 — geomap.ts PRES_SGG_GEO_YEAR와 동기 (16~21은 SGIS 연도 경계).
-  //   13·14대는 도농통합 전이라 맞는 파일 없음 → undefined면 호출부가 simple 폴백/숨김.
+  // 시군구 geo 경계 연도 — geomap.ts와 동기. 대선 PRES_SGG_GEO_YEAR(16~21 SGIS 연도, 13·14대는 도농통합
+  //   전이라 파일 없음→undefined), 지선 기초장 LOCAL_SGG_GEO_YEAR(회차별 통합전 시군구). undefined면 호출부 폴백/숨김.
   const PRES_SGG_GEO_YEAR = { 15: 2000, 16: 2002, 17: 2006, 18: 2013, 19: 2025, 20: 2025, 21: 2025 };
+  const LOCAL_SGG_GEO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010, 6: 2025, 7: 2025, 8: 2025, 9: 2026 };
   function geoYear(n, kind) {
     if (kind === 'presidential') return PRES_SGG_GEO_YEAR[n];
+    if (kind === 'local') return LOCAL_SGG_GEO_YEAR[n];
     return undefined;
   }
 

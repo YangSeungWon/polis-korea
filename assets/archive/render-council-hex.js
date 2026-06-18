@@ -470,10 +470,11 @@
   // 시군구 결과 맵 — 단색(격차 명도)/격자/dorling(표 비례) 토글. host 주면 거기(폴), 없으면 종합 섹션 자동.
   async function initResult(ctx, host, opts) {
     const onSelect = (opts && opts.onSelect) || null;
+    const tc = (opts && opts.tc) || '1';   // '1'=대선 시군구 1위 · '4'=기초단체장
     const races = ctx?.results?.races || [];
-    const rmap = resultBySigungu(races, '1');
+    const rmap = resultBySigungu(races, tc);
     if (rmap.size < 4) return null;
-    const fmap = fullResultBySigungu(races, '1');
+    const fmap = fullResultBySigungu(races, tc);
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return null;
     const resultFn = (sido, name) => lookupKey(fmap, sido, name) || null;
@@ -488,8 +489,9 @@
       if (!anchor || !anchor.parentElement) return null;
       let sec = document.getElementById('ar-sgg-result');
       if (!sec) {
+        const title = tc === '4' ? '시·군·구 기초단체장' : '시·군·구 1위 후보';
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
-        sec.innerHTML = '<h2 class="ar-section-title">시·군·구 1위 후보</h2>'
+        sec.innerHTML = `<h2 class="ar-section-title">${title}</h2>`
           + '<p class="ar-source-line">1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.</p>'
           + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);

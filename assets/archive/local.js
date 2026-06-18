@@ -413,6 +413,11 @@
       if (window.Archive.metroHex) await window.Archive.metroHex.init(ctx);
       if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
       if (window.Archive.councilHex?.initTurnout) await window.Archive.councilHex.initTurnout(ctx);
+      // 기초단체장 시군구 1위 맵(단색/격자/원형/지도) — 대선 council 렌더러 tc=4 재사용. 투표율 섹션 뒤 앵커라 그 뒤.
+      if (window.Archive.councilHex?.initResult) await window.Archive.councilHex.initResult(ctx, null, {
+        tc: '4',
+        onSelect: (sido, name) => window.Archive?.winners?.focus?.({ sido, q: name, level: '기초단체장' }),
+      });
       if (window.Archive.winners) await window.Archive.winners.init(ctx);
     },
     // 2차 데이터(여론조사·출구조사·재보궐사유) 도착 후 — 코어(선출직 분포·hex) 재렌더 안 함.
