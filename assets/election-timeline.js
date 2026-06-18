@@ -14,7 +14,7 @@
   const shortLabel = (e) => (typeOf(e) === 'local' ? `${e.n}회` : `${e.n}대`);
   // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 동일 뷰, 라벨은 캡처서 숨김).
   //   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백(onerror).
-  const TL_VIEW = { local: 'governor', pres: 'result', general: 'seats' };
+  const TL_VIEW = { local: 'governor', pres: 'sido1', general: 'seats' };
   const mapUrl = (e) => `/og/maps/${e.slug}/${TL_VIEW[typeOf(e)] || 'dorling'}.png`;
 
   function attachMiniMap(host) {

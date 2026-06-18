@@ -21,6 +21,7 @@ VIEW_LABEL = {
     "governor": "광역단체장", "council": "광역의원", "dorling": "의석 비례",
     "geo": "지리 지도", "seats": "의석수", "turnout": "투표율",
     "result": "시군구 1위", "sgg-geo": "시군구 지도", "sgg-prop": "시군구 비례",
+    "sido1": "시도 1위", "district": "선거구 1위", "district-geo": "선거구 지도",
 }
 
 TEMPLATE = """<!DOCTYPE html>

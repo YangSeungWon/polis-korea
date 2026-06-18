@@ -41,7 +41,8 @@
 
   const MAP_SEL = [
     'svg.governor-hex-svg', 'svg.council-hex-svg', 'svg.ar-sidocluster-svg',
-    'svg.sido-map-svg', 'svg.sigungu-map-svg', 'svg.parliament-chart', 'svg.hex-pane',
+    'svg.sido-map-svg', 'svg.sigungu-map-svg', 'svg.district-hex-svg', 'svg.district-map-svg',
+    'svg.parliament-chart', 'svg.hex-pane',
   ].join(',');
 
   // 지도 종류 → [클래스, 공유키(build_share_pages와 일치), 파일명 꼬리표]. 더 구체적인 클래스를 먼저 —
@@ -51,6 +52,9 @@
     ['result-map', 'result', '시군구결과'],
     ['cartogram-map', 'sgg-prop', '시군구비례'],
     ['sigungu-map-svg', 'sgg-geo', '시군구지도'],
+    ['sido-winner-hex', 'sido1', '시도1위'],        // governor-hex-svg와 공존 → 먼저
+    ['district-hex-svg', 'district', '선거구1위'],
+    ['district-map-svg', 'district-geo', '선거구지도'],
     ['governor-hex-svg', 'governor', '광역단체장'],
     ['ar-sidocluster-svg', 'dorling', 'dorling'],
     ['sido-map-svg', 'geo', '지도'],
@@ -121,6 +125,7 @@
     governor: 'governor-hex-svg', council: 'council-hex-svg', dorling: 'ar-sidocluster-svg',
     geo: 'sido-map-svg', seats: 'parliament-chart', turnout: 'turnout-map',
     result: 'result-map', 'sgg-prop': 'cartogram-map', 'sgg-geo': 'sigungu-map-svg',
+    sido1: 'sido-winner-hex', district: 'district-hex-svg', 'district-geo': 'district-map-svg',
   };
   function applyHashView() {
     const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');

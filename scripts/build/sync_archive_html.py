@@ -568,7 +568,7 @@ def render_ar_list(metas: list[dict]) -> str:
         #   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백.
         THUMB_PRIORITY = {
             "local": ("governor", "dorling"),
-            "presidential": ("result", "dorling", "geo"),
+            "presidential": ("sido1", "geo", "dorling"),   # 시도 1위 hex(시군구 result는 너무 자잘)
             "general_election": ("seats", "dorling"),
         }
         thumb = '<span class="ar-list-thumb is-empty" aria-hidden="true"></span>'

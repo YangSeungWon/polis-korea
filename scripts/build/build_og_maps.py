@@ -45,8 +45,9 @@ VIEW_DEFS = [
     ("sido-map", "geo", "지리 지도", "실제 시도 경계"),
     ("parliament-chart", "seats", "의석수", "정당별 총 의석"),
 ]
-# 대표(overview) 카드로 쓸 뷰 우선순위.
-PRIMARY_ORDER = ["governor", "dorling", "council", "seats", "geo"]
+# 대표(overview) 카드로 쓸 뷰 우선순위 — 썸네일과 일치(지선 governor·대선 sido1·총선 seats).
+#   seats를 sido1보다 위에 둬야 총선(sido1·seats 둘 다 보유)이 seats로 잡힘.
+PRIMARY_ORDER = ["governor", "seats", "sido1", "dorling", "council", "geo"]
 
 
 def list_slugs() -> list[str]:
