@@ -221,12 +221,15 @@
       for (const [p, n] of sorted) {
         for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
       }
-      // small hex radius — N이 클수록 작게
-      const smallR = SMALL_R;
       const spiral = hexSpiral(N);
+      // 소헥스 크기 — 의석 많은 시군구는 셀(PARENT_R)을 뚫지 않게 축소. 시군구 hex는 지리 지도라
+      //   셀을 못 키움(이웃과 겹침) → 스파이럴 실제 반경을 재서 PARENT_R 안에 들어오게 smallR 결정.
+      const upos = spiral.map(([q, ar]) => ({ x: 1.5 * q, y: Math.sqrt(3) * (ar + q / 2) }));  // flat-top 단위(smallR=1)
+      const maxExt = Math.max(0.95, ...upos.map((p) => Math.hypot(p.x, p.y))) + 0.95;  // 중심→최외곽 + 헥스 반폭
+      const smallR = Math.min(SMALL_R, (PARENT_R * 0.9) / maxExt);
       // 방향 채움(밴드) — 셀을 x(컬럼)→y로 정렬해 정당이 연속 세로띠가 되게. 동심 스파이럴의
       //   '과녁' 대신, 호각=깔끔한 좌우분할·압도=한 색+얇은 띠로 한 배치에서 둘 다 읽힌다.
-      const pos = spiral.map(([q, ar]) => ({ x: smallR * 1.5 * q, y: smallR * Math.sqrt(3) * (ar + q / 2) }));
+      const pos = upos.map((p) => ({ x: smallR * p.x, y: smallR * p.y }));
       const order = pos.map((_, i) => i).sort((a, b) => pos[a].x - pos[b].x || pos[a].y - pos[b].y);
       const cellFill = new Array(N);
       for (let k = 0; k < order.length; k++) cellFill[order[k]] = fills[k];
