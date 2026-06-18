@@ -95,11 +95,14 @@
     const byKey = new Map();
     function add(sd, sg, party, n) {
       if (!n) return;
-      const parent = parentSigungu(sd, sg);
-      const k = `${sd}|${parent}`;
-      const m = byKey.get(k) || new Map();
+      // exact(접미사만)·rolled(parentSigungu) 두 키에 같은 누적기 등록 — parentSigungu가 '금정구'→'금구'처럼
+      //   망가뜨려도(정=선거구 분할자 오인) 레이아웃은 exact 키로 매칭. 다른 함수(resultBySigungu)와 동일 패턴.
+      const keys = matchKeys(sd, sg);
+      let m = null;
+      for (const k of keys) if (byKey.has(k)) { m = byKey.get(k); break; }
+      if (!m) m = new Map();
       m.set(party, (m.get(party) || 0) + n);
-      byKey.set(k, m);
+      for (const k of keys) byKey.set(k, m);
     }
     for (const r of races) {
       const sd = r.sido || '';
@@ -184,7 +187,7 @@
     const partyTotal = new Map();
 
     for (const cell of hexCells) {
-      const seats = sigunguSeats.get(normalizeKey(cell.sido, cell.name));
+      const seats = lookupKey(sigunguSeats, cell.sido, cell.name);   // exact→rolled (matchKeys) — '금정구' 등 보존
       const [cx, cy] = hexCenter(cell.c, cell.r);
       const g = document.createElementNS(NS, 'g');
       // 클릭 → 아래 당선인 섹션을 그 시군구 기초의원으로 필터·스크롤(의석 있는 셀만).
