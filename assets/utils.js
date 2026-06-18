@@ -431,7 +431,7 @@ function buildPartyTrendSVG(polls, opts) {
         key = c.name; color = partyColor(c.party); label = c.name;
       } else {
         if (!c.party) continue;
-        key = CANON[c.party] || c.party; color = partyColor(key); label = PARTY_SHORT[key] || key;
+        key = CANON[c.party] || c.party; color = partyColor(key); label = key;  // 풀네임 표기(약칭 안 함 — 옛 정당 일관·'민주'↔'민주평화당' 혼동 방지)
       }
       if (opts.colorMap && opts.colorMap[key]) color = opts.colorMap[key];  // 국정 긍정/부정 등 비정당 시리즈 색
       (byKey[key] = byKey[key] || []).push({ t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0 });
