@@ -41,29 +41,29 @@
 
   const MAP_SEL = [
     'svg.governor-hex-svg', 'svg.council-hex-svg', 'svg.ar-sidocluster-svg',
-    'svg.sido-map-svg', 'svg.parliament-chart', 'svg.hex-pane',
+    'svg.sido-map-svg', 'svg.sigungu-map-svg', 'svg.parliament-chart', 'svg.hex-pane',
   ].join(',');
 
-  // 지도 종류 → 파일명 꼬리표(같은 페이지 여러 지도 구분)
-  const VIEW = {
-    'governor-hex-svg': '광역단체장', 'council-hex-svg': '의원', 'ar-sidocluster-svg': 'dorling',
-    'sido-map-svg': '지도', 'parliament-chart': '의석', 'hex-pane': 'hex',
-  };
-  // 지도 종류 → 공유페이지 뷰 키(build_share_pages.py와 일치)
-  const SHARE_KEY = {
-    'governor-hex-svg': 'governor', 'council-hex-svg': 'council', 'ar-sidocluster-svg': 'dorling',
-    'sido-map-svg': 'geo', 'parliament-chart': 'seats',
-  };
-  function viewLabel(svg) {
-    if (svg.classList.contains('turnout-map')) return '투표율';   // 결과 hex 클래스 공유 → 먼저 판정
-    for (const cls of svg.classList) if (VIEW[cls]) return VIEW[cls];
-    return '';
+  // 지도 종류 → [클래스, 공유키(build_share_pages와 일치), 파일명 꼬리표]. 더 구체적인 클래스를 먼저 —
+  // council-hex-svg는 result-map(대선 시군구 단색)·cartogram-map(시군구 비례)과 공존하므로 그 뒤에 둬야 오분류 안 됨.
+  const VIEW_DEFS = [
+    ['turnout-map', 'turnout', '투표율'],
+    ['result-map', 'result', '시군구결과'],
+    ['cartogram-map', 'sgg-prop', '시군구비례'],
+    ['sigungu-map-svg', 'sgg-geo', '시군구지도'],
+    ['governor-hex-svg', 'governor', '광역단체장'],
+    ['ar-sidocluster-svg', 'dorling', 'dorling'],
+    ['sido-map-svg', 'geo', '지도'],
+    ['parliament-chart', 'seats', '의석'],
+    ['council-hex-svg', 'council', '의원'],
+    ['hex-pane', '', 'hex'],   // 폴 hex — 저장만(아카이브 아님 → 공유키 없음)
+  ];
+  function classify(svg) {
+    for (let i = 0; i < VIEW_DEFS.length; i++) if (svg.classList.contains(VIEW_DEFS[i][0])) return VIEW_DEFS[i];
+    return null;
   }
-  function shareKey(svg) {
-    if (svg.classList.contains('turnout-map')) return 'turnout';
-    for (const cls of svg.classList) if (SHARE_KEY[cls]) return SHARE_KEY[cls];
-    return '';
-  }
+  function viewLabel(svg) { const d = classify(svg); return d ? d[2] : ''; }
+  function shareKey(svg) { const d = classify(svg); return d ? d[1] : ''; }
   // archive 페이지 slug (/archive/{slug}/). 공유페이지는 결과 아카이브 뷰에만 존재.
   function archiveSlug() {
     const m = location.pathname.match(/\/archive\/([^/]+)\//);
@@ -120,6 +120,7 @@
   const KEY2CLASS = {
     governor: 'governor-hex-svg', council: 'council-hex-svg', dorling: 'ar-sidocluster-svg',
     geo: 'sido-map-svg', seats: 'parliament-chart', turnout: 'turnout-map',
+    result: 'result-map', 'sgg-prop': 'cartogram-map', 'sgg-geo': 'sigungu-map-svg',
   };
   function applyHashView() {
     const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');
@@ -130,7 +131,7 @@
     const view = svg.closest('.ar-sido-view');
     if (view) {
       const host = view.parentElement;
-      const tab = host && host.querySelector('.ar-sido-toggle .seg-btn[data-view="' + view.dataset.view + '"]');
+      const tab = host && host.querySelector('.ar-sido-toggle .seg-btn[data-enc="' + view.dataset.view + '"]');
       if (tab && !tab.classList.contains('is-active')) tab.click();
       (view.closest('.ar-section') || view).scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
