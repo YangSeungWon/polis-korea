@@ -224,15 +224,17 @@
       // small hex radius — N이 클수록 작게
       const smallR = SMALL_R;
       const spiral = hexSpiral(N);
+      // 방향 채움(밴드) — 셀을 x(컬럼)→y로 정렬해 정당이 연속 세로띠가 되게. 동심 스파이럴의
+      //   '과녁' 대신, 호각=깔끔한 좌우분할·압도=한 색+얇은 띠로 한 배치에서 둘 다 읽힌다.
+      const pos = spiral.map(([q, ar]) => ({ x: smallR * 1.5 * q, y: smallR * Math.sqrt(3) * (ar + q / 2) }));
+      const order = pos.map((_, i) => i).sort((a, b) => pos[a].x - pos[b].x || pos[a].y - pos[b].y);
+      const cellFill = new Array(N);
+      for (let k = 0; k < order.length; k++) cellFill[order[k]] = fills[k];
       for (let i = 0; i < spiral.length; i++) {
-        const [q, ar] = spiral[i];
-        // flat-top 배치(부모 뾰족top 셀에 덩어리가 정렬되도록) — dx=1.5q, dy=√3(ar+q/2).
-        const dx = smallR * 1.5 * q;
-        const dy = smallR * Math.sqrt(3) * (ar + q / 2);
-        const sx = cx + dx, sy = cy + dy;
+        const sx = cx + pos[i].x, sy = cy + pos[i].y;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPointsFlat(sx, sy, smallR * 0.95));
-        poly.setAttribute('fill', fills[i] || '#e6e9ef');
+        poly.setAttribute('fill', cellFill[i] || '#e6e9ef');
         poly.setAttribute('stroke', 'rgba(255,255,255,0.5)');
         poly.setAttribute('stroke-width', '0.3');
         g.appendChild(poly);

@@ -349,13 +349,18 @@
         while (fills.length < n.N) fills.push('#e6e9ef');
         const sp = spiral(n.N);
         const sr = n.smallR || L.smallR;   // 고정 그리드(seats)는 셀별 소헥스 크기로 균등 셀을 채움
+        // flat-top 배치 — 덩어리가 뾰족top 셀에 정렬되도록(dx=1.5q, dy=√3(ar+q/2)).
+        // 방향 채움(밴드) — 셀을 x(컬럼)→y로 정렬해 정당이 연속 세로띠가 되게(동심 스파이럴 '과녁' 대신
+        //   호각=좌우분할·압도=한 색+얇은 띠로 한 배치에서 읽힘). fills는 등수 순(1등 먼저)이라 1등이 왼쪽.
+        const spos = sp.map(([q, ar]) => ({ x: sr * 1.5 * q, y: sr * Math.sqrt(3) * (ar + q / 2) }));
+        const sord = spos.map((_, i) => i).sort((a, b) => spos[a].x - spos[b].x || spos[a].y - spos[b].y);
+        const cfill = new Array(n.N);
+        for (let k = 0; k < sord.length; k++) cfill[sord[k]] = fills[k];
         for (let i = 0; i < sp.length; i++) {
-          const [q, ar] = sp[i];
-          // flat-top 배치 — 덩어리가 뾰족top 셀에 정렬되도록(dx=1.5q, dy=√3(ar+q/2)).
-          const sx = n.cx + sr * 1.5 * q, sy = n.cy + sr * Math.sqrt(3) * (ar + q / 2);
+          const sx = n.cx + spos[i].x, sy = n.cy + spos[i].y;
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', hexPtsFlat(sx, sy, sr * 0.9));
-          poly.setAttribute('fill', fills[i] || '#e6e9ef');
+          poly.setAttribute('fill', cfill[i] || '#e6e9ef');
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
         }
