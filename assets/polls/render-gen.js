@@ -46,19 +46,30 @@
       <span class="pc-bar"><span class="pc-bar-fill" style="width:${(c.pct / maxPct) * 100}%;background:${pc(c.party)}"></span></span>
       <span class="pct" style="color:${ptc(c.party)}">${c.pct}%</span></div>`).join('');
     let html = '<h3 class="pres-trend-title">비례대표 실제 득표</h3>' + `<div class="poll-card">${bars}</div>`;
-    // 시도별 비례 분포 맵 — 대선과 동일한 격자/dorling(득표 비례). 비례 여론조사는 전국 단위라 실제 분포.
+    // 시도별 비례 분포 맵 — 대선 폴(render-pres)과 동일: 원형·격자(득표 비례) + 지도(격차명도). 실제 분포.
     if (window.Archive && window.Archive.sidoProp && (gs.propSidoRaces || []).length >= 4) {
       html += `<div class="gen-prop-map"><h3 class="pres-trend-title" style="margin-top:16px">시·도별 비례 분포 <span class="pres-trend-sub">실제 · 색=정당, 면적=득표</span></h3>`
-        + `<div class="seg" style="justify-content:flex-end;margin:6px 0"><button class="seg-btn is-active" data-pmap="dorling">dorling</button><button class="seg-btn" data-pmap="grid">격자</button></div>`
+        + `<div class="gen-prop-enc" style="justify-content:flex-end;margin:6px 0"></div>`
         + `<div id="gen-prop-map-svg"></div></div>`;
     }
     host.innerHTML = html;
     drawPropMap();
-    host.querySelectorAll('[data-pmap]').forEach((b) => b.addEventListener('click', () => {
-      gs.pmap = b.dataset.pmap;
-      host.querySelectorAll('[data-pmap]').forEach((x) => x.classList.toggle('is-active', x === b));
-      drawPropMap();
-    }));
+    // 방식 — 표비례(원형·격자) + 1위(지도). 공용 EncodingToggle, 없으면 폴백 seg.
+    const encHost = host.querySelector('.gen-prop-enc');
+    if (encHost) {
+      const OPTS = [{ key: 'dorling', label: '원형' }, { key: 'grid', label: '격자' }, { key: 'map', label: '지도' }];
+      if (window.EncodingToggle) {
+        window.EncodingToggle.render(encHost, { options: OPTS, active: gs.pmap, onSelect: (v) => { gs.pmap = v; drawPropMap(); } });
+      } else {
+        encHost.classList.add('seg');
+        encHost.innerHTML = OPTS.map((o) => `<button class="seg-btn${o.key === gs.pmap ? ' is-active' : ''}" data-pmap="${o.key}">${o.label}</button>`).join('');
+        encHost.querySelectorAll('[data-pmap]').forEach((b) => b.addEventListener('click', () => {
+          gs.pmap = b.dataset.pmap;
+          encHost.querySelectorAll('[data-pmap]').forEach((x) => x.classList.toggle('is-active', x === b));
+          drawPropMap();
+        }));
+      }
+    }
     host.hidden = false;
   }
 
@@ -71,6 +82,10 @@
       state.selectedSido = sido; state.selectedSigungu = null; state.office = '비례대표';
       if (window.renderDetail) window.renderDetail();
     };
+    if (gs.pmap === 'map') {
+      const SM = window.Archive.sidoMap;
+      if (SM && SM.draw) { SM.draw(el, gs.propSidoRaces, { margin: true, onSelect }); return; }
+    }
     (gs.pmap === 'grid' ? SP.drawGrid : SP.drawDorling)(el, gs.propSidoRaces, { onSelect });
   }
 
