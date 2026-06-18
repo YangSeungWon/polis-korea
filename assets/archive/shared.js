@@ -234,6 +234,11 @@
           if (!sizeTotal) continue;
           out[ns(r.sido)] = { slices: cands.map((c) => ({ key: c.name, color: Archive.pcol(c.party), value: _v(c), tip: `${c.name}(${c.party}) ${(c.pct || 0).toFixed(1)}%` })), sizeTotal };
         }
+        // 전남광주 통합(9회 지선) — 비례도 통합 셀 사용(seats와 동일). 데이터 sido='전남광주통합특별시'를 레이아웃 키로.
+        if ((out['전남광주통합특별시'] || out['전남광주특별시']) && typeof honamMergedLayout === 'function') {
+          if (out['전남광주통합특별시']) { out['전남광주특별시'] = out['전남광주통합특별시']; delete out['전남광주통합특별시']; }
+          return { bySido: out, hexLayout: honamMergedLayout(SIDO_HEX_LAYOUT) };
+        }
         return { bySido: out, hexLayout: SIDO_HEX_LAYOUT };
       }
       const m = mergeHonam(input || {});

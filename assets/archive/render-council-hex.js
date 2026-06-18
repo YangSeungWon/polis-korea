@@ -572,7 +572,70 @@
     return { parties };
   }
 
+  // ── 기초의원 비례 표심 (시군구별 정당 득표) ──────────────────────
+  // tc=9(proportional_sigungu) 정당 득표를 시군구 표비례(격자/원형 cartogram)로. 의석이 가린 실제 표심.
+  function propBySigungu(races) {
+    const put = (m, k, v) => { if (!m.has(k)) m.set(k, v); };
+    const m = new Map();
+    for (const r of races || []) {
+      if (r.sg_typecode !== '9' || r.scope !== 'proportional_sigungu') continue;
+      const cs = (r.candidates || []).filter((c) => c.party && (c.votes || 0) > 0);
+      const voted = r.valid_votes ?? cs.reduce((s, c) => s + (c.votes || 0), 0);
+      if (!cs.length || !voted) continue;
+      putKeys(m, r.sido, r.sigungu, { candidates: cs, voted }, put);
+    }
+    return m;
+  }
+
+  async function initProp(ctx) {
+    const races = ctx?.results?.races || [];
+    const pmap = propBySigungu(races);
+    if (pmap.size < 4) return;
+    const CART = window.Archive && window.Archive.drawSigunguCartogram;
+    if (!CART) return;
+    const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
+    if (!hexCells.length) return;
+    const resultFn = (sido, name) => lookupKey(pmap, sido, name) || null;
+    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    // 의석(council) 섹션 뒤에 주입
+    const base = document.getElementById('ar-council-hex') || document.getElementById('ar-sgg-turnout');
+    const anchor = base?.closest('.ar-section') || base?.parentElement;
+    if (!anchor || !anchor.parentElement) return;
+    let sec = document.getElementById('ar-sgg-prop');
+    if (!sec) {
+      sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-prop';
+      sec.innerHTML = '<h2 class="ar-section-title">기초의원 비례 — 시·군·구별 표심</h2>'
+        + '<p class="ar-source-line">비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.</p>'
+        + '<div class="sgg-mode-toggle seg" role="tablist"></div><div class="ar-sgg-prop-host sgg-map-area"></div>'
+        + '<div class="ar-sgg-prop-legend ch-leg-row"></div>';
+      anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+    }
+    const tog = sec.querySelector('.sgg-mode-toggle');
+    const area = sec.querySelector('.ar-sgg-prop-host');
+    const leg = sec.querySelector('.ar-sgg-prop-legend');
+    const onSelect = (sido, name) => window.Archive?.winners?.focus?.({ sido, q: name, level: '기초의원' });
+    const parties = [...new Set([...pmap.values()].flatMap((v) => v.candidates.map((c) => c.party)))];
+    let mode = '격자';
+    function redraw() {
+      const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
+      const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
+      svg.setAttribute('class', 'council-hex-svg cartogram-map');
+      const meta = CART(svg, hexCells, resultFn, { mode, r: 22, onSelect });
+      area.innerHTML = ''; area.appendChild(svg);
+      if (window.SvgViewport && meta && meta.cells) window.SvgViewport.applyHost(area, svg, { cells: meta.cells }, keep);
+    }
+    const MODES = [['격자', '격자'], ['dorling', '원형']];
+    if (window.EncodingToggle) {
+      window.EncodingToggle.render(tog, { options: MODES.map(([k, l]) => ({ key: k, label: l })), active: mode, onSelect: (k) => { mode = k; redraw(); } });
+    } else {
+      tog.innerHTML = MODES.map(([k, l], i) => `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${l}</button>`).join('');
+      tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.sgmode; tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b)); redraw(); }));
+    }
+    leg.innerHTML = parties.slice(0, 8).map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ');
+    redraw();
+  }
+
   // archive/local.js render 끝나면 호출. window.Archive 네임스페이스 attach.
   window.Archive = window.Archive || {};
-  window.Archive.councilHex = { init, initTurnout, initResult };
+  window.Archive.councilHex = { init, initTurnout, initResult, initProp };
 })();

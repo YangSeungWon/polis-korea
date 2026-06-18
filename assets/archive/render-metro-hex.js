@@ -73,6 +73,35 @@
     }
   }
 
+  // 광역의원 비례 — 시·도별 정당 득표(표심). 의석(지역구 승자독식 과대대표) 아닌 실제 표심.
+  //   tc=8(proportional_sido) 정당 득표를 시도 표비례(sidoProp 격자/원형)로. 의석 섹션 뒤에 주입.
+  async function initProp(ctx) {
+    const races = (ctx?.results?.races || []).filter(
+      (r) => r.sg_typecode === '8' && r.scope === 'proportional_sido' && (r.candidates || []).length);
+    if (races.length < 2) return;
+    const SP = window.Archive.sidoProp, SV = window.Archive.sidoView;
+    if (!SP || !SV) return;
+    const base = document.getElementById('ar-metro-hex');
+    const anchor = base?.closest('.ar-section') || base?.parentElement;
+    if (!anchor || !anchor.parentElement) return;
+    let sec = document.getElementById('ar-metro-prop');
+    if (!sec) {
+      sec = document.createElement('section');
+      sec.className = 'ar-section'; sec.id = 'ar-metro-prop';
+      sec.innerHTML = '<h2 class="ar-section-title">광역의원 비례 — 시·도별 표심</h2>'
+        + '<p class="ar-source-line">비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.</p>'
+        + '<div class="ar-metro-prop-host"></div>';
+      anchor.parentElement.insertBefore(sec, anchor.nextSibling);
+    }
+    const host = sec.querySelector('.ar-metro-prop-host');
+    const onSelect = (sido) => window.Archive.winners && window.Archive.winners.focus({ sido, level: '광역의원' });
+    const modes = [
+      { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, races, { onSelect }) },
+      { key: 'dorling', label: '원형', draw: (el) => SP.drawDorling(el, races, { onSelect }) },
+    ];
+    SV.mount(host, modes, null);
+  }
+
   window.Archive = window.Archive || {};
-  window.Archive.metroHex = { init };
+  window.Archive.metroHex = { init, initProp };
 })();

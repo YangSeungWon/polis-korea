@@ -419,7 +419,9 @@
       if (window.Archive.sidoView) await window.Archive.sidoView.init(ctx);
       else if (window.Archive.governorHex) await window.Archive.governorHex.init(ctx);
       if (window.Archive.metroHex) await window.Archive.metroHex.init(ctx);
+      if (window.Archive.metroHex?.initProp) await window.Archive.metroHex.initProp(ctx);
       if (window.Archive.councilHex) await window.Archive.councilHex.init(ctx);
+      if (window.Archive.councilHex?.initProp) await window.Archive.councilHex.initProp(ctx);
       if (window.Archive.councilHex?.initTurnout) await window.Archive.councilHex.initTurnout(ctx);
       // 기초단체장 시군구 1위 맵(단색/격자/원형/지도) — 대선 council 렌더러 tc=4 재사용. 투표율 섹션 뒤 앵커라 그 뒤.
       if (window.Archive.councilHex?.initResult) await window.Archive.councilHex.initResult(ctx, null, {
