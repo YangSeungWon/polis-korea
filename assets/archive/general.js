@@ -54,7 +54,7 @@
         const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
           .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}"></span><b>${seats}</b> ${party}</span>`).join('');
         sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
-          + renderParliamentChart(pp, totalSeats, 460, 210)
+          + renderParliamentChart(pp, totalSeats, 460, 210, { mode: 'donut' })  // 이 히어로가 그대로 OG 썸네일/공유 카드 → 작아도 식별되게 도넛
           + `<div class="ar-pl-total">${totalSeats}석</div>`
           + `<div class="ar-pl-legend">${legend}</div></div>`);
       }
