@@ -114,15 +114,31 @@ def parse_block(hdr_rows: list[list[str]], data_row: list[str], s_idx: int) -> l
     return out
 
 
+def norm_borders(t: str) -> str:
+    """표 괘선이 CID 글리프(코리아리서치 등 사설영역 box-drawing)·널바이트인 PDF 정규화 →
+    세로선 '|', 가로선 '-', 코너 '+'. ASCII 표 파서가 그대로 동작하게."""
+    out = []
+    for ch in t:
+        o = ord(ch)
+        if 0xF0810 <= o <= 0xF081F:           # 사설영역 box-drawing (코리아리서치)
+            out.append("|" if o == 0xF081B else ("-" if o == 0xF081A else "+"))
+        elif ch == "\x00":                     # 널바이트(입소스 등) → 공백
+            out.append(" ")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def parse_pdf(path: Path) -> list[dict]:
     pdf = pdfplumber.open(path)
     qs, seen = [], set()
     for page in pdf.pages:
-        lines = (page.extract_text() or "").split("\n")
+        lines = norm_borders(page.extract_text() or "").split("\n")
         i, title = 0, ""
         while i < len(lines):
             l = lines[i]
-            if re.match(r"\s*\d+\.\s*\S", l) or ("▣" in l and "|" not in l):
+            # 제목 — 'N.', '문N', '<표 N>' (리얼미터·코리아리서치·입소스 공통)
+            if re.match(r"\s*(?:<\s*표|문\s*\d|\d+\.)", l) or ("▣" in l and "|" not in l):
                 title = re.sub(r"\s+", " ", re.split(r"[|+]", l)[0]).strip()[:70]
             if "사례수" in l and "|" in l:
                 row0 = cells(l)
@@ -136,8 +152,9 @@ def parse_pdf(path: Path) -> list[dict]:
                     if "|" in lines[j]:
                         hdr.append(cells(lines[j]))
                     j += 1
+                # 전체행 탐색 — 사례수~전체 사이 서브헤더가 기관마다 달라(입소스는 더 많음) window 넉넉히.
                 k = j
-                while k < len(lines) and k < j + 4 and not is_total(lines[k]):
+                while k < len(lines) and k < j + 12 and not is_total(lines[k]):
                     k += 1
                 if k < len(lines) and is_total(lines[k]):
                     cand = parse_block(hdr, cells(lines[k]), s_idx)
@@ -168,7 +185,8 @@ def main():
     ap = argparse.ArgumentParser(description="리얼미터류 ASCII 표 복구 → parsed JSON")
     ap.add_argument("--election", default="21st-general-2020", choices=list(ELECTION_CSV))
     ap.add_argument("--csv", default=None, help="NESDC 메타 CSV(미지정 시 election 기본)")
-    ap.add_argument("--agency", default="리얼미터", help="대상 기관 키워드(쉼표 구분)")
+    ap.add_argument("--agency", default="리얼미터,코리아리서치,입소스",
+                    help="대상 기관 키워드(쉼표 구분). 모두 ASCII/CID 괘선 cross-tab.")
     ap.add_argument("--all", action="store_true", help="빈 파싱뿐 아니라 전 대상 재파싱(정상도 덮어씀)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)

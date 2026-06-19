@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T21:55:29",
+    "generated_at": "2026-06-19T09:01:13",
     "election": "21st-general-2020",
     "election_date": "2020-04-15",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1122,
       "matched_parsed": 828,
-      "emitted_records": 550,
+      "emitted_records": 615,
       "skipped_no_pdf": 294,
-      "skipped_no_race": 531
+      "skipped_no_race": 482
     }
   },
   "polls": [
@@ -951,6 +951,573 @@
           "name": "",
           "party": "친박신당",
           "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7847",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7847&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 5.7,
+      "contact_rate": 54.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 23.2
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 27.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 11.6
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7849",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7849&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 6.4,
+      "contact_rate": 57.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 24.5
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 28.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.8
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7844",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7844&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 7.6,
+      "contact_rate": 45.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 24.0
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 23.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7841",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7841&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 7.8,
+      "contact_rate": 58.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "종로구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 서울 종로구 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "이낙연",
+          "party": "더불어민주당",
+          "pct": 63.5
+        },
+        {
+          "name": "황교안",
+          "party": "미래통합당",
+          "pct": 26.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7841",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7841&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 7.8,
+      "contact_rate": 58.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 21.0
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 25.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 13.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7850",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7850&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 17.3,
+      "contact_rate": 31.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "목포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 전남 목포시 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "김원이",
+          "party": "더불어민주당",
+          "pct": 40.8
+        },
+        {
+          "name": "황규원",
+          "party": "미래통합당",
+          "pct": 1.7
+        },
+        {
+          "name": "박지원",
+          "party": "민생당",
+          "pct": 34.3
+        },
+        {
+          "name": "윤소하",
+          "party": "정의당",
+          "pct": 16.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7850",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7850&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 17.3,
+      "contact_rate": 31.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 9.4
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 28.8
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 18.7
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 3.0
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 16.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7848",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7848&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 13.7,
+      "contact_rate": 33.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "공주시부여군청양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 충남 공주시부여군청양군 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "박수현",
+          "party": "더불어민주당",
+          "pct": 44.6
+        },
+        {
+          "name": "정진석",
+          "party": "미래통합당",
+          "pct": 39.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7848",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7848&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 13.7,
+      "contact_rate": 33.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 32.7
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 20.8
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.3
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7842",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7842&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 9.1,
+      "contact_rate": 47.1,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "부산진구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 부산 부산진구갑 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "김영춘",
+          "party": "더불어민주당",
+          "pct": 40.5
+        },
+        {
+          "name": "서병수",
+          "party": "미래통합당",
+          "pct": 38.8
+        },
+        {
+          "name": "정해정",
+          "party": "민생당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7842",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7842&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 9.1,
+      "contact_rate": 47.1,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 34.7
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 20.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.3
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 4.0
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 10.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7846",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7846&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 14.3,
+      "contact_rate": 30.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-05",
+      "period_end": "2020-04-08",
+      "reg_date": "2020-04-09",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "5. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 45.2
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 13.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.0
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 10.1
+        },
+        {
+          "name": "",
+          "party": "친박신당",
+          "pct": 1.0
         }
       ]
     },
@@ -3677,6 +4244,57 @@
       ]
     },
     {
+      "ntt_id": "7788",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7788&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1004.0,
+      "response_rate": 8.2,
+      "contact_rate": 60.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-08",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "문3. 귀하께서는 비례대표 정당 투표를 어디에 하실 생각이십니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.2
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 24.2
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 23.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.5
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 7.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7796",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7796&menuNo=200467",
       "agency": "(주)조원씨앤아이",
@@ -4456,6 +5074,381 @@
       ]
     },
     {
+      "ntt_id": "7790",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7790&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, 제주CBS, 제주신보, 제주의소리",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 804.0,
+      "response_rate": 10.2,
+      "contact_rate": 29.6,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "서귀포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문4. 그러면, 선생님의 지지여부와는 관계없이 당선가능성은 누가 가장 높다고 보십니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "위성곤",
+          "party": "더불어민주당",
+          "pct": 60.8
+        },
+        {
+          "name": "강경필",
+          "party": "미래통합당",
+          "pct": 16.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7789",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7789&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, 제주CBS, 제주신보, 제주의소리",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 803.0,
+      "response_rate": 11.5,
+      "contact_rate": 30.7,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문4. 그러면, 선생님의 지지여부와는 관계없이 당선가능성은 누가 가장 높다고 보십니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "오영훈",
+          "party": "더불어민주당",
+          "pct": 60.4
+        },
+        {
+          "name": "부상일",
+          "party": "미래통합당",
+          "pct": 23.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7787",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7787&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, 제주CBS, 제주신보, 제주의소리",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 802.0,
+      "response_rate": 10.2,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문4. 그러면, 선생님의 지지여부와는 관계없이 당선가능성은 누가 가장 높다고 보십니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "송재호",
+          "party": "더불어민주당",
+          "pct": 47.7
+        },
+        {
+          "name": "장성철",
+          "party": "미래통합당",
+          "pct": 22.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7783",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7783&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 12.5,
+      "contact_rate": 34.1,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "완주군진안군무주군장수군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 완주/진안/무주/장수 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "안호영",
+          "party": "민주당",
+          "pct": 56.5
+        },
+        {
+          "name": "임정엽",
+          "party": "무소속",
+          "pct": 33.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7777",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7777&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 507.0,
+      "response_rate": 16.8,
+      "contact_rate": 27.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "김제시부안군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 김제/부안 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "이원택",
+          "party": "민주당",
+          "pct": 63.4
+        },
+        {
+          "name": "김경민",
+          "party": "민생당",
+          "pct": 2.7
+        },
+        {
+          "name": "김종회",
+          "party": "무소속",
+          "pct": 25.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7776",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7776&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 22.1,
+      "contact_rate": 21.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "강릉시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 강릉시 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "민주당",
+          "pct": 30.8
+        },
+        {
+          "name": "최명희",
+          "party": "무소속",
+          "pct": 12.1
+        },
+        {
+          "name": "권성동",
+          "party": "무소속",
+          "pct": 32.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7773",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7773&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 16.0,
+      "contact_rate": 31.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "남원시임실군순창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 남원/임실/순창 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "이강래",
+          "party": "민주당",
+          "pct": 43.2
+        },
+        {
+          "name": "정상모",
+          "party": "정의당",
+          "pct": 1.9
+        },
+        {
+          "name": "이용호",
+          "party": "무소속",
+          "pct": 47.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7772",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7772&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 14.6,
+      "contact_rate": 30.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 원주시갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "이광재",
+          "party": "민주당",
+          "pct": 44.4
+        },
+        {
+          "name": "권성중",
+          "party": "무소속",
+          "pct": 9.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7769",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7769&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 12.6,
+      "contact_rate": 27.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "정읍시고창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 정읍/고창 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "윤준병",
+          "party": "민주당",
+          "pct": 64.8
+        },
+        {
+          "name": "유성엽",
+          "party": "민생당",
+          "pct": 25.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7767",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7767&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 17.2,
+      "contact_rate": 28.8,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "춘천시철원군화천군양구군갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 춘천시/철원군/화천군/양구군갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순",
+      "candidates": [
+        {
+          "name": "허영",
+          "party": "민주당",
+          "pct": 47.5
+        },
+        {
+          "name": "엄재철",
+          "party": "정의당",
+          "pct": 2.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7759",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7759&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -4878,6 +5871,42 @@
       ]
     },
     {
+      "ntt_id": "7754",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7754&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 22.5,
+      "contact_rate": 33.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "홍천군횡성군영월군평창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 홍천군/횡성군/영월군/평창군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입",
+      "candidates": [
+        {
+          "name": "원경환",
+          "party": "민주당",
+          "pct": 35.8
+        },
+        {
+          "name": "조일현",
+          "party": "무소속",
+          "pct": 11.1
+        }
+      ]
+    },
+    {
       "ntt_id": "7752",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7752&menuNo=200467",
       "agency": "(주)한국갤럽조사연구소",
@@ -4996,6 +6025,78 @@
           "name": "",
           "party": "열린민주당",
           "pct": 10.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7750",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7750&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 4.7,
+      "contact_rate": 32.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-06",
+      "period_end": "2020-04-07",
+      "reg_date": "2020-04-08",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "동작구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 동작구을 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "이수진",
+          "party": "민주당",
+          "pct": 45.3
+        },
+        {
+          "name": "이호영",
+          "party": "정의당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7749",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7749&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 507.0,
+      "response_rate": 18.6,
+      "contact_rate": 31.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "속초시인제군고성군양양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 속초시/인제군/고성군/양양군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입",
+      "candidates": [
+        {
+          "name": "이동기",
+          "party": "민주당",
+          "pct": 38.1
+        },
+        {
+          "name": "황정기",
+          "party": "무소속",
+          "pct": 2.1
         }
       ]
     },
@@ -5464,6 +6565,47 @@
           "name": "",
           "party": "우리공화당",
           "pct": 0.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7747",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7747&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보, G1강원민방, 강원도민일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 14.6,
+      "contact_rate": 37.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-08",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "동해시태백시삼척시정선군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 동해시/태백시/삼척시/정선군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입",
+      "candidates": [
+        {
+          "name": "김동완",
+          "party": "민주당",
+          "pct": 36.2
+        },
+        {
+          "name": "동다은",
+          "party": "무소속",
+          "pct": 1.3
+        },
+        {
+          "name": "장승호",
+          "party": "무소속",
+          "pct": 1.0
         }
       ]
     },
@@ -7418,6 +8560,47 @@
       ]
     },
     {
+      "ntt_id": "7714",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7714&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 11.7,
+      "contact_rate": 35.6,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "익산시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 익산시을 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "한병도",
+          "party": "민주당",
+          "pct": 60.4
+        },
+        {
+          "name": "조배숙",
+          "party": "민생당",
+          "pct": 20.0
+        },
+        {
+          "name": "권태홍",
+          "party": "정의당",
+          "pct": 6.7
+        }
+      ]
+    },
+    {
       "ntt_id": "7694",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7694&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -7561,6 +8744,160 @@
       ]
     },
     {
+      "ntt_id": "7712",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7712&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 16.1,
+      "contact_rate": 35.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "익산시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 익산시갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "김수흥",
+          "party": "민주당",
+          "pct": 75.2
+        },
+        {
+          "name": "고상진",
+          "party": "민생당",
+          "pct": 7.6
+        },
+        {
+          "name": "전권희",
+          "party": "민중당",
+          "pct": 1.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7707",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7707&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 28.2,
+      "contact_rate": 36.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "군산시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 군산시 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "신영대",
+          "party": "민주당",
+          "pct": 46.1
+        },
+        {
+          "name": "김관영",
+          "party": "무소속",
+          "pct": 45.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7705",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7705&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 22.0,
+      "contact_rate": 29.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 전주시병 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "김성주",
+          "party": "민주당",
+          "pct": 61.0
+        },
+        {
+          "name": "정동영",
+          "party": "민생당",
+          "pct": 25.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7704",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7704&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 13.0,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문4. 그러면, 선생님의 지지여부와는 관계없이 당선가능성은 누가 가장 높다고 보십니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "이상직",
+          "party": "민주당",
+          "pct": 71.6
+        },
+        {
+          "name": "오형수",
+          "party": "정의당",
+          "pct": 1.1
+        },
+        {
+          "name": "최형재",
+          "party": "무소속",
+          "pct": 8.2
+        }
+      ]
+    },
+    {
       "ntt_id": "7697",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7697&menuNo=200467",
       "agency": "경북인터넷방송",
@@ -7644,6 +8981,57 @@
           "name": "",
           "party": "미래통합당",
           "pct": 14.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7695",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7695&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 전주MBC, JTV 전주방송, 전북도민일보, 전라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.1,
+      "contact_rate": 30.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 전주시갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까? 보기는 무작위순입니다.",
+      "candidates": [
+        {
+          "name": "김윤덕",
+          "party": "민주당",
+          "pct": 65.3
+        },
+        {
+          "name": "염경석",
+          "party": "정의당",
+          "pct": 6.5
+        },
+        {
+          "name": "허성진",
+          "party": "통일당",
+          "pct": 1.4
+        },
+        {
+          "name": "김광수",
+          "party": "무소속",
+          "pct": 14.3
+        },
+        {
+          "name": "이범석",
+          "party": "무소속",
+          "pct": 1.0
         }
       ]
     },
@@ -7756,6 +9144,78 @@
           "name": "",
           "party": "열린민주당",
           "pct": 11.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7683",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7683&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 안동MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 605.0,
+      "response_rate": 28.8,
+      "contact_rate": 23.8,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-07",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "상주시문경시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 상주시/문경시 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "정용운",
+          "party": "민주당",
+          "pct": 14.9
+        },
+        {
+          "name": "이한성",
+          "party": "무소속",
+          "pct": 15.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7680",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7680&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 7.0,
+      "contact_rate": 27.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-06",
+      "reg_date": "2020-04-07",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "연수구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 연수구을 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "정일영",
+          "party": "민주당",
+          "pct": 31.7
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 24.0
         }
       ]
     },
@@ -12034,6 +13494,124 @@
       ]
     },
     {
+      "ntt_id": "7614",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7614&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 3.2,
+      "contact_rate": 54.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "서대문구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 서대문갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "우상호",
+          "party": "민주당",
+          "pct": 48.4
+        },
+        {
+          "name": "신지예",
+          "party": "무소속",
+          "pct": 3.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7613",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7613&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 안동MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 708.0,
+      "response_rate": 26.4,
+      "contact_rate": 31.2,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "영주시영양군봉화군울진군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 영주시/영양군/봉화군/울진군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입",
+      "candidates": [
+        {
+          "name": "황재선",
+          "party": "민주당",
+          "pct": 16.8
+        },
+        {
+          "name": "장윤석",
+          "party": "무소속",
+          "pct": 18.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7612",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7612&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 안동MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 708.0,
+      "response_rate": 22.1,
+      "contact_rate": 30.0,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2020-04-04",
+      "period_end": "2020-04-05",
+      "reg_date": "2020-04-06",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "안동시예천군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 안동시/예천군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "이삼걸",
+          "party": "민주당",
+          "pct": 17.6
+        },
+        {
+          "name": "박인우",
+          "party": "공화당",
+          "pct": 1.1
+        },
+        {
+          "name": "권오을",
+          "party": "무소속",
+          "pct": 9.3
+        },
+        {
+          "name": "권택기",
+          "party": "무소속",
+          "pct": 22.3
+        }
+      ]
+    },
+    {
       "ntt_id": "7611",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7611&menuNo=200467",
       "agency": "(주)디오피니언",
@@ -16259,6 +17837,190 @@
       ]
     },
     {
+      "ntt_id": "7527",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7527&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.3,
+      "contact_rate": 33.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "고양시정",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 경기 고양시 정 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "이용우",
+          "party": "더불어민주당",
+          "pct": 49.0
+        },
+        {
+          "name": "김현아",
+          "party": "미래통합당",
+          "pct": 31.6
+        },
+        {
+          "name": "신지혜",
+          "party": "기본소득당",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7527",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7527&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.3,
+      "contact_rate": 33.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "6. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "민생당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 19.8
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 18.6
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 16.9
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7526",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7526&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.6,
+      "contact_rate": 39.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "동대문구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 서울 동대문구 을 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "장경태",
+          "party": "더불어민주당",
+          "pct": 31.3
+        },
+        {
+          "name": "이혜훈",
+          "party": "미래통합당",
+          "pct": 28.3
+        },
+        {
+          "name": "김종민",
+          "party": "민중당",
+          "pct": 1.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7526",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7526&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.6,
+      "contact_rate": 39.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-04-01",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "6. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 23.1
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 18.9
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.9
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 1.1
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7525",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7525&menuNo=200467",
       "agency": "(주)에브리미디어",
@@ -17205,6 +18967,134 @@
           "name": "",
           "party": "국민의당",
           "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7459",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7459&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.2,
+      "contact_rate": 34.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "수성구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 이번 대구 수성구 을 국회의원 선거에 출마한 후보들을 무작위 순서로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "이상식",
+          "party": "더불어민주당",
+          "pct": 23.6
+        },
+        {
+          "name": "이인선",
+          "party": "미래통합당",
+          "pct": 34.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7459",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7459&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.2,
+      "contact_rate": 34.1,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "6. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 45.5
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 8.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7458",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7458&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.7,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "6. 총선은 1인 2표제로 지역구 후보와 비례대표 정당에 각각 투표해야 합니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 30.0
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 17.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 10.5
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 6.5
         }
       ]
     },
@@ -18905,6 +20795,42 @@
       ]
     },
     {
+      "ntt_id": "7480",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7480&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 대전MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 12.7,
+      "contact_rate": 31.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-29",
+      "period_end": "2020-03-30",
+      "reg_date": "2020-03-31",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "공주시부여군청양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 충남 공주시부여군청양군 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "박수현",
+          "party": "민주당",
+          "pct": 42.7
+        },
+        {
+          "name": "김근태",
+          "party": "무소속",
+          "pct": 5.4
+        }
+      ]
+    },
+    {
       "ntt_id": "7472",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7472&menuNo=200467",
       "agency": "(주)에이스리서치",
@@ -20273,6 +22199,804 @@
           "name": "",
           "party": "친박신당",
           "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7425",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7425&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 11.3,
+      "contact_rate": 40.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "문3. 귀하께서는 비례대표 정당 투표를 어디에 하실 생각이십니까?",
+      "candidates": [
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 24.4
+        },
+        {
+          "name": "",
+          "party": "더불어시민당",
+          "pct": 20.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 13.5
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 5.3
+        },
+        {
+          "name": "",
+          "party": "친박신당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7423",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7423&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 14.1,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "홍천군횡성군영월군평창군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 2 > [홍천횡성영월평창] 지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "원경환",
+          "party": "더불어민주당",
+          "pct": 32.3
+        },
+        {
+          "name": "유상범",
+          "party": "미래통합당",
+          "pct": 33.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7423",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7423&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 14.1,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [홍천횡성영월평창] 지지 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 36.9
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7423",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7423&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 14.1,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "< 표 6 > [홍천횡성영월평창] 비례대표 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 28.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 37.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7422",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7422&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 14.2,
+      "contact_rate": 30.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "강릉시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 2 > [강릉시] 지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 30.7
+        },
+        {
+          "name": "홍윤식",
+          "party": "미래통합당",
+          "pct": 13.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "7422",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7422&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 14.2,
+      "contact_rate": 30.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [강릉시] 지지 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.3
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 35.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7422",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7422&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 14.2,
+      "contact_rate": 30.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "< 표 6 > [강릉시] 비례대표 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 29.9
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 33.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 7.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.6
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 5.0
+        },
+        {
+          "name": "",
+          "party": "친박신당",
+          "pct": 1.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7421",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7421&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 9.0,
+      "contact_rate": 38.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 2 > [원주시갑] 지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "이광재",
+          "party": "더불어민주당",
+          "pct": 48.1
+        },
+        {
+          "name": "박정하",
+          "party": "미래통합당",
+          "pct": 27.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7421",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7421&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 9.0,
+      "contact_rate": 38.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [원주시갑] 지지 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 46.4
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 25.9
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 6.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "7421",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7421&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 9.0,
+      "contact_rate": 38.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "< 표 6 > [원주시갑] 비례대표 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 27.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 7.9
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.4
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 4.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "7419",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7419&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 17.5,
+      "contact_rate": 24.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "강릉시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 강릉시 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "김경수",
+          "party": "민주당",
+          "pct": 24.8
+        },
+        {
+          "name": "장지창",
+          "party": "민중당",
+          "pct": 1.0
+        },
+        {
+          "name": "최명희",
+          "party": "무소속",
+          "pct": 19.8
+        },
+        {
+          "name": "권성동",
+          "party": "무소속",
+          "pct": 24.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "7420",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7420&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 11.0,
+      "contact_rate": 41.7,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [춘천철원화천양구을] 지지 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 41.6
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 7.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "7420",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7420&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 11.0,
+      "contact_rate": 41.7,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "< 표 6 > [춘천철원화천양구을] 비례대표 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 31.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 29.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.9
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "민중당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 5.5
+        },
+        {
+          "name": "",
+          "party": "친박신당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7416",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7416&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 18.4,
+      "contact_rate": 33.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "춘천시철원군화천군양구군갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 2 > [춘천철원화천양구갑] 지역구 후보 지지도",
+      "candidates": [
+        {
+          "name": "허영",
+          "party": "더불어민주당",
+          "pct": 48.8
+        },
+        {
+          "name": "김진태",
+          "party": "미래통합당",
+          "pct": 35.7
+        },
+        {
+          "name": "엄재철",
+          "party": "정의당",
+          "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "7416",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7416&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 18.4,
+      "contact_rate": 33.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [춘천철원화천양구갑] 지지 정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 46.1
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 31.2
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 8.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7416",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7416&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : G1",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 510.0,
+      "response_rate": 18.4,
+      "contact_rate": 33.0,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "< 표 6 > [춘천철원화천양구갑] 비례대표 정당 지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "미래통합당",
+          "pct": 29.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.4
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 1.3
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "7415",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7415&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 11.0,
+      "contact_rate": 28.2,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 원주시갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다.",
+      "candidates": [
+        {
+          "name": "이광재",
+          "party": "민주당",
+          "pct": 46.8
+        },
+        {
+          "name": "이강범",
+          "party": "공화당",
+          "pct": 1.2
+        },
+        {
+          "name": "권성중",
+          "party": "무소속",
+          "pct": 8.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "7411",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7411&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : 춘천MBC, 춘천KBS, 강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 503.0,
+      "response_rate": 20.6,
+      "contact_rate": 25.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2020-03-28",
+      "period_end": "2020-03-29",
+      "reg_date": "2020-03-30",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "춘천시철원군화천군양구군갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 이번 춘천시철원군화천군양구군갑 국회의원 선거에 출마한 다음 후보 중 누구에게 투표 하시겠습니까? 보기는 무작위 순입니다",
+      "candidates": [
+        {
+          "name": "허영",
+          "party": "민주당",
+          "pct": 44.2
+        },
+        {
+          "name": "엄재철",
+          "party": "정의당",
+          "pct": 6.0
         }
       ]
     },
@@ -28696,6 +31420,52 @@
           "name": "최종윤",
           "party": "더불어민주당",
           "pct": 47.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "7059",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=7059&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국경제신문사",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1002.0,
+      "response_rate": 15.7,
+      "contact_rate": 36.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2020-02-20",
+      "period_end": "2020-02-21",
+      "reg_date": "2020-02-22",
+      "sido": "",
+      "sigungu": "",
+      "district": "",
+      "office_level": "비례대표",
+      "office_label": "비례대표",
+      "metric_type": "비례대표",
+      "table_no": "",
+      "table_title": "문3. 그렇다면, 비례대표 정당 투표시 어느 정당 또는 단체에게 투표하시겠습니까? 보기는 무작위로 불러 드리겠습니다.",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 35.4
+        },
+        {
+          "name": "",
+          "party": "미래한국당",
+          "pct": 28.6
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 12.2
+        },
+        {
+          "name": "",
+          "party": "국민의당",
+          "pct": 8.8
         }
       ]
     },

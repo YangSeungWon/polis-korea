@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T17:03:50",
+    "generated_at": "2026-06-19T09:23:59",
     "election": "20th-pres-2022",
     "election_date": "2022-03-09",
     "blackout_start": "2022-03-03",
@@ -10,9 +10,9 @@
     "legal_notice": "본 자료는 NESDC 등록 조사 인용. 인용 시 의뢰자·기관·조사기간·표본수·응답률·표본오차 표시 의무.",
     "stats": {
       "total_polls_meta": 1131,
-      "matched_parsed": 812,
-      "emitted_records": 1194,
-      "skipped_no_pdf": 319,
+      "matched_parsed": 813,
+      "emitted_records": 1196,
+      "skipped_no_pdf": 318,
       "skipped_no_race": 232,
       "skipped_pre_campaign": 169
     }
@@ -10615,6 +10615,86 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9992",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9992&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "(주)코리아리서치인터내셔널, (주)한국리서치",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2006.0,
+      "response_rate": 20.2,
+      "contact_rate": 31.3,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2022-02-15",
+      "period_end": "2022-02-16",
+      "reg_date": "2022-02-17",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > 대선 후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.2
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 39.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "9992",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9992&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "(주)코리아리서치인터내셔널, (주)한국리서치",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 2006.0,
+      "response_rate": 20.2,
+      "contact_rate": 31.3,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2022-02-15",
+      "period_end": "2022-02-16",
+      "reg_date": "2022-02-17",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 12 > 정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 38.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.9
         }
       ]
     },
