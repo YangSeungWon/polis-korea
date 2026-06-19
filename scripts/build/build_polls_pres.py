@@ -166,7 +166,7 @@ def normalize_pcts(cands: list[dict]) -> bool:
             if c.get("pct") is not None:
                 c["pct"] = round(c["pct"] / 10, 1)
         s /= 10
-    if s == 0 or s > 110 or s < 30:  # 추출 실패·일부만 추출
+    if s == 0 or s > 110 or s < 50:  # 추출 실패·일부만 추출·시나리오(frontrunner 누락). 총선 게이트와 동일 하한
         return False
     return True
 
@@ -397,7 +397,9 @@ def postprocess(polls: list[dict]) -> list[dict]:
     for p in deduped:
         if p["metric_type"] == "후보지지":
             n = len(p["candidates"])
-            if not (3 <= n <= MAX_BALLOT) or not (40 <= _sum(p) <= 110):
+            # 합<50: frontrunner 빠진 시나리오(예: 19대 ntt3633 안철수·홍준표·유승민 보수단일화,
+            #   문재인 결석) 혼입. 전국 ballot은 합 70~100이라 50 하한이 시나리오만 정확히 제거.
+            if not (3 <= n <= MAX_BALLOT) or not (50 <= _sum(p) <= 110):
                 continue
             # 후보 전원이 한 정당이면 본선 ballot이 아니라 당내 경선/선호도
             # ("더불어민주당 차기 대선 후보", "범진보 주자 선호도" 등) → drop.
