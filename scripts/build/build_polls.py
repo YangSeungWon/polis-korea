@@ -17,6 +17,9 @@ import sys
 from datetime import datetime, date
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from canon_agency import canon_agency  # noqa: E402  기관명 정규화((주) 제거) — emit 시 통일해 house-effect 분리 방지
+
 ROOT = Path(__file__).resolve().parents[2]
 # 회차별 path — CLI 인자로 override 가능 (--csv, --out, --roster)
 META_CSV = ROOT / "data" / "raw" / "nesdc_9th_polls.csv"
@@ -366,7 +369,7 @@ def build() -> dict:
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
-                "agency": m.get("agency", ""),
+                "agency": canon_agency(m.get("agency", "")),
                 "co_agency": m.get("co_agency", ""),
                 "requester": requester,
                 "is_self_poll": self_poll,
@@ -629,7 +632,7 @@ def build() -> dict:
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
-                "agency": m.get("agency", ""),
+                "agency": canon_agency(m.get("agency", "")),
                 "co_agency": m.get("co_agency", ""),
                 "requester": requester,
                 "is_self_poll": self_poll,

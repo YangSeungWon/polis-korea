@@ -26,6 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts" / "build"))
 # 지선 build 순수 helper 재사용 (side-effect: 9회 roster load — 미사용, 무해)
+from canon_agency import canon_agency  # noqa: E402  기관명 정규화 — emit 통일
 from build_polls import (  # noqa: E402
     SIDO_CANONICAL, canon_sido, parse_survey_period, to_float, is_self_poll,
 )
@@ -270,7 +271,7 @@ def build(csv_path: Path, parsed_dir: Path, roster_path: Path,
             polls.append({
                 "ntt_id": ntt_id,
                 "source_url": m.get("source_url", ""),
-                "agency": m.get("agency", ""),
+                "agency": canon_agency(m.get("agency", "")),
                 "co_agency": m.get("co_agency", ""),
                 "requester": requester,
                 "is_self_poll": self_poll,
