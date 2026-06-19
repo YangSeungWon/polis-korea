@@ -21,12 +21,27 @@ priority:
 """
 from __future__ import annotations
 import json
+import subprocess
 from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = "https://polis.ysw.kr"
 TODAY = date.today().isoformat()
+
+
+def git_lastmod(rel_path: str) -> str:
+    """index.html의 git 마지막 커밋일(YYYY-MM-DD) = 페이지 실제 수정일.
+    lastmod에 선거일(1948 등 웹 이전) 쓰면 Search Console이 '잘못된 날짜'로 거부 → 커밋일로."""
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", rel_path],
+                             cwd=ROOT, capture_output=True, text=True, timeout=10)
+        d = out.stdout.strip()
+        if d and d[:4] >= "2024":   # 사이트 개설(2024+) 이후만 유효 — 이전이면 커밋이력 없음
+            return d
+    except Exception:
+        pass
+    return TODAY
 
 # 정적 메인 페이지
 STATIC = [
@@ -58,15 +73,20 @@ def archive_urls() -> list[tuple[str, str, str]]:
             continue
         eid = d.name
         meta_path = ROOT / f"data/elections/{eid}.json"
-        lastmod = TODAY
+        # lastmod = 페이지 수정일. results_fetched_at(있으면) → 없으면 index.html git 커밋일.
+        #   선거일(m["date"])은 역사적 날짜라 lastmod 부적합(웹 이전 → Search Console 거부).
+        lastmod = None
         if meta_path.exists():
             try:
                 m = json.loads(meta_path.read_text(encoding="utf-8"))
-                fetched = (m.get("archive") or {}).get("results_fetched_at") or m.get("date")
-                if fetched:
-                    lastmod = fetched[:10]
+                if isinstance(m, dict) and isinstance(m.get("archive"), dict):
+                    fetched = m["archive"].get("results_fetched_at")
+                    if fetched and str(fetched)[:4] >= "2024":
+                        lastmod = str(fetched)[:10]
             except Exception:
                 pass
+        if not lastmod:
+            lastmod = git_lastmod(f"archive/{eid}/index.html")
         priority = "0.7" if eid in active else "0.6"
         freq = "daily" if eid in active else "monthly"
         out.append((f"/archive/{eid}/", freq, priority, lastmod))
