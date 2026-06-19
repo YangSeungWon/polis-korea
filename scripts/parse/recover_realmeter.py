@@ -168,6 +168,65 @@ def parse_pdf(path: Path) -> list[dict]:
     return qs
 
 
+def _rows_by_y(words, tol=3):
+    """pymupdf words → [(y, [(x, text), ...]), ...] (y로 행 그룹, x정렬)."""
+    rows = []
+    for w in sorted(words, key=lambda w: (round(w[1]), w[0])):
+        x0, y0, t = w[0], w[1], w[4]
+        if not t.strip():
+            continue
+        if rows and abs(y0 - rows[-1][0]) <= tol:
+            rows[-1][1].append((x0, t))
+        else:
+            rows.append([y0, [(x0, t)]])
+    return rows
+
+
+def parse_pdf_spaced(path: Path) -> list[dict]:
+    """공백정렬 cross-tab (코리아리서치센터·일부 입소스/갤럽) — |괘선 없이 x좌표로 컬럼 정렬.
+    pdfplumber는 (cid:N)으로 깨지지만 pymupdf는 한글 정상 → 단어 x좌표로 컬럼 클러스터링.
+    '전체' 행의 pct 값 x좌표로 컬럼을 정의하고, 위 헤더 행에서 같은 x의 정당·후보명을 모음."""
+    import fitz  # pymupdf
+    doc = fitz.open(path)
+    qs, seen = [], set()
+    for pg in doc:
+        rows = _rows_by_y(pg.get_text("words"))
+        title = ""
+        for ri, (y, cells) in enumerate(rows):
+            line = " ".join(t for _, t in cells)
+            if re.match(r"^\s*(?:<\s*표|문\s*\d|\d+\.|\[\s*문)", line):
+                title = re.sub(r"\s+", " ", line)[:70]
+            ln = line.replace(" ", "")
+            if not (ln.startswith("전체") or ln.startswith("■전체") or ln.startswith("▣전체")) or ri == 0:
+                continue
+            vals = [(x, t) for x, t in cells if NUM.match(t) and 0 <= float(t) <= 100]
+            if len(vals) < 2:
+                continue
+            hdr = [c for _, c in rows[max(0, ri - 4):ri]]
+            out = []
+            for vx, v in vals:
+                toks = []
+                for hcells in hdr:
+                    near = [c for c in hcells if abs(c[0] - vx) < 22]
+                    if near:
+                        toks.append(min(near, key=lambda c: abs(c[0] - vx))[1])
+                combined = "".join(t for t in toks if t not in DROP and not PAREN.match(t))
+                if not combined or combined in DROP:
+                    continue
+                party, name = split_party_name(combined)
+                label = name or party
+                if not label or label in DROP:
+                    continue
+                out.append({"name": name, "party": party, "pct": float(v)})
+            if len(out) >= 2:
+                key = (title, tuple(round(c["pct"], 1) for c in out))
+                if key not in seen:
+                    seen.add(key)
+                    qs.append({"table_no": "", "title": title,
+                               "election_office": office_of(title), "candidates": out})
+    return qs
+
+
 def parsed_is_empty(stem: str) -> bool:
     """이 PDF의 기존 parsed JSON이 후보표 0개(빈 파싱)인지 — 정상 파싱은 덮어쓰지 않기 위함."""
     p = PARSED_DIR / (stem + ".json")
@@ -194,9 +253,12 @@ def main():
 
     csv_path = ROOT / (args.csv or f"data/raw/{ELECTION_CSV[args.election]}")
     meta = {r["ntt_id"]: r for r in csv.DictReader(open(csv_path, encoding="utf-8"))}
-    kws = [k.strip() for k in args.agency.split(",") if k.strip()]
-    targets = [(nid, m) for nid, m in meta.items()
-               if any(k in m.get("agency", "") for k in kws)]
+    if args.agency.strip().lower() == "all":   # 전 기관 — 빈 파싱 PDF 전수 시도(|/CID 괘선 포맷이면 추출).
+        targets = list(meta.items())
+    else:
+        kws = [k.strip() for k in args.agency.split(",") if k.strip()]
+        targets = [(nid, m) for nid, m in meta.items()
+                   if any(k in m.get("agency", "") for k in kws)]
     if args.limit:
         targets = targets[:args.limit]
     print(f"대상 {args.agency} ({args.election}): {len(targets)} ntt", file=sys.stderr)
@@ -213,7 +275,14 @@ def main():
             if not args.all and not parsed_is_empty(pdf.stem):
                 continue  # 이미 정상 파싱 — 보존
             try:
-                qs = parse_pdf(pdf)
+                qs = parse_pdf(pdf)            # pdfplumber | / CID 괘선
+                if len(qs) < 2:               # |-파서 빈약 → 공백정렬(pymupdf x좌표) 폴백
+                    try:
+                        qs2 = parse_pdf_spaced(pdf)
+                        if len(qs2) > len(qs):
+                            qs = qs2
+                    except Exception:
+                        pass
             except Exception as e:
                 print(f"  ! {nid} {pdf.name[:40]}: {e}", file=sys.stderr)
                 continue
