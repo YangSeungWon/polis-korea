@@ -949,6 +949,32 @@ def build() -> dict:
     # candidates 비어버린 record drop (단, pending은 보존)
     polls = [p for p in polls if p.get("candidates") or p.get("is_pending")]
 
+    # 단체장 후보지지 합<50 drop — 주요후보 컬럼누락 시그니처(예: 제주 원희룡·서울 박원순이
+    #   PDF엔 있는데 파서가 그 컬럼 드롭 → 합<50·승자결석). 총선·대선 게이트와 동일 하한.
+    #   교육감은 거론율 형식이라 저합이 정상 → 제외. pending(빈 placeholder)도 제외.
+    def _psum(p):
+        return sum(c.get("pct") or 0 for c in p["candidates"] if c.get("pct") is not None)
+    n_lowsum = sum(1 for p in polls if not p.get("is_pending")
+                   and p.get("metric_type") in ("후보지지", "당선가능성")
+                   and p.get("office_level") in ("광역단체장", "기초단체장") and _psum(p) < 50)
+    polls = [p for p in polls if p.get("is_pending")
+             or not (p.get("metric_type") in ("후보지지", "당선가능성")
+                     and p.get("office_level") in ("광역단체장", "기초단체장") and _psum(p) < 50)]
+    if n_lowsum:
+        print(f"  단체장 합<50 컬럼누락 record drop {n_lowsum}건", file=sys.stderr)
+
+    # 1위(최다 pct) 후보 이름이 빈칸인 후보지지 = 주열 이름 드롭된 깨진 표(예: ∅49.3, 자유, 바른).
+    #   정당지지(name 비고 party만)는 metric_type로 제외됨.
+    def _top_noname(p):
+        if p.get("is_pending") or p.get("metric_type") not in ("후보지지", "당선가능성"):
+            return False
+        cs = sorted(p.get("candidates", []), key=lambda c: -(c.get("pct") or 0))
+        return bool(cs) and not (cs[0].get("name") or "").strip()
+    n_noname = sum(1 for p in polls if _top_noname(p))
+    polls = [p for p in polls if not _top_noname(p)]
+    if n_noname:
+        print(f"  1위 후보 이름 빈칸 record drop {n_noname}건", file=sys.stderr)
+
     # 후보 → 정당 자동 매핑 (정당 미표기 양식 fix)
     # 정당이 있는 후보들에서 (sido, name) → party 사전 구축, 시도·전국 우선순위
     name_party_by_sido: dict[tuple[str, str], dict[str, int]] = {}
