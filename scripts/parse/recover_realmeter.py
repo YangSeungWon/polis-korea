@@ -227,6 +227,72 @@ def parse_pdf_spaced(path: Path) -> list[dict]:
     return qs
 
 
+def parse_pdf_statable(path: Path) -> list[dict]:
+    """엠브레인·중앙일보·갤럽 등 'OOO 통계표' dense cross-tab 전용 (parse_pdf_spaced 고정윈도가
+    못 잡는 다단 헤더). 특징: 헤더가 세로 2줄+로 분할(국민\\n의힘), 정수 %, 인구통계 하위행 다수.
+    전략: '전체' 행(최좌측 셀) 값을 x로 컬럼정렬하되, 헤더밴드를 '사례수' 행~전체 행으로 **동적**
+    탐지(고정 윈도면 헤더 높이가 표마다 달라 정당명 잘리거나 후보표 놓침)."""
+    import fitz  # pymupdf
+    doc = fitz.open(path)
+    qs, seen = [], set()
+    for pg in doc:
+        rows = _rows_by_y(pg.get_text("words"))
+        for r in rows:
+            r[1].sort(key=lambda c: c[0])     # 행내 x정렬 — cross-y 병합으로 흐트러진 '전체' 라벨 복원
+        title = ""
+        for ri, (y, cells) in enumerate(rows):
+            line = " ".join(t for _, t in cells)
+            if re.match(r"^\s*(?:<\s*표|\[\s*표|\[\s*문|문\s*\d|\d+\.)", line):
+                m = re.search(r"\)\s*([가-힣/ ]+?)\s*\]?\s*$", line)  # "[표 N. (지역) XXX]"의 XXX
+                title = (m.group(1).strip() if m else re.sub(r"\s+", " ", line))[:70]
+            if ri == 0 or not cells:
+                continue
+            # 전체 행 검출 — 기관마다 ▩전체▩·■전체■·'전'+'체' 분리·BASE:전체 제각각이라
+            #   숫자 이전 leading 셀을 모아 box-drawing·공백 제거 후 '전체' 시작 여부로 판정.
+            label_toks = []
+            for x, t in cells:
+                if NUM.match(t) or PAREN.match(t):
+                    break
+                label_toks.append(t)
+            label = re.sub(r"[■▣◈▩□●○\s]", "", "".join(label_toks)).replace("BASE:", "")
+            if not label.startswith("전체"):
+                continue
+            vals = [(x, t) for x, t in cells if NUM.match(t) and 0 <= float(t) <= 100]
+            if len(vals) < 2:
+                continue
+            sr = None                          # 동적 헤더밴드: 위로 '사례수' 행 탐색(최대 8행)
+            for k in range(ri - 1, max(-1, ri - 9), -1):
+                if any("사례수" in t for _, t in rows[k][1]):
+                    sr = k
+                    break
+            if sr is None:
+                continue
+            hdr = [rows[k][1] for k in range(sr, ri)]
+            out = []
+            for vx, v in vals:
+                toks = []
+                for hc in hdr:                 # 각 헤더 행에서 같은 x의 토큰 → 위→아래 결합
+                    near = [c for c in hc if abs(c[0] - vx) < 18]
+                    if near:
+                        toks.append(min(near, key=lambda c: abs(c[0] - vx))[1])
+                combined = "".join(t for t in toks
+                                   if t not in DROP and not PAREN.match(t) and "사례수" not in t)
+                if not combined or combined in DROP:
+                    continue
+                party, name = split_party_name(combined)
+                label = name or party
+                if not label or label in DROP:
+                    continue
+                out.append({"name": name, "party": party, "pct": float(v)})
+            if len(out) >= 2:
+                key = (title, tuple(round(c["pct"], 1) for c in out))
+                if key not in seen:
+                    seen.add(key)
+                    qs.append({"table_no": "", "title": title,
+                               "election_office": office_of(title), "candidates": out})
+    return qs
+
+
 def parsed_is_empty(stem: str) -> bool:
     """이 PDF의 기존 parsed JSON이 후보표 0개(빈 파싱)인지 — 정상 파싱은 덮어쓰지 않기 위함."""
     p = PARSED_DIR / (stem + ".json")
@@ -281,6 +347,13 @@ def main():
                         qs2 = parse_pdf_spaced(pdf)
                         if len(qs2) > len(qs):
                             qs = qs2
+                    except Exception:
+                        pass
+                if len(qs) < 2:               # 그래도 빈약 → 통계표(다단 헤더) 폴백
+                    try:
+                        qs3 = parse_pdf_statable(pdf)
+                        if len(qs3) > len(qs):
+                            qs = qs3
                     except Exception:
                         pass
             except Exception as e:

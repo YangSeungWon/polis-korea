@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T10:48:41",
+    "generated_at": "2026-06-19T13:29:36",
     "election": "22nd-general-2024",
     "election_date": "2024-04-10",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1993,
       "matched_parsed": 1738,
-      "emitted_records": 1994,
+      "emitted_records": 2008,
       "skipped_no_pdf": 255,
-      "skipped_no_race": 479
+      "skipped_no_race": 470
     }
   },
   "polls": [
@@ -1055,6 +1055,98 @@
       ]
     },
     {
+      "ntt_id": "15134",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15134&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 11.1,
+      "contact_rate": 32.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 20.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 8.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15134",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15134&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 11.1,
+      "contact_rate": 32.4,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "화성시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "후보 지지도",
+      "candidates": [
+        {
+          "name": "공영운",
+          "party": "더불어민주당",
+          "pct": 40.0
+        },
+        {
+          "name": "한정민",
+          "party": "국민의힘",
+          "pct": 14.0
+        },
+        {
+          "name": "이준석",
+          "party": "개혁신당",
+          "pct": 31.0
+        }
+      ]
+    },
+    {
       "ntt_id": "15135",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15135&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -1117,6 +1209,175 @@
           "name": "",
           "party": "진보당",
           "pct": 2.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "15133",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15133&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.8,
+      "contact_rate": 33.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 30.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15133",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15133&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.8,
+      "contact_rate": 33.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "용산구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "후보 지지도",
+      "candidates": [
+        {
+          "name": "강태웅",
+          "party": "더불어민주당",
+          "pct": 44.0
+        },
+        {
+          "name": "권영세",
+          "party": "국민의힘",
+          "pct": 39.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15132",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15132&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 13.3,
+      "contact_rate": 28.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 33.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 0.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15132",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15132&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 13.3,
+      "contact_rate": 28.5,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-02",
+      "period_end": "2024-04-03",
+      "reg_date": "2024-04-04",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "양산시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "후보 지지도",
+      "candidates": [
+        {
+          "name": "김두관",
+          "party": "더불어민주당",
+          "pct": 47.0
+        },
+        {
+          "name": "김태호",
+          "party": "국민의힘",
+          "pct": 37.0
         }
       ]
     },
@@ -3892,6 +4153,93 @@
       ]
     },
     {
+      "ntt_id": "15089",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15089&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 15.0,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-01",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-04",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 38.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 28.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15089",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15089&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 506.0,
+      "response_rate": 15.0,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-01",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-04",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "공주시부여군청양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "후보 지지도",
+      "candidates": [
+        {
+          "name": "박수현",
+          "party": "더불어민주당",
+          "pct": 42.0
+        },
+        {
+          "name": "정진석",
+          "party": "국민의힘",
+          "pct": 42.0
+        }
+      ]
+    },
+    {
       "ntt_id": "15080",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15080&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -4102,6 +4450,93 @@
           "name": "",
           "party": "조국혁신당",
           "pct": 11.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15086",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15086&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.8,
+      "contact_rate": 30.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-01",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-04",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 32.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 2.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 7.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "15086",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15086&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.8,
+      "contact_rate": 30.7,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-01",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-04",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "성남시분당구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "후보 지지도",
+      "candidates": [
+        {
+          "name": "이광재",
+          "party": "더불어민주당",
+          "pct": 43.0
+        },
+        {
+          "name": "안철수",
+          "party": "국민의힘",
+          "pct": 39.0
         }
       ]
     },
@@ -13595,6 +14030,47 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "14991",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14991&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 502.0,
+      "response_rate": 13.6,
+      "contact_rate": 29.3,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-31",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-03",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "종로구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 내일이 총선 투표일이라면, 선생님께서는 종로구 국회의원 선거에 출마한 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "곽상언",
+          "party": "더불어민주당",
+          "pct": 50.0
+        },
+        {
+          "name": "진예찬",
+          "party": "새로운미래",
+          "pct": 2.0
+        },
+        {
+          "name": "차은정",
+          "party": "민중민주당",
+          "pct": 0.0
         }
       ]
     },
@@ -48808,6 +49284,159 @@
           "name": "",
           "party": "녹색정의당",
           "pct": 2.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "14392",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14392&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 507.0,
+      "response_rate": 10.6,
+      "contact_rate": 34.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-09",
+      "period_end": "2024-03-10",
+      "reg_date": "2024-03-11",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 36.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 30.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "14391",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14391&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.9,
+      "contact_rate": 31.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-09",
+      "period_end": "2024-03-10",
+      "reg_date": "2024-03-11",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 31.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 38.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 0.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "14390",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14390&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 10.0,
+      "contact_rate": 37.0,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-03-09",
+      "period_end": "2024-03-10",
+      "reg_date": "2024-03-11",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "정당지지도",
+      "candidates": [
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 30.0
+        },
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 34.0
+        },
+        {
+          "name": "",
+          "party": "개혁신당",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "새로운미래",
+          "pct": 1.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 1.0
         }
       ]
     },
