@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T11:11:47",
+    "generated_at": "2026-06-19T13:52:15",
     "election": "20th-pres-2022",
     "election_date": "2022-03-09",
     "blackout_start": "2022-03-03",
@@ -10,10 +10,10 @@
     "legal_notice": "본 자료는 NESDC 등록 조사 인용. 인용 시 의뢰자·기관·조사기간·표본수·응답률·표본오차 표시 의무.",
     "stats": {
       "total_polls_meta": 1131,
-      "matched_parsed": 813,
-      "emitted_records": 1187,
-      "skipped_no_pdf": 318,
-      "skipped_no_race": 240,
+      "matched_parsed": 867,
+      "emitted_records": 1235,
+      "skipped_no_pdf": 264,
+      "skipped_no_race": 244,
       "skipped_pre_campaign": 169
     }
   },
@@ -10504,6 +10504,101 @@
       ]
     },
     {
+      "ntt_id": "9993",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9993&menuNo=200467",
+      "agency": "PNR-(주)피플네트웍스",
+      "co_agency": "",
+      "requester": "전국단위 신문/기타/인터넷언론/기타/기타 : 프라임경제신문/미래한국연구소/펜앤드마이크/고성국TV/이봉규TV",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1004.0,
+      "response_rate": 8.9,
+      "contact_rate": 32.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-16",
+      "period_end": "2022-02-17",
+      "reg_date": "2022-02-17",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 39.9
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 44.6
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 7.9
+        },
+        {
+          "name": "허경영",
+          "party": "국가혁명당",
+          "pct": 1.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "9991",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9991&menuNo=200467",
+      "agency": "미디어리얼리서치코리아",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 미디어리얼리서치코리아",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1006.0,
+      "response_rate": 2.1,
+      "contact_rate": 10.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-14",
+      "period_end": "2022-02-16",
+      "reg_date": "2022-02-17",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 차기 대선후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 39.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 45.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 8.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.7
+        }
+      ]
+    },
+    {
       "ntt_id": "9992",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9992&menuNo=200467",
       "agency": "입소스 주식회사",
@@ -10580,6 +10675,46 @@
           "name": "",
           "party": "정의당",
           "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "9985",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9985&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "인터넷언론 : 조세일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 1033.0,
+      "response_rate": 14.6,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2022-02-11",
+      "period_end": "2022-02-14",
+      "reg_date": "2022-02-16",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.6
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 16.8
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.4
         }
       ]
     },
@@ -11219,6 +11354,141 @@
       ]
     },
     {
+      "ntt_id": "9945",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9945&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 데일리안",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 7.3,
+      "contact_rate": 21.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-11",
+      "period_end": "2022-02-12",
+      "reg_date": "2022-02-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 19.3
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 74.7
+        },
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "9944",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9944&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 재경일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 8.1,
+      "contact_rate": 21.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-11",
+      "period_end": "2022-02-12",
+      "reg_date": "2022-02-13",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.5
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.8
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 7.7
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 47.5
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 36.6
+        },
+        {
+          "name": "허경영",
+          "party": "국가혁명당",
+          "pct": 1.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "9940",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9940&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1015.0,
+      "response_rate": 15.3,
+      "contact_rate": 33.2,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-12",
+      "period_end": "2022-02-12",
+      "reg_date": "2022-02-12",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 40.5
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 43.1
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.1
+        }
+      ]
+    },
+    {
       "ntt_id": "9937",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9937&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -11255,6 +11525,46 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 2.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "9927",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9927&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 자유일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1004.0,
+      "response_rate": 7.8,
+      "contact_rate": 20.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-09",
+      "period_end": "2022-02-09",
+      "reg_date": "2022-02-10",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 16.9
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 76.5
+        },
+        {
+          "name": "조원진",
+          "party": "우리공화당",
+          "pct": 1.1
         }
       ]
     },
@@ -11439,6 +11749,91 @@
       ]
     },
     {
+      "ntt_id": "9813",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9813&menuNo=200467",
+      "agency": "(주)에스티아이",
+      "co_agency": "",
+      "requester": "전국단위 신문/기타 : 중앙일보/한국정당학회",
+      "is_self_poll": false,
+      "method": "스마트폰앱조사",
+      "sample_size": 2100.0,
+      "response_rate": 16.5,
+      "contact_rate": 100.0,
+      "sample_error": "95% 신뢰수준에 ±2.1%P",
+      "period_start": "2022-01-19",
+      "period_end": "2022-01-25",
+      "reg_date": "2022-02-09",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 38.7
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 22.6
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 5.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 19.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "9923",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9923&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "(주)코리아리서치인터네셔널",
+      "requester": "조사기관 자체 : ㈜엠브레인퍼블릭, 케이스탯리서치, ㈜코리아리서치인터내셔널, ㈜한국리서치",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1007.0,
+      "response_rate": 29.7,
+      "contact_rate": 24.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-07",
+      "period_end": "2022-02-09",
+      "reg_date": "2022-02-09",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문7] 선생님 지지 여부와 상관없이, 선거 분위기나 주변 사람들의 반응을 볼 때 올해 대선에서 어느 후보가 당선될 것으로 보",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 34.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 43.0
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.0
+        }
+      ]
+    },
+    {
       "ntt_id": "9916",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9916&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -11480,6 +11875,51 @@
           "name": "",
           "party": "국민의당",
           "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9903",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9903&menuNo=200467",
+      "agency": "미디어리얼리서치코리아",
+      "co_agency": "",
+      "requester": "조사기관 자체 : 미디어리얼리서치코리아",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1001.0,
+      "response_rate": 2.4,
+      "contact_rate": 17.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-06",
+      "period_end": "2022-02-08",
+      "reg_date": "2022-02-09",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 차기 대선후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 38.4
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 45.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 9.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.1
         }
       ]
     },
@@ -13289,6 +13729,131 @@
       ]
     },
     {
+      "ntt_id": "9888",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9888&menuNo=200467",
+      "agency": "(주)글로벌리서치",
+      "co_agency": "",
+      "requester": "방송사 : JTBC",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1005.0,
+      "response_rate": 17.8,
+      "contact_rate": 25.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-05",
+      "period_end": "2022-02-06",
+      "reg_date": "2022-02-07",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 42.0
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.7
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9879",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9879&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 18.8,
+      "contact_rate": 28.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-03",
+      "period_end": "2022-02-04",
+      "reg_date": "2022-02-07",
+      "sido": "충청북도",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 34.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 47.3
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 5.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "9878",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9878&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 데일리안",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 8.7,
+      "contact_rate": 21.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-04",
+      "period_end": "2022-02-05",
+      "reg_date": "2022-02-07",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 7.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 8.4
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 40.6
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 37.5
+        }
+      ]
+    },
+    {
       "ntt_id": "9874",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9874&menuNo=200467",
       "agency": "넥스트리서치",
@@ -14614,6 +15179,51 @@
       ]
     },
     {
+      "ntt_id": "9871",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9871&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "통신사 : news1",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 20.4,
+      "contact_rate": 21.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-05",
+      "period_end": "2022-02-06",
+      "reg_date": "2022-02-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 41.1
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 46.5
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.2
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 2.0
+        }
+      ]
+    },
+    {
       "ntt_id": "9870",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9870&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -14804,6 +15414,216 @@
       ]
     },
     {
+      "ntt_id": "9865",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9865&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 중앙일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1005.0,
+      "response_rate": 14.7,
+      "contact_rate": 29.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-04",
+      "period_end": "2022-02-05",
+      "reg_date": "2022-02-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 40.8
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 42.6
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9864",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9864&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 에너지경제신문",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1015.0,
+      "response_rate": 3.8,
+      "contact_rate": 42.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-04",
+      "period_end": "2022-02-05",
+      "reg_date": "2022-02-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 40.1
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 42.4
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.7
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 8.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "9847",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9847&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "통신사 : 뉴시스",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1076.0,
+      "response_rate": 3.3,
+      "contact_rate": 46.1,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2022-02-03",
+      "period_end": "2022-02-04",
+      "reg_date": "2022-02-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 48.2
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 43.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 3.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "9851",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9851&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 20.9,
+      "contact_rate": 25.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-04",
+      "period_end": "2022-02-05",
+      "reg_date": "2022-02-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 37.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 41.8
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "9845",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9845&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한겨레신문사",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 19.0,
+      "contact_rate": 34.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-03",
+      "period_end": "2022-02-04",
+      "reg_date": "2022-02-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.3
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 45.1
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.3
+        }
+      ]
+    },
+    {
       "ntt_id": "9844",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9844&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -14840,6 +15660,141 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 4.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "9840",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9840&menuNo=200467",
+      "agency": "데일리리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문/정책연구원 : 매일신문/대경미래발전포럼",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1001.0,
+      "response_rate": 13.0,
+      "contact_rate": 26.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-03",
+      "period_end": "2022-02-04",
+      "reg_date": "2022-02-04",
+      "sido": "복합권역",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 34.7
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 55.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 3.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "9839",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9839&menuNo=200467",
+      "agency": "데일리리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문/정책연구원 : 매일신문/대경미래발전포럼",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1001.0,
+      "response_rate": 13.0,
+      "contact_rate": 26.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-02-03",
+      "period_end": "2022-02-04",
+      "reg_date": "2022-02-04",
+      "sido": "복합권역",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 21.8
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 69.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 3.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "9829",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9829&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 데일리안",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1002.0,
+      "response_rate": 7.8,
+      "contact_rate": 19.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-29",
+      "period_end": "2022-01-29",
+      "reg_date": "2022-01-31",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.7
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 1.6
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 40.3
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 52.8
         }
       ]
     },
@@ -15614,6 +16569,91 @@
       ]
     },
     {
+      "ntt_id": "9824",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9824&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1002.0,
+      "response_rate": 20.5,
+      "contact_rate": 23.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-28",
+      "period_end": "2022-01-29",
+      "reg_date": "2022-01-29",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 39.1
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 39.5
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "9822",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9822&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 1000.0,
+      "response_rate": 73.0,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-26",
+      "period_end": "2022-01-27",
+      "reg_date": "2022-01-29",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 30.7
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 24.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 5.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 17.4
+        }
+      ]
+    },
+    {
       "ntt_id": "9814",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9814&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -15655,6 +16695,96 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 3.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "9812",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9812&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 자유일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 9.0,
+      "contact_rate": 19.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-27",
+      "period_end": "2022-01-28",
+      "reg_date": "2022-01-28",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.6
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 21.4
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 74.8
+        },
+        {
+          "name": "조원진",
+          "party": "우리공화당",
+          "pct": 0.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "9793",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9793&menuNo=200467",
+      "agency": "미디어리얼리서치코리아",
+      "co_agency": "",
+      "requester": "방송사 : 데이터뉴스",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 3.1,
+      "contact_rate": 10.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-24",
+      "period_end": "2022-01-27",
+      "reg_date": "2022-01-28",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 차기 대선후보 지지도",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 40.1
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 38.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 10.8
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.2
         }
       ]
     },
@@ -15925,6 +17055,51 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9776",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9776&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 채널A",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1370.0,
+      "response_rate": 22.2,
+      "contact_rate": 31.6,
+      "sample_error": "95% 신뢰수준에 ±2.6%P",
+      "period_start": "2022-01-23",
+      "period_end": "2022-01-25",
+      "reg_date": "2022-01-26",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 33.3
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 37.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 2.5
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 12.2
         }
       ]
     },
@@ -16659,6 +17834,156 @@
       ]
     },
     {
+      "ntt_id": "9768",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9768&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 재경일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 8.6,
+      "contact_rate": 20.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-25",
+      "period_end": "2022-01-25",
+      "reg_date": "2022-01-26",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 1.6
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.7
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 9.9
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 42.2
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 37.8
+        },
+        {
+          "name": "허경영",
+          "party": "국가혁명당",
+          "pct": 3.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "9766",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9766&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 문화일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 17.4,
+      "contact_rate": 21.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-24",
+      "period_end": "2022-01-25",
+      "reg_date": "2022-01-25",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 33.5
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 35.9
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.2
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 12.0
+        },
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "9761",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9761&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1018.0,
+      "response_rate": 5.7,
+      "contact_rate": 43.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-24",
+      "period_end": "2022-01-25",
+      "reg_date": "2022-01-25",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 42.4
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 48.4
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 3.9
+        },
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 0.3
+        }
+      ]
+    },
+    {
       "ntt_id": "9758",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9758&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -16754,19 +18079,19 @@
       ]
     },
     {
-      "ntt_id": "9751",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9751&menuNo=200467",
-      "agency": "(주)한국리서치",
+      "ntt_id": "9752",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9752&menuNo=200467",
+      "agency": "미디어리얼리서치코리아",
       "co_agency": "",
-      "requester": "기타 : 동아시아연구원",
+      "requester": "조사기관 자체 : 미디어리얼리서치코리아",
       "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 1515.0,
-      "response_rate": 9.3,
-      "contact_rate": 19.1,
-      "sample_error": "95% 신뢰수준에 ±2.5%P",
-      "period_start": "2022-01-12",
-      "period_end": "2022-01-15",
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 2.2,
+      "contact_rate": 11.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-19",
+      "period_end": "2022-01-21",
       "reg_date": "2022-01-25",
       "sido": "",
       "sigungu": "",
@@ -16774,27 +18099,27 @@
       "office_label": "대통령",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "지역구 후보 지지도",
+      "table_title": "2. 차기 대선후보 지지도",
       "candidates": [
         {
           "name": "이재명",
           "party": "더불어민주당",
-          "pct": 36.5
+          "pct": 36.8
         },
         {
           "name": "윤석열",
           "party": "국민의힘",
-          "pct": 35.0
-        },
-        {
-          "name": "심상정",
-          "party": "정의당",
-          "pct": 3.0
+          "pct": 43.1
         },
         {
           "name": "안철수",
           "party": "국민의당",
-          "pct": 12.7
+          "pct": 11.7
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 2.4
         }
       ]
     },
@@ -16815,31 +18140,31 @@
       "reg_date": "2022-01-25",
       "sido": "",
       "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "정당 지지도",
+      "table_title": "[문4] 내일이 대통령 선거일이라면, 다음 사람들 중에서 누구에게 투표하시겠습니까? 무작위 순으로 불러드리겠습니다.",
       "candidates": [
         {
-          "name": "",
+          "name": "이재명",
           "party": "더불어민주당",
-          "pct": 34.6
+          "pct": 36.5
         },
         {
-          "name": "",
+          "name": "윤석열",
           "party": "국민의힘",
-          "pct": 35.4
+          "pct": 35.0
         },
         {
-          "name": "",
+          "name": "심상정",
           "party": "정의당",
-          "pct": 5.2
+          "pct": 3.0
         },
         {
-          "name": "",
+          "name": "안철수",
           "party": "국민의당",
-          "pct": 5.6
+          "pct": 12.7
         }
       ]
     },
@@ -17520,6 +18845,46 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 1.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "9736",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9736&menuNo=200467",
+      "agency": "(주)글로벌리서치",
+      "co_agency": "",
+      "requester": "방송사 : JTBC",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1012.0,
+      "response_rate": 12.0,
+      "contact_rate": 25.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-22",
+      "period_end": "2022-01-23",
+      "reg_date": "2022-01-24",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 40.7
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 36.8
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.5
         }
       ]
     },
@@ -18479,6 +19844,56 @@
       ]
     },
     {
+      "ntt_id": "9726",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9726&menuNo=200467",
+      "agency": "여론조사공정(주)",
+      "co_agency": "",
+      "requester": "인터넷언론 : 데일리안",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1002.0,
+      "response_rate": 8.5,
+      "contact_rate": 20.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-21",
+      "period_end": "2022-01-22",
+      "reg_date": "2022-01-23",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 1.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 1.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 10.8
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 41.0
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 38.3
+        }
+      ]
+    },
+    {
       "ntt_id": "9724",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9724&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -18520,6 +19935,46 @@
           "name": "안철수",
           "party": "국민의당",
           "pct": 12.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "9716",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9716&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1002.0,
+      "response_rate": 20.0,
+      "contact_rate": 23.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-21",
+      "period_end": "2022-01-22",
+      "reg_date": "2022-01-22",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 41.5
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 36.3
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.4
         }
       ]
     },
@@ -23129,6 +24584,46 @@
       ]
     },
     {
+      "ntt_id": "9625",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9625&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1002.0,
+      "response_rate": 19.9,
+      "contact_rate": 24.7,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-07",
+      "period_end": "2022-01-08",
+      "reg_date": "2022-01-08",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 28.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 42.3
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.3
+        }
+      ]
+    },
+    {
       "ntt_id": "9621",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9621&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -24225,6 +25720,46 @@
           "name": "",
           "party": "정의당",
           "pct": 6.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9607",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9607&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "(주)코리아리서치인터네셔널",
+      "requester": "조사기관 자체 : ㈜엠브레인퍼블릭, 케이스탯리서치, ㈜코리아리서치인터내셔널, ㈜한국리서치",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 27.9,
+      "contact_rate": 24.0,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-01-03",
+      "period_end": "2022-01-05",
+      "reg_date": "2022-01-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문7] 선생님 지지 여부와 상관없이, 선거 분위기나 주변 사람들의 반응을 볼 때 올해 대선에서 어느 후보가 당선될 것으로 보",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 50.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 26.0
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 0.0
         }
       ]
     },
@@ -27519,6 +29054,51 @@
       ]
     },
     {
+      "ntt_id": "9567",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9567&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1012.0,
+      "response_rate": 4.6,
+      "contact_rate": 32.3,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-12-30",
+      "period_end": "2022-01-01",
+      "reg_date": "2022-01-03",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 39.9
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 30.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 8.6
+        }
+      ]
+    },
+    {
       "ntt_id": "9566",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9566&menuNo=200467",
       "agency": "(주)엠브레인퍼블릭",
@@ -30074,6 +31654,51 @@
       ]
     },
     {
+      "ntt_id": "9541",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9541&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1013.0,
+      "response_rate": 5.3,
+      "contact_rate": 37.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-12-27",
+      "period_end": "2021-12-29",
+      "reg_date": "2021-12-31",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.5
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 30.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 10.3
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.1
+        }
+      ]
+    },
+    {
       "ntt_id": "9518",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9518&menuNo=200467",
       "agency": "미디어리얼리서치코리아",
@@ -30110,6 +31735,46 @@
           "name": "",
           "party": "정의당",
           "pct": 3.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "9537",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9537&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1027.0,
+      "response_rate": 18.4,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-12-29",
+      "period_end": "2021-12-30",
+      "reg_date": "2021-12-31",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2 다음 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.8
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 25.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.1
         }
       ]
     },
@@ -33745,6 +35410,51 @@
           "name": "이재명",
           "party": "더불어민주당",
           "pct": 39.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "9491",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9491&menuNo=200467",
+      "agency": "서던포스트",
+      "co_agency": "",
+      "requester": "방송사 : cbs",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1010.0,
+      "response_rate": 20.6,
+      "contact_rate": 20.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-12-24",
+      "period_end": "2021-12-25",
+      "reg_date": "2021-12-26",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2 다음 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 36.6
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 27.7
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.0
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 4.1
         }
       ]
     },
@@ -38785,6 +40495,146 @@
           "name": "김동연",
           "party": "새로운물결",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9351",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9351&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "(주)코리아리서치인터네셔널",
+      "requester": "조사기관 자체 : ㈜엠브레인퍼블릭, 케이스탯리서치, ㈜코리아리서치인터내셔널, ㈜한국리서치",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1015.0,
+      "response_rate": 29.0,
+      "contact_rate": 21.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-11-29",
+      "period_end": "2021-12-01",
+      "reg_date": "2021-12-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문8] 선생님께서는 다음 대선 후보 중 도덕성 측면에서 가장 나은 사람은 누구라고 생각하십니까? 후보 이름은 무작위 순으로",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 16.0
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 21.0
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 18.0
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 20.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "9349",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9349&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 채널A",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1008.0,
+      "response_rate": 5.9,
+      "contact_rate": 38.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-11-27",
+      "period_end": "2021-11-29",
+      "reg_date": "2021-12-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 35.5
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 34.6
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 6.0
+        },
+        {
+          "name": "김동연",
+          "party": "새로운물결",
+          "pct": 1.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "9347",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9347&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 서울경제",
+      "is_self_poll": false,
+      "method": "인터넷조사",
+      "sample_size": 1800.0,
+      "response_rate": 73.1,
+      "contact_rate": 93.0,
+      "sample_error": "95% 신뢰수준에 ±2.3%P",
+      "period_start": "2021-11-16",
+      "period_end": "2021-11-18",
+      "reg_date": "2021-12-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 29.2
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 27.4
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 3.7
         }
       ]
     },
@@ -50334,6 +52184,96 @@
       ]
     },
     {
+      "ntt_id": "8992",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8992&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 무등일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 14.4,
+      "contact_rate": 24.7,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2021-09-13",
+      "period_end": "2021-09-14",
+      "reg_date": "2021-09-16",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "1. 지지정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 65.8
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 11.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 2.6
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 8.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "8991",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8991&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 무등일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 15.3,
+      "contact_rate": 22.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2021-09-13",
+      "period_end": "2021-09-14",
+      "reg_date": "2021-09-16",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "1. 지지정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 62.7
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 12.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.5
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 6.8
+        }
+      ]
+    },
+    {
       "ntt_id": "8995",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8995&menuNo=200467",
       "agency": "케이스탯리서치",
@@ -52875,6 +54815,151 @@
           "name": "",
           "party": "열린민주당",
           "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "8761",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8761&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사 : MBC",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1015.0,
+      "response_rate": 27.4,
+      "contact_rate": 29.6,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-07-17",
+      "period_end": "2021-07-18",
+      "reg_date": "2021-07-19",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문 3. 차기대통령선거후보로거론되고있는다음인물중에서는누가가장낫다고생각하십니까 ? 순서는무작위순입니다 .",
+      "candidates": [
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 27.1
+        },
+        {
+          "name": "윤석열",
+          "party": "국민의힘",
+          "pct": 19.7
+        },
+        {
+          "name": "이낙연",
+          "party": "더불어민주당",
+          "pct": 14.6
+        },
+        {
+          "name": "최재형",
+          "party": "국민의힘",
+          "pct": 4.8
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 3.9
+        },
+        {
+          "name": "정세균",
+          "party": "더불어민주당",
+          "pct": 1.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "8759",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8759&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 무등일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 811.0,
+      "response_rate": 13.6,
+      "contact_rate": 26.1,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2021-07-14",
+      "period_end": "2021-07-15",
+      "reg_date": "2021-07-19",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "1. 지지정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 65.8
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 9.7
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.2
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 8.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "8758",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8758&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 무등일보",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 816.0,
+      "response_rate": 16.2,
+      "contact_rate": 22.8,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2021-07-14",
+      "period_end": "2021-07-15",
+      "reg_date": "2021-07-19",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "1. 지지정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 61.0
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 13.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.7
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 6.9
         }
       ]
     },
@@ -55460,6 +57545,51 @@
           "name": "",
           "party": "열린민주당",
           "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "8327",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=8327&menuNo=200467",
+      "agency": "리얼미터",
+      "co_agency": "",
+      "requester": "방송사 : SBS Biz",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 2.6,
+      "contact_rate": 46.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2021-01-31",
+      "period_end": "2021-02-02",
+      "reg_date": "2021-02-08",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "1. 지지정당",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 31.1
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 33.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.5
+        },
+        {
+          "name": "",
+          "party": "열린민주당",
+          "pct": 5.6
         }
       ]
     },
