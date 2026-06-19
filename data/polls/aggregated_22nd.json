@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T21:55:30",
+    "generated_at": "2026-06-19T10:48:41",
     "election": "22nd-general-2024",
     "election_date": "2024-04-10",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1993,
       "matched_parsed": 1738,
-      "emitted_records": 2033,
+      "emitted_records": 1994,
       "skipped_no_pdf": 255,
-      "skipped_no_race": 471
+      "skipped_no_race": 479
     }
   },
   "polls": [
@@ -3301,6 +3301,47 @@
           "name": "",
           "party": "조국혁신당",
           "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "15090",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15090&menuNo=200467",
+      "agency": "(주)엠브레인퍼블릭",
+      "co_agency": "",
+      "requester": "방송사 : YTN",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.0,
+      "contact_rate": 36.8,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2024-04-01",
+      "period_end": "2024-04-02",
+      "reg_date": "2024-04-04",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "district": "광산구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "민형배",
+          "party": "더불어민주당",
+          "pct": 74.0
+        },
+        {
+          "name": "안태욱",
+          "party": "국민의힘",
+          "pct": 2.0
+        },
+        {
+          "name": "이낙연",
+          "party": "새로운미래",
+          "pct": 9.0
         }
       ]
     },
@@ -17088,42 +17129,6 @@
       "reg_date": "2024-04-01",
       "sido": "경상남도",
       "sigungu": "",
-      "district": "김해시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "김정호",
-          "party": "더불어민주당",
-          "pct": 30.0
-        },
-        {
-          "name": "조해진",
-          "party": "국민의힘",
-          "pct": 12.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "14898",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14898&menuNo=200467",
-      "agency": "(주)한국리서치",
-      "co_agency": "",
-      "requester": "방송사 : KBS 창원",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 15.1,
-      "contact_rate": 24.1,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-28",
-      "period_end": "2024-03-30",
-      "reg_date": "2024-04-01",
-      "sido": "경상남도",
-      "sigungu": "",
       "district": "",
       "office_level": "비례대표",
       "office_label": "비례대표",
@@ -17613,42 +17618,6 @@
       "reg_date": "2024-04-01",
       "sido": "경상남도",
       "sigungu": "",
-      "district": "김해시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "민홍철",
-          "party": "더불어민주당",
-          "pct": 30.0
-        },
-        {
-          "name": "박성호",
-          "party": "국민의힘",
-          "pct": 14.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "14896",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14896&menuNo=200467",
-      "agency": "(주)한국리서치",
-      "co_agency": "",
-      "requester": "방송사 : KBS 창원",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 14.1,
-      "contact_rate": 25.7,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-28",
-      "period_end": "2024-03-30",
-      "reg_date": "2024-04-01",
-      "sido": "경상남도",
-      "sigungu": "",
       "district": "",
       "office_level": "비례대표",
       "office_label": "비례대표",
@@ -17797,42 +17766,6 @@
           "name": "",
           "party": "개혁신당",
           "pct": 2.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "14852",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14852&menuNo=200467",
-      "agency": "(주)한국리서치",
-      "co_agency": "",
-      "requester": "방송사 : KBS 창원",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 14.9,
-      "contact_rate": 24.6,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-28",
-      "period_end": "2024-03-30",
-      "reg_date": "2024-04-01",
-      "sido": "경상남도",
-      "sigungu": "",
-      "district": "양산시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "김두관",
-          "party": "더불어민주당",
-          "pct": 33.0
-        },
-        {
-          "name": "김태호",
-          "party": "국민의힘",
-          "pct": 9.0
         }
       ]
     },
@@ -26058,6 +25991,42 @@
       ]
     },
     {
+      "ntt_id": "14767",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14767&menuNo=200467",
+      "agency": "(주)에브리리서치",
+      "co_agency": "",
+      "requester": "방송사/시·도단위 신문 : 포항MBC/경북매일신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 4.6,
+      "contact_rate": 76.6,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2024-03-25",
+      "period_end": "2024-03-26",
+      "reg_date": "2024-03-27",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "포항시남구울릉군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김상헌",
+          "party": "더불어민주당",
+          "pct": 20.3
+        },
+        {
+          "name": "이상휘",
+          "party": "국민의힘",
+          "pct": 72.4
+        }
+      ]
+    },
+    {
       "ntt_id": "14766",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14766&menuNo=200467",
       "agency": "(주)여론조사꽃",
@@ -30320,47 +30289,6 @@
       "reg_date": "2024-03-25",
       "sido": "대전광역시",
       "sigungu": "",
-      "district": "서구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "양홍규",
-          "party": "국민의힘",
-          "pct": 39.3
-        },
-        {
-          "name": "조동운",
-          "party": "개혁신당",
-          "pct": 3.8
-        },
-        {
-          "name": "이지훈",
-          "party": "자유통일당",
-          "pct": 1.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "14692",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14692&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "방송사/시·도단위 신문 : TJB 대전방송/충청투데이",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 8.1,
-      "contact_rate": 43.9,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-23",
-      "period_end": "2024-03-24",
-      "reg_date": "2024-03-25",
-      "sido": "대전광역시",
-      "sigungu": "",
       "district": "",
       "office_level": "비례대표",
       "office_label": "비례대표",
@@ -31681,6 +31609,42 @@
           "name": "",
           "party": "진보당",
           "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "14680",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14680&menuNo=200467",
+      "agency": "(주)에브리리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 에브리뉴스",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 700.0,
+      "response_rate": 5.5,
+      "contact_rate": 62.3,
+      "sample_error": "95% 신뢰수준에 ±3.7%P",
+      "period_start": "2024-03-08",
+      "period_end": "2024-03-09",
+      "reg_date": "2024-03-25",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "사상구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "배재정",
+          "party": "더불어민주당",
+          "pct": 46.2
+        },
+        {
+          "name": "김대식",
+          "party": "국민의힘",
+          "pct": 41.6
         }
       ]
     },
@@ -39716,42 +39680,6 @@
       "reg_date": "2024-03-20",
       "sido": "부산광역시",
       "sigungu": "",
-      "district": "연제구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "김희정",
-          "party": "국민의힘",
-          "pct": 38.3
-        },
-        {
-          "name": "노정현",
-          "party": "진보당",
-          "pct": 6.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "14569",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14569&menuNo=200467",
-      "agency": "케이에스오아이 주식회사(한국사회여론연구소)",
-      "co_agency": "",
-      "requester": "시·도단위 신문/방송사 : 부산일보/부산MBC",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 8.4,
-      "contact_rate": 43.6,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-18",
-      "period_end": "2024-03-19",
-      "reg_date": "2024-03-20",
-      "sido": "부산광역시",
-      "sigungu": "",
       "district": "",
       "office_level": "비례대표",
       "office_label": "비례대표",
@@ -41804,47 +41732,6 @@
           "name": "",
           "party": "새로운미래",
           "pct": 3.3
-        }
-      ]
-    },
-    {
-      "ntt_id": "14548",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14548&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 8.4,
-      "contact_rate": 42.3,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-03-18",
-      "period_end": "2024-03-19",
-      "reg_date": "2024-03-19",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "district": "서구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "양홍규",
-          "party": "국민의힘",
-          "pct": 38.2
-        },
-        {
-          "name": "조동운",
-          "party": "개혁신당",
-          "pct": 2.6
-        },
-        {
-          "name": "이지훈",
-          "party": "자유통일당",
-          "pct": 2.2
         }
       ]
     },
@@ -69490,42 +69377,6 @@
       ]
     },
     {
-      "ntt_id": "14032",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14032&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "방송사 : HCN",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 502.0,
-      "response_rate": 9.2,
-      "contact_rate": 38.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-02-16",
-      "period_end": "2024-02-17",
-      "reg_date": "2024-02-19",
-      "sido": "경상북도",
-      "sigungu": "",
-      "district": "상주시문경시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "임이자",
-          "party": "국민의힘",
-          "pct": 38.3
-        },
-        {
-          "name": "이윤희",
-          "party": "더불어민주당",
-          "pct": 6.3
-        }
-      ]
-    },
-    {
       "ntt_id": "14016",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=14016&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -70641,139 +70492,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "13983",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13983&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 6.5,
-      "contact_rate": 56.5,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-02-11",
-      "period_end": "2024-02-12",
-      "reg_date": "2024-02-13",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "해남군완도군진도군",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "1",
-      "table_title": "제22대 총선 후보지지도",
-      "candidates": [
-        {
-          "name": "박지원",
-          "party": "더불어민주당",
-          "pct": 44.5
-        },
-        {
-          "name": "곽봉근",
-          "party": "국민의힘",
-          "pct": 5.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "13982",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13982&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 6.7,
-      "contact_rate": 53.5,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-02-11",
-      "period_end": "2024-02-12",
-      "reg_date": "2024-02-13",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "순천시광양시곡성군구례군갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "1",
-      "table_title": "제22대 총선 후보지지도",
-      "candidates": [
-        {
-          "name": "신성식",
-          "party": "무소속",
-          "pct": 22.5
-        },
-        {
-          "name": "이성수",
-          "party": "진보당",
-          "pct": 9.0
-        },
-        {
-          "name": "김문수",
-          "party": "더불어민주당",
-          "pct": 7.8
-        },
-        {
-          "name": "김형석",
-          "party": "국민의힘",
-          "pct": 1.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "13981",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13981&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 7.1,
-      "contact_rate": 50.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-02-11",
-      "period_end": "2024-02-12",
-      "reg_date": "2024-02-13",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "목포시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "1",
-      "table_title": "제22대 총선 후보지지도",
-      "candidates": [
-        {
-          "name": "김원이",
-          "party": "더불어민주당",
-          "pct": 29.1
-        },
-        {
-          "name": "이윤석",
-          "party": "무소속",
-          "pct": 4.0
-        },
-        {
-          "name": "윤선웅",
-          "party": "국민의힘",
-          "pct": 3.9
-        },
-        {
-          "name": "최국진",
-          "party": "진보당",
-          "pct": 2.8
-        },
-        {
-          "name": "박명기",
-          "party": "녹색정의당",
-          "pct": 0.9
         }
       ]
     },
@@ -73423,42 +73141,6 @@
       "reg_date": "2024-02-06",
       "sido": "전북특별자치도",
       "sigungu": "",
-      "district": "정읍시고창군",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "윤준병",
-          "party": "더불어민주당",
-          "pct": 38.0
-        },
-        {
-          "name": "정후영",
-          "party": "자유통일당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13870",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13870&menuNo=200467",
-      "agency": "(주)한국리서치",
-      "co_agency": "",
-      "requester": "방송사/시·도단위 신문 : KBS전주/전북일보",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 19.2,
-      "contact_rate": 22.1,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-01-31",
-      "period_end": "2024-02-01",
-      "reg_date": "2024-02-06",
-      "sido": "전북특별자치도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -74453,42 +74135,6 @@
       "reg_date": "2024-02-05",
       "sido": "전북특별자치도",
       "sigungu": "",
-      "district": "익산시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "이춘석",
-          "party": "더불어민주당",
-          "pct": 39.0
-        },
-        {
-          "name": "전권희",
-          "party": "진보당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13840",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13840&menuNo=200467",
-      "agency": "(주)한국리서치",
-      "co_agency": "",
-      "requester": "방송사/시·도단위 신문 : KBS전주/전북일보",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 18.3,
-      "contact_rate": 24.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-01-30",
-      "period_end": "2024-01-31",
-      "reg_date": "2024-02-05",
-      "sido": "전북특별자치도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -74751,6 +74397,42 @@
           "name": "김선교",
           "party": "국민의힘",
           "pct": 35.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "13855",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13855&menuNo=200467",
+      "agency": "(주)코리아리서치인터내셔널",
+      "co_agency": "",
+      "requester": "방송사/방송사/시·도단위 신문/인터넷언론 : 제주MBC/제주CBS/제주일보/제주의소리",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 604.0,
+      "response_rate": 18.4,
+      "contact_rate": 23.5,
+      "sample_error": "95% 신뢰수준에 ±4.0%P",
+      "period_start": "2024-02-03",
+      "period_end": "2024-02-04",
+      "reg_date": "2024-02-04",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "서귀포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 그러면 이번 총선에서 다음 두 후보가 출마한다면, 어느 후보를 지지하시겠습니까? (보기 1-2 로테이션)",
+      "candidates": [
+        {
+          "name": "위성곤",
+          "party": "더불어민주당",
+          "pct": 43.0
+        },
+        {
+          "name": "고기철",
+          "party": "국민의힘",
+          "pct": 34.0
         }
       ]
     },
@@ -76469,42 +76151,6 @@
       "reg_date": "2024-01-23",
       "sido": "경기도",
       "sigungu": "",
-      "district": "김포시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "3. 김포시(갑) 후보지지도",
-      "candidates": [
-        {
-          "name": "김주영",
-          "party": "더불어민주당",
-          "pct": 23.9
-        },
-        {
-          "name": "박진호",
-          "party": "국민의힘",
-          "pct": 22.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "13737",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13737&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 김포신문",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 6.6,
-      "contact_rate": 53.1,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2024-01-19",
-      "period_end": "2024-01-20",
-      "reg_date": "2024-01-23",
-      "sido": "경기도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -77517,42 +77163,6 @@
           "name": "",
           "party": "국민의힘",
           "pct": 38.6
-        }
-      ]
-    },
-    {
-      "ntt_id": "13652",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13652&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 프레스뉴스통신",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 5.9,
-      "contact_rate": 58.5,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2024-01-13",
-      "period_end": "2024-01-14",
-      "reg_date": "2024-01-15",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "남양주시병",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "조광한",
-          "party": "국민의힘",
-          "pct": 24.1
-        },
-        {
-          "name": "정재준",
-          "party": "개혁신당",
-          "pct": 18.0
         }
       ]
     },
@@ -79513,124 +79123,6 @@
       ]
     },
     {
-      "ntt_id": "13537",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13537&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 502.0,
-      "response_rate": 20.3,
-      "contact_rate": 33.0,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-02",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 40.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 3.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13536",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13536&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 509.0,
-      "response_rate": 15.5,
-      "contact_rate": 35.8,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-02",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 28.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 7.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13534",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13534&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 502.0,
-      "response_rate": 23.6,
-      "contact_rate": 34.0,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-28",
-      "period_end": "2023-12-29",
-      "reg_date": "2024-01-02",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 35.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 2.0
-        }
-      ]
-    },
-    {
       "ntt_id": "13564",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13564&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -79708,83 +79200,6 @@
       ]
     },
     {
-      "ntt_id": "13531",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13531&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 501.0,
-      "response_rate": 11.4,
-      "contact_rate": 42.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2024-01-02",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 27.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13529",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13529&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 501.0,
-      "response_rate": 12.7,
-      "contact_rate": 42.3,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-02",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 30.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 2.0
-        }
-      ]
-    },
-    {
       "ntt_id": "13528",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13528&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -79821,88 +79236,6 @@
         {
           "name": "",
           "party": "정의당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13525",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13525&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 13.1,
-      "contact_rate": 39.8,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2024-01-02",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 38.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 5.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 4.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13524",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13524&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 503.0,
-      "response_rate": 10.5,
-      "contact_rate": 43.7,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2024-01-02",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 27.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
           "pct": 3.0
         }
       ]
@@ -79950,42 +79283,6 @@
           "name": "",
           "party": "진보당",
           "pct": 0.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13512",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13512&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 501.0,
-      "response_rate": 12.7,
-      "contact_rate": 42.3,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-02",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 30.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 2.0
         }
       ]
     },
@@ -80154,165 +79451,6 @@
       ]
     },
     {
-      "ntt_id": "13520",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13520&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 502.0,
-      "response_rate": 20.3,
-      "contact_rate": 33.0,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-01",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 40.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 3.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13519",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13519&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 509.0,
-      "response_rate": 15.5,
-      "contact_rate": 35.8,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2023-12-29",
-      "period_end": "2023-12-30",
-      "reg_date": "2024-01-01",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 28.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 7.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13517",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13517&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 502.0,
-      "response_rate": 23.6,
-      "contact_rate": 34.0,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-28",
-      "period_end": "2023-12-29",
-      "reg_date": "2024-01-01",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 35.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 2.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13514",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13514&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 501.0,
-      "response_rate": 11.4,
-      "contact_rate": 42.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2024-01-01",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 27.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
       "ntt_id": "13540",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13540&menuNo=200467",
       "agency": "케이스탯리서치",
@@ -80349,88 +79487,6 @@
         {
           "name": "",
           "party": "정의당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13506",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13506&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 13.1,
-      "contact_rate": 39.8,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2023-12-31",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 38.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 5.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 4.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13505",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13505&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : KBS광주방송총국",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 503.0,
-      "response_rate": 10.5,
-      "contact_rate": 43.7,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-26",
-      "period_end": "2023-12-27",
-      "reg_date": "2023-12-31",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 27.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 4.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
           "pct": 3.0
         }
       ]
@@ -81118,37 +80174,6 @@
       ]
     },
     {
-      "ntt_id": "13436",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13436&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 503.0,
-      "response_rate": 13.3,
-      "contact_rate": 29.4,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-20",
-      "period_end": "2023-12-21",
-      "reg_date": "2023-12-22",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "district": "유성구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "이상민",
-          "party": "국민의힘",
-          "pct": 34.3
-        }
-      ]
-    },
-    {
       "ntt_id": "13435",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13435&menuNo=200467",
       "agency": "(주)여론조사꽃",
@@ -81247,12 +80272,12 @@
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 25.0
+          "pct": 38.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 20.0
+          "pct": 34.0
         }
       ]
     },
@@ -81606,52 +80631,6 @@
       "reg_date": "2023-12-18",
       "sido": "전라남도",
       "sigungu": "",
-      "district": "목포시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "2. 제22대 총선 후보선호도 (%)",
-      "candidates": [
-        {
-          "name": "김원이",
-          "party": "더불어민주당",
-          "pct": 27.4
-        },
-        {
-          "name": "이윤석",
-          "party": "무소속",
-          "pct": 6.4
-        },
-        {
-          "name": "윤선웅",
-          "party": "국민의힘",
-          "pct": 4.1
-        },
-        {
-          "name": "최국진",
-          "party": "진보당",
-          "pct": 2.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "13410",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13410&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 6.1,
-      "contact_rate": 57.1,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-15",
-      "period_end": "2023-12-16",
-      "reg_date": "2023-12-18",
-      "sido": "전라남도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -81831,47 +80810,6 @@
       "reg_date": "2023-12-18",
       "sido": "광주광역시",
       "sigungu": "",
-      "district": "서구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "제22대 총선 후보선호도",
-      "candidates": [
-        {
-          "name": "양부남",
-          "party": "더불어민주당",
-          "pct": 29.8
-        },
-        {
-          "name": "강은미",
-          "party": "녹색정의당",
-          "pct": 9.3
-        },
-        {
-          "name": "김해정",
-          "party": "진보당",
-          "pct": 5.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "13400",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13400&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.8,
-      "contact_rate": 60.3,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-14",
-      "period_end": "2023-12-15",
-      "reg_date": "2023-12-18",
-      "sido": "광주광역시",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -81964,47 +80902,6 @@
       "reg_date": "2023-12-18",
       "sido": "광주광역시",
       "sigungu": "",
-      "district": "동구남구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "제22대 총선 후보선호도",
-      "candidates": [
-        {
-          "name": "김성환",
-          "party": "무소속",
-          "pct": 25.5
-        },
-        {
-          "name": "안도걸",
-          "party": "더불어민주당",
-          "pct": 15.0
-        },
-        {
-          "name": "김미화",
-          "party": "진보당",
-          "pct": 2.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "13398",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13398&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.9,
-      "contact_rate": 58.9,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-14",
-      "period_end": "2023-12-15",
-      "reg_date": "2023-12-18",
-      "sido": "광주광역시",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -82077,42 +80974,6 @@
           "name": "",
           "party": "진보당",
           "pct": 2.8
-        }
-      ]
-    },
-    {
-      "ntt_id": "13396",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13396&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 뉴스원 전북취재본부",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 7.2,
-      "contact_rate": 54.3,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-15",
-      "period_end": "2023-12-16",
-      "reg_date": "2023-12-17",
-      "sido": "전북특별자치도",
-      "sigungu": "",
-      "district": "전주시병",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "정동영",
-          "party": "더불어민주당",
-          "pct": 24.8
-        },
-        {
-          "name": "한병옥",
-          "party": "녹색정의당",
-          "pct": 5.3
         }
       ]
     },
@@ -82878,42 +81739,6 @@
       "reg_date": "2023-12-13",
       "sido": "전북특별자치도",
       "sigungu": "",
-      "district": "익산시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "이춘석",
-          "party": "더불어민주당",
-          "pct": 23.2
-        },
-        {
-          "name": "전권희",
-          "party": "진보당",
-          "pct": 7.6
-        }
-      ]
-    },
-    {
-      "ntt_id": "13363",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13363&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 뉴스원 전북취재본부",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 502.0,
-      "response_rate": 9.1,
-      "contact_rate": 43.9,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-11",
-      "period_end": "2023-12-12",
-      "reg_date": "2023-12-13",
-      "sido": "전북특별자치도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -83053,42 +81878,6 @@
           "name": "",
           "party": "국민의힘",
           "pct": 32.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "13357",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13357&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 한양경제",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 6.5,
-      "contact_rate": 59.2,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-12-09",
-      "period_end": "2023-12-11",
-      "reg_date": "2023-12-12",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "부천시병",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "이건태",
-          "party": "더불어민주당",
-          "pct": 24.4
-        },
-        {
-          "name": "장덕천",
-          "party": "새로운미래",
-          "pct": 10.9
         }
       ]
     },
@@ -84690,42 +83479,6 @@
       ]
     },
     {
-      "ntt_id": "13275",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13275&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 513.0,
-      "response_rate": 9.4,
-      "contact_rate": 41.0,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2023-11-29",
-      "period_end": "2023-11-30",
-      "reg_date": "2023-12-01",
-      "sido": "인천광역시",
-      "sigungu": "",
-      "district": "부평구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "홍영표",
-          "party": "더불어민주당",
-          "pct": 35.2
-        },
-        {
-          "name": "김응호",
-          "party": "녹색정의당",
-          "pct": 3.3
-        }
-      ]
-    },
-    {
       "ntt_id": "13273",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13273&menuNo=200467",
       "agency": "(주)여론조사꽃",
@@ -86113,42 +84866,6 @@
       ]
     },
     {
-      "ntt_id": "13169",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13169&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 515.0,
-      "response_rate": 11.2,
-      "contact_rate": 34.8,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2023-11-01",
-      "period_end": "2023-11-02",
-      "reg_date": "2023-11-02",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "남양주시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "조응천",
-          "party": "개혁신당",
-          "pct": 26.5
-        },
-        {
-          "name": "최민희",
-          "party": "더불어민주당",
-          "pct": 21.9
-        }
-      ]
-    },
-    {
       "ntt_id": "13168",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13168&menuNo=200467",
       "agency": "(주)리서치뷰",
@@ -86787,42 +85504,6 @@
           "name": "",
           "party": "국민의힘",
           "pct": 22.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "13133",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13133&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "방송사 : 목포MBC",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 501.0,
-      "response_rate": 15.4,
-      "contact_rate": 39.4,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-10-17",
-      "period_end": "2023-10-18",
-      "reg_date": "2023-10-19",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "목포시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "김원이",
-          "party": "더불어민주당",
-          "pct": 32.5
-        },
-        {
-          "name": "이윤석",
-          "party": "무소속",
-          "pct": 8.7
         }
       ]
     },
@@ -88417,47 +87098,6 @@
       "reg_date": "2023-09-25",
       "sido": "전라남도",
       "sigungu": "",
-      "district": "순천시광양시곡성군구례군을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "제22대 총선 후보선호도",
-      "candidates": [
-        {
-          "name": "이정현",
-          "party": "국민의힘",
-          "pct": 13.2
-        },
-        {
-          "name": "유현주",
-          "party": "진보당",
-          "pct": 11.5
-        },
-        {
-          "name": "권향엽",
-          "party": "더불어민주당",
-          "pct": 8.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "13039",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13039&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.7,
-      "contact_rate": 61.4,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-09-22",
-      "period_end": "2023-09-23",
-      "reg_date": "2023-09-25",
-      "sido": "전라남도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -88642,47 +87282,6 @@
       "reg_date": "2023-09-25",
       "sido": "광주광역시",
       "sigungu": "",
-      "district": "서구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "제22대 총선 후보선호도",
-      "candidates": [
-        {
-          "name": "양부남",
-          "party": "더불어민주당",
-          "pct": 22.9
-        },
-        {
-          "name": "강은미",
-          "party": "녹색정의당",
-          "pct": 10.7
-        },
-        {
-          "name": "김해정",
-          "party": "진보당",
-          "pct": 5.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "13035",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13035&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.5,
-      "contact_rate": 62.6,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-09-21",
-      "period_end": "2023-09-22",
-      "reg_date": "2023-09-25",
-      "sido": "광주광역시",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -88755,47 +87354,6 @@
           "name": "",
           "party": "진보당",
           "pct": 4.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "13033",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13033&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "방송사 : KBC광주방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.7,
-      "contact_rate": 60.7,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2023-09-21",
-      "period_end": "2023-09-22",
-      "reg_date": "2023-09-25",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "district": "동구남구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "제22대 총선 후보선호도",
-      "candidates": [
-        {
-          "name": "김성환",
-          "party": "무소속",
-          "pct": 27.9
-        },
-        {
-          "name": "안도걸",
-          "party": "더불어민주당",
-          "pct": 8.9
-        },
-        {
-          "name": "김미화",
-          "party": "진보당",
-          "pct": 5.4
         }
       ]
     },
@@ -88969,42 +87527,6 @@
       ]
     },
     {
-      "ntt_id": "13021",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13021&menuNo=200467",
-      "agency": "(주)여론조사꽃",
-      "co_agency": "",
-      "requester": "조사기관 자체 : (주)여론조사꽃 자체조사",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 511.0,
-      "response_rate": 10.6,
-      "contact_rate": 35.3,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2023-09-20",
-      "period_end": "2023-09-21",
-      "reg_date": "2023-09-22",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "고양시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "김성회",
-          "party": "더불어민주당",
-          "pct": 27.6
-        },
-        {
-          "name": "심상정",
-          "party": "녹색정의당",
-          "pct": 21.7
-        }
-      ]
-    },
-    {
       "ntt_id": "13007",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13007&menuNo=200467",
       "agency": "(주)데일리리서치",
@@ -89042,42 +87564,6 @@
           "name": "",
           "party": "정의당",
           "pct": 3.7
-        }
-      ]
-    },
-    {
-      "ntt_id": "13006",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=13006&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 서부경남신문",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1008.0,
-      "response_rate": 8.0,
-      "contact_rate": 43.6,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2023-09-17",
-      "period_end": "2023-09-18",
-      "reg_date": "2023-09-19",
-      "sido": "경상남도",
-      "sigungu": "",
-      "district": "산청군함양군거창군합천군",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "지역구 후보 지지도",
-      "candidates": [
-        {
-          "name": "신성범",
-          "party": "국민의힘",
-          "pct": 26.3
-        },
-        {
-          "name": "김기태",
-          "party": "더불어민주당",
-          "pct": 9.4
         }
       ]
     },
@@ -92198,17 +90684,17 @@
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 35.5
+          "pct": 59.2
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 6.7
+          "pct": 9.2
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 2.2
+          "pct": 3.2
         }
       ]
     },

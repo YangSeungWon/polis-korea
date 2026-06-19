@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T21:55:29",
+    "generated_at": "2026-06-19T10:48:40",
     "election": "20th-general-2016",
     "election_date": "2016-04-13",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1410,
       "matched_parsed": 1131,
-      "emitted_records": 492,
+      "emitted_records": 518,
       "skipped_no_pdf": 279,
-      "skipped_no_race": 660
+      "skipped_no_race": 630
     }
   },
   "polls": [
@@ -153,6 +153,83 @@
       ]
     },
     {
+      "ntt_id": "2771",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2771&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 5.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-07",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "강서구병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 서울 강서구병 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "유영",
+          "party": "새누리당",
+          "pct": 30.4
+        },
+        {
+          "name": "한정애",
+          "party": "더불어민주당",
+          "pct": 27.8
+        },
+        {
+          "name": "김종민",
+          "party": "정의당",
+          "pct": 5.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2768",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2768&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 21.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-04",
+      "reg_date": "2016-04-07",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "수성구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 대구 수성구갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김문수",
+          "party": "새누리당",
+          "pct": 28.5
+        },
+        {
+          "name": "김부겸",
+          "party": "더불어민주당",
+          "pct": 55.6
+        }
+      ]
+    },
+    {
       "ntt_id": "2767",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2767&menuNo=200467",
       "agency": "(주)밀워드브라운미디어리서치",
@@ -195,6 +272,47 @@
           "name": "",
           "party": "정의당",
           "pct": 5.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "2765",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2765&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 7.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-07",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "종로구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 서울 종로구 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "오세훈",
+          "party": "새누리당",
+          "pct": 40.0
+        },
+        {
+          "name": "정세균",
+          "party": "더불어민주당",
+          "pct": 40.4
+        },
+        {
+          "name": "윤공규",
+          "party": "정의당",
+          "pct": 1.2
         }
       ]
     },
@@ -705,6 +823,47 @@
       ]
     },
     {
+      "ntt_id": "2751",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2751&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 목포MBC",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 25.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-05",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-07",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "영암군무안군신안군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 전남 영암군/무안군/신안군 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "주영순",
+          "party": "새누리당",
+          "pct": 16.5
+        },
+        {
+          "name": "서삼석",
+          "party": "더불어민주당",
+          "pct": 34.5
+        },
+        {
+          "name": "장문규",
+          "party": "정의당",
+          "pct": 2.4
+        }
+      ]
+    },
+    {
       "ntt_id": "2750",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2750&menuNo=200467",
       "agency": "시대정신연구소",
@@ -1002,42 +1161,6 @@
       ]
     },
     {
-      "ntt_id": "2730",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2730&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "방송사 : MBN",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 512.0,
-      "response_rate": 9.0,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-05",
-      "period_end": "2016-04-06",
-      "reg_date": "2016-04-07",
-      "sido": "인천광역시",
-      "sigungu": "",
-      "district": "남동구갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "문대성",
-          "party": "새누리당",
-          "pct": 33.4
-        },
-        {
-          "name": "임동수",
-          "party": "민중연합당",
-          "pct": 1.9
-        }
-      ]
-    },
-    {
       "ntt_id": "2728",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2728&menuNo=200467",
       "agency": "리얼미터",
@@ -1079,23 +1202,23 @@
       ]
     },
     {
-      "ntt_id": "2724",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2724&menuNo=200467",
-      "agency": "리얼미터",
+      "ntt_id": "2720",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2720&menuNo=200467",
+      "agency": "(주)리서치플러스",
       "co_agency": "",
-      "requester": "방송사 : MBN",
+      "requester": "방송사 : KBS 제주방송총국",
       "is_self_poll": false,
       "method": "유선전화면접",
-      "sample_size": 511.0,
-      "response_rate": 9.9,
+      "sample_size": 811.0,
+      "response_rate": 20.4,
       "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-05",
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2016-04-04",
       "period_end": "2016-04-06",
       "reg_date": "2016-04-07",
-      "sido": "서울특별시",
+      "sido": "제주특별자치도",
       "sigungu": "",
-      "district": "성북구갑",
+      "district": "제주시갑",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
@@ -1103,14 +1226,122 @@
       "table_title": "",
       "candidates": [
         {
-          "name": "정태근",
+          "name": "양치석",
           "party": "새누리당",
-          "pct": 32.2
+          "pct": 30.0
         },
         {
-          "name": "박철우",
-          "party": "민중연합당",
-          "pct": 4.3
+          "name": "강창일",
+          "party": "민주당",
+          "pct": 27.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "2714",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2714&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 18.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-04-05",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-07",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "서귀포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 이번 서귀포시 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "강지용",
+          "party": "새누리당",
+          "pct": 40.9
+        },
+        {
+          "name": "위성곤",
+          "party": "더불어민주당",
+          "pct": 41.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "2713",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2713&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1005.0,
+      "response_rate": 15.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-04-05",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-07",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 이번 제주시을 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "부상일",
+          "party": "새누리당",
+          "pct": 42.5
+        },
+        {
+          "name": "오영훈",
+          "party": "더불어민주당",
+          "pct": 33.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "2711",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2711&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1006.0,
+      "response_rate": 12.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-04-05",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-07",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 이번 제주시갑 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "양치석",
+          "party": "새누리당",
+          "pct": 35.6
+        },
+        {
+          "name": "강창일",
+          "party": "더불어민주당",
+          "pct": 36.6
         }
       ]
     },
@@ -2500,6 +2731,47 @@
       ]
     },
     {
+      "ntt_id": "2663",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2663&menuNo=200467",
+      "agency": "마크로밀엠브레인",
+      "co_agency": "",
+      "requester": "정당·후보자 : 민병두",
+      "is_self_poll": true,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 13.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "동대문구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "3. 통계표",
+      "candidates": [
+        {
+          "name": "박준선",
+          "party": "새누리당",
+          "pct": 30.2
+        },
+        {
+          "name": "민병두",
+          "party": "더불어민주당",
+          "pct": 48.4
+        },
+        {
+          "name": "윤미연",
+          "party": "민중연합당",
+          "pct": 3.6
+        }
+      ]
+    },
+    {
       "ntt_id": "2647",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2647&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -2752,6 +3024,42 @@
           "name": "",
           "party": "민중연합당",
           "pct": 1.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "2638",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2638&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 13.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "district": "전주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 전북 전주시을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "정운천",
+          "party": "새누리당",
+          "pct": 28.4
+        },
+        {
+          "name": "최형재",
+          "party": "더불어민주당",
+          "pct": 27.9
         }
       ]
     },
@@ -3114,6 +3422,237 @@
       ]
     },
     {
+      "ntt_id": "2596",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2596&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 29.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "속초시고성군양양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 속초시/고성군/양양군 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이양수",
+          "party": "새누리당",
+          "pct": 55.1
+        },
+        {
+          "name": "김주학",
+          "party": "더불어민주당",
+          "pct": 18.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2594",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2594&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 26.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "홍천군철원군화천군양구군인제군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 홍천군/철원군/화천군/양구군/인제군 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습",
+      "candidates": [
+        {
+          "name": "황영철",
+          "party": "새누리당",
+          "pct": 46.9
+        },
+        {
+          "name": "조일현",
+          "party": "더불어민주당",
+          "pct": 18.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "2591",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2591&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 23.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "강릉시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 강릉시 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "권성동",
+          "party": "새누리당",
+          "pct": 52.9
+        },
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 23.7
+        },
+        {
+          "name": "최종문",
+          "party": "노동당",
+          "pct": 3.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "2590",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2590&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 16.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-04",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 원주시 을 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이강후",
+          "party": "새누리당",
+          "pct": 38.2
+        },
+        {
+          "name": "송기헌",
+          "party": "더불어민주당",
+          "pct": 36.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2589",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2589&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 14.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-05",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 원주시 갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김기선",
+          "party": "새누리당",
+          "pct": 39.3
+        },
+        {
+          "name": "권성중",
+          "party": "더불어민주당",
+          "pct": 33.2
+        },
+        {
+          "name": "최석",
+          "party": "정의당",
+          "pct": 2.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2588",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2588&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방,강원일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 31.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-04",
+      "reg_date": "2016-04-06",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "춘천시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 강원 춘천시 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김진태",
+          "party": "새누리당",
+          "pct": 50.4
+        },
+        {
+          "name": "허영",
+          "party": "더불어민주당",
+          "pct": 28.1
+        },
+        {
+          "name": "강선경",
+          "party": "정의당",
+          "pct": 2.8
+        }
+      ]
+    },
+    {
       "ntt_id": "2587",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2587&menuNo=200467",
       "agency": "한국CNR",
@@ -3160,23 +3699,23 @@
       ]
     },
     {
-      "ntt_id": "2583",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2583&menuNo=200467",
-      "agency": "리얼미터",
+      "ntt_id": "2577",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2577&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
       "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
       "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 515.0,
-      "response_rate": 1.8,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.2,
       "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-02",
-      "period_end": "2016-04-03",
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
       "reg_date": "2016-04-06",
-      "sido": "경기도",
+      "sido": "충청북도",
       "sigungu": "",
-      "district": "안산시상록구갑",
+      "district": "증평군진천군음성군",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
@@ -3184,14 +3723,122 @@
       "table_title": "",
       "candidates": [
         {
-          "name": "이화수",
+          "name": "경대수",
           "party": "새누리당",
-          "pct": 35.2
+          "pct": 41.2
         },
         {
-          "name": "홍연아",
-          "party": "민중연합당",
-          "pct": 3.1
+          "name": "임해종",
+          "party": "더불어민주당",
+          "pct": 24.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "2575",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2575&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-06",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "보은군옥천군영동군괴산군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "박덕흠",
+          "party": "새누리당",
+          "pct": 50.4
+        },
+        {
+          "name": "이재한",
+          "party": "더불어민주당",
+          "pct": 21.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "2574",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2574&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-06",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "제천시단양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "권석창",
+          "party": "새누리당",
+          "pct": 50.4
+        },
+        {
+          "name": "이후삼",
+          "party": "더불어민주당",
+          "pct": 19.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2573",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2573&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-06",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "충주시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이종배",
+          "party": "새누리당",
+          "pct": 54.3
+        },
+        {
+          "name": "윤홍락",
+          "party": "더불어민주당",
+          "pct": 21.1
         }
       ]
     },
@@ -3233,6 +3880,78 @@
           "name": "이기원",
           "party": "무소속",
           "pct": 7.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "2570",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2570&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 9.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-06",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "청주시흥덕구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "송태영",
+          "party": "새누리당",
+          "pct": 31.4
+        },
+        {
+          "name": "도종환",
+          "party": "더불어민주당",
+          "pct": 30.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "2567",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2567&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB청주방송",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-04",
+      "period_end": "2016-04-06",
+      "reg_date": "2016-04-06",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "청주시상당구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "정우택",
+          "party": "새누리당",
+          "pct": 46.1
+        },
+        {
+          "name": "한범덕",
+          "party": "더불어민주당",
+          "pct": 33.4
         }
       ]
     },
@@ -3917,52 +4636,6 @@
       "reg_date": "2016-04-05",
       "sido": "서울특별시",
       "sigungu": "",
-      "district": "용산구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
-      "candidates": [
-        {
-          "name": "황춘자",
-          "party": "새누리당",
-          "pct": 32.2
-        },
-        {
-          "name": "곽태원",
-          "party": "국민의당",
-          "pct": 7.6
-        },
-        {
-          "name": "정연욱",
-          "party": "정의당",
-          "pct": 3.3
-        },
-        {
-          "name": "이소영",
-          "party": "민중연합당",
-          "pct": 0.6
-        }
-      ]
-    },
-    {
-      "ntt_id": "2552",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2552&menuNo=200467",
-      "agency": "마크로밀엠브레인",
-      "co_agency": "",
-      "requester": "방송사 : YTN",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 16.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-04-03",
-      "period_end": "2016-04-05",
-      "reg_date": "2016-04-05",
-      "sido": "서울특별시",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -4203,6 +4876,42 @@
       ]
     },
     {
+      "ntt_id": "2528",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2528&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 23.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-05",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "창원시성산구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 경남 창원시성산구 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "강기윤",
+          "party": "새누리당",
+          "pct": 31.7
+        },
+        {
+          "name": "노회찬",
+          "party": "정의당",
+          "pct": 40.8
+        }
+      ]
+    },
+    {
       "ntt_id": "2526",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2526&menuNo=200467",
       "agency": "윈폴(WINPOLL)",
@@ -4254,6 +4963,42 @@
       ]
     },
     {
+      "ntt_id": "2523",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2523&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 19.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-05",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "북구강서구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 부산 북구강서구갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "박민식",
+          "party": "새누리당",
+          "pct": 43.3
+        },
+        {
+          "name": "전재수",
+          "party": "더불어민주당",
+          "pct": 41.6
+        }
+      ]
+    },
+    {
       "ntt_id": "2520",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2520&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -4296,42 +5041,6 @@
           "name": "이정확",
           "party": "민중연합당",
           "pct": 2.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "2519",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2519&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 굿모닝충청",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 519.0,
-      "response_rate": 2.9,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-04",
-      "period_end": "2016-04-06",
-      "reg_date": "2016-04-05",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "district": "서구갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이영규",
-          "party": "새누리당",
-          "pct": 43.8
-        },
-        {
-          "name": "주무늬",
-          "party": "민중연합당",
-          "pct": 2.1
         }
       ]
     },
@@ -5235,42 +5944,6 @@
       ]
     },
     {
-      "ntt_id": "2478",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2478&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 서울경제",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 509.0,
-      "response_rate": 3.5,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-05",
-      "period_end": "2016-04-06",
-      "reg_date": "2016-04-05",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "용산구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "황춘자",
-          "party": "새누리당",
-          "pct": 35.4
-        },
-        {
-          "name": "이소영",
-          "party": "민중연합당",
-          "pct": 2.4
-        }
-      ]
-    },
-    {
       "ntt_id": "2477",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2477&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -5528,6 +6201,42 @@
           "name": "윤공규",
           "party": "정의당",
           "pct": 0.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2469",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2469&menuNo=200467",
+      "agency": "마크로밀엠브레인",
+      "co_agency": "",
+      "requester": "정당·후보자 : 김상민",
+      "is_self_poll": true,
+      "method": "유선전화면접",
+      "sample_size": 501.0,
+      "response_rate": 8.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-02",
+      "period_end": "2016-04-03",
+      "reg_date": "2016-04-05",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "수원시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 수원시을 국회의원 선거에서 다음 후보 중 누구에게 투표하시겠습니까? 순서는 기호순입니다",
+      "candidates": [
+        {
+          "name": "김상민",
+          "party": "새누리당",
+          "pct": 26.5
+        },
+        {
+          "name": "백혜련",
+          "party": "민주당",
+          "pct": 23.6
         }
       ]
     },
@@ -6216,78 +6925,6 @@
       ]
     },
     {
-      "ntt_id": "2445",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2445&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "방송사 : CBS, 국민일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 510.0,
-      "response_rate": 1.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-03-31",
-      "period_end": "2016-04-04",
-      "reg_date": "2016-04-04",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "순천시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이정현",
-          "party": "새누리당",
-          "pct": 35.5
-        },
-        {
-          "name": "정오균",
-          "party": "민중연합당",
-          "pct": 2.8
-        }
-      ]
-    },
-    {
-      "ntt_id": "2444",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2444&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "방송사 : CBS, 국민일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 511.0,
-      "response_rate": 4.0,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-01",
-      "period_end": "2016-04-04",
-      "reg_date": "2016-04-04",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "용산구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "황춘자",
-          "party": "새누리당",
-          "pct": 34.7
-        },
-        {
-          "name": "이소영",
-          "party": "민중연합당",
-          "pct": 1.0
-        }
-      ]
-    },
-    {
       "ntt_id": "2443",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2443&menuNo=200467",
       "agency": "(주)포커스컴퍼니",
@@ -6376,42 +7013,6 @@
           "name": "",
           "party": "정의당",
           "pct": 5.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "2441",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2441&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "방송사 : CBS, 국민일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 505.0,
-      "response_rate": 3.0,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-04-01",
-      "period_end": "2016-04-03",
-      "reg_date": "2016-04-04",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "남양주시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "심장수",
-          "party": "새누리당",
-          "pct": 46.5
-        },
-        {
-          "name": "이기원",
-          "party": "민중연합당",
-          "pct": 2.2
         }
       ]
     },
@@ -7126,42 +7727,6 @@
       ]
     },
     {
-      "ntt_id": "2417",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2417&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 중부일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 510.0,
-      "response_rate": 1.7,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-05",
-      "period_end": "2016-04-05",
-      "reg_date": "2016-04-04",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "용인시정",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이상일",
-          "party": "새누리당",
-          "pct": 41.5
-        },
-        {
-          "name": "문예연",
-          "party": "민중연합당",
-          "pct": 3.2
-        }
-      ]
-    },
-    {
       "ntt_id": "2416",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2416&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -7204,42 +7769,6 @@
           "name": "안상수",
           "party": "무소속",
           "pct": 26.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "2414",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2414&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 2.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-04-01",
-      "period_end": "2016-04-03",
-      "reg_date": "2016-04-04",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "부천시원미구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이사철",
-          "party": "새누리당",
-          "pct": 36.1
-        },
-        {
-          "name": "백현종",
-          "party": "민중연합당",
-          "pct": 3.9
         }
       ]
     },
@@ -8367,6 +8896,42 @@
       ]
     },
     {
+      "ntt_id": "2371",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2371&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 국제신문",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-03",
+      "reg_date": "2016-04-04",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "사하구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김척수",
+          "party": "새누리당",
+          "pct": 42.4
+        },
+        {
+          "name": "최인호",
+          "party": "더불어민주당",
+          "pct": 35.9
+        }
+      ]
+    },
+    {
       "ntt_id": "2367",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2367&menuNo=200467",
       "agency": "윈폴(WINPOLL)",
@@ -8409,6 +8974,47 @@
           "name": "유현목",
           "party": "민중연합당",
           "pct": 1.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2365",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2365&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 13.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-04",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "용산구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 서울 용산구 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "황춘자",
+          "party": "새누리당",
+          "pct": 35.2
+        },
+        {
+          "name": "진영",
+          "party": "더불어민주당",
+          "pct": 31.9
+        },
+        {
+          "name": "정연욱",
+          "party": "정의당",
+          "pct": 2.2
         }
       ]
     },
@@ -8924,78 +9530,6 @@
           "name": "강운태",
           "party": "무소속",
           "pct": 22.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "2338",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2338&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "정당·후보자 : 정태근 후보",
-      "is_self_poll": true,
-      "method": "유선 ARS",
-      "sample_size": 1005.0,
-      "response_rate": 2.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-04-01",
-      "period_end": "2016-04-03",
-      "reg_date": "2016-04-04",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "성북구갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "정태근",
-          "party": "새누리당",
-          "pct": 44.6
-        },
-        {
-          "name": "박철우",
-          "party": "민중연합당",
-          "pct": 1.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "2336",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2336&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 중부일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 501.0,
-      "response_rate": 1.5,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-04-01",
-      "period_end": "2016-04-02",
-      "reg_date": "2016-04-04",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "수원시정",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "박수영",
-          "party": "새누리당",
-          "pct": 34.0
-        },
-        {
-          "name": "강새별",
-          "party": "민중연합당",
-          "pct": 3.5
         }
       ]
     },
@@ -10325,42 +10859,6 @@
           "name": "",
           "party": "무소속",
           "pct": 1.3
-        }
-      ]
-    },
-    {
-      "ntt_id": "2296",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2296&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 중부일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 509.0,
-      "response_rate": 2.0,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-04-02",
-      "period_end": "2016-04-03",
-      "reg_date": "2016-04-03",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "수원시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "김상민",
-          "party": "새누리당",
-          "pct": 36.4
-        },
-        {
-          "name": "박승하",
-          "party": "민중연합당",
-          "pct": 5.1
         }
       ]
     },
@@ -12098,150 +12596,6 @@
       ]
     },
     {
-      "ntt_id": "2234",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2234&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 서울경제",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 512.0,
-      "response_rate": 8.9,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-30",
-      "period_end": "2016-04-02",
-      "reg_date": "2016-04-01",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "용인시정",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이상일",
-          "party": "새누리당",
-          "pct": 37.7
-        },
-        {
-          "name": "문예연",
-          "party": "민중연합당",
-          "pct": 1.5
-        }
-      ]
-    },
-    {
-      "ntt_id": "2230",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2230&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 서울경제",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 508.0,
-      "response_rate": 13.9,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-03-30",
-      "period_end": "2016-04-02",
-      "reg_date": "2016-04-01",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "노원구병",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이준석",
-          "party": "새누리당",
-          "pct": 31.1
-        },
-        {
-          "name": "정태흥",
-          "party": "민중연합당",
-          "pct": 1.2
-        }
-      ]
-    },
-    {
-      "ntt_id": "2227",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2227&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 서울경제",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 513.0,
-      "response_rate": 8.2,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-03-30",
-      "period_end": "2016-04-02",
-      "reg_date": "2016-04-01",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "용산구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "황춘자",
-          "party": "새누리당",
-          "pct": 36.1
-        },
-        {
-          "name": "이소영",
-          "party": "민중연합당",
-          "pct": 1.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "2226",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2226&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "방송사 : MBN",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 514.0,
-      "response_rate": 9.0,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-03-31",
-      "period_end": "2016-04-02",
-      "reg_date": "2016-04-01",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "용산구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "황춘자",
-          "party": "새누리당",
-          "pct": 32.8
-        },
-        {
-          "name": "이소영",
-          "party": "민중연합당",
-          "pct": 1.9
-        }
-      ]
-    },
-    {
       "ntt_id": "2219",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2219&menuNo=200467",
       "agency": "여민리서치컨설팅",
@@ -13357,42 +13711,6 @@
       ]
     },
     {
-      "ntt_id": "2183",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2183&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 502.0,
-      "response_rate": 1.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-28",
-      "period_end": "2016-03-30",
-      "reg_date": "2016-03-31",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "수원시정",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "박수영",
-          "party": "새누리당",
-          "pct": 30.5
-        },
-        {
-          "name": "강새별",
-          "party": "민중연합당",
-          "pct": 3.5
-        }
-      ]
-    },
-    {
       "ntt_id": "2181",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2181&menuNo=200467",
       "agency": "한국CNR",
@@ -13583,6 +13901,119 @@
           "name": "",
           "party": "정의당",
           "pct": 2.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2169",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2169&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1014.0,
+      "response_rate": 15.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-03-29",
+      "period_end": "2016-03-29",
+      "reg_date": "2016-03-30",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "서귀포시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서귀포시 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "강지용",
+          "party": "새누리당",
+          "pct": 39.1
+        },
+        {
+          "name": "위성곤",
+          "party": "더불어민주당",
+          "pct": 38.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "2168",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2168&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1007.0,
+      "response_rate": 17.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-03-29",
+      "period_end": "2016-03-29",
+      "reg_date": "2016-03-30",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 제주시을 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "부상일",
+          "party": "새누리당",
+          "pct": 42.2
+        },
+        {
+          "name": "오영훈",
+          "party": "더불어민주당",
+          "pct": 31.1
+        },
+        {
+          "name": "차주홍",
+          "party": "한나라당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "2166",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2166&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 제주MBC, JIBS, CBS, 제민일보, 제주신보, 한라일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1008.0,
+      "response_rate": 15.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-03-29",
+      "period_end": "2016-03-29",
+      "reg_date": "2016-03-30",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "district": "제주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 제주시갑 국회의원 선거에 출마하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "양치석",
+          "party": "새누리당",
+          "pct": 34.8
+        },
+        {
+          "name": "강창일",
+          "party": "더불어민주당",
+          "pct": 34.9
         }
       ]
     },
@@ -13863,42 +14294,6 @@
       ]
     },
     {
-      "ntt_id": "2151",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2151&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 501.0,
-      "response_rate": 1.8,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-27",
-      "period_end": "2016-03-29",
-      "reg_date": "2016-03-30",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "수원시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "김상민",
-          "party": "새누리당",
-          "pct": 39.4
-        },
-        {
-          "name": "박승하",
-          "party": "민중연합당",
-          "pct": 3.5
-        }
-      ]
-    },
-    {
       "ntt_id": "2150",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2150&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -13936,6 +14331,150 @@
           "name": "위두환",
           "party": "민중연합당",
           "pct": 2.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2148",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2148&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 9.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-29",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "서대문구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 서대문구을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "정두언",
+          "party": "새누리당",
+          "pct": 38.9
+        },
+        {
+          "name": "김영호",
+          "party": "더불어민주당",
+          "pct": 33.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "2147",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2147&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 9.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-29",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "용인시정",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 경기 용인시정 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이상일",
+          "party": "새누리당",
+          "pct": 29.4
+        },
+        {
+          "name": "표창원",
+          "party": "더불어민주당",
+          "pct": 36.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2146",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2146&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 12.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-29",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "district": "사하구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 부산 사하구갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김척수",
+          "party": "새누리당",
+          "pct": 46.0
+        },
+        {
+          "name": "최인호",
+          "party": "더불어민주당",
+          "pct": 26.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2145",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2145&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 22.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-29",
+      "sido": "충청남도",
+      "sigungu": "",
+      "district": "공주시부여군청양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 공주시/부여군/청양군 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습",
+      "candidates": [
+        {
+          "name": "정진석",
+          "party": "새누리당",
+          "pct": 43.7
+        },
+        {
+          "name": "박수현",
+          "party": "더불어민주당",
+          "pct": 30.5
         }
       ]
     },
@@ -14042,42 +14581,6 @@
       ]
     },
     {
-      "ntt_id": "2136",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2136&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 충청투데이",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 506.0,
-      "response_rate": 3.4,
-      "contact_rate": null,
-      "sample_error": "9.5% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-28",
-      "period_end": "2016-03-29",
-      "reg_date": "2016-03-29",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "district": "서구갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "이영규",
-          "party": "새누리당",
-          "pct": 35.1
-        },
-        {
-          "name": "주무늬",
-          "party": "민중연합당",
-          "pct": 3.0
-        }
-      ]
-    },
-    {
       "ntt_id": "2121",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2121&menuNo=200467",
       "agency": "주식회사 한길리서치센타",
@@ -14166,42 +14669,6 @@
           "name": "",
           "party": "한나라당",
           "pct": 1.7
-        }
-      ]
-    },
-    {
-      "ntt_id": "2119",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2119&menuNo=200467",
-      "agency": "강원도민일보 부설 강원사회조사연구소",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 강원도민일보",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 505.0,
-      "response_rate": 21.2,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-28",
-      "period_end": "2016-03-28",
-      "reg_date": "2016-03-29",
-      "sido": "강원특별자치도",
-      "sigungu": "",
-      "district": "속초시고성군양양군",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "2",
-      "table_title": "귀하께서는 속초, 고성, 양양 선거구 국회의원으로 다음의 후보들 중 누구에게 투표",
-      "candidates": [
-        {
-          "name": "이양수",
-          "party": "새누리당",
-          "pct": 37.6
-        },
-        {
-          "name": "김주학",
-          "party": "더불어민주당",
-          "pct": 7.9
         }
       ]
     },
@@ -14457,6 +14924,88 @@
       ]
     },
     {
+      "ntt_id": "2098",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2098&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 여수MBC, 순천KBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 16.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-27",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-28",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "광양시곡성군구례군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 광양시곡성군구례군 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까",
+      "candidates": [
+        {
+          "name": "이승안",
+          "party": "새누리당",
+          "pct": 5.6
+        },
+        {
+          "name": "우윤근",
+          "party": "더불어민주당",
+          "pct": 41.3
+        },
+        {
+          "name": "유현주",
+          "party": "민중연합당",
+          "pct": 4.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2095",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2095&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 여수MBC, 순천KBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 21.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-27",
+      "period_end": "2016-03-27",
+      "reg_date": "2016-03-28",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "순천시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 순천시 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이정현",
+          "party": "새누리당",
+          "pct": 27.2
+        },
+        {
+          "name": "노관규",
+          "party": "더불어민주당",
+          "pct": 41.8
+        },
+        {
+          "name": "정오균",
+          "party": "민중연합당",
+          "pct": 1.8
+        }
+      ]
+    },
+    {
       "ntt_id": "2089",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2089&menuNo=200467",
       "agency": "리얼미터",
@@ -14621,6 +15170,42 @@
       ]
     },
     {
+      "ntt_id": "2082",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2082&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 22.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-27",
+      "period_end": "2016-03-28",
+      "reg_date": "2016-03-28",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "속초시고성군양양군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 속초시/고성군/양양군 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습",
+      "candidates": [
+        {
+          "name": "이양수",
+          "party": "새누리당",
+          "pct": 46.5
+        },
+        {
+          "name": "김주학",
+          "party": "더불어민주당",
+          "pct": 9.1
+        }
+      ]
+    },
+    {
       "ntt_id": "2081",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2081&menuNo=200467",
       "agency": "강원도민일보 부설 강원사회조사연구소",
@@ -14667,38 +15252,156 @@
       ]
     },
     {
-      "ntt_id": "2073",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2073&menuNo=200467",
-      "agency": "리얼미터",
+      "ntt_id": "2080",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2080&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
       "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방",
       "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 505.0,
-      "response_rate": 2.5,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 19.9,
       "contact_rate": null,
       "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-25",
+      "period_start": "2016-03-27",
       "period_end": "2016-03-27",
       "reg_date": "2016-03-28",
-      "sido": "경기도",
+      "sido": "강원특별자치도",
       "sigungu": "",
-      "district": "군포시을",
+      "district": "홍천군철원군화천군양구군인제군",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 홍천군/철원군/화천군/양구군/인제군 국회의원 선거에 출마 하는 다음 후보 중 누구에",
       "candidates": [
         {
-          "name": "금병찬",
+          "name": "황영철",
           "party": "새누리당",
-          "pct": 34.1
+          "pct": 43.0
         },
         {
-          "name": "김도현",
-          "party": "민중연합당",
-          "pct": 4.6
+          "name": "조일현",
+          "party": "더불어민주당",
+          "pct": 22.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "2077",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2077&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 21.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-27",
+      "period_end": "2016-03-27",
+      "reg_date": "2016-03-28",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "강릉시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 강릉시 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "권성동",
+          "party": "새누리당",
+          "pct": 55.1
+        },
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 17.5
+        },
+        {
+          "name": "최종문",
+          "party": "노동당",
+          "pct": 2.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "2076",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2076&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 17.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-27",
+      "reg_date": "2016-03-28",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "원주시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 원주시 을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이강후",
+          "party": "새누리당",
+          "pct": 37.3
+        },
+        {
+          "name": "송기헌",
+          "party": "더불어민주당",
+          "pct": 32.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "2075",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2075&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : 춘천KBS·춘천MBC·G1강원민방",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 21.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-26",
+      "reg_date": "2016-03-28",
+      "sido": "강원특별자치도",
+      "sigungu": "",
+      "district": "춘천시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 춘천시 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김진태",
+          "party": "새누리당",
+          "pct": 49.3
+        },
+        {
+          "name": "허영",
+          "party": "더불어민주당",
+          "pct": 21.8
+        },
+        {
+          "name": "강선경",
+          "party": "정의당",
+          "pct": 2.3
         }
       ]
     },
@@ -14822,6 +15525,227 @@
           "name": "이기원",
           "party": "무소속",
           "pct": 8.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "2063",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2063&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 13.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-25",
+      "reg_date": "2016-03-28",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "남양주시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 경기 남양주갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "심장수",
+          "party": "새누리당",
+          "pct": 44.8
+        },
+        {
+          "name": "조응천",
+          "party": "더불어민주당",
+          "pct": 23.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "2062",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2062&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-25",
+      "reg_date": "2016-03-28",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "성남시분당구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 경기 성남 분당구갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "권혁세",
+          "party": "새누리당",
+          "pct": 38.6
+        },
+        {
+          "name": "김병관",
+          "party": "더불어민주당",
+          "pct": 27.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "2061",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2061&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.7,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-25",
+      "reg_date": "2016-03-28",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "수원시갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 경기 수원시갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "박종희",
+          "party": "새누리당",
+          "pct": 32.5
+        },
+        {
+          "name": "이찬열",
+          "party": "더불어민주당",
+          "pct": 34.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "2060",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2060&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 9.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-25",
+      "reg_date": "2016-03-28",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "구로구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 구로구갑 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김승제",
+          "party": "새누리당",
+          "pct": 34.7
+        },
+        {
+          "name": "이인영",
+          "party": "더불어민주당",
+          "pct": 35.0
+        },
+        {
+          "name": "이호성",
+          "party": "정의당",
+          "pct": 4.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "2059",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2059&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 7.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-26",
+      "reg_date": "2016-03-28",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "동작구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 동작구을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "나경원",
+          "party": "새누리당",
+          "pct": 51.1
+        },
+        {
+          "name": "허동준",
+          "party": "더불어민주당",
+          "pct": 18.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "2058",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2058&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 한국일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 7.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-25",
+      "period_end": "2016-03-26",
+      "reg_date": "2016-03-28",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "강남구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 강남구을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "김종훈",
+          "party": "새누리당",
+          "pct": 41.9
+        },
+        {
+          "name": "전현희",
+          "party": "더불어민주당",
+          "pct": 25.8
         }
       ]
     },
@@ -15005,23 +15929,23 @@
       ]
     },
     {
-      "ntt_id": "2036",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2036&menuNo=200467",
-      "agency": "리얼미터",
+      "ntt_id": "2032",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2032&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
       "co_agency": "",
-      "requester": "시·도단위 신문 : 경기신문",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB",
       "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 509.0,
-      "response_rate": 2.1,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 12.8,
       "contact_rate": null,
-      "sample_error": "9% 신뢰수준에 ±4.3%P",
-      "period_start": "2016-03-25",
-      "period_end": "2016-03-26",
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-27",
       "reg_date": "2016-03-27",
-      "sido": "경기도",
+      "sido": "충청북도",
       "sigungu": "",
-      "district": "용인시정",
+      "district": "보은군옥천군영동군괴산군",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
@@ -15029,14 +15953,50 @@
       "table_title": "",
       "candidates": [
         {
-          "name": "이상일",
+          "name": "박덕흠",
           "party": "새누리당",
-          "pct": 41.2
+          "pct": 37.0
         },
         {
-          "name": "문예연",
-          "party": "민중연합당",
-          "pct": 2.0
+          "name": "이재한",
+          "party": "더불어민주당",
+          "pct": 20.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "2029",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2029&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 청주MBC, 충주MBC, CJB",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 12.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-26",
+      "period_end": "2016-03-27",
+      "reg_date": "2016-03-27",
+      "sido": "충청북도",
+      "sigungu": "",
+      "district": "청주시청원구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "오성균",
+          "party": "새누리당",
+          "pct": 28.1
+        },
+        {
+          "name": "변재일",
+          "party": "더불어민주당",
+          "pct": 22.1
         }
       ]
     },
@@ -15496,6 +16456,124 @@
       ]
     },
     {
+      "ntt_id": "1994",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1994&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 31.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-22",
+      "period_end": "2016-03-23",
+      "reg_date": "2016-03-24",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "순천시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 순천시 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "이정현",
+          "party": "새누리당",
+          "pct": 31.4
+        },
+        {
+          "name": "노관규",
+          "party": "더불어민주당",
+          "pct": 38.1
+        },
+        {
+          "name": "최용준",
+          "party": "민주당",
+          "pct": 1.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "1991",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1991&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 9.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-22",
+      "period_end": "2016-03-23",
+      "reg_date": "2016-03-24",
+      "sido": "경기도",
+      "sigungu": "",
+      "district": "수원시무",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 경기 수원시무 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "정미경",
+          "party": "새누리당",
+          "pct": 32.2
+        },
+        {
+          "name": "김진표",
+          "party": "더불어민주당",
+          "pct": 39.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "1989",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1989&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-22",
+      "period_end": "2016-03-24",
+      "reg_date": "2016-03-24",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "district": "남동구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 인천 남동구갑 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "문대성",
+          "party": "새누리당",
+          "pct": 30.6
+        },
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 31.6
+        },
+        {
+          "name": "임동수",
+          "party": "민중연합당",
+          "pct": 1.4
+        }
+      ]
+    },
+    {
       "ntt_id": "1986",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1986&menuNo=200467",
       "agency": "한국사회여론연구소(KSOI)",
@@ -15690,6 +16768,83 @@
       ]
     },
     {
+      "ntt_id": "1965",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1965&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 6.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-21",
+      "period_end": "2016-03-22",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "마포구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 마포구갑 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "안대희",
+          "party": "새누리당",
+          "pct": 29.9
+        },
+        {
+          "name": "노웅래",
+          "party": "더불어민주당",
+          "pct": 40.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "1964",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1964&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 6.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-21",
+      "period_end": "2016-03-23",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "서대문구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 서대문갑 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "이성헌",
+          "party": "새누리당",
+          "pct": 39.2
+        },
+        {
+          "name": "우상호",
+          "party": "더불어민주당",
+          "pct": 33.7
+        },
+        {
+          "name": "김영준",
+          "party": "녹색당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
       "ntt_id": "1963",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1963&menuNo=200467",
       "agency": "마크로밀엠브레인",
@@ -15732,6 +16887,83 @@
           "name": "",
           "party": "민중연합당",
           "pct": 2.51
+        }
+      ]
+    },
+    {
+      "ntt_id": "1962",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1962&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-20",
+      "period_end": "2016-03-21",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "노원구병",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 종로구 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니까",
+      "candidates": [
+        {
+          "name": "이준석",
+          "party": "새누리당",
+          "pct": 34.1
+        },
+        {
+          "name": "황창화",
+          "party": "더불어민주당",
+          "pct": 13.9
+        },
+        {
+          "name": "주희준",
+          "party": "정의당",
+          "pct": 4.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "1961",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1961&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-21",
+      "period_end": "2016-03-22",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "도봉구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 도봉구을 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니",
+      "candidates": [
+        {
+          "name": "김선동",
+          "party": "새누리당",
+          "pct": 42.9
+        },
+        {
+          "name": "오기형",
+          "party": "더불어민주당",
+          "pct": 22.4
         }
       ]
     },
@@ -15966,6 +17198,52 @@
       ]
     },
     {
+      "ntt_id": "1955",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1955&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 8.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-03-20",
+      "period_end": "2016-03-22",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "종로구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 4월 13일에 치러지는 서울 종로구 국회의원 선거에 출마가 예상되는 다음 후보 중 누구에게 투표하시겠습니까",
+      "candidates": [
+        {
+          "name": "오세훈",
+          "party": "새누리당",
+          "pct": 45.8
+        },
+        {
+          "name": "정세균",
+          "party": "더불어민주당",
+          "pct": 28.5
+        },
+        {
+          "name": "윤공규",
+          "party": "정의당",
+          "pct": 4.0
+        },
+        {
+          "name": "하승수",
+          "party": "녹색당",
+          "pct": 1.2
+        }
+      ]
+    },
+    {
       "ntt_id": "1954",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1954&menuNo=200467",
       "agency": "(주)밀워드브라운미디어리서치",
@@ -16008,6 +17286,42 @@
           "name": "",
           "party": "정의당",
           "pct": 3.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "1953",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1953&menuNo=200467",
+      "agency": "(주)리서치플러스",
+      "co_agency": "",
+      "requester": "정당·후보자 : 박선규 예비후보",
+      "is_self_poll": true,
+      "method": "유선전화면접",
+      "sample_size": 527.0,
+      "response_rate": 7.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.3%P",
+      "period_start": "2016-03-20",
+      "period_end": "2016-03-20",
+      "reg_date": "2016-03-23",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "영등포구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "박선규",
+          "party": "새누리당",
+          "pct": 36.0
+        },
+        {
+          "name": "김영주",
+          "party": "더불어민주당",
+          "pct": 35.4
         }
       ]
     },
@@ -16754,42 +18068,6 @@
       ]
     },
     {
-      "ntt_id": "1901",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1901&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 제주매일, 미디어제주, 제주투데이",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1030.0,
-      "response_rate": 5.1,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-03-17",
-      "period_end": "2016-03-20",
-      "reg_date": "2016-03-20",
-      "sido": "제주특별자치도",
-      "sigungu": "",
-      "district": "제주시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "부상일",
-          "party": "새누리당",
-          "pct": 47.0
-        },
-        {
-          "name": "차주홍",
-          "party": "한나라당",
-          "pct": 1.7
-        }
-      ]
-    },
-    {
       "ntt_id": "1892",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1892&menuNo=200467",
       "agency": "한국CNR/케이엠조사연구소",
@@ -17066,42 +18344,6 @@
       ]
     },
     {
-      "ntt_id": "1860",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1860&menuNo=200467",
-      "agency": "모노커뮤니케이션즈(모노리서치)",
-      "co_agency": "",
-      "requester": "인터넷언론 : 홍천인터넷신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 8.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-12",
-      "period_end": "2016-03-13",
-      "reg_date": "2016-03-14",
-      "sido": "강원특별자치도",
-      "sigungu": "",
-      "district": "홍천군철원군화천군양구군인제군",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "4. 조사항목별 결과",
-      "candidates": [
-        {
-          "name": "정해용",
-          "party": "무소속",
-          "pct": 13.0
-        },
-        {
-          "name": "황영철",
-          "party": "새누리당",
-          "pct": 34.6
-        }
-      ]
-    },
-    {
       "ntt_id": "1854",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1854&menuNo=200467",
       "agency": "리얼미터",
@@ -17326,24 +18568,24 @@
       "table_title": "지역구 후보 지지도",
       "candidates": [
         {
-          "name": "기동민",
-          "party": "더불어민주당",
-          "pct": 25.9
-        },
-        {
-          "name": "박창완",
-          "party": "정의당",
-          "pct": 5.6
-        },
-        {
           "name": "김효재",
           "party": "새누리당",
           "pct": 30.4
         },
         {
+          "name": "기동민",
+          "party": "더불어민주당",
+          "pct": 25.4
+        },
+        {
           "name": "김인원",
           "party": "국민의당",
           "pct": 6.5
+        },
+        {
+          "name": "박창완",
+          "party": "정의당",
+          "pct": 4.8
         }
       ]
     },
@@ -17415,17 +18657,17 @@
         {
           "name": "이정현",
           "party": "새누리당",
-          "pct": 30.0
-        },
-        {
-          "name": "구희승",
-          "party": "국민의당",
-          "pct": 18.9
+          "pct": 29.4
         },
         {
           "name": "노관규",
           "party": "더불어민주당",
           "pct": 37.6
+        },
+        {
+          "name": "구희승",
+          "party": "국민의당",
+          "pct": 18.9
         }
       ]
     },
@@ -18065,42 +19307,6 @@
       ]
     },
     {
-      "ntt_id": "1742",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1742&menuNo=200467",
-      "agency": "윈폴(WINPOLL)",
-      "co_agency": "",
-      "requester": "정당·후보자 : 이병웅",
-      "is_self_poll": true,
-      "method": "유선 ARS",
-      "sample_size": 800.0,
-      "response_rate": 1.1,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2016-03-02",
-      "period_end": "2016-03-03",
-      "reg_date": "2016-03-04",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "광진구을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "■ 광진구(을) 지역 국회의원선거 관련 여론조사",
-      "candidates": [
-        {
-          "name": "추미애",
-          "party": "더불어민주당",
-          "pct": 33.8
-        },
-        {
-          "name": "황인철",
-          "party": "국민의당",
-          "pct": 14.6
-        }
-      ]
-    },
-    {
       "ntt_id": "1738",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1738&menuNo=200467",
       "agency": "주식회사 리서치뷰",
@@ -18618,42 +19824,6 @@
       "reg_date": "2016-02-29",
       "sido": "경상북도",
       "sigungu": "",
-      "district": "구미시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "1) 새누리당 예비후보 지지도",
-      "candidates": [
-        {
-          "name": "김태환",
-          "party": "무소속",
-          "pct": 25.1
-        },
-        {
-          "name": "장석춘",
-          "party": "새누리당",
-          "pct": 15.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "1709",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1709&menuNo=200467",
-      "agency": "리서치거버넌스",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경북일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 996.0,
-      "response_rate": 4.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-02-28",
-      "period_end": "2016-02-28",
-      "reg_date": "2016-02-29",
-      "sido": "경상북도",
-      "sigungu": "",
       "district": "",
       "office_level": "정당지지",
       "office_label": "정당지지",
@@ -18680,42 +19850,6 @@
           "name": "",
           "party": "정의당",
           "pct": 0.6
-        }
-      ]
-    },
-    {
-      "ntt_id": "1707",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1707&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "정당·후보자 : 신용한 예비후보",
-      "is_self_poll": true,
-      "method": "유선 ARS",
-      "sample_size": 1006.0,
-      "response_rate": 2.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-02-24",
-      "period_end": "2016-02-26",
-      "reg_date": "2016-02-29",
-      "sido": "충청북도",
-      "sigungu": "",
-      "district": "청주시흥덕구",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "김준환",
-          "party": "무소속",
-          "pct": 21.4
-        },
-        {
-          "name": "송태영",
-          "party": "새누리당",
-          "pct": 16.6
         }
       ]
     },
@@ -19360,6 +20494,114 @@
       ]
     },
     {
+      "ntt_id": "1587",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1587&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 10.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-12",
+      "period_end": "2016-02-13",
+      "reg_date": "2016-02-16",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "김해시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 4월에 치러지는 김해시 을 국회의원 선거에 새누리당에서 이만기 당협위원장, 더불어민주당에서 김경수 경남도당",
+      "candidates": [
+        {
+          "name": "이만기",
+          "party": "새누리당",
+          "pct": 33.7
+        },
+        {
+          "name": "김경수",
+          "party": "더불어민주당",
+          "pct": 33.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "1585",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1585&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 12.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-13",
+      "period_end": "2016-02-14",
+      "reg_date": "2016-02-16",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "동구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 4월에 치러지는 동구 갑 국회의원 선거에 새누리당 후보로 류성걸 현 국회의원, 손종익 상생정치연구원장,",
+      "candidates": [
+        {
+          "name": "류성걸",
+          "party": "무소속",
+          "pct": 40.2
+        },
+        {
+          "name": "정종섭",
+          "party": "새누리당",
+          "pct": 19.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "1584",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1584&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 12.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-13",
+      "period_end": "2016-02-14",
+      "reg_date": "2016-02-16",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "district": "수성구갑",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문1. 선생님께서는 4월에 치러지는 수성구 갑 국회의원 선거에 새누리당에서 김문수 전 경기도지사, 더불어민주당에서 김부겸 전 ",
+      "candidates": [
+        {
+          "name": "김문수",
+          "party": "새누리당",
+          "pct": 27.3
+        },
+        {
+          "name": "김부겸",
+          "party": "더불어민주당",
+          "pct": 48.1
+        }
+      ]
+    },
+    {
       "ntt_id": "1581",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1581&menuNo=200467",
       "agency": "(주)알앤써치",
@@ -19503,6 +20745,42 @@
       ]
     },
     {
+      "ntt_id": "1565",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1565&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 11.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-12",
+      "period_end": "2016-02-14",
+      "reg_date": "2016-02-15",
+      "sido": "전라남도",
+      "sigungu": "",
+      "district": "순천시",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 그러면, 새누리당에서 이정현 현 국회의원, 더불어민주당에서 노관규 전 순천시장, 국민의당에서 구희승 변호사가 출마한다면",
+      "candidates": [
+        {
+          "name": "이정현",
+          "party": "새누리당",
+          "pct": 34.0
+        },
+        {
+          "name": "노관규",
+          "party": "더불어민주당",
+          "pct": 24.4
+        }
+      ]
+    },
+    {
       "ntt_id": "1562",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1562&menuNo=200467",
       "agency": "주식회사 리서치뷰",
@@ -19549,38 +20827,38 @@
       ]
     },
     {
-      "ntt_id": "1558",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1558&menuNo=200467",
-      "agency": "윈스리서치",
+      "ntt_id": "1561",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1561&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
       "co_agency": "",
-      "requester": "구·시·군단위 신문 : 타임뉴스",
+      "requester": "방송사 : KBS,연합뉴스",
       "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 2.8,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 7.7,
       "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-02-06",
-      "period_end": "2016-02-06",
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-11",
+      "period_end": "2016-02-13",
       "reg_date": "2016-02-15",
-      "sido": "경기도",
+      "sido": "서울특별시",
       "sigungu": "",
-      "district": "오산시",
+      "district": "마포구갑",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "조사결과분석",
+      "table_title": "문1. 선생님께서는 4월에 치러지는 마포구 갑 국회의원 선거에 새누리당에서 강승규 전 국회의원,",
       "candidates": [
         {
-          "name": "이권재",
+          "name": "강승규",
           "party": "새누리당",
-          "pct": 30.69
+          "pct": 34.6
         },
         {
-          "name": "최웅수",
-          "party": "국민의당",
-          "pct": 11.4
+          "name": "노웅래",
+          "party": "더불어민주당",
+          "pct": 35.3
         }
       ]
     },
@@ -19622,6 +20900,42 @@
           "name": "정진후",
           "party": "정의당",
           "pct": 8.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "1554",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1554&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "정당·후보자 : 박진",
+      "is_self_poll": true,
+      "method": "유선전화면접",
+      "sample_size": 504.0,
+      "response_rate": 10.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-02-12",
+      "period_end": "2016-02-13",
+      "reg_date": "2016-02-15",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "종로구",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "오세훈",
+          "party": "새누리당",
+          "pct": 43.2
+        },
+        {
+          "name": "정세균",
+          "party": "더불어민주당",
+          "pct": 34.9
         }
       ]
     },
@@ -19858,42 +21172,6 @@
           "name": "",
           "party": "정의당",
           "pct": 0.7
-        }
-      ]
-    },
-    {
-      "ntt_id": "1519",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1519&menuNo=200467",
-      "agency": "모노커뮤니케이션즈(모노리서치)",
-      "co_agency": "",
-      "requester": "전국단위 신문 : 오마이뉴스",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 800.0,
-      "response_rate": 4.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2016-02-03",
-      "period_end": "2016-02-05",
-      "reg_date": "2016-02-06",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "목포시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "4. 조사항목별 결과",
-      "candidates": [
-        {
-          "name": "조상기",
-          "party": "더불어민주당",
-          "pct": 16.1
-        },
-        {
-          "name": "박지원",
-          "party": "국민의당",
-          "pct": 30.0
         }
       ]
     },
@@ -21054,42 +22332,6 @@
       ]
     },
     {
-      "ntt_id": "1403",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1403&menuNo=200467",
-      "agency": "휴먼리서치",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 서라벌신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 761.0,
-      "response_rate": 5.5,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.6%P",
-      "period_start": "2016-01-29",
-      "period_end": "2016-01-30",
-      "reg_date": "2016-01-31",
-      "sido": "경상북도",
-      "sigungu": "",
-      "district": "경주시",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "조사결과 요약",
-      "candidates": [
-        {
-          "name": "김석기",
-          "party": "새누리당",
-          "pct": 25.1
-        },
-        {
-          "name": "정종복",
-          "party": "무소속",
-          "pct": 23.9
-        }
-      ]
-    },
-    {
       "ntt_id": "1390",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1390&menuNo=200467",
       "agency": "위드리서치",
@@ -21183,42 +22425,6 @@
           "name": "",
           "party": "무소속",
           "pct": 2.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "1353",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1353&menuNo=200467",
-      "agency": "모노커뮤니케이션즈(모노리서치)",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경남도민신문",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 5.7,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-01-19",
-      "period_end": "2016-01-21",
-      "reg_date": "2016-01-22",
-      "sido": "경상남도",
-      "sigungu": "",
-      "district": "진주시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "4. 조사항목별 결과",
-      "candidates": [
-        {
-          "name": "김재경",
-          "party": "새누리당",
-          "pct": 30.4
-        },
-        {
-          "name": "서소연",
-          "party": "더불어민주당",
-          "pct": 5.5
         }
       ]
     },
@@ -21397,84 +22603,38 @@
       ]
     },
     {
-      "ntt_id": "1274",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1274&menuNo=200467",
-      "agency": "타임리서치",
+      "ntt_id": "1244",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1244&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
       "co_agency": "",
-      "requester": "정당·후보자 : 신정일",
-      "is_self_poll": true,
-      "method": "유선 ARS",
-      "sample_size": 1035.0,
-      "response_rate": 5.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.0%P",
-      "period_start": "2016-01-04",
-      "period_end": "2016-01-05",
-      "reg_date": "2016-01-07",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "4",
-      "table_title": "정당지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "새누리당",
-          "pct": 13.0
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 24.0
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 3.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "1258",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1258&menuNo=200467",
-      "agency": "(주)리서치뷰",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 태안신문",
+      "requester": "전국단위 신문 : 한국일보",
       "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 929.0,
-      "response_rate": 6.9,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 16.4,
       "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.2%P",
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
       "period_start": "2015-12-27",
-      "period_end": "2015-12-27",
-      "reg_date": "2016-01-05",
-      "sido": "충청남도",
+      "period_end": "2015-12-28",
+      "reg_date": "2016-01-04",
+      "sido": "대구광역시",
       "sigungu": "",
-      "district": "서산시태안군",
+      "district": "수성구갑",
       "office_level": "국회의원",
       "office_label": "국회의원",
       "metric_type": "후보지지",
       "table_no": "",
-      "table_title": "3-1. 제20대 총선 후보지지도 : 특성별 응답결과",
+      "table_title": "문1. 선생님께서는 내년 4월에 치러지는 수성구갑 국회의원 선거에 새누리당에서 김문수 전 경기도지사, 새정치민주연합에서 김부겸",
       "candidates": [
         {
-          "name": "한상율",
-          "party": "무소속",
-          "pct": 20.2
-        },
-        {
-          "name": "성일종",
+          "name": "김문수",
           "party": "새누리당",
-          "pct": 14.7
+          "pct": 31.9
         },
         {
-          "name": "조한기",
-          "party": "더불어민주당",
-          "pct": 13.7
+          "name": "김부겸",
+          "party": "새정치민주연합",
+          "pct": 50.5
         }
       ]
     },
@@ -21566,78 +22726,6 @@
       ]
     },
     {
-      "ntt_id": "1184",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1184&menuNo=200467",
-      "agency": "휴먼리서치",
-      "co_agency": "",
-      "requester": "통신사 : 뉴스1 전북취재본부",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 512.0,
-      "response_rate": 2.2,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2015-12-29",
-      "period_end": "2015-12-30",
-      "reg_date": "2015-12-31",
-      "sido": "전북특별자치도",
-      "sigungu": "",
-      "district": "익산시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "조사결과 요약",
-      "candidates": [
-        {
-          "name": "박종길",
-          "party": "새누리당",
-          "pct": 8.8
-        },
-        {
-          "name": "조배숙",
-          "party": "국민의당",
-          "pct": 27.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "1183",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1183&menuNo=200467",
-      "agency": "휴먼리서치",
-      "co_agency": "",
-      "requester": "통신사 : 뉴스1 전북취재본부",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 568.0,
-      "response_rate": 2.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.1%P",
-      "period_start": "2015-12-29",
-      "period_end": "2015-12-30",
-      "reg_date": "2015-12-31",
-      "sido": "전북특별자치도",
-      "sigungu": "",
-      "district": "익산시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "조사결과 요약",
-      "candidates": [
-        {
-          "name": "김영일",
-          "party": "새누리당",
-          "pct": 8.6
-        },
-        {
-          "name": "이춘석",
-          "party": "더불어민주당",
-          "pct": 26.5
-        }
-      ]
-    },
-    {
       "ntt_id": "1181",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1181&menuNo=200467",
       "agency": "휴먼리서치",
@@ -21711,47 +22799,6 @@
           "name": "김부겸",
           "party": "더불어민주당",
           "pct": 49.3
-        }
-      ]
-    },
-    {
-      "ntt_id": "1140",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1140&menuNo=200467",
-      "agency": "휴먼리서치",
-      "co_agency": "",
-      "requester": "통신사 : 뉴스1 전북취재본부",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 665.0,
-      "response_rate": 1.2,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.8%P",
-      "period_start": "2015-12-26",
-      "period_end": "2015-12-27",
-      "reg_date": "2015-12-27",
-      "sido": "전북특별자치도",
-      "sigungu": "",
-      "district": "전주시을",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "조사결과 요약",
-      "candidates": [
-        {
-          "name": "장세환",
-          "party": "국민의당",
-          "pct": 6.6
-        },
-        {
-          "name": "정운천",
-          "party": "새누리당",
-          "pct": 27.1
-        },
-        {
-          "name": "최형재",
-          "party": "더불어민주당",
-          "pct": 13.9
         }
       ]
     },
@@ -21957,42 +23004,6 @@
           "name": "고영석",
           "party": "기독자유당",
           "pct": 2.8
-        }
-      ]
-    },
-    {
-      "ntt_id": "1006",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1006&menuNo=200467",
-      "agency": "리얼미터",
-      "co_agency": "",
-      "requester": "전국단위 신문 : 광주타임즈",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 837.0,
-      "response_rate": 4.6,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.4%P",
-      "period_start": "2015-11-11",
-      "period_end": "2015-11-14",
-      "reg_date": "2015-11-17",
-      "sido": "전라남도",
-      "sigungu": "",
-      "district": "여수시갑",
-      "office_level": "국회의원",
-      "office_label": "국회의원",
-      "metric_type": "후보지지",
-      "table_no": "",
-      "table_title": "",
-      "candidates": [
-        {
-          "name": "김영규",
-          "party": "무소속",
-          "pct": 11.6
-        },
-        {
-          "name": "이용주",
-          "party": "국민의당",
-          "pct": 20.8
         }
       ]
     }

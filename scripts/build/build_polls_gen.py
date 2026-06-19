@@ -56,10 +56,13 @@ SIDO_SHORT = {
 }
 _SIDO_VALUES = set(SIDO_CANONICAL.values()) | set(SIDO_SHORT.values())
 
-# horse-race가 아닌 문항 reject (적합도·가상·단일화·정책·성향 류)
+# horse-race가 아닌 문항 reject (적합도·가상·단일화·정책·성향·당선가능성 류)
+#   당선가능성("누가 당선될 것 같은가")은 투표의향(후보지지)과 별개 metric — 같은 후보라도 값이 달라
+#   ballot 대신 잘못 채택되면 왜곡(예: 제주을 부상일 ballot42.5 vs 당선가능성52.3). 명시 reject.
 REJECT_TITLE = re.compile(
     r"적합|경선|가상|단일화|단일\s*후보|찍고\s*싶지|절대|비호감|호감도|역선택|"
-    r"성향|국정|평가|만족|정책|현안|\bvs\b|\bVS\b"
+    r"성향|국정|평가|만족|정책|현안|\bvs\b|\bVS\b|"
+    r"당선\s*가능|당선\s*될|당선\s*확률|당선\s*예상|당선\s*전망|누가\s*당선|당선\s*자\s*예측"
 )
 
 
@@ -185,7 +188,9 @@ def normalize_pcts(cands: list[dict]) -> bool:
             if c.get("pct") is not None:
                 c["pct"] = round(c["pct"] / 10, 1)
         s /= 10
-    return not (s == 0 or s > 110 or s < 30)
+    # 하한 50: 후보 합계<50%면 주요후보 컬럼 누락(공백정렬 파서 2줄헤더 드롭) 또는 sub-group행.
+    #   실측 — 합<50 폴은 1위일치 31%(승자 결석), 합>=50은 56%+. 누락분 제거 게이트.
+    return not (s == 0 or s > 110 or s < 50)
 
 
 def accept_district_race(q: dict, roster_dist: dict[str, str]) -> list[dict] | None:
@@ -376,7 +381,7 @@ def postprocess(polls: list[dict]) -> list[dict]:
     def card_score(p):
         s = _sum(p)
         if p["metric_type"] == "후보지지":
-            return (40 <= s <= 110, -abs(s - 95), len(p["candidates"]), p.get("sample_size") or 0)
+            return (50 <= s <= 110, -abs(s - 95), len(p["candidates"]), p.get("sample_size") or 0)
         return (True, 0, len(p["candidates"]), p.get("sample_size") or 0)
     seen_card = {}
     out = []
@@ -390,7 +395,7 @@ def postprocess(polls: list[dict]) -> list[dict]:
 
     # 최종 sanity — merge가 후보별 max-pct로 합치며 합>110 garble(양산갑·남양주병) 만들거나,
     # sub-group 행을 전체로 오인(합<30)한 record drop.
-    return [p for p in out if 30 <= _sum(p) <= 110]
+    return [p for p in out if 50 <= _sum(p) <= 110]
 
 
 def main():
