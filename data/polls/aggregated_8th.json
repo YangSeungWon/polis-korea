@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-18T18:18:53",
+    "generated_at": "2026-06-19T14:09:25",
     "election_date": "2026-06-03",
     "blackout_start": "2026-05-28",
     "blackout_end": "2026-06-03T18:00",
@@ -10,9 +10,9 @@
     "stats": {
       "total_polls_meta": 1886,
       "matched_parsed": 1580,
-      "emitted_records": 966,
+      "emitted_records": 1021,
       "skipped_no_pdf": 304,
-      "skipped_no_candidates": 731
+      "skipped_no_candidates": 671
     }
   },
   "polls": [
@@ -1067,6 +1067,716 @@
       ]
     },
     {
+      "ntt_id": "11918",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11918&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 809.0,
+      "response_rate": 19.8,
+      "contact_rate": 25.5,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [제주] 도지사 후보 지지도",
+      "candidates": [
+        {
+          "name": "오영훈",
+          "party": "더불어민주당",
+          "pct": 42.3
+        },
+        {
+          "name": "허향진",
+          "party": "국민의힘",
+          "pct": 31.6
+        },
+        {
+          "name": "부순정",
+          "party": "녹색당",
+          "pct": 1.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "11918",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11918&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 809.0,
+      "response_rate": 19.8,
+      "contact_rate": 25.5,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [제주] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "이석문",
+          "party": "",
+          "pct": 31.2
+        },
+        {
+          "name": "김광수",
+          "party": "",
+          "pct": 34.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "11918",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11918&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 809.0,
+      "response_rate": 19.8,
+      "contact_rate": 25.5,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [제주] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.6
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 39.1
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "11917",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11917&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 21.3,
+      "contact_rate": 25.3,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [전북] 도지사 후보 지지도",
+      "candidates": [
+        {
+          "name": "김관영",
+          "party": "더불어민주당",
+          "pct": 60.2
+        },
+        {
+          "name": "조배숙",
+          "party": "국민의힘",
+          "pct": 13.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "11917",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11917&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 21.3,
+      "contact_rate": 25.3,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [전북] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "서거석",
+          "party": "",
+          "pct": 36.0
+        },
+        {
+          "name": "김윤태",
+          "party": "",
+          "pct": 5.6
+        },
+        {
+          "name": "천호성",
+          "party": "",
+          "pct": 24.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "11917",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11917&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 21.3,
+      "contact_rate": 25.3,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "전북특별자치도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [전북] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 64.8
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 13.9
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "11916",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11916&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 16.7,
+      "contact_rate": 29.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [인천] 시장 후보 지지도",
+      "candidates": [
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 35.8
+        },
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 39.9
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "11916",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11916&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 16.7,
+      "contact_rate": 29.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [인천] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "도성훈",
+          "party": "",
+          "pct": 19.3
+        },
+        {
+          "name": "최계운",
+          "party": "",
+          "pct": 14.2
+        },
+        {
+          "name": "서정호",
+          "party": "",
+          "pct": 4.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "11916",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11916&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 16.7,
+      "contact_rate": 29.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [인천] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 36.2
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 42.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "11914",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11914&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 18.8,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [세종] 시장 후보 지지도",
+      "candidates": [
+        {
+          "name": "이춘희",
+          "party": "더불어민주당",
+          "pct": 38.5
+        },
+        {
+          "name": "최민호",
+          "party": "국민의힘",
+          "pct": 40.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "11914",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11914&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 18.8,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [세종] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "최교진",
+          "party": "",
+          "pct": 22.0
+        },
+        {
+          "name": "최정수",
+          "party": "",
+          "pct": 1.9
+        },
+        {
+          "name": "이길주",
+          "party": "",
+          "pct": 6.8
+        },
+        {
+          "name": "최태호",
+          "party": "",
+          "pct": 8.0
+        },
+        {
+          "name": "강미애",
+          "party": "",
+          "pct": 10.3
+        },
+        {
+          "name": "사진숙",
+          "party": "",
+          "pct": 6.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "11914",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11914&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 18.8,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [세종] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 37.5
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 38.5
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 4.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "11909",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11909&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 20.2,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [경남] 도지사 후보 지지도",
+      "candidates": [
+        {
+          "name": "양문석",
+          "party": "더불어민주당",
+          "pct": 21.3
+        },
+        {
+          "name": "박완수",
+          "party": "국민의힘",
+          "pct": 53.4
+        },
+        {
+          "name": "여영국",
+          "party": "정의당",
+          "pct": 2.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "11909",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11909&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 20.2,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [경남] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "김상권",
+          "party": "",
+          "pct": 24.6
+        },
+        {
+          "name": "박종훈",
+          "party": "",
+          "pct": 33.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "11909",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11909&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 20.2,
+      "contact_rate": 24.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "경상남도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [경남] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 22.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 56.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "11904",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11904&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 20.6,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [부산] 시장 후보 지지도",
+      "candidates": [
+        {
+          "name": "변성완",
+          "party": "더불어민주당",
+          "pct": 25.9
+        },
+        {
+          "name": "박형준",
+          "party": "국민의힘",
+          "pct": 52.3
+        },
+        {
+          "name": "김영진",
+          "party": "정의당",
+          "pct": 1.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "11904",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11904&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 20.6,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 5 > [부산] 교육감 후보 지지도",
+      "candidates": [
+        {
+          "name": "하윤수",
+          "party": "",
+          "pct": 23.7
+        },
+        {
+          "name": "김석준",
+          "party": "",
+          "pct": 28.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "11904",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11904&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 20.6,
+      "contact_rate": 23.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "부산광역시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 8 > [부산] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 26.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 52.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.3
+        }
+      ]
+    },
+    {
       "ntt_id": "11912",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11912&menuNo=200467",
       "agency": "KOPRA",
@@ -1147,6 +1857,331 @@
       ]
     },
     {
+      "ntt_id": "11856",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11856&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 24.1,
+      "contact_rate": 18.2,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김영록",
+          "party": "더불어민주당",
+          "pct": 57.2
+        },
+        {
+          "name": "이정현",
+          "party": "국민의힘",
+          "pct": 12.9
+        },
+        {
+          "name": "민점기",
+          "party": "진보당",
+          "pct": 3.3
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 9.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "11855",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11855&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 23.2,
+      "contact_rate": 18.1,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "충청북도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "노영민",
+          "party": "더불어민주당",
+          "pct": 30.7
+        },
+        {
+          "name": "김영환",
+          "party": "국민의힘",
+          "pct": 43.4
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 9.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "11852",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11852&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 27.9,
+      "contact_rate": 15.6,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "울산광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "송철호",
+          "party": "더불어민주당",
+          "pct": 27.1
+        },
+        {
+          "name": "김두겸",
+          "party": "국민의힘",
+          "pct": 43.4
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 11.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "11851",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11851&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 20.3,
+      "contact_rate": 21.6,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "광주광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "강기정",
+          "party": "민주당",
+          "pct": 56.1
+        },
+        {
+          "name": "주기환",
+          "party": "국민의힘",
+          "pct": 9.2
+        },
+        {
+          "name": "장연주",
+          "party": "정의당",
+          "pct": 2.9
+        },
+        {
+          "name": "김주업",
+          "party": "진보당",
+          "pct": 1.8
+        },
+        {
+          "name": "후보가",
+          "party": "",
+          "pct": 19.6
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 10.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "11850",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11850&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 22.4,
+      "contact_rate": 18.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "대구광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "서재헌",
+          "party": "민주당",
+          "pct": 11.7
+        },
+        {
+          "name": "홍준표",
+          "party": "국민의힘",
+          "pct": 63.6
+        },
+        {
+          "name": "한민정",
+          "party": "정의당",
+          "pct": 1.7
+        },
+        {
+          "name": "신원호",
+          "party": "기본소득당",
+          "pct": 0.2
+        },
+        {
+          "name": "후보가",
+          "party": "",
+          "pct": 14.2
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 8.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "11847",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11847&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 16.9,
+      "contact_rate": 24.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "민주당",
+          "pct": 39.1
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "pct": 37.7
+        },
+        {
+          "name": "황순식",
+          "party": "정의당",
+          "pct": 0.3
+        },
+        {
+          "name": "송영주",
+          "party": "진보당",
+          "pct": 0.4
+        },
+        {
+          "name": "후보가",
+          "party": "",
+          "pct": 12.1
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 8.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "11896",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11896&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 7.0,
+      "contact_rate": 29.5,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-24",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 36.4
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "pct": 43.8
+        }
+      ]
+    },
+    {
       "ntt_id": "11894",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11894&menuNo=200467",
       "agency": "한길리서치",
@@ -1218,6 +2253,46 @@
           "name": "",
           "party": "정의당",
           "pct": 3.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "11890",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11890&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 804.0,
+      "response_rate": 9.4,
+      "contact_rate": 26.4,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-24",
+      "period_end": "2022-05-25",
+      "reg_date": "2022-05-26",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 33.5
+        },
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 47.2
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 3.8
         }
       ]
     },
@@ -1808,6 +2883,41 @@
           "name": "이정미",
           "party": "정의당",
           "pct": 4.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "11864",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11864&menuNo=200467",
+      "agency": "충청리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 충남지역신문연합회 로컬충남",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 1004.0,
+      "response_rate": 3.3,
+      "contact_rate": 42.4,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-23",
+      "period_end": "2022-05-24",
+      "reg_date": "2022-05-26",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 40.7
+        },
+        {
+          "name": "김태흠",
+          "party": "국민의힘",
+          "pct": 48.0
         }
       ]
     },
@@ -3913,6 +5023,41 @@
           "name": "부순정",
           "party": "녹색당",
           "pct": 1.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "11722",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11722&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문/시·도단위 신문/방송사 : 한라일보/제민일보/JIBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1516.0,
+      "response_rate": 13.5,
+      "contact_rate": 14.8,
+      "sample_error": "95% 신뢰수준에 ±2.5%P",
+      "period_start": "2022-05-22",
+      "period_end": "2022-05-24",
+      "reg_date": "2022-05-25",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "제8회전국동시지방선거제주도3차여론조사",
+      "candidates": [
+        {
+          "name": "김광수",
+          "party": "",
+          "pct": 40.4
+        },
+        {
+          "name": "이석문",
+          "party": "",
+          "pct": 35.1
         }
       ]
     },
@@ -8947,6 +10092,51 @@
       ]
     },
     {
+      "ntt_id": "11530",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11530&menuNo=200467",
+      "agency": "한길리서치",
+      "co_agency": "",
+      "requester": "인터넷언론 : 대전인터넷신문기자협회",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1006.0,
+      "response_rate": 7.3,
+      "contact_rate": 46.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-21",
+      "period_end": "2022-05-22",
+      "reg_date": "2022-05-23",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "대전광역시 지방선거 여론조사(2022.5.23.)",
+      "candidates": [
+        {
+          "name": "김동석",
+          "party": "",
+          "pct": 11.2
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "pct": 19.0
+        },
+        {
+          "name": "설동호",
+          "party": "",
+          "pct": 34.1
+        },
+        {
+          "name": "정상신",
+          "party": "",
+          "pct": 13.0
+        }
+      ]
+    },
+    {
       "ntt_id": "11529",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11529&menuNo=200467",
       "agency": "(주)리서치뷰",
@@ -11132,6 +12322,86 @@
       ]
     },
     {
+      "ntt_id": "11458",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11458&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 굿모닝충청",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1007.0,
+      "response_rate": 7.7,
+      "contact_rate": 44.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-19",
+      "period_end": "2022-05-20",
+      "reg_date": "2022-05-21",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이장우",
+          "party": "국민의힘",
+          "pct": 48.2
+        },
+        {
+          "name": "허태정",
+          "party": "더불어민주당",
+          "pct": 43.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "11458",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11458&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 굿모닝충청",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1007.0,
+      "response_rate": 7.7,
+      "contact_rate": 44.1,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-19",
+      "period_end": "2022-05-20",
+      "reg_date": "2022-05-21",
+      "sido": "대전광역시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "설동호",
+          "party": "",
+          "pct": 34.5
+        },
+        {
+          "name": "성광진",
+          "party": "",
+          "pct": 18.1
+        },
+        {
+          "name": "김동석",
+          "party": "",
+          "pct": 9.5
+        },
+        {
+          "name": "정상신",
+          "party": "",
+          "pct": 8.3
+        }
+      ]
+    },
+    {
       "ntt_id": "11453",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11453&menuNo=200467",
       "agency": "미디어리서치",
@@ -12682,6 +13952,91 @@
       ]
     },
     {
+      "ntt_id": "11362",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11362&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "주·월간지 : 일요신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 4.4,
+      "contact_rate": 75.5,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-15",
+      "period_end": "2022-05-17",
+      "reg_date": "2022-05-18",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 충남도지사후보지지도",
+      "candidates": [
+        {
+          "name": "김태흠",
+          "party": "국민의힘",
+          "pct": 46.4
+        },
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 42.2
+        },
+        {
+          "name": "최기복",
+          "party": "충청의미래당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "11362",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11362&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "주·월간지 : 일요신문",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 800.0,
+      "response_rate": 4.4,
+      "contact_rate": 75.5,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-15",
+      "period_end": "2022-05-17",
+      "reg_date": "2022-05-18",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "5. 충청남도교육감후보지지도",
+      "candidates": [
+        {
+          "name": "김지철",
+          "party": "",
+          "pct": 25.2
+        },
+        {
+          "name": "이병학",
+          "party": "",
+          "pct": 14.0
+        },
+        {
+          "name": "조영종",
+          "party": "",
+          "pct": 9.7
+        },
+        {
+          "name": "김영춘",
+          "party": "",
+          "pct": 9.3
+        }
+      ]
+    },
+    {
       "ntt_id": "11360",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11360&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -13747,6 +15102,91 @@
       ]
     },
     {
+      "ntt_id": "11323",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11323&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "시·도단위 신문/방송사 : 대전일보/TJB대전방송",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 5.5,
+      "contact_rate": 64.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-15",
+      "period_end": "2022-05-16",
+      "reg_date": "2022-05-17",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "2. 충남도지사후보지지도",
+      "candidates": [
+        {
+          "name": "김태흠",
+          "party": "국민의힘",
+          "pct": 45.6
+        },
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 43.3
+        },
+        {
+          "name": "최기복",
+          "party": "충청의미래당",
+          "pct": 2.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "11323",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11323&menuNo=200467",
+      "agency": "조원씨앤아이",
+      "co_agency": "",
+      "requester": "시·도단위 신문/방송사 : 대전일보/TJB대전방송",
+      "is_self_poll": false,
+      "method": "무선 ARS",
+      "sample_size": 1000.0,
+      "response_rate": 5.5,
+      "contact_rate": 64.5,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-15",
+      "period_end": "2022-05-16",
+      "reg_date": "2022-05-17",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "4. 충남교육감후보지지도",
+      "candidates": [
+        {
+          "name": "김지철",
+          "party": "",
+          "pct": 27.3
+        },
+        {
+          "name": "이병학",
+          "party": "",
+          "pct": 11.5
+        },
+        {
+          "name": "김영춘",
+          "party": "",
+          "pct": 10.4
+        },
+        {
+          "name": "조영종",
+          "party": "",
+          "pct": 9.5
+        }
+      ]
+    },
+    {
       "ntt_id": "11322",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11322&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -14087,6 +15527,51 @@
       ]
     },
     {
+      "ntt_id": "11312",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11312&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 809.0,
+      "response_rate": 7.7,
+      "contact_rate": 34.0,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-17",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 34.7
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "pct": 37.2
+        },
+        {
+          "name": "황순식",
+          "party": "정의당",
+          "pct": 1.5
+        },
+        {
+          "name": "송영주",
+          "party": "진보당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
       "ntt_id": "11309",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11309&menuNo=200467",
       "agency": "한길리서치",
@@ -14268,6 +15753,91 @@
           "name": "이상일",
           "party": "국민의힘",
           "pct": 45.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "11301",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11301&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 803.0,
+      "response_rate": 10.9,
+      "contact_rate": 25.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-17",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "송영길",
+          "party": "더불어민주당",
+          "pct": 27.2
+        },
+        {
+          "name": "오세훈",
+          "party": "국민의힘",
+          "pct": 52.4
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "pct": 2.1
+        },
+        {
+          "name": "신지혜",
+          "party": "기본소득당",
+          "pct": 1.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "11299",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11299&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 8.7,
+      "contact_rate": 26.3,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-17",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 32.5
+        },
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 39.6
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 5.3
         }
       ]
     },
@@ -15812,6 +17382,181 @@
       ]
     },
     {
+      "ntt_id": "11254",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11254&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 23.8,
+      "contact_rate": 18.1,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "충청북도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "노영민",
+          "party": "더불어민주당",
+          "pct": 27.8
+        },
+        {
+          "name": "김영환",
+          "party": "국민의힘",
+          "pct": 42.8
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 9.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "11254",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11254&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 23.8,
+      "contact_rate": 18.1,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "충청북도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김진균",
+          "party": "",
+          "pct": 5.2
+        },
+        {
+          "name": "김병우",
+          "party": "",
+          "pct": 23.3
+        },
+        {
+          "name": "윤건영",
+          "party": "",
+          "pct": 18.7
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 18.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "11250",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11250&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 23.0,
+      "contact_rate": 19.2,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "민주당",
+          "pct": 40.3
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "pct": 36.8
+        },
+        {
+          "name": "황순식",
+          "party": "정의당",
+          "pct": 0.2
+        },
+        {
+          "name": "송영주",
+          "party": "진보당",
+          "pct": 0.1
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 14.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "11250",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11250&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 23.0,
+      "contact_rate": 19.2,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "성기선",
+          "party": "",
+          "pct": 13.9
+        },
+        {
+          "name": "임태희",
+          "party": "",
+          "pct": 15.2
+        },
+        {
+          "name": "모르겠다",
+          "party": "",
+          "pct": 23.1
+        }
+      ]
+    },
+    {
       "ntt_id": "11259",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11259&menuNo=200467",
       "agency": "윈지코리아컨설팅",
@@ -16333,6 +18078,161 @@
           "name": "",
           "party": "정의당",
           "pct": 2.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "11243",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11243&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 16.6,
+      "contact_rate": 30.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [충남] 도지사 후보 지지도",
+      "candidates": [
+        {
+          "name": "양승조",
+          "party": "더불어민주당",
+          "pct": 34.3
+        },
+        {
+          "name": "김태흠",
+          "party": "국민의힘",
+          "pct": 40.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "11243",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11243&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 16.6,
+      "contact_rate": 30.9,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "충청남도",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 9 > [충남] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 30.5
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 48.3
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 3.7
+        }
+      ]
+    },
+    {
+      "ntt_id": "11242",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11242&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 14.7,
+      "contact_rate": 37.4,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "< 표 3 > [인천] 시장 후보 지지도",
+      "candidates": [
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 30.4
+        },
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 37.5
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 3.6
+        }
+      ]
+    },
+    {
+      "ntt_id": "11242",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11242&menuNo=200467",
+      "agency": "입소스 주식회사",
+      "co_agency": "",
+      "requester": "방송사 : KBS, MBC, SBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 801.0,
+      "response_rate": 14.7,
+      "contact_rate": 37.4,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-05-14",
+      "period_end": "2022-05-15",
+      "reg_date": "2022-05-16",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "정당지지",
+      "office_label": "정당지지",
+      "metric_type": "정당지지",
+      "table_no": "",
+      "table_title": "< 표 9 > [인천] 정당지지도 (재질문 포함)",
+      "candidates": [
+        {
+          "name": "",
+          "party": "더불어민주당",
+          "pct": 32.9
+        },
+        {
+          "name": "",
+          "party": "국민의힘",
+          "pct": 42.4
+        },
+        {
+          "name": "",
+          "party": "정의당",
+          "pct": 5.3
         }
       ]
     },
@@ -22973,6 +24873,236 @@
           "name": "이재호",
           "party": "국민의힘",
           "pct": 46.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "10952",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10952&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문/시·도단위 신문/방송사 : 한라일보/제민일보/JIBS",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1032.0,
+      "response_rate": 12.1,
+      "contact_rate": 22.9,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2022-04-30",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-02",
+      "sido": "제주특별자치도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "제8회전국동시지방선거제주도2차여론조사",
+      "candidates": [
+        {
+          "name": "김광수",
+          "party": "",
+          "pct": 37.1
+        },
+        {
+          "name": "이석문",
+          "party": "",
+          "pct": 27.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "10951",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10951&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문/방송사 : 조선일보/TV조선",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 804.0,
+      "response_rate": 15.2,
+      "contact_rate": 32.0,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-04-29",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-02",
+      "sido": "경기도",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "김동연",
+          "party": "더불어민주당",
+          "pct": 45.0
+        },
+        {
+          "name": "김은혜",
+          "party": "국민의힘",
+          "pct": 41.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "10950",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10950&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문/방송사 : 조선일보/TV조선",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 804.0,
+      "response_rate": 13.5,
+      "contact_rate": 33.2,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-04-29",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-02",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 44.4
+        },
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 38.3
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 4.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "10949",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10949&menuNo=200467",
+      "agency": "케이스탯리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문/방송사 : 조선일보/TV조선",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 807.0,
+      "response_rate": 13.0,
+      "contact_rate": 38.1,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-04-30",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-02",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "오세훈",
+          "party": "국민의힘",
+          "pct": 54.6
+        },
+        {
+          "name": "송영길",
+          "party": "더불어민주당",
+          "pct": 33.7
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "pct": 2.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "10945",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10945&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 18.5,
+      "contact_rate": 19.8,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-04-29",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-01",
+      "sido": "인천광역시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문2] 이번 인천시장 선거에 다음과 같은 후보들이 출마한다면 누구에게 투표하시겠습니까? 후보 이름은 무작위 순으로 불러드리겠",
+      "candidates": [
+        {
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "pct": 33.0
+        },
+        {
+          "name": "유정복",
+          "party": "국민의힘",
+          "pct": 38.0
+        },
+        {
+          "name": "이정미",
+          "party": "정의당",
+          "pct": 3.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "10943",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10943&menuNo=200467",
+      "agency": "(주)한국리서치",
+      "co_agency": "",
+      "requester": "방송사 : KBS",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 800.0,
+      "response_rate": 17.3,
+      "contact_rate": 23.7,
+      "sample_error": "95% 신뢰수준에 ±3.5%P",
+      "period_start": "2022-04-29",
+      "period_end": "2022-05-01",
+      "reg_date": "2022-05-01",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "[문2] 이번 서울시장 선거에 다음과 같은 후보들이 출마한다면 누구에게 투표하시겠습니까? 후보 이름은 무작위 순으로 불러드리겠",
+      "candidates": [
+        {
+          "name": "송영길",
+          "party": "더불어민주당",
+          "pct": 26.9
+        },
+        {
+          "name": "오세훈",
+          "party": "국민의힘",
+          "pct": 49.9
+        },
+        {
+          "name": "권수정",
+          "party": "정의당",
+          "pct": 1.8
         }
       ]
     },
@@ -33047,6 +35177,116 @@
       ]
     },
     {
+      "ntt_id": "9960",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9960&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "통신사/방송사 : 뉴스1/TJB대전방송",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 811.0,
+      "response_rate": 2.8,
+      "contact_rate": 34.2,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-02-11",
+      "period_end": "2022-02-12",
+      "reg_date": "2022-02-14",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "office_level": "광역단체장",
+      "office_label": "도지사",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "이춘희",
+          "party": "더불어민주당",
+          "pct": 21.9
+        },
+        {
+          "name": "최민호",
+          "party": "국민의힘",
+          "pct": 10.6
+        },
+        {
+          "name": "조상호",
+          "party": "더불어민주당",
+          "pct": 7.5
+        },
+        {
+          "name": "송아영",
+          "party": "",
+          "pct": 6.1
+        },
+        {
+          "name": "이세영",
+          "party": "",
+          "pct": 6.0
+        },
+        {
+          "name": "배선호",
+          "party": "",
+          "pct": 5.4
+        },
+        {
+          "name": "정원희",
+          "party": "",
+          "pct": 5.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "9960",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9960&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "통신사/방송사 : 뉴스1/TJB대전방송",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 811.0,
+      "response_rate": 2.8,
+      "contact_rate": 34.2,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2022-02-11",
+      "period_end": "2022-02-12",
+      "reg_date": "2022-02-14",
+      "sido": "세종특별자치시",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "최교진",
+          "party": "",
+          "pct": 20.2
+        },
+        {
+          "name": "최태호",
+          "party": "",
+          "pct": 9.7
+        },
+        {
+          "name": "송명석",
+          "party": "",
+          "pct": 6.7
+        },
+        {
+          "name": "사진숙",
+          "party": "",
+          "pct": 6.2
+        },
+        {
+          "name": "강미애",
+          "party": "",
+          "pct": 6.0
+        }
+      ]
+    },
+    {
       "ntt_id": "9954",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9954&menuNo=200467",
       "agency": "(주)리얼미터",
@@ -35188,6 +37428,51 @@
           "name": "",
           "party": "정의당",
           "pct": 4.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "9564",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9564&menuNo=200467",
+      "agency": "(주)리얼미터",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 광주일보",
+      "is_self_poll": false,
+      "method": "유선 ARS",
+      "sample_size": 807.0,
+      "response_rate": 2.2,
+      "contact_rate": 19.4,
+      "sample_error": "95% 신뢰수준에 ±3.4%P",
+      "period_start": "2021-12-29",
+      "period_end": "2021-12-30",
+      "reg_date": "2022-01-02",
+      "sido": "전라남도",
+      "sigungu": "",
+      "office_level": "교육감",
+      "office_label": "교육감",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "장석웅",
+          "party": "",
+          "pct": 36.4
+        },
+        {
+          "name": "김대중",
+          "party": "",
+          "pct": 10.8
+        },
+        {
+          "name": "김동환",
+          "party": "",
+          "pct": 7.2
+        },
+        {
+          "name": "인물",
+          "party": "",
+          "pct": 7.0
         }
       ]
     },

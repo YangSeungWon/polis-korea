@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T10:48:40",
+    "generated_at": "2026-06-19T14:11:55",
     "election": "20th-general-2016",
     "election_date": "2016-04-13",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1410,
       "matched_parsed": 1131,
-      "emitted_records": 518,
+      "emitted_records": 521,
       "skipped_no_pdf": 279,
-      "skipped_no_race": 630
+      "skipped_no_race": 627
     }
   },
   "polls": [
@@ -190,6 +190,42 @@
           "name": "김종민",
           "party": "정의당",
           "pct": 5.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2770",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2770&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS,연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 15.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-03",
+      "period_end": "2016-04-04",
+      "reg_date": "2016-04-07",
+      "sido": "경상북도",
+      "sigungu": "",
+      "district": "구미시을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 경북 구미을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "장석춘",
+          "party": "새누리당",
+          "pct": 27.6
+        },
+        {
+          "name": "김태환",
+          "party": "무소속",
+          "pct": 34.2
         }
       ]
     },
@@ -4912,6 +4948,52 @@
       ]
     },
     {
+      "ntt_id": "2527",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2527&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 21.1,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-02",
+      "reg_date": "2016-04-05",
+      "sido": "경상남도",
+      "sigungu": "",
+      "district": "밀양시의령군함안군창녕군",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 경남 밀양/의령/함안/창녕 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "엄용수",
+          "party": "새누리당",
+          "pct": 36.4
+        },
+        {
+          "name": "우일식",
+          "party": "국민의당",
+          "pct": 4.9
+        },
+        {
+          "name": "김충근",
+          "party": "무소속",
+          "pct": 4.5
+        },
+        {
+          "name": "조해진",
+          "party": "무소속",
+          "pct": 33.9
+        }
+      ]
+    },
+    {
       "ntt_id": "2526",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2526&menuNo=200467",
       "agency": "윈폴(WINPOLL)",
@@ -8841,6 +8923,52 @@
           "name": "",
           "party": "민중연합당",
           "pct": 3.3
+        }
+      ]
+    },
+    {
+      "ntt_id": "2374",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2374&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS, 연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 500.0,
+      "response_rate": 7.9,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±4.4%P",
+      "period_start": "2016-04-01",
+      "period_end": "2016-04-03",
+      "reg_date": "2016-04-04",
+      "sido": "서울특별시",
+      "sigungu": "",
+      "district": "송파구을",
+      "office_level": "국회의원",
+      "office_label": "국회의원",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문2. 선생님께서는 이번 서울 송파구을 국회의원 선거에 출마 하는 다음 후보 중 누구에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "최명길",
+          "party": "민주당",
+          "pct": 30.0
+        },
+        {
+          "name": "이래협",
+          "party": "국민의당",
+          "pct": 9.9
+        },
+        {
+          "name": "김영순",
+          "party": "무소속",
+          "pct": 33.0
+        },
+        {
+          "name": "채현",
+          "party": "무소속",
+          "pct": 1.1
         }
       ]
     },

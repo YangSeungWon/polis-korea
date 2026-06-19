@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T11:11:47",
+    "generated_at": "2026-06-19T14:20:12",
     "election": "19th-pres-2017",
     "election_date": "2017-05-09",
     "blackout_start": "2017-05-03",
@@ -11,9 +11,9 @@
     "stats": {
       "total_polls_meta": 594,
       "matched_parsed": 541,
-      "emitted_records": 414,
+      "emitted_records": 432,
       "skipped_no_pdf": 53,
-      "skipped_no_race": 268,
+      "skipped_no_race": 250,
       "skipped_pre_campaign": 154
     }
   },
@@ -1715,6 +1715,101 @@
           "name": "심상정",
           "party": "정의당",
           "pct": 4.8
+        }
+      ]
+    },
+    {
+      "ntt_id": "3775",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3775&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보, 채널A",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1058.0,
+      "response_rate": 21.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.0%P",
+      "period_start": "2017-05-01",
+      "period_end": "2017-05-02",
+      "reg_date": "2017-05-02",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 26.5
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 2.7
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 49.8
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 4.9
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 4.4
+        }
+      ]
+    },
+    {
+      "ntt_id": "3773",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3773&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : MBC, 한국경제신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1507.0,
+      "response_rate": 24.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±2.5%P",
+      "period_start": "2017-05-01",
+      "period_end": "2017-05-02",
+      "reg_date": "2017-05-02",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 40.6
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 17.7
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 4.7
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 7.2
         }
       ]
     },
@@ -4904,6 +4999,51 @@
       ]
     },
     {
+      "ntt_id": "3753",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3753&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 아시아경제",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1027.0,
+      "response_rate": 24.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-04-30",
+      "period_end": "2017-05-01",
+      "reg_date": "2017-05-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 39.7
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 16.4
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 5.1
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 9.8
+        }
+      ]
+    },
+    {
       "ntt_id": "3751",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3751&menuNo=200467",
       "agency": "(주)한국리서치",
@@ -5925,6 +6065,136 @@
           "name": "심상정",
           "party": "정의당",
           "pct": 8.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "3747",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3747&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : 부산MBC, MBC경남",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1616.0,
+      "response_rate": 6.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±2.4%P",
+      "period_start": "2017-04-29",
+      "period_end": "2017-05-01",
+      "reg_date": "2017-05-01",
+      "sido": "복합권역",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 36.1
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 27.5
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 6.3
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 14.9
+        }
+      ]
+    },
+    {
+      "ntt_id": "3746",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3746&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1004.0,
+      "response_rate": 20.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-04-29",
+      "period_end": "2017-04-30",
+      "reg_date": "2017-05-01",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 68.2
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 6.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 12.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "3738",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3738&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1007.0,
+      "response_rate": 20.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-04-26",
+      "period_end": "2017-04-26",
+      "reg_date": "2017-04-28",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 57.8
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 2.8
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 6.8
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 2.3
         }
       ]
     },
@@ -8629,6 +8899,56 @@
       ]
     },
     {
+      "ntt_id": "3712",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3712&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : MBC, 한국경제신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1514.0,
+      "response_rate": 22.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±2.5%P",
+      "period_start": "2017-04-21",
+      "period_end": "2017-04-22",
+      "reg_date": "2017-04-23",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 9.5
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 22.5
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 19.6
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 27.9
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.0
+        }
+      ]
+    },
+    {
       "ntt_id": "3710",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3710&menuNo=200467",
       "agency": "한국갤럽조사연구소",
@@ -9570,6 +9890,51 @@
           "name": "",
           "party": "정의당",
           "pct": 6.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "3701",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3701&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1009.0,
+      "response_rate": 17.6,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-04-18",
+      "period_end": "2017-04-19",
+      "reg_date": "2017-04-20",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 36.4
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 13.9
+        },
+        {
+          "name": "유승민",
+          "party": "바른정당",
+          "pct": 9.5
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 2.7
         }
       ]
     },
@@ -13529,6 +13894,46 @@
       ]
     },
     {
+      "ntt_id": "3662",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3662&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : MBC, 한국경제신문",
+      "is_self_poll": false,
+      "method": "무선전화면접",
+      "sample_size": 1500.0,
+      "response_rate": 20.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±2.5%P",
+      "period_start": "2017-04-07",
+      "period_end": "2017-04-08",
+      "reg_date": "2017-04-08",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 53.0
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 3.1
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 31.4
+        }
+      ]
+    },
+    {
       "ntt_id": "3661",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3661&menuNo=200467",
       "agency": "리얼미터",
@@ -16484,6 +16889,51 @@
       ]
     },
     {
+      "ntt_id": "3627",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3627&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1000.0,
+      "response_rate": 10.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-03-28",
+      "period_end": "2017-03-29",
+      "reg_date": "2017-03-30",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 37.2
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 28.6
+        },
+        {
+          "name": "홍준표",
+          "party": "자유한국당",
+          "pct": 11.2
+        },
+        {
+          "name": "심상정",
+          "party": "정의당",
+          "pct": 3.4
+        }
+      ]
+    },
+    {
       "ntt_id": "3625",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3625&menuNo=200467",
       "agency": "리얼미터",
@@ -18094,6 +18544,46 @@
       ]
     },
     {
+      "ntt_id": "3479",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3479&menuNo=200467",
+      "agency": "월드리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 충청투데이",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1019.0,
+      "response_rate": 10.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-02-11",
+      "period_end": "2017-02-12",
+      "reg_date": "2017-02-13",
+      "sido": "복합권역",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문09. 이번 대선에서 안희정, 황교안, 안철수 후보가 나온다면, 어느 후보에게 투표하시겠습니까?",
+      "candidates": [
+        {
+          "name": "안희정",
+          "party": "더불어민주당",
+          "pct": 59.2
+        },
+        {
+          "name": "황교안",
+          "party": "자유한국당",
+          "pct": 18.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 9.4
+        }
+      ]
+    },
+    {
       "ntt_id": "3472",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3472&menuNo=200467",
       "agency": "리얼미터",
@@ -18329,6 +18819,46 @@
       ]
     },
     {
+      "ntt_id": "3461",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3461&menuNo=200467",
+      "agency": "(주)코리아리서치센터",
+      "co_agency": "",
+      "requester": "방송사 : KBS·연합뉴스",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 2016.0,
+      "response_rate": 14.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±2.2%P",
+      "period_start": "2017-02-05",
+      "period_end": "2017-02-06",
+      "reg_date": "2017-02-06",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "문 11. 차기대선이문재인안철수황교안 , , 3 자구도로치러진다면어느후보에게투표하시겠습니까 ?",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 45.0
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 15.1
+        },
+        {
+          "name": "황교안",
+          "party": "자유한국당",
+          "pct": 20.5
+        }
+      ]
+    },
+    {
       "ntt_id": "3460",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3460&menuNo=200467",
       "agency": "한국사회여론연구소(KSOI)",
@@ -18420,6 +18950,46 @@
           "name": "",
           "party": "정의당",
           "pct": 5.2
+        }
+      ]
+    },
+    {
+      "ntt_id": "3457",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3457&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1012.0,
+      "response_rate": 10.2,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-02-03",
+      "period_end": "2017-02-04",
+      "reg_date": "2017-02-05",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 42.3
+        },
+        {
+          "name": "황교안",
+          "party": "자유한국당",
+          "pct": 18.4
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 17.7
         }
       ]
     },
@@ -19269,6 +19839,86 @@
       ]
     },
     {
+      "ntt_id": "3431",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3431&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 세계일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1011.0,
+      "response_rate": 10.3,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-01-30",
+      "period_end": "2017-01-30",
+      "reg_date": "2017-01-31",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 45.3
+        },
+        {
+          "name": "반기문",
+          "party": "무소속",
+          "pct": 19.9
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 14.1
+        }
+      ]
+    },
+    {
+      "ntt_id": "3426",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3426&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : MBC, 한국경제신문",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1001.0,
+      "response_rate": 8.4,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-01-25",
+      "period_end": "2017-01-26",
+      "reg_date": "2017-01-26",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 39.5
+        },
+        {
+          "name": "반기문",
+          "party": "무소속",
+          "pct": 23.2
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 12.3
+        }
+      ]
+    },
+    {
       "ntt_id": "3420",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3420&menuNo=200467",
       "agency": "리얼미터",
@@ -19410,6 +20060,46 @@
           "name": "",
           "party": "정의당",
           "pct": 5.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "3405",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3405&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "시·도단위 신문 : 국제신문",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1006.0,
+      "response_rate": 13.5,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2017-01-20",
+      "period_end": "2017-01-22",
+      "reg_date": "2017-01-24",
+      "sido": "복합권역",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 37.2
+        },
+        {
+          "name": "반기문",
+          "party": "무소속",
+          "pct": 27.3
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 7.5
         }
       ]
     },
@@ -19830,6 +20520,101 @@
           "name": "",
           "party": "정의당",
           "pct": 6.5
+        }
+      ]
+    },
+    {
+      "ntt_id": "3297",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3297&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "전국단위 신문 : 동아일보",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1011.0,
+      "response_rate": 11.8,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-12-28",
+      "period_end": "2016-12-30",
+      "reg_date": "2016-12-29",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 34.4
+        },
+        {
+          "name": "반기문",
+          "party": "무소속",
+          "pct": 29.6
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 13.0
+        }
+      ]
+    },
+    {
+      "ntt_id": "3296",
+      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=3296&menuNo=200467",
+      "agency": "(주)리서치앤리서치",
+      "co_agency": "",
+      "requester": "방송사 : MBC, 한국경제신문",
+      "is_self_poll": false,
+      "method": "유선전화면접",
+      "sample_size": 1008.0,
+      "response_rate": 12.0,
+      "contact_rate": null,
+      "sample_error": "95% 신뢰수준에 ±3.1%P",
+      "period_start": "2016-12-29",
+      "period_end": "2016-12-30",
+      "reg_date": "2016-12-29",
+      "sido": "",
+      "sigungu": "",
+      "office_level": "대통령",
+      "office_label": "대통령",
+      "metric_type": "후보지지",
+      "table_no": "",
+      "table_title": "",
+      "candidates": [
+        {
+          "name": "문재인",
+          "party": "더불어민주당",
+          "pct": 26.2
+        },
+        {
+          "name": "이재명",
+          "party": "더불어민주당",
+          "pct": 10.8
+        },
+        {
+          "name": "안철수",
+          "party": "국민의당",
+          "pct": 9.5
+        },
+        {
+          "name": "안희정",
+          "party": "더불어민주당",
+          "pct": 6.0
+        },
+        {
+          "name": "손학규",
+          "party": "국민의당",
+          "pct": 5.5
+        },
+        {
+          "name": "박원순",
+          "party": "더불어민주당",
+          "pct": 3.8
         }
       ]
     },
