@@ -148,23 +148,29 @@
         const lo = Math.min(ePct, aPct), hi = Math.max(ePct, aPct);
         const diff = (e.pct != null && a.pct != null) ? Math.abs(ePct - aPct).toFixed(1) : '';
         const cls = (hit ? 'is-hit' : 'is-miss') + (sido === '전국' ? ' is-nation' : '');
-        const mark = hit ? '<span class="ar-exit-mark">✓</span>'
-          : '<span class="ar-exit-mark ar-exit-miss-mark">✗</span>';
+        const mark = hit ? '<span class="ar-exit-mark" aria-hidden="true">✓</span>'
+          : '<span class="ar-exit-mark ar-exit-miss-mark" aria-hidden="true">✗</span>';
+        const sidoLbl = sido === '전국' ? '전국' : Archive.ssh(sido);
+        // 행 전체를 SR용 한 줄 요약(예측/실제/오차/적중) — 시각 트랙·마크는 aria-hidden.
+        const aria = `${sidoLbl}: 예측 ${e.party} ${ePct.toFixed(1)}%, 실제 ${a.party} ${aPct.toFixed(1)}%`
+          + `${diff ? `, 오차 ${diff}%p` : ''}, ${hit ? '적중' : '빗나감'}`;
         rowsHtml += `
-          <div class="ar-exit-dbb ${cls}">
-            <span class="ar-exit-sido">${sido === '전국' ? '전국' : Archive.ssh(sido)}</span>
-            <div class="ar-exit-track">
+          <div class="ar-exit-dbb ${cls}" role="listitem" aria-label="${aria}">
+            <span class="ar-exit-sido" aria-hidden="true">${sidoLbl}</span>
+            <div class="ar-exit-track" aria-hidden="true">
               <div class="ar-exit-line ${hit ? '' : 'is-miss'}" style="left:${lo}%;width:${hi - lo}%"></div>
               <div class="ar-exit-dot ar-exit-dot-pred" style="left:${ePct}%;background:${eCol}" title="예측 ${e.name || e.party} ${ePct.toFixed(1)}%"></div>
               <div class="ar-exit-dot ar-exit-dot-actual" style="left:${aPct}%;background:${aCol}" title="실제 ${a.name || a.party} ${aPct.toFixed(1)}%"></div>
             </div>
-            <span class="ar-exit-pred-pct" style="color:${eCol}">${ePct.toFixed(1)}</span>
-            <span class="ar-exit-arrow">→</span>
-            <span class="ar-exit-actual-pct" style="color:${aCol}">${aPct.toFixed(1)}</span>
-            <span class="ar-exit-diff">${diff}%p</span>
+            <span class="ar-exit-pred-pct" style="color:${eCol}" aria-hidden="true">${ePct.toFixed(1)}</span>
+            <span class="ar-exit-arrow" aria-hidden="true">→</span>
+            <span class="ar-exit-actual-pct" style="color:${aCol}" aria-hidden="true">${aPct.toFixed(1)}</span>
+            <span class="ar-exit-diff" aria-hidden="true">${diff}%p</span>
             ${mark}
           </div>`;
       }
+      chart.setAttribute('role', 'list');
+      chart.setAttribute('aria-label', '시도별 출구조사 예측 대 실제');
       chart.innerHTML = rowsHtml;
       card.appendChild(chart);
       host.appendChild(card);

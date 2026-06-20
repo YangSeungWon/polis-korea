@@ -48,7 +48,7 @@
     const abbr = p.abbr ? ` <span class="s-pty-abbr" style="background:${col};color:${atc}">${escapeHtml(p.abbr)}</span>` : '';
     return `<li class="s-item s-party-card">
       <a class="s-link" href="/party/${encodeURIComponent(p.name)}/">
-        <span class="s-pty-bar" style="background:${col}"></span>
+        <span class="s-pty-bar" style="background:${col}" aria-hidden="true"></span>
         <span class="s-name">${escapeHtml(p.name)}</span>${abbr}
         <span class="s-pty-life">${escapeHtml(life)}</span>
         <span class="s-meta">${escapeHtml((p.note || '').slice(0, 60))}</span>

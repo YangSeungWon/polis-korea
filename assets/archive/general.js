@@ -52,7 +52,7 @@
       if (totalSeats > 0) {
         const pp = sorted.map(([party, seats]) => ({ party, seats, color: pcol(party) }));
         const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
-          .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}"></span><b>${seats}</b> ${party}</span>`).join('');
+          .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}" aria-hidden="true"></span><b>${seats}</b> ${party}</span>`).join('');
         sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
           + renderParliamentChart(pp, totalSeats, 460, 210, { mode: 'dots' })  // 의석=점 하나(반원). 460폭이라 점이 또렷이 읽힘.
           + `<div class="ar-pl-total">${totalSeats}석</div>`
@@ -132,6 +132,21 @@
       </div>`).join('')}
       <div class="ar-parl-trow ar-parl-foot"><span></span><span class="ar-parl-name">합계</span>${foot}</div>
     </div>${note ? `<p class="ar-parl-note">${note}</p>` : ''}`;
+    // 표 시맨틱 — div 그리드라 SR엔 평문. ARIA role로 행/열 구조 부여(레이아웃 CSS는 그대로).
+    const grid = table.querySelector('.ar-parl-table');
+    if (grid) {
+      grid.setAttribute('role', 'table');
+      grid.setAttribute('aria-label', '정당별 의석 분포');
+      const thead = grid.querySelector('.ar-parl-thead');
+      if (thead) { thead.setAttribute('role', 'row'); thead.querySelectorAll('span').forEach((s) => s.setAttribute('role', 'columnheader')); }
+      grid.querySelectorAll('.ar-parl-trow').forEach((row) => {
+        row.setAttribute('role', 'row');
+        row.querySelectorAll('span').forEach((s) => {
+          if (s.classList.contains('ar-parl-name')) s.setAttribute('role', 'rowheader');
+          else s.setAttribute('role', 'cell');   // swatch 포함 — 빈 장식 셀도 열 정합 위해 cell
+        });
+      });
+    }
     document.getElementById('ar-parliament').hidden = false;
   }
 
