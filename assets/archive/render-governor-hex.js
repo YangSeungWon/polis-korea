@@ -164,7 +164,7 @@
       if (window.SvgViewport) window.SvgViewport.applyHost(host, svg, { cells: cells.map((c) => ({ region: c.sido, cx: c.cx, cy: c.cy })) }, keep);
     }
     // 캡션의 '시·도 수'를 실제 데이터 있는 셀 수로 갱신(아카이브 .ar-source-line만 — 폴은 closest null이라 무시).
-    const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
+    const cap = host.closest && host.closest('.ar-section')?.querySelector('.info-pop, .ar-source-line');
     const nData = cells.filter((c) => c.win).length;
     if (cap && nData && !opts.winnerOf) cap.textContent = `${nData}개 시·도 — 1위 후보(정당색·득표율).`;
     // 줌·포커스 인프라(svg-viewport)용 — 지역→셀중심 + base viewBox. 기존 호출자는 반환값 무시.

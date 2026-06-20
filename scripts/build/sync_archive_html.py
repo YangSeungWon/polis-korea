@@ -14,6 +14,7 @@ archive HTML 4개 (8th-local·9th-local·21st-pres·22nd-general)는 head/footer
 from __future__ import annotations
 import argparse
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -460,7 +461,25 @@ FOOT = """
 """
 
 KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
-KIND_TO_SECTIONS = {"local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES, "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION}
+
+# 제목 아래 깔린 .ar-source-line(TMI 설명)을 제목 옆 정보 ⓘ 팝오버로 이관.
+# 화면엔 제목만 — 누르면(ⓘ) 설명이 읽기 좋은 크기로 뜬다. (assets/components.css .info-i/.info-pop)
+_SRC_RE = re.compile(r'<h2 class="ar-section-title">([^<]*)</h2>\s*<p class="ar-source-line">(.*?)</p>')
+
+
+def _sourceline_to_info(html: str) -> str:
+    def repl(m: "re.Match[str]") -> str:
+        title, body = m.group(1), m.group(2)
+        return (f'<h2 class="ar-section-title">{title}'
+                f'<span class="info-i" tabindex="0" role="button" aria-label="설명">i'
+                f'<span class="info-pop">{body}</span></span></h2>')
+    return _SRC_RE.sub(repl, html)
+
+
+KIND_TO_SECTIONS = {k: _sourceline_to_info(v) for k, v in {
+    "local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES,
+    "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION,
+}.items()}
 
 
 def nec_source_suffix(meta: dict) -> str:

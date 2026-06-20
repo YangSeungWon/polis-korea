@@ -398,8 +398,8 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.className = 'ar-section'; sec.id = 'ar-sgg-turnout';
-      sec.innerHTML = '<h2 class="ar-section-title">시군구 투표율</h2>'
-        + '<p class="ar-source-line">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음.</p>'
+      sec.innerHTML = '<h2 class="ar-section-title">시군구 투표율'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음.</span></span></h2>'
         + '<div class="ar-sgg-turnout-host"></div><div class="ar-turnout-legend"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
@@ -510,8 +510,8 @@
       if (!sec) {
         const title = tc === '4' ? '시·군·구 기초단체장' : '시·군·구 1위 후보';
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
-        sec.innerHTML = `<h2 class="ar-section-title">${title}</h2>`
-          + '<p class="ar-source-line">1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.</p>'
+        sec.innerHTML = `<h2 class="ar-section-title">${title}`
+          + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.</span></span></h2>'
           + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
       }
@@ -604,8 +604,8 @@
     let sec = document.getElementById('ar-sgg-prop');
     if (!sec) {
       sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-prop';
-      sec.innerHTML = '<h2 class="ar-section-title">기초의원 비례 — 시·군·구별 표심</h2>'
-        + '<p class="ar-source-line">비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.</p>'
+      sec.innerHTML = '<h2 class="ar-section-title">기초의원 비례 — 시·군·구별 표심'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.</span></span></h2>'
         + '<div class="sgg-mode-toggle seg" role="tablist"></div><div class="ar-sgg-prop-host sgg-map-area"></div>'
         + '<div class="ar-sgg-prop-legend ch-leg-row"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);

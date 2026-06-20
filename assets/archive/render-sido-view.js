@@ -116,7 +116,7 @@
       if (el) m.draw(el, drawArg);
     }
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
-    const cap = host.closest && host.closest('.ar-section')?.querySelector('.ar-source-line');
+    const cap = host.closest && host.closest('.ar-section')?.querySelector('.info-pop, .ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
 
     // 모드 전환 — 떠나는 뷰의 줌을 capture해 새 뷰에 apply(탭 교차 포커스 전이). region=시도라
