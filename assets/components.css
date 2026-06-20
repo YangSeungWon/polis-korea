@@ -327,14 +327,14 @@
 .poll-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 14px;
+  gap: 8px 22px;   /* 당 항목 간 간격 넉넉히 — 한 줄에 몰리면 당명끼리 붙어 보임 */
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--rule);
   font-size: 12.5px;
   color: var(--ink-soft);
 }
-.poll-legend .leg-item { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.poll-legend .leg-item { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding-right: 2px; }
 .poll-legend .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
 @media (max-width: 900px) {
   /* 헤더·.page 반응형 chrome → common.css */

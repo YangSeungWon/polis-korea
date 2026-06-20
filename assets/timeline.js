@@ -87,8 +87,7 @@ function loadJson(p) {
   // 역대 페이지는 사실(과거) 중심 — 주기 추정 예측 행은 제외. 진짜 예정(active)만 노출.
   const rounds = (data.rounds || []).filter((r) => !r.predicted);
   $('#loading').hidden = true;
-  const root = $('#tl-table');
-  root.hidden = false;
+  const root = $('#tl-table');   // 행은 숨김 상태로 append — 기본 화면은 상세(아래에서 노출).
 
   // (헤더 row 제거 — 시도 약칭 헤더는 stacked bar 구조에서 의미 없음.)
 
@@ -332,6 +331,10 @@ function loadJson(p) {
   }
   buildDetail();
 
+  // 기본 화면 = 상세(3열 비교 타임라인, 자랑 뷰). 흐름은 보조 토글.
+  $('#tl-detail').hidden = false;
+  requestAnimationFrame(reflowDetail);   // 보인 뒤 높이 측정해 겹침 해소
+
   // 모드 토글 (흐름↔상세)
   document.querySelectorAll('[data-tlmode]').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -339,11 +342,12 @@ function loadJson(p) {
       const detail = btn.dataset.tlmode === 'detail';
       $('#tl-table').hidden = detail;
       $('#tl-detail').hidden = !detail;
-      if (detail) requestAnimationFrame(reflowDetail);   // 보인 뒤 높이 측정해 겹침 해소
+      if (detail) requestAnimationFrame(reflowDetail);          // 보인 뒤 높이 측정해 겹침 해소
+      else requestAnimationFrame(fitStackLabels);               // 숨김 중엔 폭 측정 0이라, 흐름 보일 때 라벨 재맞춤
     });
   });
 
-  // 필터 — 흐름(행 dim)·상세(열 숨김) 양쪽 적용
+  // 필터 — 흐름만 적용(해당 선거 행만 남기고 비대상 숨김). 상세는 3열 비교 타임라인이라 필터 무관 전체 표시.
   document.querySelectorAll('[data-filter]').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-filter]').forEach((b) =>
@@ -351,10 +355,7 @@ function loadJson(p) {
       const f = btn.dataset.filter;
       document.querySelectorAll('.tl-row').forEach((row) => {
         if (!row.dataset.kind) return;  // 헤더 row 무시
-        row.classList.toggle('is-dimmed', f !== 'all' && row.dataset.kind !== f);
-      });
-      document.querySelectorAll('.tld-tcol').forEach((col) => {
-        col.classList.toggle('is-hidden', f !== 'all' && col.dataset.kind !== f);
+        row.classList.toggle('is-hidden', f !== 'all' && row.dataset.kind !== f);
       });
     });
   });

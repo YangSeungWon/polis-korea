@@ -121,20 +121,8 @@
 
 
 
-/* 필터 — 압축 행 (시간 흐름 유지, 시각상 dim) */
-.tl-row > * { transition: opacity 0.15s, height 0.15s, padding 0.15s, font-size 0.15s; }
-.tl-row.is-dimmed > * {
-  opacity: 0.45;
-  pointer-events: none;
-}
-.tl-row.is-dimmed .tl-meta { padding: 1px 0; }
-.tl-row.is-dimmed .tl-meta .tl-kind { font-size: 8px; padding: 0 3px; }
-.tl-row.is-dimmed .tl-meta .tl-label { font-size: 10px; }
-.tl-row.is-dimmed .tl-meta .tl-date { display: none; }
-.tl-row.is-dimmed .tl-sidos { height: 5px; gap: 1px; }
-.tl-row.is-dimmed .tl-right { font-size: 9px; }
-.tl-row.is-dimmed .tl-right .tl-winner { font-size: 9px; }
-.tl-row.is-dimmed:hover > * { opacity: 0.85; }
+/* 필터 — 흐름: 해당 선거 행만 남기고 비대상 행은 숨김(display:contents → none). */
+.tl-row.is-hidden { display: none; }
 
 /* 예정·예측 회차 — sidos 회색 dim + 우측 태그 */
 .tl-row.is-upcoming .tl-sidos { opacity: 0.4; }
@@ -162,7 +150,6 @@
 .tld-timeline { position: relative; }
 .tld-tcols { display: flex; gap: 12px; margin-left: 40px; height: 100%; }
 .tld-tcol { flex: 1; position: relative; min-width: 0; }
-.tld-tcol.is-hidden { display: none; }
 .tld-coltitle { position: sticky; top: 4px; z-index: 3; margin: 0; padding: 6px 0; background: var(--bg); text-align: center; }
 .tld-card { display: block; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--bg); text-decoration: none; color: inherit; transition: border-color .12s, box-shadow .12s; }
 .tld-card.tld-abs { position: absolute; left: 0; right: 0; z-index: 1; }
