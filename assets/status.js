@@ -48,7 +48,7 @@
     const remY = Math.floor(remDays / 365);
     const remM = Math.floor((remDays % 365) / 30);
     const result = lastPres.winner
-      ? `<div class="pres-result">${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color}">${party}</span>` : ''}</div>`
+      ? `<div class="pres-result">${lastPres.winner}${party ? ` <span class="party-pill" style="background:${color};color:${(typeof pickTextColor === 'function') ? pickTextColor(color) : '#fff'}">${party}</span>` : ''}</div>`
       : '<div class="pres-result">—</div>';
     // 전체 후보 득표 % 가로 막대 (상위 4명).
     const cands = (lastPres.presCandidates || []).slice(0, 4);

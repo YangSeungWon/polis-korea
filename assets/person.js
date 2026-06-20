@@ -14,7 +14,7 @@
 
   function partyBadge(party) {
     if (!party) return '';
-    const col = (typeof partyColor === 'function') ? partyColor(party) : '#888';
+    const col = (typeof partyTextColor === 'function') ? partyTextColor(party) : '#888';  // 정의당 노랑 등 가독 보정
     return `<span class="pp-party" style="color:${col};border-color:${col}">${escapeHtml(party)}</span>`;
   }
 

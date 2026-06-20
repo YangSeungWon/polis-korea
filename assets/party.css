@@ -12,7 +12,7 @@
 }
 .pty-abbr {
   font-size: 0.95rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 999px;
-  color: #fff; background: var(--pty-c, var(--ink-mute));
+  color: var(--pty-text, #fff); background: var(--pty-c, var(--ink-mute));
 }
 .pty-life { font-size: 0.95rem; color: var(--ink-soft); margin: 0 0 0.5rem; font-variant-numeric: tabular-nums; }
 .pty-note { font-size: 0.98rem; color: var(--ink); line-height: 1.55; margin: 0.6rem 0 0; }

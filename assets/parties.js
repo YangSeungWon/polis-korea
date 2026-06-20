@@ -245,7 +245,24 @@ function partyTextColor(party) {
   if (party && PARTY_TEXT_OVERRIDE[party]) return PARTY_TEXT_OVERRIDE[party];
   const c = partyColor(party);
   if (c === PARTY_FALLBACK) return '#4a4a4a';  // 매칭 안 된 회색 fallback도 글씨용 진하게
-  return c;
+  return _textLegible(c);  // 정의당 노랑(고휘도) 등 글씨 대비 보정 (라이트=어둡게·다크=밝게)
+}
+// 글씨용 색 보정 — 페이지 배경 대비를 YIQ 휘도로 확보. legibleColor는 HSL-lightness 기준이라
+// 정의당 노랑(#FFED00, l=0.5지만 휘도 215)을 못 잡음 → 텍스트는 휘도로 명도 반복 조정.
+function _textLegible(hex) {
+  const s0 = (hex || '').replace('#', '');
+  if (!/^[0-9a-f]{6}$/i.test(s0)) return hex;
+  const n = parseInt(s0, 16);
+  let [h, s, l] = _rgb2hslP([(n >> 16) & 255, (n >> 8) & 255, n & 255]);
+  const yiqOf = (rgb) => (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+  const dark = _detectDarkTheme();
+  for (let i = 0; i < 24; i++) {
+    const yiq = yiqOf(_hsl2rgbP(h, s, l));
+    if (dark) { if (yiq >= 120) break; l = Math.min(0.92, l + 0.04); }   // 어두운 글씨 → 밝게
+    else { if (yiq <= 150) break; l = Math.max(0.18, l - 0.04); }        // 밝은 글씨(노랑) → 어둡게
+  }
+  const out = _hsl2rgbP(h, s, l);
+  return `rgb(${out[0]},${out[1]},${out[2]})`;
 }
 
 // hex/cell 배경색 위에 글씨 색 자동 결정. YIQ 공식 — 밝으면 검정, 어두우면 흰색.
@@ -275,6 +292,49 @@ function pickTextColor(bgHex, fillOpacity = 1) {
   // 다크 테마는 텍스트 흰/검 임계점도 더 낮게 (텍스트는 어차피 다크에선 밝아야)
   const threshold = isDark ? 130 : 165;
   return yiq >= threshold ? (isDark ? '#0a0e1a' : '#0a0e1a') : '#fff';
+}
+
+// 테마 인지 색 보정 (공용) — 다크 배경(#0d1018)에선 어두운 당색을 밝게 올려 fill·글씨 가독성 확보,
+// 라이트에선 너무 밝은 색(정의당 #FFED00 등)을 살짝 내려 흰 배경 위 글씨로도 보이게. 명도만 조절
+// (채도 유지·소폭 부스트) — 흰색 혼합(허여멀개) 대신 HSL. tracker.legible의 공용판.
+function _rgb2hslP([r, g, b]) {
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+  let h = 0, s = 0; const l = (mx + mn) / 2;
+  if (mx !== mn) {
+    const d = mx - mn;
+    s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h /= 6;
+  }
+  return [h, s, l];
+}
+function _hsl2rgbP(h, s, l) {
+  if (s === 0) { const v = Math.round(l * 255); return [v, v, v]; }
+  const hue = (p, q, t) => {
+    if (t < 0) t += 1; if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+  return [hue(p, q, h + 1 / 3), hue(p, q, h), hue(p, q, h - 1 / 3)].map((v) => Math.round(v * 255));
+}
+function legibleColor(hex) {
+  const c = (hex || '').replace('#', '');
+  if (!/^[0-9a-f]{6}$/i.test(c)) return hex;
+  const n = parseInt(c, 16);
+  let [h, s, l] = _rgb2hslP([(n >> 16) & 255, (n >> 8) & 255, n & 255]);
+  if (_detectDarkTheme()) {
+    if (l < 0.55) { l = 0.62; s = Math.min(1, s * 1.08 + 0.05); }   // 어두운 색 → 밝고 선명
+  } else if (l > 0.82) {
+    l = 0.7;   // 라이트 배경서 너무 밝은 색(정의당 노랑 등)만 살짝 내림
+  } else {
+    return hex;   // 보정 불필요 — 원색 유지
+  }
+  const out = _hsl2rgbP(h, s, l);
+  return `rgb(${out[0]},${out[1]},${out[2]})`;
 }
 
 // 격차(%p)에 따른 opacity. 박빙일수록 연하게.

@@ -37,9 +37,9 @@
   <span data-nav-urgent></span>
   <a href="/byelection/" class="hdr-link">재·보궐</a>
   <a href="/history.html" class="hdr-link">역대 결과</a>
-  <a href="/timeline.html" class="hdr-link">역대 판세</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
   <a href="/chronology.html" class="hdr-link">근현대사</a>
-  <a href="/parties.html" class="hdr-link is-current">정당사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
   <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
@@ -72,9 +72,10 @@
   if (typeof partyColor !== 'function') return;
   document.querySelectorAll('[data-party]').forEach(function (el) {
     var c = partyColor(el.dataset.party);
+    var tc = (typeof partyTextColor === 'function') ? partyTextColor(el.dataset.party) : c;  // 정의당 노랑 등 가독 보정
     if (el.classList.contains('pty-bar')) el.style.background = c;
-    else if (el.classList.contains('pty-rel')) { el.style.color = c; el.style.borderColor = c; }
-    else el.style.setProperty('--pty-c', c);
+    else if (el.classList.contains('pty-rel')) { el.style.color = tc; el.style.borderColor = tc; }
+    else { el.style.setProperty('--pty-c', c); if (typeof pickTextColor === 'function') el.style.setProperty('--pty-text', pickTextColor(c)); }
   });
 })();
 </script>

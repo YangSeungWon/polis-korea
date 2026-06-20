@@ -44,7 +44,8 @@
   function partyCard(p) {
     const col = (typeof partyColor === 'function') ? partyColor(p.name) : '#888';
     const life = (p.founded || '') + (p.dissolved ? ` ~ ${p.dissolved}` : (p.founded ? ' ~ 현재' : ''));
-    const abbr = p.abbr ? ` <span class="s-pty-abbr" style="background:${col}">${escapeHtml(p.abbr)}</span>` : '';
+    const atc = (typeof pickTextColor === 'function') ? pickTextColor(col) : '#fff';  // 밝은 당색이면 검정 글씨
+    const abbr = p.abbr ? ` <span class="s-pty-abbr" style="background:${col};color:${atc}">${escapeHtml(p.abbr)}</span>` : '';
     return `<li class="s-item s-party-card">
       <a class="s-link" href="/party/${encodeURIComponent(p.name)}/">
         <span class="s-pty-bar" style="background:${col}"></span>

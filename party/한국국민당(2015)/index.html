@@ -37,9 +37,9 @@
   <span data-nav-urgent></span>
   <a href="/byelection/" class="hdr-link">재·보궐</a>
   <a href="/history.html" class="hdr-link">역대 결과</a>
-  <a href="/timeline.html" class="hdr-link">역대 판세</a>
+  <a href="/timeline.html" class="hdr-link">타임라인</a>
   <a href="/chronology.html" class="hdr-link">근현대사</a>
-  <a href="/parties.html" class="hdr-link is-current">정당사</a>
+  <a href="/parties.html" class="hdr-link">정당사</a>
   <!-- NAV_END -->
   </nav>
   <div class="hdr-meta">
@@ -54,7 +54,7 @@
     <p class="pty-note">윤영오·김만근 창당(2015). 1981 한국국민당과 별개·이름 재사용. 현존 원외 군소.</p>
   </section>
   
-  
+  <section class="pty-sec"><h2>등장 선거 <span class="pty-cnt">1</span></h2><ul class="pty-elections"><li><a href="/history.html?type=presidential&n=19"><span class="pty-el-lab">19대 대선</span><span class="pty-el-k">대선</span><span class="pty-el-m">0.0% (이경희)</span></a></li></ul></section>
   
   <footer class="foot">
     <p class="fine">소속 인물은 당선 국회의원 기준 — 낙선·기타 후보는 <a href="/search.html?q=%ED%95%9C%EA%B5%AD%EA%B5%AD%EB%AF%BC%EB%8B%B9%282015%29">검색</a>에서.</p>
@@ -69,9 +69,10 @@
   if (typeof partyColor !== 'function') return;
   document.querySelectorAll('[data-party]').forEach(function (el) {
     var c = partyColor(el.dataset.party);
+    var tc = (typeof partyTextColor === 'function') ? partyTextColor(el.dataset.party) : c;  // 정의당 노랑 등 가독 보정
     if (el.classList.contains('pty-bar')) el.style.background = c;
-    else if (el.classList.contains('pty-rel')) { el.style.color = c; el.style.borderColor = c; }
-    else el.style.setProperty('--pty-c', c);
+    else if (el.classList.contains('pty-rel')) { el.style.color = tc; el.style.borderColor = tc; }
+    else { el.style.setProperty('--pty-c', c); if (typeof pickTextColor === 'function') el.style.setProperty('--pty-text', pickTextColor(c)); }
   });
 })();
 </script>

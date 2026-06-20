@@ -190,9 +190,10 @@ PAGE = """<!DOCTYPE html>
   if (typeof partyColor !== 'function') return;
   document.querySelectorAll('[data-party]').forEach(function (el) {{
     var c = partyColor(el.dataset.party);
+    var tc = (typeof partyTextColor === 'function') ? partyTextColor(el.dataset.party) : c;  // 정의당 노랑 등 가독 보정
     if (el.classList.contains('pty-bar')) el.style.background = c;
-    else if (el.classList.contains('pty-rel')) {{ el.style.color = c; el.style.borderColor = c; }}
-    else el.style.setProperty('--pty-c', c);
+    else if (el.classList.contains('pty-rel')) {{ el.style.color = tc; el.style.borderColor = tc; }}
+    else {{ el.style.setProperty('--pty-c', c); if (typeof pickTextColor === 'function') el.style.setProperty('--pty-text', pickTextColor(c)); }}
   }});
 }})();
 </script>
