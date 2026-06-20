@@ -336,6 +336,42 @@
 }
 .poll-legend .leg-item { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding-right: 2px; }
 .poll-legend .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+
+/* === 정보 아이콘 + 팝오버 ===
+   깨알 설명문을 본문에 깔아두지 말고 'i' 눌러서 보게. JS 없이 hover/focus(-within)로.
+   .info-i(트리거) > .info-pop(설명) 구조. 데스크톱=아이콘 아래, 모바일=하단 시트. */
+.info-i {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 17px; height: 17px; margin-left: 7px;
+  border-radius: 50%; border: 1.5px solid var(--ink-mute);
+  color: var(--ink-mute);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 11px; line-height: 1; font-weight: 700; font-style: italic;
+  cursor: help; flex: 0 0 auto; vertical-align: middle; user-select: none;
+  transition: color .12s, border-color .12s;
+}
+.info-i:hover, .info-i:focus, .info-i:focus-visible { color: var(--ink); border-color: var(--ink); outline: none; }
+.info-pop {
+  display: none;
+  position: absolute; top: calc(100% + 9px); left: 0;
+  width: min(360px, 78vw); z-index: 30;
+  background: var(--bg); border: 1px solid var(--rule-strong); border-radius: 8px;
+  padding: 11px 13px; box-shadow: 0 8px 28px var(--shadow);
+  font-size: 13px; line-height: 1.6; font-weight: 400; font-style: normal;
+  color: var(--ink-soft); text-align: left; white-space: normal; letter-spacing: normal;
+}
+.info-pop b { color: var(--ink); font-weight: 700; }
+.info-pop::before {
+  content: ''; position: absolute; bottom: 100%; left: 5px;
+  border: 6px solid transparent; border-bottom-color: var(--rule-strong);
+}
+.info-i:hover .info-pop, .info-i:focus .info-pop, .info-i:focus-within .info-pop { display: block; }
+@media (max-width: 640px) {
+  /* 모바일 — 화면 하단 시트로 고정(아이콘 위치와 무관, 가로 넘침 방지) */
+  .info-pop { position: fixed; left: 12px; right: 12px; bottom: 14px; top: auto; width: auto; }
+  .info-pop::before { display: none; }
+}
 @media (max-width: 900px) {
   /* 헤더·.page 반응형 chrome → common.css */
   /* 인트로 */

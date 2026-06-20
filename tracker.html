@@ -53,17 +53,15 @@
 <main class="page">
   <section class="intro">
     <h1>지지율 추이</h1>
-    <p class="lede">선거에 묶이지 않는 상시 지표. 국정수행 평가·정당 지지도·차기 대선주자 선호를 하나의 연속 흐름으로. 점에 마우스를 올리면 개별 조사가 보인다.</p>
   </section>
 
   <div id="tk-loading"><span class="spin"></span>데이터 불러오는 중…</div>
 
   <section class="tk-section">
     <div class="tk-section-head">
-      <h2 class="tk-section-title">대통령 국정수행 평가</h2>
+      <h2 class="tk-section-title">대통령 국정수행 평가<span class="info-i" tabindex="0" role="button" aria-label="이 지표 설명">i<span class="info-pop">“대통령이 직무를 잘 수행하고 있다고 보십니까?” 한국갤럽·리얼미터·NBS·한길리서치 등 다기관 조사. <b>점 = 개별 조사</b>(기관별 차이·house effect 산포), <b>선 = 평활 추세</b>(시간창 가중평균). 임기별로 구간을 나눠 표시(직무정지 기간 제외).</span></span></h2>
       <span class="tk-section-meta" id="tk-approval-meta"></span>
     </div>
-    <p class="tk-section-sub">“대통령이 직무를 잘 수행하고 있다고 보십니까?” 한국갤럽·리얼미터·NBS·한길리서치 등 다기관 조사. <b>점 = 개별 조사</b>(기관별 차이·house effect 산포), <b>선 = 평활 추세</b>(시간창 가중평균). 임기별로 구간을 나눠 표시(직무정지 기간 제외).</p>
     <div class="tk-legend">
       <span class="tk-leg"><span class="tk-leg-dot pos"></span> 긍정</span>
       <span class="tk-leg"><span class="tk-leg-dot neg"></span> 부정</span>
@@ -73,27 +71,24 @@
 
   <section class="tk-section">
     <div class="tk-section-head">
-      <h2 class="tk-section-title">정당 지지도</h2>
+      <h2 class="tk-section-title">정당 지지도<span class="info-i" tabindex="0" role="button" aria-label="이 지표 설명">i<span class="info-pop">전국 단위 다기관 조사의 정당 지지도. <b>점 = 개별 조사</b>(house effect 산포), <b>선 = 평활 추세</b>. NESDC 등록 공표 조사를 통합해 연속 시계열로.</span></span></h2>
       <span class="tk-section-meta" id="tk-party-meta"></span>
     </div>
-    <p class="tk-section-sub">전국 단위 다기관 조사의 정당 지지도. <b>점 = 개별 조사</b>(house effect 산포), <b>선 = 평활 추세</b>. NESDC 등록 공표 조사를 통합해 연속 시계열로.</p>
     <div class="tk-chart" id="tk-party"></div>
   </section>
 
   <section class="tk-section">
     <div class="tk-section-head">
-      <h2 class="tk-section-title">차기 대선주자 선호</h2>
+      <h2 class="tk-section-title">차기 대선주자 선호<span class="info-i" tabindex="0" role="button" aria-label="이 지표 설명">i<span class="info-pop">“다음 대통령으로 누구를 선호하십니까?” <b>다자대결</b>(후보 4명 이상) 기준 — 양자대결·단독 적합도는 제외. 색은 소속 정당. 대선 국면(2016–17·2021–22·2024–25)별로 후보 동학이 보인다. 점에 마우스를 올리면 개별 조사.</span></span></h2>
       <span class="tk-section-meta" id="tk-cand-meta"></span>
     </div>
-    <p class="tk-section-sub">“다음 대통령으로 누구를 선호하십니까?” <b>다자대결</b>(후보 4명 이상) 기준 — 양자대결·단독 적합도는 제외. 색은 소속 정당. 대선 국면(2016–17·2021–22·2024–25)별로 후보 동학이 보인다. 점에 마우스를 올리면 개별 조사.</p>
     <div class="tk-chart" id="tk-cand"></div>
   </section>
 
   <section class="tk-section">
     <div class="tk-section-head">
-      <h2 class="tk-section-title">조사기관별 성향 (house effect)</h2>
+      <h2 class="tk-section-title">조사기관별 성향 (house effect)<span class="info-i" tabindex="0" role="button" aria-label="이 지표 설명">i<span class="info-pop">각 기관 조사값에서 전체 추세선을 뺀 <b>잔차의 평균</b>. +면 그 정당/지표를 평균보다 높게, −면 낮게 부르는 경향(전체 평균 대비 상대값). 표본 15건 이상.</span></span></h2>
     </div>
-    <p class="tk-section-sub">각 기관 조사값에서 전체 추세선을 뺀 <b>잔차의 평균</b>. +면 그 정당/지표를 평균보다 높게, −면 낮게 부르는 경향(전체 평균 대비 상대값). 표본 15건 이상.</p>
     <div id="tk-lean"></div>
   </section>
 
