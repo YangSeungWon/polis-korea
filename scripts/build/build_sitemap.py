@@ -54,7 +54,10 @@ STATIC = [
     ("/history.html", "weekly", "0.9"),
     ("/timeline.html", "weekly", "0.8"),
     ("/polls.html", "daily", "0.8"),
+    ("/tracker.html", "daily", "0.8"),
     ("/party/", "weekly", "0.7"),
+    ("/parties.html", "weekly", "0.7"),
+    ("/chronology.html", "weekly", "0.6"),
     ("/about/data-coverage/", "weekly", "0.5"),
 ]
 
@@ -137,6 +140,15 @@ def person_urls() -> list[tuple[str, str, str, str]]:
             for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
 
 
+def party_urls() -> list[tuple[str, str, str, str]]:
+    """build_party_pages가 만든 sitemap_party.txt 소비 (개별 정당 프로필 페이지)."""
+    p = ROOT / "data/sitemap_party.txt"
+    if not p.exists():
+        return []
+    return [(loc.strip(), "monthly", "0.6", TODAY)
+            for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
+
+
 def main():
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -148,6 +160,9 @@ def main():
         lines.append(url_block(loc, freq, priority, lastmod))
     for loc, freq, priority, lastmod in poll_election_urls():
         lines.append(url_block(loc, freq, priority, lastmod))
+    parties = party_urls()
+    for loc, freq, priority, lastmod in parties:
+        lines.append(url_block(loc, freq, priority, lastmod))
     persons = person_urls()
     for loc, freq, priority, lastmod in persons:
         lines.append(url_block(loc, freq, priority, lastmod))
@@ -157,9 +172,9 @@ def main():
     (ROOT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
     n_arch, n_hist = len(archive_urls()), len(history_urls())
-    total = len(STATIC) + n_arch + n_hist + len(persons)
+    total = len(STATIC) + n_arch + n_hist + len(parties) + len(persons)
     print(f"→ sitemap.xml: {total} URLs ({len(STATIC)} static + {n_arch} archive + "
-          f"{n_hist} history + {len(persons)} person) · robots.txt")
+          f"{n_hist} history + {len(parties)} party + {len(persons)} person) · robots.txt")
 
 
 if __name__ == "__main__":
