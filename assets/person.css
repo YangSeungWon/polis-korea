@@ -10,6 +10,7 @@
 .pp-summary {
   display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
   padding: 8px 0 14px; border-bottom: 1px solid var(--rule);
+  max-width: 920px;   /* 넓은 PC(.page 1320px)서 우측 정당 배지가 멀리 튀지 않게 */
 }
 .pp-stat {
   display: flex; flex-direction: column; align-items: center; min-width: 50px;
@@ -25,10 +26,12 @@
   border: 1px solid; border-radius: 2px; white-space: nowrap;
 }
 
-.pp-races { display: flex; flex-direction: column; }
+.pp-races { display: flex; flex-direction: column; max-width: 920px; }
 .pp-race {
   display: grid;
-  grid-template-columns: 60px minmax(110px,1fr) minmax(120px,1.5fr) auto 50px 60px 60px 32px;
+  /* 연도 · 선거 · 지역 · 정당(고정폭) · 순위 · 득표 · 결과 · →
+     정당 컬럼을 auto→고정폭으로: 행마다 정당명 길이가 달라도 뒤 컬럼들이 세로로 정렬됨. */
+  grid-template-columns: 54px minmax(88px,1fr) minmax(104px,1.4fr) 110px 44px 60px 56px 24px;
   gap: 10px; align-items: center;
   padding: 8px 4px;
   border-bottom: 1px solid var(--rule);
@@ -43,6 +46,7 @@
 .pp-place { color: var(--ink); }
 .pp-rk { font-size: 12px; color: var(--ink-soft); text-align: right; font-variant-numeric: tabular-nums; }
 .pp-pct { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); text-align: right; }
+.pp-tag-cell { text-align: center; }
 .pp-tag { font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 2px; }
 .pp-tag.pp-won { background: rgba(31,122,77,0.15); color: #1f7a4d; }
 .pp-tag.pp-lost { background: rgba(192,57,43,0.10); color: #c0392b; }
