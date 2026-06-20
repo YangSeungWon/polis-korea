@@ -1,13 +1,14 @@
 """aggregated.json 품질 sanity check — 회귀 자동 검출.
 
-7가지 검사:
+8가지 검사:
   1. 시계열 outlier (같은 시도·office·후보 median±4*MAD)
   2. 메이저정당 4+ 후보 (적합도/경선 잔존)
   3. 정당명-as-후보 (parse 오류 잔존)
   4. 광역의원·기초의원 분류 false positive (NEC roster typecode 대조)
   5. 합계 의심 (<30% 또는 >110%)
   6. NEC roster 누락 의심 (≥3 PDF 등장 + 정당 일관 + 다른 race 후보들 등록)
-  7. build_golden 회귀 (tests/test_build_golden.py 결과)
+  7. 트래커 소스 신선도 (정기 발행 소스가 조용히 멈췄나 — 스트림×기관 자동주기)
+  8. build_golden 회귀 (tests/test_build_golden.py 결과)
 
 각 검사 결과 → severity (info/warn/error). 누적 카운트 출력 + JSON 저장
 (data/audits/YYYY-MM-DD.json). 이전 audit과 diff로 신규 outlier alert.
@@ -238,6 +239,91 @@ def check_roster_gaps(polls: list, roster: dict) -> dict:
             "count": len(hits), "items": hits[:20]}
 
 
+def check_source_freshness(today: date | None = None) -> dict:
+    """8. 트래커 소스 신선도 — 정기 발행하던 소스가 조용히 멈췄나.
+
+    위험: 트래커 차트는 여러 소스를 머지·dedup해 최신점을 그리므로, 한 소스
+    (예: 리얼미터 국정평가)가 멈춰도 다른 소스가 최신을 채워 **화면엔 멀쩡**.
+    파서 고장·소스 발행 중단이 조용히 묻힌다. → 소스별 신선도를 능동 감시.
+
+    granularity = (스트림 × 기관). 리얼미터처럼 정당지지는 흐르는데 국정평가만
+    멈춘 경우를 잡으려면 스트림을 분리해야 한다. 한국리서치처럼 전용 파일은
+    묵었지만 general로 흐르는 경우는 스트림(파일 합집합) 기준이라 오탐 안 난다.
+
+    주기는 하드코딩 않고 **각 기관의 과거 발행 간격(median)** 에서 자동 산출.
+    충분한 이력(≥MIN_POLLS)이 있고 정기적(median 간격 ≤ REGULAR_GAP)인 기관만 대상.
+    경과 > max(FLOOR, STALE_MULT×median_gap) 이면 stale. 단발·비정기 기관은 제외.
+
+    단, **최근에 멈춘 것만** 알람한다(경과 ≤ MAX_ALARM). 수년 전 은퇴한 기관을
+    매일 나무라는 건 노이즈 — 신선도 경보는 "정기적이던 소스가 새로 끊긴" 신호여야
+    하고, 소스가 완전히 retired 되면(또는 재개되면) 자동으로 알람이 사라진다.
+    """
+    today = today or date.today()
+    MIN_POLLS = 8          # 정기성 판단에 필요한 최소 이력
+    REGULAR_GAP = 40       # median 간격 ≤ 40일(대략 월간 이상)인 기관만 정기로 간주
+    STALE_MULT = 3         # 경과가 median 간격의 3배 넘으면 의심
+    FLOOR = 30             # 최소 임계(주간 소스도 30일은 비어야 알람)
+    MAX_ALARM = 180        # 경과 6개월 넘으면 retired로 보고 알람 해제(노이즈 컷)
+
+    # 트래커가 fetch하는 라이브 스트림(선거 종료 후 고정되는 aggregated_{Npres,..}는 제외)
+    STREAMS = {
+        "국정평가": ["approval_gallup.json", "approval_realmeter.json", "approval_nbs.json",
+                   "approval_hrc.json", "approval_general.json"],
+        "정당지지·기타": ["aggregated_etc.json"],
+    }
+    polls_dir = ROOT / "data/polls"
+
+    def _canon(a: str) -> str:
+        a = (a or "").strip()
+        for t in ("주식회사", "(주)", "㈜", "（주）"):
+            a = a.replace(t, "")
+        return a.strip().strip("()[]").strip()
+
+    def _parse(s):
+        try: return date.fromisoformat(str(s)[:10])
+        except: return None
+
+    hits = []
+    for stream, files in STREAMS.items():
+        by_agency = defaultdict(set)   # 기관 → {조사종료일}
+        for fn in files:
+            p = polls_dir / fn
+            if not p.exists():
+                continue
+            try:
+                d = json.load(open(p, encoding="utf-8"))
+            except Exception:
+                continue
+            rows = d if isinstance(d, list) else (d.get("records") or d.get("polls") or [])
+            for r in rows:
+                if not isinstance(r, dict):
+                    continue
+                ed = _parse(r.get("period_end") or r.get("date"))
+                ag = _canon(r.get("agency") or r.get("ag") or "")
+                if ed and ag:
+                    by_agency[ag].add(ed)
+        for ag, dates in by_agency.items():
+            ds = sorted(dates)
+            if len(ds) < MIN_POLLS:
+                continue
+            gaps = [(ds[i] - ds[i - 1]).days for i in range(1, len(ds))]
+            # 최근 이력 위주(최근 12간격)로 median 산출
+            recent = gaps[-12:]
+            med_gap = median(recent)
+            if med_gap > REGULAR_GAP or med_gap <= 0:
+                continue   # 비정기 또는 동일일 다건 — 대상 아님
+            days_since = (today - ds[-1]).days
+            if max(FLOOR, STALE_MULT * med_gap) < days_since <= MAX_ALARM:
+                hits.append({
+                    "stream": stream, "agency": ag,
+                    "latest": str(ds[-1]), "days_since": days_since,
+                    "median_gap": round(med_gap, 1), "n": len(ds),
+                })
+    hits.sort(key=lambda h: -h["days_since"])
+    return {"name": "트래커 소스 신선도", "severity": "warn" if hits else "info",
+            "count": len(hits), "items": hits[:20]}
+
+
 def check_build_golden() -> dict:
     """7. build_golden 회귀."""
     try:
@@ -300,6 +386,7 @@ def main():
         check_office_classification(polls, roster),
         check_sum_sanity(polls),
         check_roster_gaps(polls, roster),
+        check_source_freshness(),
         check_build_golden(),
     ]
 
