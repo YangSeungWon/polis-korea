@@ -13,7 +13,21 @@ declare function loadJson(path: string): Promise<any>;
 declare function canonSido(s: string): string;
 declare const SIDO_HEX_LAYOUT: any;
 declare function partyColor(p: string): string;
+declare function partyFill(p: string): string;
 declare function pickTextColor(hex: string, opacity?: number): string;
+
+// Leaflet 스타일은 CSS var()를 못 받아 색을 JS 리터럴로 줘야 함 → 렌더타임 테마 인지.
+// 경계선 ink 색: 다크선 밝은 잉크(#e8eaf0), 라이트선 어두운 잉크(#0a0e1a). 알파 그대로.
+function _geoDark(): boolean {
+  try {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t === 'dark') return true; if (t === 'light') return false;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  } catch { return false; }
+}
+function inkLine(a: number): string {
+  return _geoDark() ? `rgba(232,234,240,${a})` : `rgba(10,14,26,${a})`;
+}
 declare function resultForDistrict(sido: string, name: string): any;
 declare function resultForSido(name: string): any;
 declare function resultForSigungu(sido: string, name: string): any;
@@ -127,7 +141,7 @@ function clearGeoLayers(): void {
 
 // === geo 선택 강조 (총선·지선·대선 공통) — 흰 테두리 + 글로우 + 최상위 ===
 let geoSelLayer: any = null;
-const _GEO_BASE = { weight: 0.6, color: 'rgba(10,14,26,0.35)' };
+const _GEO_BASE = { weight: 0.6, color: inkLine(0.35) };
 function _geoDeselect(): void {
   if (geoSelLayer) {
     try { geoSelLayer.setStyle(_GEO_BASE); geoSelLayer._path?.classList.remove('geo-sel'); } catch {}
@@ -177,7 +191,7 @@ function _jungPattern(parties: [string, string]): string {
 }
 
 function _districtStyleFor(info: any, approx: any): any {
-  let fill = info?.winner?.party ? partyColor(info.winner.party) : 'rgba(154,163,179,0.65)';
+  let fill = info?.winner?.party ? partyFill(info.winner.party) : 'rgba(154,163,179,0.65)';
   const ws = info?.race?.winners;  // 중선거구: 당선당 2개 → 줄무늬
   if (ws && ws.length >= 2) {
     const ps = ws.map((w: any) => w.party);
@@ -185,7 +199,7 @@ function _districtStyleFor(info: any, approx: any): any {
   }
   // approx=옛 도시 갑/을 보로노이 추정 경계 → 점선·약간 진하게(실측 아님 표시)
   return {
-    color: approx ? 'rgba(10,14,26,0.6)' : 'rgba(10,14,26,0.35)',
+    color: approx ? inkLine(0.6) : inkLine(0.35),
     weight: approx ? 1.0 : 0.6,
     dashArray: approx ? '3 3' : null,
     fillColor: fill,
@@ -199,7 +213,7 @@ function _attachDistrictInteraction(_feature: any, layer: any, info: any, label:
     { className: 'sigungu-tooltip', sticky: true, direction: 'auto' }
   );
   if (info) {
-    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }); });
+    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: inkLine(0.85) }); });
     layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
     layer.on('click', () => {
       state.selected = { sido: info.race.sido, name: info.race.name, kind: 'district' };
@@ -212,7 +226,7 @@ function _attachDistrictInteraction(_feature: any, layer: any, info: any, label:
 function _setupGeoMiniMap(sidoData: any): void {
   if (geoMiniMapCtrl || typeof L.Control.MiniMap === 'undefined') return;
   const miniLayer = L.geoJSON(sidoData, {
-    style: { color: 'rgba(10,14,26,0.4)', weight: 0.6, fillColor: 'rgba(230,233,239,0.85)', fillOpacity: 0.85 },
+    style: { color: inkLine(0.4), weight: 0.6, fillColor: 'rgba(230,233,239,0.85)', fillOpacity: 0.85 },
     interactive: false,
   });
   const MAINLAND = L.latLngBounds([32.8, 125.6], [38.8, 130.0]);
@@ -314,7 +328,7 @@ async function renderGeoMap(): Promise<void> {
 
   // 시도 외곽선 — 옛총선(1~7대)은 그 회차 선거구 dissolve 외곽선(당시 영토·이북 포함, 현대
   // 휴전선 X). 그 외(8~22대, 휴전선 이남)는 현대 sido_simple 공용 외곽선.
-  const SIDO_STYLE = { color: 'rgba(10,14,26,0.9)', weight: 2.4, fill: false, lineJoin: 'round' };
+  const SIDO_STYLE = { color: inkLine(0.9), weight: 2.4, fill: false, lineJoin: 'round' };
   // 회차별 시도 외곽선(district_{n}_sido) — 광역시도 그 회차 승격 기준이라 시대 정합.
   // 파일 없는 회차(21대 등, 현대와 동일)는 현대 sido_simple 폴백.
   let outline: any = null;
@@ -402,7 +416,7 @@ async function renderDistrictHex(): Promise<void> {
     sectionLabel.setAttribute('y', String(headerY));
     sectionLabel.setAttribute('font-size', '12');
     sectionLabel.setAttribute('font-weight', '700');
-    sectionLabel.setAttribute('fill', '#0a0e1a');
+    sectionLabel.setAttribute('fill', inkLine(1));
     sectionLabel.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
     // 비지역구 의석 명칭 — 시대별(총선): 6~8·11~16대 전국구, 9·10대 유정회, 17대~ 비례대표.
     const propKind = state.type === 'national_assembly'
@@ -593,7 +607,7 @@ async function renderPresGeoMap(): Promise<void> {
   _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, outlineKey);
 }
 
-const SIDO_OUTLINE_STYLE = { color: 'rgba(10,14,26,0.9)', weight: 2.4, fill: false, lineJoin: 'round' };
+const SIDO_OUTLINE_STYLE = { color: inkLine(0.9), weight: 2.4, fill: false, lineJoin: 'round' };
 // 대선·지선 시도 외곽선 — key가 연도(sido_{year}) 또는 'hgis_{n}'(sido_hgis_{n}, 옛 회차 HGIS 경계)면
 // 그 시점 경계로, 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시(key 문자열).
 async function _sidoOutline(key: string | number | null): Promise<any> {
@@ -667,8 +681,8 @@ async function _mountSggGeo(geoData: any, infoFor: (p: any) => any, styleFor: (i
 // 지선 단색 스타일 — 당선자 있으면 partyColor(없는당='' → 교육감 #777777, hex와 동일),
 // 데이터 없으면 no-data 회색.
 function _localStyleFor(info: any): any {
-  const fill = info ? partyColor(info.winner?.party || '') : 'rgba(154,163,179,0.65)';
-  return { color: 'rgba(10,14,26,0.35)', weight: 0.6, fillColor: fill, fillOpacity: 0.85 };
+  const fill = info ? partyFill(info.winner?.party || '') : 'rgba(154,163,179,0.65)';
+  return { color: inkLine(0.35), weight: 0.6, fillColor: fill, fillOpacity: 0.85 };
 }
 
 // 대선 margin 명도 — 1위 정당색을 격차(1위-2위 %p)에 따라 흰색쪽으로 옅게.
@@ -678,16 +692,17 @@ function _hex2rgb(h: string): [number, number, number] {
   if (h.length === 3) h = h.split('').map((c) => c + c).join('');
   return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
-function _mixWhite(hex: string, t: number): string {       // t=0 → 흰색, t=1 → 원색
+function _mixWhite(hex: string, t: number): string {       // t=1 → 원색, t=0 → 배경색(라이트=흰·다크=어두움)
   const [r, g, b] = _hex2rgb(hex);
-  const m = (c: number) => Math.round(255 + (c - 255) * t);
-  return `rgb(${m(r)},${m(g)},${m(b)})`;
+  const bg = _geoDark() ? [31, 36, 51] : [255, 255, 255];   // 다크 배경(#1f2433)으로 섞어 접전지가 묻히게
+  const m = (c: number, i: number) => Math.round(bg[i] + (c - bg[i]) * t);
+  return `rgb(${m(r, 0)},${m(g, 1)},${m(b, 2)})`;
 }
 function _presStyleFor(info: any): any {
-  if (!info) return { color: 'rgba(10,14,26,0.25)', weight: 0.5, fillColor: 'rgba(154,163,179,0.4)', fillOpacity: 0.55 };
+  if (!info) return { color: inkLine(0.25), weight: 0.5, fillColor: 'rgba(154,163,179,0.4)', fillOpacity: 0.55 };
   const margin = (info.winner?.pct || 0) - (info.second?.pct || 0);
   const t = Math.max(0.18, Math.min(1, margin / 40));   // 0~40%p → 0.18~1.0
-  return { color: 'rgba(10,14,26,0.3)', weight: 0.5, fillColor: _mixWhite(partyColor(info.winner?.party || ''), t), fillOpacity: 0.92 };
+  return { color: inkLine(0.3), weight: 0.5, fillColor: _mixWhite(partyFill(info.winner?.party || ''), t), fillOpacity: 0.92 };
 }
 
 function _attachLocalInteraction(_feature: any, layer: any, info: any, label: string): void {
@@ -698,7 +713,7 @@ function _attachLocalInteraction(_feature: any, layer: any, info: any, label: st
   }
   layer.bindTooltip(tip, { className: 'sigungu-tooltip', sticky: true, direction: 'auto' });
   if (info) {
-    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: 'rgba(10,14,26,0.85)' }); });
+    layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: inkLine(0.85) }); });
     layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
     layer.on('click', () => {
       state.selected = info.race.scope === 'sido'
