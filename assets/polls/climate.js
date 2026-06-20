@@ -72,8 +72,7 @@
 
     const range = `${new Date(startTs).toISOString().slice(0, 7)}~${electionDate.slice(0, 7)}`;
     host.innerHTML = `
-      <h2 class="poll-climate-title">선거 무렵 분위기</h2>
-      <p class="poll-climate-sub">선거 ${months}개월 전 ~ 선거일 (${range}) · 결과를 만든 국정·정당 지지 배경.</p>
+      <h2 class="poll-climate-title">선거 무렵 분위기 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">선거 ${months}개월 전 ~ 선거일 (${range}) 구간. 결과를 만든 국정·정당 지지 배경.</span></span></h2>
       <div class="poll-climate-grid">
         ${apprSvg ? `<div class="poll-climate-block"><div class="poll-climate-lbl">${subj || ''} 국정 지지율 <span class="pc-pos">긍정</span>·<span class="pc-neg">부정</span></div>${apprSvg}</div>` : ''}
         ${partySvg ? `<div class="poll-climate-block"><div class="poll-climate-lbl">정당 지지율${opts.partyActual ? ' <span class="pc-actual">◆ 비례 실제</span>' : ''}</div>${partySvg}</div>` : ''}

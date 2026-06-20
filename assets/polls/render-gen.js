@@ -48,7 +48,7 @@
     let html = '<h3 class="pres-trend-title">비례대표 실제 득표</h3>' + `<div class="poll-card">${bars}</div>`;
     // 시도별 비례 분포 맵 — 대선 폴(render-pres)과 동일: 원형·격자(득표 비례) + 지도(격차명도). 실제 분포.
     if (window.Archive && window.Archive.sidoProp && (gs.propSidoRaces || []).length >= 4) {
-      html += `<div class="gen-prop-map"><h3 class="pres-trend-title" style="margin-top:16px">시·도별 비례 분포 <span class="pres-trend-sub">실제 · 색=정당, 면적=득표</span></h3>`
+      html += `<div class="gen-prop-map"><h3 class="pres-trend-title" style="margin-top:16px">시·도별 비례 분포 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 · 색=정당, 면적=득표</span></span></h3>`
         + `<div class="gen-prop-enc" style="justify-content:flex-end;margin:6px 0"></div>`
         + `<div id="gen-prop-map-svg"></div></div>`;
     }
@@ -110,9 +110,9 @@
     }
     const note = gs.dmode === 'polls'
       ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
-      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b> (점선 테두리=조사 1위 정당)` : '확정 결과');
+      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b>` : '확정 결과');
     host.innerHTML = `
-      <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span></h3>
+      <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span> <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">칸=선거구, 색=1위 정당. <b>여론조사 1위</b>/<b>실제 1위</b> 토글. 점선 테두리=여론조사가 예측한 1위(실제와 다른 곳).</span></span></h3>
       <div class="gen-dist-bar">
         <div class="seg" role="tablist">
           <button class="seg-btn${gs.dmode === 'polls' ? ' is-active' : ''}" data-dmode="polls">여론조사 1위</button>

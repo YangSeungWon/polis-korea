@@ -65,10 +65,13 @@ function setPhase() {
   const now = new Date();
   const post = now >= ELECTION;
   const h1 = $('#poll-h1'), lede = $('#poll-lede'), banner = $('#post-banner');
-  if (h1) h1.textContent = post ? `${ELECTION_NAME} · 여론조사 vs 실제` : `${ELECTION_NAME} 여론조사`;
+  // 셀 색 범례(TMI)는 제목 옆 ⓘ로, framing 문장만 lede에 노출.
+  const cellLegend = post ? '셀 색 = 1위 정당' : '셀 색 = 마지막 조사 1위 정당';
+  if (h1) h1.innerHTML = `${post ? `${ELECTION_NAME} · 여론조사 vs 실제` : `${ELECTION_NAME} 여론조사`}`
+    + ` <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">${cellLegend}.</span></span>`;
   if (lede) lede.textContent = post
-    ? 'NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지. 셀 색=1위 정당.'
-    : 'NESDC 등록 조사. 셀 색=마지막 조사 1위 정당.';
+    ? 'NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지.'
+    : 'NESDC 등록 조사.';
   if (banner) banner.hidden = !post;
   // post-banner 날짜·결과링크를 회차별로 (정적 마크업은 9회 기본 — per-election 페이지에서 교체)
   const pebTag = banner && banner.querySelector('.peb-tag');

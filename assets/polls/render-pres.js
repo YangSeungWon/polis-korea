@@ -22,7 +22,7 @@
       // 같은 font-size가 차트 대비 더 커짐(width:100% 스케일이라 화면 점유 크기는 그대로). 와이드 비율 유지.
       w: 600, h: 290,
     });
-    host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="pres-trend-sub">전국 여론조사(본선 구도) · ◆ 선거일 실제 득표</span></h3>`
+    host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">전국 여론조사(본선 구도) · ◆ 선거일 실제 득표</span></span></h3>`
       + `<div class="pres-trend-chart">${svg}</div>`;
     host.hidden = false;
   }
@@ -65,7 +65,7 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
-      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="pres-trend-sub">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></h3>'
+      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></span></h3>'
         + '<div class="pres-sgg-host"></div>';
       const anchor = document.getElementById('pres-host') || document.querySelector('.viz-main') || document.querySelector('.viz');
       (anchor && anchor.parentElement ? anchor.parentElement : document.body).appendChild(sec);
