@@ -3,6 +3,8 @@
 
 const BLACKOUT_START = new Date('2026-05-28T00:00:00+09:00');
 const BLACKOUT_END = new Date('2026-06-03T18:00:00+09:00');
+// 마커 경계 — 테마 인지(다크선 밝은 잉크). Leaflet은 CSS var 못 받음.
+const _byInk = () => (typeof _detectDarkTheme === 'function' && _detectDarkTheme()) ? '#e8eaf0' : '#0a0e1a';
 
 const state = { data: null, selected: null, map: null, markers: {} };
 const $ = (s) => document.querySelector(s);
@@ -154,7 +156,7 @@ function renderMap(geo) {
       radius: isPollless ? 7 : (8 + Math.min(d.n_polls, 8)),
       fillColor: color,
       fillOpacity: isPollless ? 0.5 : (top ? Math.max(0.6, gapOpacity(top.gap)) : 0.6),
-      color: '#0a0e1a', weight: isPollless ? 1.2 : 1.6,
+      color: _byInk(), weight: isPollless ? 1.2 : 1.6,
       dashArray: isPollless ? '2,2' : null,
     }).addTo(map);
     marker._districtName = d.district;  // 선택 강조용
@@ -182,7 +184,7 @@ function selectDistrict(name, { scroll = true } = {}) {
   for (const [n, m] of Object.entries(state.markers)) {
     const isSel = n === name;
     m.setStyle({
-      color: isSel ? '#f5b800' : '#0a0e1a',
+      color: isSel ? '#f5b800' : _byInk(),
       weight: isSel ? 3.5 : 1.6,
     });
     const baseR = m.options.radius;
