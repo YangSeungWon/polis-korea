@@ -75,7 +75,7 @@
       // 권역(시도) 테두리 — 시도별 convex hull(원 외곽 padding 포함). dorling은 hex 경계 안 씀.
       const groups = new Map();
       for (const n of nodes) { const k = n.d.sido; (groups.get(k) || groups.set(k, []).get(k)).push(n); }
-      for (const [, list] of groups) {
+      for (const [sido, list] of groups) {
         const pts = [];
         for (const n of list) for (let k = 0; k < 12; k++) { const a = k * Math.PI / 6; pts.push({ x: n.cx + Math.cos(a) * (n.radius + 3), y: n.cy + Math.sin(a) * (n.radius + 3) }); }
         const hull = CU.convexHull(pts);
@@ -84,11 +84,12 @@
         poly.setAttribute('points', hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '));
         poly.setAttribute('fill', 'rgba(10,14,26,0.04)'); poly.setAttribute('stroke', 'rgba(10,14,26,0.45)');
         poly.setAttribute('stroke-width', '1.5'); poly.setAttribute('stroke-linejoin', 'round'); poly.setAttribute('pointer-events', 'none');
+        poly.setAttribute('class', 'sido-hull'); poly.setAttribute('data-sido', sido);   // 권역 호버 강조용
         svg.appendChild(poly);
       }
       const pieSlice = CU.pieSlice;
       for (const n of nodes) {
-        const g = document.createElementNS(NS, 'g'); bindClick(g, n.d);
+        const g = document.createElementNS(NS, 'g'); bindClick(g, n.d); g.setAttribute('data-sido', n.d.sido);
         const cs = n.cands, totalV = cs.reduce((s, c) => s + (c.votes || 0), 0);
         const selW = isSel(n.d) ? '1.6' : '0.5';
         if (totalV > 0 && cs.filter((c) => (c.votes || 0) > 0).length > 1) {
@@ -113,6 +114,7 @@
         }
         svg.appendChild(g);
       }
+      CU.wireSidoHover(svg);
       return { shown: nodes.length, cells: focusCells, viewBox: vb };
     }
 
@@ -126,7 +128,7 @@
       const [cx0, cy0] = ctr(d);
       const cands = (res.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       const top = cands[0];
-      const g = document.createElementNS(NS, 'g'); bindClick(g, d); if (!isFill) shown += 1;
+      const g = document.createElementNS(NS, 'g'); bindClick(g, d); g.setAttribute('data-sido', d.sido); if (!isFill) shown += 1;
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = titleText(d, top, isFill ? ' · 당시 미분리(부모 구)' : ' · ' + N + '석(2만표=1)'); g.appendChild(tt);
       // footprint(테마 반투명 흰 배경) — 같은 구 인접 셀끼리 이어져 병합 구가 한 면처럼.
@@ -177,6 +179,7 @@
       const selCells = cells.filter((x) => x.sido === sel.sido && x.name === sel.name);
       if (selCells.length) CU.drawBorders(svg, selCells, geom, { key: (c) => c.sido + '|' + c.name, includeOutline: true, lineClass: 'gu-outline is-selected' });
     }
+    CU.wireSidoHover(svg);
     return { shown, cells: focusCells, viewBox: vb };
   }
 

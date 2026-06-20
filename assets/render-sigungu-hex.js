@@ -42,6 +42,7 @@
       const op = (result && opts.opacityOf) ? opts.opacityOf(result) : 1;
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('class', 'hex-cell ' + (result ? 'has-data' : 'no-data') + (isSel(d) ? ' is-selected' : ''));
+      poly.setAttribute('data-sido', d.sido);   // 권역 호버 강조용
       poly.setAttribute('points', hexPoints(cx, cy, r - 0.7));
       poly.setAttribute('fill', fill);
       poly.setAttribute('stroke', 'var(--ink, #0a0e1a)');
@@ -106,6 +107,7 @@
       // 안 주면 하드코딩 #0a0e1a라 다크모드서 시도 경계가 안 보임.
       drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, opts.borderWidth || '1.6', true, undefined, 'sido-border');
     }
+    if (window.CartogramUtil) window.CartogramUtil.wireSidoHover(svg);
     return { colW, rowH, offX, offY, cells: outCells, viewBox: vb };
   }
 

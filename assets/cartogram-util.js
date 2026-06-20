@@ -87,12 +87,34 @@
         const ln = document.createElementNS(NS, 'line');
         ln.setAttribute('x1', x1.toFixed(1)); ln.setAttribute('y1', y1.toFixed(1));
         ln.setAttribute('x2', x2.toFixed(1)); ln.setAttribute('y2', y2.toFixed(1));
-        ln.setAttribute('class', lineClass); g.appendChild(ln);
+        ln.setAttribute('class', lineClass);
+        if (lineClass === 'sido-border') ln.setAttribute('data-sido', mine);  // 호버 강조용
+        g.appendChild(ln);
       }
     }
     svg.appendChild(g);
   }
+
+  // 권역 호버 라이트 강조 — 셀/경계에 data-sido가 있으면, 호버한 칸의 시도 요소만 .sido-hot.
+  // dim 없음(전체 데이터 유지). svg 요소에 위임 1회 부착(재렌더로 children만 바뀜).
+  function wireSidoHover(svg) {
+    if (!svg || svg.__sidoHover) return;
+    svg.__sidoHover = true;
+    let hot = null;
+    const apply = (sido) => {
+      if (sido === hot) return;
+      hot = sido;
+      svg.querySelectorAll('[data-sido]').forEach((el) => {
+        el.classList.toggle('sido-hot', sido != null && el.getAttribute('data-sido') === sido);
+      });
+    };
+    svg.addEventListener('mouseover', (e) => {
+      const el = e.target.closest && e.target.closest('[data-sido]');
+      apply(el ? el.getAttribute('data-sido') : null);
+    });
+    svg.addEventListener('mouseleave', () => apply(null));
+  }
   // 권역(시도) 테두리 — drawBorders의 시도키 래퍼(기존 호출 호환).
   function drawSidoBorders(svg, cells, geom) { drawBorders(svg, cells, geom, { key: (c) => c.sido, lineClass: 'sido-border' }); }
-  window.CartogramUtil = { hexSpiral, allocateByVotes, convexHull, pieSlice, packCircles, drawSidoBorders, drawBorders };
+  window.CartogramUtil = { hexSpiral, allocateByVotes, convexHull, pieSlice, packCircles, drawSidoBorders, drawBorders, wireSidoHover };
 })();

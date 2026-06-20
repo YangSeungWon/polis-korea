@@ -73,6 +73,7 @@ function drawHexBorders(
       line.setAttribute('x2', String(x2)); line.setAttribute('y2', String(y2));
       if (lineClass) line.setAttribute('class', lineClass);
       else line.setAttribute('stroke', '#0a0e1a');
+      if (lineClass === 'sido-border' && dk) line.setAttribute('data-sido', String(dk));  // 권역 호버 강조용
       line.setAttribute('stroke-width', String(strokeWidth));
       line.setAttribute('stroke-linecap', 'round');
       line.setAttribute('pointer-events', 'none');
