@@ -8,23 +8,37 @@
 }
 
 .pp-summary {
-  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
-  padding: 8px 0 14px; border-bottom: 1px solid var(--rule);
-  max-width: 920px;   /* 넓은 PC(.page 1320px)서 우측 정당 배지가 멀리 튀지 않게 */
+  display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
+  padding: 6px 0 16px; border-bottom: 1px solid var(--rule);
+  max-width: 920px;
 }
-.pp-stat {
-  display: flex; flex-direction: column; align-items: center; min-width: 50px;
+/* 전적 — 출마(총) · 당선 · 낙선. 숫자=focal(위), 라벨=아래. 당선 초록·낙선 빨강으로 한눈에. */
+.pp-record { display: flex; gap: 22px; }
+.pp-stat { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
+.pp-stat-num { font-size: 30px; font-weight: 800; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.pp-stat-label { font-size: 12px; color: var(--ink-soft); font-weight: 600; margin-top: 4px; }
+.pp-win .pp-stat-num { color: #1f7a4d; }
+.pp-loss .pp-stat-num { color: #c0392b; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pp-win .pp-stat-num { color: #5be19f; }
+  :root:not([data-theme="light"]) .pp-loss .pp-stat-num { color: #e56457; }
 }
-.pp-stat-num { font-size: 22px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
-.pp-stat-label { font-size: 11px; color: var(--ink-soft); font-weight: 600; }
-.pp-sidos { font-size: 13px; color: var(--ink); border-left: 1px solid var(--rule); padding-left: 14px; }
-.pp-parties { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+:root[data-theme="dark"] .pp-win .pp-stat-num { color: #5be19f; }
+:root[data-theme="dark"] .pp-loss .pp-stat-num { color: #e56457; }
+
+/* 지역·정당 — 라벨 붙여 무슨 값인지 명확히(예전 '경기도'만 떠서 헷갈림) */
+.pp-meta { display: flex; flex-direction: column; gap: 7px; padding-left: 24px; border-left: 1px solid var(--rule); }
+.pp-field { display: flex; align-items: center; gap: 9px; font-size: 13.5px; }
+.pp-field-k { font-size: 11px; font-weight: 700; color: var(--ink-mute); min-width: 30px; letter-spacing: 0.02em; }
+.pp-field-v { color: var(--ink); display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
 
 .pp-party {
   display: inline-block;
   font-size: 11px; font-weight: 700; padding: 2px 7px;
   border: 1px solid; border-radius: 2px; white-space: nowrap;
 }
+a.pp-party { text-decoration: none; cursor: pointer; transition: background .12s; }
+a.pp-party:hover { background: var(--bg2); }
 
 .pp-races { display: flex; flex-direction: column; max-width: 920px; }
 .pp-race {
@@ -68,4 +82,8 @@
   .pp-pty { grid-row: 3; grid-column: 1 / 3; }
   .pp-rk, .pp-link { display: none; }
   /* 모바일에서도 row 전체가 링크라 탭 가능 (link 아이콘만 숨김) */
+
+  /* 요약 — 좁은 화면선 전적/메타가 줄바꿈되므로 구분선 제거하고 위아래로 */
+  .pp-summary { gap: 14px 24px; }
+  .pp-meta { padding-left: 0; border-left: none; }
 }

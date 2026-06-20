@@ -12,10 +12,14 @@
     return String(s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  function partyBadge(party) {
+  function partyBadge(party, asLink) {
     if (!party) return '';
     const col = (typeof partyTextColor === 'function') ? partyTextColor(party) : '#888';  // 정의당 노랑 등 가독 보정
-    return `<span class="pp-party" style="color:${col};border-color:${col}">${escapeHtml(party)}</span>`;
+    const sty = `color:${col};border-color:${col}`;
+    // asLink: 정당 페이지로. 레이스 행 배지는 행 전체가 <a>라 중첩 불가 → span 유지.
+    return asLink
+      ? `<a class="pp-party" href="/party/${encodeURIComponent(party)}/" style="${sty}">${escapeHtml(party)}</a>`
+      : `<span class="pp-party" style="${sty}">${escapeHtml(party)}</span>`;
   }
 
   // 백엔드(enrich_person_index)가 이미 assembly_id 기준으로 split했으므로
@@ -99,11 +103,15 @@
     return `<section class="pp-card">
       ${label ? `<div class="pp-namesake-label">${escapeHtml(label)}</div>` : ''}
       <div class="pp-summary">
-        <div class="pp-stat"><span class="pp-stat-num">${wins}</span><span class="pp-stat-label">당선</span></div>
-        <div class="pp-stat"><span class="pp-stat-num">${losses}</span><span class="pp-stat-label">낙선</span></div>
-        <div class="pp-stat"><span class="pp-stat-num">${races.length}</span><span class="pp-stat-label">출마</span></div>
-        <div class="pp-sidos">${[...sidos].join(' · ') || '—'}</div>
-        <div class="pp-parties">${parties.slice(0, 5).map(partyBadge).join('')}</div>
+        <div class="pp-record">
+          <div class="pp-stat"><b class="pp-stat-num">${races.length}</b><span class="pp-stat-label">출마</span></div>
+          <div class="pp-stat pp-win"><b class="pp-stat-num">${wins}</b><span class="pp-stat-label">당선</span></div>
+          <div class="pp-stat pp-loss"><b class="pp-stat-num">${losses}</b><span class="pp-stat-label">낙선</span></div>
+        </div>
+        <div class="pp-meta">
+          <div class="pp-field"><span class="pp-field-k">지역</span><span class="pp-field-v">${[...sidos].join(' · ') || '—'}</span></div>
+          <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
+        </div>
       </div>
       <div class="pp-races">${rows}</div>
     </section>`;
@@ -134,10 +142,12 @@
       const totalRaces = all.reduce((s, p) => s + p.races.length, 0);
       const totalWins = all.reduce((s, p) => s + p.wins, 0);
       $('#person-title').textContent = targetName;
-      $('#person-sub').textContent =
-        all.length > 1
-          ? `동명이인 ${all.length}명 추정 · 합산 ${totalRaces}회 출마 · 당선 ${totalWins}`
-          : `${totalRaces}회 출마 · 당선 ${totalWins} · 낙선 ${all[0].losses}`;
+      // 단일 인물 lede는 요약 카드(출마·당선·낙선)와 중복 → 제거. 동명이인일 때만 구분 안내.
+      const sub = $('#person-sub');
+      if (sub) {
+        if (all.length > 1) sub.textContent = `동명이인 ${all.length}명 추정 · 합산 ${totalRaces}회 출마 · 당선 ${totalWins}`;
+        else sub.remove();
+      }
       let html = '';
       all.sort((a, b) => b.races.length - a.races.length);
       all.forEach((p, i) => {
