@@ -10,7 +10,7 @@
 .pp-summary {
   display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
   padding: 6px 0 16px; border-bottom: 1px solid var(--rule);
-  max-width: 920px;
+  max-width: 800px;
 }
 /* 전적 — 출마(총) · 당선 · 낙선. 숫자=focal(위), 라벨=아래. 당선 초록·낙선 빨강으로 한눈에. */
 .pp-record { display: flex; gap: 22px; }
@@ -40,7 +40,7 @@
 a.pp-party { text-decoration: none; cursor: pointer; transition: background .12s; }
 a.pp-party:hover { background: var(--bg2); }
 
-.pp-races { display: flex; flex-direction: column; max-width: 920px; }
+.pp-races { display: flex; flex-direction: column; max-width: 800px; }
 .pp-race {
   display: grid;
   /* 연도 · 선거 · 지역 · 정당(고정폭) · 순위 · 득표 · 결과 · →
