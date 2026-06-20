@@ -87,7 +87,7 @@
       if (cell.win) {
         // fillOf: 정당색 대신 임의 채색(투표율 그라데이션 등). 주면 대비 텍스트색도 보정.
         const fill = opts.fillOf ? opts.fillOf(cell.sido, cell.win)
-          : ((typeof partyColor === 'function') ? partyColor(cell.win.party) : '#888');
+          : ((typeof partyFill === 'function') ? partyFill(cell.win.party) : '#888');
         poly.setAttribute('fill', fill);
         poly.setAttribute('class', 'gov-hex-cell has-data' + selCls);
         if (opts.fillOf && typeof pickTextColor === 'function') textCol = pickTextColor(fill, 1);

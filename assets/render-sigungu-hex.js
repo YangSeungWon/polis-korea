@@ -38,7 +38,7 @@
       const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
       outCells.push({ region: ((typeof canonSido === 'function') ? canonSido(d.sido) : d.sido) + '|' + d.name, cx, cy });
       const result = resultFn(d.sido, d.name, d);
-      const fill = result ? partyColor(result.party) : 'var(--bg3, #e6e9ef)';
+      const fill = result ? ((typeof legibleColor === 'function') ? legibleColor(partyColor(result.party)) : partyColor(result.party)) : 'var(--bg3, #e6e9ef)';
       const op = (result && opts.opacityOf) ? opts.opacityOf(result) : 1;
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('class', 'hex-cell ' + (result ? 'has-data' : 'no-data') + (isSel(d) ? ' is-selected' : ''));

@@ -219,7 +219,7 @@
       for (const [p, n] of sorted) partyTotal.set(p, (partyTotal.get(p) || 0) + n);
       const fills = [];
       for (const [p, n] of sorted) {
-        for (let k = 0; k < n; k++) fills.push((typeof partyColor === 'function') ? partyColor(p) : '#999');
+        for (let k = 0; k < n; k++) fills.push((typeof partyFill === 'function') ? partyFill(p) : '#999');
       }
       const spiral = hexSpiral(N);
       // 소헥스 크기 — 의석 많은 시군구는 셀(PARENT_R)을 뚫지 않게 축소. 시군구 hex는 지리 지도라
@@ -453,7 +453,7 @@
     svg.setAttribute('viewBox', `${-EM} 0 ${w + 2 * EM} ${h}`);
     svg.setAttribute('width', w + 2 * EM); svg.setAttribute('height', h);
     const PARENT_R = 13.85;
-    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
     const valueOf = (c) => lookupKey(rmap, c.sido, c.name);
     let shown = 0; const parties = new Set();
     for (const cell of hexCells) {
@@ -497,7 +497,7 @@
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return null;
     const resultFn = (sido, name) => lookupKey(fmap, sido, name) || null;
-    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
     const parties = [...new Set([...rmap.values()].map((w) => w.party))];
 
     let mapHost = host;
@@ -596,7 +596,7 @@
     const hexCells = await loadHexLayout(ctx?.meta?.electionN, ctx?.meta?.electionKind);
     if (!hexCells.length) return;
     const resultFn = (sido, name) => lookupKey(pmap, sido, name) || null;
-    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
     // 의석(council) 섹션 뒤에 주입
     const base = document.getElementById('ar-council-hex') || document.getElementById('ar-sgg-turnout');
     const anchor = base?.closest('.ar-section') || base?.parentElement;

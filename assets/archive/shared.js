@@ -13,7 +13,7 @@
   ];
 
   Archive.ssh = (s) => (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[s] || s) : s;
-  Archive.pcol = (p) => (typeof partyColor === 'function') ? partyColor(p) : '#999';
+  Archive.pcol = (p) => { const c = (typeof partyColor === 'function') ? partyColor(p) : '#999'; return (typeof legibleColor === 'function') ? legibleColor(c) : c; };
 
   // 위성정당 → 본정당: assets/parties.js 의 SATELLITE_TO_MAIN/mainParty 전역 사용.
   // 단일 출처: data/parties/satellites.json → sync_satellites_js.py가 parties.js로 sync.

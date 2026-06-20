@@ -53,7 +53,7 @@
     if (!data) { host.innerHTML = '<p class="ar-empty">선거구 경계 없음</p>'; return null; }
     const { geo, code } = data;
     const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
-    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
 
     // SGG_Code → 1위 {party,name,pct}
     const winBySgg = {};

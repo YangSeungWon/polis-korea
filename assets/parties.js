@@ -262,7 +262,7 @@ function _textLegible(hex) {
     else { if (yiq <= 150) break; l = Math.max(0.18, l - 0.04); }        // 밝은 글씨(노랑) → 어둡게
   }
   const out = _hsl2rgbP(h, s, l);
-  return `rgb(${out[0]},${out[1]},${out[2]})`;
+  return '#' + out.map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
 }
 
 // hex/cell 배경색 위에 글씨 색 자동 결정. YIQ 공식 — 밝으면 검정, 어두우면 흰색.
@@ -334,7 +334,12 @@ function legibleColor(hex) {
     return hex;   // 보정 불필요 — 원색 유지
   }
   const out = _hsl2rgbP(h, s, l);
-  return `rgb(${out[0]},${out[1]},${out[2]})`;
+  return '#' + out.map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');  // #hex (pickTextColor 호환)
+}
+// fill용 당색 — 다크 배경 가시성 보정 포함(legibleColor). 셀·choropleth 채움에 사용.
+function partyFill(party, date) {
+  const c = partyColor(party, date);
+  return (c === PARTY_FALLBACK) ? c : legibleColor(c);
 }
 
 // 격차(%p)에 따른 opacity. 박빙일수록 연하게.

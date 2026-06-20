@@ -134,7 +134,7 @@
       path.setAttribute('d', featPath(f.geometry));
       path.setAttribute('fill-rule', 'evenodd');
       if (win) {
-        path.setAttribute('fill', (typeof partyColor === 'function') ? partyColor(win.party) : '#888');
+        path.setAttribute('fill', (typeof partyFill === 'function') ? partyFill(win.party) : '#888');
         // 대선: 격차명도 (gapOpacity = 박빙 0.55 ~ 압도 0.95). 광역장: flat(명도 없음).
         if (margin) path.setAttribute('fill-opacity', ((typeof gapOpacity === 'function') ? gapOpacity(win.gap) : 1).toFixed(3));
         path.setAttribute('class', 'sido-map-region has-data');

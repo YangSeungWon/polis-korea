@@ -72,7 +72,7 @@
       host.innerHTML = '<p class="ar-empty">경계 데이터 없음</p>'; return null;
     }
     const lookup = opts.lookup || (() => null);
-    const pcol = (typeof partyColor === 'function') ? partyColor : () => '#888';
+    const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
 
     const feats = geo.features;
     const { mnX, mnY, mxX, mxY } = bbox(feats);

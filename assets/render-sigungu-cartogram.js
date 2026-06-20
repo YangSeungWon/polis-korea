@@ -10,7 +10,11 @@
 //              onSelect(sido,name,result,cell), date('' 종합/폴 → 현행 시도명) }
 (function () {
   const NS = 'http://www.w3.org/2000/svg';
-  const pcol = (p) => (typeof partyColor === 'function' ? partyColor(p) : '#888');
+  // 당색 fill — 다크 배경서 어두운 당색이 묻히지 않게 legibleColor 보정(라이트선 거의 무변).
+  const pcol = (p) => {
+    const c = (typeof partyColor === 'function') ? partyColor(p) : '#888';
+    return (typeof legibleColor === 'function') ? legibleColor(c) : c;
+  };
   function hexPoints(cx, cy, r) {
     const p = [];
     for (let i = 0; i < 6; i++) { const a = Math.PI / 6 + i * Math.PI / 3; p.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`); }
