@@ -112,8 +112,13 @@ def main():
     meta = load_meta()
     fmap = {}
     for f in os.listdir(ROOT / "data/raw/pdf"):
-        if f.endswith(".pdf"):
-            fmap.setdefault(f.split("_", 1)[0], f)
+        if not f.endswith(".pdf"):
+            continue
+        nid = f.split("_", 1)[0]
+        # 한 ntt에 PDF 여럿(설문지+통계표 등) → '통계표' 우선. setdefault(먼저 나온 것)는
+        # 설문지를 골라 아래 '통계표' 필터에서 탈락시키는 버그(18907=NBS 5-20 누락) 유발.
+        if nid not in fmap or ("통계표" in f and "통계표" not in fmap[nid]):
+            fmap[nid] = f
     # NBS 통계표만 (설문지 제외)
     ids = [nid for nid, m in meta.items()
            if "NBS" in fmap.get(nid, "") and "통계표" in fmap.get(nid, "")]
