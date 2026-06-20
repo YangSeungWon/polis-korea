@@ -53,6 +53,12 @@
 .tk-lean-tbl td.ag { text-align: left; font-weight: 600; color: var(--ink); }
 .tk-lean-tbl td.pos { color: #1f6feb; font-weight: 700; }
 .tk-lean-tbl td.neg { color: #c0392b; font-weight: 700; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tk-lean-tbl td.pos { color: #6ea8ff; }
+  :root:not([data-theme="light"]) .tk-lean-tbl td.neg { color: #e56457; }
+}
+:root[data-theme="dark"] .tk-lean-tbl td.pos { color: #6ea8ff; }
+:root[data-theme="dark"] .tk-lean-tbl td.neg { color: #e56457; }
 .tk-lean-tbl td.z { color: var(--ink-mute); }
 .tk-lean-tbl td.n { color: var(--ink-mute); font-size: 11px; }
 

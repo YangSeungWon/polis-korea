@@ -135,6 +135,21 @@
 .chr-tag.tg-coup    { background: #f3e3e3; color: #9a3b3b; }
 .chr-tag.tg-impeach { background: rgba(230,30,43,0.12); color: #c0392b; }
 .chr-tag.tg-econ    { background: #e6f1ec; color: #2f6b4f; }
+/* 다크 — 파스텔 칩 배경이 그대로면 흰 칩으로 눈부심. translucent 틴트(다크 위서 어두워짐)+밝은 텍스트. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .chr-tag.tg-state   { background: rgba(120,140,180,0.20); color: #aeb8cf; }
+  :root:not([data-theme="light"]) .chr-tag.tg-amend   { background: rgba(70,120,240,0.20);  color: #93b2f0; }
+  :root:not([data-theme="light"]) .chr-tag.tg-revolt  { background: rgba(210,130,40,0.20);  color: #e2a866; }
+  :root:not([data-theme="light"]) .chr-tag.tg-coup    { background: rgba(200,90,90,0.20);   color: #e29c9c; }
+  :root:not([data-theme="light"]) .chr-tag.tg-econ    { background: rgba(60,160,110,0.20);  color: #74ca9d; }
+  :root:not([data-theme="light"]) .chr-tag.tg-impeach { color: #e56457; }
+}
+:root[data-theme="dark"] .chr-tag.tg-state   { background: rgba(120,140,180,0.20); color: #aeb8cf; }
+:root[data-theme="dark"] .chr-tag.tg-amend   { background: rgba(70,120,240,0.20);  color: #93b2f0; }
+:root[data-theme="dark"] .chr-tag.tg-revolt  { background: rgba(210,130,40,0.20);  color: #e2a866; }
+:root[data-theme="dark"] .chr-tag.tg-coup    { background: rgba(200,90,90,0.20);   color: #e29c9c; }
+:root[data-theme="dark"] .chr-tag.tg-econ    { background: rgba(60,160,110,0.20);  color: #74ca9d; }
+:root[data-theme="dark"] .chr-tag.tg-impeach { color: #e56457; }
 
 @media (max-width: 560px) {
   .chrono { --rail: 56px; }

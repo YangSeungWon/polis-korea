@@ -193,6 +193,9 @@
 /* 대선 비례 viz — 공유 Archive.sidoCluster 재사용 (archive.css 미로드라 폴 페이지용 복제) */
 .pres-host { width: 100%; }
 .ar-sidocluster-svg { display: block; width: 100%; max-width: 600px; height: auto; margin: 4px auto 0; }
+/* geo(지도) 토글 — 같은 .pres-host 안 격자·원형(600px)과 폭 맞춤. 공용 .sido-map-svg는
+   아카이브선 캡 없이 hex와 동일하게 채우지만, 폴에선 토글 형제가 600px라 여기 스코프로 맞춤. */
+.pres-host .sido-map-svg, .pres-sgg-host .sigungu-map-svg { max-width: 600px; margin: 4px auto 0; }
 .ar-genhex-outline { fill: var(--bg2); stroke: var(--rule); stroke-width: 1; }
 .ar-genhex-label { font-size: 12px; font-weight: 700; fill: var(--ink); pointer-events: none;
   paint-order: stroke; stroke: var(--bg); stroke-width: 2.5; }
@@ -231,6 +234,21 @@
 .gen-dist-readout .gdr-ok { font-size: 11px; color: #2e7d32; font-weight: 700; }
 .gen-dist-readout .gdr-miss { font-size: 11px; color: #d32f2f; font-weight: 700; }
 .gen-dist-hint { color: var(--ink-soft); }
+/* 다크 — 어두운 초록/빨강 텍스트가 near-black 배경서 안 보임 → 밝은 변형(person·tracker와 동일 톤). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lean-mini-tbl td.pos { color: #5be19f; }
+  :root:not([data-theme="light"]) .lean-mini-tbl td.neg { color: #e56457; }
+  :root:not([data-theme="light"]) .pc-pos { color: #5fc9b3; }
+  :root:not([data-theme="light"]) .pc-neg { color: #e98167; }
+  :root:not([data-theme="light"]) .gen-dist-readout .gdr-ok { color: #6fd97a; }
+  :root:not([data-theme="light"]) .gen-dist-readout .gdr-miss { color: #f0685a; }
+}
+:root[data-theme="dark"] .lean-mini-tbl td.pos { color: #5be19f; }
+:root[data-theme="dark"] .lean-mini-tbl td.neg { color: #e56457; }
+:root[data-theme="dark"] .pc-pos { color: #5fc9b3; }
+:root[data-theme="dark"] .pc-neg { color: #e98167; }
+:root[data-theme="dark"] .gen-dist-readout .gdr-ok { color: #6fd97a; }
+:root[data-theme="dark"] .gen-dist-readout .gdr-miss { color: #f0685a; }
 
 /* 여론조사 적중 표시 — 실제 모드 헤드라인/범례 (점선=빗나간 곳 오버레이와 짝) */
 .ra-legend { color: var(--ink-mute, #8a93a3); font-weight: 600; font-size: 0.82em; margin-left: 2px; }
