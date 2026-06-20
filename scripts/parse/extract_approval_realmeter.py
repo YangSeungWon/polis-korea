@@ -88,13 +88,91 @@ def extract_page(pg, debug=False) -> dict | None:
     return None
 
 
+SELF_DIR = ROOT / "data" / "raw" / "realmeter_self"
+
+
+def run_self(args):
+    """realmeter.net 자체발표 보도용 PDF에서 국정수행평가 추출 (NESDC 미등록분 보완).
+
+    fetch_realmeter_self.py가 받은 PDF + index.json(주차·기간 메타) 소비. NESDC 경로와
+    같은 OUT(approval_realmeter.json)에 병합하되 **주(period_end) 단위로 self가 우선**
+    (NESDC 리얼미터 국정평가는 할당제·보궐 설문에 끼인 비정기뿐이라 정규 주간이 정본).
+    재실행 idempotent: 기존 self 레코드(src=='self')는 갈아끼움."""
+    idx_path = SELF_DIR / "index.json"
+    if not idx_path.exists():
+        print(f"! {idx_path.relative_to(ROOT)} 없음 — fetch_realmeter_self.py 먼저 실행", file=sys.stderr)
+        return
+    entries = json.loads(idx_path.read_text(encoding="utf-8"))
+    if args.limit:
+        entries = entries[-args.limit:]
+
+    prev = []
+    if OUT.exists():
+        prev = json.loads(OUT.read_text(encoding="utf-8")).get("records", [])
+
+    self_recs = []
+    for e in entries:
+        pp = SELF_DIR / e["file"]
+        if not pp.exists():
+            continue
+        pages = find_job_pages(str(pp))
+        if not pages:
+            if args.debug:
+                print(f"  - {e['week']}: 국정수행 페이지 없음(정당지지 전용본?) skip", file=sys.stderr)
+            continue
+        rec = None
+        try:
+            with pdfplumber.open(str(pp)) as doc:
+                for pidx in pages:
+                    r = extract_page(doc.pages[pidx], debug=args.debug)
+                    if r:
+                        rec = r
+                        break
+        except Exception as ex:
+            if args.debug:
+                print(f"    ERR {e['week']}: {ex}", file=sys.stderr)
+        if not rec:
+            continue
+        pe = e["period_end"]
+        subj = subject_for(pe)
+        if not subj:
+            continue
+        self_recs.append({
+            "ntt_id": f"rm-self-{pe}", "agency": "리얼미터",
+            "period_start": e.get("period_start", ""), "period_end": pe,
+            "subject": subj, "positive": rec["positive"], "negative": rec["negative"],
+            "source_url": e["url"], "src": "self",
+        })
+        if args.debug:
+            print(f"  + {pe} {e['week']} {subj} 긍정{rec['positive']} 부정{rec['negative']}", file=sys.stderr)
+
+    # 병합: 기존 non-self 보존 + self가 덮는 주(period_end)는 NESDC분 제거 + self로 교체
+    self_pe = {r["period_end"] for r in self_recs}
+    kept = [r for r in prev if r.get("src") != "self" and r.get("period_end") not in self_pe]
+    records = kept + self_recs
+    records.sort(key=lambda x: x["period_end"] or "")
+    n_self = len(self_recs)
+    print(f"리얼미터 자체발표 국정평가 {n_self}건 → 총 {len(records)}건", file=sys.stderr)
+    if args.dry_run:
+        return
+    OUT.write_text(json.dumps({"_meta": {"metric": "대통령 국정수행 평가 (리얼미터)",
+                   "n": len(records)}, "records": records}, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"→ {OUT.relative_to(ROOT)}", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--source", choices=["nesdc", "self"], default="nesdc",
+                    help="nesdc=NESDC PDF 스캔(기본) / self=realmeter.net 자체발표 보도용")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--debug", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--incremental", action="store_true", help="기존 출력 보존·신규 ntt만(CI)")
     args = ap.parse_args()
+
+    if args.source == "self":
+        run_self(args)
+        return
 
     prev, done = [], set()
     if args.incremental and OUT.exists():

@@ -17,6 +17,25 @@ NESDC(여심위 선거여론조사심의위)는 폴을 `pollGubuncd`로 분류�
 
 > 코드 맵은 메모리 `nesdc_gubun_codes` / `scrape_nesdc --gubun` 참고.
 
+### 1-1. 리얼미터 국정평가 보완 — realmeter.net 자체발표
+
+**리얼미터는 국정수행평가를 NESDC에 등록하지 않는다.** NESDC엔 같은 조사의
+**정당지지도만** 올리고(선거 관련), 국정수행평가는 자체 사이트·언론으로만 발표한다
+(국정평가는 선거여론조사가 아니라 NESDC 등록 의무 없음). 그래서 NESDC-only 경로엔
+리얼미터 국정평가가 **2023년 이후 안 들어온다** — `extract_approval_realmeter.py`(NESDC)는
+정상이지만 PDF에 국정수행 표 자체가 없다.
+
+→ **유일한 non-NESDC 소스.** `realmeter.net/category/pdf/`의 '보도용' 주간통계표 PDF에는
+국정수행 표가 들어있어, 이걸 별도로 긁어 보완한다.
+
+- `scripts/fetch/fetch_realmeter_self.py` — 목록(`/category/pdf/page/N`)에서 주간통계표
+  PDF·주차·조사기간을 긁어 `data/raw/realmeter_self/`(+`index.json`)에 다운(http+self-signed,
+  증분). 글 title 속성에서 기간 파싱. '등록본'(정당지지 전용)은 국정수행 페이지 없어 자동 skip.
+- `extract_approval_realmeter.py --source self` — 그 PDF에서 국정수행 추출 → 같은
+  `approval_realmeter.json`에 **주(period_end) 단위 self 우선**으로 병합(`src:"self"` 태그,
+  idempotent). NESDC분(할당제·보궐에 끼인 비정기)은 충돌 없으면 보존.
+- 출처 표기: "리얼미터/에너지경제신문(자체발표)". freshness audit(아래 §)가 끊김 감시.
+
 ## 2. 추출기 6종
 
 PDF를 **직접** 읽어(fitz/pdfplumber) 표를 파싱한다. `parse_pdf.py`(라우틴 파서)의
