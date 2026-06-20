@@ -35,10 +35,13 @@
   const SIDO_YEARS = new Set([1975, 1985, 1987, 1990, 1995, 2000, 2002, 2006, 2010, 2013, 2026]);
   const PRES_SIDO_YEAR = { 13: 1987, 14: 1990, 15: 2000, 16: 2002, 17: 2006, 18: 2013 };  // 19~21=현대
   const LOCAL_SIDO_YEAR = { 1: 1995, 2: 2000, 3: 2002, 4: 2006, 5: 2010, 9: 2026 };          // 6~8=현대, 9=전남광주 통합
+  // 총선 — 세종(2012-07)·울산(1997)·대전(1989) 신설 시점 반영. 19대(2012-04)는 세종 이전이라 2010. 20대~=현대.
+  const GENERAL_SIDO_YEAR = { 13: 1987, 14: 1990, 15: 1995, 16: 2000, 17: 2002, 18: 2006, 19: 2010 };
   function sidoGeoFile(n, kind) {
     let y;
     if (kind === 'presidential') y = PRES_SIDO_YEAR[n];
     else if (kind === 'local') y = LOCAL_SIDO_YEAR[n];
+    else if (kind === 'general_election' || kind === 'national_assembly') y = GENERAL_SIDO_YEAR[n];
     return (y && SIDO_YEARS.has(y)) ? `data/geo/sido_${y}.json` : 'data/geo/sido_simple.json';
   }
   const _geoCache = {};

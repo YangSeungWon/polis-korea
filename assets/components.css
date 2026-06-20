@@ -172,13 +172,15 @@
 .detail-pane { flex: 0 0 420px; }
 
 /* 지리 코로플레스 (시도·시군구) — sidoMap/sigunguMap SVG. 폴·아카이브 공용(이전 archive.css). */
-.sido-map-svg, .sigungu-map-svg { width: 100%; height: auto; max-width: 540px; display: block; margin: 0 auto; }
+/* geo 코로플레스는 hex(.governor-hex-svg·.district-hex-svg, 무제한 채움)와 같은 토글에서 비교되므로
+   max-width 캡을 두면 geo만 작아 보임 → 캡 제거해 컨테이너를 동일하게 채움. */
+.sido-map-svg, .sigungu-map-svg { width: 100%; height: auto; display: block; margin: 0 auto; }
 .sido-map-region { stroke: var(--bg); stroke-width: 0.8; }
 .sido-map-region.no-data { fill: var(--bg2); stroke: var(--rule-strong); }
 .sigungu-map-region { stroke: var(--bg); stroke-width: 0.4; }
 .sigungu-map-region.no-data { fill: var(--bg2); stroke: var(--rule); stroke-width: 0.3; }
 .sigungu-map-region.is-selected { stroke: var(--ink); stroke-width: 1.4; paint-order: stroke; }
-.district-map-svg { width: 100%; height: auto; max-width: 540px; display: block; margin: 0 auto; }
+.district-map-svg { width: 100%; height: auto; display: block; margin: 0 auto; }
 .district-hex-svg { width: 100%; height: auto; display: block; }
 .district-map-region { stroke: var(--bg); stroke-width: 0.4; }
 .district-map-region.no-data { fill: var(--bg2); stroke: var(--rule); stroke-width: 0.3; }
