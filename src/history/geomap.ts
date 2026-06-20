@@ -141,10 +141,22 @@ function clearGeoLayers(): void {
 
 // === geo 선택 강조 (총선·지선·대선 공통) — 흰 테두리 + 글로우 + 최상위 ===
 let geoSelLayer: any = null;
-const _GEO_BASE = { weight: 0.6, color: inkLine(0.35) };
+function _geoBase() { return { weight: 0.6, color: inkLine(0.35) }; }
+// 테마 변경(다크↔라이트) 시 — Leaflet 색은 캐시 레이어라 stale. 캐시 비우고 현재 뷰
+// 재렌더해 새 잉크색 반영(균등은 CSS라 자동, geo만 필요). data-theme 변경 + OS 변경 둘 다.
+function _onGeoThemeChange(): void {
+  for (const k of Object.keys(geoDistrictByN)) delete geoDistrictByN[k];
+  for (const k of Object.keys(periodSidoByYear)) delete periodSidoByYear[k];
+  for (const k of Object.keys(geoSidoByN)) delete geoSidoByN[k];
+  if (typeof renderAll === 'function') renderAll();
+}
+try {
+  new MutationObserver(_onGeoThemeChange).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', _onGeoThemeChange);
+} catch (e) { /* noop */ }
 function _geoDeselect(): void {
   if (geoSelLayer) {
-    try { geoSelLayer.setStyle(_GEO_BASE); geoSelLayer._path?.classList.remove('geo-sel'); } catch {}
+    try { geoSelLayer.setStyle(_geoBase()); geoSelLayer._path?.classList.remove('geo-sel'); } catch {}
     geoSelLayer = null;
   }
 }
@@ -214,7 +226,7 @@ function _attachDistrictInteraction(_feature: any, layer: any, info: any, label:
   );
   if (info) {
     layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: inkLine(0.85) }); });
-    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
+    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_geoBase()); });
     layer.on('click', () => {
       state.selected = { sido: info.race.sido, name: info.race.name, kind: 'district' };
       _geoSelect(layer);
@@ -607,7 +619,7 @@ async function renderPresGeoMap(): Promise<void> {
   _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, outlineKey);
 }
 
-const SIDO_OUTLINE_STYLE = { color: inkLine(0.9), weight: 2.4, fill: false, lineJoin: 'round' };
+function _sidoOutlineStyle() { return { color: inkLine(0.9), weight: 2.4, fill: false, lineJoin: 'round' }; }
 // 대선·지선 시도 외곽선 — key가 연도(sido_{year}) 또는 'hgis_{n}'(sido_hgis_{n}, 옛 회차 HGIS 경계)면
 // 그 시점 경계로, 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시(key 문자열).
 async function _sidoOutline(key: string | number | null): Promise<any> {
@@ -616,13 +628,13 @@ async function _sidoOutline(key: string | number | null): Promise<any> {
   if (attempt && k) {
     if (periodSidoByYear[k] === undefined) {
       periodSidoByYear[k] = await loadJson(`data/geo/sido_${k}.json`)
-        .then((od) => L.geoJSON(od, { style: SIDO_OUTLINE_STYLE, interactive: false }))
+        .then((od) => L.geoJSON(od, { style: _sidoOutlineStyle(), interactive: false }))
         .catch(() => null);
     }
     if (periodSidoByYear[k]) return periodSidoByYear[k];
   }
   if (!geoSidoOutlineLayer && state.geoSido) {
-    geoSidoOutlineLayer = L.geoJSON(state.geoSido, { style: SIDO_OUTLINE_STYLE, interactive: false });
+    geoSidoOutlineLayer = L.geoJSON(state.geoSido, { style: _sidoOutlineStyle(), interactive: false });
   }
   return geoSidoOutlineLayer;
 }
@@ -714,7 +726,7 @@ function _attachLocalInteraction(_feature: any, layer: any, info: any, label: st
   layer.bindTooltip(tip, { className: 'sigungu-tooltip', sticky: true, direction: 'auto' });
   if (info) {
     layer.on('mouseover', () => { if (layer !== geoSelLayer) layer.setStyle({ weight: 1.8, color: inkLine(0.85) }); });
-    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_GEO_BASE); });
+    layer.on('mouseout', () => { if (layer !== geoSelLayer) layer.setStyle(_geoBase()); });
     layer.on('click', () => {
       state.selected = info.race.scope === 'sido'
         ? { sido: info.sido }
