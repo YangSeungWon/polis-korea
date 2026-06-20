@@ -30,6 +30,13 @@ ROOT = Path(__file__).resolve().parents[2]
 SIGUNGU_GEO = ROOT / 'data/geo/sigungu_simple.json'
 SIGUNGU_OVERRIDES = ROOT / 'data/geo/sigungu_centroid_overrides.json'
 
+# 영남 목표 종횡비 — 영남이 S존 전체 높이를 결정하므로(호남·충청이 따라 stretch),
+# 회차별 시군구 구성에 따라 빈칸최소화가 납작/길쭉을 제멋대로 골라 9회(캐논)와 형태가 달라지던 것을
+# 통일. 목표높이 target_H = YN_ASPECT*sqrt(n_영남)로 잡고 그쪽으로 끈다(9회: 12줄/√70≈1.43).
+# 무작정 키우면 구멍이 느니, '목표 근접'을 우선하되 그 안에서 구멍 최소. env YN_ASPECT로 튜닝.
+import os  # noqa: E402
+YN_ASPECT = float(os.environ.get('YN_ASPECT', '1.43'))
+
 SIDO_REGION = {
     '서울특별시': '수도권', '인천광역시': '수도권', '경기도': '수도권',
     '충청남도': '충청권', '충청북도': '충청권',
@@ -662,6 +669,11 @@ def design_yeongnam(zone_cells_by_sido):
     inner_w = w_dg + w_us
     n_bot = n_gn + n_bs
 
+    # 9회(캐논) 비율 기준 목표 높이 — 회차 간 영남(→남부) 형태 통일. 빈칸최소화에만 맡기면
+    # 구성따라 납작/길쭉이 들쭉날쭉. 목표 근접을 1순위, 그 안에서 구멍 최소(2순위).
+    n_total_yn = n_dg + n_kb + n_gn + n_bs + n_us
+    target_H_yn = round(YN_ASPECT * math.sqrt(n_total_yn)) if n_total_yn else 0
+
     # 검색: (top_h, left_w, W_extra, H_bot, w_gn)
     # 점수: (total_empties, W) — 빈자리 최소 + 더 좁은 W (taller blob) 선호
     best = None
@@ -697,7 +709,9 @@ def design_yeongnam(zone_cells_by_sido):
                         if (W - w_gn) * H_bot + H_bot < n_bs:
                             continue
                         total_empties = top_empties + bot_empties
-                        score = (total_empties, W, abs((H_top + H_bot) - W))
+                        H_yn_try = H_top + H_bot
+                        # 목표높이 근접 1순위(회차 형태 통일) → 빈칸 최소 2순위(구멍 방지) → 좁은 W.
+                        score = (abs(H_yn_try - target_H_yn), total_empties, W, abs(H_yn_try - W))
                         if best is None or score < best[0]:
                             best = (score, W, H_top, H_bot, top_h, left_w, W_extra, w_gn)
 
@@ -884,9 +898,10 @@ def partition_yeongnam_blob(by_sido, plan):
         add((l_col, us_row0))
         for r in range(us_row0):
             add((l_col, r))
-    # (5) 나머지 top cells (top-first / inner-first 우선 → cluster 유지)
-    for r in range(H_top):
-        for c in range(W):
+    # (5) 나머지 top cells — 서→동 column-major(빈칸을 outer-east=영남 우단으로 밀어 내부 갭 방지).
+    #     단 각 col은 위→아래로 채워 bot 경계행이 비지 않게(경북-경남/부산 이음새 갭 차단).
+    for c in range(W):
+        for r in range(H_top):
             add((c, r))
     for i, p in enumerate(kb_ordered):
         if i < n_kb:
