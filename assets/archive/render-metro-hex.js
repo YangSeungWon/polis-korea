@@ -88,8 +88,8 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.className = 'ar-section'; sec.id = 'ar-metro-prop';
-      sec.innerHTML = '<h2 class="ar-section-title">광역의원 비례 — 시·도별 표심</h2>'
-        + '<p class="ar-source-line">비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.</p>'
+      sec.innerHTML = '<h2 class="ar-section-title">광역의원 비례 — 시·도별 표심'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.</span></span></h2>'
         + '<div class="ar-metro-prop-host"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }

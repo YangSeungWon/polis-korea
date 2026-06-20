@@ -54,7 +54,7 @@
         const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
           .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}"></span><b>${seats}</b> ${party}</span>`).join('');
         sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
-          + renderParliamentChart(pp, totalSeats, 460, 210, { mode: 'donut' })  // 이 히어로가 그대로 OG 썸네일/공유 카드 → 작아도 식별되게 도넛
+          + renderParliamentChart(pp, totalSeats, 460, 210, { mode: 'dots' })  // 의석=점 하나(반원). 460폭이라 점이 또렷이 읽힘.
           + `<div class="ar-pl-total">${totalSeats}석</div>`
           + `<div class="ar-pl-legend">${legend}</div></div>`);
       }
@@ -334,7 +334,8 @@
       sec = document.createElement('section');
       sec.className = 'ar-section';
       sec.id = 'ar-general-hex';
-      sec.innerHTML = '<h2 class="ar-section-title">지역구 의석 — 시도별</h2>'
+      sec.innerHTML = '<h2 class="ar-section-title">지역구 의석 — 시도별'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">각 시도의 지역구 의석을 hex로. <b>균등</b>=1석 1칸 · <b>원형</b>=원 크기 의석·파이 정당.</span></span></h2>'
         + '<div class="ar-genhex-toggle"></div><div class="ar-genhex-legend ch-leg-row"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
@@ -363,8 +364,7 @@
     const legend = sec.querySelector('.ar-genhex-legend');
     if (legend) {
       legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
-        .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ')
-        + ' <span class="ar-genhex-note">· 균등=1석 1칸 · 원형=원 크기 의석·파이 정당</span>';
+        .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ');
     }
   }
 
@@ -403,8 +403,8 @@
     let sec = document.getElementById('ar-district-map');
     if (!sec) {
       sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-district-map';
-      sec.innerHTML = '<h2 class="ar-section-title">지역구 선거구별 1위</h2>'
-        + '<p class="ar-source-line">선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.</p>'
+      sec.innerHTML = '<h2 class="ar-section-title">지역구 선거구별 1위'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">선거구마다 당선자 정당색(승자독식). <b>균등</b>=등면적 hex · <b>지도</b>=실제 경계.</span></span></h2>'
         + '<div class="ar-district-map-toggle"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }

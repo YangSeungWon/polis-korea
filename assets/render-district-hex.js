@@ -89,6 +89,7 @@
 
       const g = document.createElementNS(NS, 'g');
       g.style.cursor = result ? 'pointer' : 'default';
+      g.setAttribute('data-sido', d.sido);   // 권역(시도) 호버 하이라이트 — sido-border와 같은 키
       if (opts.onSelect) g.addEventListener('click', () => opts.onSelect(d.sido, d.name, result));
 
       const poly = document.createElementNS(NS, 'polygon');
@@ -168,6 +169,7 @@
     }
 
     if (typeof drawHexBorders === 'function') drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true, undefined, 'sido-border');
+    if (window.CartogramUtil && typeof window.CartogramUtil.wireSidoHover === 'function') window.CartogramUtil.wireSidoHover(svg);   // 권역 호버
     if (typeof drawSidoEdgeLabels === 'function') {
       drawSidoEdgeLabels(svg, layout.map((d) => {
         const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
