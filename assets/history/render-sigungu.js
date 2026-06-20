@@ -87,23 +87,13 @@ function renderSigunguHex() {
         : `${periodSidoName(sido, electionDate)} ${fmtUnitName(name)} · 데이터 없음`),
       onSelect: (sido, name, w, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
       underlay: (svgEl, geom) => {
-        // 시도명 워터마크 (cells보다 먼저 = 배경) — 시도별 cell centroid.
-        const centers = new Map();
-        for (const d of data) {
+        // 시도명 — 좌우 외곽 가장자리 라벨(종합결과·카토그램과 통일). 옛 중앙 워터마크 대체.
+        if (typeof drawSidoEdgeLabels !== 'function') return;
+        const pts = data.map((d) => {
           const [cx, cy] = hexCenter(d.c, d.r, geom.colW, geom.rowH, geom.offX, geom.offY);
-          const c = centers.get(d.sido) || { sx: 0, sy: 0, n: 0 };
-          c.sx += cx; c.sy += cy; c.n += 1; centers.set(d.sido, c);
-        }
-        for (const [sido, c] of centers) {
-          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          t.setAttribute('x', c.sx / c.n); t.setAttribute('y', c.sy / c.n);
-          t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
-          t.setAttribute('font-size', '44'); t.setAttribute('font-weight', '800');
-          t.setAttribute('class', 'hist-sido-bg-label'); t.setAttribute('pointer-events', 'none');
-          t.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-          t.textContent = SIDO_LABEL_SHORT[sido] || sido;
-          svgEl.appendChild(t);
-        }
+          return { sido: d.sido, cx, cy };
+        });
+        drawSidoEdgeLabels(svgEl, pts);
       },
     });
   if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
