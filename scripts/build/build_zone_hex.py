@@ -35,7 +35,7 @@ SIGUNGU_OVERRIDES = ROOT / 'data/geo/sigungu_centroid_overrides.json'
 # 통일. 목표높이 target_H = YN_ASPECT*sqrt(n_영남)로 잡고 그쪽으로 끈다(9회: 12줄/√70≈1.43).
 # 무작정 키우면 구멍이 느니, '목표 근접'을 우선하되 그 안에서 구멍 최소. env YN_ASPECT로 튜닝.
 import os  # noqa: E402
-YN_ASPECT = float(os.environ.get('YN_ASPECT', '1.43'))
+YN_ASPECT = float(os.environ.get('YN_ASPECT', '1.3'))
 
 SIDO_REGION = {
     '서울특별시': '수도권', '인천광역시': '수도권', '경기도': '수도권',
