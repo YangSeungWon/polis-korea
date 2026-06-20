@@ -232,7 +232,7 @@ function loadJson(p) {
     if (r.kind === 'presidential' && r.presCandidates?.length) {
       const cs = r.presCandidates.slice(0, 5);
       const max = Math.max(...cs.map((c) => c.pct || 0)) || 100;
-      const win = cs[0], wc = (typeof partyColor === 'function') ? partyColor(win.party, r.date) : '#999';
+      const win = cs[0], wc = (typeof partyTextColor === 'function') ? partyTextColor(win.party, r.date) : '#999';
       const bars = cs.map((c) => {
         const col = partyColor(c.party, r.date);
         return `<div class="tld-bar-row"><span class="tld-name">${c.name || c.party}</span>`
@@ -245,7 +245,7 @@ function loadJson(p) {
       const total = r.partySeats.reduce((s, p) => s + (p[1] || 0), 0);
       const parties = r.partySeats.map(([party, seats]) => ({ party, seats, color: partyColor(party, r.date) }));
       const donut = (typeof renderParliamentChart === 'function') ? renderParliamentChart(parties, total, 220, 116) : '';
-      const leg = parties.slice(0, 4).map((p) => `<span style="color:${partyColor(p.party, r.date)}">■ ${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
+      const leg = parties.slice(0, 4).map((p) => `<span style="color:${(typeof partyTextColor==='function')?partyTextColor(p.party):partyColor(p.party, r.date)}">■ ${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
       return `<div class="tld-donut">${donut}</div><div class="tld-leg">${total}석 · ${leg}</div>`;
     }
     if (r.kind === 'local') {

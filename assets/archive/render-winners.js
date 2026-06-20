@@ -103,7 +103,7 @@
         return;
       }
       grid.innerHTML = filtered.slice(0, 500).map((w) => {
-        const col = (typeof partyColor === 'function') ? partyColor(w.party) : '#999';
+        const col = (typeof partyTextColor === 'function') ? partyTextColor(w.party) : '#999';
         const lvlBadge = w.level === '광역의원' ? '광역' : '기초';
         return `<div class="ar-winner-row" style="border-left:3px solid ${col}">
           <span class="ar-winner-lvl">${lvlBadge}</span>

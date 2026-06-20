@@ -241,9 +241,9 @@ function samePartyName(a, b, date) {
 const PARTY_TEXT_OVERRIDE = {
   '무소속': '#4a4a4a',
 };
-function partyTextColor(party) {
+function partyTextColor(party, date) {
   if (party && PARTY_TEXT_OVERRIDE[party]) return PARTY_TEXT_OVERRIDE[party];
-  const c = partyColor(party);
+  const c = partyColor(party, date);
   if (c === PARTY_FALLBACK) return '#4a4a4a';  // 매칭 안 된 회색 fallback도 글씨용 진하게
   return _textLegible(c);  // 정의당 노랑(고휘도) 등 글씨 대비 보정 (라이트=어둡게·다크=밝게)
 }

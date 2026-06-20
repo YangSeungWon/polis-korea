@@ -405,7 +405,7 @@ function renderDetail() {
     const top = parties[0];
     html += `<div class="national-summary" style="border-left-color:${top ? top.color : 'var(--ink)'}">
       <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · ${state.office}</div>
-      <div class="ns-name" style="color:${top ? top.color : 'var(--ink)'}">${top ? top.party : '—'}</div>
+      <div class="ns-name" style="color:${top ? _textLegible(top.color) : 'var(--ink)'}">${top ? top.party : '—'}</div>
       <div class="ns-party">${top ? `${top.wins}곳 / 총 ${total}곳` : (el?.date || '')}</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
@@ -429,12 +429,12 @@ function renderDetail() {
       return `<div class="rc-bar-row">
         <span class="name">${candLabel(c)}</span>
         <span class="rc-bar"><span class="rc-bar-fill" style="width:${w}%;background:${cColor}"></span></span>
-        <span class="pct" style="color:${cColor}">${c.pct != null ? c.pct.toFixed(1) + '%' : '—'}</span>
+        <span class="pct" style="color:${_textLegible(cColor)}">${c.pct != null ? c.pct.toFixed(1) + '%' : '—'}</span>
       </div>`;
     }).join('');
     html += `<div class="national-summary" style="border-left-color:${color}">
       <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · 전국</div>
-      <div class="ns-name" style="color:${color}">${candLabel(top) || el?.winner || '—'}</div>
+      <div class="ns-name" style="color:${_textLegible(color)}">${candLabel(top) || el?.winner || '—'}</div>
       <div class="ns-party">${top.party} · ${top.pct?.toFixed(1)}%</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
@@ -484,7 +484,7 @@ function renderDetail() {
         return `<div class="rc-bar-row">
           <span class="name">${candLabel(c)}</span>
           <span class="rc-bar"><span class="rc-bar-fill" style="width:${w}%;background:${color}"></span></span>
-          <span class="pct" style="color:${color}">${pctTxt}</span>
+          <span class="pct" style="color:${_textLegible(color)}">${pctTxt}</span>
         </div>`;
       }).join('');
       const meta = unopposed ? '단독 출마(무투표)'
@@ -512,8 +512,8 @@ function renderDetail() {
           return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${r.name}" data-kind="${r.scope}">
             <span class="hist-close-loc">${r.sido} ${r.name}</span>
             <span class="hist-close-cands">
-              <span class="hist-close-cand" style="color:${col1}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
-              <span class="hist-close-cand" style="color:${col2}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
+              <span class="hist-close-cand" style="color:${_textLegible(col1)}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
+              <span class="hist-close-cand" style="color:${_textLegible(col2)}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
             </span>
             <span class="hist-close-margin">+${r.margin.toFixed(2)}%p</span>
           </a>`;

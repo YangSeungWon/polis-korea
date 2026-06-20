@@ -297,7 +297,7 @@ function renderByelectionPanel(boe, byResults) {
     return `<div class="dash-boe-item">
       <span class="dash-dot" style="background:${color}"></span>
       <span class="dash-boe-name">${d.name}</span>
-      <span class="dash-boe-top" style="color:${color}">${d.label}</span>
+      <span class="dash-boe-top" style="color:${(typeof _textLegible==='function')?_textLegible(color):color}">${d.label}</span>
     </div>`;
   }).join('');
 }

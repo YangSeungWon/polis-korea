@@ -65,7 +65,7 @@
     if (legend) {
       const sorted = Array.from(partyTotal.entries()).sort((a, b) => b[1] - a[1]);
       legend.innerHTML = sorted.map(([p, n]) => {
-        const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
+        const col = (typeof partyTextColor === 'function') ? partyTextColor(p) : '#999';
         return `<span class="mh-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-metro-hex-total');

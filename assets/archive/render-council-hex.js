@@ -566,7 +566,7 @@
         redraw();
       }));
     }
-    leg.innerHTML = parties.map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ')
+    leg.innerHTML = parties.map((p) => `<span class="ch-leg" style="color:${(typeof partyTextColor==='function')?partyTextColor(p):pcol(p)}">■ ${p}</span>`).join(' ')
       + ' <span class="ar-genhex-note">· 단색 명도=격차 · 격자 1칸=2만표</span>';
     redraw();
     return { parties };
@@ -631,7 +631,7 @@
       tog.innerHTML = MODES.map(([k, l], i) => `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${l}</button>`).join('');
       tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.sgmode; tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b)); redraw(); }));
     }
-    leg.innerHTML = parties.slice(0, 8).map((p) => `<span class="ch-leg" style="color:${pcol(p)}">■ ${p}</span>`).join(' ');
+    leg.innerHTML = parties.slice(0, 8).map((p) => `<span class="ch-leg" style="color:${(typeof partyTextColor==='function')?partyTextColor(p):pcol(p)}">■ ${p}</span>`).join(' ');
     redraw();
   }
 
