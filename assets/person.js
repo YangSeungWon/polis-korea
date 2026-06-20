@@ -73,14 +73,10 @@
     races = races.slice().sort((a, b) => dkey(a).localeCompare(dkey(b)));
     const wins = races.filter((r) => r.won).length;
     const losses = races.length - wins;
-    const lastRace = races[races.length - 1];
-    const sidos = new Set();
     const parties = [];
     const seen = new Set();
     for (const r of races) {
       if (r.party && !seen.has(r.party)) { seen.add(r.party); parties.push(r.party); }
-      const m = (r.place || '').match(/^[가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도)/);
-      if (m) sidos.add(m[0]);
     }
 
     const rows = races.map((r) => {   // 최근이 아래로(오름차순) — 검색과 통일
@@ -109,7 +105,6 @@
           <div class="pp-stat pp-loss"><b class="pp-stat-num">${losses}</b><span class="pp-stat-label">낙선</span></div>
         </div>
         <div class="pp-meta">
-          <div class="pp-field"><span class="pp-field-k">지역</span><span class="pp-field-v">${[...sidos].join(' · ') || '—'}</span></div>
           <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
         </div>
       </div>
