@@ -227,7 +227,7 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
   const kindShort = { presidential: '대선', national_assembly: '총선', local: '지선' };
 
   // 라인
-  const line = `<line x1="${padL}" y1="${H/2}" x2="${W - padR}" y2="${H/2}" stroke="rgba(10,14,26,0.18)" stroke-width="1.5"/>`;
+  const line = `<line x1="${padL}" y1="${H/2}" x2="${W - padR}" y2="${H/2}" stroke="var(--rule, rgba(10,14,26,0.18))" stroke-width="1.5"/>`;
 
   // round dots
   let dots = '';
@@ -252,8 +252,8 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
         <title>${r.label} ${r.date}${r.winner ? ` · ${r.winner}` : ''}${r.upcoming ? ' (예정)' : ''}</title>
         <circle class="tl-dot-hit" cx="${x}" cy="${H/2}" r="${rHit}" fill="transparent"/>
         <circle class="tl-dot-vis" cx="${x}" cy="${H/2}" r="${r0}" fill="${fill}" stroke="${stroke}" stroke-width="${isPast ? 0 : 1.8}" ${isPast ? '' : 'stroke-dasharray="2,1.5"'} />
-        <text x="${x}" y="${yName}" text-anchor="middle" font-size="13" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? '#0a0e1a' : '#5a6378'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
-        <text x="${x}" y="${yYear}" text-anchor="middle" font-size="13" font-weight="700" fill="#5a6378" font-family="Pretendard, system-ui, sans-serif">${year}</text>
+        <text x="${x}" y="${yName}" text-anchor="middle" font-size="13" font-weight="${isPast ? '700' : '600'}" fill="${isPast ? 'var(--ink, #0a0e1a)' : 'var(--ink-soft, #5a6378)'}" font-family="Pretendard, system-ui, sans-serif">${labelName}</text>
+        <text x="${x}" y="${yYear}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink-soft, #5a6378)" font-family="Pretendard, system-ui, sans-serif">${year}</text>
       </g>
     `;
   });
@@ -262,8 +262,8 @@ function renderTimelineStrip(rounds, today, tStart, tEnd) {
   const tx = xOf(today.toISOString().slice(0, 10));
   const yT = 8, yB = H - 8;
   const todayDot = `
-    <line x1="${tx}" y1="${yT}" x2="${tx}" y2="${yB}" stroke="#0a0e1a" stroke-width="1.1" stroke-dasharray="3,3" opacity="0.4"/>
-    <text x="${tx}" y="${yT - 1}" text-anchor="middle" font-size="9" font-weight="700" fill="#0a0e1a" opacity="0.6" font-family="Pretendard, system-ui, sans-serif">오늘</text>
+    <line x1="${tx}" y1="${yT}" x2="${tx}" y2="${yB}" stroke="var(--ink, #0a0e1a)" stroke-width="1.1" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="${tx}" y="${yT - 1}" text-anchor="middle" font-size="9" font-weight="700" fill="var(--ink, #0a0e1a)" opacity="0.6" font-family="Pretendard, system-ui, sans-serif">오늘</text>
   `;
 
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
