@@ -8,7 +8,7 @@
   display: grid;
   /* row: [라벨 콤팩트] [17 시도 cells] [meta] */
   grid-template-columns: 200px 1fr 120px;
-  gap: 6px 12px;
+  gap: 11px 12px;   /* 행 간격 넉넉히 — 당색 막대 벽이 빽빽하지 않게 */
   align-items: center;
   font-size: 13px;
 }
@@ -71,7 +71,7 @@
 .tl-sidos {
   display: flex;
   width: 100%;
-  height: 28px;
+  height: 18px;   /* 28→18 — 색 면적 줄여 흐름 화면 차분하게 */
   border: 1px solid var(--rule);
   overflow: hidden;
 }
@@ -186,11 +186,12 @@
 .tld-donut { max-width: 240px; margin: 0 auto; }
 .tld-leg { font-size: 10px; color: var(--ink-soft); text-align: center; margin-top: 2px; line-height: 1.5; }
 .tld-leg span { white-space: nowrap; margin: 0 3px; }
+.tld-leg .tld-sw { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 3px; vertical-align: -1px; box-shadow: 0 0 0 1px rgba(128,128,128,0.35) inset; }
 .tld-sub { font-size: 11px; color: var(--ink-mute); margin-bottom: 4px; }
 .tld-empty { font-size: 11px; color: var(--ink-mute); padding: 8px 0; text-align: center; }
-/* 지선 상세 — 6직위 정당별 의석 스택 */
-.tld-office { margin-bottom: 6px; }
-.tld-orow { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; color: var(--ink-soft); margin-bottom: 2px; }
+/* 지선 상세 — 6직위 정당별 의석 스택. 바 6개라 얇게 둬 카드 높이 절약. */
+.tld-office { margin-bottom: 3px; }
+.tld-orow { display: flex; justify-content: space-between; align-items: baseline; font-size: 9px; color: var(--ink-soft); margin-bottom: 1px; }
 .tld-ototal { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
-.tld-ostack { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--bg2); }
+.tld-ostack { display: flex; height: 6px; border-radius: 2px; overflow: hidden; background: var(--bg2); }
 .tld-oseg { display: block; min-width: 1px; }

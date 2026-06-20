@@ -245,7 +245,8 @@ function loadJson(p) {
       const total = r.partySeats.reduce((s, p) => s + (p[1] || 0), 0);
       const parties = r.partySeats.map(([party, seats]) => ({ party, seats, color: partyColor(party, r.date) }));
       const donut = (typeof renderParliamentChart === 'function') ? renderParliamentChart(parties, total, 220, 116) : '';
-      const leg = parties.slice(0, 4).map((p) => `<span style="color:${(typeof partyTextColor==='function')?partyTextColor(p.party):partyColor(p.party, r.date)}">■ ${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
+      // 스와치(당색)+잉크 텍스트 — 텍스트를 당색으로 칠하면 무소속(회색)·정의당(노랑)이 한쪽 테마서 묻힘.
+      const leg = parties.slice(0, 4).map((p) => `<span><i class="tld-sw" style="background:${partyColor(p.party, r.date)}"></i>${PARTY_SHORT[p.party] || p.party} ${p.seats}</span>`).join(' ');
       return `<div class="tld-donut">${donut}</div><div class="tld-leg">${total}석 · ${leg}</div>`;
     }
     if (r.kind === 'local') {

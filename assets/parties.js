@@ -237,14 +237,11 @@ function samePartyName(a, b, date) {
   return ca === cb && ca !== PARTY_FALLBACK;
 }
 
-// 글씨 색 — fill에 적합한 회색이 글씨로 쓰이면 흰 배경에서 잘 안 보임. 무소속 등 회색계만 더 진하게.
-const PARTY_TEXT_OVERRIDE = {
-  '무소속': '#4a4a4a',
-};
+// 글씨 색 — fill에 적합한 회색이 글씨로 쓰이면 배경에서 잘 안 보임. 무소속 등 회색계는 테마별로:
+// 라이트=진한 회색(흰 위), 다크=밝은 회색(어두운 위). 단색 하드코딩하면 한쪽 테마에서 묻힘.
 function partyTextColor(party, date) {
-  if (party && PARTY_TEXT_OVERRIDE[party]) return PARTY_TEXT_OVERRIDE[party];
   const c = partyColor(party, date);
-  if (c === PARTY_FALLBACK) return '#4a4a4a';  // 매칭 안 된 회색 fallback도 글씨용 진하게
+  if (party === '무소속' || c === PARTY_FALLBACK) return _detectDarkTheme() ? '#9aa0aa' : '#4a4a4a';
   return _textLegible(c);  // 정의당 노랑(고휘도) 등 글씨 대비 보정 (라이트=어둡게·다크=밝게)
 }
 // 글씨용 색 보정 — 페이지 배경 대비를 YIQ 휘도로 확보. legibleColor는 HSL-lightness 기준이라
