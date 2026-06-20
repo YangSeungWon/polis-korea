@@ -189,7 +189,7 @@ function renderGovernor(polls, results) {
     if (top) seenParties.add(top.party);
     cells.push({
       c: pos.col, r: pos.row,
-      fill: top ? partyColor(top.party) : '#e6e9ef',
+      fill: top ? partyColor(top.party) : 'var(--bg3, #e6e9ef)',
       label: pos.label, dark: !!top,
       title: top
         ? `${pos.label} · ${top.party} ${typeof top.pct === 'number' ? top.pct.toFixed(1) : top.pct}%`
@@ -256,7 +256,7 @@ function renderMayor(polls, sgHex, results) {
     if (top) { seenParties.add(top.party); covered++; }
     return {
       c: h.c, r: h.r, sido: h.sido,
-      fill: top ? partyColor(top.party) : '#e6e9ef',
+      fill: top ? partyColor(top.party) : 'var(--bg3, #e6e9ef)',
       title: top
         ? `${h.name} · ${top.party} ${typeof top.pct === 'number' ? top.pct.toFixed(1) : top.pct}%`
         : `${h.name} · 데이터 없음`,
@@ -314,7 +314,7 @@ function renderLegend() {
     });
   wrap.innerHTML = parties.map((p) =>
     `<span class="dash-leg-item"><span class="dash-dot" style="background:${partyColor(p)}"></span>${p}</span>`
-  ).join('') + '<span class="dash-leg-item"><span class="dash-dot" style="background:#e6e9ef"></span>데이터 없음</span>';
+  ).join('') + '<span class="dash-leg-item"><span class="dash-dot" style="background:var(--bg3,#e6e9ef)"></span>데이터 없음</span>';
 }
 
 init();

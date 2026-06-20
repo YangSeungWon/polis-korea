@@ -237,7 +237,7 @@
         const sx = cx + pos[i].x, sy = cy + pos[i].y;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPointsFlat(sx, sy, smallR * 0.95));
-        poly.setAttribute('fill', cellFill[i] || '#e6e9ef');
+        poly.setAttribute('fill', cellFill[i] || 'var(--bg3, #e6e9ef)');
         poly.setAttribute('stroke', 'rgba(255,255,255,0.5)');
         poly.setAttribute('stroke-width', '0.3');
         g.appendChild(poly);

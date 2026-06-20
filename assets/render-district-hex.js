@@ -59,9 +59,9 @@
     const topFn = opts.topFn || ((res) => res && res.candidates && res.candidates[0]);
     // 채움색(정당색) 위 글씨 — 대비 기반(pickTextColor)이라야 보임. partyTextColor는 정당색을
     // 그대로 반환(흰 배경용)이라 채운 셀 위에선 채움색==글씨색으로 안 보임.
-    const tColor = opts.textColor || ((fill, op, party) => (typeof pickTextColor === 'function' ? pickTextColor(fill, op) : '#0a0e1a'));
+    const tColor = opts.textColor || ((fill, op, party) => (typeof pickTextColor === 'function' ? pickTextColor(fill, op) : 'var(--ink, #0a0e1a)'));
     const emptyOpacity = opts.emptyOpacity != null ? opts.emptyOpacity : 1;
-    const emptyFill = opts.emptyFill || '#e6e9ef';
+    const emptyFill = opts.emptyFill || 'var(--bg3, #e6e9ef)';
     const colW = r * Math.sqrt(3), rowH = r * 1.5;
     const cs = layout.map((d) => d.c), rs = layout.map((d) => d.r);
     const minC = Math.min(...cs), minR = Math.min(...rs), maxC = Math.max(...cs), maxR = Math.max(...rs);
@@ -96,7 +96,7 @@
       poly.setAttribute('fill', fill);
       poly.setAttribute('fill-opacity', String(top ? 1 : emptyOpacity));
       if (isZorangi) { poly.setAttribute('stroke', 'none'); }
-      else { poly.setAttribute('stroke', '#0a0e1a'); poly.setAttribute('stroke-width', isSel ? '1.6' : '0.7'); }
+      else { poly.setAttribute('stroke', 'var(--ink, #0a0e1a)'); poly.setAttribute('stroke-width', isSel ? '1.6' : '0.7'); }
       // 여론조사 빗나감 — 점선 테두리색 = 여론조사가 예측한 정당색(missOf 반환).
       const missCol = opts.missOf && opts.missOf(d.sido, d.name);
       if (missCol) poly.classList.add('hex-poll-miss');
@@ -126,7 +126,7 @@
       txt.setAttribute('x', String(cx)); txt.setAttribute('text-anchor', 'middle');
       txt.setAttribute('font-weight', '600'); txt.setAttribute('pointer-events', 'none');
       txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      txt.setAttribute('fill', top ? (isPattern ? '#fff' : tColor(fill, 1, top.party)) : '#0a0e1a');
+      txt.setAttribute('fill', top ? (isPattern ? '#fff' : tColor(fill, 1, top.party)) : 'var(--ink, #0a0e1a)');
       if (lbl.prefix) {
         const a = document.createElementNS(NS, 'tspan');
         a.setAttribute('x', String(cx)); a.setAttribute('y', String(cy - 2));
@@ -159,7 +159,7 @@
           const line = document.createElementNS(NS, 'line');
           line.setAttribute('x1', String(x1)); line.setAttribute('y1', String(y1));
           line.setAttribute('x2', String(x2)); line.setAttribute('y2', String(y2));
-          line.setAttribute('stroke', selPair ? '#0a0e1a' : 'rgba(10,14,26,0.5)');
+          line.setAttribute('stroke', selPair ? 'var(--ink, #0a0e1a)' : 'var(--ink-mute, rgba(10,14,26,0.5))');
           line.setAttribute('stroke-width', selPair ? '2' : '0.9');
           line.setAttribute('stroke-linecap', 'round'); line.setAttribute('pointer-events', 'none');
           svg.appendChild(line);
@@ -167,7 +167,7 @@
       }
     }
 
-    if (typeof drawHexBorders === 'function') drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true);
+    if (typeof drawHexBorders === 'function') drawHexBorders(svg, layout, cellAt, colW, rowH, offX, offY, r, '1.8', true, undefined, 'sido-border');
     if (typeof drawSidoEdgeLabels === 'function') {
       drawSidoEdgeLabels(svg, layout.map((d) => {
         const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);

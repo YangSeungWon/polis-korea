@@ -233,5 +233,5 @@ function renderLegend() {
   const items = legendData();
   el.innerHTML = items.map((it) =>
     `<span class="leg-item"><span class="leg-dot" style="background:${it.color}"></span>${it.label}</span>`
-  ).join('') + '<span class="leg-item"><span class="leg-dot" style="background:#e6e9ef"></span>조사 없음</span>';
+  ).join('') + '<span class="leg-item"><span class="leg-dot" style="background:var(--bg3,#e6e9ef)"></span>조사 없음</span>';
 }

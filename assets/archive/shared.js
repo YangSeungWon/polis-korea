@@ -347,7 +347,7 @@
         const alloc = allocate(n.slices, n.N);
         const fills = [];
         for (let i = 0; i < n.slices.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(n.slices[i].color);
-        while (fills.length < n.N) fills.push('#e6e9ef');
+        while (fills.length < n.N) fills.push('var(--bg3, #e6e9ef)');
         const sp = spiral(n.N);
         const sr = n.smallR || L.smallR;   // 고정 그리드(seats)는 셀별 소헥스 크기로 균등 셀을 채움
         // flat-top 배치 — 덩어리가 뾰족top 셀에 정렬되도록(dx=1.5q, dy=√3(ar+q/2)).
@@ -361,7 +361,7 @@
           const sx = n.cx + spos[i].x, sy = n.cy + spos[i].y;
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', hexPtsFlat(sx, sy, sr * 0.9));
-          poly.setAttribute('fill', cfill[i] || '#e6e9ef');
+          poly.setAttribute('fill', cfill[i] || 'var(--bg3, #e6e9ef)');
           poly.setAttribute('stroke', 'rgba(255,255,255,0.5)'); poly.setAttribute('stroke-width', '0.3');
           g.appendChild(poly);
         }
@@ -398,7 +398,7 @@
         } else {
           const c = document.createElementNS(NS, 'circle');
           c.setAttribute('cx', n.cx.toFixed(1)); c.setAttribute('cy', n.cy.toFixed(1)); c.setAttribute('r', dr.toFixed(1));
-          c.setAttribute('fill', n.slices[0] ? n.slices[0].color : '#e6e9ef'); g.appendChild(c);
+          c.setAttribute('fill', n.slices[0] ? n.slices[0].color : 'var(--bg3, #e6e9ef)'); g.appendChild(c);
         }
         const rng = document.createElementNS(NS, 'circle');
         rng.setAttribute('cx', n.cx.toFixed(1)); rng.setAttribute('cy', n.cy.toFixed(1));

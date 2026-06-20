@@ -69,7 +69,7 @@
         const [cx0, cy0] = ctr(d);
         return { d, res, top, cands: cs, cx0, cy0, cx: cx0, cy: cy0,
           radius: v > 0 ? Math.max(3, (r - 0.7) * Math.sqrt(v / maxVoted)) : 3,
-          fill: top ? pcol(top.party) : '#e6e9ef', op: top ? gapOp(gap) : 1 };
+          fill: top ? pcol(top.party) : 'var(--bg3, #e6e9ef)', op: top ? gapOp(gap) : 1 };
       });
       CU.packCircles(nodes, 40);
       // 권역(시도) 테두리 — 시도별 convex hull(원 외곽 padding 포함). dorling은 hex 경계 안 씀.
@@ -82,8 +82,8 @@
         if (hull.length < 3) continue;
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '));
-        poly.setAttribute('fill', 'rgba(10,14,26,0.04)'); poly.setAttribute('stroke', 'rgba(10,14,26,0.45)');
-        poly.setAttribute('stroke-width', '1.5'); poly.setAttribute('stroke-linejoin', 'round'); poly.setAttribute('pointer-events', 'none');
+        
+        poly.setAttribute('stroke-linejoin', 'round'); poly.setAttribute('pointer-events', 'none');
         poly.setAttribute('class', 'sido-hull'); poly.setAttribute('data-sido', sido);   // 권역 호버 강조용
         svg.appendChild(poly);
       }
@@ -138,13 +138,13 @@
       if (isFill) {
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(cx0, cy0, r - 1));
-        poly.setAttribute('fill', top ? pcol(top.party) : '#e6e9ef'); poly.setAttribute('opacity', '0.85');
+        poly.setAttribute('fill', top ? pcol(top.party) : 'var(--bg3, #e6e9ef)'); poly.setAttribute('opacity', '0.85');
         g.appendChild(poly);
       } else {
         const alloc = CU.allocateByVotes(cands, N);
         const fills = [];
         for (let i = 0; i < cands.length; i++) for (let k = 0; k < alloc[i]; k++) fills.push(pcol(cands[i].party));
-        while (fills.length < N) fills.push('#e6e9ef');
+        while (fills.length < N) fills.push('var(--bg3, #e6e9ef)');
         const spiral = CU.hexSpiral(N);
         let ext = 0; for (const [q, ar] of spiral) ext = Math.max(ext, Math.hypot(Math.sqrt(3) * (q + ar / 2), 1.5 * ar));
         const sr = Math.min(smallR, (r - 2) / (ext + 1));
@@ -153,7 +153,7 @@
           const sx = cx0 + sr * Math.sqrt(3) * (q + ar / 2), sy = cy0 + sr * 1.5 * ar;
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', hexPoints(sx, sy, sr - 0.4));
-          poly.setAttribute('fill', fills[i] || '#e6e9ef');
+          poly.setAttribute('fill', fills[i] || 'var(--bg3, #e6e9ef)');
           g.appendChild(poly);
         }
         // 셀 라벨 — canonical 셀(클러스터)에만(차용 셀은 같은 이름 중복이라 생략)
