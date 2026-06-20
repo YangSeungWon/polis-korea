@@ -46,6 +46,46 @@
   meta.appendChild(btn);
 })();
 
+// 정보 ⓘ 팝오버 — CSS만으론 모바일 터치서 안 열리고 닫을 길이 없음(span은 hover/focus 의존).
+// 전 페이지 공통 nav.js에서 위임 핸들러로: 탭/Enter/Space 토글, Escape·바깥 탭 닫기, aria-expanded.
+// (CSS의 :hover/:focus-within는 데스크톱용으로 유지 — 여기선 .is-open 클래스로 클릭 경로만 보강.)
+(function wireInfoPopovers() {
+  // 초기 aria-expanded(닫힘) — 마크업 89페이지 안 건드리고 여기서 일괄 세팅.
+  document.querySelectorAll('.info-i:not([aria-expanded])').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+  function closeAll(except) {
+    document.querySelectorAll('.info-i.is-open').forEach((el) => {
+      if (el === except) return;
+      el.classList.remove('is-open');
+      el.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const trig = e.target.closest('.info-i');
+    if (trig) {
+      // 팝오버 내부 링크 클릭은 그대로 통과(닫지 않음)
+      if (e.target.closest('.info-pop')) return;
+      e.preventDefault(); e.stopPropagation();
+      const open = !trig.classList.contains('is-open');
+      closeAll(trig);
+      trig.classList.toggle('is-open', open);
+      trig.setAttribute('aria-expanded', open ? 'true' : 'false');
+    } else {
+      closeAll(null);   // 바깥 클릭/탭 — 모두 닫기
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeAll(null); return; }
+    const trig = e.target.closest && e.target.closest('.info-i');
+    if (trig && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      const open = !trig.classList.contains('is-open');
+      closeAll(trig);
+      trig.classList.toggle('is-open', open);
+      trig.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+  });
+})();
+
 (async function fillNavUrgent() {
   const slot = document.querySelector('[data-nav-urgent]');
   if (!slot) return;

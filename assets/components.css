@@ -353,7 +353,8 @@
   cursor: help; flex: 0 0 auto; vertical-align: middle; user-select: none;
   transition: color .12s, border-color .12s;
 }
-.info-i:hover, .info-i:focus, .info-i:focus-visible { color: var(--ink); border-color: var(--ink); outline: none; }
+.info-i:hover, .info-i:focus, .info-i:focus-visible { color: var(--ink); border-color: var(--ink); }
+.info-i:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }   /* 키보드 포커스 — hover와 구분되는 또렷한 표시 */
 .info-pop {
   display: none;
   position: absolute; top: calc(100% + 9px); left: 0;
@@ -368,11 +369,16 @@
   content: ''; position: absolute; bottom: 100%; left: 5px;
   border: 6px solid transparent; border-bottom-color: var(--rule-strong);
 }
-.info-i:hover .info-pop, .info-i:focus .info-pop, .info-i:focus-within .info-pop { display: block; }
+/* 데스크톱 hover/focus(CSS) + 클릭/터치 토글(nav.js가 .is-open 부여) 둘 다 지원 */
+.info-i:hover .info-pop, .info-i:focus .info-pop, .info-i:focus-within .info-pop,
+.info-i.is-open .info-pop { display: block; }
 @media (max-width: 640px) {
-  /* 모바일 — 화면 하단 시트로 고정(아이콘 위치와 무관, 가로 넘침 방지) */
+  /* 모바일 — 화면 하단 시트로 고정(아이콘 위치와 무관, 가로 넘침 방지). 바깥 탭·Esc로 닫힘(nav.js). */
   .info-pop { position: fixed; left: 12px; right: 12px; bottom: 14px; top: auto; width: auto; }
   .info-pop::before { display: none; }
+  /* 모바일 hover는 없고 :focus-within이 터치서 불안정 → .is-open(JS)일 때만 표시 */
+  .info-i:hover .info-pop, .info-i:focus .info-pop, .info-i:focus-within .info-pop { display: none; }
+  .info-i.is-open .info-pop { display: block; }
 }
 @media (max-width: 900px) {
   /* 헤더·.page 반응형 chrome → common.css */
