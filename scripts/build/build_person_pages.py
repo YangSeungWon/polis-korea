@@ -35,10 +35,12 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:title" content="polis · {name}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="profile">
+<meta property="og:url" content="https://polis.ysw.kr/person/{slug}/">
 <meta property="og:image" content="https://polis.ysw.kr/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="polis · {name}">
 <meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="/person/{slug}/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
