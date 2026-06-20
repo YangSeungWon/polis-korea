@@ -434,6 +434,7 @@ function buildPartyTrendSVG(polls, opts) {
         key = CANON[c.party] || c.party; color = partyColor(key); label = key;  // 풀네임 표기(약칭 안 함 — 옛 정당 일관·'민주'↔'민주평화당' 혼동 방지)
       }
       if (opts.colorMap && opts.colorMap[key]) color = opts.colorMap[key];  // 국정 긍정/부정 등 비정당 시리즈 색
+      if (typeof legibleColor === 'function') color = legibleColor(color);   // 다크 배경서 어두운 당색 가독(tracker와 동일)
       (byKey[key] = byKey[key] || []).push({ t, v: c.pct, ag: p.agency || '?', n: +p.sample_size || 0 });
       meta[key] = { color, label };
     }
@@ -477,7 +478,7 @@ function buildPartyTrendSVG(polls, opts) {
     if (v > maxPct) continue;
     const yy = y(v);
     grid += `<line x1="${pl}" y1="${yy}" x2="${W - pr}" y2="${yy}" stroke="var(--rule, #e6e9ef)" stroke-width="0.6"/>`;
-    grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="end">${v}</text>`;
+    grid += `<text x="${pl - 4}" y="${yy + 3}" font-size="11" fill="var(--ink-mute, #8a93a3)" text-anchor="end">${v}</text>`;
   }
   let xax = '';
   for (const ts of [minTs, (minTs + endTs) / 2, endTs]) {
@@ -486,13 +487,13 @@ function buildPartyTrendSVG(polls, opts) {
     const lab = (endTs - minTs) > 200 * 864e5
       ? `${String(d.getFullYear()).slice(2)}년 ${d.getMonth() + 1}월`
       : `${d.getMonth() + 1}/${d.getDate()}`;
-    xax += `<text x="${x(ts)}" y="${H - 6}" font-size="9" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${lab}</text>`;
+    xax += `<text x="${x(ts)}" y="${H - 6}" font-size="11" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">${lab}</text>`;
   }
   // 선거일 세로선 (actual 있을 때)
   if (Object.keys(actual).length && opts.electionTs) {
     const ex = x(opts.electionTs);
     grid += `<line x1="${ex.toFixed(1)}" y1="${pt}" x2="${ex.toFixed(1)}" y2="${H - pb}" stroke="var(--ink-mute, #8a93a3)" stroke-width="0.7" stroke-dasharray="3 2"/>`;
-    grid += `<text x="${ex.toFixed(1)}" y="${pt + 8}" font-size="8" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">선거일</text>`;
+    grid += `<text x="${ex.toFixed(1)}" y="${pt + 8}" font-size="10" fill="var(--ink-mute, #8a93a3)" text-anchor="middle">선거일</text>`;
   }
   let lastLabelY = -99, body = '';
   for (const k of keys) {
@@ -527,7 +528,7 @@ function buildPartyTrendSVG(polls, opts) {
     let ly = labY0 + 3;
     if (ly - lastLabelY < 11) ly = lastLabelY + 11;
     lastLabelY = ly;
-    body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${label}</text>`;
+    body += `<text x="${W - pr + 3}" y="${ly.toFixed(1)}" font-size="11" fill="${color}" font-weight="600">${label}</text>`;
   }
   // 폴 추이엔 없지만 실제 득표가 큰 정당(예: 조국혁신당 2024 — 신생이라 정당지지 추이 없음)도 ◆로 — 누락 방지.
   if (opts.electionTs) {
@@ -535,10 +536,10 @@ function buildPartyTrendSVG(polls, opts) {
     const extra = Object.keys(actual).filter((k) => !inKeys.has(k) && actual[k] >= 3)
       .sort((a, b) => actual[b] - actual[a]).slice(0, 3);
     for (const k of extra) {
-      const color = (typeof partyColor === 'function') ? partyColor(k) : '#888';
+      const color = (typeof partyColor === 'function') ? ((typeof legibleColor==='function')?legibleColor(partyColor(k)):partyColor(k)) : '#888';
       const ax = x(opts.electionTs), ay = y(actual[k]);
       body += `<path d="M${ax.toFixed(1)},${(ay - 3.4).toFixed(1)} L${(ax + 3.4).toFixed(1)},${ay.toFixed(1)} L${ax.toFixed(1)},${(ay + 3.4).toFixed(1)} L${(ax - 3.4).toFixed(1)},${ay.toFixed(1)} Z" fill="${color}" stroke="var(--bg,#fff)" stroke-width="0.8"><title>${k} 실제 ${actual[k].toFixed(1)}%</title></path>`;
-      body += `<text x="${W - pr + 3}" y="${(ay + 3).toFixed(1)}" font-size="9" fill="${color}" font-weight="600">${k}</text>`;
+      body += `<text x="${W - pr + 3}" y="${(ay + 3).toFixed(1)}" font-size="11" fill="${color}" font-weight="600">${k}</text>`;
     }
   }
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${body}</svg>`;
