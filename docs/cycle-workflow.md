@@ -72,6 +72,23 @@ python3 scripts/fetch/fetch_nec_results.py --election 10th-local-2030
 - 여론조사 vs 개표 비교 카드 생성
 - history.html에 미리 archive 자리 준비된 경우 결과 즉시 표시
 
+### ⚠️ 인물·정당 프로필 페이지는 수동 재빌드 (CI 미포함)
+
+daily-refresh CI(`build_static.py`)는 polls·history·sitemap만 재생성한다.
+**인물(`/person/`)·정당 프로필(`/party/`) 페이지와 `assets/person-index.json`은
+재생성하지 않는다** — 당선이력을 HTML에 정적 임베드하므로, 새 개표 결과가 들어오면
+당선자 페이지가 stale 상태로 남는다. 결과 확정 후 로컬에서 빌드·커밋:
+
+```bash
+python3 scripts/build/build_person_index.py   # results → assets/person-index.json
+python3 scripts/build/build_person_pages.py    # → person/*/index.html (+ sitemap_person.txt)
+python3 scripts/build/build_party_pages.py     # → party/*/index.html (+ sitemap_party.txt)
+python3 scripts/build/build_sitemap.py         # sitemap.xml 통합 재생성
+```
+
+> 4,000여 페이지를 매일 재생성하는 건 낭비라 CI에서 제외 — 데이터 변경 후 1회만 돌리면 된다.
+> 빠뜨리면 조용히 stale 되니, 개표 확정 커밋과 함께 묶을 것.
+
 ## D+30 — archive 이동
 
 ```json
