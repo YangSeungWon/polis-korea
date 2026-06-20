@@ -408,7 +408,7 @@
   stroke-width: 3.5;
 }
 /* 권역(시도) 굵은 경계선 — 카토그램/시군구 hex 공용(종합·폴·역대). 폴은 archive.css 미로드라 여기로. */
-.sido-border { stroke: var(--ink, #0a0e1a); stroke-width: 1.5; stroke-linecap: round; stroke-opacity: 0.72; pointer-events: none; }
+.sido-border { stroke: var(--ink, #0a0e1a); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-opacity: 0.92; pointer-events: none; }
 /* 구 영역 경계선 (격자 — 옛 회차 병합 구 윤곽). sig-outline stroke와 같은 테마 색. */
 .gu-outline { stroke: rgba(27,34,55,0.45); fill: none; stroke-linecap: round; }
 .gu-outline.is-selected { stroke: #0a0e1a; }

@@ -102,7 +102,9 @@
     if (opts.borders !== false && typeof drawHexBorders === 'function') {
       const cellAt = new Map();
       for (const d of cells) cellAt.set(`${d.c},${d.r}`, d);
-      drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, opts.borderWidth || '1.6', true);
+      // lineClass 'sido-border' — 시도 경계 색·굵기를 CSS에 위임(테마 인지 + 격자/원형과 통일).
+      // 안 주면 하드코딩 #0a0e1a라 다크모드서 시도 경계가 안 보임.
+      drawHexBorders(svg, cells, cellAt, colW, rowH, offX, offY, r, opts.borderWidth || '1.6', true, undefined, 'sido-border');
     }
     return { colW, rowH, offX, offY, cells: outCells, viewBox: vb };
   }

@@ -314,7 +314,7 @@ async function renderGeoMap(): Promise<void> {
 
   // 시도 외곽선 — 옛총선(1~7대)은 그 회차 선거구 dissolve 외곽선(당시 영토·이북 포함, 현대
   // 휴전선 X). 그 외(8~22대, 휴전선 이남)는 현대 sido_simple 공용 외곽선.
-  const SIDO_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
+  const SIDO_STYLE = { color: 'rgba(10,14,26,0.9)', weight: 2.4, fill: false, lineJoin: 'round' };
   // 회차별 시도 외곽선(district_{n}_sido) — 광역시도 그 회차 승격 기준이라 시대 정합.
   // 파일 없는 회차(21대 등, 현대와 동일)는 현대 sido_simple 폴백.
   let outline: any = null;
@@ -593,7 +593,7 @@ async function renderPresGeoMap(): Promise<void> {
   _mountSggGeo(geoData, infoFor, _presStyleFor, labelFor, outlineKey);
 }
 
-const SIDO_OUTLINE_STYLE = { color: 'rgba(10,14,26,0.85)', weight: 1.4, fill: false, lineJoin: 'round' };
+const SIDO_OUTLINE_STYLE = { color: 'rgba(10,14,26,0.9)', weight: 2.4, fill: false, lineJoin: 'round' };
 // 대선·지선 시도 외곽선 — key가 연도(sido_{year}) 또는 'hgis_{n}'(sido_hgis_{n}, 옛 회차 HGIS 경계)면
 // 그 시점 경계로, 없으면(2025/2026=현재) 현대 sido_simple 폴백. 캐시(key 문자열).
 async function _sidoOutline(key: string | number | null): Promise<any> {
