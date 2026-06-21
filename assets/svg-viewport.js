@@ -24,12 +24,13 @@
     (document.body || document.documentElement).appendChild(_resetBtn);
     return _resetBtn;
   }
-  // 줌된 지도의 우상단에 버튼 배치(화면 우상단 고정 X) — 그 svg의 화면 위치를 실측, 스크롤·리사이즈에 추종.
+  // 줌된 지도의 좌상단에 버튼 배치 — 그 svg의 화면 위치를 실측, 스크롤·리사이즈에 추종.
   function positionResetBtn() {
     const btn = _resetBtn; if (!btn || !btn.__svg || btn.style.display === 'none') return;
     const r = btn.__svg.getBoundingClientRect();
     btn.style.top = Math.max(8, r.top + 8) + 'px';
-    btn.style.right = Math.max(8, window.innerWidth - r.right + 8) + 'px';
+    btn.style.left = Math.max(8, r.left + 8) + 'px';
+    btn.style.right = 'auto';
   }
   function updateResetBtn() {
     // 떨어진(재렌더로 교체된) svg 정리 + 보이는 확대 viewport 있으면 버튼 표시.
@@ -105,13 +106,25 @@
       cx -= dxPx / m.a; cy -= dyPx / m.d; applyViewBox();
     }
 
+    // rAF 코얼레싱 — 연속 제스처(휠·드래그·핀치)의 viewBox 갱신을 프레임당 1회로 묶음.
+    //   고해상도 geo path(5만 점)는 viewBox 변경마다 재래스터라 이벤트마다 처리하면 렉.
+    let _gRaf = 0, _gJob = null;
+    function scheduleFrame(job) {
+      _gJob = job;
+      if (_gRaf) return;
+      _gRaf = requestAnimationFrame(() => { _gRaf = 0; const j = _gJob; _gJob = null; if (j) j(); });
+    }
+
     // ── 데스크톱: Ctrl/⌘+휠 줌 + 확대 상태 드래그 pan ──────────────────
+    let _wheelFactor = 1, _wheelX = 0, _wheelY = 0;
     function onWheel(e) {
       if (!(e.ctrlKey || e.metaKey)) return;   // 평소 휠은 페이지 스크롤(가로채지 않음)
       e.preventDefault(); cancelAnim();
-      zoomAt(e.clientX, e.clientY, scale * Math.exp(-e.deltaY * 0.0015));
+      _wheelFactor *= Math.exp(-e.deltaY * 0.0015);   // 한 프레임에 들어온 틱 누적
+      _wheelX = e.clientX; _wheelY = e.clientY;
+      scheduleFrame(() => { const f = _wheelFactor; _wheelFactor = 1; zoomAt(_wheelX, _wheelY, scale * f); });
     }
-    let mDrag = null;
+    let mDrag = null, _panDx = 0, _panDy = 0;
     function onMouseDown(e) {
       if (e.button != null && e.button !== 0) return;
       if (!isZoomed()) return;   // 안 확대면 셀 클릭/페이지에 양보
@@ -122,7 +135,9 @@
       if (!mDrag) return;
       const dx = e.clientX - mDrag.x, dy = e.clientY - mDrag.y;
       if (!moved && Math.hypot(dx, dy) < 4) return;
-      moved = true; panBy(dx, dy); mDrag.x = e.clientX; mDrag.y = e.clientY;
+      moved = true; mDrag.x = e.clientX; mDrag.y = e.clientY;
+      _panDx += dx; _panDy += dy;   // 프레임당 1회 panBy
+      scheduleFrame(() => { const ax = _panDx, ay = _panDy; _panDx = _panDy = 0; panBy(ax, ay); });
     }
     function onMouseUp() { if (mDrag) { mDrag = null; updateTA(); } }
     function onClickCapture(e) { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }
@@ -142,16 +157,21 @@
         pan0 = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     }
+    let _pinchX = 0, _pinchY = 0, _pinchTarget = 1;
     function onTouchMove(e) {
       if (tmode === 'pinch' && e.touches.length === 2) {
         e.preventDefault(); moved = true;
-        const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2, my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-        zoomAt(mx, my, startScale * (dist(e.touches) / (startD || 1)));
+        _pinchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        _pinchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        _pinchTarget = startScale * (dist(e.touches) / (startD || 1));
+        scheduleFrame(() => zoomAt(_pinchX, _pinchY, _pinchTarget));   // 프레임당 1회
       } else if (tmode === 'pan' && e.touches.length === 1) {
         const dx = e.touches[0].clientX - pan0.x, dy = e.touches[0].clientY - pan0.y;
         if (!moved && Math.hypot(dx, dy) < 6) return;
-        e.preventDefault(); moved = true; panBy(dx, dy);
+        e.preventDefault(); moved = true;
         pan0.x = e.touches[0].clientX; pan0.y = e.touches[0].clientY;
+        _panDx += dx; _panDy += dy;
+        scheduleFrame(() => { const ax = _panDx, ay = _panDy; _panDx = _panDy = 0; panBy(ax, ay); });
       }
     }
     function onTouchEnd() { tmode = null; }
@@ -194,6 +214,7 @@
       isZoomed,
       detach() {
         cancelAnim();
+        if (_gRaf) { cancelAnimationFrame(_gRaf); _gRaf = 0; _gJob = null; }
         svg.removeEventListener('wheel', onWheel);
         svg.removeEventListener('mousedown', onMouseDown);
         window.removeEventListener('mousemove', onMouseMove);
