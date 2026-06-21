@@ -82,9 +82,11 @@
   // hex의 '부천시' key와 매칭 위해 부모 sigungu 추출 (시·군·구 suffix 직전).
   function parentSigungu(sd, sg) {
     if (!sg) return sg;
-    sg = sg.replace(/\([^)]*\)\s*$/, '')          // '중구(부산)' → '중구' (동음이의 — sido가 키에 있음)
+    sg = sg.replace(/^세종특별자치시$/, '세종시')   // 데이터=세종특별자치시 ↔ geojson=세종시 (단층 시=도)
+      .replace(/\([^)]*\)\s*$/, '')                // '중구(부산)' → '중구' (동음이의 — sido가 키에 있음)
       .replace(/제\d+(선거구)?$/, '')              // '인천시제1' → '인천시' (옛 대선 시 분할 선거구)
       .replace(/(시|군)[갑을병정무]구$/, '$1')      // '인천시갑구' → '인천시' (시·군 분할, 구=선거구)
+      .replace(/(시|군)[갑을병정무]$/, '$1')         // '화성시갑' → '화성시' (구 없는 시·군 선거구 표기)
       .replace(/([가-힣]+)[갑을병정무]구$/, '$1구')  // '동대문갑구' → '동대문구' (자치구 갑/을 분할)
       .replace(/구\s*[갑을병정무]$/, '구');         // '강남구갑' → '강남구' (현대 국회의원 표기)
     // '수원시장안구' → '수원시', '청주시상당구' → '청주시', '천안시동남구' → '천안시'
@@ -152,10 +154,21 @@
   // 데이터는 둘 다 저장, 레이아웃 셀은 exact→rolled 순 조회.
   const _canonSido = (s) => (typeof canonSido === 'function' ? canonSido(s) : s);
   const stripSfx = (s) => (s || '').replace(/\([^)]*\)\s*$/, '');
+  // 시도 경계 변경으로 데이터·geojson의 시도가 갈리는 시군구 — 양쪽 시도 키를 모두 등록/조회.
+  // 군위군: 2023-07 경북→대구 편입. 데이터(대구)·sigungu_2025 geojson(경북 code 37310)이 어긋남.
+  const CROSS_SIDO = { '군위군': ['경상북도', '대구광역시'] };
   function matchKeys(sido, name) {
     const s = _canonSido(sido);
-    const ek = normalizeKey(s, stripSfx(name)), rk = normalizeKey(s, parentSigungu(s, name));
-    return ek === rk ? [ek] : [ek, rk];
+    const base = stripSfx(name);
+    const sidos = CROSS_SIDO[base] ? Array.from(new Set([s, ...CROSS_SIDO[base]])) : [s];
+    const keys = [];
+    for (const ss of sidos) {
+      const ek = normalizeKey(ss, base);
+      const rk = normalizeKey(ss, parentSigungu(ss, name));
+      keys.push(ek);
+      if (rk !== ek) keys.push(rk);
+    }
+    return Array.from(new Set(keys));
   }
   function putKeys(m, sido, name, v, put) {
     for (const k of matchKeys(sido, name)) put(m, k, v);
