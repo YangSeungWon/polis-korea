@@ -57,6 +57,58 @@
     } catch (e) { /* 결과 없으면 폴 모드만 */ }
   }
 
+  // 클릭한 시군구 → 그 지역 race 찾기용 키. geojson명(화성시·세종시·군위군)과 데이터명
+  //   (화성시갑/을·세종특별자치시·대구 군위) 차이를 흡수 — councilHex matchKeys의 축약판.
+  function sigKeys(sido, name) {
+    const rolled = (name || '').replace(/(시|군)[갑을병정무]구$/, '$1').replace(/(시|군)[갑을병정무]$/, '$1');
+    const ks = [`${sido}|${name}`];
+    if (rolled !== name) ks.push(`${sido}|${rolled}`);
+    if (name === '세종특별자치시' || name === '세종시') { ks.push(`${sido}|세종시`, `${sido}|세종특별자치시`); }
+    if (name === '군위군' || rolled === '군위군') { ks.push('경상북도|군위군', '대구광역시|군위군'); }
+    return Array.from(new Set(ks));
+  }
+  function rollSig(name) {
+    let s = (name || '').replace(/(시|군)[갑을병정무]구$/, '$1').replace(/(시|군)[갑을병정무]$/, '$1');
+    if (s === '세종특별자치시') s = '세종시';
+    return s;
+  }
+  function buildSigDetailMap() {
+    // 같은 시군구로 묶어 후보 득표 합산 — 화성갑/을처럼 선거구 분할된 시는 합쳐 시 전체 결과로.
+    const groups = new Map();
+    for (const r of ps.sigunguRaces || []) {
+      if (!(r.candidates || []).length) continue;
+      const canon = `${r.sido}|${rollSig(r.sigungu)}`;
+      let g = groups.get(canon);
+      if (!g) { g = { sido: r.sido, name: rollSig(r.sigungu), agg: new Map() }; groups.set(canon, g); }
+      for (const c of r.candidates) {
+        const cur = g.agg.get(c.party) || { name: c.name, party: c.party, votes: 0 };
+        cur.votes += (c.votes || 0);
+        g.agg.set(c.party, cur);
+      }
+    }
+    const m = new Map();
+    for (const g of groups.values()) {
+      const cands = Array.from(g.agg.values());
+      const tot = cands.reduce((s, c) => s + c.votes, 0) || 1;
+      cands.forEach((c) => { c.pct = +(c.votes / tot * 100).toFixed(1); });
+      cands.sort((a, b) => b.votes - a.votes);
+      const race = { sido: g.sido, sigungu: g.name, candidates: cands };
+      for (const k of sigKeys(g.sido, g.name)) if (!m.has(k)) m.set(k, race);
+    }
+    return m;
+  }
+  // 시군구 자체 상세 패널 — 공용 #detail-pane 대신 이 섹션 우측에 그 시군구 개표결과(전 후보).
+  function renderSigDetail(map, sido, name) {
+    const pane = document.querySelector('#pres-sgg-result .pres-sgg-detail');
+    if (!pane) return;
+    let race = null;
+    for (const k of sigKeys(sido, name)) if (map.has(k)) { race = map.get(k); break; }
+    if (!race) { pane.innerHTML = '<div class="detail-empty">시·군·구를 선택하면 그 지역 개표 결과가 표시됩니다.</div>'; return; }
+    const card = (typeof renderActualResultCard === 'function') ? renderActualResultCard(race) : '';
+    pane.innerHTML = `<div class="detail-hdr"><h2>${sido} · ${name}</h2><span class="count">개표 확정</span></div>`
+      + (card || '<div class="detail-empty">결과 데이터가 없습니다.</div>');
+  }
+
   // 시·군·구 1위 후보 결과 맵 (1위색 + 격차 명도). council-hex 재사용.
   async function renderSigunguResult() {
     const CH = window.Archive && window.Archive.councilHex;
@@ -65,21 +117,19 @@
     if (!sec) {
       sec = document.createElement('section');
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
+      // 자체 2단(지도 + 우측 상세) — 지역·비례 viz의 공용 detail 패널과 분리(시군구 클릭은 여기로).
       sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></span></h3>'
-        + '<div class="pres-sgg-host"></div>';
-      // .viz(지역·비례 map + detail 패널) 밖, 전체폭 형제로 — 두 viz가 우측 detail 패널을 공유해
-      // 어색하던 것 해소. 시군구는 자체 폭으로 아래에 배치.
+        + '<div class="pres-sgg-body"><div class="pres-sgg-host"></div>'
+        + '<aside class="pres-sgg-detail detail-pane"><div class="detail-empty">시·군·구를 선택하면 그 지역 개표 결과가 표시됩니다.</div></aside></div>';
       const viz = document.querySelector('.viz');
       if (viz && viz.parentElement) viz.parentElement.insertBefore(sec, viz.nextSibling);
       else (document.querySelector('main.page') || document.body).appendChild(sec);
     }
+    const detailMap = buildSigDetailMap();
     await CH.initResult(
       { results: { races: ps.sigunguRaces }, meta: { electionN: POLL_ELECTION.n, electionKind: 'presidential' } },
       sec.querySelector('.pres-sgg-host'),
-      { onSelect: (sido, name) => {   // 시군구 클릭 → 그 지역 실제 결과 detail
-        state.selectedSido = sido; state.selectedSigungu = name; state.office = '대통령';
-        if (window.renderDetail) window.renderDetail();
-      } });
+      { onSelect: (sido, name) => renderSigDetail(detailMap, sido, name) });   // 시군구 클릭 → 자체 패널
   }
 
   function cells() {

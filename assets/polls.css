@@ -257,6 +257,15 @@
 
 /* 대선 폴 — 시군구 1위 후보 결과 맵 */
 .pres-sgg-result { margin-top: 22px; margin-bottom: 36px; }
+/* 시군구 자체 2단 — 지도(좌) + 그 시군구 개표 상세(우). .viz와 동형. */
+.pres-sgg-body { display: flex; gap: 18px; align-items: flex-start; }
+.pres-sgg-body .pres-sgg-host { flex: 1 1 0; min-width: 0; }
+/* .detail-pane 클래스의 박스(테두리·배경·패딩)는 쓰되, 고정 height:680px는 내용 높이로 override. */
+.pres-sgg-body .pres-sgg-detail { flex: 0 0 360px; height: auto; max-height: 680px; overflow-y: auto; }
+@media (max-width: 900px) {
+  .pres-sgg-body { flex-direction: column; }
+  .pres-sgg-body .pres-sgg-detail { flex: none; width: 100%; max-height: none; }
+}
 .pres-sgg-host .council-hex-svg { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
 .pres-sgg-legend { margin-top: 8px; font-size: 12px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
 .pres-sgg-legend .ch-leg { font-weight: 700; }
