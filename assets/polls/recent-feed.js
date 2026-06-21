@@ -10,7 +10,9 @@
 
   function pass(p) {
     if (filter === 'party') return p.metric_type === '정당지지';
-    if (filter === 'cand') return p.metric_type && p.metric_type !== '정당지지';
+    // 차기주자 = 차기 대선주자만(tracker와 동일 기준). 지선 후보지지(시장·도지사 등)는 대선주자가
+    // 아니라 의미 없음 — 전체에만 노출. 대선주자 폴이 없는 시기엔 아래에서 버튼 자체를 숨김.
+    if (filter === 'cand') return p.metric_type === '후보지지' && p.office_level === '대통령';
     return true;
   }
 
@@ -39,6 +41,13 @@
         .sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));
     } catch (e) {
       all = [];
+    }
+    // 차기 대선주자 폴이 없는 시기(지선 국면 등)엔 '차기주자' 버튼 숨김 — 빈/오해 필터 방지.
+    const hasPresCand = all.some((p) => p.metric_type === '후보지지' && p.office_level === '대통령');
+    const candBtn = document.querySelector('.rp-filter [data-rp="cand"]');
+    if (candBtn && !hasPresCand) {
+      candBtn.hidden = true;
+      if (filter === 'cand') { filter = 'all'; document.querySelectorAll('.rp-filter [data-rp]').forEach((x) => x.classList.toggle('is-active', x.dataset.rp === 'all')); }
     }
     render();
   }
