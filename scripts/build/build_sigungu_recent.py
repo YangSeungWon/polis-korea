@@ -86,6 +86,10 @@ def build(year, tol=200):
     subprocess.run([str(_ms), str(op), "snap", "-simplify", "0.6%", "keep-shapes",
                     "-clean", "gap-fill-area=2km2", "-o", str(op), "force"],
                    check=True, capture_output=True, timeout=300)
+    # 줌 성능 — geo 코로플레스는 viewBox 변경마다 전 path 재래스터라, 50k점이면 확대가 렉.
+    #   서비스 파일은 ~8k점(0.2MB)으로 추가 단순화(코로플레스 정밀도엔 충분). keep-shapes로 도서 보존.
+    subprocess.run([str(_ms), str(op), "-simplify", "12%", "keep-shapes", "-o", str(op), "force"],
+                   check=True, capture_output=True, timeout=300)
     print(f"{year}: {len(out)}유닛, 경계밖동 {miss}, → {op.name} ({round(op.stat().st_size/1e6,2)}MB)")
 
 

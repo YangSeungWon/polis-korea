@@ -114,11 +114,15 @@ def build_year(year):
     out = {"type": "FeatureCollection", "features": feats}
     p = ROOT / f"data/geo/sigungu_{year}.json"
     p.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
-    # mapshaper 위상 보존 단순화 — 공유 경계 함께 줄여 인접 시군구 틈 0 + 용량 ~400KB.
+    # mapshaper 위상 보존 단순화 — 공유 경계 함께 줄여 인접 시군구 틈 0 + 용량↓.
     _ms = ROOT / "node_modules/.bin/mapshaper"
     try:
         subprocess.run([str(_ms), str(p), "snap", "-simplify", "2%", "keep-shapes",
                         "-clean", "gap-fill-area=2km2", "-o", str(p), "force"],
+                       check=True, capture_output=True, timeout=300)
+        # 줌 성능 — geo 코로플레스는 viewBox 변경마다 전 path 재래스터. 서비스 파일은 추가 단순화로
+        #   시군구당 ~30점(전체 ~0.13MB)까지 — 코로플레스 정밀도엔 충분, 확대 렉 해소.
+        subprocess.run([str(_ms), str(p), "-simplify", "14%", "keep-shapes", "-o", str(p), "force"],
                        check=True, capture_output=True, timeout=300)
     except Exception as e:
         print(f"  ⚠ mapshaper 실패: {e}", file=sys.stderr)
