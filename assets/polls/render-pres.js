@@ -67,8 +67,11 @@
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
       sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></span></h3>'
         + '<div class="pres-sgg-host"></div>';
-      const anchor = document.getElementById('pres-host') || document.querySelector('.viz-main') || document.querySelector('.viz');
-      (anchor && anchor.parentElement ? anchor.parentElement : document.body).appendChild(sec);
+      // .viz(지역·비례 map + detail 패널) 밖, 전체폭 형제로 — 두 viz가 우측 detail 패널을 공유해
+      // 어색하던 것 해소. 시군구는 자체 폭으로 아래에 배치.
+      const viz = document.querySelector('.viz');
+      if (viz && viz.parentElement) viz.parentElement.insertBefore(sec, viz.nextSibling);
+      else (document.querySelector('main.page') || document.body).appendChild(sec);
     }
     await CH.initResult(
       { results: { races: ps.sigunguRaces }, meta: { electionN: POLL_ELECTION.n, electionKind: 'presidential' } },
@@ -185,9 +188,9 @@
     sec.id = 'pres-trend';
     sec.className = 'pres-trend';
     if (controls && controls.parentElement) controls.parentElement.insertBefore(sec, controls);
-    // 보조(지역·비례) 섹션 라벨
+    // 보조(지역·비례) 섹션 소제목 — 다른 소제목(본선 추이·시군구 1위)과 동급 h3.
     if (controls && !document.getElementById('pres-secondary-label')) {
-      const lab = document.createElement('div');
+      const lab = document.createElement('h3');
       lab.id = 'pres-secondary-label';
       lab.className = 'pres-secondary-label';
       lab.textContent = '지역·비례 분포';
