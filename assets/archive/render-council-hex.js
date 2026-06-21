@@ -157,6 +157,12 @@
   // 시도 경계 변경으로 데이터·geojson의 시도가 갈리는 시군구 — 양쪽 시도 키를 모두 등록/조회.
   // 군위군: 2023-07 경북→대구 편입. 데이터(대구)·sigungu_2025 geojson(경북 code 37310)이 어긋남.
   const CROSS_SIDO = { '군위군': ['경상북도', '대구광역시'] };
+  // 개칭 별칭(시도 스코프 — '남구'는 부산·대구·광주·울산에도 있어 통째 치환 불가).
+  //   인천 남구 → 미추홀구(2018-07). geojson(옛 남구)·데이터(미추홀구) 매칭.
+  const NAME_ALIAS = {
+    '인천광역시|남구': '미추홀구', '인천광역시|미추홀구': '남구',   // 2018-07 개칭
+    '경기도|여주군': '여주시', '경기도|여주시': '여주군',           // 2013-09 시 승격(18대 대선은 군)
+  };
   function matchKeys(sido, name) {
     const s = _canonSido(sido);
     const base = stripSfx(name);
@@ -167,6 +173,8 @@
       const rk = normalizeKey(ss, parentSigungu(ss, name));
       keys.push(ek);
       if (rk !== ek) keys.push(rk);
+      const alias = NAME_ALIAS[ek];
+      if (alias) keys.push(normalizeKey(ss, alias));
     }
     return Array.from(new Set(keys));
   }

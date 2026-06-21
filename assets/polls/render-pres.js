@@ -65,6 +65,7 @@
     if (rolled !== name) ks.push(`${sido}|${rolled}`);
     if (name === '세종특별자치시' || name === '세종시') { ks.push(`${sido}|세종시`, `${sido}|세종특별자치시`); }
     if (name === '군위군' || rolled === '군위군') { ks.push('경상북도|군위군', '대구광역시|군위군'); }
+    if (sido === '인천광역시' && (name === '남구' || name === '미추홀구')) { ks.push('인천광역시|남구', '인천광역시|미추홀구'); }
     return Array.from(new Set(ks));
   }
   function rollSig(name) {
