@@ -22,8 +22,10 @@ DL = "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={atch}&fileDetai
 
 # 회차 → (atchFileId, fileDetailSn). data.go.kr 투표율분석 fileData 페이지에서 추출.
 ELECTIONS = {
-    # 제21대 대통령선거 투표율 분석 (data.go.kr/data/15156333)
-    "21st-pres-2025": ("FILE_000000003560318", "1"),
+    # data.go.kr 투표율분석 fileData (atchFileId, fileDetailSn). 페이지에서 fn_fileDataDown 추출.
+    "21st-pres-2025": ("FILE_000000003560318", "1"),   # data/15156333
+    "20th-pres-2022": ("FILE_000000003138713", "1"),   # data/15116212
+    # 19th-pres-2017 (data/15116206): atchFileId가 AJAX 로드라 미확보 — 수동 등록 필요.
 }
 
 
