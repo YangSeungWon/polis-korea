@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-22T10:45:07",
+    "generated_at": "2026-06-22T10:51:19",
     "election_date": "2026-06-03",
     "blackout_start": "2026-05-28",
     "blackout_end": "2026-06-03T18:00",
@@ -10,9 +10,9 @@
     "stats": {
       "total_polls_meta": 1886,
       "matched_parsed": 1580,
-      "emitted_records": 1294,
+      "emitted_records": 1278,
       "skipped_no_pdf": 304,
-      "skipped_no_candidates": 695
+      "skipped_no_candidates": 711
     }
   },
   "polls": [
@@ -4115,41 +4115,6 @@
       "is_pending": true
     },
     {
-      "ntt_id": "11830",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11830&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 스마트에프앤 경기",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 5.7,
-      "contact_rate": 60.7,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2022-05-23",
-      "period_end": "2022-05-25",
-      "reg_date": "2022-05-25",
-      "sido": "경기도",
-      "sigungu": "용인시",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "용인특례시장 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 50.3
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 43.1
-        }
-      ]
-    },
-    {
       "ntt_id": "11828",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11828&menuNo=200467",
       "agency": "케이에스오아이 (한국사회여론연구소)",
@@ -4925,41 +4890,6 @@
       ]
     },
     {
-      "ntt_id": "11779",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11779&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "주·월간지 : 시사저널",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 513.0,
-      "response_rate": 16.7,
-      "contact_rate": 32.6,
-      "sample_error": "95% 신뢰수준에 ±4.3%P",
-      "period_start": "2022-05-22",
-      "period_end": "2022-05-24",
-      "reg_date": "2022-05-25",
-      "sido": "강원특별자치도",
-      "sigungu": "고성군",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "강원 고성군수 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 48.6
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 47.6
-        }
-      ]
-    },
-    {
       "ntt_id": "11775",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11775&menuNo=200467",
       "agency": "코리아정보리서치",
@@ -5270,41 +5200,6 @@
           "name": "",
           "party": "정의당",
           "pct": 4.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "11768",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11768&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "주·월간지 : 시사저널",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 503.0,
-      "response_rate": 5.3,
-      "contact_rate": 62.4,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2022-05-22",
-      "period_end": "2022-05-24",
-      "reg_date": "2022-05-25",
-      "sido": "경기도",
-      "sigungu": "화성시",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "경기 화성시장 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 46.9
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 43.7
         }
       ]
     },
@@ -7592,51 +7487,6 @@
       ]
     },
     {
-      "ntt_id": "11683",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11683&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "인터넷언론 : 스트레이트뉴스",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 500.0,
-      "response_rate": 4.9,
-      "contact_rate": 72.6,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2022-05-21",
-      "period_end": "2022-05-23",
-      "reg_date": "2022-05-24",
-      "sido": "인천광역시",
-      "sigungu": "중구",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "인천시장 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 47.8
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 40.2
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 3.6
-        },
-        {
-          "name": "",
-          "party": "기본소득당",
-          "pct": 1.3
-        }
-      ]
-    },
-    {
       "ntt_id": "11673",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11673&menuNo=200467",
       "agency": "에이스리서치",
@@ -9565,23 +9415,23 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "서울시장 후보 지지도",
+      "table_no": "6",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.5
+          "pct": 36.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 52.9
+          "pct": 47.2
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 1.3
+          "pct": 3.8
         }
       ]
     },
@@ -15541,41 +15391,6 @@
       ]
     },
     {
-      "ntt_id": "11364",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11364&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "주·월간지 : 일요신문",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 800.0,
-      "response_rate": 4.8,
-      "contact_rate": 67.0,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-15",
-      "period_end": "2022-05-17",
-      "reg_date": "2022-05-18",
-      "sido": "강원특별자치도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "강원도지사 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 47.3
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 43.6
-        }
-      ]
-    },
-    {
       "ntt_id": "11362",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11362&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -15755,41 +15570,6 @@
           "name": "김영환",
           "party": "국민의힘",
           "pct": 46.5
-        }
-      ]
-    },
-    {
-      "ntt_id": "11344",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11344&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경기일보",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 801.0,
-      "response_rate": 5.9,
-      "contact_rate": 57.9,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-17",
-      "period_end": "2022-05-17",
-      "reg_date": "2022-05-18",
-      "sido": "경기도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "3",
-      "table_title": "양자가상대결: 김동연 vs 김은혜",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 47.2
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 44.0
         }
       ]
     },
@@ -16589,41 +16369,6 @@
       ]
     },
     {
-      "ntt_id": "11324",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11324&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "시·도단위 신문/방송사 : 대전일보/TJB대전방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1031.0,
-      "response_rate": 6.2,
-      "contact_rate": 58.6,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2022-05-15",
-      "period_end": "2022-05-17",
-      "reg_date": "2022-05-17",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "대전시장 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 48.9
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 38.7
-        }
-      ]
-    },
-    {
       "ntt_id": "11323",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11323&menuNo=200467",
       "agency": "조원씨앤아이",
@@ -16705,41 +16450,6 @@
           "name": "조영종",
           "party": "",
           "pct": 9.5
-        }
-      ]
-    },
-    {
-      "ntt_id": "11322",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11322&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "시·도단위 신문/방송사 : 대전일보/TJB대전방송",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 800.0,
-      "response_rate": 5.7,
-      "contact_rate": 65.0,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-15",
-      "period_end": "2022-05-17",
-      "reg_date": "2022-05-17",
-      "sido": "세종특별자치시",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "세종시장 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 45.1
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 43.5
         }
       ]
     },
@@ -22254,41 +21964,6 @@
       ]
     },
     {
-      "ntt_id": "11145",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11145&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "주·월간지 : 시사저널",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 800.0,
-      "response_rate": 3.5,
-      "contact_rate": 31.4,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-09",
-      "period_end": "2022-05-11",
-      "reg_date": "2022-05-11",
-      "sido": "충청북도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "충북도지사 후보 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 48.9
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 37.2
-        }
-      ]
-    },
-    {
       "ntt_id": "11140",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11140&menuNo=200467",
       "agency": "비전코리아",
@@ -23424,41 +23099,6 @@
           "name": "",
           "party": "진보당",
           "pct": 1.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "11072",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11072&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 경기일보",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 801.0,
-      "response_rate": 5.0,
-      "contact_rate": 67.3,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-08",
-      "period_end": "2022-05-09",
-      "reg_date": "2022-05-09",
-      "sido": "경기도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "3",
-      "table_title": "양자가상대결: 김동연 vs 김은혜",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 47.2
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 42.5
         }
       ]
     },
@@ -24721,41 +24361,6 @@
       ]
     },
     {
-      "ntt_id": "11038",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11038&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "방송사 : CBS",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 801.0,
-      "response_rate": 4.1,
-      "contact_rate": 81.2,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-06",
-      "period_end": "2022-05-08",
-      "reg_date": "2022-05-08",
-      "sido": "경기도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "3",
-      "table_title": "양자가상대결: 김동연 vs 김은혜",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 46.4
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 44.6
-        }
-      ]
-    },
-    {
       "ntt_id": "11037",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11037&menuNo=200467",
       "agency": "모노커뮤니케이션즈(모노리서치)",
@@ -24880,41 +24485,6 @@
           "name": "",
           "party": "더불어민주당",
           "pct": 43.4
-        }
-      ]
-    },
-    {
-      "ntt_id": "11033",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=11033&menuNo=200467",
-      "agency": "조원씨앤아이",
-      "co_agency": "",
-      "requester": "방송사 : CBS",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 801.0,
-      "response_rate": 5.7,
-      "contact_rate": 59.8,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-05-06",
-      "period_end": "2022-05-07",
-      "reg_date": "2022-05-07",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "3",
-      "table_title": "양자가상대결: 송영길 vs 오세훈",
-      "candidates": [
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 57.6
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 37.5
         }
       ]
     },
@@ -28727,46 +28297,6 @@
       "table_title": "",
       "candidates": [],
       "is_pending": true
-    },
-    {
-      "ntt_id": "10844",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10844&menuNo=200467",
-      "agency": "비전코리아",
-      "co_agency": "",
-      "requester": "전국단위 신문/인터넷언론 : 포털신문/비전코리아뉴스",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1005.0,
-      "response_rate": 7.6,
-      "contact_rate": 55.2,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2022-04-22",
-      "period_end": "2022-04-22",
-      "reg_date": "2022-04-24",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "서울시장 지지 정당 후보",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 34.8
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 50.2
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 2.9
-        }
-      ]
     },
     {
       "ntt_id": "10845",
@@ -34747,22 +34277,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "표3) 가상대결",
+      "table_title": "표6) 정당지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.3
+          "pct": 43.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 46.8
+          "pct": 45.0
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 3.2
+          "pct": 2.2
         }
       ]
     },
@@ -37679,46 +37209,6 @@
       ]
     },
     {
-      "ntt_id": "10262",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10262&menuNo=200467",
-      "agency": "디오피니언",
-      "co_agency": "",
-      "requester": "시·도단위 신문 : 시사뉴스",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 801.0,
-      "response_rate": 0.8,
-      "contact_rate": 50.7,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2022-03-20",
-      "period_end": "2022-03-22",
-      "reg_date": "2022-03-22",
-      "sido": "경기도",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "문4) 선생님께서는 경기도지사 선거에 어느 당 후보를 지지하시겠습니까?",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 41.4
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 46.1
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 3.6
-        }
-      ]
-    },
-    {
       "ntt_id": "10257",
       "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10257&menuNo=200467",
       "agency": "에이스리서치",
@@ -38708,46 +38198,6 @@
       "table_title": "",
       "candidates": [],
       "is_pending": true
-    },
-    {
-      "ntt_id": "10188",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=10188&menuNo=200467",
-      "agency": "비전코리아",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 하나로일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1001.0,
-      "response_rate": 2.2,
-      "contact_rate": 39.1,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2022-03-06",
-      "period_end": "2022-03-07",
-      "reg_date": "2022-03-07",
-      "sido": "경기도",
-      "sigungu": "양평군",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "5",
-      "table_title": "양평군수 선거 정당지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 31.9
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 58.0
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 1.8
-        }
-      ]
     },
     {
       "ntt_id": "10178",
@@ -41753,51 +41203,6 @@
           "name": "",
           "party": "정의당",
           "pct": 2.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "9618",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=9618&menuNo=200467",
-      "agency": "비전코리아",
-      "co_agency": "",
-      "requester": "구·시·군단위 신문 : 하나로일보",
-      "is_self_poll": false,
-      "method": "유선 ARS",
-      "sample_size": 1002.0,
-      "response_rate": 4.1,
-      "contact_rate": 47.1,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2022-01-06",
-      "period_end": "2022-01-07",
-      "reg_date": "2022-01-07",
-      "sido": "경기도",
-      "sigungu": "양평군",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "양평군수 후보 소속 정당 지지도",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 36.1
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 47.0
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 2.6
-        },
-        {
-          "name": "",
-          "party": "민주당",
-          "pct": 0.5
         }
       ]
     },

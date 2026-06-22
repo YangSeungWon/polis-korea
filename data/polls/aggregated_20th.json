@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-22T10:45:05",
+    "generated_at": "2026-06-22T10:51:18",
     "election": "20th-general-2016",
     "election_date": "2016-04-13",
     "source": "NESDC 등록현황 (nesdc.go.kr)",
@@ -8,9 +8,9 @@
     "stats": {
       "total_polls_meta": 1410,
       "matched_parsed": 1131,
-      "emitted_records": 505,
+      "emitted_records": 501,
       "skipped_no_pdf": 279,
-      "skipped_no_race": 643
+      "skipped_no_race": 647
     }
   },
   "polls": [
@@ -967,27 +967,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 제주을 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원 으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 36.8
+          "pct": 46.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 32.6
+          "pct": 28.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 5.3
+          "pct": 1.3
         },
         {
           "name": "",
           "party": "한나라당",
-          "pct": 6.0
+          "pct": 4.0
         }
       ]
     },
@@ -1013,22 +1013,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 제주갑 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원 으로 당선될 것으로보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 34.0
+          "pct": 30.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 32.7
+          "pct": 39.4
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 9.8
+          "pct": 3.1
         }
       ]
     },
@@ -1054,53 +1054,17 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 서귀포 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원 으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 41.3
+          "pct": 34.5
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 38.5
-        }
-      ]
-    },
-    {
-      "ntt_id": "2740",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2740&menuNo=200467",
-      "agency": "한길리서치",
-      "co_agency": "",
-      "requester": "전국단위 신문 : 매일경제",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 500.0,
-      "response_rate": 15.2,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-04-06",
-      "period_end": "2016-04-06",
-      "reg_date": "2016-04-07",
-      "sido": "대구광역시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "문2) 귀하는 대구 수성갑 지역 국회의원 후보 중 누구를 지지하십니까? (정당의석순)",
-      "candidates": [
-        {
-          "name": "",
-          "party": "새누리당",
-          "pct": 35.4
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 44.4
+          "pct": 36.1
         }
       ]
     },
@@ -1745,28 +1709,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 34.3
+          "pct": 32.5
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 21.1
+          "pct": 25.5
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 28.0
+          "pct": 22.5
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 4.1
+          "pct": 9.2
         }
       ]
     },
@@ -1878,33 +1842,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 34.5
+          "pct": 36.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 33.9
+          "pct": 28.0
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.2
+          "pct": 12.0
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 4.8
-        },
-        {
-          "name": "",
-          "party": "녹색당",
-          "pct": 5.1
+          "pct": 11.1
         }
       ]
     },
@@ -2404,28 +2363,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.7
+          "pct": 34.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 34.6
+          "pct": 25.9
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 10.9
+          "pct": 15.6
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 2.7
+          "party": "정의당",
+          "pct": 10.5
         }
       ]
     },
@@ -2537,28 +2496,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 37.0
+          "pct": 37.3
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 20.5
+          "pct": 22.6
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 30.4
+          "pct": 24.5
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 0.7
+          "party": "정의당",
+          "pct": 6.3
         }
       ]
     },
@@ -2968,27 +2927,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 파주갑 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 21.2
+          "pct": 23.5
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 33.3
+          "pct": 32.9
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.0
+          "pct": 3.0
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 1.8
+          "pct": 6.0
         }
       ]
     },
@@ -3941,28 +3900,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 27.3
+          "pct": 35.4
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.2
+          "pct": 33.6
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.5
+          "pct": 10.4
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 2.7
+          "pct": 4.9
         }
       ]
     },
@@ -4079,33 +4038,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 25.4
+          "pct": 29.7
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 48.6
+          "pct": 33.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.2
+          "pct": 13.4
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 5.1
-        },
-        {
-          "name": "",
-          "party": "노동당",
-          "pct": 2.1
+          "pct": 11.6
         }
       ]
     },
@@ -4176,28 +4130,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 36.4
+          "pct": 36.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 33.2
+          "pct": 27.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.0
+          "pct": 10.7
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 4.7
+          "pct": 8.2
         }
       ]
     },
@@ -4268,28 +4222,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 30.4
+          "pct": 32.4
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 39.6
+          "pct": 29.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 14.0
+          "pct": 14.5
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 1.5
+          "party": "정의당",
+          "pct": 10.1
         }
       ]
     },
@@ -4314,33 +4268,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 32.7
+          "pct": 37.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 45.5
+          "pct": 28.1
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 5.9
+          "pct": 10.5
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 2.1
-        },
-        {
-          "name": "",
-          "party": "민중연합당",
-          "pct": 0.8
+          "pct": 8.5
         }
       ]
     },
@@ -4365,28 +4314,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 32.8
+          "pct": 37.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 25.1
+          "pct": 24.8
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 13.9
+          "pct": 15.5
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 3.0
+          "pct": 5.9
         }
       ]
     },
@@ -4503,28 +4452,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 2.2
+          "pct": 5.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 35.5
+          "pct": 31.0
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 34.7
+          "pct": 36.7
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 2.1
+          "party": "정의당",
+          "pct": 3.6
         }
       ]
     },
@@ -4641,28 +4590,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 24.4
+          "pct": 29.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.5
+          "pct": 32.8
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 12.4
+          "pct": 15.6
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 1.9
+          "party": "정의당",
+          "pct": 6.0
         }
       ]
     },
@@ -4688,27 +4637,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 소사 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 25.8
+          "pct": 25.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 24.2
+          "pct": 29.6
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.8
+          "pct": 2.3
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 1.8
+          "pct": 2.0
         }
       ]
     },
@@ -6579,33 +6528,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 27.7
+          "pct": 32.3
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 34.6
+          "pct": 32.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.8
+          "pct": 13.0
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 8.0
-        },
-        {
-          "name": "",
-          "party": "민중연합당",
-          "pct": 1.0
+          "pct": 10.2
         }
       ]
     },
@@ -6630,33 +6574,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.9
+          "pct": 32.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 29.2
+          "pct": 29.5
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 19.3
+          "pct": 19.5
         },
         {
           "name": "",
-          "party": "민주당",
-          "pct": 1.1
-        },
-        {
-          "name": "",
-          "party": "민중연합당",
-          "pct": 1.7
+          "party": "정의당",
+          "pct": 7.0
         }
       ]
     },
@@ -6773,28 +6712,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 36.2
+          "pct": 36.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 36.2
+          "pct": 27.9
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 5.7
+          "pct": 10.1
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 3.2
+          "pct": 9.7
         }
       ]
     },
@@ -7234,12 +7173,12 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 고양병 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 22.8
+          "pct": 24.9
         },
         {
           "name": "",
@@ -7249,7 +7188,7 @@
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.0
+          "pct": 3.4
         }
       ]
     },
@@ -7933,22 +7872,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 이번 국회의원 선거에서 다음의 양산시갑 지역 국회의원 후보 중 누구를 지지하십니까?",
+      "table_title": "문4) 귀하의 지지여부와 관계없이 이번 선거에서 누가 당선될 것으로 보십니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 51.9
+          "pct": 59.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 25.3
+          "pct": 13.6
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.1
+          "pct": 2.1
         }
       ]
     },
@@ -8020,22 +7959,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 분당갑 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 32.3
+          "pct": 49.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 28.3
+          "pct": 19.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 9.5
+          "pct": 3.3
         }
       ]
     },
@@ -8179,52 +8118,6 @@
           "name": "조해진",
           "party": "무소속",
           "pct": 25.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "2388",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=2388&menuNo=200467",
-      "agency": "한길리서치",
-      "co_agency": "",
-      "requester": "정당·후보자 : 김영선",
-      "is_self_poll": true,
-      "method": "유선전화면접",
-      "sample_size": 800.0,
-      "response_rate": 8.4,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2016-03-23",
-      "period_end": "2016-03-25",
-      "reg_date": "2016-04-04",
-      "sido": "경기도",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "문6) 귀하는 다음 중 어느 당 후보에게 투표하시겠습니까?(국회의석순)",
-      "candidates": [
-        {
-          "name": "",
-          "party": "새누리당",
-          "pct": 37.4
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 26.5
-        },
-        {
-          "name": "",
-          "party": "국민의당",
-          "pct": 10.6
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 5.9
         }
       ]
     },
@@ -8541,22 +8434,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 이번 국회의원 선거에서 다음의 남구을 지역 국회의원 후보 중 누구를 지지하십니까?",
+      "table_title": "문4) 귀하의 지지여부와 관계없이 이번 선거에서 누가 당선될 것으로 보십니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 41.1
+          "pct": 60.2
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 34.2
+          "pct": 17.1
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.5
+          "pct": 9.0
         }
       ]
     },
@@ -9571,28 +9464,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "4",
-      "table_title": "단일화 시 후보 지지도: ① 문흥수 후보",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 39.4
+          "pct": 36.0
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 27.9
+          "pct": 26.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 9.2
+          "pct": 14.5
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 4.1
+          "party": "정의당",
+          "pct": 4.9
         }
       ]
     },
@@ -9709,28 +9602,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.4
+          "pct": 38.0
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.4
+          "pct": 28.5
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.8
+          "pct": 13.3
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 0.6
+          "party": "정의당",
+          "pct": 7.9
         }
       ]
     },
@@ -9801,28 +9694,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "5",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 37.9
+          "pct": 38.5
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 31.4
+          "pct": 26.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.7
+          "pct": 12.4
         },
         {
           "name": "",
-          "party": "민중연합당",
-          "pct": 3.4
+          "party": "정의당",
+          "pct": 12.5
         }
       ]
     },
@@ -9847,33 +9740,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 30.3
+          "pct": 33.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 25.5
+          "pct": 27.4
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 15.3
+          "pct": 17.3
         },
         {
           "name": "",
-          "party": "녹색당",
-          "pct": 3.8
-        },
-        {
-          "name": "",
-          "party": "민중연합당",
-          "pct": 2.0
+          "party": "정의당",
+          "pct": 7.1
         }
       ]
     },
@@ -9898,28 +9786,28 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "후보 지지도",
+      "table_no": "4",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 40.1
+          "pct": 39.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 32.7
+          "pct": 28.2
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.4
+          "pct": 10.6
         },
         {
           "name": "",
-          "party": "한나라당",
-          "pct": 1.6
+          "party": "정의당",
+          "pct": 5.3
         }
       ]
     },
@@ -10630,17 +10518,17 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 이번 국회의원 선거에서 다음의 북강서갑 지역 국회의원 후보 중 누구를 지지하십니까?",
+      "table_title": "문4) 귀하의 지지여부와 관계없이 이번 선거에서 누가 당선될 것으로 보십니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 43.1
+          "pct": 50.2
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.6
+          "pct": 29.5
         }
       ]
     },
@@ -10666,27 +10554,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 오정 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 16.9
+          "pct": 13.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 31.3
+          "pct": 42.1
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.6
+          "pct": 4.0
         },
         {
           "name": "",
           "party": "정의당",
-          "pct": 6.0
+          "pct": 2.0
         }
       ]
     },
@@ -10753,22 +10641,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 계양을 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 24.9
+          "pct": 20.4
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 37.1
+          "pct": 44.1
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 11.6
+          "pct": 6.8
         }
       ]
     },
@@ -10876,27 +10764,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 의정부을 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 33.2
+          "pct": 46.5
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 18.9
+          "pct": 15.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.6
+          "pct": 3.9
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 3.0
+          "pct": 1.6
         }
       ]
     },
@@ -11959,22 +11847,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 26.8
+          "pct": 19.1
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 46.4
+          "pct": 55.0
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.0
+          "pct": 1.6
         }
       ]
     },
@@ -12041,27 +11929,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 27.3
+          "pct": 32.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 44.2
+          "pct": 43.5
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.8
+          "pct": 0.2
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 1.9
+          "pct": 0.4
         }
       ]
     },
@@ -12133,27 +12021,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 29.5
+          "pct": 20.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 42.1
+          "pct": 59.5
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.3
+          "pct": 1.6
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 1.1
+          "pct": 0.9
         }
       ]
     },
@@ -12179,27 +12067,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 38.3
+          "pct": 44.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.8
+          "pct": 34.8
         },
         {
           "name": "",
           "party": "민주당",
-          "pct": 2.4
+          "pct": 0.8
         },
         {
           "name": "",
           "party": "녹색당",
-          "pct": 2.9
+          "pct": 0.7
         }
       ]
     },
@@ -12271,22 +12159,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.8
+          "pct": 44.0
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 24.6
+          "pct": 21.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 17.3
+          "pct": 8.1
         }
       ]
     },
@@ -12547,27 +12435,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 32.1
+          "pct": 32.2
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 43.5
+          "pct": 50.4
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.0
+          "pct": 1.1
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 1.9
+          "pct": 0.2
         }
       ]
     },
@@ -12593,17 +12481,17 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 37.7
+          "pct": 43.2
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 44.4
+          "pct": 31.8
         }
       ]
     },
@@ -12629,22 +12517,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 5.6
+          "pct": 2.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 40.2
+          "pct": 39.7
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 38.1
+          "pct": 38.6
         }
       ]
     },
@@ -12716,27 +12604,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 40.2
+          "pct": 66.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 23.6
+          "pct": 10.2
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 7.9
+          "pct": 2.0
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 4.2
+          "pct": 1.2
         }
       ]
     },
@@ -12762,22 +12650,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문2. 귀하께서는 이번 국회의원 선거에서, 다음의 후보 중 누구에게 투표하시겠습니까?",
+      "table_title": "문3. 귀하의 지지 여부와 관계 없이, 당선될 가능성이 가장 높다고 생각되는 인물은 누구입니까?",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 41.8
+          "pct": 57.6
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 31.9
+          "pct": 21.4
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 8.4
+          "pct": 2.5
         }
       ]
     },
@@ -13202,27 +13090,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 평택을 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 32.2
+          "pct": 38.4
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 20.5
+          "pct": 17.4
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 9.6
+          "pct": 4.0
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 3.0
+          "pct": 7.0
         }
       ]
     },
@@ -13340,27 +13228,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 동안갑 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 22.9
+          "pct": 21.4
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 34.5
+          "pct": 42.9
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 6.0
+          "pct": 3.1
         },
         {
           "name": "",
           "party": "민중연합당",
-          "pct": 4.0
+          "pct": 1.1
         }
       ]
     },
@@ -14052,27 +13940,27 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 제주을 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 39.3
+          "pct": 46.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 32.4
+          "pct": 26.9
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 4.6
+          "pct": 2.0
         },
         {
           "name": "",
           "party": "한나라당",
-          "pct": 1.7
+          "pct": 1.2
         }
       ]
     },
@@ -14180,22 +14068,22 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 제주갑 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.5
+          "pct": 33.9
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 34.7
+          "pct": 39.3
         },
         {
           "name": "",
           "party": "국민의당",
-          "pct": 9.1
+          "pct": 2.4
         }
       ]
     },
@@ -14221,17 +14109,17 @@
       "office_label": "정당지지",
       "metric_type": "정당지지",
       "table_no": "",
-      "table_title": "문3) 귀하는 서귀포 지역 국회의원 후보 중 누구를 지지하십니까?(정당의석순)",
+      "table_title": "문4) 귀하의 지지여부를 떠나 이번 선거에서 누가 국회의원으로 당선될 것으로 보십니까?(정당의석순)",
       "candidates": [
         {
           "name": "",
           "party": "새누리당",
-          "pct": 35.3
+          "pct": 31.8
         },
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 41.8
+          "pct": 40.3
         }
       ]
     },
@@ -16245,52 +16133,6 @@
           "name": "김영준",
           "party": "녹색당",
           "pct": 1.0
-        }
-      ]
-    },
-    {
-      "ntt_id": "1963",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1963&menuNo=200467",
-      "agency": "마크로밀엠브레인",
-      "co_agency": "",
-      "requester": "정당·후보자 : 민병두",
-      "is_self_poll": true,
-      "method": "유선전화면접",
-      "sample_size": 514.0,
-      "response_rate": 11.5,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±4.4%P",
-      "period_start": "2016-03-21",
-      "period_end": "2016-03-22",
-      "reg_date": "2016-03-23",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "",
-      "table_title": "가상대결",
-      "candidates": [
-        {
-          "name": "",
-          "party": "새누리당",
-          "pct": 25.024
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 45.649
-        },
-        {
-          "name": "",
-          "party": "국민의당",
-          "pct": 6.68
-        },
-        {
-          "name": "",
-          "party": "민중연합당",
-          "pct": 2.51
         }
       ]
     },
@@ -18799,52 +18641,6 @@
           "name": "",
           "party": "정의당",
           "pct": 4.1
-        }
-      ]
-    },
-    {
-      "ntt_id": "1736",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=1736&menuNo=200467",
-      "agency": "밀워드브라운미디어리서치",
-      "co_agency": "",
-      "requester": "전국단위 신문 : 조선일보",
-      "is_self_poll": false,
-      "method": "유선전화면접",
-      "sample_size": 1035.0,
-      "response_rate": 10.9,
-      "contact_rate": null,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2016-02-29",
-      "period_end": "2016-03-01",
-      "reg_date": "2016-03-03",
-      "sido": "",
-      "sigungu": "",
-      "district": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "5",
-      "table_title": "총선 지지정당 후보",
-      "candidates": [
-        {
-          "name": "",
-          "party": "새누리당",
-          "pct": 33.3
-        },
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 22.2
-        },
-        {
-          "name": "",
-          "party": "국민의당",
-          "pct": 5.7
-        },
-        {
-          "name": "",
-          "party": "정의당",
-          "pct": 1.8
         }
       ]
     },

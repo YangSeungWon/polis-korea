@@ -140,6 +140,32 @@ def check_party_as_name(polls: list) -> dict:
             "count": len(hits), "items": hits[:15]}
 
 
+# 정당지지 표인데 실은 '후보 지지(정당 기준)'·단체장/지역구 후보 표인 신호.
+#   - candidates에 '무소속'(정당 아님) → 무소속 후보 새어듦
+#   - table_title이 후보/대결/단일화/직위명 → 후보 선호 표
+_PARTY_CONTAM_TITLE = re.compile(
+    r"후보|단일화|양자|가상\s*대결|당선\s*가능|지역구|단체장|도지사|시장|군수|구청장|교육감|시의원|도의원")
+def check_party_support_contamination(polls: list) -> dict:
+    """3b. 정당지지에 섞인 후보-지지 표 (무소속 후보·후보제목 신호). 정당 추이를 왜곡."""
+    hits = []
+    for p in polls:
+        if p.get("is_pending") or p.get("metric_type") != "정당지지":
+            continue
+        parties = {(c.get("party") or "") for c in p.get("candidates", [])}
+        title = p.get("table_title") or ""
+        why = []
+        if "무소속" in parties:
+            why.append("무소속")
+        if _PARTY_CONTAM_TITLE.search(title):
+            why.append("후보제목")
+        if why:
+            hits.append({"ntt": p.get("ntt_id"), "agency": p.get("agency"),
+                         "period": p.get("period_end"), "why": "+".join(why),
+                         "title": title[:40]})
+    return {"name": "정당지지 후보표 오염", "severity": "error" if hits else "info",
+            "count": len(hits), "items": hits[:15]}
+
+
 def check_office_classification(polls: list, roster: dict) -> dict:
     """4. 광역/기초의원 분류 false positive (NEC typecode 단체장인데 의원 분류).
     또는 단체장 분류인데 typecode 의원."""
@@ -365,14 +391,54 @@ def diff_vs_prev(now: dict) -> list[str]:
     return diffs
 
 
+# roster 불필요 + 전 파일 공통으로 도는 체크 (per-election aggregated 모두 스캔용).
+ROSTER_FREE_CHECKS = [check_party_as_name, check_party_support_contamination, check_sum_sanity]
+
+
+def scan_all(verbose: bool = False) -> int:
+    """전 aggregated_*.json을 roster-free 체크로 스캔 — 회차 무관 오염 회귀 검출. error면 1."""
+    import glob
+    n_error = 0
+    print(f"=== polis audit (전 파일 스캔) — {date.today()} ===\n")
+    for f in sorted(glob.glob(str(ROOT / "data/polls/aggregated_*.json"))):
+        try:
+            polls = json.load(open(f, encoding="utf-8")).get("polls", [])
+        except Exception as e:
+            print(f"  {Path(f).name}: 로드 실패 {e}"); n_error += 1; continue
+        rows = []
+        for chk in ROSTER_FREE_CHECKS:
+            c = chk(polls)
+            if c["count"]:
+                rows.append(c)
+                if c["severity"] == "error":
+                    n_error += 1
+        name = Path(f).name
+        if rows:
+            for c in rows:
+                mk = {"error": "✗", "warn": "⚠", "info": "ⓘ"}[c["severity"]]
+                print(f"  {mk} {name}: {c['name']} {c['count']}건"
+                      + (f" [{c['severity'].upper()}]" if c["severity"] != "info" else ""))
+                if verbose:
+                    for it in c["items"][:5]:
+                        print(f"        {it}")
+        else:
+            print(f"  ✓ {name}: 깨끗")
+    print(f"\n총: {n_error} error")
+    return 1 if n_error else 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-save", action="store_true", help="audit JSON 저장 안 함")
     ap.add_argument("--strict", action="store_true", help="warn도 exit 1")
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument("--all", action="store_true", help="전 aggregated_*.json을 roster-free 체크로 스캔")
     ap.add_argument("--agg", default=str(AGG), help="aggregated JSON path")
     ap.add_argument("--roster", default=str(ROSTER), help="NEC roster JSON path")
     args = ap.parse_args()
+
+    if args.all:
+        sys.exit(scan_all(args.verbose))
 
     agg_path = Path(args.agg) if Path(args.agg).is_absolute() else ROOT / args.agg
     roster_path = Path(args.roster) if Path(args.roster).is_absolute() else ROOT / args.roster
@@ -383,6 +449,7 @@ def main():
         check_outliers(polls, roster),
         check_party_inflate(polls),
         check_party_as_name(polls),
+        check_party_support_contamination(polls),
         check_office_classification(polls, roster),
         check_sum_sanity(polls),
         check_roster_gaps(polls, roster),

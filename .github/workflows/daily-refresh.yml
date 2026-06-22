@@ -115,7 +115,9 @@ jobs:
           python tests/test_build_golden.py
 
       - name: Audit (error 시 워크플로 실패)
-        run: python scripts/audit/audit_quality.py
+        run: |
+          python scripts/audit/audit_quality.py
+          python scripts/audit/audit_quality.py --all   # 전 회차 aggregated 오염(정당지지 후보표 등) 회귀 차단
 
       - name: Commit & push if changed
         run: |

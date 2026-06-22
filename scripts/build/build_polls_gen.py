@@ -240,6 +240,9 @@ def accept_party_race(q: dict, dem: list, ppp: list) -> list[dict] | None:
     # 정당지지로 새는 신호. 정당지지 집계에서 제외(후보지지는 별도 경로).
     if "무소속" in parties:
         return None
+    # 후보 지지(정당 기준)·지역구 후보 표가 정당지지로 새는 것 차단(정당지지 제목엔 안 나옴).
+    if re.search(r"후보|단일화|양자|가상\s*대결|당선\s*가능|지역구|단체장|도지사|시장|군수|구청장|교육감|시의원|도의원", q.get("title", "")):
+        return None
     if re.search(r"비례", q.get("title", "")):  # 비례는 accept_prop_race가 처리
         return None
     if not normalize_pcts(keep):

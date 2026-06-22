@@ -596,6 +596,9 @@ def build() -> dict:
                 # 새는 신호(지선은 무소속 후보 흔함). 정당지지 집계에서 제외.
                 if "무소속" in parties:
                     continue
+                # 후보 지지(정당 기준)·단체장 후보 표가 정당지지로 새는 것 차단(정당지지 제목엔 안 나옴).
+                if re.search(r"후보|양자|가상\s*대결|당선\s*가능|지역구|단체장|도지사|시장|군수|구청장|교육감|시의원|도의원", title):
+                    continue
                 # 경선 record는 별도 — title에 "경선"·"단일화" 들어가면 정당지지 page에 부적절
                 if re.search(r"경선|단일화|당내", title):
                     continue
