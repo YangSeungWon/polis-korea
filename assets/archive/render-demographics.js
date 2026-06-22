@@ -12,7 +12,15 @@
   const ptc = (p) => (typeof partyTextColor === 'function' ? partyTextColor(p) : 'var(--ink)');
   const fmt = (n) => n.toLocaleString();
 
-  let DATA = null, view = 'group';   // 'group' | 'cand'
+  let DATA = null, TURN = null, view = 'group';   // 'group' | 'cand' | 'region'
+  let rsex = '합계';   // 지역 투표율 뷰의 성별 (합계/남자/여자)
+  const SIDO_ORDER = ['서울특별시', '인천광역시', '경기도', '강원특별자치도', '대전광역시', '세종특별자치시',
+    '충청북도', '충청남도', '광주광역시', '전북특별자치도', '전라남도',
+    '대구광역시', '부산광역시', '울산광역시', '경상북도', '경상남도', '제주특별자치도'];
+  const SIDO_SHORT = { '서울특별시': '서울', '인천광역시': '인천', '경기도': '경기', '강원특별자치도': '강원',
+    '대전광역시': '대전', '세종특별자치시': '세종', '충청북도': '충북', '충청남도': '충남', '광주광역시': '광주',
+    '전북특별자치도': '전북', '전라남도': '전남', '대구광역시': '대구', '부산광역시': '부산', '울산광역시': '울산',
+    '경상북도': '경북', '경상남도': '경남', '제주특별자치도': '제주' };
 
   function cellOf(sex, age) {
     return (DATA.cells || []).find((c) => c.sex === sex && c.age === age);
@@ -93,10 +101,43 @@
     }).join('');
   }
 
+  // ── 지역 투표율 — 시도×연령 히트맵(성별 토글). 색 진하기 = 투표율(teal). 실측 NEC. ──
+  function renderRegionView() {
+    if (!TURN) return '<p class="detail-empty">지역 투표율 데이터가 없습니다.</p>';
+    const all = [];
+    for (const s of SIDO_ORDER) for (const a of AGES) {
+      const t = (TURN[s] || {})[rsex] && TURN[s][rsex][a]; if (t && t.turnout != null) all.push(t.turnout);
+    }
+    const lo = Math.min(...all), hi = Math.max(...all);
+    const cellBg = (v) => {
+      const k = hi > lo ? (v - lo) / (hi - lo) : 0.5;            // 상대 스케일
+      return `rgba(20,140,130,${(0.12 + 0.78 * k).toFixed(2)})`;  // teal
+    };
+    const sexBtns = ['합계', '남자', '여자'].map((s) => `<button class="dg-rsex${s === rsex ? ' is-active' : ''}" data-rsex="${s}">${s}</button>`).join('');
+    let head = '<div class="dg-hcell"></div>' + AGES.map((a) => `<div class="dg-hcell">${AGE_LABEL[a]}</div>`).join('');
+    let rows = '';
+    for (const s of SIDO_ORDER) {
+      const blk = (TURN[s] || {})[rsex] || {};
+      rows += `<div class="dg-hcell dg-rlab2">${SIDO_SHORT[s] || s}</div>`;
+      for (const a of AGES) {
+        const t = blk[a];
+        rows += t && t.turnout != null
+          ? `<div class="dg-hm" style="background:${cellBg(t.turnout)}" title="${s} ${AGE_LABEL[a]} ${rsex} 투표율 ${t.turnout}% (투표 ${fmt(t.voters)}/${fmt(t.electors)})">${t.turnout.toFixed(0)}</div>`
+          : '<div class="dg-hm dg-na"></div>';
+      }
+    }
+    const nat = (TURN['전국'] || {})[rsex] || {};
+    const natRow = AGES.map((a) => nat[a] ? `<b>${nat[a].turnout}</b>` : '–').join(' · ');
+    return `<div class="dg-rtoggle">${sexBtns}</div>`
+      + `<div class="dg-heat" style="grid-template-columns:46px repeat(${AGES.length},1fr)">${head}${rows}</div>`
+      + `<p class="ar-parl-note">전국(${rsex}): ${natRow} · 색 진할수록 투표율 높음(상대). 실측 NEC 표본.</p>`;
+  }
+
   function draw(host) {
     const body = host.querySelector('.dg-body');
-    body.innerHTML = view === 'group' ? renderGroupView() : renderCandView();
+    body.innerHTML = view === 'group' ? renderGroupView() : view === 'cand' ? renderCandView() : renderRegionView();
     host.querySelectorAll('[data-dgv]').forEach((b) => b.classList.toggle('is-active', b.dataset.dgv === view));
+    body.querySelectorAll('[data-rsex]').forEach((b) => b.addEventListener('click', () => { rsex = b.dataset.rsex; draw(host); }));
   }
 
   async function render(ctx) {
@@ -109,6 +150,8 @@
     } catch (e) { d = null; }
     if (!d || !(d.cells || []).length) return;
     DATA = d;
+    try { TURN = await fetch(`data/polls/turnout_demographics_${n}pres.json`).then((r) => (r.ok ? r.json() : null)); }
+    catch (e) { TURN = null; }
     const anchor = document.getElementById('ar-exitpoll') || document.getElementById('ar-counting')
       || document.querySelector('.ar-section');
     if (!anchor || !anchor.parentElement) return;
@@ -120,7 +163,8 @@
       + '%가 아닌 실제 표 크기로 영향을 본다 — 이대남은 비율 높아도 인구·투표율이 낮아 표는 작다.</span></span></h2>'
       + '<div class="dg-toggle seg" role="tablist">'
       + '<button class="seg-btn is-active" data-dgv="group" role="tab">집단 → 후보</button>'
-      + '<button class="seg-btn" data-dgv="cand" role="tab">후보 → 지지층</button></div>'
+      + '<button class="seg-btn" data-dgv="cand" role="tab">후보 → 지지층</button>'
+      + (TURN ? '<button class="seg-btn" data-dgv="region" role="tab">지역 투표율</button>' : '') + '</div>'
       + '<div class="dg-body"></div>'
       + `<p class="ar-parl-note">크기=실측 투표자수 · 구성=출구조사 추정(±오차). 총 투표자 ${fmt(d.total_voters)}(표본).</p>`;
     anchor.parentElement.insertBefore(sec, anchor.nextSibling);

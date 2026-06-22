@@ -835,3 +835,13 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
   .dg-row { grid-template-columns: 66px 1fr; gap: 6px; }
   .dg-rlab { font-size: 12px; }
 }
+
+/* 지역 투표율 히트맵 (render-demographics region view) */
+.dg-rtoggle { display: flex; gap: 4px; margin: 4px 0 10px; }
+.dg-rsex { font-size: 12px; padding: 3px 10px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink-soft); border-radius: 3px; cursor: pointer; }
+.dg-rsex.is-active { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 700; }
+.dg-heat { display: grid; gap: 2px; max-width: 560px; }
+.dg-hcell { font-size: 10px; font-weight: 700; color: var(--ink-soft); text-align: center; padding: 2px 0; }
+.dg-rlab2 { text-align: right; padding-right: 4px; }
+.dg-hm { font-size: 10px; font-weight: 600; color: var(--ink); text-align: center; padding: 4px 0; border-radius: 2px; font-variant-numeric: tabular-nums; }
+.dg-hm.dg-na { background: var(--bg2); }
