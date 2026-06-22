@@ -70,37 +70,57 @@ def find_crosstab(doc, names: list[str]):
                     if sum(c in ln for c in need) >= max(2, len(need) - 1)), None)
         if hdr is None:
             continue
-        # 성별/연령 행 둘 다 보여야 특성별 표
+        # 성별/연령 행 둘 다 — 연령은 norm_age로 변종(18-29세·30-39세·30대 등) 흡수.
         body = "\n".join(lines)
-        if ("남" in body and "여" in body) and re.search(r"(18[/~\-]?20|20대|30대|40대|50대|60대)", body):
+        if ("남" in body and "여" in body) and any(norm_age(ln.replace(" ", "")) for ln in lines):
             return lines, hdr
     return None, None
 
 
-def cand_order(header: str, names: list[str]) -> list[str]:
-    pos = [(header.find(c), c) for c in names if c and c in header]
-    return [c for _, c in sorted(pos)]
+def split_header(header: str, roster: dict) -> list[str]:
+    """붙어있는 헤더(예 '김경수김동연...')를 로스터 후보명으로 분해 — 컬럼 순서(authoritative).
+    공백·잡음(전체·계·없음 등) 건너뛰고 후보명만 등장순으로."""
+    names = sorted(roster, key=len, reverse=True)   # 긴 이름 우선(동음 방지)
+    s = header
+    out, i = [], 0
+    while i < len(s):
+        for nm in names:
+            if s.startswith(nm, i):
+                out.append(nm); i += len(nm); break
+        else:
+            i += 1
+    return out
 
 
 def row_pcts(ln: str, n: int):
-    """행에서 후보 N개 pct(소수) 추출. 앞쪽 정수(사례수)는 건너뜀."""
-    floats = re.findall(r"\d+\.\d+", ln)
-    return [float(x) for x in floats[:n]] if len(floats) >= n else None
+    """행에서 후보 N개 pct 추출 — 소수·정수 모두. 괄호 사례수·연령 라벨 숫자 선제거."""
+    s = re.sub(r"\([\d,]+\)", " ", ln)            # 괄호 사례수((385))
+    # 연령 라벨 자체의 숫자(18-29세·30-39세·18/20대·70세이상·30대 등)를 pct로 오인 방지.
+    s = re.sub(r"\d+\s*[-~/]\s*\d+\s*[세대]|\d0\s*대|\d+\s*세\s*이상|만\s*\d+\s*세?", " ", s)
+    floats = re.findall(r"\d+\.\d+", s)
+    if len(floats) >= n:
+        return [float(x) for x in floats[:n]]      # 리서치뷰류(소수 pct, bare 사례수는 정수라 제외됨)
+    ints = re.findall(r"(?<![\d.])\d+(?![\d.])", s)  # 한국리서치류(정수 pct, 사례수는 괄호로 이미 제거)
+    if len(ints) >= n:
+        return [float(x) for x in ints[:n]]
+    return None
 
 
-def parse_pdf(pdf_path: Path, cands: list[dict]):
-    names = [c.get("name") for c in cands if c.get("name")]
-    party = {c.get("name"): c.get("party", "") for c in cands}
+def parse_pdf(pdf_path: Path, q_names: list[str], roster: dict):
     try:
         with pdfplumber.open(pdf_path) as doc:
-            lines, hdr = find_crosstab(doc, names)
+            lines, hdr = find_crosstab(doc, q_names)
     except Exception:
         return None
     if not lines:
         return None
-    order = cand_order(lines[hdr], names)
+    # 컬럼 순서 = 헤더 분해(로스터). 없으면 parsed 후보 등장순 폴백.
+    order = split_header(lines[hdr], roster)
+    if len(order) < 2:
+        order = [c for _, c in sorted((lines[hdr].find(c), c) for c in q_names if c in lines[hdr])]
     if len(order) < 2:
         return None
+    party = {nm: roster.get(nm, "") for nm in order}
     N = len(order)
 
     def cand_row(pcts):
@@ -168,6 +188,10 @@ def main():
             meta[row["ntt_id"]] = row
     meta_ids = set(meta)
     parsed_cand = {}
+    roster = {}
+    _name_ct = {}       # 후보명 빈도 — 노이즈('조사'·'목표할당' 등 1회성) 걸러 헤더 분해 정합.
+    _STOP = {"조사", "조사완료", "목표할당", "사례수", "전체", "계", "없음", "모름", "무응답",
+             "기타", "응답", "비율", "구분", "지지", "후보"}
     for p in PARSED.glob("*.json"):
         if p.name.split("_")[0] not in meta_ids:
             continue
@@ -180,6 +204,17 @@ def main():
             if q.get("election_office") == "후보지지" and (q.get("candidates") or []):
                 if ntt not in parsed_cand or len(q["candidates"]) > len(parsed_cand[ntt][1]):
                     parsed_cand[ntt] = (p, q["candidates"])
+                # 포괄 로스터 — 모든 질문의 후보 빈도 집계(노이즈는 빈도 낮음).
+                for c in q["candidates"]:
+                    nm = c.get("name")
+                    if nm and 2 <= len(nm) <= 4 and nm not in _STOP:
+                        _name_ct[nm] = _name_ct.get(nm, 0) + 1
+                        if c.get("party"):
+                            roster[nm] = c["party"]
+
+    # 빈도 ≥3 인 후보만 로스터(헤더 분해용) — 1~2회성 파싱 노이즈 제거.
+    roster = {nm: roster.get(nm, "") for nm, ct in _name_ct.items() if ct >= 3}
+    print(f"로스터 후보 {len(roster)}명 (빈도≥3)", flush=True)
 
     cache_path = PARSED / ".pres_demo_cache.json"
     cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
@@ -193,7 +228,8 @@ def main():
             rows = cache[stem]
         else:
             pdfs = list(RAW_PDF.glob(stem + ".*"))
-            rows = parse_pdf(pdfs[0], cands) if pdfs else None
+            qn = [c.get("name") for c in cands if c.get("name")]
+            rows = parse_pdf(pdfs[0], qn, roster) if pdfs else None
             cache[stem] = rows
         if rows:
             out[ntt] = rows
