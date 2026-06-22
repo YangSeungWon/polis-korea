@@ -26,39 +26,47 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXIT_DIR = ROOT / "data" / "exit_polls"
-WIKI_API = "https://ko.wikipedia.org/w/api.php"
-
-# 회차 → (위키 문서, 후보 순서·정당). 표 헤더 후보 순서와 일치해야 함.
+# 회차 → 위키 소스. lang(ko/en)·문서·후보(컬럼 순서·정당)·header(표 탐지용 헤더 토큰).
+#   21대=한국위키 '심층 출구조사', 20대=영문위키 'Age by gender'(한국위키엔 없음, 나무위키와 교차검증 일치).
 ELECTIONS = {
     "21st-pres-2025": {
-        "page": "대한민국 제21대 대통령 선거",
+        "lang": "ko", "page": "대한민국 제21대 대통령 선거",
         "cands": [("이재명", "더불어민주당"), ("김문수", "국민의힘"), ("이준석", "개혁신당")],
+        "header": ["이재명", "김문수", "이준석"],
+    },
+    "20th-pres-2022": {
+        "lang": "en", "page": "2022 South Korean presidential election",
+        "cands": [("이재명", "더불어민주당"), ("윤석열", "국민의힘")],   # 표 컬럼 순서: Lee, Yoon
+        "header": ["Lee", "Yoon"],
     },
 }
 
-AGE_MAP = {  # 위키 라벨 → 폴 정렬 띠
-    "18~29세": "18-29", "18-29세": "18-29", "20대": "18-29",
-    "30~39세": "30", "30-39세": "30", "30대": "30",
-    "40~49세": "40", "40대": "40", "50~59세": "50", "50대": "50",
-    "60~69세": "60", "60대": "60", "70세 이상": "70+", "70대 이상": "70+", "70대+": "70+",
+AGE_MAP = {  # 위키 라벨(한/영) → 폴 정렬 띠. en-dash·하이픈·공백 정규화 후 매칭.
+    "18~29세": "18-29", "18-29세": "18-29", "20대": "18-29", "18-29 years old": "18-29",
+    "30~39세": "30", "30-39세": "30", "30대": "30", "30-39 years old": "30",
+    "40~49세": "40", "40대": "40", "40-49 years old": "40",
+    "50~59세": "50", "50대": "50", "50-59 years old": "50",
+    "60~69세": "60", "60대": "60", "60-69 years old": "60",
+    "70세 이상": "70+", "70대 이상": "70+", "70대+": "70+",
+    "70 and older": "70+", "70 or older": "70+", "70+ years old": "70+",
 }
 
 
-def wikitext(page: str) -> str:
+def wikitext(page: str, lang: str = "ko") -> str:
+    api = f"https://{lang}.wikipedia.org/w/api.php"
     params = {"action": "parse", "page": page, "prop": "wikitext",
               "format": "json", "formatversion": "2"}
-    req = urllib.request.Request(WIKI_API + "?" + urllib.parse.urlencode(params),
+    req = urllib.request.Request(api + "?" + urllib.parse.urlencode(params),
                                  headers={"User-Agent": "polis/1.0 (election data)"})
     return json.load(urllib.request.urlopen(req, timeout=40))["parse"]["wikitext"]
 
 
-def find_table(wt: str, cands) -> str | None:
-    """후보 3명이 헤더에 모인 심층 출구조사 wikitable 본문."""
-    names = [c[0] for c in cands]
+def find_table(wt: str, header) -> str | None:
+    """헤더 토큰이 모이고 성연령(연령과 성별/Age by gender) 행이 있는 wikitable."""
     for m in re.finditer(r"\{\|[^\n]*wikitable.*?\n\|\}", wt, re.S):
         tbl = m.group(0)
-        head = tbl[:400]
-        if sum(n in head for n in names) >= len(names) - 1 and "연령" in tbl:
+        if sum(n in tbl[:600] for n in header) >= len(header) - 1 \
+                and ("연령" in tbl or "Age by gender" in tbl):
             return tbl
     return None
 
@@ -67,6 +75,23 @@ def cell_nums(chunk: str, n: int):
     """행 chunk에서 후보 n명 수치 추출(배경색 셀, 승자 볼드 무관)."""
     vals = re.findall(r"background-color:[^|]*\|\s*'*([\d.]+)'*", chunk)
     return [float(v) for v in vals[:n]] if len(vals) >= n else None
+
+
+def _gender(label: str):
+    """라벨에서 성별 — 한(남/여) 영(men/women/Male/Female). 없으면 None."""
+    if re.search(r"(남성|남자)\b|\bmen\b|\bMale\b", label):
+        return "남성"
+    if re.search(r"(여성|여자)\b|\bwomen\b|\bFemale\b", label):
+        return "여성"
+    return None
+
+
+def _age(label: str):
+    """라벨 → 폴 띠. 성별 접미 제거 + en-dash/공백 정규화."""
+    s = re.sub(r"\s*(남성|남자|여성|여자|men|women)\s*$", "", label).strip()
+    s2 = s.replace("–", "-").replace("—", "-")        # en/em-dash → hyphen
+    return AGE_MAP.get(s) or AGE_MAP.get(s2) or AGE_MAP.get(s2.replace(" ", "")) \
+        or AGE_MAP.get(s.replace(" ", ""))
 
 
 def parse(tbl: str, cands):
@@ -80,11 +105,9 @@ def parse(tbl: str, cands):
     out = {"성별": {}, "연령": {}, "성연령": {"남성": {}, "여성": {}}}
     section = None
     for chunk in tbl.split("\n|-"):
-        # 섹션 헤더
         sm = re.search(r'!\s*colspan="\d+"\s*\|\s*([^\n|]+)', chunk)
         if sm:
             section = sm.group(1).strip()
-        # 라벨 = 첫 데이터 셀(style 없는 |텍스트)
         lm = re.search(r"^\|\s*([^|\n!][^\n|]*?)\s*$", chunk, re.M)
         if not lm:
             continue
@@ -92,25 +115,19 @@ def parse(tbl: str, cands):
         pcts = cell_nums(chunk, N)
         if not pcts:
             continue
-        # 성별 (남성/여성 단독)
-        if section in ("성별",) and re.fullmatch(r"(남성|남자|여성|여자)", label):
-            out["성별"]["남성" if label[0] == "남" else "여성"] = row(pcts)
-            continue
+        is_grid = bool(section) and (("연령" in section and "성별" in section) or "Age by gender" in section)
+        is_age = bool(section) and section in ("연령", "연령별", "Age") and not is_grid
+        is_sex = bool(section) and section in ("성별", "Gender")
+        g, a = _gender(label), _age(label)
+        # 성×연령 그리드 ("18~29세 남성" / "18–29 years old men")
+        if is_grid and g and a:
+            out["성연령"][g][a] = row(pcts)
         # 연령 (전체)
-        if section in ("연령", "연령별"):
-            age = AGE_MAP.get(label) or AGE_MAP.get(label.replace(" ", ""))
-            if age:
-                out["연령"][age] = row(pcts)
-            continue
-        # 연령과 성별 (성×연령 그리드): "18~29세 남성"
-        if section and ("연령" in section and "성별" in section):
-            gm = re.search(r"(남성|남자|여성|여자)", label)
-            agelab = re.sub(r"\s*(남성|남자|여성|여자)\s*$", "", label).strip()
-            age = AGE_MAP.get(agelab) or AGE_MAP.get(agelab.replace(" ", ""))
-            if gm and age:
-                g = "남성" if gm.group(1)[0] == "남" else "여성"
-                out["성연령"][g][age] = row(pcts)
-            continue
+        elif is_age and a and not g:
+            out["연령"][a] = row(pcts)
+        # 성별 단독 (남/여, 연령 없음)
+        elif is_sex and g and not a:
+            out["성별"][g] = row(pcts)
     return out
 
 
@@ -120,13 +137,15 @@ def main():
         sys.exit(2)
     eid = sys.argv[1]
     cfg = ELECTIONS[eid]
-    wt = wikitext(cfg["page"])
-    tbl = find_table(wt, cfg["cands"])
+    lang = cfg.get("lang", "ko")
+    wt = wikitext(cfg["page"], lang)
+    tbl = find_table(wt, cfg.get("header") or [c[0] for c in cfg["cands"]])
     if not tbl:
-        print("심층 출구조사 표를 못 찾음", file=sys.stderr)
+        print("성연령 출구조사 표를 못 찾음", file=sys.stderr)
         sys.exit(1)
     out = parse(tbl, cfg["cands"])
-    result = {"_meta": {"election": eid, "source": "ko.wikipedia 방송3사(KEP) 심층 출구조사",
+    result = {"_meta": {"election": eid,
+                        "source": f"{lang}.wikipedia 방송3사(KEP) 출구조사" + (" — 나무위키 교차검증" if lang == "en" else " 심층"),
                         "page": cfg["page"],
                         "note": "선거당일 출구조사 추정(실제 득표 아님). 연령 띠: 18-29/30/40/50/60/70+"}}
     result.update(out)
