@@ -21,6 +21,29 @@ ROOT = Path(__file__).resolve().parents[2]
 AGES = ["18-29", "30", "40", "50", "60", "70+"]
 SEXES = ["남성", "여성"]
 
+# 후보지지 추출 노이즈 — 정당지지 오분류 파편·집계어(사람/후보가) 헤더분해 실패 잔해.
+# 후보지지 추이엔 인물명만 와야 함. 정당명(국민의당·시대전환·열린민주당)이 '후보'로 오면 정당지지표 오염.
+_NOISE = {"사례", "사례수", "무당층", "무응답", "모름", "없음", "기타", "응답", "비율", "구분",
+          "전체", "계", "의힘", "의당", "국민의당", "시대전환", "열린", "다른", "인물", "사람",
+          "후보가", "정당이", "단일화", "후보", "지지", "지지율", "당", "기타후보"}
+
+
+def clean_row(row):
+    """행 정화: 사례수 오독(>100) 행 통째 제거, 노이즈/정당파편·범위밖 항목 제거."""
+    if not row:
+        return []
+    nums = [c.get("pct") for c in row if isinstance(c.get("pct"), (int, float))]
+    # 퍼센트 아닌 사례수/빈도 오독 → 행 폐기. 개별 >100, 또는 단일선택 합>102(중복불가).
+    if any(v > 100 or v < 0 for v in nums) or sum(nums) > 102:
+        return []
+    out = []
+    for c in row:
+        nm, p = c.get("name"), c.get("pct")
+        if nm in _NOISE or not isinstance(p, (int, float)) or not (0 <= p <= 100):
+            continue
+        out.append(c)
+    return out
+
 
 def build(short: str):
     raw = json.load(open(ROOT / f"data/raw/parsed/pres_demographics_{short}pres.json", encoding="utf-8"))
@@ -39,7 +62,11 @@ def build(short: str):
         d, ag = meta.get(str(ntt), (None, None))
         if not d:
             continue
-        rec = lambda key, row: cells[key].append({"date": d, "agency": ag, "c": row}) or agencies.add(ag)
+        def rec(key, row):
+            row = clean_row(row)
+            if row:
+                cells[key].append({"date": d, "agency": ag, "c": row})
+                agencies.add(ag)
         grid = v.get("성연령", {})
         for s in SEXES:
             for a in AGES:

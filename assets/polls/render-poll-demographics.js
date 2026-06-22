@@ -17,9 +17,18 @@
     if (d === '연령') return AGES.map((a) => ['연령|' + a, AGE_LABEL[a]]);
     return null;   // 성연령은 grid(아래 별도)
   }
+  const hasCell = (k) => (DATA && (DATA.cells[k] || []).length > 0);
+  // 차원에 데이터가 있나 — 옛 회차(2017 등)는 성×연령 그리드 미공표라 비어있을 수 있음.
+  function dimAvail(d) {
+    if (d === '성별') return SEXES.some((s) => hasCell('성별|' + s));
+    if (d === '연령') return AGES.some((a) => hasCell('연령|' + a));
+    return SEXES.some((s) => AGES.some((a) => hasCell(s + '|' + a)));
+  }
+  // 데이터 있는 첫 셀(없으면 관례 기본값).
   function defaultSel(d) {
-    if (d === '성별') return '성별|남성';
-    if (d === '연령') return '연령|18-29';
+    if (d === '성별') return '성별|' + (SEXES.find((s) => hasCell('성별|' + s)) || '남성');
+    if (d === '연령') return '연령|' + (AGES.find((a) => hasCell('연령|' + a)) || '18-29');
+    for (const s of SEXES) for (const a of AGES) if (hasCell(s + '|' + a)) return s + '|' + a;
     return '남성|18-29';
   }
 
@@ -92,14 +101,20 @@
     catch (e) { d = null; }
     if (!d || !d.cells || !Object.values(d.cells).some((v) => v.length)) return;
     DATA = d;
+    const dims = DIMS.filter(([k]) => dimAvail(k));   // 데이터 있는 차원만(옛 회차 성연령 누락 대응)
+    if (!dims.length) return;
+    dim = dims[0][0]; sel = defaultSel(dim);           // 성연령 비면 성별/연령으로 폴백
     const sec = document.createElement('section');
     sec.id = 'pd-section'; sec.className = 'pd-section';
-    const dimBtns = DIMS.map(([k, lbl]) => `<button class="seg-btn${k === dim ? ' is-active' : ''}" data-pddim="${k}">${lbl}</button>`).join('');
+    const dimBtns = dims.map(([k, lbl]) => `<button class="seg-btn${k === dim ? ' is-active' : ''}" data-pddim="${k}">${lbl}</button>`).join('');
+    const hasExit = d.exit && Object.keys(d.exit).length > 0;
+    const hasGrid = dims.some(([k]) => k === '성연령');
     sec.innerHTML = '<h3 class="pres-trend-title">여론조사 성·연령 추이 '
       + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">'
-      + '후보지지를 성별·연령·성×연령으로 본 시계열(다자대결 잡음 줄이려 최종 3인만). '
-      + `끝의 ◆ = 방송3사 출구조사. 성별·연령은 다기관(${(d._meta.agencies || []).length}곳), `
-      + '성×연령 그리드는 공표 기관이 적음.</span></span></h3>'
+      + `후보지지를 ${hasGrid ? '성별·연령·성×연령' : '성별·연령'}으로 본 시계열(다자대결 잡음 줄이려 최종 후보만). `
+      + (hasExit ? '끝의 ◆ = 방송3사 출구조사. ' : '')
+      + `성별·연령은 다기관(${(d._meta.agencies || []).length}곳)`
+      + (hasGrid ? ', 성×연령 그리드는 공표 기관이 적음' : '') + '.</span></span></h3>'
       + `<div class="pd-dim seg" role="tablist">${dimBtns}</div>`
       + '<div class="pd-cells"></div><div class="pd-chart"></div>';
     const anchor = document.getElementById('pres-trend') || document.querySelector('.controls');
