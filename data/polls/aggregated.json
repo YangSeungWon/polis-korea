@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-22T10:51:20",
+    "generated_at": "2026-06-22T11:02:27",
     "election_date": "2026-06-03",
     "blackout_start": "2026-05-28",
     "blackout_end": "2026-06-03T18:00",
@@ -10,7 +10,7 @@
     "stats": {
       "total_polls_meta": 2231,
       "matched_parsed": 2132,
-      "emitted_records": 1791,
+      "emitted_records": 1790,
       "skipped_no_pdf": 97,
       "skipped_no_candidates": 580
     }
@@ -66744,51 +66744,6 @@
           "name": "",
           "party": "개혁신당",
           "pct": 3.9
-        }
-      ]
-    },
-    {
-      "ntt_id": "19014",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19014&menuNo=200467",
-      "agency": "한국갤럽조사연구소",
-      "co_agency": "",
-      "requester": "시·도단위 신문/시·도단위 신문/인터넷언론/방송사 : 삼다일보/한라일보/헤드라인제주/KCTV제주방송",
-      "is_self_poll": false,
-      "method": "무선전화면접",
-      "sample_size": 804.0,
-      "response_rate": 15.5,
-      "contact_rate": 31.1,
-      "sample_error": "95% 신뢰수준에 ±3.5%P",
-      "period_start": "2026-05-23",
-      "period_end": "2026-05-24",
-      "reg_date": "",
-      "sido": "제주특별자치도",
-      "sigungu": "",
-      "office_level": "비례정당",
-      "office_label": "비례정당",
-      "metric_type": "비례정당",
-      "table_no": "",
-      "table_title": "표 7. 도의원 선거 비례대표 투표 정당",
-      "candidates": [
-        {
-          "name": "습라도더",
-          "party": "개혁신당",
-          "pct": 2.0
-        },
-        {
-          "name": "낫다고보",
-          "party": "진보당",
-          "pct": 3.0
-        },
-        {
-          "name": "십니까",
-          "party": "기본소득당",
-          "pct": 1.0
-        },
-        {
-          "name": "녹색당",
-          "party": "",
-          "pct": 3.0
         }
       ]
     },

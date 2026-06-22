@@ -602,6 +602,10 @@ def build() -> dict:
                 # 경선 record는 별도 — title에 "경선"·"단일화" 들어가면 정당지지 page에 부적절
                 if re.search(r"경선|단일화|당내", title):
                     continue
+            # 정당지표(정당지지·비례)는 정당-only — name칸에 텍스트가 있으면 컬럼 밀림 파싱오류.
+            #   (예: 질문 조각 '습라도더'·정당명이 name칸으로) → record drop.
+            if metric_type in ("정당지지", "비례정당", "비례대표") and any((c.get("name") or "").strip() for c in cands):
+                continue
             # 1) 잘못 추출된 후보 필터 — 정당기호 매핑 실패 ('기호') / 이슈 폴
             #    ('환경문제'·'일자리확'·'코로나'·'경제'·'복지' 등이 후보명 자리)
             ISSUE_NAMES = {

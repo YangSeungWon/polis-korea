@@ -140,29 +140,50 @@ def check_party_as_name(polls: list) -> dict:
             "count": len(hits), "items": hits[:15]}
 
 
-# 정당지지 표인데 실은 '후보 지지(정당 기준)'·단체장/지역구 후보 표인 신호.
-#   - candidates에 '무소속'(정당 아님) → 무소속 후보 새어듦
-#   - table_title이 후보/대결/단일화/직위명 → 후보 선호 표
+# metric_type별 형태 불변식 위반 — 오분류 회귀 차단의 핵심.
+#   정당/비례 지지표인데 실은 '후보 지지(정당 기준)'·직위 후보표인 신호:
+#   - candidates에 사람이름(정당지표엔 이름 없어야) / '무소속'(정당 아님) / 후보·대결·직위 제목.
 _PARTY_CONTAM_TITLE = re.compile(
     r"후보|단일화|양자|가상\s*대결|당선\s*가능|지역구|단체장|도지사|시장|군수|구청장|교육감|시의원|도의원")
-def check_party_support_contamination(polls: list) -> dict:
-    """3b. 정당지지에 섞인 후보-지지 표 (무소속 후보·후보제목 신호). 정당 추이를 왜곡."""
+_PARTY_METRICS = {"정당지지", "비례대표", "비례정당"}
+def check_metric_invariants(polls: list) -> dict:
+    """3b. metric_type 형태 위반(정당·비례 지지). 후보표/국정평가가 정당지표로 새는 것 탐지."""
     hits = []
     for p in polls:
-        if p.get("is_pending") or p.get("metric_type") != "정당지지":
+        if p.get("is_pending") or p.get("metric_type") not in _PARTY_METRICS:
             continue
-        parties = {(c.get("party") or "") for c in p.get("candidates", [])}
+        cands = p.get("candidates", [])
+        parties = {(c.get("party") or "") for c in cands}
         title = p.get("table_title") or ""
         why = []
+        if any((c.get("name") or "").strip() for c in cands):
+            why.append("사람이름")            # 정당지표엔 후보명이 없어야 함
         if "무소속" in parties:
-            why.append("무소속")
-        if _PARTY_CONTAM_TITLE.search(title):
+            why.append("무소속")              # 무소속은 정당이 아님
+        # 후보제목 체크는 정당지지만 — 비례 표 제목엔 '지역구 후보' 같은 1인2표제 설명이 흔해 오탐.
+        if p.get("metric_type") == "정당지지" and _PARTY_CONTAM_TITLE.search(title):
             why.append("후보제목")
         if why:
+            hits.append({"metric": p.get("metric_type"), "ntt": p.get("ntt_id"),
+                         "agency": p.get("agency"), "period": p.get("period_end"),
+                         "why": "+".join(why), "title": title[:40]})
+    return {"name": "정당/비례지지 형태 위반(후보표 오염)", "severity": "error" if hits else "info",
+            "count": len(hits), "items": hits[:15]}
+
+
+def check_candidate_unnamed(polls: list) -> dict:
+    """3c. 후보지지인데 후보명 없는 표(정당라벨뿐) — 매칭 불가·정당표 누수 의심. (pending·빈건 제외)"""
+    hits = []
+    for p in polls:
+        if p.get("is_pending") or p.get("metric_type") != "후보지지":
+            continue
+        cands = p.get("candidates", [])
+        if cands and not any((c.get("name") or "").strip() for c in cands):
             hits.append({"ntt": p.get("ntt_id"), "agency": p.get("agency"),
-                         "period": p.get("period_end"), "why": "+".join(why),
-                         "title": title[:40]})
-    return {"name": "정당지지 후보표 오염", "severity": "error" if hits else "info",
+                         "period": p.get("period_end"),
+                         "title": (p.get("table_title") or "")[:40],
+                         "parties": [c.get("party") for c in cands[:4]]})
+    return {"name": "후보지지 이름없음(정당라벨 후보표)", "severity": "warn" if hits else "info",
             "count": len(hits), "items": hits[:15]}
 
 
@@ -392,7 +413,7 @@ def diff_vs_prev(now: dict) -> list[str]:
 
 
 # roster 불필요 + 전 파일 공통으로 도는 체크 (per-election aggregated 모두 스캔용).
-ROSTER_FREE_CHECKS = [check_party_as_name, check_party_support_contamination, check_sum_sanity]
+ROSTER_FREE_CHECKS = [check_party_as_name, check_metric_invariants, check_candidate_unnamed, check_sum_sanity]
 
 
 def scan_all(verbose: bool = False) -> int:
@@ -449,7 +470,8 @@ def main():
         check_outliers(polls, roster),
         check_party_inflate(polls),
         check_party_as_name(polls),
-        check_party_support_contamination(polls),
+        check_metric_invariants(polls),
+        check_candidate_unnamed(polls),
         check_office_classification(polls, roster),
         check_sum_sanity(polls),
         check_roster_gaps(polls, roster),
