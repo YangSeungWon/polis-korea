@@ -817,3 +817,21 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .cartogram-map { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
 .sgg-result-legend { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
 .sgg-result-legend .ch-leg { font-weight: 700; }
+
+/* 성·연령 득표 기여 (render-demographics) — 막대 길이=실측 투표자수, 채움=출구조사 구성 */
+.dg-toggle { margin: 4px 0 14px; }
+.dg-body { max-width: 720px; }
+.dg-grouphd { font-size: 12px; font-weight: 800; color: var(--ink-soft); margin: 12px 0 4px; letter-spacing: .02em; }
+.dg-grouphd:first-child { margin-top: 0; }
+.dg-row { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: center; margin: 3px 0; }
+.dg-rlab { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; }
+.dg-rsub { display: block; font-size: 10px; font-weight: 400; color: var(--ink-mute); }
+.dg-track { position: relative; display: flex; align-items: center; gap: 8px; }
+.dg-bar { display: flex; height: 20px; border-radius: 3px; overflow: hidden; background: var(--bg2); min-width: 1px; }
+.dg-seg { display: block; height: 100%; }
+.dg-seg.dg-f { border-top: 2px solid rgba(255,255,255,0.55); }   /* 여성 세그 구분(역피벗 뷰) */
+.dg-rtot { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 560px) {
+  .dg-row { grid-template-columns: 66px 1fr; gap: 6px; }
+  .dg-rlab { font-size: 12px; }
+}

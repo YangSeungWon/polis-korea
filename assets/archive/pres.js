@@ -210,6 +210,8 @@
       renderHero(ctx);       // 여론조사 건수·시도 출구조사 요약 갱신 (idempotent)
       renderExitPoll(ctx);
       renderPollsLink(ctx);
+      // 성·연령 득표 기여(실측 투표자수×출구조사) — 데이터 있는 회차만(1회 삽입).
+      if (window.Archive.demographics) window.Archive.demographics.render(ctx);
     },
     renderExitPoll,  // 총선이 재사용
   };
