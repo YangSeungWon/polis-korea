@@ -198,6 +198,10 @@ def accept_party_race(q: dict) -> list[dict] | None:
     parties = {c["party"] for c in cands}
     if not (parties & PARTY_DEM) or not (parties & PARTY_PPP):
         return None
+    # '무소속'은 정당이 아님 — 정당지지 표엔 안 나옴. 등장하면 '대선 후보 지지(정당 기준)' 표가
+    # 정당지지로 새는 신호(예: 한덕수 무소속 후보). 정당지지 집계에서 제외.
+    if "무소속" in parties:
+        return None
     if re.search(r"경선|단일화|당내", q.get("title", "")):
         return None
     if not normalize_pcts(cands):

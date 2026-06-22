@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-06-19T14:25:56",
+    "generated_at": "2026-06-22T09:11:17",
     "election": "21st-pres-2025",
     "election_date": "2025-06-03",
     "blackout_start": "2025-05-28",
@@ -11,9 +11,9 @@
     "stats": {
       "total_polls_meta": 499,
       "matched_parsed": 455,
-      "emitted_records": 712,
+      "emitted_records": 711,
       "skipped_no_pdf": 44,
-      "skipped_no_race": 114,
+      "skipped_no_race": 115,
       "skipped_pre_campaign": 34
     }
   },
@@ -14728,33 +14728,33 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "1",
-      "table_title": "대선 후보 지지도",
+      "table_no": "3",
+      "table_title": "정당 지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 48.0
+          "pct": 42.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 20.0
+          "pct": 35.0
+        },
+        {
+          "name": "",
+          "party": "조국혁신당",
+          "pct": 5.0
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 6.0
+          "pct": 5.0
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 18.0
+          "pct": 1.0
         }
       ]
     },
@@ -22863,23 +22863,23 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "8",
-      "table_title": "정당 기준 대선 후보 지지",
+      "table_no": "12",
+      "table_title": "정당지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 40.0
+          "pct": 38.0
         },
         {
           "name": "",
           "party": "국민의힘",
-          "pct": 30.0
+          "pct": 32.0
         },
         {
           "name": "",
           "party": "조국혁신당",
-          "pct": 2.0
+          "pct": 7.0
         },
         {
           "name": "",
@@ -22889,11 +22889,6 @@
         {
           "name": "",
           "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
           "pct": 1.0
         }
       ]
@@ -26593,38 +26588,33 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "9",
-      "table_title": "정당 기준 대선 후보 지지",
+      "table_no": "12",
+      "table_title": "정당지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 37.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
           "pct": 34.0
         },
         {
           "name": "",
+          "party": "국민의힘",
+          "pct": 37.0
+        },
+        {
+          "name": "",
           "party": "조국혁신당",
-          "pct": 2.0
+          "pct": 7.0
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.0
+          "pct": 3.0
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 2.0
+          "pct": 1.0
         }
       ]
     },
@@ -27975,61 +27965,6 @@
           "name": "김경수",
           "party": "더불어민주당",
           "pct": 4.5
-        }
-      ]
-    },
-    {
-      "ntt_id": "15707",
-      "source_url": "https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=15707&menuNo=200467",
-      "agency": "KOPRA",
-      "co_agency": "",
-      "requester": "개인 : 고성국TV",
-      "is_self_poll": false,
-      "method": "무선 ARS",
-      "sample_size": 1000.0,
-      "response_rate": 11.6,
-      "contact_rate": 40.5,
-      "sample_error": "95% 신뢰수준에 ±3.1%P",
-      "period_start": "2025-02-05",
-      "period_end": "2025-02-06",
-      "reg_date": "2025-02-07",
-      "sido": "",
-      "sigungu": "",
-      "office_level": "정당지지",
-      "office_label": "정당지지",
-      "metric_type": "정당지지",
-      "table_no": "2",
-      "table_title": "차기 대선 투표 정당 후보",
-      "candidates": [
-        {
-          "name": "",
-          "party": "더불어민주당",
-          "pct": 42.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
-          "pct": 45.0
-        },
-        {
-          "name": "",
-          "party": "조국혁신당",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "개혁신당",
-          "pct": 2.0
-        },
-        {
-          "name": "",
-          "party": "진보당",
-          "pct": 1.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 2.0
         }
       ]
     },
@@ -31123,38 +31058,33 @@
       "office_level": "정당지지",
       "office_label": "정당지지",
       "metric_type": "정당지지",
-      "table_no": "7",
-      "table_title": "정당 기준 대선 후보 지지",
+      "table_no": "9",
+      "table_title": "정당지지도",
       "candidates": [
         {
           "name": "",
           "party": "더불어민주당",
-          "pct": 36.0
-        },
-        {
-          "name": "",
-          "party": "국민의힘",
           "pct": 33.0
         },
         {
           "name": "",
+          "party": "국민의힘",
+          "pct": 35.0
+        },
+        {
+          "name": "",
           "party": "조국혁신당",
-          "pct": 2.0
+          "pct": 8.0
         },
         {
           "name": "",
           "party": "개혁신당",
-          "pct": 2.0
+          "pct": 3.0
         },
         {
           "name": "",
           "party": "진보당",
-          "pct": 0.0
-        },
-        {
-          "name": "",
-          "party": "무소속",
-          "pct": 2.0
+          "pct": 1.0
         }
       ]
     },
