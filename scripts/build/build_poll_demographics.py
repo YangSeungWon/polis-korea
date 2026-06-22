@@ -27,19 +27,31 @@ def build(short: str):
     agg = json.load(open(ROOT / f"data/polls/aggregated_{short}pres.json", encoding="utf-8"))
     meta = {str(p.get("ntt_id")): (p.get("period_end"), p.get("agency")) for p in agg["polls"]}
 
+    # 3차원 시계열: 성×연령 그리드(좁음) + 성별(남/여) + 연령(넓음). 키 형식:
+    #   성연령="남성|18-29" · 성별="성별|남성" · 연령="연령|30"
     cells = {f"{s}|{a}": [] for s in SEXES for a in AGES}
+    for s in SEXES:
+        cells[f"성별|{s}"] = []
+    for a in AGES:
+        cells[f"연령|{a}"] = []
     agencies = set()
     for ntt, v in raw.items():
-        grid = v.get("성연령", {})
         d, ag = meta.get(str(ntt), (None, None))
         if not d:
             continue
+        rec = lambda key, row: cells[key].append({"date": d, "agency": ag, "c": row}) or agencies.add(ag)
+        grid = v.get("성연령", {})
         for s in SEXES:
             for a in AGES:
                 row = grid.get(s, {}).get(a)
                 if row:
-                    cells[f"{s}|{a}"].append({"date": d, "agency": ag, "c": row})
-                    agencies.add(ag)
+                    rec(f"{s}|{a}", row)
+        for s, row in (v.get("성별") or {}).items():
+            if s in SEXES and row:
+                rec(f"성별|{s}", row)
+        for a, row in (v.get("연령") or {}).items():
+            if a in AGES and row:
+                rec(f"연령|{a}", row)
     for k in cells:
         cells[k].sort(key=lambda x: x["date"])
 
@@ -52,6 +64,12 @@ def build(short: str):
                 row = ex.get("성연령", {}).get(s, {}).get(a)
                 if row:
                     exit_final[f"{s}|{a}"] = row
+        for s, row in (ex.get("성별") or {}).items():
+            if row:
+                exit_final[f"성별|{s}"] = row
+        for a, row in (ex.get("연령") or {}).items():
+            if row:
+                exit_final[f"연령|{a}"] = row
 
     npts = sum(len(v) for v in cells.values()) // (len(SEXES) * len(AGES)) if cells else 0
     out = {

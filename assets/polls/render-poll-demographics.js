@@ -8,9 +8,28 @@
   const pcol = (p) => (typeof partyColor === 'function' ? partyColor(p) : '#888');
   const lc = (h) => (typeof legibleColor === 'function' ? legibleColor(h) : h);
 
-  let DATA = null, sel = '남성|18-29';
+  let DATA = null, dim = '성연령', sel = '남성|18-29';
+  const DIMS = [['성연령', '성×연령'], ['성별', '성별'], ['연령', '연령']];
+
+  // 차원별 셀 키 목록 + 기본 선택.
+  function dimCells(d) {
+    if (d === '성별') return SEXES.map((s) => ['성별|' + s, s]);
+    if (d === '연령') return AGES.map((a) => ['연령|' + a, AGE_LABEL[a]]);
+    return null;   // 성연령은 grid(아래 별도)
+  }
+  function defaultSel(d) {
+    if (d === '성별') return '성별|남성';
+    if (d === '연령') return '연령|18-29';
+    return '남성|18-29';
+  }
 
   const ts = (d) => Date.parse(d + 'T00:00:00+09:00');
+  function selLabel() {
+    const [a, b] = sel.split('|');
+    if (a === '성별') return b;                       // 성별|남성 → 남성
+    if (a === '연령') return AGE_LABEL[b] || b;        // 연령|30 → 30대
+    return `${a} ${AGE_LABEL[b] || b}`;               // 남성|18-29 → 남성 18·20대
+  }
 
   function focalCands() {
     // 출구조사에 있는 최종 후보(이재명·김문수·이준석)에 집중 — 초기 다자대결 잡음 제외.
@@ -57,7 +76,7 @@
     // x축 라벨(첫·끝·선거일)
     const xlab = `<text x="${PL}" y="${H - 8}" font-size="9" fill="var(--ink-mute)">${series[0].date.slice(2)}</text>`
       + `<text x="${W - PR}" y="${H - 8}" font-size="9" fill="var(--ink-mute)" text-anchor="end">선거일 ◆출구</text>`;
-    return `<svg viewBox="0 0 ${W} ${H}" class="pd-trend" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${AGE_LABEL[sel.split('|')[1]]} ${sel.split('|')[0]} 후보지지 추이">${grid}${lines}${xlab}</svg>`;
+    return `<svg viewBox="0 0 ${W} ${H}" class="pd-trend" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${selLabel()} 후보지지 추이">${grid}${lines}${xlab}</svg>`;
   }
 
   function draw(sec) {
@@ -75,19 +94,38 @@
     DATA = d;
     const sec = document.createElement('section');
     sec.id = 'pd-section'; sec.className = 'pd-section';
-    const cellBtns = SEXES.map((s) =>
-      `<div class="pd-sexrow"><span class="pd-sexlab">${s}</span>`
-      + AGES.map((a) => `<button class="pd-cell${(s + '|' + a) === sel ? ' is-active' : ''}" data-pdcell="${s}|${a}">${AGE_LABEL[a]}</button>`).join('')
-      + '</div>').join('');
+    const dimBtns = DIMS.map(([k, lbl]) => `<button class="seg-btn${k === dim ? ' is-active' : ''}" data-pddim="${k}">${lbl}</button>`).join('');
     sec.innerHTML = '<h3 class="pres-trend-title">여론조사 성·연령 추이 '
       + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">'
-      + '성×연령 그리드를 공표한 조사의 후보지지 시계열(다자대결 잡음 줄이려 최종 3인만). '
-      + `끝의 ◆ = 방송3사 출구조사. 출처: ${(d._meta.agencies || []).join('·')}.</span></span></h3>`
-      + `<div class="pd-cells">${cellBtns}</div><div class="pd-chart"></div>`;
+      + '후보지지를 성별·연령·성×연령으로 본 시계열(다자대결 잡음 줄이려 최종 3인만). '
+      + `끝의 ◆ = 방송3사 출구조사. 성별·연령은 다기관(${(d._meta.agencies || []).length}곳), `
+      + '성×연령 그리드는 공표 기관이 적음.</span></span></h3>'
+      + `<div class="pd-dim seg" role="tablist">${dimBtns}</div>`
+      + '<div class="pd-cells"></div><div class="pd-chart"></div>';
     const anchor = document.getElementById('pres-trend') || document.querySelector('.controls');
     (anchor && anchor.parentElement ? anchor.parentElement : document.body).insertBefore(sec, anchor ? anchor.nextSibling : null);
-    sec.querySelectorAll('[data-pdcell]').forEach((b) => b.addEventListener('click', () => { sel = b.dataset.pdcell; draw(sec); }));
+    sec.querySelectorAll('[data-pddim]').forEach((b) => b.addEventListener('click', () => {
+      dim = b.dataset.pddim; sel = defaultSel(dim);
+      sec.querySelectorAll('[data-pddim]').forEach((x) => x.classList.toggle('is-active', x.dataset.pddim === dim));
+      renderCells(sec); draw(sec);
+    }));
+    renderCells(sec);
     draw(sec);
+  }
+
+  function renderCells(sec) {
+    const host = sec.querySelector('.pd-cells');
+    if (dim === '성연령') {
+      host.innerHTML = SEXES.map((s) =>
+        `<div class="pd-sexrow"><span class="pd-sexlab">${s}</span>`
+        + AGES.map((a) => `<button class="pd-cell${(s + '|' + a) === sel ? ' is-active' : ''}" data-pdcell="${s}|${a}">${AGE_LABEL[a]}</button>`).join('')
+        + '</div>').join('');
+    } else {
+      host.innerHTML = '<div class="pd-sexrow">'
+        + dimCells(dim).map(([k, lbl]) => `<button class="pd-cell${k === sel ? ' is-active' : ''}" data-pdcell="${k}">${lbl}</button>`).join('')
+        + '</div>';
+    }
+    host.querySelectorAll('[data-pdcell]').forEach((b) => b.addEventListener('click', () => { sel = b.dataset.pdcell; draw(sec); }));
   }
 
   window.renderPollDemographics = render;
