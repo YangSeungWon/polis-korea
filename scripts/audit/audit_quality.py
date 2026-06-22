@@ -37,6 +37,14 @@ ROSTER = ROOT / "data/raw/nec_roster_9th.json"
 AUDIT_DIR = ROOT / "data/audits"
 
 
+def _date(s):
+    """'YYYY-MM-DD...' → date | None."""
+    try:
+        return date.fromisoformat(str(s)[:10])
+    except Exception:
+        return None
+
+
 MAJOR_PARTIES = {"더불어민주당", "국민의힘", "조국혁신당", "개혁신당", "진보당",
                  "정의당", "민주당"}
 PARTY_AS_NAME = {"더불어", "민주당", "국민의힘", "조국혁신", "조국혁신당",
@@ -184,6 +192,71 @@ def check_candidate_unnamed(polls: list) -> dict:
                          "title": (p.get("table_title") or "")[:40],
                          "parties": [c.get("party") for c in cands[:4]]})
     return {"name": "후보지지 이름없음(정당라벨 후보표)", "severity": "warn" if hits else "info",
+            "count": len(hits), "items": hits[:15]}
+
+
+# 집계 파일(정당/후보 지지)에 들어올 수 있는 정상 metric. 국정평가·투표의향·기타는
+# 별도 파일(approval_*) 소관 — 여기 섞이면 오분류 누수.
+_EXPECTED_METRICS = {"정당지지", "후보지지", "비례대표", "비례정당"}
+def check_unexpected_metric(polls: list) -> dict:
+    """3d. 집계 파일에 예상외 metric_type(국정평가·투표의향·기타 누수)."""
+    hits = []
+    for p in polls:
+        mt = p.get("metric_type")
+        if mt not in _EXPECTED_METRICS:
+            hits.append({"metric": mt, "ntt": p.get("ntt_id"), "agency": p.get("agency"),
+                         "period": p.get("period_end"), "title": (p.get("table_title") or "")[:40]})
+    return {"name": "예상외 metric_type(지표 누수)", "severity": "error" if hits else "info",
+            "count": len(hits), "items": hits[:15]}
+
+
+# 국정평가(approval_*.json records) 불변식 — 대통령 재임 창 + 긍·부정 값 정합.
+#   subject(평가대상 대통령)가 그 시점 실제 대통령과 어긋나면 오분류.
+_PRESIDENT_TERMS = [   # (이름, 시작, 끝) — 버퍼 ±60일 허용
+    ("박근혜", "2013-02-25", "2017-03-10"),
+    ("문재인", "2017-05-10", "2022-05-09"),
+    ("윤석열", "2022-05-10", "2025-06-03"),
+    ("이재명", "2025-06-04", "2099-12-31"),
+]
+def _term_of(name: str):
+    for n, lo, hi in _PRESIDENT_TERMS:
+        if n == name:
+            return lo, hi
+    return None
+def check_approval_invariants() -> dict:
+    """국정평가 — subject(대통령)가 재임 창 밖 / 긍·부정 값 이상. approval_*.json 전수."""
+    import glob
+    from datetime import timedelta
+    hits = []
+    BUF = timedelta(days=60)
+    for f in glob.glob(str(ROOT / "data/polls/approval_*.json")):
+        if "scancache" in f:
+            continue
+        try:
+            recs = json.load(open(f, encoding="utf-8")).get("records", [])
+        except Exception:
+            continue
+        for r in recs:
+            subj = r.get("subject") or ""
+            pe = _date(r.get("period_end"))
+            pos, neg = r.get("positive"), r.get("negative")
+            why = []
+            # 값 정합
+            if pos is None or neg is None or not (0 <= pos <= 100) or not (0 <= neg <= 100) or pos + neg > 103:
+                why.append(f"값({pos}/{neg})")
+            # 대통령-시점 정합
+            term = _term_of(subj)
+            if term is None:
+                why.append(f"미지subject({subj})")
+            elif pe is not None:
+                lo, hi = _date(term[0]), _date(term[1])
+                if pe < lo - BUF or pe > hi + BUF:
+                    why.append(f"재임창밖({subj}/{pe})")
+            if why:
+                hits.append({"file": Path(f).name, "ntt": r.get("ntt_id"),
+                             "agency": r.get("agency"), "period": str(r.get("period_end")),
+                             "why": "+".join(why)})
+    return {"name": "국정평가 형태 위반(대통령창·값)", "severity": "error" if hits else "info",
             "count": len(hits), "items": hits[:15]}
 
 
@@ -413,7 +486,8 @@ def diff_vs_prev(now: dict) -> list[str]:
 
 
 # roster 불필요 + 전 파일 공통으로 도는 체크 (per-election aggregated 모두 스캔용).
-ROSTER_FREE_CHECKS = [check_party_as_name, check_metric_invariants, check_candidate_unnamed, check_sum_sanity]
+ROSTER_FREE_CHECKS = [check_party_as_name, check_metric_invariants, check_candidate_unnamed,
+                      check_unexpected_metric, check_sum_sanity]
 
 
 def scan_all(verbose: bool = False) -> int:
@@ -444,6 +518,19 @@ def scan_all(verbose: bool = False) -> int:
                         print(f"        {it}")
         else:
             print(f"  ✓ {name}: 깨끗")
+    # 국정평가(approval_*.json) — 별도 구조라 1회만 스캔.
+    appr = check_approval_invariants()
+    if appr["count"]:
+        mk = {"error": "✗", "warn": "⚠", "info": "ⓘ"}[appr["severity"]]
+        print(f"  {mk} approval_*.json: {appr['name']} {appr['count']}건"
+              + (f" [{appr['severity'].upper()}]" if appr["severity"] != "info" else ""))
+        if verbose:
+            for it in appr["items"][:5]:
+                print(f"        {it}")
+        if appr["severity"] == "error":
+            n_error += 1
+    else:
+        print("  ✓ approval_*.json: 깨끗")
     print(f"\n총: {n_error} error")
     return 1 if n_error else 0
 
@@ -472,6 +559,8 @@ def main():
         check_party_as_name(polls),
         check_metric_invariants(polls),
         check_candidate_unnamed(polls),
+        check_unexpected_metric(polls),
+        check_approval_invariants(),
         check_office_classification(polls, roster),
         check_sum_sanity(polls),
         check_roster_gaps(polls, roster),
