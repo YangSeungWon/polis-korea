@@ -1,7 +1,9 @@
 // tracker.js — 선거에 안 묶이는 상시 지표 연속 시계열.
 //   ① 대통령 국정수행 평가(한국갤럽, approval_gallup.json) — 긍정/부정 + 임기 band.
 //   ② 정당지지 연속(aggregated_*.json metric_type='정당지지' & 전국) — 주요정당 라인.
-// parties.js(partyColor)·utils.js(PARTY_SHORT) 의존.
+//   ②-b 정당지지 성·연령별(party_demographics_trend.json) — 차원·집단 토글, 본 차트 재사용.
+//   ③ 차기 대선주자 선호(다자대결).
+// parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
   'use strict';
 

@@ -58,6 +58,21 @@ CSV)에 의존.
 - 차기주자: `aggregated_etc.json` + tracker.js의 다자대결 필터(≥4명, 합 70~106,
   max<55, 양자/적합도 제외)로 프런트에서 산출.
 
+### 2-1. 정당지지 성·연령별 (별도 — 로컬 빌드)
+
+트래커 ②-b 섹션 '정당 지지도 — 성·연령별'은 위 주간 CI와 **별개**다. 정당지지 cross-tab을
+응답자 성별·연령으로 나눈 연속 추이(이대남·이대녀 등).
+
+- 추출 `scripts/parse/extract_party_demographics.py` — 위치기반(x좌표) PDF 파서. 정당명이
+  길어 헤더가 여러 줄로 쌓이는 걸 컬럼 x중심으로 복원. 안전가드(pct수 정합·합계≈100)로
+  오데이터 0. 전 정당지지 폴 스캔 → `data/raw/parsed/party_demographics.json`(gitignore).
+- 빌드 `scripts/build/build_party_demographics_trend.py` — 전 aggregated union으로 날짜·기관
+  조인(**전국만**) + registry 검증 → `data/polls/party_demographics_trend.json`(served).
+- viz `tracker.js` renderPartyDemo(renderPartySupport 재사용). 차원·집단 토글, 데이터 있는
+  차원만.
+- **CI 비대상**: 과거 PDF 코퍼스가 필요한데 CI엔 VT012만 있음 → §7처럼 **분기 로컬 재빌드**.
+  현재 그룹당 ~65점(2022~2025, 전국 깨끗분). 메모리 `party_demographics_pipeline`.
+
 ### house effect (기관 lean)
 
 각 기관 측정치 − 커널 평활 추세 의 평균 잔차(538/Economist 방식). 공유 모듈
