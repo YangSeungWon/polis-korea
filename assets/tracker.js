@@ -2,6 +2,7 @@
 //   ① 대통령 국정수행 평가(한국갤럽, approval_gallup.json) — 긍정/부정 + 임기 band.
 //   ② 정당지지 연속(aggregated_*.json metric_type='정당지지' & 전국) — 주요정당 라인.
 //   ②-b 정당지지 성·연령별(party_demographics_trend.json) — 차원·집단 토글, 본 차트 재사용.
+//   ②-c 무당층(지지정당 없음·모름) 성·연령별 — 같은 데이터, 집단별 한 선.
 //   ③ 차기 대선주자 선호(다자대결).
 // parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
@@ -372,6 +373,68 @@
     requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
   }
 
+  // ===== ②-c 무당층(지지정당 없음·모름) 성·연령별 — 집단별 한 선 =====
+  const UNDEC_RE = /없음|모름|무응답|유보|부동|무당/;        // 기타·기타정당(타정당 지지) 제외
+  const undecVal = (row) => row.reduce((s, c) => s + (!c.party && UNDEC_RE.test(c.name) ? c.pct : 0), 0);
+  // 집단색 — 연령은 젊을수록 옅은→짙은 순차(YlGnBu), 성별은 2색.
+  const AGE_COLOR = { '18-29': '#43c6ac', '30': '#1d9bc9', '40': '#2c6fb8', '50': '#3b4fa0', '60': '#6a3d9a', '70+': '#9b2f86' };
+  const SEX_COLOR = { '남성': '#3b6ea5', '여성': '#c2557a' };
+  let udDim = '연령';
+
+  function udSeries(dim) {
+    const keys = dim === '성별' ? SEXES.map((s) => ['성별|' + s, s, SEX_COLOR[s]])
+      : AGES.map((a) => ['연령|' + a, AGE_LABEL[a], AGE_COLOR[a]]);
+    return keys.filter(([k]) => pdHas(k)).map(([k, label, color]) => ({
+      label, color,
+      pts: (PDEMO.groups[k] || []).map((r) => ({ t: ms(r.date), v: undecVal(r.c), ag: r.agency, su: r.source_url }))
+        .filter((p) => isFinite(p.t)).sort((a, b) => a.t - b.t),
+    })).filter((s) => s.pts.length);
+  }
+
+  function renderUndecided() {
+    const host = document.getElementById('tk-undec');
+    const ctrl = document.getElementById('tk-undec-controls');
+    if (!host || !ctrl || !PDEMO) return;
+    const dims = [['연령', '연령'], ['성별', '성별']].filter(([k]) => pdDimAvail(k));
+    if (!dims.length) return;
+    if (!pdDimAvail(udDim)) udDim = dims[0][0];
+    const series = udSeries(udDim);
+    let tMin = Infinity, tMax = -Infinity, yMax = 10;
+    for (const s of series) for (const p of s.pts) { tMin = Math.min(tMin, p.t); tMax = Math.max(tMax, p.t); yMax = Math.max(yMax, p.v); }
+    yMax = Math.min(40, Math.ceil(yMax / 5) * 5);
+    const W = 960, H = 360, P = { l: 30, r: 64, t: 16, b: 22 };
+    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
+    const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
+    const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
+    HOVER['tk-undec'] = [];
+    let dots = '', lines = '', labels = '';
+    const lab = [];
+    for (const s of series) {
+      const color = legible(s.color);
+      for (const p of s.pts) {
+        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
+        HOVER['tk-undec'].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${s.label} 무당층 <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
+      }
+      for (const seg of kernelSmooth(s.pts, 30)) {
+        if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+      }
+      const sm = kernelSmooth(s.pts, 30).flat();
+      const last = sm[sm.length - 1];
+      if (last) lab.push({ label: s.label, x: xOf(last.t), y: yOf(last.v), color });
+    }
+    lab.sort((a, b) => a.y - b.y);
+    let ly = -99;
+    for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.label}</text>`; }
+    const dimBtns = dims.map(([k, l]) => `<button class="seg-btn${k === udDim ? ' is-active' : ''}" data-uddim="${k}">${l}</button>`).join('');
+    ctrl.innerHTML = `<div class="seg" role="tablist">${dimBtns}</div>`;
+    host.innerHTML = wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, '무당층 성·연령별 추이');
+    attachHover('tk-undec');
+    const meta = document.getElementById('tk-undec-meta');
+    if (meta) meta.textContent = `${udDim}별 · 지지정당 없음·모름`;
+    ctrl.querySelectorAll('[data-uddim]').forEach((b) => b.onclick = () => { udDim = b.dataset.uddim; renderUndecided(); });
+    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
+  }
+
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
   function renderCandidatePref(polls) {
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
@@ -490,6 +553,7 @@
     PDEMO = await fetch('data/polls/party_demographics_trend.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
     if (PDEMO && PDEMO.groups && Object.values(PDEMO.groups).some((v) => v.length)) {
       document.getElementById('tk-pdemo-section')?.removeAttribute('hidden');
+      document.getElementById('tk-undec-section')?.removeAttribute('hidden');
     } else { PDEMO = null; }
     // 국정평가 — 4기관 + 범용(기타 기관) 통합. ntt 중복 제거.
     const seen = new Set();
@@ -508,7 +572,7 @@
       document.getElementById('tk-approval').innerHTML = renderApproval(recs);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
-      if (PDEMO) renderPartyDemo();
+      if (PDEMO) { renderPartyDemo(); renderUndecided(); }
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
