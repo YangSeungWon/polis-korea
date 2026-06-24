@@ -4,7 +4,7 @@
 //   ②-b 정당지지 성·연령별(party_demographics_trend.json) — 차원·집단 토글, 본 차트 재사용.
 //   ②-c 무당층(지지정당 없음·모름) 성·연령별 — 같은 데이터, 집단별 한 선.
 //   ②-d 정당별 성별 격차(남−여) — 같은 조사 남·여 짝지어 0기준 발산 라인.
-//   ③ 차기 대선주자 선호(다자대결).
+//   ③ 차기 대선주자 선호(다자대결).  ③-b 차기주자 성·연령별(renderCandidatePref 재사용).
 // parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
   'use strict';
@@ -504,7 +504,7 @@
   }
 
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
-  function renderCandidatePref(polls) {
+  function renderCandidatePref(polls, hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이') {
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
     const byCand = {};  // name -> {pts:[{t,v,ag}], party}
     for (const p of polls) {
@@ -571,7 +571,7 @@
     });
 
     names.sort((a, b) => series[b].peak - series[a].peak);
-    HOVER['tk-cand'] = [];
+    HOVER[hoverKey] = [];
     let dots = '', lines = '';
     const ends = clusters.map(() => []);  // 클러스터별 [{x,y,name,color}] (선 끝 라벨)
     for (const name of names) {
@@ -579,7 +579,7 @@
       const color = legible(party ? partyColor(party, fmtD(pts[pts.length - 1].t)) : '#888');
       for (const p of pts) {
         dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
-        HOVER['tk-cand'].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
+        HOVER[hoverKey].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${name} <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
       }
       // 클러스터(대선 국면)별로 나눠 평활·라벨 — 라벨이 그 국면 선 끝에 위치.
       const byC = clusters.map(() => []);
@@ -604,7 +604,58 @@
         labels += `<text x="${lx.toFixed(1)}" y="${(L.y + 3).toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.name}</text>`;
       }
     });
-    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, '차기 대선주자 선호 추이');
+    return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, aria);
+  }
+
+  // ===== ③-b 차기주자 성·연령별 — renderCandidatePref(후보별·정당색) 재사용 =====
+  let CDEMO = null, cdDim = '연령', cdSel = '연령|18-29';
+  const cdHas = (k) => CDEMO && (CDEMO.groups[k] || []).length > 0;
+  function cdDimAvail(d) {
+    if (d === '성별') return SEXES.some((s) => cdHas('성별|' + s));
+    if (d === '연령') return AGES.some((a) => cdHas('연령|' + a));
+    return SEXES.some((s) => AGES.some((a) => cdHas(s + '|' + a)));
+  }
+  function cdDefaultSel(d) {
+    if (d === '성별') return '성별|' + (SEXES.find((s) => cdHas('성별|' + s)) || '남성');
+    if (d === '연령') return '연령|' + (AGES.find((a) => cdHas('연령|' + a)) || '18-29');
+    for (const s of SEXES) for (const a of AGES) if (cdHas(s + '|' + a)) return s + '|' + a;
+    return '남성|18-29';
+  }
+  function cdCells(d) {
+    if (d === '성별') return SEXES.filter((s) => cdHas('성별|' + s)).map((s) => ['성별|' + s, s]);
+    if (d === '연령') return AGES.filter((a) => cdHas('연령|' + a)).map((a) => ['연령|' + a, AGE_LABEL[a]]);
+    const out = [];
+    for (const s of SEXES) for (const a of AGES) if (cdHas(s + '|' + a)) out.push([s + '|' + a, s + ' ' + AGE_LABEL[a]]);
+    return out;
+  }
+  function cdSelLabel() {
+    const [a, b] = cdSel.split('|');
+    if (a === '성별') return b;
+    if (a === '연령') return AGE_LABEL[b] || b;
+    return `${a} ${AGE_LABEL[b] || b}`;
+  }
+  const cdPseudoPolls = (key) => (CDEMO.groups[key] || []).map((r) => ({
+    period_end: r.date, agency: r.agency, source_url: null, candidates: r.c,
+  }));
+
+  function renderCandDemo() {
+    const host = document.getElementById('tk-cdemo');
+    const ctrl = document.getElementById('tk-cdemo-controls');
+    if (!host || !ctrl || !CDEMO) return;
+    const dims = [['연령', '연령'], ['성별', '성별'], ['성연령', '성×연령']].filter(([k]) => cdDimAvail(k));
+    if (!dims.length) return;
+    if (!cdDimAvail(cdDim)) { cdDim = dims[0][0]; cdSel = cdDefaultSel(cdDim); }
+    if (!cdHas(cdSel)) cdSel = cdDefaultSel(cdDim);
+    const dimBtns = dims.map(([k, l]) => `<button class="seg-btn${k === cdDim ? ' is-active' : ''}" data-cddim="${k}">${l}</button>`).join('');
+    const cellBtns = cdCells(cdDim).map(([k, l]) => `<button class="seg-btn${k === cdSel ? ' is-active' : ''}" data-cdcell="${k}">${l}</button>`).join('');
+    ctrl.innerHTML = `<div class="seg" role="tablist">${dimBtns}</div><div class="seg tk-pdemo-cells" role="tablist">${cellBtns}</div>`;
+    host.innerHTML = renderCandidatePref(cdPseudoPolls(cdSel), 'tk-cdemo', `${cdSelLabel()} 차기주자 추이`);
+    attachHover('tk-cdemo');
+    const meta = document.getElementById('tk-cdemo-meta');
+    if (meta) meta.textContent = `${cdSelLabel()} · 전국 ${(CDEMO.groups[cdSel] || []).length}개 조사`;
+    ctrl.querySelectorAll('[data-cddim]').forEach((b) => b.onclick = () => { cdDim = b.dataset.cddim; cdSel = cdDefaultSel(cdDim); renderCandDemo(); });
+    ctrl.querySelectorAll('[data-cdcell]').forEach((b) => b.onclick = () => { cdSel = b.dataset.cdcell; renderCandDemo(); });
+    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
   }
 
   // ---- load ----
@@ -625,6 +676,11 @@
       if ((PDEMO.groups['성별|남성'] || []).length && (PDEMO.groups['성별|여성'] || []).length)
         document.getElementById('tk-ggap-section')?.removeAttribute('hidden');
     } else { PDEMO = null; }
+    // 차기주자 성·연령별
+    CDEMO = await fetch('data/polls/cand_demographics_trend.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    if (CDEMO && CDEMO.groups && Object.values(CDEMO.groups).some((v) => v.length)) {
+      document.getElementById('tk-cdemo-section')?.removeAttribute('hidden');
+    } else { CDEMO = null; }
     // 국정평가 — 4기관 + 범용(기타 기관) 통합. ntt 중복 제거.
     const seen = new Set();
     const recs = apprData.flatMap((d) => d.records || [])
@@ -643,6 +699,7 @@
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
       if (PDEMO) { renderPartyDemo(); renderUndecided(); renderGenderGap(); }
+      if (CDEMO) renderCandDemo();
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;

@@ -105,8 +105,10 @@ def _datanums(ws):
     return [w for w in ws if _NUMRE.match(w["text"]) and not _PARENNUM.match(w["text"])]
 
 
-def parse_page_pos(words, v2c, variants):
-    """위치기반 — 쌓인(다줄) 헤더를 x좌표로 복원. 컬럼=완전데이터행 숫자 x중심."""
+def parse_page_pos(words, v2c, variants, party_of=None, known=None):
+    """위치기반 — 쌓인(다줄) 헤더를 x좌표로 복원. 컬럼=완전데이터행 숫자 x중심.
+    party_of(name)=열 정당(없으면 기본: 특수는 '', 그 외 정식명=name). 후보 추출기는 후보→정당 맵 주입.
+    known=실제 엔티티 집합(주면 헤더에 known ≥2 요구 — 지역·정당파편 오매칭 차단). 없으면 비특수 ≥2."""
     for w in words:
         w["text"] = decode(w["text"])
     rows = _cluster_rows(words)
@@ -133,17 +135,19 @@ def parse_page_pos(words, v2c, variants):
             if abs(cols[j] - cx) <= span * 0.7:
                 frags[j].append((w["top"], w["text"]))
     order = [_map_name("".join(t for _, t in sorted(f)), v2c, variants) for f in frags]
-    if len(set(p for p in order if p not in _SPECIAL)) < 2:
+    real = set(p for p in order if p in known) if known is not None else set(p for p in order if p not in _SPECIAL)
+    if len(real) < 2:
         return None
-    return _assign_rows(rows, anchor, cols, span, order, v2c)
+    return _assign_rows(rows, anchor, cols, span, order, v2c, party_of)
 
 
-def _assign_rows(rows, anchor, cols, span, order, v2c):
+def _assign_rows(rows, anchor, cols, span, order, v2c, party_of=None):
     C = len(cols)
-    is_special = {p for p in order if p in _SPECIAL}
+    if party_of is None:
+        party_of = lambda nm: "" if nm in _SPECIAL else nm
 
     def row(vals):
-        return [{"name": order[i], "party": "" if order[i] in is_special else order[i],
+        return [{"name": order[i], "party": party_of(order[i]),
                  "pct": vals[i]} for i in range(C)]
 
     def vals_of(ws):
@@ -203,18 +207,18 @@ def _finalize(out):
     return None
 
 
-def parse_pdf(pdf_path: Path, v2c: dict, variants: list[str]):
+def parse_pdf(pdf_path: Path, v2c: dict, variants: list[str], party_of=None, known=None):
     try:
         with pdfplumber.open(pdf_path) as doc:
             for pg in doc.pages[:PAGE_CAP]:
                 ws = pg.extract_words(x_tolerance=1.5, y_tolerance=2)
                 if not ws:
                     continue
-                # 정당 ≥2 + 성/연령 신호 있는 페이지만(빠른 선별)
+                # 후보/정당 ≥2 + 성/연령 신호 있는 페이지만(빠른 선별)
                 flat = decode("".join(w["text"] for w in ws))
                 if not (("남" in flat and "여" in flat) and ("대" in flat or "세" in flat)):
                     continue
-                res = parse_page_pos(ws, v2c, variants)
+                res = parse_page_pos(ws, v2c, variants, party_of, known)
                 if res:
                     return res
     except Exception:
