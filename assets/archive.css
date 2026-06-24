@@ -836,6 +836,20 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
   .dg-rlab { font-size: 12px; }
 }
 
+/* 직전 대선 대비 swing — 발산형(0 기준 좌우) 막대 (render-demographics swing view) */
+.dg-swing { max-width: 640px; }
+.dg-srow { display: grid; grid-template-columns: 78px 1fr 54px; gap: 10px; align-items: center; margin: 3px 0; }
+.dg-slab { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; }
+.dg-strack { position: relative; height: 20px; background: var(--bg2); border-radius: 3px; }
+.dg-zero { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--rule-strong); }
+.dg-sbar { position: absolute; top: 0; height: 100%; border-radius: 3px; min-width: 1px; }
+.dg-sval { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dg-send { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 560px) {
+  .dg-srow { grid-template-columns: 56px 1fr 46px; gap: 6px; }
+  .dg-slab { font-size: 12px; }
+}
+
 /* 지역 투표율 히트맵 (render-demographics region view) */
 .dg-rtoggle { display: flex; gap: 4px; margin: 4px 0 10px; }
 .dg-rsex { font-size: 12px; padding: 3px 10px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink-soft); border-radius: 3px; cursor: pointer; }

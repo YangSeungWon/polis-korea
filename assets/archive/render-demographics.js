@@ -12,8 +12,11 @@
   const ptc = (p) => (typeof partyTextColor === 'function' ? partyTextColor(p) : 'var(--ink)');
   const fmt = (n) => n.toLocaleString();
 
-  let DATA = null, TURN = null, view = 'group';   // 'group' | 'cand' | 'region'
+  let DATA = null, TURN = null, view = 'group';   // 'group' | 'cand' | 'region' | 'swing'
   let rsex = '합계';   // 지역 투표율 뷰의 성별 (합계/남자/여자)
+  let PRIOR = null, priorN = null;   // 직전 비교 대선(성연령 grid 있는). swing 뷰용.
+  const PRIOR_OF = { 21: 20 };       // 둘 다 출구조사 성연령 grid 보유 → 같은 후보(이재명) 비교 가능
+  const SEX_SHORT = { '남성': '남', '여성': '여' };
   const SIDO_ORDER = ['서울특별시', '인천광역시', '경기도', '강원특별자치도', '대전광역시', '세종특별자치시',
     '충청북도', '충청남도', '광주광역시', '전북특별자치도', '전라남도',
     '대구광역시', '부산광역시', '울산광역시', '경상북도', '경상남도', '제주특별자치도'];
@@ -133,9 +136,54 @@
       + `<p class="ar-parl-note">전국(${rsex}): ${natRow} · 색 진할수록 투표율 높음(상대). 실측 NEC 표본.</p>`;
   }
 
+  // ── 직전 대선 대비 swing — 같은 민주 후보(이재명) 집단별 득표 변화. 발산형 막대(정렬). ──
+  function demShareOf(data, sex, age) {
+    const c = (data.cells || []).find((x) => x.sex === sex && x.age === age);
+    if (!c) return null;
+    const v = (c.shares || []).filter((s) => s.party === '더불어민주당').reduce((a, s) => a + s.pct, 0);
+    return (c.shares || []).some((s) => s.party === '더불어민주당') ? v : null;
+  }
+  function renderSwingView() {
+    if (!PRIOR) return '<p class="detail-empty">비교할 직전 대선 데이터가 없습니다.</p>';
+    const rows = [];
+    for (const sex of SEXES) for (const age of AGES) {
+      const now = demShareOf(DATA, sex, age), pri = demShareOf(PRIOR, sex, age);
+      if (now == null || pri == null) continue;
+      rows.push({ sex, age, now, pri, sw: now - pri });
+    }
+    if (!rows.length) return '<p class="detail-empty">비교 데이터가 없습니다.</p>';
+    rows.sort((a, b) => b.sw - a.sw);
+    const maxAbs = Math.max(...rows.map((r) => Math.abs(r.sw)), 1);
+    const demC = pcol('더불어민주당');
+    const lossC = '#c0392b';
+    let html = '';
+    for (const r of rows) {
+      const pos = r.sw >= 0, col = pos ? demC : lossC;
+      const w = Math.abs(r.sw) / maxAbs * 46;
+      const ws = w.toFixed(1);
+      const bar = pos
+        ? `<div class="dg-sbar" style="left:50%;width:${ws}%;background:${col}"></div>`
+        : `<div class="dg-sbar" style="left:calc(50% - ${ws}%);width:${ws}%;background:${col}"></div>`;
+      const inside = w >= 13;   // 긴 막대는 값을 막대 안(흰색), 짧은 막대는 바깥(당색)
+      const valStyle = inside
+        ? (pos ? `right:calc(50% - ${ws}% + 4px);text-align:right;color:#fff`
+               : `left:calc(50% - ${ws}% + 4px);color:#fff`)
+        : (pos ? `left:calc(50% + ${ws}% + 4px);color:${col}`
+               : `right:calc(50% + ${ws}% + 4px);text-align:right;color:${col}`);
+      html += `<div class="dg-srow"><span class="dg-slab">${SEX_SHORT[r.sex]} ${AGE_LABEL[r.age]}</span>`
+        + `<div class="dg-strack"><div class="dg-zero"></div>${bar}`
+        + `<span class="dg-sval" style="${valStyle}">${pos ? '+' : ''}${r.sw.toFixed(1)}</span></div>`
+        + `<span class="dg-send" title="이재명 득표율 ${priorN}대→현재">${r.pri.toFixed(0)}→${r.now.toFixed(0)}</span></div>`;
+    }
+    return `<p class="ar-parl-note">민주당 후보(이재명) 득표율의 직전 대선(${priorN}대) 대비 변화 — 같은 후보라 순수 이동. `
+      + `<b style="color:${demC}">파랑=이재명 결집</b>, <b style="color:${lossC}">빨강=이탈</b>(국힘·이준석 등). 출구조사 기준.</p>`
+      + `<div class="dg-swing">${html}</div>`;
+  }
+
   function draw(host) {
     const body = host.querySelector('.dg-body');
-    body.innerHTML = view === 'group' ? renderGroupView() : view === 'cand' ? renderCandView() : renderRegionView();
+    body.innerHTML = view === 'group' ? renderGroupView() : view === 'cand' ? renderCandView()
+      : view === 'swing' ? renderSwingView() : renderRegionView();
     host.querySelectorAll('[data-dgv]').forEach((b) => b.classList.toggle('is-active', b.dataset.dgv === view));
     body.querySelectorAll('[data-rsex]').forEach((b) => b.addEventListener('click', () => { rsex = b.dataset.rsex; draw(host); }));
   }
@@ -152,6 +200,13 @@
     DATA = d;
     try { TURN = await fetch(`data/polls/turnout_demographics_${n}pres.json`).then((r) => (r.ok ? r.json() : null)); }
     catch (e) { TURN = null; }
+    // 직전 대선(성연령 grid 보유) 로드 → swing 뷰. 같은 민주 후보(이재명) 집단 이동 비교.
+    PRIOR = null; priorN = PRIOR_OF[n] || null;
+    if (priorN) {
+      try { PRIOR = await fetch(`data/polls/demographic_impact_${priorN}pres.json`).then((r) => (r.ok ? r.json() : null)); }
+      catch (e) { PRIOR = null; }
+      if (!PRIOR || !(PRIOR.cells || []).length) { PRIOR = null; priorN = null; }
+    }
     const anchor = document.getElementById('ar-exitpoll') || document.getElementById('ar-counting')
       || document.querySelector('.ar-section');
     if (!anchor || !anchor.parentElement) return;
@@ -164,7 +219,8 @@
       + '<div class="dg-toggle seg" role="tablist">'
       + '<button class="seg-btn is-active" data-dgv="group" role="tab">집단 → 후보</button>'
       + '<button class="seg-btn" data-dgv="cand" role="tab">후보 → 지지층</button>'
-      + (TURN ? '<button class="seg-btn" data-dgv="region" role="tab">지역 투표율</button>' : '') + '</div>'
+      + (TURN ? '<button class="seg-btn" data-dgv="region" role="tab">지역 투표율</button>' : '')
+      + (PRIOR ? `<button class="seg-btn" data-dgv="swing" role="tab">직전 대비 swing</button>` : '') + '</div>'
       + '<div class="dg-body"></div>'
       + `<p class="ar-parl-note">크기=실측 투표자수 · 구성=출구조사 추정(±오차). 총 투표자 ${fmt(d.total_voters)}(표본).</p>`;
     anchor.parentElement.insertBefore(sec, anchor.nextSibling);
