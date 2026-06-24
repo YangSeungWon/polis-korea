@@ -67,6 +67,8 @@ def build_roster():
 
 
 def _iter_cand_polls():
+    """다자(≥4 CAND 후보) 차기주자 질문 든 폴만 — 양자·소수·비후보 폴 건너뛰어 스캔 폭 축소."""
+    roster = set(CAND)
     seen = set()
     for f in PARSED.glob("*.json"):
         if f.name.startswith("."):
@@ -75,8 +77,10 @@ def _iter_cand_polls():
             d = json.loads(f.read_text())
         except Exception:
             continue
-        if any(q.get("election_office") == "후보지지" and (q.get("candidates") or [])
-               for q in d.get("questions", [])):
+        rich = any(q.get("election_office") == "후보지지"
+                   and len({c.get("name") for c in (q.get("candidates") or [])} & roster) >= 4
+                   for q in d.get("questions", []))
+        if rich:
             stem = f.name[:-5]
             if stem not in seen:
                 seen.add(stem)
