@@ -850,6 +850,18 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
   .dg-slab { font-size: 12px; }
 }
 
+/* 성별 격차 덤벨 — 연령별 남녀 득표율 점+연결선 (render-demographics gap view) */
+.dg-gap { max-width: 640px; margin-top: 4px; }
+.dg-grow { display: grid; grid-template-columns: 78px 1fr 40px; gap: 10px; align-items: center; margin: 6px 0; }
+.dg-gtrack { position: relative; height: 16px; }
+.dg-gtrack::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--rule); }
+.dg-gline { position: absolute; top: 50%; transform: translateY(-50%); height: 3px; background: var(--ink-mute); opacity: .45; border-radius: 2px; }
+.dg-gdot { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%, -50%); border: 1.5px solid var(--bg); }
+.dg-gap .dg-send { text-align: right; }
+@media (max-width: 560px) {
+  .dg-grow { grid-template-columns: 56px 1fr 36px; gap: 6px; }
+}
+
 /* 지역 투표율 히트맵 (render-demographics region view) */
 .dg-rtoggle { display: flex; gap: 4px; margin: 4px 0 10px; }
 .dg-rsex { font-size: 12px; padding: 3px 10px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink-soft); border-radius: 3px; cursor: pointer; }
