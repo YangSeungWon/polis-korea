@@ -68,9 +68,12 @@ CSV)에 의존.
   오데이터 0. 전 정당지지 폴 스캔 → `data/raw/parsed/party_demographics.json`(gitignore).
 - 빌드 `scripts/build/build_party_demographics_trend.py` — 전 aggregated union으로 날짜·기관
   조인(**전국만**) + registry 검증 → `data/polls/party_demographics_trend.json`(served).
-- viz `tracker.js` 3개 섹션: ②-b 정당지지 성·연령별(renderPartyDemo, renderPartySupport 재사용),
+- viz `tracker.js`: ②-b 정당지지 성·연령별(renderPartyDemo, renderPartySupport 재사용),
   ②-c 무당층(renderUndecided, 없음·모름 합·집단별 한 선), ②-d 정당별 성별 격차(renderGenderGap,
-  남·여 짝지어 남−여 0기준). archive에도 출구조사 기반 '성별 격차'(덤벨)·'직전 swing' 뷰.
+  남·여 짝지어 남−여 0기준), ③-b 차기주자 성·연령별(renderCandDemo, renderCandidatePref 재사용).
+  archive에도 출구조사 기반 '성별 격차'(덤벨)·'직전 swing' 뷰.
+- 차기주자 버전: `extract_cand_demographics.py`(큐레이트 후보명단)+`build_cand_demographics_trend.py`.
+  위치기반 파서를 party_of·known으로 일반화해 정당/후보 공유. _iter는 다자(≥4) 사전필터.
 - **CI 비대상**: 과거 PDF 코퍼스가 필요한데 CI엔 VT012만 있음 → §7처럼 **분기 로컬 재빌드**.
   현재 그룹당 ~65점(2022~2025, 전국 깨끗분). 메모리 `party_demographics_pipeline`.
 
