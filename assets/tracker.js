@@ -3,6 +3,7 @@
 //   ② 정당지지 연속(aggregated_*.json metric_type='정당지지' & 전국) — 주요정당 라인.
 //   ②-b 정당지지 성·연령별(party_demographics_trend.json) — 차원·집단 토글, 본 차트 재사용.
 //   ②-c 무당층(지지정당 없음·모름) 성·연령별 — 같은 데이터, 집단별 한 선.
+//   ②-d 정당별 성별 격차(남−여) — 같은 조사 남·여 짝지어 0기준 발산 라인.
 //   ③ 차기 대선주자 선호(다자대결).
 // parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
@@ -435,6 +436,73 @@
     requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
   }
 
+  // ===== ②-d 정당별 성별 격차(남−여) 추이 — 0 기준 발산 라인 =====
+  function renderGenderGap() {
+    const host = document.getElementById('tk-ggap');
+    if (!host || !PDEMO) return;
+    const M = {}, F = {};
+    for (const r of (PDEMO.groups['성별|남성'] || [])) M[r.date + '|' + (r.agency || '')] = r.c;
+    for (const r of (PDEMO.groups['성별|여성'] || [])) F[r.date + '|' + (r.agency || '')] = r.c;
+    const byParty = {};
+    for (const k of Object.keys(M)) {
+      if (!F[k]) continue;
+      const t = ms(k.split('|')[0]); if (!isFinite(t)) continue;
+      const mp = {}, fp = {};
+      for (const c of M[k]) if (c.party) mp[c.party] = c.pct;
+      for (const c of F[k]) if (c.party) fp[c.party] = c.pct;
+      for (const party in mp) if (party in fp) (byParty[party] ||= []).push({ t, v: mp[party] - fp[party], ag: k.split('|')[1] });
+    }
+    const series = {}; let tMin = Infinity, tMax = -Infinity, yM = 4;
+    for (const [party, pts] of Object.entries(byParty)) {
+      if (pts.length < 12) continue;
+      pts.sort((a, b) => a.t - b.t);
+      const sm = kernelSmooth(pts, 40).flat();
+      if (Math.max(...sm.map((p) => Math.abs(p.v)), 0) < 2) continue;
+      series[party] = { pts, sm };
+      for (const p of pts) { tMin = Math.min(tMin, p.t); tMax = Math.max(tMax, p.t); yM = Math.max(yM, Math.abs(p.v)); }
+    }
+    const parties = Object.keys(series);
+    if (!parties.length) { host.innerHTML = '<div class="tk-empty">데이터 없음</div>'; return; }
+    yM = Math.ceil(yM / 2) * 2;
+    const W = 960, H = 340, P = { l: 30, r: 92, t: 24, b: 22 };
+    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
+    const yOf = (v) => P.t + (1 - (v + yM) / (2 * yM)) * (H - P.t - P.b);
+    let grid = '';
+    for (let v = -yM; v <= yM; v += yM / 2) {
+      const y = yOf(v), zero = v === 0;
+      grid += `<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W - P.r}" y2="${y.toFixed(1)}" stroke="var(--rule,#e6e9ef)" stroke-width="${zero ? 1 : 0.5}"${zero ? '' : ' stroke-dasharray="2 3"'}/>`;
+      grid += `<text x="${P.l - 6}" y="${(y + 3).toFixed(1)}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v > 0 ? '+' : ''}${v}</text>`;
+    }
+    for (let yr = new Date(tMin).getFullYear(); yr <= new Date(tMax).getFullYear(); yr++) {
+      const t = Date.parse(`${yr}-01-01`); if (t < tMin || t > tMax) continue;
+      grid += `<text x="${xOf(t).toFixed(1)}" y="${H - P.b + 14}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${yr}</text>`;
+    }
+    grid += `<text x="${P.l}" y="12" font-size="10.5" fill="${legible(SEX_COLOR['남성'])}" font-weight="700">▲ 남성이 더 지지</text>`
+      + `<text x="${P.l}" y="${H - 6}" font-size="10.5" fill="${legible(SEX_COLOR['여성'])}" font-weight="700">▼ 여성이 더 지지</text>`;
+    HOVER['tk-ggap'] = [];
+    let dots = '', lines = '', labels = '';
+    const lab = [];
+    parties.sort((a, b) => series[b].sm[series[b].sm.length - 1].v - series[a].sm[series[a].sm.length - 1].v);
+    for (const party of parties) {
+      const { pts, sm } = series[party];
+      const color = legible(partyColor(party, new Date(tMax).toISOString().slice(0, 10)));
+      for (const p of pts) {
+        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.14"/>`;
+        HOVER['tk-ggap'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${party} 남−여 <b>${p.v > 0 ? '+' : ''}${p.v.toFixed(1)}%p</b><br>${p.ag || ''} · ${fmtD(p.t)}` });
+      }
+      for (const seg of kernelSmooth(pts, 40)) if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+      const last = sm[sm.length - 1];
+      if (last) lab.push({ party, x: xOf(last.t), y: yOf(last.v), color });
+    }
+    lab.sort((a, b) => a.y - b.y); let ly = -99;
+    for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.party}</text>`; }
+    host.innerHTML = `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="정당별 성별 격차 추이">${grid}${dots}${lines}${labels}</svg></div>`;
+    attachHover('tk-ggap');
+    const meta = document.getElementById('tk-ggap-meta');
+    if (meta) meta.textContent = `남성 − 여성 (%p) · ${parties.length}개 정당`;
+    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
+  }
+
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
   function renderCandidatePref(polls) {
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
@@ -554,6 +622,8 @@
     if (PDEMO && PDEMO.groups && Object.values(PDEMO.groups).some((v) => v.length)) {
       document.getElementById('tk-pdemo-section')?.removeAttribute('hidden');
       document.getElementById('tk-undec-section')?.removeAttribute('hidden');
+      if ((PDEMO.groups['성별|남성'] || []).length && (PDEMO.groups['성별|여성'] || []).length)
+        document.getElementById('tk-ggap-section')?.removeAttribute('hidden');
     } else { PDEMO = null; }
     // 국정평가 — 4기관 + 범용(기타 기관) 통합. ntt 중복 제거.
     const seen = new Set();
@@ -572,7 +642,7 @@
       document.getElementById('tk-approval').innerHTML = renderApproval(recs);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
-      if (PDEMO) { renderPartyDemo(); renderUndecided(); }
+      if (PDEMO) { renderPartyDemo(); renderUndecided(); renderGenderGap(); }
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
