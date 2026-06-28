@@ -6,9 +6,11 @@ name: Election results polling (개표 추적)
 #
 # 활성 범위: 선거 직후 ~1주. 7일 후 자동 종료(아래 if 조건).
 on:
-  schedule:
-    # 매시간 정각 (UTC). 한국 시간 분기 9분 (KST UTC+9) — 09:00 KST = 00:00 UTC
-    - cron: '5 * * * *'
+  # 선거 없는 평시엔 cron 비활성 — D+7 가드로 어차피 no-op이라 매시간 빈 run만 낭비.
+  # 다음 선거 직전에 아래 schedule 주석 해제(+ window 단계 ELECTION_DATE·probe sgId 갱신)로 재개.
+  # schedule:
+  #   # 매시간 정각 (UTC). 한국 시간 분기 9분 (KST UTC+9) — 09:00 KST = 00:00 UTC
+  #   - cron: '5 * * * *'
   workflow_dispatch:
     inputs:
       election:

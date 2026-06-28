@@ -68,8 +68,10 @@ jobs:
         run: python scripts/fetch/refresh_pending_pdfs.py --csv data/raw/nesdc_etc_polls.csv --max-days 14
 
       # 리얼미터는 국정수행평가를 NESDC에 등록 안 함(정당지지만) → 자체 사이트 '보도용' PDF로 보완.
-      # 최근 3페이지만(증분). 이미 받은 PDF·index는 skip. 자세한 배경은 docs/tracker-pipeline.md.
-      - name: Fetch 리얼미터 자체발표 (국정평가 — NESDC 미등록분)
+      # ⚠️ realmeter.net이 GitHub Actions 러너 IP를 차단 → CI에선 항상 "총 0건" (NESDC IP차단과 동일).
+      #    따라서 리얼미터 국정평가는 CI로 안 차오름 → 로컬에서 주기적으로 fetch+extract+commit 해야 함
+      #    (이 단계는 차단 풀리면 자동 재개되도록 남겨둠). 배경은 docs/tracker-pipeline.md §1-1.
+      - name: Fetch 리얼미터 자체발표 (국정평가 — NESDC 미등록분, CI는 IP차단으로 보통 0건)
         run: python scripts/fetch/fetch_realmeter_self.py --max-pages 3 || echo "realmeter.net fetch 실패 — 다음 run 회수"
 
       - name: Extract tracker data (incremental — 기존 보존·신규만 추가)

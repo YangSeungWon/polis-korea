@@ -35,6 +35,12 @@ NESDC(여심위 선거여론조사심의위)는 폴을 `pollGubuncd`로 분류�
   `approval_realmeter.json`에 **주(period_end) 단위 self 우선**으로 병합(`src:"self"` 태그,
   idempotent). NESDC분(할당제·보궐에 끼인 비정기)은 충돌 없으면 보존.
 - 출처 표기: "리얼미터/에너지경제신문(자체발표)". freshness audit(아래 §)가 끊김 감시.
+- **⚠️ realmeter.net이 GitHub Actions 러너 IP를 차단**(NESDC IP차단과 동일 — 메모리 `cicd_polls_gotchas`).
+  CI의 `fetch_realmeter_self`는 항상 **"총 0건"** → 리얼미터 국정평가는 **CI로 안 차오름**. 그래서
+  `approval_realmeter.json`이 조용히 동결됨(2026-04→06 발견 사례: 11주 stale). **로컬에서 주기적**으로
+  `fetch_realmeter_self.py --max-pages 5` + `extract_approval_realmeter.py --source self` + commit 해야
+  최신 유지. CI 단계는 차단 풀리면 자동 재개되도록 남겨둠. (다른 추출기는 IP차단 무관 — NESDC가
+  아니라 커밋된 CSV/PDF 기반이라 정상.)
 
 ## 2. 추출기 6종
 
