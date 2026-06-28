@@ -1,10 +1,7 @@
 // tracker.js — 선거에 안 묶이는 상시 지표 연속 시계열.
 //   ① 대통령 국정수행 평가(한국갤럽, approval_gallup.json) — 긍정/부정 + 임기 band.
 //   ② 정당지지 연속(aggregated_*.json metric_type='정당지지' & 전국) — 주요정당 라인.
-//   ②-b 정당지지 성·연령별(party_demographics_trend.json) — 차원·집단 토글, 본 차트 재사용.
-//   ②-c 무당층(지지정당 없음·모름) 성·연령별 — 같은 데이터, 집단별 한 선.
-//   ②-d 정당별 성별 격차(남−여) — 같은 조사 남·여 짝지어 0기준 발산 라인.
-//   ③ 차기 대선주자 선호(다자대결).  ③-b 차기주자 성·연령별(renderCandidatePref 재사용).
+//   ③ 차기 대선주자 선호(다자대결).
 // parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
   'use strict';
@@ -314,195 +311,6 @@
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${body}`, title);
   }
 
-  // ===== ②-b 정당지지 성·연령별 (party_demographics_trend.json) =====
-  const AGES = ['18-29', '30', '40', '50', '60', '70+'];
-  const AGE_LABEL = { '18-29': '18·20대', '30': '30대', '40': '40대', '50': '50대', '60': '60대', '70+': '70대+' };
-  const SEXES = ['남성', '여성'];
-  let PDEMO = null, pdDim = '연령', pdSel = '연령|18-29';
-
-  const pdHas = (k) => PDEMO && (PDEMO.groups[k] || []).length > 0;
-  function pdDimAvail(dim) {
-    if (dim === '성별') return SEXES.some((s) => pdHas('성별|' + s));
-    if (dim === '연령') return AGES.some((a) => pdHas('연령|' + a));
-    return SEXES.some((s) => AGES.some((a) => pdHas(s + '|' + a)));   // 성연령 grid
-  }
-  function pdDefaultSel(dim) {
-    if (dim === '성별') return '성별|' + (SEXES.find((s) => pdHas('성별|' + s)) || '남성');
-    if (dim === '연령') return '연령|' + (AGES.find((a) => pdHas('연령|' + a)) || '18-29');
-    for (const s of SEXES) for (const a of AGES) if (pdHas(s + '|' + a)) return s + '|' + a;
-    return '남성|18-29';
-  }
-  function pdCells(dim) {
-    if (dim === '성별') return SEXES.filter((s) => pdHas('성별|' + s)).map((s) => ['성별|' + s, s]);
-    if (dim === '연령') return AGES.filter((a) => pdHas('연령|' + a)).map((a) => ['연령|' + a, AGE_LABEL[a]]);
-    const out = [];
-    for (const s of SEXES) for (const a of AGES) if (pdHas(s + '|' + a)) out.push([s + '|' + a, s + ' ' + AGE_LABEL[a]]);
-    return out;
-  }
-  function pdSelLabel() {
-    const [a, b] = pdSel.split('|');
-    if (a === '성별') return b;
-    if (a === '연령') return AGE_LABEL[b] || b;
-    return `${a} ${AGE_LABEL[b] || b}`;
-  }
-
-  // 선택 그룹 레코드 → renderPartySupport가 먹는 polls 모양으로 변환(정당열만, 특수열 제외).
-  function pdPseudoPolls(key) {
-    return (PDEMO.groups[key] || []).map((r) => ({
-      period_end: r.date, agency: r.agency, source_url: null,
-      candidates: r.c.filter((x) => x.party).map((x) => ({ party: x.party, pct: x.pct })),
-    }));
-  }
-
-  function renderPartyDemo() {
-    const host = document.getElementById('tk-pdemo');
-    const ctrl = document.getElementById('tk-pdemo-controls');
-    if (!host || !ctrl || !PDEMO) return;
-    const dims = [['연령', '연령'], ['성별', '성별'], ['성연령', '성×연령']].filter(([k]) => pdDimAvail(k));
-    if (!dims.length) return;
-    if (!pdDimAvail(pdDim)) { pdDim = dims[0][0]; pdSel = pdDefaultSel(pdDim); }
-    if (!pdHas(pdSel)) pdSel = pdDefaultSel(pdDim);
-    const dimBtns = dims.map(([k, l]) => `<button class="seg-btn${k === pdDim ? ' is-active' : ''}" data-pddim="${k}">${l}</button>`).join('');
-    const cellBtns = pdCells(pdDim).map(([k, l]) => `<button class="seg-btn${k === pdSel ? ' is-active' : ''}" data-pdcell="${k}">${l}</button>`).join('');
-    ctrl.innerHTML = `<div class="seg" role="tablist">${dimBtns}</div><div class="seg tk-pdemo-cells" role="tablist">${cellBtns}</div>`;
-    host.innerHTML = renderPartySupport(pdPseudoPolls(pdSel), 'tk-pdemo', `${pdSelLabel()} 정당 지지도 추이`);
-    attachHover('tk-pdemo');
-    const meta = document.getElementById('tk-pdemo-meta');
-    if (meta) meta.textContent = `${pdSelLabel()} · 전국 ${(PDEMO.groups[pdSel] || []).length}개 조사`;
-    ctrl.querySelectorAll('[data-pddim]').forEach((b) => b.onclick = () => { pdDim = b.dataset.pddim; pdSel = pdDefaultSel(pdDim); renderPartyDemo(); });
-    ctrl.querySelectorAll('[data-pdcell]').forEach((b) => b.onclick = () => { pdSel = b.dataset.pdcell; renderPartyDemo(); });
-    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
-  }
-
-  // ===== ②-c 무당층(지지정당 없음·모름) 성·연령별 — 집단별 한 선 =====
-  const UNDEC_RE = /없음|모름|무응답|유보|부동|무당/;        // 기타·기타정당(타정당 지지) 제외
-  const undecVal = (row) => row.reduce((s, c) => s + (!c.party && UNDEC_RE.test(c.name) ? c.pct : 0), 0);
-  // 집단색 — 연령은 젊을수록 옅은→짙은 순차(YlGnBu), 성별은 2색.
-  const AGE_COLOR = { '18-29': '#43c6ac', '30': '#1d9bc9', '40': '#2c6fb8', '50': '#3b4fa0', '60': '#6a3d9a', '70+': '#9b2f86' };
-  const SEX_COLOR = { '남성': '#3b6ea5', '여성': '#c2557a' };
-  let udDim = '연령';
-
-  function udSeries(dim) {
-    const keys = dim === '성별' ? SEXES.map((s) => ['성별|' + s, s, SEX_COLOR[s]])
-      : AGES.map((a) => ['연령|' + a, AGE_LABEL[a], AGE_COLOR[a]]);
-    return keys.filter(([k]) => pdHas(k)).map(([k, label, color]) => ({
-      label, color,
-      pts: (PDEMO.groups[k] || []).map((r) => ({ t: ms(r.date), v: undecVal(r.c), ag: r.agency, su: r.source_url }))
-        .filter((p) => isFinite(p.t)).sort((a, b) => a.t - b.t),
-    })).filter((s) => s.pts.length);
-  }
-
-  function renderUndecided() {
-    const host = document.getElementById('tk-undec');
-    const ctrl = document.getElementById('tk-undec-controls');
-    if (!host || !ctrl || !PDEMO) return;
-    const dims = [['연령', '연령'], ['성별', '성별']].filter(([k]) => pdDimAvail(k));
-    if (!dims.length) return;
-    if (!pdDimAvail(udDim)) udDim = dims[0][0];
-    const series = udSeries(udDim);
-    let tMin = Infinity, tMax = -Infinity, yMax = 10;
-    for (const s of series) for (const p of s.pts) { tMin = Math.min(tMin, p.t); tMax = Math.max(tMax, p.t); yMax = Math.max(yMax, p.v); }
-    yMax = Math.min(40, Math.ceil(yMax / 5) * 5);
-    const W = 960, H = 360, P = { l: 30, r: 64, t: 16, b: 22 };
-    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
-    const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
-    const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
-    HOVER['tk-undec'] = [];
-    let dots = '', lines = '', labels = '';
-    const lab = [];
-    for (const s of series) {
-      const color = legible(s.color);
-      for (const p of s.pts) {
-        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.16"/>`;
-        HOVER['tk-undec'].push({ x: xOf(p.t), y: yOf(p.v), color, su: p.su, tip: `${s.label} 무당층 <b>${p.v.toFixed(1)}%</b><br>${p.ag || ''} · ${fmtD(p.t)}${srcLine(p.su)}` });
-      }
-      for (const seg of kernelSmooth(s.pts, 30)) {
-        if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
-      }
-      const sm = kernelSmooth(s.pts, 30).flat();
-      const last = sm[sm.length - 1];
-      if (last) lab.push({ label: s.label, x: xOf(last.t), y: yOf(last.v), color });
-    }
-    lab.sort((a, b) => a.y - b.y);
-    let ly = -99;
-    for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.label}</text>`; }
-    const dimBtns = dims.map(([k, l]) => `<button class="seg-btn${k === udDim ? ' is-active' : ''}" data-uddim="${k}">${l}</button>`).join('');
-    ctrl.innerHTML = `<div class="seg" role="tablist">${dimBtns}</div>`;
-    host.innerHTML = wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, '무당층 성·연령별 추이');
-    attachHover('tk-undec');
-    const meta = document.getElementById('tk-undec-meta');
-    if (meta) meta.textContent = `${udDim}별 · 지지정당 없음·모름`;
-    ctrl.querySelectorAll('[data-uddim]').forEach((b) => b.onclick = () => { udDim = b.dataset.uddim; renderUndecided(); });
-    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
-  }
-
-  // ===== ②-d 정당별 성별 격차(남−여) 추이 — 0 기준 발산 라인 =====
-  function renderGenderGap() {
-    const host = document.getElementById('tk-ggap');
-    if (!host || !PDEMO) return;
-    const M = {}, F = {};
-    for (const r of (PDEMO.groups['성별|남성'] || [])) M[r.date + '|' + (r.agency || '')] = r.c;
-    for (const r of (PDEMO.groups['성별|여성'] || [])) F[r.date + '|' + (r.agency || '')] = r.c;
-    const byParty = {};
-    for (const k of Object.keys(M)) {
-      if (!F[k]) continue;
-      const t = ms(k.split('|')[0]); if (!isFinite(t)) continue;
-      const mp = {}, fp = {};
-      for (const c of M[k]) if (c.party) mp[c.party] = c.pct;
-      for (const c of F[k]) if (c.party) fp[c.party] = c.pct;
-      for (const party in mp) if (party in fp) (byParty[party] ||= []).push({ t, v: mp[party] - fp[party], ag: k.split('|')[1] });
-    }
-    const series = {}; let tMin = Infinity, tMax = -Infinity, yM = 4;
-    for (const [party, pts] of Object.entries(byParty)) {
-      if (pts.length < 12) continue;
-      pts.sort((a, b) => a.t - b.t);
-      const sm = kernelSmooth(pts, 40).flat();
-      if (Math.max(...sm.map((p) => Math.abs(p.v)), 0) < 2) continue;
-      series[party] = { pts, sm };
-      for (const p of pts) { tMin = Math.min(tMin, p.t); tMax = Math.max(tMax, p.t); yM = Math.max(yM, Math.abs(p.v)); }
-    }
-    const parties = Object.keys(series);
-    if (!parties.length) { host.innerHTML = '<div class="tk-empty">데이터 없음</div>'; return; }
-    yM = Math.ceil(yM / 2) * 2;
-    const W = 960, H = 340, P = { l: 30, r: 92, t: 24, b: 22 };
-    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
-    const yOf = (v) => P.t + (1 - (v + yM) / (2 * yM)) * (H - P.t - P.b);
-    let grid = '';
-    for (let v = -yM; v <= yM; v += yM / 2) {
-      const y = yOf(v), zero = v === 0;
-      grid += `<line x1="${P.l}" y1="${y.toFixed(1)}" x2="${W - P.r}" y2="${y.toFixed(1)}" stroke="var(--rule,#e6e9ef)" stroke-width="${zero ? 1 : 0.5}"${zero ? '' : ' stroke-dasharray="2 3"'}/>`;
-      grid += `<text x="${P.l - 6}" y="${(y + 3).toFixed(1)}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="end">${v > 0 ? '+' : ''}${v}</text>`;
-    }
-    for (let yr = new Date(tMin).getFullYear(); yr <= new Date(tMax).getFullYear(); yr++) {
-      const t = Date.parse(`${yr}-01-01`); if (t < tMin || t > tMax) continue;
-      grid += `<text x="${xOf(t).toFixed(1)}" y="${H - P.b + 14}" font-size="11" fill="var(--ink-mute,#8a93a3)" text-anchor="middle">${yr}</text>`;
-    }
-    grid += `<text x="${P.l}" y="12" font-size="10.5" fill="${legible(SEX_COLOR['남성'])}" font-weight="700">▲ 남성이 더 지지</text>`
-      + `<text x="${P.l}" y="${H - 6}" font-size="10.5" fill="${legible(SEX_COLOR['여성'])}" font-weight="700">▼ 여성이 더 지지</text>`;
-    HOVER['tk-ggap'] = [];
-    let dots = '', lines = '', labels = '';
-    const lab = [];
-    parties.sort((a, b) => series[b].sm[series[b].sm.length - 1].v - series[a].sm[series[a].sm.length - 1].v);
-    for (const party of parties) {
-      const { pts, sm } = series[party];
-      const color = legible(partyColor(party, new Date(tMax).toISOString().slice(0, 10)));
-      for (const p of pts) {
-        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1" fill="${color}" opacity="0.14"/>`;
-        HOVER['tk-ggap'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${party} 남−여 <b>${p.v > 0 ? '+' : ''}${p.v.toFixed(1)}%p</b><br>${p.ag || ''} · ${fmtD(p.t)}` });
-      }
-      for (const seg of kernelSmooth(pts, 40)) if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
-      const last = sm[sm.length - 1];
-      if (last) lab.push({ party, x: xOf(last.t), y: yOf(last.v), color });
-    }
-    lab.sort((a, b) => a.y - b.y); let ly = -99;
-    for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.party}</text>`; }
-    host.innerHTML = `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="정당별 성별 격차 추이">${grid}${dots}${lines}${labels}</svg></div>`;
-    attachHover('tk-ggap');
-    const meta = document.getElementById('tk-ggap-meta');
-    if (meta) meta.textContent = `남성 − 여성 (%p) · ${parties.length}개 정당`;
-    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
-  }
-
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
   function renderCandidatePref(polls, hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이') {
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
@@ -607,57 +415,6 @@
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, aria);
   }
 
-  // ===== ③-b 차기주자 성·연령별 — renderCandidatePref(후보별·정당색) 재사용 =====
-  let CDEMO = null, cdDim = '연령', cdSel = '연령|18-29';
-  const cdHas = (k) => CDEMO && (CDEMO.groups[k] || []).length > 0;
-  function cdDimAvail(d) {
-    if (d === '성별') return SEXES.some((s) => cdHas('성별|' + s));
-    if (d === '연령') return AGES.some((a) => cdHas('연령|' + a));
-    return SEXES.some((s) => AGES.some((a) => cdHas(s + '|' + a)));
-  }
-  function cdDefaultSel(d) {
-    if (d === '성별') return '성별|' + (SEXES.find((s) => cdHas('성별|' + s)) || '남성');
-    if (d === '연령') return '연령|' + (AGES.find((a) => cdHas('연령|' + a)) || '18-29');
-    for (const s of SEXES) for (const a of AGES) if (cdHas(s + '|' + a)) return s + '|' + a;
-    return '남성|18-29';
-  }
-  function cdCells(d) {
-    if (d === '성별') return SEXES.filter((s) => cdHas('성별|' + s)).map((s) => ['성별|' + s, s]);
-    if (d === '연령') return AGES.filter((a) => cdHas('연령|' + a)).map((a) => ['연령|' + a, AGE_LABEL[a]]);
-    const out = [];
-    for (const s of SEXES) for (const a of AGES) if (cdHas(s + '|' + a)) out.push([s + '|' + a, s + ' ' + AGE_LABEL[a]]);
-    return out;
-  }
-  function cdSelLabel() {
-    const [a, b] = cdSel.split('|');
-    if (a === '성별') return b;
-    if (a === '연령') return AGE_LABEL[b] || b;
-    return `${a} ${AGE_LABEL[b] || b}`;
-  }
-  const cdPseudoPolls = (key) => (CDEMO.groups[key] || []).map((r) => ({
-    period_end: r.date, agency: r.agency, source_url: null, candidates: r.c,
-  }));
-
-  function renderCandDemo() {
-    const host = document.getElementById('tk-cdemo');
-    const ctrl = document.getElementById('tk-cdemo-controls');
-    if (!host || !ctrl || !CDEMO) return;
-    const dims = [['연령', '연령'], ['성별', '성별'], ['성연령', '성×연령']].filter(([k]) => cdDimAvail(k));
-    if (!dims.length) return;
-    if (!cdDimAvail(cdDim)) { cdDim = dims[0][0]; cdSel = cdDefaultSel(cdDim); }
-    if (!cdHas(cdSel)) cdSel = cdDefaultSel(cdDim);
-    const dimBtns = dims.map(([k, l]) => `<button class="seg-btn${k === cdDim ? ' is-active' : ''}" data-cddim="${k}">${l}</button>`).join('');
-    const cellBtns = cdCells(cdDim).map(([k, l]) => `<button class="seg-btn${k === cdSel ? ' is-active' : ''}" data-cdcell="${k}">${l}</button>`).join('');
-    ctrl.innerHTML = `<div class="seg" role="tablist">${dimBtns}</div><div class="seg tk-pdemo-cells" role="tablist">${cellBtns}</div>`;
-    host.innerHTML = renderCandidatePref(cdPseudoPolls(cdSel), 'tk-cdemo', `${cdSelLabel()} 차기주자 추이`);
-    attachHover('tk-cdemo');
-    const meta = document.getElementById('tk-cdemo-meta');
-    if (meta) meta.textContent = `${cdSelLabel()} · 전국 ${(CDEMO.groups[cdSel] || []).length}개 조사`;
-    ctrl.querySelectorAll('[data-cddim]').forEach((b) => b.onclick = () => { cdDim = b.dataset.cddim; cdSel = cdDefaultSel(cdDim); renderCandDemo(); });
-    ctrl.querySelectorAll('[data-cdcell]').forEach((b) => b.onclick = () => { cdSel = b.dataset.cdcell; renderCandDemo(); });
-    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
-  }
-
   // ---- load ----
   async function load() {
     const APPR_FILES = ['gallup', 'realmeter', 'nbs', 'hrc', 'general']
@@ -668,19 +425,6 @@
     ]);
     const apprData = all.slice(0, APPR_FILES.length);
     const aggs = all.slice(APPR_FILES.length);
-    // 정당지지 성·연령 추이 — 별도 shape(groups). 있으면 섹션 노출.
-    PDEMO = await fetch('data/polls/party_demographics_trend.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    if (PDEMO && PDEMO.groups && Object.values(PDEMO.groups).some((v) => v.length)) {
-      document.getElementById('tk-pdemo-section')?.removeAttribute('hidden');
-      document.getElementById('tk-undec-section')?.removeAttribute('hidden');
-      if ((PDEMO.groups['성별|남성'] || []).length && (PDEMO.groups['성별|여성'] || []).length)
-        document.getElementById('tk-ggap-section')?.removeAttribute('hidden');
-    } else { PDEMO = null; }
-    // 차기주자 성·연령별
-    CDEMO = await fetch('data/polls/cand_demographics_trend.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    if (CDEMO && CDEMO.groups && Object.values(CDEMO.groups).some((v) => v.length)) {
-      document.getElementById('tk-cdemo-section')?.removeAttribute('hidden');
-    } else { CDEMO = null; }
     // 국정평가 — 4기관 + 범용(기타 기관) 통합. ntt 중복 제거.
     const seen = new Set();
     const recs = apprData.flatMap((d) => d.records || [])
@@ -698,8 +442,6 @@
       document.getElementById('tk-approval').innerHTML = renderApproval(recs);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
-      if (PDEMO) { renderPartyDemo(); renderUndecided(); renderGenderGap(); }
-      if (CDEMO) renderCandDemo();
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
