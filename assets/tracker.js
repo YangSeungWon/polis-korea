@@ -1,7 +1,7 @@
 // tracker.js — 선거에 안 묶이는 상시 지표 연속 시계열.
 //   ① 대통령 국정수행 평가(한국갤럽, approval_gallup.json) — 긍정/부정 + 임기 band.
 //   ② 정당지지 연속(aggregated_*.json metric_type='정당지지' & 전국) — 주요정당 라인.
-//   ③ 차기 대선주자 선호(다자대결).
+//   ③ 차기 대선주자 선호(다자대결).  ③-c 장래 지도자 자유응답(한국갤럽 self, gallup_leaders.json).
 // parties.js(partyColor)·utils.js(PARTY_SHORT)·poll-stats.js(kernelSmooth) 의존.
 (function () {
   'use strict';
@@ -415,6 +415,60 @@
     return wrapChart(W, H, P, yMax, 10, yOf, `${grid}${dots}${lines}${labels}`, aria);
   }
 
+  // ===== ③-c 장래 정치 지도자 — 자유응답(한국갤럽 월간 연속) =====
+  let GLEAD = null;
+  function renderGallupLeaders() {
+    const host = document.getElementById('tk-glead');
+    if (!host || !GLEAD || !GLEAD.records || !GLEAD.records.length) return;
+    const byCand = {};
+    for (const r of GLEAD.records) {
+      const t = ms(r.date);
+      if (!isFinite(t) || r.pct == null) continue;
+      (byCand[r.candidate] ||= { pts: [], party: r.party }).pts.push({ t, v: r.pct, ag: '한국갤럽' });
+      if (r.party) byCand[r.candidate].party = r.party;
+    }
+    const series = {};
+    let tMin = Infinity, tMax = -Infinity, yMax = 10;
+    for (const [name, o] of Object.entries(byCand)) {
+      o.pts.sort((a, b) => a.t - b.t);
+      const sm = kernelSmooth(o.pts, 45).flat();
+      if (Math.max(0, ...sm.map((p) => p.v)) < 5) continue;   // 자발적 top-of-mind 주요 인물만
+      series[name] = { ...o, sm };
+      for (const p of o.pts) { tMin = Math.min(tMin, p.t); tMax = Math.max(tMax, p.t); }
+      yMax = Math.max(yMax, ...o.pts.map((p) => p.v));
+    }
+    const names = Object.keys(series);
+    if (!names.length) { host.innerHTML = '<div class="tk-empty">데이터 없음</div>'; return; }
+    yMax = Math.min(60, Math.ceil(yMax / 10) * 10);
+    const W = 960, H = 360, P = { l: 30, r: 84, t: 16, b: 22 };
+    const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
+    const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
+    const grid = gridAxes(W, H, P, tMin, tMax, yMax, 10, xOf, yOf);
+    HOVER['tk-glead'] = [];
+    let dots = '', lines = '', labels = '';
+    const lab = [];
+    names.sort((a, b) => series[b].sm[series[b].sm.length - 1].v - series[a].sm[series[a].sm.length - 1].v);
+    for (const name of names) {
+      const o = series[name];
+      const color = legible(partyColor(o.party, new Date(tMax).toISOString().slice(0, 10)));
+      for (const p of o.pts) {
+        dots += `<circle cx="${xOf(p.t).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="1.3" fill="${color}" opacity="0.2"/>`;
+        HOVER['tk-glead'].push({ x: xOf(p.t), y: yOf(p.v), color, tip: `${name} <b>${p.v}%</b><br>한국갤럽 자유응답 · ${fmtD(p.t)}` });
+      }
+      for (const seg of kernelSmooth(o.pts, 45)) if (seg.length >= 2) lines += `<path d="${pathOf(seg, xOf, yOf)}" fill="none" stroke="${color}" stroke-width="1.8" stroke-opacity="0.95"/>`;
+      const last = o.sm[o.sm.length - 1];
+      if (last) lab.push({ name, x: xOf(last.t), y: yOf(last.v), color });
+    }
+    lab.sort((a, b) => a.y - b.y); let ly = -99;
+    for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.name}</text>`; }
+    host.innerHTML = `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="장래 정치 지도자 자유응답 추이">${grid}${dots}${lines}${labels}</svg></div>`;
+    attachHover('tk-glead');
+    const meta = document.getElementById('tk-glead-meta');
+    const months = new Set(GLEAD.records.map((r) => r.date));
+    if (meta) meta.textContent = `한국갤럽 자유응답 · ${months.size}개월`;
+    requestAnimationFrame(() => { const sc = host.querySelector('.tk-scroll'); if (sc) sc.scrollLeft = sc.scrollWidth; });
+  }
+
   // ---- load ----
   async function load() {
     const APPR_FILES = ['gallup', 'realmeter', 'nbs', 'hrc', 'general']
@@ -430,6 +484,11 @@
     const recs = apprData.flatMap((d) => d.records || [])
       .filter((r) => r.subject && r.positive != null && !seen.has(r.ntt_id) && seen.add(r.ntt_id))
       .sort((a, b) => ms(a.period_end) - ms(b.period_end));
+    // 장래 정치 지도자 자유응답(한국갤럽 self) — 별도 섹션. 있으면 노출.
+    GLEAD = await fetch('data/polls/gallup_leaders.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    if (GLEAD && GLEAD.records && GLEAD.records.length) {
+      document.getElementById('tk-glead-section')?.removeAttribute('hidden');
+    } else { GLEAD = null; }
     // 정당지지(전국) · 차기 대선주자(대통령 후보지지, 전국)
     const polls = [], candPolls = [];
     for (const a of aggs) for (const p of (a.polls || [])) {
@@ -442,6 +501,7 @@
       document.getElementById('tk-approval').innerHTML = renderApproval(recs);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
+      if (GLEAD) renderGallupLeaders();
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
       document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;

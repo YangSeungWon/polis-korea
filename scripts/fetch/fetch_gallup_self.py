@@ -43,7 +43,8 @@ NAME_PARTY = {
     "이준석": "개혁신당", "심상정": "정의당", "조국": "조국혁신당", "반기문": "무소속", "한덕수": "무소속",
 }
 # 인물 아님 — 파싱 잡음 차단
-_STOP = {"의견", "유보", "이상", "각각", "이외", "인물", "포함", "기타", "순", "약", "전국", "지지층"}
+_STOP = {"의견", "유보", "이상", "각각", "이외", "인물", "포함", "기타", "순", "약", "전국", "지지층",
+         "미만", "여명", "내외", "안팎", "이하", "정도", "명", "이며", "비롯", "다만", "그외", "기록"}
 
 _DATE = re.compile(r"조사기간\s*[:：]?\s*(20\d\d)년\s*(\d+)월\s*(\d+)\s*[~∼-]\s*(\d+)\s*일")
 _NHO = re.compile(r"데일리\s*오피니언\s*제\s*(\d+)\s*호")
@@ -131,6 +132,8 @@ def main():
         if not v or not v.get("period_end"):
             continue
         for nm, pct in v["rows"]:
+            if nm in _STOP:           # 캐시 재빌드 시에도 잡음 재차단
+                continue
             records.append({"date": v["period_end"], "ho": v.get("ho"), "candidate": nm,
                             "party": NAME_PARTY.get(nm, ""), "pct": pct, "seqNo": int(seq)})
     records.sort(key=lambda r: (r["date"], -r["pct"]))
