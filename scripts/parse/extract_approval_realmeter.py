@@ -146,9 +146,15 @@ def run_self(args):
         if args.debug:
             print(f"  + {pe} {e['week']} {subj} 긍정{rec['positive']} 부정{rec['negative']}", file=sys.stderr)
 
-    # 병합: 기존 non-self 보존 + self가 덮는 주(period_end)는 NESDC분 제거 + self로 교체
+    # 이번에 받은 self가 0건이면(예: CI IP차단으로 fetch 실패) 기존 파일을 건드리지 않는다
+    #   — 안 그러면 커밋된 self 레코드가 매 run 증발(2026-06 실사례). fetch 성공분만 병합.
+    if not self_recs:
+        print("리얼미터 자체발표 0건 — 기존 approval_realmeter.json 보존(변경 없음)", file=sys.stderr)
+        return
+    # 병합: 기존을 보존하되 새 self가 덮는 주(period_end)만 교체(기존 self·NESDC 모두 제거 후 self).
+    #   ★ 기존 self는 보존해야 함(과거엔 무조건 drop해 CI가 self를 지웠음).
     self_pe = {r["period_end"] for r in self_recs}
-    kept = [r for r in prev if r.get("src") != "self" and r.get("period_end") not in self_pe]
+    kept = [r for r in prev if r.get("period_end") not in self_pe]
     records = kept + self_recs
     records.sort(key=lambda x: x["period_end"] or "")
     n_self = len(self_recs)
