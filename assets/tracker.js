@@ -73,7 +73,7 @@
   new MutationObserver(_onThemeChange).observe(document.documentElement,
     { attributes: true, attributeFilter: ['data-theme'] });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', _onThemeChange);
-  const AGG_FILES = ['19pres', '20pres', '21pres', '20th', '21st', '22nd', '7th', '8th', 'etc']
+  const AGG_FILES = ['19pres', '20pres', '21pres', '20th', '21st', '22nd', '7th', '8th', 'etc', 'gallup']
     .map((s) => `data/polls/aggregated_${s}.json`);
   const CANON = { '민주당': '더불어민주당', '국힘': '국민의힘', '국민의 힘': '국민의힘' };
   const NON_PARTY = new Set(['무소속', '없음', '기타', '무당층', '지지정당없음', '기타정당', '지지정당 없음']);

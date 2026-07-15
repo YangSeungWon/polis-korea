@@ -25,6 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data/polls/gallup_leaders.json"
+PARTY_OUT = ROOT / "data/polls/aggregated_gallup.json"   # 갤럽 정당지지(트래커 소스)
 CACHE = ROOT / "data/raw/gallup_self"
 URL = "https://www.gallup.co.kr/gallupdb/reportContent.asp?seqNo={n}&bType=8"
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
@@ -60,33 +61,57 @@ def fetch(seqno: int) -> str | None:
     return raw.decode("euc-kr", errors="ignore")
 
 
-def parse(htmltext: str, seqno: int):
-    """리포트 HTML → (period_end, 호, [(name, pct)]) 또는 None."""
-    txt = _html.unescape(re.sub(r"<[^>]+>", " ", htmltext))
-    txt = txt.replace("·", "·").replace("·", "·")
-    txt = re.sub(r"\s+", " ", txt)
-    m = _LEAD.search(txt)
-    if not m:
-        return None
-    body = m.group(1)
+# 정당지지 산문 파싱용 — 당명(정식명, partyColor 캐노니컬).
+_P_NAMES = (r"더불어민주당|국민의힘|조국혁신당|개혁신당|진보당|정의당|기본소득당|사회민주당|"
+            r"기본소득당|새로운미래|이외 ?정당/?단체")
+_PARTY_BODY = re.compile(r"지지하는 정당은[^)]*\)\s*(.+?무당.{0,4}층\s*\d+%)")
+_PARTY_BODY2 = re.compile(r"정당\s*지지도[:\]]\s*(.+?무당.{0,4}층\s*\d+%)")
+
+
+def parse_leaders(body: str):
     rows = []
     for g in re.finditer(r"([가-힣·]+(?:\s+[가-힣]+)??)\s*\(?(\d+)\s*%\)?", body):
-        names = re.split(r"[·,]", g.group(1))
         pct = int(g.group(2))
-        for nm in names:
-            nm = re.sub(r"\s.*$", "", nm.strip())   # '오세훈 서울시장' → '오세훈'
+        for nm in re.split(r"[·,]", g.group(1)):
+            nm = re.sub(r"\s.*$", "", nm.strip())
             if 2 <= len(nm) <= 4 and nm not in _STOP:
                 rows.append((nm, pct))
-    if not rows:
+    return rows
+
+
+def parse_party(txt: str):
+    """'…더불어민주당 41%, 국민의힘 29%, 조국·개혁·진보 각각 2%, 무당층 21%' → {정당:pct}."""
+    m = _PARTY_BODY.search(txt) or _PARTY_BODY2.search(txt)
+    if not m:
+        return {}
+    body = m.group(1)
+    out = {}
+    for g in re.finditer(r"((?:(?:" + _P_NAMES + r")[,\s]*)+)(?:각각\s*)?(\d{1,2}(?:\.\d)?)%", body):
+        pct = float(g.group(2))
+        for nm in re.findall(_P_NAMES, g.group(1)):
+            out[nm.replace(" ", "")] = pct
+    mu = re.search(r"무당.{0,4}층\s*(\d{1,2})%", body)
+    if mu:
+        out["없음"] = float(mu.group(1))   # 무당층 → 트래커 NON_PARTY '없음'
+    # 합≈100 검증(오파싱 배제)
+    s = sum(out.values())
+    return out if 90 <= s <= 112 and "더불어민주당" in out and "국민의힘" in out else {}
+
+
+def parse(htmltext: str, seqno: int):
+    """리포트 HTML → {period_end, ho, leaders:[(name,pct)], party:{정당:pct}} 또는 None."""
+    txt = _html.unescape(re.sub(r"<[^>]+>", " ", htmltext))
+    txt = re.sub(r"\s+", " ", txt)
+    lm = _LEAD.search(txt)
+    leaders = parse_leaders(lm.group(1)) if lm else []
+    party = parse_party(txt)
+    if not leaders and not party:
         return None
     dm = _DATE.search(txt)
-    if dm:
-        y, mo, _, d2 = dm.groups()
-        period_end = f"{y}-{int(mo):02d}-{int(d2):02d}"
-    else:
-        period_end = None
+    period_end = f"{dm.group(1)}-{int(dm.group(2)):02d}-{int(dm.group(4)):02d}" if dm else None
     nho = _NHO.search(txt)
-    return period_end, (int(nho.group(1)) if nho else None), rows
+    return {"period_end": period_end, "ho": (int(nho.group(1)) if nho else None),
+            "leaders": leaders, "party": party}
 
 
 def main():
@@ -101,49 +126,65 @@ def main():
     idx_path = CACHE / "index.json"
     idx = json.loads(idx_path.read_text()) if idx_path.exists() else {}
 
-    found, scanned = 0, 0
+    def stale(e):   # None(옛 캐시) 또는 party 키 없는 dict → 재fetch(정당지지 1회 백필)
+        return e is None or (isinstance(e, dict) and "party" not in e)
+
+    scanned = 0
     for seq in range(args.frm, args.to - 1, -1):
         if scanned >= args.max:
             break
         key = str(seq)
-        if key in idx:
-            if idx[key]:
-                found += 1
+        if key in idx and not stale(idx[key]):
             continue
         scanned += 1
         h = fetch(seq)
         time.sleep(args.sleep)
         res = parse(h, seq) if h else None
+        # sentinel: 빈 결과도 party 키 든 dict로 저장 → 다음 run에서 재fetch 안 함(None은 fetch 실패만)
+        idx[key] = res if res else ({"period_end": None, "ho": None, "leaders": [], "party": {}} if h else None)
         if res:
-            period_end, nho, rows = res
-            idx[key] = {"period_end": period_end, "ho": nho, "rows": rows}
-            found += 1
-            print(f"  seq {seq} 제{nho}호 {period_end}: {len(rows)}명 ({rows[0][0]} {rows[0][1]}%…)", flush=True)
-        else:
-            idx[key] = None
+            p = res.get("party") or {}
+            ld = res.get("leaders") or []
+            print(f"  seq {seq} 제{res.get('ho')}호 {res.get('period_end')}: "
+                  f"장래{len(ld)} · 정당{'민주%s/국힘%s' % (p.get('더불어민주당','-'), p.get('국민의힘','-')) if p else '-'}", flush=True)
         if scanned % 25 == 0:
             idx_path.write_text(json.dumps(idx, ensure_ascii=False))
-            print(f"  …{scanned} 스캔, {found} 장래지도자", flush=True)
+            print(f"  …{scanned} 스캔", flush=True)
     idx_path.write_text(json.dumps(idx, ensure_ascii=False))
 
-    # index → records 빌드(날짜 있는 것만)
-    records = []
+    # ① 장래지도자(자유응답) → gallup_leaders.json
+    lrecs = []
     for seq, v in idx.items():
         if not v or not v.get("period_end"):
             continue
-        for nm, pct in v["rows"]:
-            if nm in _STOP:           # 캐시 재빌드 시에도 잡음 재차단
-                continue
-            records.append({"date": v["period_end"], "ho": v.get("ho"), "candidate": nm,
-                            "party": NAME_PARTY.get(nm, ""), "pct": pct, "seqNo": int(seq)})
-    records.sort(key=lambda r: (r["date"], -r["pct"]))
-    out = {"_meta": {"source": "gallup.co.kr 데일리 오피니언 '장래 정치 지도자 선호도'(자유응답)",
-                     "kind": "gallup_leaders_open", "agency": "한국갤럽조사연구소",
-                     "note": "자유응답(open-ended) — NESDC 다자대결과 척도 다름. 별도 시리즈."},
-           "records": records}
-    OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
-    months = sorted(set(r["date"] for r in records))
-    print(f"→ {OUT.name}: {len(records)}건, {len(months)}개월 ({months[0] if months else '?'}~{months[-1] if months else '?'})")
+        for nm, pct in (v.get("leaders") or v.get("rows") or []):
+            if nm not in _STOP:
+                lrecs.append({"date": v["period_end"], "ho": v.get("ho"), "candidate": nm,
+                              "party": NAME_PARTY.get(nm, ""), "pct": pct, "seqNo": int(seq)})
+    lrecs.sort(key=lambda r: (r["date"], -r["pct"]))
+    OUT.write_text(json.dumps({"_meta": {"source": "gallup.co.kr 데일리 오피니언 '장래 정치 지도자 선호도'(자유응답)",
+                   "kind": "gallup_leaders_open", "agency": "한국갤럽조사연구소",
+                   "note": "자유응답 — NESDC 다자대결과 척도 다름. 별도 시리즈."},
+                   "records": lrecs}, ensure_ascii=False, separators=(",", ":")))
+    lm = sorted(set(r["date"] for r in lrecs))
+    print(f"→ {OUT.name}: {len(lrecs)}건, {len(lm)}개월")
+
+    # ② 정당지지 → aggregated_gallup.json (트래커 정당지지 소스 — 갤럽은 NESDC VT012에 안 들어옴)
+    polls = []
+    for seq, v in idx.items():
+        if not v or not v.get("period_end") or not v.get("party"):
+            continue
+        cands = [{"party": k, "pct": val} for k, val in v["party"].items()]
+        polls.append({"ntt_id": f"gallup-{v.get('ho') or seq}", "agency": "한국갤럽조사연구소",
+                      "period_end": v["period_end"], "sido": "", "metric_type": "정당지지",
+                      "office_level": "", "candidates": cands,
+                      "source_url": URL.format(n=seq).split('&')[0]})
+    polls.sort(key=lambda p: p["period_end"])
+    PARTY_OUT.write_text(json.dumps({"_meta": {"source": "gallup.co.kr 데일리 오피니언 정당지지도(HTML 산문)",
+                   "note": "갤럽 정당지지 — NESDC VT012 미포함분 보완. 트래커 정당지지 소스."},
+                   "polls": polls}, ensure_ascii=False, separators=(",", ":")))
+    pm = sorted(set(p["period_end"] for p in polls))
+    print(f"→ {PARTY_OUT.name}: {len(polls)}건 정당지지, {pm[0] if pm else '?'}~{pm[-1] if pm else '?'}")
 
 
 if __name__ == "__main__":
