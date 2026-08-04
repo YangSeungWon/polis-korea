@@ -95,11 +95,18 @@
 
   function renderPledgeEntry(e) {
     const where = [e.sido, e.sigungu].filter(Boolean).join(' ');
-    const items = (e.pledges || []).map((p) => `
+    const items = (e.pledges || []).map((p) => {
+      // 분야는 NEC 원본이 99% 비어 있어 제목·본문에서 추정한 값(realm_auto)이다.
+      // 추정임을 라벨과 툴팁으로 밝힌다 — 원본 분류로 오해되면 안 된다.
+      const realms = (p.realms_auto || []).slice(0, 2)
+        .map((r) => `<span class="pp-realm" title="제목·본문에서 자동 추정한 분야 (NEC 원본 아님)">${escapeHtml(r)}</span>`)
+        .join('');
+      return `
       <details class="pp-pledge">
-        <summary><span class="pp-pledge-n">${p.order}</span>${escapeHtml(p.title)}</summary>
+        <summary><span class="pp-pledge-n">${p.order}</span><span class="pp-pledge-t">${escapeHtml(p.title)}</span>${realms}</summary>
         <div class="pp-pledge-body">${escapeHtml(p.content)}</div>
-      </details>`).join('');
+      </details>`;
+    }).join('');
     return `
       <div class="pp-pledge-group">
         <div class="pp-pledge-head">

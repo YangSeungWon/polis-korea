@@ -133,6 +133,12 @@ a.pp-party:hover { background: var(--bg2); }
   flex: none; width: 20px; font-size: 12px; font-weight: 700;
   color: var(--ink-soft); font-variant-numeric: tabular-nums;
 }
+.pp-pledge-t { flex: 1; min-width: 0; }
+/* 자동 추정 분야 — 원본 데이터가 아니므로 약하게. 정당 배지처럼 단정적으로 보이면 안 된다. */
+.pp-realm {
+  flex: none; font-size: 11px; font-weight: 600; color: var(--ink-soft);
+  background: var(--bg2); border-radius: 10px; padding: 1px 7px; cursor: help;
+}
 .pp-pledge-body {
   white-space: pre-wrap; font-size: 13px; line-height: 1.7; color: var(--ink-soft);
   padding: 2px 0 14px 30px; overflow-wrap: anywhere;

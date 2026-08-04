@@ -57,6 +57,9 @@ jobs:
             python scripts/fetch/fetch_pledges.py --all-candidates --active
           fi
 
+      - name: 분야 자동 분류
+        run: python scripts/build/classify_pledges.py
+
       - name: 인물별 재색인
         run: python scripts/build/build_person_pledges.py
 

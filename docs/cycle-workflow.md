@@ -42,8 +42,14 @@ archive로 내리기 전에 반드시 한 번은 돌았는지 확인할 것.
 ```bash
 python3 scripts/fetch/fetch_pledges.py --active --all-candidates   # 0단계 (전 후보)
 python3 scripts/fetch/fetch_pledges.py --election <id>             # 3단계 (당선인 백필)
+python3 scripts/build/classify_pledges.py                          # 분야 자동 분류
 python3 scripts/build/build_person_pledges.py                      # 인물별 재색인
 ```
+
+공약분야명(NEC 원본)은 6,048건 중 45건만 채워져 있어 분류 축으로 쓸 수 없다.
+`classify_pledges.py`가 제목·본문에서 키워드 규칙으로 추정해 `realm_auto`(대표)·
+`realms_auto`(다중)에 넣는다. **원본 `realm`은 건드리지 않는다** — 추정치와 원본이
+섞이면 안 되기 때문. 화면에도 '자동 추정'임을 툴팁으로 밝힌다.
 
 > 지방의원·비례(tc 5·6·8·9)가 있는 회차는 개표 API만으론 무투표·중선거구 당선·비례
 > 의석이 빠진다. `finalize_election.py`의 `POST_STEPS`에 그 회차 보정 단계를 등록해야
