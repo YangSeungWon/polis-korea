@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 INDEX = ROOT / "assets/person-index.json"
 OUT_DIR = ROOT / "person"
 SITEMAP_OUT = ROOT / "data/sitemap_person.txt"
+SITE = "https://polis.ysw.kr"
 
 # nav는 sync_nav_html.py가 정본 — 여기서 사본을 들고 있으면 메뉴가 바뀔 때마다 어긋난다
 # (실제로 '역대 판세'가 '타임라인'으로 굳어 있었다). 생성 시점에 정본을 불러 쓴다.
@@ -51,6 +52,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:title" content="polis · {name}">
 <meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="/person/{slug}/">
+{jsonld}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
@@ -72,11 +74,9 @@ TEMPLATE = """<!DOCTYPE html>
 <main class="page">
   <section class="intro">
     <h1 id="person-title">{name}</h1>
-    <p class="lede" id="person-sub">불러오는 중…</p>
+    <p class="lede" id="person-sub">{lede}</p>
   </section>
-  <section id="person-body">
-    <div class="detail-empty">불러오는 중…</div>
-  </section>
+  <section id="person-body">{static_body}</section>
   <footer class="foot">
     <p class="fine">비의원·낙선 이력은 <a href="/person.html?name={name}">검색</a>에서.</p>
   </footer>
@@ -93,6 +93,71 @@ TEMPLATE = """<!DOCTYPE html>
 def slugify(name: str, dob: str) -> str:
     """URL slug: 한글 그대로 + dob. e.g. '이재명-1964-12-22'."""
     return f"{name}-{dob}"
+
+
+def esc(s) -> str:
+    return (str(s if s is not None else "")
+            .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;"))
+
+
+def jsonld(p: dict, slug: str, desc: str) -> str:
+    """Person + BreadcrumbList — 검색 결과에 URL 대신 경로가, 인물엔 개체 정보가 붙는다.
+
+    단언할 수 없는 값(직위·소속 현재형)은 넣지 않는다. 이름·생년월일·한자·설명처럼
+    데이터로 확실한 것만 싣는다 — 구조화 데이터의 오류는 신뢰도 페널티로 돌아온다.
+    """
+    url = f"{SITE}/person/{slug}/"
+    person = {"@type": "Person", "name": p["name"], "url": url, "description": desc}
+    if p.get("dob"):
+        person["birthDate"] = p["dob"]
+    if p.get("hanja"):
+        person["alternateName"] = p["hanja"]
+    crumbs = {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "인물 검색", "item": f"{SITE}/search.html"},
+        {"@type": "ListItem", "position": 2, "name": p["name"]},
+    ]}
+    data = {"@context": "https://schema.org", "@graph": [person, crumbs]}
+    return ('<script type="application/ld+json">'
+            + json.dumps(data, ensure_ascii=False) + '</script>')
+
+
+def static_body(p: dict) -> tuple[str, str]:
+    """(lede, 본문 HTML) — 렌더 전에도 읽히는 실제 내용.
+
+    이 페이지들은 원래 inline JSON + person.js로만 내용을 만들었다. 데이터는 HTML 안에
+    있었지만 <script> 안이라 렌더 전에는 텍스트가 아니고, 검색엔진의 렌더 예산은 4,000
+    페이지에 배분되지 않는다. 실제로 구글이 '크롤링됨 - 색인 생성되지 않음'으로 2,190건을
+    보류했다(본문이 nav 빼면 40자). 그래서 같은 내용을 빌드 시점에 HTML로도 찍는다.
+    person.js는 로드되면 #person-body를 자기 렌더로 덮어쓰므로 화면 동작은 그대로다.
+    """
+    races = sorted(p.get("races", []), key=lambda r: (r.get("date") or str(r.get("year") or "")))
+    years = [r.get("year") for r in races if r.get("year")]
+    span = f"{min(years)}~{max(years)}년 " if years else ""
+    parties = p.get("parties") or []
+    wins, losses = p.get("wins", 0), p.get("losses", 0)
+    lede_bits = [f"{span}{len(races)}회 출마 · {wins}회 당선 · {losses}회 낙선"]
+    if parties:
+        lede_bits.append(" · ".join(parties[:4]))
+    lede = esc(" — ".join(lede_bits))
+
+    rows = []
+    for r in races:
+        tag = "당선" if r.get("won") else "낙선"
+        pct = f"{float(r['pct']):.1f}%" if r.get("pct") is not None else "—"
+        rank = f"{r['rank']}위" if r.get("rank") and r["rank"] < 99 else ""
+        rows.append(
+            f'<tr><td>{esc(r.get("year") or "")}</td>'
+            f'<td><a href="/archive/{esc(r.get("eid"))}/">{esc(r.get("round") or r.get("eid"))}</a></td>'
+            f'<td>{esc(r.get("place") or "")}</td>'
+            f'<td>{esc(r.get("party") or "")}</td>'
+            f'<td>{pct}</td><td>{esc(rank)}</td><td>{tag}</td></tr>')
+    table = (
+        '<table class="pp-static"><caption>출마 이력</caption><thead><tr>'
+        '<th>연도</th><th>선거</th><th>지역</th><th>정당</th><th>득표율</th>'
+        '<th>순위</th><th>결과</th></tr></thead><tbody>'
+        + "".join(rows) + "</tbody></table>")
+    return lede, table
 
 
 def main():
@@ -122,12 +187,17 @@ def main():
             f"{p['name']} 출마·당선 이력. {p['wins']}당선·{p['losses']}낙선 "
             f"· {' · '.join(parties)} · {len(p['races'])}회"
         )
+        lede, body = static_body(p)
+        ld = jsonld(p, slug, desc)
         html = TEMPLATE.format(
             nav=render_nav(menu_for_path(f"person/{slug}/index.html")),
             name=p["name"],
             desc=desc,
             slug=slug,
             data_json=data_json,
+            lede=lede,
+            static_body=body,
+            jsonld=ld,
         )
         (page_dir / "index.html").write_text(html, encoding="utf-8")
         sitemap_urls.append(f"/person/{slug}/")

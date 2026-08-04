@@ -20,6 +20,7 @@ polls.html / history.html 자체는 그대로 — 기본(광역/대선) 페이�
 """
 from __future__ import annotations
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -200,8 +201,53 @@ def build_poll_elections(urls: list):
     print(f'poll-elections: {len(made)} ({", ".join(m["slug"] for m in made_sorted)})')
 
 
+
+# --- 프리렌더 본문 주입 -------------------------------------------------------
+# history 프리렌더 66개는 title/desc만 다르고 <body> 텍스트가 서로 완전히 같았다.
+# 구글이 '크롤링됨 - 색인 생성되지 않음'으로 대거 보류한 직접 원인이다(중복 콘텐츠).
+# 회차별 사실(당선인·투표율·날짜)을 intro에 찍어 페이지마다 다른 내용을 갖게 하고,
+# 해당 회차 아카이브로 나가는 링크도 함께 넣는다(내부 링크 심도 개선).
+
+def _esc(x) -> str:
+    return (str(x if x is not None else '').replace('&', '&amp;')
+            .replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;'))
+
+
+def archive_slug_map() -> dict:
+    """(type, n) → archive slug. 없으면 링크를 걸지 않는다."""
+    try:
+        idx = json.loads((ROOT / 'data/archive_index.json').read_text(encoding='utf-8'))
+    except Exception:
+        return {}
+    return {(a.get('type'), a.get('n')): a.get('slug') for a in idx if a.get('slug')}
+
+
+def intro_block(h1: str, lede: str, extra: str = '') -> str:
+    return (f'<section class="intro">\n    <h1>{h1}</h1>\n'
+            f'    <p class="lede">{lede}</p>\n{extra}  </section>')
+
+
+def breadcrumb_ld(trail: list) -> str:
+    """BreadcrumbList — 검색 결과에 URL 대신 경로가 표시되게 한다."""
+    items = [{'@type': 'ListItem', 'position': i + 1, 'name': name,
+              **({'item': SITE + url} if url else {})}
+             for i, (name, url) in enumerate(trail)]
+    data = {'@context': 'https://schema.org', '@type': 'BreadcrumbList',
+            'itemListElement': items}
+    return ('<script type="application/ld+json">'
+            + json.dumps(data, ensure_ascii=False) + '</script>')
+
+
+def inject_body(html: str, intro: str, jsonld: str = '') -> str:
+    html = re.sub(r'<section class="intro">[\s\S]*?</section>', intro, html, count=1)
+    if jsonld:
+        html = html.replace('</head>', jsonld + '\n</head>', 1)
+    return html
+
+
 def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
+    slugs = archive_slug_map()
     n_made = 0
     urls.append(('/history.html', '0.7', 'monthly'))
     # manifest(지도 데이터 보유분) 대신 elections.json 전체 회차를 페이지로 — 간선 대선(1·4·8~12 등)
@@ -226,7 +272,20 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     desc = f'{n}회 전국동시지방선거 {office_ko} 결과 ({el_date}) — 시군구 hex 격자 시각화.'
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
                     init_state = {'type': type_key, 'n': n, 'office': office_ko}
-                    html = replace_meta(template, title, desc, canon, init_state)
+                    turnout = meta.get('turnout')
+                    bits = [f'{el_date} 실시']
+                    if turnout:
+                        bits.append(f'투표율 {turnout}%')
+                    slug = slugs.get((type_key, n))
+                    extra = ('    <p class="lede"><a href="/archive/' + slug + '/">'
+                             f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
+                    intro = intro_block(f'{n}회 {type_short} {office_ko}',
+                                        _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
+                    ld = breadcrumb_ld([('역대 결과', '/history.html'),
+                                        (f'{n}회 {type_short}', None),
+                                        (office_ko, None)])
+                    html = inject_body(replace_meta(template, title, desc, canon, init_state),
+                                       intro, ld)
                     write_page(ROOT / 'history' / type_slug / str(n) / off_slug / 'index.html', html)
                     urls.append((canon, '0.6', 'yearly'))
                     n_made += 1
@@ -238,7 +297,28 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 desc = f'{n}{unit} {type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
                 canon = f'/history/{type_slug}/{n}/'
                 init_state = {'type': type_key, 'n': n}
-                html = replace_meta(template, title, desc, canon, init_state)
+                turnout = meta.get('turnout')
+                bits = [f'{el_date} 실시']
+                if winner:
+                    wp = meta.get('winner_party')
+                    bits.append(f'{winner}({wp}) 당선' if wp else f'{winner} 당선')
+                if meta.get('seats'):
+                    bits.append(f"의석 {meta['seats']}")
+                if turnout:
+                    bits.append(f'투표율 {turnout}%')
+                if meta.get('indirect'):
+                    bits.append('간선')
+                if meta.get('note'):
+                    bits.append(str(meta['note']))
+                slug = slugs.get((type_key, n))
+                extra = ('    <p class="lede"><a href="/archive/' + slug + '/">'
+                         f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
+                intro = intro_block(f'{n}{unit} {type_short}',
+                                    _esc(' · '.join(bits)), extra)
+                ld = breadcrumb_ld([('역대 결과', '/history.html'),
+                                    (f'{n}{unit} {type_short}', None)])
+                html = inject_body(replace_meta(template, title, desc, canon, init_state),
+                                   intro, ld)
                 write_page(ROOT / 'history' / type_slug / str(n) / 'index.html', html)
                 urls.append((canon, '0.6', 'yearly'))
                 n_made += 1

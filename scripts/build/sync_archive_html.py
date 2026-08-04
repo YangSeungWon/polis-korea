@@ -64,14 +64,29 @@ def derive(meta: dict) -> dict:
         breadcrumb = (f'<a href="/byelection/">재·보궐</a> · '
                       f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
     else:
-        breadcrumb = (f'<a href="/timeline.html">타임라인</a> · '
+        breadcrumb = (f'<a href="/timeline.html">역대 판세</a> · '
                       f'<a href="/history.html?type={km["history_type"]}&n={meta["n"]}">역대 선거</a> · '
                       f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
     # 선거별 결과지도 og 카드(build_og_maps.py 생성). 없으면(지도 없는 옛 회차) 일반 카드.
     _og = ROOT / "og" / f'{meta["id"]}.png'
     og_image = (f'https://polis.ysw.kr/og/{meta["id"]}.png' if _og.exists()
                 else "https://polis.ysw.kr/og.png")
+    # 화면 breadcrumb과 같은 경로를 기계가 읽을 수 있게 — 검색 결과에 URL 대신 경로가 뜬다.
+    if kind == "byelection":
+        trail = [("재·보궐", "/byelection/"), (f'{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브', None)]
+    else:
+        trail = [("역대 판세", "/timeline.html"),
+                 ("역대 선거", f'/history.html?type={km["history_type"]}&n={meta["n"]}'),
+                 (f'{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브', None)]
+    SITE = "https://polis.ysw.kr"
+    ld = {"@context": "https://schema.org", "@type": "BreadcrumbList",
+          "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "name": nm,
+               **({"item": SITE + u} if u else {})}
+              for i, (nm, u) in enumerate(trail)]}
     return {
+        "breadcrumb_ld": ('<script type="application/ld+json">'
+                          + json.dumps(ld, ensure_ascii=False) + '</script>'),
         "breadcrumb": breadcrumb,
         "id": meta["id"],
         "og_image": og_image,
@@ -116,6 +131,7 @@ HEAD = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{og_image}">
 <link rel="canonical" href="/archive/{id}/">
+{breadcrumb_ld}
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">

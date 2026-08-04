@@ -147,3 +147,20 @@ a.pp-party:hover { background: var(--bg2); }
 @media (max-width: 700px) {
   .pp-pledge-body { padding-left: 0; }
 }
+
+/* 빌드 시점에 찍는 정적 출마 이력 표 — person.js가 로드되면 같은 자리를 자기 렌더로
+   덮어쓴다. 검색엔진과 JS 비활성 환경에서 실제 내용이 읽히게 하는 것이 목적이라,
+   화면에 잠깐 보여도 어색하지 않을 만큼만 꾸민다. */
+.pp-static { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.pp-static caption {
+  text-align: left; font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  padding-bottom: 6px;
+}
+.pp-static th {
+  text-align: left; font-size: 11px; font-weight: 700; color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule); padding: 5px 8px 5px 0; white-space: nowrap;
+}
+.pp-static td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--rule); }
+.pp-static td:nth-child(5), .pp-static td:nth-child(6) { font-variant-numeric: tabular-nums; }
+.pp-static a { color: inherit; text-decoration: none; }
+.pp-static a:hover { text-decoration: underline; }
