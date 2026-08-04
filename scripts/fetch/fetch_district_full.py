@@ -44,7 +44,7 @@ def fetch_district(key: str, sg_id: str, sido: str, sgg_name: str) -> dict | Non
     sd_enc = urllib.parse.quote(sido)
     sg_enc = urllib.parse.quote(sgg_name)
     url = (f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode=2"
-           f"&sdName={sd_enc}&sggName={sg_enc}&pageNo=1&numOfRows=10")
+           f"&sdName={sd_enc}&sggName={sg_enc}&pageNo=1&numOfRows=10&resultType=xml")
     try:
         r = urllib.request.urlopen(url, timeout=30)
     except urllib.error.HTTPError as e:

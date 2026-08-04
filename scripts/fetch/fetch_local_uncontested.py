@@ -60,7 +60,7 @@ def fetch_api(key: str, sg_id: str, tc: str) -> list[dict]:
     """무투표 후보 list 또는 빈 list (API 미공개)."""
     qs = urllib.parse.urlencode({
         "serviceKey": key, "sgId": sg_id, "sgTypecode": tc,
-        "pageNo": 1, "numOfRows": 1000,
+        "pageNo": 1, "numOfRows": 1000, "resultType": "xml",
     })
     try:
         with urllib.request.urlopen(f"{API}?{qs}", timeout=20) as r:

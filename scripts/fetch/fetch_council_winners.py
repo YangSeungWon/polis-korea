@@ -56,7 +56,7 @@ def fetch_winners(key: str, sg_id: str):
     page, total = 1, 0
     while True:
         url = (f"{API}?serviceKey={key}&sgId={sg_id}&sgTypecode=6"
-               f"&pageNo={page}&numOfRows=100")
+               f"&pageNo={page}&numOfRows=100&resultType=xml")
         root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read())
         if root.findtext("header/resultCode") != "INFO-00":
             break
@@ -85,7 +85,7 @@ def fetch_winners_full(key: str, sg_id: str):
     out, page, total = [], 1, 0
     while True:
         url = (f"{API}?serviceKey={key}&sgId={sg_id}&sgTypecode=6"
-               f"&pageNo={page}&numOfRows=100")
+               f"&pageNo={page}&numOfRows=100&resultType=xml")
         root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read())
         if root.findtext("header/resultCode") != "INFO-00":
             break

@@ -82,7 +82,7 @@ def fetch_metro_prop(key: str, sg_id: str, canon):
     page = 1
     while True:
         url = (f"{API}?serviceKey={key}&sgId={sg_id}&sgTypecode=8"
-               f"&pageNo={page}&numOfRows=100")
+               f"&pageNo={page}&numOfRows=100&resultType=xml")
         root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read())
         if root.findtext("header/resultCode") != "INFO-00":
             break

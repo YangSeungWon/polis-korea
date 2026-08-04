@@ -37,7 +37,7 @@ def fetch_rows(key, sg_id, tc):
     out, page, total = [], 1, None
     while True:
         p = {"serviceKey": key, "pageNo": page, "numOfRows": 100,
-             "sgId": sg_id, "sgTypecode": tc}
+             "sgId": sg_id, "sgTypecode": tc, "resultType": "xml"}
         url = API + "?" + urllib.parse.urlencode(p, safe="")
         root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read().decode("utf-8", "replace"))
         items = root.findall(".//item")

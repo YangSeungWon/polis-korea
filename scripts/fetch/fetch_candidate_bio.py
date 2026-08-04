@@ -43,7 +43,7 @@ def save_cache(done, records):
 
 
 def fetch_name(key, name):
-    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100"
+    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100&resultType=xml"
     with urllib.request.urlopen(url, timeout=20) as r:
         x = r.read().decode("utf-8", "replace")
     if "INFO-03" in x:        # 데이터 없음(그 이름 후보 없음) — 정상, 빈 결과

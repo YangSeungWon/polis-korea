@@ -46,7 +46,7 @@ def _load_api_key() -> str:
 
 
 def fetch_name(key: str, name: str) -> list[dict]:
-    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100"
+    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100&resultType=xml"
     try:
         xml = urllib.request.urlopen(url, timeout=30).read()
     except Exception as e:

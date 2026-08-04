@@ -39,7 +39,7 @@ ELECTION_DATES = {
 def fetch_uncontested(key: str, sg_id: str, sg_typecode: int = 2) -> list[dict]:
     """무투표 당선 선거구 list. sgTypecode=2 국회의원."""
     url = (f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}"
-           f"&pageNo=1&numOfRows=100")
+           f"&pageNo=1&numOfRows=100&resultType=xml")
     root = ET.fromstring(urllib.request.urlopen(url, timeout=30).read())
     if root.findtext("header/resultCode") != "INFO-00":
         print(f"  ! API {root.findtext('header/resultMsg')}", file=sys.stderr)

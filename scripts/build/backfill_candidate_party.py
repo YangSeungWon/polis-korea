@@ -48,7 +48,7 @@ def resolve_office(rows: list[dict], sido: str) -> str:
 
 def fetch_name(key: str, name: str) -> list[dict]:
     """그 이름의 모든 출마 이력 (sdName·sggName·jdName·sgId)."""
-    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100"
+    url = f"{API}?serviceKey={key}&name={urllib.parse.quote(name)}&pageNo=1&numOfRows=100&resultType=xml"
     try:
         root = ET.fromstring(urllib.request.urlopen(url, timeout=30).read())
     except Exception as e:

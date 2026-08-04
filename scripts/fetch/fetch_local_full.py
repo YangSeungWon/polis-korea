@@ -87,7 +87,7 @@ def fetch(key: str, sg_id: str, sg_typecode: int, sido: str,
         sd_enc = urllib.parse.quote(sido)
         sg_enc = urllib.parse.quote(sgg_name) if sgg_name else ""
         url = (f"{API}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}"
-               f"&sdName={sd_enc}&pageNo={page}&numOfRows=200")
+               f"&sdName={sd_enc}&pageNo={page}&numOfRows=200&resultType=xml")
         if sgg_name:
             url += f"&sggName={sg_enc}"
         try:

@@ -56,7 +56,7 @@ def fetch_sido(key: str, sg_id: str, sido: str, sg_typecode: int = 2) -> list[di
     page = 1
     while True:
         sd_enc = urllib.parse.quote(sido)
-        url = f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}&sdName={sd_enc}&pageNo={page}&numOfRows=100"
+        url = f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}&sdName={sd_enc}&pageNo={page}&numOfRows=100&resultType=xml"
         try:
             r = urllib.request.urlopen(url, timeout=30)
         except urllib.error.HTTPError as e:

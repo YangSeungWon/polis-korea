@@ -88,7 +88,7 @@ def fetch_seats(key: str, sg_id: str) -> dict:
     out = defaultdict(lambda: defaultdict(int))
     page = 1
     while True:
-        url = f"{WINNER_API}?serviceKey={key}&sgId={sg_id}&sgTypecode=8&pageNo={page}&numOfRows=100"
+        url = f"{WINNER_API}?serviceKey={key}&sgId={sg_id}&sgTypecode=8&pageNo={page}&numOfRows=100&resultType=xml"
         root = ET.fromstring(urllib.request.urlopen(url, timeout=40).read())
         if root.findtext("header/resultCode") != "INFO-00":
             break

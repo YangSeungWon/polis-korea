@@ -37,7 +37,7 @@ SG_TYPECODE = {  # 우리 office → 무투표 API code
 
 def fetch_uncontested(key: str, sg_id: str, sg_typecode: str) -> list[dict]:
     """무투표선거구 당선자 list 반환."""
-    url = f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}&pageNo=1&numOfRows=200"
+    url = f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode={sg_typecode}&pageNo=1&numOfRows=200&resultType=xml"
     r = urllib.request.urlopen(url, timeout=30)
     root = ET.fromstring(r.read())
     code = root.findtext("header/resultCode")

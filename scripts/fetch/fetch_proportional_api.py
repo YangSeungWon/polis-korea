@@ -40,7 +40,7 @@ def fetch_proportional(key: str, sg_id: str) -> dict[str, int]:
         while True:
             sd_enc = urllib.parse.quote(sd)
             url = (f"{API_URL}?serviceKey={key}&sgId={sg_id}&sgTypecode=7"
-                   f"&sdName={sd_enc}&pageNo={page}&numOfRows=100")
+                   f"&sdName={sd_enc}&pageNo={page}&numOfRows=100&resultType=xml")
             try:
                 r = urllib.request.urlopen(url, timeout=30)
             except urllib.error.HTTPError:
