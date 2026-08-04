@@ -6,7 +6,7 @@
 
 | 단계 | 기간 | 데이터 소스 | 자동화 |
 |---|---|---|---|
-| 0 사전 | D-180 ~ D-1 | NESDC 여론조사 | `daily-refresh.yml` |
+| 0 사전·캡처 | D-180 ~ archive | NESDC 여론조사 · NEC 선거공약 | `daily-refresh.yml` · **`pledge-capture.yml`** |
 | 1 개표 | D-day ~ D+7 | info.nec.go.kr 라이브(잠정) | `election-results-poll.yml` |
 | 2 확정 대기 | D+7 ~ OpenAPI 게시 | NEC OpenAPI probe | **`election-finalize.yml`** (매일) |
 | 3 역사 편입 | 확정 후 | 고정 | 없음 — 자동 잡 금지 |
@@ -22,6 +22,27 @@
 # 2단계 수동 실행 — 게시 전이면 no-op, 게시됐으면 승격까지
 python3 scripts/build/finalize_election.py --auto --dry-run
 python3 scripts/build/finalize_election.py --auto
+```
+
+### 0단계에 시한이 있다 — 낙선자 공약
+
+NEC 선거공약 API의 **낙선자 공약은 시간이 지나면 사라진다.** 문서는 "종료된 선거는
+당선인 공약만"이라고 하지만 실제로는 한동안 남아 있다가 없어진다. 2026-08-04 실측:
+
+| 회차 | 경과 | 낙선자 공약 |
+|---|---|---|
+| 9회 지선 (2026-06) | 2개월 | 살아 있음 |
+| 21대 대선 (2025-06) | 14개월 | 없음 |
+| 8회·7회 지선 (2022·2018) | — | 없음 |
+
+소멸 시점은 2~14개월 사이고 **한 번 사라지면 복구 수단이 없다.** `pledge-capture.yml`이
+active 회차를 매일 훑는 이유다. 새 선거를 active에 올리면 자동으로 캡처가 시작되고,
+archive로 내리기 전에 반드시 한 번은 돌았는지 확인할 것.
+
+```bash
+python3 scripts/fetch/fetch_pledges.py --active --all-candidates   # 0단계 (전 후보)
+python3 scripts/fetch/fetch_pledges.py --election <id>             # 3단계 (당선인 백필)
+python3 scripts/build/build_person_pledges.py                      # 인물별 재색인
 ```
 
 > 지방의원·비례(tc 5·6·8·9)가 있는 회차는 개표 API만으론 무투표·중선거구 당선·비례

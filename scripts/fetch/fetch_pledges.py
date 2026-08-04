@@ -5,20 +5,31 @@
 제약 (실측 확인):
   · 공약서 제출 대상은 sg_typecode 1(대통령)·3(시도지사)·4(구시군의장)·11(교육감)뿐.
     총선·지방의원·비례는 아예 없다.
-  · **종료된 선거는 당선인 공약만** 제공된다. 낙선자 공약은 선거 기간에만 받을 수 있고
-    끝나면 영구히 사라진다(20대 대선 이재명 → INFO-03 확인). 후보 간 공약 비교가
-    필요하면 선거 기간 중에 별도로 회수해 둬야 한다.
+  · **낙선자 공약은 시한부다.** 문서는 "종료된 선거는 당선인 공약만"이라고 하지만
+    실제로는 선거 후 한동안 남아 있다가 사라진다. 2026-08-04 기준 실측:
+        9회 지선(2026-06, 2개월 전)  → 낙선자 공약 살아 있음
+        21대 대선(2025-06, 14개월 전) → 없음
+        8회·7회 지선(2022·2018)       → 없음
+    소멸 시점은 2개월~14개월 사이 어딘가다. 한 번 사라지면 복구 수단이 없으므로
+    **선거가 끝나면 되도록 빨리** --all-candidates로 훑어 둬야 한다(0단계).
   · 2017년(19대 대선)이 하한선. 2014년 6회 지선·2007년 17대 대선은 INFO-03.
 
-조인 키: cnddtId = WinnerInfoInqireService2의 huboid. 당선인 명부에서 huboid를 받아
-        공약 API에 넣는 2단 구조다.
+조인 키: cnddtId = 명부 API의 huboid. 명부에서 huboid를 받아 공약 API에 넣는 2단 구조.
+  · 당선인 명부  WinnerInfoInqireService2      — 사후 백필용(3단계)
+  · 등록 후보 명부 PofelcddInfoInqireService    — 선거 기간 캡처용(0단계·낙선자 포함)
 
 함정: 공약 본문 필드는 문서상 prmsCont{i}이나 실제 응답은 prmmCont{i}다. 둘 다 읽는다.
 
 사용:
-  python3 scripts/fetch/fetch_pledges.py                      # 대상 회차 전체
+  # 3단계 — 끝난 선거 당선인 백필
+  python3 scripts/fetch/fetch_pledges.py
   python3 scripts/fetch/fetch_pledges.py --election 9th-local-2026
-  python3 scripts/fetch/fetch_pledges.py --dry-run            # 회차·인원만 출력
+
+  # 0단계 — 선거 기간 중 전 후보 캡처 (이때만 낙선자 공약을 잡을 수 있다)
+  python3 scripts/fetch/fetch_pledges.py --active --all-candidates
+
+이어받기: 기존 파일의 인물은 건너뛰고 새로 등록된 후보만 받는다. 0단계로 잡아 둔
+낙선자는 이후 당선인 백필이 돌아도 지워지지 않는다(_meta.scope도 all_candidates 유지).
 """
 from __future__ import annotations
 import argparse
@@ -37,6 +48,9 @@ OUT_DIR = ROOT / "data/pledges"
 
 BASE = "https://apis.data.go.kr/9760000"
 WINNER = f"{BASE}/WinnerInfoInqireService2/getWinnerInfoInqire"
+# 전 후보 등록 명부 — 당선인 명부와 달리 낙선자까지 huboid로 열거된다.
+# 낙선자 공약은 선거가 끝나면 사라지므로 '선거 기간 중' 캡처(0단계)는 이걸 써야 한다.
+CANDIDATE = f"{BASE}/PofelcddInfoInqireService/getPofelcddRegistSttusInfoInqire"
 PLEDGE = f"{BASE}/ElecPrmsInfoInqireService/getCnddtElecPrmsInfoInqire"
 
 # 선거공약서 제출 대상 직.
@@ -51,6 +65,7 @@ MAX_SLOTS = 10
 # 해소되면 이 목록에서 지우면 자동으로 다시 받는다.
 KNOWN_UPSTREAM_ERROR = {
     "100162500": "9회 대구 교육감 강은희 — NEC API 502 (2026-08-04 확인)",
+    "100153751": "9회 경남 교육감 오인태 — NEC API 502 (2026-08-04 확인)",
 }
 
 
@@ -101,6 +116,29 @@ def fetch_winners(key: str, sg_id: str, tc: str) -> list[dict]:
     return out
 
 
+def fetch_candidates(key: str, sg_id: str, tc: str) -> list[dict]:
+    """등록 후보 전체(낙선자 포함) — 0단계 캡처용. 페이지네이션 자동."""
+    out, page = [], 1
+    while page <= 60:
+        url = (f"{CANDIDATE}?serviceKey={key}&sgId={sg_id}&sgTypecode={tc}"
+               f"&pageNo={page}&numOfRows=100&resultType=xml")
+        root = _get(url)
+        if root.findtext(".//resultCode") != "INFO-00":
+            break
+        items = root.findall(".//item")
+        if not items:
+            break
+        for it in items:
+            g = lambda t: (it.findtext(t) or "").strip()
+            out.append({"cnddt_id": g("huboid"), "name": g("name"), "party": g("jdName"),
+                        "sido": g("sdName"), "sigungu": g("wiwName"), "sgg_name": g("sggName")})
+        total = int(root.findtext(".//totalCount") or 0)
+        if page * 100 >= total:
+            break
+        page += 1
+    return out
+
+
 def fetch_pledges(key: str, sg_id: str, tc: str, cnddt_id: str) -> tuple[list[dict], str]:
     """한 사람의 공약 리스트. (pledges, resultCode)."""
     url = (f"{PLEDGE}?serviceKey={key}&sgId={sg_id}&sgTypecode={tc}"
@@ -127,12 +165,20 @@ def fetch_pledges(key: str, sg_id: str, tc: str, cnddt_id: str) -> tuple[list[di
     return out, code
 
 
-def targets(only: str | None) -> list[dict]:
+def targets(only: str | None, active_only: bool) -> list[dict]:
     """공약 회수 대상 (선거 메타, 직 목록)."""
+    active = set()
+    if active_only:
+        idx = json.loads((ELECTIONS_DIR / "index.json").read_text(encoding="utf-8"))
+        active = set(idx.get("active") or [])
     out = []
     for p in sorted(ELECTIONS_DIR.glob("*.json")):
+        if p.name == "index.json":
+            continue
         meta = json.loads(p.read_text(encoding="utf-8"))
         if only and meta.get("id") != only:
+            continue
+        if active_only and meta.get("id") not in active:
             continue
         sg_id = (meta.get("nec") or {}).get("sg_id", "")
         if not sg_id or sg_id < MIN_SG_ID:
@@ -147,7 +193,11 @@ def targets(only: str | None) -> list[dict]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--election", help="특정 회차만 (data/elections/{id}.json)")
-    ap.add_argument("--dry-run", action="store_true", help="대상 회차·당선인 수만 출력")
+    ap.add_argument("--dry-run", action="store_true", help="대상 회차·인원만 출력")
+    ap.add_argument("--all-candidates", action="store_true",
+                    help="당선인이 아니라 등록 후보 전체 (0단계 — 선거 기간 중에만 유효)")
+    ap.add_argument("--active", action="store_true",
+                    help="elections/index.json의 active 회차만 (0단계 자동화용)")
     ap.add_argument("--delay", type=float, default=0.25, help="요청 간 지연")
     args = ap.parse_args()
 
@@ -156,8 +206,12 @@ def main():
         print("ERR: NEC_API_KEY 미설정 (.env)", file=sys.stderr)
         sys.exit(1)
 
-    tg = targets(args.election)
+    tg = targets(args.election, args.active)
     if not tg:
+        if args.active:
+            # 진행 중인 선거가 없는 평시 — 정상 상태다. 매일 도는 잡을 실패시키지 않는다.
+            print("active 회차 없음 — 할 일 없음", file=sys.stderr)
+            return
         print("대상 회차 없음 — --election 오타이거나 2017년 이전", file=sys.stderr)
         sys.exit(1)
     print(f"=== 공약 회수 대상 {len(tg)}개 회차 ===", file=sys.stderr)
@@ -170,21 +224,25 @@ def main():
         meta, sg_id = t["meta"], t["sg_id"]
         fp = OUT_DIR / f"{meta['id']}.json"
         # 이어받기 — 이미 회수한 사람은 건너뛴다. NEC가 502를 내도 진행분이 남는다.
-        people, n_pledge, empty = [], 0, 0
+        people, n_pledge, empty, prev_scope, n_roster = [], 0, 0, None, 0
         if fp.exists() and not args.dry_run:
             prev = json.loads(fp.read_text(encoding="utf-8"))
             people = prev.get("people", [])
+            prev_scope = (prev.get("_meta") or {}).get("roster_scope")
             n_pledge = sum(len(p.get("pledges") or []) for p in people)
             empty = int((prev.get("_meta") or {}).get("n_without_pledges") or 0)
         done = {p["cnddt_id"] for p in people}
+        roster = "등록 후보" if args.all_candidates else "당선인"
         for tc in t["typecodes"]:
-            ws = fetch_winners(key, sg_id, tc)
+            ws = (fetch_candidates(key, sg_id, tc) if args.all_candidates
+                  else fetch_winners(key, sg_id, tc))
             if not ws:
-                print(f"  {meta['id']} tc{tc}: 당선인 명부 없음 — skip", file=sys.stderr)
+                print(f"  {meta['id']} tc{tc}: {roster} 명부 없음 — skip", file=sys.stderr)
                 continue
             if args.dry_run:
-                print(f"  {meta['id']} tc{tc}: 당선인 {len(ws)}명 [dry]", file=sys.stderr)
+                print(f"  {meta['id']} tc{tc}: {roster} {len(ws)}명 [dry]", file=sys.stderr)
                 continue
+            n_roster += len(ws)
             got = skipped = 0
             for w in ws:
                 if w["cnddt_id"] in done:
@@ -217,8 +275,15 @@ def main():
                 "election_date": meta["date"], "sg_id": sg_id,
                 "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
                 "source": "nec-openapi-ElecPrmsInfoInqireService",
-                "scope": "winners_only",
-                "_note": "종료된 선거는 당선인 공약만 제공된다 — 낙선자 공약은 API에 없음",
+                # 어느 명부로 훑었는지. 한 번이라도 전 후보로 받았으면 유지한다 — 나중에
+                # 당선인 백필이 돌아도 이미 잡아 둔 낙선자 공약의 가치를 지우지 않기 위해.
+                # '전 후보를 훑었다'와 '전 후보 공약을 가졌다'는 다르다 — 선거가 끝난 뒤
+                # 훑으면 낙선자는 INFO-03이라 n_roster와 n_people 격차로 드러난다.
+                "roster_scope": ("all_candidates"
+                                 if (args.all_candidates or prev_scope == "all_candidates")
+                                 else "winners_only"),
+                "n_roster": n_roster,
+                "_note": "종료된 선거는 당선인 공약만 제공된다 — 낙선자 공약은 선거 기간 중에만 회수 가능",
                 "n_people": len(people), "n_pledges": n_pledge,
                 "n_without_pledges": empty,
             },

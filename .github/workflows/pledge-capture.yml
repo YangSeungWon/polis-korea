@@ -1,0 +1,78 @@
+name: Pledge capture (선거공약 캡처)
+
+# 선거 생애주기 0단계 — '사라지기 전에 잡는다'.
+#
+# NEC 선거공약 API의 낙선자 공약은 시한부다. 문서는 "종료된 선거는 당선인 공약만"이라고
+# 하지만 실제로는 선거 후 한동안 남아 있다가 사라진다. 2026-08-04 실측:
+#     9회 지선(2개월 전)   → 낙선자 공약 살아 있음
+#     21대 대선(14개월 전) → 없음 / 8회·7회 지선 → 없음
+# 소멸 시점은 2~14개월 사이 어딘가고, 한 번 사라지면 복구 수단이 없다. 그래서 active
+# 회차가 있는 동안 매일 전 후보를 훑어 둔다. 공약서 제출 시점(후보 등록 직후)부터 계속
+# 돌면 등록 순서대로 채워지고, 이미 받은 사람은 건너뛴다.
+#
+# 대상은 data/elections/index.json의 active 배열. 평시(active 없음)엔 즉시 no-op.
+
+on:
+  schedule:
+    # 매일 23:40 UTC (08:40 KST) — finalize(23:10) 뒤. 같은 날 승격된 결과와
+    # 커밋이 겹치지 않도록 순서를 준다.
+    - cron: '40 23 * * *'
+  workflow_dispatch:
+    inputs:
+      election:
+        description: '특정 회차만 (비우면 active 전체)'
+        required: false
+
+concurrency:
+  group: pledge-capture
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Capture pledges (전 후보)
+        env:
+          NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
+        run: |
+          set -e
+          if [ -n "${{ github.event.inputs.election }}" ]; then
+            python scripts/fetch/fetch_pledges.py --all-candidates \
+              --election "${{ github.event.inputs.election }}"
+          else
+            python scripts/fetch/fetch_pledges.py --all-candidates --active
+          fi
+
+      - name: 인물별 재색인
+        run: python scripts/build/build_person_pledges.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "polis-bot"
+          git config user.email "noreply@anthropic.com"
+          git add data/pledges/ assets/pledges-index.json
+          if git diff --staged --quiet; then
+            echo "변경 없음 — 신규 등록 후보나 신규 공약이 없다"
+          else
+            git commit -m "공약 캡처 (자동): $(date -u +%Y-%m-%d)"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash origin master && git push; then ok=1; break; fi
+              echo "push 레이스 — 재시도 $i/3"; sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "push 3회 실패"; exit 1; }
+          fi

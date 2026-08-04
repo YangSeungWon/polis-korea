@@ -33,12 +33,12 @@ def norm(s: str) -> str:
 
 def main():
     persons = json.loads(INDEX.read_text(encoding="utf-8")).get("persons", [])
-    # (이름, eid, tc) → 그 회차 그 직에서 당선한 인물 entry들
+    # (이름, eid, tc) → 그 회차 그 직에 출마한 인물 entry들.
+    # 당선 여부로 거르지 않는다 — 0단계 캡처로 낙선자 공약도 들어오기 때문.
     by_win: dict[tuple, list] = defaultdict(list)
     for p in persons:
         for r in p.get("races", []):
-            if r.get("won"):
-                by_win[(norm(p["name"]), r.get("eid"), r.get("tc"))].append(p)
+            by_win[(norm(p["name"]), r.get("eid"), r.get("tc"))].append(p)
 
     per_person: dict[str, dict] = {}
     matched = unmatched = 0
