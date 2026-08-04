@@ -243,6 +243,7 @@ function renderCards() {
     const electors = result.electors || 0, voted = result.voters || 0;
     const turnout = electors ? (voted / electors * 100) : 0;
     const c1 = partyColor(r1.party);
+    const t1 = (typeof partyTextColor === 'function') ? partyTextColor(r1.party) : c1;
     const hit = top && top.party === r1.party ? '여론조사 적중 ✓' : (top ? '여론조사 빗나감 ✗' : '');
     html += `<div class="boe-result">
       <div class="boe-result-hdr">
@@ -251,14 +252,14 @@ function renderCards() {
       </div>
       <div class="boe-result-row">
         <span class="boe-rank">1위</span>
-        <span class="boe-name" style="color:${c1};font-weight:700">${r1.name}</span>
-        <span class="boe-party" style="color:${c1}">${r1.party}</span>
+        <span class="boe-name" style="color:${t1};font-weight:700">${r1.name}</span>
+        <span class="boe-party" style="color:${t1}">${r1.party}</span>
         <span class="boe-pct">${(r1.pct || 0).toFixed(2)}%</span>
       </div>
       ${r2 ? `<div class="boe-result-row">
         <span class="boe-rank">2위</span>
         <span class="boe-name">${r2.name}</span>
-        <span class="boe-party" style="color:${partyColor(r2.party)}">${r2.party}</span>
+        <span class="boe-party" style="color:${(typeof partyTextColor === 'function') ? partyTextColor(r2.party) : partyColor(r2.party)}">${r2.party}</span>
         <span class="boe-pct">${(r2.pct || 0).toFixed(2)}%</span>
       </div>` : ''}
       ${margin != null ? `<div class="boe-result-margin">격차 ${margin.toFixed(2)}%p</div>` : ''}

@@ -73,7 +73,9 @@
 
   function partyBadge(party) {
     const col = (typeof partyColor === 'function') ? partyColor(party) : '#888';
-    return `<span class="s-party" style="color:${col};border-color:${col}">${party || '무소속'}</span>`;
+    // 테두리는 마크(원색), 글씨는 대비 보정색 — 원색 글씨는 대비가 안 나온다.
+    const tcol = (typeof partyTextColor === 'function') ? partyTextColor(party) : col;
+    return `<span class="s-party" style="color:${tcol};border-color:${col}">${party || '무소속'}</span>`;
   }
 
   function render(rawQ) {

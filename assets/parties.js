@@ -244,22 +244,51 @@ function partyTextColor(party, date) {
   if (party === '무소속' || c === PARTY_FALLBACK) return _detectDarkTheme() ? '#9aa0aa' : '#4a4a4a';
   return _textLegible(c);  // 정의당 노랑(고휘도) 등 글씨 대비 보정 (라이트=어둡게·다크=밝게)
 }
-// 글씨용 색 보정 — 페이지 배경 대비를 YIQ 휘도로 확보. legibleColor는 HSL-lightness 기준이라
-// 정의당 노랑(#FFED00, l=0.5지만 휘도 215)을 못 잡음 → 텍스트는 휘도로 명도 반복 조정.
+// 글씨용 색 보정 — **실제 대비(WCAG)로** 확보한다.
+//
+// 예전에는 YIQ 휘도 임계(라이트 ≤150)로 잘랐는데, 그 기준은 대비 4.5:1보다 훨씬 느슨하다.
+// 측정해보니 정당 146개 중 87개가 라이트 배경에서 본문 대비 미달이었고 YIQ 보정 후에도
+// 86개가 그대로였다. 정의당 노랑(#FFED00)은 보정해도 2.57:1이었다.
+// 그래서 임계가 아니라 대비 자체를 목표로 명도를 조정한다.
+//
+// 배경은 테마별로 **가장 불리한 표면**을 쓴다 — 라이트는 가장 밝은 --bg(#fafbfc),
+// 다크는 가장 밝은 --bg3(#1f2433). 카드 위에 얹혀도 기준을 밑돌지 않는다.
+const TEXT_CONTRAST_MIN = 4.5;
+const TEXT_BG = { light: [250, 251, 252], dark: [31, 36, 51] };
+
+function _relLum(rgb) {
+  const f = rgb.map((v) => {
+    v = Math.max(0, Math.min(255, v)) / 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+}
+
+function _contrast(a, b) {
+  const l1 = _relLum(a), l2 = _relLum(b);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+
 function _textLegible(hex) {
   const s0 = (hex || '').replace('#', '');
   if (!/^[0-9a-f]{6}$/i.test(s0)) return hex;
   const n = parseInt(s0, 16);
-  let [h, s, l] = _rgb2hslP([(n >> 16) & 255, (n >> 8) & 255, n & 255]);
-  const yiqOf = (rgb) => (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+  const [h, s, l0] = _rgb2hslP([(n >> 16) & 255, (n >> 8) & 255, n & 255]);
   const dark = _detectDarkTheme();
-  for (let i = 0; i < 24; i++) {
-    const yiq = yiqOf(_hsl2rgbP(h, s, l));
-    if (dark) { if (yiq >= 120) break; l = Math.min(0.92, l + 0.04); }   // 어두운 글씨 → 밝게
-    else { if (yiq <= 150) break; l = Math.max(0.18, l - 0.04); }        // 밝은 글씨(노랑) → 어둡게
+  const bg = dark ? TEXT_BG.dark : TEXT_BG.light;
+  // 원래 명도에서 **안전한 방향으로만** 최소한 움직인다 — 라이트는 어둡게, 다크는 밝게.
+  // 처음부터 극단값을 쓰면 전부 검정/흰색이 되어 정당 구분이 사라진다. 채도는 건드리지
+  // 않는다 — 색상은 정체성이고, 여기서 조정하는 건 밝기뿐이다.
+  const end = dark ? 0.97 : 0.03;
+  let best = _hsl2rgbP(h, s, l0);
+  for (let i = 0; i <= 48; i++) {
+    const l = l0 + (end - l0) * (i / 48);
+    best = _hsl2rgbP(h, s, l);
+    if (_contrast(best, bg) >= TEXT_CONTRAST_MIN) break;
+    // 끝까지 못 넘으면 극단값 — 순수 노랑처럼 채도상 불가능한 경우.
   }
-  const out = _hsl2rgbP(h, s, l);
-  return '#' + out.map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
+  return '#' + best.map((v) => Math.max(0, Math.min(255, Math.round(v)))
+    .toString(16).padStart(2, '0')).join('');
 }
 
 // hex/cell 배경색 위에 글씨 색 자동 결정. YIQ 공식 — 밝으면 검정, 어두우면 흰색.

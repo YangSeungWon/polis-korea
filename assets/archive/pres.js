@@ -2,7 +2,7 @@
 // 사용: Archive.pres.render(ctx). renderExitPoll은 총선도 재사용.
 
 (function () {
-  const { SIDO_ORDER, ssh, pcol, renderTrendSVG } = window.Archive;
+  const { SIDO_ORDER, ssh, pcol, ptcol, renderTrendSVG } = window.Archive;
 
   function nationRace(results, sg) {
     return (results?.races || []).find((r) => r.scope === 'nation' && r.sg_typecode === sg);
@@ -33,13 +33,13 @@
     const segOf = (c) => `<span class="ar-pres-seg" style="flex:${(c.pct || 0).toFixed(3)};background:${pcol(c.party)}" title="${c.name} ${c.party} ${(c.pct || 0).toFixed(2)}%"></span>`;
     const segs = shown.map(segOf).join('')
       + (restPct > 0.3 ? `<span class="ar-pres-seg ar-pres-seg-etc" style="flex:${restPct.toFixed(3)}" title="기타 ${restPct.toFixed(1)}%"></span>` : '');
-    const labs = shown.map((c, i) => `<span class="ar-pres-lab${i === 0 ? ' is-win' : ''}" style="color:${pcol(c.party)}"><b>${c.name}</b> ${(c.pct || 0).toFixed(1)}<span class="u">%</span></span>`).join('')
+    const labs = shown.map((c, i) => `<span class="ar-pres-lab${i === 0 ? ' is-win' : ''}" style="color:${ptcol(c.party)}"><b>${c.name}</b> ${(c.pct || 0).toFixed(1)}<span class="u">%</span></span>`).join('')
       + (restPct >= 1 ? `<span class="ar-pres-lab ar-pres-lab-etc">기타 ${restPct.toFixed(1)}<span class="u">%</span></span>` : '');
-    const wcol = pcol(top.party);
+    const wcol = pcol(top.party), wtcol = ptcol(top.party);
     sc.innerHTML = `
       <div class="ar-pres-winner">
         <span class="ar-pres-wname">${top.name}</span>
-        <span class="ar-pres-wparty" style="color:${wcol};border-color:${wcol}">${top.party}</span>
+        <span class="ar-pres-wparty" style="color:${wtcol};border-color:${wcol}">${top.party}</span>
         <span class="ar-pres-badge">당선</span>
       </div>
       <div class="ar-pres-wstat">
@@ -89,9 +89,9 @@
     let html = '<div class="ar-nation-bars">';
     for (const c of top6) {
       const w = (c.votes / total) * 100;
-      const col = pcol(c.party);
+      const col = pcol(c.party), tcol = ptcol(c.party);
       html += `<div class="ar-nation-row">
-        <div class="ar-nation-name"><span style="color:${col};font-weight:700">${c.name}</span> <span class="ar-nation-party">${c.party}</span></div>
+        <div class="ar-nation-name"><span style="color:${tcol};font-weight:700">${c.name}</span> <span class="ar-nation-party">${c.party}</span></div>
         <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
         <div class="ar-nation-pct">${(c.pct || 0).toFixed(2)}<span class="unit">%</span></div>
         <div class="ar-nation-votes">${(c.votes || 0).toLocaleString()}표</div>
@@ -121,7 +121,7 @@
         <div class="ar-count-sido">${ssh(sido)}</div>
         <div class="ar-count-bar"><span class="ar-count-fill" style="width:${(top.pct || 0).toFixed(1)}%;background:${col}"></span></div>
         <div class="ar-count-meta">
-          <span style="color:${col};font-weight:700">${top.name} ${(top.pct || 0).toFixed(1)}</span>
+          <span style="color:${ptcol(top.party)};font-weight:700">${top.name} ${(top.pct || 0).toFixed(1)}</span>
           ${margin != null ? `<span class="ar-count-pct">+${margin.toFixed(1)}%p</span>` : ''}
         </div>
       `;

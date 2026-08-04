@@ -166,9 +166,13 @@
     const maxAbs = Math.max(...rows.map((r) => Math.abs(r.sw)), 1);
     const demC = pcol('더불어민주당');
     const lossC = '#c0392b';
+    const demTC = ptc('더불어민주당');
+    const lossTC = (typeof _textLegible === 'function') ? _textLegible(lossC) : lossC;
     let html = '';
     for (const r of rows) {
       const pos = r.sw >= 0, col = pos ? demC : lossC;
+      // 막대 바깥 값은 글씨 — 면색 그대로 쓰면 배경 대비가 안 나온다.
+      const tcol = pos ? demTC : lossTC;
       const w = Math.abs(r.sw) / maxAbs * 46;
       const ws = w.toFixed(1);
       const bar = pos
@@ -178,8 +182,8 @@
       const valStyle = inside
         ? (pos ? `right:calc(50% - ${ws}% + 4px);text-align:right;color:#fff`
                : `left:calc(50% - ${ws}% + 4px);color:#fff`)
-        : (pos ? `left:calc(50% + ${ws}% + 4px);color:${col}`
-               : `right:calc(50% + ${ws}% + 4px);text-align:right;color:${col}`);
+        : (pos ? `left:calc(50% + ${ws}% + 4px);color:${tcol}`
+               : `right:calc(50% + ${ws}% + 4px);text-align:right;color:${tcol}`);
       html += `<div class="dg-srow"><span class="dg-slab">${SEX_SHORT[r.sex]} ${AGE_LABEL[r.age]}</span>`
         + `<div class="dg-strack"><div class="dg-zero"></div>${bar}`
         + `<span class="dg-sval" style="${valStyle}">${pos ? '+' : ''}${r.sw.toFixed(1)}</span></div>`
@@ -188,7 +192,7 @@
     const what = swingMetric === 'margin' ? '이재명 − 보수블록(국힘+개혁신당) 마진' : '민주당 후보(이재명) 득표율';
     return tg
       + `<p class="ar-parl-note">${what}의 직전 대선(${priorN}대) 대비 변화 — 같은 후보라 순수 이동. `
-      + `<b style="color:${demC}">파랑=이재명 쪽</b>, <b style="color:${lossC}">빨강=보수 쪽</b>. 출구조사 기준.</p>`
+      + `<b style="color:${demTC}">파랑=이재명 쪽</b>, <b style="color:${lossTC}">빨강=보수 쪽</b>. 출구조사 기준.</p>`
       + `<div class="dg-swing">${html}</div>`;
   }
 

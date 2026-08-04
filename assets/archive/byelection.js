@@ -2,7 +2,7 @@
 // 사용: Archive.byelection.render(ctx).
 
 (function () {
-  const { SIDO_ORDER, ssh, pcol } = window.Archive;
+  const { SIDO_ORDER, ssh, pcol, ptcol } = window.Archive;
 
   function racesBy(results, scope, tc) {
     return (results?.races || []).filter((r) => r.scope === scope && r.sg_typecode === tc);
@@ -43,7 +43,8 @@
       if (sc) sc.removeAttribute('hidden');
       const renderParty = (party) => {
         const col = pcol(party);
-        return `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${party}</span>`;
+        const tcol = ptcol(party);
+        return `<span class="ar-sc-pname" style="color:${tcol};border-bottom:3px solid ${col}">${party}</span>`;
       };
       setHTML('ar-sc-p1', renderParty(p1));
       if (p2) setHTML('ar-sc-p2', renderParty(p2));
@@ -69,7 +70,8 @@
             if (otherTotal > 0) {
               const breakdown = others.map(([party, n]) => {
                 const col = pcol(party);
-                return `<span class="ar-sc-oseg" style="color:${col}">${party} ${n.toLocaleString()}</span>`;
+                const tcol = ptcol(party);
+                return `<span class="ar-sc-oseg" style="color:${tcol}">${party} ${n.toLocaleString()}</span>`;
               }).join(' · ');
               otherEl.innerHTML = `기타 ${otherTotal.toLocaleString()} (${breakdown})`;
               otherEl.removeAttribute('hidden');
@@ -101,6 +103,7 @@
     const partyless = PARTYLESS_TC.has(tc);
     // 정당 없는 직은 정당색을 쓸 수 없다 — 중립색으로 통일한다.
     const colOf = (p) => (partyless ? 'var(--ink-soft)' : pcol(p));
+    const tcolOf = (p) => (partyless ? 'var(--ink-soft)' : ptcol(p));
     const nameOf = (p) => (partyless
       ? '<span class="ar-by-partyless" title="교육감은 정당의 추천·표방이 금지된 직입니다">정당 없음</span>'
       : (p || ''));
@@ -113,19 +116,20 @@
       const electors = r.electors || 0, voted = r.voters || 0;
       const turnout = electors ? (voted / electors * 100) : 0;
       const col = colOf(top.party);
+      const tcol = tcolOf(top.party);
       const margin = second ? (top.pct - second.pct) : null;
       const card = document.createElement('div');
       card.className = 'ar-by-sido-card';
       card.innerHTML = `
         <h3 class="ar-by-sido-name">${r.sido}</h3>
         <div class="ar-by-sido-winner" style="border-left:4px solid ${col}">
-          <span class="ar-by-sido-w-name" style="color:${col};font-weight:700">${top.name}</span>
-          <span class="ar-by-sido-w-party" style="color:${col}">${nameOf(top.party)}</span>
+          <span class="ar-by-sido-w-name" style="color:${tcol};font-weight:700">${top.name}</span>
+          <span class="ar-by-sido-w-party" style="color:${tcol}">${nameOf(top.party)}</span>
           <span class="ar-by-sido-w-pct">${(top.pct || 0).toFixed(2)}%</span>
         </div>
         ${second ? `<div class="ar-by-sido-second">
           <span>2위 ${second.name}</span>
-          <span style="color:${colOf(second.party)}">${nameOf(second.party)}</span>
+          <span style="color:${tcolOf(second.party)}">${nameOf(second.party)}</span>
           <span>${(second.pct || 0).toFixed(2)}%</span>
         </div>` : ''}
         ${margin != null ? `<div class="ar-by-sido-meta">격차 ${margin.toFixed(2)}%p · 투표율 ${turnout.toFixed(1)}%</div>` : ''}
@@ -152,10 +156,11 @@
         const top = cands[0], second = cands[1];
         if (!top) continue;
         const col = pcol(top.party);
+        const tcol = ptcol(top.party);
         const margin = second ? (top.pct - second.pct) : null;
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${r.sigungu}</span>
-          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
           <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
@@ -182,11 +187,12 @@
         const top = cands[0], second = cands[1];
         if (!top) continue;
         const col = pcol(top.party);
+        const tcol = ptcol(top.party);
         const margin = second ? (top.pct - second.pct) : null;
         const name = r.district || r.sigungu || '?';
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${name}</span>
-          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
           <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
@@ -211,9 +217,10 @@
       html += `<div class="ar-rsn-block"><h3 class="ar-rsn-kind">${kind} <span class="ar-rsn-count">${list.length}건</span></h3><div class="ar-rsn-rows">`;
       for (const r of list) {
         const col = r.plprNm ? pcol(r.plprNm) : '#999';
+        const tcol = r.plprNm ? ptcol(r.plprNm) : 'var(--ink-soft)';
         html += `<div class="ar-rsn-row">
           <span class="ar-rsn-loc">${r.ctpvNm} ${r.elpcNm || r.cmtNm || ''}</span>
-          <span class="ar-rsn-prev"><span style="color:${col};font-weight:600">${r.trprNm || '—'}</span> <span class="ar-rsn-party">${r.plprNm || ''}</span></span>
+          <span class="ar-rsn-prev"><span style="color:${tcol};font-weight:600">${r.trprNm || '—'}</span> <span class="ar-rsn-party">${r.plprNm || ''}</span></span>
           <span class="ar-rsn-rsn">${r.rsn || ''}</span>
         </div>`;
       }
@@ -240,10 +247,11 @@
         const top = cands[0], second = cands[1];
         if (!top) continue;
         const col = pcol(top.party);
+        const tcol = ptcol(top.party);
         const margin = second ? (top.pct - second.pct) : null;
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${r.district}</span>
-          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
           <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }

@@ -13,7 +13,10 @@
   ];
 
   Archive.ssh = (s) => (typeof SIDO_LABEL_SHORT !== 'undefined') ? (SIDO_LABEL_SHORT[s] || s) : s;
+  // pcol = **면(fill)** 색. 글씨에 쓰면 안 된다 — 정당 원색은 대부분 본문 대비 4.5:1을
+  // 못 넘는다(146개 중 라이트 87·다크 93). 글씨는 ptcol을 쓸 것.
   Archive.pcol = (p) => { const c = (typeof partyColor === 'function') ? partyColor(p) : '#999'; return (typeof legibleColor === 'function') ? legibleColor(c) : c; };
+  Archive.ptcol = (p) => ((typeof partyTextColor === 'function') ? partyTextColor(p) : 'var(--ink)');
 
   // 위성정당 → 본정당: assets/parties.js 의 SATELLITE_TO_MAIN/mainParty 전역 사용.
   // 단일 출처: data/parties/satellites.json → sync_satellites_js.py가 parties.js로 sync.
@@ -157,6 +160,8 @@
         const e = r.e, a = r.a, hit = r.hit, sido = r.sido;
         const ePct = e.pct || 0, aPct = a.pct || 0;
         const eCol = Archive.pcol(e.party), aCol = Archive.pcol(a.party);
+        // 점(마크)은 원색, 옆 숫자(글씨)는 대비 보정색.
+        const eTC = Archive.ptcol(e.party), aTC = Archive.ptcol(a.party);
         const lo = Math.min(ePct, aPct), hi = Math.max(ePct, aPct);
         const diff = (e.pct != null && a.pct != null) ? Math.abs(ePct - aPct).toFixed(1) : '';
         const cls = (hit ? 'is-hit' : 'is-miss') + (sido === '전국' ? ' is-nation' : '');
@@ -174,9 +179,9 @@
               <div class="ar-exit-dot ar-exit-dot-pred" style="left:${ePct}%;background:${eCol}" title="예측 ${e.name || e.party} ${ePct.toFixed(1)}%"></div>
               <div class="ar-exit-dot ar-exit-dot-actual" style="left:${aPct}%;background:${aCol}" title="실제 ${a.name || a.party} ${aPct.toFixed(1)}%"></div>
             </div>
-            <span class="ar-exit-pred-pct" style="color:${eCol}" aria-hidden="true">${ePct.toFixed(1)}</span>
+            <span class="ar-exit-pred-pct" style="color:${eTC}" aria-hidden="true">${ePct.toFixed(1)}</span>
             <span class="ar-exit-arrow" aria-hidden="true">→</span>
-            <span class="ar-exit-actual-pct" style="color:${aCol}" aria-hidden="true">${aPct.toFixed(1)}</span>
+            <span class="ar-exit-actual-pct" style="color:${aTC}" aria-hidden="true">${aPct.toFixed(1)}</span>
             <span class="ar-exit-diff" aria-hidden="true">${diff}%p</span>
             ${mark}
           </div>`;

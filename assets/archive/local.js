@@ -2,7 +2,7 @@
 // 사용: Archive.local.render(ctx).
 
 (function () {
-  const { SIDO_ORDER, ssh, pcol } = window.Archive;
+  const { SIDO_ORDER, ssh, pcol, ptcol } = window.Archive;
 
   function sidoRaces(results) {
     return (results?.races || []).filter((r) => r.scope === 'sido' && r.sg_typecode === '3');
@@ -73,7 +73,7 @@
       const light = (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff');
       return light
         ? `<span class="ar-sc-pname" style="background:${col};color:${pickTextColor(col)};padding:0 6px;border-radius:7px">${p}</span>`
-        : `<span class="ar-sc-pname" style="color:${col};border-bottom:3px solid ${col}">${p}</span>`;
+        : `<span class="ar-sc-pname" style="color:${ptcol(p)};border-bottom:3px solid ${col}">${p}</span>`;
     };
     setHTML('ar-sc-p1', renderParty(p1, 'l'));
     if (p2) setHTML('ar-sc-p2', renderParty(p2, 'r'));
@@ -168,7 +168,7 @@
         <div class="ar-count-sido">${ssh(r.sido)}</div>
         <div class="ar-count-bar"><span class="ar-count-fill" style="width:${barW.toFixed(1)}%;background:${col}"></span></div>
         <div class="ar-count-meta">
-          ${top ? `<span style="color:${col};font-weight:700">${top.party} ${top.pct?.toFixed(1) || ''}</span>` : '—'}
+          ${top ? `<span style="color:${ptcol(top.party)};font-weight:700">${top.party} ${top.pct?.toFixed(1) || ''}</span>` : '—'}
           ${tail}
         </div>
       `;
@@ -207,7 +207,7 @@
       const hit = a && p && a.party === p.party;
       const partyHTML = (party, pct) => {
         if (!party) return '<span class="party" style="color:#999">—</span>';
-        return `<span class="party" style="color:${pcol(party)}">${party}</span>${pct != null ? ` <span class="pct">${pct.toFixed(1)}%</span>` : ''}`;
+        return `<span class="party" style="color:${ptcol(party)}">${party}</span>${pct != null ? ` <span class="pct">${pct.toFixed(1)}%</span>` : ''}`;
       };
       const cell = document.createElement('div');
       cell.className = 'ar-pred-cell ' + (a && p ? (hit ? 'is-hit' : 'is-miss') : '');
@@ -266,15 +266,15 @@
       const margin = second ? (top.pct - second.pct) : null;
       const card = document.createElement('div');
       card.className = 'ar-by-card ar-by-result-card';
-      const col = pcol(top.party);
+      const col = pcol(top.party), tcol = ptcol(top.party);
       card.innerHTML = `
         <div class="ar-by-elpc">${race.sido || ''} ${race.district || race.sigungu || ''}</div>
         <div class="ar-by-result-winner" style="border-left:3px solid ${col}">
-          <span style="color:${col};font-weight:700">${top.name}</span>
-          <span style="color:${col};font-size:11px">${top.party}</span>
+          <span style="color:${tcol};font-weight:700">${top.name}</span>
+          <span style="color:${tcol};font-size:11px">${top.party}</span>
           <span style="font-weight:700;font-variant-numeric:tabular-nums">${(top.pct || 0).toFixed(2)}%</span>
         </div>
-        ${second ? `<div class="ar-by-result-second">2위 <span style="color:${pcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${(second.pct || 0).toFixed(2)}%</span></div>` : ''}
+        ${second ? `<div class="ar-by-result-second">2위 <span style="color:${ptcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${(second.pct || 0).toFixed(2)}%</span></div>` : ''}
         ${margin != null ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:4px">격차 ${margin.toFixed(2)}%p</div>` : ''}
       `;
       host.appendChild(card);
@@ -286,10 +286,11 @@
       const card = document.createElement('div');
       card.className = 'ar-by-card';
       const col = r.plprNm ? pcol(r.plprNm) : '#999';
+      const tcol = r.plprNm ? ptcol(r.plprNm) : 'var(--ink-soft)';
       card.innerHTML = `
         <div class="ar-by-elpc">${r.ctpvNm || ''} ${r.elpcNm || ''}</div>
         <div class="ar-by-reason">${r.rsn || ''}</div>
-        <div style="font-size:12px;margin-top:4px">전임 <span style="color:${col};font-weight:700">${r.trprNm || '—'}</span> (${r.plprNm || '—'})</div>
+        <div style="font-size:12px;margin-top:4px">전임 <span style="color:${tcol};font-weight:700">${r.trprNm || '—'}</span> (${r.plprNm || '—'})</div>
         ${r.rsnOcrnYmd ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:2px">사유 발생 ${r.rsnOcrnYmd}</div>` : ''}
       `;
       host.appendChild(card);

@@ -2,7 +2,7 @@
 // 사용: Archive.general.render(ctx).
 
 (function () {
-  const { SIDO_ORDER, ssh, pcol, mainParty, renderTrendSVG } = window.Archive;
+  const { SIDO_ORDER, ssh, pcol, ptcol, mainParty, renderTrendSVG } = window.Archive;
 
   function propSg(meta) { return meta.proportionalSgTypecode || '7'; }
 
@@ -159,9 +159,9 @@
     let html = '<div class="ar-nation-bars">';
     for (const c of top8) {
       const w = (c.votes / total) * 100;
-      const col = pcol(c.party);
+      const col = pcol(c.party), tcol = ptcol(c.party);
       html += `<div class="ar-nation-row">
-        <div class="ar-nation-name"><span style="color:${col};font-weight:700">${c.party}</span></div>
+        <div class="ar-nation-name"><span style="color:${tcol};font-weight:700">${c.party}</span></div>
         <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
         <div class="ar-nation-pct">${(c.pct || 0).toFixed(2)}<span class="unit">%</span></div>
         <div class="ar-nation-votes">${(c.votes || 0).toLocaleString()}표</div>
@@ -217,12 +217,12 @@
         const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
         const top = cands[0], second = cands[1];
         if (!top) continue;
-        const col = pcol(top.party);
+        const col = pcol(top.party), tcol = ptcol(top.party);
         const margin = second ? (top.pct - second.pct) : null;
         const name = r.district || r.sigungu || '?';
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${name}</span>
-          <span class="ar-dist-cand" style="color:${col};font-weight:700">${top.name}</span>
+          <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
           <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
@@ -287,7 +287,7 @@
         const row = document.createElement('div');
         row.className = 'ar-seatbar-row ' + (actual != null ? (hit ? 'is-hit' : 'is-miss') : '');
         row.innerHTML = `
-          <span class="ar-seatbar-party" style="color:${col}">${party}${sat}</span>
+          <span class="ar-seatbar-party" style="color:${ptcol(party)}">${party}${sat}</span>
           <div class="ar-seatbar-track" title="예측 ${predText}석${actual != null ? ' · 실제 ' + actual + '석' : ''}">
             <div class="ar-seatbar-range" style="left:${lo.toFixed(1)}%;width:${Math.max(hi - lo, 0.8).toFixed(1)}%;background:${col}"></div>
             ${ap != null ? `<div class="ar-seatbar-dot" style="left:${ap.toFixed(1)}%;background:${col}"></div>` : ''}
@@ -379,7 +379,7 @@
     const legend = sec.querySelector('.ar-genhex-legend');
     if (legend) {
       legend.innerHTML = Object.entries(partyTotal).sort((a, b) => b[1] - a[1]).slice(0, 8)
-        .map(([p, n]) => `<span class="ch-leg" style="color:${pcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ');
+        .map(([p, n]) => `<span class="ch-leg" style="color:${ptcol(p)}"><b>${n}</b> ${p}</span>`).join(' · ');
     }
   }
 

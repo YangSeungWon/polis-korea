@@ -297,7 +297,8 @@
     if (legend) {
       const sorted = Array.from(partyTotal.entries()).sort((a, b) => b[1] - a[1]);
       legend.innerHTML = sorted.map(([p, n]) => {
-        const col = (typeof partyColor === 'function') ? partyColor(p) : '#999';
+        // 범례는 글씨다 — 원색이 아니라 대비 보정색. (자매 뷰 render-metro-hex와 동일)
+        const col = (typeof partyTextColor === 'function') ? partyTextColor(p) : '#999';
         return `<span class="ch-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-council-hex-total');
