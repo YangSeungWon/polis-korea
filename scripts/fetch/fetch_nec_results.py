@@ -452,6 +452,27 @@ def main():
               f"  부분 결과로 덮어쓰지 않음. 재실행하거나 --force.", file=sys.stderr)
         sys.exit(1)
 
+    # 광역·기초의원 지역구(tc5·6)의 합계 행에는 시군구가 없다(wiwName='합계'). 그런데
+    # 화면(시군구의회 hex 등)은 race.sigungu로 시군구에 의석을 붙인다. 비워 두면 지역구
+    # 의석이 어느 시군구에도 안 붙어 지도가 텅 비어 보인다 — 실제로 그렇게 됐다.
+    # 짝이 되는 district_sigungu 행이 시군구를 갖고 있으므로 거기서 채운다. 9회 기준
+    # 모든 선거구가 정확히 한 시군구에 대응한다(tc5 721 · tc6 896, 예외 0). 둘 이상에
+    # 걸치면 단정할 수 없으므로 비워 둔다.
+    from collections import defaultdict as _dd
+    _sib = _dd(set)
+    for r in all_races:
+        if r.get("scope") == "district_sigungu" and r.get("sigungu"):
+            _sib[(r.get("sg_typecode"), r.get("sido"), r.get("district"))].add(r["sigungu"])
+    _filled = 0
+    for r in all_races:
+        if r.get("scope") == "district" and not r.get("sigungu"):
+            cand = _sib.get((r.get("sg_typecode"), r.get("sido"), r.get("district")))
+            if cand and len(cand) == 1:
+                r["sigungu"] = next(iter(cand))
+                _filled += 1
+    if _filled:
+        print(f"  ✓ 지역구 합계 행에 시군구 채움: {_filled}건", file=sys.stderr)
+
     # 통합 시도(예: 전남광주특별시)는 구 시도 두 이름 모두로 호출되어 같은 race가 두 번
     # 수집된다. 내용까지 완전히 같은 row만 제거 — 일반구 부분집계(sigungu_part)처럼
     # 키는 같지만 내용이 다른 정상 row는 건드리지 않는다.
