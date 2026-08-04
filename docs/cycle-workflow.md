@@ -80,11 +80,16 @@ daily-refresh CI(`build_static.py`)는 polls·history·sitemap만 재생성한�
 당선자 페이지가 stale 상태로 남는다. 결과 확정 후 로컬에서 빌드·커밋:
 
 ```bash
-python3 scripts/build/build_person_index.py   # results → assets/person-index.json
+python3 scripts/build/build_person_index.py    # results → assets/person-index.json
+python3 scripts/build/enrich_person_index.py   # assembly_id·한자·비례 보강 (빠뜨리면 의원 링크 소실)
+python3 scripts/build/build_person_pledges.py  # data/pledges → by-person/ + pledges-index.json
 python3 scripts/build/build_person_pages.py    # → person/*/index.html (+ sitemap_person.txt)
 python3 scripts/build/build_party_pages.py     # → party/*/index.html (+ sitemap_party.txt)
 python3 scripts/build/build_sitemap.py         # sitemap.xml 통합 재생성
 ```
+
+> `enrich_person_index.py`는 `build_person_index.py` 직후에 반드시 돌린다 — 건너뛰면
+> assembly_id 2,617건이 사라지고 인물 id가 바뀌어 정적 페이지 링크가 깨진다.
 
 > 4,000여 페이지를 매일 재생성하는 건 낭비라 CI에서 제외 — 데이터 변경 후 1회만 돌리면 된다.
 > 빠뜨리면 조용히 stale 되니, 개표 확정 커밋과 함께 묶을 것.

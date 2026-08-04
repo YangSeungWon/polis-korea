@@ -67,6 +67,49 @@
     return Object.values(groups);
   }
 
+  // ── 선거공약 ──────────────────────────────────────────────────────────────
+  // 공약 원본은 회차별 2MB짜리라 인물별로 쪼갠 파일을 필요할 때만 받는다.
+  // 데이터는 당선인 것만 존재한다(NEC API 제약) — 낙선 이력엔 붙지 않는다.
+  let pledgeIndex = null;
+
+  async function loadPledgeIndex() {
+    if (pledgeIndex) return pledgeIndex;
+    try {
+      const r = await fetch('assets/pledges-index.json');
+      pledgeIndex = await r.json();
+    } catch (e) {
+      pledgeIndex = {};
+    }
+    return pledgeIndex;
+  }
+
+  function renderPledgeEntry(e) {
+    const where = [e.sido, e.sigungu].filter(Boolean).join(' ');
+    const items = (e.pledges || []).map((p) => `
+      <details class="pp-pledge">
+        <summary><span class="pp-pledge-n">${p.order}</span>${escapeHtml(p.title)}</summary>
+        <div class="pp-pledge-body">${escapeHtml(p.content)}</div>
+      </details>`).join('');
+    return `
+      <div class="pp-pledge-group">
+        <div class="pp-pledge-head">
+          <b>${escapeHtml(e.round || '')}</b>
+          <span class="pp-pledge-where">${escapeHtml(where)} · ${escapeHtml(e.office)}</span>
+        </div>
+        ${items}
+      </div>`;
+  }
+
+  async function renderPledges(personId, mount) {
+    try {
+      const r = await fetch(`data/pledges/by-person/${encodeURIComponent(personId)}.json`);
+      const doc = await r.json();
+      mount.innerHTML = (doc.entries || []).map(renderPledgeEntry).join('');
+    } catch (e) {
+      mount.innerHTML = '<div class="detail-empty">공약 로드 실패.</div>';
+    }
+  }
+
   function renderTimelineCard(races, label) {
     // 실제 선거일순 — 같은 해 대선(3월)·재보궐(6월) 등 월까지 구분. date 없으면 year fallback.
     const dkey = (r) => r.date || (r.year ? String(r.year) : '');
@@ -158,6 +201,28 @@
         html += renderTimelineCard(p.races, label);
       });
       $('#person-body').innerHTML = html;
+
+      // 공약 섹션 — 인덱스에 있는 인물만. 본문은 펼칠 때 받는다.
+      const idx = await loadPledgeIndex();
+      all.forEach((p) => {
+        const n = idx[p.id];
+        if (!n) return;
+        const sec = document.createElement('section');
+        sec.className = 'pp-card pp-pledges';
+        const who = all.length > 1 ? ` — ${escapeHtml(p.name)}${p.dob ? ' (' + p.dob + ')' : ''}` : '';
+        sec.innerHTML = `
+          <details class="pp-pledge-toggle">
+            <summary><b>선거공약</b> <span class="pp-pledge-count">${n}건</span>${who}</summary>
+            <div class="pp-pledge-mount"><div class="detail-empty">불러오는 중…</div></div>
+          </details>`;
+        $('#person-body').appendChild(sec);
+        const det = sec.querySelector('details');
+        det.addEventListener('toggle', function once() {
+          if (!det.open) return;
+          det.removeEventListener('toggle', once);
+          renderPledges(p.id, sec.querySelector('.pp-pledge-mount'));
+        });
+      });
     } catch (e) {
       $('#person-body').innerHTML = '<div class="detail-empty">인덱스 로드 실패.</div>';
     }

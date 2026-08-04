@@ -93,3 +93,45 @@ a.pp-party:hover { background: var(--bg2); }
   .pp-summary { gap: 14px 24px; }
   .pp-meta { padding-left: 0; border-left: none; }
 }
+
+/* ── 선거공약 ─────────────────────────────────────────────────────────────
+   당선인 공약(NEC 선거공약 API). 본문이 수백~수천 자라 기본은 접어 두고
+   제목만 노출한다. 원문이 □·○ 들여쓰기로 구조를 표현해 pre-wrap으로 보존. */
+.pp-pledges summary { cursor: pointer; list-style: none; }
+.pp-pledges summary::-webkit-details-marker { display: none; }
+.pp-pledge-toggle > summary {
+  padding: 6px 0 10px; border-bottom: 1px solid var(--rule);
+  display: flex; align-items: baseline; gap: 8px;
+}
+.pp-pledge-toggle > summary::before {
+  content: '▸'; color: var(--ink-soft); font-size: 12px; transition: transform .15s;
+}
+.pp-pledge-toggle[open] > summary::before { content: '▾'; }
+.pp-pledge-count {
+  font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  background: var(--bg2); border-radius: 10px; padding: 1px 8px;
+}
+.pp-pledge-group { margin: 14px 0 20px; }
+.pp-pledge-head {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--rule);
+}
+.pp-pledge-where { font-size: 12px; color: var(--ink-soft); }
+.pp-pledge { border-bottom: 1px solid var(--rule); }
+.pp-pledge > summary {
+  padding: 9px 0; display: flex; gap: 10px; align-items: baseline;
+  font-weight: 600; line-height: 1.45;
+}
+.pp-pledge > summary:hover { color: var(--accent, var(--ink)); }
+.pp-pledge-n {
+  flex: none; width: 20px; font-size: 12px; font-weight: 700;
+  color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.pp-pledge-body {
+  white-space: pre-wrap; font-size: 13px; line-height: 1.7; color: var(--ink-soft);
+  padding: 2px 0 14px 30px; overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .pp-pledge-body { padding-left: 0; }
+}
