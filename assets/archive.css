@@ -989,3 +989,6 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .cmp-office { margin: 0 0 26px; }
 .cmp-office + .cmp-office { padding-top: 18px; border-top: 1px solid var(--rule); }
 .cmp-office-title { font-size: 14px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.01em; }
+/* 후보 → 인물 페이지. 링크임을 알리되 목록의 리듬을 깨지 않게 밑줄은 호버에만. */
+.ar-person-link { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+.ar-person-link:hover { border-bottom-color: var(--ink); }

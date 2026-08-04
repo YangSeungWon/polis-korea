@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "election_id": "13th-pres-1987",
+    "generated_at": "2026-08-05T00:28:38+09:00",
+    "source": "polis 계산",
+    "method": "person-index의 race(eid·tc·place)와 이름으로 역색인. 같은 키에 동명이인이 걸리면 잇지 않고 unresolved로 남긴다.",
+    "n_keys": 4,
+    "n_links": 4,
+    "n_unresolved": 0,
+    "n_no_page": 0
+  },
+  "links": {
+    "1|전국|김대중": "김대중-1925-12-03",
+    "1|전국|김영삼": "김영삼-1927-12-20",
+    "1|전국|김종필": "김종필-1926-01-07",
+    "1|전국|노태우": "노태우-1932-12-04"
+  },
+  "unresolved": []
+}

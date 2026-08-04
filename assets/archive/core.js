@@ -60,6 +60,8 @@
     }
   } catch { results = null; }
 
+  // 후보→인물 링크 색인 — 결과 렌더보다 먼저 받아 둔다(작은 파일).
+  if (window.Archive.personLink) { try { await window.Archive.personLink.load(meta.id); } catch {} }
   const ctx = { meta, results, polls: null, byReasons: [], exitData: null, sgTypecode };
   if (mode) await mode.render(ctx);   // 여론조사·출구조사 없이 상단·결과 먼저(가드로 2차 섹션 스킵)
   // 공약 분야 분포 — 회차 종류와 무관하게 같은 처리라 mode 밖에서 한 번만. 데이터나

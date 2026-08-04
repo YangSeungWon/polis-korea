@@ -506,6 +506,7 @@ FOOT = """
 <script src="assets/render-district-hex.js"></script><!-- 선거구 hex(공용) -->
 <script src="assets/archive/render-district-map.js"></script><!-- 선거구 지리 코로플레스 -->
 <script src="assets/trust.js"></script><!-- 신뢰 상태 (docs/trust-states.md) -->
+<script src="assets/archive/person-link.js"></script><!-- 후보 → 인물 페이지 -->
 <script src="assets/archive/render-comparison.js"></script><!-- 이전 회차 대비 변화 -->
 <script src="assets/archive/render-pledge-realms.js"></script><!-- 공약 분야 분포 -->
 <script src="assets/archive/render-council-hex.js"></script>

@@ -24,7 +24,7 @@
         const level = tc === '5' ? '광역의원' : '기초의원';
         for (const c of r.candidates || []) {
           if (!c.won) continue;
-          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct });
+          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct, tc, place: r.district || r.sigungu || '' });
         }
       } else if (['8', '9'].includes(tc)) {
         // 비례 당선인 (tc8 광역·tc9 기초) — 정당 명부(개인명 없음) → 정당별 seats 만큼 행. hex와 일치.
@@ -108,7 +108,7 @@
         return `<div class="ar-winner-row" style="border-left:3px solid ${col}">
           <span class="ar-winner-lvl">${lvlBadge}</span>
           <span class="ar-winner-loc">${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}</span>
-          <span class="ar-winner-name">${w.name}</span>
+          <span class="ar-winner-name">${(window.Archive.personLink && w.tc) ? window.Archive.personLink.wrap(w.tc, w.place, w.name) : w.name}</span>
           <span class="ar-winner-party" style="color:${col}">${w.party}</span>
           ${w.pct != null ? `<span class="ar-winner-pct">${w.pct.toFixed(1)}%</span>` : ''}
         </div>`;
