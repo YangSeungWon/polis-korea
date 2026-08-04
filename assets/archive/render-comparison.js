@@ -18,12 +18,18 @@
   const sign = (n) => (n > 0 ? `+${n}` : String(n));
 
   // 정당별 증감 — 색은 정당 정체성이라 여기서는 정당색을 쓴다(신뢰 상태와 다른 축).
+  // 값이 소수면 득표율(%p), 정수면 의석·단위 수. 단위를 안 붙이면 8석과 8%p가 같아 보인다.
+  function unitOf(delta) {
+    return Object.values(delta || {}).some((v) => !Number.isInteger(v)) ? '%p' : '';
+  }
+
   function deltaRow(label, delta, note) {
     const items = Object.entries(delta || {}).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
     if (!items.length) return '';
+    const u = unitOf(delta);
     const chips = items.map(([p, n]) =>
       `<span class="cmp-delta"><i style="background:${pcol(p)}"></i>${esc(p)}
-        <b class="${n > 0 ? 'is-up' : 'is-down'}">${sign(n)}</b></span>`).join('');
+        <b class="${n > 0 ? 'is-up' : 'is-down'}">${sign(n)}${u}</b></span>`).join('');
     return `<div class="cmp-row"><div class="cmp-row-label">${esc(label)}
       ${note ? `<span class="cmp-note">${esc(note)}</span>` : ''}</div>
       <div class="cmp-chips">${chips}</div></div>`;
@@ -60,7 +66,7 @@
 
   // 단독 선출직은 단위 대조가 되고, 의회는 선거구 획정이 달라 합계만 된다.
   // 순서는 페이지의 다른 결과 섹션과 같게 — 광역 → 기초.
-  const OFFICE_ORDER = ['3', '4'];
+  const OFFICE_ORDER = ['1', '3', '4'];
 
   function officeBlock(o) {
     const n = o.counts;
@@ -101,6 +107,14 @@
     const parts = [`<p class="cmp-head"><b>${esc(d._meta.previous_name || prev)}</b>와 비교
       ${t.delta != null ? `· 투표율 ${t.previous}% → <b>${t.current}%</b>
         <span class="${t.delta > 0 ? 'is-up' : 'is-down'}">${sign(t.delta)}%p</span>` : ''}</p>`];
+
+    // 대선은 전국 득표율 변화가 본론이다 — 시도별 교체 수보다 먼저 읽혀야 한다.
+    if (d.nation && d.nation.delta && Object.keys(d.nation.delta).length) {
+      parts.push(`<div class="cmp-office">
+        <h3 class="cmp-office-title">전국 득표율</h3>
+        ${deltaRow('정당별 변화', d.nation.delta, esc(d.nation.note || ''))}
+      </div>`);
+    }
 
     for (const tc of OFFICE_ORDER) {
       if (d.offices[tc]) parts.push(officeBlock(d.offices[tc]));

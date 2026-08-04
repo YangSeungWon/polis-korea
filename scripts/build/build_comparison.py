@@ -69,7 +69,13 @@ def load_boundary_map(cur_id: str, prev_id: str) -> dict:
 OUTCOME_INDEP = "independent_to_independent"
 
 # 단독 선출직만 단위 대조가 가능하다(1위 정당이 곧 결과).
-SINGLE_WINNER = {"3": ("sido", "광역단체장"), "4": ("sigungu", "기초단체장")}
+# 대선(tc1)은 시도가 곧 비교 단위다 — 전국 1석짜리 선거라 '의석 증감'은 뜻이 없고
+# 지역별 표심 이동(swing)이 본론이다.
+SINGLE_WINNER = {
+    "1": ("sido", "대통령 — 시도별"),
+    "3": ("sido", "광역단체장"),
+    "4": ("sigungu", "기초단체장"),
+}
 # 의회는 선거구가 바뀌므로 합계만.
 COUNCIL = {"5": "광역의원", "6": "기초의원", "8": "광역의원 비례", "9": "기초의원 비례"}
 
@@ -140,11 +146,17 @@ def council_seats(races, tc):
 
 
 def turnout(races):
-    el = vo = 0
+    """전국 투표율. 회차 종류마다 최상위 직이 다르므로(대선 1·지선 3·총선 2) 고정하지 않고
+    sido scope에서 선거인수가 가장 많은 직을 쓴다 — 그게 전 유권자를 덮는 직이다."""
+    by_tc = defaultdict(lambda: [0, 0])
     for r in races:
-        if r.get("sg_typecode") == "3" and r.get("scope") == "sido":
-            el += r.get("electors") or 0
-            vo += r.get("voters") or 0
+        if r.get("scope") == "sido":
+            b = by_tc[r.get("sg_typecode")]
+            b[0] += r.get("electors") or 0
+            b[1] += r.get("voters") or 0
+    if not by_tc:
+        return None
+    el, vo = max(by_tc.values(), key=lambda b: b[0])
     return round(vo / el * 100, 1) if el else None
 
 
@@ -169,6 +181,8 @@ def build(cur_id: str, prev_id: str) -> dict:
         key_field = "sido" if scope == "sido" else "sigungu"
         pm = unit_map(prev_races, tc, scope, key_field)
         cm = unit_map(cur_races, tc, scope, key_field)
+        if not pm and not cm:
+            continue        # 이 회차 종류에 없는 직 — 0으로 채운 빈 블록을 만들지 않는다
         both = set(pm) & set(cm)
 
         units, not_compared = [], []
@@ -260,6 +274,24 @@ def build(cur_id: str, prev_id: str) -> dict:
                         "current": dict(c.most_common()), "delta": delta_counter(p, c),
                         "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."}
 
+    # 전국 득표율 변화 — 대선에서 가장 먼저 읽히는 값. nation scope가 있을 때만.
+    def nation_share(races):
+        for r in races:
+            if r.get("scope") == "nation" and r.get("sg_typecode") == "1":
+                return {c.get("party") or "무소속": c.get("pct")
+                        for c in (r.get("candidates") or []) if c.get("pct") is not None}
+        return {}
+    np_, nc_ = nation_share(prev_races), nation_share(cur_races)
+    nation = None
+    if np_ and nc_:
+        keys = sorted(set(np_) | set(nc_))
+        nation = {
+            "previous": np_, "current": nc_,
+            "delta": {k: round(nc_.get(k, 0) - np_.get(k, 0), 2) for k in keys
+                      if abs(nc_.get(k, 0) - np_.get(k, 0)) >= 0.05},
+            "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다.",
+        }
+
     tp, tc_ = turnout(prev_races), turnout(cur_races)
     return {
         "_meta": {
@@ -273,6 +305,7 @@ def build(cur_id: str, prev_id: str) -> dict:
         },
         "turnout": {"previous": tp, "current": tc_,
                     "delta": round(tc_ - tp, 1) if tp is not None and tc_ is not None else None},
+        "nation": nation,
         "offices": offices,
         "councils": councils,
     }

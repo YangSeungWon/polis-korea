@@ -1,0 +1,326 @@
+{
+  "_meta": {
+    "current": "20th-pres-2022",
+    "previous": "19th-pres-2017",
+    "current_name": "제20대 대통령선거",
+    "previous_name": "제19대 대통령선거",
+    "generated_at": "2026-08-05T00:37:29+09:00",
+    "source": "polis 계산",
+    "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
+  },
+  "turnout": {
+    "previous": 77.2,
+    "current": 77.1,
+    "delta": -0.1
+  },
+  "nation": {
+    "previous": {
+      "더불어민주당": 41.09,
+      "자유한국당": 24.04,
+      "국민의당": 21.42,
+      "바른정당": 6.76,
+      "정의당": 6.17,
+      "새누리당": 0.13,
+      "무소속": 0.1,
+      "민중연합당": 0.08,
+      "국민대통합당": 0.07,
+      "홍익당": 0.06,
+      "한국국민당": 0.03,
+      "늘푸른한국당": 0.03,
+      "경제애국당": 0.02
+    },
+    "current": {
+      "국민의힘": 48.56,
+      "더불어민주당": 47.83,
+      "정의당": 2.38,
+      "국가혁명당": 0.83,
+      "진보당": 0.11,
+      "우리공화당": 0.08,
+      "기본소득당": 0.05,
+      "한류연합당": 0.05,
+      "통일한국당": 0.03,
+      "노동당": 0.03,
+      "신자유민주연합": 0.02,
+      "새누리당": 0.01
+    },
+    "delta": {
+      "국가혁명당": 0.83,
+      "국민대통합당": -0.07,
+      "국민의당": -21.42,
+      "국민의힘": 48.56,
+      "기본소득당": 0.05,
+      "더불어민주당": 6.74,
+      "무소속": -0.1,
+      "민중연합당": -0.08,
+      "바른정당": -6.76,
+      "새누리당": -0.12,
+      "우리공화당": 0.08,
+      "자유한국당": -24.04,
+      "정의당": -3.79,
+      "진보당": 0.11,
+      "한류연합당": 0.05,
+      "홍익당": -0.06
+    },
+    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+  },
+  "offices": {
+    "1": {
+      "label": "대통령 — 시도별",
+      "counts": {
+        "previous_units": 17,
+        "current_units": 17,
+        "direct_comparable": 17,
+        "previous_unmatched": 0,
+        "current_unmatched": 0,
+        "party_hold": 7,
+        "party_flip": 10,
+        "independent_to_independent": 0
+      },
+      "party_seats": {
+        "previous": {
+          "더불어민주당": 14,
+          "자유한국당": 3
+        },
+        "current": {
+          "국민의힘": 10,
+          "더불어민주당": 7
+        },
+        "delta": {
+          "국민의힘": 10,
+          "더불어민주당": -7,
+          "자유한국당": -3
+        }
+      },
+      "delta_compared_only": {
+        "국민의힘": 10,
+        "더불어민주당": -7,
+        "자유한국당": -3
+      },
+      "units": [
+        {
+          "sido": "강원특별자치도",
+          "unit": "강원특별자치도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 34.16,
+          "cur_pct": 54.18,
+          "prev_margin": 4.19,
+          "cur_margin": 12.46,
+          "margin_delta": 8.27
+        },
+        {
+          "sido": "경기도",
+          "unit": "경기도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 42.09,
+          "cur_pct": 50.95,
+          "prev_margin": 19.18,
+          "cur_margin": 5.33,
+          "margin_delta": -13.85
+        },
+        {
+          "sido": "경상남도",
+          "unit": "경상남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "자유한국당",
+          "cur_party": "국민의힘",
+          "prev_pct": 37.24,
+          "cur_pct": 58.25,
+          "prev_margin": 0.51,
+          "cur_margin": 20.87,
+          "margin_delta": 20.36
+        },
+        {
+          "sido": "경상북도",
+          "unit": "경상북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "자유한국당",
+          "cur_party": "국민의힘",
+          "prev_pct": 48.63,
+          "cur_pct": 72.76,
+          "prev_margin": 26.9,
+          "cur_margin": 48.96,
+          "margin_delta": 22.06
+        },
+        {
+          "sido": "광주광역시",
+          "unit": "광주광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 61.15,
+          "cur_pct": 84.82,
+          "prev_margin": 31.07,
+          "cur_margin": 72.1,
+          "margin_delta": 41.03
+        },
+        {
+          "sido": "대구광역시",
+          "unit": "대구광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "자유한국당",
+          "cur_party": "국민의힘",
+          "prev_pct": 45.36,
+          "cur_pct": 75.14,
+          "prev_margin": 23.6,
+          "cur_margin": 53.53,
+          "margin_delta": 29.93
+        },
+        {
+          "sido": "대전광역시",
+          "unit": "대전광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 42.93,
+          "cur_pct": 49.56,
+          "prev_margin": 19.71,
+          "cur_margin": 3.11,
+          "margin_delta": -16.6
+        },
+        {
+          "sido": "부산광역시",
+          "unit": "부산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 38.71,
+          "cur_pct": 58.26,
+          "prev_margin": 6.73,
+          "cur_margin": 20.1,
+          "margin_delta": 13.37
+        },
+        {
+          "sido": "서울특별시",
+          "unit": "서울특별시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 42.34,
+          "cur_pct": 50.56,
+          "prev_margin": 19.62,
+          "cur_margin": 4.82,
+          "margin_delta": -14.8
+        },
+        {
+          "sido": "세종특별자치시",
+          "unit": "세종특별자치시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 51.08,
+          "cur_pct": 51.92,
+          "prev_margin": 30.05,
+          "cur_margin": 7.77,
+          "margin_delta": -22.28
+        },
+        {
+          "sido": "울산광역시",
+          "unit": "울산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 38.15,
+          "cur_pct": 54.41,
+          "prev_margin": 10.69,
+          "cur_margin": 13.62,
+          "margin_delta": 2.93
+        },
+        {
+          "sido": "인천광역시",
+          "unit": "인천광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 41.21,
+          "cur_pct": 48.92,
+          "prev_margin": 17.55,
+          "cur_margin": 1.86,
+          "margin_delta": -15.69
+        },
+        {
+          "sido": "전라남도",
+          "unit": "전라남도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 59.88,
+          "cur_pct": 86.1,
+          "prev_margin": 29.19,
+          "cur_margin": 74.65,
+          "margin_delta": 45.46
+        },
+        {
+          "sido": "전북특별자치도",
+          "unit": "전북특별자치도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 64.84,
+          "cur_pct": 82.98,
+          "prev_margin": 41.07,
+          "cur_margin": 68.55,
+          "margin_delta": 27.48
+        },
+        {
+          "sido": "제주특별자치도",
+          "unit": "제주특별자치도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "더불어민주당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 45.51,
+          "cur_pct": 52.59,
+          "prev_margin": 24.6,
+          "cur_margin": 9.9,
+          "margin_delta": -14.7
+        },
+        {
+          "sido": "충청남도",
+          "unit": "충청남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 38.63,
+          "cur_pct": 51.08,
+          "prev_margin": 13.78,
+          "cur_margin": 6.12,
+          "margin_delta": -7.66
+        },
+        {
+          "sido": "충청북도",
+          "unit": "충청북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "더불어민주당",
+          "cur_party": "국민의힘",
+          "prev_pct": 38.62,
+          "cur_pct": 50.67,
+          "prev_margin": 12.29,
+          "cur_margin": 5.55,
+          "margin_delta": -6.74
+        }
+      ],
+      "not_compared": []
+    }
+  },
+  "councils": {}
+}
