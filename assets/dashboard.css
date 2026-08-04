@@ -189,3 +189,25 @@
   color: var(--ink-soft);
 }
 
+
+/* 능력 패널 — 홈을 내리면 사이트가 무엇을 줄 수 있는지 순서대로 드러난다.
+   기존 dash-panel 어휘를 그대로 쓰되 한 줄만 더한다: 그 주장을 뒷받침하는 실제 수치.
+   숫자가 곧 근거이자 이 사이트의 성격이라, 장식 대신 수치에 무게를 준다. */
+.cap-panel { justify-content: space-between; }
+.cap-figure {
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.cap-figure::before {
+  content: '';
+  display: block;
+  width: 26px;
+  border-top: 2px solid var(--ink);
+  margin-bottom: 7px;
+}
+.cap-panel .dash-more { margin-top: 8px; }

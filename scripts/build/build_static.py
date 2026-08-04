@@ -357,6 +357,14 @@ def main():
     build_poll_elections(urls)    # /polls/{id}/ 선거별 여론조사 vs 실제 + 디렉터리
     build_polls(urls)             # /, /governor/ 등 페이지 생성
     build_history(manifest, elections, urls)   # history/**/index.html 생성
+    # 홈 능력 블록 — 수치를 손으로 적으면 데이터가 늘 때마다 어긋난다(nav와 같은 이유).
+    try:
+        import build_home_capabilities as _caps
+        _caps.main()
+    except SystemExit:
+        pass
+    except Exception as e:
+        print(f'  ! 홈 능력 블록 갱신 실패: {e}')
     # sitemap·robots는 포괄 생성기에 위임 — archive·person 포함 전수(56개로 덮어쓰던 버그 수정).
     # build_polls/build_history가 페이지를 먼저 써야 디렉터리 스캔이 잡힘.
     _sitemap.main()
