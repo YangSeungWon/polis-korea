@@ -138,6 +138,20 @@ python3 scripts/build/build_sitemap.py         # sitemap.xml 통합 재생성
 > `enrich_person_index.py`는 `build_person_index.py` 직후에 반드시 돌린다 — 건너뛰면
 > assembly_id 2,617건이 사라지고 인물 id가 바뀌어 정적 페이지 링크가 깨진다.
 
+### nav는 손대지 않아도 된다
+
+nav 정본은 `sync_nav_html.py`(MENU + `menu_for_path`)이고, 페이지 생성기들이 생성
+시점에 그 함수를 호출한다. 따라서 재빌드 후 `sync_nav_html.py`를 따로 돌릴 필요가 없다
+— 안전망일 뿐이다. 메뉴를 바꿀 때는 `sync_nav_html.py`의 `MENU`만 고치고 생성기를 다시
+돌린다.
+
+CI(`checks.yml`)가 매 push마다 `sync_nav_html.py --check`로 검사해, 새 생성기가 nav
+사본을 박으면 즉시 실패한다. 로컬에서도 같은 명령으로 확인할 수 있다.
+
+```bash
+python3 scripts/build/sync_nav_html.py --check   # 어긋나면 exit 1
+```
+
 > 4,000여 페이지를 매일 재생성하는 건 낭비라 CI에서 제외 — 데이터 변경 후 1회만 돌리면 된다.
 > 빠뜨리면 조용히 stale 되니, 개표 확정 커밋과 함께 묶을 것.
 

@@ -111,7 +111,11 @@ def process(path: Path, dry: bool) -> str:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--check", action="store_true",
+                    help="쓰지 않고 검사만 — 어긋난 페이지가 있으면 exit 1 (CI 가드용)")
     args = ap.parse_args()
+    if args.check:
+        args.dry = True
     htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html")) + sorted(ROOT.glob("person/*/index.html"))
     counts = {"changed": 0, "same": 0, "skip": 0}
     for p in htmls:
@@ -122,6 +126,16 @@ def main():
         if r == "changed":
             print(f"  {p.relative_to(ROOT)}")
     print(f"\n변경 {counts['changed']} · 동일 {counts['same']} · 스킵 {counts['skip']}")
+    if args.check and counts["changed"]:
+        # 생성기가 nav 정본(render_nav·menu_for_path)을 쓰지 않고 사본을 박았다는 신호.
+        # 사본은 메뉴가 바뀔 때마다 조용히 어긋나므로, 여기서 잡아 되돌아가게 한다.
+        print(
+            f"\n✗ nav가 정본과 어긋난 페이지 {counts['changed']}개.\n"
+            "  원인은 대개 페이지 생성기가 nav HTML 사본을 템플릿에 박은 것이다.\n"
+            "  생성기에서 sync_nav_html의 render_nav(menu_for_path(rel))를 쓰도록 고칠 것.\n"
+            "  (정본 자체를 바꾼 경우라면 생성기를 다시 돌려 페이지를 갱신하고 커밋)",
+            file=sys.stderr)
+        return 1
     return 0
 
 
