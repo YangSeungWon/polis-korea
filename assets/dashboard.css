@@ -211,3 +211,16 @@
   margin-bottom: 7px;
 }
 .cap-panel .dash-more { margin-top: 8px; }
+/* 미니 시각물 — 그 패널이 다루는 데이터의 실제 모양. 정확한 값은 아래 수치 줄이 말하므로
+   여기서는 규모와 형태만 보인다. currentColor 상속이라 테마 전환에 그대로 따라온다. */
+.cap-viz {
+  display: block;
+  width: 100%;
+  height: 34px;
+  margin: 2px 0 0;
+  color: var(--ink-mute);
+  transition: color .12s;
+}
+.cap-panel:hover .cap-viz,
+.cap-panel:focus-visible .cap-viz { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .cap-viz { transition: none; } }
