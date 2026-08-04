@@ -68,129 +68,79 @@ def counts() -> dict:
 
 
 
-# --- 미니 시각물 ---------------------------------------------------------------
-# 능력 패널이 전부 '테두리 친 텍스트 상자'라 스크롤 리듬이 평평했다. 이 사이트의 언어는
-# 지도·hex·막대인데 능력을 말로만 설명하고 있었다. 각 패널에 그 데이터의 실제 모양을
-# 한 조각 넣는다 — 정확히 읽는 차트가 아니라 규모와 형태를 보여주는 텍스처다.
-# 정확한 수치는 바로 아래 cap-figure에 숫자로 있으므로 그림만으로 값을 읽게 하지 않는다.
+# --- 국정지지율 스파크라인 -----------------------------------------------------
+# 능력 패널 6개에 전부 미니 차트를 넣었다가 5개를 걷어냈다. 라벨 없는 막대·구간은 읽히지
+# 않는다 — 무엇의 크기인지 알 수 없으면 그냥 무늬다. 시계열만 남긴 이유는 모양 자체가
+# 의미를 갖기 때문이다(오르내림과 정권별 궤적은 라벨 없이도 읽힌다).
 #
-# 색은 쓰지 않는다(currentColor). 계열이 하나뿐이고, 여기에 정당색을 쓰면 있지도 않은
-# 정파 의미가 생긴다. 라이트·다크는 상속색으로 자동 대응.
+# 5개 조사기관을 모두 합친다. 갤럽만 쓰면 272건이지만 리얼미터·NBS·한국리서치·일반
+# 조사까지 1,600건 넘고, 기관별 house effect가 섞여 상쇄된다. 월별 중앙값으로 묶어
+# 개별 조사의 튐을 죽이고 궤적만 남긴다.
 
-W, H = 168, 34
-
-
-def _svg(inner: str, label: str) -> str:
-    return (f'<svg class="cap-viz" viewBox="0 0 {W} {H}" preserveAspectRatio="none" '
-            f'role="img" aria-label="{label}" focusable="false">{inner}</svg>')
+W, H = 168, 44
+APPROVAL_FILES = ("approval_gallup.json", "approval_realmeter.json", "approval_nbs.json",
+                  "approval_hrc.json", "approval_general.json")
 
 
-def spark(vals: list, label: str) -> str:
-    if len(vals) < 2:
+def approval_series() -> tuple[list, str]:
+    """((월오프셋, 값) 리스트, 대통령 이름) — **현 정부 구간만**.
+
+    홈은 '지금'을 보는 자리다. 2015년부터 11년치를 168px에 넣으면 궤적이 뭉개지고, 정권이
+    네 번 바뀐 선이 무엇을 말하는지도 애매해진다. 현 정부만 잘라 내면 취임 이후 흐름이
+    그대로 읽힌다. 역대 전체는 /tracker.html이 제대로 보여준다.
+
+    x는 배열 인덱스가 아니라 실제 경과 월 — 조사가 없는 달이 있어 인덱스로 그리면
+    그 구간이 압축돼 시간이 왜곡된다.
+    """
+    from collections import defaultdict
+    from statistics import median
+    by_month: dict[str, list] = defaultdict(list)
+    subj: dict[str, str] = {}
+    for name in APPROVAL_FILES:
+        fp = ROOT / "data/polls" / name
+        if not fp.exists():
+            continue
+        try:
+            d = json.loads(fp.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        for r in d.get("records") or d.get("polls") or []:
+            st, pos = (r.get("period_start") or ""), r.get("positive")
+            if len(st) >= 7 and pos is not None:
+                by_month[st[:7]].append(float(pos))
+                subj.setdefault(st[:7], r.get("subject") or "")
+    months = sorted(by_month)
+    if not months:
+        return [], ""
+    who = subj.get(months[-1]) or ""
+    cur = [m for m in months if subj.get(m) == who]
+    # 취임 달은 전임과 조사가 섞이므로(2022-05처럼) 연속 구간의 시작부터 자른다.
+    if len(cur) < 4:
+        return [], ""
+    y0, m0 = int(cur[0][:4]), int(cur[0][5:7])
+    off = lambda m: (int(m[:4]) - y0) * 12 + (int(m[5:7]) - m0)
+    return [(off(m), median(by_month[m])) for m in cur], who
+
+
+def approval_spark() -> str:
+    pts, _who = approval_series()
+    if len(pts) < 4:
         return ""
+    vals = [v for _, v in pts]
     lo, hi = min(vals), max(vals)
     rng = (hi - lo) or 1
-    step = W / (len(vals) - 1)
-    pts = " ".join(f"{i * step:.1f},{H - 3 - (v - lo) / rng * (H - 8):.1f}"
-                   for i, v in enumerate(vals))
-    return _svg(f'<polyline points="{pts}" fill="none" stroke="currentColor" '
-                f'stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>',
-                label)
-
-
-def bars(vals: list, label: str) -> str:
-    if not vals:
-        return ""
-    hi = max(vals) or 1
-    n = len(vals)
-    gap = 2
-    bw = (W - gap * (n - 1)) / n
-    out = []
-    for i, v in enumerate(vals):
-        h = max(1.5, v / hi * (H - 4))
-        out.append(f'<rect x="{i * (bw + gap):.1f}" y="{H - h:.1f}" width="{bw:.1f}" '
-                   f'height="{h:.1f}" fill="currentColor" rx="1"/>')
-    return _svg("".join(out), label)
-
-
-def segments(widths: list, label: str) -> str:
-    tot = sum(widths) or 1
-    x = 0.0
-    out = []
-    for w in widths:
-        ww = max(1.0, w / tot * W - 2)
-        out.append(f'<rect x="{x:.1f}" y="{H / 2 - 5:.1f}" width="{ww:.1f}" height="10" '
-                   f'fill="currentColor" rx="1"/>')
-        x += w / tot * W
-    return _svg("".join(out), label)
-
-
-def viz_data() -> dict:
-    """패널별 미니 시각물. 데이터가 없으면 그 패널만 그림 없이 나간다."""
-    v = {}
-    try:    # 국정지지율 시계열 — 갤럽 기록을 시간순으로
-        rec = json.loads((ROOT / "data/polls/approval_gallup.json").read_text(encoding="utf-8"))
-        rows = sorted((r for r in rec.get("records", []) if r.get("positive") is not None),
-                      key=lambda r: r.get("period_start") or "")
-        v["tracker"] = spark([r["positive"] for r in rows][-72:], "역대 국정지지율 추이")
-    except Exception:
-        pass
-    try:    # 연도별 조사 건수
-        from collections import Counter
-        years = Counter()
-        seen = set()
-        for fp in (ROOT / "data/polls").glob("aggregated*.json"):
-            if "scancache" in fp.name:
-                continue
-            d = json.loads(fp.read_text(encoding="utf-8"))
-            polls = d.get("polls") if isinstance(d, dict) else d
-            for p in polls or []:
-                k, st = p.get("ntt_id"), (p.get("period_start") or "")
-                if k and k not in seen and len(st) >= 4:
-                    seen.add(k)
-                    years[st[:4]] += 1
-        ks = sorted(years)[-10:]
-        v["poll"] = bars([years[k] for k in ks], "연도별 여론조사 건수")
-    except Exception:
-        pass
-    try:    # 연대별 출마 건수
-        from collections import Counter
-        dec = Counter()
-        for p in json.loads((ROOT / "assets/person-index.json").read_text(encoding="utf-8"))["persons"]:
-            for r in p.get("races", []):
-                y = r.get("year")
-                if y:
-                    dec[y // 10 * 10] += 1
-        ks = sorted(dec)
-        v["person"] = bars([dec[k] for k in ks], "연대별 출마 건수")
-    except Exception:
-        pass
-    try:    # 공약 분야 분포 상위
-        pl = json.loads((ROOT / "data/pledges/realm-summary.json").read_text(encoding="utf-8"))
-        from collections import Counter
-        tot = Counter()
-        for e in pl.values():
-            for r in e.get("realms", []):
-                tot[r["realm"]] += r["n"]
-        v["pledge"] = bars([n for _, n in tot.most_common(8)], "공약 분야 분포")
-    except Exception:
-        pass
-    try:    # 계열별 정당 수
-        from collections import Counter
-        reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
-        st = Counter(x.get("stream") or "기타" for x in reg.values())
-        v["party"] = segments([n for _, n in st.most_common()], "계열별 정당 수")
-    except Exception:
-        pass
-    try:    # 공화국 존속 기간
-        h = json.loads((ROOT / "data/history_events.json").read_text(encoding="utf-8"))
-        reps = [r for r in h.get("republics", []) if r.get("start")]
-        yrs = [int(r["start"][:4]) for r in reps] + [2026]
-        v["history"] = segments([max(1, yrs[i + 1] - yrs[i]) for i in range(len(yrs) - 1)],
-                                "공화국별 존속 기간")
-    except Exception:
-        pass
-    return v
+    span = pts[-1][0] or 1
+    step = W / span
+    xy = [(o * step, H - 4 - (v - lo) / rng * (H - 10)) for o, v in pts]
+    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in xy)
+    area = f"0,{H} " + line + f" {W},{H}"
+    return (f'<svg class="cap-viz" viewBox="0 0 {W} {H}" preserveAspectRatio="none" '
+            f'role="img" aria-label="현 정부 국정지지율 — 5개 조사기관 월별 중앙값" '
+            f'focusable="false">'
+            f'<polygon points="{area}" fill="currentColor" opacity="0.13"/>'
+            f'<polyline points="{line}" fill="none" stroke="currentColor" stroke-width="1.5" '
+            f'stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>'
+            f'</svg>')
 
 
 def panel(href: str, title: str, sub: str, figure: str, more: str, viz: str = "") -> str:
@@ -203,6 +153,13 @@ def panel(href: str, title: str, sub: str, figure: str, more: str, viz: str = ""
             f'      </a>\n')
 
 
+def approval_figure() -> str:
+    pts, who = approval_series()
+    if not pts:
+        return "5개 조사기관 통합"
+    return f"{who} 정부 {pts[-1][0] + 1}개월 · 5개 기관" if who else "5개 조사기관 통합"
+
+
 def build(c: dict) -> str:
     """능력 섹션 3개 × 2패널.
 
@@ -211,7 +168,7 @@ def build(c: dict) -> str:
     '역대 선거'는 바로 위 '역대' 섹션의 '역대 선거 결과'와 같은 것이라 넣지 않는다.
     """
     f = lambda n: f"{n:,}"
-    v = viz_data()
+    spark = approval_spark()
     out = [START + " — scripts/build/build_home_capabilities.py 자동 갱신. 손수정 X. -->"]
 
     out.append('  <section class="dash-section">\n'
@@ -219,10 +176,10 @@ def build(c: dict) -> str:
                '    <div class="dash-grid dash-grid-2">\n')
     out.append(panel("/tracker.html", "지지율 추이",
                      "대통령 국정평가·정당지지·차기주자를 선거와 무관하게 이어 본다",
-                     "5개 조사기관 통합", "추이 보기", v.get("tracker", "")))
+                     approval_figure(), "추이 보기", spark))
     out.append(panel("/polls.html", "여론조사",
                      "조사가 실제 결과를 얼마나 맞혔는지 회차별로 대조한다",
-                     f"NESDC 등록 {f(c['poll'])}건", "조사 보기", v.get("poll", "")))
+                     f"NESDC 등록 {f(c['poll'])}건", "조사 보기"))
     out.append("    </div>\n  </section>\n")
 
     out.append('  <section class="dash-section">\n'
@@ -230,15 +187,15 @@ def build(c: dict) -> str:
                '    <div class="dash-grid dash-grid-2">\n')
     out.append(panel("/search.html", "출마 이력",
                      "한 사람이 언제 어디서 무엇으로 나왔고 어떻게 됐는지",
-                     f"{f(c['person'])}명", "이름으로 찾기", v.get("person", "")))
+                     f"{f(c['person'])}명", "이름으로 찾기"))
     if c["pledge"]:
         out.append(panel("/archive/9th-local-2026/", "선거공약",
                          "대통령·시도지사·시장군수구청장·교육감이 낸 공약서 원문. 낙선자 것까지",
-                         f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", "분야별로 보기", v.get("pledge", "")))
+                         f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", "분야별로 보기"))
     else:
         out.append(panel("/parties.html", "정당사",
                          "창당·합당·분당·해산으로 이어지는 계보",
-                         f"정당 {f(c['party'])}개", "계보 보기", v.get("party", "")))
+                         f"정당 {f(c['party'])}개", "계보 보기"))
     out.append("    </div>\n  </section>\n")
 
     out.append('  <section class="dash-section">\n'
@@ -246,10 +203,10 @@ def build(c: dict) -> str:
                '    <div class="dash-grid dash-grid-2">\n')
     out.append(panel("/parties.html", "정당사",
                      "창당·합당·분당·해산으로 이어지는 계보",
-                     f"정당 {f(c['party'])}개", "계보 보기", v.get("party", "")))
+                     f"정당 {f(c['party'])}개", "계보 보기"))
     out.append(panel("/chronology.html", "근현대사 연표",
                      "공화국·개헌·항쟁·정변과 모든 선거를 한 줄에 놓고 본다",
-                     f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", "연표 보기", v.get("history", "")))
+                     f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", "연표 보기"))
     out.append("    </div>\n  </section>\n")
 
     out.append("  " + END)
