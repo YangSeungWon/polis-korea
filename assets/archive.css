@@ -920,3 +920,32 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .ar-summary-list b { font-weight: 700; }
 .ar-summary-list span { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .ar-summary-note { font-size: 12px; color: var(--ink-mute); margin: 10px 0 0; }
+
+/* ── 신뢰 상태 (docs/trust-states.md) ─────────────────────────────────────
+   '데이터가 얼마나 믿을 만한가'를 평가하는 UI가 아니라 '이 숫자가 무엇이고 어디서
+   왔으며 어느 생애주기에 있는가'를 설명하는 UI다. 그래서 좋음/나쁨 색을 쓰지 않는다.
+   polis에서 빨강·파랑은 이미 정당을 뜻하므로 신뢰에 쓰면 정치적으로 오독된다. */
+.tr-line {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 2px 0 12px;
+  letter-spacing: -0.005em;
+}
+.tr-life { font-weight: 700; color: var(--ink); }
+/* 잠정 ≠ 오류. 경고색으로 칠하면 '문제 있는 데이터'로 읽힌다 — 정상적인 집계 진행이다. */
+.tr-provisional { color: var(--ink-soft); }
+/* polis가 만든 값 — 원자료와 구분하되 단정적으로 보이지 않게 점선.
+   교육감 '정당 없음' 칩과 같은 어휘. */
+.tr-chip, .tr-fact {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+  cursor: help;
+  color: var(--ink-soft);
+}
+.tr-chip { border: 1px dashed var(--rule-strong); }
+/* 무투표는 신뢰 상태가 아니라 도메인 사실 — 실선으로 성격을 구분한다. */
+.tr-fact { border: 1px solid var(--rule); background: var(--bg2); }

@@ -64,6 +64,7 @@
   // 공약 분야 분포 — 회차 종류와 무관하게 같은 처리라 mode 밖에서 한 번만. 데이터나
   // 섹션이 없는 회차(총선 등)에서는 스스로 조용히 끝난다.
   window.Archive.pledgeRealms?.render(ctx);
+  mountTrust(ctx);
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
@@ -86,5 +87,40 @@
     ctx.exitData = exitData;
     ctx.pollPageExists = (pollIndex || []).some((e) => e.slug === meta.id);
     if (mode && mode.renderDeferred) await mode.renderDeferred(ctx);
+    mountTrust(ctx);   // 출구조사·여론조사는 2단계에서 오므로 한 번 더 (mount는 교체 방식)
   })();
 })();
+
+// 신뢰 상태 한 줄을 각 섹션 제목 아래에 붙인다 — docs/trust-states.md.
+// 한 곳에서만 부른다: 섹션마다 _meta를 따로 해석하면 규칙이 갈라진다.
+function mountTrust(ctx) {
+  const T = window.Trust;
+  if (!T) return;
+  const meta = ctx.results?._meta || {};
+  const races = ctx.results?.races || [];
+
+  // 개표율 — 잠정일 때만 뜻이 있다(확정본의 count_pct는 무투표 race의 100뿐).
+  const cps = races.map((r) => r.count_pct).filter((v) => typeof v === 'number');
+  const countPct = cps.length ? cps.reduce((a, b) => a + b, 0) / cps.length : null;
+
+  // 결과 기반 섹션 — 같은 데이터셋이라 같은 줄을 쓴다.
+  const base = T.deriveDataset(meta, { countPct });
+  ['ar-offices', 'ar-governor-hex-section', 'ar-metro-hex-section',
+    'ar-council-hex-section', 'ar-winners-section'].forEach((id) => T.mount(id, base));
+
+  // 기초의원 비례는 득표 미게시 시군구가 있다 — 그 섹션에서만 밝힌다.
+  const pending = races.filter((r) => r.votes_pending).length;
+  if (pending) {
+    T.mount('ar-council-hex-section', T.deriveDataset(meta, { countPct, pendingCount: pending }));
+  }
+
+  // 출구조사 — 확정/잠정을 붙이지 않는다. 예측은 확정 결과가 아니다.
+  // 출처가 둘 이상이면 섹션에 뭉뚱그리지 않고 시리즈별로 붙는 게 맞지만(스펙), 우선
+  // 섹션 단위로 발표 시각만 밝히고 시리즈별 표기는 출구조사 렌더러가 맡는다.
+  const ex = ctx.exitData?._meta;
+  if (ex) {
+    T.mount('ar-exitpoll', T.deriveDataset(ex, {
+      sourceLabel: (ex.sources || []).map((s) => s.name).join(' · ') || null,
+    }));
+  }
+}
