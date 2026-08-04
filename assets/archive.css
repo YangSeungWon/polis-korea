@@ -980,3 +980,9 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
   .cmp-row { grid-template-columns: 1fr; gap: 4px; }
   .cmp-unit { min-width: 0; }
 }
+/* 비교 요약 — 숫자가 먼저 읽히게. '직접 비교 불가'도 같은 크기로 둔다(숨기지 않는다). */
+.cmp-stats { display: flex; flex-wrap: wrap; gap: 10px 30px; margin: 0 0 18px; }
+.cmp-stat { display: flex; flex-direction: column; min-width: 84px; }
+.cmp-stat-n { font-size: 26px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.cmp-stat-l { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-top: 3px; }
+.cmp-stat-x { font-size: 11px; color: var(--ink-mute); margin-top: 1px; }

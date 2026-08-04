@@ -30,7 +30,8 @@
   }
 
   function flipList(office) {
-    const flips = (office.units || []).filter((u) => u.changed);
+    // outcome 기준 — '무소속→무소속'은 정당이 바뀐 게 아니라 정당이 없는 것이라 뺀다.
+    const flips = (office.units || []).filter((u) => u.outcome === 'party_flip');
     if (!flips.length) return '';
     const rows = flips.map((u) => `<li>
       <span class="cmp-unit">${esc(u.unit)}</span>
@@ -47,7 +48,7 @@
     for (const o of all) {
       for (const x of o.not_compared || []) {
         rows.push(`<li><span class="cmp-unit">${esc(x.unit)}</span>
-          <span class="cmp-reason">${esc(x.reason)}</span></li>`);
+          <span class="cmp-reason">${esc(x.note || x.reason)}</span></li>`);
       }
     }
     if (!rows.length) return '';
@@ -56,6 +57,9 @@
         단위입니다. 빼고 세면 실제로 없던 변화가 만들어지므로 따로 밝힙니다.</p>
       <ul class="cmp-flip-list">${rows.join('')}</ul></details>`;
   }
+
+  // 1차는 광역단체장만. 얇게 내보고 자연스러우면 기초단체장·의회로 넓힌다.
+  const FIRST_OFFICE = '3';
 
   async function render(ctx) {
     const sec = document.getElementById(SECTION);
@@ -68,33 +72,35 @@
       d = await fetch(`data/comparisons/${ctx.meta.id}__${prev}.json`)
         .then((r) => (r.ok ? r.json() : null));
     } catch { return; }
-    if (!d) return;
+    const o = d?.offices?.[FIRST_OFFICE];
+    if (!o) return;
 
+    const n = o.counts;
     const t = d.turnout || {};
-    const head = (t.delta != null)
-      ? `<p class="cmp-head"><b>${esc(d._meta.previous_name || prev)}</b> 대비 ·
-         투표율 ${t.previous}% → <b>${t.current}%</b>
-         <span class="${t.delta > 0 ? 'is-up' : 'is-down'}">${sign(t.delta)}%p</span></p>`
-      : '';
+    // 비교 불가를 결함처럼 숨기지 않는다. 인천 개편·군위 편입 같은 사건을 드러내는 게
+    // 오히려 이 사이트가 할 일이다.
+    const excluded = n.previous_unmatched + n.current_unmatched;
 
-    const offices = Object.values(d.offices || {});
-    const parts = [head];
-    for (const o of offices) {
-      parts.push(deltaRow(o.label, o.delta_compared_only,
-        `교체 ${o.flips} · 수성 ${o.holds}`));
-      parts.push(flipList(o));
-    }
-    for (const c of Object.values(d.councils || {})) {
-      parts.push(deltaRow(c.label + ' 의석', c.delta, '선거구 획정이 달라 합계만'));
-    }
-    parts.push(notCompared(offices));
+    const stat = (v, label, extra) => `<div class="cmp-stat">
+      <b class="cmp-stat-n">${v}</b><span class="cmp-stat-l">${esc(label)}</span>
+      ${extra ? `<span class="cmp-stat-x">${esc(extra)}</span>` : ''}</div>`;
+
+    const parts = [`<p class="cmp-head"><b>${esc(d._meta.previous_name || prev)}</b>와 비교</p>`];
+    parts.push(`<div class="cmp-stats">
+      ${stat(n.party_flip, '정당이 바뀐 광역단체장')}
+      ${stat(n.party_hold, '같은 정당 유지')}
+      ${excluded ? stat(excluded, '직접 비교 불가', '행정구역 변경') : ''}
+      ${t.delta != null ? stat(`${sign(t.delta)}%p`, '투표율', `${t.previous}% → ${t.current}%`) : ''}
+    </div>`);
+    parts.push(deltaRow('정당 증감', o.delta_compared_only, '직접 비교 가능한 곳만'));
+    parts.push(flipList(o));
+    parts.push(notCompared([o]));
 
     const chip = (window.Trust && window.Trust.fieldChip)
       ? window.Trust.fieldChip('calculated',
-        '두 회차 결과에서 polis가 계산한 값입니다. 같은 이름의 단위끼리만 대조합니다.')
+        '두 회차 결과에서 polis가 계산한 값입니다. 같은 이름·같은 경계의 단위끼리만 대조합니다.')
       : '';
-    parts.push(`<p class="cmp-foot">${chip} 정당 증감은 통합·개편 단위를 뺀
-      <b>비교 가능한 단위</b> 기준입니다.</p>`);
+    parts.push(`<p class="cmp-foot">${chip} 기초단체장·지방의원 비교는 준비 중입니다.</p>`);
 
     host.innerHTML = parts.filter(Boolean).join('');
     sec.hidden = false;

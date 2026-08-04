@@ -29,8 +29,26 @@ ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "data/results"
 OUT_DIR = ROOT / "data/comparisons"
 
-# 이름만 바뀐 같은 단위 — 이어 붙인다.
+# 이름만 바뀐 같은 단위 — 경계가 같으므로 이어 붙인다(match_type='renamed').
 SIDO_RENAME = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+
+# 매칭 유형. 정규화(이름 맞추기)와 비교 가능성 판정은 다른 문제다 — 이름을 맞췄다고
+# 경계가 같은 게 아니다. 직접 delta를 낼 수 있는 건 exact·renamed뿐이다.
+MATCH_DIRECT = ("exact", "renamed")
+
+# 비교 불가 사유 — 문자열이 아니라 코드로 둔다. 나중에 '행정구역 개편'만 거르는 필터를
+# 만들 수 있고, 문구가 바뀌어도 소비하는 쪽이 안 깨진다.
+REASON = {
+    "merged_into": "다른 단위와 통합",
+    "sido_transferred": "상위 시도가 바뀜",
+    "boundary_reorganized": "행정구역 개편",
+    "new_unit": "지난 회차에 없던 단위",
+    "abolished_unit": "이번 회차에 없는 단위",
+}
+
+# 결과 분류. '수성'을 정당 기준으로 못 박는다. 무소속→무소속은 서로 다른 사람인데
+# party bucket만 같은 것이라 수성으로 부르면 정치적으로 틀린 말이 된다.
+OUTCOME_INDEP = "independent_to_independent"
 
 # 단독 선출직만 단위 대조가 가능하다(1위 정당이 곧 결과).
 SINGLE_WINNER = {"3": ("sido", "광역단체장"), "4": ("sigungu", "기초단체장")}
@@ -66,7 +84,8 @@ def winner_of(race: dict):
     if top.get("pct") is not None and others and others[0].get("pct") is not None:
         margin = round(top["pct"] - others[0]["pct"], 2)
     return {"party": top.get("party") or "무소속", "name": top.get("name"),
-            "pct": top.get("pct"), "margin": margin}
+            "pct": top.get("pct"), "margin": margin,
+            "raw_sido": race.get("sido")}
 
 
 def unit_map(races, tc, scope, key_field):
@@ -121,68 +140,85 @@ def build(cur_id: str, prev_id: str) -> dict:
     cur_doc, cur_races = load(cur_id)
     prev_doc, prev_races = load(prev_id)
 
+    merged_into = {}
+    for mm in (json.loads((ROOT / f"data/elections/{cur_id}.json").read_text(encoding="utf-8"))
+               .get("sido_merge") or []):
+        for src in mm.get("merge_from") or []:
+            merged_into[canon_sido(src)] = mm.get("canonical")
+
     offices = {}
     for tc, (scope, label) in SINGLE_WINNER.items():
         key_field = "sido" if scope == "sido" else "sigungu"
         pm = unit_map(prev_races, tc, scope, key_field)
         cm = unit_map(cur_races, tc, scope, key_field)
+        both = set(pm) & set(cm)
+
         units, not_compared = [], []
-        flips = holds = 0
-        for k in sorted(set(pm) & set(cm)):
+        outcome_n = Counter()
+        for k in sorted(both):
             p, c = pm[k], cm[k]
-            changed = p["party"] != c["party"]
-            flips += changed
-            holds += (not changed)
+            # 이름이 바뀐 시도는 renamed — 경계는 같다.
+            mt = "renamed" if (scope == "sido" and p.get("raw_sido") != c.get("raw_sido")) else "exact"
+            if p["party"] == "무소속" and c["party"] == "무소속":
+                outcome = OUTCOME_INDEP          # 같은 정당이 아니라 정당이 없는 것
+            elif p["party"] == c["party"]:
+                outcome = "party_hold"
+            else:
+                outcome = "party_flip"
+            outcome_n[outcome] += 1
             units.append({
-                "sido": k[0], "unit": k[1] or k[0],
-                "prev_party": p["party"], "cur_party": c["party"], "changed": changed,
+                "sido": k[0], "unit": k[1] or k[0], "match_type": mt, "outcome": outcome,
+                "prev_party": p["party"], "cur_party": c["party"],
                 "prev_pct": p["pct"], "cur_pct": c["pct"],
                 "prev_margin": p["margin"], "cur_margin": c["margin"],
                 "margin_delta": (round(c["margin"] - p["margin"], 2)
                                  if p["margin"] is not None and c["margin"] is not None else None),
             })
-        # 사유를 가능한 만큼 특정한다. 같은 이름이 다른 시도에 있으면 '시도 이관'
-        # (경북 군위군 → 대구 편입), 통합 시도로 흡수됐으면 '시도 통합', 그 외는 개편·신설.
-        merged_into = {}
-        merge_meta = (json.loads((ROOT / f"data/elections/{cur_id}.json").read_text(encoding="utf-8"))
-                      .get("sido_merge") or [])
-        for mm in merge_meta:
-            for src in mm.get("merge_from") or []:
-                merged_into[canon_sido(src)] = mm.get("canonical")
+
         cur_names = {k[1] for k in cm}
         prev_names = {k[1] for k in pm}
-        for k in sorted(set(pm) - set(cm)):
-            if k[0] in merged_into:
-                reason = f"{merged_into[k[0]]}로 통합"
-            elif k[1] in cur_names:
-                reason = "다른 시도로 이관"
-            else:
-                reason = "이번 회차에 같은 이름의 단위가 없음 (개편·폐지)"
-            not_compared.append({"sido": k[0], "unit": k[1] or k[0], "side": "previous",
-                                 "reason": reason})
-        for k in sorted(set(cm) - set(pm)):
-            if k[0] in merged_into.values():
-                reason = "통합으로 새로 생긴 단위"
-            elif k[1] in prev_names:
-                reason = "다른 시도에서 이관"
-            else:
-                reason = "지난 회차에 없던 단위 (신설·개편)"
-            not_compared.append({"sido": k[0], "unit": k[1] or k[0], "side": "current",
-                                 "reason": reason})
+
+        def excluded(k, side):
+            other_names = cur_names if side == "previous" else prev_names
+            if side == "previous" and k[0] in merged_into:
+                return "merged", "merged_into", f"{merged_into[k[0]]}로 통합"
+            if side == "current" and k[0] in set(merged_into.values()):
+                return "merged", "merged_into", "통합으로 새로 생긴 단위"
+            if k[1] in other_names:
+                return "transferred", "sido_transferred", "상위 시도가 바뀌어 직접 대조하지 않음"
+            return "boundary_changed", "boundary_reorganized", "행정구역 개편으로 짝이 없음"
+
+        for side, only in (("previous", set(pm) - both), ("current", set(cm) - both)):
+            for k in sorted(only):
+                mt, code, note = excluded(k, side)
+                not_compared.append({
+                    "sido": k[0], "unit": k[1] or k[0], "side": side,
+                    "match_type": mt, "reason_code": code,
+                    "reason": REASON.get(code, code), "note": note,
+                })
+
+        prev_parties = Counter(v["party"] for v in pm.values())
+        cur_parties = Counter(v["party"] for v in cm.values())
+        counts = {
+            "previous_units": len(pm), "current_units": len(cm),
+            "direct_comparable": len(both),
+            "previous_unmatched": len(pm) - len(both),
+            "current_unmatched": len(cm) - len(both),
+            "party_hold": outcome_n["party_hold"],
+            "party_flip": outcome_n["party_flip"],
+            OUTCOME_INDEP: outcome_n[OUTCOME_INDEP],
+        }
         offices[tc] = {
-            "label": label,
+            "label": label, "counts": counts,
             "party_seats": {
-                "previous": dict(Counter(v["party"] for v in pm.values()).most_common()),
-                "current": dict(Counter(v["party"] for v in cm.values()).most_common()),
-                "delta": delta_counter(Counter(v["party"] for v in pm.values()),
-                                       Counter(v["party"] for v in cm.values())),
+                "previous": dict(prev_parties.most_common()),
+                "current": dict(cur_parties.most_common()),
+                "delta": delta_counter(prev_parties, cur_parties),
             },
-            # 전체 증감에는 통합·개편으로 인한 구조적 변화가 섞인다(17개 시도 → 16개).
-            # 실제로 표심이 뒤집힌 몫은 '비교된 단위'만 따로 낸다.
+            # 전체 증감엔 통합·개편으로 인한 구조적 변화가 섞인다(17개 시도 → 16개).
+            # 표심으로 뒤집힌 몫은 직접 비교 가능한 단위만 따로 낸다.
             "delta_compared_only": delta_counter(
-                Counter(pm[k]["party"] for k in set(pm) & set(cm)),
-                Counter(cm[k]["party"] for k in set(pm) & set(cm))),
-            "flips": flips, "holds": holds,
+                Counter(pm[k]["party"] for k in both), Counter(cm[k]["party"] for k in both)),
             "units": units, "not_compared": not_compared,
         }
 
@@ -226,9 +262,14 @@ def main():
     t = data["turnout"]
     print(f"   투표율 {t['previous']}% → {t['current']}% ({t['delta']:+})", file=sys.stderr)
     for tc, o in data["offices"].items():
-        print(f"   {o['label']}: 교체 {o['flips']} · 수성 {o['holds']}"
-              f" · 비교 제외 {len(o['not_compared'])} · 증감 {o['party_seats']['delta']}",
+        n = o["counts"]
+        print(f"   {o['label']}: 이전 {n['previous_units']} → 현재 {n['current_units']}"
+              f" · 직접비교 {n['direct_comparable']}"
+              f" (교체 {n['party_flip']} · 유지 {n['party_hold']}"
+              f" · 무소속끼리 {n['independent_to_independent']})"
+              f" · 미매칭 이전 {n['previous_unmatched']}·현재 {n['current_unmatched']}",
               file=sys.stderr)
+        print(f"      정당 증감(비교분만) {o['delta_compared_only']}", file=sys.stderr)
     for tc, c in data["councils"].items():
         print(f"   {c['label']} 의석 증감: {c['delta']}", file=sys.stderr)
 
