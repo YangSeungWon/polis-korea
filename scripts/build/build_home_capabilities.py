@@ -143,13 +143,13 @@ def approval_spark() -> str:
             f'</svg>')
 
 
-def panel(href: str, title: str, sub: str, figure: str, more: str, viz: str = "") -> str:
-    return (f'      <a class="dash-panel cap-panel" href="{href}">\n'
-            f'        <h2>{title}</h2>\n'
-            f'        <div class="dash-sub">{sub}</div>\n'
-            f'        {viz}\n'
-            f'        <div class="cap-figure">{figure}</div>\n'
-            f'        <span class="dash-more">{more} →</span>\n'
+def row(href: str, title: str, sub: str, figure: str, viz: str = "") -> str:
+    """능력 한 줄. 카드 대신 색인 행 — 수치가 한 열로 정렬돼 커버리지가 표처럼 읽힌다."""
+    return (f'      <a class="cap-row" href="{href}">\n'
+            f'        <span class="cap-name">{title}</span>\n'
+            f'        <span class="cap-desc">{sub}</span>\n'
+            f'        <span class="cap-viz-cell">{viz}</span>\n'
+            f'        <span class="cap-fig">{figure}</span>\n'
             f'      </a>\n')
 
 
@@ -161,54 +161,54 @@ def approval_figure() -> str:
 
 
 def build(c: dict) -> str:
-    """능력 섹션 3개 × 2패널.
+    """능력 목록 — 여론 / 사람 / 맥락.
 
-    이름은 사이트의 다른 곳과 같은 평서형 명사로 둔다 — '광역단체장'·'선거 타임라인'·
-    '근현대사 연표' 옆에 수사의문문이 끼면 그 패널만 튄다.
-    '역대 선거'는 바로 위 '역대' 섹션의 '역대 선거 결과'와 같은 것이라 넣지 않는다.
+    카드 그리드가 아니라 색인 행이다. 홈 위쪽은 이미 대시보드 패널(진행 중인 선거)이라,
+    아래까지 같은 상자가 이어지면 스크롤이 평평해진다. 행으로 두면 수치가 오른쪽 한 열에
+    정렬돼 '무엇을 얼마나 담고 있나'가 표처럼 읽히고, 위쪽 패널과 리듬이 갈린다.
     """
     f = lambda n: f"{n:,}"
     spark = approval_spark()
     out = [START + " — scripts/build/build_home_capabilities.py 자동 갱신. 손수정 X. -->"]
+    out.append('  <section class="dash-section cap-sec">')
+    out.append('    <h2 class="dash-section-title">더 볼 것</h2>')
 
-    out.append('  <section class="dash-section">\n'
-               '    <h2 class="dash-section-title">여론</h2>\n'
-               '    <div class="dash-grid dash-grid-2">\n')
-    out.append(panel("/tracker.html", "지지율 추이",
-                     "대통령 국정평가·정당지지·차기주자를 선거와 무관하게 이어 본다",
-                     approval_figure(), "추이 보기", spark))
-    out.append(panel("/polls.html", "여론조사",
-                     "조사가 실제 결과를 얼마나 맞혔는지 회차별로 대조한다",
-                     f"NESDC 등록 {f(c['poll'])}건", "조사 보기"))
-    out.append("    </div>\n  </section>\n")
-
-    out.append('  <section class="dash-section">\n'
-               '    <h2 class="dash-section-title">사람</h2>\n'
-               '    <div class="dash-grid dash-grid-2">\n')
-    out.append(panel("/search.html", "출마 이력",
-                     "한 사람이 언제 어디서 무엇으로 나왔고 어떻게 됐는지",
-                     f"{f(c['person'])}명", "이름으로 찾기"))
+    groups = [
+        ("여론", [
+            ("/tracker.html", "지지율 추이",
+             "대통령 국정평가·정당지지·차기주자를 선거와 무관하게 이어 본다",
+             approval_figure(), spark),
+            ("/polls.html", "여론조사",
+             "조사가 실제 결과를 얼마나 맞혔는지 회차별로 대조한다",
+             f"NESDC 등록 {f(c['poll'])}건", ""),
+        ]),
+        ("사람", [
+            ("/search.html", "출마 이력",
+             "한 사람이 언제 어디서 무엇으로 나왔고 어떻게 됐는지",
+             f"{f(c['person'])}명", ""),
+        ]),
+        ("맥락", [
+            ("/parties.html", "정당사",
+             "창당·합당·분당·해산으로 이어지는 계보",
+             f"정당 {f(c['party'])}개", ""),
+            ("/chronology.html", "근현대사 연표",
+             "공화국·개헌·항쟁·정변과 모든 선거를 한 줄에 놓고 본다",
+             f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", ""),
+        ]),
+    ]
     if c["pledge"]:
-        out.append(panel("/archive/9th-local-2026/", "선거공약",
-                         "대통령·시도지사·시장군수구청장·교육감이 낸 공약서 원문. 낙선자 것까지",
-                         f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", "분야별로 보기"))
-    else:
-        out.append(panel("/parties.html", "정당사",
-                         "창당·합당·분당·해산으로 이어지는 계보",
-                         f"정당 {f(c['party'])}개", "계보 보기"))
-    out.append("    </div>\n  </section>\n")
+        groups[1][1].append(
+            ("/archive/9th-local-2026/", "선거공약",
+             "대통령·시도지사·시장군수구청장·교육감이 낸 공약서 원문. 낙선자 것까지",
+             f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", ""))
 
-    out.append('  <section class="dash-section">\n'
-               '    <h2 class="dash-section-title">맥락</h2>\n'
-               '    <div class="dash-grid dash-grid-2">\n')
-    out.append(panel("/parties.html", "정당사",
-                     "창당·합당·분당·해산으로 이어지는 계보",
-                     f"정당 {f(c['party'])}개", "계보 보기"))
-    out.append(panel("/chronology.html", "근현대사 연표",
-                     "공화국·개헌·항쟁·정변과 모든 선거를 한 줄에 놓고 본다",
-                     f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", "연표 보기"))
-    out.append("    </div>\n  </section>\n")
-
+    for label, rows in groups:
+        out.append(f'    <div class="cap-group">')
+        out.append(f'      <h3 class="cap-eyebrow">{label}</h3>')
+        for href, title, sub, fig, viz in rows:
+            out.append(row(href, title, sub, fig, viz).rstrip("\n"))
+        out.append('    </div>')
+    out.append('  </section>')
     out.append("  " + END)
     return "\n".join(out)
 

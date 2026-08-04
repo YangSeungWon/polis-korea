@@ -190,37 +190,63 @@
 }
 
 
-/* 능력 패널 — 홈을 내리면 사이트가 무엇을 줄 수 있는지 순서대로 드러난다.
-   기존 dash-panel 어휘를 그대로 쓰되 한 줄만 더한다: 그 주장을 뒷받침하는 실제 수치.
-   숫자가 곧 근거이자 이 사이트의 성격이라, 장식 대신 수치에 무게를 준다. */
-.cap-panel { justify-content: space-between; }
-.cap-figure {
-  margin-top: auto;
-  padding-top: 10px;
+/* 능력 목록 — 홈을 내리면 사이트가 무엇을 줄 수 있는지 드러난다.
+   위쪽은 대시보드 패널(진행 중인 선거)이라, 여기까지 같은 상자를 이으면 스크롤이
+   평평해진다. 색인 행으로 두어 리듬을 가르고, 수치를 오른쪽 한 열에 정렬해
+   '무엇을 얼마나 담고 있나'가 표처럼 읽히게 한다. */
+.cap-group + .cap-group { margin-top: 22px; }
+.cap-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin: 0 0 2px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--rule-strong);
+}
+.cap-row {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr) 96px auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 2px;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+}
+.cap-row:hover { background: var(--bg2); }
+.cap-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.cap-name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.cap-row:hover .cap-name { text-decoration: underline; text-underline-offset: 3px; }
+.cap-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.cap-viz-cell { display: block; align-self: center; }
+.cap-fig {
   font-size: 13px;
   font-weight: 700;
-  color: var(--ink);
+  text-align: right;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
 }
-.cap-figure::before {
-  content: '';
-  display: block;
-  width: 26px;
-  border-top: 2px solid var(--ink);
-  margin-bottom: 7px;
-}
-.cap-panel .dash-more { margin-top: 8px; }
-/* 미니 시각물 — 그 패널이 다루는 데이터의 실제 모양. 정확한 값은 아래 수치 줄이 말하므로
-   여기서는 규모와 형태만 보인다. currentColor 상속이라 테마 전환에 그대로 따라온다. */
+/* 유일하게 남긴 시각물 — 현 정부 국정지지율. 수치가 옆에서 값을 말하므로
+   여기서는 궤적만 보인다. currentColor 상속이라 테마를 그대로 따라간다. */
 .cap-viz {
   display: block;
   width: 100%;
-  height: 44px;
-  margin: 2px 0 0;
+  height: 26px;
   color: var(--ink-mute);
-  transition: color .12s;
 }
-.cap-panel:hover .cap-viz,
-.cap-panel:focus-visible .cap-viz { color: var(--ink); }
-@media (prefers-reduced-motion: reduce) { .cap-viz { transition: none; } }
+.cap-row:hover .cap-viz { color: var(--ink); }
+
+@media (max-width: 700px) {
+  .cap-row {
+    grid-template-columns: 1fr auto;
+    gap: 2px 10px;
+    padding: 12px 2px;
+  }
+  .cap-name { grid-column: 1; }
+  .cap-fig { grid-column: 2; grid-row: 1; }
+  .cap-desc { grid-column: 1 / -1; }
+  .cap-viz-cell { grid-column: 1 / -1; }
+  .cap-viz { height: 30px; margin-top: 4px; }
+}
