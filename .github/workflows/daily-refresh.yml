@@ -101,12 +101,14 @@ jobs:
           # 레포 컨벤션은 pretty(indent=2). minify를 커밋하면 39k줄 diff로 컨벤션 붕괴.
           # Pages는 gzip 서빙이라 공백 minify의 전송 이득은 사실상 0. geo 좌표절삭이
           # 필요하면 별도 수동/배포 단계로 분리할 것.
-          echo "=== 9. 기초의원 9회 확정 회수 (NEC OpenAPI 게시 시 — 미게시(INFO-03)면 자동 skip) ==="
-          python scripts/fetch/fetch_council_winners.py --rebuild --n 9 || true
-          if ! git diff --quiet data/results/9th-local-2026.json; then
-            echo "  → 9회 기초의원 확정 회수됨 → timeline 재집계 (아카이브는 result JSON 런타임 fetch)"
-            python scripts/build/build_timeline.py
-          fi
+          # [제거됨] 9. 기초의원 9회 확정 회수 — fetch_council_winners.py --rebuild --n 9
+          #
+          # --rebuild(rebuild_tc6)는 tc=6 race를 '기존 제거 후 당선인만으로 교체'한다.
+          # 2026-07-31 NEC OpenAPI가 9회 기초의원을 게시(INFO-03→INFO-00)하자 이 상시
+          # 단계가 발동해 낙선자 1,737명과 1,038건의 선거인수·투표수·투표율을 삭제했다.
+          # 확정 데이터는 fetch_nec_results.py 전면 fetch로 이미 회수했고(is_final: true),
+          # 확정된 회차는 자동 잡이 건드리지 않는다 — 필요하면 수동으로 파이프라인을 돌린다.
+          #   ./scripts/build/run_local_pipeline.sh 9th-local-2026
 
       - name: Golden tests (회귀 검출)
         run: |
