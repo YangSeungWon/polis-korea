@@ -46,6 +46,24 @@ REASON = {
     "abolished_unit": "이번 회차에 없는 단위",
 }
 
+# split(하나 → 여럿)의 정확한 대응은 데이터에서 유도할 수 없다. 인천 중구가 제물포구·
+# 영종구로 갈렸다는 건 행정 사실이지 결과 파일에 적혀 있지 않다. 근거 없이 매핑을 지어내면
+# 그 위에 쌓는 swing 계산이 조용히 틀린다. 그래서 같은 시도에서 사라진 단위와 새로 생긴
+# 단위가 함께 있으면 'boundary_reorganized'로만 표시하고, 정확한 대응은 출처가 생겼을 때
+# data/geo/boundary_changes.json에 선언해 쓰도록 남겨 둔다.
+BOUNDARY_MAP = ROOT / "data/geo/boundary_changes.json"
+
+
+def load_boundary_map(cur_id: str, prev_id: str) -> dict:
+    """선언된 경계 변경 대응표. 없으면 빈 dict — 추정하지 않는다."""
+    if not BOUNDARY_MAP.exists():
+        return {}
+    try:
+        d = json.loads(BOUNDARY_MAP.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    return d.get(f"{cur_id}__{prev_id}") or {}
+
 # 결과 분류. '수성'을 정당 기준으로 못 박는다. 무소속→무소속은 서로 다른 사람인데
 # party bucket만 같은 것이라 수성으로 부르면 정치적으로 틀린 말이 된다.
 OUTCOME_INDEP = "independent_to_independent"
@@ -178,6 +196,11 @@ def build(cur_id: str, prev_id: str) -> dict:
         cur_names = {k[1] for k in cm}
         prev_names = {k[1] for k in pm}
 
+        # 같은 시도에서 사라진 단위와 생긴 단위가 함께 있으면 개편으로 본다. 한쪽만
+        # 있으면 신설/폐지다 — 추정 없이 관측만으로 가르는 기준.
+        gone_by_sido = Counter(k[0] for k in set(pm) - both)
+        born_by_sido = Counter(k[0] for k in set(cm) - both)
+
         def excluded(k, side):
             other_names = cur_names if side == "previous" else prev_names
             if side == "previous" and k[0] in merged_into:
@@ -186,7 +209,13 @@ def build(cur_id: str, prev_id: str) -> dict:
                 return "merged", "merged_into", "통합으로 새로 생긴 단위"
             if k[1] in other_names:
                 return "transferred", "sido_transferred", "상위 시도가 바뀌어 직접 대조하지 않음"
-            return "boundary_changed", "boundary_reorganized", "행정구역 개편으로 짝이 없음"
+            reorg = gone_by_sido.get(k[0], 0) and born_by_sido.get(k[0], 0)
+            if reorg:
+                return ("boundary_changed", "boundary_reorganized",
+                        "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편")
+            if side == "previous":
+                return "abolished", "abolished_unit", "이번 회차에 대응 단위가 없다"
+            return "new", "new_unit", "지난 회차에 대응 단위가 없다"
 
         for side, only in (("previous", set(pm) - both), ("current", set(cm) - both)):
             for k in sorted(only):

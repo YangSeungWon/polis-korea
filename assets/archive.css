@@ -986,3 +986,6 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .cmp-stat-n { font-size: 26px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .cmp-stat-l { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-top: 3px; }
 .cmp-stat-x { font-size: 11px; color: var(--ink-mute); margin-top: 1px; }
+.cmp-office { margin: 0 0 26px; }
+.cmp-office + .cmp-office { padding-top: 18px; border-top: 1px solid var(--rule); }
+.cmp-office-title { font-size: 14px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.01em; }
