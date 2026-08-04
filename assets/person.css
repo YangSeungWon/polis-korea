@@ -175,3 +175,20 @@ a.pp-party:hover { background: var(--bg2); }
 }
 .pp-static-pledges { margin: 0; padding-left: 20px; }
 .pp-static-pledges li { font-size: 13px; line-height: 1.7; }
+
+/* ── 지역 허브 ────────────────────────────────────────────────────────────
+   400곳을 한 화면에 두면서도 훑을 수 있어야 한다. 시도로 묶고 그 안은 조밀한
+   칩 흐름 — 사용자는 자기 시도를 먼저 찾고 그 안에서 눈으로 스캔한다. */
+.rg-count {
+  font-size: 12px; font-weight: 500; color: var(--ink-mute);
+  margin-left: 8px; letter-spacing: 0;
+}
+.rg-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.rg-item {
+  display: inline-block; padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--bg2);
+  color: var(--ink); font-size: 13px; text-decoration: none;
+  transition: border-color .12s, background .12s;
+}
+.rg-item:hover { border-color: var(--rule-strong); background: var(--bg3); }
+.rg-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

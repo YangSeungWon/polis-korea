@@ -63,6 +63,8 @@ def menu_for_path(rel_path: str) -> str | None:
         return "elections"
     if p == "/tracker.html":
         return "now"
+    if p.startswith("/region/"):
+        return "elections"
     if p in ("/history.html", "/elections.html", "/timeline.html") \
             or p.startswith("/archive/") or p.startswith("/history/"):
         return "elections"
@@ -124,7 +126,7 @@ def main():
     args = ap.parse_args()
     if args.check:
         args.dry = True
-    htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html")) + sorted(ROOT.glob("person/*/index.html"))
+    htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html")) + sorted(ROOT.glob("person/*/index.html")) + sorted(ROOT.glob("region/*/index.html"))
     counts = {"changed": 0, "same": 0, "skip": 0}
     for p in htmls:
         if "node_modules" in str(p) or "/.git/" in str(p):

@@ -73,10 +73,23 @@ def main():
     n_links = len(_re.findall(r'class="hdr-link', nav.group(0))) if nav else 0
     ck("nav 링크 4개", n_links == 4, n_links)
 
+    ck("nav에서 빠진 /region/가 선거 랜딩에서 링크됨", "/region/" in reachable)
+
+    # 지역 페이지는 허브 1-hop이어야 한다. 400개가 sitemap에만 있고 링크가 없으면
+    # 7월 색인 사고(2,190페이지 미색인)의 '고아 + thin' 조합을 그대로 재현한다.
+    rg_hub = ROOT / "region" / "index.html"
+    ck("지역 허브가 있다", rg_hub.exists())
+    if rg_hub.exists():
+        rg_pages = {p.parent.name for p in ROOT.glob("region/*/index.html")}
+        rg_linked = links(rg_hub, r'href="/region/([^/"]+)/')
+        ck(f"허브가 지역 {len(rg_pages)}개 전부 링크",
+           not (rg_pages - rg_linked), sorted(rg_pages - rg_linked)[:5])
+
     # sitemap에 허브가 있다
     sm = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
     ck("sitemap에 허브 등록", "/elections.html" in sm)
     ck("sitemap에 archive 전부", all(f"/archive/{a}/" in sm for a in archives))
+    ck("sitemap에 지역 허브 등록", "/region/</loc>" in sm or "/region/<" in sm)
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0

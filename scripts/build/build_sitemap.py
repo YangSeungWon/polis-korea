@@ -209,6 +209,15 @@ def party_urls() -> list[tuple[str, str, str, str]]:
             for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
 
 
+def region_urls() -> list[tuple[str, str, str, str]]:
+    """build_region_pages가 만든 sitemap_region.txt 소비."""
+    p = ROOT / "data/sitemap_region.txt"
+    if not p.exists():
+        return []
+    return [(loc.strip(), "monthly", "0.5", lastmod_for(loc.strip()))
+            for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
+
+
 def main():
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -223,6 +232,9 @@ def main():
     parties = party_urls()
     for loc, freq, priority, lastmod in parties:
         lines.append(url_block(loc, freq, priority, lastmod))
+    regions = region_urls()
+    for loc, freq, priority, lastmod in regions:
+        lines.append(url_block(loc, freq, priority, lastmod))
     persons = person_urls()
     for loc, freq, priority, lastmod in persons:
         lines.append(url_block(loc, freq, priority, lastmod))
@@ -232,9 +244,10 @@ def main():
     (ROOT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
     n_arch, n_hist = len(archive_urls()), len(history_urls())
-    total = len(STATIC) + n_arch + n_hist + len(parties) + len(persons)
+    total = len(STATIC) + n_arch + n_hist + len(parties) + len(persons) + len(regions)
     print(f"→ sitemap.xml: {total} URLs ({len(STATIC)} static + {n_arch} archive + "
-          f"{n_hist} history + {len(parties)} party + {len(persons)} person) · robots.txt")
+          f"{n_hist} history + {len(parties)} party + {len(regions)} region + "
+          f"{len(persons)} person) · robots.txt")
 
 
 if __name__ == "__main__":
