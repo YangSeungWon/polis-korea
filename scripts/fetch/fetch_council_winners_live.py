@@ -32,7 +32,8 @@ RESULTS = {9: "data/results/9th-local-2026.json"}
 _SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
 
 # 부분집계 scope — 오버레이가 마킹하면 당선자 중복 계상(확정률 178% 등).
-SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary"}
+SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary",
+              "proportional_sido_sigungu", "proportional_sigungu_part"}
 
 
 def norm(s: str) -> str:

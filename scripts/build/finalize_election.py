@@ -7,8 +7,10 @@
 
 안전 규칙 (2026-07-31 사고에서 도출):
   1. 부분 결과로 덮어쓰지 않는다 — fetch 실패·급감 시 fetch_nec_results가 중단한다.
-  2. OpenAPI가 주지 않는 직(광역/기초 비례 tc8·tc9)은 이전 파일에서 이관한다.
-     'fetch 후 사라진 sg_typecode'를 일반 규칙으로 이관하므로 직 목록을 하드코딩하지 않는다.
+  2. OpenAPI가 주지 않는 직이 있으면 이전 파일에서 이관한다. 'fetch 후 사라진
+     sg_typecode'를 일반 규칙으로 삼아 직 목록을 하드코딩하지 않는다. 9회 지선 기준
+     현재는 이관이 필요한 직이 없다(비례 tc8·tc9도 개표 API가 제공) — 앞으로
+     API가 못 주는 직이 생기면 자동으로 걸린다.
   3. 승격 전후를 대조해 race·후보·당선자가 **하나라도 줄면 롤백**한다.
 
 사용:
@@ -162,7 +164,7 @@ def finalize(eid: str, key: str, dry: bool) -> bool:
             shutil.copy(snap, rp)
             return False
 
-        # OpenAPI가 주지 않는 직은 이전 파일에서 이관 (tc8·tc9 비례 등).
+        # OpenAPI가 못 주는 직이 있으면 이전 파일에서 이관 (현재 해당 없음 — 안전망).
         after = json.loads(rp.read_text(encoding="utf-8"))
         have = {r.get("sg_typecode") for r in after["races"]}
         carried = [r for r in before["races"] if r.get("sg_typecode") not in have]

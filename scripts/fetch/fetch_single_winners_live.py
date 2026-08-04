@@ -36,11 +36,15 @@ OFFICES = {
     "4": {"code": "4", "race_unit": "sigungu", "label": "기초단체장"},
     "5": {"code": "5", "race_unit": "district", "label": "광역의원 지역구"},
 }
-_SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+_SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도",
+               # 명부는 통합 시도의회를 '전남광주통합특별시'로 부른다. 결과 데이터의
+               # 캐노니컬(메타 sido_merge)은 '전남광주특별시'라 맞춰야 tc8이 매칭된다.
+               "전남광주통합특별시": "전남광주특별시"}
 
 # 부분집계 scope — 같은 선거를 하위 단위로 쪼갠 행(일반구별·시군구별 분해).
 # 당선인 오버레이가 이들까지 마킹하면 당선자가 중복 계상된다(확정률 199% 등).
-SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary"}
+SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary",
+              "proportional_sido_sigungu", "proportional_sigungu_part"}
 # 전남광주 통합 시도의회(tc5): 선거구가 모두 한 cityCode·SDNAME=전남광주통합특별시로 옴.
 # 시군구(WIWNAME)로 광주(5 자치구)/전남 분리 — 우리 데이터(분리 sido)와 맞춤.
 _GWANGJU_GU = {"동구", "서구", "남구", "북구", "광산구"}
@@ -137,7 +141,7 @@ def process_prop8(d: dict, by_sido: dict):
     marked = 0
     by_party: dict[str, int] = defaultdict(int)
     for r in d.get("races", []):
-        if r.get("sg_typecode") != "8":
+        if r.get("sg_typecode") != "8" or r.get("scope") in SUB_SCOPES:
             continue
         seats_map = by_sido.get(canon_sido(r.get("sido")))
         if not seats_map:

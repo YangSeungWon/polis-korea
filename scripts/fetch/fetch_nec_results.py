@@ -44,8 +44,11 @@ ENDPOINT_VOTE = "/getVoteSttusInfoInqire"      # 투표 결과 (투표율 등)
 #   2023-06-11: 강원도 → 강원특별자치도
 #   2024-01-18: 전라북도 → 전북특별자치도
 #   2026-06-03: 광주광역시+전라남도 → 전남광주특별시 (메타 sido_merge로 처리)
-# 통합 시도명을 쓰는 직 — 광역단체장(3)·교육감(11). 그 외는 옛 시도 분리 유지.
-SIDO_MERGE_TYPECODES = {"3", "11"}
+# 통합 시도명을 쓰는 직 — 광역단체장(3)·교육감(11)·광역의원 비례(8).
+# tc8은 통합 시도의회의 비례라 선거 자체가 하나다(광주·전남 어느 쪽으로 물어도 선거인수·
+# 정당 득표가 완전히 같은 행이 온다). 지역구(tc5)·기초 단위(4·6·9)는 옛 시도별로 나뉘어
+# 치러지므로 분리 유지.
+SIDO_MERGE_TYPECODES = {"3", "8", "11"}
 
 
 def sidos_for_sg_id(sg_id: str) -> list[str]:
@@ -272,6 +275,28 @@ def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str, wiw: str,
             out["sigungu"] = wiw
         return out
 
+    # 광역의원 비례 (tc=8): sgg=시도명. wiw='합계' → 시도 비례 race,
+    # wiw=시군구 → 그 시도 비례의 시군구별 분해.
+    if sg_typecode == "8":
+        if wiw == "합계":
+            out["scope"] = "proportional_sido"
+        else:
+            out["scope"] = "proportional_sido_sigungu"
+            out["sigungu"] = wiw
+        return out
+
+    # 기초의원 비례 (tc=9): sgg=시군구명. wiw='합계' → 그 시군구 비례 race,
+    # wiw=일반구 → 분해(창원시의창구 등). 일반구가 없는 시군구는 sgg와 같은 이름의
+    # 행이 합계와 값까지 똑같이 한 번 더 오므로 호출부에서 걸러진다.
+    if sg_typecode == "9":
+        out["sigungu"] = sgg
+        if wiw == "합계":
+            out["scope"] = "proportional_sigungu"
+        else:
+            out["scope"] = "proportional_sigungu_part"
+            out["sigungu_part"] = wiw
+        return out
+
     # 그 외 (tc=1,3,7,11): sgg가 시도명·대한민국·비례대표·sd_name 결정
     # wiw='합계' → 시도 race / wiw=시군구 → 시군구 race
     if wiw == "합계":
@@ -366,8 +391,11 @@ def main():
     offices = meta.get("offices", [])
     # 1=대통령, 2=국회의원, 3=광역단체장, 4=기초단체장, 7=비례대표, 11=교육감.
     # 5(광역의원)·6(기초의원)는 sd 단위 호출만으로는 race 식별 어려움 → 별도 처리 (TODO)
+    # 8·9(광역/기초 비례)도 개표 API가 제공한다 — 정당별 득표·투표율까지 온다.
+    # (예전엔 제외돼 있어 비례만 라이브 산출물을 이관해 써야 했다.) 의석 배분은
+    # 개표 API에 없으므로 당선인 명부 오버레이가 이어서 채운다.
     target_offices = [o for o in offices
-                      if o.get("sg_typecode") in ("1", "2", "3", "4", "5", "6", "7", "11")]
+                      if o.get("sg_typecode") in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "11")]
     sidos_at_sg = sidos_for_sg_id(sg_id)
     print(f"  대상 office: {[o['level'] for o in target_offices]}", file=sys.stderr)
     print(f"  대상 시도: {len(sidos_at_sg)}개 ({sg_id} 시점)", file=sys.stderr)
@@ -406,8 +434,12 @@ def main():
                 continue
             n_row += len(rows)
             for row in rows:
-                race = normalize_race(meta, tc, sd, row.get("sggName", ""),
-                                      row.get("wiwName", ""), row)
+                sgg, wiw = row.get("sggName", ""), row.get("wiwName", "")
+                # tc9에서 일반구가 없는 시군구는 '합계' 행과 값까지 동일한 자기 이름 행이
+                # 한 번 더 온다(부산 중구 → (중구,합계)·(중구,중구)). 분해가 아니라 중복.
+                if tc == "9" and wiw == sgg:
+                    continue
+                race = normalize_race(meta, tc, sd, sgg, wiw, row)
                 all_races.append(race)
             print(f"  ✓ {office['level']} {sd}: {len(rows)} rows",
                   file=sys.stderr)
