@@ -110,6 +110,7 @@ STATIC = [
     ("/superintendent/", "daily", "0.9"),
     ("/byelection.html", "daily", "0.9"),
     ("/byelection/", "weekly", "0.8"),
+    ("/elections.html", "weekly", "0.9"),
     ("/history.html", "weekly", "0.9"),
     ("/timeline.html", "weekly", "0.8"),
     ("/polls.html", "daily", "0.8"),

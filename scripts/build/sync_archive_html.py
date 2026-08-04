@@ -26,6 +26,9 @@ RESULTS_DIR = ROOT / "data" / "results"
 INDEX_HTML = ROOT / "index.html"
 AR_LIST_START = "<!-- AR_LIST_START"
 AR_LIST_END = "<!-- AR_LIST_END -->"
+AR_RECENT_START = "<!-- AR_RECENT_START"
+AR_RECENT_END = "<!-- AR_RECENT_END -->"
+AR_RECENT_N = 6   # 홈은 최근 몇 개만 — 전체는 /elections.html 허브가 링크한다.
 
 # nav 정본은 sync_nav_html.py — 사본을 들고 있으면 메뉴 변경 때마다 어긋난다.
 import sys as _sys
@@ -841,13 +844,41 @@ def render_ar_list(metas: list[dict]) -> str:
     return "\n".join(rows)
 
 
-def sync_index_html(metas: list[dict], check: bool) -> bool:
-    """index.html 회차 목록 markers 사이 갱신. 변경 여부 반환."""
+def sync_recent_html(metas: list[dict], check: bool) -> bool:
+    """홈의 '최근 선거' 몇 개만 갱신. 전체 목록은 /elections.html 허브가 갖는다.
+
+    홈에서 53행을 걷어내되 정적으로 박아 두면 다음 선거 때 낡는다. 마커로 생성한다.
+    """
+    fp = ROOT / "index.html"
+    html = fp.read_text(encoding="utf-8")
+    si, ei = html.find(AR_RECENT_START), html.find(AR_RECENT_END)
+    if si < 0 or ei < 0:
+        return False
+    start_end = html.find("\n", si) + 1
+    # render_ar_list가 내부에서 정렬·재보궐 제외를 하므로, 자르기 전에 같은 기준을 적용해야
+    # 최근 N개가 실제로 N개가 된다(정렬 전에 자르면 재보궐이 섞여 줄어든다).
+    recent = [m for m in sorted(metas, key=lambda x: x["date"], reverse=True)
+              if m.get("kind") != "byelection"][:AR_RECENT_N]
+    new_html = html[:start_end] + render_ar_list(recent) + "\n      " + html[ei:]
+    if new_html == html:
+        return False
+    if not check:
+        fp.write_text(new_html, encoding="utf-8")
+    return True
+
+
+def sync_index_html(metas: list[dict], check: bool, target: Path = None) -> bool:
+    """AR_LIST 마커 사이 회차 목록 갱신. 변경 여부 반환.
+
+    홈과 '모든 선거' 허브가 같은 목록을 쓴다. 홈에서 목록을 걷어내도 허브가 77개 archive를
+    직접 링크하므로 크롤 경로(홈 → 허브 → archive)가 1-hop + 1-hop으로 유지된다.
+    """
+    INDEX_HTML = target or (ROOT / "index.html")
     html = INDEX_HTML.read_text(encoding="utf-8")
     si = html.find(AR_LIST_START)
     ei = html.find(AR_LIST_END)
     if si < 0 or ei < 0:
-        print(f"  ! index.html에 AR_LIST 마커 없음 — 스킵", file=sys.stderr)
+        print(f"  ! {INDEX_HTML.name}에 AR_LIST 마커 없음 — 스킵", file=sys.stderr)
         return False
     # marker 줄 끝까지 포함
     start_end = html.find("\n", si) + 1
@@ -987,6 +1018,10 @@ def main():
         n_changed += 1
     # index.html 회차 목록 — --id 옵션이 아닐 때만 (부분 메타로 list 잘리면 안 됨)
     if not args.id and archive_metas:
+        # '모든 선거' 허브도 같은 목록을 쓴다 — 홈에서 목록을 줄여도 크롤 경로가 유지된다.
+        sync_index_html(archive_metas, args.check, ROOT / 'elections.html')
+        if sync_recent_html(archive_metas, args.check):
+            print(("~" if args.check else "OK") + " index.html (최근 선거)")
         if sync_index_html(archive_metas, args.check):
             print(("~" if args.check else "OK") + " index.html (회차 아카이브 목록)")
 
