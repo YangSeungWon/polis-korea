@@ -60,3 +60,24 @@ a.pty-rel:hover { filter: brightness(1.1); text-decoration: none; }
 .pty-members a:hover { border-color: var(--rule-strong); }
 .pty-mem-wl { font-size: 0.75rem; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
 .pty-more { font-size: 0.85rem; color: var(--ink-mute); margin: 0.6rem 0 0; }
+
+/* ── 지역 기반 ────────────────────────────────────────────────────────────
+   "이 당은 어디서 이겼나" — 계보·인물만으로는 안 보이던 축.
+   숫자는 시군구 단위 1위 횟수이고, 지역 페이지의 집계와 같은 출처다. */
+.pty-rg-sum { margin: 0 0 0.15rem; font-size: 0.95rem; }
+.pty-rg-sido { margin: 0 0 0.75rem; font-size: 0.82rem; color: var(--ink-mute); }
+.pty-rg-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.pty-rg {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  padding: 5px 10px; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--bg2);
+  color: var(--ink); font-size: 13px; text-decoration: none;
+  transition: border-color .12s, background .12s;
+}
+a.pty-rg:hover { border-color: var(--rule-strong); background: var(--bg3); }
+a.pty-rg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pty-rg-sd { font-size: 11px; color: var(--ink-mute); }
+.pty-rg-n {
+  font-size: 11px; color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}

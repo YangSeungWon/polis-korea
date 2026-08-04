@@ -12,6 +12,7 @@ from __future__ import annotations
 import html
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 from urllib.parse import quote
 
@@ -20,7 +21,9 @@ ROOT = Path(__file__).resolve().parents[2]
 # nav 정본은 sync_nav_html.py — 사본을 들고 있으면 메뉴 변경 때마다 어긋난다.
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+from sync_nav_html import render_nav, menu_for_path
+from build_region_pages import collect as collect_regions, sido_short  # noqa: E402
+from party_canon import disambiguate_party  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from party_canon import canon_party  # noqa: E402
@@ -176,6 +179,7 @@ PAGE = """<!DOCTYPE html>
   {lineage}
   {elections}
   {members}
+  {regions}
   <footer class="foot">
     <p class="fine">소속 인물은 당선 국회의원 기준 — 낙선·기타 후보는 <a href="/search.html?q={qname}">검색</a>에서.</p>
   </footer>
@@ -225,7 +229,49 @@ def party_jsonld(name: str, info: dict, desc: str) -> str:
                          ensure_ascii=False) + '</script>')
 
 
-def render(name, info, known, appearances, members):
+def build_region_strength() -> dict:
+    """정당 → {(시도, 시군구): 1위 횟수}.
+
+    지역 페이지와 **같은 집계**를 쓴다(build_region_pages.collect). 정당 페이지와
+    지역 페이지가 서로 다른 숫자를 말하면 둘 다 못 믿게 된다.
+
+    무소속은 정당이 아니므로 registry에 없고 여기서 자연히 빠진다.
+    """
+    out = defaultdict(lambda: defaultdict(int))
+    for (sd, sg), rows in collect_regions().items():
+        for r in rows:
+            out[disambiguate_party(r["party"], r.get("date") or "")][(sd, sg)] += 1
+    return out
+
+
+# 지역 페이지가 있는 시군구만 링크한다 — 회차 3건 미만은 페이지를 안 만들었다.
+def render_regions(name: str, strength: dict, page_slugs: set) -> str:
+    reg = strength.get(name)
+    if not reg:
+        return ""
+    total = sum(reg.values())
+    by_sido = defaultdict(int)
+    for (sd, _sg), n in reg.items():
+        by_sido[sd] += 1
+    top = sorted(reg.items(), key=lambda x: (-x[1], x[0]))[:24]
+    chips = []
+    for (sd, sg), n in top:
+        slug = f"{sd}-{sg}"
+        # 중구·서구·남구는 여러 시도에 있다 — 시도 없이는 어디인지 알 수 없다.
+        label = (f'<span class="pty-rg-sd">{esc(sido_short(sd))}</span>'
+                 f'{esc(sg)}<span class="pty-rg-n">{n}</span>')
+        chips.append(f'<a class="pty-rg" href="/region/{quote(slug)}/">{label}</a>'
+                     if slug in page_slugs else f'<span class="pty-rg">{label}</span>')
+    sido = " · ".join(f"{esc(sd)} {n}곳" for sd, n in
+                      sorted(by_sido.items(), key=lambda x: (-x[1], x[0]))[:8])
+    return (f'<section class="pty-sec"><h2>지역 기반 '
+            f'<span class="pty-cnt">{len(reg)}</span></h2>'
+            f'<p class="pty-rg-sum">시군구 1위 {total:,}회 · {len(reg)}곳</p>'
+            f'<p class="pty-rg-sido">{sido}</p>'
+            f'<div class="pty-rg-grid">{"".join(chips)}</div></section>')
+
+
+def render(name, info, known, appearances, members, regions=""):
     abbr = info.get("abbr")
     abbr_badge = f' <span class="pty-abbr" data-party="{esc(name)}">{esc(abbr)}</span>' if abbr else ""
     founded = info.get("founded", "")
@@ -289,6 +335,7 @@ def render(name, info, known, appearances, members):
         nav=render_nav(menu_for_path("party/x/index.html")),
         name=esc(name), abbr_badge=abbr_badge, life=life, note=note_html,
         lineage=lineage, elections=elections, members=members_html,
+        regions=regions,
         desc=esc(desc[:160]), canon=purl(name), qname=quote(name),
         jsonld=party_jsonld(name, info, esc(desc[:160])),
     )
@@ -302,13 +349,17 @@ def main():
     known = set(reg.keys())
     appearances = build_appearances(timeline)
     members = build_members(persons)
+    strength = build_region_strength()
+    page_slugs = {d.name for d in (ROOT / "region").iterdir() if d.is_dir()} \
+        if (ROOT / "region").exists() else set()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     urls = []
     for name, info in reg.items():
         d = OUT_DIR / name
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(render(name, info, known, appearances, members), encoding="utf-8")
+        (d / "index.html").write_text(render(name, info, known, appearances, members,
+                      render_regions(name, strength, page_slugs)), encoding="utf-8")
         urls.append(purl(name))
     import shutil   # stale 제거 — 개명·삭제된 정당 디렉터리 잔존분.
     n_stale = 0

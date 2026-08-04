@@ -18,6 +18,7 @@ import re
 import sys
 from collections import defaultdict
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "data/results"
@@ -27,10 +28,44 @@ SITE = "https://polis.ysw.kr"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+from party_canon import disambiguate_party  # noqa: E402
+
+# 정당 페이지가 있는 이름만 링크한다. 무소속·미등록 군소정당은 그냥 글자.
+_REG = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
+PARTY_PAGES = set(_REG.keys())
+
+
+def party_cell(name: str, date: str) -> str:
+    canon = disambiguate_party(name, date or "")
+    if canon in PARTY_PAGES:
+        return f'<a href="/party/{quote(canon)}/">{esc(name)}</a>'
+    return esc(name)
 
 # 회차가 이보다 적으면 페이지를 만들지 않는다 — 한두 번 스친 옛 지명까지 만들면
 # 내용도 없고 검색 노이즈만 된다(오늘 배운 thin content 문제).
 MIN_ROUNDS = 3
+
+# 시도 개명은 같은 지역이다. 정규화하지 않으면 '강원도 홍천군'과 '강원특별자치도
+# 홍천군'이 별개 페이지가 되어, 한 지역의 기록이 둘로 쪼개진다.
+# (시군구 쪽 옛 이름 — 명주군·원성군 등 — 은 실제로 다른 행정단위였으므로 합치지 않는다.)
+SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+
+# 동명 시군구(중구·서구·남구…)를 구분하려면 시도가 필요하다.
+SIDO_SHORT = {
+    "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구", "인천광역시": "인천",
+    "광주광역시": "광주", "대전광역시": "대전", "울산광역시": "울산", "세종특별자치시": "세종",
+    "경기도": "경기", "강원특별자치도": "강원", "충청북도": "충북", "충청남도": "충남",
+    "전북특별자치도": "전북", "전라남도": "전남", "경상북도": "경북", "경상남도": "경남",
+    "제주특별자치도": "제주",
+}
+
+
+def sido_canon(sd: str) -> str:
+    return SIDO_CANON.get(sd, sd)
+
+
+def sido_short(sd: str) -> str:
+    return SIDO_SHORT.get(sd, sd)
 
 KIND_LABEL = {"presidential": "대선", "national_assembly": "총선",
               "general_election": "총선", "local": "지선", "byelection": "재보궐"}
@@ -80,7 +115,7 @@ def collect() -> dict:
         # 시군구 단위 대표 race — 그 지역의 '1위'가 무엇이었는지.
         # 지선은 기초단체장(4), 대선·총선은 시군구 분해 row.
         for r in races:
-            sg, sd = r.get("sigungu"), r.get("sido")
+            sg, sd = r.get("sigungu"), sido_canon(r.get("sido"))
             if not sg or not sd:
                 continue
             scope, tc = r.get("scope"), r.get("sg_typecode")
@@ -177,7 +212,7 @@ def build_page(sd: str, sg: str, rows: list) -> str:
             f'<tr><td>{esc((r.get("date") or "")[:4])}</td>'
             f'<td><a href="/archive/{esc(r["eid"])}/">{esc(r["election"])}</a></td>'
             f'<td>{esc(r["office"])}</td>'
-            f'<td>{esc(r["party"])}</td>'
+            f'<td>{party_cell(r["party"], r.get("date"))}</td>'
             f'<td>{esc(r.get("name") or "")}</td>'
             f'<td>{f"{r['pct']:.1f}%" if r.get("pct") is not None else "—"}</td>'
             f'<td>{f"{r['turnout']:.1f}%" if r.get("turnout") is not None else "—"}</td></tr>')
@@ -279,9 +314,19 @@ def main():
     (OUT_DIR / "index.html").write_text(
         HUB.format(n=len(entries), body=build_hub(entries),
                    nav=render_nav(menu_for_path("region/index.html"))), encoding="utf-8")
+    # stale 제거 — 시도 정규화·MIN_ROUNDS 변경으로 더 이상 안 만드는 slug가 남으면
+    # sitemap에 없는 페이지가 배포돼 크롤러에는 살아 있고 우리는 모르는 상태가 된다.
+    import shutil
+    keep = {u.split("/")[2] for u in urls}
+    n_stale = 0
+    for dch in OUT_DIR.iterdir():
+        if dch.is_dir() and dch.name not in keep:
+            shutil.rmtree(dch)
+            n_stale += 1
     urls.insert(0, "/region/")
     SITEMAP_OUT.write_text("\n".join(urls) + "\n", encoding="utf-8")
-    print(f"→ region/ : {n} pages (회차 {MIN_ROUNDS}건 이상)", file=sys.stderr)
+    print(f"→ region/ : {n} pages (회차 {MIN_ROUNDS}건 이상, stale 제거 {n_stale})",
+          file=sys.stderr)
     print(f"→ {SITEMAP_OUT.relative_to(ROOT)}", file=sys.stderr)
 
 
