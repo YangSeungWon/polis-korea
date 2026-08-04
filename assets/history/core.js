@@ -249,6 +249,29 @@ function parseInitialState() {
   };
 }
 
+
+// 지금 보고 있는 회차의 아카이브로 나가는 링크. hex 탐색기(공간 탐색)와 회차 아카이브
+// (한 선거 심층)는 서로 다른 질문에 답하는 화면인데, archive → history 방향만 있고
+// 역방향이 없어 탐색기에서 본 회차의 출구조사·공약으로 갈 길이 없었다(page-map gap-1).
+let _archiveIndex = null;
+
+async function archiveSlugFor(type, n) {
+  if (_archiveIndex === null) {
+    _archiveIndex = await loadJson('data/archive_index.json').catch(() => []) || [];
+  }
+  const hit = _archiveIndex.find((a) => a.type === type && a.n === n);
+  return hit ? hit.slug : null;
+}
+
+async function updateArchiveLink() {
+  const el = document.getElementById('hx-archive-link');
+  if (!el) return;
+  const slug = (state.type && state.n != null) ? await archiveSlugFor(state.type, state.n) : null;
+  if (!slug) { el.hidden = true; el.innerHTML = ''; return; }
+  el.innerHTML = `<a href="/archive/${slug}/">이 회차 아카이브 — 결과·여론조사·출구조사</a>`;
+  el.hidden = false;
+}
+
 function buildPath() {
   const tSlug = TYPE_TO_SLUG[state.type];
   if (!tSlug || state.n == null) return '/history.html';
@@ -269,6 +292,7 @@ function updateURL() {
   if (newUrl !== location.pathname + location.search) {
     history.replaceState(null, '', newUrl);
   }
+  updateArchiveLink();
 }
 
 // 대선만 격자 hex 기본(전국 표심을 면적으로 — 1 hex=2만표). 지선·총선은 단일 hex('동일',

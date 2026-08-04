@@ -90,7 +90,14 @@ def derive(meta: dict) -> dict:
               {"@type": "ListItem", "position": i + 1, "name": nm,
                **({"item": SITE + u} if u else {})}
               for i, (nm, u) in enumerate(trail)]}
+    # 회차별 여론조사 페이지(/polls/{id}/)가 있으면 링크. 이 9개는 sitemap에만 있고
+    # 사이트 어디서도 링크하지 않아 검색엔진으로만 도달 가능한 고아였다(page-map gap-2).
+    polls_page = ROOT / "polls" / meta["id"] / "index.html"
+    polls_link = (f'<p class="ar-source-line"><a href="/polls/{meta["id"]}/">'
+                  f'{meta["n"]}{km["n_unit"]} {km["short"]} 여론조사 vs 실제 — 조사별 정확도 비교</a></p>'
+                  if polls_page.exists() else "")
     return {
+        "polls_link": polls_link,
         "breadcrumb_ld": ('<script type="application/ld+json">'
                           + json.dumps(ld, ensure_ascii=False) + '</script>'),
         "breadcrumb": breadcrumb,
@@ -342,6 +349,7 @@ SECTIONS_LOCAL = """
 
   <section class="ar-section" id="ar-polls-link" hidden>
     <h2 class="ar-section-title">여론조사</h2>
+    {polls_link}
     <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
   </section>
 
@@ -378,6 +386,7 @@ SECTIONS_PRES = """
 
   <section class="ar-section" id="ar-polls-link" hidden>
     <h2 class="ar-section-title">여론조사</h2>
+    {polls_link}
     <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
   </section>
 
@@ -456,6 +465,7 @@ SECTIONS_GENERAL = """
 
   <section class="ar-section" id="ar-polls-link" hidden>
     <h2 class="ar-section-title">여론조사</h2>
+    {polls_link}
     <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
   </section>
 """

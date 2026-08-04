@@ -198,7 +198,27 @@ def build_poll_elections(urls: list):
     made_sorted = sorted(made, key=lambda m: m['date'], reverse=True)
     idx_path = ROOT / 'data' / 'polls' / 'election_index.json'
     idx_path.write_text(json.dumps(made_sorted, ensure_ascii=False), encoding='utf-8')
+    _write_poll_index_block(made_sorted)
     print(f'poll-elections: {len(made)} ({", ".join(m["slug"] for m in made_sorted)})')
+
+
+def _write_poll_index_block(made_sorted: list):
+    """polls.html의 정적 시드 목록 갱신 — 손으로 관리하면 회차가 늘 때마다 어긋난다."""
+    src = ROOT / 'polls.html'
+    if not src.exists():
+        return
+    html = src.read_text(encoding='utf-8')
+    items = ''.join(
+        f'<li><a href="/polls/{m["slug"]}/">{_esc(m["name"])} 여론조사 vs 실제</a> '
+        f'<span>{m["date"]}</span></li>' for m in made_sorted)
+    block = ('<!-- POLL_INDEX_START — build_static.py 자동 갱신. 손수정 X.\n'
+             '           election-index.js가 로드되면 타임라인으로 교체한다. JS 없이도(그리고 크롤러가\n'
+             '           렌더하기 전에도) 회차별 페이지로 가는 링크가 HTML에 남게 하는 것이 목적. -->\n'
+             f'      <ul class="poll-tl-fallback">{items}</ul>\n'
+             '      <!-- POLL_INDEX_END -->')
+    new = re.sub(r'<!-- POLL_INDEX_START[\s\S]*?POLL_INDEX_END -->', block, html, count=1)
+    if new != html:
+        src.write_text(new, encoding='utf-8')
 
 
 
@@ -277,7 +297,9 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     if turnout:
                         bits.append(f'투표율 {turnout}%')
                     slug = slugs.get((type_key, n))
-                    extra = ('    <p class="lede"><a href="/archive/' + slug + '/">'
+                    # 정적 링크를 남기되 id를 붙여, 사용자가 회차를 바꾸면 JS가 갱신한다.
+                    extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
+                             '<a href="/archive/' + slug + '/">'
                              f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
                     intro = intro_block(f'{n}회 {type_short} {office_ko}',
                                         _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
@@ -311,7 +333,8 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 if meta.get('note'):
                     bits.append(str(meta['note']))
                 slug = slugs.get((type_key, n))
-                extra = ('    <p class="lede"><a href="/archive/' + slug + '/">'
+                extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
+                         '<a href="/archive/' + slug + '/">'
                          f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
                 intro = intro_block(f'{n}{unit} {type_short}',
                                     _esc(' · '.join(bits)), extra)
@@ -329,8 +352,10 @@ def main():
     manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
     elections = json.loads(ELECTIONS.read_text(encoding='utf-8'))
     urls = []
-    build_polls(urls)             # /, /governor/ 등 페이지 생성
+    # 순서 주의: build_poll_elections가 polls.html의 정적 회차 목록 블록을 갱신하므로
+    # 그 뒤에 build_polls를 돌려야 /governor/ 등 파생 페이지에도 목록이 들어간다.
     build_poll_elections(urls)    # /polls/{id}/ 선거별 여론조사 vs 실제 + 디렉터리
+    build_polls(urls)             # /, /governor/ 등 페이지 생성
     build_history(manifest, elections, urls)   # history/**/index.html 생성
     # sitemap·robots는 포괄 생성기에 위임 — archive·person 포함 전수(56개로 덮어쓰던 버그 수정).
     # build_polls/build_history가 페이지를 먼저 써야 디렉터리 스캔이 잡힘.
