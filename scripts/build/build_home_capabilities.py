@@ -77,6 +77,12 @@ def panel(href: str, title: str, sub: str, figure: str, more: str) -> str:
 
 
 def build(c: dict) -> str:
+    """능력 섹션 3개 × 2패널.
+
+    이름은 사이트의 다른 곳과 같은 평서형 명사로 둔다 — '광역단체장'·'선거 타임라인'·
+    '근현대사 연표' 옆에 수사의문문이 끼면 그 패널만 튄다.
+    '역대 선거'는 바로 위 '역대' 섹션의 '역대 선거 결과'와 같은 것이라 넣지 않는다.
+    """
     f = lambda n: f"{n:,}"
     out = [START + " — scripts/build/build_home_capabilities.py 자동 갱신. 손수정 X. -->"]
 
@@ -92,37 +98,30 @@ def build(c: dict) -> str:
     out.append("    </div>\n  </section>\n")
 
     out.append('  <section class="dash-section">\n'
-               '    <h2 class="dash-section-title">사람과 정당</h2>\n'
+               '    <h2 class="dash-section-title">사람</h2>\n'
                '    <div class="dash-grid dash-grid-2">\n')
-    out.append(panel("/search.html", "인물",
+    out.append(panel("/search.html", "출마 이력",
                      "한 사람이 언제 어디서 무엇으로 나왔고 어떻게 됐는지",
                      f"{f(c['person'])}명", "이름으로 찾기"))
+    if c["pledge"]:
+        out.append(panel("/archive/9th-local-2026/", "선거공약",
+                         "대통령·시도지사·시장군수구청장·교육감이 낸 공약서 원문. 낙선자 것까지",
+                         f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", "분야별로 보기"))
+    else:
+        out.append(panel("/parties.html", "정당사",
+                         "창당·합당·분당·해산으로 이어지는 계보",
+                         f"정당 {f(c['party'])}개", "계보 보기"))
+    out.append("    </div>\n  </section>\n")
+
+    out.append('  <section class="dash-section">\n'
+               '    <h2 class="dash-section-title">맥락</h2>\n'
+               '    <div class="dash-grid dash-grid-2">\n')
     out.append(panel("/parties.html", "정당사",
                      "창당·합당·분당·해산으로 이어지는 계보",
                      f"정당 {f(c['party'])}개", "계보 보기"))
-    out.append("    </div>\n  </section>\n")
-
-    if c["pledge"]:
-        out.append('  <section class="dash-section">\n'
-                   '    <h2 class="dash-section-title">공약</h2>\n'
-                   '    <div class="dash-grid dash-grid-2">\n')
-        out.append(panel("/archive/9th-local-2026/", "무엇을 약속했나",
-                         "대통령·시도지사·시장군수구청장·교육감의 선거공약서 원문",
-                         f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", "9회 지선에서 보기"))
-        out.append(panel("/search.html", "누가 약속했나",
-                         "당선인뿐 아니라 낙선자 공약까지 — 사라지기 전에 받아 둔 것",
-                         f"{c['pledge_rounds']}개 회차", "인물에서 보기"))
-        out.append("    </div>\n  </section>\n")
-
-    out.append('  <section class="dash-section">\n'
-               '    <h2 class="dash-section-title">역사</h2>\n'
-               '    <div class="dash-grid dash-grid-2">\n')
     out.append(panel("/chronology.html", "근현대사 연표",
                      "공화국·개헌·항쟁·정변과 모든 선거를 한 줄에 놓고 본다",
                      f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", "연표 보기"))
-    out.append(panel("/history.html", "역대 선거",
-                     "1948년 제헌부터 지금까지, 지역별로 어떻게 갈렸나",
-                     f"{f(c['election'])}회 · 아카이브 {c['archive']}건", "결과 보기"))
     out.append("    </div>\n  </section>\n")
 
     out.append("  " + END)
