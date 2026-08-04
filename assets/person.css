@@ -39,6 +39,12 @@
 }
 a.pp-party { text-decoration: none; cursor: pointer; transition: background .12s; }
 a.pp-party:hover { background: var(--bg2); }
+/* 교육감처럼 정당이 제도적으로 없는 직 — 정당 배지와 구분되게 약하게, 점선으로.
+   실제 정당(무소속 포함)으로 오해되면 안 되므로 색을 주지 않는다. */
+.pp-party-none {
+  color: var(--ink-soft); border-style: dashed; border-color: var(--rule);
+  font-weight: 600; cursor: help;
+}
 
 .pp-races { display: flex; flex-direction: column; max-width: 800px; }
 .pp-race {

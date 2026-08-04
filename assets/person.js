@@ -12,8 +12,18 @@
     return String(s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  function partyBadge(party, asLink) {
-    if (!party) return '';
+  // 정당 공천·표방이 법으로 금지된 직 — 교육감(tc 11). 이 직의 빈 정당은 '자료 없음'이
+  // 아니라 '제도적으로 정당이 없음'이다. 개표 라이브 포털은 여기에 '무소속'을 채웠지만
+  // OpenAPI 확정본은 빈값을 준다(그쪽이 사실에 맞다). 빈칸으로 두면 누락처럼 보이므로
+  // 명시적으로 표기한다.
+  const PARTYLESS_TC = new Set(['11']);
+
+  function partylessChip() {
+    return '<span class="pp-party pp-party-none" title="교육감은 정당의 추천·표방이 금지된 직입니다">정당 없음</span>';
+  }
+
+  function partyBadge(party, asLink, tc) {
+    if (!party) return PARTYLESS_TC.has(tc) ? partylessChip() : '';
     const col = (typeof partyTextColor === 'function') ? partyTextColor(party) : '#888';  // 정의당 노랑 등 가독 보정
     const sty = `color:${col};border-color:${col}`;
     // asLink: 정당 페이지로. 레이스 행 배지는 행 전체가 <a>라 중첩 불가 → span 유지.
@@ -121,6 +131,9 @@
     for (const r of races) {
       if (r.party && !seen.has(r.party)) { seen.add(r.party); parties.push(r.party); }
     }
+    // 교육감만 출마한 인물은 정당이 하나도 없다 — 요약의 '정당' 칸이 통째로 비어
+    // 자료 누락처럼 보인다. 정당 없는 직만 뛴 경우임을 밝힌다.
+    const allPartyless = parties.length === 0 && races.every((r) => PARTYLESS_TC.has(r.tc));
 
     const rows = races.map((r) => {   // 최근이 아래로(오름차순) — 검색과 통일
       const tag = r.won ? '<span class="pp-tag pp-won">당선</span>' : '<span class="pp-tag pp-lost">낙선</span>';
@@ -131,7 +144,7 @@
         <div class="pp-yr">${r.year || '?'}</div>
         <div class="pp-round">${escapeHtml(r.round || r.eid)}</div>
         <div class="pp-place">${escapeHtml(r.place || '')}</div>
-        <div class="pp-pty">${partyBadge(r.party)}</div>
+        <div class="pp-pty">${partyBadge(r.party, false, r.tc)}</div>
         <div class="pp-rk">${rank}</div>
         <div class="pp-pct">${pct}</div>
         <div class="pp-tag-cell">${tag}</div>
@@ -148,7 +161,7 @@
           <div class="pp-stat pp-loss"><b class="pp-stat-num">${losses}</b><span class="pp-stat-label">낙선</span></div>
         </div>
         <div class="pp-meta">
-          <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
+          <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${allPartyless ? partylessChip() : parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
         </div>
       </div>
       <div class="pp-races">${rows}</div>
