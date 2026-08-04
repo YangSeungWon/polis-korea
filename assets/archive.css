@@ -949,3 +949,34 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .tr-chip { border: 1px dashed var(--rule-strong); }
 /* 무투표는 신뢰 상태가 아니라 도메인 사실 — 실선으로 성격을 구분한다. */
 .tr-fact { border: 1px solid var(--rule); background: var(--bg2); }
+
+/* ── 이전 회차 대비 변화 ──────────────────────────────────────────────────
+   증감의 정체성은 정당이므로 여기서는 정당색을 쓴다(신뢰 상태와는 다른 축).
+   +/-는 색이 아니라 부호와 굵기로 읽히게 해, 색맹·흑백에서도 방향이 남는다. */
+.cmp-head { font-size: 14px; margin: 0 0 14px; }
+.cmp-row { display: grid; grid-template-columns: 132px 1fr; gap: 12px; align-items: baseline;
+  padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.cmp-row-label { font-size: 13px; font-weight: 700; }
+.cmp-note { display: block; font-size: 11px; font-weight: 500; color: var(--ink-mute); margin-top: 2px; }
+.cmp-chips { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.cmp-delta { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
+.cmp-delta i, .cmp-swap i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; flex: none; }
+.cmp-delta b { font-variant-numeric: tabular-nums; }
+.is-up { font-weight: 800; }
+.is-down { font-weight: 800; color: var(--ink-soft); }
+.cmp-flips, .cmp-excluded { margin: 8px 0 14px; }
+.cmp-flips summary, .cmp-excluded summary { font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  cursor: pointer; padding: 4px 0; }
+.cmp-flip-list { list-style: none; margin: 6px 0 0; padding: 0; }
+.cmp-flip-list li { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--rule); }
+.cmp-unit { font-weight: 700; min-width: 108px; }
+.cmp-swap { display: inline-flex; align-items: center; gap: 5px; color: var(--ink-soft); }
+.cmp-arrow { color: var(--ink-mute); margin: 0 2px; }
+.cmp-reason { font-size: 12px; color: var(--ink-soft); }
+.cmp-excluded-why { font-size: 12px; color: var(--ink-soft); margin: 6px 0; line-height: 1.6; }
+.cmp-foot { font-size: 12px; color: var(--ink-mute); margin: 14px 0 0; line-height: 1.7; }
+@media (max-width: 700px) {
+  .cmp-row { grid-template-columns: 1fr; gap: 4px; }
+  .cmp-unit { min-width: 0; }
+}

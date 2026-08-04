@@ -27,6 +27,7 @@
     pollsPath: ar.polls_path,
     exitPollPath: ar.exit_poll_path,
     byelectionId: ar.byelection_id || null,
+    comparePrevious: ar.compare_previous || null,
     pollsWindow: ar.polls_window ? { start: ar.polls_window[0], end: ar.polls_window[1] } : null,
   };
 
@@ -63,6 +64,7 @@
   if (mode) await mode.render(ctx);   // 여론조사·출구조사 없이 상단·결과 먼저(가드로 2차 섹션 스킵)
   // 공약 분야 분포 — 회차 종류와 무관하게 같은 처리라 mode 밖에서 한 번만. 데이터나
   // 섹션이 없는 회차(총선 등)에서는 스스로 조용히 끝난다.
+  window.Archive.comparison?.render(ctx);
   window.Archive.pledgeRealms?.render(ctx);
   mountTrust(ctx);
 
