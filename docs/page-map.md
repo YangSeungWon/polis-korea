@@ -117,25 +117,38 @@ share는 sitemap에도 없고 내부 링크도 없지만 **의도된 설계**다
 
 ## 알려진 공백
 
-작업 대상으로 남겨 둔 것. 발견 2026-08-04.
+발견 2026-08-04, 같은 날 처리 결과 포함.
 
-**gap-1 · `history.html` → `archive/{회차}/` 링크 없음.**
-hex 탐색기에서 회차를 보다가 그 회차의 심층 자료로 갈 수 없다. archive → history는
-breadcrumb으로 이미 있으니 역방향만 뚫으면 된다. history의 선택 상태(`type`·`n`)가 곧
-archive id로 매핑되므로 링크 하나면 된다.
+**gap-1 · history ↔ archive 단방향** — 해소.
+hex 탐색기에서 보던 회차의 심층 자료로 갈 수 없었다. `history.html`에 링크 슬롯을 두고
+`updateURL()`이 `archive_index.json`으로 `(type, n)`→slug를 찾아 갱신한다. 프리렌더 66개는
+정적 `<a>`를 유지하되 같은 id를 붙여, HTML에 링크가 남으면서 회차 전환 시 JS가 갱신한다.
 
-**gap-2 · `/polls/{회차}/` 9개가 고아.**
-sitemap에는 있으나 사이트 어디서도 링크하지 않아 검색엔진으로만 도달 가능하다.
-`polls/index.html` 허브도 없다. archive의 '여론조사' 섹션과 내용이 겹치므로
-① archive에서 링크 ② polls.html에 회차 목록 ③ archive로 흡수하고 페이지 폐기 — 중 택일.
+**gap-2 · '고아'는 오진이었다** — 정정 + 보강.
+`/polls/{회차}/`가 사이트 어디서도 링크되지 않는다고 적었으나 **틀렸다**. `polls.html`이
+`election-index.js`로 타임라인을 그려 링크하고 있었다. 정적 HTML만 grep해서 JS 생성 링크를
+놓친 것이다. 실제 문제는 '고아'가 아니라 **링크가 렌더 후에만 존재**하는 것이었고, 그건
+아래 gap-5와 같은 부류다. 지금은 `polls.html`에 정적 시드 목록(build_static이 갱신)이
+들어가고, archive 9개도 해당 폴 페이지로 링크한다.
 
-**gap-3 · 같은 화면의 두 URL.**
-`/history.html?type=local&n=8`과 `/history/local/8/{office}/`가 같은 것을 보여준다.
-프리렌더는 SEO 목적이니 canonical 정리 상태를 점검할 여지가 있다.
+> 교훈: 링크·콘텐츠 유무를 정적 파일 grep으로만 판단하지 말 것. 이 사이트는 상당 부분을
+> JS가 만든다. 사용자 도달 가능성과 크롤러 가시성은 **다른 질문**이다.
 
-**gap-4 · archive breadcrumb 라벨이 nav와 불일치.**
-breadcrumb '타임라인' vs nav '역대 판세' — 같은 페이지를 두 이름으로 부른다.
-`sync_archive_html.py`의 `derive()` 한 줄.
+**gap-3 · 같은 화면의 두 URL** — 남음(성격 변경).
+`/history.html?type=local&n=8`과 `/history/local/8/{office}/`가 같은 화면이다. 다만 이제
+프리렌더는 회차별 사실(당선인·투표율)을 본문에 갖고 canonical이 자기 자신을 가리키므로
+중복 콘텐츠는 아니다. 정리 필요성은 낮아졌다.
+
+**gap-4 · breadcrumb 라벨 불일치** — 해소. '타임라인' → '역대 판세'.
+
+**gap-5 · 렌더 전 본문이 비는 페이지** — 대부분 해소.
+2026-07 Search Console이 2,190페이지를 '크롤링됨 - 색인 생성되지 않음'으로 보류했다.
+원인은 본문이 HTML에 없다는 것이었다(person 40자, history 프리렌더 66개는 서로 완전 동일).
+빌드 시점 정적 렌더로 person 223자·공약 보유자 373자, history 중복 0쌍이 됐고 구조화
+데이터(Person·Organization·BreadcrumbList)를 넣었다. 남은 것:
+  · `/party/` 100개는 중앙값 228자 — 군소·역사 정당은 데이터 자체가 적어 한계가 있다.
+  · og:image가 인물·정당·history에서 공용 이미지다(archive만 회차별).
+  · 효과 확인은 색인 재평가까지 몇 주 걸린다.
 
 ## 관련 문서
 
