@@ -164,3 +164,14 @@ a.pp-party:hover { background: var(--bg2); }
 .pp-static td:nth-child(5), .pp-static td:nth-child(6) { font-variant-numeric: tabular-nums; }
 .pp-static a { color: inherit; text-decoration: none; }
 .pp-static a:hover { text-decoration: underline; }
+
+/* 정적 공약 목록 — person.js가 접이식 상세로 덮어쓰기 전의 기본형이자, 검색엔진이 읽는
+   본문. 제목만 싣는다(본문은 수천 자라 지연 로드). */
+.pp-static-sec { margin-top: 22px; }
+.pp-static-sec h2 { font-size: 15px; font-weight: 800; margin: 0 0 8px; }
+.pp-static-sec h3 {
+  font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  margin: 12px 0 4px; padding-bottom: 4px; border-bottom: 1px solid var(--rule);
+}
+.pp-static-pledges { margin: 0; padding-left: 20px; }
+.pp-static-pledges li { font-size: 13px; line-height: 1.7; }

@@ -30,6 +30,65 @@ BASE = "https://polis.ysw.kr"
 TODAY = date.today().isoformat()
 
 
+_LASTMOD_CACHE: dict | None = None
+_DIRTY: set | None = None
+
+
+def lastmod_map() -> dict:
+    """경로 → 마지막 커밋일. git log 한 번으로 전부 뽑는다.
+
+    페이지마다 git log를 부르면 4,300회 subprocess라 느리다. 그리고 이게 중요한 이유는
+    따로 있다 — 예전엔 모든 URL의 lastmod를 빌드일(TODAY)로 찍었다. 매 빌드마다 4,288개가
+    전부 '오늘 수정됨'이 되면 검색엔진은 lastmod 신호 자체를 무시하게 되고, 무엇이 실제로
+    바뀌었는지 알 수 없어 크롤 우선순위가 잡히지 않는다.
+    """
+    global _LASTMOD_CACHE
+    if _LASTMOD_CACHE is not None:
+        return _LASTMOD_CACHE
+    out: dict[str, str] = {}
+    try:
+        r = subprocess.run(
+            ["git", "log", "--format=%cs", "--name-only", "--since=2024-01-01",
+             "--", "person/", "party/", "archive/", "history/", "polls/"],
+            cwd=ROOT, capture_output=True, text=True, timeout=120)
+        cur = ""
+        for line in r.stdout.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if len(line) == 10 and line[4] == "-" and line[7] == "-":
+                cur = line          # 커밋일 (최신부터 내려온다)
+            elif cur and line not in out:
+                out[line] = cur     # 처음 만난 것이 가장 최근 커밋
+    except Exception:
+        pass
+    _LASTMOD_CACHE = out
+    return out
+
+
+def dirty_paths() -> set:
+    """아직 커밋되지 않은 변경 파일 — 지금 바뀌는 중이므로 lastmod는 빌드일이 맞다.
+    (커밋 전에 sitemap을 만들면 git log는 옛 날짜를 주므로 그대로 쓰면 거짓이 된다.)"""
+    global _DIRTY
+    if _DIRTY is None:
+        try:
+            r = subprocess.run(["git", "status", "--porcelain", "--", "person/", "party/",
+                                "archive/", "history/", "polls/"],
+                               cwd=ROOT, capture_output=True, text=True, timeout=60)
+            _DIRTY = {ln[3:].strip().strip('"') for ln in r.stdout.splitlines() if len(ln) > 3}
+        except Exception:
+            _DIRTY = set()
+    return _DIRTY
+
+
+def lastmod_for(url: str) -> str:
+    """URL(/person/xxx/) → 그 페이지 파일의 마지막 커밋일. 미커밋·미상이면 빌드일."""
+    rel = url.strip("/") + "/index.html"
+    if rel in dirty_paths():
+        return TODAY
+    return lastmod_map().get(rel, TODAY)
+
+
 def git_lastmod(rel_path: str) -> str:
     """index.html의 git 마지막 커밋일(YYYY-MM-DD) = 페이지 실제 수정일.
     lastmod에 선거일(1948 등 웹 이전) 쓰면 Search Console이 '잘못된 날짜'로 거부 → 커밋일로."""
@@ -104,7 +163,7 @@ def history_urls() -> list[tuple[str, str, str]]:
         return out
     for p in sorted(hroot.rglob("index.html")):
         rel = p.relative_to(ROOT).parent.as_posix()
-        out.append((f"/{rel}/", "monthly", "0.6", TODAY))
+        out.append((f"/{rel}/", "monthly", "0.6", lastmod_for(f"/{rel}/")))
     return out
 
 
@@ -116,7 +175,7 @@ def poll_election_urls() -> list[tuple[str, str, str, str]]:
         return out
     for d in sorted(proot.iterdir()):
         if (d / "index.html").exists():
-            out.append((f"/polls/{d.name}/", "monthly", "0.6", TODAY))
+            out.append((f"/polls/{d.name}/", "monthly", "0.6", lastmod_for(f"/polls/{d.name}/")))
     return out
 
 
@@ -136,7 +195,7 @@ def person_urls() -> list[tuple[str, str, str, str]]:
     p = ROOT / "data/sitemap_person.txt"
     if not p.exists():
         return []
-    return [(loc.strip(), "monthly", "0.5", TODAY)
+    return [(loc.strip(), "monthly", "0.5", lastmod_for(loc.strip()))
             for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
 
 
@@ -145,7 +204,7 @@ def party_urls() -> list[tuple[str, str, str, str]]:
     p = ROOT / "data/sitemap_party.txt"
     if not p.exists():
         return []
-    return [(loc.strip(), "monthly", "0.6", TODAY)
+    return [(loc.strip(), "monthly", "0.6", lastmod_for(loc.strip()))
             for loc in p.read_text(encoding="utf-8").splitlines() if loc.strip()]
 
 

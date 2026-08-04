@@ -18,6 +18,7 @@ INDEX = ROOT / "assets/person-index.json"
 OUT_DIR = ROOT / "person"
 SITEMAP_OUT = ROOT / "data/sitemap_person.txt"
 SITE = "https://polis.ysw.kr"
+PLEDGE_BY_PERSON = ROOT / "data/pledges/by-person"
 
 # nav는 sync_nav_html.py가 정본 — 여기서 사본을 들고 있으면 메뉴가 바뀔 때마다 어긋난다
 # (실제로 '역대 판세'가 '타임라인'으로 굳어 있었다). 생성 시점에 정본을 불러 쓴다.
@@ -122,6 +123,30 @@ def jsonld(p: dict, slug: str, desc: str) -> str:
             + json.dumps(data, ensure_ascii=False) + '</script>')
 
 
+def pledge_block(pid: str) -> str:
+    """공약 제목을 정적 HTML로. 본문은 길어서 넣지 않고 제목만 — 제목만으로도 인물마다
+    완전히 고유한 수십~수백 자가 생긴다. 상세 본문은 person.js가 접이식으로 지연 로드한다."""
+    fp = PLEDGE_BY_PERSON / f"{pid}.json"
+    if not fp.exists():
+        return ""
+    try:
+        doc = json.loads(fp.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    blocks = []
+    for e in doc.get("entries", []):
+        where = " ".join(x for x in (e.get("sido"), e.get("sigungu")) if x)
+        items = "".join(f"<li>{esc(pl.get('title'))}</li>" for pl in e.get("pledges", []))
+        if not items:
+            continue
+        blocks.append(f'<h3>{esc(e.get("round"))} · {esc(where)} {esc(e.get("office"))}</h3>'
+                      f'<ol class="pp-static-pledges">{items}</ol>')
+    if not blocks:
+        return ""
+    return ('<section class="pp-static-sec"><h2>선거공약</h2>' + "".join(blocks)
+            + '</section>')
+
+
 def static_body(p: dict) -> tuple[str, str]:
     """(lede, 본문 HTML) — 렌더 전에도 읽히는 실제 내용.
 
@@ -157,15 +182,20 @@ def static_body(p: dict) -> tuple[str, str]:
         '<th>연도</th><th>선거</th><th>지역</th><th>정당</th><th>득표율</th>'
         '<th>순위</th><th>결과</th></tr></thead><tbody>'
         + "".join(rows) + "</tbody></table>")
-    return lede, table
+    return lede, table + pledge_block(p["id"])
 
 
 def main():
     pi = json.loads(INDEX.read_text(encoding="utf-8"))
     # 당선 선출직(국회의원·단체장·교육감·대통령 등) — dob 있고 + 의원이거나 무언가 당선.
-    # 낙선만 한 후보는 페이지 없이 검색에만(노이즈 방지).
+    # 낙선만 한 후보는 원래 페이지 없이 검색에만 뒀다(노이즈 방지). 다만 **공약이 있으면**
+    # 예외 — 공약 5~10건은 1회 출마 당선자보다 고유 콘텐츠가 많고, 낙선자 공약은 선거 후
+    # 일정 기간이 지나면 NEC에서 사라져 여기 아니면 볼 곳이 없다.
+    has_pledge = {f.stem for f in PLEDGE_BY_PERSON.glob("*.json")} if PLEDGE_BY_PERSON.exists() else set()
     persons = [p for p in pi["persons"]
-               if p.get("dob") and (p.get("assembly_id") or any(r.get("won") for r in p.get("races", [])))]
+               if p.get("dob") and (p.get("assembly_id")
+                                    or any(r.get("won") for r in p.get("races", []))
+                                    or p["id"] in has_pledge)]
     print(f"의원 entry: {len(persons)} (전체 {len(pi['persons'])} 중)")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
