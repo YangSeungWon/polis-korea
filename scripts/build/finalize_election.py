@@ -29,7 +29,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -214,7 +214,10 @@ def finalize(eid: str, key: str, dry: bool) -> bool:
             r.get("sigungu") or "", r.get("district") or "",
             json.dumps(r, sort_keys=True, ensure_ascii=False)))
         doc["_meta"]["is_final"] = True
-        doc["_meta"].pop("source", None)
+        # source를 지우지 않고 확정 경로로 바꾼다. 지우면 '확정'인 건 알아도 '어디서 온
+        # 확정인지'가 사라져, 화면에 '확정 · NEC OpenAPI'를 띄울 근거가 없어진다.
+        doc["_meta"]["source"] = "nec-openapi"
+        doc["_meta"]["finalized_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
         rp.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n",
                       encoding="utf-8")
         print(f"  ✓ {eid} 확정 승격 완료 (is_final: true)", file=sys.stderr)
