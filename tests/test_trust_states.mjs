@@ -90,5 +90,25 @@ check('방어: 알 수 없는 긴 source는 버린다',
   T.deriveDataset({ source: 'some-very-long-internal-pipeline-identifier-v3' }).sourceLabel === null);
 check('방어: 빈 meta는 빈 문자열', T.renderDataset(T.deriveDataset({})) === '');
 
+// ── 9. 부모 상속 — 자식은 다른 것만 남긴다 ──────────────────────────────────
+const parent = T.deriveDataset(res._meta);
+const same = T.deriveDataset(res._meta);
+check('9 상속: 부모와 같으면 자식 줄 없음', T.onlyDifferent(parent, same) === null);
+const child = T.deriveDataset(res._meta, { pendingCount: 58 });
+const diff = T.onlyDifferent(parent, child);
+check('9 상속: 다른 항목만 남는다',
+  diff && diff.incomplete && !diff.lifecycle && !diff.sourceLabel, JSON.stringify(diff));
+check('9 상속: 자식 줄에 확정/출처 반복 없음',
+  !/확정|NEC OpenAPI/.test(T.renderDataset(diff)), T.renderDataset(diff));
+
+// ── 10. 출구조사 시리즈별 provenance ────────────────────────────────────────
+const s0 = ex.sources[0];
+const sm = T.deriveDataset({ data_type: 'exit_poll', published_at: s0.released_at },
+  { sourceLabel: s0.name });
+const sh = T.renderDataset(sm);
+check('10 시리즈: 출처 이름', sh.includes(s0.name.slice(0, 6)), sh);
+check('10 시리즈: 발표 시각', /발표/.test(sh), sh);
+check('10 시리즈: 확정/잠정 없음', !/확정|잠정/.test(sh), sh);
+
 console.log(`\n총 ${pass + fail}건: ${pass} pass, ${fail} fail`);
 process.exit(fail ? 1 : 0);

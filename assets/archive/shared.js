@@ -135,9 +135,21 @@
       const avgErr = errN ? (errSum / errN).toFixed(2) : '—';
       const card = document.createElement('div');
       card.className = 'ar-exit-block';
+      // 출구조사는 출처가 여럿이다(3사 공동·JTBC 등). 섹션에 뭉뚱그리지 않고 시리즈마다
+      // 자기 provenance를 붙인다 — 발표 시각이 다르면 값의 뜻도 다르다.
+      // 적중률·평균 오차는 실제 결과와 대조해 polis가 계산한 값이라 칩을 단다.
+      const T = window.Trust;
+      const prov = (T && T.renderDataset)
+        ? T.renderDataset(T.deriveDataset(
+          { data_type: 'exit_poll', published_at: ep.released_at },
+          { sourceLabel: ep.name || ep.key }))
+        : '';
+      const calcChip = (T && T.fieldChip)
+        ? T.fieldChip('calculated', '출구조사 예측과 실제 결과를 polis가 대조해 계산했습니다.')
+        : '';
       card.innerHTML = `<h3 class="ar-exit-source">${ep.name || ep.key}
         <span class="ar-exit-hitrate">${hits}/${total} 적중 ${rate}%</span>
-        <span class="ar-exit-err">평균 오차 ${avgErr}%p</span></h3>`;
+        <span class="ar-exit-err">평균 오차 ${avgErr}%p ${calcChip}</span></h3>${prov}`;
       const chart = document.createElement('div');
       chart.className = 'ar-exit-dumbbell';
       let rowsHtml = '';

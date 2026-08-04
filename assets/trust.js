@@ -124,6 +124,37 @@
     return `<span class="tr-fact" title="${esc(f[1])}">${esc(f[0])}</span>`;
   }
 
+  // 부모 scope에 공통 provenance를 두고, 자식 섹션에는 **다른 사실만** 남긴다.
+  // 같은 'NEC OpenAPI 확정'이 섹션마다 반복되면 정보가 아니라 잡음이 된다.
+  // 부모와 같은 값이면 자식 줄을 지우고, 다른 게 있으면 그 차이만 낸다.
+  function mountGroup(groupEl, parentModel, childOverrides) {
+    if (!groupEl || !parentModel) return;
+    const title = groupEl.querySelector('.ar-group-title');
+    if (title) {
+      let el = groupEl.querySelector(':scope > .tr-line');
+      const html = renderDataset(parentModel);
+      if (html) {
+        if (!el) { el = document.createElement('p'); el.className = 'tr-line'; title.after(el); }
+        el.outerHTML = html;
+      }
+    }
+    for (const [id, model] of Object.entries(childOverrides || {})) {
+      const diff = onlyDifferent(parentModel, model);
+      mount(id, diff);
+    }
+  }
+
+  // 부모와 다른 항목만 남긴 모델. 전부 같으면 null → 자식 줄을 안 그린다.
+  function onlyDifferent(parent, child) {
+    if (!child) return null;
+    const out = {};
+    let any = false;
+    for (const k of ['lifecycle', 'sourceLabel', 'progress', 'publishedAt', 'scopeLabel', 'incomplete']) {
+      if (child[k] && child[k] !== parent[k]) { out[k] = child[k]; any = true; }
+    }
+    return any ? out : null;
+  }
+
   // 섹션 제목 바로 아래에 한 줄을 넣는다(있으면 교체).
   function mount(sectionId, model) {
     const sec = document.getElementById(sectionId);
@@ -140,5 +171,6 @@
     el.outerHTML = html;
   }
 
-  window.Trust = { deriveDataset, renderDataset, fieldChip, domainFact, mount, sourceLabel };
+  window.Trust = { deriveDataset, renderDataset, fieldChip, domainFact, mount,
+    mountGroup, onlyDifferent, sourceLabel };
 })();

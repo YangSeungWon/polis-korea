@@ -107,24 +107,23 @@ function mountTrust(ctx) {
   const cps = races.map((r) => r.count_pct).filter((v) => typeof v === 'number');
   const countPct = cps.length ? cps.reduce((a, b) => a + b, 0) / cps.length : null;
 
-  // 결과 기반 섹션 — 같은 데이터셋이라 같은 줄을 쓴다.
+  // 결과 기반 섹션은 같은 데이터셋이다 — '결과' 그룹에 한 번만 쓰고, 자식 섹션에는
+  // 부모와 다른 사실만 남긴다(기초의원 비례의 '일부 집계 중' 같은 것).
   const base = T.deriveDataset(meta, { countPct });
-  ['ar-offices', 'ar-governor-hex-section', 'ar-metro-hex-section',
-    'ar-council-hex-section', 'ar-winners-section'].forEach((id) => T.mount(id, base));
-
-  // 기초의원 비례는 득표 미게시 시군구가 있다 — 그 섹션에서만 밝힌다.
   const pending = races.filter((r) => r.votes_pending).length;
+  const groupEl = document.querySelector('.ar-group');   // 첫 그룹 = 결과
+  const overrides = {};
   if (pending) {
-    T.mount('ar-council-hex-section', T.deriveDataset(meta, { countPct, pendingCount: pending }));
+    overrides['ar-council-hex-section'] =
+      T.deriveDataset(meta, { countPct, pendingCount: pending });
+  }
+  if (groupEl && T.mountGroup) {
+    T.mountGroup(groupEl, base, overrides);
+  } else {
+    ['ar-offices', 'ar-governor-hex-section', 'ar-metro-hex-section',
+      'ar-council-hex-section', 'ar-winners-section'].forEach((id) => T.mount(id, base));
   }
 
-  // 출구조사 — 확정/잠정을 붙이지 않는다. 예측은 확정 결과가 아니다.
-  // 출처가 둘 이상이면 섹션에 뭉뚱그리지 않고 시리즈별로 붙는 게 맞지만(스펙), 우선
-  // 섹션 단위로 발표 시각만 밝히고 시리즈별 표기는 출구조사 렌더러가 맡는다.
-  const ex = ctx.exitData?._meta;
-  if (ex) {
-    T.mount('ar-exitpoll', T.deriveDataset(ex, {
-      sourceLabel: (ex.sources || []).map((s) => s.name).join(' · ') || null,
-    }));
-  }
+  // 출구조사는 시리즈(3사 공동·JTBC)마다 발표 시각이 다르다. 섹션에 뭉뚱그리면 어느
+  // 값이 언제 나온 건지 사라지므로, provenance는 renderExitDumbbell이 카드마다 붙인다.
 }

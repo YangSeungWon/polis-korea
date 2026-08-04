@@ -1016,3 +1016,5 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
   .ar-group-title { flex-direction: column; gap: 2px; }
   .ar-group-sub { text-align: left; }
 }
+/* 출구조사 시리즈별 provenance — 카드 제목 바로 아래. */
+.ar-exit-block .tr-line { margin: 2px 0 10px; }
