@@ -2,7 +2,15 @@ name: Checks (구조 불변식)
 
 # 데이터가 아니라 '구조'를 지키는 가드. 빌드 산출물이 정본과 어긋난 채 커밋되는 걸 막는다.
 #
-# 지금 지키는 것: nav 단일 출처.
+# 지금 지키는 것:
+#   nav 단일 출처 · 신뢰 상태 적용 범위 · 비교 모델 불변조건 · 인물 링크 무결성
+#   · archive 구조(앵커·그룹) · 크롤 경로(홈→허브→archive)
+#
+# 전부 '화면은 멀쩡한데 조용히 틀리는' 종류를 잡는다. 비교에서 단위가 사라지면 실제로
+# 없던 변화가 만들어지고, 앵커가 빠지면 외부 링크가 죽고, 크롤 경로가 끊기면 색인이
+# 되돌아간다 — 셋 다 눈으로는 안 보인다.
+#
+# nav 단일 출처:
 #   sync_nav_html.py가 nav 정본인데, 페이지 생성기가 nav HTML 사본을 템플릿에 박으면
 #   메뉴가 바뀔 때마다 조용히 어긋난다. 실제로 '역대 판세'가 '타임라인'으로 4,200여
 #   페이지에 굳어 있었다. 생성기가 render_nav()를 쓰는 한 이 검사는 항상 0이다.
@@ -34,5 +42,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: nav 단일 출처 (생성기가 사본을 박지 않았는지)
         run: python scripts/build/sync_nav_html.py --check
+
+      - name: 신뢰 상태 (확정/잠정 적용 범위·상속·시리즈 provenance)
+        run: node tests/test_trust_states.mjs
+
+      - name: 비교 모델 불변조건 (단위가 조용히 사라지지 않는지)
+        run: python tests/test_comparison.py
+
+      - name: 후보↔인물 링크 (죽은 링크·억지 매칭 없는지)
+        run: python tests/test_person_links.py
+
+      - name: archive 구조 (앵커·그룹 보존)
+        run: python tests/test_archive_structure.py
+
+      - name: 크롤 경로 (홈→허브→archive 유지)
+        run: python tests/test_crawl_paths.py
