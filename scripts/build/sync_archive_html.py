@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 ELECTIONS_DIR = ROOT / "data" / "elections"
 ARCHIVE_DIR = ROOT / "archive"
+RESULTS_DIR = ROOT / "data" / "results"
 INDEX_HTML = ROOT / "index.html"
 AR_LIST_START = "<!-- AR_LIST_START"
 AR_LIST_END = "<!-- AR_LIST_END -->"
@@ -41,6 +42,11 @@ KIND_META = {
     "general_election":   {"short": "총선",  "history_type": "national_assembly",  "n_unit": "대"},
     "byelection":         {"short": "재보궐", "history_type": "byelection",         "n_unit": "년"},
 }
+
+
+def _esc(x) -> str:
+    return (str(x if x is not None else "").replace("&", "&amp;")
+            .replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
 
 
 def kday(date_str: str) -> str:
@@ -502,6 +508,79 @@ FOOT = """
 KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
 
 # 제목 아래 깔린 .ar-source-line(TMI 설명)을 제목 옆 정보 ⓘ 팝오버로 이관.
+
+# --- 결과 요약 (빌드 시점 정적 렌더) -----------------------------------------
+# archive 77개는 섹션 제목만 HTML에 있고 수치는 전부 JS가 채웠다. 본문이 744자뿐이라
+# 검색엔진이 '크롤링됨 - 색인 생성되지 않음'으로 보류하기 좋은 상태였다. 결과 JSON에서
+# 회차 핵심을 뽑아 HTML로도 찍는다 — 화면 섹션은 그대로 JS가 채우므로 중복 표시는 없다.
+
+def _fmt_pct(v):
+    return f"{float(v):.1f}%" if v is not None else "—"
+
+
+def results_summary(eid: str, kind: str) -> str:
+    rp = RESULTS_DIR / f"{eid}.json"
+    if not rp.exists():
+        return ""
+    try:
+        doc = json.loads(rp.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    races = doc.get("races", [])
+
+    def top_of(scope, tc=None, n=3):
+        rs = [r for r in races if r.get("scope") == scope and (tc is None or r.get("sg_typecode") == tc)]
+        if not rs:
+            return []
+        cs = sorted((rs[0].get("candidates") or []), key=lambda c: -(c.get("votes") or 0))
+        return cs[:n]
+
+    rows = []
+    if kind == "presidential":
+        for c in top_of("nation", "1"):
+            rows.append((f'{_esc(c.get("name"))} ({_esc(c.get("party"))})', _fmt_pct(c.get("pct"))))
+    elif kind == "general_election":
+        seats = {}
+        for r in races:
+            if r.get("scope") != "district" or r.get("sg_typecode") != "2":
+                continue
+            for c in (r.get("candidates") or []):
+                if c.get("won"):
+                    seats[c.get("party") or "무소속"] = seats.get(c.get("party") or "무소속", 0) + 1
+        for pty, n in sorted(seats.items(), key=lambda x: -x[1])[:5]:
+            rows.append((_esc(pty), f"지역구 {n}석"))
+    else:   # local · byelection — 광역단체장(3) 우선, 없으면 기초단체장(4)·국회의원(2)
+        # 재보궐은 그 회차에 치러진 직만 있다 — 광역장이 없으면 기초장·국회의원·지방의원
+        # 순으로 내려가며 첫 번째로 데이터가 있는 직을 요약한다(2014-10-29는 기초의원뿐).
+        for tc, scope, label in (("3", "sido", "광역단체장"), ("4", "sigungu", "기초단체장"),
+                                 ("2", "district", "국회의원"), ("5", "district", "광역의원"),
+                                 ("6", "district", "기초의원")):
+            won = {}
+            for r in races:
+                if r.get("sg_typecode") != tc or r.get("scope") != scope:
+                    continue
+                for c in (r.get("candidates") or []):
+                    if c.get("won"):
+                        won[c.get("party") or "무소속"] = won.get(c.get("party") or "무소속", 0) + 1
+            if won:
+                for pty, n in sorted(won.items(), key=lambda x: -x[1])[:5]:
+                    rows.append((_esc(pty), f"{label} {n}곳"))
+                break
+    if not rows:
+        return ""
+
+    # 투표율 — 전국 합계가 있으면 그것, 없으면 시도 가중평균.
+    el = sum(r.get("electors") or 0 for r in races if r.get("scope") in ("sido", "nation"))
+    vo = sum(r.get("voters") or 0 for r in races if r.get("scope") in ("sido", "nation"))
+    turnout = f" · 투표율 {vo / el * 100:.1f}%" if el else ""
+
+    items = "".join(f"<li><b>{a}</b> <span>{b}</span></li>" for a, b in rows)
+    return (f'<section class="ar-summary"><h2>결과 요약</h2>'
+            f'<ul class="ar-summary-list">{items}</ul>'
+            f'<p class="ar-summary-note">개표 결과 기준{turnout}. '
+            f'지역별 상세는 아래 섹션에서.</p></section>')
+
+
 # 화면엔 제목만 — 누르면(ⓘ) 설명이 읽기 좋은 크기로 뜬다. (assets/components.css .info-i/.info-pop)
 _SRC_RE = re.compile(r'<h2 class="ar-section-title">([^<]*)</h2>\s*<p class="ar-source-line">(.*?)</p>')
 
@@ -554,6 +633,7 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
     return (
         HEAD.format(**d, nav=render_nav(menu_for_path(f'archive/{d["id"]}/index.html')))
         + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
+        + results_summary(d["id"], d["kind"])       # 빌드 시점 정적 요약(검색엔진용)
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
         + render_bottom_nav(nbrs, d)                # 이전 · [더 자세히] · 다음
         + FOOT.format(**d)

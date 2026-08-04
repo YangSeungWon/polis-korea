@@ -148,6 +148,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="{canon}">
+{jsonld}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
@@ -198,6 +199,30 @@ PAGE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+
+SITE = "https://polis.ysw.kr"
+
+
+def party_jsonld(name: str, info: dict, desc: str) -> str:
+    """Organization + BreadcrumbList.
+
+    정당은 schema.org에 PoliticalParty가 없어 Organization으로 낸다. 창당·해산 일자는
+    레지스트리에 있는 것만 싣고, 없으면 생략 — 추정치를 구조화 데이터에 넣지 않는다.
+    """
+    org = {"@type": "Organization", "name": name,
+           "url": f"{SITE}/party/{quote(name)}/", "description": desc}
+    if info.get("founded"):
+        org["foundingDate"] = info["founded"]
+    if info.get("dissolved"):
+        org["dissolutionDate"] = info["dissolved"]
+    crumbs = {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "정당사", "item": f"{SITE}/parties.html"},
+        {"@type": "ListItem", "position": 2, "name": name},
+    ]}
+    return ('<script type="application/ld+json">'
+            + json.dumps({"@context": "https://schema.org", "@graph": [org, crumbs]},
+                         ensure_ascii=False) + '</script>')
 
 
 def render(name, info, known, appearances, members):
@@ -265,6 +290,7 @@ def render(name, info, known, appearances, members):
         name=esc(name), abbr_badge=abbr_badge, life=life, note=note_html,
         lineage=lineage, elections=elections, members=members_html,
         desc=esc(desc[:160]), canon=purl(name), qname=quote(name),
+        jsonld=party_jsonld(name, info, esc(desc[:160])),
     )
 
 
