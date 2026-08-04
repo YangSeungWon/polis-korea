@@ -342,6 +342,12 @@
 }
 .ar-by-sido-w-name { font-size: 16px; flex: 1; }
 .ar-by-sido-w-party { font-size: 11px; font-weight: 600; }
+/* 교육감처럼 정당이 제도적으로 없는 직 — 정당명 자리에 들어가되 실제 정당으로
+   오해되지 않게 점선 테두리·무채색. 색은 부여하지 않는다. */
+.ar-by-partyless {
+  border: 1px dashed var(--rule); border-radius: 2px; padding: 1px 5px;
+  color: var(--ink-soft); font-weight: 600; cursor: help; white-space: nowrap;
+}
 .ar-by-sido-w-pct { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .ar-by-sido-second {
   display: flex; gap: 8px; font-size: 12px; color: var(--ink-soft);

@@ -90,11 +90,21 @@
     setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`);
   }
 
-  // 광역단체장 — 큰 카드. 보통 1~2건 (서울·부산 시장 같은).
-  function renderSidoBig(ctx) {
-    const races = racesBy(ctx.results, 'sido', '3');
+  // 교육감은 정당 추천·표방이 금지된 직 — 빈 정당은 '자료 없음'이 아니라 '정당이 없음'.
+  const PARTYLESS_TC = new Set(['11']);
+
+  // 시도 단위 단독 선출직 — 큰 카드. 보통 1~2건 (서울시장·서울교육감 같은).
+  // tc 3(광역단체장)과 11(교육감)이 구조가 같아 같은 렌더를 쓴다.
+  function renderSidoBig(ctx, tc, hostId, sectionId) {
+    const races = racesBy(ctx.results, 'sido', tc);
     if (!races.length) return;
-    const host = document.getElementById('ar-by-sido-host');
+    const partyless = PARTYLESS_TC.has(tc);
+    // 정당 없는 직은 정당색을 쓸 수 없다 — 중립색으로 통일한다.
+    const colOf = (p) => (partyless ? 'var(--ink-soft)' : pcol(p));
+    const nameOf = (p) => (partyless
+      ? '<span class="ar-by-partyless" title="교육감은 정당의 추천·표방이 금지된 직입니다">정당 없음</span>'
+      : (p || ''));
+    const host = document.getElementById(hostId);
     host.innerHTML = '';
     for (const r of races) {
       const cands = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
@@ -102,7 +112,7 @@
       if (!top) continue;
       const electors = r.electors || 0, voted = r.voters || 0;
       const turnout = electors ? (voted / electors * 100) : 0;
-      const col = pcol(top.party);
+      const col = colOf(top.party);
       const margin = second ? (top.pct - second.pct) : null;
       const card = document.createElement('div');
       card.className = 'ar-by-sido-card';
@@ -110,19 +120,19 @@
         <h3 class="ar-by-sido-name">${r.sido}</h3>
         <div class="ar-by-sido-winner" style="border-left:4px solid ${col}">
           <span class="ar-by-sido-w-name" style="color:${col};font-weight:700">${top.name}</span>
-          <span class="ar-by-sido-w-party" style="color:${col}">${top.party}</span>
+          <span class="ar-by-sido-w-party" style="color:${col}">${nameOf(top.party)}</span>
           <span class="ar-by-sido-w-pct">${(top.pct || 0).toFixed(2)}%</span>
         </div>
         ${second ? `<div class="ar-by-sido-second">
           <span>2위 ${second.name}</span>
-          <span style="color:${pcol(second.party)}">${second.party}</span>
+          <span style="color:${colOf(second.party)}">${nameOf(second.party)}</span>
           <span>${(second.pct || 0).toFixed(2)}%</span>
         </div>` : ''}
         ${margin != null ? `<div class="ar-by-sido-meta">격차 ${margin.toFixed(2)}%p · 투표율 ${turnout.toFixed(1)}%</div>` : ''}
       `;
       host.appendChild(card);
     }
-    document.getElementById('ar-by-sido-section').hidden = false;
+    document.getElementById(sectionId).hidden = false;
   }
 
   // 기초단체장 list — 시도별 그룹
@@ -247,7 +257,8 @@
     async render(ctx) {
       const reasons = await fetchReasons(ctx.meta.date);
       renderHero(ctx, reasons);
-      renderSidoBig(ctx);
+      renderSidoBig(ctx, '3', 'ar-by-sido-host', 'ar-by-sido-section');
+      renderSidoBig(ctx, '11', 'ar-by-supt-host', 'ar-by-supt-section');
       renderDistrictList(ctx);
       renderSigunguList(ctx);
       renderMemberList(ctx, '5', 'ar-by-sido-mem-host', 'ar-by-sido-mem-section');

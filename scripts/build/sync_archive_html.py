@@ -364,6 +364,12 @@ SECTIONS_BYELECTION = """
     <div class="ar-by-sido-host" id="ar-by-sido-host"></div>
   </section>
 
+  <section class="ar-section" id="ar-by-supt-section" hidden>
+    <h2 class="ar-section-title">교육감 결과</h2>
+    <p class="ar-source-line">교육감은 정당의 추천·표방이 금지된 직이라 정당 표시가 없습니다.</p>
+    <div class="ar-by-sido-host" id="ar-by-supt-host"></div>
+  </section>
+
   <section class="ar-section" id="ar-by-district-section" hidden>
     <h2 class="ar-section-title">국회의원 재·보궐 결과</h2>
     <div class="ar-by-district-host" id="ar-by-district-host"></div>
