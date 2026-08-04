@@ -26,6 +26,12 @@ INDEX_HTML = ROOT / "index.html"
 AR_LIST_START = "<!-- AR_LIST_START"
 AR_LIST_END = "<!-- AR_LIST_END -->"
 
+# nav 정본은 sync_nav_html.py — 사본을 들고 있으면 메뉴 변경 때마다 어긋난다.
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+
+
 DOW = ["월", "화", "수", "목", "금", "토", "일"]
 
 # kind → 짧은 라벨·history.html type slug·n 단위
@@ -123,16 +129,7 @@ HEAD = """<!DOCTYPE html>
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. (재생성 후 sync_nav_html 실행) -->
-    <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-    <a href="/polls.html" class="hdr-link">여론조사</a>
-    <span data-nav-urgent></span>
-    <a href="/byelection/" class="hdr-link">재·보궐</a>
-    <a href="/history.html" class="hdr-link is-current">역대 결과</a>
-    <a href="/timeline.html" class="hdr-link">타임라인</a>
-    <a href="/chronology.html" class="hdr-link">근현대사</a>
-    <a href="/parties.html" class="hdr-link">정당사</a>
-    <!-- NAV_END -->
+{nav}
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
@@ -520,7 +517,7 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
     nbrs = neighbors or {}
 
     return (
-        HEAD.format(**d)
+        HEAD.format(**d, nav=render_nav(menu_for_path(f'archive/{d["id"]}/index.html')))
         + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
         + render_bottom_nav(nbrs, d)                # 이전 · [더 자세히] · 다음

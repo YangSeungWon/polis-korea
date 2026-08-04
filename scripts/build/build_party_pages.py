@@ -16,6 +16,12 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
+
+# nav 정본은 sync_nav_html.py — 사본을 들고 있으면 메뉴 변경 때마다 어긋난다.
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from party_canon import canon_party  # noqa: E402
 
@@ -153,16 +159,7 @@ PAGE = """<!DOCTYPE html>
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
-  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-  <a href="/polls.html" class="hdr-link">여론조사</a>
-  <span data-nav-urgent></span>
-  <a href="/byelection/" class="hdr-link">재·보궐</a>
-  <a href="/history.html" class="hdr-link">역대 결과</a>
-  <a href="/timeline.html" class="hdr-link">타임라인</a>
-  <a href="/chronology.html" class="hdr-link">근현대사</a>
-  <a href="/parties.html" class="hdr-link">정당사</a>
-  <!-- NAV_END -->
+{nav}
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
@@ -264,6 +261,7 @@ def render(name, info, known, appearances, members):
 
     desc = f'{name}' + (f'({abbr})' if abbr else '') + f' — {life}. ' + (info.get("note") or "")
     return PAGE.format(
+        nav=render_nav(menu_for_path("party/x/index.html")),
         name=esc(name), abbr_badge=abbr_badge, life=life, note=note_html,
         lineage=lineage, elections=elections, members=members_html,
         desc=esc(desc[:160]), canon=purl(name), qname=quote(name),

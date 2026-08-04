@@ -18,6 +18,13 @@ INDEX = ROOT / "assets/person-index.json"
 OUT_DIR = ROOT / "person"
 SITEMAP_OUT = ROOT / "data/sitemap_person.txt"
 
+# nav는 sync_nav_html.py가 정본 — 여기서 사본을 들고 있으면 메뉴가 바뀔 때마다 어긋난다
+# (실제로 '역대 판세'가 '타임라인'으로 굳어 있었다). 생성 시점에 정본을 불러 쓴다.
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+
+
 
 TEMPLATE = """<!DOCTYPE html>
 <html lang="ko">
@@ -56,16 +63,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
   </div>
   <nav class="hdr-nav">
-    <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
-  <a href="/tracker.html" class="hdr-link">지지율 추이</a>
-  <a href="/polls.html" class="hdr-link">여론조사</a>
-  <span data-nav-urgent></span>
-  <a href="/byelection/" class="hdr-link">재·보궐</a>
-  <a href="/history.html" class="hdr-link">역대 결과</a>
-  <a href="/timeline.html" class="hdr-link">타임라인</a>
-  <a href="/chronology.html" class="hdr-link">근현대사</a>
-  <a href="/parties.html" class="hdr-link">정당사</a>
-  <!-- NAV_END -->
+{nav}
   </nav>
   <div class="hdr-meta">
     <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
@@ -125,6 +123,7 @@ def main():
             f"· {' · '.join(parties)} · {len(p['races'])}회"
         )
         html = TEMPLATE.format(
+            nav=render_nav(menu_for_path(f"person/{slug}/index.html")),
             name=p["name"],
             desc=desc,
             slug=slug,

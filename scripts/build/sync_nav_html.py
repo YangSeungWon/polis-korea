@@ -43,6 +43,11 @@ def menu_for_path(rel_path: str) -> str | None:
         return "home"
     if p == "/polls.html" or any(p.startswith(x) for x in ("/governor/", "/mayor/", "/superintendent/")):
         return "polls"
+    # /party/index.html은 정당사가 아니라 '정당지지' 여론조사 페이지(build_static.py 생성)다.
+    # /party/{정당명}/ 프로필만 정당사. 한 prefix로 뭉뚱그리면 여론조사 페이지에 '정당사'가
+    # 활성으로 찍힌다.
+    if p == "/party/index.html":
+        return "polls"
     if p == "/parties.html" or p.startswith("/party/"):
         return "parties"
     if p == "/byelection.html" or p.startswith("/byelection/") or p.startswith("/archive/byelection-"):
