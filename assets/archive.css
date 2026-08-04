@@ -877,3 +877,36 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 .dg-rlab2 { text-align: right; padding-right: 4px; }
 .dg-hm { font-size: 10px; font-weight: 600; color: var(--ink); text-align: center; padding: 4px 0; border-radius: 2px; font-variant-numeric: tabular-nums; }
 .dg-hm.dg-na { background: var(--bg2); }
+
+/* ── 공약 분야 분포 ───────────────────────────────────────────────────────
+   계열이 하나(건수)뿐이라 색은 한 가지. 분야 정체성은 왼쪽 라벨이 갖는다. */
+.pr-note { font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; }
+.pr-chart { display: flex; flex-direction: column; gap: 6px; }
+.pr-row {
+  display: grid; grid-template-columns: 104px 1fr 84px;
+  align-items: center; gap: 10px; outline: none;
+}
+.pr-row:hover .pr-bar, .pr-row:focus-visible .pr-bar { filter: brightness(1.08); }
+.pr-row:focus-visible { outline: 2px solid var(--rule-strong); outline-offset: 2px; border-radius: 3px; }
+.pr-label { font-size: 12px; font-weight: 600; text-align: right; color: var(--ink); }
+.pr-track { background: var(--bg2); border-radius: 3px; height: 14px; overflow: hidden; }
+.pr-bar {
+  height: 100%; background: #5b54d6;           /* 검증: light surface 대비 3:1 이상 */
+  border-radius: 0 4px 4px 0;                  /* 데이터 끝만 둥글게 — 기준선은 각지게 */
+  min-width: 2px; transition: filter .12s;
+}
+:root[data-theme="dark"] .pr-bar { background: #8b85f0; }  /* 다크는 별도 스텝 */
+.pr-val {
+  font-size: 12px; font-weight: 700; color: var(--ink);
+  font-variant-numeric: tabular-nums; display: flex; gap: 6px; align-items: baseline;
+}
+.pr-pct { font-size: 11px; font-weight: 600; color: var(--ink-mute); }
+.pr-fine { font-size: 11px; color: var(--ink-mute); margin: 12px 0 0; line-height: 1.6; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pr-bar { background: #8b85f0; }
+}
+@media (max-width: 700px) {
+  .pr-row { grid-template-columns: 82px 1fr 66px; gap: 7px; }
+  .pr-label { font-size: 11px; }
+}

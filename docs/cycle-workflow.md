@@ -44,6 +44,7 @@ python3 scripts/fetch/fetch_pledges.py --active --all-candidates   # 0단계 (�
 python3 scripts/fetch/fetch_pledges.py --election <id>             # 3단계 (당선인 백필)
 python3 scripts/build/classify_pledges.py                          # 분야 자동 분류
 python3 scripts/build/build_person_pledges.py                      # 인물별 재색인
+python3 scripts/build/build_pledge_realms.py                       # 분야 분포 집계
 ```
 
 공약분야명(NEC 원본)은 6,048건 중 45건만 채워져 있어 분류 축으로 쓸 수 없다.

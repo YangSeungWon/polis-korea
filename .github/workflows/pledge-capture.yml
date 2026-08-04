@@ -63,6 +63,9 @@ jobs:
       - name: 인물별 재색인
         run: python scripts/build/build_person_pledges.py
 
+      - name: 분야 분포 집계 (archive 시각화용)
+        run: python scripts/build/build_pledge_realms.py
+
       - name: Commit & push if changed
         run: |
           git config user.name "polis-bot"

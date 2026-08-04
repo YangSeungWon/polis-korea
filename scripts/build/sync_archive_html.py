@@ -327,6 +327,12 @@ SECTIONS_LOCAL = """
     <h2 class="ar-section-title">재·보궐</h2>
     <div class="ar-byelection-host" id="ar-byelection-host"></div>
   </section>
+
+  <section class="ar-section" id="ar-pledge-realm-section" hidden>
+    <h2 class="ar-section-title">공약 분야 분포</h2>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <div id="ar-pledge-realm-host"></div>
+  </section>
 """
 
 SECTIONS_PRES = """
@@ -351,6 +357,12 @@ SECTIONS_PRES = """
   <section class="ar-section" id="ar-polls-link" hidden>
     <h2 class="ar-section-title">여론조사</h2>
     <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-pledge-realm-section" hidden>
+    <h2 class="ar-section-title">공약 분야 분포</h2>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <div id="ar-pledge-realm-host"></div>
   </section>
 """
 
@@ -393,6 +405,12 @@ SECTIONS_BYELECTION = """
     <h2 class="ar-section-title">실시 사유</h2>
     <p class="ar-source-line">중앙선거관리위원회 재·보궐 실시사유 확정상황 API · 전임자·소속 정당·사유.</p>
     <div class="ar-by-reasons-host" id="ar-by-reasons-host"></div>
+  </section>
+
+  <section class="ar-section" id="ar-pledge-realm-section" hidden>
+    <h2 class="ar-section-title">공약 분야 분포</h2>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <div id="ar-pledge-realm-host"></div>
   </section>
 """
 
@@ -450,6 +468,7 @@ FOOT = """
 <script src="assets/render-sigungu-cartogram.js"></script><!-- 시군구 표비례 카토그램(격자/dorling) -->
 <script src="assets/render-district-hex.js"></script><!-- 선거구 hex(공용) -->
 <script src="assets/archive/render-district-map.js"></script><!-- 선거구 지리 코로플레스 -->
+<script src="assets/archive/render-pledge-realms.js"></script><!-- 공약 분야 분포 -->
 <script src="assets/archive/render-council-hex.js"></script>
 <script src="assets/archive/render-winners.js"></script>
 <script src="assets/archive/render-demographics.js"></script><!-- 성연령 득표기여(대선) -->

@@ -61,6 +61,9 @@
 
   const ctx = { meta, results, polls: null, byReasons: [], exitData: null, sgTypecode };
   if (mode) await mode.render(ctx);   // 여론조사·출구조사 없이 상단·결과 먼저(가드로 2차 섹션 스킵)
+  // 공약 분야 분포 — 회차 종류와 무관하게 같은 처리라 mode 밖에서 한 번만. 데이터나
+  // 섹션이 없는 회차(총선 등)에서는 스스로 조용히 끝난다.
+  window.Archive.pledgeRealms?.render(ctx);
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
