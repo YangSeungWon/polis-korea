@@ -2,6 +2,32 @@
 
 선거 사이클당 1회 ~30분 작업. 메타 파일 작성·active 등록·운영 전환.
 
+## 선거 생애주기 — 어느 단계에 무엇이 도는가
+
+| 단계 | 기간 | 데이터 소스 | 자동화 |
+|---|---|---|---|
+| 0 사전 | D-180 ~ D-1 | NESDC 여론조사 | `daily-refresh.yml` |
+| 1 개표 | D-day ~ D+7 | info.nec.go.kr 라이브(잠정) | `election-results-poll.yml` |
+| 2 확정 대기 | D+7 ~ OpenAPI 게시 | NEC OpenAPI probe | **`election-finalize.yml`** (매일) |
+| 3 역사 편입 | 확정 후 | 고정 | 없음 — 자동 잡 금지 |
+
+2단계가 없던 시절 9회 지선 잠정 파일이 두 달 방치됐고, 그 틈에 daily-refresh의 부분
+갱신이 기초의원 낙선자 1,737명과 집계값 1,038건을 삭제했다(2026-07-31). 그래서 규칙:
+
+- **확정(`is_final: true`) 회차는 어떤 자동 잡도 건드리지 않는다.**
+- **부분 덮어쓰기 금지** — 전면 재fetch만 허용하고, 실패·급감 시 롤백한다.
+- 결과 파일을 통째로 교체하는 스크립트는 상시 루프에 넣지 않는다(승격 시 1회만).
+
+```bash
+# 2단계 수동 실행 — 게시 전이면 no-op, 게시됐으면 승격까지
+python3 scripts/build/finalize_election.py --auto --dry-run
+python3 scripts/build/finalize_election.py --auto
+```
+
+> 지방의원·비례(tc 5·6·8·9)가 있는 회차는 개표 API만으론 무투표·중선거구 당선·비례
+> 의석이 빠진다. `finalize_election.py`의 `POST_STEPS`에 그 회차 보정 단계를 등록해야
+> 승격이 진행된다 — 등록 전엔 일부러 실패시켜 조용한 결손을 막는다.
+
 ## D-180 — 메타 파일 작성
 
 ```bash

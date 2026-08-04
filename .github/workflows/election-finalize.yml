@@ -1,0 +1,97 @@
+name: Election finalize (잠정→확정 승격)
+
+# 선거 생애주기 2단계 — '확정 대기'.
+#
+# 1단계(개표일)는 info.nec.go.kr 라이브로 잠정 결과를 띄운다. NEC OpenAPI는 몇 주~두
+# 달 뒤에야 확정 데이터를 게시한다. 그 사이를 지키는 단계가 없어서 9회 지선 잠정 파일이
+# 두 달 방치됐고, 그 틈에 daily-refresh의 부분 갱신이 tc6 낙선자·집계값을 삭제했다
+# (2026-07-31). 이 워크플로가 매일 OpenAPI 게시를 확인해 게시되는 즉시 확정으로 올린다.
+#
+# 승격되면 is_final: true가 되고 대상에서 자동으로 빠진다 — 3단계(역사 편입) 이후로는
+# 어떤 자동 잡도 그 회차를 건드리지 않는다. 확정 대기 중인 회차가 없으면 즉시 no-op이라
+# 상시 켜 둬도 비용이 없다(하루 1회, probe 몇 콜).
+
+on:
+  schedule:
+    # 매일 23:10 UTC (08:10 KST) — daily-refresh(22:36)·tracker(22:40) 뒤로 비켜서
+    # 같은 파일을 두 잡이 동시에 커밋하는 레이스를 피한다.
+    - cron: '10 23 * * *'
+  workflow_dispatch:
+    inputs:
+      election:
+        description: '특정 회차만 (비우면 최근 미확정 자동 탐지)'
+        required: false
+      dry_run:
+        description: 'dry-run (커밋 안 함)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: election-finalize
+  cancel-in-progress: false
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Finalize
+        env:
+          NEC_API_KEY: ${{ secrets.NEC_API_KEY }}
+        run: |
+          set -e
+          ARGS="--auto"
+          [ -n "${{ github.event.inputs.election }}" ] && ARGS="--election ${{ github.event.inputs.election }}"
+          [ "${{ github.event.inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          # 승격 실패(감소 감지 롤백·보정 단계 미등록 등)는 job을 실패시켜 알린다.
+          # 미게시는 정상 종료 — 다음 주기에 다시 본다.
+          python scripts/build/finalize_election.py $ARGS
+
+      - name: Rebuild timeline (결과 변경 시)
+        run: |
+          if ! git diff --quiet data/results/; then
+            echo "결과 변경 감지 → timeline 재집계"
+            python scripts/build/build_timeline.py
+          fi
+
+      - name: Audit (회귀 차단)
+        run: python scripts/audit/audit_quality.py
+
+      - name: Commit & push if changed
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "polis-bot"
+          git config user.email "noreply@anthropic.com"
+          git add data/results/ data/timeline.json
+          if git diff --staged --quiet; then
+            echo "변경 없음 — 확정 대기 중이거나 이미 확정"
+          else
+            git commit -m "확정 승격: NEC OpenAPI 확정본 반영 ($(date -u +%Y-%m-%d))"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase --autostash origin master && git push; then ok=1; break; fi
+              echo "push 레이스 — 재시도 $i/3"; sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "push 3회 실패"; exit 1; }
+          fi
+
+      - name: 인물 페이지 재빌드 안내
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          if ! git diff --quiet HEAD~1 -- data/results/ 2>/dev/null; then
+            echo "::notice::결과가 확정으로 바뀌었다. person/party 정적 페이지는 CI에서"
+            echo "::notice::재생성하지 않으므로 docs/cycle-workflow.md 절차를 로컬에서 1회 돌릴 것."
+          fi
