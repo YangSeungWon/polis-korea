@@ -37,6 +37,10 @@ OFFICES = {
     "5": {"code": "5", "race_unit": "district", "label": "광역의원 지역구"},
 }
 _SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
+
+# 부분집계 scope — 같은 선거를 하위 단위로 쪼갠 행(일반구별·시군구별 분해).
+# 당선인 오버레이가 이들까지 마킹하면 당선자가 중복 계상된다(확정률 199% 등).
+SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary"}
 # 전남광주 통합 시도의회(tc5): 선거구가 모두 한 cityCode·SDNAME=전남광주통합특별시로 옴.
 # 시군구(WIWNAME)로 광주(5 자치구)/전남 분리 — 우리 데이터(분리 sido)와 맞춤.
 _GWANGJU_GU = {"동구", "서구", "남구", "북구", "광산구"}
@@ -154,7 +158,7 @@ def process(d: dict, tc: str, race_unit: str, winners: dict):
     seen, marked = set(), 0
     by_party: dict[str, int] = defaultdict(int)
     for r in d.get("races", []):
-        if r.get("sg_typecode") != tc:
+        if r.get("sg_typecode") != tc or r.get("scope") in SUB_SCOPES:
             continue
         key = (canon_sido(r.get("sido")), norm(r.get(race_unit) or ""))
         ws = winners.get(key)
@@ -206,6 +210,38 @@ def process(d: dict, tc: str, race_unit: str, winners: dict):
     return marked, added, len(seen), by_party
 
 
+def drop_merged_sido_ghosts(d: dict, tc: str, race_unit: str) -> int:
+    """통합 시도의 '유령 사본' 제거.
+
+    전남광주 통합 시도의회는 광주·전남 어느 cityCode로 물어도 전체 선거구 목록을
+    돌려준다. 그래서 개표 fetch가 같은 선거구를 sido만 다르게 두 번 담는다
+    (예: 동구제1선거구가 광주광역시·전라남도 양쪽에). 당선인 명부는 둘 중 하나만
+    인정하므로, 명부에 매칭된 쪽(seats_total 존재)을 남기고 내용이 같은 반대쪽을 지운다.
+    """
+    matched, ghosts = {}, []
+    for r in d.get("races", []):
+        if r.get("sg_typecode") != tc or r.get("scope") in SUB_SCOPES:
+            continue
+        unit = norm(r.get(race_unit) or "")
+        if r.get("seats_total") is not None:
+            matched.setdefault(unit, []).append(r)
+    for r in d.get("races", []):
+        if r.get("sg_typecode") != tc or r.get("scope") in SUB_SCOPES:
+            continue
+        if r.get("seats_total") is not None:
+            continue
+        twins = matched.get(norm(r.get(race_unit) or ""))
+        if not twins:
+            continue
+        # 같은 선거구·같은 개표 내용인데 sido만 다르면 사본이다.
+        if any(t.get("sido") != r.get("sido") and t.get("electors") == r.get("electors")
+               and r.get("electors") is not None for t in twins):
+            ghosts.append(id(r))
+    if ghosts:
+        d["races"] = [r for r in d["races"] if id(r) not in set(ghosts)]
+    return len(ghosts)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=9)
@@ -224,6 +260,9 @@ def main():
         print(f"[tc{tc} {info['label']}] 명부 {total} · 매칭 {matched} · 추가(무투표) {added} · 확정 {marked}/{total} ({marked/total:.1%})", file=sys.stderr)
         for p, c in sorted(by_party.items(), key=lambda x: -x[1])[:6]:
             print(f"    {p}: {c}", file=sys.stderr)
+        dropped = drop_merged_sido_ghosts(d, tc, info["race_unit"])
+        if dropped:
+            print(f"    통합 시도 유령 사본 제거: {dropped}건", file=sys.stderr)
         if marked != total:
             ok = False
     # tc8 광역의원 비례 — 명부 의석(_#8)으로 교체

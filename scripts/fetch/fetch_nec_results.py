@@ -44,6 +44,10 @@ ENDPOINT_VOTE = "/getVoteSttusInfoInqire"      # 투표 결과 (투표율 등)
 #   2023-06-11: 강원도 → 강원특별자치도
 #   2024-01-18: 전라북도 → 전북특별자치도
 #   2026-06-03: 광주광역시+전라남도 → 전남광주특별시 (메타 sido_merge로 처리)
+# 통합 시도명을 쓰는 직 — 광역단체장(3)·교육감(11). 그 외는 옛 시도 분리 유지.
+SIDO_MERGE_TYPECODES = {"3", "11"}
+
+
 def sidos_for_sg_id(sg_id: str) -> list[str]:
     yyyymmdd = int(sg_id) if sg_id.isdigit() else 99999999
     base = ["서울특별시", "부산광역시", "대구광역시", "인천광역시",
@@ -102,13 +106,27 @@ def _load_api_key() -> str:
 def _fetch_page(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
                 page: int, num_rows: int = 100) -> tuple[int, list[dict]]:
     """한 page 호출. (totalCount, items) 반환."""
+    # resultType=xml 필수 — 이 API의 기본 응답이 XML→JSON으로 바뀌어, 없으면 JSON이
+    # 와서 ET.fromstring이 ParseError. 호출부가 예외를 삼켜 '0 rows'로 조용히 실패한다.
     params = {
         "serviceKey": api_key, "sgId": sg_id, "sgTypecode": sg_typecode,
         "sdName": sd_name, "numOfRows": num_rows, "pageNo": page,
+        "resultType": "xml",
     }
     url = f"{API_BASE}{ENDPOINT_XMNTCK}?{urllib.parse.urlencode(params, safe='%')}"
-    with urllib.request.urlopen(url, timeout=20) as r:
-        raw = r.read().decode("utf-8", errors="replace")
+    # NEC API는 간헐적으로 504/502를 낸다. 재시도 없이 두면 그 시도(sdName) 전체가
+    # 통째로 빠진 채 파일이 써져, 실행할 때마다 race 수가 달라진다.
+    last = None
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                raw = r.read().decode("utf-8", errors="replace")
+            break
+        except Exception as e:
+            last = e
+            time.sleep(1.5 * (attempt + 1))
+    else:
+        raise last
     root = ET.fromstring(raw)
     total = int(root.findtext(".//totalCount", "0") or "0")
     result_code = root.findtext(".//resultCode", "")
@@ -127,16 +145,20 @@ def fetch_xmntck(sg_id: str, sg_typecode: str, sd_name: str, api_key: str,
     """
     aliases = SIDO_NAME_ALIASES.get(sd_name, [sd_name])
     total, items, used_name = 0, [], sd_name
+    last_err = None
     for alias in aliases:
         try:
             t, it = _fetch_page(sg_id, sg_typecode, alias, api_key, 1, num_rows)
         except Exception as e:
+            last_err = e   # 통신·파싱 실패는 '데이터 없음'과 다르다 — 삼키지 않고 보고
             continue
         if t > 0 or it:
             total, items, used_name = t, it, alias
             break
     if not items:
-        return []
+        # 모든 alias가 예외로 죽었으면 빈 결과가 아니라 장애 — 호출부가 race를 건너뛰고
+        # 빈 파일을 쓰지 않도록 _error를 올린다.
+        return [{"_error": f"{type(last_err).__name__}: {last_err}"}] if last_err else []
     # 추가 page (page 2, 3, ...)
     page = 2
     while len(items) < total and page <= 20:  # 안전 cap
@@ -194,11 +216,15 @@ def normalize_race(meta: dict, sg_typecode: str, sd: str, sgg: str, wiw: str,
     | 11 (교육감) | 시도명 | '합계' | sido | '' | - |
     | 11 (교육감) | 시도명 | 시군구명 | sigungu | wiw | - |
     """
-    # 통합 시도 매핑 (전남광주 등)
-    merges = {alias: m["canonical"]
-              for m in meta.get("sido_merge", [])
-              for alias in m.get("merge_from", [])}
-    sd = merges.get(sd, sd)
+    # 통합 시도 매핑 (전남광주 등) — 시도 단위로 1명을 뽑는 직(광역단체장·교육감)에만
+    # 적용한다. 기초단체장·광역의원·기초의원·비례는 통합 뒤에도 옛 시도별로 나뉘어
+    # 치러지므로 '광주광역시'/'전라남도'를 그대로 유지해야 한다(당선인 명부·hex 레이아웃
+    # 모두 분리 표기 기준). 전 직에 일괄 적용하면 명부와 시도명이 어긋나 매칭이 깨진다.
+    if sg_typecode in SIDO_MERGE_TYPECODES:
+        merges = {alias: m["canonical"]
+                  for m in meta.get("sido_merge", [])
+                  for alias in m.get("merge_from", [])}
+        sd = merges.get(sd, sd)
 
     out = {
         "sg_typecode": sg_typecode,
@@ -322,6 +348,8 @@ def main():
                     help="첫 시도만 1회 호출 (전체 안 받음, 검증용)")
     ap.add_argument("--delay", type=float, default=0.3,
                     help="요청 간 지연 (NEC 부담 완화)")
+    ap.add_argument("--force", action="store_true",
+                    help="race 급감(기존의 50% 미만)에도 덮어쓰기")
     args = ap.parse_args()
 
     meta = load_election_meta(args.election)
@@ -345,6 +373,7 @@ def main():
     print(f"  대상 시도: {len(sidos_at_sg)}개 ({sg_id} 시점)", file=sys.stderr)
 
     all_races: list[dict] = []
+    failures: list[str] = []
     n_call = n_row = 0
     # nation scope race가 의미 있는 office (대선·총선 비례).
     # sd_name='합계' 호출 → sgg='대한민국' wiw='합계' row 1개 = 전국 race.
@@ -373,6 +402,7 @@ def main():
             n_call += 1
             if rows and "_error" in rows[0]:
                 print(f"  ✗ {office['level']} {sd}: {rows[0]['_error']}", file=sys.stderr)
+                failures.append(f"{office['level']}/{sd}")
                 continue
             n_row += len(rows)
             for row in rows:
@@ -382,6 +412,28 @@ def main():
             print(f"  ✓ {office['level']} {sd}: {len(rows)} rows",
                   file=sys.stderr)
             time.sleep(args.delay)
+
+    # 한 시도라도 통신 실패면 결과가 조용히 불완전해진다 — 부분 결과로 덮어쓰지 않는다.
+    if failures and not args.force:
+        print(f"\n✗ 중단: {len(failures)}개 호출 실패 — {', '.join(failures[:5])}"
+              f"{' 외' if len(failures) > 5 else ''}\n"
+              f"  부분 결과로 덮어쓰지 않음. 재실행하거나 --force.", file=sys.stderr)
+        sys.exit(1)
+
+    # 통합 시도(예: 전남광주특별시)는 구 시도 두 이름 모두로 호출되어 같은 race가 두 번
+    # 수집된다. 내용까지 완전히 같은 row만 제거 — 일반구 부분집계(sigungu_part)처럼
+    # 키는 같지만 내용이 다른 정상 row는 건드리지 않는다.
+    seen: set[str] = set()
+    deduped = []
+    for r in all_races:
+        sig = json.dumps(r, sort_keys=True, ensure_ascii=False)
+        if sig in seen:
+            continue
+        seen.add(sig)
+        deduped.append(r)
+    if len(deduped) != len(all_races):
+        print(f"  ✓ 통합 시도 중복 제거: {len(all_races) - len(deduped)}건", file=sys.stderr)
+        all_races = deduped
 
     # 옛 선거(선거일 < 오늘 - 7일)는 확정 결과. 신선거는 잠정 가능 → False.
     from datetime import date, timedelta
@@ -411,6 +463,17 @@ def main():
     }
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     out_path = RESULTS_DIR / f"{args.election}.json"
+    # 회귀 방어: 이 스크립트는 파일을 전면 교체한다. API 장애·응답 포맷 변경으로 race가
+    # 0건이거나 기존의 절반 미만이면 덮어쓰지 않는다. --force로만 통과.
+    if out_path.exists() and not args.force:
+        try:
+            prev = len(json.loads(out_path.read_text(encoding="utf-8")).get("races", []))
+        except Exception:
+            prev = 0
+        if prev and len(all_races) < prev * 0.5:
+            print(f"\n✗ 중단: race {prev} → {len(all_races)} (50% 미만). 기존 파일 유지.\n"
+                  f"  API 장애/포맷 변경 의심. 의도한 축소면 --force.", file=sys.stderr)
+            sys.exit(1)
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n→ {out_path.relative_to(ROOT)} ({len(all_races)} race rows, "
           f"{n_call} calls)", file=sys.stderr)

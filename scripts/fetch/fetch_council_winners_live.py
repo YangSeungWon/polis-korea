@@ -31,6 +31,9 @@ RESULTS = {9: "data/results/9th-local-2026.json"}
 
 _SIDO_CANON = {"강원도": "강원특별자치도", "전라북도": "전북특별자치도"}
 
+# 부분집계 scope — 오버레이가 마킹하면 당선자 중복 계상(확정률 178% 등).
+SUB_SCOPES = {"sigungu_part", "district_sigungu", "sido_summary"}
+
 
 def norm(s: str) -> str:
     return (s or "").replace(" ", "").strip()
@@ -132,7 +135,7 @@ def main():
     by_party: dict[str, int] = defaultdict(int)
     seen_keys = set()
     for r in d.get("races", []):
-        if r.get("sg_typecode") != "6":
+        if r.get("sg_typecode") != "6" or r.get("scope") in SUB_SCOPES:
             continue
         key = (canon_sido(r.get("sido")), norm(r.get("district") or ""))
         winners = by_sgg.get(key)
@@ -179,7 +182,7 @@ def main():
     prop_seen, prop_marked = set(), 0
     prop_party: dict[str, int] = defaultdict(int)
     for r in d.get("races", []):
-        if r.get("sg_typecode") != "9":
+        if r.get("sg_typecode") != "9" or r.get("scope") in SUB_SCOPES:
             continue
         key = (canon_sido(r.get("sido")), norm(r.get("sigungu") or ""))
         seats_map = prop.get(key)
