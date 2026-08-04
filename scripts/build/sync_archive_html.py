@@ -309,6 +309,9 @@ NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={el
 # 시도/시군구 시각화 진입은 하단 nav 센터 '더 자세히' 셀로 통합 (render_bottom_nav · DETAIL_CELL)
 
 SECTIONS_LOCAL = """
+  <div class="ar-group">
+    <h2 class="ar-group-title">결과<span class="ar-group-sub">이 선거에서 무슨 일이 있었나</span></h2>
+
   <section class="ar-section" id="ar-offices" hidden>
     <h2 class="ar-section-title">선출직 정당 분포</h2>
     <p class="ar-source-line">광역단체장 · 기초단체장 · 광역의원 (지역구·비례) · 기초의원 (지역구·비례). 교육감 제외.</p>
@@ -334,12 +337,32 @@ SECTIONS_LOCAL = """
     <div class="ar-council-hex" id="ar-council-hex"></div>
     <div class="ar-council-hex-meta"><span id="ar-council-hex-total"></span><span id="ar-council-hex-legend"></span></div>
   </section>
+  </div>
+
+
+  <div class="ar-group">
+    <h2 class="ar-group-title">무엇이 바뀌었나<span class="ar-group-sub">지난 회차와 견줘서</span></h2>
+
+  <section class="ar-section" id="ar-compare-section" hidden>
+    <h2 class="ar-section-title">무엇이 바뀌었나</h2>
+    <div id="ar-compare-host"></div>
+  </section>
+  </div>
+
+
+  <div class="ar-group">
+    <h2 class="ar-group-title">누가 경쟁했나<span class="ar-group-sub">당선인과 후보</span></h2>
 
   <section class="ar-section" id="ar-winners-section" hidden>
     <h2 class="ar-section-title">시·도의원·시·군·구의원 당선인</h2>
     <p class="ar-source-line">시·도의원·시·군·구의원 모두 NEC 확정 당선인 기준 — 중선거구 정수·무투표 포함.</p>
     <div id="ar-winners-body"></div>
   </section>
+  </div>
+
+
+  <div class="ar-group">
+    <h2 class="ar-group-title">선거 전에는 어떻게 보였나<span class="ar-group-sub">여론조사·출구조사와 실제의 거리</span></h2>
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
@@ -352,22 +375,29 @@ SECTIONS_LOCAL = """
     {polls_link}
     <div class="ar-polls-link-host" id="ar-polls-link-host"></div>
   </section>
+  </div>
 
-  <section class="ar-section" id="ar-byelection" hidden>
-    <h2 class="ar-section-title">재·보궐</h2>
-    <div class="ar-byelection-host" id="ar-byelection-host"></div>
-  </section>
+
+  <div class="ar-group">
+    <h2 class="ar-group-title">무엇을 약속했나<span class="ar-group-sub">당선인·후보의 공약</span></h2>
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
     <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
+  </div>
 
-  <section class="ar-section" id="ar-compare-section" hidden>
-    <h2 class="ar-section-title">무엇이 바뀌었나</h2>
-    <div id="ar-compare-host"></div>
+
+  <div class="ar-group">
+    <h2 class="ar-group-title">함께 치러진 선거<span class="ar-group-sub">같은 날 실시된 재·보궐</span></h2>
+
+  <section class="ar-section" id="ar-byelection" hidden>
+    <h2 class="ar-section-title">재·보궐</h2>
+    <div class="ar-byelection-host" id="ar-byelection-host"></div>
   </section>
+  </div>
+
 """
 
 SECTIONS_PRES = """
