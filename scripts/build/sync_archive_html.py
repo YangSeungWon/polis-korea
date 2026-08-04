@@ -430,6 +430,11 @@ SECTIONS_PRES = """
     <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
+
+  <section class="ar-section" id="ar-compare-section" hidden>
+    <h2 class="ar-section-title">무엇이 바뀌었나</h2>
+    <div id="ar-compare-host"></div>
+  </section>
 """
 
 SECTIONS_BYELECTION = """
@@ -642,10 +647,74 @@ def _sourceline_to_info(html: str) -> str:
     return _SRC_RE.sub(repl, html)
 
 
-KIND_TO_SECTIONS = {k: _sourceline_to_info(v) for k, v in {
-    "local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES,
-    "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION,
-}.items()}
+
+# --- 서사 그룹 -----------------------------------------------------------------
+# 섹션이 전부 같은 위계로 늘어서면 '무엇에 답하는 묶음인지'가 없어 길게만 느껴진다.
+# 섹션을 지우거나 접지 않고 그룹을 얹어 계층을 만든다. 그룹은 trust provenance의
+# 상속 단위이기도 하다(같은 데이터 family = 같은 부모).
+#
+# 회차 종류마다 있는 섹션이 다르므로, 없는 섹션은 조용히 건너뛰고 빈 그룹은 만들지 않는다.
+
+def group_sections(body: str, groups: list) -> str:
+    """섹션 블록을 서사 그룹으로 재배열. groups = [(제목, 부제, [section_id...])]"""
+    blocks = {}
+    for m in re.finditer(r'\n  <section class="ar-section" id="(ar-[a-z0-9-]+)"[\s\S]*?\n  </section>\n',
+                         body):
+        blocks[m.group(1)] = m.group(0)
+    if not blocks:
+        return body
+    out, seen = [], set()
+    for title, sub, ids in groups:
+        have = [i for i in ids if i in blocks]
+        if not have:
+            continue                       # 이 회차에 없는 그룹은 만들지 않는다
+        out.append(f'\n  <div class="ar-group">\n    <h2 class="ar-group-title">{title}'
+                   f'<span class="ar-group-sub">{sub}</span></h2>')
+        for i in have:
+            out.append(blocks[i].rstrip('\n'))
+            seen.add(i)
+        out.append('  </div>\n')
+    for k, v in blocks.items():            # 그룹 미지정 섹션도 잃지 않는다
+        if k not in seen:
+            out.append(v.rstrip('\n'))
+    return '\n'.join(out) + '\n'
+
+
+G_RESULT = ("결과", "이 선거에서 무슨 일이 있었나")
+G_CHANGE = ("무엇이 바뀌었나", "지난 회차와 견줘서")
+G_WHO = ("누가 경쟁했나", "당선인과 후보")
+G_BEFORE = ("선거 전에는 어떻게 보였나", "여론조사·출구조사와 실제의 거리")
+G_PLEDGE = ("무엇을 약속했나", "당선인·후보의 공약")
+G_TOGETHER = ("함께 치러진 선거", "같은 날 실시된 재·보궐")
+
+GROUPS_BY_KIND = {
+    "presidential": [
+        (*G_RESULT, ["ar-nation", "ar-pres-sido-hex-section"]),
+        (*G_CHANGE, ["ar-compare-section"]),
+        (*G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
+        (*G_PLEDGE, ["ar-pledge-realm-section"]),
+    ],
+    "general_election": [
+        (*G_RESULT, ["ar-parliament", "ar-proportional"]),
+        (*G_CHANGE, ["ar-compare-section"]),
+        (*G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
+    ],
+    "byelection": [
+        (*G_RESULT, ["ar-by-sido-section", "ar-by-supt-section", "ar-by-district-section",
+                     "ar-by-sigungu-section", "ar-by-sido-mem-section",
+                     "ar-by-sigungu-mem-section"]),
+        (*G_WHO, ["ar-by-reasons-section"]),
+        (*G_PLEDGE, ["ar-pledge-realm-section"]),
+    ],
+}
+
+
+KIND_TO_SECTIONS = {
+    k: _sourceline_to_info(group_sections(v, GROUPS_BY_KIND[k]) if k in GROUPS_BY_KIND else v)
+    for k, v in {
+        "local": SECTIONS_LOCAL, "presidential": SECTIONS_PRES,
+        "general_election": SECTIONS_GENERAL, "byelection": SECTIONS_BYELECTION,
+    }.items()}
 
 
 def nec_source_suffix(meta: dict) -> str:

@@ -43,14 +43,37 @@ def main():
     ck("그룹 순서: 결과가 먼저", groups and groups[0] == "결과", groups[:1])
     ck("비교가 결과 다음", len(groups) > 1 and groups[1] == "무엇이 바뀌었나", groups[:2])
 
-    # 모든 지선 archive가 같은 구조여야 한다(한 회차만 손대고 끝나는 실수 방지)
-    local = [f for f in glob.glob(str(ROOT / "archive/*-local-*/index.html"))]
+    # 회차 종류마다 최소 그룹 수 — 한 회차만 손대고 끝나는 실수를 잡는다.
+    # 종류마다 있는 섹션이 다르므로 기대치도 다르다(총선은 비교·공약이 없다).
+    MIN_GROUPS = {"local": 5, "pres": 3, "general": 2, "byelection": 2}
+    def kind_of(name):
+        if "byelection" in name:
+            return "byelection"
+        if "-pres-" in name:
+            return "pres"
+        if "-general-" in name:
+            return "general"
+        return "local"
     bad = []
-    for f in local:
+    n_checked = 0
+    for f in glob.glob(str(ROOT / "archive/*/index.html")):
+        name = Path(f).parent.name
         h = Path(f).read_text(encoding="utf-8")
-        if len(re.findall(r'ar-group-title">', h)) < 5:
-            bad.append(Path(f).parent.name)
-    ck(f"지선 archive {len(local)}개 모두 그룹 구조", not bad, bad)
+        n = len(re.findall(r'ar-group-title">', h))
+        n_checked += 1
+        if n < MIN_GROUPS[kind_of(name)]:
+            bad.append(f"{name}({n})")
+    ck(f"archive {n_checked}개 전부 종류별 최소 그룹 충족", not bad, bad[:6])
+
+    # 빈 그룹을 만들지 않는다 — 그룹 안에 섹션이 최소 하나
+    empty = []
+    for f in glob.glob(str(ROOT / "archive/*/index.html")):
+        h = Path(f).read_text(encoding="utf-8")
+        for blk in re.findall(r'<div class="ar-group">([\s\S]*?)</div>', h):
+            if '<section' not in blk:
+                empty.append(Path(f).parent.name)
+                break
+    ck("빈 그룹 없음", not empty, empty[:5])
 
     # 스크립트 로드 순서 — trust는 렌더러보다 먼저 와야 mount가 동작한다
     it, ic = html.find("assets/trust.js"), html.find("assets/archive/core.js")
