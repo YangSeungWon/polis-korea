@@ -23,45 +23,53 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 # 캐노니컬 메뉴 — 회차 번호·시간 의존 표현 금지 (장기 안정).
+# 데이터 종류가 아니라 **사용자가 묻는 대상**으로 나눈다. 예전 메뉴(여론조사·역대 결과·
+# 역대 판세·정당사…)는 만든 사람에겐 서로 다른 데이터셋이지만 사용자에겐 그렇지 않다.
+#
+# 여론은 두 축에 걸친다 — 데이터 원천이 같아도 목적이 다르다.
+#   상시(국정평가·정당지지·차기주자) → '지금'
+#   회차별(후보 지지·조사 vs 실제·출구조사) → '선거'
+#
+# 각 축은 실제 랜딩이 있어야 한다. 옛 페이지들은 URL 그대로 살아 있고 랜딩에서 링크된다
+# (/elections.html이 역대 결과·역대 판세·여론조사·재보궐을 안내).
 MENU = [
-    # 홈은 좌측 polis 로고가 이미 / 링크 — nav 중복 제거 (모바일 폭 절약).
-    # 순서: 현재 여론(상시 추세 → 폴 허브) → 선거 결과(보궐 → 역대 → 개관) → 역사 맥락.
-    ("지지율 추이", "/tracker.html", "tracker"),
-    ("여론조사", "/polls.html", "polls"),
-    ("재·보궐", "/byelection/", "byelection"),
-    ("역대 결과", "/history.html", "history"),
-    ("역대 판세", "/timeline.html", "timeline"),
-    ("근현대사", "/chronology.html", "chronology"),
-    ("정당사", "/parties.html", "parties"),
+    ("지금", "/tracker.html", "now"),
+    ("선거", "/elections.html", "elections"),
+    ("인물·정당", "/parties.html", "people"),
+    ("역사", "/chronology.html", "history"),
     # '검색'은 nav 링크 대신 헤더 우측 검색창(nav.js가 .hdr-meta에 주입)으로 대체.
 ]
 
 # 파일 경로 → 활성 메뉴 키 매핑. 매치 안되면 is-current 없음 (archive 등).
 def menu_for_path(rel_path: str) -> str | None:
+    """파일 경로 → 활성 메뉴 키. 4축 재편 후에도 옛 경로가 어느 축에 속하는지 알아야
+    is-current가 붙는다 — 예전 URL로 들어온 사용자도 자기 위치를 안다."""
     p = "/" + rel_path.lstrip("/")
     if p == "/index.html" or p == "/":
         return "home"
-    if p == "/polls.html" or any(p.startswith(x) for x in ("/governor/", "/mayor/", "/superintendent/")):
-        return "polls"
+    # 회차별 여론조사는 '선거'에 속한다(상시 추세는 아래 tracker → '지금').
+    if p == "/polls.html" or p.startswith("/polls/") or any(
+            p.startswith(x) for x in ("/governor/", "/mayor/", "/superintendent/")):
+        return "elections"
     # /party/index.html은 정당사가 아니라 '정당지지' 여론조사 페이지(build_static.py 생성)다.
     # /party/{정당명}/ 프로필만 정당사. 한 prefix로 뭉뚱그리면 여론조사 페이지에 '정당사'가
     # 활성으로 찍힌다.
     if p == "/party/index.html":
-        return "polls"
-    if p == "/parties.html" or p.startswith("/party/"):
-        return "parties"
+        return "elections"
+    if p == "/parties.html" or p.startswith("/party/") or p.startswith("/person/") \
+            or p == "/person.html" or p == "/search.html":
+        return "people"
     if p == "/byelection.html" or p.startswith("/byelection/") or p.startswith("/archive/byelection-"):
-        return "byelection"   # 재보궐 아카이브는 '역대 결과'(hex 탐색기)가 아니라 '재·보궐'로
+        return "elections"
     if p == "/tracker.html":
-        return "tracker"
-    if p == "/history.html" or p.startswith("/archive/"):
-        return "history"
-    if p == "/timeline.html":
-        return "timeline"
+        return "now"
+    if p in ("/history.html", "/elections.html", "/timeline.html") \
+            or p.startswith("/archive/") or p.startswith("/history/"):
+        return "elections"
+
     if p == "/chronology.html":
-        return "chronology"
-    if p == "/search.html":
-        return "search"
+        return "history"
+
     return None
 
 
@@ -83,7 +91,7 @@ def render_nav(current_key: str | None) -> str:
     for i, (label, href, key) in enumerate(MENU):
         cls = "hdr-link is-current" if key == current_key else "hdr-link"
         lines.append(f'  <a href="{href}" class="{cls}">{label}</a>')
-        if key == "polls":  # 여론조사(선거·폴 허브) 직후 — 임박/방금끝난 선거 urgent 뱃지 자리
+        if key == "elections":  # '선거' 직후 — 임박/방금끝난 선거 urgent 뱃지 자리
             lines.append('  <span data-nav-urgent></span>')
     lines.append('  <!-- NAV_END -->')
     return "\n".join(lines)

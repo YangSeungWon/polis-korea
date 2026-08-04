@@ -52,11 +52,26 @@ def main():
         ok = bool(bl) or (ROOT / "data/byelection_calendar.json").exists()
         ck(f"재보궐 {len(by)}개 도달 경로 존재", ok)
 
-    # 홈이 너무 얇아지지 않았는지 — 주요 진입점은 남아야 한다
+    # 홈은 라우터다 — 4축과 검색만 직접 두고, 세부 도구는 랜딩 경유(depth 2)가 맞다.
+    # 여기에 옛 메뉴를 전부 요구하면 IA 재편을 되돌리는 테스트가 된다.
     h = home.read_text(encoding="utf-8")
-    for path in ["/tracker.html", "/polls.html", "/search.html", "/parties.html",
-                 "/chronology.html", "/history.html", "/elections.html"]:
-        ck(f"홈에 진입점 {path}", path in h)
+    for path in ["/tracker.html", "/elections.html", "/parties.html",
+                 "/chronology.html", "/search.html"]:
+        ck(f"홈에 축 진입점 {path}", path in h)
+
+    # nav 4축 재편으로 nav에서 빠진 페이지들 — 어딘가에서 링크돼야 고아가 안 된다.
+    hub_txt = hub.read_text(encoding="utf-8")
+    home_txt = home.read_text(encoding="utf-8")
+    reachable = hub_txt + home_txt
+    for path, where in [("/history.html", "선거 랜딩"), ("/timeline.html", "선거 랜딩"),
+                        ("/polls.html", "선거 랜딩"), ("/byelection/", "선거 랜딩")]:
+        ck(f"nav에서 빠진 {path}가 {where}에서 링크됨", path in reachable)
+
+    # nav 자체는 4축
+    import re as _re
+    nav = _re.search(r"NAV_START[\s\S]*?NAV_END", home_txt)
+    n_links = len(_re.findall(r'class="hdr-link', nav.group(0))) if nav else 0
+    ck("nav 링크 4개", n_links == 4, n_links)
 
     # sitemap에 허브가 있다
     sm = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
