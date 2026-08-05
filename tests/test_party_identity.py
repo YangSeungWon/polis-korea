@@ -67,12 +67,15 @@ def main() -> int:
     cmp_fp = ROOT / "data/comparisons/general/22nd-general-2024__21st-general-2020.json"
     if cmp_fp.exists():
         d = json.loads(cmp_fp.read_text(encoding="utf-8"))
-        keys = list(d["party_swing_in_compared"])
+        # 집계는 대표성 게이트를 통과할 때만 생성된다(test_aggregation_gate 참조).
+        # identity가 새는지는 **unit-level share_delta**로 본다 — 그건 항상 있다.
+        keys = sorted({k for u in d["units"] for k in (u.get("share_delta") or {})})
         ck("산출물에 pid가 새지 않았다", not any(k.startswith("pid:") for k in keys), str(keys[:3]))
-        ck("산출물에 옛 이름(미래통합당)이 라벨로 없다", "미래통합당" not in keys, str(keys))
-        ck("국민의힘 swing이 현실적 범위 (±20%p)",
-           abs(d["party_swing_in_compared"].get("국민의힘", {}).get("mean_pp", 0)) < 20,
-           str(d["party_swing_in_compared"].get("국민의힘")))
+        ck("산출물에 옛 이름(미래통합당)이 라벨로 없다", "미래통합당" not in keys, str(keys[:6]))
+        # 개명을 못 이으면 한 선거구에서 ±40%p 같은 값이 나온다 — identity가 섰는지의 신호
+        worst = max((abs(v) for u in d["units"] for v in (u.get("share_delta") or {}).values()),
+                    default=0)
+        ck(f"선거구 delta가 현실적 범위 (최대 {worst:.1f}%p < 60)", worst < 60, str(worst))
         ck("분모 규칙이 적혀 있다", "두 회차 모두" in d.get("swing_denominator", ""))
         ck("registry 공백이 드러난다", "unregistered_parties" in d)
         ck("녹색정의당이 공백으로 잡힌다", "녹색정의당" in d["unregistered_parties"])

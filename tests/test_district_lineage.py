@@ -162,8 +162,12 @@ def main() -> int:
         leaked = [u["district"] for u in cd["units"]
                   if u["comparable"] != "yes" and u.get("share_delta")]
         ck(f"{fp.stem[:22]}: 비교 불가 단위에 delta 없음", not leaked, str(leaked[:3]))
-        ck(f"{fp.stem[:22]}: 부분집합 경고가 있다",
-           "subset_warning" in cd["_meta"])
+        # 경고 문구가 아니라 **게이트**가 있어야 한다 — 값이 존재하면 결국 쓰인다.
+        ck(f"{fp.stem[:22]}: 집계 게이트가 있다", "aggregation_allowed" in cd)
+        if not cd.get("aggregation_allowed"):
+            leaked = [k for k in ("party_swing_in_compared", "turnout_in_compared",
+                                  "biggest_moves") if k in cd]
+            ck(f"{fp.stem[:22]}: 차단 시 집계 지표 없음", not leaked, str(leaked))
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
