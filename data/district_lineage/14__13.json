@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 14,
   "previous_n": 13,
-  "generated_at": "2026-08-05T15:09:27+09:00",
+  "generated_at": "2026-08-05T15:43:14+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -11,18 +11,30 @@
    "minor": 0.05
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
-  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+  "source_profile": {
+   "current": [
+    false,
+    4,
+    false
+   ],
+   "previous": [
+    false,
+    4,
+    false
+   ],
+   "same_source": true
+  },
+  "polygon_caveat": "폴리곤 출처가 회차마다 다르다 — 21·22대만 오마이뉴스 원본(LICENSE 있음), 9~20대는 재구성, 1~8대는 properties에 approx로 근사임을 밝힌다. 출처가 다르면 겹침 90~97%를 실제 변화인지 정밀도 차이인지 못 가른다(comparable='unknown'). 출처가 같으면 정밀도로 설명되지 않으므로 실제 경계 변화로 본다."
  },
  "counts": {
   "exact": 158,
   "renamed": 21,
-  "minor_boundary_change": 14,
+  "boundary_changed": 33,
   "unresolvable": 13,
-  "boundary_changed": 19,
   "split": 12,
   "total": 237,
   "comparable": 179,
-  "comparable_unknown": 14,
+  "comparable_unknown": 0,
   "previous_total": 224,
   "previous_unmatched": 12
  },
@@ -189,9 +201,9 @@
   {
    "district": "강원 춘천시",
    "sido": "강원",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/92% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "강원 춘천시",
@@ -316,9 +328,9 @@
   {
    "district": "경기 구리시",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 99%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 99%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "경기 구리시",
@@ -330,9 +342,9 @@
   {
    "district": "경기 김포군·강화군",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "경기 김포군·강화군",
@@ -537,9 +549,9 @@
   {
    "district": "경기 안산시·옹진군",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "경기 안산시·옹진군",
@@ -696,9 +708,9 @@
   {
    "district": "경기 평택군",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "경기 평택군",
@@ -710,9 +722,9 @@
   {
    "district": "경기 하남시·광주군",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기 광주군'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기 광주군'",
    "previous": [
     {
      "prev": "경기 광주군",
@@ -1500,9 +1512,9 @@
   {
    "district": "대구 동구을",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '대구 동구'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '대구 동구'",
    "previous": [
     {
      "prev": "대구 동구",
@@ -1598,9 +1610,9 @@
   {
    "district": "대전 대덕구",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충남 대전시동구을'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충남 대전시동구을'",
    "previous": [
     {
      "prev": "충남 대전시동구을",
@@ -1897,9 +1909,9 @@
   {
    "district": "서울 강남구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "서울 강남구갑",
@@ -1916,9 +1928,9 @@
   {
    "district": "서울 강남구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "서울 강남구을",
@@ -1949,9 +1961,9 @@
   {
    "district": "서울 강동구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 91%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 91%/99% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "서울 강동구을",
@@ -2376,9 +2388,9 @@
   {
    "district": "서울 송파구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 91%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 91%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "서울 송파구갑",
@@ -2395,9 +2407,9 @@
   {
    "district": "서울 송파구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "서울 송파구을",
@@ -2756,9 +2768,9 @@
   {
    "district": "전남 동광양시·광양군",
    "sido": "전남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전남 광양군'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전남 광양군'",
    "previous": [
     {
      "prev": "전남 광양군",

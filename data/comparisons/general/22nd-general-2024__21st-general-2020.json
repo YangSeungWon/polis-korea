@@ -2,7 +2,7 @@
  "_meta": {
   "current": "22nd-general-2024",
   "previous": "21st-general-2020",
-  "generated_at": "2026-08-05T15:39:56+09:00",
+  "generated_at": "2026-08-05T15:43:39+09:00",
   "source": "polis 계산",
   "scope_note": "**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다.",
   "subset_warning": "아래 party_swing은 비교 가능한 선거구 안의 값이다. 전국 전체 변화가 아니다 — 두 숫자를 섞으면 없는 사실이 된다.",
@@ -12,12 +12,11 @@
  "counts": {
   "total_districts": 254,
   "compared": 190,
-  "undetermined": 19,
-  "excluded_redistricting": 45,
+  "undetermined": 0,
+  "excluded_redistricting": 64,
   "by_relation": {
    "exact": 189,
-   "minor_boundary_change": 19,
-   "boundary_changed": 30,
+   "boundary_changed": 49,
    "unresolvable": 7,
    "merged": 6,
    "renamed": 1,
@@ -156,8 +155,8 @@
    "previous_turnout": 66.63,
    "turnout_delta": -1.01,
    "share_delta": {
-    "더불어민주당": 4.58,
-    "국민의힘": 42.96
+    "국민의힘": 42.96,
+    "더불어민주당": 4.58
    },
    "newly_ran": [
     {
@@ -167,12 +166,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.54
-    },
-    {
      "party": "진보당",
      "previous_pct": 0.86
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.54
     }
    ]
   },
@@ -201,8 +200,8 @@
    "previous_turnout": 65.72,
    "turnout_delta": 0.1,
    "share_delta": {
-    "더불어민주당": -6.58,
-    "국민의힘": 7.62
+    "국민의힘": 7.62,
+    "더불어민주당": -6.58
    },
    "newly_ran": [
     {
@@ -242,8 +241,8 @@
    "previous_turnout": 66.21,
    "turnout_delta": 0.4,
    "share_delta": {
-    "더불어민주당": -0.05,
-    "국민의힘": 3.29
+    "국민의힘": 3.29,
+    "더불어민주당": -0.05
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -278,8 +277,8 @@
    "previous_turnout": 61.73,
    "turnout_delta": 3.28,
    "share_delta": {
-    "더불어민주당": 0.71,
-    "국민의힘": 9.59
+    "국민의힘": 9.59,
+    "더불어민주당": 0.71
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -318,15 +317,11 @@
    "previous_turnout": 64.6,
    "turnout_delta": 1.99,
    "share_delta": {
-    "더불어민주당": 0.2,
-    "국민의힘": 2.72
+    "국민의힘": 2.72,
+    "더불어민주당": 0.2
    },
    "newly_ran": [],
    "no_longer_ran": [
-    {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.71
-    },
     {
      "party": "우리공화당",
      "previous_pct": 0.51
@@ -334,6 +329,10 @@
     {
      "party": "기후민생당",
      "previous_pct": 0.85
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.71
     },
     {
      "party": "진보당",
@@ -366,8 +365,8 @@
    "previous_turnout": 68.51,
    "turnout_delta": -1.01,
    "share_delta": {
-    "더불어민주당": 2.12,
-    "국민의힘": 0.58
+    "국민의힘": 0.58,
+    "더불어민주당": 2.12
    },
    "newly_ran": [
     {
@@ -411,8 +410,8 @@
    "previous_turnout": 67.3,
    "turnout_delta": -0.7,
    "share_delta": {
-    "더불어민주당": -4.9,
-    "국민의힘": 1.86
+    "국민의힘": 1.86,
+    "더불어민주당": -4.9
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -447,8 +446,8 @@
    "previous_turnout": 67.09,
    "turnout_delta": 2.02,
    "share_delta": {
-    "더불어민주당": 3.89,
-    "국민의힘": 9.11
+    "국민의힘": 9.11,
+    "더불어민주당": 3.89
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -461,9 +460,9 @@
   {
    "district": "경기 고양시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 고양시갑"
   },
   {
@@ -499,11 +498,15 @@
    "previous_turnout": 68.32,
    "turnout_delta": 1.57,
    "share_delta": {
-    "더불어민주당": 8.78,
-    "국민의힘": 1.57
+    "국민의힘": 1.57,
+    "더불어민주당": 8.78
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 1.73
+    },
     {
      "party": "정의당",
      "previous_pct": 7.57
@@ -511,10 +514,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.39
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 1.73
     }
    ]
   },
@@ -543,18 +542,18 @@
    "previous_turnout": 68.9,
    "turnout_delta": 0.38,
    "share_delta": {
-    "더불어민주당": 1.47,
-    "국민의힘": 0.24
+    "국민의힘": 0.24,
+    "더불어민주당": 1.47
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.42
-    },
-    {
      "party": "기본소득당",
      "previous_pct": 1.28
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.42
     }
    ]
   },
@@ -599,8 +598,8 @@
    "previous_turnout": 61.03,
    "turnout_delta": 3.28,
    "share_delta": {
-    "더불어민주당": 0.19,
-    "국민의힘": 0.96
+    "국민의힘": 0.96,
+    "더불어민주당": 0.19
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -635,8 +634,8 @@
    "previous_turnout": 59.88,
    "turnout_delta": 2.61,
    "share_delta": {
-    "더불어민주당": -1.81,
-    "국민의힘": 2.75
+    "국민의힘": 2.75,
+    "더불어민주당": -1.81
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -671,8 +670,8 @@
    "previous_turnout": 66.15,
    "turnout_delta": 2.61,
    "share_delta": {
-    "더불어민주당": -4.67,
-    "국민의힘": 3.91
+    "국민의힘": 3.91,
+    "더불어민주당": -4.67
    },
    "newly_ran": [
     {
@@ -716,8 +715,8 @@
    "previous_turnout": 69.1,
    "turnout_delta": 1.35,
    "share_delta": {
-    "더불어민주당": -0.5,
-    "국민의힘": 2.71
+    "국민의힘": 2.71,
+    "더불어민주당": -0.5
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -752,8 +751,8 @@
    "previous_turnout": 67.44,
    "turnout_delta": 2.27,
    "share_delta": {
-    "더불어민주당": 1.38,
-    "국민의힘": 7.24
+    "국민의힘": 7.24,
+    "더불어민주당": 1.38
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -793,12 +792,12 @@
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.74
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.96
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.74
     }
    ]
   },
@@ -827,8 +826,8 @@
    "previous_turnout": 61.52,
    "turnout_delta": 2.02,
    "share_delta": {
-    "더불어민주당": -6.88,
-    "국민의힘": -2.38
+    "국민의힘": -2.38,
+    "더불어민주당": -6.88
    },
    "newly_ran": [
     {
@@ -838,16 +837,16 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.65
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.45
     },
     {
      "party": "기후민생당",
      "previous_pct": 2.82
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
     }
    ]
   },
@@ -876,8 +875,8 @@
    "previous_turnout": 67.73,
    "turnout_delta": 0.75,
    "share_delta": {
-    "더불어민주당": 4.51,
-    "국민의힘": -4.84
+    "국민의힘": -4.84,
+    "더불어민주당": 4.51
    },
    "newly_ran": [
     {
@@ -921,8 +920,8 @@
    "previous_turnout": 60.49,
    "turnout_delta": 3.29,
    "share_delta": {
-    "더불어민주당": -2.13,
-    "국민의힘": 9.38
+    "국민의힘": 9.38,
+    "더불어민주당": -2.13
    },
    "newly_ran": [
     {
@@ -948,9 +947,9 @@
   {
    "district": "경기 동두천시양주시연천군을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기 동두천시연천군'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기 동두천시연천군'",
    "previous_district": "경기 동두천시연천군"
   },
   {
@@ -994,8 +993,8 @@
    "previous_turnout": 67.69,
    "turnout_delta": 1.98,
    "share_delta": {
-    "더불어민주당": 0.99,
-    "국민의힘": -1.66
+    "국민의힘": -1.66,
+    "더불어민주당": 0.99
    },
    "newly_ran": [
     {
@@ -1043,8 +1042,8 @@
    "previous_turnout": 75.64,
    "turnout_delta": 1.48,
    "share_delta": {
-    "더불어민주당": -2.63,
-    "국민의힘": 3.21
+    "국민의힘": 3.21,
+    "더불어민주당": -2.63
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1079,8 +1078,8 @@
    "previous_turnout": 73.62,
    "turnout_delta": 1.41,
    "share_delta": {
-    "더불어민주당": 0.93,
-    "국민의힘": 6.02
+    "국민의힘": 6.02,
+    "더불어민주당": 0.93
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1089,12 +1088,12 @@
      "previous_pct": 2.12
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.21
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.31
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.21
     },
     {
      "party": "진보당",
@@ -1127,18 +1126,18 @@
    "previous_turnout": 63.1,
    "turnout_delta": 3.73,
    "share_delta": {
-    "더불어민주당": -1.89,
-    "국민의힘": 5.77
+    "국민의힘": 5.77,
+    "더불어민주당": -1.89
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.9
-    },
-    {
      "party": "진보당",
      "previous_pct": 2.97
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.9
     }
    ]
   },
@@ -1167,18 +1166,18 @@
    "previous_turnout": 63.51,
    "turnout_delta": 3.12,
    "share_delta": {
-    "더불어민주당": 5.5,
-    "국민의힘": -1.79
+    "국민의힘": -1.79,
+    "더불어민주당": 5.5
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.65
-    },
-    {
      "party": "진보당",
      "previous_pct": 3.05
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
     }
    ]
   },
@@ -1207,8 +1206,8 @@
    "previous_turnout": 66.49,
    "turnout_delta": 2.13,
    "share_delta": {
-    "더불어민주당": -3.62,
-    "국민의힘": 2.59
+    "국민의힘": 2.59,
+    "더불어민주당": -3.62
    },
    "newly_ran": [
     {
@@ -1226,17 +1225,17 @@
   {
    "district": "경기 수원시무",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 수원시무"
   },
   {
    "district": "경기 수원시병",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 수원시병"
   },
   {
@@ -1264,8 +1263,8 @@
    "previous_turnout": 66.04,
    "turnout_delta": 0.5,
    "share_delta": {
-    "더불어민주당": 1.05,
-    "국민의힘": -0.04
+    "국민의힘": -0.04,
+    "더불어민주당": 1.05
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1300,35 +1299,35 @@
    "previous_turnout": 69.4,
    "turnout_delta": 1.26,
    "share_delta": {
-    "더불어민주당": -6.56,
-    "국민의힘": 11.17
+    "국민의힘": 11.17,
+    "더불어민주당": -6.56
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.51
-    },
-    {
      "party": "진보당",
      "previous_pct": 0.95
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.51
     }
    ]
   },
   {
    "district": "경기 시흥시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 시흥시갑"
   },
   {
    "district": "경기 시흥시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 시흥시을"
   },
   {
@@ -1356,11 +1355,15 @@
    "previous_turnout": 60.93,
    "turnout_delta": 0.62,
    "share_delta": {
-    "더불어민주당": -2.94,
-    "국민의힘": 6.31
+    "국민의힘": 6.31,
+    "더불어민주당": -2.94
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 1.99
+    },
     {
      "party": "우리공화당",
      "previous_pct": 0.65
@@ -1368,10 +1371,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.74
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 1.99
     }
    ]
   },
@@ -1416,8 +1415,8 @@
    "previous_turnout": 63.52,
    "turnout_delta": -0.12,
    "share_delta": {
-    "더불어민주당": -0.73,
-    "국민의힘": 0.24
+    "국민의힘": 0.24,
+    "더불어민주당": -0.73
    },
    "newly_ran": [
     {
@@ -1457,8 +1456,8 @@
    "previous_turnout": 70.57,
    "turnout_delta": 1.85,
    "share_delta": {
-    "더불어민주당": 1.99,
-    "국민의힘": 2.9
+    "국민의힘": 2.9,
+    "더불어민주당": 1.99
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1497,11 +1496,15 @@
    "previous_turnout": 75.82,
    "turnout_delta": -0.13,
    "share_delta": {
-    "더불어민주당": -0.29,
-    "국민의힘": 4.41
+    "국민의힘": 4.41,
+    "더불어민주당": -0.29
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.6
+    },
     {
      "party": "정의당",
      "previous_pct": 3.24
@@ -1509,10 +1512,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.27
-    },
-    {
-     "party": "기후민생당",
-     "previous_pct": 0.6
     }
    ]
   },
@@ -1541,8 +1540,8 @@
    "previous_turnout": 67.29,
    "turnout_delta": 1.69,
    "share_delta": {
-    "더불어민주당": 3.25,
-    "국민의힘": 0.8
+    "국민의힘": 0.8,
+    "더불어민주당": 3.25
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1581,8 +1580,8 @@
    "previous_turnout": 65.75,
    "turnout_delta": 1.09,
    "share_delta": {
-    "더불어민주당": 6.24,
-    "국민의힘": -1.4
+    "국민의힘": -1.4,
+    "더불어민주당": 6.24
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1625,8 +1624,8 @@
    "previous_turnout": 60.6,
    "turnout_delta": -0.4,
    "share_delta": {
-    "더불어민주당": 2.3,
-    "국민의힘": -0.08
+    "국민의힘": -0.08,
+    "더불어민주당": 2.3
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1661,8 +1660,8 @@
    "previous_turnout": 62.55,
    "turnout_delta": 0.79,
    "share_delta": {
-    "더불어민주당": 4.28,
-    "국민의힘": -9.31
+    "국민의힘": -9.31,
+    "더불어민주당": 4.28
    },
    "newly_ran": [
     {
@@ -1680,17 +1679,17 @@
   {
    "district": "경기 용인시병",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 용인시병"
   },
   {
    "district": "경기 용인시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 용인시을"
   },
   {
@@ -1726,18 +1725,18 @@
    "previous_turnout": 72.69,
    "turnout_delta": 2.03,
    "share_delta": {
-    "더불어민주당": 10.98,
-    "국민의힘": 7.68
+    "국민의힘": 7.68,
+    "더불어민주당": 10.98
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.37
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 15.29
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 3.37
     }
    ]
   },
@@ -1766,8 +1765,8 @@
    "previous_turnout": 58.74,
    "turnout_delta": 3.07,
    "share_delta": {
-    "더불어민주당": 1.86,
-    "국민의힘": 6.06
+    "국민의힘": 6.06,
+    "더불어민주당": 1.86
    },
    "newly_ran": [
     {
@@ -1807,18 +1806,18 @@
    "previous_turnout": 62.43,
    "turnout_delta": 3.04,
    "share_delta": {
-    "더불어민주당": -0.71,
-    "국민의힘": 5.89
+    "국민의힘": 5.89,
+    "더불어민주당": -0.71
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.85
-    },
-    {
      "party": "진보당",
      "previous_pct": 4.33
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.85
     }
    ]
   },
@@ -1847,8 +1846,8 @@
    "previous_turnout": 61.5,
    "turnout_delta": 1.37,
    "share_delta": {
-    "더불어민주당": 2.98,
-    "국민의힘": -0.66
+    "국민의힘": -0.66,
+    "더불어민주당": 2.98
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -1893,9 +1892,9 @@
   {
    "district": "경기 평택시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 평택시을"
   },
   {
@@ -1923,8 +1922,8 @@
    "previous_turnout": 60.23,
    "turnout_delta": 4.31,
    "share_delta": {
-    "더불어민주당": 1.68,
-    "국민의힘": 0.22
+    "국민의힘": 0.22,
+    "더불어민주당": 1.68
    },
    "newly_ran": [
     {
@@ -1934,12 +1933,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.14
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.92
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.14
     }
    ]
   },
@@ -1962,9 +1961,9 @@
   {
    "district": "경기 화성시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 91%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 91%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경기 화성시갑"
   },
   {
@@ -2016,8 +2015,8 @@
    "previous_turnout": 66.14,
    "turnout_delta": 1.4,
    "share_delta": {
-    "더불어민주당": 8.64,
-    "국민의힘": 0.34
+    "국민의힘": 0.34,
+    "더불어민주당": 8.64
    },
    "newly_ran": [
     {
@@ -2061,8 +2060,8 @@
    "previous_turnout": 63.22,
    "turnout_delta": 0.89,
    "share_delta": {
-    "더불어민주당": 1.42,
-    "국민의힘": 2.43
+    "국민의힘": 2.43,
+    "더불어민주당": 1.42
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2101,8 +2100,8 @@
    "previous_turnout": 65.31,
    "turnout_delta": -0.25,
    "share_delta": {
-    "더불어민주당": 6.51,
-    "국민의힘": 2.2
+    "국민의힘": 2.2,
+    "더불어민주당": 6.51
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2141,8 +2140,8 @@
    "previous_turnout": 66.8,
    "turnout_delta": 0.55,
    "share_delta": {
-    "더불어민주당": 2.87,
-    "국민의힘": -1.14
+    "국민의힘": -1.14,
+    "더불어민주당": 2.87
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2177,8 +2176,8 @@
    "previous_turnout": 69.64,
    "turnout_delta": 0.31,
    "share_delta": {
-    "더불어민주당": -5.28,
-    "국민의힘": -4.0
+    "국민의힘": -4.0,
+    "더불어민주당": -5.28
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2213,15 +2212,11 @@
    "previous_turnout": 72.6,
    "turnout_delta": -2.43,
    "share_delta": {
-    "더불어민주당": 11.06,
-    "국민의힘": 34.52
+    "국민의힘": 34.52,
+    "더불어민주당": 11.06
    },
    "newly_ran": [],
    "no_longer_ran": [
-    {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.07
-    },
     {
      "party": "우리공화당",
      "previous_pct": 0.62
@@ -2229,6 +2224,10 @@
     {
      "party": "기후민생당",
      "previous_pct": 0.55
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.07
     },
     {
      "party": "진보당",
@@ -2261,8 +2260,8 @@
    "previous_turnout": 66.16,
    "turnout_delta": 0.5,
    "share_delta": {
-    "더불어민주당": 2.74,
-    "국민의힘": -3.38
+    "국민의힘": -3.38,
+    "더불어민주당": 2.74
    },
    "newly_ran": [
     {
@@ -2341,18 +2340,18 @@
    "previous_turnout": 69.14,
    "turnout_delta": -0.27,
    "share_delta": {
-    "더불어민주당": 3.22,
-    "국민의힘": 3.54
+    "국민의힘": 3.54,
+    "더불어민주당": 3.22
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.56
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.37
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.56
     }
    ]
   },
@@ -2381,8 +2380,8 @@
    "previous_turnout": 66.67,
    "turnout_delta": 0.78,
    "share_delta": {
-    "더불어민주당": -3.61,
-    "국민의힘": -2.89
+    "국민의힘": -2.89,
+    "더불어민주당": -3.61
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2421,8 +2420,8 @@
    "previous_turnout": 68.29,
    "turnout_delta": -0.9,
    "share_delta": {
-    "더불어민주당": 1.77,
-    "국민의힘": 1.08
+    "국민의힘": 1.08,
+    "더불어민주당": 1.77
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2457,8 +2456,8 @@
    "previous_turnout": 70.21,
    "turnout_delta": -1.34,
    "share_delta": {
-    "더불어민주당": -1.72,
-    "국민의힘": 3.34
+    "국민의힘": 3.34,
+    "더불어민주당": -1.72
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2475,17 +2474,17 @@
   {
    "district": "경남 창원시성산구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경남 창원시성산구"
   },
   {
    "district": "경남 창원시의창구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "경남 창원시의창구"
   },
   {
@@ -2513,8 +2512,8 @@
    "previous_turnout": 67.91,
    "turnout_delta": -2.82,
    "share_delta": {
-    "더불어민주당": 0.9,
-    "국민의힘": 0.02
+    "국민의힘": 0.02,
+    "더불어민주당": 0.9
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2549,8 +2548,8 @@
    "previous_turnout": 67.51,
    "turnout_delta": 1.12,
    "share_delta": {
-    "더불어민주당": -0.37,
-    "국민의힘": 3.1
+    "국민의힘": 3.1,
+    "더불어민주당": -0.37
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2634,8 +2633,8 @@
    "previous_turnout": 67.16,
    "turnout_delta": -1.79,
    "share_delta": {
-    "더불어민주당": 9.54,
-    "국민의힘": 13.1
+    "국민의힘": 13.1,
+    "더불어민주당": 9.54
    },
    "newly_ran": [
     {
@@ -2649,12 +2648,12 @@
      "previous_pct": 11.57
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.57
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.59
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.57
     }
    ]
   },
@@ -2683,8 +2682,8 @@
    "previous_turnout": 63.84,
    "turnout_delta": 0.56,
    "share_delta": {
-    "더불어민주당": -2.53,
-    "국민의힘": 13.53
+    "국민의힘": 13.53,
+    "더불어민주당": -2.53
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2719,8 +2718,8 @@
    "previous_turnout": 63.93,
    "turnout_delta": -2.42,
    "share_delta": {
-    "더불어민주당": -4.17,
-    "국민의힘": 7.0
+    "국민의힘": 7.0,
+    "더불어민주당": -4.17
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2759,8 +2758,8 @@
    "previous_turnout": 60.47,
    "turnout_delta": -2.67,
    "share_delta": {
-    "더불어민주당": -2.32,
-    "국민의힘": 8.85
+    "국민의힘": 8.85,
+    "더불어민주당": -2.32
    },
    "newly_ran": [
     {
@@ -2800,8 +2799,8 @@
    "previous_turnout": 67.86,
    "turnout_delta": -1.04,
    "share_delta": {
-    "더불어민주당": 2.22,
-    "국민의힘": -8.73
+    "국민의힘": -8.73,
+    "더불어민주당": 2.22
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2836,8 +2835,8 @@
    "previous_turnout": 68.66,
    "turnout_delta": 0.77,
    "share_delta": {
-    "더불어민주당": 0.77,
-    "국민의힘": 12.85
+    "국민의힘": 12.85,
+    "더불어민주당": 0.77
    },
    "newly_ran": [
     {
@@ -2877,8 +2876,8 @@
    "previous_turnout": 67.97,
    "turnout_delta": -0.52,
    "share_delta": {
-    "더불어민주당": 2.78,
-    "국민의힘": 20.36
+    "국민의힘": 20.36,
+    "더불어민주당": 2.78
    },
    "newly_ran": [
     {
@@ -2930,8 +2929,8 @@
    "previous_turnout": 69.61,
    "turnout_delta": -0.52,
    "share_delta": {
-    "더불어민주당": -3.02,
-    "국민의힘": -1.75
+    "국민의힘": -1.75,
+    "더불어민주당": -3.02
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -2974,18 +2973,18 @@
    "previous_turnout": 65.81,
    "turnout_delta": -3.97,
    "share_delta": {
-    "더불어민주당": -4.34,
-    "국민의힘": 14.2
+    "국민의힘": 14.2,
+    "더불어민주당": -4.34
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.62
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.0
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.62
     }
    ]
   },
@@ -3014,8 +3013,8 @@
    "previous_turnout": 67.31,
    "turnout_delta": -2.52,
    "share_delta": {
-    "더불어민주당": -2.48,
-    "국민의힘": -2.44
+    "국민의힘": -2.44,
+    "더불어민주당": -2.48
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -3054,17 +3053,17 @@
    "previous_turnout": 63.4,
    "turnout_delta": 3.2,
    "share_delta": {
-    "더불어민주당": 3.92,
-    "진보당": 2.79
+    "진보당": 2.79,
+    "더불어민주당": 3.92
    },
    "newly_ran": [
     {
-     "party": "새로운미래",
-     "pct": 3.47
-    },
-    {
      "party": "국민의힘",
      "pct": 6.97
+    },
+    {
+     "party": "새로운미래",
+     "pct": 3.47
     }
    ],
    "no_longer_ran": [
@@ -3073,12 +3072,12 @@
      "previous_pct": 4.41
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.89
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 13.33
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.89
     }
    ]
   },
@@ -3111,10 +3110,6 @@
    },
    "newly_ran": [
     {
-     "party": "새로운미래",
-     "pct": 13.85
-    },
-    {
      "party": "녹색정의당",
      "pct": 1.18
     },
@@ -3125,6 +3120,10 @@
     {
      "party": "진보당",
      "pct": 4.1
+    },
+    {
+     "party": "새로운미래",
+     "pct": 13.85
     }
    ],
    "no_longer_ran": [
@@ -3133,12 +3132,12 @@
      "previous_pct": 6.17
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.08
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 7.47
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.08
     },
     {
      "party": "노동당",
@@ -3181,16 +3180,16 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.8
-    },
-    {
      "party": "기독자유통일당",
      "previous_pct": 1.35
     },
     {
      "party": "기후민생당",
      "previous_pct": 20.61
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.8
     }
    ]
   },
@@ -3223,16 +3222,16 @@
    },
    "newly_ran": [
     {
+     "party": "국민의힘",
+     "pct": 8.63
+    },
+    {
      "party": "개혁신당",
      "pct": 1.66
     },
     {
      "party": "진보당",
      "pct": 3.39
-    },
-    {
-     "party": "국민의힘",
-     "pct": 8.63
     }
    ],
    "no_longer_ran": [
@@ -3241,12 +3240,12 @@
      "previous_pct": 2.01
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.58
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 10.11
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
     }
    ]
   },
@@ -3275,8 +3274,8 @@
    "previous_turnout": 66.33,
    "turnout_delta": 0.2,
    "share_delta": {
-    "더불어민주당": 25.66,
-    "국민의힘": 6.15
+    "국민의힘": 6.15,
+    "더불어민주당": 25.66
    },
    "newly_ran": [
     {
@@ -3320,8 +3319,8 @@
    "previous_turnout": 66.55,
    "turnout_delta": 2.67,
    "share_delta": {
-    "더불어민주당": -6.71,
-    "진보당": 13.06
+    "진보당": 13.06,
+    "더불어민주당": -6.71
    },
    "newly_ran": [
     {
@@ -3339,20 +3338,20 @@
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 2.98
+     "party": "기독자유통일당",
+     "previous_pct": 0.93
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.5
+     "party": "정의당",
+     "previous_pct": 2.98
     },
     {
      "party": "기후민생당",
      "previous_pct": 11.13
     },
     {
-     "party": "기독자유통일당",
-     "previous_pct": 0.93
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.5
     }
    ]
   },
@@ -3381,9 +3380,9 @@
    "previous_turnout": 64.86,
    "turnout_delta": 1.94,
    "share_delta": {
-    "더불어민주당": -13.75,
+    "국민의힘": 4.92,
     "진보당": 2.11,
-    "국민의힘": 4.92
+    "더불어민주당": -13.75
    },
    "newly_ran": [
     {
@@ -3393,12 +3392,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.59
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 10.05
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
     }
    ]
   },
@@ -3431,8 +3430,16 @@
    },
    "newly_ran": [
     {
+     "party": "녹색정의당",
+     "pct": 14.67
+    },
+    {
      "party": "개혁신당",
      "pct": 1.4
+    },
+    {
+     "party": "국민의힘",
+     "pct": 7.82
     },
     {
      "party": "기독당",
@@ -3441,14 +3448,6 @@
     {
      "party": "진보당",
      "pct": 4.45
-    },
-    {
-     "party": "녹색정의당",
-     "pct": 14.67
-    },
-    {
-     "party": "국민의힘",
-     "pct": 7.82
     }
    ],
    "no_longer_ran": [
@@ -3457,12 +3456,12 @@
      "previous_pct": 3.05
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.52
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 19.49
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.52
     }
    ]
   },
@@ -3491,11 +3490,15 @@
    "previous_turnout": 66.43,
    "turnout_delta": -2.95,
    "share_delta": {
-    "더불어민주당": 1.73,
-    "국민의힘": 13.78
+    "국민의힘": 13.78,
+    "더불어민주당": 1.73
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.94
+    },
     {
      "party": "우리공화당",
      "previous_pct": 1.37
@@ -3503,10 +3506,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.72
-    },
-    {
-     "party": "기후민생당",
-     "previous_pct": 0.94
     }
    ]
   },
@@ -3546,16 +3545,16 @@
    ],
    "no_longer_ran": [
     {
-     "party": "더불어민주당",
-     "previous_pct": 27.62
+     "party": "기독자유통일당",
+     "previous_pct": 0.59
     },
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.92
     },
     {
-     "party": "기독자유통일당",
-     "previous_pct": 0.59
+     "party": "더불어민주당",
+     "previous_pct": 27.62
     }
    ]
   },
@@ -3584,8 +3583,8 @@
    "previous_turnout": 69.01,
    "turnout_delta": -2.42,
    "share_delta": {
-    "더불어민주당": -0.55,
-    "국민의힘": 7.11
+    "국민의힘": 7.11,
+    "더불어민주당": -0.55
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -3628,27 +3627,27 @@
    "previous_turnout": 64.2,
    "turnout_delta": -1.25,
    "share_delta": {
-    "더불어민주당": -2.33,
-    "국민의힘": 7.97
+    "국민의힘": 7.97,
+    "더불어민주당": -2.33
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.99
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.51
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.99
     }
    ]
   },
   {
    "district": "대구 동구군위군갑",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 90%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '대구 동구갑'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 90%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '대구 동구갑'",
    "previous_district": "대구 동구갑"
   },
   {
@@ -3684,8 +3683,8 @@
    "previous_turnout": 67.26,
    "turnout_delta": -3.22,
    "share_delta": {
-    "더불어민주당": 1.48,
-    "국민의힘": 21.56
+    "국민의힘": 21.56,
+    "더불어민주당": 1.48
    },
    "newly_ran": [
     {
@@ -3699,12 +3698,12 @@
      "previous_pct": 3.03
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.66
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.77
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.66
     }
    ]
   },
@@ -3733,8 +3732,8 @@
    "previous_turnout": 66.9,
    "turnout_delta": -4.24,
    "share_delta": {
-    "더불어민주당": -8.07,
-    "국민의힘": 6.17
+    "국민의힘": 6.17,
+    "더불어민주당": -8.07
    },
    "newly_ran": [
     {
@@ -3821,8 +3820,8 @@
    "previous_turnout": 74.91,
    "turnout_delta": -6.31,
    "share_delta": {
-    "더불어민주당": -8.97,
-    "국민의힘": 5.83
+    "국민의힘": 5.83,
+    "더불어민주당": -8.97
    },
    "newly_ran": [
     {
@@ -3832,12 +3831,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.45
-    },
-    {
      "party": "친박신당",
      "previous_pct": 0.44
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.45
     }
    ]
   },
@@ -3870,12 +3869,12 @@
    },
    "newly_ran": [
     {
-     "party": "개혁신당",
-     "pct": 7.38
-    },
-    {
      "party": "새진보연합",
      "pct": 15.57
+    },
+    {
+     "party": "개혁신당",
+     "pct": 7.38
     }
    ],
    "no_longer_ran": [
@@ -3914,8 +3913,8 @@
    "previous_turnout": 64.62,
    "turnout_delta": -2.5,
    "share_delta": {
-    "더불어민주당": -4.78,
-    "국민의힘": -9.57
+    "국민의힘": -9.57,
+    "더불어민주당": -4.78
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -3950,8 +3949,8 @@
    "previous_turnout": 64.5,
    "turnout_delta": 0.95,
    "share_delta": {
-    "더불어민주당": 1.53,
-    "국민의힘": -3.2
+    "국민의힘": -3.2,
+    "더불어민주당": 1.53
    },
    "newly_ran": [
     {
@@ -3991,8 +3990,8 @@
    "previous_turnout": 62.82,
    "turnout_delta": 1.59,
    "share_delta": {
-    "더불어민주당": 2.31,
-    "국민의힘": -2.55
+    "국민의힘": -2.55,
+    "더불어민주당": 2.31
    },
    "newly_ran": [
     {
@@ -4032,8 +4031,8 @@
    "previous_turnout": 64.0,
    "turnout_delta": 0.47,
    "share_delta": {
-    "더불어민주당": -2.76,
-    "국민의힘": -1.35
+    "국민의힘": -1.35,
+    "더불어민주당": -2.76
    },
    "newly_ran": [
     {
@@ -4043,12 +4042,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.77
-    },
-    {
      "party": "충청의미래당",
      "previous_pct": 0.85
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.77
     }
    ]
   },
@@ -4077,8 +4076,8 @@
    "previous_turnout": 66.05,
    "turnout_delta": -0.04,
    "share_delta": {
-    "더불어민주당": -2.91,
-    "국민의힘": 2.09
+    "국민의힘": 2.09,
+    "더불어민주당": -2.91
    },
    "newly_ran": [
     {
@@ -4092,12 +4091,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.93
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.79
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.93
     }
    ]
   },
@@ -4126,8 +4125,8 @@
    "previous_turnout": 66.66,
    "turnout_delta": 0.36,
    "share_delta": {
-    "더불어민주당": 0.25,
-    "국민의힘": 0.49
+    "국민의힘": 0.49,
+    "더불어민주당": 0.25
    },
    "newly_ran": [
     {
@@ -4137,12 +4136,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.56
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.38
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.56
     },
     {
      "party": "진보당",
@@ -4175,8 +4174,8 @@
    "previous_turnout": 72.21,
    "turnout_delta": -0.64,
    "share_delta": {
-    "더불어민주당": 3.9,
-    "국민의힘": 0.2
+    "국민의힘": 0.2,
+    "더불어민주당": 3.9
    },
    "newly_ran": [
     {
@@ -4220,8 +4219,8 @@
    "previous_turnout": 64.83,
    "turnout_delta": 1.62,
    "share_delta": {
-    "더불어민주당": 1.78,
-    "국민의힘": -0.27
+    "국민의힘": -0.27,
+    "더불어민주당": 1.78
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4264,11 +4263,15 @@
    "previous_turnout": 68.55,
    "turnout_delta": -0.2,
    "share_delta": {
-    "더불어민주당": 2.97,
-    "국민의힘": 2.43
+    "국민의힘": 2.43,
+    "더불어민주당": 2.97
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.49
+    },
     {
      "party": "정의당",
      "previous_pct": 2.16
@@ -4276,10 +4279,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.74
-    },
-    {
-     "party": "기후민생당",
-     "previous_pct": 2.49
     }
    ]
   },
@@ -4308,8 +4307,8 @@
    "previous_turnout": 64.64,
    "turnout_delta": 0.33,
    "share_delta": {
-    "더불어민주당": 3.24,
-    "국민의힘": 2.71
+    "국민의힘": 2.71,
+    "더불어민주당": 3.24
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4352,8 +4351,8 @@
    "previous_turnout": 68.53,
    "turnout_delta": 0.47,
    "share_delta": {
-    "더불어민주당": 0.43,
-    "국민의힘": 2.41
+    "국민의힘": 2.41,
+    "더불어민주당": 0.43
    },
    "newly_ran": [
     {
@@ -4397,18 +4396,18 @@
    "previous_turnout": 69.13,
    "turnout_delta": -2.04,
    "share_delta": {
-    "더불어민주당": 2.19,
-    "국민의힘": 4.27
+    "국민의힘": 4.27,
+    "더불어민주당": 2.19
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.54
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.4
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.54
     }
    ]
   },
@@ -4437,8 +4436,8 @@
    "previous_turnout": 64.81,
    "turnout_delta": -1.81,
    "share_delta": {
-    "더불어민주당": 0.43,
-    "국민의힘": -1.31
+    "국민의힘": -1.31,
+    "더불어민주당": 0.43
    },
    "newly_ran": [
     {
@@ -4494,8 +4493,8 @@
    "previous_turnout": 67.36,
    "turnout_delta": -0.65,
    "share_delta": {
-    "더불어민주당": 0.82,
-    "국민의힘": 0.6
+    "국민의힘": 0.6,
+    "더불어민주당": 0.82
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4520,9 +4519,9 @@
   {
    "district": "부산 사하구을",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "부산 사하구을"
   },
   {
@@ -4550,8 +4549,8 @@
    "previous_turnout": 65.23,
    "turnout_delta": 0.6,
    "share_delta": {
-    "더불어민주당": -0.17,
-    "국민의힘": 1.92
+    "국민의힘": 1.92,
+    "더불어민주당": -0.17
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4590,18 +4589,18 @@
    "previous_turnout": 66.77,
    "turnout_delta": -0.58,
    "share_delta": {
-    "더불어민주당": -0.53,
-    "국민의힘": -5.6
+    "국민의힘": -5.6,
+    "더불어민주당": -0.53
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.04
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 2.02
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.04
     }
    ]
   },
@@ -4640,12 +4639,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "더불어민주당",
-     "previous_pct": 47.74
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.3
+    },
+    {
+     "party": "더불어민주당",
+     "previous_pct": 47.74
     }
    ]
   },
@@ -4674,8 +4673,8 @@
    "previous_turnout": 64.82,
    "turnout_delta": -0.47,
    "share_delta": {
-    "더불어민주당": -1.37,
-    "국민의힘": 2.96
+    "국민의힘": 2.96,
+    "더불어민주당": -1.37
    },
    "newly_ran": [
     {
@@ -4715,8 +4714,8 @@
    "previous_turnout": 70.0,
    "turnout_delta": -0.86,
    "share_delta": {
-    "더불어민주당": 7.24,
-    "국민의힘": -5.78
+    "국민의힘": -5.78,
+    "더불어민주당": 7.24
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4755,8 +4754,8 @@
    "previous_turnout": 66.75,
    "turnout_delta": -0.03,
    "share_delta": {
-    "더불어민주당": -4.25,
-    "국민의힘": 5.47
+    "국민의힘": 5.47,
+    "더불어민주당": -4.25
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4791,18 +4790,18 @@
    "previous_turnout": 62.37,
    "turnout_delta": -1.0,
    "share_delta": {
-    "더불어민주당": -3.83,
-    "국민의힘": 5.78
+    "국민의힘": 5.78,
+    "더불어민주당": -3.83
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.62
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.33
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.62
     }
    ]
   },
@@ -4831,8 +4830,8 @@
    "previous_turnout": 72.13,
    "turnout_delta": -1.5,
    "share_delta": {
-    "더불어민주당": -0.82,
-    "국민의힘": 0.91
+    "국민의힘": 0.91,
+    "더불어민주당": -0.82
    },
    "newly_ran": [
     {
@@ -4842,19 +4841,19 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.32
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.23
     },
     {
-     "party": "새누리당",
-     "previous_pct": 0.25
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.32
     },
     {
      "party": "친박신당",
+     "previous_pct": 0.25
+    },
+    {
+     "party": "새누리당",
      "previous_pct": 0.25
     }
    ]
@@ -4884,27 +4883,27 @@
    "previous_turnout": 73.02,
    "turnout_delta": 0.65,
    "share_delta": {
-    "더불어민주당": -4.98,
-    "국민의힘": 7.62
+    "국민의힘": 7.62,
+    "더불어민주당": -4.98
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.42
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.32
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.42
     }
    ]
   },
   {
    "district": "서울 강동구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "서울 강동구갑"
   },
   {
@@ -4940,8 +4939,8 @@
    "previous_turnout": 61.79,
    "turnout_delta": 2.24,
    "share_delta": {
-    "더불어민주당": -0.51,
-    "국민의힘": 3.27
+    "국민의힘": 3.27,
+    "더불어민주당": -0.51
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -4976,8 +4975,8 @@
    "previous_turnout": 65.19,
    "turnout_delta": 1.52,
    "share_delta": {
-    "더불어민주당": -11.51,
-    "국민의힘": 6.8
+    "국민의힘": 6.8,
+    "더불어민주당": -11.51
    },
    "newly_ran": [
     {
@@ -5017,8 +5016,8 @@
    "previous_turnout": 65.91,
    "turnout_delta": 0.56,
    "share_delta": {
-    "더불어민주당": 2.65,
-    "국민의힘": 0.31
+    "국민의힘": 0.31,
+    "더불어민주당": 2.65
    },
    "newly_ran": [
     {
@@ -5058,18 +5057,18 @@
    "previous_turnout": 67.53,
    "turnout_delta": -0.21,
    "share_delta": {
-    "더불어민주당": -0.78,
-    "국민의힘": 4.31
+    "국민의힘": 4.31,
+    "더불어민주당": -0.78
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.52
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.46
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.52
     }
    ]
   },
@@ -5098,8 +5097,8 @@
    "previous_turnout": 68.33,
    "turnout_delta": 0.48,
    "share_delta": {
-    "더불어민주당": -1.3,
-    "국민의힘": 2.81
+    "국민의힘": 2.81,
+    "더불어민주당": -1.3
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5152,16 +5151,16 @@
      "previous_pct": 4.22
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.63
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 2.33
     },
     {
      "party": "기후민생당",
      "previous_pct": 1.84
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.63
     },
     {
      "party": "진보당",
@@ -5194,23 +5193,23 @@
    "previous_turnout": 64.97,
    "turnout_delta": -1.56,
    "share_delta": {
-    "더불어민주당": 4.08,
+    "국민의힘": -2.87,
     "진보당": 2.08,
-    "국민의힘": -2.87
+    "더불어민주당": 4.08
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.46
+     "party": "우리공화당",
+     "previous_pct": 0.44
     },
     {
      "party": "기후민생당",
      "previous_pct": 1.59
     },
     {
-     "party": "우리공화당",
-     "previous_pct": 0.44
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.46
     }
    ]
   },
@@ -5239,11 +5238,15 @@
    "previous_turnout": 68.03,
    "turnout_delta": 1.42,
    "share_delta": {
-    "더불어민주당": -1.14,
-    "국민의힘": 6.85
+    "국민의힘": 6.85,
+    "더불어민주당": -1.14
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.75
+    },
     {
      "party": "정의당",
      "previous_pct": 3.5
@@ -5251,10 +5254,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.47
-    },
-    {
-     "party": "기후민생당",
-     "previous_pct": 1.75
     }
    ]
   },
@@ -5283,8 +5282,8 @@
    "previous_turnout": 71.19,
    "turnout_delta": -1.88,
    "share_delta": {
-    "더불어민주당": 1.11,
-    "국민의힘": -0.22
+    "국민의힘": -0.22,
+    "더불어민주당": 1.11
    },
    "newly_ran": [
     {
@@ -5294,12 +5293,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.34
-    },
-    {
      "party": "미래당",
      "previous_pct": 1.46
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.34
     }
    ]
   },
@@ -5328,8 +5327,8 @@
    "previous_turnout": 69.05,
    "turnout_delta": 2.01,
    "share_delta": {
-    "더불어민주당": 1.81,
-    "국민의힘": 4.92
+    "국민의힘": 4.92,
+    "더불어민주당": 1.81
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5338,12 +5337,12 @@
      "previous_pct": 4.78
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.45
-    },
-    {
      "party": "우리공화당",
      "previous_pct": 0.41
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.45
     },
     {
      "party": "진보당",
@@ -5376,8 +5375,8 @@
    "previous_turnout": 67.78,
    "turnout_delta": 1.24,
    "share_delta": {
-    "더불어민주당": 2.82,
-    "국민의힘": 2.46
+    "국민의힘": 2.46,
+    "더불어민주당": 2.82
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5412,8 +5411,8 @@
    "previous_turnout": 63.63,
    "turnout_delta": 1.64,
    "share_delta": {
-    "더불어민주당": 9.41,
-    "국민의힘": 5.48
+    "국민의힘": 5.48,
+    "더불어민주당": 9.41
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5464,8 +5463,8 @@
    "previous_turnout": 66.4,
    "turnout_delta": 3.35,
    "share_delta": {
-    "더불어민주당": -6.14,
-    "국민의힘": 8.56
+    "국민의힘": 8.56,
+    "더불어민주당": -6.14
    },
    "newly_ran": [
     {
@@ -5509,8 +5508,8 @@
    "previous_turnout": 66.55,
    "turnout_delta": 3.27,
    "share_delta": {
-    "더불어민주당": -0.17,
-    "국민의힘": 1.53
+    "국민의힘": 1.53,
+    "더불어민주당": -0.17
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5545,8 +5544,8 @@
    "previous_turnout": 66.47,
    "turnout_delta": 1.71,
    "share_delta": {
-    "더불어민주당": 0.17,
-    "국민의힘": 2.66
+    "국민의힘": 2.66,
+    "더불어민주당": 0.17
    },
    "newly_ran": [
     {
@@ -5556,12 +5555,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.4
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.72
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
     },
     {
      "party": "진보당",
@@ -5594,18 +5593,18 @@
    "previous_turnout": 66.55,
    "turnout_delta": 3.47,
    "share_delta": {
-    "더불어민주당": 0.08,
-    "국민의힘": 1.56
+    "국민의힘": 1.56,
+    "더불어민주당": 0.08
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.46
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.18
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.46
     }
    ]
   },
@@ -5634,8 +5633,8 @@
    "previous_turnout": 69.41,
    "turnout_delta": 1.13,
    "share_delta": {
-    "더불어민주당": -4.79,
-    "국민의힘": 2.13
+    "국민의힘": 2.13,
+    "더불어민주당": -4.79
    },
    "newly_ran": [
     {
@@ -5645,12 +5644,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.64
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.18
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
     }
    ]
   },
@@ -5679,11 +5678,15 @@
    "previous_turnout": 73.44,
    "turnout_delta": 0.74,
    "share_delta": {
-    "더불어민주당": -6.18,
-    "국민의힘": 8.98
+    "국민의힘": 8.98,
+    "더불어민주당": -6.18
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 0.52
+    },
     {
      "party": "정의당",
      "previous_pct": 1.98
@@ -5691,10 +5694,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.29
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 0.52
     }
    ]
   },
@@ -5723,8 +5722,8 @@
    "previous_turnout": 70.55,
    "turnout_delta": 1.67,
    "share_delta": {
-    "더불어민주당": -8.29,
-    "국민의힘": 5.35
+    "국민의힘": 5.35,
+    "더불어민주당": -8.29
    },
    "newly_ran": [
     {
@@ -5772,8 +5771,8 @@
    "previous_turnout": 68.84,
    "turnout_delta": -0.3,
    "share_delta": {
-    "더불어민주당": -1.32,
-    "국민의힘": 1.99
+    "국민의힘": 1.99,
+    "더불어민주당": -1.32
    },
    "newly_ran": [
     {
@@ -5817,8 +5816,8 @@
    "previous_turnout": 69.05,
    "turnout_delta": 0.12,
    "share_delta": {
-    "더불어민주당": -2.49,
-    "국민의힘": 1.85
+    "국민의힘": 1.85,
+    "더불어민주당": -2.49
    },
    "newly_ran": [
     {
@@ -5828,11 +5827,11 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
+     "party": "우리공화당",
      "previous_pct": 0.37
     },
     {
-     "party": "우리공화당",
+     "party": "국가혁명배당금당",
      "previous_pct": 0.37
     },
     {
@@ -5866,8 +5865,8 @@
    "previous_turnout": 68.27,
    "turnout_delta": 2.83,
    "share_delta": {
-    "더불어민주당": -3.7,
-    "국민의힘": 4.67
+    "국민의힘": 4.67,
+    "더불어민주당": -3.7
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5902,8 +5901,8 @@
    "previous_turnout": 72.17,
    "turnout_delta": -0.5,
    "share_delta": {
-    "더불어민주당": -5.35,
-    "국민의힘": 5.85
+    "국민의힘": 5.85,
+    "더불어민주당": -5.35
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -5938,18 +5937,18 @@
    "previous_turnout": 71.4,
    "turnout_delta": 0.7,
    "share_delta": {
-    "더불어민주당": -2.5,
-    "국민의힘": 3.83
+    "국민의힘": 3.83,
+    "더불어민주당": -2.5
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.53
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.8
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.53
     }
    ]
   },
@@ -5978,8 +5977,8 @@
    "previous_turnout": 68.31,
    "turnout_delta": 1.09,
    "share_delta": {
-    "더불어민주당": -5.21,
-    "국민의힘": 2.63
+    "국민의힘": 2.63,
+    "더불어민주당": -5.21
    },
    "newly_ran": [
     {
@@ -5989,12 +5988,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.65
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.94
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
     }
    ]
   },
@@ -6023,18 +6022,18 @@
    "previous_turnout": 66.73,
    "turnout_delta": 2.25,
    "share_delta": {
-    "더불어민주당": -2.53,
-    "국민의힘": 4.95
+    "국민의힘": 4.95,
+    "더불어민주당": -2.53
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.7
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.73
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
     }
    ]
   },
@@ -6063,8 +6062,8 @@
    "previous_turnout": 72.08,
    "turnout_delta": 0.08,
    "share_delta": {
-    "더불어민주당": -2.9,
-    "국민의힘": 1.04
+    "국민의힘": 1.04,
+    "더불어민주당": -2.9
    },
    "newly_ran": [
     {
@@ -6104,18 +6103,18 @@
    "previous_turnout": 70.26,
    "turnout_delta": 1.95,
    "share_delta": {
-    "더불어민주당": -1.45,
-    "국민의힘": 5.74
+    "국민의힘": 5.74,
+    "더불어민주당": -1.45
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.48
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 2.21
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.48
     }
    ]
   },
@@ -6144,8 +6143,8 @@
    "previous_turnout": 71.98,
    "turnout_delta": -0.51,
    "share_delta": {
-    "더불어민주당": -3.25,
-    "국민의힘": 6.75
+    "국민의힘": 6.75,
+    "더불어민주당": -3.25
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6188,8 +6187,8 @@
    "previous_turnout": 73.6,
    "turnout_delta": 0.38,
    "share_delta": {
-    "더불어민주당": -2.06,
-    "국민의힘": 3.19
+    "국민의힘": 3.19,
+    "더불어민주당": -2.06
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6224,8 +6223,8 @@
    "previous_turnout": 66.65,
    "turnout_delta": 1.62,
    "share_delta": {
-    "더불어민주당": -0.07,
-    "국민의힘": 1.25
+    "국민의힘": 1.25,
+    "더불어민주당": -0.07
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6264,8 +6263,8 @@
    "previous_turnout": 69.2,
    "turnout_delta": 1.01,
    "share_delta": {
-    "더불어민주당": -1.73,
-    "국민의힘": 3.4
+    "국민의힘": 3.4,
+    "더불어민주당": -1.73
    },
    "newly_ran": [
     {
@@ -6309,9 +6308,9 @@
    "previous_turnout": 68.02,
    "turnout_delta": 2.75,
    "share_delta": {
-    "더불어민주당": -0.08,
     "기후민생당": -0.57,
-    "국민의힘": 4.68
+    "국민의힘": 4.68,
+    "더불어민주당": -0.08
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6346,8 +6345,8 @@
    "previous_turnout": 66.45,
    "turnout_delta": 2.46,
    "share_delta": {
-    "더불어민주당": -0.11,
-    "국민의힘": 3.97
+    "국민의힘": 3.97,
+    "더불어민주당": -0.11
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6356,12 +6355,12 @@
      "previous_pct": 3.18
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.4
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.98
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
     },
     {
      "party": "진보당",
@@ -6394,18 +6393,18 @@
    "previous_turnout": 65.61,
    "turnout_delta": 2.48,
    "share_delta": {
-    "더불어민주당": -3.5,
-    "국민의힘": 5.27
+    "국민의힘": 5.27,
+    "더불어민주당": -3.5
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.61
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.15
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.61
     }
    ]
   },
@@ -6434,8 +6433,8 @@
    "previous_turnout": 66.17,
    "turnout_delta": 1.6,
    "share_delta": {
-    "더불어민주당": -0.46,
-    "국민의힘": 3.37
+    "국민의힘": 3.37,
+    "더불어민주당": -0.46
    },
    "newly_ran": [
     {
@@ -6445,12 +6444,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 4.46
-    },
-    {
      "party": "기본소득당",
      "previous_pct": 1.89
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 4.46
     }
    ]
   },
@@ -6479,18 +6478,18 @@
    "previous_turnout": 70.8,
    "turnout_delta": -0.36,
    "share_delta": {
-    "더불어민주당": -7.46,
     "국민의힘": 4.15,
-    "민중민주당": 0.26
+    "민중민주당": 0.26,
+    "더불어민주당": -7.46
    },
    "newly_ran": [
     {
-     "party": "가락특권폐지당",
-     "pct": 0.06
-    },
-    {
      "party": "개혁신당",
      "pct": 3.23
+    },
+    {
+     "party": "가락특권폐지당",
+     "pct": 0.06
     },
     {
      "party": "새로운미래",
@@ -6503,28 +6502,28 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.21
+     "party": "공화당",
+     "previous_pct": 0.06
     },
     {
      "party": "우리공화당",
      "previous_pct": 0.44
     },
     {
-     "party": "공화당",
-     "previous_pct": 0.06
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 0.29
-    },
-    {
      "party": "국민새정당",
      "previous_pct": 0.07
     },
     {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.21
+    },
+    {
      "party": "가자!평화인권당",
      "previous_pct": 0.15
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.29
     },
     {
      "party": "한나라당",
@@ -6557,8 +6556,8 @@
    "previous_turnout": 68.28,
    "turnout_delta": 1.35,
    "share_delta": {
-    "더불어민주당": -1.64,
-    "국민의힘": 6.46
+    "국민의힘": 6.46,
+    "더불어민주당": -1.64
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6597,8 +6596,8 @@
    "previous_turnout": 67.85,
    "turnout_delta": 1.53,
    "share_delta": {
-    "더불어민주당": -1.15,
-    "국민의힘": 1.26
+    "국민의힘": 1.26,
+    "더불어민주당": -1.15
    },
    "newly_ran": [
     {
@@ -6638,8 +6637,8 @@
    "previous_turnout": 61.04,
    "turnout_delta": 2.79,
    "share_delta": {
-    "더불어민주당": 4.17,
-    "국민의힘": 1.78
+    "국민의힘": 1.78,
+    "더불어민주당": 4.17
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6648,12 +6647,12 @@
      "previous_pct": 2.83
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.51
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.79
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.51
     },
     {
      "party": "진보당",
@@ -6686,15 +6685,11 @@
    "previous_turnout": 65.68,
    "turnout_delta": 2.97,
    "share_delta": {
-    "더불어민주당": -1.56,
-    "국민의힘": 4.2
+    "국민의힘": 4.2,
+    "더불어민주당": -1.56
    },
    "newly_ran": [],
    "no_longer_ran": [
-    {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.58
-    },
     {
      "party": "진보당",
      "previous_pct": 1.56
@@ -6702,6 +6697,10 @@
     {
      "party": "한국복지당",
      "previous_pct": 0.5
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
     }
    ]
   },
@@ -6746,8 +6745,8 @@
    "previous_turnout": 70.71,
    "turnout_delta": -2.73,
    "share_delta": {
-    "더불어민주당": -0.59,
-    "국민의힘": 0.45
+    "국민의힘": 0.45,
+    "더불어민주당": -0.59
    },
    "newly_ran": [
     {
@@ -6761,12 +6760,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.07
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 2.24
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.07
     }
    ]
   },
@@ -6795,8 +6794,8 @@
    "previous_turnout": 66.91,
    "turnout_delta": -2.14,
    "share_delta": {
-    "더불어민주당": 3.66,
-    "국민의힘": -2.25
+    "국민의힘": -2.25,
+    "더불어민주당": 3.66
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6831,8 +6830,8 @@
    "previous_turnout": 68.47,
    "turnout_delta": -1.83,
    "share_delta": {
-    "더불어민주당": 21.36,
     "국민의힘": 6.84,
+    "더불어민주당": 21.36,
     "노동당": 6.41
    },
    "newly_ran": [],
@@ -6882,6 +6881,10 @@
    ],
    "no_longer_ran": [
     {
+     "party": "기후민생당",
+     "previous_pct": 0.96
+    },
+    {
      "party": "정의당",
      "previous_pct": 9.89
     },
@@ -6892,10 +6895,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.65
-    },
-    {
-     "party": "기후민생당",
-     "previous_pct": 0.96
     }
    ]
   },
@@ -6924,8 +6923,8 @@
    "previous_turnout": 68.39,
    "turnout_delta": -1.05,
    "share_delta": {
-    "더불어민주당": 3.11,
-    "국민의힘": 0.74
+    "국민의힘": 0.74,
+    "더불어민주당": 3.11
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6960,8 +6959,8 @@
    "previous_turnout": 68.98,
    "turnout_delta": -1.28,
    "share_delta": {
-    "더불어민주당": 9.22,
-    "국민의힘": 2.4
+    "국민의힘": 2.4,
+    "더불어민주당": 9.22
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -6986,9 +6985,9 @@
   {
    "district": "인천 계양구을",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 91%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 91%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "인천 계양구을"
   },
   {
@@ -7016,8 +7015,8 @@
    "previous_turnout": 61.75,
    "turnout_delta": 1.15,
    "share_delta": {
-    "더불어민주당": 2.57,
-    "국민의힘": -4.18
+    "국민의힘": -4.18,
+    "더불어민주당": 2.57
    },
    "newly_ran": [
     {
@@ -7057,8 +7056,8 @@
    "previous_turnout": 63.86,
    "turnout_delta": 1.91,
    "share_delta": {
-    "더불어민주당": -0.1,
-    "국민의힘": 7.94
+    "국민의힘": 7.94,
+    "더불어민주당": -0.1
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7097,8 +7096,8 @@
    "previous_turnout": 59.41,
    "turnout_delta": 2.92,
    "share_delta": {
-    "더불어민주당": 4.95,
-    "국민의힘": 4.1
+    "국민의힘": 4.1,
+    "더불어민주당": 4.95
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7137,8 +7136,8 @@
    "previous_turnout": 61.93,
    "turnout_delta": 1.6,
    "share_delta": {
-    "더불어민주당": 9.11,
-    "국민의힘": 34.86
+    "국민의힘": 34.86,
+    "더불어민주당": 9.11
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7177,8 +7176,8 @@
    "previous_turnout": 59.63,
    "turnout_delta": 1.98,
    "share_delta": {
-    "더불어민주당": -1.49,
-    "국민의힘": 2.98
+    "국민의힘": 2.98,
+    "더불어민주당": -1.49
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7213,17 +7212,17 @@
    "previous_turnout": 65.31,
    "turnout_delta": 2.36,
    "share_delta": {
-    "더불어민주당": -4.76,
-    "국민의힘": 2.63
+    "국민의힘": 2.63,
+    "더불어민주당": -4.76
    },
    "newly_ran": [
     {
-     "party": "새로운미래",
-     "pct": 8.26
-    },
-    {
      "party": "녹색정의당",
      "pct": 1.62
+    },
+    {
+     "party": "새로운미래",
+     "pct": 8.26
     }
    ],
    "no_longer_ran": [
@@ -7306,8 +7305,8 @@
    "previous_turnout": 64.37,
    "turnout_delta": 1.55,
    "share_delta": {
-    "더불어민주당": -3.76,
-    "국민의힘": 4.71
+    "국민의힘": 4.71,
+    "더불어민주당": -3.76
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7386,8 +7385,8 @@
    "previous_turnout": 65.28,
    "turnout_delta": 3.69,
    "share_delta": {
-    "더불어민주당": -7.74,
-    "진보당": 0.21
+    "진보당": 0.21,
+    "더불어민주당": -7.74
    },
    "newly_ran": [
     {
@@ -7431,30 +7430,30 @@
    },
    "newly_ran": [
     {
+     "party": "국민의힘",
+     "pct": 4.54
+    },
+    {
      "party": "개혁신당",
      "pct": 1.02
     },
     {
      "party": "새로운미래",
      "pct": 2.06
-    },
-    {
-     "party": "국민의힘",
-     "pct": 4.54
     }
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.81
+     "party": "우리공화당",
+     "previous_pct": 0.98
     },
     {
      "party": "기후민생당",
      "previous_pct": 4.59
     },
     {
-     "party": "우리공화당",
-     "previous_pct": 0.98
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.81
     }
    ]
   },
@@ -7483,10 +7482,14 @@
    "previous_turnout": 67.87,
    "turnout_delta": -2.95,
    "share_delta": {
-    "더불어민주당": 22.66,
-    "국민의힘": 3.51
+    "국민의힘": 3.51,
+    "더불어민주당": 22.66
    },
    "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 2.31
+    },
     {
      "party": "소나무당",
      "pct": 4.01
@@ -7494,10 +7497,6 @@
     {
      "party": "진보당",
      "pct": 3.06
-    },
-    {
-     "party": "녹색정의당",
-     "pct": 2.31
     }
    ],
    "no_longer_ran": [
@@ -7536,27 +7535,27 @@
    "previous_turnout": 70.35,
    "turnout_delta": -0.34,
    "share_delta": {
-    "더불어민주당": 5.78,
+    "국민의힘": 5.73,
     "진보당": 13.62,
-    "국민의힘": 5.73
+    "더불어민주당": 5.78
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 0.94
+     "party": "기독자유통일당",
+     "previous_pct": 0.29
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.27
+     "party": "정의당",
+     "previous_pct": 0.94
     },
     {
      "party": "기후민생당",
      "previous_pct": 0.79
     },
     {
-     "party": "기독자유통일당",
-     "previous_pct": 0.29
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.27
     }
    ]
   },
@@ -7585,9 +7584,9 @@
    "previous_turnout": 67.15,
    "turnout_delta": 1.95,
    "share_delta": {
-    "더불어민주당": 5.35,
+    "국민의힘": 19.33,
     "진보당": 3.79,
-    "국민의힘": 19.33
+    "더불어민주당": 5.35
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7642,17 +7641,17 @@
    "previous_turnout": 65.74,
    "turnout_delta": 3.51,
    "share_delta": {
-    "더불어민주당": -7.8,
-    "국민의힘": 2.9
+    "국민의힘": 2.9,
+    "더불어민주당": -7.8
    },
    "newly_ran": [
     {
-     "party": "한국농어민당",
-     "pct": 0.69
-    },
-    {
      "party": "진보당",
      "pct": 3.11
+    },
+    {
+     "party": "한국농어민당",
+     "pct": 0.69
     }
    ],
    "no_longer_ran": [
@@ -7697,12 +7696,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.59
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 30.9
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.59
     }
    ]
   },
@@ -7717,9 +7716,9 @@
   {
    "district": "전북 군산시김제시부안군을",
    "sido": "전북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북 김제시부안군'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북 김제시부안군'",
    "previous_district": "전북 김제시부안군"
   },
   {
@@ -7757,9 +7756,9 @@
   {
    "district": "전북 전주시갑",
    "sido": "전북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "전북 전주시갑"
   },
   {
@@ -7801,12 +7800,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.3
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 32.05
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.3
     }
    ]
   },
@@ -7835,17 +7834,17 @@
    "previous_turnout": 65.92,
    "turnout_delta": 1.98,
    "share_delta": {
-    "더불어민주당": 3.84,
-    "국민의힘": 14.06
+    "국민의힘": 14.06,
+    "더불어민주당": 3.84
    },
    "newly_ran": [
     {
-     "party": "자유민주당",
-     "pct": 0.52
-    },
-    {
      "party": "진보당",
      "pct": 11.5
+    },
+    {
+     "party": "자유민주당",
+     "pct": 0.52
     }
    ],
    "no_longer_ran": [
@@ -7854,12 +7853,12 @@
      "previous_pct": 4.21
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.4
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 3.57
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
     }
    ]
   },
@@ -7932,8 +7931,8 @@
    "previous_turnout": 63.88,
    "turnout_delta": 0.91,
    "share_delta": {
-    "더불어민주당": -1.48,
-    "국민의힘": 2.63
+    "국민의힘": 2.63,
+    "더불어민주당": -1.48
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -7968,8 +7967,8 @@
    "previous_turnout": 61.36,
    "turnout_delta": -1.7,
    "share_delta": {
-    "더불어민주당": 14.18,
-    "국민의힘": 0.05
+    "국민의힘": 0.05,
+    "더불어민주당": 14.18
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -8008,8 +8007,8 @@
    "previous_turnout": 64.05,
    "turnout_delta": -0.83,
    "share_delta": {
-    "더불어민주당": 9.29,
-    "국민의힘": -9.11
+    "국민의힘": -9.11,
+    "더불어민주당": 9.29
    },
    "newly_ran": [
     {
@@ -8057,18 +8056,18 @@
    "previous_turnout": 66.1,
    "turnout_delta": 5.79,
    "share_delta": {
-    "더불어민주당": 4.24,
-    "국민의힘": -0.23
+    "국민의힘": -0.23,
+    "더불어민주당": 4.24
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.64
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 0.6
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
     }
    ]
   },
@@ -8097,18 +8096,18 @@
    "previous_turnout": 63.79,
    "turnout_delta": 3.78,
    "share_delta": {
-    "더불어민주당": -0.16,
-    "국민의힘": 0.81
+    "국민의힘": 0.81,
+    "더불어민주당": -0.16
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.1
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.54
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.1
     }
    ]
   },
@@ -8137,11 +8136,15 @@
    "previous_turnout": 59.49,
    "turnout_delta": 3.38,
    "share_delta": {
-    "더불어민주당": 4.12,
-    "국민의힘": 17.97
+    "국민의힘": 17.97,
+    "더불어민주당": 4.12
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 1.95
+    },
     {
      "party": "우리공화당",
      "previous_pct": 0.53
@@ -8149,10 +8152,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.64
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 1.95
     }
    ]
   },
@@ -8181,8 +8180,8 @@
    "previous_turnout": 68.52,
    "turnout_delta": 2.52,
    "share_delta": {
-    "더불어민주당": -1.73,
-    "국민의힘": 0.65
+    "국민의힘": 0.65,
+    "더불어민주당": -1.73
    },
    "newly_ran": [],
    "no_longer_ran": []
@@ -8212,8 +8211,8 @@
    "previous_turnout": 64.07,
    "turnout_delta": 3.72,
    "share_delta": {
-    "더불어민주당": 4.24,
-    "국민의힘": -1.14
+    "국민의힘": -1.14,
+    "더불어민주당": 4.24
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -8252,8 +8251,8 @@
    "previous_turnout": 61.66,
    "turnout_delta": 1.37,
    "share_delta": {
-    "더불어민주당": 4.7,
-    "국민의힘": -5.73
+    "국민의힘": -5.73,
+    "더불어민주당": 4.7
    },
    "newly_ran": [
     {
@@ -8302,9 +8301,9 @@
   {
    "district": "충남 천안시갑",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous_district": "충남 천안시갑"
   },
   {
@@ -8340,11 +8339,15 @@
    "previous_turnout": 60.74,
    "turnout_delta": -1.42,
    "share_delta": {
-    "더불어민주당": -3.71,
-    "국민의힘": 6.91
+    "국민의힘": 6.91,
+    "더불어민주당": -3.71
    },
    "newly_ran": [],
    "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 0.77
+    },
     {
      "party": "정의당",
      "previous_pct": 4.82
@@ -8352,10 +8355,6 @@
     {
      "party": "국가혁명배당금당",
      "previous_pct": 0.68
-    },
-    {
-     "party": "진보당",
-     "previous_pct": 0.77
     }
    ]
   },
@@ -8384,8 +8383,8 @@
    "previous_turnout": 62.96,
    "turnout_delta": 5.21,
    "share_delta": {
-    "더불어민주당": 0.68,
-    "국민의힘": 0.89
+    "국민의힘": 0.89,
+    "더불어민주당": 0.68
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -8420,8 +8419,8 @@
    "previous_turnout": 68.56,
    "turnout_delta": 3.94,
    "share_delta": {
-    "더불어민주당": 5.63,
-    "국민의힘": -3.95
+    "국민의힘": -3.95,
+    "더불어민주당": 5.63
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -8460,8 +8459,8 @@
    "previous_turnout": 67.33,
    "turnout_delta": 0.93,
    "share_delta": {
-    "더불어민주당": -3.16,
-    "국민의힘": -4.66
+    "국민의힘": -4.66,
+    "더불어민주당": -3.16
    },
    "newly_ran": [
     {
@@ -8501,8 +8500,8 @@
    "previous_turnout": 59.82,
    "turnout_delta": 3.32,
    "share_delta": {
-    "더불어민주당": 3.26,
-    "국민의힘": -1.79
+    "국민의힘": -1.79,
+    "더불어민주당": 3.26
    },
    "newly_ran": [],
    "no_longer_ran": [
@@ -8537,8 +8536,8 @@
    "previous_turnout": 64.89,
    "turnout_delta": -0.28,
    "share_delta": {
-    "더불어민주당": 4.35,
-    "국민의힘": 2.2
+    "국민의힘": 2.2,
+    "더불어민주당": 4.35
    },
    "newly_ran": [
     {
@@ -8552,12 +8551,12 @@
      "previous_pct": 6.91
     },
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.7
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.32
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
     }
    ]
   },
@@ -8586,18 +8585,18 @@
    "previous_turnout": 64.9,
    "turnout_delta": 0.84,
    "share_delta": {
-    "더불어민주당": 2.6,
-    "국민의힘": 0.75
+    "국민의힘": 0.75,
+    "더불어민주당": 2.6
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.98
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 2.37
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
     }
    ]
   },
@@ -8626,18 +8625,18 @@
    "previous_turnout": 61.76,
    "turnout_delta": 1.33,
    "share_delta": {
-    "더불어민주당": 0.3,
-    "국민의힘": 2.29
+    "국민의힘": 2.29,
+    "더불어민주당": 0.3
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 0.96
-    },
-    {
      "party": "진보당",
      "previous_pct": 1.63
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.96
     }
    ]
   },
@@ -8666,8 +8665,8 @@
    "previous_turnout": 62.29,
    "turnout_delta": -1.01,
    "share_delta": {
-    "더불어민주당": -4.04,
-    "국민의힘": 1.63
+    "국민의힘": 1.63,
+    "더불어민주당": -4.04
    },
    "newly_ran": [
     {
@@ -8707,18 +8706,18 @@
    "previous_turnout": 63.89,
    "turnout_delta": 1.97,
    "share_delta": {
-    "더불어민주당": 3.96,
-    "국민의힘": -1.13
+    "국민의힘": -1.13,
+    "더불어민주당": 3.96
    },
    "newly_ran": [],
    "no_longer_ran": [
     {
-     "party": "국가혁명배당금당",
-     "previous_pct": 1.03
-    },
-    {
      "party": "기후민생당",
      "previous_pct": 1.8
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.03
     }
    ]
   }

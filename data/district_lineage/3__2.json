@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 3,
   "previous_n": 2,
-  "generated_at": "2026-08-05T15:09:25+09:00",
+  "generated_at": "2026-08-05T15:43:11+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -11,11 +11,23 @@
    "minor": 0.05
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
-  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+  "source_profile": {
+   "current": [
+    false,
+    9,
+    true
+   ],
+   "previous": [
+    false,
+    9,
+    true
+   ],
+   "same_source": true
+  },
+  "polygon_caveat": "폴리곤 출처가 회차마다 다르다 — 21·22대만 오마이뉴스 원본(LICENSE 있음), 9~20대는 재구성, 1~8대는 properties에 approx로 근사임을 밝힌다. 출처가 다르면 겹침 90~97%를 실제 변화인지 정밀도 차이인지 못 가른다(comparable='unknown'). 출처가 같으면 정밀도로 설명되지 않으므로 실제 경계 변화로 본다."
  },
  "counts": {
-  "boundary_changed": 35,
-  "minor_boundary_change": 45,
+  "boundary_changed": 80,
   "merged": 3,
   "unresolvable": 10,
   "renamed": 106,
@@ -23,7 +35,7 @@
   "new": 3,
   "total": 203,
   "comparable": 106,
-  "comparable_unknown": 45,
+  "comparable_unknown": 0,
   "previous_total": 206,
   "previous_unmatched": 10
  },
@@ -76,9 +88,9 @@
   {
    "district": "서울특별시 종로구 갑",
    "sido": "서울특별시",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제3선거구(종로 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '서울특별시 제3선거구(종로 갑구)'",
    "previous": [
     {
      "prev": "서울특별시 제3선거구(종로 갑구)",
@@ -143,9 +155,9 @@
   {
    "district": "서울특별시 성북구",
    "sido": "서울특별시",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제6선거구(성북구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '서울특별시 제6선거구(성북구)'",
    "previous": [
     {
      "prev": "서울특별시 제6선거구(성북구)",
@@ -219,9 +231,9 @@
   {
    "district": "서울특별시 서대문구 을",
    "sido": "서울특별시",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제10선거구(서대문 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '서울특별시 제10선거구(서대문 을구)'",
    "previous": [
     {
      "prev": "서울특별시 제10선거구(서대문 을구)",
@@ -390,9 +402,9 @@
   {
    "district": "경기도 인천시 병",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제3선거구(인천시 병구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/92% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제3선거구(인천시 병구)'",
    "previous": [
     {
      "prev": "경기도 제3선거구(인천시 병구)",
@@ -423,9 +435,9 @@
   {
    "district": "경기도 고양군",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제6선거구(고양군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제6선거구(고양군)'",
    "previous": [
     {
      "prev": "경기도 제6선거구(고양군)",
@@ -503,9 +515,9 @@
   {
    "district": "경기도 가평군",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제11선거구(가평군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/99% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제11선거구(가평군)'",
    "previous": [
     {
      "prev": "경기도 제11선거구(가평군)",
@@ -587,9 +599,9 @@
   {
    "district": "경기도 평택군",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제17선거구(평택군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제17선거구(평택군)'",
    "previous": [
     {
      "prev": "경기도 제17선거구(평택군)",
@@ -601,9 +613,9 @@
   {
    "district": "경기도 화성군 갑",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제18선거구(화성군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제18선거구(화성군 갑구)'",
    "previous": [
     {
      "prev": "경기도 제18선거구(화성군 갑구)",
@@ -667,9 +679,9 @@
   {
    "district": "경기도 김포군",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제22선거구(김포군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제22선거구(김포군)'",
    "previous": [
     {
      "prev": "경기도 제22선거구(김포군)",
@@ -681,9 +693,9 @@
   {
    "district": "경기도 강화군",
    "sido": "경기도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제23선거구(강화군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기도 제23선거구(강화군)'",
    "previous": [
     {
      "prev": "경기도 제23선거구(강화군)",
@@ -1178,9 +1190,9 @@
   {
    "district": "충청남도 부여군 갑",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 99%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제8선거구(부여군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 99%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제8선거구(부여군 갑구)'",
    "previous": [
     {
      "prev": "충청남도 제8선거구(부여군 갑구)",
@@ -1206,9 +1218,9 @@
   {
    "district": "충청남도 서천군",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제10선거구(서천군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/98% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제10선거구(서천군)'",
    "previous": [
     {
      "prev": "충청남도 제10선거구(서천군)",
@@ -1220,9 +1232,9 @@
   {
    "district": "충청남도 보령군",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제11선거구(보령군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제11선거구(보령군)'",
    "previous": [
     {
      "prev": "충청남도 제11선거구(보령군)",
@@ -1248,9 +1260,9 @@
   {
    "district": "충청남도 홍성군",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제13선거구(홍성군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/98% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제13선거구(홍성군)'",
    "previous": [
     {
      "prev": "충청남도 제13선거구(홍성군)",
@@ -1290,9 +1302,9 @@
   {
    "district": "충청남도 서산군 을",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제16선거구(서산 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제16선거구(서산 을구)'",
    "previous": [
     {
      "prev": "충청남도 제16선거구(서산 을구)",
@@ -1304,9 +1316,9 @@
   {
    "district": "충청남도 당진군",
    "sido": "충청남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제17선거구(당진군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '충청남도 제17선거구(당진군)'",
    "previous": [
     {
      "prev": "충청남도 제17선거구(당진군)",
@@ -1529,9 +1541,9 @@
   {
    "district": "전북특별자치도 정읍군 갑",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제13선거구(정읍군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제13선거구(정읍군 갑구)'",
    "previous": [
     {
      "prev": "전북특별자치도 제13선거구(정읍군 갑구)",
@@ -1571,9 +1583,9 @@
   {
    "district": "전북특별자치도 고창군 을",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제16선거구(고창군 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/99% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제16선거구(고창군 을구)'",
    "previous": [
     {
      "prev": "전북특별자치도 제16선거구(고창군 을구)",
@@ -1585,9 +1597,9 @@
   {
    "district": "전북특별자치도 부안군",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제17선거구(부안군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제17선거구(부안군)'",
    "previous": [
     {
      "prev": "전북특별자치도 제17선거구(부안군)",
@@ -1637,9 +1649,9 @@
   {
    "district": "전북특별자치도 옥구군",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제20선거구(옥구군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/92% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제20선거구(옥구군)'",
    "previous": [
     {
      "prev": "전북특별자치도 제20선거구(옥구군)",
@@ -1656,9 +1668,9 @@
   {
    "district": "전북특별자치도 익산군 갑",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제21선거구(익산군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/98% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제21선거구(익산군 갑구)'",
    "previous": [
     {
      "prev": "전북특별자치도 제21선거구(익산군 갑구)",
@@ -1675,9 +1687,9 @@
   {
    "district": "전북특별자치도 익산군 을",
    "sido": "전북특별자치도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제22선거구(익산군 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/99% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북특별자치도 제22선거구(익산군 을구)'",
    "previous": [
     {
      "prev": "전북특별자치도 제22선거구(익산군 을구)",
@@ -1689,9 +1701,9 @@
   {
    "district": "전라남도 광주시",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제2선거구(광주시)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제2선거구(광주시)'",
    "previous": [
     {
      "prev": "전라남도 제2선거구(광주시)",
@@ -1736,9 +1748,9 @@
   {
    "district": "전라남도 순천시",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제4선거구(순천시)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제4선거구(순천시)'",
    "previous": [
     {
      "prev": "전라남도 제4선거구(순천시)",
@@ -1750,9 +1762,9 @@
   {
    "district": "전라남도 광산군 갑",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제5선거구(광주군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제5선거구(광주군 갑구)'",
    "previous": [
     {
      "prev": "전라남도 제5선거구(광주군 갑구)",
@@ -1788,9 +1800,9 @@
   {
    "district": "전라남도 담양군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제21선거구(담양군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/98% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제21선거구(담양군)'",
    "previous": [
     {
      "prev": "전라남도 제21선거구(담양군)",
@@ -1882,9 +1894,9 @@
   {
    "district": "전라남도 고흥군 갑",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제25선거구(고흥군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 92%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제25선거구(고흥군 갑구)'",
    "previous": [
     {
      "prev": "전라남도 제25선거구(고흥군 갑구)",
@@ -1896,9 +1908,9 @@
   {
    "district": "전라남도 고흥군 을",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제26선거구(고흥군 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제26선거구(고흥군 을구)'",
    "previous": [
     {
      "prev": "전라남도 제26선거구(고흥군 을구)",
@@ -1938,9 +1950,9 @@
   {
    "district": "전라남도 장흥군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제9선거구(장흥군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제9선거구(장흥군)'",
    "previous": [
     {
      "prev": "전라남도 제9선거구(장흥군)",
@@ -1952,9 +1964,9 @@
   {
    "district": "전라남도 강진군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제10선거구(강진군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제10선거구(강진군)'",
    "previous": [
     {
      "prev": "전라남도 제10선거구(강진군)",
@@ -1980,9 +1992,9 @@
   {
    "district": "전라남도 해남군 을",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제12선거구(해남군 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제12선거구(해남군 을구)'",
    "previous": [
     {
      "prev": "전라남도 제12선거구(해남군 을구)",
@@ -1994,9 +2006,9 @@
   {
    "district": "전라남도 영암군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제13선거구(영암군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제13선거구(영암군)'",
    "previous": [
     {
      "prev": "전라남도 제13선거구(영암군)",
@@ -2074,9 +2086,9 @@
   {
    "district": "전라남도 함평군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제18선거구(함평군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제18선거구(함평군)'",
    "previous": [
     {
      "prev": "전라남도 제18선거구(함평군)",
@@ -2088,9 +2100,9 @@
   {
    "district": "전라남도 영광군",
    "sido": "전라남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제19선거구(영광군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 97%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전라남도 제19선거구(영광군)'",
    "previous": [
     {
      "prev": "전라남도 제19선거구(영광군)",
@@ -2158,9 +2170,9 @@
   {
    "district": "경상북도 대구시 을",
    "sido": "경상북도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 93%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제2선거구(대구시 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 93%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상북도 제2선거구(대구시 을구)'",
    "previous": [
     {
      "prev": "경상북도 제2선거구(대구시 을구)",
@@ -2196,9 +2208,9 @@
   {
    "district": "경상북도 포항시",
    "sido": "경상북도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제4선거구(포항시)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/92% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상북도 제4선거구(포항시)'",
    "previous": [
     {
      "prev": "경상북도 제4선거구(포항시)",
@@ -2617,9 +2629,9 @@
   {
    "district": "경상북도 울릉군",
    "sido": "경상북도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 99%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제34선거구(울릉군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 99%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상북도 제34선거구(울릉군)'",
    "previous": [
     {
      "prev": "경상북도 제34선거구(울릉군)",
@@ -2731,9 +2743,9 @@
   {
    "district": "경상남도 마산시",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제6선거구(마산시)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제6선거구(마산시)'",
    "previous": [
     {
      "prev": "경상남도 제6선거구(마산시)",
@@ -2745,9 +2757,9 @@
   {
    "district": "경상남도 진주시",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 98%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제7선거구(진주시)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 98%/93% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제7선거구(진주시)'",
    "previous": [
     {
      "prev": "경상남도 제7선거구(진주시)",
@@ -2890,9 +2902,9 @@
   {
    "district": "경상남도 동래군",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제17선거구(동래군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제17선거구(동래군)'",
    "previous": [
     {
      "prev": "경상남도 제17선거구(동래군)",
@@ -2932,9 +2944,9 @@
   {
    "district": "경상남도 창원군 갑",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제20선거구(창원군 갑구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제20선거구(창원군 갑구)'",
    "previous": [
     {
      "prev": "경상남도 제20선거구(창원군 갑구)",
@@ -2946,9 +2958,9 @@
   {
    "district": "경상남도 창원군 을",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제21선거구(창원군 을구)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제21선거구(창원군 을구)'",
    "previous": [
     {
      "prev": "경상남도 제21선거구(창원군 을구)",
@@ -2988,9 +3000,9 @@
   {
    "district": "경상남도 고성군",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제24선거구(고성군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제24선거구(고성군)'",
    "previous": [
     {
      "prev": "경상남도 제24선거구(고성군)",
@@ -3002,9 +3014,9 @@
   {
    "district": "경상남도 사천군",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 95%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제25선거구(사천군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 95%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제25선거구(사천군)'",
    "previous": [
     {
      "prev": "경상남도 제25선거구(사천군)",
@@ -3016,9 +3028,9 @@
   {
    "district": "경상남도 남해군",
    "sido": "경상남도",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제26선거구(남해군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경상남도 제26선거구(남해군)'",
    "previous": [
     {
      "prev": "경상남도 제26선거구(남해군)",

@@ -51,6 +51,39 @@ MAJOR = 0.60      # 이 이상이면 '주된 대응'
 MINOR = 0.05      # 이 미만은 경계 노이즈로 보고 버린다
 
 
+def source_profile(n: int) -> tuple:
+    """폴리곤 출처 지문 — 파일 자체에서 읽는다(추정하지 않는다).
+
+    (원본 여부, 좌표 정밀도, 근사 표시)
+      · 21·22대만 LICENSE가 있는 오마이뉴스 원본(1.5MB, 소수 4자리)
+      · 9~20대는 우리 재구성(소수 4자리, 300~780KB)
+      · 1~8대는 소수 9자리 + properties에 approx — 스스로 근사임을 밝힌다
+
+    같은 지문이면 겹침 94~97%를 '정밀도 차이'로 볼 근거가 없다 → 실제 경계 변화다.
+    실제로 22↔21은 같은 출처인데 그 구간 19건을 전부 판정 보류로 두고 있었다.
+    """
+    fp = GEO / f"district_{n}_geojson.json"
+    if not fp.exists():
+        return ()
+    lic = (GEO / f"district_{n}_geojson.LICENSE").exists()
+    d = json.loads(fp.read_text(encoding="utf-8"))
+    feats = d.get("features") or []
+    if not feats:
+        return ()
+    approx = "approx" in (feats[0].get("properties") or {})
+    from collections import Counter
+    c = Counter()
+    for f in feats[:30]:
+        g = f["geometry"]["coordinates"]
+        while isinstance(g[0], list):
+            g = g[0]
+        for x in g[:100]:
+            if isinstance(x, (int, float)):
+                c[len(str(x).split(".")[-1])] += 1
+    prec = c.most_common(1)[0][0] if c else 0
+    return (lic, prec, approx)
+
+
 def load(n: int) -> list[dict] | None:
     fp = GEO / f"district_{n}_geojson.json"
     if not fp.exists():
@@ -96,7 +129,8 @@ def overlaps(cur: list[dict], prev: list[dict]) -> dict:
     return out
 
 
-def classify(cur_key: str, ov: list[dict], prev_fanout: dict) -> tuple[str, str, str]:
+def classify(cur_key: str, ov: list[dict], prev_fanout: dict,
+             same_src: bool) -> tuple[str, str, str]:
     """(관계, 비교가능 yes/no/unknown, 사유). 사유는 사람이 읽고 판단할 수 있게 남긴다."""
     if not ov:
         return "new", "no", "대응하는 이전 선거구 없음"
@@ -109,13 +143,17 @@ def classify(cur_key: str, ov: list[dict], prev_fanout: dict) -> tuple[str, str,
         return ("exact" if same_name else "renamed"), "yes", (
             "양방향 겹침 ≥97%" + ("" if same_name else " · 이름만 다름"))
 
-    # 0.90~0.97 — 실제 경계 변화인지 폴리곤 정밀도 차이인지 **데이터로 못 가른다**.
-    # 이름이 같고 양방향 90% 이상이면 대개 후자지만, 단언할 근거가 없다.
+    # 0.90~0.97 — 두 폴리곤의 **출처가 다르면** 실제 경계 변화인지 정밀도 차이인지
+    # 못 가른다. 출처가 같으면 정밀도로 설명할 수 없으므로 실제 변화다.
     if top["of_current"] >= NEAR and top["of_previous"] >= NEAR:
+        pct = f"{top['of_current'] * 100:.0f}%/{top['of_previous'] * 100:.0f}%"
+        named = "" if cur_key == top["prev"] else f" · 이전 '{top['prev']}'"
+        if same_src:
+            return "boundary_changed", "no", (
+                f"겹침 {pct} — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다{named}")
         return "minor_boundary_change", "unknown", (
-            f"겹침 {top['of_current'] * 100:.0f}%/{top['of_previous'] * 100:.0f}% — "
-            "실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가"
-            + ("" if cur_key == top["prev"] else f" · 이전 '{top['prev']}'"))
+            f"겹침 {pct} — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 "
+            f"구분 불가{named}")
 
     # 현재가 이전 하나에 거의 담긴다 = 이전이 쪼개졌다
     if top["of_current"] >= EXACT and top["of_previous"] < EXACT:
@@ -143,6 +181,8 @@ def build(cur_n: int, prev_n: int) -> dict | None:
     cur, prev = load(cur_n), load(prev_n)
     if not cur or not prev:
         return None
+    sp_cur, sp_prev = source_profile(cur_n), source_profile(prev_n)
+    same_src = bool(sp_cur) and sp_cur == sp_prev
     ov = overlaps(cur, prev)
 
     # 이전 선거구가 몇 개로 갈라졌는지 — split 판정에 필요하다
@@ -154,7 +194,7 @@ def build(cur_n: int, prev_n: int) -> dict | None:
 
     units, counts = [], {}
     for c in cur:
-        rel, comparable, why = classify(c["key"], ov[c["key"]], fanout)
+        rel, comparable, why = classify(c["key"], ov[c["key"]], fanout, same_src)
         counts[rel] = counts.get(rel, 0) + 1
         units.append({
             "district": c["key"], "sido": c["sido"],
@@ -181,9 +221,14 @@ def build(cur_n: int, prev_n: int) -> dict | None:
                      "경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. "
                      "'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, "
                      "'같다'로도 '다르다'로도 쓰지 않는다."),
-            "polygon_caveat": ("21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본"
-                               "(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 "
-                               "안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."),
+            "source_profile": {"current": list(sp_cur), "previous": list(sp_prev),
+                               "same_source": same_src},
+            "polygon_caveat": (
+                "폴리곤 출처가 회차마다 다르다 — 21·22대만 오마이뉴스 원본(LICENSE 있음), "
+                "9~20대는 재구성, 1~8대는 properties에 approx로 근사임을 밝힌다. "
+                "출처가 다르면 겹침 90~97%를 실제 변화인지 정밀도 차이인지 못 가른다"
+                "(comparable='unknown'). 출처가 같으면 정밀도로 설명되지 않으므로 "
+                "실제 경계 변화로 본다."),
         },
         "counts": {**counts, "total": len(units), "comparable": n_ok,
                    "comparable_unknown": n_unk,

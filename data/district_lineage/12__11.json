@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 12,
   "previous_n": 11,
-  "generated_at": "2026-08-05T15:09:27+09:00",
+  "generated_at": "2026-08-05T15:43:13+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -11,18 +11,30 @@
    "minor": 0.05
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
-  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+  "source_profile": {
+   "current": [
+    false,
+    4,
+    false
+   ],
+   "previous": [
+    false,
+    4,
+    false
+   ],
+   "same_source": true
+  },
+  "polygon_caveat": "폴리곤 출처가 회차마다 다르다 — 21·22대만 오마이뉴스 원본(LICENSE 있음), 9~20대는 재구성, 1~8대는 properties에 approx로 근사임을 밝힌다. 출처가 다르면 겹침 90~97%를 실제 변화인지 정밀도 차이인지 못 가른다(comparable='unknown'). 출처가 같으면 정밀도로 설명되지 않으므로 실제 경계 변화로 본다."
  },
  "counts": {
   "exact": 52,
   "renamed": 25,
-  "minor_boundary_change": 7,
+  "boundary_changed": 10,
   "unresolvable": 4,
-  "boundary_changed": 3,
   "merged": 1,
   "total": 92,
   "comparable": 77,
-  "comparable_unknown": 7,
+  "comparable_unknown": 0,
   "previous_total": 92,
   "previous_unmatched": 0
  },
@@ -171,9 +183,9 @@
   {
    "district": "경기 제4선거구(안양시·광명시·시흥군·옹진군)",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 99%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기 제6선거구(안양시·시흥군·옹진군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 99%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기 제6선거구(안양시·시흥군·옹진군)'",
    "previous": [
     {
      "prev": "경기 제6선거구(안양시·시흥군·옹진군)",
@@ -283,9 +295,9 @@
   {
    "district": "경남 제2선거구(울산시·울주군)",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 96%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 96%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "경남 제2선거구(울산시·울주군)",
@@ -493,9 +505,9 @@
   {
    "district": "경북 제7선거구(달성군·고령군·성주군)",
    "sido": "경북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경북 제10선거구(달성군·고령군·성주군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경북 제10선거구(달성군·고령군·성주군)'",
    "previous": [
     {
      "prev": "경북 제10선거구(달성군·고령군·성주군)",
@@ -521,9 +533,9 @@
   {
    "district": "경북 제9선거구(영천시·영천군·경산군)",
    "sido": "경북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경북 제12선거구(경산군·영천군)'",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경북 제12선거구(경산군·영천군)'",
    "previous": [
     {
      "prev": "경북 제12선거구(경산군·영천군)",
@@ -1229,9 +1241,9 @@
   {
    "district": "충남 제3선거구(천안시·아산군·천원군)",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 94%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 94%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "충남 제3선거구(천안시·아산군·천원군)",
@@ -1248,9 +1260,9 @@
   {
    "district": "충남 제4선거구(대덕군·금산군·연기군)",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "충남 제4선거구(대덕군·금산군·연기군)",
@@ -1262,9 +1274,9 @@
   {
    "district": "충남 제5선거구(논산군·공주군)",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "겹침 100%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "previous": [
     {
      "prev": "충남 제5선거구(논산군·공주군)",

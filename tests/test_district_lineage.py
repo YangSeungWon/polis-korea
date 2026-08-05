@@ -66,14 +66,29 @@ def main() -> int:
     print("\n[3-state] 모르는 것을 안다고 하지 않는가")
     states = {u["comparable"] for u in d["units"]}
     ck("comparable이 yes/no/unknown 셋뿐", states <= {"yes", "no", "unknown"}, str(states))
+    ck("_meta가 폴리곤 출처를 밝힌다", "polygon_caveat" in d["_meta"])
+    ck("_meta에 출처 지문이 있다", "source_profile" in d["_meta"])
+
+    # 22↔21은 **같은 출처**(오마이뉴스 원본)다. 정밀도 차이로 설명할 수 없으므로
+    # 겹침 90~97%는 실제 경계 변화다 — 판정 보류가 아니다.
+    ck("22↔21은 같은 출처로 판정된다", d["_meta"]["source_profile"]["same_source"],
+       str(d["_meta"]["source_profile"]))
     unk = [u for u in d["units"] if u["comparable"] == "unknown"]
-    ck(f"판정 불가가 별도 상태로 있다 ({len(unk)}건)", True)
-    ck("판정 불가는 전부 minor_boundary_change",
-       all(u["relation"] == "minor_boundary_change" for u in unk),
-       str({u["relation"] for u in unk}))
-    ck("판정 불가에 사유가 적혀 있다",
-       all("구분 불가" in u["reason"] for u in unk[:5]))
-    ck("_meta가 폴리곤 출처 차이를 밝힌다", "polygon_caveat" in d["_meta"])
+    ck("같은 출처 쌍에는 판정 보류가 없다", not unk,
+       f"{len(unk)}건: {[u['district'] for u in unk[:3]]}")
+
+    # 출처가 다른 쌍에서는 보류가 남아야 한다 — 없으면 근거 없이 단정한 것이다
+    d21 = load(21, 20)
+    if d21:
+        ck("21↔20은 다른 출처로 판정된다",
+           not d21["_meta"]["source_profile"]["same_source"],
+           str(d21["_meta"]["source_profile"]))
+        u21 = [u for u in d21["units"] if u["comparable"] == "unknown"]
+        ck(f"다른 출처 쌍에는 판정 보류가 있다 ({len(u21)}건)", bool(u21))
+        ck("보류는 전부 minor_boundary_change",
+           all(u["relation"] == "minor_boundary_change" for u in u21),
+           str({u["relation"] for u in u21}))
+        ck("보류에 사유가 적혀 있다", all("구분 불가" in u["reason"] for u in u21[:5]))
 
     # ── 불변식 ──────────────────────────────────────────────────────────────
     print("\n[불변식]")
@@ -102,11 +117,28 @@ def main() -> int:
             bad.append(fp.stem)
     ck("전 쌍이 같은 상태 어휘를 쓴다", not bad, str(bad[:3]))
 
-    # 총선 비교 산출물이 아직 없어야 한다 — 판정이 선 뒤에 만든다
-    print("\n[게이트] 판정 전에 swing을 만들지 않았는가")
-    cmp_general = list((ROOT / "data/comparisons").glob("*general*.json"))
-    ck("총선 회차 간 비교 산출물 없음 (normalization 완료 전)",
-       not cmp_general, str([p.name for p in cmp_general[:3]]))
+    # 판정이 선 쌍만 비교를 만든다. 게이트는 '만들지 않았는가'에서
+    # '판정 없이 만들지 않았는가'로 옮겨간다 — 22↔21은 이제 판정이 섰다.
+    print("\n[게이트] 계보 없이 swing을 만들지 않았는가")
+    cmp_dir = ROOT / "data/comparisons/general"
+    made = sorted(cmp_dir.glob("*__*.json")) if cmp_dir.exists() else []
+    orphan = []
+    for fp in made:
+        cur, prev = fp.stem.split("__", 1)
+        cn = "".join(c for c in cur.split("-")[0] if c.isdigit())
+        pn = "".join(c for c in prev.split("-")[0] if c.isdigit())
+        if not (LIN / f"{cn}__{pn}.json").exists():
+            orphan.append(fp.name)
+    ck(f"총선 비교 {len(made)}쌍이 전부 계보 위에 있다", not orphan, str(orphan[:3]))
+
+    # 비교 가능하지 않은 단위로 delta를 만들지 않았는가 — 이게 진짜 게이트다
+    for fp in made:
+        cd = json.loads(fp.read_text(encoding="utf-8"))
+        leaked = [u["district"] for u in cd["units"]
+                  if u["comparable"] != "yes" and u.get("share_delta")]
+        ck(f"{fp.stem[:22]}: 비교 불가 단위에 delta 없음", not leaked, str(leaked[:3]))
+        ck(f"{fp.stem[:22]}: 부분집합 경고가 있다",
+           "subset_warning" in cd["_meta"])
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
