@@ -50,6 +50,13 @@ def _families(mode: str) -> dict:
     return {n: v["family"] for n, v in ax[key].items()}
 
 
+def _dominant() -> dict:
+    """mixed 정당의 **주계열** — 근거가 있는 것만. 계보 사실을 덮어쓰지 않는다."""
+    ax = json.loads(AXES.read_text(encoding="utf-8"))
+    return {n: v for n, v in (ax.get("dominant_family") or {}).items()
+            if v.get("value") and v["value"] != "unknown"}
+
+
 def _date(path: Path, doc: dict) -> str:
     meta = doc.get("_meta") or {}
     # 파일마다 키가 다르다 — election_date / date 둘 다 쓰인다
@@ -71,7 +78,7 @@ def _walk_candidates(o, out: list) -> None:
             _walk_candidates(v, out)
 
 
-def tally(cands: list, date: str, fam: dict) -> dict:
+def tally(cands: list, date: str, fam: dict, dominant: dict | None = None) -> dict:
     """정당별 득표 → 계열별 합. 무소속은 계열을 추정하지 않는다."""
     acc: dict = collections.Counter()
     for c in cands:
@@ -86,29 +93,51 @@ def tally(cands: list, date: str, fam: dict) -> dict:
             continue
         canon = disambiguate_party(p, date)
         f = fam.get(canon, "unknown")
-        acc[f if f in FAMILIES else ("mixed" if f == "mixed" else "unknown")] += v
+        if f in FAMILIES:
+            acc[f] += v
+        elif f == "mixed":
+            # 주계열이 근거와 함께 확인된 mixed는 따로 센다 — 해석 레이어에서만 쓴다.
+            # 여기서 단일 계열로 재분류하지 않는다. mixed는 mixed다.
+            acc["mixed_with_dominant" if (dominant or {}).get(canon) else "mixed"] += v
+        else:
+            acc["unknown"] += v
     return dict(acc)
 
 
-def summarize(acc: dict) -> dict:
+def summarize(acc: dict, dominant: dict | None = None) -> dict:
+    """coverage를 하나로 뭉개지 않는다.
+
+    `mixed`를 `unknown`과 같이 세면 진단이 뒤집힌다. **둘은 품질상 정반대다** —
+    unknown은 계보를 모르는 것이고, mixed는 계보를 알아서 복수 계열인 것이다.
+    국민의힘은 3당합당 후신이라 mixed인데, 그걸 '분류 실패'로 세면 "22대 계보가
+    19%밖에 안 풀린다"는 잘못된 진단이 나온다.
+
+        lineage_resolved       단일 + 복수 — 계보 자체를 설명할 수 있는 표
+        single_family          하나의 계열로만 귀속되는 표
+        dominant_projection    단일 + mixed 중 dominant가 검증된 표 (해석 레이어용)
+    """
     total = sum(acc.values())
     if not total:
         return {}
-    known = sum(acc.get(f, 0) for f in FAMILIES)
+    single = sum(acc.get(f, 0) for f in FAMILIES)
+    mixed = acc.get("mixed", 0)
+    dom_ok = acc.get("mixed_with_dominant", 0)
+    pct = lambda v: round(v / total * 100, 2)      # noqa: E731
     return {
         "total_votes": total,
-        "share": {k: round(v / total * 100, 2) for k, v in sorted(acc.items())},
-        # 셋을 하나로 뭉개지 않는다 — 말할 수 있는 정도가 다르다
-        "known_single_family_share": round(known / total * 100, 2),
-        "mixed_family_share": round(acc.get("mixed", 0) / total * 100, 2),
-        "unknown_family_share": round(acc.get("unknown", 0) / total * 100, 2),
-        "independent_share": round(acc.get("independent", 0) / total * 100, 2),
-        "classification_coverage": round(known / total * 100, 2),
+        "share": {k: pct(v) for k, v in sorted(acc.items())},
+        "single_family_coverage": pct(single),
+        "lineage_resolved_coverage": pct(single + mixed + dom_ok),
+        "dominant_projection_coverage": pct(single + dom_ok),
+        "mixed_share": pct(mixed + dom_ok),
+        "unknown_share": pct(acc.get("unknown", 0)),
+        "independent_share": pct(acc.get("independent", 0)),
     }
 
 
 def main() -> int:
     fam_s, fam_h = _families("strict"), _families("historical")
+    dom = _dominant()
     rows = []
     # 어느 정당이 미분류 표를 좌우하는가 — 다음 계보 보강 우선순위가 여기서 나온다.
     unknown_by_party: dict = collections.Counter()
@@ -132,8 +161,8 @@ def main() -> int:
             if (isinstance(v, (int, float)) and v and p_ and p_ != "무소속"
                     and fam_s.get(disambiguate_party(p_, date), "unknown") == "unknown"):
                 unknown_by_party[disambiguate_party(p_, date)] += v
-        s = summarize(tally(cands, date, fam_s))
-        h = summarize(tally(cands, date, fam_h))
+        s = summarize(tally(cands, date, fam_s, dom), dom)
+        h = summarize(tally(cands, date, fam_h, dom), dom)
         if not s:
             continue
         rows.append({"election": f.stem, "date": date,
@@ -153,12 +182,12 @@ def main() -> int:
     }
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"→ {OUT.name}: 선거 {len(rows)}회\n")
-    print(f"  {'선거':28} {'분류가능':>7} {'혼합':>6} {'미확인':>7} {'무소속':>7}")
+    print(f"  {'선거':26} {'계보설명':>7} {'단일':>6} {'혼합':>6} {'미확인':>7} {'무소속':>7}")
     for r in rows:
         s = r["strict"]
-        print(f"  {r['label'][:26]:28} {s['classification_coverage']:6.1f}% "
-              f"{s['mixed_family_share']:5.1f}% {s['unknown_family_share']:6.1f}% "
-              f"{s['independent_share']:6.1f}%")
+        print(f"  {r['label'][:24]:26} {s['lineage_resolved_coverage']:6.1f}% "
+              f"{s['single_family_coverage']:5.1f}% {s['mixed_share']:5.1f}% "
+              f"{s['unknown_share']:6.1f}% {s['independent_share']:6.1f}%")
     print("\n[보강 우선순위] 미분류 표가 많은 정당 — 하나 뚫을 때 얻는 게 큰 순서")
     for k, v in unknown_by_party.most_common(12):
         print(f"  {v:12,}  {k}")

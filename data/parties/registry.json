@@ -10,7 +10,8 @@
   "successors": "후신 정당 정식명들(합당체·개명 후·분당체)",
   "relation": "new(신설)|rename(개명)|merge(합당)|split(분당)|dissolve(해산/소멸)",
   "note": "한 줄 설명(대표·맥락)",
-  "stream": "**legacy_polis_classification** — 값을 바꾸거나 rename하지 마라. 보수/중도보수/중도/중도진보/진보/기타 값을 갖지만, 이념 위치와 조직 계보가 섞여 있다(lineage.js는 '좌→우 이념 스펙트럼'으로 쓰는데 parties.html meta는 '보수·민주·진보·충청 계열'이라 부른다 — 충청계는 이념 위치가 아니다). 현재 용도는 정당사 그래프의 가로축 열 배치뿐이다. 조직 계보는 political_axes.json의 lineage_family, 시점별 이념 위치는 contemporary_position을 쓴다."
+  "stream": "**legacy_polis_classification** — 값을 바꾸거나 rename하지 마라. 보수/중도보수/중도/중도진보/진보/기타 값을 갖지만, 이념 위치와 조직 계보가 섞여 있다(lineage.js는 '좌→우 이념 스펙트럼'으로 쓰는데 parties.html meta는 '보수·민주·진보·충청 계열'이라 부른다 — 충청계는 이념 위치가 아니다). 현재 용도는 정당사 그래프의 가로축 열 배치뿐이다. 조직 계보는 political_axes.json의 lineage_family, 시점별 이념 위치는 contemporary_position을 쓴다.",
+  "path_compressed": "registry 해상도 때문에 중간 정당을 생략한 edge. 역사 자체가 아니라 표현의 압축임을 밝힌다 — 생략된 entity를 나중에 추가하면 풀어야 한다."
  },
  "_collisions": {
   "민정당": "1963 윤보선 民政黨(5대대선·6대총선) ↔ 민주정의당 약칭 민정당(1981~). 별개 정당 — 병합 금지.",
@@ -672,6 +673,18 @@
    ],
    "predecessors": [
     "민주당(1955)"
+   ],
+   "path_compressed": [
+    {
+     "to": "민주당(1955)",
+     "omitted_entities": [
+      "신민당(1960)"
+     ],
+     "reason": "구파가 1960-11 민주당을 탈당해 만든 신민당(1960)이 registry에 없어 직접 이었다. 그 entity를 추가하면 이 압축을 풀어야 한다.",
+     "source": [
+      "https://encykorea.aks.ac.kr/Article/E0020249"
+     ]
+    }
    ]
   },
   "공화당": {

@@ -243,19 +243,45 @@ def main() -> int:
                 if not x:
                     continue
                 # 셋을 하나로 뭉개지 않는다
-                ck(f"{r['election']}/{m}: 세 비중이 따로 있다",
-                   {"known_single_family_share", "mixed_family_share",
-                    "unknown_family_share"} <= set(x))
+                # mixed를 unknown과 같이 세면 진단이 뒤집힌다 — 둘은 품질상 정반대다.
+                # unknown은 계보를 모르는 것이고 mixed는 알아서 복수 계열인 것이다.
+                ck(f"{r['election']}/{m}: coverage가 나뉘어 있다",
+                   {"single_family_coverage", "lineage_resolved_coverage",
+                    "dominant_projection_coverage", "mixed_share",
+                    "unknown_share", "independent_share"} <= set(x))
+                ck(f"{r['election']}/{m}: 계보설명 ≥ 단일 (mixed를 실패로 세지 않는다)",
+                   x["lineage_resolved_coverage"] >= x["single_family_coverage"] - 0.01)
                 # 재정규화 금지 — 합이 100이어야 하고 known만 100이면 안 된다
                 tot = sum(x["share"].values())
                 ck(f"{r['election']}/{m}: 전체 합이 100 (재정규화 안 함)",
                    abs(tot - 100) < 0.5, f"{tot:.2f}")
-                if x["unknown_family_share"] > 1:
+                if x["unknown_share"] > 1:
                     ck(f"{r['election']}/{m}: 미분류가 남아 있다 "
-                       f"({x['unknown_family_share']}%)",
-                       x["classification_coverage"] < 99.9)
+                       f"({x['unknown_share']}%)",
+                       x["single_family_coverage"] < 99.9)
                 break        # 회차마다 두 모드 다 보면 출력이 너무 길다
         ck("보강 우선순위가 표 수 기준으로 나온다", bool(F.get("unknown_priority")))
+        # dominant는 mixed를 재분류하지 않는다 — 별도 projection이다
+        ck("dominant 규칙이 재분류 금지를 명시한다",
+           "재분류하지 않는다" in ax["_dominant_rule"])
+        ck("dominant 스키마가 근거·시점을 요구한다",
+           {"basis", "source", "confidence", "valid_from"} <= set(ax["_dominant_schema"]))
+        for n, v in (ax.get("dominant_family") or {}).items():
+            ck(f"dominant {n}: 근거·출처·confidence",
+               bool(v.get("basis")) and bool(v.get("source"))
+               and v.get("confidence") in CONF)
+            ck(f"dominant {n}: 대상이 mixed다 (단일 계열을 덮어쓰지 않는다)",
+               fam[n]["family"] == "mixed", fam[n]["family"])
+
+    print("\n[압축] 중간 노드를 생략한 edge가 드러나 있는가")
+    ck("path_compressed가 스키마에 있다", "path_compressed" in reg["_schema"])
+    for n, v in parties.items():
+        for pc in v.get("path_compressed") or []:
+            ck(f"{n}: 압축 edge에 생략 entity·근거·출처",
+               bool(pc.get("omitted_entities")) and bool(pc.get("reason"))
+               and bool(pc.get("source")))
+            ck(f"{n}: 압축 대상이 실제 전신이다",
+               pc["to"] in (v.get("predecessors") or []))
 
     print("\n[시점] contemporary_position이 시계열인가")
     pos = ax.get("contemporary_position") or {}
