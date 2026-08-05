@@ -35,6 +35,22 @@ _REG = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-
 PARTY_PAGES = set(_REG.keys())
 
 
+# 후보 이름 → 인물 페이지. build_person_links의 (직|지역|이름) 색인을 그대로 쓴다.
+# 동명이인으로 갈리는 키는 색인에 없으므로 억지로 잇지 않는다 — 죽은 링크보다 글자가 낫다.
+_PERSON_LINKS: dict = {}
+
+
+def person_href(eid: str, tc: str, place: str, name: str) -> str | None:
+    if eid not in _PERSON_LINKS:
+        fp = ROOT / "data/person-links" / f"{eid}.json"
+        try:
+            _PERSON_LINKS[eid] = json.loads(fp.read_text(encoding="utf-8")).get("links") or {}
+        except Exception:
+            _PERSON_LINKS[eid] = {}
+    slug = _PERSON_LINKS[eid].get(f"{tc}|{place}|{name}")
+    return f"/person/{quote(slug)}/" if slug else None
+
+
 def party_cell(name: str, date: str) -> str:
     canon = disambiguate_party(name, date or "")
     if canon in PARTY_PAGES:
@@ -143,6 +159,10 @@ def collect() -> dict:
                            "11": "교육감"}.get(tc, tc),
                 "party": top.get("party") or "무소속", "name": top.get("name"),
                 "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
+                # 인물 링크용 — person-links 색인의 (직|지역) 키를 그대로 보존한다.
+                # 기초 단위(4·6)는 시군구명이, 광역 단위(1·3·11)는 시도명이 키다.
+                "tc": tc,
+                "place": sg if tc in ("4", "6") else (r.get("sido") or sd),
                 "pct": top.get("pct"),
                 "turnout": (round(vo / el * 100, 1)
                             if (el and vo is not None) else None),
@@ -214,6 +234,15 @@ def build_page(sd: str, sg: str, rows: list) -> str:
     lede = esc(f"{span}선거 {len(rows)}건 — 1위 정당 {top_parties}")
     desc = esc(f"{sd} {sigungu_short(sg)} 역대 선거 기록. {span}{len(rows)}건 · {top_parties}")
 
+    def name_cell(r):
+        """1위 후보 — 인물 페이지가 있으면 링크. 지역에서 사람으로 넘어가는 길이다.
+        (지역 페이지에서 인물로 나가는 링크가 하나도 없었다 — 측정: person 0)"""
+        nm = r.get("name") or ""
+        if not nm:
+            return ""
+        h = person_href(r["eid"], r.get("tc") or "", r.get("place") or "", nm)
+        return f'<a href="{h}">{esc(nm)}</a>' if h else esc(nm)
+
     def num_cell(r, key):
         """숫자 칸 — 세 상태를 구분한다: 값 / 무투표(사실) / 자료 없음(결손).
         셋을 다 0.0%로 쓰면 '아무도 안 찍었다'는 없던 사실이 만들어진다."""
@@ -230,7 +259,7 @@ def build_page(sd: str, sg: str, rows: list) -> str:
             f'<td><a href="/archive/{esc(r["eid"])}/">{esc(r["election"])}</a></td>'
             f'<td>{esc(r["office"])}</td>'
             f'<td>{party_cell(r["party"], r.get("date"))}</td>'
-            f'<td>{esc(r.get("name") or "")}</td>'
+            f'<td>{name_cell(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
     table = ('<table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'

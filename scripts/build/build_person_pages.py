@@ -12,6 +12,7 @@ Output:
 from __future__ import annotations
 import json
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX = ROOT / "assets/person-index.json"
@@ -25,6 +26,7 @@ PLEDGE_BY_PERSON = ROOT / "data/pledges/by-person"
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sync_nav_html import render_nav, menu_for_path  # noqa: E402
+from party_canon import disambiguate_party  # noqa: E402
 
 
 
@@ -59,6 +61,7 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="assets/components.css">
 <link rel="stylesheet" href="assets/person.css">
 <script id="person-data" type="application/json">{data_json}</script>
+<script id="region-slugs" type="application/json">{region_slugs}</script>
 </head>
 <body>
 <header class="site-hdr">
@@ -94,6 +97,63 @@ TEMPLATE = """<!DOCTYPE html>
 def slugify(name: str, dob: str) -> str:
     """URL slug: 한글 그대로 + dob. e.g. '이재명-1964-12-22'."""
     return f"{name}-{dob}"
+
+
+# ── 엔티티 링크 ────────────────────────────────────────────────────────────
+# 인물 페이지가 archive로만 나가고 정당·지역으로는 못 갔다(측정: party 4·region 0).
+# 있는 데이터를 잇는 일이라 새로 만드는 것이 없다.
+_REGION_BY_NAME: dict | None = None
+_PARTY_PAGES: set | None = None
+
+
+def region_slug_index() -> dict:
+    """시군구명 → slug. **모호하지 않은 것만** — '중구'처럼 여러 시도에 있는 이름은
+    person-index의 place에 시도가 없어 어디인지 정할 수 없다. 억지로 하나 고르면
+    틀린 지역으로 보내는 링크가 된다."""
+    global _REGION_BY_NAME
+    if _REGION_BY_NAME is None:
+        by: dict = {}
+        d = ROOT / "region"
+        if d.exists():
+            for sub in d.iterdir():
+                if sub.is_dir() and "-" in sub.name:
+                    by.setdefault(sub.name.split("-", 1)[1], []).append(sub.name)
+        _REGION_BY_NAME = {k: v[0] for k, v in by.items() if len(v) == 1}
+    return _REGION_BY_NAME
+
+
+def region_href(place: str, tc: str) -> str | None:
+    """시군구명 → 지역 페이지. person-index의 place에는 시도가 없어서
+    '중구'처럼 여러 시도에 있는 이름은 **어디인지 정할 수 없다** — 잇지 않는다.
+    억지로 하나 고르면 틀린 지역으로 보내는 링크가 된다.
+    광역 단위(tc 1·3·11)의 place는 시도명이고 시도 페이지는 없으므로 대상이 아니다."""
+    if tc not in ("4", "6") or not place:
+        return None
+    slug = region_slug_index().get(place)
+    return f"/region/{quote(slug)}/" if slug else None
+
+
+def party_cell(name: str | None, date: str) -> str:
+    """정당 페이지가 있는 이름만 링크. 동음이의(민주당 등)는 날짜로 가른다."""
+    global _PARTY_PAGES
+    if not name:
+        return ""
+    if _PARTY_PAGES is None:
+        try:
+            _PARTY_PAGES = set(json.loads(
+                (ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"])
+        except Exception:
+            _PARTY_PAGES = set()
+    canon = disambiguate_party(name, date or "")
+    if canon in _PARTY_PAGES:
+        return f'<a href="/party/{quote(canon)}/">{esc(name)}</a>'
+    return esc(name)
+
+
+def place_cell(r: dict) -> str:
+    place = r.get("place") or ""
+    h = region_href(place, r.get("tc") or "")
+    return f'<a href="{h}">{esc(place)}</a>' if h else esc(place)
 
 
 def esc(s) -> str:
@@ -174,8 +234,8 @@ def static_body(p: dict) -> tuple[str, str]:
         rows.append(
             f'<tr><td>{esc(r.get("year") or "")}</td>'
             f'<td><a href="/archive/{esc(r.get("eid"))}/">{esc(r.get("round") or r.get("eid"))}</a></td>'
-            f'<td>{esc(r.get("place") or "")}</td>'
-            f'<td>{esc(r.get("party") or "")}</td>'
+            f'<td>{place_cell(r)}</td>'
+            f'<td>{party_cell(r.get("party"), r.get("date") or "")}</td>'
             f'<td>{pct}</td><td>{esc(rank)}</td><td>{tag}</td></tr>')
     table = (
         '<table class="pp-static"><caption>출마 이력</caption><thead><tr>'
@@ -200,6 +260,8 @@ def main():
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     sitemap_urls = []
+    # 시군구→slug 색인은 모든 페이지가 같다 — 한 번만 만들어 심는다(4,326회 반복 금지).
+    _REGION_JSON = json.dumps(region_slug_index(), ensure_ascii=False, separators=(",", ":"))
     n_written = 0
     valid_slugs = set()
     for p in persons:
@@ -227,6 +289,7 @@ def main():
             data_json=data_json,
             lede=lede,
             static_body=body,
+            region_slugs=_REGION_JSON,
             jsonld=ld,
         )
         (page_dir / "index.html").write_text(html, encoding="utf-8")

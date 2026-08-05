@@ -18,6 +18,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 ELECTIONS_DIR = ROOT / "data" / "elections"
@@ -574,6 +575,37 @@ def _fmt_pct(v):
     return f"{float(v):.1f}%" if v is not None else "—"
 
 
+_PARTY_PAGES = None
+_PERSON_LINKS = {}
+
+
+def party_href(name: str) -> str | None:
+    """정당 페이지가 있는 이름만. 무소속·미등록 군소정당은 링크하지 않는다."""
+    global _PARTY_PAGES
+    if _PARTY_PAGES is None:
+        try:
+            _PARTY_PAGES = set(json.loads(
+                (ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"])
+        except Exception:
+            _PARTY_PAGES = set()
+    if name in _PARTY_PAGES:
+        return f"/party/{quote(name)}/"
+    return None
+
+
+def person_href(eid: str, tc: str, place: str, name: str) -> str | None:
+    """build_person_links가 만든 (직|지역|이름) → slug 색인. 동명이인으로 갈리는 키는
+    색인에 아예 없으므로 여기서 억지로 잇지 않는다 — 죽은 링크보다 글자가 낫다."""
+    if eid not in _PERSON_LINKS:
+        fp = ROOT / "data/person-links" / f"{eid}.json"
+        try:
+            _PERSON_LINKS[eid] = json.loads(fp.read_text(encoding="utf-8")).get("links") or {}
+        except Exception:
+            _PERSON_LINKS[eid] = {}
+    slug = _PERSON_LINKS[eid].get(f"{tc}|{place}|{name}")
+    return f"/person/{quote(slug)}/" if slug else None
+
+
 def results_summary(eid: str, kind: str) -> str:
     rp = RESULTS_DIR / f"{eid}.json"
     if not rp.exists():
@@ -591,10 +623,20 @@ def results_summary(eid: str, kind: str) -> str:
         cs = sorted((rs[0].get("candidates") or []), key=lambda c: -(c.get("votes") or 0))
         return cs[:n]
 
+    # 요약은 이 선거의 **입구**다. 이름만 적어 두면 여기서 더 갈 데가 없다 —
+    # archive에서 인물·정당으로 나가는 링크가 하나도 없었다(측정: person 0·party 0).
+    # 당선인 목록은 3,967명이라 필터 UI라서 상호작용 전엔 크롤러도 못 본다.
+    def party_cell(name: str) -> str:
+        h = party_href(name)
+        return f'<a href="{h}">{_esc(name)}</a>' if h else _esc(name)
+
     rows = []
     if kind == "presidential":
         for c in top_of("nation", "1"):
-            rows.append((f'{_esc(c.get("name"))} ({_esc(c.get("party"))})', _fmt_pct(c.get("pct"))))
+            nm, pty = c.get("name"), c.get("party")
+            ph = person_href(eid, "1", "전국", nm)
+            nm_html = f'<a href="{ph}">{_esc(nm)}</a>' if ph else _esc(nm)
+            rows.append((f'{nm_html} ({party_cell(pty)})', _fmt_pct(c.get("pct"))))
     elif kind == "general_election":
         seats = {}
         for r in races:
@@ -604,7 +646,7 @@ def results_summary(eid: str, kind: str) -> str:
                 if c.get("won"):
                     seats[c.get("party") or "무소속"] = seats.get(c.get("party") or "무소속", 0) + 1
         for pty, n in sorted(seats.items(), key=lambda x: -x[1])[:5]:
-            rows.append((_esc(pty), f"지역구 {n}석"))
+            rows.append((party_cell(pty), f"지역구 {n}석"))
     else:   # local · byelection — 광역단체장(3) 우선, 없으면 기초단체장(4)·국회의원(2)
         # 재보궐은 그 회차에 치러진 직만 있다 — 광역장이 없으면 기초장·국회의원·지방의원
         # 순으로 내려가며 첫 번째로 데이터가 있는 직을 요약한다(2014-10-29는 기초의원뿐).
@@ -620,7 +662,7 @@ def results_summary(eid: str, kind: str) -> str:
                         won[c.get("party") or "무소속"] = won.get(c.get("party") or "무소속", 0) + 1
             if won:
                 for pty, n in sorted(won.items(), key=lambda x: -x[1])[:5]:
-                    rows.append((_esc(pty), f"{label} {n}곳"))
+                    rows.append((party_cell(pty), f"{label} {n}곳"))
                 break
     if not rows:
         return ""
@@ -640,7 +682,10 @@ def results_summary(eid: str, kind: str) -> str:
     return (f'<section class="ar-summary"><h2>결과 요약</h2>'
             f'<ul class="ar-summary-list">{items}</ul>'
             f'<p class="ar-summary-note">개표 결과 기준{turnout}. '
-            f'지역별 상세는 아래 섹션에서.</p></section>')
+            f'지역별 상세는 아래 섹션에서 — '
+            # archive에서 지역 entity로 나가는 길. 시군구 265곳을 다 나열하지 않고
+            # 허브 1-hop으로 둔다(역방향은 이미 강하다 — 지역 페이지가 archive 25개를 링크).
+            f'<a href="/region/">내 지역의 역대 기록</a>도 볼 수 있습니다.</p></section>')
 
 
 # 화면엔 제목만 — 누르면(ⓘ) 설명이 읽기 좋은 크기로 뜬다. (assets/components.css .info-i/.info-pop)

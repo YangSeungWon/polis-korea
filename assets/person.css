@@ -200,3 +200,12 @@ a.pp-party:hover { background: var(--bg2); }
 }
 /* 무투표 — 결손(—)과 다른 표시. 사실이지 없는 값이 아니다. */
 .rg-nv { color: var(--ink-soft); font-size: 0.92em; }
+
+/* 인물 → 지역 진입. 정당 배지와 같은 줄 문법(칩)이되 색은 중립 — 지역엔 정당색이 없다. */
+.pp-regions { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.pp-region {
+  display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 7px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  color: var(--ink-soft); text-decoration: none; white-space: nowrap;
+}
+.pp-region:hover { border-color: var(--rule-strong); color: var(--ink); }

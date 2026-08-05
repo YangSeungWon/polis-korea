@@ -32,6 +32,31 @@
       : `<span class="pp-party" style="${sty}">${escapeHtml(party)}</span>`;
   }
 
+  // 이 사람이 출마한 시군구 → 지역 페이지. 인물에서 지역으로 나가는 유일한 길이다
+  // (레이스 행은 행 전체가 archive 링크라 그 안에 또 링크를 넣을 수 없다).
+  //
+  // 지역 페이지는 {시도}-{시군구}인데 race의 place에는 시도가 없다. '중구'처럼 여러
+  // 시도에 있는 이름은 **어디인지 정할 수 없어** 잇지 않는다 — 억지로 하나 고르면
+  // 틀린 지역으로 보내는 링크가 된다. 목록은 build 시점에 만들어 둔 것을 쓴다.
+  let _regionIndex = null;
+  function regionField(races) {
+    if (!_regionIndex) {
+      const el = document.getElementById('region-slugs');
+      try { _regionIndex = el ? JSON.parse(el.textContent) : {}; } catch { _regionIndex = {}; }
+    }
+    const seen = new Set(), out = [];
+    for (const r of races || []) {
+      const slug = _regionIndex[r.place];
+      if (!slug || seen.has(slug)) continue;
+      seen.add(slug);
+      out.push(`<a class="pp-region" href="/region/${encodeURIComponent(slug)}/">${escapeHtml(r.place)}</a>`);
+      if (out.length >= 6) break;
+    }
+    if (!out.length) return '';
+    return `<div class="pp-field"><span class="pp-field-k">지역</span>`
+      + `<span class="pp-field-v pp-regions">${out.join('')}</span></div>`;
+  }
+
   // 백엔드(enrich_person_index)가 이미 assembly_id 기준으로 split했으므로
   // 프론트는 단순 렌더만. 이름 검색 시 동명이인 entry 여러 건 그대로 나열.
   function _splitNamesakesDeprecated(person) {
@@ -169,6 +194,7 @@
         </div>
         <div class="pp-meta">
           <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${allPartyless ? partylessChip() : parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
+          ${regionField(races)}
         </div>
       </div>
       <div class="pp-races">${rows}</div>
