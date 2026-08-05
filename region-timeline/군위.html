@@ -1,0 +1,380 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>군위 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 2298 426" width="2298" height="426" role="img" aria-label="군위 지역 정치사 연표">
+<line x1="232" y1="42" x2="232" y2="402" class="rt-grid"/><text x="232" y="36" class="rt-yr">1950</text>
+<line x1="492" y1="42" x2="492" y2="402" class="rt-grid"/><text x="492" y="36" class="rt-yr">1960</text>
+<line x1="752" y1="42" x2="752" y2="402" class="rt-grid"/><text x="752" y="36" class="rt-yr">1970</text>
+<line x1="1012" y1="42" x2="1012" y2="402" class="rt-grid"/><text x="1012" y="36" class="rt-yr">1980</text>
+<line x1="1272" y1="42" x2="1272" y2="402" class="rt-grid"/><text x="1272" y="36" class="rt-yr">1990</text>
+<line x1="1532" y1="42" x2="1532" y2="402" class="rt-grid"/><text x="1532" y="36" class="rt-yr">2000</text>
+<line x1="1792" y1="42" x2="1792" y2="402" class="rt-grid"/><text x="1792" y="36" class="rt-yr">2010</text>
+<line x1="2052" y1="42" x2="2052" y2="402" class="rt-grid"/><text x="2052" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="2258" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="2258" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="2258" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="2258" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="2258" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="2258" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="2258" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="2258" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="2258" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="2258" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="2143" y1="48" x2="2143" y2="400" class="rt-ev rt-ev-admin"><title>경상북도 군위군이 대구광역시로 편입</title></line><text x="2147" y="414" class="rt-evlab">경상북도 군위군이 대구광역시로 편입</text>
+<line x1="1981" y1="209" x2="1981" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1981" y1="209" x2="1981" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1981" y1="209" x2="1981" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1981" y1="209" x2="1981" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="242" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="242" y1="107" x2="346" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="346" y1="107" x2="448" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="448" y1="107" x2="507" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="507" y1="107" x2="593" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="593" y1="107" x2="685" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="685" y1="107" x2="788" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="788" y1="107" x2="834" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="834" y1="107" x2="984" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="984" y1="107" x2="1044" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="107" x2="1145" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1145" y1="107" x2="1228" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1228" y1="107" x2="1330" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1330" y1="107" x2="1435" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1435" y1="107" x2="1539" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1539" y1="107" x2="1643" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1643" y1="107" x2="1747" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1747" y1="107" x2="1851" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1851" y1="107" x2="1955" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1955" y1="107" x2="2059" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2059" y1="107" x2="2163" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2163" y1="107" x2="2163" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="2163" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="175" x2="2219" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="299" y1="73" x2="397" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="397" y1="73" x2="497" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="497" y1="73" x2="590" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="590" y1="73" x2="682" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="682" y1="73" x2="786" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="786" y1="73" x2="1219" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1219" y1="73" x2="1349" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1349" y1="73" x2="1479" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>1st-general-1948
+당시 선거구: 제5선거구(군위군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 무소속 박준 27.54%
+계보 구성: 무소속 44.88% · 계보 미확인 36.29% · 민주계 18.83%</title></circle>
+<circle cx="242" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2nd-general-1950
+당시 선거구: 제7선거구(군위군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 무소속 박만원 14.63%
+계보 구성: 무소속 87.9% · 민주계 12.1%</title></circle>
+<circle cx="299" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>2nd-pres-1952
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유당 이승만 82.01%
+계보 구성: 보수계 82.01% · 무소속 17.99%</title></circle>
+<circle cx="346" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>3rd-general-1954
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유당 박만원 %
+계보 구성: </title></circle>
+<circle cx="397" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>3rd-pres-1956
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유당 이승만 52.92%
+계보 구성: 보수계 52.92% · 무소속 47.08%</title></circle>
+<circle cx="448" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-general-1958
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유당 박만원 72.85%
+계보 구성: 보수계 72.85% · 무소속 27.15%</title></circle>
+<circle cx="497" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-pres-1960
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유당 이승만 100.0%
+계보 구성: 보수계 100.0%</title></circle>
+<circle cx="507" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>5th-general-1960
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주당(1955) 문명호 23.36%
+계보 구성: 무소속 66.28% · 민주계 23.36% · 계보 미확인 10.36%</title></circle>
+<circle cx="590" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>5th-pres-1963
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 박정희 67.42%
+계보 구성: 보수계 67.42% · 계보 미확인 32.58%</title></circle>
+<circle cx="593" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>6th-general-1963
+당시 선거구: 군위군·선산군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 김봉환 58.23%
+계보 구성: 보수계 58.23% · 계보 미확인 39.27% · 민주계 2.5%</title></circle>
+<circle cx="682" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>6th-pres-1967
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 박정희 71.11%
+계보 구성: 보수계 71.11% · 계보 미확인 28.89%</title></circle>
+<circle cx="685" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>7th-general-1967
+당시 선거구: 군위군·선산군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 김봉환 67.9%
+계보 구성: 보수계 68.42% · 계보 미확인 31.58%</title></circle>
+<circle cx="786" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>7th-pres-1971
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 박정희 79.33%
+계보 구성: 보수계 79.33% · 계보 미확인 19.98% · 진보계 0.69%</title></circle>
+<circle cx="788" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>8th-general-1971
+당시 선거구: 군위군·선산군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 김봉환 50.74%
+계보 구성: 보수계 50.74% · 계보 미확인 49.26%</title></circle>
+<circle cx="834" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>9th-general-1973
+당시 선거구: 제8선거구(칠곡군·군위군·성주군·선산군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 신현확 28.49%
+계보 구성: 무소속 41.94% · 계보 미확인 29.57% · 보수계 28.49%</title></circle>
+<circle cx="984" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제7선거구(구미시·군위군·성주군·칠곡군·선산군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주공화당 신현확 30.96%
+계보 구성: 무소속 49.1% · 보수계 30.96% · 계보 미확인 19.94%</title></circle>
+<circle cx="1044" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>11th-general-1981
+당시 선거구: 제8선거구(구미시·군위군·칠곡군·선산군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주정의당 박재홍 52.64%
+계보 구성: 보수계 52.64% · 계보 미확인 47.36%</title></circle>
+<circle cx="1145" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>12th-general-1985
+당시 선거구: 제5선거구(구미시·군위군·칠곡군·선산군)
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주정의당 박재홍 47%
+계보 구성: 보수계 47.0% · 무소속 35.28% · 계보 미확인 17.72%</title></circle>
+<circle cx="1219" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주정의당 노태우 76.56%
+계보 구성: 보수계 76.56% · 계보 미확인 22.24% · 지역계 1.2%</title></circle>
+<circle cx="1228" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 군위군·선산군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주정의당 김윤환 76.17%
+계보 구성: 보수계 76.17% · 무소속 12.28% · 계보 미확인 11.55%</title></circle>
+<circle cx="1330" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 군위군·선산군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주자유당 김윤환 61.5%
+계보 구성: 혼합 계보 61.5% · 무소속 36.01% · 계보 미확인 2.49%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1349" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 민주자유당 김영삼 67.5%
+계보 구성: 혼합 계보 67.5% · 계보 미확인 31.01% · 무소속 1.5%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1435" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 군위군·칠곡군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 신한국당 장영철 31.07%
+계보 구성: 무소속 51.18% · 혼합 계보 31.07% · 지역계 12.74% · 계보 미확인 5.0%
+혼합 구성: 신한국당=보수계+지역계</title></circle>
+<circle cx="1479" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 한나라당 이회창 61.01%
+계보 구성: 혼합 계보 81.22% · 계보 미확인 18.78%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1539" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 군위군·의성군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 한나라당 정창화 50.63%
+계보 구성: 혼합 계보 50.63% · 무소속 39.43% · 계보 미확인 9.94%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1643" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 군위군·의성군·청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 한나라당 김재원 47.15%
+계보 구성: 혼합 계보 47.15% · 무소속 34.11% · 계보 미확인 18.74%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1747" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 무소속 정해걸 49.36%
+계보 구성: 무소속 49.36% · 혼합 계보 44.93% · 계보 미확인 5.72%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1851" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 새누리당 김재원 72.68%
+계보 구성: 혼합 계보 72.68% · 계보 미확인 27.32%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1955" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 새누리당 김종태 77.65%
+계보 구성: 혼합 계보 77.65% · 계보 미확인 22.35%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1981" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유한국당 김재원 47.53%
+계보 구성: 혼합 계보 52.75% · 무소속 29.21% · 계보 미확인 18.04%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="1981" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 무소속 성윤환 47.18%
+계보 구성: 무소속 47.62% · 혼합 계보 27.7% · 계보 미확인 24.68%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="1981" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유한국당 김재원 67.48%
+계보 구성: 혼합 계보 73.02% · 무소속 16.39% · 계보 미확인 10.59%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="1981" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유한국당 김재원 67.13%
+계보 구성: 혼합 계보 77.9% · 계보 미확인 11.6% · 무소속 10.5%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="1981" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 상주시군위군의성군청송군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 자유한국당 김재원 62.55%
+계보 구성: 혼합 계보 66.61% · 무소속 17.59% · 계보 미확인 15.8%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="2059" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 군위군의성군청송군영덕군
+당시 행정구역: 군위군 (admin_unit:경상북도:군위군)
+당선: 미래통합당 김희국 79.31%
+계보 구성: 혼합 계보 79.31% · 계보 미확인 20.69%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="2163" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 동구군위군갑
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 최은석 74.49%
+계보 구성: 혼합 계보 74.49% · 계보 미확인 25.51%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -0.83%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2163" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 동구군위군을
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 강대식 76.13%
+계보 구성: 혼합 계보 76.13% · 진보계 19.47% · 계보 미확인 4.4%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선:  강은희 61.26%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="2219" cy="243" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 추경호 58.66%
+계보 구성: 혼합 계보 58.66% · 계보 미확인 41.34%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 김진열 77.4%
+계보 구성: 혼합 계보 77.4% · 계보 미확인 22.6%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 김진열 77.4%
+계보 구성: 혼합 계보 77.4% · 계보 미확인 22.6%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 박창석 74.53%
+계보 구성: 혼합 계보 74.53% · 계보 미확인 25.47%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 박창석 74.53%
+계보 구성: 혼합 계보 74.53% · 계보 미확인 25.47%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군가선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 서대식 20.06%
+계보 구성: 혼합 계보 51.59% · 무소속 32.83% · 계보 미확인 15.59%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군나선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 무소속 박수현 26.43%
+계보 구성: 혼합 계보 56.69% · 무소속 26.43% · 계보 미확인 16.89%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군가선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 서대식 20.06%
+계보 구성: 혼합 계보 51.59% · 무소속 32.83% · 계보 미확인 15.59%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군나선거구
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 무소속 박수현 26.43%
+계보 구성: 혼합 계보 56.69% · 무소속 26.43% · 계보 미확인 16.89%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="311" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘 국민의힘 72.04%
+계보 구성: 혼합 계보 72.04% · 계보 미확인 26.52% · 진보계 1.44%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 군위군
+당시 행정구역: 군위군 (admin_unit:대구광역시:군위군)
+당선: 국민의힘  %
+계보 구성: </title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 49회 · 계열 10종 · 행정구역·선거구 사건 1건 · 계보 분류의 24.25%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

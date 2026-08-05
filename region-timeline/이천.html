@@ -1,0 +1,391 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>이천 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 2298 426" width="2298" height="426" role="img" aria-label="이천 지역 정치사 연표">
+<line x1="232" y1="42" x2="232" y2="402" class="rt-grid"/><text x="232" y="36" class="rt-yr">1950</text>
+<line x1="492" y1="42" x2="492" y2="402" class="rt-grid"/><text x="492" y="36" class="rt-yr">1960</text>
+<line x1="752" y1="42" x2="752" y2="402" class="rt-grid"/><text x="752" y="36" class="rt-yr">1970</text>
+<line x1="1012" y1="42" x2="1012" y2="402" class="rt-grid"/><text x="1012" y="36" class="rt-yr">1980</text>
+<line x1="1272" y1="42" x2="1272" y2="402" class="rt-grid"/><text x="1272" y="36" class="rt-yr">1990</text>
+<line x1="1532" y1="42" x2="1532" y2="402" class="rt-grid"/><text x="1532" y="36" class="rt-yr">2000</text>
+<line x1="1792" y1="42" x2="1792" y2="402" class="rt-grid"/><text x="1792" y="36" class="rt-yr">2010</text>
+<line x1="2052" y1="42" x2="2052" y2="402" class="rt-grid"/><text x="2052" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="2258" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="2258" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="2258" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="2258" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="2258" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="2258" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="2258" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="2258" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="2258" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="2258" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1432" y1="48" x2="1432" y2="400" class="rt-ev rt-ev-admin"><title>이천군에서 이천시로 승격</title></line><text x="1436" y="414" class="rt-evlab">이천군에서 이천시로 승격</text>
+<line x1="1955" y1="209" x2="1955" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="242" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="242" y1="107" x2="346" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="346" y1="107" x2="448" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="448" y1="107" x2="507" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="507" y1="107" x2="593" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="593" y1="107" x2="685" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="685" y1="107" x2="788" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="788" y1="107" x2="834" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="834" y1="107" x2="984" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="984" y1="107" x2="1044" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="107" x2="1145" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1145" y1="107" x2="1228" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1228" y1="107" x2="1330" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1330" y1="107" x2="1435" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1435" y1="107" x2="1539" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1539" y1="107" x2="1643" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1643" y1="107" x2="1747" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1747" y1="107" x2="1851" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1851" y1="107" x2="1955" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1955" y1="107" x2="2059" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2059" y1="107" x2="2163" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="175" x2="2219" y2="175" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="299" y1="73" x2="397" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="397" y1="73" x2="497" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="497" y1="73" x2="590" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="590" y1="73" x2="682" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="682" y1="73" x2="786" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="786" y1="73" x2="1219" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1219" y1="73" x2="1349" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1349" y1="73" x2="1479" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>1st-general-1948
+당시 선거구: 제22선거구(이천군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 대한독립촉성국민회 송창식 32.46%
+계보 구성: 무소속 56.89% · 계보 미확인 43.11%</title></circle>
+<circle cx="242" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2nd-general-1950
+당시 선거구: 제14선거구(이천군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 무소속 이종성 19.47%
+계보 구성: 무소속 65.43% · 계보 미확인 34.57%</title></circle>
+<circle cx="299" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>2nd-pres-1952
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 자유당 이승만 89.01%
+계보 구성: 보수계 89.01% · 무소속 10.99%</title></circle>
+<circle cx="346" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>3rd-general-1954
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 자유당 김병철 29.19%
+계보 구성: 무소속 70.81% · 보수계 29.19%</title></circle>
+<circle cx="397" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>3rd-pres-1956
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 자유당 이승만 87.14%
+계보 구성: 보수계 87.14% · 무소속 12.86%</title></circle>
+<circle cx="448" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>4th-general-1958
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 자유당 이기붕 %
+계보 구성: </title></circle>
+<circle cx="497" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-pres-1960
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 자유당 이승만 100.0%
+계보 구성: 보수계 100.0%</title></circle>
+<circle cx="507" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>5th-general-1960
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 무소속 최하영 16.94%
+계보 구성: 무소속 80.39% · 민주계 19.61%</title></circle>
+<circle cx="590" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>5th-pres-1963
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민정당 윤보선 50.32%
+계보 구성: 계보 미확인 62.62% · 보수계 37.38%</title></circle>
+<circle cx="593" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>6th-general-1963
+당시 선거구: 광주군·이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민정당 신하균 43.74%
+계보 구성: 계보 미확인 53.42% · 보수계 39.28% · 민주계 7.3%</title></circle>
+<circle cx="682" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>6th-pres-1967
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 신민당 윤보선 57.54%
+계보 구성: 계보 미확인 66.18% · 보수계 33.82%</title></circle>
+<circle cx="685" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>7th-general-1967
+당시 선거구: 광주군·이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주공화당 차지철 71.44%
+계보 구성: 보수계 71.44% · 계보 미확인 28.56%</title></circle>
+<circle cx="786" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>7th-pres-1971
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주공화당 박정희 56.06%
+계보 구성: 보수계 56.06% · 계보 미확인 42.33% · 진보계 1.61%</title></circle>
+<circle cx="788" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>8th-general-1971
+당시 선거구: 광주군·이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주공화당 차지철 57.79%
+계보 구성: 보수계 57.79% · 계보 미확인 42.21%</title></circle>
+<circle cx="834" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>9th-general-1973
+당시 선거구: 제4선거구(여주군·광주군·이천군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주공화당 차지철 35.71%
+계보 구성: 계보 미확인 61.05% · 보수계 35.71% · 무소속 3.24%</title></circle>
+<circle cx="984" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제4선거구(성남시·여주군·광주군·이천군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주공화당 정동성 30.6%
+계보 구성: 무소속 37.48% · 계보 미확인 31.92% · 보수계 30.6%</title></circle>
+<circle cx="1044" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>11th-general-1981
+당시 선거구: 제9선거구(여주군·이천군·용인군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주정의당 정동성 38.14%
+계보 구성: 보수계 38.14% · 무소속 32.87% · 계보 미확인 28.98%</title></circle>
+<circle cx="1145" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>12th-general-1985
+당시 선거구: 제7선거구(여주군·이천군·용인군)
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주정의당 정동성 46.41%
+계보 구성: 계보 미확인 53.59% · 보수계 46.41%</title></circle>
+<circle cx="1219" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주정의당 노태우 50.78%
+계보 구성: 보수계 50.78% · 계보 미확인 42.78% · 지역계 6.44%</title></circle>
+<circle cx="1228" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주정의당 이영문 43.73%
+계보 구성: 보수계 43.73% · 계보 미확인 38.96% · 지역계 11.96% · 무소속 5.35%</title></circle>
+<circle cx="1330" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주자유당 이영문 37.77%
+계보 구성: 계보 미확인 62.23% · 혼합 계보 37.77%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1349" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 이천군
+당시 행정구역: 이천군 (admin_unit:경기도:이천군)
+당선: 민주자유당 김영삼 36.15%
+계보 구성: 계보 미확인 62.25% · 혼합 계보 36.15% · 무소속 1.6%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1435" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 통합민주당(1995) 황규선 32.25%
+계보 구성: 계보 미확인 40.71% · 혼합 계보 24.3% · 무소속 23.93% · 지역계 11.06%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="1479" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 국민신당 이인제 37.46%
+계보 구성: 혼합 계보 68.01% · 계보 미확인 31.99%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="1539" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 새천년민주당 이희규 44.75%
+계보 구성: 계보 미확인 49.51% · 혼합 계보 34.5% · 지역계 15.99%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="1643" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 이천시·여주군
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 한나라당 이규택 41.86%
+계보 구성: 계보 미확인 53.93% · 혼합 계보 41.86% · 진보계 4.22%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1747" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 이천시여주군
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 한나라당 이범관 33.14%
+계보 구성: 계보 미확인 54.22% · 혼합 계보 33.14% · 무소속 9.75% · 진보계 2.88%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1851" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 새누리당 유승우 42.43%
+계보 구성: 혼합 계보 42.43% · 무소속 29.38% · 진보계 28.19%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="1955" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 새누리당 송석준 50.99%
+계보 구성: 혼합 계보 50.99% · 계보 미확인 39.82% · 무소속 9.19%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="1955" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 이천시가선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 임영길 55.39%
+계보 구성: 계보 미확인 55.39% · 혼합 계보 44.61%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1955" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 이천시가선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 임영길 55.39%
+계보 구성: 계보 미확인 55.39% · 혼합 계보 44.61%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="2059" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 미래통합당 송석준 51.99%
+계보 구성: 혼합 계보 51.99% · 계보 미확인 46.46% · 무소속 1.54%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2163" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 국민의힘 송석준 51.33%
+계보 구성: 혼합 계보 51.33% · 계보 미확인 48.67%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선:  임태희 51.52%
+계보 구성: 무소속 100.0%
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 추미애 49.82%
+계보 구성: 계보 미확인 53.8% · 혼합 계보 45.43% · 진보계 0.76%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 성수석 51.32%
+계보 구성: 계보 미확인 51.32% · 혼합 계보 48.68%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 성수석 51.32%
+계보 구성: 계보 미확인 51.32% · 혼합 계보 48.68%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시제1선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 국민의힘 김일중 51.5%
+계보 구성: 혼합 계보 51.5% · 계보 미확인 48.5%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시제2선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 김인영 50.64%
+계보 구성: 계보 미확인 50.64% · 혼합 계보 49.36%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시제1선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 국민의힘 김일중 51.5%
+계보 구성: 혼합 계보 51.5% · 계보 미확인 48.5%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시제2선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 김인영 50.64%
+계보 구성: 계보 미확인 50.64% · 혼합 계보 49.36%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시가선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 조주환 35.22%
+계보 구성: 계보 미확인 52.37% · 혼합 계보 42.48% · 진보계 5.14%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시나선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 최덕수 43.28%
+계보 구성: 혼합 계보 50.98% · 계보 미확인 43.28% · 무소속 5.74%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시다선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 진재훈 46.08%
+계보 구성: 혼합 계보 53.92% · 계보 미확인 46.08%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시가선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 조주환 35.22%
+계보 구성: 계보 미확인 52.37% · 혼합 계보 42.48% · 진보계 5.14%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시나선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 최덕수 43.28%
+계보 구성: 혼합 계보 50.98% · 계보 미확인 43.28% · 무소속 5.74%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시다선거구
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 진재훈 46.08%
+계보 구성: 혼합 계보 53.92% · 계보 미확인 46.08%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 더불어민주당 46.13%
+계보 구성: 계보 미확인 54.01% · 혼합 계보 44.74% · 진보계 1.25%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+<circle cx="2219" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 이천시
+당시 행정구역: 이천시 (admin_unit:경기도:이천시)
+당선: 더불어민주당 더불어민주당 51.92%
+계보 구성: 계보 미확인 51.92% · 혼합 계보 48.08%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.84%p</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 49회 · 계열 10종 · 행정구역·선거구 사건 1건 · 계보 분류의 44.65%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

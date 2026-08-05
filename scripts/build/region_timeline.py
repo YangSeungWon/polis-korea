@@ -220,6 +220,63 @@ def _reagg_for(district: str) -> dict | None:
     }
 
 
+def comparison_edges(points: list) -> list:
+    """점과 **따로** 만든다. 비교 불가는 점을 지우는 게 아니라 선만 끊는 것이다.
+
+        비교 불가 ≠ 역사에서 사라짐
+
+    부천은 광역동이 선거구를 가로질러 2020↔2024 delta를 못 낸다. 그렇다고 2020년
+    선거가 없었던 게 아니다. 점은 둘 다 남고 그 사이 선만 없다.
+    같은 comparison_series_id 안에서만 잇는다.
+    """
+    out = []
+    by: dict = {}
+    for p in points:
+        by.setdefault(p["comparison_series_id"], []).append(p)
+    for sid, ps in by.items():
+        ps = sorted(ps, key=lambda x: x["election_date"])
+        for a, b in zip(ps, ps[1:]):
+            cm = b.get("comparison") or {}
+            allowed = bool(cm.get("may_show_delta")) if cm else None
+            out.append({
+                "series": sid, "from": a["election_id"], "to": b["election_id"],
+                "from_date": a["election_date"], "to_date": b["election_date"],
+                # None = 비교 판정 자체가 없다(총선 외). False = 판정했고 막혔다.
+                "delta_allowed": allowed,
+                "method": cm.get("method"),
+                "blocked_reason": (None if allowed is not False else
+                                   ("가로지르는 동" if cm.get("method") == "context_only"
+                                    else "구도 변화·편향 불안정")),
+                "delta": cm.get("delta") if allowed else None,
+                "measurement_scope": cm.get("measurement_scope"),
+            })
+    return sorted(out, key=lambda e: (e["series"], e["to_date"]))
+
+
+def bridge_dependency(points: list) -> dict:
+    """historical이 얼마나 **역사적 연속성 해석에 기대고 있나**.
+
+    coverage 하나로 기본 모드를 정하면 안 된다. strict와 historical은 완성도 차이가
+    아니라 다른 질문이다. historical resolved 96%인데 그중 58%가 bridge를 거친 것이면,
+    읽기는 좋아도 상당 부분이 '강제해산 너머의 정치적 전통' 해석에 의존한다.
+    그 사실을 알고 기본값을 정해야 한다.
+    """
+    tot = dep = 0.0
+    for p in points:
+        a, b = p.get("lineage_composition") or {}, p.get("lineage_composition_historical") or {}
+        if not a or not b:
+            continue
+        v = b.get("total_votes") or 0
+        tot += v * b.get("lineage_resolved_coverage", 0) / 100
+        # historical에서만 분류된 표 = bridge 덕에 풀린 표
+        dep += v * max(0.0, b.get("lineage_resolved_coverage", 0)
+                       - a.get("lineage_resolved_coverage", 0)) / 100
+    return {"historical_resolved_votes": round(tot),
+            "bridge_dependent_votes": round(dep),
+            "bridge_dependent_share_of_resolved":
+                round(dep / tot * 100, 2) if tot else None}
+
+
 def main(regions: list[str]) -> int:
     ax = json.loads(AXES.read_text(encoding="utf-8"))
     fam = ax["lineage_family"]
@@ -294,6 +351,9 @@ def main(regions: list[str]) -> int:
             "region": region,
             "series": sorted({p["comparison_series_id"] for p in points}),
             "events": geo_events(region),
+            # 점 · 비교선 · 사건을 따로 둔다 — renderer가 셋을 섞지 않게
+            "comparison_edges": comparison_edges(points),
+            "bridge_dependency": bridge_dependency(points),
             "points": points,
         }
         (OUT / f"{region}.json").write_text(

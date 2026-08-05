@@ -1,0 +1,491 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>종로 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 2298 426" width="2298" height="426" role="img" aria-label="종로 지역 정치사 연표">
+<line x1="232" y1="42" x2="232" y2="402" class="rt-grid"/><text x="232" y="36" class="rt-yr">1950</text>
+<line x1="492" y1="42" x2="492" y2="402" class="rt-grid"/><text x="492" y="36" class="rt-yr">1960</text>
+<line x1="752" y1="42" x2="752" y2="402" class="rt-grid"/><text x="752" y="36" class="rt-yr">1970</text>
+<line x1="1012" y1="42" x2="1012" y2="402" class="rt-grid"/><text x="1012" y="36" class="rt-yr">1980</text>
+<line x1="1272" y1="42" x2="1272" y2="402" class="rt-grid"/><text x="1272" y="36" class="rt-yr">1990</text>
+<line x1="1532" y1="42" x2="1532" y2="402" class="rt-grid"/><text x="1532" y="36" class="rt-yr">2000</text>
+<line x1="1792" y1="42" x2="1792" y2="402" class="rt-grid"/><text x="1792" y="36" class="rt-yr">2010</text>
+<line x1="2052" y1="42" x2="2052" y2="402" class="rt-grid"/><text x="2052" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="2258" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="2258" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="2258" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="2258" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="2258" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="2258" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="2258" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="2258" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="2258" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="2258" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1839" y1="209" x2="2085" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2085" y1="209" x2="2109" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2109" y1="209" x2="2109" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2109" y1="209" x2="2176" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="189" y1="107" x2="189" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="242" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="242" y1="107" x2="242" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="242" y1="107" x2="346" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="346" y1="107" x2="346" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="346" y1="107" x2="448" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="448" y1="107" x2="448" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="448" y1="107" x2="507" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="507" y1="107" x2="507" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="507" y1="107" x2="593" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="593" y1="107" x2="685" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="685" y1="107" x2="788" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="788" y1="107" x2="834" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="834" y1="107" x2="984" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="984" y1="107" x2="1044" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="107" x2="1145" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1145" y1="107" x2="1228" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1228" y1="107" x2="1330" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1330" y1="107" x2="1435" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1435" y1="107" x2="1539" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1539" y1="107" x2="1643" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1643" y1="107" x2="1747" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1747" y1="107" x2="1851" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1851" y1="107" x2="1955" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1955" y1="107" x2="2059" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2059" y1="107" x2="2163" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="277" x2="2219" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="345" x2="2219" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2219" y1="175" x2="2219" y2="175" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="299" y1="73" x2="397" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="397" y1="73" x2="497" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="497" y1="73" x2="590" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="590" y1="73" x2="682" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="682" y1="73" x2="786" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="786" y1="73" x2="1219" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1219" y1="73" x2="1349" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1349" y1="73" x2="1479" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>1st-general-1948
+당시 선거구: 제2선거구(종로갑구)
+당시 행정구역 연결 정보 미등록
+당선: 조선민주당 이윤영 56.11%
+계보 구성: 계보 미확인 91.56% · 무소속 8.44%</title></circle>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>1st-general-1948
+당시 선거구: 제3선거구(종로을구)
+당시 행정구역 연결 정보 미등록
+당선: 무소속 장면 57.06%
+계보 구성: 무소속 91.51% · 계보 미확인 8.49%</title></circle>
+<circle cx="242" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2nd-general-1950
+당시 선거구: 제3선거구(종로 갑구)
+당시 행정구역 연결 정보 미등록
+당선: 대한부인회 박순천 54.98%
+계보 구성: 계보 미확인 54.98% · 무소속 45.02%</title></circle>
+<circle cx="242" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2nd-general-1950
+당시 선거구: 제4선거구(종로 을구)
+당시 행정구역 연결 정보 미등록
+당선: 무소속 오하영 58.55%
+계보 구성: 무소속 58.55% · 민주계 41.45%</title></circle>
+<circle cx="299" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>2nd-pres-1952
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 자유당 이승만 76.03%
+계보 구성: 보수계 76.03% · 무소속 23.97%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="346" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>3rd-general-1954
+당시 선거구: 종로구 갑
+당시 행정구역 연결 정보 미등록
+당선: 민주국민당 윤보선 32.35%
+계보 구성: 무소속 62.12% · 민주계 32.35% · 보수계 5.53%</title></circle>
+<circle cx="346" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>3rd-general-1954
+당시 선거구: 종로구 을
+당시 행정구역 연결 정보 미등록
+당선: 무소속 김두한 28.63%
+계보 구성: 무소속 55.43% · 계보 미확인 27.12% · 보수계 17.45%</title></circle>
+<circle cx="397" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>3rd-pres-1956
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 자유당 이승만 64.51%
+계보 구성: 보수계 64.51% · 무소속 35.49%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="448" cy="107" r="6" class="rt-pt" fill="#0a5cb8" tabindex="0"><title>4th-general-1958
+당시 선거구: 종로구 갑
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1955) 윤보선 63.21%
+계보 구성: 민주계 63.21% · 무소속 18.47% · 보수계 18.32%</title></circle>
+<circle cx="448" cy="107" r="6" class="rt-pt" fill="#0a5cb8" tabindex="0"><title>4th-general-1958
+당시 선거구: 종로구 을
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1955) 한근조 55.69%
+계보 구성: 민주계 55.69% · 계보 미확인 23.93% · 보수계 18.5% · 무소속 1.87%</title></circle>
+<circle cx="497" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-pres-1960
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 자유당 이승만 100.0%
+계보 구성: 보수계 100.0%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="507" cy="107" r="6" class="rt-pt" fill="#0a5cb8" tabindex="0"><title>5th-general-1960
+당시 선거구: 종로구 갑
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1955) 윤보선 81.85%
+계보 구성: 민주계 81.85% · 무소속 10.39% · 계보 미확인 7.76%</title></circle>
+<circle cx="507" cy="107" r="6" class="rt-pt" fill="#0a5cb8" tabindex="0"><title>5th-general-1960
+당시 선거구: 종로구 을
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1955) 한근조 48.99%
+계보 구성: 민주계 48.99% · 무소속 44.32% · 계보 미확인 6.69%</title></circle>
+<circle cx="590" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>5th-pres-1963
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민정당 윤보선 64.55%
+계보 구성: 계보 미확인 68.44% · 보수계 31.56%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="593" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>6th-general-1963
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민정당 전진한 50.2%
+계보 구성: 계보 미확인 55.05% · 민주계 22.6% · 보수계 22.34%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="682" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>6th-pres-1967
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 신민당 윤보선 50.48%
+계보 구성: 계보 미확인 53.15% · 보수계 46.85%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="685" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>7th-general-1967
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 신민당 유진오 69.68%
+계보 구성: 계보 미확인 73.13% · 보수계 26.87%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="786" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>7th-pres-1971
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 신민당 김대중 55.4%
+계보 구성: 계보 미확인 55.66% · 보수계 44.15% · 진보계 0.19%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="788" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>8th-general-1971
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 신민당 권중돈 55.85%
+계보 구성: 계보 미확인 56.53% · 보수계 43.47%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="834" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>9th-general-1973
+당시 선거구: 제1선거구(종로구·중구)
+당시 행정구역 연결 정보 미등록
+당선: 민주공화당 장기영 43.31%
+계보 구성: 계보 미확인 56.69% · 보수계 43.31%</title></circle>
+<circle cx="984" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제1선거구(종로구·중구)
+당시 행정구역 연결 정보 미등록
+당선: 신민당 정대철 42.54%
+계보 구성: 계보 미확인 44.52% · 보수계 29.18% · 무소속 26.3%</title></circle>
+<circle cx="1044" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>11th-general-1981
+당시 선거구: 제1선거구(종로구·중구)
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 이종찬 48.72%
+계보 구성: 계보 미확인 51.28% · 보수계 48.72%</title></circle>
+<circle cx="1145" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>12th-general-1985
+당시 선거구: 제1선거구(종로구·중구)
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 이종찬 32.23%
+계보 구성: 계보 미확인 60.47% · 보수계 32.23% · 무소속 7.3%</title></circle>
+<circle cx="1219" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 평화민주당 김대중 34.7%
+계보 구성: 계보 미확인 61.94% · 보수계 30.94% · 지역계 7.11%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1228" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 이종찬 37.96%
+계보 구성: 계보 미확인 49.69% · 보수계 37.96% · 지역계 12.35%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1330" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 이종찬 35.48%
+계보 구성: 계보 미확인 50.79% · 혼합 계보 35.48% · 무소속 13.73%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1349" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1991) 김대중 39.16%
+계보 구성: 계보 미확인 66.26% · 혼합 계보 32.27% · 무소속 1.47%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1435" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 신한국당 이명박 41.01%
+계보 구성: 계보 미확인 51.4% · 혼합 계보 41.01% · 지역계 6.73% · 무소속 0.86%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1479" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 김대중 45.71%
+계보 구성: 혼합 계보 52.8% · 계보 미확인 47.2%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1539" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 정인봉 48.74%
+계보 구성: 혼합 계보 48.74% · 계보 미확인 44.44% · 지역계 4.13% · 진보계 1.74% · 무소속 0.95%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1643" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 박진 42.81%
+계보 구성: 계보 미확인 53.4% · 혼합 계보 42.81% · 진보계 3.37% · 지역계 0.41%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1747" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 박진 48.44%
+계보 구성: 계보 미확인 49.95% · 혼합 계보 48.44% · 진보계 1.62%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1839" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2011년 10·26 재·보궐선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 무소속 박원순 53.98%
+계보 구성: 무소속 54.37% · 혼합 계보 45.63%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1851" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 민주통합당 정세균 52.27%
+계보 구성: 계보 미확인 52.77% · 혼합 계보 45.89% · 진보계 0.86% · 무소속 0.48%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1955" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정세균 52.6%
+계보 구성: 계보 미확인 58.98% · 혼합 계보 39.79% · 진보계 0.96% · 무소속 0.26%
+혼합 구성: 새누리당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2059" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이낙연 58.38%
+계보 구성: 계보 미확인 59.38% · 혼합 계보 40.05% · 진보계 0.29% · 무소속 0.28%
+혼합 구성: 미래통합당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2085" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2021년 4·7 재·보궐선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 오세훈 55.24%
+계보 구성: 혼합 계보 55.47% · 계보 미확인 43.74% · 무소속 0.57% · 진보계 0.22%
+혼합 구성: 국민의힘=보수계+지역계, 민생당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2109" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2022년 3·9 동시 재·보궐선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 최재형 52.09%
+계보 구성: 혼합 계보 52.09% · 무소속 30.2% · 진보계 15.32% · 계보 미확인 2.38%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2109" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2022년 3·9 동시 재·보궐선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 최재형 52.09%
+계보 구성: 혼합 계보 52.09% · 무소속 30.2% · 진보계 15.32% · 계보 미확인 2.38%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2163" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 곽상언 50.92%
+계보 구성: 계보 미확인 55.87% · 혼합 계보 44.13%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2176" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2024년 10·16 재·보궐선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선:  정근식 53.48%
+계보 구성: 무소속 100.0%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선:  정근식 28.4%
+계보 구성: 무소속 100.0%
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정원오 49.97%
+계보 구성: 계보 미확인 51.61% · 혼합 계보 47.03% · 진보계 1.36%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 유찬종 52.52%
+계보 구성: 계보 미확인 52.52% · 혼합 계보 47.48%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 유찬종 52.52%
+계보 구성: 계보 미확인 52.52% · 혼합 계보 47.48%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 윤선희 48.56%
+계보 구성: 계보 미확인 48.56% · 혼합 계보 47.34% · 무소속 4.1%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 선정환 52.88%
+계보 구성: 계보 미확인 52.88% · 혼합 계보 42.72% · 진보계 2.26% · 무소속 2.14%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 윤선희 48.56%
+계보 구성: 계보 미확인 48.56% · 혼합 계보 47.34% · 무소속 4.1%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 선정환 52.88%
+계보 구성: 계보 미확인 52.88% · 혼합 계보 42.72% · 진보계 2.26% · 무소속 2.14%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구가선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 여봉무 49.35%
+계보 구성: 혼합 계보 50.65% · 계보 미확인 49.35%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이미자 32.46%
+계보 구성: 계보 미확인 59.24% · 혼합 계보 40.76%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구나선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 노진경 %
+계보 구성: </title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김종보 %
+계보 구성: </title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구가선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 여봉무 49.35%
+계보 구성: 혼합 계보 50.65% · 계보 미확인 49.35%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이미자 32.46%
+계보 구성: 계보 미확인 59.24% · 혼합 계보 40.76%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2219" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 44.46%
+계보 구성: 계보 미확인 54.72% · 혼합 계보 41.97% · 진보계 3.31%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2219" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 종로구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 54.13%
+계보 구성: 계보 미확인 54.13% · 혼합 계보 45.87%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.46%p, 더불어민주당 -8.11%p, 민중민주당 +0.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 57회 · 계열 10종 · 행정구역·선거구 사건 0건 · 계보 분류의 46.84%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

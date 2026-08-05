@@ -1,0 +1,308 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>하남 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 1157 426" width="1157" height="426" role="img" aria-label="하남 지역 정치사 연표">
+<line x1="391" y1="42" x2="391" y2="402" class="rt-grid"/><text x="391" y="36" class="rt-yr">2000</text>
+<line x1="651" y1="42" x2="651" y2="402" class="rt-grid"/><text x="651" y="36" class="rt-yr">2010</text>
+<line x1="911" y1="42" x2="911" y2="402" class="rt-grid"/><text x="911" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="1117" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="1117" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="1117" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="1117" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="1117" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="1117" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="1117" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="1117" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="1117" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="1117" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1022" y1="94" x2="1022" y2="120" class="rt-ev rt-ev-dist"><title>하남시가 갑·을로 분구</title></line>
+<line x1="840" y1="209" x2="840" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="840" y1="209" x2="1078" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1078" y1="209" x2="1078" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="189" y1="107" x2="294" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="294" y1="107" x2="398" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="398" y1="107" x2="503" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="503" y1="107" x2="606" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="606" y1="107" x2="710" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="710" y1="107" x2="814" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="814" y1="107" x2="919" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="919" y1="107" x2="1022" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1022" y1="107" x2="1022" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="277" x2="1078" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="345" x2="1078" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="345" x2="1078" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="345" x2="1078" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="345" x2="1078" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="345" x2="1078" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1078" y1="175" x2="1078" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="208" y1="73" x2="338" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 하남시·광주군
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 정영훈 37.33%
+계보 구성: 계보 미확인 43.88% · 혼합 계보 37.33% · 무소속 18.79%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="208" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 김영삼 35.45%
+계보 구성: 계보 미확인 63.25% · 혼합 계보 35.45% · 무소속 1.3%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="294" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 하남시·광주군
+당시 행정구역 연결 정보 미등록
+당선: 신한국당 정영훈 39.15%
+계보 구성: 계보 미확인 42.22% · 혼합 계보 39.15% · 지역계 18.63%
+혼합 구성: 신한국당=보수계+지역계</title></circle>
+<circle cx="338" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 김대중 39.12%
+계보 구성: 혼합 계보 59.73% · 계보 미확인 40.27%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="398" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 유성근 40.14%
+계보 구성: 혼합 계보 40.14% · 계보 미확인 34.92% · 지역계 24.93%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="503" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 열린우리당 문학진 42.65%
+계보 구성: 계보 미확인 50.21% · 혼합 계보 33.5% · 무소속 16.29%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="606" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 통합민주당 문학진 46.2%
+계보 구성: 계보 미확인 61.33% · 혼합 계보 38.67%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="710" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 이현재 52.81%
+계보 구성: 혼합 계보 52.81% · 계보 미확인 42.25% · 무소속 4.94%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="814" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 이현재 50.55%
+계보 구성: 혼합 계보 50.55% · 계보 미확인 49.45%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="840" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오수봉 37.8%
+계보 구성: 계보 미확인 65.32% · 혼합 계보 34.68%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="840" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2017년 4·12 재·보궐선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오수봉 37.8%
+계보 구성: 계보 미확인 65.32% · 혼합 계보 34.68%
+혼합 구성: 바른정당=보수계+지역계, 자유한국당=보수계+지역계</title></circle>
+<circle cx="919" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최종윤 50.77%
+계보 구성: 계보 미확인 51.29% · 혼합 계보 33.25% · 무소속 15.47%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="1022" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 하남시갑
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 추미애 50.59%
+계보 구성: 계보 미확인 50.59% · 혼합 계보 49.41%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.68%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1022" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 하남시을
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김용만 51.66%
+계보 구성: 계보 미확인 56.29% · 혼합 계보 43.71%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.7%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1078" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2026년 국회의원 재·보궐선거
+당시 선거구: 하남시갑
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이광재 49.68%
+계보 구성: 계보 미확인 51.87% · 혼합 계보 48.13%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.68%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1078" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2026년 국회의원 재·보궐선거
+당시 선거구: 하남시갑
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이광재 49.68%
+계보 구성: 계보 미확인 51.87% · 혼합 계보 48.13%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 +2.68%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1078" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선:  안민석 51.96%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="1078" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 추미애 52.89%
+계보 구성: 계보 미확인 57.7% · 혼합 계보 41.73% · 진보계 0.57%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이현재 51.95%
+계보 구성: 혼합 계보 51.95% · 계보 미확인 48.05%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이현재 51.95%
+계보 구성: 혼합 계보 51.95% · 계보 미확인 48.05%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오민용 52.16%
+계보 구성: 계보 미확인 52.16% · 혼합 계보 42.61% · 무소속 5.23%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강성삼 51.02%
+계보 구성: 계보 미확인 51.02% · 혼합 계보 48.98%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오지훈 59.75%
+계보 구성: 계보 미확인 59.75% · 혼합 계보 40.25%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 방미숙 56.17%
+계보 구성: 계보 미확인 56.17% · 혼합 계보 43.83%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오민용 52.16%
+계보 구성: 계보 미확인 52.16% · 혼합 계보 42.61% · 무소속 5.23%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강성삼 51.02%
+계보 구성: 계보 미확인 51.02% · 혼합 계보 48.98%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오지훈 59.75%
+계보 구성: 계보 미확인 59.75% · 혼합 계보 40.25%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 방미숙 56.17%
+계보 구성: 계보 미확인 56.17% · 혼합 계보 43.83%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시나선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정혜영 37.88%
+계보 구성: 계보 미확인 52.35% · 혼합 계보 47.65%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시다선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 신선호 31.52%
+계보 구성: 계보 미확인 58.3% · 혼합 계보 39.5% · 진보계 2.21%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시가선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최승태 %
+계보 구성: </title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오승철 %
+계보 구성: </title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시나선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정혜영 37.88%
+계보 구성: 계보 미확인 52.35% · 혼합 계보 47.65%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시다선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 신선호 31.52%
+계보 구성: 계보 미확인 58.3% · 혼합 계보 39.5% · 진보계 2.21%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1078" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 46.78%
+계보 구성: 계보 미확인 57.03% · 혼합 계보 41.49% · 진보계 1.48%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1078" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 하남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 54.54%
+계보 구성: 계보 미확인 54.54% · 혼합 계보 45.46%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 36회 · 계열 10종 · 행정구역·선거구 사건 1건 · 계보 분류의 52.13%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

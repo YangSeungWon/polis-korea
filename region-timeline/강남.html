@@ -1,0 +1,592 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>강남 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 1502 426" width="1502" height="426" role="img" aria-label="강남 지역 정치사 연표">
+<line x1="216" y1="42" x2="216" y2="402" class="rt-grid"/><text x="216" y="36" class="rt-yr">1980</text>
+<line x1="476" y1="42" x2="476" y2="402" class="rt-grid"/><text x="476" y="36" class="rt-yr">1990</text>
+<line x1="736" y1="42" x2="736" y2="402" class="rt-grid"/><text x="736" y="36" class="rt-yr">2000</text>
+<line x1="996" y1="42" x2="996" y2="402" class="rt-grid"/><text x="996" y="36" class="rt-yr">2010</text>
+<line x1="1256" y1="42" x2="1256" y2="402" class="rt-grid"/><text x="1256" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="1462" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="1462" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="1462" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="1462" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="1462" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="1462" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="1462" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="1462" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="1462" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="1462" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1031" y1="209" x2="1031" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1031" y1="209" x2="1031" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1031" y1="209" x2="1031" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1031" y1="209" x2="1044" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1289" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1289" y1="209" x2="1381" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="248" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="248" y1="107" x2="349" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="349" y1="107" x2="433" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="433" y1="107" x2="433" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="433" y1="107" x2="534" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="534" y1="107" x2="534" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="534" y1="107" x2="640" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="640" y1="107" x2="640" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="640" y1="107" x2="744" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="744" y1="107" x2="744" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="744" y1="107" x2="848" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="848" y1="107" x2="848" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="848" y1="107" x2="951" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="951" y1="107" x2="951" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="951" y1="107" x2="1056" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1056" y1="107" x2="1056" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1056" y1="107" x2="1160" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1160" y1="107" x2="1160" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1160" y1="107" x2="1160" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1160" y1="107" x2="1264" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1264" y1="107" x2="1264" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1264" y1="107" x2="1264" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1264" y1="107" x2="1368" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1368" y1="107" x2="1368" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1368" y1="107" x2="1368" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="175" x2="1423" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="423" y1="73" x2="553" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="553" y1="73" x2="683" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제10선거구(강남구·강남구을)
+당시 행정구역 연결 정보 미등록
+당선: 신민당 정운갑 50.89%
+계보 구성: 계보 미확인 55.56% · 보수계 29.28% · 무소속 15.16%</title></circle>
+<circle cx="248" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>11th-general-1981
+당시 선거구: 제13선거구(강남구)
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 이태섭 35.92%
+계보 구성: 계보 미확인 49.56% · 보수계 35.92% · 무소속 14.52%</title></circle>
+<circle cx="349" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>12th-general-1985
+당시 선거구: 제13선거구(강남구)
+당시 행정구역 연결 정보 미등록
+당선: 신한민주당 김형래 35.8%
+계보 구성: 계보 미확인 75.43% · 보수계 24.57%</title></circle>
+<circle cx="423" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 통일민주당 김영삼 35.31%
+계보 구성: 계보 미확인 60.57% · 보수계 32.41% · 지역계 7.02%</title></circle>
+<circle cx="433" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 통일민주당 황병태 27.04%
+계보 구성: 계보 미확인 48.15% · 지역계 21.41% · 보수계 17.9% · 무소속 12.54%
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="433" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 이태섭 35.98%
+계보 구성: 보수계 35.98% · 계보 미확인 30.66% · 무소속 30.4% · 지역계 2.97%
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="534" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 통일국민당 김동길 46.11%
+계보 구성: 계보 미확인 69.66% · 혼합 계보 30.34%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="534" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1991) 홍사덕 52.24%
+계보 구성: 계보 미확인 64.5% · 혼합 계보 35.5%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="553" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 김영삼 44.01%
+계보 구성: 계보 미확인 54.96% · 혼합 계보 44.01% · 무소속 1.03%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="640" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 신한국당 서상목 38.14%
+계보 구성: 계보 미확인 39.38% · 혼합 계보 38.14% · 무소속 15.43% · 지역계 7.06%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="640" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 무소속 홍사덕 26.07%
+계보 구성: 무소속 26.45% · 계보 미확인 25.67% · 혼합 계보 24.33% · 지역계 23.55%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="683" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 이회창 53.61%
+계보 구성: 혼합 계보 62.58% · 계보 미확인 37.42%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 최병렬 56.47%
+계보 구성: 혼합 계보 56.47% · 계보 미확인 39.55% · 지역계 3.08% · 무소속 0.9%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 오세훈 59.4%
+계보 구성: 혼합 계보 59.4% · 계보 미확인 34.85% · 지역계 4.9% · 무소속 0.85%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 이종구 62.99%
+계보 구성: 혼합 계보 62.99% · 계보 미확인 33.64% · 진보계 2.8% · 무소속 0.57%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 공성진 57.5%
+계보 구성: 혼합 계보 57.5% · 계보 미확인 41.52% · 지역계 0.98%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 이종구 64.91%
+계보 구성: 혼합 계보 64.91% · 계보 미확인 19.22% · 무소속 15.87%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 공성진 62.69%
+계보 구성: 혼합 계보 62.69% · 계보 미확인 27.12% · 진보계 10.18%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 강남구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 강동원 66.61%
+계보 구성: 혼합 계보 66.61% · 계보 미확인 33.39%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 강남구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 강동원 66.61%
+계보 구성: 혼합 계보 66.61% · 계보 미확인 33.39%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 강남구사선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 윤석민 40.8%
+계보 구성: 혼합 계보 40.8% · 계보 미확인 29.63% · 무소속 29.57%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 강남구사선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 윤석민 40.8%
+계보 구성: 혼합 계보 40.8% · 계보 미확인 29.63% · 무소속 29.57%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1044" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2011년 10·26 재·보궐선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 나경원 61.33%
+계보 구성: 혼합 계보 61.33% · 무소속 38.67%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 심윤조 65.33%
+계보 구성: 혼합 계보 65.33% · 계보 미확인 33.33% · 무소속 1.34%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 김종훈 59.48%
+계보 구성: 혼합 계보 59.48% · 계보 미확인 39.26% · 무소속 1.26%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 이종구 54.82%
+계보 구성: 혼합 계보 54.82% · 계보 미확인 45.18%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 전현희 51.46%
+계보 구성: 계보 미확인 51.46% · 혼합 계보 44.42% · 무소속 4.12%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 강남구병
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 이은재 57.81%
+계보 구성: 혼합 계보 58.79% · 계보 미확인 41.21%
+혼합 구성: 새누리당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +1.21%p, 더불어민주당 -1.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 강남구아선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강대후 54.23%
+계보 구성: 계보 미확인 54.23% · 혼합 계보 45.77%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 강남구아선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강대후 54.23%
+계보 구성: 계보 미확인 54.23% · 혼합 계보 45.77%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 태구민 58.41%
+계보 구성: 혼합 계보 59.74% · 계보 미확인 40.26%
+혼합 구성: 미래통합당=보수계+지역계, 민생당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 박진 50.95%
+계보 구성: 혼합 계보 52.27% · 계보 미확인 46.83% · 무소속 0.9%
+혼합 구성: 미래통합당=보수계+지역계, 민생당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 강남구병
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 유경준 65.38%
+계보 구성: 혼합 계보 65.38% · 계보 미확인 34.62%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +1.21%p, 더불어민주당 -1.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1289" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2021년 4·7 재·보궐선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 오세훈 73.55%
+계보 구성: 혼합 계보 73.7% · 계보 미확인 25.91% · 무소속 0.29% · 진보계 0.1%
+혼합 구성: 국민의힘=보수계+지역계, 민생당=보수계+지역계</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 강남구갑
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 서명옥 64.19%
+계보 구성: 혼합 계보 64.19% · 계보 미확인 35.81%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.39%p, 더불어민주당 -4.46%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 강남구을
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 박수민 58.57%
+계보 구성: 혼합 계보 58.57% · 계보 미확인 41.43%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +7.7%p, 더불어민주당 -5.1%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 강남구병
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 고동진 66.29%
+계보 구성: 혼합 계보 66.29% · 계보 미확인 33.71%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +1.21%p, 더불어민주당 -1.17%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1381" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2024년 10·16 재·보궐선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선:  조전혁 66.31%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="1423" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선:  조전혁 33.96%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="1423" cy="243" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 오세훈 65.99%
+계보 구성: 혼합 계보 65.99% · 계보 미확인 33.37% · 진보계 0.64%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김현기 65.9%
+계보 구성: 혼합 계보 65.9% · 계보 미확인 34.1%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김현기 65.9%
+계보 구성: 혼합 계보 65.9% · 계보 미확인 34.1%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 민경희 76.77%
+계보 구성: 혼합 계보 76.77% · 진보계 13.55% · 계보 미확인 9.68%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 강신욱 61.38%
+계보 구성: 혼합 계보 61.38% · 계보 미확인 36.76% · 무소속 1.86%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이인화 65.74%
+계보 구성: 혼합 계보 65.74% · 계보 미확인 34.26%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 유만희 55.13%
+계보 구성: 혼합 계보 55.13% · 계보 미확인 43.65% · 진보계 1.22%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이도희 72.41%
+계보 구성: 혼합 계보 72.41% · 계보 미확인 27.59%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김길영 71.33%
+계보 구성: 혼합 계보 71.33% · 계보 미확인 28.67%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 민경희 76.77%
+계보 구성: 혼합 계보 76.77% · 진보계 13.55% · 계보 미확인 9.68%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 강신욱 61.38%
+계보 구성: 혼합 계보 61.38% · 계보 미확인 36.76% · 무소속 1.86%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이인화 65.74%
+계보 구성: 혼합 계보 65.74% · 계보 미확인 34.26%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 유만희 55.13%
+계보 구성: 혼합 계보 55.13% · 계보 미확인 43.65% · 진보계 1.22%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이도희 72.41%
+계보 구성: 혼합 계보 72.41% · 계보 미확인 27.59%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김길영 71.33%
+계보 구성: 혼합 계보 71.33% · 계보 미확인 28.67%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구가선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김지웅 51.9%
+계보 구성: 혼합 계보 66.21% · 계보 미확인 33.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구나선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 강현섭 58.25%
+계보 구성: 혼합 계보 71.97% · 계보 미확인 23.47% · 무소속 4.57%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김영민 37.6%
+계보 구성: 혼합 계보 56.02% · 계보 미확인 43.98%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구라선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이동호 50.0%
+계보 구성: 혼합 계보 62.46% · 계보 미확인 37.54%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구마선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이종원 46.3%
+계보 구성: 혼합 계보 58.89% · 계보 미확인 41.11%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구사선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이인선 45.31%
+계보 구성: 혼합 계보 70.2% · 계보 미확인 29.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구자선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 우종혁 53.3%
+계보 구성: 혼합 계보 64.37% · 계보 미확인 31.15% · 무소속 4.48%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구바선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 고은진 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구아선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오온누리 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구가선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김지웅 51.9%
+계보 구성: 혼합 계보 66.21% · 계보 미확인 33.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구나선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 강현섭 58.25%
+계보 구성: 혼합 계보 71.97% · 계보 미확인 23.47% · 무소속 4.57%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구다선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김영민 37.6%
+계보 구성: 혼합 계보 56.02% · 계보 미확인 43.98%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구라선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이동호 50.0%
+계보 구성: 혼합 계보 62.46% · 계보 미확인 37.54%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구마선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이종원 46.3%
+계보 구성: 혼합 계보 58.89% · 계보 미확인 41.11%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구사선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이인선 45.31%
+계보 구성: 혼합 계보 70.2% · 계보 미확인 29.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구자선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 우종혁 53.3%
+계보 구성: 혼합 계보 64.37% · 계보 미확인 31.15% · 무소속 4.48%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="311" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 국민의힘 61.02%
+계보 구성: 혼합 계보 61.07% · 계보 미확인 37.53% · 진보계 1.41%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1423" cy="379" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 강남구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 국민의힘 66.08%
+계보 구성: 혼합 계보 66.08% · 계보 미확인 33.92%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 72회 · 계열 10종 · 행정구역·선거구 사건 0건 · 계보 분류의 39.05%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

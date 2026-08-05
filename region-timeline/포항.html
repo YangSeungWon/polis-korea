@@ -1,0 +1,749 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>포항 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 2244 426" width="2244" height="426" role="img" aria-label="포항 지역 정치사 연표">
+<line x1="178" y1="42" x2="178" y2="402" class="rt-grid"/><text x="178" y="36" class="rt-yr">1950</text>
+<line x1="438" y1="42" x2="438" y2="402" class="rt-grid"/><text x="438" y="36" class="rt-yr">1960</text>
+<line x1="698" y1="42" x2="698" y2="402" class="rt-grid"/><text x="698" y="36" class="rt-yr">1970</text>
+<line x1="958" y1="42" x2="958" y2="402" class="rt-grid"/><text x="958" y="36" class="rt-yr">1980</text>
+<line x1="1218" y1="42" x2="1218" y2="402" class="rt-grid"/><text x="1218" y="36" class="rt-yr">1990</text>
+<line x1="1478" y1="42" x2="1478" y2="402" class="rt-grid"/><text x="1478" y="36" class="rt-yr">2000</text>
+<line x1="1738" y1="42" x2="1738" y2="402" class="rt-grid"/><text x="1738" y="36" class="rt-yr">2010</text>
+<line x1="1998" y1="42" x2="1998" y2="402" class="rt-grid"/><text x="1998" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="2204" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="2204" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="2204" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="2204" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="2204" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="2204" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="2204" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="2204" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="2204" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="2204" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1348" y1="48" x2="1348" y2="400" class="rt-ev rt-ev-admin"><title>포항시·영일군 통합(1차 도농통합)</title></line><text x="1352" y="414" class="rt-evlab">포항시·영일군 통합(1차 도농통합)</text>
+<line x1="1838" y1="209" x2="1838" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1838" y1="209" x2="1838" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1838" y1="209" x2="2006" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2006" y1="209" x2="2006" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2006" y1="209" x2="2006" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2006" y1="209" x2="2006" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2006" y1="209" x2="2083" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2083" y1="209" x2="2083" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="292" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="292" y1="107" x2="395" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="395" y1="107" x2="453" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="453" y1="107" x2="540" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="540" y1="107" x2="632" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="632" y1="107" x2="735" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="735" y1="107" x2="780" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="780" y1="107" x2="931" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="931" y1="107" x2="990" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="990" y1="107" x2="1091" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1091" y1="107" x2="1175" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1175" y1="107" x2="1276" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1276" y1="107" x2="1382" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1382" y1="107" x2="1382" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1382" y1="107" x2="1486" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1486" y1="107" x2="1486" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1486" y1="107" x2="1590" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1590" y1="107" x2="1590" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1590" y1="107" x2="1693" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1693" y1="107" x2="1693" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1693" y1="107" x2="1798" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1798" y1="107" x2="1798" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1798" y1="107" x2="1902" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1902" y1="107" x2="1902" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1902" y1="107" x2="2006" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2006" y1="107" x2="2006" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2006" y1="107" x2="2110" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2110" y1="107" x2="2110" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2165" y1="243" x2="2165" y2="243" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="277" x2="2165" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="311" x2="2165" y2="311" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2165" y1="141" x2="2165" y2="141" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="345" x2="2165" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="379" x2="2165" y2="379" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="379" x2="2165" y2="379" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="175" x2="2165" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="2165" y1="175" x2="2165" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="246" y1="73" x2="344" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="344" y1="73" x2="444" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="444" y1="73" x2="537" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="537" y1="73" x2="629" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="629" y1="73" x2="733" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="733" y1="73" x2="1165" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1165" y1="73" x2="1295" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1295" y1="73" x2="1425" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1425" y1="73" x2="1425" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2nd-general-1950
+당시 선거구: 제4선거구(포항시)
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 대한청년당 김판석 16.83%
+계보 구성: 무소속 65.68% · 계보 미확인 34.32%</title></circle>
+<circle cx="246" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>2nd-pres-1952
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 자유당 이승만 79.98%
+계보 구성: 보수계 79.98% · 무소속 20.02%</title></circle>
+<circle cx="292" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>3rd-general-1954
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 무소속 하태환 45.03%
+계보 구성: 무소속 69.04% · 보수계 30.96%</title></circle>
+<circle cx="344" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>3rd-pres-1956
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 자유당 이승만 58.9%
+계보 구성: 보수계 58.9% · 무소속 41.1%</title></circle>
+<circle cx="395" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-general-1958
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 자유당 하태환 60.96%
+계보 구성: 보수계 60.96% · 민주계 19.7% · 무소속 19.34%</title></circle>
+<circle cx="444" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>4th-pres-1960
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 자유당 이승만 100.0%
+계보 구성: 보수계 100.0%</title></circle>
+<circle cx="453" cy="107" r="6" class="rt-pt" fill="#0a5cb8" tabindex="0"><title>5th-general-1960
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주당(1955) 이상면 51.95%
+계보 구성: 민주계 51.95% · 무소속 40.88% · 계보 미확인 7.17%</title></circle>
+<circle cx="537" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>5th-pres-1963
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민정당 윤보선 47.74%
+계보 구성: 계보 미확인 53.29% · 보수계 46.71%</title></circle>
+<circle cx="540" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>6th-general-1963
+당시 선거구: 포항시·영일군·울릉군
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 김장섭 49.05%
+계보 구성: 보수계 49.05% · 계보 미확인 45.02% · 민주계 5.93%</title></circle>
+<circle cx="629" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>6th-pres-1967
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 박정희 61.43%
+계보 구성: 보수계 61.43% · 계보 미확인 38.57%</title></circle>
+<circle cx="632" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>7th-general-1967
+당시 선거구: 포항시·영일군·울릉군
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 김장섭 43.86%
+계보 구성: 계보 미확인 54.89% · 보수계 43.86% · 민주계 1.25%</title></circle>
+<circle cx="733" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>7th-pres-1971
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 박정희 73.23%
+계보 구성: 보수계 73.23% · 계보 미확인 26.52% · 진보계 0.24%</title></circle>
+<circle cx="735" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>8th-general-1971
+당시 선거구: 포항시·울릉군
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 김병윤 61.09%
+계보 구성: 보수계 61.09% · 계보 미확인 38.91%</title></circle>
+<circle cx="780" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>9th-general-1973
+당시 선거구: 제3선거구(포항시·울릉군·영일군·영천군)
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주공화당 정무식 35.43%
+계보 구성: 보수계 35.43% · 계보 미확인 34.48% · 무소속 30.09%</title></circle>
+<circle cx="931" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제3선거구(포항시·영일군·영천군·울릉군)
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 무소속 권오태 32.21%
+계보 구성: 무소속 42.13% · 계보 미확인 36.51% · 보수계 21.36%</title></circle>
+<circle cx="990" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>11th-general-1981
+당시 선거구: 제4선거구(포항시·영일군·울릉군)
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주정의당 이진우 46.45%
+계보 구성: 계보 미확인 53.55% · 보수계 46.45%</title></circle>
+<circle cx="1091" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>12th-general-1985
+당시 선거구: 제1선거구(포항시·영일군·울릉군)
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주정의당 박경석 38.63%
+계보 구성: 계보 미확인 61.37% · 보수계 38.63%</title></circle>
+<circle cx="1165" cy="73" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주정의당 노태우 53.92%
+계보 구성: 보수계 53.92% · 계보 미확인 42.53% · 지역계 3.55%</title></circle>
+<circle cx="1175" cy="107" r="6" class="rt-pt" fill="#d2352b" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주정의당 이진우 43.47%
+계보 구성: 보수계 43.47% · 지역계 33.82% · 계보 미확인 20.7% · 무소속 2.0%</title></circle>
+<circle cx="1276" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 무소속 허화평 46.33%
+계보 구성: 무소속 48.45% · 혼합 계보 39.9% · 계보 미확인 11.65%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1295" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 포항시
+당시 행정구역: 포항시(구) (admin_unit:경상북도:포항시(구))
+당선: 민주자유당 김영삼 62.14%
+계보 구성: 혼합 계보 62.14% · 계보 미확인 36.54% · 무소속 1.32%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="1382" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 포항시남구·울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 신한국당 이상득 48.78%
+계보 구성: 혼합 계보 48.78% · 지역계 28.42% · 계보 미확인 22.81%
+혼합 구성: 신한국당=보수계+지역계</title></circle>
+<circle cx="1382" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 무소속 허화평 44.23%
+계보 구성: 무소속 50.51% · 혼합 계보 34.03% · 계보 미확인 10.72% · 지역계 4.75%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1425" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 포항시남구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이회창 63.5%
+계보 구성: 혼합 계보 83.33% · 계보 미확인 16.67%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1425" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이회창 69.79%
+계보 구성: 혼합 계보 85.33% · 계보 미확인 14.67%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1486" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 포항시남구·울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이상득 53.46%
+계보 구성: 혼합 계보 53.46% · 지역계 37.59% · 계보 미확인 8.96%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1486" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이병석 63.54%
+계보 구성: 혼합 계보 63.54% · 계보 미확인 36.46%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1590" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이병석 55.29%
+계보 구성: 혼합 계보 55.29% · 계보 미확인 21.58% · 무소속 16.09% · 진보계 7.04%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1590" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 포항시남구·울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이상득 50.1%
+계보 구성: 혼합 계보 50.1% · 계보 미확인 34.98% · 무소속 8.11% · 진보계 6.81%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1693" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이병석 62.64%
+계보 구성: 혼합 계보 62.64% · 무소속 30.42% · 계보 미확인 6.93%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1693" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 한나라당 이상득 69.63%
+계보 구성: 혼합 계보 69.63% · 계보 미확인 19.45% · 무소속 10.93%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="1798" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 이병석 70.45%
+계보 구성: 혼합 계보 70.45% · 진보계 18.08% · 무소속 11.47%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1798" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 김형태 41.25%
+계보 구성: 혼합 계보 41.25% · 무소속 40.91% · 계보 미확인 17.84%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="1838" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2013년 10·30 재·보궐선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 박명재 78.57%
+계보 구성: 혼합 계보 78.57% · 계보 미확인 18.51% · 진보계 2.92%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="1838" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2013년 10·30 재·보궐선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 박명재 78.0%
+계보 구성: 혼합 계보 78.0% · 계보 미확인 19.0% · 진보계 3.0%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="1838" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2013년 10·30 재·보궐선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 박명재 86.57%
+계보 구성: 혼합 계보 86.57% · 계보 미확인 11.64% · 진보계 1.79%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="1902" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 김정재 43.4%
+계보 구성: 혼합 계보 43.4% · 무소속 38.84% · 계보 미확인 12.71% · 진보계 5.04%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1902" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 새누리당 박명재 71.86%
+계보 구성: 혼합 계보 71.86% · 진보계 15.07% · 무소속 13.07%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="2006" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 김정재 64.78%
+계보 구성: 혼합 계보 64.78% · 계보 미확인 32.23% · 진보계 2.99%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2006" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 김병욱 55.83%
+계보 구성: 혼합 계보 55.83% · 계보 미확인 34.93% · 무소속 8.24% · 진보계 1.0%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="2006" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 포항시제6선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 이동업 65.35%
+계보 구성: 혼합 계보 65.35% · 계보 미확인 34.65%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="2006" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 포항시제6선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 이동업 65.35%
+계보 구성: 혼합 계보 65.35% · 계보 미확인 34.65%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="2006" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 포항시마선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 안병국 75.58%
+계보 구성: 혼합 계보 75.58% · 계보 미확인 24.42%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="2006" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 포항시마선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 미래통합당 안병국 75.58%
+계보 구성: 혼합 계보 75.58% · 계보 미확인 24.42%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="2083" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2023년 4·5 재·보궐선거
+당시 선거구: 포항시나선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상백 58.5%
+계보 구성: 혼합 계보 58.5% · 무소속 41.5%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2083" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2023년 4·5 재·보궐선거
+당시 선거구: 포항시나선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상백 58.5%
+계보 구성: 혼합 계보 58.5% · 무소속 41.5%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2110" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김정재 62.34%
+계보 구성: 혼합 계보 62.34% · 계보 미확인 28.91% · 무소속 8.76%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2110" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 포항시남구울릉군
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 이상휘 70.03%
+계보 구성: 혼합 계보 70.03% · 계보 미확인 29.97%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +14.44%p</title></circle>
+<circle cx="2165" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시남구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선:  임종식 45.77%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="2165" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선:  임종식 44.0%
+계보 구성: 무소속 100.0%
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2165" cy="243" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시남구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 이철우 63.67%
+계보 구성: 혼합 계보 63.67% · 계보 미확인 36.33%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="243" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 이철우 61.25%
+계보 구성: 혼합 계보 61.25% · 계보 미확인 38.75%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2165" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 박용선 49.29%
+계보 구성: 혼합 계보 49.29% · 계보 미확인 32.49% · 무소속 18.22%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 박용선 48.55%
+계보 구성: 혼합 계보 48.55% · 계보 미확인 32.39% · 무소속 19.06%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 박용선 50.26%
+계보 구성: 혼합 계보 50.26% · 계보 미확인 32.62% · 무소속 17.12%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제1선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상백 60.21%
+계보 구성: 혼합 계보 60.21% · 무소속 39.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제2선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 장명수 56.85%
+계보 구성: 혼합 계보 56.85% · 무소속 43.15%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제3선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상일 64.57%
+계보 구성: 혼합 계보 64.57% · 무소속 35.43%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제7선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 이동업 69.04%
+계보 구성: 혼합 계보 69.04% · 무소속 30.96%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제8선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 박정호 45.82%
+계보 구성: 혼합 계보 45.82% · 계보 미확인 32.15% · 무소속 22.03%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제9선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 손희권 56.17%
+계보 구성: 혼합 계보 56.17% · 계보 미확인 43.83%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제6선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 서재원 %
+계보 구성: </title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제4선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 연규식 %
+계보 구성: </title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제5선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김희수 %
+계보 구성: </title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제7선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 이동업 69.04%
+계보 구성: 혼합 계보 69.04% · 무소속 30.96%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제8선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 박정호 45.82%
+계보 구성: 혼합 계보 45.82% · 계보 미확인 32.15% · 무소속 22.03%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제9선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 손희권 56.17%
+계보 구성: 혼합 계보 56.17% · 계보 미확인 43.83%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제1선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상백 60.21%
+계보 구성: 혼합 계보 60.21% · 무소속 39.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제2선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 장명수 56.85%
+계보 구성: 혼합 계보 56.85% · 무소속 43.15%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시제3선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김상일 64.57%
+계보 구성: 혼합 계보 64.57% · 무소속 35.43%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시가선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김후환 30.95%
+계보 구성: 혼합 계보 59.91% · 무소속 40.09%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시나선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 문성호 37.8%
+계보 구성: 혼합 계보 62.2% · 계보 미확인 37.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시다선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김재원 30.55%
+계보 구성: 혼합 계보 57.77% · 계보 미확인 27.19% · 무소속 15.04%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시라선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 무소속 안병국 37.28%
+계보 구성: 혼합 계보 62.72% · 무소속 37.28%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시바선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 손태식 29.52%
+계보 구성: 혼합 계보 54.1% · 계보 미확인 45.9%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시사선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 황찬규 42.89%
+계보 구성: 혼합 계보 59.71% · 계보 미확인 31.5% · 진보계 8.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시아선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김철수 42.63%
+계보 구성: 혼합 계보 65.33% · 무소속 18.37% · 계보 미확인 16.3%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시자선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 조민성 32.02%
+계보 구성: 혼합 계보 78.99% · 계보 미확인 21.01%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시차선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 안대천 32.54%
+계보 구성: 혼합 계보 60.31% · 계보 미확인 27.31% · 무소속 12.38%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시카선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 박칠용 31.76%
+계보 구성: 혼합 계보 57.67% · 계보 미확인 31.76% · 무소속 10.57%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시타선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 김은주 40.66%
+계보 구성: 혼합 계보 58.26% · 계보 미확인 41.74%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시마선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 김상민 %
+계보 구성: </title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시아선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김철수 42.63%
+계보 구성: 혼합 계보 65.33% · 무소속 18.37% · 계보 미확인 16.3%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시자선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 조민성 32.02%
+계보 구성: 혼합 계보 78.99% · 계보 미확인 21.01%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시차선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 안대천 32.54%
+계보 구성: 혼합 계보 60.31% · 계보 미확인 27.31% · 무소속 12.38%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시카선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 박칠용 31.76%
+계보 구성: 혼합 계보 57.67% · 계보 미확인 31.76% · 무소속 10.57%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시타선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 김은주 40.66%
+계보 구성: 혼합 계보 58.26% · 계보 미확인 41.74%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시가선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김후환 30.95%
+계보 구성: 혼합 계보 59.91% · 무소속 40.09%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시나선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 문성호 37.8%
+계보 구성: 혼합 계보 62.2% · 계보 미확인 37.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시다선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 김재원 30.55%
+계보 구성: 혼합 계보 57.77% · 계보 미확인 27.19% · 무소속 15.04%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시라선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 무소속 안병국 37.28%
+계보 구성: 혼합 계보 62.72% · 무소속 37.28%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시바선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 더불어민주당 손태식 29.52%
+계보 구성: 혼합 계보 54.1% · 계보 미확인 45.9%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시사선거구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 황찬규 42.89%
+계보 구성: 혼합 계보 59.71% · 계보 미확인 31.5% · 진보계 8.79%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="311" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시남구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 국민의힘 61.93%
+계보 구성: 혼합 계보 61.93% · 계보 미확인 36.42% · 진보계 1.65%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="311" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시북구
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 국민의힘 60.96%
+계보 구성: 혼합 계보 60.96% · 계보 미확인 37.09% · 진보계 1.96%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 더불어민주당 -2.57%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="2165" cy="379" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 국민의힘 63.93%
+계보 구성: 혼합 계보 63.93% · 계보 미확인 34.11% · 진보계 1.96%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="379" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 국민의힘 63.46%
+계보 구성: 혼합 계보 63.46% · 계보 미확인 34.43% · 진보계 2.11%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="2165" cy="379" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 포항시
+당시 행정구역: 포항시 (admin_unit:경상북도:포항시)
+당선: 국민의힘 국민의힘 64.55%
+계보 구성: 혼합 계보 64.55% · 계보 미확인 33.69% · 진보계 1.77%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 98회 · 계열 10종 · 행정구역·선거구 사건 1건 · 계보 분류의 29.9%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>

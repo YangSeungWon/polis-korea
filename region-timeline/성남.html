@@ -1,0 +1,903 @@
+<style>
+.rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;--rt-bg:#fff}
+@media(prefers-color-scheme:dark){.rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;
+ --rt-line:#3a4048;--rt-bg:#14171a}}
+:root[data-theme=dark] .rt-wrap{--rt-ink:#e7e9ec;--rt-mut:#9aa1ab;--rt-line:#3a4048;
+ --rt-bg:#14171a}
+:root[data-theme=light] .rt-wrap{--rt-ink:#1a1d21;--rt-mut:#6b7280;--rt-line:#d7dbe0;
+ --rt-bg:#fff}
+.rt-wrap{color:var(--rt-ink)}
+.rt-note,.rt-meta,.rt-legend{color:var(--rt-mut);font-size:.86rem;line-height:1.6}
+/* 긴 연표는 가로로 탐색한다 — 폭에 우겨 넣으면 최근 선거가 겹친다 */
+.rt-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;
+ border:1px solid var(--rt-line);border-radius:8px;background:var(--rt-bg)}
+.rt-svg{display:block}
+.rt-grid{stroke:var(--rt-line);stroke-width:1;stroke-dasharray:2 4}
+.rt-lane{stroke:var(--rt-line);stroke-width:1}
+.rt-lab,.rt-yr{fill:var(--rt-mut);font-size:11px}
+.rt-lab{font-size:12px;fill:var(--rt-ink)}
+.rt-edge-ok{stroke:var(--rt-ink);stroke-width:2;opacity:.35}
+/* 비교 불가 — 선만 끊긴다. 점은 그대로 남는다. */
+.rt-edge-blocked{stroke:var(--rt-mut);stroke-width:1.5;stroke-dasharray:3 4;opacity:.5}
+.rt-edge-none{stroke:var(--rt-line);stroke-width:1;opacity:.35}
+.rt-x{fill:var(--rt-mut);font-size:12px;font-weight:700}
+.rt-pt{stroke:var(--rt-bg);stroke-width:1.5;cursor:default}
+.rt-pt:focus{outline:2px solid var(--rt-ink);outline-offset:2px}
+/* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
+.rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
+.rt-pt-unknown{opacity:.4}
+.rt-ev{stroke-width:1.5}
+.rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
+.rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
+.rt-evlab{fill:var(--rt-mut);font-size:10px}
+.rt-key{display:inline-flex;align-items:center;gap:.3em;margin-right:.9em}
+.rt-key i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.rt-i-mixed{background:var(--rt-mut);border:1.5px dashed var(--rt-ink)}
+.rt-i-unknown{background:var(--rt-mut);opacity:.4}
+</style><section class="rt-wrap">
+<h2>성남 지역 정치사</h2>
+<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
+점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
+<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
+뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<div class="rt-scroll"><svg class="rt-svg" viewBox="0 0 1502 426" width="1502" height="426" role="img" aria-label="성남 지역 정치사 연표">
+<line x1="216" y1="42" x2="216" y2="402" class="rt-grid"/><text x="216" y="36" class="rt-yr">1980</text>
+<line x1="476" y1="42" x2="476" y2="402" class="rt-grid"/><text x="476" y="36" class="rt-yr">1990</text>
+<line x1="736" y1="42" x2="736" y2="402" class="rt-grid"/><text x="736" y="36" class="rt-yr">2000</text>
+<line x1="996" y1="42" x2="996" y2="402" class="rt-grid"/><text x="996" y="36" class="rt-yr">2010</text>
+<line x1="1256" y1="42" x2="1256" y2="402" class="rt-grid"/><text x="1256" y="36" class="rt-yr">2020</text>
+<line x1="150" y1="73" x2="1462" y2="73" class="rt-lane"/><text x="140" y="77" class="rt-lab" text-anchor="end">대통령</text>
+<line x1="150" y1="107" x2="1462" y2="107" class="rt-lane"/><text x="140" y="111" class="rt-lab" text-anchor="end">국회의원</text>
+<line x1="150" y1="141" x2="1462" y2="141" class="rt-lane"/><text x="140" y="145" class="rt-lab" text-anchor="end">광역단체장</text>
+<line x1="150" y1="175" x2="1462" y2="175" class="rt-lane"/><text x="140" y="179" class="rt-lab" text-anchor="end">기초단체장</text>
+<line x1="150" y1="209" x2="1462" y2="209" class="rt-lane"/><text x="140" y="213" class="rt-lab" text-anchor="end">재·보궐</text>
+<line x1="150" y1="243" x2="1462" y2="243" class="rt-lane"/><text x="140" y="247" class="rt-lab" text-anchor="end">교육감</text>
+<line x1="150" y1="277" x2="1462" y2="277" class="rt-lane"/><text x="140" y="281" class="rt-lab" text-anchor="end">광역의원</text>
+<line x1="150" y1="311" x2="1462" y2="311" class="rt-lane"/><text x="140" y="315" class="rt-lab" text-anchor="end">광역의원 비례</text>
+<line x1="150" y1="345" x2="1462" y2="345" class="rt-lane"/><text x="140" y="349" class="rt-lab" text-anchor="end">기초의원</text>
+<line x1="150" y1="379" x2="1462" y2="379" class="rt-lane"/><text x="140" y="383" class="rt-lab" text-anchor="end">기초의원 비례</text>
+<line x1="1031" y1="209" x2="1031" y2="209" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1031" y1="209" x2="1044" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="209" x2="1044" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1044" y1="209" x2="1056" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1056" y1="209" x2="1056" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1056" y1="209" x2="1135" y2="209" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1095" y="203" class="rt-x" text-anchor="middle">×</text>
+<line x1="1135" y1="209" x2="1135" y2="209" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1135" y="203" class="rt-x" text-anchor="middle">×</text>
+<line x1="1135" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1160" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1160" y1="209" x2="1264" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1264" y1="209" x2="1264" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1264" y1="209" x2="1264" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1264" y1="209" x2="1264" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1264" y1="209" x2="1319" y2="209" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1292" y="203" class="rt-x" text-anchor="middle">×</text>
+<line x1="1319" y1="209" x2="1319" y2="209" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1319" y="203" class="rt-x" text-anchor="middle">×</text>
+<line x1="1319" y1="209" x2="1393" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1393" y1="209" x2="1393" y2="209" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="189" y1="107" x2="248" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="248" y1="107" x2="349" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="349" y1="107" x2="433" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="433" y1="107" x2="433" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="433" y1="107" x2="534" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="534" y1="107" x2="534" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="534" y1="107" x2="640" y2="107" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="640" y1="107" x2="640" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="640" y1="107" x2="640" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="640" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="640" y1="107" x2="744" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="692" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="744" y1="107" x2="744" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="744" y1="107" x2="744" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="744" y1="107" x2="744" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="744" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="744" y1="107" x2="848" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="848" y1="107" x2="848" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="848" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="848" y1="107" x2="848" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="848" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="848" y1="107" x2="848" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="848" y1="107" x2="951" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="951" y1="107" x2="951" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="951" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="951" y1="107" x2="951" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="951" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="951" y1="107" x2="951" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="951" y1="107" x2="1056" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1056" y1="107" x2="1056" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1056" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1056" y1="107" x2="1056" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1056" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1056" y1="107" x2="1056" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1056" y1="107" x2="1160" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1160" y1="107" x2="1160" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1160" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1160" y1="107" x2="1160" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1160" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1160" y1="107" x2="1160" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1160" y1="107" x2="1264" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1264" y1="107" x2="1264" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1264" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1264" y1="107" x2="1264" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1264" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1264" y1="107" x2="1264" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1264" y1="107" x2="1368" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1368" y1="107" x2="1368" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1368" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1368" y1="107" x2="1368" y2="107" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1368" y="101" class="rt-x" text-anchor="middle">×</text>
+<line x1="1368" y1="107" x2="1368" y2="107" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1423" y1="243" x2="1423" y2="243" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1423" y1="243" x2="1423" y2="243" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1423" y="237" class="rt-x" text-anchor="middle">×</text>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="277" x2="1423" y2="277" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="311" x2="1423" y2="311" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1423" y1="311" x2="1423" y2="311" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1423" y="305" class="rt-x" text-anchor="middle">×</text>
+<line x1="1423" y1="141" x2="1423" y2="141" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="1423" y1="141" x2="1423" y2="141" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="1423" y="135" class="rt-x" text-anchor="middle">×</text>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="345" x2="1423" y2="345" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="379" x2="1423" y2="379" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="379" x2="1423" y2="379" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="379" x2="1423" y2="379" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="175" x2="1423" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="175" x2="1423" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="1423" y1="175" x2="1423" y2="175" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="423" y1="73" x2="553" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<line x1="553" y1="73" x2="553" y2="73" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="553" y="67" class="rt-x" text-anchor="middle">×</text>
+<line x1="553" y1="73" x2="553" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="553" y1="73" x2="683" y2="73" class="rt-edge-blocked"><title>변화량 비교 불가 — 구도 변화·편향 불안정</title></line>
+<text x="618" y="67" class="rt-x" text-anchor="middle">×</text>
+<line x1="683" y1="73" x2="683" y2="73" class="rt-edge-none"><title>변화량 비교 불가 — 판정 없음</title></line>
+<line x1="683" y1="73" x2="683" y2="73" class="rt-edge-ok"><title>변화량 비교 가능 · attributable_only</title></line>
+<circle cx="189" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>10th-general-1978
+당시 선거구: 제4선거구(성남시·여주군·광주군·이천군)
+당시 행정구역 연결 정보 미등록
+당선: 민주공화당 정동성 30.6%
+계보 구성: 무소속 37.48% · 계보 미확인 31.92% · 보수계 30.6%</title></circle>
+<circle cx="248" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>11th-general-1981
+당시 선거구: 제4선거구(성남시·광주군)
+당시 행정구역 연결 정보 미등록
+당선: 민주정의당 오세응 40.68%
+계보 구성: 계보 미확인 56.64% · 보수계 40.68% · 무소속 2.68%</title></circle>
+<circle cx="349" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>12th-general-1985
+당시 선거구: 제2선거구(성남시·광주군)
+당시 행정구역 연결 정보 미등록
+당선: 한국국민당 이대엽 30.66%
+계보 구성: 계보 미확인 56.35% · 보수계 25.67% · 무소속 17.98%</title></circle>
+<circle cx="423" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 대통령선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 평화민주당 김대중 34.76%
+계보 구성: 계보 미확인 57.92% · 보수계 33.71% · 지역계 8.37%</title></circle>
+<circle cx="433" cy="107" r="6" class="rt-pt" fill="#00875a" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 성남시갑
+당시 행정구역 연결 정보 미등록
+당선: 신민주공화당 이대엽 39.08%
+계보 구성: 지역계 39.08% · 계보 미확인 35.32% · 보수계 25.6%</title></circle>
+<circle cx="433" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제13대 국회의원선거
+당시 선거구: 성남시을
+당시 행정구역 연결 정보 미등록
+당선: 평화민주당 이찬구 35.48%
+계보 구성: 계보 미확인 46.75% · 보수계 32.13% · 지역계 21.12%</title></circle>
+<circle cx="534" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1991) 이윤수 48.56%
+계보 구성: 계보 미확인 54.51% · 혼합 계보 45.49%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="534" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 국회의원선거
+당시 선거구: 성남시중원구·분당구
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 오세응 39.69%
+계보 구성: 계보 미확인 57.75% · 혼합 계보 39.69% · 무소속 2.56%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="553" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1991) 김대중 43.93%
+계보 구성: 계보 미확인 67.86% · 혼합 계보 30.83% · 무소속 1.31%
+혼합 구성: 민주자유당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="553" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 민주당(1991) 김대중 43.14%
+계보 구성: 계보 미확인 67.62% · 혼합 계보 31.12% · 무소속 1.26%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="553" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제14대 대통령선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선: 민주자유당 김영삼 41.63%
+계보 구성: 계보 미확인 57.25% · 혼합 계보 41.63% · 무소속 1.12%
+혼합 구성: 민주자유당=보수계+지역계</title></circle>
+<circle cx="640" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선: 신한국당 오세응 33.06%
+계보 구성: 계보 미확인 44.51% · 혼합 계보 33.06% · 지역계 19.46% · 무소속 2.96%
+혼합 구성: 신한국당=보수계+지역계</title></circle>
+<circle cx="640" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 이윤수 37.14%
+계보 구성: 계보 미확인 43.23% · 지역계 35.72% · 혼합 계보 19.48% · 무소속 1.57%
+혼합 구성: 신한국당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="640" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 조성준 38.05%
+계보 구성: 계보 미확인 45.0% · 혼합 계보 26.01% · 지역계 20.63% · 무소속 8.36%
+혼합 구성: 신한국당=보수계+지역계</title></circle>
+<circle cx="683" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 김대중 49.21%
+계보 구성: 계보 미확인 50.47% · 혼합 계보 49.53%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="683" cy="73" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 이회창 51.05%
+계보 구성: 혼합 계보 63.47% · 계보 미확인 36.53%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="683" cy="73" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제15대 대통령선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 새정치국민회의 김대중 49.38%
+계보 구성: 계보 미확인 50.75% · 혼합 계보 49.25%
+혼합 구성: 국민신당=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 고흥길 51.84%
+계보 구성: 혼합 계보 51.84% · 계보 미확인 43.81% · 지역계 4.35%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 임태희 50.86%
+계보 구성: 혼합 계보 50.86% · 계보 미확인 44.19% · 지역계 4.95%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 새천년민주당 이윤수 41.42%
+계보 구성: 계보 미확인 44.43% · 혼합 계보 26.39% · 지역계 20.95% · 무소속 8.24%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="744" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제16대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새천년민주당 조성준 43.64%
+계보 구성: 계보 미확인 43.64% · 혼합 계보 25.11% · 진보계 21.48% · 지역계 6.39% · 무소속 3.38%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 열린우리당 김태년 43.95%
+계보 구성: 계보 미확인 54.16% · 혼합 계보 30.24% · 진보계 11.68% · 무소속 2.24% · 지역계 1.35% · 민주계 0.33%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 열린우리당 이상락 39.22%
+계보 구성: 계보 미확인 49.38% · 혼합 계보 24.79% · 진보계 20.76% · 무소속 3.74% · 지역계 1.33%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 고흥길 54.09%
+계보 구성: 혼합 계보 54.09% · 계보 미확인 43.91% · 무소속 2.0%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="848" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제17대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 임태희 53.95%
+계보 구성: 혼합 계보 53.95% · 계보 미확인 45.48% · 무소속 0.56%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 신영수 38.71%
+계보 구성: 계보 미확인 49.55% · 혼합 계보 38.71% · 진보계 9.29% · 무소속 2.45%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 신상진 42.96%
+계보 구성: 계보 미확인 43.43% · 혼합 계보 42.96% · 진보계 13.61%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 고흥길 64.73%
+계보 구성: 혼합 계보 64.73% · 계보 미확인 35.27%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="951" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제18대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 임태희 71.06%
+계보 구성: 혼합 계보 71.06% · 계보 미확인 28.94%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 통합민주당 손학규 51.0%
+계보 구성: 계보 미확인 51.0% · 혼합 계보 48.32% · 무소속 0.68%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1031" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2011년 4·27 재·보궐선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 통합민주당 손학규 51.0%
+계보 구성: 계보 미확인 51.0% · 혼합 계보 48.32% · 무소속 0.68%
+혼합 구성: 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1044" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2011년 10·26 재·보궐선거
+당시 선거구: 성남시타선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 권락용 47.86%
+계보 구성: 계보 미확인 49.15% · 혼합 계보 47.86% · 무소속 2.99%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1044" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2011년 10·26 재·보궐선거
+당시 선거구: 성남시타선거구
+당시 행정구역 연결 정보 미등록
+당선: 한나라당 권락용 47.86%
+계보 구성: 계보 미확인 49.15% · 혼합 계보 47.86% · 무소속 2.99%
+혼합 구성: 한나라당=보수계+지역계</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 민주통합당 김태년 54.77%
+계보 구성: 계보 미확인 59.77% · 혼합 계보 40.23%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt" fill="#e8a300" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 통합진보당 김미희 46.78%
+계보 구성: 진보계 46.78% · 혼합 계보 46.11% · 계보 미확인 3.86% · 무소속 3.24%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 이종훈 51.46%
+계보 구성: 혼합 계보 51.46% · 계보 미확인 45.24% · 무소속 3.3%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1056" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제19대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 전하진 52.59%
+계보 구성: 혼합 계보 52.59% · 계보 미확인 43.91% · 무소속 3.5%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1056" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2012년 4·11 동시 재·보궐선거
+당시 선거구: 성남시제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 지수식 52.64%
+계보 구성: 혼합 계보 52.64% · 계보 미확인 47.36%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1056" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2012년 4·11 동시 재·보궐선거
+당시 선거구: 성남시제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 지수식 52.64%
+계보 구성: 혼합 계보 52.64% · 계보 미확인 47.36%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1135" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2015년 4·29 재·보궐선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 신상진 55.91%
+계보 구성: 혼합 계보 55.91% · 계보 미확인 35.63% · 무소속 8.47%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1135" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2015년 4·29 재·보궐선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 신상진 55.91%
+계보 구성: 혼합 계보 55.91% · 계보 미확인 35.63% · 무소속 8.47%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김태년 44.58%
+계보 구성: 계보 미확인 64.5% · 혼합 계보 33.28% · 진보계 2.21%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 신상진 43.41%
+계보 구성: 계보 미확인 56.59% · 혼합 계보 43.41%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김병관 47.03%
+계보 구성: 계보 미확인 61.49% · 혼합 계보 38.51%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제20대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김병욱 39.85%
+계보 구성: 계보 미확인 49.24% · 혼합 계보 30.97% · 무소속 18.82% · 진보계 0.98%
+혼합 구성: 새누리당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 성남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 임동본 36.64%
+계보 구성: 계보 미확인 56.51% · 혼합 계보 36.64% · 진보계 6.85%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 성남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 새누리당 임동본 36.64%
+계보 구성: 계보 미확인 56.51% · 혼합 계보 36.64% · 진보계 6.85%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이나영 39.93%
+계보 구성: 계보 미확인 56.58% · 혼합 계보 38.53% · 무소속 4.89%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1160" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2016년 4·13 동시 재·보궐선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이나영 39.93%
+계보 구성: 계보 미확인 56.58% · 혼합 계보 38.53% · 무소속 4.89%
+혼합 구성: 새누리당=보수계+지역계</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김태년 60.31%
+계보 구성: 계보 미확인 61.22% · 혼합 계보 35.81% · 진보계 2.97%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 윤영찬 54.62%
+계보 구성: 계보 미확인 55.27% · 혼합 계보 41.67% · 진보계 3.05%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 김은혜 50.07%
+계보 구성: 혼합 계보 50.07% · 계보 미확인 49.93%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="1264" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제21대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김병욱 47.94%
+계보 구성: 계보 미확인 48.46% · 혼합 계보 45.11% · 무소속 3.97% · 진보계 2.46%
+혼합 구성: 미래통합당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1264" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 이제영 49.53%
+계보 구성: 혼합 계보 49.53% · 계보 미확인 42.56% · 진보계 7.9%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="1264" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 미래통합당 이제영 49.53%
+계보 구성: 혼합 계보 49.53% · 계보 미확인 42.56% · 진보계 7.9%
+혼합 구성: 미래통합당=보수계+지역계</title></circle>
+<circle cx="1264" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 성남시라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강현숙 72.12%
+계보 구성: 계보 미확인 72.12% · 진보계 27.88%</title></circle>
+<circle cx="1264" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2020년 4·15 동시 재·보궐선거
+당시 선거구: 성남시라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강현숙 72.12%
+계보 구성: 계보 미확인 72.12% · 진보계 27.88%</title></circle>
+<circle cx="1319" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2022년 6·1 동시 재·보궐선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 안철수 62.51%
+계보 구성: 혼합 계보 62.51% · 계보 미확인 37.49%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1319" cy="209" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>2022년 6·1 동시 재·보궐선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 안철수 62.51%
+계보 구성: 혼합 계보 62.51% · 계보 미확인 37.49%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김태년 58.42%
+계보 구성: 계보 미확인 58.42% · 혼합 계보 41.58%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이수진 60.12%
+계보 구성: 계보 미확인 60.12% · 혼합 계보 39.88%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 성남시분당구갑
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 안철수 53.28%
+계보 구성: 혼합 계보 53.28% · 계보 미확인 46.72%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1368" cy="107" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제22대 국회의원선거
+당시 선거구: 성남시분당구을
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 김은혜 51.13%
+계보 구성: 혼합 계보 51.13% · 계보 미확인 48.87%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +6.55%p, 더불어민주당 +0.38%p
+※ 과거 재집계 수준값·승자는 사용하지 않음</title></circle>
+<circle cx="1393" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2025년 4·2 재·보궐선거
+당시 선거구: 성남시제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김진명 53.39%
+계보 구성: 계보 미확인 53.39% · 혼합 계보 46.61%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1393" cy="209" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>2025년 4·2 재·보궐선거
+당시 선거구: 성남시제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김진명 53.39%
+계보 구성: 계보 미확인 53.39% · 혼합 계보 46.61%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선:  임태희 55.53%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="1423" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선:  안민석 51.28%
+계보 구성: 무소속 100.0%
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1423" cy="141" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선:  안민석 54.06%
+계보 구성: 무소속 100.0%</title></circle>
+<circle cx="1423" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 양향자 48.09%
+계보 구성: 계보 미확인 51.42% · 혼합 계보 48.09% · 진보계 0.5%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 추미애 55.55%
+계보 구성: 계보 미확인 60.05% · 혼합 계보 39.12% · 진보계 0.83%
+혼합 구성: 국민의힘=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1423" cy="243" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 추미애 58.03%
+계보 구성: 계보 미확인 62.22% · 혼합 계보 36.74% · 진보계 1.04%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 신상진 50.31%
+계보 구성: 혼합 계보 50.31% · 계보 미확인 48.69% · 진보계 1.01%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 신상진 54.14%
+계보 구성: 혼합 계보 54.14% · 계보 미확인 45.1% · 진보계 0.76%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김병욱 52.8%
+계보 구성: 계보 미확인 52.8% · 혼합 계보 45.85% · 진보계 1.35%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="175" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김병욱 52.65%
+계보 구성: 계보 미확인 52.65% · 혼합 계보 46.12% · 진보계 1.22%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 문승호 59.8%
+계보 구성: 계보 미확인 59.8% · 혼합 계보 40.2%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최만식 58.74%
+계보 구성: 계보 미확인 58.74% · 혼합 계보 41.26%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 전석훈 59.73%
+계보 구성: 계보 미확인 59.73% · 혼합 계보 37.49% · 진보계 2.78%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 국중범 59.97%
+계보 구성: 계보 미확인 59.97% · 혼합 계보 40.03%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 방성환 49.13%
+계보 구성: 혼합 계보 49.13% · 계보 미확인 45.95% · 무소속 4.92%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김진명 50.47%
+계보 구성: 계보 미확인 50.47% · 혼합 계보 49.53%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정종혁 50.08%
+계보 구성: 계보 미확인 50.08% · 혼합 계보 49.92%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제8선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 정용한 54.69%
+계보 구성: 혼합 계보 54.69% · 계보 미확인 45.31%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제5선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 방성환 49.13%
+계보 구성: 혼합 계보 49.13% · 계보 미확인 45.95% · 무소속 4.92%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제6선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김진명 50.47%
+계보 구성: 계보 미확인 50.47% · 혼합 계보 49.53%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제7선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정종혁 50.08%
+계보 구성: 계보 미확인 50.08% · 혼합 계보 49.92%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제8선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 정용한 54.69%
+계보 구성: 혼합 계보 54.69% · 계보 미확인 45.31%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제1선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 문승호 59.8%
+계보 구성: 계보 미확인 59.8% · 혼합 계보 40.2%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제2선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최만식 58.74%
+계보 구성: 계보 미확인 58.74% · 혼합 계보 41.26%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제3선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 전석훈 59.73%
+계보 구성: 계보 미확인 59.73% · 혼합 계보 37.49% · 진보계 2.78%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="277" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시제4선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 국중범 59.97%
+계보 구성: 계보 미확인 59.97% · 혼합 계보 40.03%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시가선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강상태 42.23%
+계보 구성: 계보 미확인 58.64% · 혼합 계보 39.0% · 진보계 2.35%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 선창선 34.87%
+계보 구성: 계보 미확인 60.44% · 혼합 계보 34.94% · 무소속 4.62%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시마선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최옥희 34.65%
+계보 구성: 계보 미확인 57.43% · 혼합 계보 32.14% · 진보계 10.43%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시바선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 민영미 43.65%
+계보 구성: 계보 미확인 45.93% · 혼합 계보 43.65% · 무소속 10.42%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시차선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이정아 32.9%
+계보 구성: 계보 미확인 53.2% · 혼합 계보 46.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시타선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 백진규 49.55%
+계보 구성: 혼합 계보 49.55% · 계보 미확인 44.51% · 무소속 5.94%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시사선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 정연화 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시아선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 오종길 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시자선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 이세미 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시카선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 서은경 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시나선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 김선임 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시다선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 박기범 %
+계보 구성: </title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시바선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 민영미 43.65%
+계보 구성: 계보 미확인 45.93% · 혼합 계보 43.65% · 무소속 10.42%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시차선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 이정아 32.9%
+계보 구성: 계보 미확인 53.2% · 혼합 계보 46.8%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시타선거구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 백진규 49.55%
+계보 구성: 혼합 계보 49.55% · 계보 미확인 44.51% · 무소속 5.94%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시가선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 강상태 42.23%
+계보 구성: 계보 미확인 58.64% · 혼합 계보 39.0% · 진보계 2.35%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시라선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 선창선 34.87%
+계보 구성: 계보 미확인 60.44% · 혼합 계보 34.94% · 무소속 4.62%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="345" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시마선거구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 최옥희 34.65%
+계보 구성: 계보 미확인 57.43% · 혼합 계보 32.14% · 진보계 10.43%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시분당구
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 국민의힘 47.27%
+계보 구성: 계보 미확인 51.02% · 혼합 계보 47.32% · 진보계 1.66%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1423" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시수정구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 50.32%
+계보 구성: 계보 미확인 59.7% · 혼합 계보 38.37% · 진보계 1.93%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계
+변화량(동 귀속표 기준): 국민의힘 +5.83%p, 더불어민주당 -2.02%p</title></circle>
+<circle cx="1423" cy="311" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시중원구
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 53.19%
+계보 구성: 계보 미확인 61.5% · 혼합 계보 36.21% · 진보계 2.29%
+혼합 구성: 국민의힘=보수계+지역계, 한나라당=보수계+지역계</title></circle>
+<circle cx="1423" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 46.97%
+계보 구성: 계보 미확인 51.93% · 혼합 계보 45.87% · 진보계 2.2%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="379" r="6" class="rt-pt rt-pt-mixed" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 국민의힘 국민의힘 51.16%
+계보 구성: 혼합 계보 51.16% · 계보 미확인 47.02% · 진보계 1.81%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 54.27%
+계보 구성: 계보 미확인 58.39% · 혼합 계보 38.71% · 진보계 2.9%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+<circle cx="1423" cy="379" r="6" class="rt-pt rt-pt-unknown" fill="#8a8f98" tabindex="0"><title>제9회 전국동시지방선거
+당시 선거구: 성남시
+당시 행정구역 연결 정보 미등록
+당선: 더불어민주당 더불어민주당 52.1%
+계보 구성: 계보 미확인 56.64% · 혼합 계보 40.96% · 진보계 2.4%
+혼합 구성: 국민의힘=보수계+지역계</title></circle>
+</svg></div>
+<p class="rt-legend"><span class="rt-key"><i style="background:#d2352b"></i>보수계</span> <span class="rt-key"><i style="background:#0a5cb8"></i>민주계</span> <span class="rt-key"><i style="background:#e8a300"></i>진보계</span> <span class="rt-key"><i style="background:#00875a"></i>지역계</span><span class="rt-key"><i class="rt-i-mixed"></i>혼합 계보</span><span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span></p>
+<p class="rt-meta">선거 116회 · 계열 10종 · 행정구역·선거구 사건 0건 · 계보 분류의 50.01%는 강제해산 등 제도적 단절을 건너는 역사적 연속성 해석에 기댑니다</p>
+</section>
