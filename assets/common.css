@@ -350,9 +350,10 @@ body {
 .vz-gap-legend {
   display: flex; align-items: center; justify-content: center;
   flex-wrap: wrap; gap: 4px 8px;
-  margin: 6px auto 0; font-size: 11px; color: var(--ink-soft);
+  margin: 8px auto 0; font-size: 12px; color: var(--ink-soft);
 }
-.vz-gap-lab { letter-spacing: -0.01em; }
+/* 양 끝 라벨(박빙/압도)이 이 키의 요점이다 — 주석처럼 흐리면 목적을 못 한다. */
+.vz-gap-lab { letter-spacing: -0.01em; color: var(--ink); font-weight: 600; }
 .vz-gap-sw {
   display: inline-block; width: 15px; height: 11px; border-radius: 2px;
   background: var(--ink-soft);

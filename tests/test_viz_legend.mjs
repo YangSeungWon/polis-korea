@@ -24,6 +24,12 @@ class El {
     return this.parentNode.children[i + 1] || null;
   }
   appendChild(c) { c.parentNode = this; this.children.push(c); return c; }
+  remove() {
+    if (!this.parentNode) return;
+    const i = this.parentNode.children.indexOf(this);
+    if (i >= 0) this.parentNode.children.splice(i, 1);
+    this.parentNode = null;
+  }
   insertBefore(c, ref) {
     c.parentNode = this;
     const i = ref ? this.children.indexOf(ref) : -1;
@@ -45,8 +51,8 @@ globalThis.document = {
   createElement: (t) => new El(t),
 };
 const src = fs.readFileSync(ROOT + 'assets/parties.js', 'utf8')
-  + '\nreturn { mountGapLegend, gapOpacity, GAP_LEGEND_STOPS };';
-const { mountGapLegend, gapOpacity, GAP_LEGEND_STOPS } = new Function(src)();
+  + '\nreturn { mountGapLegend, removeGapLegend, gapOpacity, GAP_LEGEND_STOPS };';
+const { mountGapLegend, removeGapLegend, gapOpacity, GAP_LEGEND_STOPS } = new Function(src)();
 
 // ── 검사 ────────────────────────────────────────────────────────────────────
 const parent = new El('div');
@@ -78,6 +84,23 @@ ck('note를 바꿔도 여전히 하나', parent.children.length === before);
 
 ck('부모 없는 host는 조용히 무시', mountGapLegend(new El('svg')) === null);
 ck('host 없으면 조용히 무시', mountGapLegend(null) === null);
+
+// ── 걷어내기 — 지도가 사라지는 경로에서 키만 남으면 안 된다 ──────────────────
+// 실제 사고 경로: 데이터 0건이면 svg.innerHTML=''로 지도만 비우는데, 범례는 svg의
+// **형제**라 그대로 남는다. 설명할 대상 없는 키가 화면에 떠 있게 된다.
+removeGapLegend(svg);
+ck('걷어내면 사라진다', !parent.children.some((c) => c._cls === 'vz-gap-legend'),
+  parent.children.map((c) => c.tag + '.' + c._cls).join(','));
+ck('걷어내도 지도·형제는 남는다',
+  parent.children.includes(svg) && parent.children.includes(after));
+removeGapLegend(svg);
+ck('두 번 걷어내도 안전', true);
+ck('없는 host 걷어내기 안전', (removeGapLegend(null), removeGapLegend(new El('svg')), true));
+// 걷어낸 뒤 다시 그릴 수 있어야 한다(모드 왕복).
+const again = mountGapLegend(svg);
+ck('걷어낸 뒤 다시 붙는다', !!again && parent.children[1] === again);
+ck('왕복해도 하나뿐',
+  parent.children.filter((c) => c._cls === 'vz-gap-legend').length === 1);
 
 console.log(`\n총 ${pass + fail}건: ${pass} pass, ${fail} fail`);
 process.exit(fail ? 1 : 0);

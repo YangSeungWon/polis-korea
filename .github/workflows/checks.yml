@@ -73,6 +73,9 @@ jobs:
       - name: 지역 페이지 (없는 값이 0으로 새지 않는지)
         run: python tests/test_region_pages.py
 
+      - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
+        run: python tests/test_chronology_layout.py
+
       - name: 글씨 대비 (정당 원색이 글씨로 새지 않는지)
         run: node tests/test_text_contrast.mjs
 

@@ -26,6 +26,11 @@ function renderHex() {
   });
   // 팬·줌 (Phase 1) — draw가 viewBox를 base로 리셋하므로 매 렌더 후 현재 줌 복원. 리스너는 1회만.
   if (window.SvgViewport && meta) window.SvgViewport.attach(host, { baseViewBox: meta.viewBox, cells: meta.cells });
+  // 시도 hex도 시군구 hex와 같은 인코딩을 쓴다 — 키가 한쪽에만 있으면 더 헷갈린다.
+  const svg = host.querySelector('svg');
+  if (svg && typeof mountGapLegend === 'function') {
+    mountGapLegend(svg, { note: '색 진하기 = 1·2위 격차 · 점선·흐림 = 최근 조사 부족' });
+  }
 }
 
 
@@ -59,7 +64,12 @@ async function loadSigunguHex() {
 async function renderSigunguHex() {
   const svg = $('#hex2');
   const data = await loadSigunguHex();
-  if (!data.length) { svg.innerHTML = ''; return; }
+  // 지도가 비면 키도 걷는다 — svg.innerHTML만 비우면 형제인 범례가 남는다.
+  if (!data.length) {
+    svg.innerHTML = '';
+    if (typeof removeGapLegend === 'function') removeGapLegend(svg);
+    return;
+  }
   const meta = drawSigunguHex(svg, data,
     (sido, name) => (isSigunguMode() ? regionSigunguWinner(sido, name, state.office) : regionSidoWinner(sido, state.office)),
     {

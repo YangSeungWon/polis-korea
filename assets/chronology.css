@@ -1,10 +1,19 @@
 /* chronology.html — 한국 근현대사 연표 */
 
-.chrono-controls { margin: 14px 0 8px; }
+/* 연표 폭(.chrono max-width)에 제목·필터도 맞춘다 — 본문만 좁아지면 필터가 허공에
+   떠 있는 것처럼 보인다. 좁은 화면에선 제한이 자동으로 풀린다(max-width라서). */
+.chronology-page .intro,
+.chrono-controls { max-width: 720px; margin-left: auto; margin-right: auto; }
+.chrono-controls { margin-top: 14px; margin-bottom: 8px; }
 .chrono-viz { position: relative; min-height: 200px; }
 
 .chrono {
   --rail: 78px;            /* 날짜열 폭 = 레일 위치 */
+  /* 연표는 세로로 읽는 형식이라 넓힐수록 나빠진다. 페이지가 1320px인데 행이 그 폭을
+     다 쓰면, 우측 정렬된 결과 막대가 사건 텍스트에서 500px 넘게 떨어져 같은 행이라는
+     게 눈으로 안 붙는다(화면 중앙이 통째로 빈다). 폭을 묶어 사건과 결과를 붙인다. */
+  max-width: 720px;
+  margin: 0 auto;
   position: relative;
   padding: 4px 0 24px;
 }
@@ -108,7 +117,10 @@
 .chr-num { font-weight: 700; font-size: 0.9em; color: var(--ink); white-space: nowrap; }
 .chr-winner { color: var(--ink-soft); font-size: 0.88em; }
 .chr-link:hover .chr-winner { color: var(--ink); }
-/* 작은 100% 결과 바 — 우측 정렬(행마다 세로로 정렬돼 비교 쉬움) */
+/* 작은 100% 결과 바 — 우측 정렬(행마다 세로로 정렬돼 비교 쉬움).
+   정렬은 유지하되 거리는 묶는다: 정렬을 버리면 회차 간 비교가 안 되고,
+   거리를 안 묶으면 어느 행의 결과인지 안 붙는다. 둘 다 필요하다. */
+.chr-body { max-width: 560px; }
 .chr-bar {
   display: inline-flex; align-items: stretch;
   width: 64px; height: 7px; border-radius: 3px; overflow: hidden;
@@ -153,6 +165,8 @@
 
 @media (max-width: 560px) {
   .chrono { --rail: 56px; }
+  /* 좁은 화면에선 폭 제한이 오히려 방해 — 있는 폭을 다 쓴다. */
+  .chr-body { max-width: none; }
   .chr-winner { font-size: 0.82em; }
   .chr-era-note { display: none; }
 }

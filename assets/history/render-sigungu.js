@@ -41,7 +41,10 @@ function renderSigunguHex() {
     }
     return [{ ...d, sido: eff.sido, name: eff.name, _borrowed: borrowed }];
   });
-  if (!data.length) return;  // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
+  if (!data.length) {        // 매칭 결과 0 → 빈 배열이면 viewBox -Infinity 방지
+    if (typeof removeGapLegend === 'function') removeGapLegend(svg);   // 키만 남지 않게
+    return;
+  }
 
   // 사이즈 모드: 격자(시군구당 득표 비례 작은 hex·대선 기본) / dorling(원) / 그 외=단일 hex.
   const sizingMode = state.sizing || '동일';

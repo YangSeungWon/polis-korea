@@ -408,6 +408,14 @@ function mountGapLegend(host, opts) {
   return el;
 }
 
+// 지도가 사라지는 경로(데이터 0건 등)에서 키만 남으면 안 된다 — 설명할 대상이 없는
+// 범례는 '뭔가 그려졌는데 안 보인다'는 오해를 만든다. 그릴 게 없으면 키도 걷는다.
+function removeGapLegend(host) {
+  if (!host || !host.parentNode) return;
+  const el = host.parentNode.querySelector(':scope > .vz-gap-legend');
+  if (el && el.remove) el.remove();
+}
+
 // 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset.
 // 9회 active layout: 5 row 4·4·4·3·1 (16 cell 빈자리 0). 한국 지도 모양 + lat·lon 정확.
 //   row 0:  [인천][서울][경기][강원]                  (4) — 수도권·강원
