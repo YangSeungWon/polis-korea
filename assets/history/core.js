@@ -214,6 +214,12 @@ function adaptNewSchema(raw, type) {
         // 없으면(옛 1~4회·9회 광역장/교육감은 scope sido만) 시도 행으로 fallback →
         // resultForSido가 시도당 1행을 그대로 집계해 광역장/교육감 시도뷰가 뜬다.
         sigungu: sggRows.length ? sggRows : sidoRaces.map(_raceToOldRow),
+        // **당선 곳 수를 세는 단위**는 지도 breakdown과 다르다.
+        // 광역단체장·교육감은 시도에서 1명을 뽑는다. sigungu(시군구별 표심 breakdown)를
+        // 세면 '158곳 / 총 256곳'처럼 광역장 모드인데 기초장 규모가 나온다 —
+        // 실제로 그렇게 나왔다. 직위가 실제로 뽑히는 단위를 따로 싣는다.
+        unit_scope: tc === '4' ? 'sigungu' : 'sido',
+        units: (tc === '4' ? sggRows : sidoRaces.map(_raceToOldRow)),
       };
     }
   }

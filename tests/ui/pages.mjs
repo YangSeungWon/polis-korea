@@ -15,6 +15,7 @@ export const PAGES = [
   { id: 'poll-round',    url: '/polls/9th-local-2026/',           why: '회차별 조사 vs 실제' },
   { id: 'history',       url: '/history.html',                    why: '지도/격자/원형 토글 stress' },
   { id: 'chronology',    url: '/chronology.html',                 why: '연표 — 1948~2026 시간 밀도' },
+  { id: 'history-local',  url: '/history/local/9/governor/',       why: '지선 직위 뷰 — 가로 flex .viz(범례가 컬럼이 되던 자리) + 직위별 집계 단위' },
   { id: 'parties',       url: '/parties.html',                    why: '정당사 SVG stress(2020년대 밀집)' },
   { id: 'party-big',     url: '/party/국민의힘/',                 why: '큰 정당 — 인물 many' },
   { id: 'party-small',   url: '/party/노동당/',                   why: '작은 정당 — 빈 섹션' },

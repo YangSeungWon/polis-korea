@@ -377,3 +377,16 @@ table td, table th { font-variant-numeric: tabular-nums; }
 [id^="ar-"],
 section[id],
 h2[id], h3[id] { scroll-margin-top: 72px; }
+
+/* 아직 공표되지 않은 자료 — '없는 것'과 구분되는 상태다. 빈 칸으로 두면 선거가
+   없었던 곳처럼 읽힌다. 정치색은 주지 않고 빗금으로 '자리는 있는데 값이 없다'만 말한다. */
+.sig-pending-fill {
+  fill: url(#sig-pending-hatch);
+  stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 3 2;
+}
+.sig-pending-key {
+  display: inline-block; width: 13px; height: 11px; vertical-align: -1px;
+  border: 1px dashed var(--rule-strong); border-radius: 2px;
+  background: repeating-linear-gradient(135deg,
+    var(--bg3, #e6e9ef) 0 3px, transparent 3px 6px);
+}

@@ -392,8 +392,11 @@ function renderDetail() {
     </div>`;
   } else if (state.type === 'local') {
     // 지선 — 광역단체장·기초단체장·교육감 winner_party 카운트 (정당별 당선 곳 수)
+    //
+    // **직위가 뽑히는 단위로 센다.** data.sigungu는 시군구별 표심 breakdown이라,
+    // 광역단체장에서 그걸 세면 시도 16곳이 아니라 시군구 256곳이 나온다.
     const winsByParty = new Map();
-    for (const r of data?.sigungu || []) {
+    for (const r of data?.units || data?.sigungu || []) {
       const winner = r.candidates?.[0];
       if (!winner?.party) continue;
       winsByParty.set(winner.party, (winsByParty.get(winner.party) || 0) + 1);
@@ -403,10 +406,15 @@ function renderDetail() {
       .sort((a, b) => b.wins - a.wins);
     const total = parties.reduce((s, p) => s + p.wins, 0);
     const top = parties[0];
+    // 교육감은 정당 공천이 없다. 정당이 하나도 없는 직위에서 '—'를 헤드라인으로 두면
+    // '자료가 없다'로 읽힌다 — 없는 것은 자료가 아니라 정당이다.
+    const units = (data?.units || data?.sigungu || []).filter((r) => r.candidates?.[0]);
+    const nonpartisan = !parties.length && units.length > 0;
     html += `<div class="national-summary" style="border-left-color:${top ? top.color : 'var(--ink)'}">
       <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · ${state.office}</div>
-      <div class="ns-name" style="color:${top ? _textLegible(top.color) : 'var(--ink)'}">${top ? top.party : '—'}</div>
-      <div class="ns-party">${top ? `${top.wins}곳 / 총 ${total}곳` : (el?.date || '')}</div>
+      <div class="ns-name" style="color:${top ? _textLegible(top.color) : 'var(--ink)'}">${top ? top.party : (nonpartisan ? '정당 공천 없음' : '—')}</div>
+      <div class="ns-party">${top ? `${top.wins}곳 / 총 ${total}곳`
+        : (nonpartisan ? `${units.length}곳 선출 · 정당 소속 없음` : (el?.date || ''))}</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}

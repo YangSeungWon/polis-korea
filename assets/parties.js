@@ -425,6 +425,22 @@ function pctValue(v) {
 // host 다음 형제로 붙이고, 다시 그려도 하나만 남는다(재렌더가 잦은 뷰들이라 필수).
 const GAP_LEGEND_STOPS = [0, 5, 10, 20];
 
+// 범례를 붙일 자리. **flex row 안에 끼우면 세 번째 컬럼이 된다** — history의 .viz는
+// 지도(flex 1) + 상세(고정폭) 2단 flex라, 형제로 넣으면 지도 옆에 222px를 차지하고
+// 높이도 지도만큼 늘어났다(실제로 19px 내용이 672px 상자가 됐다).
+// 그럴 땐 그 덩어리 **아래**로 내린다 — 범례는 원래 시각화 밑에 붙는 것이다.
+function _legendAnchor(host) {
+  let node = host, par = host.parentNode;
+  for (let i = 0; i < 4 && par; i++) {
+    const cs = (typeof getComputedStyle === 'function') ? getComputedStyle(par) : null;
+    const rowFlex = cs && (cs.display === 'flex' || cs.display === 'inline-flex')
+      && !String(cs.flexDirection || '').startsWith('column');
+    if (!rowFlex) break;
+    node = par; par = par.parentNode;         // 한 단계 밖으로
+  }
+  return { parent: par || host.parentNode, before: node.nextSibling, node };
+}
+
 function mountGapLegend(host, opts) {
   if (!host || !host.parentNode) return null;
   opts = opts || {};
@@ -434,11 +450,12 @@ function mountGapLegend(host, opts) {
     const op = gapOpacity(g).toFixed(2);
     return `<i class="vz-gap-sw" style="opacity:${op}" title="격차 ${g}%p"></i>`;
   }).join('');
-  let el = host.parentNode.querySelector(':scope > .vz-gap-legend');
+  const at = _legendAnchor(host);
+  let el = at.parent.querySelector(':scope > .vz-gap-legend');
   if (!el) {
     el = document.createElement('p');
     el.className = 'vz-gap-legend';
-    host.parentNode.insertBefore(el, host.nextSibling);
+    at.parent.insertBefore(el, at.before);
   }
   // 무엇의 척도인지 **먼저** 말한다. '박빙 ▪▪▪▪ 압도 · 색 진하기=격차' 순서면
   // 회색 칸을 먼저 읽고 뒤 설명으로 의미를 확정해야 한다 — 순서가 거꾸로다.
@@ -459,7 +476,9 @@ function mountGapLegend(host, opts) {
 // 범례는 '뭔가 그려졌는데 안 보인다'는 오해를 만든다. 그릴 게 없으면 키도 걷는다.
 function removeGapLegend(host) {
   if (!host || !host.parentNode) return;
-  const el = host.parentNode.querySelector(':scope > .vz-gap-legend');
+  const at = _legendAnchor(host);
+  const el = at.parent.querySelector(':scope > .vz-gap-legend')
+    || host.parentNode.querySelector(':scope > .vz-gap-legend');
   if (el && el.remove) el.remove();
 }
 

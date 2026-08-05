@@ -58,10 +58,61 @@
     // 총투표수 — voted 없으면 voters(live-count는 voters만). maxVoted는 차용(_fill) 제외(스케일 왜곡 방지).
     const vget = (r) => ((r && r.voted != null) ? r.voted : ((r && r.voters) || 0));
     const rmap = new Map(); let maxVoted = 0;
-    for (const d of cells) { const res = resultFn(d.sido, d.name); if (res && vget(res)) { rmap.set(d, res); if (!res._fill) maxVoted = Math.max(maxVoted, vget(res)); } }
+    // _pending = 선거는 있었고 결과(의석)도 확정인데 **정당별 득표가 아직 공표되지 않음**.
+    // 빈 칸으로 두면 '선거가 없었다'·'자료가 없다'와 구별되지 않는다 — 셋은 다르다.
+    const pending = [];
+    for (const d of cells) {
+      const res = resultFn(d.sido, d.name);
+      if (res && res._pending && !vget(res)) { pending.push([d, res]); continue; }
+      if (res && vget(res)) { rmap.set(d, res); if (!res._fill) maxVoted = Math.max(maxVoted, vget(res)); }
+    }
 
     if (typeof drawSidoEdgeLabels === 'function') {
       drawSidoEdgeLabels(svg, cells.map((d) => { const [cx, cy] = ctr(d); return { sido: d.sido, cx, cy }; }));
+    }
+
+    // 미공표 셀 — 옅은 빗금 hex + 이유를 title로. 색(정치)을 주지 않는다.
+    function drawPending() {
+      if (!pending.length) return;
+      // 빗금 pattern은 이 svg 안에 있어야 url(#...)이 걸린다(문서 공유 defs 아님).
+      const defs = document.createElementNS(NS, 'defs');
+      const pat = document.createElementNS(NS, 'pattern');
+      pat.setAttribute('id', 'sig-pending-hatch'); pat.setAttribute('width', '6');
+      pat.setAttribute('height', '6'); pat.setAttribute('patternUnits', 'userSpaceOnUse');
+      pat.setAttribute('patternTransform', 'rotate(135)');
+      const bg = document.createElementNS(NS, 'rect');
+      bg.setAttribute('width', '6'); bg.setAttribute('height', '6');
+      bg.setAttribute('fill', 'var(--bg2, #f2f4f8)');
+      const ln = document.createElementNS(NS, 'line');
+      ln.setAttribute('x1', '0'); ln.setAttribute('y1', '0');
+      ln.setAttribute('x2', '0'); ln.setAttribute('y2', '6');
+      ln.setAttribute('stroke', 'var(--rule-strong, #b9c0c8)'); ln.setAttribute('stroke-width', '1.6');
+      pat.appendChild(bg); pat.appendChild(ln); defs.appendChild(pat); svg.appendChild(defs);
+      for (const [d, res] of pending) {
+        const [cx, cy] = ctr(d);
+        const g = document.createElementNS(NS, 'g'); bindClick(g, d); g.setAttribute('data-sido', d.sido);
+        g.setAttribute('class', 'sig-pending');
+        const poly = document.createElementNS(NS, 'polygon');
+        poly.setAttribute('points', hexPoints(cx, cy, r - 1));
+        poly.setAttribute('class', 'sig-pending-fill');
+        g.appendChild(poly);
+        const tt = document.createElementNS(NS, 'title');
+        tt.textContent = `${psido(d.sido, date)} ${uname(d.name)} · `
+          + (res._pending_note || '정당별 득표 미공표');
+        g.appendChild(tt);
+        const lbl = slabel(d.name, d.sido);
+        if (lbl.short) {
+          const txt = document.createElementNS(NS, 'text');
+          txt.setAttribute('x', cx.toFixed(1)); txt.setAttribute('y', (cy - 8).toFixed(1));
+          txt.setAttribute('text-anchor', 'middle');
+          txt.setAttribute('font-size', lbl.short.length > 3 ? '6' : '8');
+          txt.setAttribute('font-weight', '700'); txt.setAttribute('class', 'hist-sigungu-label');
+          txt.setAttribute('pointer-events', 'none');
+          txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
+          txt.textContent = lbl.short; g.appendChild(txt);
+        }
+        svg.appendChild(g);
+      }
     }
 
     // ── Dorling — 원(표 비례), 파이=후보, 시도별 convex hull 권역 ──────────────
@@ -120,8 +171,9 @@
         }
         svg.appendChild(g);
       }
+      drawPending();
       CU.wireSidoHover(svg);
-      return { shown: nodes.length, cells: focusCells, viewBox: vb };
+      return { shown: nodes.length, cells: focusCells, viewBox: vb, pending: pending.length };
     }
 
     // ── 격자 — 시군구당 N개 작은 hex(1 hex=2만표). 차용/모도시 셀은 단일 채움 ──────
@@ -185,8 +237,9 @@
       const selCells = cells.filter((x) => x.sido === sel.sido && x.name === sel.name);
       if (selCells.length) CU.drawBorders(svg, selCells, geom, { key: (c) => c.sido + '|' + c.name, includeOutline: true, lineClass: 'gu-outline is-selected' });
     }
+    drawPending();
     CU.wireSidoHover(svg);
-    return { shown, cells: focusCells, viewBox: vb };
+    return { shown, cells: focusCells, viewBox: vb, pending: pending.length };
   }
 
   window.Archive = window.Archive || {};

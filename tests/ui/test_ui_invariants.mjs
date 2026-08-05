@@ -129,7 +129,11 @@ for (const spec of pages) {
           .filter((v) => !isNaN(v)));
         // 셀이 많고 명도가 3단계 이상 → 지도가 명도로 값을 나른다.
         // 셀 수 조건이 없으면 스파크라인·아이콘 같은 작은 svg가 오탐된다.
-        if (els.length >= 20 && vals.size >= 3) varying++;
+        // 다만 20은 너무 높다 — **시도 지도는 16~17칸뿐**이고 그것도 격차 명도를 쓴다.
+        // 20으로 두면 광역단체장 뷰가 '명도를 안 쓴다'로 잡혀 정상 램프를 오탐한다.
+        // 대신 아이콘 오탐은 '큰 그림인가'로 막는다.
+        const r = svg.getBoundingClientRect();
+        if (els.length >= 12 && vals.size >= 3 && r.width >= 200 && r.height >= 200) varying++;
       }
       // 범례 존재 여부가 아니라 **격차 램프**를 본다. 범례는 다른 인코딩(크기 등)
       // 때문에 있을 수 있다 — 램프가 곧 '색 진하기 = 격차'라는 주장이다.
@@ -140,6 +144,63 @@ for (const spec of pages) {
       `명도 지도 ${enc.varying} · 램프 ${enc.legs}`);
     ck(`${vp.id} 명도가 안 변하면 램프도 없다`, enc.varying > 0 || enc.legs === 0,
       `명도 지도 ${enc.varying} · 램프 ${enc.legs}`);
+
+    // ── 3.6 범례가 시각화 옆 컬럼을 차지하지 않는가 ───────────────────────
+    // history의 .viz는 지도(flex 1) + 상세(고정폭) **가로 flex**다. 범례를 형제로
+    // 넣으면 세 번째 컬럼이 되어 지도 옆 222px를 먹고 높이도 지도만큼(672px) 늘어난다.
+    // 내용은 19px 한 줄인데 상자만 커진 것이라 '공간을 이상하게 차지'하는 것으로 보인다.
+    const legBox = await page.evaluate(() => [...document.querySelectorAll('.vz-gap-legend')]
+      .map((e) => { const r = e.getBoundingClientRect();
+        return { h: Math.round(r.height), w: Math.round(r.width),
+                 lines: e.querySelectorAll('.vz-gap-item').length }; })
+      .filter((b) => b.h > 0));
+    // 한 줄 범례가 항목 수에 비해 지나치게 높으면 stretch된 것이다.
+    ck(`${vp.id} 범례가 세로로 늘어나지 않았다`,
+      legBox.every((b) => b.h <= 40 * Math.max(1, b.lines)),
+      JSON.stringify(legBox));
+
+    // ── 3.7 비어 있는 칸에 이유가 있는가 ──────────────────────────────────
+    // 자료가 아직 공표되지 않은 시군구를 그냥 비워 두면 '선거가 없었다'와 구별되지
+    // 않는다. 9회 기초의원 비례 58곳이 그렇게 빈 칸이었다.
+    // **데이터에서 몇 곳이 미공표인지 세어** DOM과 대조한다. 화면만 보면 '빈 칸이
+    // 하나도 없으니 통과'라는 공허한 검사가 된다(실제로 그렇게 통과했다).
+    const pend = await page.evaluate(async () => {
+      const sec = document.querySelector('#ar-sgg-prop');
+      if (!sec) return null;
+      const id = location.pathname.match(/\/archive\/([^/]+)\//)?.[1];
+      if (!id) return null;
+      const raw = await fetch(`/data/results/${id}.json`).then((r) => r.json()).catch(() => null);
+      if (!raw?.races) return null;
+      const expect = raw.races.filter((r) => r.sg_typecode === '9'
+        && r.scope === 'proportional_sigungu'
+        && !(r.candidates || []).some((c) => c.party && (c.votes || 0) > 0)).length;
+      return { expect, cells: sec.querySelectorAll('g.sig-pending').length,
+               note: (sec.querySelector('.ar-sgg-prop-note')?.innerText || '').length };
+    });
+    if (pend && pend.expect) {
+      // 자료가 없는 시군구를 빈 칸으로 두면 '선거가 없었다'와 구별되지 않는다
+      ck(`${vp.id} 미공표 시군구를 빈 칸으로 두지 않는다 (${pend.cells}/${pend.expect})`,
+        pend.cells >= pend.expect, JSON.stringify(pend));
+      ck(`${vp.id} 미공표 칸에 설명이 있다`, pend.note > 20, JSON.stringify(pend));
+    }
+
+    // ── 3.8 지선 요약이 **직위가 뽑히는 단위**로 세는가 ────────────────────
+    // 광역단체장인데 시군구 breakdown을 세어 '158곳 / 총 256곳'이 나왔다.
+    // 시도에서 1명을 뽑는 직위의 총합이 시군구 규모면 단위를 잘못 센 것이다.
+    const office = await page.evaluate(() => {
+      const t = document.querySelector('.ns-title')?.innerText || '';
+      const m = (document.querySelector('.ns-party')?.innerText || '').match(/총\s*(\d+)\s*곳/);
+      return m ? { title: t, total: +m[1] } : null;
+    });
+    if (office && /광역단체장|교육감/.test(office.title)) {
+      // 시도는 17개(2026 전남·광주 통합으로 16)를 넘지 않는다
+      ck(`${vp.id} 광역 직위는 시도 수만큼 센다`, office.total <= 17,
+        JSON.stringify(office));
+    }
+    if (office && /기초단체장/.test(office.title)) {
+      ck(`${vp.id} 기초 직위는 시군구 수만큼 센다`,
+        office.total > 100 && office.total <= 260, JSON.stringify(office));
+    }
 
     // ── 4.5 클릭 가능한 링크가 실제로 살아 있는가 ─────────────────────────
     // 정적 href 감사(108,439개)는 통과했는데 /history/local/9/가 404였다.

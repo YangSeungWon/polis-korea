@@ -609,7 +609,20 @@
       if (r.sg_typecode !== '9' || r.scope !== 'proportional_sigungu') continue;
       const cs = (r.candidates || []).filter((c) => c.party && (c.votes || 0) > 0);
       const voted = r.valid_votes ?? cs.reduce((s, c) => s + (c.votes || 0), 0);
-      if (!cs.length || !voted) continue;
+      if (!cs.length || !voted) {
+        // 의석은 확정인데 정당별 득표가 아직 공표되지 않은 시군구(9회 58곳).
+        // 그냥 건너뛰면 지도에 빈 칸으로 남아 '선거가 없었다'처럼 보인다 — 실제로
+        // 그렇게 보였다. 표심을 지어내지 않되, **비어 있는 이유는 말한다**.
+        const seats = (r.candidates || []).filter((c) => c.seats);
+        if (r.votes_pending || seats.length) {
+          putKeys(m, r.sido, r.sigungu, {
+            _pending: true, candidates: [], voted: 0,
+            _pending_note: '정당별 득표 미공표'
+              + (seats.length ? ` (의석 ${seats.reduce((a, c) => a + (c.seats || 0), 0)}석 확정)` : ''),
+          }, put);
+        }
+        continue;
+      }
       putKeys(m, r.sido, r.sigungu, { candidates: cs, voted }, put);
     }
     return m;
@@ -643,6 +656,9 @@
     const leg = sec.querySelector('.ar-sgg-prop-legend');
     const onSelect = (sido, name) => window.Archive?.winners?.focus?.({ sido, q: name, level: '기초의원' });
     const parties = [...new Set([...pmap.values()].flatMap((v) => v.candidates.map((c) => c.party)))];
+    // 빠진 것을 조용히 비우지 않는다 — 몇 곳이 왜 비었는지 화면이 말한다.
+    // putKeys가 한 시군구를 여러 키로 넣는다 — 키가 아니라 **객체 정체성**으로 센다
+    const nPending = new Set([...pmap.values()].filter((v) => v._pending)).size;
     let mode = '격자';
     function redraw() {
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
@@ -660,6 +676,37 @@
       tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.sgmode; tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b)); redraw(); }));
     }
     leg.innerHTML = parties.slice(0, 8).map((p) => `<span class="ch-leg" style="color:${(typeof partyTextColor==='function')?partyTextColor(p):pcol(p)}">■ ${p}</span>`).join(' ');
+    // 아예 선거가 없던 곳 — 기초의원 지역구(6)도 비례(9)도 없으면 그 시군구엔 기초의회가
+    // 없다. 이름을 박아 넣지 않고 **데이터에서 판정한다** (세종·제주 행정시).
+    const hasCouncil = new Set();
+    for (const r of races) {
+      if ((r.sg_typecode === '9' || r.sg_typecode === '6') && r.sido && r.sigungu) {
+        hasCouncil.add(r.sido + '|' + r.sigungu);
+      }
+    }
+    const noElection = hexCells.filter((c) => !lookupKey(pmap, c.sido, c.name)
+      && !matchKeys(c.sido, c.name).some((k) => hasCouncil.has(k))).map((c) => c.name);
+
+    let note = sec.querySelector('.ar-sgg-prop-note');
+    if (nPending || noElection.length) {
+      if (!note) {
+        note = document.createElement('p'); note.className = 'ar-sgg-prop-note ar-note';
+        leg.parentNode.insertBefore(note, leg.nextSibling);
+      }
+      // 몇 곳인지, 무엇이 없는지, 무엇은 있는지를 같이 말한다.
+      // 비어 있는 이유가 둘이면 둘 다 말한다 — 하나로 뭉치면 서로 다른 상태가 같아 보인다.
+      const parts = [];
+      if (nPending) {
+        parts.push('<span class="sig-pending-key"></span> '
+          + `빗금 ${nPending}곳은 <b>정당별 득표가 아직 공표되지 않았습니다</b> — `
+          + '의석은 확정입니다(중앙선관위 개표현황 미게시). 표심을 추정해 채우지 않습니다.');
+      }
+      if (noElection.length) {
+        parts.push(`${noElection.join('·')}는 <b>기초의회가 없어</b> 기초의원 선거 자체가 `
+          + '없습니다 — 자료가 빠진 것이 아닙니다.');
+      }
+      note.innerHTML = parts.join('<br>');
+    } else if (note) { note.remove(); }
     redraw();
   }
 
