@@ -116,6 +116,15 @@ def render(doc: dict) -> str:
             m = (a + b) / 2
             out.append(f'<text x="{m:.0f}" y="{yy-6:.0f}" class="rt-x" '
                        f'text-anchor="middle">×</text>')
+    # 한 지역에 같은 회차 선거구가 여럿일 수 있다(부천시갑·을·병). 같은 (날짜, lane)에
+    # 그대로 찍으면 완전히 겹쳐 하나로 보인다. **x는 시간이라 못 옮기므로 y로 편다.**
+    slot: dict = {}
+    for p in sorted(pts, key=lambda q: (q["election_date"], q["unit_name_at_the_time"])):
+        k = (p["election_date"], p["comparison_series_id"])
+        slot[k] = slot.get(k, 0) + 1
+        p["_slot"] = slot[k] - 1
+    nslot = {k: v for k, v in slot.items()}
+
     # 점 — 계보 구성의 최다 bucket으로 칠한다. mixed는 빗금, unknown은 옅게.
     for p in pts:
         s = p["comparison_series_id"]
@@ -151,8 +160,32 @@ def render(doc: dict) -> str:
         title = (f'{p["label"]}\n당시 선거구: {p["unit_name_at_the_time"]}{gtxt}\n'
                  f'당선: {w.get("party") or ""} {w.get("name") or ""} {w.get("pct") or ""}%\n'
                  f'계보 구성: {comp}{mx}{claim}')
-        out.append(f'<circle cx="{x(p["election_date"]):.0f}" cy="{yl(s):.0f}" r="6" '
-                   f'class="{cls}" fill="{fill}" tabindex="0">'
+        n = nslot[(p["election_date"], s)]
+        # 넷 이상이 한 자리에 몰리면 펴도 서로 겹친다(기초의원은 한 지역에 6~10개).
+        # 억지로 펴서 읽을 수 없게 만드는 대신 **하나로 묶고 개수를 밝힌다** —
+        # 데이터는 그대로 있고 화면만 접는다.
+        if n > 3:
+            if p["_slot"] > 0:
+                continue
+            grouped = [q for q in pts
+                       if q["election_date"] == p["election_date"]
+                       and q["comparison_series_id"] == s]
+            names = ", ".join(q["unit_name_at_the_time"] for q in grouped)
+            lab = (f'{p["label"]} · {SERIES_LABEL.get(s, s)} {n}개 선거구\n{names}\n'
+                   f'개별 결과는 목록에서 볼 수 있습니다')
+            out.append(f'<circle cx="{x(p["election_date"]):.0f}" cy="{yl(s):.0f}" '
+                       f'r="8" class="rt-pt rt-pt-group" fill="{fill}" tabindex="0" '
+                       f'role="img" aria-label="{esc(lab.replace(chr(10), " / "))}">'
+                       f'<title>{esc(lab)}</title></circle>'
+                       f'<text x="{x(p["election_date"]):.0f}" y="{yl(s)+3:.0f}" '
+                       f'class="rt-cnt" text-anchor="middle">{n}</text>')
+            continue
+        r = 6 if n == 1 else 5
+        off = 0 if n == 1 else (p["_slot"] - (n - 1) / 2) * 11
+        out.append(f'<circle cx="{x(p["election_date"]):.0f}" '
+                   f'cy="{yl(s) + off:.0f}" r="{r}" '
+                   f'class="{cls}" fill="{fill}" tabindex="0" role="img" '
+                   f'aria-label="{esc(title.replace(chr(10), " / "))}">'
                    f'<title>{esc(title)}</title></circle>')
     out.append("</svg>")
     return "\n".join(out)
@@ -186,6 +219,8 @@ STYLE = """<style>
 /* mixed는 계열이 아니라 상태다 — 고유 hue를 주면 '중도'로 오해된다 */
 .rt-pt-mixed{fill:var(--rt-mut)!important;stroke-dasharray:2 2;stroke:var(--rt-ink)}
 .rt-pt-unknown{opacity:.4}
+.rt-pt-group{stroke-width:2}
+.rt-cnt{fill:#fff;font-size:9px;font-weight:700;pointer-events:none}
 .rt-ev{stroke-width:1.5}
 .rt-ev-admin{stroke:var(--rt-ink);stroke-dasharray:5 3;opacity:.55}
 .rt-ev-dist{stroke:var(--rt-mut);stroke-dasharray:2 2}
@@ -227,8 +262,13 @@ def main(regions: list[str]) -> int:
             meta += (f' · 계보 분류의 {share}%는 강제해산 등 제도적 단절을 '
                      f'건너는 역사적 연속성 해석에 기댑니다')
         # STYLE은 format 대상이 아니다 — CSS의 중괄호가 .format()과 충돌한다
-        html = STYLE + PAGE.format(region=esc(d["region"]), svg=render(d),
-                                   legend=leg, meta=esc(meta))
+        body = PAGE.format(region=esc(d["region"]), svg=render(d),
+                           legend=leg, meta=esc(meta))
+        # 감사·미리보기용 독립 문서. 실제 사이트에 얹을 땐 body만 쓴다.
+        html = (f'<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">'
+                f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+                f'<title>{esc(d["region"])} 지역 정치사</title>{STYLE}</head>'
+                f'<body>{body}</body></html>')
         (OUT / f"{f.stem}.html").write_text(html, encoding="utf-8")
         print(f"  {d['region']}: lane {len(d['series'])} · 점 {len(d['points'])} · "
               f"선 {len(d['comparison_edges'])}")
