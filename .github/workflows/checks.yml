@@ -70,6 +70,9 @@ jobs:
       - name: 크롤 경로 (홈→허브→archive 유지)
         run: python tests/test_crawl_paths.py
 
+      - name: 지역 페이지 (없는 값이 0으로 새지 않는지)
+        run: python tests/test_region_pages.py
+
       - name: 글씨 대비 (정당 원색이 글씨로 새지 않는지)
         run: node tests/test_text_contrast.mjs
 

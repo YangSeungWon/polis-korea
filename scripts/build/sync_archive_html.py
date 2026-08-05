@@ -626,9 +626,15 @@ def results_summary(eid: str, kind: str) -> str:
         return ""
 
     # 투표율 — 전국 합계가 있으면 그것, 없으면 시도 가중평균.
-    el = sum(r.get("electors") or 0 for r in races if r.get("scope") in ("sido", "nation"))
-    vo = sum(r.get("voters") or 0 for r in races if r.get("scope") in ("sido", "nation"))
-    turnout = f" · 투표율 {vo / el * 100:.1f}%" if el else ""
+    # voters가 아예 없는 회차(1~4회 지선)는 계산하지 않고 문구를 뺀다. None을 0으로
+    # 더하면 '투표율 0.0%'라는 없던 사실이 만들어진다 — 결손은 0이 아니다.
+    top = [r for r in races if r.get("scope") in ("sido", "nation")]
+    el = sum(r.get("electors") or 0 for r in top)
+    have_vo = [r for r in top if r.get("voters") is not None]
+    vo = sum(r["voters"] for r in have_vo)
+    # 일부만 있으면 그 합은 전국 투표율이 아니다 — 전부 있을 때만 쓴다.
+    turnout = (f" · 투표율 {vo / el * 100:.1f}%"
+               if (el and have_vo and len(have_vo) == len(top)) else "")
 
     items = "".join(f"<li><b>{a}</b> <span>{b}</span></li>" for a, b in rows)
     return (f'<section class="ar-summary"><h2>결과 요약</h2>'

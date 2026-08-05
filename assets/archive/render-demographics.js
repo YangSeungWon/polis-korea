@@ -16,6 +16,9 @@
   let rsex = '합계';   // 지역 투표율 뷰의 성별 (합계/남자/여자)
   let PRIOR = null, priorN = null;   // 직전 비교 대선(성연령 grid 있는). swing 뷰용.
   let swingMetric = 'dem';           // 'dem'(이재명 득표율) | 'margin'(이재명 − 보수블록)
+  // 연령은 순서가 있는 축이다 — 값으로 재정렬하면 연령 곡선이 사라진다. 기본은 연령 순.
+  // (변화량 순은 '누가 가장 움직였나' 랭킹으로 여전히 쓸모 있어 토글로 남긴다.)
+  let swingSort = 'age';             // 'age' | 'swing'
   const PRIOR_OF = { 21: 20 };       // 둘 다 출구조사 성연령 grid 보유 → 같은 후보(이재명) 비교 가능
   const SEX_SHORT = { '남성': '남', '여성': '여' };
   const MALE_C = '#2a6fb0', FEM_C = '#c2557a';   // 남/여 색(덤벨·격차)
@@ -148,28 +151,46 @@
       + `<p class="ar-parl-note">전국(${rsex}): ${natRow} · 색 진할수록 투표율 높음(상대). 실측 NEC 표본.</p>`;
   }
 
-  // ── 직전 대선 대비 swing — 같은 민주 후보(이재명) 집단별 득표 변화. 발산형 막대(정렬). ──
+  // ── 직전 대선 대비 swing — 같은 민주 후보(이재명) 집단별 득표 변화. 발산형 막대. ──
+  //   기본 정렬은 연령 순(남/여 짝). 변화량 순으로 정렬하면 12행이 섞여 연령 곡선과
+  //   성별 격차가 둘 다 흩어진다 — 연령은 순서가 있는 축이라 값으로 재정렬하면 정보가 준다.
   function renderSwingView() {
     if (!PRIOR) return '<p class="detail-empty">비교할 직전 대선 데이터가 없습니다.</p>';
     const m = swingMetric;
     const tg = `<div class="dg-rtoggle">`
       + `<button class="dg-rsex${m === 'dem' ? ' is-active' : ''}" data-swm="dem">이재명 득표율</button>`
-      + `<button class="dg-rsex${m === 'margin' ? ' is-active' : ''}" data-swm="margin">이재명 − 보수블록</button></div>`;
+      + `<button class="dg-rsex${m === 'margin' ? ' is-active' : ''}" data-swm="margin">이재명 − 보수블록</button>`
+      + `<span class="dg-rgap"></span>`
+      + `<button class="dg-rsex${swingSort === 'age' ? ' is-active' : ''}" data-swsort="age">연령 순</button>`
+      + `<button class="dg-rsex${swingSort === 'swing' ? ' is-active' : ''}" data-swsort="swing">변화 순</button></div>`;
+    // 연령 순은 같은 연령의 남/여를 붙여 놓는다 — 연령 곡선과 성별 격차를 한 번에 읽게.
     const rows = [];
-    for (const sex of SEXES) for (const age of AGES) {
-      const now = metricOf(DATA, sex, age, m), pri = metricOf(PRIOR, sex, age, m);
-      if (now == null || pri == null) continue;
-      rows.push({ sex, age, now, pri, sw: now - pri });
+    if (swingSort === 'age') {
+      for (const age of AGES) for (const sex of SEXES) {
+        const now = metricOf(DATA, sex, age, m), pri = metricOf(PRIOR, sex, age, m);
+        if (now == null || pri == null) continue;
+        rows.push({ sex, age, now, pri, sw: now - pri });
+      }
+    } else {
+      for (const sex of SEXES) for (const age of AGES) {
+        const now = metricOf(DATA, sex, age, m), pri = metricOf(PRIOR, sex, age, m);
+        if (now == null || pri == null) continue;
+        rows.push({ sex, age, now, pri, sw: now - pri });
+      }
+      rows.sort((a, b) => b.sw - a.sw);
     }
     if (!rows.length) return '<p class="detail-empty">비교 데이터가 없습니다.</p>';
-    rows.sort((a, b) => b.sw - a.sw);
     const maxAbs = Math.max(...rows.map((r) => Math.abs(r.sw)), 1);
     const demC = pcol('더불어민주당');
     const lossC = '#c0392b';
     const demTC = ptc('더불어민주당');
     const lossTC = (typeof _textLegible === 'function') ? _textLegible(lossC) : lossC;
     let html = '';
+    let prevAge = null;
     for (const r of rows) {
+      // 연령 순일 때만 연령이 바뀌는 자리에 여백 — 남/여 한 쌍이 한 덩어리로 보이게.
+      const newGroup = swingSort === 'age' && prevAge != null && r.age !== prevAge;
+      prevAge = r.age;
       const pos = r.sw >= 0, col = pos ? demC : lossC;
       // 막대 바깥 값은 글씨 — 면색 그대로 쓰면 배경 대비가 안 나온다.
       const tcol = pos ? demTC : lossTC;
@@ -184,7 +205,7 @@
                : `left:calc(50% - ${ws}% + 4px);color:#fff`)
         : (pos ? `left:calc(50% + ${ws}% + 4px);color:${tcol}`
                : `right:calc(50% + ${ws}% + 4px);text-align:right;color:${tcol}`);
-      html += `<div class="dg-srow"><span class="dg-slab">${SEX_SHORT[r.sex]} ${AGE_LABEL[r.age]}</span>`
+      html += `<div class="dg-srow${newGroup ? ' is-newage' : ''}"><span class="dg-slab">${SEX_SHORT[r.sex]} ${AGE_LABEL[r.age]}</span>`
         + `<div class="dg-strack"><div class="dg-zero"></div>${bar}`
         + `<span class="dg-sval" style="${valStyle}">${pos ? '+' : ''}${r.sw.toFixed(1)}</span></div>`
         + `<span class="dg-send" title="이재명 득표율 ${priorN}대→현재">${r.pri.toFixed(0)}→${r.now.toFixed(0)}</span></div>`;
@@ -230,6 +251,7 @@
     host.querySelectorAll('[data-dgv]').forEach((b) => b.classList.toggle('is-active', b.dataset.dgv === view));
     body.querySelectorAll('[data-rsex]').forEach((b) => b.addEventListener('click', () => { rsex = b.dataset.rsex; draw(host); }));
     body.querySelectorAll('[data-swm]').forEach((b) => b.addEventListener('click', () => { swingMetric = b.dataset.swm; draw(host); }));
+    body.querySelectorAll('[data-swsort]').forEach((b) => b.addEventListener('click', () => { swingSort = b.dataset.swsort; draw(host); }));
   }
 
   async function render(ctx) {

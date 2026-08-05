@@ -865,7 +865,11 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 }
 
 /* 지역 투표율 히트맵 (render-demographics region view) */
-.dg-rtoggle { display: flex; gap: 4px; margin: 4px 0 10px; }
+.dg-rtoggle { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 4px 0 10px; }
+/* 지표 토글과 정렬 토글은 다른 축이다 — 붙여 두면 한 묶음으로 읽힌다. */
+.dg-rgap { width: 14px; }
+/* 연령이 바뀌는 자리에만 여백 — 남/여 한 쌍이 한 덩어리로 보이게. */
+.dg-srow.is-newage { margin-top: 9px; }
 .dg-rsex { font-size: 12px; padding: 3px 10px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink-soft); border-radius: 3px; cursor: pointer; }
 .dg-rsex.is-active { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 700; }
 .dg-heat { display: grid; gap: 2px; max-width: 560px; }

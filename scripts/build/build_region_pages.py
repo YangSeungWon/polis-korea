@@ -45,6 +45,11 @@ def party_cell(name: str, date: str) -> str:
 # 내용도 없고 검색 노이즈만 된다(오늘 배운 thin content 문제).
 MIN_ROUNDS = 3
 
+# 결손은 '—'로 쓰고 무엇인지 title로 밝힌다. 0으로 쓰면 사용자가 실제 값으로 읽는다.
+NO_DATA = '<span class="rg-nd" title="원자료에 투표수가 없습니다">—</span>'
+# 무투표는 결손이 아니라 도메인 사실이다 — 후보가 정수 이하라 투표 자체가 없었다.
+UNCONTESTED = '<span class="rg-nv" title="후보가 정수 이하라 투표 없이 당선됐습니다">무투표</span>'
+
 # 시도 개명은 같은 지역이다. 정규화하지 않으면 '강원도 홍천군'과 '강원특별자치도
 # 홍천군'이 별개 페이지가 되어, 한 지역의 기록이 둘로 쪼개진다.
 # (시군구 쪽 옛 이름 — 명주군·원성군 등 — 은 실제로 다른 행정단위였으므로 합치지 않는다.)
@@ -128,15 +133,19 @@ def collect() -> dict:
             if not cs:
                 continue
             top = cs[0]
-            el, vo = r.get("electors") or 0, r.get("voters") or 0
+            # 없는 값은 0이 아니다. 1~4회 지선은 electors만 있고 voters가 없어서,
+            # None을 0으로 강제하면 0/134603 = '투표율 0.0%'라는 있지도 않은 사실이 생긴다.
+            el, vo = r.get("electors"), r.get("voters")
             by_region[(sd, sg)].append({
                 "eid": eid, "date": date, "kind": kind,
                 "election": name,
                 "office": {"1": "대통령", "3": "광역단체장", "4": "기초단체장",
                            "11": "교육감"}.get(tc, tc),
                 "party": top.get("party") or "무소속", "name": top.get("name"),
+                "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
                 "pct": top.get("pct"),
-                "turnout": round(vo / el * 100, 1) if el else None,
+                "turnout": (round(vo / el * 100, 1)
+                            if (el and vo is not None) else None),
             })
     return by_region
 
@@ -182,7 +191,7 @@ TEMPLATE = """<!DOCTYPE html>
   </section>
   <section>{table}</section>
   <footer class="foot">
-    <p class="fine">시군구 단위로 1위를 집계한 기록입니다. 회차별 상세는 각 아카이브에서 볼 수 있습니다.</p>
+    <p class="fine">시군구 단위로 1위를 집계한 기록입니다. 회차별 상세는 각 아카이브에서 볼 수 있습니다. 투표율의 <span class="rg-nd">—</span>는 원자료에 투표수가 없는 회차입니다(1~4회 지방선거).</p>
   </footer>
 </main>
 <script src="assets/parties.js"></script>
@@ -205,6 +214,14 @@ def build_page(sd: str, sg: str, rows: list) -> str:
     lede = esc(f"{span}선거 {len(rows)}건 — 1위 정당 {top_parties}")
     desc = esc(f"{sd} {sigungu_short(sg)} 역대 선거 기록. {span}{len(rows)}건 · {top_parties}")
 
+    def num_cell(r, key):
+        """숫자 칸 — 세 상태를 구분한다: 값 / 무투표(사실) / 자료 없음(결손).
+        셋을 다 0.0%로 쓰면 '아무도 안 찍었다'는 없던 사실이 만들어진다."""
+        if r.get("uncontested"):
+            return UNCONTESTED
+        v = r.get(key)
+        return f"{v:.1f}%" if v is not None else NO_DATA
+
     trs = []
     for r in rows:
         kl = KIND_LABEL.get(r["kind"], "")
@@ -214,8 +231,8 @@ def build_page(sd: str, sg: str, rows: list) -> str:
             f'<td>{esc(r["office"])}</td>'
             f'<td>{party_cell(r["party"], r.get("date"))}</td>'
             f'<td>{esc(r.get("name") or "")}</td>'
-            f'<td>{f"{r['pct']:.1f}%" if r.get("pct") is not None else "—"}</td>'
-            f'<td>{f"{r['turnout']:.1f}%" if r.get("turnout") is not None else "—"}</td></tr>')
+            f'<td>{num_cell(r, "pct")}</td>'
+            f'<td>{num_cell(r, "turnout")}</td></tr>')
     table = ('<table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
              '<th>연도</th><th>선거</th><th>직</th><th>1위 정당</th><th>1위 후보</th>'
              '<th>득표율</th><th>투표율</th></tr></thead><tbody>'

@@ -75,6 +75,14 @@ def main():
                 break
     ck("빈 그룹 없음", not empty, empty[:5])
 
+    # 결손을 0으로 쓰지 않는다 — 1~4회 지선은 원자료에 voters가 없다.
+    # '투표율 0.0%'는 사용자가 실제 값으로 읽어서, 없던 사실이 만들어진다.
+    zero = []
+    for f in glob.glob(str(ROOT / "archive/*/index.html")):
+        if "투표율 0.0%" in Path(f).read_text(encoding="utf-8"):
+            zero.append(Path(f).parent.name)
+    ck("투표율 0.0%로 찍힌 회차 없음", not zero, zero[:5])
+
     # 스크립트 로드 순서 — trust는 렌더러보다 먼저 와야 mount가 동작한다
     it, ic = html.find("assets/trust.js"), html.find("assets/archive/core.js")
     ck("trust.js가 core.js보다 먼저 로드", it != -1 and it < ic)
