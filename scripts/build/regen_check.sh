@@ -19,7 +19,13 @@
 set -euo pipefail
 PY="${PYTHON:-python}"
 
+# 순서가 중요하다. build_person_index는 뼈대만 만들고 enrich_person_index가
+# assembly_id 등을 채운다 — 앞엣것만 돌리면 정당 페이지의 '소속 인물'이 통째로
+# 사라진다(실제로 그랬다). 의존 관계가 있는 것은 반드시 짝으로 넣는다.
 GENERATORS=(
+  build_timeline         # data/timeline.json (정당·회차 메타)
+  build_person_index     # assets/person-index.json 뼈대
+  enrich_person_index    #   └ assembly_id·비례 보강 (반드시 뒤에)
   sync_nav_html          # nav 정본 → 모든 HTML
   sync_archive_html      # archive 목록·그룹 구조
   build_static           # history/·polls/ 프리렌더
@@ -39,7 +45,8 @@ done
 # 검사 대상은 **생성 산출물**이다. 새 스크립트를 추가하는 중이라 untracked 파일이
 # 있는 것은 정상이므로, 추적 중인 변경 + 생성 경로의 새 파일만 본다.
 OUT_PATHS=(person party region history polls archive share sitemap.xml robots.txt
-           index.html elections.html)
+           index.html elections.html
+           assets/person-index.json data/timeline.json)
 CHANGED="$(git status --porcelain -- "${OUT_PATHS[@]}" '*.html')"
 if [ -n "$CHANGED" ]; then
   echo
