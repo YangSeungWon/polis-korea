@@ -113,6 +113,44 @@ def main() -> int:
             ck("하남시갑: 국민의힘 변화량은 구도 변화로 차단",
                cm["delta_blocked"].get("pid:국민의힘") == "candidacy_configuration_changed")
 
+    print("\n[시점 version] 최신 version으로 소급하지 않는가")
+    for f in files:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        ck(f"{d['region']}: 모든 점에 해소 상태가 있다",
+           all(p.get("resolution") in
+               ("resolved", "ambiguous", "no_entity_recorded") for p in d["points"]))
+        # 모호한 건 남겨두면 안 된다 — 어느 version인지 모르면 그 점의 의미가 없다
+        ck(f"{d['region']}: 모호한 version 없음",
+           not [p for p in d["points"] if p["resolution"] == "ambiguous"])
+        # resolved면 실제 id가 있어야 한다 (placeholder 금지)
+        ck(f"{d['region']}: resolved에는 실제 version id",
+           all(p.get("geography_version_id") for p in d["points"]
+               if p["resolution"] == "resolved"))
+    # 포항 — 1995 도농통합 전후로 이름이 같은데 version이 달라야 한다
+    ph = DIR / "포항.json"
+    if ph.exists():
+        d = json.loads(ph.read_text(encoding="utf-8"))
+        before = {p["geography_version_id"] for p in d["points"]
+                  if p["election_date"] < "1995-01-01" and p["resolution"] == "resolved"}
+        after = {p["geography_version_id"] for p in d["points"]
+                 if p["election_date"] > "1995-01-01" and p["resolution"] == "resolved"}
+        ck("포항: 통합 전후 version이 다르다 (이름이 같아도)",
+           bool(before) and bool(after) and not (before & after),
+           f"{before} vs {after}")
+
+    print("\n[사건] 행정구역과 선거구를 섞지 않는가")
+    for f in files:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for e in d.get("events") or []:
+            ck(f"{d['region']}/{e['event_id']}: namespace가 갈린다",
+               e["namespace"] in ("administrative_geography", "electoral_district"))
+            # 선거구 변화가 대선 시계열까지 끊으면 안 된다
+            if e["namespace"] == "electoral_district":
+                ck(f"{d['region']}/{e['event_id']}: 관련 series에만 영향",
+                   "*" not in e["affects_series"], str(e["affects_series"]))
+            ck(f"{d['region']}/{e['event_id']}: 전후 version이 있다",
+               bool(e["from"]) or bool(e["to"]))
+
     print("\n[이름] 현재 이름으로 소급하지 않는가")
     for f in files:
         d = json.loads(f.read_text(encoding="utf-8"))

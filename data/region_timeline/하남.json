@@ -13,6 +13,26 @@
   "local:municipal_mayor",
   "president:national"
  ],
+ "events": [
+  {
+   "event_id": "geo:2024-22nd:hanam-split",
+   "namespace": "electoral_district",
+   "effective_date": "2024-04-10",
+   "type": "split",
+   "label": "하남시가 갑·을로 분구",
+   "from": [
+    "electoral_district:21:경기:하남시"
+   ],
+   "to": [
+    "electoral_district:22:경기:하남시갑",
+    "electoral_district:22:경기:하남시을"
+   ],
+   "affects_series": [
+    "general:district"
+   ],
+   "comparison_capability": "reaggregated"
+  }
+ ],
  "points": [
   {
    "election_id": "14th-general-1992",
@@ -23,6 +43,8 @@
    "geography_entity_id": "electoral_district:하남시·광주군",
    "boundary_valid_at": "1992-03-24",
    "unit_name_at_the_time": "하남시·광주군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "정영훈",
     "party": "민주자유당",
@@ -78,6 +100,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "1992-12-18",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김영삼",
     "party": "민주자유당",
@@ -133,6 +157,8 @@
    "geography_entity_id": "electoral_district:하남시·광주군",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "하남시·광주군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "정영훈",
     "party": "신한국당",
@@ -188,6 +214,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "1997-12-18",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "새정치국민회의",
@@ -249,6 +277,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "유성근",
     "party": "한나라당",
@@ -303,6 +333,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "문학진",
     "party": "열린우리당",
@@ -358,6 +390,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "문학진",
     "party": "통합민주당",
@@ -411,6 +445,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이현재",
     "party": "새누리당",
@@ -465,6 +501,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이현재",
     "party": "새누리당",
@@ -517,6 +555,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오수봉",
     "party": "더불어민주당",
@@ -577,6 +617,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오수봉",
     "party": "더불어민주당",
@@ -637,6 +679,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최종윤",
     "party": "더불어민주당",
@@ -692,6 +736,8 @@
    "geography_entity_id": "electoral_district:하남시갑",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "하남시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "추미애",
     "party": "더불어민주당",
@@ -758,6 +804,8 @@
    "geography_entity_id": "electoral_district:하남시을",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "하남시을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김용만",
     "party": "더불어민주당",
@@ -824,6 +872,8 @@
    "geography_entity_id": "electoral_district:하남시갑",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이광재",
     "party": "더불어민주당",
@@ -891,6 +941,8 @@
    "geography_entity_id": "electoral_district:하남시갑",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이광재",
     "party": "더불어민주당",
@@ -958,6 +1010,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안민석",
     "party": "",
@@ -998,6 +1052,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "추미애",
     "party": "더불어민주당",
@@ -1053,6 +1109,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이현재",
     "party": "국민의힘",
@@ -1105,6 +1163,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이현재",
     "party": "국민의힘",
@@ -1157,6 +1217,8 @@
    "geography_entity_id": "electoral_district:하남시제1선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오민용",
     "party": "더불어민주당",
@@ -1211,6 +1273,8 @@
    "geography_entity_id": "electoral_district:하남시제2선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강성삼",
     "party": "더불어민주당",
@@ -1263,6 +1327,8 @@
    "geography_entity_id": "electoral_district:하남시제3선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오지훈",
     "party": "더불어민주당",
@@ -1315,6 +1381,8 @@
    "geography_entity_id": "electoral_district:하남시제4선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "방미숙",
     "party": "더불어민주당",
@@ -1367,6 +1435,8 @@
    "geography_entity_id": "electoral_district:하남시제1선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오민용",
     "party": "더불어민주당",
@@ -1421,6 +1491,8 @@
    "geography_entity_id": "electoral_district:하남시제2선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강성삼",
     "party": "더불어민주당",
@@ -1473,6 +1545,8 @@
    "geography_entity_id": "electoral_district:하남시제3선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오지훈",
     "party": "더불어민주당",
@@ -1525,6 +1599,8 @@
    "geography_entity_id": "electoral_district:하남시제4선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "방미숙",
     "party": "더불어민주당",
@@ -1577,6 +1653,8 @@
    "geography_entity_id": "electoral_district:하남시나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "정혜영",
     "party": "더불어민주당",
@@ -1629,6 +1707,8 @@
    "geography_entity_id": "electoral_district:하남시다선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "신선호",
     "party": "더불어민주당",
@@ -1683,6 +1763,8 @@
    "geography_entity_id": "electoral_district:하남시가선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최승태",
     "party": "더불어민주당",
@@ -1701,6 +1783,8 @@
    "geography_entity_id": "electoral_district:하남시라선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오승철",
     "party": "더불어민주당",
@@ -1719,6 +1803,8 @@
    "geography_entity_id": "electoral_district:하남시나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "정혜영",
     "party": "더불어민주당",
@@ -1771,6 +1857,8 @@
    "geography_entity_id": "electoral_district:하남시다선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "신선호",
     "party": "더불어민주당",
@@ -1825,6 +1913,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "더불어민주당",
     "party": "더불어민주당",
@@ -1888,6 +1978,8 @@
    "geography_entity_id": "electoral_district:하남시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "하남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "더불어민주당",
     "party": "더불어민주당",

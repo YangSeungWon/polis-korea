@@ -173,6 +173,46 @@
     "읍면동 단위로 나눌 수 없음 — 가로지르는 동: 4145:부천동, 4145:심곡동"
    ],
    "capability_evidence": "읍면동 단위로 나눌 수 없음 — 가로지르는 동: 4145:부천동, 4145:심곡동"
+  },
+  {
+   "id": "geo:1995-01-01:pohang-merge",
+   "type": "merge",
+   "kind": "admin_unit",
+   "effective_date": "1995-01-01",
+   "from": [
+    {
+     "id": "admin_unit:경상북도:포항시(구)",
+     "kind": "admin_unit",
+     "parent": "경상북도",
+     "name": "포항시"
+    },
+    {
+     "id": "admin_unit:경상북도:영일군",
+     "kind": "admin_unit",
+     "parent": "경상북도",
+     "name": "영일군"
+    }
+   ],
+   "to": [
+    {
+     "id": "admin_unit:경상북도:포항시",
+     "kind": "admin_unit",
+     "parent": "경상북도",
+     "name": "포항시"
+    }
+   ],
+   "territorial_continuity": "same_total",
+   "comparison_capability": "aggregated",
+   "capability_reason": "두 단위의 영역 합이 그대로 새 포항시가 됐다 — 이전 두 곳을 더하면 비교가 선다.",
+   "label": "포항시·영일군 통합(1차 도농통합)",
+   "source": [
+    "https://encykorea.aks.ac.kr/Article/E0068765"
+   ],
+   "note": "1995-01-01 1차 도농통합. 같은 해 남구·북구로 분구됐다. 통합 전 두 단위를 현재 포항시와 직접 비교하면 안 되고, 합산해야 한다.",
+   "evidence": [
+    "1995-01-01 1차 도농통합으로 포항시와 영일군을 통합해 도농복합시가 됐다(같은 해 남구·북구 분구). 두 단위의 영역 합이 그대로 새 포항시가 되므로 이전 두 곳을 합산하면 비교가 선다.",
+    "https://encykorea.aks.ac.kr/Article/E0068765"
+   ]
   }
  ]
 }

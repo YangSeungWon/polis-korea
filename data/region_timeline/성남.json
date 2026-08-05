@@ -1,0 +1,6840 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "성남",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "events": [],
+ "points": [
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(성남시·여주군·광주군·이천군)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제4선거구(성남시·여주군·광주군·이천군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정동성",
+    "party": "민주공화당",
+    "pct": 30.6
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 30.6,
+     "independent": 37.48,
+     "unknown": 31.92
+    },
+    "single_family_coverage": 30.6,
+    "lineage_resolved_coverage": 30.6,
+    "mixed_share": 0.0,
+    "unknown_share": 31.92,
+    "independent_share": 37.48,
+    "mixed_constituents": {},
+    "total_votes": 250220
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 30.6,
+     "democratic": 24.29,
+     "independent": 37.48,
+     "unknown": 7.63
+    },
+    "single_family_coverage": 54.89,
+    "lineage_resolved_coverage": 54.89,
+    "mixed_share": 0.0,
+    "unknown_share": 7.63,
+    "independent_share": 37.48,
+    "mixed_constituents": {},
+    "total_votes": 250220
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(성남시·광주군)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제4선거구(성남시·광주군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세응",
+    "party": "민주정의당",
+    "pct": 40.68
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 40.68,
+     "independent": 2.68,
+     "unknown": 56.64
+    },
+    "single_family_coverage": 40.68,
+    "lineage_resolved_coverage": 40.68,
+    "mixed_share": 0.0,
+    "unknown_share": 56.64,
+    "independent_share": 2.68,
+    "mixed_constituents": {},
+    "total_votes": 199363
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 47.08,
+     "democratic": 12.65,
+     "independent": 2.68,
+     "unknown": 37.59
+    },
+    "single_family_coverage": 59.73,
+    "lineage_resolved_coverage": 59.73,
+    "mixed_share": 0.0,
+    "unknown_share": 37.59,
+    "independent_share": 2.68,
+    "mixed_constituents": {},
+    "total_votes": 199363
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제2선거구(성남시·광주군)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제2선거구(성남시·광주군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이대엽",
+    "party": "한국국민당",
+    "pct": 30.66
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 25.67,
+     "independent": 17.98,
+     "unknown": 56.35
+    },
+    "single_family_coverage": 25.67,
+    "lineage_resolved_coverage": 25.67,
+    "mixed_share": 0.0,
+    "unknown_share": 56.35,
+    "independent_share": 17.98,
+    "mixed_constituents": {},
+    "total_votes": 272860
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 56.33,
+     "democratic": 22.53,
+     "independent": 17.98,
+     "unknown": 3.16
+    },
+    "single_family_coverage": 78.86,
+    "lineage_resolved_coverage": 78.86,
+    "mixed_share": 0.0,
+    "unknown_share": 3.16,
+    "independent_share": 17.98,
+    "mixed_constituents": {},
+    "total_votes": 272860
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김대중",
+    "party": "평화민주당",
+    "pct": 34.76
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 33.71,
+     "regional": 8.37,
+     "unknown": 57.92
+    },
+    "single_family_coverage": 42.08,
+    "lineage_resolved_coverage": 42.08,
+    "mixed_share": 0.0,
+    "unknown_share": 57.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 262451
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 33.71,
+     "democratic": 57.79,
+     "regional": 8.37,
+     "unknown": 0.14
+    },
+    "single_family_coverage": 99.86,
+    "lineage_resolved_coverage": 99.86,
+    "mixed_share": 0.0,
+    "unknown_share": 0.14,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 262451
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시갑",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "성남시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이대엽",
+    "party": "신민주공화당",
+    "pct": 39.08
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 25.6,
+     "regional": 39.08,
+     "unknown": 35.32
+    },
+    "single_family_coverage": 64.68,
+    "lineage_resolved_coverage": 64.68,
+    "mixed_share": 0.0,
+    "unknown_share": 35.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 114191
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 25.6,
+     "democratic": 35.32,
+     "regional": 39.08
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 114191
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시을",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "성남시을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이찬구",
+    "party": "평화민주당",
+    "pct": 35.48
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 32.13,
+     "regional": 21.12,
+     "unknown": 46.75
+    },
+    "single_family_coverage": 53.25,
+    "lineage_resolved_coverage": 53.25,
+    "mixed_share": 0.0,
+    "unknown_share": 46.75,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 93541
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.44,
+     "democratic": 43.44,
+     "regional": 21.12
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 93541
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이윤수",
+    "party": "민주당(1991)",
+    "pct": 48.56
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.49,
+     "unknown": 54.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.49,
+    "mixed_share": 45.49,
+    "unknown_share": 54.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 120934
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.56,
+     "mixed": 45.49,
+     "unknown": 5.95
+    },
+    "single_family_coverage": 48.56,
+    "lineage_resolved_coverage": 94.05,
+    "mixed_share": 45.49,
+    "unknown_share": 5.95,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 120934
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구·분당구",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "성남시중원구·분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세응",
+    "party": "민주자유당",
+    "pct": 39.69
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.56,
+     "mixed": 39.69,
+     "unknown": 57.75
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 39.69,
+    "mixed_share": 39.69,
+    "unknown_share": 57.75,
+    "independent_share": 2.56,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 130997
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.76,
+     "independent": 2.56,
+     "mixed": 39.69,
+     "unknown": 22.99
+    },
+    "single_family_coverage": 34.76,
+    "lineage_resolved_coverage": 74.45,
+    "mixed_share": 39.69,
+    "unknown_share": 22.99,
+    "independent_share": 2.56,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 130997
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김대중",
+    "party": "민주당(1991)",
+    "pct": 43.93
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.31,
+     "mixed": 30.83,
+     "unknown": 67.86
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 30.83,
+    "mixed_share": 30.83,
+    "unknown_share": 67.86,
+    "independent_share": 1.31,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 147320
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.93,
+     "independent": 1.31,
+     "mixed": 30.83,
+     "unknown": 23.94
+    },
+    "single_family_coverage": 43.93,
+    "lineage_resolved_coverage": 74.75,
+    "mixed_share": 30.83,
+    "unknown_share": 23.94,
+    "independent_share": 1.31,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 147320
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김대중",
+    "party": "민주당(1991)",
+    "pct": 43.14
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.26,
+     "mixed": 31.12,
+     "unknown": 67.62
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 31.12,
+    "mixed_share": 31.12,
+    "unknown_share": 67.62,
+    "independent_share": 1.26,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 144499
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.14,
+     "independent": 1.26,
+     "mixed": 31.12,
+     "unknown": 24.48
+    },
+    "single_family_coverage": 43.14,
+    "lineage_resolved_coverage": 74.26,
+    "mixed_share": 31.12,
+    "unknown_share": 24.48,
+    "independent_share": 1.26,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 144499
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 41.63
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.12,
+     "mixed": 41.63,
+     "unknown": 57.25
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 41.63,
+    "mixed_share": 41.63,
+    "unknown_share": 57.25,
+    "independent_share": 1.12,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 44446
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.78,
+     "independent": 1.12,
+     "mixed": 41.63,
+     "unknown": 27.47
+    },
+    "single_family_coverage": 29.78,
+    "lineage_resolved_coverage": 71.41,
+    "mixed_share": 41.63,
+    "unknown_share": 27.47,
+    "independent_share": 1.12,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 44446
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세응",
+    "party": "신한국당",
+    "pct": 33.06
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.96,
+     "mixed": 33.06,
+     "regional": 19.46,
+     "unknown": 44.51
+    },
+    "single_family_coverage": 19.46,
+    "lineage_resolved_coverage": 52.52,
+    "mixed_share": 33.06,
+    "unknown_share": 44.51,
+    "independent_share": 2.96,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 150251
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.51,
+     "independent": 2.96,
+     "mixed": 33.06,
+     "regional": 19.46
+    },
+    "single_family_coverage": 63.97,
+    "lineage_resolved_coverage": 97.04,
+    "mixed_share": 33.06,
+    "unknown_share": 0.0,
+    "independent_share": 2.96,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 150251
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이윤수",
+    "party": "새정치국민회의",
+    "pct": 37.14
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.57,
+     "mixed": 19.48,
+     "regional": 35.72,
+     "unknown": 43.23
+    },
+    "single_family_coverage": 35.72,
+    "lineage_resolved_coverage": 55.2,
+    "mixed_share": 19.48,
+    "unknown_share": 43.23,
+    "independent_share": 1.57,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105988
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.23,
+     "independent": 1.57,
+     "mixed": 19.48,
+     "regional": 35.72
+    },
+    "single_family_coverage": 78.95,
+    "lineage_resolved_coverage": 98.43,
+    "mixed_share": 19.48,
+    "unknown_share": 0.0,
+    "independent_share": 1.57,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105988
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "조성준",
+    "party": "새정치국민회의",
+    "pct": 38.05
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.36,
+     "mixed": 26.01,
+     "regional": 20.63,
+     "unknown": 45.0
+    },
+    "single_family_coverage": 20.63,
+    "lineage_resolved_coverage": 46.64,
+    "mixed_share": 26.01,
+    "unknown_share": 45.0,
+    "independent_share": 8.36,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105189
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.0,
+     "independent": 8.36,
+     "mixed": 26.01,
+     "regional": 20.63
+    },
+    "single_family_coverage": 65.63,
+    "lineage_resolved_coverage": 91.64,
+    "mixed_share": 26.01,
+    "unknown_share": 0.0,
+    "independent_share": 8.36,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105189
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김대중",
+    "party": "새정치국민회의",
+    "pct": 49.21
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.53,
+     "unknown": 50.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.53,
+    "mixed_share": 49.53,
+    "unknown_share": 50.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 149661
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.21,
+     "mixed": 49.53,
+     "unknown": 1.26
+    },
+    "single_family_coverage": 49.21,
+    "lineage_resolved_coverage": 98.74,
+    "mixed_share": 49.53,
+    "unknown_share": 1.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 149661
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이회창",
+    "party": "한나라당",
+    "pct": 51.05
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 63.47,
+     "unknown": 36.53
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 63.47,
+    "mixed_share": 63.47,
+    "unknown_share": 36.53,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 213881
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 35.27,
+     "mixed": 63.47,
+     "unknown": 1.26
+    },
+    "single_family_coverage": 35.27,
+    "lineage_resolved_coverage": 98.74,
+    "mixed_share": 63.47,
+    "unknown_share": 1.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 213881
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김대중",
+    "party": "새정치국민회의",
+    "pct": 49.38
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.25,
+     "unknown": 50.75
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.25,
+    "mixed_share": 49.25,
+    "unknown_share": 50.75,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 143607
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.38,
+     "mixed": 49.25,
+     "unknown": 1.37
+    },
+    "single_family_coverage": 49.38,
+    "lineage_resolved_coverage": 98.63,
+    "mixed_share": 49.25,
+    "unknown_share": 1.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 143607
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "고흥길",
+    "party": "한나라당",
+    "pct": 51.84
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.84,
+     "regional": 4.35,
+     "unknown": 43.81
+    },
+    "single_family_coverage": 4.35,
+    "lineage_resolved_coverage": 56.19,
+    "mixed_share": 51.84,
+    "unknown_share": 43.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 86528
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.47,
+     "mixed": 51.84,
+     "regional": 4.35,
+     "unknown": 2.34
+    },
+    "single_family_coverage": 45.82,
+    "lineage_resolved_coverage": 97.66,
+    "mixed_share": 51.84,
+    "unknown_share": 2.34,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 86528
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임태희",
+    "party": "한나라당",
+    "pct": 50.86
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.86,
+     "regional": 4.95,
+     "unknown": 44.19
+    },
+    "single_family_coverage": 4.95,
+    "lineage_resolved_coverage": 55.81,
+    "mixed_share": 50.86,
+    "unknown_share": 44.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78714
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.19,
+     "mixed": 50.86,
+     "regional": 4.95
+    },
+    "single_family_coverage": 49.14,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 50.86,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78714
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이윤수",
+    "party": "새천년민주당",
+    "pct": 41.42
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.24,
+     "mixed": 26.39,
+     "regional": 20.95,
+     "unknown": 44.43
+    },
+    "single_family_coverage": 20.95,
+    "lineage_resolved_coverage": 47.34,
+    "mixed_share": 26.39,
+    "unknown_share": 44.43,
+    "independent_share": 8.24,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 90778
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.42,
+     "independent": 8.24,
+     "mixed": 26.39,
+     "regional": 20.95,
+     "unknown": 3.01
+    },
+    "single_family_coverage": 62.37,
+    "lineage_resolved_coverage": 88.76,
+    "mixed_share": 26.39,
+    "unknown_share": 3.01,
+    "independent_share": 8.24,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 90778
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "조성준",
+    "party": "새천년민주당",
+    "pct": 43.64
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.38,
+     "mixed": 25.11,
+     "progressive": 21.48,
+     "regional": 6.39,
+     "unknown": 43.64
+    },
+    "single_family_coverage": 27.87,
+    "lineage_resolved_coverage": 52.98,
+    "mixed_share": 25.11,
+    "unknown_share": 43.64,
+    "independent_share": 3.38,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92081
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.64,
+     "independent": 3.38,
+     "mixed": 25.11,
+     "progressive": 21.48,
+     "regional": 6.39
+    },
+    "single_family_coverage": 71.51,
+    "lineage_resolved_coverage": 96.62,
+    "mixed_share": 25.11,
+    "unknown_share": 0.0,
+    "independent_share": 3.38,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92081
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김태년",
+    "party": "열린우리당",
+    "pct": 43.95
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 0.33,
+     "independent": 2.24,
+     "mixed": 30.24,
+     "progressive": 11.68,
+     "regional": 1.35,
+     "unknown": 54.16
+    },
+    "single_family_coverage": 13.36,
+    "lineage_resolved_coverage": 43.6,
+    "mixed_share": 30.24,
+    "unknown_share": 54.16,
+    "independent_share": 2.24,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108034
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.15,
+     "independent": 2.24,
+     "mixed": 30.24,
+     "progressive": 11.68,
+     "regional": 1.35,
+     "unknown": 0.34
+    },
+    "single_family_coverage": 67.18,
+    "lineage_resolved_coverage": 97.42,
+    "mixed_share": 30.24,
+    "unknown_share": 0.34,
+    "independent_share": 2.24,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108034
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이상락",
+    "party": "열린우리당",
+    "pct": 39.22
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.74,
+     "mixed": 24.79,
+     "progressive": 20.76,
+     "regional": 1.33,
+     "unknown": 49.38
+    },
+    "single_family_coverage": 22.09,
+    "lineage_resolved_coverage": 46.88,
+    "mixed_share": 24.79,
+    "unknown_share": 49.38,
+    "independent_share": 3.74,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109064
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.38,
+     "independent": 3.74,
+     "mixed": 24.79,
+     "progressive": 20.76,
+     "regional": 1.33
+    },
+    "single_family_coverage": 71.47,
+    "lineage_resolved_coverage": 96.26,
+    "mixed_share": 24.79,
+    "unknown_share": 0.0,
+    "independent_share": 3.74,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109064
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "고흥길",
+    "party": "한나라당",
+    "pct": 54.09
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.0,
+     "mixed": 54.09,
+     "unknown": 43.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.09,
+    "mixed_share": 54.09,
+    "unknown_share": 43.91,
+    "independent_share": 2.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 104310
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.91,
+     "independent": 2.0,
+     "mixed": 54.09
+    },
+    "single_family_coverage": 43.91,
+    "lineage_resolved_coverage": 98.0,
+    "mixed_share": 54.09,
+    "unknown_share": 0.0,
+    "independent_share": 2.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 104310
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임태희",
+    "party": "한나라당",
+    "pct": 53.95
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.56,
+     "mixed": 53.95,
+     "unknown": 45.48
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 53.95,
+    "mixed_share": 53.95,
+    "unknown_share": 45.48,
+    "independent_share": 0.56,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 102255
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.03,
+     "independent": 0.56,
+     "mixed": 53.95,
+     "unknown": 0.45
+    },
+    "single_family_coverage": 45.03,
+    "lineage_resolved_coverage": 98.99,
+    "mixed_share": 53.95,
+    "unknown_share": 0.45,
+    "independent_share": 0.56,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 102255
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신영수",
+    "party": "한나라당",
+    "pct": 38.71
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.45,
+     "mixed": 38.71,
+     "progressive": 9.29,
+     "unknown": 49.55
+    },
+    "single_family_coverage": 9.29,
+    "lineage_resolved_coverage": 48.0,
+    "mixed_share": 38.71,
+    "unknown_share": 49.55,
+    "independent_share": 2.45,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77405
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 38.54,
+     "independent": 2.45,
+     "mixed": 38.71,
+     "progressive": 9.29,
+     "unknown": 11.01
+    },
+    "single_family_coverage": 47.83,
+    "lineage_resolved_coverage": 86.54,
+    "mixed_share": 38.71,
+    "unknown_share": 11.01,
+    "independent_share": 2.45,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77405
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "한나라당",
+    "pct": 42.96
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 42.96,
+     "progressive": 13.61,
+     "unknown": 43.43
+    },
+    "single_family_coverage": 13.61,
+    "lineage_resolved_coverage": 56.57,
+    "mixed_share": 42.96,
+    "unknown_share": 43.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 80413
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.62,
+     "mixed": 42.96,
+     "progressive": 13.61,
+     "unknown": 6.81
+    },
+    "single_family_coverage": 50.22,
+    "lineage_resolved_coverage": 93.19,
+    "mixed_share": 42.96,
+    "unknown_share": 6.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 80413
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "고흥길",
+    "party": "한나라당",
+    "pct": 64.73
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 64.73,
+     "unknown": 35.27
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.73,
+    "mixed_share": 64.73,
+    "unknown_share": 35.27,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 71673
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.24,
+     "mixed": 64.73,
+     "unknown": 2.03
+    },
+    "single_family_coverage": 33.24,
+    "lineage_resolved_coverage": 97.97,
+    "mixed_share": 64.73,
+    "unknown_share": 2.03,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 71673
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임태희",
+    "party": "한나라당",
+    "pct": 71.06
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 71.06,
+     "unknown": 28.94
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 71.06,
+    "mixed_share": 71.06,
+    "unknown_share": 28.94,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74165
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 26.73,
+     "mixed": 71.06,
+     "unknown": 2.21
+    },
+    "single_family_coverage": 26.73,
+    "lineage_resolved_coverage": 97.79,
+    "mixed_share": 71.06,
+    "unknown_share": 2.21,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74165
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "손학규",
+    "party": "통합민주당",
+    "pct": 51.0
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.68,
+     "mixed": 48.32,
+     "unknown": 51.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.32,
+    "mixed_share": 48.32,
+    "unknown_share": 51.0,
+    "independent_share": 0.68,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81504
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.0,
+     "independent": 0.68,
+     "mixed": 48.32
+    },
+    "single_family_coverage": 51.0,
+    "lineage_resolved_coverage": 99.32,
+    "mixed_share": 48.32,
+    "unknown_share": 0.0,
+    "independent_share": 0.68,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81504
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "손학규",
+    "party": "통합민주당",
+    "pct": 51.0
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.68,
+     "mixed": 48.32,
+     "unknown": 51.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.32,
+    "mixed_share": 48.32,
+    "unknown_share": 51.0,
+    "independent_share": 0.68,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81504
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.0,
+     "independent": 0.68,
+     "mixed": 48.32
+    },
+    "single_family_coverage": 51.0,
+    "lineage_resolved_coverage": 99.32,
+    "mixed_share": 48.32,
+    "unknown_share": 0.0,
+    "independent_share": 0.68,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81504
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2011-10-26",
+   "election_type": "byelection",
+   "election_date": "2011-10-26",
+   "label": "2011년 10·26 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시타선거구",
+   "boundary_valid_at": "2011-10-26",
+   "unit_name_at_the_time": "성남시타선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "권락용",
+    "party": "한나라당",
+    "pct": 47.86
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.99,
+     "mixed": 47.86,
+     "unknown": 49.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.86,
+    "mixed_share": 47.86,
+    "unknown_share": 49.15,
+    "independent_share": 2.99,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16911
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.06,
+     "independent": 2.99,
+     "mixed": 47.86,
+     "unknown": 8.08
+    },
+    "single_family_coverage": 41.06,
+    "lineage_resolved_coverage": 88.92,
+    "mixed_share": 47.86,
+    "unknown_share": 8.08,
+    "independent_share": 2.99,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16911
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2011-10-26",
+   "election_type": "byelection",
+   "election_date": "2011-10-26",
+   "label": "2011년 10·26 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시타선거구",
+   "boundary_valid_at": "2011-10-26",
+   "unit_name_at_the_time": "성남시타선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "권락용",
+    "party": "한나라당",
+    "pct": 47.86
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.99,
+     "mixed": 47.86,
+     "unknown": 49.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.86,
+    "mixed_share": 47.86,
+    "unknown_share": 49.15,
+    "independent_share": 2.99,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16911
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.06,
+     "independent": 2.99,
+     "mixed": 47.86,
+     "unknown": 8.08
+    },
+    "single_family_coverage": 41.06,
+    "lineage_resolved_coverage": 88.92,
+    "mixed_share": 47.86,
+    "unknown_share": 8.08,
+    "independent_share": 2.99,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16911
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김태년",
+    "party": "민주통합당",
+    "pct": 54.77
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.23,
+     "unknown": 59.77
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.23,
+    "mixed_share": 40.23,
+    "unknown_share": 59.77,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 93382
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.77,
+     "mixed": 40.23,
+     "unknown": 5.0
+    },
+    "single_family_coverage": 54.77,
+    "lineage_resolved_coverage": 95.0,
+    "mixed_share": 40.23,
+    "unknown_share": 5.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 93382
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김미희",
+    "party": "통합진보당",
+    "pct": 46.78
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.24,
+     "mixed": 46.11,
+     "progressive": 46.78,
+     "unknown": 3.86
+    },
+    "single_family_coverage": 46.78,
+    "lineage_resolved_coverage": 92.89,
+    "mixed_share": 46.11,
+    "unknown_share": 3.86,
+    "independent_share": 3.24,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98468
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 3.24,
+     "mixed": 46.11,
+     "progressive": 46.78,
+     "unknown": 3.86
+    },
+    "single_family_coverage": 46.78,
+    "lineage_resolved_coverage": 92.89,
+    "mixed_share": 46.11,
+    "unknown_share": 3.86,
+    "independent_share": 3.24,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98468
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종훈",
+    "party": "새누리당",
+    "pct": 51.46
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.3,
+     "mixed": 51.46,
+     "unknown": 45.24
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.46,
+    "mixed_share": 51.46,
+    "unknown_share": 45.24,
+    "independent_share": 3.3,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 128316
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.75,
+     "independent": 3.3,
+     "mixed": 51.46,
+     "unknown": 1.49
+    },
+    "single_family_coverage": 43.75,
+    "lineage_resolved_coverage": 95.2,
+    "mixed_share": 51.46,
+    "unknown_share": 1.49,
+    "independent_share": 3.3,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 128316
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "전하진",
+    "party": "새누리당",
+    "pct": 52.59
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.5,
+     "mixed": 52.59,
+     "unknown": 43.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.59,
+    "mixed_share": 52.59,
+    "unknown_share": 43.91,
+    "independent_share": 3.5,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 99562
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.13,
+     "independent": 3.5,
+     "mixed": 52.59,
+     "unknown": 0.79
+    },
+    "single_family_coverage": 43.13,
+    "lineage_resolved_coverage": 95.72,
+    "mixed_share": 52.59,
+    "unknown_share": 0.79,
+    "independent_share": 3.5,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 99562
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2012-04-11",
+   "election_type": "byelection",
+   "election_date": "2012-04-11",
+   "label": "2012년 4·11 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제5선거구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "지수식",
+    "party": "새누리당",
+    "pct": 52.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 52.64,
+     "unknown": 47.36
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.64,
+    "mixed_share": 52.64,
+    "unknown_share": 47.36,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53638
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 47.36,
+     "mixed": 52.64
+    },
+    "single_family_coverage": 47.36,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 52.64,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53638
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2012-04-11",
+   "election_type": "byelection",
+   "election_date": "2012-04-11",
+   "label": "2012년 4·11 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제5선거구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "성남시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "지수식",
+    "party": "새누리당",
+    "pct": 52.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 52.64,
+     "unknown": 47.36
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.64,
+    "mixed_share": 52.64,
+    "unknown_share": 47.36,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53638
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 47.36,
+     "mixed": 52.64
+    },
+    "single_family_coverage": 47.36,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 52.64,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53638
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2015-04-29",
+   "election_type": "byelection",
+   "election_date": "2015-04-29",
+   "label": "2015년 4·29 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2015-04-29",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "새누리당",
+    "pct": 55.91
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.47,
+     "mixed": 55.91,
+     "unknown": 35.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 55.91,
+    "mixed_share": 55.91,
+    "unknown_share": 35.63,
+    "independent_share": 8.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 65930
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 35.63,
+     "independent": 8.47,
+     "mixed": 55.91
+    },
+    "single_family_coverage": 35.63,
+    "lineage_resolved_coverage": 91.53,
+    "mixed_share": 55.91,
+    "unknown_share": 0.0,
+    "independent_share": 8.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 65930
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2015-04-29",
+   "election_type": "byelection",
+   "election_date": "2015-04-29",
+   "label": "2015년 4·29 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2015-04-29",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "새누리당",
+    "pct": 55.91
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.47,
+     "mixed": 55.91,
+     "unknown": 35.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 55.91,
+    "mixed_share": 55.91,
+    "unknown_share": 35.63,
+    "independent_share": 8.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 65930
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 35.63,
+     "independent": 8.47,
+     "mixed": 55.91
+    },
+    "single_family_coverage": 35.63,
+    "lineage_resolved_coverage": 91.53,
+    "mixed_share": 55.91,
+    "unknown_share": 0.0,
+    "independent_share": 8.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 65930
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김태년",
+    "party": "더불어민주당",
+    "pct": 44.58
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 33.28,
+     "progressive": 2.21,
+     "unknown": 64.5
+    },
+    "single_family_coverage": 2.21,
+    "lineage_resolved_coverage": 35.5,
+    "mixed_share": 33.28,
+    "unknown_share": 64.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 100164
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 64.5,
+     "mixed": 33.28,
+     "progressive": 2.21
+    },
+    "single_family_coverage": 66.72,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 33.28,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 100164
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "새누리당",
+    "pct": 43.41
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 43.41,
+     "unknown": 56.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.41,
+    "mixed_share": 43.41,
+    "unknown_share": 56.59,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 114517
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.59,
+     "mixed": 43.41
+    },
+    "single_family_coverage": 56.59,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 43.41,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 114517
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김병관",
+    "party": "더불어민주당",
+    "pct": 47.03
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 38.51,
+     "unknown": 61.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 38.51,
+    "mixed_share": 38.51,
+    "unknown_share": 61.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 135435
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 61.49,
+     "mixed": 38.51
+    },
+    "single_family_coverage": 61.49,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 38.51,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 135435
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김병욱",
+    "party": "더불어민주당",
+    "pct": 39.85
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 18.82,
+     "mixed": 30.97,
+     "progressive": 0.98,
+     "unknown": 49.24
+    },
+    "single_family_coverage": 0.98,
+    "lineage_resolved_coverage": 31.94,
+    "mixed_share": 30.97,
+    "unknown_share": 49.24,
+    "independent_share": 18.82,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127127
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.24,
+     "independent": 18.82,
+     "mixed": 30.97,
+     "progressive": 0.98
+    },
+    "single_family_coverage": 50.22,
+    "lineage_resolved_coverage": 81.18,
+    "mixed_share": 30.97,
+    "unknown_share": 0.0,
+    "independent_share": 18.82,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127127
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제4선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임동본",
+    "party": "새누리당",
+    "pct": 36.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 36.64,
+     "progressive": 6.85,
+     "unknown": 56.51
+    },
+    "single_family_coverage": 6.85,
+    "lineage_resolved_coverage": 43.49,
+    "mixed_share": 36.64,
+    "unknown_share": 56.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48390
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 55.46,
+     "mixed": 36.64,
+     "progressive": 6.85,
+     "unknown": 1.05
+    },
+    "single_family_coverage": 62.3,
+    "lineage_resolved_coverage": 98.95,
+    "mixed_share": 36.64,
+    "unknown_share": 1.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48390
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제4선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임동본",
+    "party": "새누리당",
+    "pct": 36.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 36.64,
+     "progressive": 6.85,
+     "unknown": 56.51
+    },
+    "single_family_coverage": 6.85,
+    "lineage_resolved_coverage": 43.49,
+    "mixed_share": 36.64,
+    "unknown_share": 56.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48390
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 55.46,
+     "mixed": 36.64,
+     "progressive": 6.85,
+     "unknown": 1.05
+    },
+    "single_family_coverage": 62.3,
+    "lineage_resolved_coverage": 98.95,
+    "mixed_share": 36.64,
+    "unknown_share": 1.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48390
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이나영",
+    "party": "더불어민주당",
+    "pct": 39.93
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.89,
+     "mixed": 38.53,
+     "unknown": 56.58
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 38.53,
+    "mixed_share": 38.53,
+    "unknown_share": 56.58,
+    "independent_share": 4.89,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61941
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.58,
+     "independent": 4.89,
+     "mixed": 38.53
+    },
+    "single_family_coverage": 56.58,
+    "lineage_resolved_coverage": 95.11,
+    "mixed_share": 38.53,
+    "unknown_share": 0.0,
+    "independent_share": 4.89,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61941
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이나영",
+    "party": "더불어민주당",
+    "pct": 39.93
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.89,
+     "mixed": 38.53,
+     "unknown": 56.58
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 38.53,
+    "mixed_share": 38.53,
+    "unknown_share": 56.58,
+    "independent_share": 4.89,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61941
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.58,
+     "independent": 4.89,
+     "mixed": 38.53
+    },
+    "single_family_coverage": 56.58,
+    "lineage_resolved_coverage": 95.11,
+    "mixed_share": 38.53,
+    "unknown_share": 0.0,
+    "independent_share": 4.89,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61941
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김태년",
+    "party": "더불어민주당",
+    "pct": 60.31
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 35.81,
+     "progressive": 2.97,
+     "unknown": 61.22
+    },
+    "single_family_coverage": 2.97,
+    "lineage_resolved_coverage": 38.78,
+    "mixed_share": 35.81,
+    "unknown_share": 61.22,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127383
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 60.31,
+     "mixed": 35.81,
+     "progressive": 2.97,
+     "unknown": 0.9
+    },
+    "single_family_coverage": 63.29,
+    "lineage_resolved_coverage": 99.1,
+    "mixed_share": 35.81,
+    "unknown_share": 0.9,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127383
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "윤영찬",
+    "party": "더불어민주당",
+    "pct": 54.62
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.67,
+     "progressive": 3.05,
+     "unknown": 55.27
+    },
+    "single_family_coverage": 3.05,
+    "lineage_resolved_coverage": 44.73,
+    "mixed_share": 41.67,
+    "unknown_share": 55.27,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 120736
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.62,
+     "mixed": 41.67,
+     "progressive": 3.05,
+     "unknown": 0.65
+    },
+    "single_family_coverage": 57.67,
+    "lineage_resolved_coverage": 99.35,
+    "mixed_share": 41.67,
+    "unknown_share": 0.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 120736
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김은혜",
+    "party": "미래통합당",
+    "pct": 50.07
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.07,
+     "unknown": 49.93
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.07,
+    "mixed_share": 50.07,
+    "unknown_share": 49.93,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 156051
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.35,
+     "mixed": 50.07,
+     "unknown": 0.58
+    },
+    "single_family_coverage": 49.35,
+    "lineage_resolved_coverage": 99.42,
+    "mixed_share": 50.07,
+    "unknown_share": 0.58,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 156051
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김병욱",
+    "party": "더불어민주당",
+    "pct": 47.94
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 3.97,
+     "mixed": 45.11,
+     "progressive": 2.46,
+     "unknown": 48.46
+    },
+    "single_family_coverage": 2.46,
+    "lineage_resolved_coverage": 47.57,
+    "mixed_share": 45.11,
+    "unknown_share": 48.46,
+    "independent_share": 3.97,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 142645
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 47.94,
+     "independent": 3.97,
+     "mixed": 45.11,
+     "progressive": 2.46,
+     "unknown": 0.52
+    },
+    "single_family_coverage": 50.4,
+    "lineage_resolved_coverage": 95.51,
+    "mixed_share": 45.11,
+    "unknown_share": 0.52,
+    "independent_share": 3.97,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 142645
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이제영",
+    "party": "미래통합당",
+    "pct": 49.53
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.53,
+     "progressive": 7.9,
+     "unknown": 42.56
+    },
+    "single_family_coverage": 7.9,
+    "lineage_resolved_coverage": 57.44,
+    "mixed_share": 49.53,
+    "unknown_share": 42.56,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77400
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 42.56,
+     "mixed": 49.53,
+     "progressive": 7.9
+    },
+    "single_family_coverage": 50.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77400
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이제영",
+    "party": "미래통합당",
+    "pct": 49.53
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.53,
+     "progressive": 7.9,
+     "unknown": 42.56
+    },
+    "single_family_coverage": 7.9,
+    "lineage_resolved_coverage": 57.44,
+    "mixed_share": 49.53,
+    "unknown_share": 42.56,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77400
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 42.56,
+     "mixed": 49.53,
+     "progressive": 7.9
+    },
+    "single_family_coverage": 50.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77400
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시라선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강현숙",
+    "party": "더불어민주당",
+    "pct": 72.12
+   },
+   "lineage_composition": {
+    "share": {
+     "progressive": 27.88,
+     "unknown": 72.12
+    },
+    "single_family_coverage": 27.88,
+    "lineage_resolved_coverage": 27.88,
+    "mixed_share": 0.0,
+    "unknown_share": 72.12,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 43377
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 72.12,
+     "progressive": 27.88
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 43377
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시라선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "성남시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강현숙",
+    "party": "더불어민주당",
+    "pct": 72.12
+   },
+   "lineage_composition": {
+    "share": {
+     "progressive": 27.88,
+     "unknown": 72.12
+    },
+    "single_family_coverage": 27.88,
+    "lineage_resolved_coverage": 27.88,
+    "mixed_share": 0.0,
+    "unknown_share": 72.12,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 43377
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 72.12,
+     "progressive": 27.88
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 43377
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2022-06-01",
+   "election_type": "byelection",
+   "election_date": "2022-06-01",
+   "label": "2022년 6·1 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2022-06-01",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "안철수",
+    "party": "국민의힘",
+    "pct": 62.51
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.51,
+     "unknown": 37.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.51,
+    "mixed_share": 62.51,
+    "unknown_share": 37.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133982
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.49,
+     "mixed": 62.51
+    },
+    "single_family_coverage": 37.49,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 62.51,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133982
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2022-06-01",
+   "election_type": "byelection",
+   "election_date": "2022-06-01",
+   "label": "2022년 6·1 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2022-06-01",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "안철수",
+    "party": "국민의힘",
+    "pct": 62.51
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.51,
+     "unknown": 37.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.51,
+    "mixed_share": 62.51,
+    "unknown_share": 37.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133982
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.49,
+     "mixed": 62.51
+    },
+    "single_family_coverage": 37.49,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 62.51,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133982
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김태년",
+    "party": "더불어민주당",
+    "pct": 58.42
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.58,
+     "unknown": 58.42
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 41.58,
+    "mixed_share": 41.58,
+    "unknown_share": 58.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 138374
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.42,
+     "mixed": 41.58
+    },
+    "single_family_coverage": 58.42,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 41.58,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 138374
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이수진",
+    "party": "더불어민주당",
+    "pct": 60.12
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.88,
+     "unknown": 60.12
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 39.88,
+    "mixed_share": 39.88,
+    "unknown_share": 60.12,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122529
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 60.12,
+     "mixed": 39.88
+    },
+    "single_family_coverage": 60.12,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 39.88,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122529
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구갑",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "성남시분당구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "안철수",
+    "party": "국민의힘",
+    "pct": 53.28
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 53.28,
+     "unknown": 46.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 53.28,
+    "mixed_share": 53.28,
+    "unknown_share": 46.72,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 163893
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.72,
+     "mixed": 53.28
+    },
+    "single_family_coverage": 46.72,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 53.28,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 163893
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8956,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:성남시분당구을",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "성남시분당구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김은혜",
+    "party": "국민의힘",
+    "pct": 51.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.13,
+     "unknown": 48.87
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.13,
+    "mixed_share": 51.13,
+    "unknown_share": 48.87,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 135455
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.87,
+     "mixed": 51.13
+    },
+    "single_family_coverage": 48.87,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.13,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 135455
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.55,
+     "pid:더불어민주당": 0.38
+    },
+    "delta_blocked": {},
+    "coverage": 0.8815,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2025-04-02",
+   "election_type": "byelection",
+   "election_date": "2025-04-02",
+   "label": "2025년 4·2 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제6선거구",
+   "boundary_valid_at": "2025-04-02",
+   "unit_name_at_the_time": "성남시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김진명",
+    "party": "더불어민주당",
+    "pct": 53.39
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 46.61,
+     "unknown": 53.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 46.61,
+    "mixed_share": 46.61,
+    "unknown_share": 53.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 28723
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.39,
+     "mixed": 46.61
+    },
+    "single_family_coverage": 53.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 46.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 28723
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2025-04-02",
+   "election_type": "byelection",
+   "election_date": "2025-04-02",
+   "label": "2025년 4·2 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:성남시제6선거구",
+   "boundary_valid_at": "2025-04-02",
+   "unit_name_at_the_time": "성남시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김진명",
+    "party": "더불어민주당",
+    "pct": 53.39
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 46.61,
+     "unknown": 53.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 46.61,
+    "mixed_share": 46.61,
+    "unknown_share": 53.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 28723
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.39,
+     "mixed": 46.61
+    },
+    "single_family_coverage": 53.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 46.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 28723
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "임태희",
+    "party": "",
+    "pct": 55.53
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 258871
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 258871
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "안민석",
+    "party": "",
+    "pct": 51.28
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 122238
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 122238
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "안민석",
+    "party": "",
+    "pct": 54.06
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 106283
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 106283
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "양향자",
+    "party": "국민의힘",
+    "pct": 48.09
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.09,
+     "progressive": 0.5,
+     "unknown": 51.42
+    },
+    "single_family_coverage": 0.5,
+    "lineage_resolved_coverage": 48.58,
+    "mixed_share": 48.09,
+    "unknown_share": 51.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262103
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.61,
+     "mixed": 48.09,
+     "progressive": 0.5,
+     "unknown": 5.8
+    },
+    "single_family_coverage": 46.11,
+    "lineage_resolved_coverage": 94.2,
+    "mixed_share": 48.09,
+    "unknown_share": 5.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262103
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "추미애",
+    "party": "더불어민주당",
+    "pct": 55.55
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.12,
+     "progressive": 0.83,
+     "unknown": 60.05
+    },
+    "single_family_coverage": 0.83,
+    "lineage_resolved_coverage": 39.95,
+    "mixed_share": 39.12,
+    "unknown_share": 60.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124471
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 55.55,
+     "mixed": 39.12,
+     "progressive": 0.83,
+     "unknown": 4.5
+    },
+    "single_family_coverage": 56.38,
+    "lineage_resolved_coverage": 95.5,
+    "mixed_share": 39.12,
+    "unknown_share": 4.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124471
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "추미애",
+    "party": "더불어민주당",
+    "pct": 58.03
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 36.74,
+     "progressive": 1.04,
+     "unknown": 62.22
+    },
+    "single_family_coverage": 1.04,
+    "lineage_resolved_coverage": 37.78,
+    "mixed_share": 36.74,
+    "unknown_share": 62.22,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108146
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.03,
+     "mixed": 36.74,
+     "progressive": 1.04,
+     "unknown": 4.19
+    },
+    "single_family_coverage": 59.07,
+    "lineage_resolved_coverage": 95.81,
+    "mixed_share": 36.74,
+    "unknown_share": 4.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108146
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "국민의힘",
+    "pct": 50.31
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.31,
+     "progressive": 1.01,
+     "unknown": 48.69
+    },
+    "single_family_coverage": 1.01,
+    "lineage_resolved_coverage": 51.31,
+    "mixed_share": 50.31,
+    "unknown_share": 48.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 496220
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.69,
+     "mixed": 50.31,
+     "progressive": 1.01
+    },
+    "single_family_coverage": 49.69,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 50.31,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 496220
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "신상진",
+    "party": "국민의힘",
+    "pct": 54.14
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.14,
+     "progressive": 0.76,
+     "unknown": 45.1
+    },
+    "single_family_coverage": 0.76,
+    "lineage_resolved_coverage": 54.9,
+    "mixed_share": 54.14,
+    "unknown_share": 45.1,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262600
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.1,
+     "mixed": 54.14,
+     "progressive": 0.76
+    },
+    "single_family_coverage": 45.86,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 54.14,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262600
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김병욱",
+    "party": "더불어민주당",
+    "pct": 52.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.85,
+     "progressive": 1.35,
+     "unknown": 52.8
+    },
+    "single_family_coverage": 1.35,
+    "lineage_resolved_coverage": 47.2,
+    "mixed_share": 45.85,
+    "unknown_share": 52.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108674
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.8,
+     "mixed": 45.85,
+     "progressive": 1.35
+    },
+    "single_family_coverage": 54.15,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 45.85,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108674
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김병욱",
+    "party": "더불어민주당",
+    "pct": 52.65
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 46.12,
+     "progressive": 1.22,
+     "unknown": 52.65
+    },
+    "single_family_coverage": 1.22,
+    "lineage_resolved_coverage": 47.35,
+    "mixed_share": 46.12,
+    "unknown_share": 52.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124946
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.65,
+     "mixed": 46.12,
+     "progressive": 1.22
+    },
+    "single_family_coverage": 53.88,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 46.12,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124946
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "문승호",
+    "party": "더불어민주당",
+    "pct": 59.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.2,
+     "unknown": 59.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.2,
+    "mixed_share": 40.2,
+    "unknown_share": 59.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60499
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.8,
+     "mixed": 40.2
+    },
+    "single_family_coverage": 59.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60499
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "최만식",
+    "party": "더불어민주당",
+    "pct": 58.74
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.26,
+     "unknown": 58.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 41.26,
+    "mixed_share": 41.26,
+    "unknown_share": 58.74,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63582
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.74,
+     "mixed": 41.26
+    },
+    "single_family_coverage": 58.74,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 41.26,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63582
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "전석훈",
+    "party": "더불어민주당",
+    "pct": 59.73
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 37.49,
+     "progressive": 2.78,
+     "unknown": 59.73
+    },
+    "single_family_coverage": 2.78,
+    "lineage_resolved_coverage": 40.27,
+    "mixed_share": 37.49,
+    "unknown_share": 59.73,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60432
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.73,
+     "mixed": 37.49,
+     "progressive": 2.78
+    },
+    "single_family_coverage": 62.51,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 37.49,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60432
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국중범",
+    "party": "더불어민주당",
+    "pct": 59.97
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.03,
+     "unknown": 59.97
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.03,
+    "mixed_share": 40.03,
+    "unknown_share": 59.97,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47003
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.97,
+     "mixed": 40.03
+    },
+    "single_family_coverage": 59.97,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.03,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47003
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제5선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "방성환",
+    "party": "국민의힘",
+    "pct": 49.13
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.92,
+     "mixed": 49.13,
+     "unknown": 45.95
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.13,
+    "mixed_share": 49.13,
+    "unknown_share": 45.95,
+    "independent_share": 4.92,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69096
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.95,
+     "independent": 4.92,
+     "mixed": 49.13
+    },
+    "single_family_coverage": 45.95,
+    "lineage_resolved_coverage": 95.08,
+    "mixed_share": 49.13,
+    "unknown_share": 0.0,
+    "independent_share": 4.92,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69096
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제6선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김진명",
+    "party": "더불어민주당",
+    "pct": 50.47
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.53,
+     "unknown": 50.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.53,
+    "mixed_share": 49.53,
+    "unknown_share": 50.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74875
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.47,
+     "mixed": 49.53
+    },
+    "single_family_coverage": 50.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74875
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정종혁",
+    "party": "더불어민주당",
+    "pct": 50.08
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.92,
+     "unknown": 50.08
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.92,
+    "mixed_share": 49.92,
+    "unknown_share": 50.08,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53369
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.08,
+     "mixed": 49.92
+    },
+    "single_family_coverage": 50.08,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.92,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53369
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제8선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제8선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정용한",
+    "party": "국민의힘",
+    "pct": 54.69
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.69,
+     "unknown": 45.31
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.69,
+    "mixed_share": 54.69,
+    "unknown_share": 45.31,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63381
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.31,
+     "mixed": 54.69
+    },
+    "single_family_coverage": 45.31,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 54.69,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63381
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제5선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "방성환",
+    "party": "국민의힘",
+    "pct": 49.13
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.92,
+     "mixed": 49.13,
+     "unknown": 45.95
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.13,
+    "mixed_share": 49.13,
+    "unknown_share": 45.95,
+    "independent_share": 4.92,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69096
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.95,
+     "independent": 4.92,
+     "mixed": 49.13
+    },
+    "single_family_coverage": 45.95,
+    "lineage_resolved_coverage": 95.08,
+    "mixed_share": 49.13,
+    "unknown_share": 0.0,
+    "independent_share": 4.92,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69096
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제6선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김진명",
+    "party": "더불어민주당",
+    "pct": 50.47
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.53,
+     "unknown": 50.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.53,
+    "mixed_share": 49.53,
+    "unknown_share": 50.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74875
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.47,
+     "mixed": 49.53
+    },
+    "single_family_coverage": 50.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74875
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제7선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정종혁",
+    "party": "더불어민주당",
+    "pct": 50.08
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.92,
+     "unknown": 50.08
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.92,
+    "mixed_share": 49.92,
+    "unknown_share": 50.08,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53369
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.08,
+     "mixed": 49.92
+    },
+    "single_family_coverage": 50.08,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.92,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 53369
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제8선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제8선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정용한",
+    "party": "국민의힘",
+    "pct": 54.69
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.69,
+     "unknown": 45.31
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.69,
+    "mixed_share": 54.69,
+    "unknown_share": 45.31,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63381
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.31,
+     "mixed": 54.69
+    },
+    "single_family_coverage": 45.31,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 54.69,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63381
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "문승호",
+    "party": "더불어민주당",
+    "pct": 59.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.2,
+     "unknown": 59.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.2,
+    "mixed_share": 40.2,
+    "unknown_share": 59.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60499
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.8,
+     "mixed": 40.2
+    },
+    "single_family_coverage": 59.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60499
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "최만식",
+    "party": "더불어민주당",
+    "pct": 58.74
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.26,
+     "unknown": 58.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 41.26,
+    "mixed_share": 41.26,
+    "unknown_share": 58.74,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63582
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.74,
+     "mixed": 41.26
+    },
+    "single_family_coverage": 58.74,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 41.26,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63582
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "전석훈",
+    "party": "더불어민주당",
+    "pct": 59.73
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 37.49,
+     "progressive": 2.78,
+     "unknown": 59.73
+    },
+    "single_family_coverage": 2.78,
+    "lineage_resolved_coverage": 40.27,
+    "mixed_share": 37.49,
+    "unknown_share": 59.73,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60432
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.73,
+     "mixed": 37.49,
+     "progressive": 2.78
+    },
+    "single_family_coverage": 62.51,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 37.49,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60432
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:성남시제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국중범",
+    "party": "더불어민주당",
+    "pct": 59.97
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.03,
+     "unknown": 59.97
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.03,
+    "mixed_share": 40.03,
+    "unknown_share": 59.97,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47003
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.97,
+     "mixed": 40.03
+    },
+    "single_family_coverage": 59.97,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.03,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47003
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강상태",
+    "party": "더불어민주당",
+    "pct": 42.23
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.0,
+     "progressive": 2.35,
+     "unknown": 58.64
+    },
+    "single_family_coverage": 2.35,
+    "lineage_resolved_coverage": 41.36,
+    "mixed_share": 39.0,
+    "unknown_share": 58.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59521
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.64,
+     "mixed": 39.0,
+     "progressive": 2.35
+    },
+    "single_family_coverage": 61.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 39.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59521
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "선창선",
+    "party": "더불어민주당",
+    "pct": 34.87
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.62,
+     "mixed": 34.94,
+     "unknown": 60.44
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 34.94,
+    "mixed_share": 34.94,
+    "unknown_share": 60.44,
+    "independent_share": 4.62,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 58721
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 60.44,
+     "independent": 4.62,
+     "mixed": 34.94
+    },
+    "single_family_coverage": 60.44,
+    "lineage_resolved_coverage": 95.38,
+    "mixed_share": 34.94,
+    "unknown_share": 0.0,
+    "independent_share": 4.62,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 58721
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시마선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "최옥희",
+    "party": "더불어민주당",
+    "pct": 34.65
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 32.14,
+     "progressive": 10.43,
+     "unknown": 57.43
+    },
+    "single_family_coverage": 10.43,
+    "lineage_resolved_coverage": 42.57,
+    "mixed_share": 32.14,
+    "unknown_share": 57.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45439
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.94,
+     "mixed": 32.14,
+     "progressive": 10.43,
+     "unknown": 3.49
+    },
+    "single_family_coverage": 64.37,
+    "lineage_resolved_coverage": 96.51,
+    "mixed_share": 32.14,
+    "unknown_share": 3.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45439
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시바선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "민영미",
+    "party": "국민의힘",
+    "pct": 43.65
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.42,
+     "mixed": 43.65,
+     "unknown": 45.93
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.65,
+    "mixed_share": 43.65,
+    "unknown_share": 45.93,
+    "independent_share": 10.42,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 34066
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 42.99,
+     "independent": 10.42,
+     "mixed": 43.65,
+     "unknown": 2.94
+    },
+    "single_family_coverage": 42.99,
+    "lineage_resolved_coverage": 86.63,
+    "mixed_share": 43.65,
+    "unknown_share": 2.94,
+    "independent_share": 10.42,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 34066
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시차선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시차선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이정아",
+    "party": "국민의힘",
+    "pct": 32.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 46.8,
+     "unknown": 53.2
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 46.8,
+    "mixed_share": 46.8,
+    "unknown_share": 53.2,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 51806
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.88,
+     "mixed": 46.8,
+     "unknown": 3.32
+    },
+    "single_family_coverage": 49.88,
+    "lineage_resolved_coverage": 96.68,
+    "mixed_share": 46.8,
+    "unknown_share": 3.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 51806
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시타선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시타선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "백진규",
+    "party": "국민의힘",
+    "pct": 49.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.94,
+     "mixed": 49.55,
+     "unknown": 44.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.55,
+    "mixed_share": 49.55,
+    "unknown_share": 44.51,
+    "independent_share": 5.94,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 32557
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.51,
+     "independent": 5.94,
+     "mixed": 49.55
+    },
+    "single_family_coverage": 44.51,
+    "lineage_resolved_coverage": 94.06,
+    "mixed_share": 49.55,
+    "unknown_share": 0.0,
+    "independent_share": 5.94,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 32557
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시사선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정연화",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시아선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오종길",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시자선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시자선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이세미",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시카선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시카선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "서은경",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김선임",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "박기범",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시바선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "민영미",
+    "party": "국민의힘",
+    "pct": 43.65
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.42,
+     "mixed": 43.65,
+     "unknown": 45.93
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.65,
+    "mixed_share": 43.65,
+    "unknown_share": 45.93,
+    "independent_share": 10.42,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 34066
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 42.99,
+     "independent": 10.42,
+     "mixed": 43.65,
+     "unknown": 2.94
+    },
+    "single_family_coverage": 42.99,
+    "lineage_resolved_coverage": 86.63,
+    "mixed_share": 43.65,
+    "unknown_share": 2.94,
+    "independent_share": 10.42,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 34066
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시차선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시차선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이정아",
+    "party": "국민의힘",
+    "pct": 32.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 46.8,
+     "unknown": 53.2
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 46.8,
+    "mixed_share": 46.8,
+    "unknown_share": 53.2,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 51806
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.88,
+     "mixed": 46.8,
+     "unknown": 3.32
+    },
+    "single_family_coverage": 49.88,
+    "lineage_resolved_coverage": 96.68,
+    "mixed_share": 46.8,
+    "unknown_share": 3.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 51806
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시타선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시타선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "백진규",
+    "party": "국민의힘",
+    "pct": 49.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.94,
+     "mixed": 49.55,
+     "unknown": 44.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.55,
+    "mixed_share": 49.55,
+    "unknown_share": 44.51,
+    "independent_share": 5.94,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 32557
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.51,
+     "independent": 5.94,
+     "mixed": 49.55
+    },
+    "single_family_coverage": 44.51,
+    "lineage_resolved_coverage": 94.06,
+    "mixed_share": 49.55,
+    "unknown_share": 0.0,
+    "independent_share": 5.94,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 32557
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강상태",
+    "party": "더불어민주당",
+    "pct": 42.23
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.0,
+     "progressive": 2.35,
+     "unknown": 58.64
+    },
+    "single_family_coverage": 2.35,
+    "lineage_resolved_coverage": 41.36,
+    "mixed_share": 39.0,
+    "unknown_share": 58.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59521
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.64,
+     "mixed": 39.0,
+     "progressive": 2.35
+    },
+    "single_family_coverage": 61.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 39.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59521
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "선창선",
+    "party": "더불어민주당",
+    "pct": 34.87
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.62,
+     "mixed": 34.94,
+     "unknown": 60.44
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 34.94,
+    "mixed_share": 34.94,
+    "unknown_share": 60.44,
+    "independent_share": 4.62,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 58721
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 60.44,
+     "independent": 4.62,
+     "mixed": 34.94
+    },
+    "single_family_coverage": 60.44,
+    "lineage_resolved_coverage": 95.38,
+    "mixed_share": 34.94,
+    "unknown_share": 0.0,
+    "independent_share": 4.62,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 58721
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:성남시마선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "최옥희",
+    "party": "더불어민주당",
+    "pct": 34.65
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 32.14,
+     "progressive": 10.43,
+     "unknown": 57.43
+    },
+    "single_family_coverage": 10.43,
+    "lineage_resolved_coverage": 42.57,
+    "mixed_share": 32.14,
+    "unknown_share": 57.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45439
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.94,
+     "mixed": 32.14,
+     "progressive": 10.43,
+     "unknown": 3.49
+    },
+    "single_family_coverage": 64.37,
+    "lineage_resolved_coverage": 96.51,
+    "mixed_share": 32.14,
+    "unknown_share": 3.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45439
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:성남시분당구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시분당구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 47.27
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.32,
+     "progressive": 1.66,
+     "unknown": 51.02
+    },
+    "single_family_coverage": 1.66,
+    "lineage_resolved_coverage": 48.98,
+    "mixed_share": 47.32,
+    "unknown_share": 51.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262340
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.33,
+     "mixed": 47.32,
+     "progressive": 1.66,
+     "unknown": 11.69
+    },
+    "single_family_coverage": 40.99,
+    "lineage_resolved_coverage": 88.31,
+    "mixed_share": 47.32,
+    "unknown_share": 11.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 262340
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:성남시수정구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시수정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 50.32
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 38.37,
+     "progressive": 1.93,
+     "unknown": 59.7
+    },
+    "single_family_coverage": 1.93,
+    "lineage_resolved_coverage": 40.3,
+    "mixed_share": 38.37,
+    "unknown_share": 59.7,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124557
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.41,
+     "mixed": 38.37,
+     "progressive": 1.93,
+     "unknown": 9.29
+    },
+    "single_family_coverage": 52.34,
+    "lineage_resolved_coverage": 90.71,
+    "mixed_share": 38.37,
+    "unknown_share": 9.29,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124557
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.83,
+     "pid:더불어민주당": -2.02
+    },
+    "delta_blocked": {},
+    "coverage": 0.8715,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:성남시중원구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시중원구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 53.19
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 36.21,
+     "progressive": 2.29,
+     "unknown": 61.5
+    },
+    "single_family_coverage": 2.29,
+    "lineage_resolved_coverage": 38.5,
+    "mixed_share": 36.21,
+    "unknown_share": 61.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108308
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.29,
+     "mixed": 36.21,
+     "progressive": 2.29,
+     "unknown": 8.21
+    },
+    "single_family_coverage": 55.58,
+    "lineage_resolved_coverage": 91.79,
+    "mixed_share": 36.21,
+    "unknown_share": 8.21,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108308
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift",
+     "pid:더불어민주당": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.8603,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 46.97
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.87,
+     "progressive": 2.2,
+     "unknown": 51.93
+    },
+    "single_family_coverage": 2.2,
+    "lineage_resolved_coverage": 48.07,
+    "mixed_share": 45.87,
+    "unknown_share": 51.93,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 492835
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.97,
+     "mixed": 45.87,
+     "progressive": 2.2,
+     "unknown": 4.96
+    },
+    "single_family_coverage": 49.17,
+    "lineage_resolved_coverage": 95.04,
+    "mixed_share": 45.87,
+    "unknown_share": 4.96,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 492835
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 51.16
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.16,
+     "progressive": 1.81,
+     "unknown": 47.02
+    },
+    "single_family_coverage": 1.81,
+    "lineage_resolved_coverage": 52.98,
+    "mixed_share": 51.16,
+    "unknown_share": 47.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 260842
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.51,
+     "mixed": 51.16,
+     "progressive": 1.81,
+     "unknown": 5.51
+    },
+    "single_family_coverage": 43.32,
+    "lineage_resolved_coverage": 94.49,
+    "mixed_share": 51.16,
+    "unknown_share": 5.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 260842
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 54.27
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 38.71,
+     "progressive": 2.9,
+     "unknown": 58.39
+    },
+    "single_family_coverage": 2.9,
+    "lineage_resolved_coverage": 41.61,
+    "mixed_share": 38.71,
+    "unknown_share": 58.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107852
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.27,
+     "mixed": 38.71,
+     "progressive": 2.9,
+     "unknown": 4.13
+    },
+    "single_family_coverage": 57.17,
+    "lineage_resolved_coverage": 95.87,
+    "mixed_share": 38.71,
+    "unknown_share": 4.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107852
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:성남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "성남시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 52.1
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.96,
+     "progressive": 2.4,
+     "unknown": 56.64
+    },
+    "single_family_coverage": 2.4,
+    "lineage_resolved_coverage": 43.36,
+    "mixed_share": 40.96,
+    "unknown_share": 56.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124141
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.1,
+     "mixed": 40.96,
+     "progressive": 2.4,
+     "unknown": 4.54
+    },
+    "single_family_coverage": 54.5,
+    "lineage_resolved_coverage": 95.46,
+    "mixed_share": 40.96,
+    "unknown_share": 4.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 124141
+   },
+   "comparison": null
+  }
+ ]
+}

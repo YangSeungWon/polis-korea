@@ -1,0 +1,1296 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "영일",
+ "series": [
+  "general:district",
+  "president:national"
+ ],
+ "events": [
+  {
+   "event_id": "geo:1995-01-01:pohang-merge",
+   "namespace": "administrative_geography",
+   "effective_date": "1995-01-01",
+   "type": "merge",
+   "label": "포항시·영일군 통합(1차 도농통합)",
+   "from": [
+    "admin_unit:경상북도:포항시(구)",
+    "admin_unit:경상북도:영일군"
+   ],
+   "to": [
+    "admin_unit:경상북도:포항시"
+   ],
+   "affects_series": [
+    "*"
+   ],
+   "comparison_capability": "aggregated"
+  }
+ ],
+ "points": [
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제13선거구(영일군 갑구)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제13선거구(영일군 갑구)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박순석",
+    "party": "무소속",
+    "pct": 27.21
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 23.67,
+     "independent": 48.52,
+     "unknown": 27.81
+    },
+    "single_family_coverage": 23.67,
+    "lineage_resolved_coverage": 23.67,
+    "mixed_share": 0.0,
+    "unknown_share": 27.81,
+    "independent_share": 48.52,
+    "mixed_constituents": {},
+    "total_votes": 38528
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 23.67,
+     "independent": 48.52,
+     "unknown": 27.81
+    },
+    "single_family_coverage": 23.67,
+    "lineage_resolved_coverage": 23.67,
+    "mixed_share": 0.0,
+    "unknown_share": 27.81,
+    "independent_share": 48.52,
+    "mixed_constituents": {},
+    "total_votes": 38528
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제14선거구(영일군 을구)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제14선거구(영일군 을구)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김익노",
+    "party": "무소속",
+    "pct": 42.02
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 42.02,
+     "unknown": 57.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 57.98,
+    "independent_share": 42.02,
+    "mixed_constituents": {},
+    "total_votes": 32231
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 42.02,
+     "unknown": 57.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 57.98,
+    "independent_share": 42.02,
+    "mixed_constituents": {},
+    "total_votes": 32231
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제15선거구(영일군 갑구)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제15선거구(영일군 갑구)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "최원수",
+    "party": "무소속",
+    "pct": 22.78
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 87.26,
+     "unknown": 12.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 12.74,
+    "independent_share": 87.26,
+    "mixed_constituents": {},
+    "total_votes": 34980
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 87.26,
+     "unknown": 12.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 12.74,
+    "independent_share": 87.26,
+    "mixed_constituents": {},
+    "total_votes": 34980
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제16선거구(영일군 을구)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제16선거구(영일군 을구)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김익노",
+    "party": "무소속",
+    "pct": 20.81
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 84.49,
+     "unknown": 15.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 15.51,
+    "independent_share": 84.49,
+    "mixed_constituents": {},
+    "total_votes": 33585
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 84.49,
+     "unknown": 15.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 15.51,
+    "independent_share": 84.49,
+    "mixed_constituents": {},
+    "total_votes": 33585
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-pres-1952",
+   "election_type": "pres",
+   "election_date": "1952-08-05",
+   "label": "2nd-pres-1952",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1952-08-05",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 88.09
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 88.09,
+     "independent": 11.91
+    },
+    "single_family_coverage": 88.09,
+    "lineage_resolved_coverage": 88.09,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 11.91,
+    "mixed_constituents": {},
+    "total_votes": 74837
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 88.09,
+     "independent": 11.91
+    },
+    "single_family_coverage": 88.09,
+    "lineage_resolved_coverage": 88.09,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 11.91,
+    "mixed_constituents": {},
+    "total_votes": 74837
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 갑",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "영일군 갑",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박순석",
+    "party": "자유당",
+    "pct": 54.13
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 54.13,
+     "democratic": 8.83,
+     "independent": 37.04
+    },
+    "single_family_coverage": 62.96,
+    "lineage_resolved_coverage": 62.96,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 37.04,
+    "mixed_constituents": {},
+    "total_votes": 36080
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 54.13,
+     "democratic": 8.83,
+     "independent": 37.04
+    },
+    "single_family_coverage": 62.96,
+    "lineage_resolved_coverage": 62.96,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 37.04,
+    "mixed_constituents": {},
+    "total_votes": 36080
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 을",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "영일군 을",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김익노",
+    "party": "자유당",
+    "pct": 72.18
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 72.18,
+     "independent": 27.82
+    },
+    "single_family_coverage": 72.18,
+    "lineage_resolved_coverage": 72.18,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 27.82,
+    "mixed_constituents": {},
+    "total_votes": 36526
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 72.18,
+     "independent": 27.82
+    },
+    "single_family_coverage": 72.18,
+    "lineage_resolved_coverage": 72.18,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 27.82,
+    "mixed_constituents": {},
+    "total_votes": 36526
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-pres-1956",
+   "election_type": "pres",
+   "election_date": "1956-05-15",
+   "label": "3rd-pres-1956",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1956-05-15",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 92.45
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 92.45,
+     "independent": 7.55
+    },
+    "single_family_coverage": 92.45,
+    "lineage_resolved_coverage": 92.45,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 7.55,
+    "mixed_constituents": {},
+    "total_votes": 71355
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 92.45,
+     "independent": 7.55
+    },
+    "single_family_coverage": 92.45,
+    "lineage_resolved_coverage": 92.45,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 7.55,
+    "mixed_constituents": {},
+    "total_votes": 71355
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 갑",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "영일군 갑",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박순석",
+    "party": "자유당",
+    "pct": 69.33
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 69.33,
+     "democratic": 14.42,
+     "independent": 16.25
+    },
+    "single_family_coverage": 83.75,
+    "lineage_resolved_coverage": 83.75,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 16.25,
+    "mixed_constituents": {},
+    "total_votes": 39511
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 69.33,
+     "democratic": 14.42,
+     "independent": 16.25
+    },
+    "single_family_coverage": 83.75,
+    "lineage_resolved_coverage": 83.75,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 16.25,
+    "mixed_constituents": {},
+    "total_votes": 39511
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 을",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "영일군 을",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김익노",
+    "party": "자유당",
+    "pct": 82.31
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 82.31,
+     "independent": 17.69
+    },
+    "single_family_coverage": 82.31,
+    "lineage_resolved_coverage": 82.31,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 17.69,
+    "mixed_constituents": {},
+    "total_votes": 39007
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 82.31,
+     "independent": 17.69
+    },
+    "single_family_coverage": 82.31,
+    "lineage_resolved_coverage": 82.31,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 17.69,
+    "mixed_constituents": {},
+    "total_votes": 39007
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-pres-1960",
+   "election_type": "pres",
+   "election_date": "1960-03-15",
+   "label": "4th-pres-1960",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1960-03-15",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 100.0
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 83940
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 83940
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 갑",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "영일군 갑",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "최태능",
+    "party": "민주당(1955)",
+    "pct": 37.5
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 37.5,
+     "independent": 62.5
+    },
+    "single_family_coverage": 37.5,
+    "lineage_resolved_coverage": 37.5,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 62.5,
+    "mixed_constituents": {},
+    "total_votes": 39857
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.5,
+     "independent": 62.5
+    },
+    "single_family_coverage": 37.5,
+    "lineage_resolved_coverage": 37.5,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 62.5,
+    "mixed_constituents": {},
+    "total_votes": 39857
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군 을",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "영일군 을",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "최해용",
+    "party": "민주당(1955)",
+    "pct": 21.0
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 32.98,
+     "independent": 61.01,
+     "unknown": 6.0
+    },
+    "single_family_coverage": 32.98,
+    "lineage_resolved_coverage": 32.98,
+    "mixed_share": 0.0,
+    "unknown_share": 6.0,
+    "independent_share": 61.01,
+    "mixed_constituents": {},
+    "total_votes": 36170
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.98,
+     "independent": 61.01,
+     "unknown": 6.0
+    },
+    "single_family_coverage": 32.98,
+    "lineage_resolved_coverage": 32.98,
+    "mixed_share": 0.0,
+    "unknown_share": 6.0,
+    "independent_share": 61.01,
+    "mixed_constituents": {},
+    "total_votes": 36170
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-pres-1963",
+   "election_type": "pres",
+   "election_date": "1963-10-15",
+   "label": "5th-pres-1963",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1963-10-15",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 53.78
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 53.78,
+     "unknown": 46.22
+    },
+    "single_family_coverage": 53.78,
+    "lineage_resolved_coverage": 53.78,
+    "mixed_share": 0.0,
+    "unknown_share": 46.22,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 74743
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 53.78,
+     "democratic": 36.77,
+     "unknown": 9.45
+    },
+    "single_family_coverage": 90.55,
+    "lineage_resolved_coverage": 90.55,
+    "mixed_share": 0.0,
+    "unknown_share": 9.45,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 74743
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-general-1963",
+   "election_type": "general",
+   "election_date": "1963-11-26",
+   "label": "6th-general-1963",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시·영일군·울릉군",
+   "boundary_valid_at": "1963-11-26",
+   "unit_name_at_the_time": "포항시·영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김장섭",
+    "party": "민주공화당",
+    "pct": 49.05
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 49.05,
+     "democratic": 5.93,
+     "unknown": 45.02
+    },
+    "single_family_coverage": 54.98,
+    "lineage_resolved_coverage": 54.98,
+    "mixed_share": 0.0,
+    "unknown_share": 45.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 90441
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 49.05,
+     "democratic": 32.3,
+     "unknown": 18.65
+    },
+    "single_family_coverage": 81.35,
+    "lineage_resolved_coverage": 81.35,
+    "mixed_share": 0.0,
+    "unknown_share": 18.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 90441
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-pres-1967",
+   "election_type": "pres",
+   "election_date": "1967-05-03",
+   "label": "6th-pres-1967",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1967-05-03",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 62.08
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 62.08,
+     "unknown": 37.92
+    },
+    "single_family_coverage": 62.08,
+    "lineage_resolved_coverage": 62.08,
+    "mixed_share": 0.0,
+    "unknown_share": 37.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 85839
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 62.08,
+     "democratic": 30.61,
+     "unknown": 7.31
+    },
+    "single_family_coverage": 92.69,
+    "lineage_resolved_coverage": 92.69,
+    "mixed_share": 0.0,
+    "unknown_share": 7.31,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 85839
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-general-1967",
+   "election_type": "general",
+   "election_date": "1967-06-08",
+   "label": "7th-general-1967",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시·영일군·울릉군",
+   "boundary_valid_at": "1967-06-08",
+   "unit_name_at_the_time": "포항시·영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김장섭",
+    "party": "민주공화당",
+    "pct": 43.86
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.86,
+     "democratic": 1.25,
+     "unknown": 54.89
+    },
+    "single_family_coverage": 45.11,
+    "lineage_resolved_coverage": 45.11,
+    "mixed_share": 0.0,
+    "unknown_share": 54.89,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 109128
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.86,
+     "democratic": 56.14
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 109128
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-pres-1971",
+   "election_type": "pres",
+   "election_date": "1971-04-27",
+   "label": "7th-pres-1971",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1971-04-27",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 78.38
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 78.38,
+     "progressive": 0.43,
+     "unknown": 21.19
+    },
+    "single_family_coverage": 78.81,
+    "lineage_resolved_coverage": 78.81,
+    "mixed_share": 0.0,
+    "unknown_share": 21.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 88080
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 78.38,
+     "democratic": 20.75,
+     "progressive": 0.43,
+     "unknown": 0.43
+    },
+    "single_family_coverage": 99.57,
+    "lineage_resolved_coverage": 99.57,
+    "mixed_share": 0.0,
+    "unknown_share": 0.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 88080
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "8th-general-1971",
+   "election_type": "general",
+   "election_date": "1971-05-25",
+   "label": "8th-general-1971",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1971-05-25",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "정무식",
+    "party": "민주공화당",
+    "pct": 60.67
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 60.67,
+     "unknown": 39.33
+    },
+    "single_family_coverage": 60.67,
+    "lineage_resolved_coverage": 60.67,
+    "mixed_share": 0.0,
+    "unknown_share": 39.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 72931
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 60.67,
+     "democratic": 36.38,
+     "unknown": 2.95
+    },
+    "single_family_coverage": 97.05,
+    "lineage_resolved_coverage": 97.05,
+    "mixed_share": 0.0,
+    "unknown_share": 2.95,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 72931
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-general-1973",
+   "election_type": "general",
+   "election_date": "1973-02-27",
+   "label": "9th-general-1973",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(포항시·울릉군·영일군·영천군)",
+   "boundary_valid_at": "1973-02-27",
+   "unit_name_at_the_time": "제3선거구(포항시·울릉군·영일군·영천군)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "정무식",
+    "party": "민주공화당",
+    "pct": 35.43
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 35.43,
+     "independent": 30.09,
+     "unknown": 34.48
+    },
+    "single_family_coverage": 35.43,
+    "lineage_resolved_coverage": 35.43,
+    "mixed_share": 0.0,
+    "unknown_share": 34.48,
+    "independent_share": 30.09,
+    "mixed_constituents": {},
+    "total_votes": 185978
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.43,
+     "democratic": 34.48,
+     "independent": 30.09
+    },
+    "single_family_coverage": 69.91,
+    "lineage_resolved_coverage": 69.91,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 30.09,
+    "mixed_constituents": {},
+    "total_votes": 185978
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(포항시·영일군·영천군·울릉군)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제3선거구(포항시·영일군·영천군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "권오태",
+    "party": "무소속",
+    "pct": 32.21
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 21.36,
+     "independent": 42.13,
+     "unknown": 36.51
+    },
+    "single_family_coverage": 21.36,
+    "lineage_resolved_coverage": 21.36,
+    "mixed_share": 0.0,
+    "unknown_share": 36.51,
+    "independent_share": 42.13,
+    "mixed_constituents": {},
+    "total_votes": 228346
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 21.36,
+     "democratic": 29.28,
+     "independent": 42.13,
+     "unknown": 7.22
+    },
+    "single_family_coverage": 50.65,
+    "lineage_resolved_coverage": 50.65,
+    "mixed_share": 0.0,
+    "unknown_share": 7.22,
+    "independent_share": 42.13,
+    "mixed_constituents": {},
+    "total_votes": 228346
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(포항시·영일군·울릉군)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제4선거구(포항시·영일군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이진우",
+    "party": "민주정의당",
+    "pct": 46.45
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 46.45,
+     "unknown": 53.55
+    },
+    "single_family_coverage": 46.45,
+    "lineage_resolved_coverage": 46.45,
+    "mixed_share": 0.0,
+    "unknown_share": 53.55,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 187057
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 65.66,
+     "democratic": 9.01,
+     "unknown": 25.33
+    },
+    "single_family_coverage": 74.67,
+    "lineage_resolved_coverage": 74.67,
+    "mixed_share": 0.0,
+    "unknown_share": 25.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 187057
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(포항시·영일군·울릉군)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제1선거구(포항시·영일군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "박경석",
+    "party": "민주정의당",
+    "pct": 38.63
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 38.63,
+     "unknown": 61.37
+    },
+    "single_family_coverage": 38.63,
+    "lineage_resolved_coverage": 38.63,
+    "mixed_share": 0.0,
+    "unknown_share": 61.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 223996
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 56.37,
+     "democratic": 39.66,
+     "unknown": 3.97
+    },
+    "single_family_coverage": 96.03,
+    "lineage_resolved_coverage": 96.03,
+    "mixed_share": 0.0,
+    "unknown_share": 3.97,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 223996
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "노태우",
+    "party": "민주정의당",
+    "pct": 64.1
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 64.1,
+     "regional": 2.36,
+     "unknown": 33.53
+    },
+    "single_family_coverage": 66.47,
+    "lineage_resolved_coverage": 66.47,
+    "mixed_share": 0.0,
+    "unknown_share": 33.53,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 92488
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 64.1,
+     "democratic": 33.14,
+     "regional": 2.36,
+     "unknown": 0.39
+    },
+    "single_family_coverage": 99.61,
+    "lineage_resolved_coverage": 99.61,
+    "mixed_share": 0.0,
+    "unknown_share": 0.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 92488
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군·울릉군",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이상득",
+    "party": "민주정의당",
+    "pct": 51.67
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 51.67,
+     "independent": 20.6,
+     "unknown": 27.73
+    },
+    "single_family_coverage": 51.67,
+    "lineage_resolved_coverage": 51.67,
+    "mixed_share": 0.0,
+    "unknown_share": 27.73,
+    "independent_share": 20.6,
+    "mixed_constituents": {},
+    "total_votes": 92498
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 51.67,
+     "democratic": 27.73,
+     "independent": 20.6
+    },
+    "single_family_coverage": 79.4,
+    "lineage_resolved_coverage": 79.4,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 20.6,
+    "mixed_constituents": {},
+    "total_votes": 92498
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:영일군·울릉군",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "이상득",
+    "party": "민주자유당",
+    "pct": 52.89
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 52.89,
+     "unknown": 47.11
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.89,
+    "mixed_share": 52.89,
+    "unknown_share": 47.11,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95354
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 13.1,
+     "mixed": 52.89,
+     "unknown": 34.01
+    },
+    "single_family_coverage": 13.1,
+    "lineage_resolved_coverage": 65.99,
+    "mixed_share": 52.89,
+    "unknown_share": 34.01,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95354
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:영일군",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "영일군",
+   "geography_version_id": "admin_unit:경상북도:영일군",
+   "resolution": "resolved",
+   "name_at_the_time": "영일군",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 63.08
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.69,
+     "mixed": 63.08,
+     "unknown": 35.23
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 63.08,
+    "mixed_share": 63.08,
+    "unknown_share": 35.23,
+    "independent_share": 1.69,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 93479
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 11.18,
+     "independent": 1.69,
+     "mixed": 63.08,
+     "unknown": 24.05
+    },
+    "single_family_coverage": 11.18,
+    "lineage_resolved_coverage": 74.26,
+    "mixed_share": 63.08,
+    "unknown_share": 24.05,
+    "independent_share": 1.69,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 93479
+   },
+   "comparison": null
+  }
+ ]
+}

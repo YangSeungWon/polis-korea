@@ -13,6 +13,26 @@
   "local:municipal_mayor",
   "president:national"
  ],
+ "events": [
+  {
+   "event_id": "geo:2024-22nd:bucheon-merge",
+   "namespace": "electoral_district",
+   "effective_date": "2024-04-10",
+   "type": "merge",
+   "label": "부천 4개 선거구가 3개로 통합",
+   "from": [
+    "electoral_district:21:경기:부천시정",
+    "electoral_district:21:경기:부천시갑"
+   ],
+   "to": [
+    "electoral_district:22:경기:부천시갑"
+   ],
+   "affects_series": [
+    "general:district"
+   ],
+   "comparison_capability": "context_only"
+  }
+ ],
  "points": [
   {
    "election_id": "1st-general-1948",
@@ -23,6 +43,8 @@
    "geography_entity_id": "electoral_district:제11선거구(부천군)",
    "boundary_valid_at": "1948-05-10",
    "unit_name_at_the_time": "제11선거구(부천군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이유선",
     "party": "대한독립촉성국민회",
@@ -67,6 +89,8 @@
    "geography_entity_id": "electoral_district:제21선거구(부천군)",
    "boundary_valid_at": "1950-05-30",
    "unit_name_at_the_time": "제21선거구(부천군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박제환",
     "party": "무소속",
@@ -109,6 +133,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1952-08-05",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -151,6 +177,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1954-05-20",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "장경근",
     "party": "자유당",
@@ -193,6 +221,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1956-05-15",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -235,6 +265,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1958-05-02",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "장경근",
     "party": "자유당",
@@ -279,6 +311,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1960-03-15",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -319,6 +353,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1960-07-29",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박제환",
     "party": "무소속",
@@ -361,6 +397,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1963-10-15",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "윤보선",
     "party": "민정당",
@@ -404,6 +442,8 @@
    "geography_entity_id": "electoral_district:시흥군·부천군·옹진군",
    "boundary_valid_at": "1963-11-26",
    "unit_name_at_the_time": "시흥군·부천군·옹진군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "옥조남",
     "party": "민주공화당",
@@ -448,6 +488,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1967-05-03",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "윤보선",
     "party": "신민당",
@@ -491,6 +533,8 @@
    "geography_entity_id": "electoral_district:시흥군·부천군·옹진군",
    "boundary_valid_at": "1967-06-08",
    "unit_name_at_the_time": "시흥군·부천군·옹진군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오학진",
     "party": "민주공화당",
@@ -535,6 +579,8 @@
    "geography_entity_id": "electoral_district:부천군",
    "boundary_valid_at": "1971-04-27",
    "unit_name_at_the_time": "부천군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박정희",
     "party": "민주공화당",
@@ -580,6 +626,8 @@
    "geography_entity_id": "electoral_district:부천군·옹진군",
    "boundary_valid_at": "1971-05-25",
    "unit_name_at_the_time": "부천군·옹진군",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "오학진",
     "party": "민주공화당",
@@ -623,6 +671,8 @@
    "geography_entity_id": "electoral_district:제6선거구(부천시·시흥군·옹진군)",
    "boundary_valid_at": "1973-02-27",
    "unit_name_at_the_time": "제6선거구(부천시·시흥군·옹진군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이택돈",
     "party": "신민당",
@@ -668,6 +718,8 @@
    "geography_entity_id": "electoral_district:제6선거구(부천시·안양시·시흥군·옹진군)",
    "boundary_valid_at": "1978-12-12",
    "unit_name_at_the_time": "제6선거구(부천시·안양시·시흥군·옹진군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이택돈",
     "party": "신민당",
@@ -713,6 +765,8 @@
    "geography_entity_id": "electoral_district:제7선거구(부천시·김포군·강화군)",
    "boundary_valid_at": "1981-03-25",
    "unit_name_at_the_time": "제7선거구(부천시·김포군·강화군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "신능순",
     "party": "민주정의당",
@@ -756,6 +810,8 @@
    "geography_entity_id": "electoral_district:제5선거구(부천시·김포군·강화군)",
    "boundary_valid_at": "1985-02-12",
    "unit_name_at_the_time": "제5선거구(부천시·김포군·강화군)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안동선",
     "party": "신한민주당",
@@ -798,6 +854,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "1987-12-16",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "노태우",
     "party": "민주정의당",
@@ -843,6 +901,8 @@
    "geography_entity_id": "electoral_district:부천시중구",
    "boundary_valid_at": "1988-04-26",
    "unit_name_at_the_time": "부천시중구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "임무웅",
     "party": "민주정의당",
@@ -887,6 +947,8 @@
    "geography_entity_id": "electoral_district:부천시남구",
    "boundary_valid_at": "1988-04-26",
    "unit_name_at_the_time": "부천시남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최기선",
     "party": "통일민주당",
@@ -934,6 +996,8 @@
    "geography_entity_id": "electoral_district:부천시남구",
    "boundary_valid_at": "1992-03-24",
    "unit_name_at_the_time": "부천시남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박규식",
     "party": "민주당(1991)",
@@ -987,6 +1051,8 @@
    "geography_entity_id": "electoral_district:부천시중구갑",
    "boundary_valid_at": "1992-03-24",
    "unit_name_at_the_time": "부천시중구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안동선",
     "party": "민주당(1991)",
@@ -1040,6 +1106,8 @@
    "geography_entity_id": "electoral_district:부천시중구을",
    "boundary_valid_at": "1992-03-24",
    "unit_name_at_the_time": "부천시중구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "원혜영",
     "party": "민주당(1991)",
@@ -1095,6 +1163,8 @@
    "geography_entity_id": "electoral_district:부천시중구",
    "boundary_valid_at": "1992-12-18",
    "unit_name_at_the_time": "부천시중구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "민주당(1991)",
@@ -1150,6 +1220,8 @@
    "geography_entity_id": "electoral_district:부천시남구",
    "boundary_valid_at": "1992-12-18",
    "unit_name_at_the_time": "부천시남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "민주당(1991)",
@@ -1205,6 +1277,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김문수",
     "party": "신한국당",
@@ -1261,6 +1335,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최선영",
     "party": "새정치국민회의",
@@ -1315,6 +1391,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안동선",
     "party": "새정치국민회의",
@@ -1371,6 +1449,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이사철",
     "party": "신한국당",
@@ -1427,6 +1507,8 @@
    "geography_entity_id": "electoral_district:부천시원미구",
    "boundary_valid_at": "1997-12-18",
    "unit_name_at_the_time": "부천시원미구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "새정치국민회의",
@@ -1488,6 +1570,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "1997-12-18",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "새정치국민회의",
@@ -1549,6 +1633,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "1997-12-18",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김대중",
     "party": "새정치국민회의",
@@ -1610,6 +1696,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김문수",
     "party": "한나라당",
@@ -1664,6 +1752,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최선영",
     "party": "새천년민주당",
@@ -1719,6 +1809,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안동선",
     "party": "새천년민주당",
@@ -1773,6 +1865,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "배기선",
     "party": "새천년민주당",
@@ -1827,6 +1921,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김기석",
     "party": "열린우리당",
@@ -1881,6 +1977,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "배기선",
     "party": "열린우리당",
@@ -1937,6 +2035,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김문수",
     "party": "한나라당",
@@ -1989,6 +2089,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "원혜영",
     "party": "열린우리당",
@@ -2043,6 +2145,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "임해규",
     "party": "한나라당",
@@ -2096,6 +2200,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이사철",
     "party": "한나라당",
@@ -2151,6 +2257,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "차명진",
     "party": "한나라당",
@@ -2208,6 +2316,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "원혜영",
     "party": "통합민주당",
@@ -2261,6 +2371,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2011-10-26",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이동현",
     "party": "통합민주당",
@@ -2317,6 +2429,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2011-10-26",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이동현",
     "party": "통합민주당",
@@ -2373,6 +2487,8 @@
    "geography_entity_id": "electoral_district:부천시차선거구",
    "boundary_valid_at": "2011-10-26",
    "unit_name_at_the_time": "부천시차선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "서헌성",
     "party": "통합민주당",
@@ -2427,6 +2543,8 @@
    "geography_entity_id": "electoral_district:부천시차선거구",
    "boundary_valid_at": "2011-10-26",
    "unit_name_at_the_time": "부천시차선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "서헌성",
     "party": "통합민주당",
@@ -2481,6 +2599,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김경협",
     "party": "민주통합당",
@@ -2535,6 +2655,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "설훈",
     "party": "민주통합당",
@@ -2587,6 +2709,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김상희",
     "party": "민주통합당",
@@ -2640,6 +2764,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "원혜영",
     "party": "민주통합당",
@@ -2695,6 +2821,8 @@
    "geography_entity_id": "electoral_district:부천시제1선거구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "염종현",
     "party": "민주통합당",
@@ -2749,6 +2877,8 @@
    "geography_entity_id": "electoral_district:부천시제1선거구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "염종현",
     "party": "민주통합당",
@@ -2803,6 +2933,8 @@
    "geography_entity_id": "electoral_district:부천시제6선거구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김종석",
     "party": "민주통합당",
@@ -2857,6 +2989,8 @@
    "geography_entity_id": "electoral_district:부천시제6선거구",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "부천시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김종석",
     "party": "민주통합당",
@@ -2911,6 +3045,8 @@
    "geography_entity_id": "electoral_district:부천시원미구갑",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시원미구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김경협",
     "party": "더불어민주당",
@@ -2963,6 +3099,8 @@
    "geography_entity_id": "electoral_district:부천시원미구을",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시원미구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "설훈",
     "party": "더불어민주당",
@@ -3017,6 +3155,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김상희",
     "party": "더불어민주당",
@@ -3071,6 +3211,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "원혜영",
     "party": "더불어민주당",
@@ -3125,6 +3267,8 @@
    "geography_entity_id": "electoral_district:부천시바선거구",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강병일",
     "party": "더불어민주당",
@@ -3177,6 +3321,8 @@
    "geography_entity_id": "electoral_district:부천시바선거구",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "부천시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강병일",
     "party": "더불어민주당",
@@ -3229,6 +3375,8 @@
    "geography_entity_id": "electoral_district:부천시갑",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "부천시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김경협",
     "party": "더불어민주당",
@@ -3296,6 +3444,8 @@
    "geography_entity_id": "electoral_district:부천시을",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "부천시을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "설훈",
     "party": "더불어민주당",
@@ -3364,6 +3514,8 @@
    "geography_entity_id": "electoral_district:부천시병",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "부천시병",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김상희",
     "party": "더불어민주당",
@@ -3429,6 +3581,8 @@
    "geography_entity_id": "electoral_district:부천시정",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "부천시정",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "서영석",
     "party": "더불어민주당",
@@ -3484,6 +3638,8 @@
    "geography_entity_id": "electoral_district:부천시갑",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "부천시갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "서영석",
     "party": "더불어민주당",
@@ -3548,6 +3704,8 @@
    "geography_entity_id": "electoral_district:부천시을",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "부천시을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김기표",
     "party": "더불어민주당",
@@ -3613,6 +3771,8 @@
    "geography_entity_id": "electoral_district:부천시병",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "부천시병",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이건태",
     "party": "더불어민주당",
@@ -3675,6 +3835,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이종문",
     "party": "진보당",
@@ -3727,6 +3889,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이종문",
     "party": "진보당",
@@ -3779,6 +3943,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안민석",
     "party": "",
@@ -3819,6 +3985,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안민석",
     "party": "",
@@ -3859,6 +4027,8 @@
    "geography_entity_id": "electoral_district:부천시원미구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시원미구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "안민석",
     "party": "",
@@ -3899,6 +4069,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "추미애",
     "party": "더불어민주당",
@@ -3954,6 +4126,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "추미애",
     "party": "더불어민주당",
@@ -4009,6 +4183,8 @@
    "geography_entity_id": "electoral_district:부천시원미구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시원미구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "추미애",
     "party": "더불어민주당",
@@ -4064,6 +4240,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "조용익",
     "party": "더불어민주당",
@@ -4116,6 +4294,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "조용익",
     "party": "더불어민주당",
@@ -4168,6 +4348,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "조용익",
     "party": "더불어민주당",
@@ -4220,6 +4402,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "조용익",
     "party": "더불어민주당",
@@ -4272,6 +4456,8 @@
    "geography_entity_id": "electoral_district:부천시제1선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이선구",
     "party": "더불어민주당",
@@ -4324,6 +4510,8 @@
    "geography_entity_id": "electoral_district:부천시제3선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이재영",
     "party": "더불어민주당",
@@ -4376,6 +4564,8 @@
    "geography_entity_id": "electoral_district:부천시제4선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "명성숙",
     "party": "더불어민주당",
@@ -4430,6 +4620,8 @@
    "geography_entity_id": "electoral_district:부천시제5선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최성운",
     "party": "더불어민주당",
@@ -4482,6 +4674,8 @@
    "geography_entity_id": "electoral_district:부천시제6선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김동희",
     "party": "더불어민주당",
@@ -4534,6 +4728,8 @@
    "geography_entity_id": "electoral_district:부천시제7선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "유경현",
     "party": "더불어민주당",
@@ -4586,6 +4782,8 @@
    "geography_entity_id": "electoral_district:부천시제8선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제8선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박순희",
     "party": "더불어민주당",
@@ -4638,6 +4836,8 @@
    "geography_entity_id": "electoral_district:부천시제2선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박상현",
     "party": "더불어민주당",
@@ -4656,6 +4856,8 @@
    "geography_entity_id": "electoral_district:부천시제5선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최성운",
     "party": "더불어민주당",
@@ -4708,6 +4910,8 @@
    "geography_entity_id": "electoral_district:부천시제6선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김동희",
     "party": "더불어민주당",
@@ -4760,6 +4964,8 @@
    "geography_entity_id": "electoral_district:부천시제8선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제8선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박순희",
     "party": "더불어민주당",
@@ -4812,6 +5018,8 @@
    "geography_entity_id": "electoral_district:부천시제7선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제7선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "유경현",
     "party": "더불어민주당",
@@ -4864,6 +5072,8 @@
    "geography_entity_id": "electoral_district:부천시제1선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이선구",
     "party": "더불어민주당",
@@ -4916,6 +5126,8 @@
    "geography_entity_id": "electoral_district:부천시제3선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이재영",
     "party": "더불어민주당",
@@ -4968,6 +5180,8 @@
    "geography_entity_id": "electoral_district:부천시제4선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "명성숙",
     "party": "더불어민주당",
@@ -5022,6 +5236,8 @@
    "geography_entity_id": "electoral_district:부천시가선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이철희",
     "party": "더불어민주당",
@@ -5074,6 +5290,8 @@
    "geography_entity_id": "electoral_district:부천시나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "염보라",
     "party": "더불어민주당",
@@ -5128,6 +5346,8 @@
    "geography_entity_id": "electoral_district:부천시다선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이강일",
     "party": "더불어민주당",
@@ -5180,6 +5400,8 @@
    "geography_entity_id": "electoral_district:부천시라선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강은주",
     "party": "더불어민주당",
@@ -5232,6 +5454,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박병권",
     "party": "더불어민주당",
@@ -5287,6 +5511,8 @@
    "geography_entity_id": "electoral_district:부천시바선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최의열",
     "party": "더불어민주당",
@@ -5341,6 +5567,8 @@
    "geography_entity_id": "electoral_district:부천시사선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김영기",
     "party": "더불어민주당",
@@ -5394,6 +5622,8 @@
    "geography_entity_id": "electoral_district:부천시아선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "윤단비",
     "party": "더불어민주당",
@@ -5446,6 +5676,8 @@
    "geography_entity_id": "electoral_district:부천시자선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시자선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박성균",
     "party": "더불어민주당",
@@ -5499,6 +5731,8 @@
    "geography_entity_id": "electoral_district:부천시바선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "최의열",
     "party": "더불어민주당",
@@ -5553,6 +5787,8 @@
    "geography_entity_id": "electoral_district:부천시사선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "김영기",
     "party": "더불어민주당",
@@ -5606,6 +5842,8 @@
    "geography_entity_id": "electoral_district:부천시자선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시자선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박성균",
     "party": "더불어민주당",
@@ -5659,6 +5897,8 @@
    "geography_entity_id": "electoral_district:부천시나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "염보라",
     "party": "더불어민주당",
@@ -5713,6 +5953,8 @@
    "geography_entity_id": "electoral_district:부천시아선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "윤단비",
     "party": "더불어민주당",
@@ -5765,6 +6007,8 @@
    "geography_entity_id": "electoral_district:부천시가선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이철희",
     "party": "더불어민주당",
@@ -5817,6 +6061,8 @@
    "geography_entity_id": "electoral_district:부천시다선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "이강일",
     "party": "더불어민주당",
@@ -5869,6 +6115,8 @@
    "geography_entity_id": "electoral_district:부천시라선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "강은주",
     "party": "더불어민주당",
@@ -5921,6 +6169,8 @@
    "geography_entity_id": "electoral_district:부천시마선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "박병권",
     "party": "더불어민주당",
@@ -5976,6 +6226,8 @@
    "geography_entity_id": "electoral_district:부천시소사구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시소사구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "더불어민주당",
     "party": "더불어민주당",
@@ -6039,6 +6291,8 @@
    "geography_entity_id": "electoral_district:부천시오정구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시오정구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "더불어민주당",
     "party": "더불어민주당",
@@ -6102,6 +6356,8 @@
    "geography_entity_id": "electoral_district:부천시원미구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시원미구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": "더불어민주당",
     "party": "더불어민주당",
@@ -6165,6 +6421,8 @@
    "geography_entity_id": "electoral_district:부천시",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "부천시",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
    "winner": {
     "name": null,
     "party": "더불어민주당",

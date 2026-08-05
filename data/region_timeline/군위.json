@@ -13,6 +13,25 @@
   "local:municipal_mayor",
   "president:national"
  ],
+ "events": [
+  {
+   "event_id": "geo:2023-07-01:gunwi-transfer",
+   "namespace": "administrative_geography",
+   "effective_date": "2023-07-01",
+   "type": "transfer",
+   "label": "경상북도 군위군이 대구광역시로 편입",
+   "from": [
+    "admin_unit:경상북도:군위군"
+   ],
+   "to": [
+    "admin_unit:대구광역시:군위군"
+   ],
+   "affects_series": [
+    "*"
+   ],
+   "comparison_capability": "direct"
+  }
+ ],
  "points": [
   {
    "election_id": "1st-general-1948",
@@ -23,6 +42,9 @@
    "geography_entity_id": "electoral_district:제5선거구(군위군)",
    "boundary_valid_at": "1948-05-10",
    "unit_name_at_the_time": "제5선거구(군위군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박준",
     "party": "무소속",
@@ -67,6 +89,9 @@
    "geography_entity_id": "electoral_district:제7선거구(군위군)",
    "boundary_valid_at": "1950-05-30",
    "unit_name_at_the_time": "제7선거구(군위군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박만원",
     "party": "무소속",
@@ -109,6 +134,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1952-08-05",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -151,6 +179,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1954-05-20",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박만원",
     "party": "자유당",
@@ -169,6 +200,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1956-05-15",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -211,6 +245,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1958-05-02",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박만원",
     "party": "자유당",
@@ -253,6 +290,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1960-03-15",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "이승만",
     "party": "자유당",
@@ -293,6 +333,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1960-07-29",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "문명호",
     "party": "민주당(1955)",
@@ -337,6 +380,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1963-10-15",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박정희",
     "party": "민주공화당",
@@ -380,6 +426,9 @@
    "geography_entity_id": "electoral_district:군위군·선산군",
    "boundary_valid_at": "1963-11-26",
    "unit_name_at_the_time": "군위군·선산군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김봉환",
     "party": "민주공화당",
@@ -424,6 +473,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1967-05-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박정희",
     "party": "민주공화당",
@@ -467,6 +519,9 @@
    "geography_entity_id": "electoral_district:군위군·선산군",
    "boundary_valid_at": "1967-06-08",
    "unit_name_at_the_time": "군위군·선산군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김봉환",
     "party": "민주공화당",
@@ -510,6 +565,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1971-04-27",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박정희",
     "party": "민주공화당",
@@ -555,6 +613,9 @@
    "geography_entity_id": "electoral_district:군위군·선산군",
    "boundary_valid_at": "1971-05-25",
    "unit_name_at_the_time": "군위군·선산군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김봉환",
     "party": "민주공화당",
@@ -597,6 +658,9 @@
    "geography_entity_id": "electoral_district:제8선거구(칠곡군·군위군·성주군·선산군)",
    "boundary_valid_at": "1973-02-27",
    "unit_name_at_the_time": "제8선거구(칠곡군·군위군·성주군·선산군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "신현확",
     "party": "민주공화당",
@@ -642,6 +706,9 @@
    "geography_entity_id": "electoral_district:제7선거구(구미시·군위군·성주군·칠곡군·선산군)",
    "boundary_valid_at": "1978-12-12",
    "unit_name_at_the_time": "제7선거구(구미시·군위군·성주군·칠곡군·선산군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "신현확",
     "party": "민주공화당",
@@ -686,6 +753,9 @@
    "geography_entity_id": "electoral_district:제8선거구(구미시·군위군·칠곡군·선산군)",
    "boundary_valid_at": "1981-03-25",
    "unit_name_at_the_time": "제8선거구(구미시·군위군·칠곡군·선산군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박재홍",
     "party": "민주정의당",
@@ -729,6 +799,9 @@
    "geography_entity_id": "electoral_district:제5선거구(구미시·군위군·칠곡군·선산군)",
    "boundary_valid_at": "1985-02-12",
    "unit_name_at_the_time": "제5선거구(구미시·군위군·칠곡군·선산군)",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박재홍",
     "party": "민주정의당",
@@ -774,6 +847,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1987-12-16",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "노태우",
     "party": "민주정의당",
@@ -819,6 +895,9 @@
    "geography_entity_id": "electoral_district:군위군·선산군",
    "boundary_valid_at": "1988-04-26",
    "unit_name_at_the_time": "군위군·선산군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김윤환",
     "party": "민주정의당",
@@ -863,6 +942,9 @@
    "geography_entity_id": "electoral_district:군위군·선산군",
    "boundary_valid_at": "1992-03-24",
    "unit_name_at_the_time": "군위군·선산군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김윤환",
     "party": "민주자유당",
@@ -917,6 +999,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1992-12-18",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김영삼",
     "party": "민주자유당",
@@ -972,6 +1057,9 @@
    "geography_entity_id": "electoral_district:군위군·칠곡군",
    "boundary_valid_at": "1996-04-11",
    "unit_name_at_the_time": "군위군·칠곡군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "장영철",
     "party": "신한국당",
@@ -1028,6 +1116,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "1997-12-18",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "이회창",
     "party": "한나라당",
@@ -1089,6 +1180,9 @@
    "geography_entity_id": "electoral_district:군위군·의성군",
    "boundary_valid_at": "2000-04-13",
    "unit_name_at_the_time": "군위군·의성군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "정창화",
     "party": "한나라당",
@@ -1143,6 +1237,9 @@
    "geography_entity_id": "electoral_district:군위군·의성군·청송군",
    "boundary_valid_at": "2004-04-15",
    "unit_name_at_the_time": "군위군·의성군·청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "한나라당",
@@ -1197,6 +1294,9 @@
    "geography_entity_id": "electoral_district:군위군의성군청송군",
    "boundary_valid_at": "2008-04-09",
    "unit_name_at_the_time": "군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "정해걸",
     "party": "무소속",
@@ -1251,6 +1351,9 @@
    "geography_entity_id": "electoral_district:군위군의성군청송군",
    "boundary_valid_at": "2012-04-11",
    "unit_name_at_the_time": "군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "새누리당",
@@ -1303,6 +1406,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2016-04-13",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김종태",
     "party": "새누리당",
@@ -1355,6 +1461,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "자유한국당",
@@ -1418,6 +1527,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "성윤환",
     "party": "무소속",
@@ -1481,6 +1593,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "자유한국당",
@@ -1544,6 +1659,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "자유한국당",
@@ -1607,6 +1725,9 @@
    "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
    "boundary_valid_at": "2017-04-12",
    "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김재원",
     "party": "자유한국당",
@@ -1670,6 +1791,9 @@
    "geography_entity_id": "electoral_district:군위군의성군청송군영덕군",
    "boundary_valid_at": "2020-04-15",
    "unit_name_at_the_time": "군위군의성군청송군영덕군",
+   "geography_version_id": "admin_unit:경상북도:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김희국",
     "party": "미래통합당",
@@ -1723,6 +1847,9 @@
    "geography_entity_id": "electoral_district:동구군위군갑",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "동구군위군갑",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "최은석",
     "party": "국민의힘",
@@ -1789,6 +1916,9 @@
    "geography_entity_id": "electoral_district:동구군위군을",
    "boundary_valid_at": "2024-04-10",
    "unit_name_at_the_time": "동구군위군을",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "강대식",
     "party": "국민의힘",
@@ -1856,6 +1986,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "강은희",
     "party": "",
@@ -1896,6 +2029,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "추경호",
     "party": "국민의힘",
@@ -1949,6 +2085,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김진열",
     "party": "국민의힘",
@@ -2001,6 +2140,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "김진열",
     "party": "국민의힘",
@@ -2053,6 +2195,9 @@
    "geography_entity_id": "electoral_district:군위군선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박창석",
     "party": "국민의힘",
@@ -2105,6 +2250,9 @@
    "geography_entity_id": "electoral_district:군위군선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박창석",
     "party": "국민의힘",
@@ -2157,6 +2305,9 @@
    "geography_entity_id": "electoral_district:군위군가선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군가선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "서대식",
     "party": "국민의힘",
@@ -2211,6 +2362,9 @@
    "geography_entity_id": "electoral_district:군위군나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군나선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박수현",
     "party": "무소속",
@@ -2265,6 +2419,9 @@
    "geography_entity_id": "electoral_district:군위군가선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군가선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "서대식",
     "party": "국민의힘",
@@ -2319,6 +2476,9 @@
    "geography_entity_id": "electoral_district:군위군나선거구",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군나선거구",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "박수현",
     "party": "무소속",
@@ -2373,6 +2533,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": "국민의힘",
     "party": "국민의힘",
@@ -2428,6 +2591,9 @@
    "geography_entity_id": "electoral_district:군위군",
    "boundary_valid_at": "2026-06-03",
    "unit_name_at_the_time": "군위군",
+   "geography_version_id": "admin_unit:대구광역시:군위군",
+   "resolution": "resolved",
+   "name_at_the_time": "군위군",
    "winner": {
     "name": null,
     "party": "국민의힘",

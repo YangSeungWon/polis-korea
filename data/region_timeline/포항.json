@@ -1,0 +1,5503 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "포항",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "events": [
+  {
+   "event_id": "geo:1995-01-01:pohang-merge",
+   "namespace": "administrative_geography",
+   "effective_date": "1995-01-01",
+   "type": "merge",
+   "label": "포항시·영일군 통합(1차 도농통합)",
+   "from": [
+    "admin_unit:경상북도:포항시(구)",
+    "admin_unit:경상북도:영일군"
+   ],
+   "to": [
+    "admin_unit:경상북도:포항시"
+   ],
+   "affects_series": [
+    "*"
+   ],
+   "comparison_capability": "aggregated"
+  }
+ ],
+ "points": [
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(포항시)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제4선거구(포항시)",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김판석",
+    "party": "대한청년당",
+    "pct": 16.83
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 65.68,
+     "unknown": 34.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 34.32,
+    "independent_share": 65.68,
+    "mixed_constituents": {},
+    "total_votes": 18754
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 65.68,
+     "unknown": 34.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 34.32,
+    "independent_share": 65.68,
+    "mixed_constituents": {},
+    "total_votes": 18754
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-pres-1952",
+   "election_type": "pres",
+   "election_date": "1952-08-05",
+   "label": "2nd-pres-1952",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1952-08-05",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 79.98
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 79.98,
+     "independent": 20.02
+    },
+    "single_family_coverage": 79.98,
+    "lineage_resolved_coverage": 79.98,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 20.02,
+    "mixed_constituents": {},
+    "total_votes": 19343
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 79.98,
+     "independent": 20.02
+    },
+    "single_family_coverage": 79.98,
+    "lineage_resolved_coverage": 79.98,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 20.02,
+    "mixed_constituents": {},
+    "total_votes": 19343
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "하태환",
+    "party": "무소속",
+    "pct": 45.03
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 30.96,
+     "independent": 69.04
+    },
+    "single_family_coverage": 30.96,
+    "lineage_resolved_coverage": 30.96,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 69.04,
+    "mixed_constituents": {},
+    "total_votes": 21165
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 30.96,
+     "independent": 69.04
+    },
+    "single_family_coverage": 30.96,
+    "lineage_resolved_coverage": 30.96,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 69.04,
+    "mixed_constituents": {},
+    "total_votes": 21165
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-pres-1956",
+   "election_type": "pres",
+   "election_date": "1956-05-15",
+   "label": "3rd-pres-1956",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1956-05-15",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 58.9
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 58.9,
+     "independent": 41.1
+    },
+    "single_family_coverage": 58.9,
+    "lineage_resolved_coverage": 58.9,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 41.1,
+    "mixed_constituents": {},
+    "total_votes": 14449
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 58.9,
+     "independent": 41.1
+    },
+    "single_family_coverage": 58.9,
+    "lineage_resolved_coverage": 58.9,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 41.1,
+    "mixed_constituents": {},
+    "total_votes": 14449
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "하태환",
+    "party": "자유당",
+    "pct": 60.96
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 60.96,
+     "democratic": 19.7,
+     "independent": 19.34
+    },
+    "single_family_coverage": 80.66,
+    "lineage_resolved_coverage": 80.66,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 19.34,
+    "mixed_constituents": {},
+    "total_votes": 21455
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 60.96,
+     "democratic": 19.7,
+     "independent": 19.34
+    },
+    "single_family_coverage": 80.66,
+    "lineage_resolved_coverage": 80.66,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 19.34,
+    "mixed_constituents": {},
+    "total_votes": 21455
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-pres-1960",
+   "election_type": "pres",
+   "election_date": "1960-03-15",
+   "label": "4th-pres-1960",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1960-03-15",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 100.0
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 21619
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 21619
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상면",
+    "party": "민주당(1955)",
+    "pct": 51.95
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 51.95,
+     "independent": 40.88,
+     "unknown": 7.17
+    },
+    "single_family_coverage": 51.95,
+    "lineage_resolved_coverage": 51.95,
+    "mixed_share": 0.0,
+    "unknown_share": 7.17,
+    "independent_share": 40.88,
+    "mixed_constituents": {},
+    "total_votes": 23664
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.95,
+     "independent": 40.88,
+     "unknown": 7.17
+    },
+    "single_family_coverage": 51.95,
+    "lineage_resolved_coverage": 51.95,
+    "mixed_share": 0.0,
+    "unknown_share": 7.17,
+    "independent_share": 40.88,
+    "mixed_constituents": {},
+    "total_votes": 23664
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-pres-1963",
+   "election_type": "pres",
+   "election_date": "1963-10-15",
+   "label": "5th-pres-1963",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1963-10-15",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "윤보선",
+    "party": "민정당",
+    "pct": 47.74
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 46.71,
+     "unknown": 53.29
+    },
+    "single_family_coverage": 46.71,
+    "lineage_resolved_coverage": 46.71,
+    "mixed_share": 0.0,
+    "unknown_share": 53.29,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 23700
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 46.71,
+     "democratic": 47.74,
+     "unknown": 5.54
+    },
+    "single_family_coverage": 94.46,
+    "lineage_resolved_coverage": 94.46,
+    "mixed_share": 0.0,
+    "unknown_share": 5.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 23700
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-general-1963",
+   "election_type": "general",
+   "election_date": "1963-11-26",
+   "label": "6th-general-1963",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시·영일군·울릉군",
+   "boundary_valid_at": "1963-11-26",
+   "unit_name_at_the_time": "포항시·영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김장섭",
+    "party": "민주공화당",
+    "pct": 49.05
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 49.05,
+     "democratic": 5.93,
+     "unknown": 45.02
+    },
+    "single_family_coverage": 54.98,
+    "lineage_resolved_coverage": 54.98,
+    "mixed_share": 0.0,
+    "unknown_share": 45.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 90441
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 49.05,
+     "democratic": 32.3,
+     "unknown": 18.65
+    },
+    "single_family_coverage": 81.35,
+    "lineage_resolved_coverage": 81.35,
+    "mixed_share": 0.0,
+    "unknown_share": 18.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 90441
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-pres-1967",
+   "election_type": "pres",
+   "election_date": "1967-05-03",
+   "label": "6th-pres-1967",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1967-05-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 61.43
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 61.43,
+     "unknown": 38.57
+    },
+    "single_family_coverage": 61.43,
+    "lineage_resolved_coverage": 61.43,
+    "mixed_share": 0.0,
+    "unknown_share": 38.57,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 26236
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 61.43,
+     "democratic": 33.85,
+     "unknown": 4.71
+    },
+    "single_family_coverage": 95.29,
+    "lineage_resolved_coverage": 95.29,
+    "mixed_share": 0.0,
+    "unknown_share": 4.71,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 26236
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-general-1967",
+   "election_type": "general",
+   "election_date": "1967-06-08",
+   "label": "7th-general-1967",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시·영일군·울릉군",
+   "boundary_valid_at": "1967-06-08",
+   "unit_name_at_the_time": "포항시·영일군·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김장섭",
+    "party": "민주공화당",
+    "pct": 43.86
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.86,
+     "democratic": 1.25,
+     "unknown": 54.89
+    },
+    "single_family_coverage": 45.11,
+    "lineage_resolved_coverage": 45.11,
+    "mixed_share": 0.0,
+    "unknown_share": 54.89,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 109128
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.86,
+     "democratic": 56.14
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 109128
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-pres-1971",
+   "election_type": "pres",
+   "election_date": "1971-04-27",
+   "label": "7th-pres-1971",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1971-04-27",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 73.23
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 73.23,
+     "progressive": 0.24,
+     "unknown": 26.52
+    },
+    "single_family_coverage": 73.48,
+    "lineage_resolved_coverage": 73.48,
+    "mixed_share": 0.0,
+    "unknown_share": 26.52,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 31999
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 73.23,
+     "democratic": 26.14,
+     "progressive": 0.24,
+     "unknown": 0.38
+    },
+    "single_family_coverage": 99.62,
+    "lineage_resolved_coverage": 99.62,
+    "mixed_share": 0.0,
+    "unknown_share": 0.38,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 31999
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "8th-general-1971",
+   "election_type": "general",
+   "election_date": "1971-05-25",
+   "label": "8th-general-1971",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시·울릉군",
+   "boundary_valid_at": "1971-05-25",
+   "unit_name_at_the_time": "포항시·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김병윤",
+    "party": "민주공화당",
+    "pct": 61.09
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 61.09,
+     "unknown": 38.91
+    },
+    "single_family_coverage": 61.09,
+    "lineage_resolved_coverage": 61.09,
+    "mixed_share": 0.0,
+    "unknown_share": 38.91,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 39624
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 61.09,
+     "democratic": 36.13,
+     "unknown": 2.78
+    },
+    "single_family_coverage": 97.22,
+    "lineage_resolved_coverage": 97.22,
+    "mixed_share": 0.0,
+    "unknown_share": 2.78,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 39624
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-general-1973",
+   "election_type": "general",
+   "election_date": "1973-02-27",
+   "label": "9th-general-1973",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(포항시·울릉군·영일군·영천군)",
+   "boundary_valid_at": "1973-02-27",
+   "unit_name_at_the_time": "제3선거구(포항시·울릉군·영일군·영천군)",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "정무식",
+    "party": "민주공화당",
+    "pct": 35.43
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 35.43,
+     "independent": 30.09,
+     "unknown": 34.48
+    },
+    "single_family_coverage": 35.43,
+    "lineage_resolved_coverage": 35.43,
+    "mixed_share": 0.0,
+    "unknown_share": 34.48,
+    "independent_share": 30.09,
+    "mixed_constituents": {},
+    "total_votes": 185978
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.43,
+     "democratic": 34.48,
+     "independent": 30.09
+    },
+    "single_family_coverage": 69.91,
+    "lineage_resolved_coverage": 69.91,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 30.09,
+    "mixed_constituents": {},
+    "total_votes": 185978
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(포항시·영일군·영천군·울릉군)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제3선거구(포항시·영일군·영천군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "권오태",
+    "party": "무소속",
+    "pct": 32.21
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 21.36,
+     "independent": 42.13,
+     "unknown": 36.51
+    },
+    "single_family_coverage": 21.36,
+    "lineage_resolved_coverage": 21.36,
+    "mixed_share": 0.0,
+    "unknown_share": 36.51,
+    "independent_share": 42.13,
+    "mixed_constituents": {},
+    "total_votes": 228346
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 21.36,
+     "democratic": 29.28,
+     "independent": 42.13,
+     "unknown": 7.22
+    },
+    "single_family_coverage": 50.65,
+    "lineage_resolved_coverage": 50.65,
+    "mixed_share": 0.0,
+    "unknown_share": 7.22,
+    "independent_share": 42.13,
+    "mixed_constituents": {},
+    "total_votes": 228346
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(포항시·영일군·울릉군)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제4선거구(포항시·영일군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이진우",
+    "party": "민주정의당",
+    "pct": 46.45
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 46.45,
+     "unknown": 53.55
+    },
+    "single_family_coverage": 46.45,
+    "lineage_resolved_coverage": 46.45,
+    "mixed_share": 0.0,
+    "unknown_share": 53.55,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 187057
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 65.66,
+     "democratic": 9.01,
+     "unknown": 25.33
+    },
+    "single_family_coverage": 74.67,
+    "lineage_resolved_coverage": 74.67,
+    "mixed_share": 0.0,
+    "unknown_share": 25.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 187057
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(포항시·영일군·울릉군)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제1선거구(포항시·영일군·울릉군)",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박경석",
+    "party": "민주정의당",
+    "pct": 38.63
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 38.63,
+     "unknown": 61.37
+    },
+    "single_family_coverage": 38.63,
+    "lineage_resolved_coverage": 38.63,
+    "mixed_share": 0.0,
+    "unknown_share": 61.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 223996
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 56.37,
+     "democratic": 39.66,
+     "unknown": 3.97
+    },
+    "single_family_coverage": 96.03,
+    "lineage_resolved_coverage": 96.03,
+    "mixed_share": 0.0,
+    "unknown_share": 3.97,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 223996
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "노태우",
+    "party": "민주정의당",
+    "pct": 53.92
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 53.92,
+     "regional": 3.55,
+     "unknown": 42.53
+    },
+    "single_family_coverage": 57.47,
+    "lineage_resolved_coverage": 57.47,
+    "mixed_share": 0.0,
+    "unknown_share": 42.53,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 148234
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 53.92,
+     "democratic": 42.34,
+     "regional": 3.55,
+     "unknown": 0.19
+    },
+    "single_family_coverage": 99.81,
+    "lineage_resolved_coverage": 99.81,
+    "mixed_share": 0.0,
+    "unknown_share": 0.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 148234
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이진우",
+    "party": "민주정의당",
+    "pct": 43.47
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.47,
+     "independent": 2.0,
+     "regional": 33.82,
+     "unknown": 20.7
+    },
+    "single_family_coverage": 77.29,
+    "lineage_resolved_coverage": 77.29,
+    "mixed_share": 0.0,
+    "unknown_share": 20.7,
+    "independent_share": 2.0,
+    "mixed_constituents": {},
+    "total_votes": 136724
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.47,
+     "democratic": 16.43,
+     "independent": 2.0,
+     "regional": 33.82,
+     "unknown": 4.27
+    },
+    "single_family_coverage": 93.72,
+    "lineage_resolved_coverage": 93.72,
+    "mixed_share": 0.0,
+    "unknown_share": 4.27,
+    "independent_share": 2.0,
+    "mixed_constituents": {},
+    "total_votes": 136724
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "허화평",
+    "party": "무소속",
+    "pct": 46.33
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 48.45,
+     "mixed": 39.9,
+     "unknown": 11.65
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 39.9,
+    "mixed_share": 39.9,
+    "unknown_share": 11.65,
+    "independent_share": 48.45,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 149772
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 11.65,
+     "independent": 48.45,
+     "mixed": 39.9
+    },
+    "single_family_coverage": 11.65,
+    "lineage_resolved_coverage": 51.55,
+    "mixed_share": 39.9,
+    "unknown_share": 0.0,
+    "independent_share": 48.45,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 149772
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시(구)",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 62.14
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.32,
+     "mixed": 62.14,
+     "unknown": 36.54
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.14,
+    "mixed_share": 62.14,
+    "unknown_share": 36.54,
+    "independent_share": 1.32,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 157357
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 11.0,
+     "independent": 1.32,
+     "mixed": 62.14,
+     "unknown": 25.54
+    },
+    "single_family_coverage": 11.0,
+    "lineage_resolved_coverage": 73.14,
+    "mixed_share": 62.14,
+    "unknown_share": 25.54,
+    "independent_share": 1.32,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 157357
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구·울릉군",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "포항시남구·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상득",
+    "party": "신한국당",
+    "pct": 48.78
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.78,
+     "regional": 28.42,
+     "unknown": 22.81
+    },
+    "single_family_coverage": 28.42,
+    "lineage_resolved_coverage": 77.19,
+    "mixed_share": 48.78,
+    "unknown_share": 22.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 112977
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 22.81,
+     "mixed": 48.78,
+     "regional": 28.42
+    },
+    "single_family_coverage": 51.22,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.78,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 112977
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "허화평",
+    "party": "무소속",
+    "pct": 44.23
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 50.51,
+     "mixed": 34.03,
+     "regional": 4.75,
+     "unknown": 10.72
+    },
+    "single_family_coverage": 4.75,
+    "lineage_resolved_coverage": 38.77,
+    "mixed_share": 34.03,
+    "unknown_share": 10.72,
+    "independent_share": 50.51,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109098
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 9.04,
+     "independent": 50.51,
+     "mixed": 34.03,
+     "regional": 4.75,
+     "unknown": 1.68
+    },
+    "single_family_coverage": 13.79,
+    "lineage_resolved_coverage": 47.81,
+    "mixed_share": 34.03,
+    "unknown_share": 1.68,
+    "independent_share": 50.51,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109098
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시남구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "포항시남구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이회창",
+    "party": "한나라당",
+    "pct": 63.5
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 83.33,
+     "unknown": 16.67
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 83.33,
+    "mixed_share": 83.33,
+    "unknown_share": 16.67,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 137892
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 14.44,
+     "mixed": 83.33,
+     "unknown": 2.24
+    },
+    "single_family_coverage": 14.44,
+    "lineage_resolved_coverage": 97.76,
+    "mixed_share": 83.33,
+    "unknown_share": 2.24,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 137892
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이회창",
+    "party": "한나라당",
+    "pct": 69.79
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 85.33,
+     "unknown": 14.67
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 85.33,
+    "mixed_share": 85.33,
+    "unknown_share": 14.67,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 131081
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 12.87,
+     "mixed": 85.33,
+     "unknown": 1.79
+    },
+    "single_family_coverage": 12.87,
+    "lineage_resolved_coverage": 98.21,
+    "mixed_share": 85.33,
+    "unknown_share": 1.79,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 131081
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구·울릉군",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "포항시남구·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상득",
+    "party": "한나라당",
+    "pct": 53.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 53.46,
+     "regional": 37.59,
+     "unknown": 8.96
+    },
+    "single_family_coverage": 37.59,
+    "lineage_resolved_coverage": 91.04,
+    "mixed_share": 53.46,
+    "unknown_share": 8.96,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 119843
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 8.96,
+     "mixed": 53.46,
+     "regional": 37.59
+    },
+    "single_family_coverage": 46.54,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 53.46,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 119843
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이병석",
+    "party": "한나라당",
+    "pct": 63.54
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 63.54,
+     "unknown": 36.46
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 63.54,
+    "mixed_share": 63.54,
+    "unknown_share": 36.46,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105846
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 5.98,
+     "mixed": 63.54,
+     "unknown": 30.48
+    },
+    "single_family_coverage": 5.98,
+    "lineage_resolved_coverage": 69.52,
+    "mixed_share": 63.54,
+    "unknown_share": 30.48,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105846
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이병석",
+    "party": "한나라당",
+    "pct": 55.29
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 16.09,
+     "mixed": 55.29,
+     "progressive": 7.04,
+     "unknown": 21.58
+    },
+    "single_family_coverage": 7.04,
+    "lineage_resolved_coverage": 62.33,
+    "mixed_share": 55.29,
+    "unknown_share": 21.58,
+    "independent_share": 16.09,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109563
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 21.58,
+     "independent": 16.09,
+     "mixed": 55.29,
+     "progressive": 7.04
+    },
+    "single_family_coverage": 28.62,
+    "lineage_resolved_coverage": 83.91,
+    "mixed_share": 55.29,
+    "unknown_share": 0.0,
+    "independent_share": 16.09,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 109563
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구·울릉군",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "포항시남구·울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상득",
+    "party": "한나라당",
+    "pct": 50.1
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.11,
+     "mixed": 50.1,
+     "progressive": 6.81,
+     "unknown": 34.98
+    },
+    "single_family_coverage": 6.81,
+    "lineage_resolved_coverage": 56.91,
+    "mixed_share": 50.1,
+    "unknown_share": 34.98,
+    "independent_share": 8.11,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 118500
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.98,
+     "independent": 8.11,
+     "mixed": 50.1,
+     "progressive": 6.81
+    },
+    "single_family_coverage": 41.79,
+    "lineage_resolved_coverage": 91.89,
+    "mixed_share": 50.1,
+    "unknown_share": 0.0,
+    "independent_share": 8.11,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 118500
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이병석",
+    "party": "한나라당",
+    "pct": 62.64
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 30.42,
+     "mixed": 62.64,
+     "unknown": 6.93
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.64,
+    "mixed_share": 62.64,
+    "unknown_share": 6.93,
+    "independent_share": 30.42,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 96754
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 5.8,
+     "independent": 30.42,
+     "mixed": 62.64,
+     "unknown": 1.13
+    },
+    "single_family_coverage": 5.8,
+    "lineage_resolved_coverage": 68.44,
+    "mixed_share": 62.64,
+    "unknown_share": 1.13,
+    "independent_share": 30.42,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 96754
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상득",
+    "party": "한나라당",
+    "pct": 69.63
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.93,
+     "mixed": 69.63,
+     "unknown": 19.45
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 69.63,
+    "mixed_share": 69.63,
+    "unknown_share": 19.45,
+    "independent_share": 10.93,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98229
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 17.07,
+     "independent": 10.93,
+     "mixed": 69.63,
+     "unknown": 2.38
+    },
+    "single_family_coverage": 17.07,
+    "lineage_resolved_coverage": 86.69,
+    "mixed_share": 69.63,
+    "unknown_share": 2.38,
+    "independent_share": 10.93,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98229
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이병석",
+    "party": "새누리당",
+    "pct": 70.45
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 11.47,
+     "mixed": 70.45,
+     "progressive": 18.08
+    },
+    "single_family_coverage": 18.08,
+    "lineage_resolved_coverage": 88.53,
+    "mixed_share": 70.45,
+    "unknown_share": 0.0,
+    "independent_share": 11.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106211
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 11.47,
+     "mixed": 70.45,
+     "progressive": 18.08
+    },
+    "single_family_coverage": 18.08,
+    "lineage_resolved_coverage": 88.53,
+    "mixed_share": 70.45,
+    "unknown_share": 0.0,
+    "independent_share": 11.47,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106211
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김형태",
+    "party": "새누리당",
+    "pct": 41.25
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 40.91,
+     "mixed": 41.25,
+     "unknown": 17.84
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 41.25,
+    "mixed_share": 41.25,
+    "unknown_share": 17.84,
+    "independent_share": 40.91,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110979
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 17.84,
+     "independent": 40.91,
+     "mixed": 41.25
+    },
+    "single_family_coverage": 17.84,
+    "lineage_resolved_coverage": 59.09,
+    "mixed_share": 41.25,
+    "unknown_share": 0.0,
+    "independent_share": 40.91,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110979
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2013-10-30",
+   "election_type": "byelection",
+   "election_date": "2013-10-30",
+   "label": "2013년 10·30 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2013-10-30",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박명재",
+    "party": "새누리당",
+    "pct": 78.57
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 78.57,
+     "progressive": 2.92,
+     "unknown": 18.51
+    },
+    "single_family_coverage": 2.92,
+    "lineage_resolved_coverage": 81.49,
+    "mixed_share": 78.57,
+    "unknown_share": 18.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 72942
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.51,
+     "mixed": 78.57,
+     "progressive": 2.92
+    },
+    "single_family_coverage": 21.43,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 78.57,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 72942
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2013-10-30",
+   "election_type": "byelection",
+   "election_date": "2013-10-30",
+   "label": "2013년 10·30 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2013-10-30",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박명재",
+    "party": "새누리당",
+    "pct": 78.0
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 78.0,
+     "progressive": 3.0,
+     "unknown": 19.0
+    },
+    "single_family_coverage": 3.0,
+    "lineage_resolved_coverage": 81.0,
+    "mixed_share": 78.0,
+    "unknown_share": 19.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 68079
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 19.0,
+     "mixed": 78.0,
+     "progressive": 3.0
+    },
+    "single_family_coverage": 22.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 78.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 68079
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2013-10-30",
+   "election_type": "byelection",
+   "election_date": "2013-10-30",
+   "label": "2013년 10·30 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2013-10-30",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박명재",
+    "party": "새누리당",
+    "pct": 86.57
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 86.57,
+     "progressive": 1.79,
+     "unknown": 11.64
+    },
+    "single_family_coverage": 1.79,
+    "lineage_resolved_coverage": 88.36,
+    "mixed_share": 86.57,
+    "unknown_share": 11.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 4863
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 11.64,
+     "mixed": 86.57,
+     "progressive": 1.79
+    },
+    "single_family_coverage": 13.43,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 86.57,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 4863
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김정재",
+    "party": "새누리당",
+    "pct": 43.4
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 38.84,
+     "mixed": 43.4,
+     "progressive": 5.04,
+     "unknown": 12.71
+    },
+    "single_family_coverage": 5.04,
+    "lineage_resolved_coverage": 48.44,
+    "mixed_share": 43.4,
+    "unknown_share": 12.71,
+    "independent_share": 38.84,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 130249
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 12.71,
+     "independent": 38.84,
+     "mixed": 43.4,
+     "progressive": 5.04
+    },
+    "single_family_coverage": 17.76,
+    "lineage_resolved_coverage": 61.16,
+    "mixed_share": 43.4,
+    "unknown_share": 0.0,
+    "independent_share": 38.84,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 130249
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박명재",
+    "party": "새누리당",
+    "pct": 71.86
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 13.07,
+     "mixed": 71.86,
+     "progressive": 15.07
+    },
+    "single_family_coverage": 15.07,
+    "lineage_resolved_coverage": 86.93,
+    "mixed_share": 71.86,
+    "unknown_share": 0.0,
+    "independent_share": 13.07,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105160
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 13.07,
+     "mixed": 71.86,
+     "progressive": 15.07
+    },
+    "single_family_coverage": 15.07,
+    "lineage_resolved_coverage": 86.93,
+    "mixed_share": 71.86,
+    "unknown_share": 0.0,
+    "independent_share": 13.07,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 105160
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김정재",
+    "party": "미래통합당",
+    "pct": 64.78
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 64.78,
+     "progressive": 2.99,
+     "unknown": 32.23
+    },
+    "single_family_coverage": 2.99,
+    "lineage_resolved_coverage": 67.77,
+    "mixed_share": 64.78,
+    "unknown_share": 32.23,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 152677
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.39,
+     "mixed": 64.78,
+     "progressive": 2.99,
+     "unknown": 0.84
+    },
+    "single_family_coverage": 34.37,
+    "lineage_resolved_coverage": 99.16,
+    "mixed_share": 64.78,
+    "unknown_share": 0.84,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 152677
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김병욱",
+    "party": "미래통합당",
+    "pct": 55.83
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.24,
+     "mixed": 55.83,
+     "progressive": 1.0,
+     "unknown": 34.93
+    },
+    "single_family_coverage": 1.0,
+    "lineage_resolved_coverage": 56.83,
+    "mixed_share": 55.83,
+    "unknown_share": 34.93,
+    "independent_share": 8.24,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133966
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.31,
+     "independent": 8.24,
+     "mixed": 55.83,
+     "progressive": 1.0,
+     "unknown": 0.62
+    },
+    "single_family_coverage": 35.32,
+    "lineage_resolved_coverage": 91.15,
+    "mixed_share": 55.83,
+    "unknown_share": 0.62,
+    "independent_share": 8.24,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 133966
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시제6선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시제6선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이동업",
+    "party": "미래통합당",
+    "pct": 65.35
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.35,
+     "unknown": 34.65
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.35,
+    "mixed_share": 65.35,
+    "unknown_share": 34.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 33420
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.65,
+     "mixed": 65.35
+    },
+    "single_family_coverage": 34.65,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.35,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 33420
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시제6선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시제6선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이동업",
+    "party": "미래통합당",
+    "pct": 65.35
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.35,
+     "unknown": 34.65
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.35,
+    "mixed_share": 65.35,
+    "unknown_share": 34.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 33420
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.65,
+     "mixed": 65.35
+    },
+    "single_family_coverage": 34.65,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.35,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 33420
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시마선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시마선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안병국",
+    "party": "미래통합당",
+    "pct": 75.58
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 75.58,
+     "unknown": 24.42
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 75.58,
+    "mixed_share": 75.58,
+    "unknown_share": 24.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20012
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 24.42,
+     "mixed": 75.58
+    },
+    "single_family_coverage": 24.42,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 75.58,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20012
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2020-04-15",
+   "election_type": "byelection",
+   "election_date": "2020-04-15",
+   "label": "2020년 4·15 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시마선거구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "포항시마선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안병국",
+    "party": "미래통합당",
+    "pct": 75.58
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 75.58,
+     "unknown": 24.42
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 75.58,
+    "mixed_share": 75.58,
+    "unknown_share": 24.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20012
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 24.42,
+     "mixed": 75.58
+    },
+    "single_family_coverage": 24.42,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 75.58,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20012
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2023-04-05",
+   "election_type": "byelection",
+   "election_date": "2023-04-05",
+   "label": "2023년 4·5 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시나선거구",
+   "boundary_valid_at": "2023-04-05",
+   "unit_name_at_the_time": "포항시나선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상백",
+    "party": "국민의힘",
+    "pct": 58.5
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 41.5,
+     "mixed": 58.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.5,
+    "mixed_share": 58.5,
+    "unknown_share": 0.0,
+    "independent_share": 41.5,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 7530
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 41.5,
+     "mixed": 58.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.5,
+    "mixed_share": 58.5,
+    "unknown_share": 0.0,
+    "independent_share": 41.5,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 7530
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2023-04-05",
+   "election_type": "byelection",
+   "election_date": "2023-04-05",
+   "label": "2023년 4·5 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:포항시나선거구",
+   "boundary_valid_at": "2023-04-05",
+   "unit_name_at_the_time": "포항시나선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상백",
+    "party": "국민의힘",
+    "pct": 58.5
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 41.5,
+     "mixed": 58.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.5,
+    "mixed_share": 58.5,
+    "unknown_share": 0.0,
+    "independent_share": 41.5,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 7530
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 41.5,
+     "mixed": 58.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.5,
+    "mixed_share": 58.5,
+    "unknown_share": 0.0,
+    "independent_share": 41.5,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 7530
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김정재",
+    "party": "국민의힘",
+    "pct": 62.34
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.76,
+     "mixed": 62.34,
+     "unknown": 28.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.34,
+    "mixed_share": 62.34,
+    "unknown_share": 28.91,
+    "independent_share": 8.76,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 146376
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 28.91,
+     "independent": 8.76,
+     "mixed": 62.34
+    },
+    "single_family_coverage": 28.91,
+    "lineage_resolved_coverage": 91.24,
+    "mixed_share": 62.34,
+    "unknown_share": 0.0,
+    "independent_share": 8.76,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 146376
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:포항시남구울릉군",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "포항시남구울릉군",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이상휘",
+    "party": "국민의힘",
+    "pct": 70.03
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 70.03,
+     "unknown": 29.97
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 70.03,
+    "mixed_share": 70.03,
+    "unknown_share": 29.97,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123860
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.97,
+     "mixed": 70.03
+    },
+    "single_family_coverage": 29.97,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 70.03,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123860
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 14.44
+    },
+    "delta_blocked": {
+     "pid:더불어민주당": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9184,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:포항시남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시남구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "임종식",
+    "party": "",
+    "pct": 45.77
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 99155
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 99155
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "임종식",
+    "party": "",
+    "pct": 44.0
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 129692
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 129692
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:포항시남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시남구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이철우",
+    "party": "국민의힘",
+    "pct": 63.67
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 63.67,
+     "unknown": 36.33
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 63.67,
+    "mixed_share": 63.67,
+    "unknown_share": 36.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101543
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.33,
+     "mixed": 63.67
+    },
+    "single_family_coverage": 36.33,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 63.67,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101543
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이철우",
+    "party": "국민의힘",
+    "pct": 61.25
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 61.25,
+     "unknown": 38.75
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.25,
+    "mixed_share": 61.25,
+    "unknown_share": 38.75,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132436
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 38.75,
+     "mixed": 61.25
+    },
+    "single_family_coverage": 38.75,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 61.25,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132436
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박용선",
+    "party": "국민의힘",
+    "pct": 49.29
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 18.22,
+     "mixed": 49.29,
+     "unknown": 32.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.29,
+    "mixed_share": 49.29,
+    "unknown_share": 32.49,
+    "independent_share": 18.22,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 233939
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.49,
+     "independent": 18.22,
+     "mixed": 49.29
+    },
+    "single_family_coverage": 32.49,
+    "lineage_resolved_coverage": 81.78,
+    "mixed_share": 49.29,
+    "unknown_share": 0.0,
+    "independent_share": 18.22,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 233939
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박용선",
+    "party": "국민의힘",
+    "pct": 48.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 19.06,
+     "mixed": 48.55,
+     "unknown": 32.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.55,
+    "mixed_share": 48.55,
+    "unknown_share": 32.39,
+    "independent_share": 19.06,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132377
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.39,
+     "independent": 19.06,
+     "mixed": 48.55
+    },
+    "single_family_coverage": 32.39,
+    "lineage_resolved_coverage": 80.94,
+    "mixed_share": 48.55,
+    "unknown_share": 0.0,
+    "independent_share": 19.06,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132377
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박용선",
+    "party": "국민의힘",
+    "pct": 50.26
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 17.12,
+     "mixed": 50.26,
+     "unknown": 32.62
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.26,
+    "mixed_share": 50.26,
+    "unknown_share": 32.62,
+    "independent_share": 17.12,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101562
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.62,
+     "independent": 17.12,
+     "mixed": 50.26
+    },
+    "single_family_coverage": 32.62,
+    "lineage_resolved_coverage": 82.88,
+    "mixed_share": 50.26,
+    "unknown_share": 0.0,
+    "independent_share": 17.12,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101562
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제1선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상백",
+    "party": "국민의힘",
+    "pct": 60.21
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 39.79,
+     "mixed": 60.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.21,
+    "mixed_share": 60.21,
+    "unknown_share": 0.0,
+    "independent_share": 39.79,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19411
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 39.79,
+     "mixed": 60.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.21,
+    "mixed_share": 60.21,
+    "unknown_share": 0.0,
+    "independent_share": 39.79,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19411
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제2선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "장명수",
+    "party": "국민의힘",
+    "pct": 56.85
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 43.15,
+     "mixed": 56.85
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.85,
+    "mixed_share": 56.85,
+    "unknown_share": 0.0,
+    "independent_share": 43.15,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19686
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 43.15,
+     "mixed": 56.85
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.85,
+    "mixed_share": 56.85,
+    "unknown_share": 0.0,
+    "independent_share": 43.15,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19686
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제3선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상일",
+    "party": "국민의힘",
+    "pct": 64.57
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 35.43,
+     "mixed": 64.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.57,
+    "mixed_share": 64.57,
+    "unknown_share": 0.0,
+    "independent_share": 35.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 31933
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 35.43,
+     "mixed": 64.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.57,
+    "mixed_share": 64.57,
+    "unknown_share": 0.0,
+    "independent_share": 35.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 31933
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제7선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제7선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이동업",
+    "party": "국민의힘",
+    "pct": 69.04
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 30.96,
+     "mixed": 69.04
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 69.04,
+    "mixed_share": 69.04,
+    "unknown_share": 0.0,
+    "independent_share": 30.96,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24768
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 30.96,
+     "mixed": 69.04
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 69.04,
+    "mixed_share": 69.04,
+    "unknown_share": 0.0,
+    "independent_share": 30.96,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24768
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제8선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제8선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박정호",
+    "party": "국민의힘",
+    "pct": 45.82
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 22.03,
+     "mixed": 45.82,
+     "unknown": 32.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.82,
+    "mixed_share": 45.82,
+    "unknown_share": 32.15,
+    "independent_share": 22.03,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22697
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.15,
+     "independent": 22.03,
+     "mixed": 45.82
+    },
+    "single_family_coverage": 32.15,
+    "lineage_resolved_coverage": 77.97,
+    "mixed_share": 45.82,
+    "unknown_share": 0.0,
+    "independent_share": 22.03,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22697
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제9선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제9선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "손희권",
+    "party": "국민의힘",
+    "pct": 56.17
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 56.17,
+     "unknown": 43.83
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.17,
+    "mixed_share": 56.17,
+    "unknown_share": 43.83,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24815
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.83,
+     "mixed": 56.17
+    },
+    "single_family_coverage": 43.83,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 56.17,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24815
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제6선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제6선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "서재원",
+    "party": "국민의힘",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제4선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "연규식",
+    "party": "국민의힘",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제5선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제5선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김희수",
+    "party": "국민의힘",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제7선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제7선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "이동업",
+    "party": "국민의힘",
+    "pct": 69.04
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 30.96,
+     "mixed": 69.04
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 69.04,
+    "mixed_share": 69.04,
+    "unknown_share": 0.0,
+    "independent_share": 30.96,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24768
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 30.96,
+     "mixed": 69.04
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 69.04,
+    "mixed_share": 69.04,
+    "unknown_share": 0.0,
+    "independent_share": 30.96,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24768
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제8선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제8선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박정호",
+    "party": "국민의힘",
+    "pct": 45.82
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 22.03,
+     "mixed": 45.82,
+     "unknown": 32.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.82,
+    "mixed_share": 45.82,
+    "unknown_share": 32.15,
+    "independent_share": 22.03,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22697
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.15,
+     "independent": 22.03,
+     "mixed": 45.82
+    },
+    "single_family_coverage": 32.15,
+    "lineage_resolved_coverage": 77.97,
+    "mixed_share": 45.82,
+    "unknown_share": 0.0,
+    "independent_share": 22.03,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22697
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제9선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제9선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "손희권",
+    "party": "국민의힘",
+    "pct": 56.17
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 56.17,
+     "unknown": 43.83
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.17,
+    "mixed_share": 56.17,
+    "unknown_share": 43.83,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24815
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.83,
+     "mixed": 56.17
+    },
+    "single_family_coverage": 43.83,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 56.17,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24815
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제1선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상백",
+    "party": "국민의힘",
+    "pct": 60.21
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 39.79,
+     "mixed": 60.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.21,
+    "mixed_share": 60.21,
+    "unknown_share": 0.0,
+    "independent_share": 39.79,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19411
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 39.79,
+     "mixed": 60.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.21,
+    "mixed_share": 60.21,
+    "unknown_share": 0.0,
+    "independent_share": 39.79,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19411
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제2선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "장명수",
+    "party": "국민의힘",
+    "pct": 56.85
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 43.15,
+     "mixed": 56.85
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.85,
+    "mixed_share": 56.85,
+    "unknown_share": 0.0,
+    "independent_share": 43.15,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19686
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 43.15,
+     "mixed": 56.85
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.85,
+    "mixed_share": 56.85,
+    "unknown_share": 0.0,
+    "independent_share": 43.15,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19686
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:포항시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시제3선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상일",
+    "party": "국민의힘",
+    "pct": 64.57
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 35.43,
+     "mixed": 64.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.57,
+    "mixed_share": 64.57,
+    "unknown_share": 0.0,
+    "independent_share": 35.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 31933
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 35.43,
+     "mixed": 64.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.57,
+    "mixed_share": 64.57,
+    "unknown_share": 0.0,
+    "independent_share": 35.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 31933
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시가선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김후환",
+    "party": "국민의힘",
+    "pct": 30.95
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 40.09,
+     "mixed": 59.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.91,
+    "mixed_share": 59.91,
+    "unknown_share": 0.0,
+    "independent_share": 40.09,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19001
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 40.09,
+     "mixed": 59.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.91,
+    "mixed_share": 59.91,
+    "unknown_share": 0.0,
+    "independent_share": 40.09,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19001
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시나선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "문성호",
+    "party": "더불어민주당",
+    "pct": 37.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.2,
+     "unknown": 37.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.2,
+    "mixed_share": 62.2,
+    "unknown_share": 37.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19901
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.8,
+     "mixed": 62.2
+    },
+    "single_family_coverage": 37.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 62.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19901
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시다선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김재원",
+    "party": "국민의힘",
+    "pct": 30.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 15.04,
+     "mixed": 57.77,
+     "unknown": 27.19
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 57.77,
+    "mixed_share": 57.77,
+    "unknown_share": 27.19,
+    "independent_share": 15.04,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 17364
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.19,
+     "independent": 15.04,
+     "mixed": 57.77
+    },
+    "single_family_coverage": 27.19,
+    "lineage_resolved_coverage": 84.96,
+    "mixed_share": 57.77,
+    "unknown_share": 0.0,
+    "independent_share": 15.04,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 17364
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시라선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안병국",
+    "party": "무소속",
+    "pct": 37.28
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 37.28,
+     "mixed": 62.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.72,
+    "mixed_share": 62.72,
+    "unknown_share": 0.0,
+    "independent_share": 37.28,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 14093
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 37.28,
+     "mixed": 62.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.72,
+    "mixed_share": 62.72,
+    "unknown_share": 0.0,
+    "independent_share": 37.28,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 14093
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시바선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시바선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "손태식",
+    "party": "더불어민주당",
+    "pct": 29.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.1,
+     "unknown": 45.9
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.1,
+    "mixed_share": 54.1,
+    "unknown_share": 45.9,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15903
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.52,
+     "mixed": 54.1,
+     "unknown": 16.37
+    },
+    "single_family_coverage": 29.52,
+    "lineage_resolved_coverage": 83.63,
+    "mixed_share": 54.1,
+    "unknown_share": 16.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15903
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시사선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시사선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "황찬규",
+    "party": "국민의힘",
+    "pct": 42.89
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 59.71,
+     "progressive": 8.79,
+     "unknown": 31.5
+    },
+    "single_family_coverage": 8.79,
+    "lineage_resolved_coverage": 68.5,
+    "mixed_share": 59.71,
+    "unknown_share": 31.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 13809
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.5,
+     "mixed": 59.71,
+     "progressive": 8.79
+    },
+    "single_family_coverage": 40.29,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 59.71,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 13809
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시아선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시아선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김철수",
+    "party": "국민의힘",
+    "pct": 42.63
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 18.37,
+     "mixed": 65.33,
+     "unknown": 16.3
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.33,
+    "mixed_share": 65.33,
+    "unknown_share": 16.3,
+    "independent_share": 18.37,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11289
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 16.3,
+     "independent": 18.37,
+     "mixed": 65.33
+    },
+    "single_family_coverage": 16.3,
+    "lineage_resolved_coverage": 81.63,
+    "mixed_share": 65.33,
+    "unknown_share": 0.0,
+    "independent_share": 18.37,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11289
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시자선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시자선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "조민성",
+    "party": "국민의힘",
+    "pct": 32.02
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 78.99,
+     "unknown": 21.01
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 78.99,
+    "mixed_share": 78.99,
+    "unknown_share": 21.01,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16395
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 21.01,
+     "mixed": 78.99
+    },
+    "single_family_coverage": 21.01,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 78.99,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16395
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시차선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시차선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안대천",
+    "party": "국민의힘",
+    "pct": 32.54
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 12.38,
+     "mixed": 60.31,
+     "unknown": 27.31
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.31,
+    "mixed_share": 60.31,
+    "unknown_share": 27.31,
+    "independent_share": 12.38,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 25255
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.31,
+     "independent": 12.38,
+     "mixed": 60.31
+    },
+    "single_family_coverage": 27.31,
+    "lineage_resolved_coverage": 87.62,
+    "mixed_share": 60.31,
+    "unknown_share": 0.0,
+    "independent_share": 12.38,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 25255
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시카선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시카선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박칠용",
+    "party": "더불어민주당",
+    "pct": 31.76
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.57,
+     "mixed": 57.67,
+     "unknown": 31.76
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 57.67,
+    "mixed_share": 57.67,
+    "unknown_share": 31.76,
+    "independent_share": 10.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22621
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.76,
+     "independent": 10.57,
+     "mixed": 57.67
+    },
+    "single_family_coverage": 31.76,
+    "lineage_resolved_coverage": 89.43,
+    "mixed_share": 57.67,
+    "unknown_share": 0.0,
+    "independent_share": 10.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22621
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시타선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시타선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김은주",
+    "party": "더불어민주당",
+    "pct": 40.66
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.26,
+     "unknown": 41.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.26,
+    "mixed_share": 58.26,
+    "unknown_share": 41.74,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24847
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.66,
+     "mixed": 58.26,
+     "unknown": 1.07
+    },
+    "single_family_coverage": 40.66,
+    "lineage_resolved_coverage": 98.93,
+    "mixed_share": 58.26,
+    "unknown_share": 1.07,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24847
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시마선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시마선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김상민",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시아선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시아선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김철수",
+    "party": "국민의힘",
+    "pct": 42.63
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 18.37,
+     "mixed": 65.33,
+     "unknown": 16.3
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.33,
+    "mixed_share": 65.33,
+    "unknown_share": 16.3,
+    "independent_share": 18.37,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11289
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 16.3,
+     "independent": 18.37,
+     "mixed": 65.33
+    },
+    "single_family_coverage": 16.3,
+    "lineage_resolved_coverage": 81.63,
+    "mixed_share": 65.33,
+    "unknown_share": 0.0,
+    "independent_share": 18.37,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11289
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시자선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시자선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "조민성",
+    "party": "국민의힘",
+    "pct": 32.02
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 78.99,
+     "unknown": 21.01
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 78.99,
+    "mixed_share": 78.99,
+    "unknown_share": 21.01,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16395
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 21.01,
+     "mixed": 78.99
+    },
+    "single_family_coverage": 21.01,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 78.99,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16395
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시차선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시차선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안대천",
+    "party": "국민의힘",
+    "pct": 32.54
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 12.38,
+     "mixed": 60.31,
+     "unknown": 27.31
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 60.31,
+    "mixed_share": 60.31,
+    "unknown_share": 27.31,
+    "independent_share": 12.38,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 25255
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.31,
+     "independent": 12.38,
+     "mixed": 60.31
+    },
+    "single_family_coverage": 27.31,
+    "lineage_resolved_coverage": 87.62,
+    "mixed_share": 60.31,
+    "unknown_share": 0.0,
+    "independent_share": 12.38,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 25255
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시카선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시카선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "박칠용",
+    "party": "더불어민주당",
+    "pct": 31.76
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.57,
+     "mixed": 57.67,
+     "unknown": 31.76
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 57.67,
+    "mixed_share": 57.67,
+    "unknown_share": 31.76,
+    "independent_share": 10.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22621
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.76,
+     "independent": 10.57,
+     "mixed": 57.67
+    },
+    "single_family_coverage": 31.76,
+    "lineage_resolved_coverage": 89.43,
+    "mixed_share": 57.67,
+    "unknown_share": 0.0,
+    "independent_share": 10.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22621
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시타선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시타선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김은주",
+    "party": "더불어민주당",
+    "pct": 40.66
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.26,
+     "unknown": 41.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.26,
+    "mixed_share": 58.26,
+    "unknown_share": 41.74,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24847
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.66,
+     "mixed": 58.26,
+     "unknown": 1.07
+    },
+    "single_family_coverage": 40.66,
+    "lineage_resolved_coverage": 98.93,
+    "mixed_share": 58.26,
+    "unknown_share": 1.07,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 24847
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시가선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김후환",
+    "party": "국민의힘",
+    "pct": 30.95
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 40.09,
+     "mixed": 59.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.91,
+    "mixed_share": 59.91,
+    "unknown_share": 0.0,
+    "independent_share": 40.09,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19001
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 40.09,
+     "mixed": 59.91
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.91,
+    "mixed_share": 59.91,
+    "unknown_share": 0.0,
+    "independent_share": 40.09,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19001
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시나선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "문성호",
+    "party": "더불어민주당",
+    "pct": 37.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.2,
+     "unknown": 37.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.2,
+    "mixed_share": 62.2,
+    "unknown_share": 37.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19901
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.8,
+     "mixed": 62.2
+    },
+    "single_family_coverage": 37.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 62.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19901
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시다선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "김재원",
+    "party": "국민의힘",
+    "pct": 30.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 15.04,
+     "mixed": 57.77,
+     "unknown": 27.19
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 57.77,
+    "mixed_share": 57.77,
+    "unknown_share": 27.19,
+    "independent_share": 15.04,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 17364
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.19,
+     "independent": 15.04,
+     "mixed": 57.77
+    },
+    "single_family_coverage": 27.19,
+    "lineage_resolved_coverage": 84.96,
+    "mixed_share": 57.77,
+    "unknown_share": 0.0,
+    "independent_share": 15.04,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 17364
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시라선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "안병국",
+    "party": "무소속",
+    "pct": 37.28
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 37.28,
+     "mixed": 62.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.72,
+    "mixed_share": 62.72,
+    "unknown_share": 0.0,
+    "independent_share": 37.28,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 14093
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 37.28,
+     "mixed": 62.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.72,
+    "mixed_share": 62.72,
+    "unknown_share": 0.0,
+    "independent_share": 37.28,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 14093
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시바선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시바선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "손태식",
+    "party": "더불어민주당",
+    "pct": 29.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.1,
+     "unknown": 45.9
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.1,
+    "mixed_share": 54.1,
+    "unknown_share": 45.9,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15903
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.52,
+     "mixed": 54.1,
+     "unknown": 16.37
+    },
+    "single_family_coverage": 29.52,
+    "lineage_resolved_coverage": 83.63,
+    "mixed_share": 54.1,
+    "unknown_share": 16.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15903
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:포항시사선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시사선거구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "황찬규",
+    "party": "국민의힘",
+    "pct": 42.89
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 59.71,
+     "progressive": 8.79,
+     "unknown": 31.5
+    },
+    "single_family_coverage": 8.79,
+    "lineage_resolved_coverage": 68.5,
+    "mixed_share": 59.71,
+    "unknown_share": 31.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 13809
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.5,
+     "mixed": 59.71,
+     "progressive": 8.79
+    },
+    "single_family_coverage": 40.29,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 59.71,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 13809
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:포항시남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시남구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 61.93
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 61.93,
+     "progressive": 1.65,
+     "unknown": 36.42
+    },
+    "single_family_coverage": 1.65,
+    "lineage_resolved_coverage": 63.58,
+    "mixed_share": 61.93,
+    "unknown_share": 36.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101278
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.95,
+     "mixed": 61.93,
+     "progressive": 1.65,
+     "unknown": 4.47
+    },
+    "single_family_coverage": 33.59,
+    "lineage_resolved_coverage": 95.53,
+    "mixed_share": 61.93,
+    "unknown_share": 4.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101278
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:포항시북구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시북구",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 60.96
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 60.96,
+     "progressive": 1.96,
+     "unknown": 37.09
+    },
+    "single_family_coverage": 1.96,
+    "lineage_resolved_coverage": 62.91,
+    "mixed_share": 60.96,
+    "unknown_share": 37.09,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132120
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.51,
+     "mixed": 60.96,
+     "progressive": 1.96,
+     "unknown": 4.57
+    },
+    "single_family_coverage": 34.47,
+    "lineage_resolved_coverage": 95.43,
+    "mixed_share": 60.96,
+    "unknown_share": 4.57,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 132120
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.57
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.9128,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 63.93
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 63.93,
+     "progressive": 1.96,
+     "unknown": 34.11
+    },
+    "single_family_coverage": 1.96,
+    "lineage_resolved_coverage": 65.89,
+    "mixed_share": 63.93,
+    "unknown_share": 34.11,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 226223
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.11,
+     "mixed": 63.93,
+     "progressive": 1.96
+    },
+    "single_family_coverage": 36.07,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 63.93,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 226223
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 63.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 63.46,
+     "progressive": 2.11,
+     "unknown": 34.43
+    },
+    "single_family_coverage": 2.11,
+    "lineage_resolved_coverage": 65.57,
+    "mixed_share": 63.46,
+    "unknown_share": 34.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127896
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.43,
+     "mixed": 63.46,
+     "progressive": 2.11
+    },
+    "single_family_coverage": 36.54,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 63.46,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 127896
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:포항시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "포항시",
+   "geography_version_id": "admin_unit:경상북도:포항시",
+   "resolution": "resolved",
+   "name_at_the_time": "포항시",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 64.55
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 64.55,
+     "progressive": 1.77,
+     "unknown": 33.69
+    },
+    "single_family_coverage": 1.77,
+    "lineage_resolved_coverage": 66.31,
+    "mixed_share": 64.55,
+    "unknown_share": 33.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98327
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.69,
+     "mixed": 64.55,
+     "progressive": 1.77
+    },
+    "single_family_coverage": 35.45,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 64.55,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98327
+   },
+   "comparison": null
+  }
+ ]
+}

@@ -1,0 +1,4220 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "강남",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "events": [],
+ "points": [
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제10선거구(강남구·강남구을)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제10선거구(강남구·강남구을)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "정운갑",
+    "party": "신민당",
+    "pct": 50.89
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 29.28,
+     "independent": 15.16,
+     "unknown": 55.56
+    },
+    "single_family_coverage": 29.28,
+    "lineage_resolved_coverage": 29.28,
+    "mixed_share": 0.0,
+    "unknown_share": 55.56,
+    "independent_share": 15.16,
+    "mixed_constituents": {},
+    "total_votes": 243259
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 29.28,
+     "democratic": 50.89,
+     "independent": 15.16,
+     "unknown": 4.68
+    },
+    "single_family_coverage": 80.16,
+    "lineage_resolved_coverage": 80.16,
+    "mixed_share": 0.0,
+    "unknown_share": 4.68,
+    "independent_share": 15.16,
+    "mixed_constituents": {},
+    "total_votes": 243259
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제13선거구(강남구)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제13선거구(강남구)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이태섭",
+    "party": "민주정의당",
+    "pct": 35.92
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 35.92,
+     "independent": 14.52,
+     "unknown": 49.56
+    },
+    "single_family_coverage": 35.92,
+    "lineage_resolved_coverage": 35.92,
+    "mixed_share": 0.0,
+    "unknown_share": 49.56,
+    "independent_share": 14.52,
+    "mixed_constituents": {},
+    "total_votes": 188638
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.92,
+     "independent": 14.52,
+     "unknown": 49.56
+    },
+    "single_family_coverage": 35.92,
+    "lineage_resolved_coverage": 35.92,
+    "mixed_share": 0.0,
+    "unknown_share": 49.56,
+    "independent_share": 14.52,
+    "mixed_constituents": {},
+    "total_votes": 188638
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제13선거구(강남구)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제13선거구(강남구)",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김형래",
+    "party": "신한민주당",
+    "pct": 35.8
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 24.57,
+     "unknown": 75.43
+    },
+    "single_family_coverage": 24.57,
+    "lineage_resolved_coverage": 24.57,
+    "mixed_share": 0.0,
+    "unknown_share": 75.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 367468
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 24.57,
+     "democratic": 65.52,
+     "unknown": 9.91
+    },
+    "single_family_coverage": 90.09,
+    "lineage_resolved_coverage": 90.09,
+    "mixed_share": 0.0,
+    "unknown_share": 9.91,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 367468
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김영삼",
+    "party": "통일민주당",
+    "pct": 35.31
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 32.41,
+     "regional": 7.02,
+     "unknown": 60.57
+    },
+    "single_family_coverage": 39.43,
+    "lineage_resolved_coverage": 39.43,
+    "mixed_share": 0.0,
+    "unknown_share": 60.57,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 463433
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 32.41,
+     "democratic": 60.51,
+     "regional": 7.02,
+     "unknown": 0.06
+    },
+    "single_family_coverage": 99.94,
+    "lineage_resolved_coverage": 99.94,
+    "mixed_share": 0.0,
+    "unknown_share": 0.06,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 463433
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "황병태",
+    "party": "통일민주당",
+    "pct": 27.04
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 17.9,
+     "independent": 12.54,
+     "regional": 21.41,
+     "unknown": 48.15
+    },
+    "single_family_coverage": 39.31,
+    "lineage_resolved_coverage": 39.31,
+    "mixed_share": 0.0,
+    "unknown_share": 48.15,
+    "independent_share": 12.54,
+    "mixed_constituents": {},
+    "total_votes": 91913
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 18.17,
+     "democratic": 44.92,
+     "independent": 12.54,
+     "regional": 21.41,
+     "unknown": 2.96
+    },
+    "single_family_coverage": 84.5,
+    "lineage_resolved_coverage": 84.5,
+    "mixed_share": 0.0,
+    "unknown_share": 2.96,
+    "independent_share": 12.54,
+    "mixed_constituents": {},
+    "total_votes": 91913
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이태섭",
+    "party": "민주정의당",
+    "pct": 35.98
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 35.98,
+     "independent": 30.4,
+     "regional": 2.97,
+     "unknown": 30.66
+    },
+    "single_family_coverage": 38.94,
+    "lineage_resolved_coverage": 38.94,
+    "mixed_share": 0.0,
+    "unknown_share": 30.66,
+    "independent_share": 30.4,
+    "mixed_constituents": {},
+    "total_votes": 114309
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.98,
+     "democratic": 30.34,
+     "independent": 30.4,
+     "regional": 2.97,
+     "unknown": 0.32
+    },
+    "single_family_coverage": 69.28,
+    "lineage_resolved_coverage": 69.28,
+    "mixed_share": 0.0,
+    "unknown_share": 0.32,
+    "independent_share": 30.4,
+    "mixed_constituents": {},
+    "total_votes": 114309
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김동길",
+    "party": "통일국민당",
+    "pct": 46.11
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 30.34,
+     "unknown": 69.66
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 30.34,
+    "mixed_share": 30.34,
+    "unknown_share": 69.66,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 118351
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 23.55,
+     "mixed": 30.34,
+     "unknown": 46.11
+    },
+    "single_family_coverage": 23.55,
+    "lineage_resolved_coverage": 53.89,
+    "mixed_share": 30.34,
+    "unknown_share": 46.11,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 118351
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "홍사덕",
+    "party": "민주당(1991)",
+    "pct": 52.24
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 35.5,
+     "unknown": 64.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 35.5,
+    "mixed_share": 35.5,
+    "unknown_share": 64.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122892
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.24,
+     "mixed": 35.5,
+     "unknown": 12.26
+    },
+    "single_family_coverage": 52.24,
+    "lineage_resolved_coverage": 87.74,
+    "mixed_share": 35.5,
+    "unknown_share": 12.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122892
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 44.01
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.03,
+     "mixed": 44.01,
+     "unknown": 54.96
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.01,
+    "mixed_share": 44.01,
+    "unknown_share": 54.96,
+    "independent_share": 1.03,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 285743
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.65,
+     "independent": 1.03,
+     "mixed": 44.01,
+     "unknown": 27.31
+    },
+    "single_family_coverage": 27.65,
+    "lineage_resolved_coverage": 71.66,
+    "mixed_share": 44.01,
+    "unknown_share": 27.31,
+    "independent_share": 1.03,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 285743
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "서상목",
+    "party": "신한국당",
+    "pct": 38.14
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 15.43,
+     "mixed": 38.14,
+     "regional": 7.06,
+     "unknown": 39.38
+    },
+    "single_family_coverage": 7.06,
+    "lineage_resolved_coverage": 45.19,
+    "mixed_share": 38.14,
+    "unknown_share": 39.38,
+    "independent_share": 15.43,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 113902
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.38,
+     "independent": 15.43,
+     "mixed": 38.14,
+     "regional": 7.06
+    },
+    "single_family_coverage": 46.44,
+    "lineage_resolved_coverage": 84.57,
+    "mixed_share": 38.14,
+    "unknown_share": 0.0,
+    "independent_share": 15.43,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 113902
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "홍사덕",
+    "party": "무소속",
+    "pct": 26.07
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 26.45,
+     "mixed": 24.33,
+     "regional": 23.55,
+     "unknown": 25.67
+    },
+    "single_family_coverage": 23.55,
+    "lineage_resolved_coverage": 47.88,
+    "mixed_share": 24.33,
+    "unknown_share": 25.67,
+    "independent_share": 26.45,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117395
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.47,
+     "independent": 26.45,
+     "mixed": 24.33,
+     "regional": 23.55,
+     "unknown": 0.2
+    },
+    "single_family_coverage": 49.02,
+    "lineage_resolved_coverage": 73.35,
+    "mixed_share": 24.33,
+    "unknown_share": 0.2,
+    "independent_share": 26.45,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117395
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이회창",
+    "party": "한나라당",
+    "pct": 53.61
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.58,
+     "unknown": 37.42
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.58,
+    "mixed_share": 62.58,
+    "unknown_share": 37.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 308389
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.09,
+     "mixed": 62.58,
+     "unknown": 1.33
+    },
+    "single_family_coverage": 36.09,
+    "lineage_resolved_coverage": 98.67,
+    "mixed_share": 62.58,
+    "unknown_share": 1.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 308389
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "최병렬",
+    "party": "한나라당",
+    "pct": 56.47
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.9,
+     "mixed": 56.47,
+     "regional": 3.08,
+     "unknown": 39.55
+    },
+    "single_family_coverage": 3.08,
+    "lineage_resolved_coverage": 59.55,
+    "mixed_share": 56.47,
+    "unknown_share": 39.55,
+    "independent_share": 0.9,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110666
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.82,
+     "independent": 0.9,
+     "mixed": 56.47,
+     "regional": 3.08,
+     "unknown": 2.72
+    },
+    "single_family_coverage": 39.91,
+    "lineage_resolved_coverage": 96.37,
+    "mixed_share": 56.47,
+    "unknown_share": 2.72,
+    "independent_share": 0.9,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110666
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세훈",
+    "party": "한나라당",
+    "pct": 59.4
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.85,
+     "mixed": 59.4,
+     "regional": 4.9,
+     "unknown": 34.85
+    },
+    "single_family_coverage": 4.9,
+    "lineage_resolved_coverage": 64.3,
+    "mixed_share": 59.4,
+    "unknown_share": 34.85,
+    "independent_share": 0.85,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108618
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.21,
+     "independent": 0.85,
+     "mixed": 59.4,
+     "regional": 4.9,
+     "unknown": 3.64
+    },
+    "single_family_coverage": 36.11,
+    "lineage_resolved_coverage": 95.51,
+    "mixed_share": 59.4,
+    "unknown_share": 3.64,
+    "independent_share": 0.85,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108618
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종구",
+    "party": "한나라당",
+    "pct": 62.99
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.57,
+     "mixed": 62.99,
+     "progressive": 2.8,
+     "unknown": 33.64
+    },
+    "single_family_coverage": 2.8,
+    "lineage_resolved_coverage": 65.79,
+    "mixed_share": 62.99,
+    "unknown_share": 33.64,
+    "independent_share": 0.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 121601
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 30.84,
+     "independent": 0.57,
+     "mixed": 62.99,
+     "progressive": 2.8,
+     "unknown": 2.8
+    },
+    "single_family_coverage": 33.64,
+    "lineage_resolved_coverage": 96.64,
+    "mixed_share": 62.99,
+    "unknown_share": 2.8,
+    "independent_share": 0.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 121601
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "공성진",
+    "party": "한나라당",
+    "pct": 57.5
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 57.5,
+     "regional": 0.98,
+     "unknown": 41.52
+    },
+    "single_family_coverage": 0.98,
+    "lineage_resolved_coverage": 58.48,
+    "mixed_share": 57.5,
+    "unknown_share": 41.52,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123184
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.52,
+     "mixed": 57.5,
+     "regional": 0.98
+    },
+    "single_family_coverage": 42.5,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 57.5,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123184
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종구",
+    "party": "한나라당",
+    "pct": 64.91
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 15.87,
+     "mixed": 64.91,
+     "unknown": 19.22
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.91,
+    "mixed_share": 64.91,
+    "unknown_share": 19.22,
+    "independent_share": 15.87,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94051
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.34,
+     "independent": 15.87,
+     "mixed": 64.91,
+     "unknown": 0.88
+    },
+    "single_family_coverage": 18.34,
+    "lineage_resolved_coverage": 83.25,
+    "mixed_share": 64.91,
+    "unknown_share": 0.88,
+    "independent_share": 15.87,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94051
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "공성진",
+    "party": "한나라당",
+    "pct": 62.69
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.69,
+     "progressive": 10.18,
+     "unknown": 27.12
+    },
+    "single_family_coverage": 10.18,
+    "lineage_resolved_coverage": 72.88,
+    "mixed_share": 62.69,
+    "unknown_share": 27.12,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92067
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.72,
+     "mixed": 62.69,
+     "progressive": 10.18,
+     "unknown": 8.41
+    },
+    "single_family_coverage": 28.9,
+    "lineage_resolved_coverage": 91.59,
+    "mixed_share": 62.69,
+    "unknown_share": 8.41,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92067
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구다선거구",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "강남구다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강동원",
+    "party": "한나라당",
+    "pct": 66.61
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.61,
+     "unknown": 33.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.61,
+    "mixed_share": 66.61,
+    "unknown_share": 33.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6717
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.39,
+     "mixed": 66.61
+    },
+    "single_family_coverage": 33.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 66.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6717
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구다선거구",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "강남구다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강동원",
+    "party": "한나라당",
+    "pct": 66.61
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.61,
+     "unknown": 33.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.61,
+    "mixed_share": 66.61,
+    "unknown_share": 33.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6717
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.39,
+     "mixed": 66.61
+    },
+    "single_family_coverage": 33.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 66.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6717
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구사선거구",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "강남구사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "윤석민",
+    "party": "한나라당",
+    "pct": 40.8
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 29.57,
+     "mixed": 40.8,
+     "unknown": 29.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.8,
+    "mixed_share": 40.8,
+    "unknown_share": 29.63,
+    "independent_share": 29.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6250
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.63,
+     "independent": 29.57,
+     "mixed": 40.8
+    },
+    "single_family_coverage": 29.63,
+    "lineage_resolved_coverage": 70.43,
+    "mixed_share": 40.8,
+    "unknown_share": 0.0,
+    "independent_share": 29.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6250
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2011-04-27",
+   "election_type": "byelection",
+   "election_date": "2011-04-27",
+   "label": "2011년 4·27 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구사선거구",
+   "boundary_valid_at": "2011-04-27",
+   "unit_name_at_the_time": "강남구사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "윤석민",
+    "party": "한나라당",
+    "pct": 40.8
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 29.57,
+     "mixed": 40.8,
+     "unknown": 29.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.8,
+    "mixed_share": 40.8,
+    "unknown_share": 29.63,
+    "independent_share": 29.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6250
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.63,
+     "independent": 29.57,
+     "mixed": 40.8
+    },
+    "single_family_coverage": 29.63,
+    "lineage_resolved_coverage": 70.43,
+    "mixed_share": 40.8,
+    "unknown_share": 0.0,
+    "independent_share": 29.57,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6250
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2011-10-26",
+   "election_type": "byelection",
+   "election_date": "2011-10-26",
+   "label": "2011년 10·26 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2011-10-26",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "나경원",
+    "party": "한나라당",
+    "pct": 61.33
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 38.67,
+     "mixed": 61.33
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.33,
+    "mixed_share": 61.33,
+    "unknown_share": 0.0,
+    "independent_share": 38.67,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 228438
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 38.67,
+     "mixed": 61.33
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.33,
+    "mixed_share": 61.33,
+    "unknown_share": 0.0,
+    "independent_share": 38.67,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 228438
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "심윤조",
+    "party": "새누리당",
+    "pct": 65.33
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.34,
+     "mixed": 65.33,
+     "unknown": 33.33
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.33,
+    "mixed_share": 65.33,
+    "unknown_share": 33.33,
+    "independent_share": 1.34,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 126412
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.84,
+     "independent": 1.34,
+     "mixed": 65.33,
+     "unknown": 0.5
+    },
+    "single_family_coverage": 32.84,
+    "lineage_resolved_coverage": 98.16,
+    "mixed_share": 65.33,
+    "unknown_share": 0.5,
+    "independent_share": 1.34,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 126412
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김종훈",
+    "party": "새누리당",
+    "pct": 59.48
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.26,
+     "mixed": 59.48,
+     "unknown": 39.26
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.48,
+    "mixed_share": 59.48,
+    "unknown_share": 39.26,
+    "independent_share": 1.26,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123317
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.26,
+     "independent": 1.26,
+     "mixed": 59.48
+    },
+    "single_family_coverage": 39.26,
+    "lineage_resolved_coverage": 98.74,
+    "mixed_share": 59.48,
+    "unknown_share": 0.0,
+    "independent_share": 1.26,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 123317
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종구",
+    "party": "새누리당",
+    "pct": 54.82
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 54.82,
+     "unknown": 45.18
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 54.82,
+    "mixed_share": 54.82,
+    "unknown_share": 45.18,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81508
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.18,
+     "mixed": 54.82
+    },
+    "single_family_coverage": 45.18,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 54.82,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 81508
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "전현희",
+    "party": "더불어민주당",
+    "pct": 51.46
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.12,
+     "mixed": 44.42,
+     "unknown": 51.46
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.42,
+    "mixed_share": 44.42,
+    "unknown_share": 51.46,
+    "independent_share": 4.12,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94015
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.46,
+     "independent": 4.12,
+     "mixed": 44.42
+    },
+    "single_family_coverage": 51.46,
+    "lineage_resolved_coverage": 95.88,
+    "mixed_share": 44.42,
+    "unknown_share": 0.0,
+    "independent_share": 4.12,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94015
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구병",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "강남구병",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이은재",
+    "party": "새누리당",
+    "pct": 57.81
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.79,
+     "unknown": 41.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.79,
+    "mixed_share": 58.79,
+    "unknown_share": 41.21,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84984
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.59,
+     "mixed": 58.79,
+     "unknown": 1.62
+    },
+    "single_family_coverage": 39.59,
+    "lineage_resolved_coverage": 98.38,
+    "mixed_share": 58.79,
+    "unknown_share": 1.62,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84984
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 1.21,
+     "pid:더불어민주당": -1.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.8654,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구아선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "강남구아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강대후",
+    "party": "더불어민주당",
+    "pct": 54.23
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.77,
+     "unknown": 54.23
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.77,
+    "mixed_share": 45.77,
+    "unknown_share": 54.23,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62929
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.23,
+     "mixed": 45.77
+    },
+    "single_family_coverage": 54.23,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 45.77,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62929
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구아선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "강남구아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강대후",
+    "party": "더불어민주당",
+    "pct": 54.23
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.77,
+     "unknown": 54.23
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.77,
+    "mixed_share": 45.77,
+    "unknown_share": 54.23,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62929
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.23,
+     "mixed": 45.77
+    },
+    "single_family_coverage": 54.23,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 45.77,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62929
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "태구민",
+    "party": "미래통합당",
+    "pct": 58.41
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 59.74,
+     "unknown": 40.26
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.74,
+    "mixed_share": 59.74,
+    "unknown_share": 40.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 103279
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.64,
+     "mixed": 59.74,
+     "unknown": 0.62
+    },
+    "single_family_coverage": 39.64,
+    "lineage_resolved_coverage": 99.38,
+    "mixed_share": 59.74,
+    "unknown_share": 0.62,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 103279
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "박진",
+    "party": "미래통합당",
+    "pct": 50.95
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.9,
+     "mixed": 52.27,
+     "unknown": 46.83
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.27,
+    "mixed_share": 52.27,
+    "unknown_share": 46.83,
+    "independent_share": 0.9,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101601
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.41,
+     "independent": 0.9,
+     "mixed": 52.27,
+     "unknown": 0.42
+    },
+    "single_family_coverage": 46.41,
+    "lineage_resolved_coverage": 98.68,
+    "mixed_share": 52.27,
+    "unknown_share": 0.42,
+    "independent_share": 0.9,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101601
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구병",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "강남구병",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "유경준",
+    "party": "미래통합당",
+    "pct": 65.38
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.38,
+     "unknown": 34.62
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.38,
+    "mixed_share": 65.38,
+    "unknown_share": 34.62,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108468
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.58,
+     "mixed": 65.38,
+     "unknown": 1.04
+    },
+    "single_family_coverage": 33.58,
+    "lineage_resolved_coverage": 98.96,
+    "mixed_share": 65.38,
+    "unknown_share": 1.04,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108468
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 1.21,
+     "pid:더불어민주당": -1.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.8654,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2021-04-07",
+   "election_type": "byelection",
+   "election_date": "2021-04-07",
+   "label": "2021년 4·7 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2021-04-07",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세훈",
+    "party": "국민의힘",
+    "pct": 73.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.29,
+     "mixed": 73.7,
+     "progressive": 0.1,
+     "unknown": 25.91
+    },
+    "single_family_coverage": 0.1,
+    "lineage_resolved_coverage": 73.8,
+    "mixed_share": 73.7,
+    "unknown_share": 25.91,
+    "independent_share": 0.29,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 275084
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 24.32,
+     "independent": 0.29,
+     "mixed": 73.7,
+     "progressive": 0.1,
+     "unknown": 1.59
+    },
+    "single_family_coverage": 24.42,
+    "lineage_resolved_coverage": 98.12,
+    "mixed_share": 73.7,
+    "unknown_share": 1.59,
+    "independent_share": 0.29,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 275084
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구갑",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "강남구갑",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "서명옥",
+    "party": "국민의힘",
+    "pct": 64.19
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 64.19,
+     "unknown": 35.81
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.19,
+    "mixed_share": 64.19,
+    "unknown_share": 35.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94330
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 35.81,
+     "mixed": 64.19
+    },
+    "single_family_coverage": 35.81,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 64.19,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94330
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 6.39,
+     "pid:더불어민주당": -4.46
+    },
+    "delta_blocked": {},
+    "coverage": 0.851,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구을",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "강남구을",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "박수민",
+    "party": "국민의힘",
+    "pct": 58.57
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.57,
+     "unknown": 41.43
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.57,
+    "mixed_share": 58.57,
+    "unknown_share": 41.43,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122296
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.43,
+     "mixed": 58.57
+    },
+    "single_family_coverage": 41.43,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 58.57,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 122296
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 7.7,
+     "pid:더불어민주당": -5.1
+    },
+    "delta_blocked": {},
+    "coverage": 0.8731,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:강남구병",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "강남구병",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "고동진",
+    "party": "국민의힘",
+    "pct": 66.29
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.29,
+     "unknown": 33.71
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.29,
+    "mixed_share": 66.29,
+    "unknown_share": 33.71,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 100465
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.76,
+     "mixed": 66.29,
+     "unknown": 0.96
+    },
+    "single_family_coverage": 32.76,
+    "lineage_resolved_coverage": 99.04,
+    "mixed_share": 66.29,
+    "unknown_share": 0.96,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 100465
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 1.21,
+     "pid:더불어민주당": -1.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.8654,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2024-10-16",
+   "election_type": "byelection",
+   "election_date": "2024-10-16",
+   "label": "2024년 10·16 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2024-10-16",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "조전혁",
+    "party": "",
+    "pct": 66.31
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 118224
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 118224
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "조전혁",
+    "party": "",
+    "pct": 33.96
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 278093
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 278093
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오세훈",
+    "party": "국민의힘",
+    "pct": 65.99
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.99,
+     "progressive": 0.64,
+     "unknown": 33.37
+    },
+    "single_family_coverage": 0.64,
+    "lineage_resolved_coverage": 66.63,
+    "mixed_share": 65.99,
+    "unknown_share": 33.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 292390
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 31.92,
+     "mixed": 65.99,
+     "progressive": 0.64,
+     "unknown": 1.45
+    },
+    "single_family_coverage": 32.56,
+    "lineage_resolved_coverage": 98.55,
+    "mixed_share": 65.99,
+    "unknown_share": 1.45,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 292390
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김현기",
+    "party": "국민의힘",
+    "pct": 65.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.9,
+     "unknown": 34.1
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.9,
+    "mixed_share": 65.9,
+    "unknown_share": 34.1,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291423
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.1,
+     "mixed": 65.9
+    },
+    "single_family_coverage": 34.1,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.9,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291423
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김현기",
+    "party": "국민의힘",
+    "pct": 65.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.9,
+     "unknown": 34.1
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.9,
+    "mixed_share": 65.9,
+    "unknown_share": 34.1,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291423
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.1,
+     "mixed": 65.9
+    },
+    "single_family_coverage": 34.1,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.9,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291423
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "민경희",
+    "party": "국민의힘",
+    "pct": 76.77
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 76.77,
+     "progressive": 13.55,
+     "unknown": 9.68
+    },
+    "single_family_coverage": 13.55,
+    "lineage_resolved_coverage": 90.32,
+    "mixed_share": 76.77,
+    "unknown_share": 9.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43207
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "mixed": 76.77,
+     "progressive": 13.55,
+     "unknown": 9.68
+    },
+    "single_family_coverage": 13.55,
+    "lineage_resolved_coverage": 90.32,
+    "mixed_share": 76.77,
+    "unknown_share": 9.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43207
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강신욱",
+    "party": "국민의힘",
+    "pct": 61.38
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.86,
+     "mixed": 61.38,
+     "unknown": 36.76
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.38,
+    "mixed_share": 61.38,
+    "unknown_share": 36.76,
+    "independent_share": 1.86,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42222
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.76,
+     "independent": 1.86,
+     "mixed": 61.38
+    },
+    "single_family_coverage": 36.76,
+    "lineage_resolved_coverage": 98.14,
+    "mixed_share": 61.38,
+    "unknown_share": 0.0,
+    "independent_share": 1.86,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42222
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이인화",
+    "party": "국민의힘",
+    "pct": 65.74
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.74,
+     "unknown": 34.26
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.74,
+    "mixed_share": 65.74,
+    "unknown_share": 34.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48880
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.26,
+     "mixed": 65.74
+    },
+    "single_family_coverage": 34.26,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.74,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48880
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "유만희",
+    "party": "국민의힘",
+    "pct": 55.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 55.13,
+     "progressive": 1.22,
+     "unknown": 43.65
+    },
+    "single_family_coverage": 1.22,
+    "lineage_resolved_coverage": 56.35,
+    "mixed_share": 55.13,
+    "unknown_share": 43.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63246
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.87,
+     "mixed": 55.13,
+     "progressive": 1.22,
+     "unknown": 2.78
+    },
+    "single_family_coverage": 42.08,
+    "lineage_resolved_coverage": 97.22,
+    "mixed_share": 55.13,
+    "unknown_share": 2.78,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63246
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제5선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이도희",
+    "party": "국민의힘",
+    "pct": 72.41
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 72.41,
+     "unknown": 27.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 72.41,
+    "mixed_share": 72.41,
+    "unknown_share": 27.59,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48844
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.59,
+     "mixed": 72.41
+    },
+    "single_family_coverage": 27.59,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 72.41,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48844
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제6선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김길영",
+    "party": "국민의힘",
+    "pct": 71.33
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 71.33,
+     "unknown": 28.67
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 71.33,
+    "mixed_share": 71.33,
+    "unknown_share": 28.67,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42546
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 28.67,
+     "mixed": 71.33
+    },
+    "single_family_coverage": 28.67,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 71.33,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42546
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제1선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "민경희",
+    "party": "국민의힘",
+    "pct": 76.77
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 76.77,
+     "progressive": 13.55,
+     "unknown": 9.68
+    },
+    "single_family_coverage": 13.55,
+    "lineage_resolved_coverage": 90.32,
+    "mixed_share": 76.77,
+    "unknown_share": 9.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43207
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "mixed": 76.77,
+     "progressive": 13.55,
+     "unknown": 9.68
+    },
+    "single_family_coverage": 13.55,
+    "lineage_resolved_coverage": 90.32,
+    "mixed_share": 76.77,
+    "unknown_share": 9.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43207
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제2선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강신욱",
+    "party": "국민의힘",
+    "pct": 61.38
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.86,
+     "mixed": 61.38,
+     "unknown": 36.76
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.38,
+    "mixed_share": 61.38,
+    "unknown_share": 36.76,
+    "independent_share": 1.86,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42222
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 36.76,
+     "independent": 1.86,
+     "mixed": 61.38
+    },
+    "single_family_coverage": 36.76,
+    "lineage_resolved_coverage": 98.14,
+    "mixed_share": 61.38,
+    "unknown_share": 0.0,
+    "independent_share": 1.86,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42222
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제3선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이인화",
+    "party": "국민의힘",
+    "pct": 65.74
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 65.74,
+     "unknown": 34.26
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 65.74,
+    "mixed_share": 65.74,
+    "unknown_share": 34.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48880
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.26,
+     "mixed": 65.74
+    },
+    "single_family_coverage": 34.26,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 65.74,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48880
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제4선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "유만희",
+    "party": "국민의힘",
+    "pct": 55.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 55.13,
+     "progressive": 1.22,
+     "unknown": 43.65
+    },
+    "single_family_coverage": 1.22,
+    "lineage_resolved_coverage": 56.35,
+    "mixed_share": 55.13,
+    "unknown_share": 43.65,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63246
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.87,
+     "mixed": 55.13,
+     "progressive": 1.22,
+     "unknown": 2.78
+    },
+    "single_family_coverage": 42.08,
+    "lineage_resolved_coverage": 97.22,
+    "mixed_share": 55.13,
+    "unknown_share": 2.78,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63246
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제5선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제5선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이도희",
+    "party": "국민의힘",
+    "pct": 72.41
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 72.41,
+     "unknown": 27.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 72.41,
+    "mixed_share": 72.41,
+    "unknown_share": 27.59,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48844
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.59,
+     "mixed": 72.41
+    },
+    "single_family_coverage": 27.59,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 72.41,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48844
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:강남구제6선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구제6선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김길영",
+    "party": "국민의힘",
+    "pct": 71.33
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 71.33,
+     "unknown": 28.67
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 71.33,
+    "mixed_share": 71.33,
+    "unknown_share": 28.67,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42546
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 28.67,
+     "mixed": 71.33
+    },
+    "single_family_coverage": 28.67,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 71.33,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42546
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김지웅",
+    "party": "국민의힘",
+    "pct": 51.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.21,
+     "unknown": 33.79
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.21,
+    "mixed_share": 66.21,
+    "unknown_share": 33.79,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16951
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.79,
+     "mixed": 66.21
+    },
+    "single_family_coverage": 33.79,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 66.21,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16951
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강현섭",
+    "party": "국민의힘",
+    "pct": 58.25
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.57,
+     "mixed": 71.97,
+     "unknown": 23.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 71.97,
+    "mixed_share": 71.97,
+    "unknown_share": 23.47,
+    "independent_share": 4.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 26996
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 19.78,
+     "independent": 4.57,
+     "mixed": 71.97,
+     "unknown": 3.69
+    },
+    "single_family_coverage": 19.78,
+    "lineage_resolved_coverage": 91.75,
+    "mixed_share": 71.97,
+    "unknown_share": 3.69,
+    "independent_share": 4.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 26996
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김영민",
+    "party": "국민의힘",
+    "pct": 37.6
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 56.02,
+     "unknown": 43.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.02,
+    "mixed_share": 56.02,
+    "unknown_share": 43.98,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41172
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 38.44,
+     "mixed": 56.02,
+     "unknown": 5.54
+    },
+    "single_family_coverage": 38.44,
+    "lineage_resolved_coverage": 94.46,
+    "mixed_share": 56.02,
+    "unknown_share": 5.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41172
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이동호",
+    "party": "국민의힘",
+    "pct": 50.0
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.46,
+     "unknown": 37.54
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.46,
+    "mixed_share": 62.46,
+    "unknown_share": 37.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48375
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.41,
+     "mixed": 62.46,
+     "unknown": 4.14
+    },
+    "single_family_coverage": 33.41,
+    "lineage_resolved_coverage": 95.86,
+    "mixed_share": 62.46,
+    "unknown_share": 4.14,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48375
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구마선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종원",
+    "party": "국민의힘",
+    "pct": 46.3
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.89,
+     "unknown": 41.11
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.89,
+    "mixed_share": 58.89,
+    "unknown_share": 41.11,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29235
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.98,
+     "mixed": 58.89,
+     "unknown": 3.13
+    },
+    "single_family_coverage": 37.98,
+    "lineage_resolved_coverage": 96.87,
+    "mixed_share": 58.89,
+    "unknown_share": 3.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29235
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구사선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이인선",
+    "party": "국민의힘",
+    "pct": 45.31
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 70.2,
+     "unknown": 29.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 70.2,
+    "mixed_share": 70.2,
+    "unknown_share": 29.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20440
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.8,
+     "mixed": 70.2
+    },
+    "single_family_coverage": 29.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 70.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20440
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구자선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구자선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "우종혁",
+    "party": "국민의힘",
+    "pct": 53.3
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.48,
+     "mixed": 64.37,
+     "unknown": 31.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.37,
+    "mixed_share": 64.37,
+    "unknown_share": 31.15,
+    "independent_share": 4.48,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42545
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.9,
+     "independent": 4.48,
+     "mixed": 64.37,
+     "unknown": 5.25
+    },
+    "single_family_coverage": 25.9,
+    "lineage_resolved_coverage": 90.27,
+    "mixed_share": 64.37,
+    "unknown_share": 5.25,
+    "independent_share": 4.48,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42545
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구바선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구바선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "고은진",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구아선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구아선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "오온누리",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구가선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김지웅",
+    "party": "국민의힘",
+    "pct": 51.9
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.21,
+     "unknown": 33.79
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.21,
+    "mixed_share": 66.21,
+    "unknown_share": 33.79,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16951
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.79,
+     "mixed": 66.21
+    },
+    "single_family_coverage": 33.79,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 66.21,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16951
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구나선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "강현섭",
+    "party": "국민의힘",
+    "pct": 58.25
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.57,
+     "mixed": 71.97,
+     "unknown": 23.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 71.97,
+    "mixed_share": 71.97,
+    "unknown_share": 23.47,
+    "independent_share": 4.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 26996
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 19.78,
+     "independent": 4.57,
+     "mixed": 71.97,
+     "unknown": 3.69
+    },
+    "single_family_coverage": 19.78,
+    "lineage_resolved_coverage": 91.75,
+    "mixed_share": 71.97,
+    "unknown_share": 3.69,
+    "independent_share": 4.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 26996
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구다선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "김영민",
+    "party": "국민의힘",
+    "pct": 37.6
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 56.02,
+     "unknown": 43.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.02,
+    "mixed_share": 56.02,
+    "unknown_share": 43.98,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41172
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 38.44,
+     "mixed": 56.02,
+     "unknown": 5.54
+    },
+    "single_family_coverage": 38.44,
+    "lineage_resolved_coverage": 94.46,
+    "mixed_share": 56.02,
+    "unknown_share": 5.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41172
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구라선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이동호",
+    "party": "국민의힘",
+    "pct": 50.0
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 62.46,
+     "unknown": 37.54
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 62.46,
+    "mixed_share": 62.46,
+    "unknown_share": 37.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48375
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.41,
+     "mixed": 62.46,
+     "unknown": 4.14
+    },
+    "single_family_coverage": 33.41,
+    "lineage_resolved_coverage": 95.86,
+    "mixed_share": 62.46,
+    "unknown_share": 4.14,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48375
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구마선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구마선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이종원",
+    "party": "국민의힘",
+    "pct": 46.3
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.89,
+     "unknown": 41.11
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.89,
+    "mixed_share": 58.89,
+    "unknown_share": 41.11,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29235
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 37.98,
+     "mixed": 58.89,
+     "unknown": 3.13
+    },
+    "single_family_coverage": 37.98,
+    "lineage_resolved_coverage": 96.87,
+    "mixed_share": 58.89,
+    "unknown_share": 3.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29235
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구사선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구사선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "이인선",
+    "party": "국민의힘",
+    "pct": 45.31
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 70.2,
+     "unknown": 29.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 70.2,
+    "mixed_share": 70.2,
+    "unknown_share": 29.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20440
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 29.8,
+     "mixed": 70.2
+    },
+    "single_family_coverage": 29.8,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 70.2,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 20440
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:강남구자선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구자선거구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "우종혁",
+    "party": "국민의힘",
+    "pct": 53.3
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.48,
+     "mixed": 64.37,
+     "unknown": 31.15
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 64.37,
+    "mixed_share": 64.37,
+    "unknown_share": 31.15,
+    "independent_share": 4.48,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42545
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.9,
+     "independent": 4.48,
+     "mixed": 64.37,
+     "unknown": 5.25
+    },
+    "single_family_coverage": 25.9,
+    "lineage_resolved_coverage": 90.27,
+    "mixed_share": 64.37,
+    "unknown_share": 5.25,
+    "independent_share": 4.48,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 42545
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 61.02
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 61.07,
+     "progressive": 1.41,
+     "unknown": 37.53
+    },
+    "single_family_coverage": 1.41,
+    "lineage_resolved_coverage": 62.47,
+    "mixed_share": 61.07,
+    "unknown_share": 37.53,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291577
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 28.54,
+     "mixed": 61.07,
+     "progressive": 1.41,
+     "unknown": 8.98
+    },
+    "single_family_coverage": 29.95,
+    "lineage_resolved_coverage": 91.02,
+    "mixed_share": 61.07,
+    "unknown_share": 8.98,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 291577
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:강남구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "강남구",
+   "geography_version_id": null,
+   "resolution": "no_entity_recorded",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 66.08
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 66.08,
+     "unknown": 33.92
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.08,
+    "mixed_share": 66.08,
+    "unknown_share": 33.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 289104
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 33.92,
+     "mixed": 66.08
+    },
+    "single_family_coverage": 33.92,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 66.08,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 289104
+   },
+   "comparison": null
+  }
+ ]
+}

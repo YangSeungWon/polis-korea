@@ -49,6 +49,8 @@ RESULTS = ROOT / "data/results"
 AXES = ROOT / "data/parties/political_axes.json"
 REAGG = ROOT / "data/reaggregated"
 OUT = ROOT / "data/region_timeline"
+GEO_ENT = ROOT / "data/geography/entities.json"
+GEO_EV = ROOT / "data/geography/events.json"
 
 FAMILIES = ("conservative", "democratic", "progressive", "regional", "other")
 
@@ -83,6 +85,73 @@ def series_id(kind: str, race: dict) -> str:
     if kind == "local":
         return "local:" + LOCAL_OFFICE.get(str(race.get("sg_typecode")), "unknown")
     return f"{kind}:unknown"
+
+
+def _entities() -> list:
+    if not GEO_ENT.exists():
+        return []
+    return json.loads(GEO_ENT.read_text(encoding="utf-8"))["entities"]
+
+
+def resolve_version(name: str, date: str, ents: list) -> dict:
+    """그 **시점에 유효한** geography version. 현재 이름으로 fallback하지 않는다.
+
+        같은 이름 ≠ 같은 장소의 같은 시점 버전
+
+    1995년은 '이천군'이고 1998년은 '이천시'다. 최신 version으로 소급해 칠하면
+    election point의 의미 자체가 달라진다. 그래서 셋을 구분한다:
+
+        resolved            그 시점 version이 정확히 하나
+        ambiguous           둘 이상 — **빌드를 실패시킨다**
+        no_entity_recorded  entity를 아직 기록하지 않았다 (placeholder가 아니라 공백)
+    """
+    hit = []
+    for e in ents:
+        if e.get("kind") != "admin_unit":
+            continue
+        if e["name"] not in name and name not in e["name"]:
+            continue
+        f, t = e.get("valid_from") or "", e.get("valid_to") or "9999-12-31"
+        if (not f or f <= date) and date < t:
+            hit.append(e)
+    if len(hit) == 1:
+        return {"geography_version_id": hit[0]["id"], "resolution": "resolved",
+                "name_at_the_time": hit[0]["name"]}
+    if len(hit) > 1:
+        return {"geography_version_id": None, "resolution": "ambiguous",
+                "candidates": [e["id"] for e in hit]}
+    return {"geography_version_id": None, "resolution": "no_entity_recorded"}
+
+
+def geo_events(region: str) -> list:
+    """행정구역 사건과 선거구 사건 — 같은 시간축에 올리되 **namespace를 나눈다**.
+
+    행정구역 승격과 총선 선거구 분구는 다른 ontology다. 특히 선거구 변화는
+    **관련 series에만** 영향을 준다 — 총선 선거구가 바뀌었다고 같은 지역의 대선
+    시계열까지 끊으면 안 된다.
+    """
+    if not GEO_EV.exists():
+        return []
+    out = []
+    for e in json.loads(GEO_EV.read_text(encoding="utf-8"))["events"]:
+        names = [x.get("name") or x["id"].split(":")[-1]
+                 for x in (e.get("from") or []) + (e.get("to") or [])]
+        if not any(region in n for n in names):
+            continue
+        admin = e.get("kind") == "admin_unit"
+        out.append({
+            "event_id": e["id"],
+            "namespace": "administrative_geography" if admin else "electoral_district",
+            "effective_date": e.get("effective_date") or e.get("date"),
+            "type": e.get("type"),
+            "label": e.get("label") or e.get("id"),
+            "from": [x["id"] for x in e.get("from") or []],
+            "to": [x["id"] for x in e.get("to") or []],
+            # 선거구 사건은 총선 series만 건드린다
+            "affects_series": (["*"] if admin else ["general:district"]),
+            "comparison_capability": e.get("comparison_capability"),
+        })
+    return sorted(out, key=lambda x: x["effective_date"] or "")
 
 
 def composition(cands: list, date: str, fam: dict) -> dict:
@@ -157,6 +226,8 @@ def main(regions: list[str]) -> int:
     # strict가 기본. historical은 근거 있는 bridge로 제도적 단절을 건넌 값 —
     # 화면에서 토글로 고를 수 있게 둘 다 싣는다. 섞지 않는다.
     fam_h = ax["lineage_family_historical"]
+    ents = _entities()
+    ambiguous: list = []
     OUT.mkdir(parents=True, exist_ok=True)
     built = 0
     for region in regions:
@@ -200,6 +271,7 @@ def main(regions: list[str]) -> int:
                     "geography_entity_id": f"electoral_district:{nm}",
                     "boundary_valid_at": date,
                     "unit_name_at_the_time": nm,
+                    **resolve_version(region, date, ents),
                     # 실제 선거 결과 (위)
                     "winner": {"name": win.get("name"), "party": win.get("party"),
                                "pct": win.get("pct")},
@@ -212,6 +284,8 @@ def main(regions: list[str]) -> int:
             print(f"  {region}: 결과 없음")
             continue
         points.sort(key=lambda p: p["election_date"])
+        ambiguous += [(region, p["election_id"]) for p in points
+                      if p["resolution"] == "ambiguous"]
         doc = {
             "_note": ("지역 정치사 타임라인. 시간축은 합치되 수치 비교는 "
                       "comparison_series_id가 같은 점 사이에서만 한다. "
@@ -219,6 +293,7 @@ def main(regions: list[str]) -> int:
                       "정치구성의 대리값으로 쓰지 않는다."),
             "region": region,
             "series": sorted({p["comparison_series_id"] for p in points}),
+            "events": geo_events(region),
             "points": points,
         }
         (OUT / f"{region}.json").write_text(
@@ -226,6 +301,30 @@ def main(regions: list[str]) -> int:
         built += 1
         ser = collections.Counter(p["comparison_series_id"] for p in points)
         print(f"  {region}: {len(points)}개 · series {dict(ser)}")
+    if ambiguous:
+        # 모호한 건 조용히 넘기지 않는다 — 어느 version인지 모르면 그 점의 의미가 없다
+        print(f"\n✗ geography version이 모호한 점 {len(ambiguous)}건: {ambiguous[:5]}")
+        return 1
+    # stress fixture를 감으로 고르지 않는다 — 데이터가 있으니 밀도를 잰다.
+    # 모델 fixture(한 특성만 검증)와 UI stress fixture(여러 lane·사건이 겹침)는 다르다.
+    dens = []
+    for f in sorted(OUT.glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        pts, evs = d["points"], d.get("events") or []
+        hard = sum(1 for p in pts if (p.get("comparison") or {}).get("method")
+                   in ("reaggregated", "context_only"))
+        mixed = sum(1 for p in pts
+                    if (p["lineage_composition"] or {}).get("mixed_share", 0) > 20)
+        score = (len(d["series"]) * 3 + len(pts) * 0.1 + len(evs) * 5
+                 + hard * 2 + mixed * 0.2)
+        dens.append((round(score, 1), d["region"], len(d["series"]), len(pts),
+                     len(evs), hard, mixed))
+    dens.sort(reverse=True)
+    print("\n[밀도] series·점·사건·재집계·mixed가 겹치는 정도")
+    print(f"  {'점수':>6} {'지역':8} {'series':>6} {'점':>4} {'사건':>4} {'재집계':>5} {'mixed':>5}")
+    for row in dens:
+        print(f"  {row[0]:6} {row[1]:8} {row[2]:6} {row[3]:4} {row[4]:4} "
+              f"{row[5]:5} {row[6]:5}")
     print(f"\n→ {OUT.name}/ {built}개 지역")
     return 0
 
