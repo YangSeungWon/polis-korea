@@ -270,15 +270,11 @@ function partyStackBar(counts, total) {
 function partyStackLegend(counts, top = 2) {
   const sorted = counts.slice().sort((a, b) => b[1] - a[1]);
   const ptc = (typeof partyTextColor === 'function') ? partyTextColor : partyColor;
-  const chip = ([p, c], cls) => {
-    const col = partyColor(p);
-    // 밝은 정당색(정의당 노랑 등)은 글씨로 흰 배경에서 안 보임 → 색 배경 pill + 대비 글씨(검정).
-    //   pickTextColor가 검정을 주면 = 그 색이 밝다는 뜻. 어두운 색은 글씨색 그대로(무소속 등은 partyTextColor가 진하게).
-    if (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff') {
-      return `<span class="sleg sleg-pill ${cls}" style="background:${col};color:${pickTextColor(col)}"><b>${c}</b> ${p}</span>`;
-    }
-    return `<span class="sleg ${cls}" style="color:${ptc(p)}"><b>${c}</b> ${p}</span>`;
-  };
+  // 밝은 정당색만 배경 pill로 칠하던 우회책이 있었다. partyTextColor가 대비를
+  // 보장하지 못하던 시절의 대응인데, 이제 실제 대비(4.5:1)를 맞추므로 필요 없다.
+  // 한 줄에서 한 정당만 칠해지면 '강조된 항목'으로 읽혀 없는 위계가 생긴다.
+  const chip = ([p, c], cls) =>
+    `<span class="sleg ${cls}" style="color:${ptc(p)}"><b>${c}</b> ${p}</span>`;
   return sorted.map((e, i) => chip(e, i < top ? '' : 'sleg-sub')).join(' ');
 }
 

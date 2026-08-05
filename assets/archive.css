@@ -1022,3 +1022,22 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 }
 /* 출구조사 시리즈별 provenance — 카드 제목 바로 아래. */
 .ar-exit-block .tr-line { margin: 2px 0 10px; }
+
+/* 지난 회차 대비 — 첫 화면에서 '무엇이 달라졌나'에 답하는 한 줄.
+   자세한 건 아래 비교 섹션이 이어받으므로 여기서는 요약만. */
+.ar-summary-cmp {
+  margin: 8px 0 0; font-size: 13px; color: var(--ink-soft);
+  line-height: 1.7; font-variant-numeric: tabular-nums;
+}
+.ar-summary-cmp b { color: var(--ink); }
+.ar-cmp-k {
+  font-weight: 700; color: var(--ink); margin-right: 6px;
+  border-bottom: 2px solid var(--rule-strong); padding-bottom: 1px;
+}
+/* 증감은 값이 아니라 방향이 요점이다 — 숫자보다 부호가 먼저 읽히게. */
+.ar-cmp-d { font-weight: 700; color: var(--ink); }
+
+/* '이전/다음 없음'은 자리만 지키는 칸이다 — 최신·최초 회차에서 빈 카드가 눈에 띄면
+   '뭔가 로드에 실패했나'로 읽힌다. 격자 자리는 유지하되 보이지 않게 한다.
+   (display:none으로 지우면 가운데 '더 자세히' 칸이 한쪽으로 쏠린다.) */
+.ar-nav-empty { visibility: hidden; }

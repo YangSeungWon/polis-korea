@@ -606,6 +606,67 @@ def person_href(eid: str, tc: str, place: str, name: str) -> str | None:
     return f"/person/{quote(slug)}/" if slug else None
 
 
+def comparison_line(eid: str) -> str:
+    """'지난 회차 대비' 한 줄 — 첫 화면에서 답해야 할 네 질문 중 마지막.
+    (무슨 선거 / 누가 이겼나 / 투표율은 / **지난번과 뭐가 달라졌나**)
+
+    비교 데이터는 21쌍 다 있는데 스크롤을 한참 내려야 나왔다. 요약은 이 선거의
+    입구이므로 여기서 한 줄로 답한다 — 자세한 건 아래 비교 섹션이 이어받는다.
+
+    정적 HTML이라 크롤러도 본다. 첫 화면 JS 렌더(hero)는 크롤러가 못 볼 수 있다.
+    """
+    em = ROOT / "data/elections" / f"{eid}.json"
+    if not em.exists():
+        return ""
+    try:
+        prev = (json.loads(em.read_text(encoding="utf-8")).get("archive") or {}
+                ).get("compare_previous")
+    except Exception:
+        return ""
+    if not prev:
+        return ""
+    fp = ROOT / "data/comparisons" / f"{eid}__{prev}.json"
+    if not fp.exists():
+        return ""
+    try:
+        d = json.loads(fp.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+
+    bits = []
+    t = d.get("turnout") or {}
+    if t.get("delta") is not None:
+        arrow = "▲" if t["delta"] > 0 else "▼" if t["delta"] < 0 else "="
+        bits.append(f'투표율 {t["previous"]}% → <b>{t["current"]}%</b> '
+                    f'<span class="ar-cmp-d">{arrow}{abs(t["delta"]):.1f}%p</span>')
+
+    # 대선은 전국 득표율 이동이 본론, 그 외는 자리 증감이 본론이다.
+    def top_delta(delta: dict, unit: str, n: int = 3):
+        if not delta:
+            return None
+        items = sorted(delta.items(), key=lambda x: -abs(x[1]))[:n]
+        return " · ".join(
+            f'{_esc(k)} <span class="ar-cmp-d">{v:+g}{unit}</span>' for k, v in items)
+
+    nat = top_delta((d.get("nation") or {}).get("delta") or {}, "%p")
+    if nat:
+        bits.append(nat)
+    else:
+        for tc in ("3", "4", "2"):
+            o = (d.get("offices") or {}).get(tc)
+            if not o:
+                continue
+            seats = top_delta(o.get("delta_compared_only") or {}, "")
+            if seats:
+                bits.append(f'{_esc(o.get("label") or "")} {seats}')
+                break
+    if not bits:
+        return ""
+    name = _esc((d.get("_meta") or {}).get("previous_name") or prev)
+    return (f'<p class="ar-summary-cmp"><span class="ar-cmp-k">{name} 대비</span> '
+            + " · ".join(bits) + '</p>')
+
+
 def results_summary(eid: str, kind: str) -> str:
     rp = RESULTS_DIR / f"{eid}.json"
     if not rp.exists():
@@ -681,11 +742,13 @@ def results_summary(eid: str, kind: str) -> str:
     items = "".join(f"<li><b>{a}</b> <span>{b}</span></li>" for a, b in rows)
     return (f'<section class="ar-summary"><h2>결과 요약</h2>'
             f'<ul class="ar-summary-list">{items}</ul>'
-            f'<p class="ar-summary-note">개표 결과 기준{turnout}. '
+            + comparison_line(eid)
+            + (f'<p class="ar-summary-note">개표 결과 기준{turnout}. '
             f'지역별 상세는 아래 섹션에서 — '
             # archive에서 지역 entity로 나가는 길. 시군구 265곳을 다 나열하지 않고
             # 허브 1-hop으로 둔다(역방향은 이미 강하다 — 지역 페이지가 archive 25개를 링크).
-            f'<a href="/region/">내 지역의 역대 기록</a>도 볼 수 있습니다.</p></section>')
+            f'<a href="/region/">내 지역의 역대 기록</a>도 볼 수 있습니다.</p>')
+            + '</section>')
 
 
 # 화면엔 제목만 — 누르면(ⓘ) 설명이 읽기 좋은 크기로 뜬다. (assets/components.css .info-i/.info-pop)

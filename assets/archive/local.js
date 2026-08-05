@@ -62,19 +62,14 @@
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
     const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
     // 연한 정당색(정의당 노랑 등)은 글씨로 안 보임 → 색 배경 pill + 대비 글씨. 어두운 색은 글씨색(무소속 등 partyTextColor 보정).
-    const segStyle = (party) => {
-      const col = pcol(party);
-      if (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff')
-        return `background:${col};color:${pickTextColor(col)};padding:0 5px;border-radius:6px`;
-      return `color:${(typeof partyTextColor === 'function') ? partyTextColor(party) : col}`;
-    };
-    const renderParty = (p) => {
-      const col = pcol(p);
-      const light = (typeof pickTextColor === 'function' && pickTextColor(col) !== '#fff');
-      return light
-        ? `<span class="ar-sc-pname" style="background:${col};color:${pickTextColor(col)};padding:0 6px;border-radius:7px">${p}</span>`
-        : `<span class="ar-sc-pname" style="color:${ptcol(p)};border-bottom:3px solid ${col}">${p}</span>`;
-    };
+    // 밝은 정당색(정의당 노랑 등)만 배경으로 칠하는 우회책이 있었다. 그때는
+    // partyTextColor가 대비를 보장하지 못해 노랑 글씨가 사실상 안 보였기 때문인데,
+    // 이제는 실제 대비(4.5:1)를 맞추므로 우회할 이유가 없다.
+    // 오히려 '기타' 한 줄에서 정의당만 형광펜처럼 칠해져 강조된 항목으로 읽혔다 —
+    // 같은 뜻은 같은 문법으로 쓴다(색은 면 전용, 글씨는 대비 보정색).
+    const segStyle = (party) => `color:${ptcol(party)}`;
+    const renderParty = (p) =>
+      `<span class="ar-sc-pname" style="color:${ptcol(p)};border-bottom:3px solid ${pcol(p)}">${p}</span>`;
     setHTML('ar-sc-p1', renderParty(p1, 'l'));
     if (p2) setHTML('ar-sc-p2', renderParty(p2, 'r'));
     for (const tc of ['3', '4', '5', '6']) {
