@@ -57,16 +57,23 @@ jobs:
             python scripts/fetch/fetch_pledges.py --all-candidates --active
           fi
 
+      # 회수는 일부 실패해도 받은 만큼은 저장된다(스크립트가 저장 후 exit 1).
+      # 여기서 멈추면 그 진행분이 커밋되지 않아 다음 실행이 처음부터 다시 받는다 —
+      # 이어받기의 뜻이 사라진다. 아래 단계는 실패해도 계속하고, 빨간 X는 그대로 남긴다.
       - name: 분야 자동 분류
+        if: always()
         run: python scripts/build/classify_pledges.py
 
       - name: 인물별 재색인
+        if: always()
         run: python scripts/build/build_person_pledges.py
 
       - name: 분야 분포 집계 (archive 시각화용)
+        if: always()
         run: python scripts/build/build_pledge_realms.py
 
       - name: Commit & push if changed
+        if: always()
         run: |
           git config user.name "polis-bot"
           git config user.email "noreply@anthropic.com"

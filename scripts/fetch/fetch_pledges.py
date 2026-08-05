@@ -234,8 +234,16 @@ def main():
         done = {p["cnddt_id"] for p in people}
         roster = "등록 후보" if args.all_candidates else "당선인"
         for tc in t["typecodes"]:
-            ws = (fetch_candidates(key, sg_id, tc) if args.all_candidates
-                  else fetch_winners(key, sg_id, tc))
+            # 명부 회수가 재시도를 다 쓰고 실패하면(NEC 타임아웃) 예외가 그대로 올라와
+            # run 전체가 죽고 **여태 받은 것도 저장되지 않았다**. 후보별 실패는 이미
+            # 잡아 기록하는데 명부만 빠져 있었다 — 여기서 죽으면 이어받기의 뜻이 없다.
+            try:
+                ws = (fetch_candidates(key, sg_id, tc) if args.all_candidates
+                      else fetch_winners(key, sg_id, tc))
+            except Exception as e:
+                failures.append(f"{meta['id']}/tc{tc}: {roster} 명부 회수 실패 — {e}")
+                print(f"  {meta['id']} tc{tc}: {roster} 명부 회수 실패 — {e}", file=sys.stderr)
+                continue
             if not ws:
                 print(f"  {meta['id']} tc{tc}: {roster} 명부 없음 — skip", file=sys.stderr)
                 continue
