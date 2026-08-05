@@ -43,6 +43,14 @@ jobs:
       - name: Build map module
         run: npm run build:map
 
+      # 화면을 보고 결함을 판단하려면 '내가 보는 게 최신인가'를 먼저 확정해야 한다.
+      # 이미 고친 것을 캐시 때문에 결함으로 보고받은 적이 있다.
+      #   확인: curl -s https://polis.ysw.kr/ | grep polis-build
+      # 저장소에는 커밋하지 않는다 — 커밋하면 매 배포마다 4,900개가 바뀌고
+      # 생성기 멱등성 검사가 매번 깨진다.
+      - name: 빌드 SHA 새기기 (배포본 전용)
+        run: python3 scripts/build/stamp_build.py
+
       - name: Prune build deps (정적 산출물만 배포)
         run: rm -rf node_modules
 
