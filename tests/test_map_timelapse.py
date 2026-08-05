@@ -63,8 +63,15 @@ for b in DOC["series_blocks"]:
     # 보간하지 않는다 — 각 시점은 그 이전 **실제** 선거를 쓴다
     ck(f"{sid}: snapshot 날짜 ≤ 시점",
        all(s["election_snapshot"]["date"] <= s["date"] for s in b["states"]))
-    ck(f"{sid}: 모델과 경계 파일 일치",
-       all(s["geography_at_date"]["model_matches_boundary"] for s in b["states"]))
+    # 그린 폴리곤이 전부 그 시점의 모델 단위인가 — 아니면 다른 땅을 그 이름으로 칠한 것
+    ck(f"{sid}: 모델에 없는 폴리곤을 그리지 않는다",
+       all(s["geography_at_date"]["drawn_units_valid"] for s in b["states"]))
+    # 경계 그림이 없으면 색도 없다 — 없는 경계에 정치색을 상상하지 않는다
+    for st in b["states"]:
+        if st["geography_at_date"]["boundary_resolution"] == "unavailable":
+            ck(f"{sid}/{st['role']}: 경계가 없으면 투영도 없다",
+               not st["political_projection"]["per_unit"]
+               and st["geography_at_date"]["features"] == [])
 
 # ── topology는 사건일에 **이산** 전환한다 ─────────────────────────────────
 for sid in [b["comparison_series_id"] for b in DOC["series_blocks"]]:
@@ -126,7 +133,8 @@ ck("울릉군을 지목한다", "울릉군" in json.dumps(g["detail"], ensure_as
 ck("같은 사건에서 series별 판정이 갈린다", p["method"] != g["method"])
 
 # ── 분구: 합의 반대 방향은 그냥 나누기가 아니다 ──────────────────────────
-hb = HANAM["series_blocks"][0]
+hb = next(b for b in HANAM["series_blocks"]
+          if b["comparison_series_id"] == "general:district")
 ck("하남은 선거구 namespace", HANAM["namespace"] == "electoral_district",
    HANAM["namespace"])
 hs = next(s for s in hb["states"] if s["role"] == "previous_on_new_boundary")
@@ -221,9 +229,12 @@ fp2, _, _ = footprint(geo, "admin_unit:경상북도:포항시", "1997-12-18")
 ck("사건 이후 시점은 되돌리지 않는다", fp2 == {"admin_unit:경상북도:포항시"}, str(fp2))
 
 # 못 쪼개는 선거구명은 **추측하지 않는다**
-ck("모르는 선거구는 None", tokenize_district("없는시갑", {"포항시", "울릉군"}) is None)
+ck("모르는 선거구는 None", tokenize_district("없는시", {"포항시", "울릉군"})[0] is None)
 ck("아는 선거구는 쪼갠다",
-   tokenize_district("영일군·울릉군", {"영일군", "울릉군"}) == ["영일군", "울릉군"])
+   tokenize_district("영일군·울릉군", {"영일군", "울릉군"})[0] == ["영일군", "울릉군"])
+# 끝의 갑·을은 **그 구역의 일부**라는 정보다 — 통째로 칠하면 안 된다
+_n, _part = tokenize_district("동구군위군갑", {"동구", "군위군"})
+ck("갑·을은 일부라는 뜻", _part is True and _n == ["동구", "군위군"], f"{_n} {_part}")
 
 # ── 합산 가능 판정을 여기서 만들지 않는다 ─────────────────────────────────
 evs = {e["id"]: e for e in geo.events}
@@ -236,12 +247,40 @@ ck("포함관계는 exhaustive일 때만 합산",
    all(c.get("exhaustive") is True and c.get("evidence")
        for c in cont["containments"]))
 
+# ── 전국: 대상 지역을 손으로 적지 않는다 ─────────────────────────────────
+from map_timelapse import auto_regions  # noqa: E402
+
+_auto = auto_regions(geo)
+_ev_ids = {x["id"] for e in geo.events for x in (e.get("from") or []) + (e.get("to") or [])
+           if x["id"] in geo.ents}
+_covered = {m for sp in _auto.values() for m in sp["members"]}
+ck("events.json의 entity가 빠짐없이 지역에 들어간다", _ev_ids <= _covered,
+   str(sorted(_ev_ids - _covered)))
+ck("지역마다 namespace는 하나",
+   all(len({geo.ents[m]["kind"] for m in sp["members"]}) == 1
+       for sp in _auto.values()))
+# 하위 단위 이름으로 지역을 부르지 않는다 (포항을 '포항시북구'라 부른 적이 있다)
+ck("지역 이름이 하위 단위가 아니다",
+   not any("구" == n[-1:] and len(n) > 2 for n in _auto), str(sorted(_auto)))
+_built = {f.stem for f in (ROOT / "data/map_timelapse").glob("*.json")}
+ck("만들어진 지역 = 사건이 있는 지역", _built <= set(_auto),
+   str(sorted(_built - set(_auto))))
+
+# 뺀 series는 이유를 남긴다 — 조용히 사라지면 자료가 없는 것처럼 보인다
+for _f in sorted((ROOT / "data/map_timelapse").glob("*.json")):
+    _d = json.loads(_f.read_text(encoding="utf-8"))
+    ck(f"{_f.stem}: 뺀 series에 이유가 있다",
+       all(e.get("reason") and e.get("why") for e in _d.get("excluded_series") or []))
+
 # ── 재생성이 같은 결과를 내는가 ───────────────────────────────────────────
-before = (ROOT / "data/map_timelapse/포항.json").read_text(encoding="utf-8")
-subprocess.run([sys.executable, "scripts/build/map_timelapse.py", "포항", "하남"],
-               cwd=ROOT, check=True, capture_output=True)
-ck("재생성 결과가 같다",
-   (ROOT / "data/map_timelapse/포항.json").read_text(encoding="utf-8") == before)
+before = {f.name: f.read_text(encoding="utf-8")
+          for f in sorted((ROOT / "data/map_timelapse").glob("*.json"))}
+subprocess.run([sys.executable, "scripts/build/map_timelapse.py"], cwd=ROOT,
+               check=True, capture_output=True)
+after = {f.name: f.read_text(encoding="utf-8")
+         for f in sorted((ROOT / "data/map_timelapse").glob("*.json"))}
+ck("재생성 결과가 같다", before == after,
+   str([k for k in set(before) | set(after) if before.get(k) != after.get(k)]))
 
 print(f"\n[지도 타임랩스] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)

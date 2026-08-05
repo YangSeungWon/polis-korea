@@ -8,6 +8,7 @@
 //   · unavailable 폴리곤에 계열색이 새지 않는다 (하남: 재집계됐지만 수준값 금지)
 //   · 화면 문장이 backend의 displayable_claim과 같다
 //   · series를 섞지 않는다
+//   · 경계 그림이 없는 시점은 폴리곤도 색도 내지 않는다 (부천 20대)
 //
 // 렌더 회귀는 픽셀이 아니라 **SVG path·채움 골든**으로 잡는다. 폰트 렌더링 차이로
 // 흔들리지 않으면서 좌표·투영·색이 바뀌면 반드시 걸린다 — 지도에서 중요한 건 그거다.
@@ -18,7 +19,7 @@ import fs from 'fs';
 import path from 'path';
 
 const ROOT = path.resolve(process.cwd());
-const REGIONS = ['포항', '하남'];
+const REGIONS = ['포항', '하남', '군위', '부천', '이천'];
 const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'tablet', width: 768, height: 1024 },
@@ -63,6 +64,9 @@ for (const region of REGIONS) {
 
     const box = await page.locator('.mt-frame:not([hidden]) .mt-svg').first().boundingBox();
     ck(`${tag}: 지도가 그려짐`, box && box.height > 80, JSON.stringify(box));
+    // series 버튼에 raw id가 새면 화면이 내부 표기를 그대로 보여 주는 것이다
+    ck(`${tag}: series 이름이 사람 말이다`,
+      !(await page.locator('.mt-seg').first().innerText()).includes(':'));
     ck(`${tag}: 가로 넘침 없음`,
       await page.evaluate(() =>
         document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
@@ -118,18 +122,31 @@ for (const region of REGIONS) {
       }
     }
 
-    // ── 사건 전후 topology가 진짜로 바뀌는가 ────────────────────────────
+    // ── 사건 전후 topology ──────────────────────────────────────────────
+    // **바뀌어야 한다고 뭉뚱그리지 않는다.** 이천군→이천시는 영역이 그대로라
+    // 폴리곤이 같은 것이 맞고, 포항 통합은 달라야 맞다. 사건이 어느 쪽인지 말해 준다.
+    const pv = d.series_blocks[0].pivot_event;
     await page.click(`[data-set="series=${d.series_blocks[0].comparison_series_id}"]`);
     await page.click('[data-set="role=before_geo_event"]');
     const nBefore = await page.locator('.mt-frame:not([hidden]) .mt-u').count();
     const dBefore = await page.locator('.mt-frame:not([hidden]) .mt-u').first()
-      .getAttribute('d');
+      .getAttribute('d').catch(() => null);
     await page.click('[data-set="role=after_geo_event"]');
     const nAfter = await page.locator('.mt-frame:not([hidden]) .mt-u').count();
-    ck(`${tag}: 사건에서 폴리곤 수가 바뀐다 (${nBefore}→${nAfter})`, nBefore !== nAfter);
     const dAfter = await page.locator('.mt-frame:not([hidden]) .mt-u').first()
-      .getAttribute('d');
-    ck(`${tag}: 같은 폴리곤을 이름만 바꿔 쓰지 않는다`, dBefore !== dAfter);
+      .getAttribute('d').catch(() => null);
+    if (pv.expect_topology_change) {
+      ck(`${tag}: 영역이 바뀌는 사건은 폴리곤도 바뀐다 (${nBefore}→${nAfter})`,
+        nBefore !== nAfter || dBefore !== dAfter);
+    } else {
+      // 영역 그대로(승격·편입) — 폴리곤이 바뀌면 없던 변화를 그린 것이다
+      ck(`${tag}: 영역이 그대로면 폴리곤도 그대로 (${pv.territorial_continuity})`,
+        nBefore === nAfter && dBefore === dAfter);
+      // 대신 화면이 "안 바뀐 게 맞다"고 말해야 한다
+      ck(`${tag}: 안 바뀐 이유를 말한다`,
+        (await page.locator('.mt-frame:not([hidden]) .mt-ev').innerText())
+          .includes('영역은 그대로'));
+    }
 
     // ── 렌더 골든 (좌표·채움) ────────────────────────────────────────────
     if (vp.name === 'desktop') {

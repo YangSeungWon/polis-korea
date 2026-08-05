@@ -1,0 +1,2047 @@
+{
+ "_note": "지도 타임랩스 상태. geography_at_date · election_snapshot · political_projection을 분리한다. **snapshot이 있다 ≠ 지금 polygon에 칠할 수 있다** — 투영 판정은 events/containment가 이미 준 capability를 쓰고 여기서 새로 만들지 않는다.",
+ "_rules": {
+  "series": "한 지도에서 series를 섞지 않는다",
+  "interpolation": "선거 사이를 보간하지 않는다 — discrete snapshot만",
+  "topology": "사건 effective date에서 이산 전환한다 — 형태 보간 없음",
+  "unavailable": "polygon은 그리되 정치색을 만들지 않는다"
+ },
+ "region": "부천",
+ "namespace": "electoral_district",
+ "excluded_series": [
+  {
+   "comparison_series_id": "president:national",
+   "reason": "units_never_resolve_to_this_map",
+   "example_units": [
+    "부천시"
+   ],
+   "why": "집계 단위가 이 지도의 경계 단위와 맞물리지 않는다 — 올리려면 하위 실측이 필요하다"
+  },
+  {
+   "comparison_series_id": "local:municipal_mayor",
+   "reason": "units_never_resolve_to_this_map",
+   "example_units": [
+    "부천시"
+   ],
+   "why": "집계 단위가 이 지도의 경계 단위와 맞물리지 않는다 — 올리려면 하위 실측이 필요하다"
+  },
+  {
+   "comparison_series_id": "local:metro_mayor",
+   "reason": "units_never_resolve_to_this_map",
+   "example_units": [
+    "부천시"
+   ],
+   "why": "집계 단위가 이 지도의 경계 단위와 맞물리지 않는다 — 올리려면 하위 실측이 필요하다"
+  },
+  {
+   "comparison_series_id": "general:pr",
+   "reason": "units_never_resolve_to_this_map",
+   "example_units": [
+    "부천시"
+   ],
+   "why": "집계 단위가 이 지도의 경계 단위와 맞물리지 않는다 — 올리려면 하위 실측이 필요하다"
+  },
+  {
+   "comparison_series_id": "local:education_superintendent",
+   "reason": "units_never_resolve_to_this_map",
+   "example_units": [
+    "부천시"
+   ],
+   "why": "집계 단위가 이 지도의 경계 단위와 맞물리지 않는다 — 올리려면 하위 실측이 필요하다"
+  }
+ ],
+ "entity_family": [
+  "electoral_district:21:경기:부천시갑",
+  "electoral_district:21:경기:부천시정",
+  "electoral_district:22:경기:부천시갑"
+ ],
+ "series_blocks": [
+  {
+   "comparison_series_id": "general:district",
+   "states": [
+    {
+     "state_id": "general:district@2020-04-14#before_election",
+     "role": "before_election",
+     "role_label": "선거 직전",
+     "date": "2020-04-14",
+     "geography_at_date": {
+      "boundary_source": "district_20",
+      "boundary_resolution": "unavailable",
+      "boundary_missing_units": [
+       "부천시갑",
+       "부천시정"
+      ],
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:21:경기:부천시갑",
+       "electoral_district:21:경기:부천시정"
+      ],
+      "units": [
+       "부천시갑",
+       "부천시정"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑|부천시정",
+      "area_km2_approx": {},
+      "features": [],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": null,
+     "political_projection": {
+      "per_unit": {},
+      "summary": {},
+      "paintable_units": [],
+      "boundary_blocked": [
+       "부천시갑",
+       "부천시정"
+      ]
+     },
+     "displayable_claim": "이 시점 경계 그림이 없습니다 — 부천시갑 · 부천시정"
+    },
+    {
+     "state_id": "general:district@2020-04-15#election",
+     "role": "election",
+     "role_label": "선거 시점",
+     "date": "2020-04-15",
+     "geography_at_date": {
+      "boundary_source": "district_21",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:21:경기:부천시갑",
+       "electoral_district:21:경기:부천시정"
+      ],
+      "units": [
+       "부천시갑",
+       "부천시정"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑|부천시정",
+      "area_km2_approx": {
+       "부천시갑": 10.6,
+       "부천시정": 20.0
+      },
+      "features": [
+       {
+        "model_unit": "부천시갑",
+        "boundary_name": "부천시갑",
+        "code": "D210024",
+        "area_km2_approx": 10.6,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.7918,
+            37.4829
+           ],
+           [
+            126.7988,
+            37.483
+           ],
+           [
+            126.8029,
+            37.4823
+           ],
+           [
+            126.8138,
+            37.4857
+           ],
+           [
+            126.8209,
+            37.4907
+           ],
+           [
+            126.8146,
+            37.4932
+           ],
+           [
+            126.813,
+            37.4964
+           ],
+           [
+            126.8196,
+            37.4993
+           ],
+           [
+            126.8215,
+            37.5021
+           ],
+           [
+            126.8223,
+            37.5063
+           ],
+           [
+            126.8137,
+            37.5059
+           ],
+           [
+            126.8069,
+            37.5068
+           ],
+           [
+            126.7975,
+            37.5058
+           ],
+           [
+            126.7943,
+            37.5072
+           ],
+           [
+            126.7909,
+            37.5067
+           ],
+           [
+            126.7913,
+            37.5101
+           ],
+           [
+            126.7902,
+            37.5131
+           ],
+           [
+            126.7939,
+            37.5157
+           ],
+           [
+            126.7954,
+            37.522
+           ],
+           [
+            126.7928,
+            37.5223
+           ],
+           [
+            126.7836,
+            37.5181
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7764,
+            37.5099
+           ],
+           [
+            126.7824,
+            37.5026
+           ],
+           [
+            126.7838,
+            37.4994
+           ],
+           [
+            126.7828,
+            37.4955
+           ],
+           [
+            126.7809,
+            37.4935
+           ],
+           [
+            126.7707,
+            37.4916
+           ],
+           [
+            126.7745,
+            37.4853
+           ],
+           [
+            126.7816,
+            37.4846
+           ],
+           [
+            126.7917,
+            37.4829
+           ],
+           [
+            126.7918,
+            37.4829
+           ]
+          ]
+         ]
+        }
+       },
+       {
+        "model_unit": "부천시정",
+        "boundary_name": "부천시정",
+        "code": "D210027",
+        "area_km2_approx": 20.0,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.8223,
+            37.5063
+           ],
+           [
+            126.8247,
+            37.5083
+           ],
+           [
+            126.8243,
+            37.5145
+           ],
+           [
+            126.8231,
+            37.5162
+           ],
+           [
+            126.8256,
+            37.52
+           ],
+           [
+            126.8261,
+            37.5243
+           ],
+           [
+            126.8284,
+            37.5267
+           ],
+           [
+            126.8219,
+            37.5348
+           ],
+           [
+            126.8221,
+            37.5407
+           ],
+           [
+            126.8123,
+            37.5407
+           ],
+           [
+            126.8091,
+            37.5426
+           ],
+           [
+            126.8074,
+            37.5436
+           ],
+           [
+            126.802,
+            37.5428
+           ],
+           [
+            126.7992,
+            37.5389
+           ],
+           [
+            126.7978,
+            37.5371
+           ],
+           [
+            126.7944,
+            37.5358
+           ],
+           [
+            126.7939,
+            37.5395
+           ],
+           [
+            126.7908,
+            37.5438
+           ],
+           [
+            126.7873,
+            37.5461
+           ],
+           [
+            126.7776,
+            37.5467
+           ],
+           [
+            126.7753,
+            37.549
+           ],
+           [
+            126.7716,
+            37.5483
+           ],
+           [
+            126.7662,
+            37.5542
+           ],
+           [
+            126.7633,
+            37.5463
+           ],
+           [
+            126.7625,
+            37.5421
+           ],
+           [
+            126.7607,
+            37.5377
+           ],
+           [
+            126.7608,
+            37.536
+           ],
+           [
+            126.7607,
+            37.5361
+           ],
+           [
+            126.7603,
+            37.5241
+           ],
+           [
+            126.7601,
+            37.518
+           ],
+           [
+            126.7658,
+            37.518
+           ],
+           [
+            126.7711,
+            37.5141
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7836,
+            37.5181
+           ],
+           [
+            126.7928,
+            37.5223
+           ],
+           [
+            126.7954,
+            37.522
+           ],
+           [
+            126.7939,
+            37.5157
+           ],
+           [
+            126.7902,
+            37.5131
+           ],
+           [
+            126.7913,
+            37.5101
+           ],
+           [
+            126.7909,
+            37.5067
+           ],
+           [
+            126.7943,
+            37.5072
+           ],
+           [
+            126.7975,
+            37.5058
+           ],
+           [
+            126.8069,
+            37.5068
+           ],
+           [
+            126.8137,
+            37.5059
+           ],
+           [
+            126.8223,
+            37.5063
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "21st-general-2020",
+      "label": "제21대 국회의원선거",
+      "date": "2020-04-15",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "부천시갑",
+       "부천시정",
+       "부천시"
+      ],
+      "unit_namespaces": [
+       "admin_unit",
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "부천시갑": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시갑"
+        ],
+        "candidates": [
+         {
+          "name": "김경협",
+          "party": "더불어민주당",
+          "votes": 48002,
+          "pct": 59.18
+         },
+         {
+          "name": "이음재",
+          "party": "미래통합당",
+          "votes": 29266,
+          "pct": 36.08
+         },
+         {
+          "name": "김선자",
+          "party": "정의당",
+          "votes": 2994,
+          "pct": 3.69
+         },
+         {
+          "name": "조은지",
+          "party": "국가혁명배당금당",
+          "votes": 856,
+          "pct": 1.06
+         }
+        ],
+        "winner": {
+         "name": "김경협",
+         "party": "더불어민주당",
+         "pct": 59.18
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 36.08,
+          "progressive": 3.69,
+          "unknown": 60.23
+         },
+         "single_family_coverage": 3.69,
+         "lineage_resolved_coverage": 39.77,
+         "mixed_share": 36.08,
+         "unknown_share": 60.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "미래통합당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 81118
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 60.23,
+         "note": "계보 미확인"
+        }
+       },
+       "부천시정": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시정"
+        ],
+        "candidates": [
+         {
+          "name": "서영석",
+          "party": "더불어민주당",
+          "votes": 49552,
+          "pct": 56.75
+         },
+         {
+          "name": "안병도",
+          "party": "미래통합당",
+          "votes": 32094,
+          "pct": 36.75
+         },
+         {
+          "name": "구자호",
+          "party": "정의당",
+          "votes": 4984,
+          "pct": 5.71
+         },
+         {
+          "name": "서남순",
+          "party": "국가혁명배당금당",
+          "votes": 692,
+          "pct": 0.79
+         }
+        ],
+        "winner": {
+         "name": "서영석",
+         "party": "더불어민주당",
+         "pct": 56.75
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 36.75,
+          "progressive": 5.71,
+          "unknown": 57.54
+         },
+         "single_family_coverage": 5.71,
+         "lineage_resolved_coverage": 42.46,
+         "mixed_share": 36.75,
+         "unknown_share": 57.54,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "미래통합당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 87322
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 57.54,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 2
+      },
+      "paintable_units": [
+       "부천시갑",
+       "부천시정"
+      ]
+     },
+     "displayable_claim": "제21대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@2024-04-09#before_geo_event",
+     "role": "before_geo_event",
+     "role_label": "경계 사건 직전",
+     "date": "2024-04-09",
+     "geography_at_date": {
+      "boundary_source": "district_21",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:21:경기:부천시갑",
+       "electoral_district:21:경기:부천시정"
+      ],
+      "units": [
+       "부천시갑",
+       "부천시정"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑|부천시정",
+      "area_km2_approx": {
+       "부천시갑": 10.6,
+       "부천시정": 20.0
+      },
+      "features": [
+       {
+        "model_unit": "부천시갑",
+        "boundary_name": "부천시갑",
+        "code": "D210024",
+        "area_km2_approx": 10.6,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.7918,
+            37.4829
+           ],
+           [
+            126.7988,
+            37.483
+           ],
+           [
+            126.8029,
+            37.4823
+           ],
+           [
+            126.8138,
+            37.4857
+           ],
+           [
+            126.8209,
+            37.4907
+           ],
+           [
+            126.8146,
+            37.4932
+           ],
+           [
+            126.813,
+            37.4964
+           ],
+           [
+            126.8196,
+            37.4993
+           ],
+           [
+            126.8215,
+            37.5021
+           ],
+           [
+            126.8223,
+            37.5063
+           ],
+           [
+            126.8137,
+            37.5059
+           ],
+           [
+            126.8069,
+            37.5068
+           ],
+           [
+            126.7975,
+            37.5058
+           ],
+           [
+            126.7943,
+            37.5072
+           ],
+           [
+            126.7909,
+            37.5067
+           ],
+           [
+            126.7913,
+            37.5101
+           ],
+           [
+            126.7902,
+            37.5131
+           ],
+           [
+            126.7939,
+            37.5157
+           ],
+           [
+            126.7954,
+            37.522
+           ],
+           [
+            126.7928,
+            37.5223
+           ],
+           [
+            126.7836,
+            37.5181
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7764,
+            37.5099
+           ],
+           [
+            126.7824,
+            37.5026
+           ],
+           [
+            126.7838,
+            37.4994
+           ],
+           [
+            126.7828,
+            37.4955
+           ],
+           [
+            126.7809,
+            37.4935
+           ],
+           [
+            126.7707,
+            37.4916
+           ],
+           [
+            126.7745,
+            37.4853
+           ],
+           [
+            126.7816,
+            37.4846
+           ],
+           [
+            126.7917,
+            37.4829
+           ],
+           [
+            126.7918,
+            37.4829
+           ]
+          ]
+         ]
+        }
+       },
+       {
+        "model_unit": "부천시정",
+        "boundary_name": "부천시정",
+        "code": "D210027",
+        "area_km2_approx": 20.0,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.8223,
+            37.5063
+           ],
+           [
+            126.8247,
+            37.5083
+           ],
+           [
+            126.8243,
+            37.5145
+           ],
+           [
+            126.8231,
+            37.5162
+           ],
+           [
+            126.8256,
+            37.52
+           ],
+           [
+            126.8261,
+            37.5243
+           ],
+           [
+            126.8284,
+            37.5267
+           ],
+           [
+            126.8219,
+            37.5348
+           ],
+           [
+            126.8221,
+            37.5407
+           ],
+           [
+            126.8123,
+            37.5407
+           ],
+           [
+            126.8091,
+            37.5426
+           ],
+           [
+            126.8074,
+            37.5436
+           ],
+           [
+            126.802,
+            37.5428
+           ],
+           [
+            126.7992,
+            37.5389
+           ],
+           [
+            126.7978,
+            37.5371
+           ],
+           [
+            126.7944,
+            37.5358
+           ],
+           [
+            126.7939,
+            37.5395
+           ],
+           [
+            126.7908,
+            37.5438
+           ],
+           [
+            126.7873,
+            37.5461
+           ],
+           [
+            126.7776,
+            37.5467
+           ],
+           [
+            126.7753,
+            37.549
+           ],
+           [
+            126.7716,
+            37.5483
+           ],
+           [
+            126.7662,
+            37.5542
+           ],
+           [
+            126.7633,
+            37.5463
+           ],
+           [
+            126.7625,
+            37.5421
+           ],
+           [
+            126.7607,
+            37.5377
+           ],
+           [
+            126.7608,
+            37.536
+           ],
+           [
+            126.7607,
+            37.5361
+           ],
+           [
+            126.7603,
+            37.5241
+           ],
+           [
+            126.7601,
+            37.518
+           ],
+           [
+            126.7658,
+            37.518
+           ],
+           [
+            126.7711,
+            37.5141
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7836,
+            37.5181
+           ],
+           [
+            126.7928,
+            37.5223
+           ],
+           [
+            126.7954,
+            37.522
+           ],
+           [
+            126.7939,
+            37.5157
+           ],
+           [
+            126.7902,
+            37.5131
+           ],
+           [
+            126.7913,
+            37.5101
+           ],
+           [
+            126.7909,
+            37.5067
+           ],
+           [
+            126.7943,
+            37.5072
+           ],
+           [
+            126.7975,
+            37.5058
+           ],
+           [
+            126.8069,
+            37.5068
+           ],
+           [
+            126.8137,
+            37.5059
+           ],
+           [
+            126.8223,
+            37.5063
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "21st-general-2020",
+      "label": "제21대 국회의원선거",
+      "date": "2020-04-15",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "부천시갑",
+       "부천시정",
+       "부천시"
+      ],
+      "unit_namespaces": [
+       "admin_unit",
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "부천시갑": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시갑"
+        ],
+        "candidates": [
+         {
+          "name": "김경협",
+          "party": "더불어민주당",
+          "votes": 48002,
+          "pct": 59.18
+         },
+         {
+          "name": "이음재",
+          "party": "미래통합당",
+          "votes": 29266,
+          "pct": 36.08
+         },
+         {
+          "name": "김선자",
+          "party": "정의당",
+          "votes": 2994,
+          "pct": 3.69
+         },
+         {
+          "name": "조은지",
+          "party": "국가혁명배당금당",
+          "votes": 856,
+          "pct": 1.06
+         }
+        ],
+        "winner": {
+         "name": "김경협",
+         "party": "더불어민주당",
+         "pct": 59.18
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 36.08,
+          "progressive": 3.69,
+          "unknown": 60.23
+         },
+         "single_family_coverage": 3.69,
+         "lineage_resolved_coverage": 39.77,
+         "mixed_share": 36.08,
+         "unknown_share": 60.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "미래통합당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 81118
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 60.23,
+         "note": "계보 미확인"
+        }
+       },
+       "부천시정": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시정"
+        ],
+        "candidates": [
+         {
+          "name": "서영석",
+          "party": "더불어민주당",
+          "votes": 49552,
+          "pct": 56.75
+         },
+         {
+          "name": "안병도",
+          "party": "미래통합당",
+          "votes": 32094,
+          "pct": 36.75
+         },
+         {
+          "name": "구자호",
+          "party": "정의당",
+          "votes": 4984,
+          "pct": 5.71
+         },
+         {
+          "name": "서남순",
+          "party": "국가혁명배당금당",
+          "votes": 692,
+          "pct": 0.79
+         }
+        ],
+        "winner": {
+         "name": "서영석",
+         "party": "더불어민주당",
+         "pct": 56.75
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 36.75,
+          "progressive": 5.71,
+          "unknown": 57.54
+         },
+         "single_family_coverage": 5.71,
+         "lineage_resolved_coverage": 42.46,
+         "mixed_share": 36.75,
+         "unknown_share": 57.54,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "미래통합당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 87322
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 57.54,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 2
+      },
+      "paintable_units": [
+       "부천시갑",
+       "부천시정"
+      ]
+     },
+     "displayable_claim": "제21대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@2024-04-10#after_geo_event",
+     "role": "after_geo_event",
+     "role_label": "경계 사건 직후",
+     "date": "2024-04-10",
+     "geography_at_date": {
+      "boundary_source": "district_22",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:22:경기:부천시갑"
+      ],
+      "units": [
+       "부천시갑"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑",
+      "area_km2_approx": {
+       "부천시갑": 27.8
+      },
+      "features": [
+       {
+        "model_unit": "부천시갑",
+        "boundary_name": "부천시갑",
+        "code": "D220025",
+        "area_km2_approx": 27.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.7917,
+            37.4829
+           ],
+           [
+            126.7898,
+            37.4868
+           ],
+           [
+            126.7961,
+            37.4898
+           ],
+           [
+            126.7995,
+            37.4922
+           ],
+           [
+            126.8015,
+            37.4966
+           ],
+           [
+            126.8097,
+            37.4967
+           ],
+           [
+            126.8143,
+            37.4983
+           ],
+           [
+            126.8196,
+            37.4993
+           ],
+           [
+            126.8215,
+            37.5021
+           ],
+           [
+            126.8222,
+            37.5077
+           ],
+           [
+            126.8247,
+            37.5083
+           ],
+           [
+            126.8243,
+            37.5145
+           ],
+           [
+            126.8231,
+            37.5162
+           ],
+           [
+            126.8256,
+            37.52
+           ],
+           [
+            126.8251,
+            37.523
+           ],
+           [
+            126.8284,
+            37.5267
+           ],
+           [
+            126.8219,
+            37.5348
+           ],
+           [
+            126.8221,
+            37.5407
+           ],
+           [
+            126.8123,
+            37.5407
+           ],
+           [
+            126.8091,
+            37.5426
+           ],
+           [
+            126.8074,
+            37.5436
+           ],
+           [
+            126.802,
+            37.5428
+           ],
+           [
+            126.7992,
+            37.5389
+           ],
+           [
+            126.7978,
+            37.5371
+           ],
+           [
+            126.7944,
+            37.5358
+           ],
+           [
+            126.7939,
+            37.5395
+           ],
+           [
+            126.7908,
+            37.5438
+           ],
+           [
+            126.7873,
+            37.5461
+           ],
+           [
+            126.7776,
+            37.5467
+           ],
+           [
+            126.7753,
+            37.549
+           ],
+           [
+            126.7716,
+            37.5483
+           ],
+           [
+            126.7662,
+            37.5542
+           ],
+           [
+            126.7633,
+            37.5463
+           ],
+           [
+            126.7625,
+            37.5421
+           ],
+           [
+            126.7608,
+            37.536
+           ],
+           [
+            126.7607,
+            37.5361
+           ],
+           [
+            126.7603,
+            37.5241
+           ],
+           [
+            126.7601,
+            37.518
+           ],
+           [
+            126.7658,
+            37.518
+           ],
+           [
+            126.7711,
+            37.5141
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7764,
+            37.5099
+           ],
+           [
+            126.7824,
+            37.5026
+           ],
+           [
+            126.7838,
+            37.4994
+           ],
+           [
+            126.7828,
+            37.4955
+           ],
+           [
+            126.7809,
+            37.4935
+           ],
+           [
+            126.7707,
+            37.4916
+           ],
+           [
+            126.7745,
+            37.4853
+           ],
+           [
+            126.7816,
+            37.4846
+           ],
+           [
+            126.7917,
+            37.4829
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "22nd-general-2024",
+      "label": "제22대 국회의원선거",
+      "date": "2024-04-10",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "부천시갑"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "부천시갑": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시갑"
+        ],
+        "candidates": [
+         {
+          "name": "서영석",
+          "party": "더불어민주당",
+          "votes": 85815,
+          "pct": 61.13
+         },
+         {
+          "name": "김복덕",
+          "party": "국민의힘",
+          "votes": 54556,
+          "pct": 38.87
+         }
+        ],
+        "winner": {
+         "name": "서영석",
+         "party": "더불어민주당",
+         "pct": 61.13
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 38.87,
+          "unknown": 61.13
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 38.87,
+         "mixed_share": 38.87,
+         "unknown_share": 61.13,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "국민의힘": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 140371
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 61.13,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "부천시갑"
+      ]
+     },
+     "displayable_claim": "제22대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@2024-04-10#previous_on_new_boundary",
+     "role": "previous_on_new_boundary",
+     "role_label": "새 경계 · 이전 선거 결과",
+     "date": "2024-04-10",
+     "geography_at_date": {
+      "boundary_source": "district_22",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:22:경기:부천시갑"
+      ],
+      "units": [
+       "부천시갑"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑",
+      "area_km2_approx": {
+       "부천시갑": 27.8
+      },
+      "features": [
+       {
+        "model_unit": "부천시갑",
+        "boundary_name": "부천시갑",
+        "code": "D220025",
+        "area_km2_approx": 27.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.7917,
+            37.4829
+           ],
+           [
+            126.7898,
+            37.4868
+           ],
+           [
+            126.7961,
+            37.4898
+           ],
+           [
+            126.7995,
+            37.4922
+           ],
+           [
+            126.8015,
+            37.4966
+           ],
+           [
+            126.8097,
+            37.4967
+           ],
+           [
+            126.8143,
+            37.4983
+           ],
+           [
+            126.8196,
+            37.4993
+           ],
+           [
+            126.8215,
+            37.5021
+           ],
+           [
+            126.8222,
+            37.5077
+           ],
+           [
+            126.8247,
+            37.5083
+           ],
+           [
+            126.8243,
+            37.5145
+           ],
+           [
+            126.8231,
+            37.5162
+           ],
+           [
+            126.8256,
+            37.52
+           ],
+           [
+            126.8251,
+            37.523
+           ],
+           [
+            126.8284,
+            37.5267
+           ],
+           [
+            126.8219,
+            37.5348
+           ],
+           [
+            126.8221,
+            37.5407
+           ],
+           [
+            126.8123,
+            37.5407
+           ],
+           [
+            126.8091,
+            37.5426
+           ],
+           [
+            126.8074,
+            37.5436
+           ],
+           [
+            126.802,
+            37.5428
+           ],
+           [
+            126.7992,
+            37.5389
+           ],
+           [
+            126.7978,
+            37.5371
+           ],
+           [
+            126.7944,
+            37.5358
+           ],
+           [
+            126.7939,
+            37.5395
+           ],
+           [
+            126.7908,
+            37.5438
+           ],
+           [
+            126.7873,
+            37.5461
+           ],
+           [
+            126.7776,
+            37.5467
+           ],
+           [
+            126.7753,
+            37.549
+           ],
+           [
+            126.7716,
+            37.5483
+           ],
+           [
+            126.7662,
+            37.5542
+           ],
+           [
+            126.7633,
+            37.5463
+           ],
+           [
+            126.7625,
+            37.5421
+           ],
+           [
+            126.7608,
+            37.536
+           ],
+           [
+            126.7607,
+            37.5361
+           ],
+           [
+            126.7603,
+            37.5241
+           ],
+           [
+            126.7601,
+            37.518
+           ],
+           [
+            126.7658,
+            37.518
+           ],
+           [
+            126.7711,
+            37.5141
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7764,
+            37.5099
+           ],
+           [
+            126.7824,
+            37.5026
+           ],
+           [
+            126.7838,
+            37.4994
+           ],
+           [
+            126.7828,
+            37.4955
+           ],
+           [
+            126.7809,
+            37.4935
+           ],
+           [
+            126.7707,
+            37.4916
+           ],
+           [
+            126.7745,
+            37.4853
+           ],
+           [
+            126.7816,
+            37.4846
+           ],
+           [
+            126.7917,
+            37.4829
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "21st-general-2020",
+      "label": "제21대 국회의원선거",
+      "date": "2020-04-15",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "부천시갑",
+       "부천시정",
+       "부천시"
+      ],
+      "unit_namespaces": [
+       "admin_unit",
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "부천시갑": {
+        "method": "unavailable",
+        "reason": "event_capability_blocks_projection",
+        "blocking_event": "geo:2024-22nd:bucheon-merge",
+        "event_capability": "context_only",
+        "territorial_continuity": "partial",
+        "why": "aggregated가 아니다. 이전 부천시정은 99.7%가 들어왔지만 이전 부천시갑은 74.7%만 들어왔고 나머지는 부천시을·병으로 갔다. 전신 전체가 후신에 포함되지 않으므로 단순 합산이 성립하지 않는다."
+       }
+      },
+      "summary": {
+       "unavailable": 1
+      },
+      "paintable_units": []
+     },
+     "displayable_claim": "제21대 국회의원선거 결과는 이 경계로 표시할 수 없습니다"
+    },
+    {
+     "state_id": "general:district@2024-04-10#next_election",
+     "role": "next_election",
+     "role_label": "다음 선거",
+     "date": "2024-04-10",
+     "geography_at_date": {
+      "boundary_source": "district_22",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "electoral_district:22:경기:부천시갑"
+      ],
+      "units": [
+       "부천시갑"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "부천시갑",
+      "area_km2_approx": {
+       "부천시갑": 27.8
+      },
+      "features": [
+       {
+        "model_unit": "부천시갑",
+        "boundary_name": "부천시갑",
+        "code": "D220025",
+        "area_km2_approx": 27.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            126.7917,
+            37.4829
+           ],
+           [
+            126.7898,
+            37.4868
+           ],
+           [
+            126.7961,
+            37.4898
+           ],
+           [
+            126.7995,
+            37.4922
+           ],
+           [
+            126.8015,
+            37.4966
+           ],
+           [
+            126.8097,
+            37.4967
+           ],
+           [
+            126.8143,
+            37.4983
+           ],
+           [
+            126.8196,
+            37.4993
+           ],
+           [
+            126.8215,
+            37.5021
+           ],
+           [
+            126.8222,
+            37.5077
+           ],
+           [
+            126.8247,
+            37.5083
+           ],
+           [
+            126.8243,
+            37.5145
+           ],
+           [
+            126.8231,
+            37.5162
+           ],
+           [
+            126.8256,
+            37.52
+           ],
+           [
+            126.8251,
+            37.523
+           ],
+           [
+            126.8284,
+            37.5267
+           ],
+           [
+            126.8219,
+            37.5348
+           ],
+           [
+            126.8221,
+            37.5407
+           ],
+           [
+            126.8123,
+            37.5407
+           ],
+           [
+            126.8091,
+            37.5426
+           ],
+           [
+            126.8074,
+            37.5436
+           ],
+           [
+            126.802,
+            37.5428
+           ],
+           [
+            126.7992,
+            37.5389
+           ],
+           [
+            126.7978,
+            37.5371
+           ],
+           [
+            126.7944,
+            37.5358
+           ],
+           [
+            126.7939,
+            37.5395
+           ],
+           [
+            126.7908,
+            37.5438
+           ],
+           [
+            126.7873,
+            37.5461
+           ],
+           [
+            126.7776,
+            37.5467
+           ],
+           [
+            126.7753,
+            37.549
+           ],
+           [
+            126.7716,
+            37.5483
+           ],
+           [
+            126.7662,
+            37.5542
+           ],
+           [
+            126.7633,
+            37.5463
+           ],
+           [
+            126.7625,
+            37.5421
+           ],
+           [
+            126.7608,
+            37.536
+           ],
+           [
+            126.7607,
+            37.5361
+           ],
+           [
+            126.7603,
+            37.5241
+           ],
+           [
+            126.7601,
+            37.518
+           ],
+           [
+            126.7658,
+            37.518
+           ],
+           [
+            126.7711,
+            37.5141
+           ],
+           [
+            126.7753,
+            37.5151
+           ],
+           [
+            126.7764,
+            37.5099
+           ],
+           [
+            126.7824,
+            37.5026
+           ],
+           [
+            126.7838,
+            37.4994
+           ],
+           [
+            126.7828,
+            37.4955
+           ],
+           [
+            126.7809,
+            37.4935
+           ],
+           [
+            126.7707,
+            37.4916
+           ],
+           [
+            126.7745,
+            37.4853
+           ],
+           [
+            126.7816,
+            37.4846
+           ],
+           [
+            126.7917,
+            37.4829
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "22nd-general-2024",
+      "label": "제22대 국회의원선거",
+      "date": "2024-04-10",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "부천시갑"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "부천시갑": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "부천시갑"
+        ],
+        "candidates": [
+         {
+          "name": "서영석",
+          "party": "더불어민주당",
+          "votes": 85815,
+          "pct": 61.13
+         },
+         {
+          "name": "김복덕",
+          "party": "국민의힘",
+          "votes": 54556,
+          "pct": 38.87
+         }
+        ],
+        "winner": {
+         "name": "서영석",
+         "party": "더불어민주당",
+         "pct": 61.13
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 38.87,
+          "unknown": 61.13
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 38.87,
+         "mixed_share": 38.87,
+         "unknown_share": 61.13,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "국민의힘": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 140371
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 61.13,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "부천시갑"
+      ]
+     },
+     "displayable_claim": "제22대 국회의원선거 결과 · 당시 경계"
+    }
+   ],
+   "n_snapshots": 2,
+   "pivot_event": {
+    "event_id": "geo:2024-22nd:bucheon-merge",
+    "type": "merge",
+    "effective_date": "2024-04-10",
+    "label": "부천 4개 선거구가 3개로 통합",
+    "territorial_continuity": "partial",
+    "comparison_capability": "context_only",
+    "expect_topology_change": true
+   }
+  }
+ ]
+}

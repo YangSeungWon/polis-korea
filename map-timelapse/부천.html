@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>부천 지도 타임랩스</title><style>
+:root{--mt-ink:#14181d;--mt-dim:#5d6672;--mt-line:#d8dde3;--mt-bg:#fff;--mt-card:#f7f8fa}
+@media (prefers-color-scheme:dark){:root{--mt-ink:#e8ecf1;--mt-dim:#9aa4b0;
+--mt-line:#333c47;--mt-bg:#0f1317;--mt-card:#171c22}}
+.mt{color:var(--mt-ink);background:var(--mt-bg);font:15px/1.6 system-ui,sans-serif;
+padding:20px;max-width:1080px;margin:0 auto}
+.mt h2{font-size:20px;margin:0 0 4px}
+.mt .mt-lead{color:var(--mt-dim);margin:0 0 16px;font-size:14px}
+.mt-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px}
+.mt-ctl label{font-size:13px;color:var(--mt-dim)}
+.mt-seg{display:flex;flex-wrap:wrap;gap:4px}
+.mt-seg button{font:inherit;font-size:13px;padding:5px 11px;border:1px solid var(--mt-line);
+background:var(--mt-bg);color:var(--mt-ink);border-radius:999px;cursor:pointer}
+.mt-seg button[aria-pressed=true]{background:var(--mt-ink);color:var(--mt-bg);
+border-color:var(--mt-ink)}
+.mt-seg button:focus-visible{outline:2px solid #0a5cb8;outline-offset:2px}
+.mt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;
+align-items:start}
+@media (max-width:820px){.mt-grid{grid-template-columns:1fr}}
+.mt-svg{width:100%;height:auto;background:var(--mt-card);border-radius:8px;
+border:1px solid var(--mt-line)}
+.mt-u{stroke:var(--mt-bg);stroke-width:2.5}
+.mt-lb{font:600 12px system-ui,sans-serif;fill:var(--mt-ink);paint-order:stroke;
+stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
+.mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
+.mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
+.mt-h{font-size:15px;margin:14px 0 8px}
+.mt-svg-empty{border-style:dashed}
+.mt-empty{font:13px system-ui,sans-serif;fill:var(--mt-dim)}
+.mt-claim{font-weight:600;margin:0 0 8px}
+.mt-ev{margin:0 0 10px;font-size:13px;color:var(--mt-dim);border-left:3px solid var(--mt-line);
+padding-left:9px}
+.mt-layers{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:0 0 12px;
+font-size:14px}
+.mt-layers dt{color:var(--mt-dim);font-size:13px}
+.mt-layers dd{margin:0}
+.mt-dim{color:var(--mt-dim);font-size:12px}
+.mt-tab{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;
+word-break:keep-all}
+.mt-tab col.c1{width:27%}.mt-tab col.c2{width:19%}.mt-tab col.c3{width:26%}
+.mt-why td{color:var(--mt-dim);font-size:12.5px;border-top:0;padding-top:0;
+line-height:1.55}
+.mt-tab caption{text-align:left;color:var(--mt-dim);font-size:12px;padding-bottom:4px}
+.mt-tab th,.mt-tab td{text-align:left;padding:5px 6px;border-top:1px solid var(--mt-line);
+vertical-align:top}
+.mt-tab thead th{color:var(--mt-dim);font-weight:500;border-top:0}
+.mt-b{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;
+border:1px solid var(--mt-line)}
+.mt-b-direct{border-color:#2a7d4f;color:#2a7d4f}
+.mt-b-aggregated{border-color:#8a6d1f;color:#8a6d1f}
+.mt-b-unavailable{border-color:#98a1ab;color:var(--mt-dim)}
+@media (prefers-color-scheme:dark){.mt-b-direct{border-color:#6fd39a;color:#6fd39a}
+.mt-b-aggregated{border-color:#dcb54a;color:#dcb54a}}
+.mt-key{display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-size:12px;
+color:var(--mt-dim)}
+.mt-key i{width:13px;height:13px;border-radius:3px;display:inline-block;
+border:1px solid var(--mt-line)}
+.mt-legend{margin:12px 0 0;line-height:2}
+.mt-note{color:var(--mt-dim);font-size:12.5px;margin:10px 0 0}
+</style></head><body><section class="mt" data-series="general:district"
+ data-role="before_election">
+<h2>부천 지도 타임랩스</h2>
+<p class="mt-lead">경계 · 선거 · 투영은 다른 층입니다. <b>결과가 있다고 해서 지금
+경계에 칠할 수 있는 것은 아닙니다</b> — 칠할 수 없는 경계는 그리되 정치색을 주지
+않습니다.</p>
+<div class="mt-ctl"><label>비교 series</label><div class="mt-seg"><button type="button" data-set="series=general:district">국회의원</button></div></div>
+<div class="mt-ctl"><label>시점</label><div class="mt-seg"><button type="button" data-set="role=before_election">선거 직전</button><button type="button" data-set="role=election">선거 시점</button><button type="button" data-set="role=before_geo_event">경계 사건 직전</button><button type="button" data-set="role=after_geo_event">경계 사건 직후</button><button type="button" data-set="role=previous_on_new_boundary">새 경계 · 이전 선거 결과</button><button type="button" data-set="role=next_election">다음 선거</button></div></div>
+<svg width="0" height="0" aria-hidden="true"><defs>
+<pattern id="mt-mixed" width="7" height="7" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(45)"><rect width="7" height="7" fill="#9aa3ad"/>
+<line x1="0" y1="0" x2="0" y2="7" stroke="#f6f7f9" stroke-width="2.5"/></pattern>
+<pattern id="mt-unknown" width="6" height="6" patternUnits="userSpaceOnUse">
+<rect width="6" height="6" fill="#d7dbe0"/><circle cx="3" cy="3" r="1" fill="#8b939c"/>
+</pattern>
+<pattern id="mt-none" width="8" height="8" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(135)"><rect width="8" height="8" fill="#eceef1"/>
+<line x1="0" y1="0" x2="0" y2="8" stroke="#b9c0c8" stroke-width="1.5"/></pattern>
+</defs></svg><section class="mt-frame" data-role="before_election"
+ data-series="general:district" data-state="general:district@2020-04-14#before_election">
+<h3 class="mt-h">선거 직전 · 2020-04-14</h3>
+<div class="mt-grid">
+<svg class="mt-svg mt-svg-empty" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-14 시점 경계 부천시갑|부천시정">
+<text class="mt-empty" x="260" y="280" text-anchor="middle">경계 그림 없음</text></svg>
+<div class="mt-side">
+<p class="mt-claim">이 시점 경계 그림이 없습니다 — 부천시갑 · 부천시정</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑 · 부천시정
+ <span class="mt-dim">(district_20)</span></dd>
+<dt>선거</dt><dd class="mt-snap">없음
+ <span class="mt-dim"></span></dd>
+<dt>투영</dt><dd class="mt-proj">없음</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr class="mt-why"><td colspan="4">이 시점의 경계 그림이 없어 폴리곤을 그리지 않습니다. 없는 경계에 색을 만들지 않습니다.</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="general:district" data-state="general:district@2020-04-15#election" hidden>
+<h3 class="mt-h">선거 시점 · 2020-04-15</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-15 시점 경계 부천시갑|부천시정"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M245.8,537.6L286.3,536.9L310.0,542.0L373.0,517.2L414.0,480.8L377.6,462.6L368.4,439.2L406.5,418.1L417.5,397.7L422.1,367.1L372.4,370.0L333.1,363.4L278.8,370.7L260.3,360.5L240.6,364.2L242.9,339.4L236.6,317.5L258.0,298.6L266.6,252.7L251.6,250.5L198.4,281.1L150.5,303.0L156.8,340.9L191.5,394.1L199.6,417.4L193.8,445.8L182.8,460.4L123.9,474.2L145.8,520.1L186.9,525.2L245.3,537.6L245.8,537.6Z" role="img" aria-label="부천시갑 — 계보 미확인, 투영 그대로"><title>부천시갑
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M422.1,367.1L436.0,352.5L433.7,307.3L426.8,294.9L441.2,267.2L444.1,235.9L457.4,218.4L419.8,159.4L421.0,116.4L364.3,116.4L345.8,102.5L336.0,95.3L304.8,101.1L288.6,129.5L280.5,142.6L260.9,152.1L258.0,125.1L240.1,93.8L219.8,77.0L163.8,72.7L150.5,55.9L129.1,61.0L97.9,18.0L81.1,75.6L76.5,106.2L66.1,138.3L66.6,150.6L66.1,149.9L63.8,237.4L62.6,281.8L95.5,281.8L126.2,310.2L150.5,303.0L198.4,281.1L251.6,250.5L266.6,252.7L258.0,298.6L236.6,317.5L242.9,339.4L240.6,364.2L260.3,360.5L278.8,370.7L333.1,363.4L372.4,370.0L422.1,367.1Z" role="img" aria-label="부천시정 — 계보 미확인, 투영 그대로"><title>부천시정
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="268" y="413" text-anchor="middle" aria-hidden="true">부천시갑</text><text class="mt-lb" x="257" y="214" text-anchor="middle" aria-hidden="true">부천시정</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑 · 부천시정
+ <span class="mt-dim">(district_21)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">부천시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김경협 59.18%</td></tr><tr><th scope="row">부천시정</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 서영석 56.75%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="general:district" data-state="general:district@2024-04-09#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2024-04-09</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-09 시점 경계 부천시갑|부천시정"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M245.8,537.6L286.3,536.9L310.0,542.0L373.0,517.2L414.0,480.8L377.6,462.6L368.4,439.2L406.5,418.1L417.5,397.7L422.1,367.1L372.4,370.0L333.1,363.4L278.8,370.7L260.3,360.5L240.6,364.2L242.9,339.4L236.6,317.5L258.0,298.6L266.6,252.7L251.6,250.5L198.4,281.1L150.5,303.0L156.8,340.9L191.5,394.1L199.6,417.4L193.8,445.8L182.8,460.4L123.9,474.2L145.8,520.1L186.9,525.2L245.3,537.6L245.8,537.6Z" role="img" aria-label="부천시갑 — 계보 미확인, 투영 그대로"><title>부천시갑
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M422.1,367.1L436.0,352.5L433.7,307.3L426.8,294.9L441.2,267.2L444.1,235.9L457.4,218.4L419.8,159.4L421.0,116.4L364.3,116.4L345.8,102.5L336.0,95.3L304.8,101.1L288.6,129.5L280.5,142.6L260.9,152.1L258.0,125.1L240.1,93.8L219.8,77.0L163.8,72.7L150.5,55.9L129.1,61.0L97.9,18.0L81.1,75.6L76.5,106.2L66.1,138.3L66.6,150.6L66.1,149.9L63.8,237.4L62.6,281.8L95.5,281.8L126.2,310.2L150.5,303.0L198.4,281.1L251.6,250.5L266.6,252.7L258.0,298.6L236.6,317.5L242.9,339.4L240.6,364.2L260.3,360.5L278.8,370.7L333.1,363.4L372.4,370.0L422.1,367.1Z" role="img" aria-label="부천시정 — 계보 미확인, 투영 그대로"><title>부천시정
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="268" y="413" text-anchor="middle" aria-hidden="true">부천시갑</text><text class="mt-lb" x="257" y="214" text-anchor="middle" aria-hidden="true">부천시정</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑 · 부천시정
+ <span class="mt-dim">(district_21)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">부천시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김경협 59.18%</td></tr><tr><th scope="row">부천시정</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 서영석 56.75%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="general:district" data-state="general:district@2024-04-10#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 부천시갑"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M245.3,537.6L234.3,509.2L270.7,487.3L290.3,469.8L301.9,437.8L349.3,437.1L375.9,425.4L406.5,418.1L417.5,397.7L421.6,356.9L436.0,352.5L433.7,307.3L426.8,294.9L441.2,267.2L438.3,245.4L457.4,218.4L419.8,159.4L421.0,116.4L364.3,116.4L345.8,102.5L336.0,95.3L304.8,101.1L288.6,129.5L280.5,142.6L260.9,152.1L258.0,125.1L240.1,93.8L219.8,77.0L163.8,72.7L150.5,55.9L129.1,61.0L97.9,18.0L81.1,75.6L76.5,106.2L66.6,150.6L66.1,149.9L63.8,237.4L62.6,281.8L95.5,281.8L126.2,310.2L150.5,303.0L156.8,340.9L191.5,394.1L199.6,417.4L193.8,445.8L182.8,460.4L123.9,474.2L145.8,520.1L186.9,525.2L245.3,537.6Z" role="img" aria-label="부천시갑 — 계보 미확인, 투영 그대로"><title>부천시갑
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="253" y="276" text-anchor="middle" aria-hidden="true">부천시갑</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제22대 국회의원선거 결과 · 당시 경계</p>
+<p class="mt-ev">부천 4개 선거구가 3개로 통합 — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제22대 국회의원선거
+ <span class="mt-dim">2024-04-10</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">부천시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 서영석 61.13%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="general:district" data-state="general:district@2024-04-10#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 부천시갑"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M245.3,537.6L234.3,509.2L270.7,487.3L290.3,469.8L301.9,437.8L349.3,437.1L375.9,425.4L406.5,418.1L417.5,397.7L421.6,356.9L436.0,352.5L433.7,307.3L426.8,294.9L441.2,267.2L438.3,245.4L457.4,218.4L419.8,159.4L421.0,116.4L364.3,116.4L345.8,102.5L336.0,95.3L304.8,101.1L288.6,129.5L280.5,142.6L260.9,152.1L258.0,125.1L240.1,93.8L219.8,77.0L163.8,72.7L150.5,55.9L129.1,61.0L97.9,18.0L81.1,75.6L76.5,106.2L66.6,150.6L66.1,149.9L63.8,237.4L62.6,281.8L95.5,281.8L126.2,310.2L150.5,303.0L156.8,340.9L191.5,394.1L199.6,417.4L193.8,445.8L182.8,460.4L123.9,474.2L145.8,520.1L186.9,525.2L245.3,537.6Z" role="img" aria-label="부천시갑 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>부천시갑
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="253" y="276" text-anchor="middle" aria-hidden="true">부천시갑</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">부천시갑</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">aggregated가 아니다. 이전 부천시정은 99.7%가 들어왔지만 이전 부천시갑은 74.7%만 들어왔고 나머지는 부천시을·병으로 갔다. 전신 전체가 후신에 포함되지 않으므로 단순 합산이 성립하지 않는다.</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="general:district" data-state="general:district@2024-04-10#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 부천시갑"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M245.3,537.6L234.3,509.2L270.7,487.3L290.3,469.8L301.9,437.8L349.3,437.1L375.9,425.4L406.5,418.1L417.5,397.7L421.6,356.9L436.0,352.5L433.7,307.3L426.8,294.9L441.2,267.2L438.3,245.4L457.4,218.4L419.8,159.4L421.0,116.4L364.3,116.4L345.8,102.5L336.0,95.3L304.8,101.1L288.6,129.5L280.5,142.6L260.9,152.1L258.0,125.1L240.1,93.8L219.8,77.0L163.8,72.7L150.5,55.9L129.1,61.0L97.9,18.0L81.1,75.6L76.5,106.2L66.6,150.6L66.1,149.9L63.8,237.4L62.6,281.8L95.5,281.8L126.2,310.2L150.5,303.0L156.8,340.9L191.5,394.1L199.6,417.4L193.8,445.8L182.8,460.4L123.9,474.2L145.8,520.1L186.9,525.2L245.3,537.6Z" role="img" aria-label="부천시갑 — 계보 미확인, 투영 그대로"><title>부천시갑
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="253" y="276" text-anchor="middle" aria-hidden="true">부천시갑</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제22대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">부천시갑
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제22대 국회의원선거
+ <span class="mt-dim">2024-04-10</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">부천시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 서영석 61.13%</td></tr></tbody></table>
+</div></div></section>
+<p class="mt-legend"><span class="mt-key"><i style="background:#d2352b"></i>보수계</span><span class="mt-key"><i style="background:#0a5cb8"></i>민주계</span><span class="mt-key"><i style="background:#e8a300"></i>진보계</span><span class="mt-key"><i style="background:#00875a"></i>지역계</span><span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보(계열 hue 없음)</span><span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속</span><span class="mt-key"><i style="background:#eceef1"></i>이 경계로 표시 불가</span><br><span class="mt-key">1위 계열 득표 비율</span><span class="mt-key"><i style="background:#d2352b;opacity:0.42"></i>45% 미만</span><span class="mt-key"><i style="background:#d2352b;opacity:0.68"></i>45–60%</span><span class="mt-key"><i style="background:#d2352b;opacity:1.0"></i>60% 이상</span></p>
+<p class="mt-note">선거 사이를 보간하지 않습니다. 각 시점은 그 이전 마지막 선거의
+결과를 보여주며, 경계는 행정구역 사건일에 이산 전환합니다.</p>
+</section><script>
+(function(){
+ var root=document.querySelector('.mt'); if(!root) return;
+ var st={series:root.dataset.series,role:root.dataset.role};
+ function draw(){
+  root.querySelectorAll('.mt-frame').forEach(function(f){
+   f.hidden=!(f.dataset.series===st.series&&f.dataset.role===st.role);});
+  root.querySelectorAll('[data-set]').forEach(function(b){
+   var kv=b.dataset.set.split('=');
+   b.setAttribute('aria-pressed',String(st[kv[0]]===kv[1]));});
+ }
+ root.querySelectorAll('[data-set]').forEach(function(b){
+  b.addEventListener('click',function(){var kv=b.dataset.set.split('=');
+   st[kv[0]]=kv[1];draw();});});
+ draw();
+})();
+</script></body></html>

@@ -8,6 +8,7 @@
  },
  "region": "포항",
  "namespace": "admin_unit",
+ "excluded_series": [],
  "entity_family": [
   "admin_unit:경상북도:영일군",
   "admin_unit:경상북도:포항시",
@@ -26,6 +27,10 @@
      "date": "1992-12-17",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -292,7 +297,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "13th-pres-1987",
@@ -457,6 +462,10 @@
      "date": "1992-12-18",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -723,7 +732,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-pres-1992",
@@ -920,6 +929,10 @@
      "date": "1994-12-31",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -1186,7 +1199,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-pres-1992",
@@ -1383,6 +1396,10 @@
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -1585,7 +1602,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-pres-1992",
@@ -1703,6 +1720,10 @@
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -1905,7 +1926,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-pres-1992",
@@ -2023,6 +2044,10 @@
      "date": "1997-12-18",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -2225,7 +2250,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "15th-pres-1997",
@@ -2340,7 +2365,16 @@
      "displayable_claim": "제15대 대통령선거 결과 · 1995년 경계에 합산"
     }
    ],
-   "n_snapshots": 9
+   "n_snapshots": 15,
+   "pivot_event": {
+    "event_id": "geo:1995-01-01:pohang-merge",
+    "type": "merge",
+    "effective_date": "1995-01-01",
+    "label": "포항시·영일군 통합(1차 도농통합)",
+    "territorial_continuity": "same_total",
+    "comparison_capability": "aggregated",
+    "expect_topology_change": true
+   }
   },
   {
    "comparison_series_id": "general:district",
@@ -2352,6 +2386,10 @@
      "date": "1992-03-23",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -2618,7 +2656,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "13th-general-1988",
@@ -2738,6 +2776,10 @@
      "date": "1992-03-24",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -3004,7 +3046,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-general-1992",
@@ -3115,6 +3157,10 @@
      "date": "1994-12-31",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:영일군",
        "admin_unit:경상북도:포항시(구)"
@@ -3381,7 +3427,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-general-1992",
@@ -3492,6 +3538,10 @@
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -3694,7 +3744,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-general-1992",
@@ -3739,6 +3789,10 @@
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -3941,7 +3995,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "14th-general-1992",
@@ -3986,6 +4040,10 @@
      "date": "1996-04-11",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
       "entity_version_ids": [
        "admin_unit:경상북도:포항시"
       ],
@@ -4188,7 +4246,7 @@
         }
        }
       ],
-      "model_matches_boundary": true
+      "drawn_units_valid": true
      },
      "election_snapshot": {
       "election_id": "15th-general-1996",
@@ -4227,7 +4285,16 @@
      "displayable_claim": "제15대 국회의원선거 결과는 이 경계로 표시할 수 없습니다"
     }
    ],
-   "n_snapshots": 22
+   "n_snapshots": 22,
+   "pivot_event": {
+    "event_id": "geo:1995-01-01:pohang-merge",
+    "type": "merge",
+    "effective_date": "1995-01-01",
+    "label": "포항시·영일군 통합(1차 도농통합)",
+    "territorial_continuity": "same_total",
+    "comparison_capability": "aggregated",
+    "expect_topology_change": true
+   }
   }
  ]
 }

@@ -81,7 +81,13 @@ def series_id(kind: str, race: dict) -> str:
     if kind == "pres":
         return "president:national"
     if kind == "general":
-        return "general:pr" if "비례" in str(race.get("name") or "") else "general:district"
+        # 이름으로 가르면 **이름 없는 행**을 놓친다. 시군구별 집계 파일의 비례 행에는
+        # name이 없어서 지역구로 분류됐다(군위군 비례 38정당이 지역구 series에 섞였다).
+        # sg_typecode가 직위를 가르는 정본이다 — 7이 비례다.
+        tc = str(race.get("sg_typecode") or "")
+        if tc == "7" or "비례" in str(race.get("name") or ""):
+            return "general:pr"
+        return "general:district"
     if kind == "local":
         return "local:" + LOCAL_OFFICE.get(str(race.get("sg_typecode")), "unknown")
     return f"{kind}:unknown"

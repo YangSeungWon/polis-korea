@@ -37,9 +37,15 @@ FAM_COLOR = {"conservative": "#d2352b", "democratic": "#0a5cb8",
              "progressive": "#e8a300", "regional": "#00875a", "other": "#7a5cc0"}
 FAM_LABEL = {"conservative": "보수계", "democratic": "민주계",
              "progressive": "진보계", "regional": "지역계", "other": "기타"}
+# 연표(render_region_timeline)와 같은 이름을 쓴다 — 화면마다 다른 말을 하면 안 된다
 SERIES_LABEL = {"president:national": "대통령", "general:district": "국회의원",
                 "general:pr": "국회의원 비례", "local:metro_mayor": "광역단체장",
-                "local:municipal_mayor": "기초단체장"}
+                "local:municipal_mayor": "기초단체장",
+                "local:metro_council_district": "광역의원",
+                "local:municipal_council_district": "기초의원",
+                "local:metro_council_pr": "광역의원 비례",
+                "local:municipal_council_pr": "기초의원 비례",
+                "local:education_superintendent": "교육감"}
 METHOD_LABEL = {"direct": "그대로", "aggregated": "합산", "reaggregated": "재집계",
                 "unavailable": "표시 불가"}
 # 강도는 3단계로만. 연속 명도는 키 없이 읽을 수 없다.
@@ -108,7 +114,8 @@ def fill_for(proj: dict) -> tuple:
         p.get("state"), "자료 없음")
 
 
-def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
+def frame(s: dict, pr, sid: str, visible: bool = False,
+          ev_info: dict | None = None) -> str:
     g, proj = s["geography_at_date"], s["political_projection"]
     snap = s["election_snapshot"]
     shapes, labels = [], []
@@ -132,6 +139,11 @@ def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
                       f'text-anchor="middle" aria-hidden="true">'
                       f'{esc(f["model_unit"])}</text>')
     rows = []
+    if not proj["per_unit"]:
+        # 빈 상자를 그냥 두지 않는다 — 비어 있는 것과 자료가 없는 것은 다르다
+        rows.append('<tr class="mt-why"><td colspan="4">'
+                    + esc("이 시점의 경계 그림이 없어 폴리곤을 그리지 않습니다. "
+                          "없는 경계에 색을 만들지 않습니다.") + '</td></tr>')
     for name, p in sorted(proj["per_unit"].items()):
         _, _, desc = fill_for(p)
         w = p.get("winner") or {}
@@ -150,16 +162,23 @@ def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
         note = p.get("why") or p.get("reason")
         if not w.get("name") and note:
             rows.append(f'<tr class="mt-why"><td colspan="4">{esc(note)}</td></tr>')
-    ev = ('<p class="mt-ev">이 시점에 행정구역이 바뀌었습니다 — 경계는 사건일에 '
-          '이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>'
-          if s["role"] == "after_geo_event" else "")
+    ev = ""
+    if s["role"] == "after_geo_event" and ev_info:
+        # 영역이 그대로인 사건(승격·편입)은 폴리곤이 안 바뀌는 게 맞다. 화면이 그걸
+        # 말하지 않으면 "왜 아무것도 안 바뀌지?"가 된다.
+        ev = ('<p class="mt-ev">' + esc(ev_info.get("label") or "행정구역 변화")
+              + (' — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.'
+                 if ev_info.get("expect_topology_change") else
+                 ' — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.')
+              + '</p>')
     return f"""<section class="mt-frame" data-role="{esc(s['role'])}"
  data-series="{esc(sid)}" data-state="{esc(s['state_id'])}"{'' if visible else ' hidden'}>
 <h3 class="mt-h">{esc(s['role_label'])} · {esc(s['date'])}</h3>
 <div class="mt-grid">
-<svg class="mt-svg" viewBox="0 0 {W} {H}" role="group"
+<svg class="mt-svg{'' if g['features'] else ' mt-svg-empty'}" viewBox="0 0 {W} {H}" role="group"
  aria-label="{esc(s['date'])} 시점 경계 {esc(g['topology_signature'])}">{''.join(shapes)}
-{''.join(labels)}</svg>
+{''.join(labels)}{'' if g['features'] else
+  f'<text class="mt-empty" x="{W//2}" y="{H//2}" text-anchor="middle">경계 그림 없음</text>'}</svg>
 <div class="mt-side">
 <p class="mt-claim">{esc(s['displayable_claim'])}</p>
 {ev}
@@ -218,6 +237,8 @@ stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
 .mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
 .mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
 .mt-h{font-size:15px;margin:14px 0 8px}
+.mt-svg-empty{border-style:dashed}
+.mt-empty{font:13px system-ui,sans-serif;fill:var(--mt-dim)}
 .mt-claim{font-weight:600;margin:0 0 8px}
 .mt-ev{margin:0 0 10px;font-size:13px;color:var(--mt-dim);border-left:3px solid var(--mt-line);
 padding-left:9px}
@@ -282,7 +303,8 @@ def render(doc: dict) -> str:
         f'{esc(s["role_label"])}</button>' for s in blocks[0]["states"])
     # JS가 없어도 **정확히 한 프레임**은 보인다. 다 보이면 series를 섞어 보여주는 셈이다.
     frames = "".join(frame(s, pr, b["comparison_series_id"],
-                           visible=(bi == 0 and si == 0))
+                           visible=(bi == 0 and si == 0),
+                           ev_info=b.get("pivot_event"))
                      for bi, b in enumerate(blocks)
                      for si, s in enumerate(b["states"]))
     leg = "".join(f'<span class="mt-key"><i style="background:{c}"></i>'
@@ -330,6 +352,11 @@ def main(regions: list[str]) -> int:
         n += 1
         print(f"  {d['region']}: series {len(d['series_blocks'])} · 프레임 "
               f"{sum(len(b['states']) for b in d['series_blocks'])}")
+    live = {f"{f.stem}.html" for f in SRC.glob("*.json")}
+    for f in OUT.glob("*.html"):
+        if f.name not in live:
+            f.unlink()
+            print(f"  (지운 옛 페이지) {f.name}")
     print(f"\n→ {OUT.name}/ {n}개")
     return 0
 

@@ -1,0 +1,2653 @@
+{
+ "_note": "지도 타임랩스 상태. geography_at_date · election_snapshot · political_projection을 분리한다. **snapshot이 있다 ≠ 지금 polygon에 칠할 수 있다** — 투영 판정은 events/containment가 이미 준 capability를 쓰고 여기서 새로 만들지 않는다.",
+ "_rules": {
+  "series": "한 지도에서 series를 섞지 않는다",
+  "interpolation": "선거 사이를 보간하지 않는다 — discrete snapshot만",
+  "topology": "사건 effective date에서 이산 전환한다 — 형태 보간 없음",
+  "unavailable": "polygon은 그리되 정치색을 만들지 않는다"
+ },
+ "region": "이천",
+ "namespace": "admin_unit",
+ "excluded_series": [],
+ "entity_family": [
+  "admin_unit:경기도:이천군",
+  "admin_unit:경기도:이천시"
+ ],
+ "series_blocks": [
+  {
+   "comparison_series_id": "president:national",
+   "states": [
+    {
+     "state_id": "president:national@1992-12-17#before_election",
+     "role": "before_election",
+     "role_label": "선거 직전",
+     "date": "1992-12-17",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "13th-pres-1987",
+      "label": "제13대 대통령선거",
+      "date": "1987-12-16",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "노태우",
+          "party": "민주정의당",
+          "votes": 36691,
+          "pct": 50.78
+         },
+         {
+          "name": "김영삼",
+          "party": "통일민주당",
+          "votes": 21381,
+          "pct": 29.59
+         },
+         {
+          "name": "김대중",
+          "party": "평화민주당",
+          "votes": 9288,
+          "pct": 12.85
+         },
+         {
+          "name": "김종필",
+          "party": "신민주공화당",
+          "votes": 4655,
+          "pct": 6.44
+         },
+         {
+          "name": "신정일",
+          "party": "한주의통일한국당",
+          "votes": 241,
+          "pct": 0.33
+         }
+        ],
+        "winner": {
+         "name": "노태우",
+         "party": "민주정의당",
+         "pct": 50.78
+        },
+        "lineage_composition": {
+         "share": {
+          "conservative": 50.78,
+          "regional": 6.44,
+          "unknown": 42.78
+         },
+         "single_family_coverage": 57.22,
+         "lineage_resolved_coverage": 57.22,
+         "mixed_share": 0.0,
+         "unknown_share": 42.78,
+         "independent_share": 0.0,
+         "mixed_constituents": {},
+         "total_votes": 72256
+        },
+        "paint": {
+         "state": "family",
+         "family": "conservative",
+         "share": 50.78,
+         "coverage": 57.22
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제13대 대통령선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "president:national@1992-12-18#election",
+     "role": "election",
+     "role_label": "선거 시점",
+     "date": "1992-12-18",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-pres-1992",
+      "label": "제14대 대통령선거",
+      "date": "1992-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "김영삼",
+          "party": "민주자유당",
+          "votes": 27852,
+          "pct": 36.15
+         },
+         {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 27850,
+          "pct": 36.14
+         },
+         {
+          "name": "김대중",
+          "party": "민주당(1991)",
+          "votes": 15266,
+          "pct": 19.81
+         },
+         {
+          "name": "박찬종",
+          "party": "신정당",
+          "votes": 4601,
+          "pct": 5.97
+         },
+         {
+          "name": "백기완",
+          "party": "무소속",
+          "votes": 868,
+          "pct": 1.13
+         },
+         {
+          "name": "김옥선",
+          "party": "무소속",
+          "votes": 368,
+          "pct": 0.48
+         },
+         {
+          "name": "이병호",
+          "party": "대한정의당",
+          "votes": 248,
+          "pct": 0.32
+         }
+        ],
+        "winner": {
+         "name": "김영삼",
+         "party": "민주자유당",
+         "pct": 36.15
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 1.6,
+          "mixed": 36.15,
+          "unknown": 62.25
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 36.15,
+         "mixed_share": 36.15,
+         "unknown_share": 62.25,
+         "independent_share": 1.6,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 77053
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.25,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제14대 대통령선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "president:national@1996-02-29#before_geo_event",
+     "role": "before_geo_event",
+     "role_label": "경계 사건 직전",
+     "date": "1996-02-29",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-pres-1992",
+      "label": "제14대 대통령선거",
+      "date": "1992-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "김영삼",
+          "party": "민주자유당",
+          "votes": 27852,
+          "pct": 36.15
+         },
+         {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 27850,
+          "pct": 36.14
+         },
+         {
+          "name": "김대중",
+          "party": "민주당(1991)",
+          "votes": 15266,
+          "pct": 19.81
+         },
+         {
+          "name": "박찬종",
+          "party": "신정당",
+          "votes": 4601,
+          "pct": 5.97
+         },
+         {
+          "name": "백기완",
+          "party": "무소속",
+          "votes": 868,
+          "pct": 1.13
+         },
+         {
+          "name": "김옥선",
+          "party": "무소속",
+          "votes": 368,
+          "pct": 0.48
+         },
+         {
+          "name": "이병호",
+          "party": "대한정의당",
+          "votes": 248,
+          "pct": 0.32
+         }
+        ],
+        "winner": {
+         "name": "김영삼",
+         "party": "민주자유당",
+         "pct": 36.15
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 1.6,
+          "mixed": 36.15,
+          "unknown": 62.25
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 36.15,
+         "mixed_share": 36.15,
+         "unknown_share": 62.25,
+         "independent_share": 1.6,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 77053
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.25,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제14대 대통령선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "president:national@1996-03-01#after_geo_event",
+     "role": "after_geo_event",
+     "role_label": "경계 사건 직후",
+     "date": "1996-03-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-pres-1992",
+      "label": "제14대 대통령선거",
+      "date": "1992-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "영역이 그대로다 — 그때 이름은 '이천군'이고 지금은 '이천시'이다",
+        "licensed_by": [
+         "geo:1996-03-01:icheon-promotion"
+        ],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "김영삼",
+          "party": "민주자유당",
+          "votes": 27852,
+          "pct": 36.15
+         },
+         {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 27850,
+          "pct": 36.14
+         },
+         {
+          "name": "김대중",
+          "party": "민주당(1991)",
+          "votes": 15266,
+          "pct": 19.81
+         },
+         {
+          "name": "박찬종",
+          "party": "신정당",
+          "votes": 4601,
+          "pct": 5.97
+         },
+         {
+          "name": "백기완",
+          "party": "무소속",
+          "votes": 868,
+          "pct": 1.13
+         },
+         {
+          "name": "김옥선",
+          "party": "무소속",
+          "votes": 368,
+          "pct": 0.48
+         },
+         {
+          "name": "이병호",
+          "party": "대한정의당",
+          "votes": 248,
+          "pct": 0.32
+         }
+        ],
+        "winner": {
+         "name": "김영삼",
+         "party": "민주자유당",
+         "pct": 36.15
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 1.6,
+          "mixed": 36.15,
+          "unknown": 62.25
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 36.15,
+         "mixed_share": 36.15,
+         "unknown_share": 62.25,
+         "independent_share": 1.6,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 77053
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.25,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제14대 대통령선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "president:national@1996-03-01#previous_on_new_boundary",
+     "role": "previous_on_new_boundary",
+     "role_label": "새 경계 · 이전 선거 결과",
+     "date": "1996-03-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-pres-1992",
+      "label": "제14대 대통령선거",
+      "date": "1992-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "영역이 그대로다 — 그때 이름은 '이천군'이고 지금은 '이천시'이다",
+        "licensed_by": [
+         "geo:1996-03-01:icheon-promotion"
+        ],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "김영삼",
+          "party": "민주자유당",
+          "votes": 27852,
+          "pct": 36.15
+         },
+         {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 27850,
+          "pct": 36.14
+         },
+         {
+          "name": "김대중",
+          "party": "민주당(1991)",
+          "votes": 15266,
+          "pct": 19.81
+         },
+         {
+          "name": "박찬종",
+          "party": "신정당",
+          "votes": 4601,
+          "pct": 5.97
+         },
+         {
+          "name": "백기완",
+          "party": "무소속",
+          "votes": 868,
+          "pct": 1.13
+         },
+         {
+          "name": "김옥선",
+          "party": "무소속",
+          "votes": 368,
+          "pct": 0.48
+         },
+         {
+          "name": "이병호",
+          "party": "대한정의당",
+          "votes": 248,
+          "pct": 0.32
+         }
+        ],
+        "winner": {
+         "name": "김영삼",
+         "party": "민주자유당",
+         "pct": 36.15
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 1.6,
+          "mixed": 36.15,
+          "unknown": 62.25
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 36.15,
+         "mixed_share": 36.15,
+         "unknown_share": 62.25,
+         "independent_share": 1.6,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 77053
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.25,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제14대 대통령선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "president:national@1997-12-18#next_election",
+     "role": "next_election",
+     "role_label": "다음 선거",
+     "date": "1997-12-18",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "15th-pres-1997",
+      "label": "제15대 대통령선거",
+      "date": "1997-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "이천시"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천시"
+        ],
+        "candidates": [
+         {
+          "name": "이인제",
+          "party": "국민신당",
+          "votes": 33487,
+          "pct": 37.46
+         },
+         {
+          "name": "이회창",
+          "party": "한나라당",
+          "votes": 27314,
+          "pct": 30.55
+         },
+         {
+          "name": "김대중",
+          "party": "새정치국민회의",
+          "votes": 27099,
+          "pct": 30.31
+         },
+         {
+          "name": "권영길",
+          "party": "건설국민승리21",
+          "votes": 860,
+          "pct": 0.96
+         },
+         {
+          "name": "신정일",
+          "party": "통일한국당",
+          "votes": 264,
+          "pct": 0.3
+         },
+         {
+          "name": "허경영",
+          "party": "공화당",
+          "votes": 207,
+          "pct": 0.23
+         },
+         {
+          "name": "김한식",
+          "party": "바른정치연합",
+          "votes": 168,
+          "pct": 0.19
+         }
+        ],
+        "winner": {
+         "name": "이인제",
+         "party": "국민신당",
+         "pct": 37.46
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 68.01,
+          "unknown": 31.99
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 68.01,
+         "mixed_share": 68.01,
+         "unknown_share": 31.99,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "국민신당": [
+           "conservative",
+           "regional"
+          ],
+          "한나라당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 89399
+        },
+        "paint": {
+         "state": "mixed",
+         "share": 68.01,
+         "note": "복수 계보 — 계열 hue를 주지 않는다"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제15대 대통령선거 결과 · 당시 경계"
+    }
+   ],
+   "n_snapshots": 15,
+   "pivot_event": {
+    "event_id": "geo:1996-03-01:icheon-promotion",
+    "type": "promotion",
+    "effective_date": "1996-03-01",
+    "label": "이천군에서 이천시로 승격",
+    "territorial_continuity": "same",
+    "comparison_capability": "direct",
+    "expect_topology_change": false
+   }
+  },
+  {
+   "comparison_series_id": "general:district",
+   "states": [
+    {
+     "state_id": "general:district@1992-03-23#before_election",
+     "role": "before_election",
+     "role_label": "선거 직전",
+     "date": "1992-03-23",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "13th-general-1988",
+      "label": "제13대 국회의원선거",
+      "date": "1988-04-26",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "이영문",
+          "party": "민주정의당",
+          "votes": 27022,
+          "pct": 43.73
+         },
+         {
+          "name": "황규선",
+          "party": "통일민주당",
+          "votes": 18497,
+          "pct": 29.93
+         },
+         {
+          "name": "김정현",
+          "party": "신민주공화당",
+          "votes": 7390,
+          "pct": 11.96
+         },
+         {
+          "name": "구재춘",
+          "party": "평화민주당",
+          "votes": 5580,
+          "pct": 9.03
+         },
+         {
+          "name": "이종원",
+          "party": "무소속",
+          "votes": 3307,
+          "pct": 5.35
+         }
+        ],
+        "winner": {
+         "name": "이영문",
+         "party": "민주정의당",
+         "pct": 43.73
+        },
+        "lineage_composition": {
+         "share": {
+          "conservative": 43.73,
+          "independent": 5.35,
+          "regional": 11.96,
+          "unknown": 38.96
+         },
+         "single_family_coverage": 55.69,
+         "lineage_resolved_coverage": 55.69,
+         "mixed_share": 0.0,
+         "unknown_share": 38.96,
+         "independent_share": 5.35,
+         "mixed_constituents": {},
+         "total_votes": 61796
+        },
+        "paint": {
+         "state": "family",
+         "family": "conservative",
+         "share": 43.73,
+         "coverage": 55.69
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제13대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@1992-03-24#election",
+     "role": "election",
+     "role_label": "선거 시점",
+     "date": "1992-03-24",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1990",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-general-1992",
+      "label": "제14대 국회의원선거",
+      "date": "1992-03-24",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "이영문",
+          "party": "민주자유당",
+          "votes": 26385,
+          "pct": 37.77
+         },
+         {
+          "name": "이희규",
+          "party": "통일국민당",
+          "votes": 25545,
+          "pct": 36.57
+         },
+         {
+          "name": "황규선",
+          "party": "민주당(1991)",
+          "votes": 16068,
+          "pct": 23.0
+         },
+         {
+          "name": "장흥석",
+          "party": "민중당",
+          "votes": 1860,
+          "pct": 2.66
+         }
+        ],
+        "winner": {
+         "name": "이영문",
+         "party": "민주자유당",
+         "pct": 37.77
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 37.77,
+          "unknown": 62.23
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 37.77,
+         "mixed_share": 37.77,
+         "unknown_share": 62.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 69858
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.23,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제14대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@1996-02-29#before_geo_event",
+     "role": "before_geo_event",
+     "role_label": "경계 사건 직전",
+     "date": "1996-02-29",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "exact",
+      "boundary_missing_units": null,
+      "boundary_alias": null,
+      "boundary_alias_licensed_by": null,
+      "entity_version_ids": [
+       "admin_unit:경기도:이천군"
+      ],
+      "units": [
+       "이천군"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천군",
+      "area_km2_approx": {
+       "이천군": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천군",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-general-1992",
+      "label": "제14대 국회의원선거",
+      "date": "1992-03-24",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천군": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "이영문",
+          "party": "민주자유당",
+          "votes": 26385,
+          "pct": 37.77
+         },
+         {
+          "name": "이희규",
+          "party": "통일국민당",
+          "votes": 25545,
+          "pct": 36.57
+         },
+         {
+          "name": "황규선",
+          "party": "민주당(1991)",
+          "votes": 16068,
+          "pct": 23.0
+         },
+         {
+          "name": "장흥석",
+          "party": "민중당",
+          "votes": 1860,
+          "pct": 2.66
+         }
+        ],
+        "winner": {
+         "name": "이영문",
+         "party": "민주자유당",
+         "pct": 37.77
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 37.77,
+          "unknown": 62.23
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 37.77,
+         "mixed_share": 37.77,
+         "unknown_share": 62.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 69858
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.23,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천군"
+      ]
+     },
+     "displayable_claim": "제14대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@1996-03-01#after_geo_event",
+     "role": "after_geo_event",
+     "role_label": "경계 사건 직후",
+     "date": "1996-03-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-general-1992",
+      "label": "제14대 국회의원선거",
+      "date": "1992-03-24",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "영역이 그대로다 — 그때 이름은 '이천군'이고 지금은 '이천시'이다",
+        "licensed_by": [
+         "geo:1996-03-01:icheon-promotion"
+        ],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "이영문",
+          "party": "민주자유당",
+          "votes": 26385,
+          "pct": 37.77
+         },
+         {
+          "name": "이희규",
+          "party": "통일국민당",
+          "votes": 25545,
+          "pct": 36.57
+         },
+         {
+          "name": "황규선",
+          "party": "민주당(1991)",
+          "votes": 16068,
+          "pct": 23.0
+         },
+         {
+          "name": "장흥석",
+          "party": "민중당",
+          "votes": 1860,
+          "pct": 2.66
+         }
+        ],
+        "winner": {
+         "name": "이영문",
+         "party": "민주자유당",
+         "pct": 37.77
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 37.77,
+          "unknown": 62.23
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 37.77,
+         "mixed_share": 37.77,
+         "unknown_share": 62.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 69858
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.23,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제14대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@1996-03-01#previous_on_new_boundary",
+     "role": "previous_on_new_boundary",
+     "role_label": "새 경계 · 이전 선거 결과",
+     "date": "1996-03-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-general-1992",
+      "label": "제14대 국회의원선거",
+      "date": "1992-03-24",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천군"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "영역이 그대로다 — 그때 이름은 '이천군'이고 지금은 '이천시'이다",
+        "licensed_by": [
+         "geo:1996-03-01:icheon-promotion"
+        ],
+        "source_units": [
+         "이천군"
+        ],
+        "candidates": [
+         {
+          "name": "이영문",
+          "party": "민주자유당",
+          "votes": 26385,
+          "pct": 37.77
+         },
+         {
+          "name": "이희규",
+          "party": "통일국민당",
+          "votes": 25545,
+          "pct": 36.57
+         },
+         {
+          "name": "황규선",
+          "party": "민주당(1991)",
+          "votes": 16068,
+          "pct": 23.0
+         },
+         {
+          "name": "장흥석",
+          "party": "민중당",
+          "votes": 1860,
+          "pct": 2.66
+         }
+        ],
+        "winner": {
+         "name": "이영문",
+         "party": "민주자유당",
+         "pct": 37.77
+        },
+        "lineage_composition": {
+         "share": {
+          "mixed": 37.77,
+          "unknown": 62.23
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 37.77,
+         "mixed_share": 37.77,
+         "unknown_share": 62.23,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 69858
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 62.23,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제14대 국회의원선거 결과 · 당시 경계"
+    },
+    {
+     "state_id": "general:district@1996-04-11#next_election",
+     "role": "next_election",
+     "role_label": "다음 선거",
+     "date": "1996-04-11",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "boundary_resolution": "predecessor_same_territory",
+      "boundary_missing_units": null,
+      "boundary_alias": {
+       "이천시": "이천군"
+      },
+      "boundary_alias_licensed_by": {
+       "이천시": "geo:1996-03-01:icheon-promotion"
+      },
+      "entity_version_ids": [
+       "admin_unit:경기도:이천시"
+      ],
+      "units": [
+       "이천시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "이천시",
+      "area_km2_approx": {
+       "이천시": 460.8
+      },
+      "features": [
+       {
+        "model_unit": "이천시",
+        "boundary_name": "이천군",
+        "code": "31400",
+        "area_km2_approx": 460.8,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            127.44246,
+            37.35844
+           ],
+           [
+            127.37616,
+            37.32076
+           ],
+           [
+            127.3388,
+            37.27054
+           ],
+           [
+            127.32973,
+            37.22162
+           ],
+           [
+            127.41407,
+            37.17314
+           ],
+           [
+            127.42982,
+            37.14774
+           ],
+           [
+            127.50294,
+            37.11823
+           ],
+           [
+            127.51623,
+            37.08789
+           ],
+           [
+            127.48996,
+            37.05282
+           ],
+           [
+            127.55274,
+            37.04433
+           ],
+           [
+            127.57934,
+            37.07533
+           ],
+           [
+            127.63111,
+            37.09629
+           ],
+           [
+            127.62876,
+            37.1538
+           ],
+           [
+            127.59775,
+            37.18834
+           ],
+           [
+            127.52992,
+            37.17292
+           ],
+           [
+            127.529,
+            37.27408
+           ],
+           [
+            127.54532,
+            37.30077
+           ],
+           [
+            127.5136,
+            37.33939
+           ],
+           [
+            127.47049,
+            37.36152
+           ],
+           [
+            127.44246,
+            37.35844
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "drawn_units_valid": true
+     },
+     "election_snapshot": {
+      "election_id": "15th-general-1996",
+      "label": "제15대 국회의원선거",
+      "date": "1996-04-11",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "이천시"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "이천시": {
+        "method": "direct",
+        "why": "경계가 그대로다",
+        "licensed_by": [],
+        "source_units": [
+         "이천시"
+        ],
+        "candidates": [
+         {
+          "name": "황규선",
+          "party": "통합민주당(1995)",
+          "votes": 20728,
+          "pct": 32.25
+         },
+         {
+          "name": "이영문",
+          "party": "신한국당",
+          "votes": 15618,
+          "pct": 24.3
+         },
+         {
+          "name": "이희규",
+          "party": "무소속",
+          "votes": 15382,
+          "pct": 23.93
+         },
+         {
+          "name": "유종열",
+          "party": "자유민주연합",
+          "votes": 7107,
+          "pct": 11.06
+         },
+         {
+          "name": "전상현",
+          "party": "새정치국민회의",
+          "votes": 5437,
+          "pct": 8.46
+         }
+        ],
+        "winner": {
+         "name": "황규선",
+         "party": "통합민주당(1995)",
+         "pct": 32.25
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 23.93,
+          "mixed": 24.3,
+          "regional": 11.06,
+          "unknown": 40.71
+         },
+         "single_family_coverage": 11.06,
+         "lineage_resolved_coverage": 35.36,
+         "mixed_share": 24.3,
+         "unknown_share": 40.71,
+         "independent_share": 23.93,
+         "mixed_constituents": {
+          "신한국당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 64272
+        },
+        "paint": {
+         "state": "unknown",
+         "share": 40.71,
+         "note": "계보 미확인"
+        }
+       }
+      },
+      "summary": {
+       "direct": 1
+      },
+      "paintable_units": [
+       "이천시"
+      ]
+     },
+     "displayable_claim": "제15대 국회의원선거 결과 · 당시 경계"
+    }
+   ],
+   "n_snapshots": 22,
+   "pivot_event": {
+    "event_id": "geo:1996-03-01:icheon-promotion",
+    "type": "promotion",
+    "effective_date": "1996-03-01",
+    "label": "이천군에서 이천시로 승격",
+    "territorial_continuity": "same",
+    "comparison_capability": "direct",
+    "expect_topology_change": false
+   }
+  }
+ ]
+}
