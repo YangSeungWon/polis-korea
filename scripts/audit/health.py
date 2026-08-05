@@ -83,30 +83,90 @@ def git_date(rel: str) -> str | None:
 
 # **정기적으로 갱신되어야 하는 것만** 본다. 확정된 회차 결과나 캡처가 끝난 공약은
 # 안 바뀌는 게 정상이라 여기 넣으면 매일 거짓 경보가 울린다.
-#   (cadence_days = 이보다 오래 안 바뀌면 fetcher가 멈춘 것으로 본다)
+#
+# 상태는 넷으로 가른다 — '최근 데이터 없음'과 '수집 실패'는 다르다.
+# (null ≠ 0, 무투표 ≠ 결손과 같은 계열이다.)
+#   fresh              다음 예정일이 아직 안 왔다
+#   expected_pause     원출처가 쉬는 기간이다 — 결함이 아니다
+#   manual_refresh     원출처가 CI 러너 IP를 차단한다 — 로컬에서 돌려야 한다
+#   overdue            예정일이 지났는데 안 들어왔다 — 봐야 한다
+#   fetch_failed       파일 자체가 없다
+#
+# 기관별 달력을 거대한 시스템으로 만들지 않는다. **지금 확인 가능한 예외만** 적는다.
+PAUSES = {
+    # 한국갤럽 2026년 공식 일정 — 여름 휴가철 데일리 오피니언 2주 휴간.
+    # https://www.gallup.co.kr/company/noticeContents.asp?seqNo=10330
+    "gallup": [("2026-07-27", "2026-08-07")],
+}
+
+# realmeter.net은 GitHub Actions 러너 IP를 차단한다(NESDC와 같은 계열). CI에선
+# 항상 '총 0건'이라 예정일을 넘겨도 우리 결함이 아니다 — 로컬에서 돌려야 갱신된다.
+# 그렇다고 조용히 넘기면 몇 달이고 옛 데이터가 남으므로 별도 상태로 드러낸다.
+CI_BLOCKED = {"realmeter"}
+
 REFRESH_TARGETS = [
-    ("갤럽 국정평가", "data/polls/approval_gallup.json", 10),
-    ("갤럽 차기주자", "data/polls/gallup_leaders.json", 10),
-    ("리얼미터 정당지지", "data/polls/approval_realmeter.json", 10),
-    ("NBS", "data/polls/approval_nbs.json", 14),
+    # (라벨, 파일, 주기(일), 소스 키)
+    ("갤럽 국정평가", "data/polls/approval_gallup.json", 10, "gallup"),
+    ("갤럽 차기주자", "data/polls/gallup_leaders.json", 10, "gallup"),
+    ("리얼미터 국정평가", "data/polls/approval_realmeter.json", 10, "realmeter"),
+    ("NBS", "data/polls/approval_nbs.json", 14, "nbs"),
 ]
 
 
+def in_pause(key: str | None, d: date) -> tuple[str, str] | None:
+    """그 날짜가 원출처의 휴간 기간에 걸리는가."""
+    for a, b in PAUSES.get(key or "", []):
+        if date.fromisoformat(a) <= d <= date.fromisoformat(b):
+            return (a, b)
+    return None
+
+
+def next_expected(last: date, cadence: int, key: str | None) -> date:
+    """다음 발표 예정일. 휴간에 걸리면 휴간이 끝난 뒤로 민다.
+    경과일만 보면 예정된 휴간이 '지연'으로 잡힌다."""
+    nxt = date.fromordinal(last.toordinal() + cadence)
+    for _ in range(6):          # 연속 휴간 대비(무한루프 방지 상한)
+        rng = in_pause(key, nxt)
+        if not rng:
+            return nxt
+        nxt = date.fromordinal(date.fromisoformat(rng[1]).toordinal() + 1)
+    return nxt
+
+
 def data_freshness() -> list[dict]:
+    today = date.today()
     out = []
-    for label, rel, cadence in REFRESH_TARGETS:
+    for label, rel, cadence, key in REFRESH_TARGETS:
         fp = ROOT / rel
         if not fp.exists():
-            out.append({"label": label, "state": "없음", "days": None, "cadence": cadence})
+            out.append({"label": label, "state": "fetch_failed", "last": None,
+                        "next": None, "note": "파일 없음"})
             continue
         d = git_date(rel)
-        days = None
+        last = None
         if d:
             try:
-                days = (date.today() - date.fromisoformat(d)).days
+                last = date.fromisoformat(d)
             except Exception:
                 pass
-        out.append({"label": label, "state": d or "미상", "days": days, "cadence": cadence})
+        if not last:
+            out.append({"label": label, "state": "fetch_failed", "last": d,
+                        "next": None, "note": "갱신일 미상"})
+            continue
+        nxt = next_expected(last, cadence, key)
+        if today <= nxt:
+            state, note = "fresh", ""
+        elif in_pause(key, today):
+            rng = in_pause(key, today)
+            state, note = "expected_pause", f"원출처 휴간 {rng[0]}~{rng[1]}"
+        elif key in CI_BLOCKED:
+            state, note = ("manual_refresh",
+                           f"{(today - nxt).days}일 지남 · CI 러너 차단 — 로컬에서 "
+                           "fetch_realmeter_self.py + extract_approval_realmeter.py --source self")
+        else:
+            state, note = "overdue", f"{(today - nxt).days}일 지남"
+        out.append({"label": label, "state": state, "last": str(last),
+                    "next": str(nxt), "note": note})
     return out
 
 
@@ -177,11 +237,11 @@ def main() -> int:
         print(f"    ✗ {k}   ← {where}")
 
     print("\n데이터 신선도")
+    MARK = {"fresh": "  ", "expected_pause": "· ", "manual_refresh": "↻ ",
+            "overdue": "⚠ ", "fetch_failed": "✗ "}
     for f in fresh:
-        over = f["days"] is not None and f["days"] > f["cadence"]
-        age = f"{f['days']}일 전" if f["days"] is not None else "?"
-        print(f"  {'⚠ ' if over else '  '}{f['label']:16} {f['state']:12} {age}"
-              f"  (주기 {f['cadence']}일)")
+        print(f"  {MARK.get(f['state'], '  ')}{f['label']:16} {f['state']:15}"
+              f" 최신 {f['last'] or '?':10} 다음 {f['next'] or '?':10} {f['note']}")
 
     print("\n가장 큰 산출물")
     for name, s in rep["largest_html"]:
@@ -201,10 +261,18 @@ def main() -> int:
                                    encoding="utf-8")
         print(f"\n→ {args.json}")
 
-    stale = [f for f in fresh if f["days"] is not None and f["days"] > f["cadence"]]
-    if stale:
-        names = ", ".join(f["label"] for f in stale)
-        print(f"\n⚠ 주기를 넘긴 데이터셋: {names} — fetcher가 조용히 멈췄는지 확인할 것")
+    over = [f for f in fresh if f["state"] == "overdue"]
+    if over:
+        names = ", ".join(f["label"] for f in over)
+        print(f"\n⚠ 예정일이 지난 데이터셋: {names}")
+        print("   원출처에 새 발표가 있는지 먼저 본다 — 없으면 외부 지연이지 우리 결함이 아니다.")
+    paused = [f for f in fresh if f["state"] == "expected_pause"]
+    if paused:
+        print(f"\n· 휴간 중(정상): {', '.join(f['label'] for f in paused)}")
+    manual = [f for f in fresh if f["state"] == "manual_refresh"]
+    if manual:
+        print(f"\n↻ 로컬 수동 갱신 필요: {', '.join(f['label'] for f in manual)}")
+        print("   원출처가 CI 러너 IP를 차단한다 — 우리 결함도 외부 지연도 아니다.")
     if bad:
         print(f"\n✗ 깨진 내부 링크 {len(bad)}종. 화면은 멀쩡한데 클릭하면 404다.")
         return 1 if args.strict else 0

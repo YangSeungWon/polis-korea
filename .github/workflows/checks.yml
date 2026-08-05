@@ -105,6 +105,10 @@ jobs:
       - name: health (깨진 내부 링크·데이터 신선도)
         run: python scripts/audit/health.py --strict
 
+      # '최근 데이터 없음' ≠ '수집 실패'. 갤럽 여름 휴간을 지연으로 부르지 않는다.
+      - name: 신선도 판정 (휴간·CI 차단·지연 구분)
+        run: python tests/test_freshness.py
+
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 
