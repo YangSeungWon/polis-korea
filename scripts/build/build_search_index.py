@@ -142,7 +142,14 @@ def main():
     for it in items:
         it.pop('dt', None)
     out = {
-        '_meta': {'n': len(items), 'description': '회차별 당선인 + 정치인 낙선 이력 통합 검색 인덱스'},
+        # archive 페이지가 실재하는 회차만 링크한다. 결과 데이터는 있는데 archive가
+        # 없는 회차가 있다(9회 재보궐) — 검색이 그 링크를 만들어 404가 났다.
+        # 클라이언트가 eid로 경로를 조립하되, 여기서 실재 목록을 함께 내보낸다.
+        '_meta': {'n': len(items),
+                  'archive_pages': sorted(
+                      x.name for x in (ROOT / 'archive').iterdir()
+                      if x.is_dir() and (x / 'index.html').exists()),
+                  'description': '회차별 당선인 + 정치인 낙선 이력 통합 검색 인덱스'},
         'items': items,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

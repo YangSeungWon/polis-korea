@@ -12,6 +12,7 @@
       const r = await fetch('assets/search-index.json');
       const j = await r.json();
       items = j.items || [];
+      window.__searchMeta = j._meta || {};
     } catch (e) {
       $('#meta').textContent = '인덱스 로드 실패';
       return;
@@ -67,8 +68,18 @@
     return hay.includes(q);
   }
 
+  // archive 페이지가 실재하는 회차만 링크한다. eid로 조립만 하면 결과 데이터는 있고
+  // archive는 없는 회차(9회 재보궐)에서 404가 난다 — UI 감사가 잡았다.
+  let _archivePages = null;
+  function hasArchive(eid) {
+    if (_archivePages === null) {
+      const m = (window.__searchMeta || {}).archive_pages;
+      _archivePages = Array.isArray(m) ? new Set(m) : null;
+    }
+    return _archivePages ? _archivePages.has(eid) : true;
+  }
   function archiveHref(eid) {
-    return `/archive/${eid}/`;
+    return hasArchive(eid) ? `/archive/${eid}/` : null;
   }
 
   function partyBadge(party) {
@@ -122,15 +133,20 @@
       if (g.aid) meta.push('국회');
       const metaTxt = meta.length ? meta.join(' · ') : (list.length === 1 ? list[0].r : '');
       // 회차 sub-rows → archive 직행. 당선/낙선 태그.
-      const sub = list.map((it) => `
-        <a class="s-sub${it.w ? '' : ' s-sub-lost'}" href="/archive/${it.e}/">
+      const sub = list.map((it) => {
+        // archive가 없는 회차는 링크가 아니라 글자로 — 죽은 링크를 만들지 않는다.
+        const href = archiveHref(it.e);
+        const tag = href ? 'a' : 'span';
+        return `
+        <${tag} class="s-sub${it.w ? '' : ' s-sub-lost'}"${href ? ` href="${href}"` : ''}>
           <span class="s-sub-yr">${it.y || ''}</span>
           <span class="s-sub-rd">${it.r}</span>
           ${partyBadge(it.p)}
           <span class="s-sub-place">${escapeHtml(it.d)}</span>
           ${it.pct != null ? `<span class="s-sub-pct">${(+it.pct).toFixed(1)}%</span>` : ''}
           <span class="s-sub-tag ${it.w ? 's-won' : 's-lost'}">${it.w ? '당선' : '낙선'}</span>
-        </a>`).join('');
+        </${tag}>`;
+      }).join('');
       return `<li class="s-item s-group">
         <a class="s-link s-group-hdr" href="${personHref(g)}">
           <span class="s-name">${escapeHtml(g.name)}</span>
