@@ -26,7 +26,14 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # 회차별 입력
 CFG = {
-    20: dict(mode="wwolf", year=2016,
+    # 20대만 wwolf 모드였다 — 9~19·21·22가 전부 nec_emd인데 혼자 다른 파이프라인이라
+    # 21↔20 계보 판정에서 125개가 '출처 다름'으로 보류됐다. NEC 읍면동 매핑을 받아
+    # 같은 방식으로 맞춘다(fetch_district_emd.py 20).
+    20: dict(mode="nec_emd", year=2016,
+             emd=ROOT / "data/raw/nec/district_emd_20.json",
+             shp=ROOT / "data/raw/sgis/bnd_dong_2016/bnd_dong_00_2016_4Q.shp",
+             results=ROOT / "data/results/national_assembly_20.json"),
+    "20_wwolf_legacy": dict(mode="wwolf", year=2016,
              wwolf=ROOT / "data/raw/wwolf/2016general_cand_full.tsv",
              match=ROOT / "data/raw/admdongkor/match_20.csv",
              shp=ROOT / "data/raw/sgis/bnd_dong_2016/bnd_dong_00_2016_4Q.shp",

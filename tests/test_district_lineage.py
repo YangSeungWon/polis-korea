@@ -146,7 +146,8 @@ def main() -> int:
     # '판정 없이 만들지 않았는가'로 옮겨간다 — 22↔21은 이제 판정이 섰다.
     print("\n[게이트] 계보 없이 swing을 만들지 않았는가")
     cmp_dir = ROOT / "data/comparisons/general"
-    made = sorted(cmp_dir.glob("*__*.json")) if cmp_dir.exists() else []
+    made = sorted(p for p in cmp_dir.glob("*__*.json")
+                  if not p.name.startswith("national__")) if cmp_dir.exists() else []
     orphan = []
     for fp in made:
         cur, prev = fp.stem.split("__", 1)

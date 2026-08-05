@@ -32,7 +32,9 @@ def ck(name, cond, detail=""):
 
 
 def main() -> int:
-    files = sorted(CMP.glob("*__*.json")) if CMP.exists() else []
+    # national__ 은 전국 집계라 units가 없다 — 층이 다르므로 여기서 보지 않는다.
+    files = sorted(p for p in CMP.glob("*__*.json")
+                   if not p.name.startswith("national__")) if CMP.exists() else []
     ck(f"총선 비교 파일이 있다 ({len(files)})", bool(files))
 
     for fp in files:

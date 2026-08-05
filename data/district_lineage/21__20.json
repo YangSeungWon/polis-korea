@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 21,
   "previous_n": 20,
-  "generated_at": "2026-08-05T15:50:32+09:00",
+  "generated_at": "2026-08-05T16:42:18+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -40,25 +40,25 @@
   "polygon_caveat": "폴리곤 출처가 회차마다 다르다 — 21·22대만 오마이뉴스 원본(LICENSE 있음), 9~20대는 재구성, 1~8대는 properties에 approx로 근사임을 밝힌다. 출처가 다르면 겹침 90~97%를 실제 변화인지 정밀도 차이인지 못 가른다(comparable='unknown'). 출처가 같으면 정밀도로 설명되지 않으므로 실제 경계 변화로 본다."
  },
  "counts": {
-  "exact": 54,
+  "exact": 198,
   "unresolvable": 8,
-  "boundary_changed": 63,
-  "minor_boundary_change": 125,
-  "new": 1,
+  "boundary_changed": 19,
+  "merged": 2,
+  "minor_boundary_change": 18,
+  "renamed": 6,
   "split": 2,
   "total": 253,
-  "comparable": 54,
-  "comparable_unknown": 125,
+  "comparable": 204,
+  "comparable_unknown": 18,
   "previous_total": 252,
-  "previous_unmatched": 6
+  "previous_unmatched": 5
  },
  "previous_unmatched": [
   "강원 홍천군철원군화천군양구군인제군",
   "경기 화성시병",
   "경북 영주시문경시예천군",
   "부산 남구갑",
-  "부산 남구을",
-  "세종 세종특별자치시"
+  "부산 남구을"
  ],
  "units": [
   {
@@ -68,15 +68,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9902,
-   "overlap_previous": 0.9898,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 강릉시",
-     "of_current": 0.9902,
-     "of_previous": 0.9898
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -87,20 +87,20 @@
    "comparable": "no",
    "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 강원 태백시횡성군영월군평창군정선군 53%, 강원 동해시삼척시 47%",
-   "overlap_current": 0.5253,
-   "overlap_previous": 0.2972,
+   "overlap_current": 0.5265,
+   "overlap_previous": 0.2976,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 태백시횡성군영월군평창군정선군",
-     "of_current": 0.5253,
-     "of_previous": 0.2972
+     "of_current": 0.5265,
+     "of_previous": 0.2976
     },
     {
      "prev": "강원 동해시삼척시",
-     "of_current": 0.4716,
-     "of_previous": 0.9954
+     "of_current": 0.4734,
+     "of_previous": 0.9999
     }
    ]
   },
@@ -110,21 +110,21 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 강원 홍천군철원군화천군양구군인제군 54%, 강원 속초시고성군양양군 41%",
-   "overlap_current": 0.5387,
-   "overlap_previous": 0.285,
+   "reason": "겹침이 흩어짐 — 강원 홍천군철원군화천군양구군인제군 54%, 강원 속초시고성군양양군 46%",
+   "overlap_current": 0.5394,
+   "overlap_previous": 0.2775,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 홍천군철원군화천군양구군인제군",
-     "of_current": 0.5387,
-     "of_previous": 0.285
+     "of_current": 0.5394,
+     "of_previous": 0.2775
     },
     {
      "prev": "강원 속초시고성군양양군",
-     "of_current": 0.412,
-     "of_previous": 0.992
+     "of_current": 0.4605,
+     "of_previous": 0.9999
     }
    ]
   },
@@ -135,15 +135,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9828,
-   "overlap_previous": 0.9756,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 원주시갑",
-     "of_current": 0.9828,
-     "of_previous": 0.9756
+     "of_current": 0.9995,
+     "of_previous": 0.999
     }
    ]
   },
@@ -154,15 +154,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9777,
-   "overlap_previous": 0.9798,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 원주시을",
-     "of_current": 0.9777,
-     "of_previous": 0.9798
+     "of_current": 0.9995,
+     "of_previous": 0.9993
     }
    ]
   },
@@ -173,39 +173,39 @@
    "comparable": "no",
    "reason_code": "boundary_moved",
    "reason": "이전 '강원 춘천시'의 36%만 차지",
-   "overlap_current": 0.973,
-   "overlap_previous": 0.3565,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.3618,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 춘천시",
-     "of_current": 0.973,
-     "of_previous": 0.3565
+     "of_current": 0.9997,
+     "of_previous": 0.3618
     }
    ]
   },
   {
    "district": "강원 춘천시철원군화천군양구군을",
    "sido": "강원",
-   "relation": "unresolvable",
+   "relation": "merged",
    "comparable": "no",
-   "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 강원 홍천군철원군화천군양구군인제군 72%, 강원 춘천시 22%",
-   "overlap_current": 0.7201,
-   "overlap_previous": 0.3973,
+   "reason_code": "merged_into_current",
+   "reason": "이전 강원 홍천군철원군화천군양구군인제군 + 강원 춘천시 통합",
+   "overlap_current": 0.7761,
+   "overlap_previous": 0.4164,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 홍천군철원군화천군양구군인제군",
-     "of_current": 0.7201,
-     "of_previous": 0.3973
+     "of_current": 0.7761,
+     "of_previous": 0.4164
     },
     {
      "prev": "강원 춘천시",
-     "of_current": 0.2205,
-     "of_previous": 0.6365
+     "of_current": 0.2237,
+     "of_previous": 0.6379
     }
    ]
   },
@@ -216,39 +216,39 @@
    "comparable": "no",
    "reason_code": "boundary_moved",
    "reason": "주 대응 '강원 태백시횡성군영월군평창군정선군' 겹침 66%/70%",
-   "overlap_current": 0.6584,
-   "overlap_previous": 0.6984,
+   "overlap_current": 0.6628,
+   "overlap_previous": 0.7023,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 태백시횡성군영월군평창군정선군",
-     "of_current": 0.6584,
-     "of_previous": 0.6984
+     "of_current": 0.6628,
+     "of_previous": 0.7023
     },
     {
      "prev": "강원 홍천군철원군화천군양구군인제군",
-     "of_current": 0.3358,
-     "of_previous": 0.3134
+     "of_current": 0.3371,
+     "of_previous": 0.3059
     }
    ]
   },
   {
    "district": "경기 고양시갑",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 고양시갑' 겹침 96%/88%",
-   "overlap_current": 0.9558,
-   "overlap_previous": 0.8791,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 100%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9986,
+   "overlap_previous": 0.9175,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시갑",
-     "of_current": 0.9558,
-     "of_previous": 0.8791
+     "of_current": 0.9986,
+     "of_previous": 0.9175
     }
    ]
   },
@@ -258,69 +258,59 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 고양시병' 겹침 82%/90%",
-   "overlap_current": 0.8212,
-   "overlap_previous": 0.8985,
+   "reason": "주 대응 '경기 고양시병' 겹침 88%/95%",
+   "overlap_current": 0.8797,
+   "overlap_previous": 0.9517,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시병",
-     "of_current": 0.8212,
-     "of_previous": 0.8985
+     "of_current": 0.8797,
+     "of_previous": 0.9517
     },
     {
      "prev": "경기 고양시갑",
-     "of_current": 0.1379,
-     "of_previous": 0.0955
+     "of_current": 0.118,
+     "of_previous": 0.0817
     }
    ]
   },
   {
    "district": "경기 고양시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9067,
-   "overlap_previous": 0.9603,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.971,
+   "overlap_previous": 0.9968,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시을",
-     "of_current": 0.9067,
-     "of_previous": 0.9603
-    },
-    {
-     "prev": "경기 고양시병",
-     "of_current": 0.0429,
-     "of_previous": 0.0724
-    },
-    {
-     "prev": "서울 은평구갑",
-     "of_current": 0.0127,
-     "of_previous": 0.1151
+     "of_current": 0.971,
+     "of_previous": 0.9968
     }
    ]
   },
   {
    "district": "경기 고양시정",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.955,
-   "overlap_previous": 0.9654,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9977,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시정",
-     "of_current": 0.955,
-     "of_previous": 0.9654
+     "of_current": 0.9985,
+     "of_previous": 0.9977
     }
    ]
   },
@@ -330,26 +320,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 광명시갑' 겹침 81%/94%",
-   "overlap_current": 0.8089,
-   "overlap_previous": 0.9391,
+   "reason": "주 대응 '경기 광명시갑' 겹침 84%/99%",
+   "overlap_current": 0.838,
+   "overlap_previous": 0.9887,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광명시갑",
-     "of_current": 0.8089,
-     "of_previous": 0.9391
+     "of_current": 0.838,
+     "of_previous": 0.9887
     },
     {
      "prev": "경기 광명시을",
-     "of_current": 0.1225,
-     "of_previous": 0.037
-    },
-    {
-     "prev": "서울 구로구갑",
-     "of_current": 0.0513,
-     "of_previous": 0.0371
+     "of_current": 0.1582,
+     "of_previous": 0.0468
     }
    ]
   },
@@ -359,121 +344,116 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9472,
-   "overlap_previous": 0.9212,
+   "reason": "겹침 100%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9977,
+   "overlap_previous": 0.9508,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광명시을",
-     "of_current": 0.9472,
-     "of_previous": 0.9212
+     "of_current": 0.9977,
+     "of_previous": 0.9508
     }
    ]
   },
   {
    "district": "경기 광주시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9672,
-   "overlap_previous": 0.9578,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.9982,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광주시갑",
-     "of_current": 0.9672,
-     "of_previous": 0.9578
+     "of_current": 0.9987,
+     "of_previous": 0.9982
     }
    ]
   },
   {
    "district": "경기 광주시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9671,
-   "overlap_previous": 0.975,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9978,
+   "overlap_previous": 0.9987,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광주시을",
-     "of_current": 0.9671,
-     "of_previous": 0.975
+     "of_current": 0.9978,
+     "of_previous": 0.9987
     }
    ]
   },
   {
    "district": "경기 구리시",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.954,
-   "overlap_previous": 0.9257,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9967,
+   "overlap_previous": 0.9961,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 구리시",
-     "of_current": 0.954,
-     "of_previous": 0.9257
+     "of_current": 0.9967,
+     "of_previous": 0.9961
     }
    ]
   },
   {
    "district": "경기 군포시",
    "sido": "경기",
-   "relation": "boundary_changed",
+   "relation": "merged",
    "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 군포시갑' 겹침 67%/99%",
-   "overlap_current": 0.6705,
-   "overlap_previous": 0.9922,
+   "reason_code": "merged_into_current",
+   "reason": "이전 경기 군포시갑 + 경기 군포시을 통합",
+   "overlap_current": 0.7373,
+   "overlap_previous": 0.9953,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 군포시갑",
-     "of_current": 0.6705,
-     "of_previous": 0.9922
+     "of_current": 0.7373,
+     "of_previous": 0.9953
     },
     {
      "prev": "경기 군포시을",
-     "of_current": 0.2273,
-     "of_previous": 0.9978
-    },
-    {
-     "prev": "경기 안산시상록구을",
-     "of_current": 0.0395,
-     "of_previous": 0.0511
+     "of_current": 0.2586,
+     "of_previous": 1.0
     }
    ]
   },
   {
    "district": "경기 김포시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9663,
-   "overlap_previous": 0.9535,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9878,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 김포시갑",
-     "of_current": 0.9663,
-     "of_previous": 0.9535
+     "of_current": 0.9994,
+     "of_previous": 0.9878
     }
    ]
   },
@@ -484,15 +464,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9747,
-   "overlap_previous": 0.984,
+   "overlap_current": 0.9852,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 김포시을",
-     "of_current": 0.9747,
-     "of_previous": 0.984
+     "of_current": 0.9852,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -503,53 +483,53 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9729,
-   "overlap_previous": 0.9883,
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.9989,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시갑",
-     "of_current": 0.9729,
-     "of_previous": 0.9883
+     "of_current": 0.9984,
+     "of_previous": 0.9989
     }
    ]
   },
   {
    "district": "경기 남양주시병",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9694,
-   "overlap_previous": 0.9731,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9991,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시병",
-     "of_current": 0.9694,
-     "of_previous": 0.9731
+     "of_current": 0.9989,
+     "of_previous": 0.9991
     }
    ]
   },
   {
    "district": "경기 남양주시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9658,
-   "overlap_previous": 0.9735,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9989,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시을",
-     "of_current": 0.9658,
-     "of_previous": 0.9735
+     "of_current": 0.9995,
+     "of_previous": 0.9989
     }
    ]
   },
@@ -560,406 +540,376 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9822,
-   "overlap_previous": 0.9828,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 동두천시연천군",
-     "of_current": 0.9822,
-     "of_previous": 0.9828
+     "of_current": 0.9996,
+     "of_previous": 0.9994
     }
    ]
   },
   {
    "district": "경기 부천시갑",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 부천시원미구갑' 겹침 80%/95%",
-   "overlap_current": 0.8042,
-   "overlap_previous": 0.9525,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9947,
+   "overlap_previous": 0.9828,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시원미구갑",
-     "of_current": 0.8042,
-     "of_previous": 0.9525
-    },
-    {
-     "prev": "경기 부천시오정구",
-     "of_current": 0.1339,
-     "of_previous": 0.067
+     "of_current": 0.9947,
+     "of_previous": 0.9828
     }
    ]
   },
   {
    "district": "경기 부천시병",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '경기 부천시소사구'",
-   "overlap_current": 0.9652,
-   "overlap_previous": 0.9641,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9802,
+   "overlap_previous": 0.9897,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시소사구",
-     "of_current": 0.9652,
-     "of_previous": 0.9641
+     "of_current": 0.9802,
+     "of_previous": 0.9897
     }
    ]
   },
   {
    "district": "경기 부천시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '경기 부천시원미구을'",
-   "overlap_current": 0.9694,
-   "overlap_previous": 0.9458,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9911,
+   "overlap_previous": 0.9916,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시원미구을",
-     "of_current": 0.9694,
-     "of_previous": 0.9458
+     "of_current": 0.9911,
+     "of_previous": 0.9916
     }
    ]
   },
   {
    "district": "경기 부천시정",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/91% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '경기 부천시오정구'",
-   "overlap_current": 0.9625,
-   "overlap_previous": 0.9109,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9925,
+   "overlap_previous": 0.9927,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시오정구",
-     "of_current": 0.9625,
-     "of_previous": 0.9109
+     "of_current": 0.9925,
+     "of_previous": 0.9927
     }
    ]
   },
   {
    "district": "경기 성남시분당구갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9657,
-   "overlap_previous": 0.9387,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9976,
+   "overlap_previous": 0.9976,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시분당구갑",
-     "of_current": 0.9657,
-     "of_previous": 0.9387
+     "of_current": 0.9976,
+     "of_previous": 0.9976
     }
    ]
   },
   {
    "district": "경기 성남시분당구을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9403,
-   "overlap_previous": 0.954,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시분당구을",
-     "of_current": 0.9403,
-     "of_previous": 0.954
+     "of_current": 0.9966,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "경기 성남시수정구",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9374,
-   "overlap_previous": 0.9565,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9974,
+   "overlap_previous": 0.9979,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시수정구",
-     "of_current": 0.9374,
-     "of_previous": 0.9565
+     "of_current": 0.9974,
+     "of_previous": 0.9979
     }
    ]
   },
   {
    "district": "경기 성남시중원구",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9405,
-   "overlap_previous": 0.9592,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.9958,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시중원구",
-     "of_current": 0.9405,
-     "of_previous": 0.9592
+     "of_current": 0.9966,
+     "of_previous": 0.9958
     }
    ]
   },
   {
    "district": "경기 수원시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9838,
-   "overlap_previous": 0.9407,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.997,
+   "overlap_previous": 0.9972,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시갑",
-     "of_current": 0.9838,
-     "of_previous": 0.9407
+     "of_current": 0.997,
+     "of_previous": 0.9972
     }
    ]
   },
   {
    "district": "경기 수원시무",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 수원시무' 겹침 84%/95%",
-   "overlap_current": 0.8428,
-   "overlap_previous": 0.9498,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 95%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9522,
+   "overlap_previous": 0.9866,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시무",
-     "of_current": 0.8428,
-     "of_previous": 0.9498
-    },
-    {
-     "prev": "경기 수원시정",
-     "of_current": 0.0581,
-     "of_previous": 0.0498
-    },
-    {
-     "prev": "경기 화성시병",
-     "of_current": 0.0523,
-     "of_previous": 0.0131
+     "of_current": 0.9522,
+     "of_previous": 0.9866
     }
    ]
   },
   {
    "district": "경기 수원시병",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 수원시병' 겹침 91%/88%",
-   "overlap_current": 0.9135,
-   "overlap_previous": 0.8808,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9954,
+   "overlap_previous": 0.9962,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시병",
-     "of_current": 0.9135,
-     "of_previous": 0.8808
-    },
-    {
-     "prev": "경기 수원시을",
-     "of_current": 0.0673,
-     "of_previous": 0.0226
+     "of_current": 0.9954,
+     "of_previous": 0.9962
     }
    ]
   },
   {
    "district": "경기 수원시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.962,
-   "overlap_previous": 0.9278,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시을",
-     "of_current": 0.962,
-     "of_previous": 0.9278
+     "of_current": 0.9995,
+     "of_previous": 0.999
     }
    ]
   },
   {
    "district": "경기 수원시정",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 수원시정' 겹침 88%/89%",
-   "overlap_current": 0.8817,
-   "overlap_previous": 0.8929,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 100%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9951,
+   "overlap_previous": 0.9656,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시정",
-     "of_current": 0.8817,
-     "of_previous": 0.8929
-    },
-    {
-     "prev": "경기 수원시병",
-     "of_current": 0.0351,
-     "of_previous": 0.0578
+     "of_current": 0.9951,
+     "of_previous": 0.9656
     }
    ]
   },
   {
    "district": "경기 시흥시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9723,
-   "overlap_previous": 0.9671,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9977,
+   "overlap_previous": 0.9951,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 시흥시갑",
-     "of_current": 0.9723,
-     "of_previous": 0.9671
+     "of_current": 0.9977,
+     "of_previous": 0.9951
     }
    ]
   },
   {
    "district": "경기 시흥시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9567,
-   "overlap_previous": 0.9784,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9899,
+   "overlap_previous": 0.9985,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 시흥시을",
-     "of_current": 0.9567,
-     "of_previous": 0.9784
+     "of_current": 0.9899,
+     "of_previous": 0.9985
     }
    ]
   },
   {
    "district": "경기 안산시단원구갑",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 안산시단원구갑' 겹침 93%/88%",
-   "overlap_current": 0.932,
-   "overlap_previous": 0.8777,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9883,
+   "overlap_previous": 0.9964,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시단원구갑",
-     "of_current": 0.932,
-     "of_previous": 0.8777
+     "of_current": 0.9883,
+     "of_previous": 0.9964
     }
    ]
   },
   {
    "district": "경기 안산시단원구을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9289,
-   "overlap_previous": 0.9197,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9929,
+   "overlap_previous": 0.9987,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시단원구을",
-     "of_current": 0.9289,
-     "of_previous": 0.9197
-    },
-    {
-     "prev": "경기 안산시단원구갑",
-     "of_current": 0.0177,
-     "of_previous": 0.0709
+     "of_current": 0.9929,
+     "of_previous": 0.9987
     }
    ]
   },
   {
    "district": "경기 안산시상록구갑",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 안산시상록구갑' 겹침 97%/89%",
-   "overlap_current": 0.9668,
-   "overlap_previous": 0.8928,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 100%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.995,
+   "overlap_previous": 0.9553,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시상록구갑",
-     "of_current": 0.9668,
-     "of_previous": 0.8928
+     "of_current": 0.995,
+     "of_previous": 0.9553
     }
    ]
   },
   {
    "district": "경기 안산시상록구을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9543,
-   "overlap_previous": 0.9005,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9965,
+   "overlap_previous": 0.9962,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시상록구을",
-     "of_current": 0.9543,
-     "of_previous": 0.9005
+     "of_current": 0.9965,
+     "of_previous": 0.9962
     }
    ]
   },
@@ -970,77 +920,72 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9839,
-   "overlap_previous": 0.9786,
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안성시",
-     "of_current": 0.9839,
-     "of_previous": 0.9786
+     "of_current": 0.9994,
+     "of_previous": 0.9992
     }
    ]
   },
   {
    "district": "경기 안양시동안구갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 90%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9016,
-   "overlap_previous": 0.9573,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9893,
+   "overlap_previous": 0.9902,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시동안구갑",
-     "of_current": 0.9016,
-     "of_previous": 0.9573
-    },
-    {
-     "prev": "경기 안양시동안구을",
-     "of_current": 0.0359,
-     "of_previous": 0.0664
+     "of_current": 0.9893,
+     "of_previous": 0.9902
     }
    ]
   },
   {
    "district": "경기 안양시동안구을",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 안양시동안구을' 겹침 96%/87%",
-   "overlap_current": 0.9572,
-   "overlap_previous": 0.8716,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9945,
+   "overlap_previous": 0.993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시동안구을",
-     "of_current": 0.9572,
-     "of_previous": 0.8716
+     "of_current": 0.9945,
+     "of_previous": 0.993
     }
    ]
   },
   {
    "district": "경기 안양시만안구",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9673,
-   "overlap_previous": 0.9406,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9948,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시만안구",
-     "of_current": 0.9673,
-     "of_previous": 0.9406
+     "of_current": 0.9948,
+     "of_previous": 0.9971
     }
    ]
   },
@@ -1051,15 +996,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9823,
-   "overlap_previous": 0.9768,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 양주시",
-     "of_current": 0.9823,
-     "of_previous": 0.9768
+     "of_current": 0.9997,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -1070,34 +1015,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.99,
-   "overlap_previous": 0.9919,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 여주시양평군",
-     "of_current": 0.99,
-     "of_previous": 0.9919
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "경기 오산시",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9537,
-   "overlap_previous": 0.9581,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9954,
+   "overlap_previous": 0.9957,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 오산시",
-     "of_current": 0.9537,
-     "of_previous": 0.9581
+     "of_current": 0.9954,
+     "of_previous": 0.9957
     }
    ]
   },
@@ -1108,15 +1053,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9797,
-   "overlap_previous": 0.9819,
+   "overlap_current": 0.999,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시갑",
-     "of_current": 0.9797,
-     "of_previous": 0.9819
+     "of_current": 0.999,
+     "of_previous": 0.999
     }
    ]
   },
@@ -1126,16 +1071,16 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9326,
-   "overlap_previous": 0.9284,
+   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9671,
+   "overlap_previous": 0.9559,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시병",
-     "of_current": 0.9326,
-     "of_previous": 0.9284
+     "of_current": 0.9671,
+     "of_previous": 0.9559
     }
    ]
   },
@@ -1145,97 +1090,92 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9354,
-   "overlap_previous": 0.9699,
+   "reason": "겹침 97%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9658,
+   "overlap_previous": 0.9972,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시을",
-     "of_current": 0.9354,
-     "of_previous": 0.9699
+     "of_current": 0.9658,
+     "of_previous": 0.9972
     }
    ]
   },
   {
    "district": "경기 용인시정",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 용인시정' 겹침 91%/90%",
-   "overlap_current": 0.9113,
-   "overlap_previous": 0.8952,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 95%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9509,
+   "overlap_previous": 0.9183,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시정",
-     "of_current": 0.9113,
-     "of_previous": 0.8952
-    },
-    {
-     "prev": "경기 용인시병",
-     "of_current": 0.0554,
-     "of_previous": 0.0517
+     "of_current": 0.9509,
+     "of_previous": 0.9183
     }
    ]
   },
   {
    "district": "경기 의왕시과천시",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9639,
-   "overlap_previous": 0.9614,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9977,
+   "overlap_previous": 0.9964,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의왕시과천시",
-     "of_current": 0.9639,
-     "of_previous": 0.9614
+     "of_current": 0.9977,
+     "of_previous": 0.9964
     }
    ]
   },
   {
    "district": "경기 의정부시갑",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.959,
-   "overlap_previous": 0.9594,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9979,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의정부시갑",
-     "of_current": 0.959,
-     "of_previous": 0.9594
+     "of_current": 0.9989,
+     "of_previous": 0.9979
     }
    ]
   },
   {
    "district": "경기 의정부시을",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9687,
-   "overlap_previous": 0.9588,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.998,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의정부시을",
-     "of_current": 0.9687,
-     "of_previous": 0.9588
+     "of_current": 0.998,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -1246,15 +1186,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9817,
-   "overlap_previous": 0.9796,
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 이천시",
-     "of_current": 0.9817,
-     "of_previous": 0.9796
+     "of_current": 0.9992,
+     "of_previous": 0.9992
     }
    ]
   },
@@ -1265,34 +1205,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9702,
-   "overlap_previous": 0.9704,
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 파주시갑",
-     "of_current": 0.9702,
-     "of_previous": 0.9704
+     "of_current": 0.9991,
+     "of_previous": 0.999
     }
    ]
   },
   {
    "district": "경기 파주시을",
    "sido": "경기",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 파주시을' 겹침 87%/98%",
-   "overlap_current": 0.8677,
-   "overlap_previous": 0.9791,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 파주시을",
-     "of_current": 0.8677,
-     "of_previous": 0.9791
+     "of_current": 0.9992,
+     "of_previous": 0.9992
     }
    ]
   },
@@ -1302,21 +1242,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 평택시갑' 겹침 83%/96%",
-   "overlap_current": 0.8277,
-   "overlap_previous": 0.9582,
+   "reason": "주 대응 '경기 평택시갑' 겹침 87%/98%",
+   "overlap_current": 0.8738,
+   "overlap_previous": 0.9756,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 평택시갑",
-     "of_current": 0.8277,
-     "of_previous": 0.9582
+     "of_current": 0.8738,
+     "of_previous": 0.9756
     },
     {
      "prev": "경기 평택시을",
-     "of_current": 0.1434,
-     "of_previous": 0.0504
+     "of_current": 0.1252,
+     "of_previous": 0.0443
     }
    ]
   },
@@ -1326,16 +1266,16 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9709,
-   "overlap_previous": 0.9321,
+   "reason": "겹침 99%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9905,
+   "overlap_previous": 0.9555,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 평택시을",
-     "of_current": 0.9709,
-     "of_previous": 0.9321
+     "of_current": 0.9905,
+     "of_previous": 0.9555
     }
    ]
   },
@@ -1346,34 +1286,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9909,
-   "overlap_previous": 0.989,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 포천시가평군",
-     "of_current": 0.9909,
-     "of_previous": 0.989
+     "of_current": 0.9996,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "경기 하남시",
    "sido": "경기",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9675,
-   "overlap_previous": 0.9701,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9976,
+   "overlap_previous": 0.9985,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 하남시",
-     "of_current": 0.9675,
-     "of_previous": 0.9701
+     "of_current": 0.9976,
+     "of_previous": 0.9985
     }
    ]
   },
@@ -1383,26 +1323,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 화성시갑' 겹침 85%/98%",
-   "overlap_current": 0.8549,
-   "overlap_previous": 0.9823,
+   "reason": "주 대응 '경기 화성시갑' 겹침 87%/100%",
+   "overlap_current": 0.8678,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시갑",
-     "of_current": 0.8549,
-     "of_previous": 0.9823
+     "of_current": 0.8678,
+     "of_previous": 0.9996
     },
     {
      "prev": "경기 화성시병",
-     "of_current": 0.0653,
-     "of_previous": 0.584
-    },
-    {
-     "prev": "경기 안산시상록구갑",
-     "of_current": 0.0029,
-     "of_previous": 0.0557
+     "of_current": 0.0642,
+     "of_previous": 0.595
     }
    ]
   },
@@ -1412,16 +1347,21 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 경기 화성시병 93%",
-   "overlap_current": 0.9316,
-   "overlap_previous": 0.389,
+   "reason": "겹침이 흩어짐 — 경기 화성시병 93%, 경기 화성시을 6%",
+   "overlap_current": 0.9294,
+   "overlap_previous": 0.4019,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시병",
-     "of_current": 0.9316,
-     "of_previous": 0.389
+     "of_current": 0.9294,
+     "of_previous": 0.4019
+    },
+    {
+     "prev": "경기 화성시을",
+     "of_current": 0.0632,
+     "of_previous": 0.0355
     }
    ]
   },
@@ -1431,35 +1371,35 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9517,
-   "overlap_previous": 0.962,
+   "reason": "겹침 100%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9982,
+   "overlap_previous": 0.9622,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시을",
-     "of_current": 0.9517,
-     "of_previous": 0.962
+     "of_current": 0.9982,
+     "of_previous": 0.9622
     }
    ]
   },
   {
    "district": "경남 거제시",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9596,
-   "overlap_previous": 0.9579,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 거제시",
-     "of_current": 0.9596,
-     "of_previous": 0.9579
+     "of_current": 0.9985,
+     "of_previous": 0.9993
     }
    ]
   },
@@ -1470,34 +1410,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9788,
-   "overlap_previous": 0.9764,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9958,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 김해시갑",
-     "of_current": 0.9788,
-     "of_previous": 0.9764
+     "of_current": 0.9996,
+     "of_previous": 0.9958
     }
    ]
   },
   {
    "district": "경남 김해시을",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9573,
-   "overlap_previous": 0.9774,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9922,
+   "overlap_previous": 0.9993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 김해시을",
-     "of_current": 0.9573,
-     "of_previous": 0.9774
+     "of_current": 0.9922,
+     "of_previous": 0.9993
     }
    ]
   },
@@ -1508,34 +1448,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9924,
-   "overlap_previous": 0.9908,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 밀양시의령군함안군창녕군",
-     "of_current": 0.9924,
-     "of_previous": 0.9908
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "경남 사천시남해군하동군",
    "sido": "경남",
-   "relation": "exact",
-   "comparable": "yes",
-   "reason_code": "exact_overlap",
-   "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9855,
-   "overlap_previous": 0.9813,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 100%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.9442,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 사천시남해군하동군",
-     "of_current": 0.9855,
-     "of_previous": 0.9813
+     "of_current": 0.999,
+     "of_previous": 0.9442
     }
    ]
   },
@@ -1546,15 +1486,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.994,
-   "overlap_previous": 0.994,
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 산청군함양군거창군합천군",
-     "of_current": 0.994,
-     "of_previous": 0.994
+     "of_current": 0.9998,
+     "of_previous": 0.9998
     }
    ]
   },
@@ -1565,182 +1505,213 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9851,
-   "overlap_previous": 0.9829,
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 양산시갑",
-     "of_current": 0.9851,
-     "of_previous": 0.9829
+     "of_current": 0.9998,
+     "of_previous": 0.9996
     }
    ]
   },
   {
    "district": "경남 양산시을",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9713,
-   "overlap_previous": 0.9493,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 양산시을",
-     "of_current": 0.9713,
-     "of_previous": 0.9493
+     "of_current": 0.9987,
+     "of_previous": 0.9995
     }
    ]
   },
   {
    "district": "경남 진주시갑",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9621,
-   "overlap_previous": 0.9769,
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "이전 '경남 진주시갑'의 86%만 차지",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.8591,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 진주시갑",
-     "of_current": 0.9621,
-     "of_previous": 0.9769
+     "of_current": 0.9987,
+     "of_previous": 0.8591
     }
    ]
   },
   {
    "district": "경남 진주시을",
    "sido": "경남",
-   "relation": "exact",
-   "comparable": "yes",
-   "reason_code": "exact_overlap",
-   "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.983,
-   "overlap_previous": 0.9765,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 100%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9026,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 진주시을",
-     "of_current": 0.983,
-     "of_previous": 0.9765
+     "of_current": 0.9994,
+     "of_previous": 0.9026
     }
    ]
   },
   {
    "district": "경남 창원시마산합포구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9458,
-   "overlap_previous": 0.965,
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "이전 '경남 창원시마산합포구'의 81%만 차지",
+   "overlap_current": 0.9974,
+   "overlap_previous": 0.8102,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시마산합포구",
-     "of_current": 0.9458,
-     "of_previous": 0.965
+     "of_current": 0.9974,
+     "of_previous": 0.8102
     }
    ]
   },
   {
    "district": "경남 창원시마산회원구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9715,
-   "overlap_previous": 0.9671,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.9984,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시마산회원구",
-     "of_current": 0.9715,
-     "of_previous": 0.9671
+     "of_current": 0.9984,
+     "of_previous": 0.9984
     }
    ]
   },
   {
    "district": "경남 창원시성산구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9448,
-   "overlap_previous": 0.9805,
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "주 대응 '경남 창원시성산구' 겹침 93%/86%",
+   "overlap_current": 0.9314,
+   "overlap_previous": 0.8579,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시성산구",
-     "of_current": 0.9448,
-     "of_previous": 0.9805
+     "of_current": 0.9314,
+     "of_previous": 0.8579
+    },
+    {
+     "prev": "경남 창원시마산합포구",
+     "of_current": 0.0584,
+     "of_previous": 0.0162
     }
    ]
   },
   {
    "district": "경남 창원시의창구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9846,
-   "overlap_previous": 0.9627,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.9963,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시의창구",
-     "of_current": 0.9846,
-     "of_previous": 0.9627
+     "of_current": 0.999,
+     "of_previous": 0.9963
     }
    ]
   },
   {
    "district": "경남 창원시진해구",
    "sido": "경남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9537,
-   "overlap_previous": 0.9466,
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "주 대응 '경남 창원시진해구' 겹침 90%/100%",
+   "overlap_current": 0.8978,
+   "overlap_previous": 0.9998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시진해구",
-     "of_current": 0.9537,
-     "of_previous": 0.9466
+     "of_current": 0.8978,
+     "of_previous": 0.9998
+    },
+    {
+     "prev": "경남 창원시성산구",
+     "of_current": 0.1018,
+     "of_previous": 0.1411
     }
    ]
   },
   {
    "district": "경남 통영시고성군",
    "sido": "경남",
-   "relation": "new",
+   "relation": "unresolvable",
    "comparable": "no",
-   "reason_code": "no_predecessor",
-   "reason": "대응하는 이전 선거구 없음",
-   "overlap_current": null,
-   "overlap_previous": null,
+   "reason_code": "scattered_overlap",
+   "reason": "겹침이 흩어짐 — 경남 사천시남해군하동군 11%, 경남 진주시갑 7%, 경남 창원시마산합포구 7%",
+   "overlap_current": 0.1107,
+   "overlap_previous": 0.0554,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
-   "previous": []
+   "previous": [
+    {
+     "prev": "경남 사천시남해군하동군",
+     "of_current": 0.1107,
+     "of_previous": 0.0554
+    },
+    {
+     "prev": "경남 진주시갑",
+     "of_current": 0.0717,
+     "of_previous": 0.14
+    },
+    {
+     "prev": "경남 창원시마산합포구",
+     "of_current": 0.0674,
+     "of_previous": 0.1725
+    },
+    {
+     "prev": "경남 진주시을",
+     "of_current": 0.0528,
+     "of_previous": 0.0966
+    }
+   ]
   },
   {
    "district": "경북 경산시",
@@ -1749,15 +1720,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9806,
-   "overlap_previous": 0.9752,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 경산시",
-     "of_current": 0.9806,
-     "of_previous": 0.9752
+     "of_current": 0.9995,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -1768,15 +1739,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9904,
-   "overlap_previous": 0.9881,
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 경주시",
-     "of_current": 0.9904,
-     "of_previous": 0.9881
+     "of_current": 0.9998,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -1787,34 +1758,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9884,
-   "overlap_previous": 0.9883,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 고령군성주군칠곡군",
-     "of_current": 0.9884,
-     "of_previous": 0.9883
+     "of_current": 0.9997,
+     "of_previous": 0.9996
     }
    ]
   },
   {
    "district": "경북 구미시갑",
    "sido": "경북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9642,
-   "overlap_previous": 0.9705,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 구미시갑",
-     "of_current": 0.9642,
-     "of_previous": 0.9705
+     "of_current": 0.9984,
+     "of_previous": 0.9983
     }
    ]
   },
@@ -1825,15 +1796,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9751,
-   "overlap_previous": 0.9863,
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 구미시을",
-     "of_current": 0.9751,
-     "of_previous": 0.9863
+     "of_current": 0.9992,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -1843,21 +1814,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경북 상주시군위군의성군청송군' 겹침 77%/67%",
-   "overlap_current": 0.771,
-   "overlap_previous": 0.671,
+   "reason": "주 대응 '경북 상주시군위군의성군청송군' 겹침 78%/68%",
+   "overlap_current": 0.7788,
+   "overlap_previous": 0.677,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 상주시군위군의성군청송군",
-     "of_current": 0.771,
-     "of_previous": 0.671
+     "of_current": 0.7788,
+     "of_previous": 0.677
     },
     {
      "prev": "경북 영양군영덕군봉화군울진군",
-     "of_current": 0.2218,
-     "of_previous": 0.1976
+     "of_current": 0.221,
+     "of_previous": 0.1973
     }
    ]
   },
@@ -1868,15 +1839,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9881,
-   "overlap_previous": 0.9841,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 김천시",
-     "of_current": 0.9881,
-     "of_previous": 0.9841
+     "of_current": 0.9996,
+     "of_previous": 0.9998
     }
    ]
   },
@@ -1886,21 +1857,21 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 경북 상주시군위군의성군청송군 57%, 경북 영주시문경시예천군 42%",
-   "overlap_current": 0.5727,
-   "overlap_previous": 0.3208,
+   "reason": "겹침이 흩어짐 — 경북 상주시군위군의성군청송군 58%, 경북 영주시문경시예천군 42%",
+   "overlap_current": 0.577,
+   "overlap_previous": 0.3228,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 상주시군위군의성군청송군",
-     "of_current": 0.5727,
-     "of_previous": 0.3208
+     "of_current": 0.577,
+     "of_previous": 0.3228
     },
     {
      "prev": "경북 영주시문경시예천군",
-     "of_current": 0.4193,
-     "of_previous": 0.4018
+     "of_current": 0.4228,
+     "of_previous": 0.4058
     }
    ]
   },
@@ -1910,21 +1881,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경북 안동시' 겹침 69%/99%",
-   "overlap_current": 0.6887,
-   "overlap_previous": 0.9909,
+   "reason": "주 대응 '경북 안동시' 겹침 70%/100%",
+   "overlap_current": 0.6964,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 안동시",
-     "of_current": 0.6887,
-     "of_previous": 0.9909
+     "of_current": 0.6964,
+     "of_previous": 0.9997
     },
     {
      "prev": "경북 영주시문경시예천군",
-     "of_current": 0.3044,
-     "of_previous": 0.2954
+     "of_current": 0.3034,
+     "of_previous": 0.2949
     }
    ]
   },
@@ -1934,21 +1905,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '경북 영양군영덕군봉화군울진군' 겹침 81%/80%",
-   "overlap_current": 0.8137,
-   "overlap_previous": 0.7973,
+   "reason": "주 대응 '경북 영양군영덕군봉화군울진군' 겹침 82%/80%",
+   "overlap_current": 0.8174,
+   "overlap_previous": 0.8026,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 영양군영덕군봉화군울진군",
-     "of_current": 0.8137,
-     "of_previous": 0.7973
+     "of_current": 0.8174,
+     "of_previous": 0.8026
     },
     {
      "prev": "경북 영주시문경시예천군",
-     "of_current": 0.1817,
-     "of_previous": 0.2976
+     "of_current": 0.1825,
+     "of_previous": 0.2993
     }
    ]
   },
@@ -1959,15 +1930,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9853,
-   "overlap_previous": 0.9862,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 영천시청도군",
-     "of_current": 0.9853,
-     "of_previous": 0.9862
+     "of_current": 0.9996,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -1978,15 +1949,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9776,
-   "overlap_previous": 0.9763,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 포항시남구울릉군",
-     "of_current": 0.9776,
-     "of_previous": 0.9763
+     "of_current": 0.9995,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -1997,229 +1968,224 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9881,
-   "overlap_previous": 0.9869,
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 포항시북구",
-     "of_current": 0.9881,
-     "of_previous": 0.9869
+     "of_current": 0.9991,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "광주 광산구갑",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9599,
-   "overlap_previous": 0.9756,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9986,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 광산구갑",
-     "of_current": 0.9599,
-     "of_previous": 0.9756
+     "of_current": 0.9995,
+     "of_previous": 0.9986
     }
    ]
   },
   {
    "district": "광주 광산구을",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.942,
-   "overlap_previous": 0.9655,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9976,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 광산구을",
-     "of_current": 0.942,
-     "of_previous": 0.9655
+     "of_current": 0.9976,
+     "of_previous": 0.9983
     }
    ]
   },
   {
    "district": "광주 동구남구갑",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9266,
-   "overlap_previous": 0.9476,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9961,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 동구남구갑",
-     "of_current": 0.9266,
-     "of_previous": 0.9476
+     "of_current": 0.9985,
+     "of_previous": 0.9961
     }
    ]
   },
   {
    "district": "광주 동구남구을",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9719,
-   "overlap_previous": 0.9399,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.9981,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 동구남구을",
-     "of_current": 0.9719,
-     "of_previous": 0.9399
+     "of_current": 0.999,
+     "of_previous": 0.9981
     }
    ]
   },
   {
    "district": "광주 북구갑",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9407,
-   "overlap_previous": 0.9311,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 북구갑",
-     "of_current": 0.9407,
-     "of_previous": 0.9311
+     "of_current": 0.9984,
+     "of_previous": 0.998
     }
    ]
   },
   {
    "district": "광주 북구을",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9265,
-   "overlap_previous": 0.9682,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9974,
+   "overlap_previous": 0.9987,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 북구을",
-     "of_current": 0.9265,
-     "of_previous": 0.9682
+     "of_current": 0.9974,
+     "of_previous": 0.9987
     }
    ]
   },
   {
    "district": "광주 서구갑",
    "sido": "광주",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '광주 서구갑' 겹침 97%/90%",
-   "overlap_current": 0.9651,
-   "overlap_previous": 0.896,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9979,
+   "overlap_previous": 0.9941,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 서구갑",
-     "of_current": 0.9651,
-     "of_previous": 0.896
+     "of_current": 0.9979,
+     "of_previous": 0.9941
     }
    ]
   },
   {
    "district": "광주 서구을",
    "sido": "광주",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9613,
-   "overlap_previous": 0.9442,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9926,
+   "overlap_previous": 0.9986,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 서구을",
-     "of_current": 0.9613,
-     "of_previous": 0.9442
+     "of_current": 0.9926,
+     "of_previous": 0.9986
     }
    ]
   },
   {
    "district": "대구 달서구갑",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9336,
-   "overlap_previous": 0.9656,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구갑",
-     "of_current": 0.9336,
-     "of_previous": 0.9656
+     "of_current": 0.9992,
+     "of_previous": 0.9995
     }
    ]
   },
   {
    "district": "대구 달서구병",
    "sido": "대구",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '대구 달서구병' 겹침 87%/94%",
-   "overlap_current": 0.874,
-   "overlap_previous": 0.9365,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.9942,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구병",
-     "of_current": 0.874,
-     "of_previous": 0.9365
-    },
-    {
-     "prev": "대구 달서구을",
-     "of_current": 0.0808,
-     "of_previous": 0.027
+     "of_current": 0.9984,
+     "of_previous": 0.9942
     }
    ]
   },
   {
    "district": "대구 달서구을",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9614,
-   "overlap_previous": 0.9267,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9978,
+   "overlap_previous": 0.9975,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구을",
-     "of_current": 0.9614,
-     "of_previous": 0.9267
+     "of_current": 0.9978,
+     "of_previous": 0.9975
     }
    ]
   },
@@ -2230,39 +2196,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9842,
-   "overlap_previous": 0.9737,
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달성군",
-     "of_current": 0.9842,
-     "of_previous": 0.9737
+     "of_current": 0.9989,
+     "of_previous": 0.9992
     }
    ]
   },
   {
    "district": "대구 동구갑",
    "sido": "대구",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '대구 동구갑' 겹침 86%/91%",
-   "overlap_current": 0.8561,
-   "overlap_previous": 0.9062,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9586,
+   "overlap_previous": 0.9762,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 동구갑",
-     "of_current": 0.8561,
-     "of_previous": 0.9062
-    },
-    {
-     "prev": "대구 북구갑",
-     "of_current": 0.0955,
-     "of_previous": 0.0603
+     "of_current": 0.9586,
+     "of_previous": 0.9762
     }
    ]
   },
@@ -2273,296 +2234,281 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9824,
-   "overlap_previous": 0.9795,
+   "overlap_current": 0.9972,
+   "overlap_previous": 0.9966,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 동구을",
-     "of_current": 0.9824,
-     "of_previous": 0.9795
+     "of_current": 0.9972,
+     "of_previous": 0.9966
     }
    ]
   },
   {
    "district": "대구 북구갑",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/91% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9148,
-   "overlap_previous": 0.9105,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9962,
+   "overlap_previous": 0.9913,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 북구갑",
-     "of_current": 0.9148,
-     "of_previous": 0.9105
+     "of_current": 0.9962,
+     "of_previous": 0.9913
     }
    ]
   },
   {
    "district": "대구 북구을",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9705,
-   "overlap_previous": 0.9583,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9985,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 북구을",
-     "of_current": 0.9705,
-     "of_previous": 0.9583
+     "of_current": 0.9997,
+     "of_previous": 0.9985
     }
    ]
   },
   {
    "district": "대구 서구",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9401,
-   "overlap_previous": 0.9511,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9952,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 서구",
-     "of_current": 0.9401,
-     "of_previous": 0.9511
+     "of_current": 0.9995,
+     "of_previous": 0.9952
     }
    ]
   },
   {
    "district": "대구 수성구갑",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9312,
-   "overlap_previous": 0.9343,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 수성구갑",
-     "of_current": 0.9312,
-     "of_previous": 0.9343
-    },
-    {
-     "prev": "대구 동구갑",
-     "of_current": 0.0167,
-     "of_previous": 0.0723
+     "of_current": 0.9985,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "대구 수성구을",
    "sido": "대구",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '대구 수성구을' 겹침 83%/97%",
-   "overlap_current": 0.8289,
-   "overlap_previous": 0.9687,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9948,
+   "overlap_previous": 0.9981,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 수성구을",
-     "of_current": 0.8289,
-     "of_previous": 0.9687
-    },
-    {
-     "prev": "대구 수성구갑",
-     "of_current": 0.1191,
-     "of_previous": 0.0551
+     "of_current": 0.9948,
+     "of_previous": 0.9981
     }
    ]
   },
   {
    "district": "대구 중구남구",
    "sido": "대구",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9523,
-   "overlap_previous": 0.9854,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9958,
+   "overlap_previous": 0.9981,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 중구남구",
-     "of_current": 0.9523,
-     "of_previous": 0.9854
+     "of_current": 0.9958,
+     "of_previous": 0.9981
     }
    ]
   },
   {
    "district": "대전 대덕구",
    "sido": "대전",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '대전 대덕구' 겹침 90%/95%",
-   "overlap_current": 0.8968,
-   "overlap_previous": 0.9546,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 대덕구",
-     "of_current": 0.8968,
-     "of_previous": 0.9546
+     "of_current": 0.9989,
+     "of_previous": 0.9993
     }
    ]
   },
   {
    "district": "대전 동구",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9664,
-   "overlap_previous": 0.9375,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9982,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 동구",
-     "of_current": 0.9664,
-     "of_previous": 0.9375
+     "of_current": 0.9988,
+     "of_previous": 0.9982
     }
    ]
   },
   {
    "district": "대전 서구갑",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9191,
-   "overlap_previous": 0.9706,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9958,
+   "overlap_previous": 0.9974,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 서구갑",
-     "of_current": 0.9191,
-     "of_previous": 0.9706
-    },
-    {
-     "prev": "대전 서구을",
-     "of_current": 0.0113,
-     "of_previous": 0.0616
+     "of_current": 0.9958,
+     "of_previous": 0.9974
     }
    ]
   },
   {
    "district": "대전 서구을",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9185,
-   "overlap_previous": 0.9229,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9893,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 서구을",
-     "of_current": 0.9185,
-     "of_previous": 0.9229
+     "of_current": 0.9991,
+     "of_previous": 0.9893
     }
    ]
   },
   {
    "district": "대전 유성구갑",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.958,
-   "overlap_previous": 0.9652,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.997,
+   "overlap_previous": 0.9975,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 유성구갑",
-     "of_current": 0.958,
-     "of_previous": 0.9652
+     "of_current": 0.997,
+     "of_previous": 0.9975
     }
    ]
   },
   {
    "district": "대전 유성구을",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.955,
-   "overlap_previous": 0.972,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9984,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 유성구을",
-     "of_current": 0.955,
-     "of_previous": 0.972
+     "of_current": 0.9989,
+     "of_previous": 0.9984
     }
    ]
   },
   {
    "district": "대전 중구",
    "sido": "대전",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9328,
-   "overlap_previous": 0.9462,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9973,
+   "overlap_previous": 0.9973,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 중구",
-     "of_current": 0.9328,
-     "of_previous": 0.9462
+     "of_current": 0.9973,
+     "of_previous": 0.9973
     }
    ]
   },
   {
    "district": "부산 금정구",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9673,
-   "overlap_previous": 0.9638,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9986,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 금정구",
-     "of_current": 0.9673,
-     "of_previous": 0.9638
+     "of_current": 0.9986,
+     "of_previous": 0.9983
     }
    ]
   },
@@ -2573,15 +2519,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.974,
-   "overlap_previous": 0.9811,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 기장군",
-     "of_current": 0.974,
-     "of_previous": 0.9811
+     "of_current": 0.9996,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -2591,21 +2537,21 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 부산 남구을 55%, 부산 남구갑 39%",
-   "overlap_current": 0.5548,
-   "overlap_previous": 0.5108,
+   "reason": "겹침이 흩어짐 — 부산 남구을 59%, 부산 남구갑 41%",
+   "overlap_current": 0.5934,
+   "overlap_previous": 0.5461,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 남구을",
-     "of_current": 0.5548,
-     "of_previous": 0.5108
+     "of_current": 0.5934,
+     "of_previous": 0.5461
     },
     {
      "prev": "부산 남구갑",
-     "of_current": 0.3932,
-     "of_previous": 0.527
+     "of_current": 0.4054,
+     "of_previous": 0.5345
     }
    ]
   },
@@ -2615,1348 +2561,1218 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 부산 남구을 55%, 부산 남구갑 39%",
-   "overlap_current": 0.5535,
-   "overlap_previous": 0.4306,
+   "reason": "겹침이 흩어짐 — 부산 남구을 58%, 부산 남구갑 42%",
+   "overlap_current": 0.58,
+   "overlap_previous": 0.451,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 남구을",
-     "of_current": 0.5535,
-     "of_previous": 0.4306
+     "of_current": 0.58,
+     "of_previous": 0.451
     },
     {
      "prev": "부산 남구갑",
-     "of_current": 0.3919,
-     "of_previous": 0.4439
+     "of_current": 0.4155,
+     "of_previous": 0.4629
     }
    ]
   },
   {
    "district": "부산 동래구",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9428,
-   "overlap_previous": 0.9781,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9963,
+   "overlap_previous": 0.9939,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 동래구",
-     "of_current": 0.9428,
-     "of_previous": 0.9781
+     "of_current": 0.9963,
+     "of_previous": 0.9939
     }
    ]
   },
   {
    "district": "부산 부산진구갑",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9122,
-   "overlap_previous": 0.9038,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9955,
+   "overlap_previous": 0.9906,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 부산진구갑",
-     "of_current": 0.9122,
-     "of_previous": 0.9038
+     "of_current": 0.9955,
+     "of_previous": 0.9906
     }
    ]
   },
   {
    "district": "부산 부산진구을",
    "sido": "부산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 부산진구을' 겹침 83%/93%",
-   "overlap_current": 0.8325,
-   "overlap_previous": 0.9292,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9886,
+   "overlap_previous": 0.9956,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 부산진구을",
-     "of_current": 0.8325,
-     "of_previous": 0.9292
-    },
-    {
-     "prev": "부산 부산진구갑",
-     "of_current": 0.089,
-     "of_previous": 0.065
+     "of_current": 0.9886,
+     "of_previous": 0.9956
     }
    ]
   },
   {
    "district": "부산 북구강서구갑",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9065,
-   "overlap_previous": 0.9342,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9981,
+   "overlap_previous": 0.9963,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 북구강서구갑",
-     "of_current": 0.9065,
-     "of_previous": 0.9342
-    },
-    {
-     "prev": "부산 북구강서구을",
-     "of_current": 0.0645,
-     "of_previous": 0.0061
+     "of_current": 0.9981,
+     "of_previous": 0.9963
     }
    ]
   },
   {
    "district": "부산 북구강서구을",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9349,
-   "overlap_previous": 0.9479,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9956,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 북구강서구을",
-     "of_current": 0.9349,
-     "of_previous": 0.9479
+     "of_current": 0.9956,
+     "of_previous": 0.9992
     }
    ]
   },
   {
    "district": "부산 사상구",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9818,
-   "overlap_previous": 0.9395,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사상구",
-     "of_current": 0.9818,
-     "of_previous": 0.9395
+     "of_current": 0.9994,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "부산 사하구갑",
    "sido": "부산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 사하구갑' 겹침 83%/92%",
-   "overlap_current": 0.8319,
-   "overlap_previous": 0.9205,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9977,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사하구갑",
-     "of_current": 0.8319,
-     "of_previous": 0.9205
+     "of_current": 0.9977,
+     "of_previous": 0.9983
     }
    ]
   },
   {
    "district": "부산 사하구을",
    "sido": "부산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 사하구을' 겹침 86%/88%",
-   "overlap_current": 0.8572,
-   "overlap_previous": 0.8836,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.9969,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사하구을",
-     "of_current": 0.8572,
-     "of_previous": 0.8836
+     "of_current": 0.9984,
+     "of_previous": 0.9969
     }
    ]
   },
   {
    "district": "부산 서구동구",
    "sido": "부산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 서구동구' 겹침 91%/88%",
-   "overlap_current": 0.9127,
-   "overlap_previous": 0.8773,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9897,
+   "overlap_previous": 0.9952,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 서구동구",
-     "of_current": 0.9127,
-     "of_previous": 0.8773
+     "of_current": 0.9897,
+     "of_previous": 0.9952
     }
    ]
   },
   {
    "district": "부산 수영구",
    "sido": "부산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 수영구' 겹침 95%/88%",
-   "overlap_current": 0.9466,
-   "overlap_previous": 0.8794,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9895,
+   "overlap_previous": 0.9967,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 수영구",
-     "of_current": 0.9466,
-     "of_previous": 0.8794
+     "of_current": 0.9895,
+     "of_previous": 0.9967
     }
    ]
   },
   {
    "district": "부산 연제구",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9249,
-   "overlap_previous": 0.922,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9946,
+   "overlap_previous": 0.9922,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 연제구",
-     "of_current": 0.9249,
-     "of_previous": 0.922
+     "of_current": 0.9946,
+     "of_previous": 0.9922
     }
    ]
   },
   {
    "district": "부산 중구영도구",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 90%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.902,
-   "overlap_previous": 0.9678,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.992,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 중구영도구",
-     "of_current": 0.902,
-     "of_previous": 0.9678
+     "of_current": 0.992,
+     "of_previous": 0.9983
     }
    ]
   },
   {
    "district": "부산 해운대구갑",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9577,
-   "overlap_previous": 0.9383,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9982,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 해운대구갑",
-     "of_current": 0.9577,
-     "of_previous": 0.9383
+     "of_current": 0.9997,
+     "of_previous": 0.9982
     }
    ]
   },
   {
    "district": "부산 해운대구을",
    "sido": "부산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.946,
-   "overlap_previous": 0.9644,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9981,
+   "overlap_previous": 0.9977,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 해운대구을",
-     "of_current": 0.946,
-     "of_previous": 0.9644
+     "of_current": 0.9981,
+     "of_previous": 0.9977
     }
    ]
   },
   {
    "district": "서울 강남구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강남구갑' 겹침 89%/95%",
-   "overlap_current": 0.8885,
-   "overlap_previous": 0.9539,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9972,
+   "overlap_previous": 0.9976,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구갑",
-     "of_current": 0.8885,
-     "of_previous": 0.9539
-    },
-    {
-     "prev": "서울 강남구병",
-     "of_current": 0.0817,
-     "of_previous": 0.1094
+     "of_current": 0.9972,
+     "of_previous": 0.9976
     }
    ]
   },
   {
    "district": "서울 강남구병",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강남구병' 겹침 95%/85%",
-   "overlap_current": 0.9471,
-   "overlap_previous": 0.8514,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9913,
+   "overlap_previous": 0.9954,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구병",
-     "of_current": 0.9471,
-     "of_previous": 0.8514
+     "of_current": 0.9913,
+     "of_previous": 0.9954
     }
    ]
   },
   {
    "district": "서울 강남구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9191,
-   "overlap_previous": 0.9452,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.996,
+   "overlap_previous": 0.9947,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구을",
-     "of_current": 0.9191,
-     "of_previous": 0.9452
-    },
-    {
-     "prev": "서울 송파구을",
-     "of_current": 0.0475,
-     "of_previous": 0.0681
+     "of_current": 0.996,
+     "of_previous": 0.9947
     }
    ]
   },
   {
    "district": "서울 강동구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9087,
-   "overlap_previous": 0.9455,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9973,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강동구갑",
-     "of_current": 0.9087,
-     "of_previous": 0.9455
-    },
-    {
-     "prev": "서울 강동구을",
-     "of_current": 0.0276,
-     "of_previous": 0.0599
+     "of_current": 0.9985,
+     "of_previous": 0.9973
     }
    ]
   },
   {
    "district": "서울 강동구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강동구을' 겹침 91%/87%",
-   "overlap_current": 0.9096,
-   "overlap_previous": 0.8713,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.9981,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강동구을",
-     "of_current": 0.9096,
-     "of_previous": 0.8713
-    },
-    {
-     "prev": "서울 강동구갑",
-     "of_current": 0.0847,
-     "of_previous": 0.0389
+     "of_current": 0.9966,
+     "of_previous": 0.9981
     }
    ]
   },
   {
    "district": "서울 강북구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강북구갑' 겹침 88%/95%",
-   "overlap_current": 0.878,
-   "overlap_previous": 0.9479,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9942,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강북구갑",
-     "of_current": 0.878,
-     "of_previous": 0.9479
-    },
-    {
-     "prev": "서울 강북구을",
-     "of_current": 0.0397,
-     "of_previous": 0.1232
-    },
-    {
-     "prev": "서울 도봉구갑",
-     "of_current": 0.0392,
-     "of_previous": 0.1087
+     "of_current": 0.9942,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "서울 강북구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강북구을' 겹침 93%/86%",
-   "overlap_current": 0.9299,
-   "overlap_previous": 0.8644,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9954,
+   "overlap_previous": 0.9841,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강북구을",
-     "of_current": 0.9299,
-     "of_previous": 0.8644
+     "of_current": 0.9954,
+     "of_previous": 0.9841
     }
    ]
   },
   {
    "district": "서울 강서구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강서구갑' 겹침 75%/83%",
-   "overlap_current": 0.7493,
-   "overlap_previous": 0.8257,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9902,
+   "overlap_previous": 0.9956,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구갑",
-     "of_current": 0.7493,
-     "of_previous": 0.8257
-    },
-    {
-     "prev": "서울 양천구을",
-     "of_current": 0.1504,
-     "of_previous": 0.1059
-    },
-    {
-     "prev": "서울 강서구을",
-     "of_current": 0.0703,
-     "of_previous": 0.0168
+     "of_current": 0.9902,
+     "of_previous": 0.9956
     }
    ]
   },
   {
    "district": "서울 강서구병",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 강서구병' 겹침 88%/87%",
-   "overlap_current": 0.8841,
-   "overlap_previous": 0.866,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9886,
+   "overlap_previous": 0.9939,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구병",
-     "of_current": 0.8841,
-     "of_previous": 0.866
-    },
-    {
-     "prev": "서울 강서구갑",
-     "of_current": 0.1003,
-     "of_previous": 0.1066
+     "of_current": 0.9886,
+     "of_previous": 0.9939
     }
    ]
   },
   {
    "district": "서울 강서구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9759,
-   "overlap_previous": 0.9422,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9973,
+   "overlap_previous": 0.9965,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구을",
-     "of_current": 0.9759,
-     "of_previous": 0.9422
+     "of_current": 0.9973,
+     "of_previous": 0.9965
     }
    ]
   },
   {
    "district": "서울 관악구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 관악구갑' 겹침 92%/90%",
-   "overlap_current": 0.9157,
-   "overlap_previous": 0.8976,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9906,
+   "overlap_previous": 0.9943,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 관악구갑",
-     "of_current": 0.9157,
-     "of_previous": 0.8976
-    },
-    {
-     "prev": "서울 관악구을",
-     "of_current": 0.0536,
-     "of_previous": 0.0349
+     "of_current": 0.9906,
+     "of_previous": 0.9943
     }
    ]
   },
   {
    "district": "서울 관악구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/91% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9542,
-   "overlap_previous": 0.9136,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9983,
+   "overlap_previous": 0.9968,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 관악구을",
-     "of_current": 0.9542,
-     "of_previous": 0.9136
+     "of_current": 0.9983,
+     "of_previous": 0.9968
     }
    ]
   },
   {
    "district": "서울 광진구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.967,
-   "overlap_previous": 0.9365,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9949,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 광진구갑",
-     "of_current": 0.967,
-     "of_previous": 0.9365
+     "of_current": 0.9949,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "서울 광진구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9458,
-   "overlap_previous": 0.993,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9961,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 광진구을",
-     "of_current": 0.9458,
-     "of_previous": 0.993
-    },
-    {
-     "prev": "서울 송파구을",
-     "of_current": 0.0508,
-     "of_previous": 0.03
+     "of_current": 0.9961,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "서울 구로구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9328,
-   "overlap_previous": 0.9515,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9899,
+   "overlap_previous": 0.9865,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 구로구갑",
-     "of_current": 0.9328,
-     "of_previous": 0.9515
+     "of_current": 0.9899,
+     "of_previous": 0.9865
     }
    ]
   },
   {
    "district": "서울 구로구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '서울 구로구을'의 88%만 차지",
-   "overlap_current": 0.9788,
-   "overlap_previous": 0.884,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9955,
+   "overlap_previous": 0.996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 구로구을",
-     "of_current": 0.9788,
-     "of_previous": 0.884
+     "of_current": 0.9955,
+     "of_previous": 0.996
     }
    ]
   },
   {
    "district": "서울 금천구",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 금천구' 겹침 89%/95%",
-   "overlap_current": 0.8891,
-   "overlap_previous": 0.95,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9917,
+   "overlap_previous": 0.9904,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 금천구",
-     "of_current": 0.8891,
-     "of_previous": 0.95
+     "of_current": 0.9917,
+     "of_previous": 0.9904
     }
    ]
   },
   {
    "district": "서울 노원구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9534,
-   "overlap_previous": 0.9387,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9901,
+   "overlap_previous": 0.9948,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 노원구갑",
-     "of_current": 0.9534,
-     "of_previous": 0.9387
+     "of_current": 0.9901,
+     "of_previous": 0.9948
     }
    ]
   },
   {
    "district": "서울 노원구병",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 노원구병' 겹침 90%/94%",
-   "overlap_current": 0.8992,
-   "overlap_previous": 0.938,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9949,
+   "overlap_previous": 0.9964,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 노원구병",
-     "of_current": 0.8992,
-     "of_previous": 0.938
+     "of_current": 0.9949,
+     "of_previous": 0.9964
     }
    ]
   },
   {
    "district": "서울 노원구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9211,
-   "overlap_previous": 0.9012,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.997,
+   "overlap_previous": 0.9886,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 노원구을",
-     "of_current": 0.9211,
-     "of_previous": 0.9012
-    },
-    {
-     "prev": "서울 노원구병",
-     "of_current": 0.051,
-     "of_previous": 0.0325
+     "of_current": 0.997,
+     "of_previous": 0.9886
     }
    ]
   },
   {
    "district": "서울 도봉구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 도봉구갑' 겹침 86%/78%",
-   "overlap_current": 0.8616,
-   "overlap_previous": 0.7813,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9979,
+   "overlap_previous": 0.9988,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 도봉구갑",
-     "of_current": 0.8616,
-     "of_previous": 0.7813
-    },
-    {
-     "prev": "서울 도봉구을",
-     "of_current": 0.0937,
-     "of_previous": 0.038
+     "of_current": 0.9979,
+     "of_previous": 0.9988
     }
    ]
   },
   {
    "district": "서울 도봉구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 90%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9025,
-   "overlap_previous": 0.9003,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9969,
+   "overlap_previous": 0.9948,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 도봉구을",
-     "of_current": 0.9025,
-     "of_previous": 0.9003
-    },
-    {
-     "prev": "서울 도봉구갑",
-     "of_current": 0.0442,
-     "of_previous": 0.0986
+     "of_current": 0.9969,
+     "of_previous": 0.9948
     }
    ]
   },
   {
    "district": "서울 동대문구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.911,
-   "overlap_previous": 0.9533,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9965,
+   "overlap_previous": 0.9967,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동대문구갑",
-     "of_current": 0.911,
-     "of_previous": 0.9533
+     "of_current": 0.9965,
+     "of_previous": 0.9967
     }
    ]
   },
   {
    "district": "서울 동대문구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9084,
-   "overlap_previous": 0.961,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9958,
+   "overlap_previous": 0.9978,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동대문구을",
-     "of_current": 0.9084,
-     "of_previous": 0.961
-    },
-    {
-     "prev": "서울 중구성동구갑",
-     "of_current": 0.0691,
-     "of_previous": 0.0307
+     "of_current": 0.9958,
+     "of_previous": 0.9978
     }
    ]
   },
   {
    "district": "서울 동작구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9247,
-   "overlap_previous": 0.9332,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9934,
+   "overlap_previous": 0.9813,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동작구갑",
-     "of_current": 0.9247,
-     "of_previous": 0.9332
+     "of_current": 0.9934,
+     "of_previous": 0.9813
     }
    ]
   },
   {
    "district": "서울 동작구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 동작구을' 겹침 86%/98%",
-   "overlap_current": 0.8637,
-   "overlap_previous": 0.9796,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9839,
+   "overlap_previous": 0.9903,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동작구을",
-     "of_current": 0.8637,
-     "of_previous": 0.9796
-    },
-    {
-     "prev": "서울 관악구갑",
-     "of_current": 0.0935,
-     "of_previous": 0.067
+     "of_current": 0.9839,
+     "of_previous": 0.9903
     }
    ]
   },
   {
    "district": "서울 마포구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9448,
-   "overlap_previous": 0.9711,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9958,
+   "overlap_previous": 0.9943,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 마포구갑",
-     "of_current": 0.9448,
-     "of_previous": 0.9711
+     "of_current": 0.9958,
+     "of_previous": 0.9943
     }
    ]
   },
   {
    "district": "서울 마포구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9528,
-   "overlap_previous": 0.9591,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9991,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 마포구을",
-     "of_current": 0.9528,
-     "of_previous": 0.9591
+     "of_current": 0.9985,
+     "of_previous": 0.9991
     }
    ]
   },
   {
    "district": "서울 서대문구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.914,
-   "overlap_previous": 0.9662,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9982,
+   "overlap_previous": 0.9956,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서대문구갑",
-     "of_current": 0.914,
-     "of_previous": 0.9662
-    },
-    {
-     "prev": "서울 서대문구을",
-     "of_current": 0.0506,
-     "of_previous": 0.0647
+     "of_current": 0.9982,
+     "of_previous": 0.9956
     }
    ]
   },
   {
    "district": "서울 서대문구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 서대문구을' 겹침 94%/90%",
-   "overlap_current": 0.9388,
-   "overlap_previous": 0.8951,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.9853,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서대문구을",
-     "of_current": 0.9388,
-     "of_previous": 0.8951
+     "of_current": 0.9966,
+     "of_previous": 0.9853
     }
    ]
   },
   {
    "district": "서울 서초구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9175,
-   "overlap_previous": 0.9253,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9975,
+   "overlap_previous": 0.9951,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서초구갑",
-     "of_current": 0.9175,
-     "of_previous": 0.9253
+     "of_current": 0.9975,
+     "of_previous": 0.9951
     }
    ]
   },
   {
    "district": "서울 서초구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9411,
-   "overlap_previous": 0.9442,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9964,
+   "overlap_previous": 0.9975,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서초구을",
-     "of_current": 0.9411,
-     "of_previous": 0.9442
+     "of_current": 0.9964,
+     "of_previous": 0.9975
     }
    ]
   },
   {
    "district": "서울 성북구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9781,
-   "overlap_previous": 0.9188,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9893,
+   "overlap_previous": 0.9919,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 성북구갑",
-     "of_current": 0.9781,
-     "of_previous": 0.9188
+     "of_current": 0.9893,
+     "of_previous": 0.9919
     }
    ]
   },
   {
    "district": "서울 성북구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9457,
-   "overlap_previous": 0.9256,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9957,
+   "overlap_previous": 0.9874,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 성북구을",
-     "of_current": 0.9457,
-     "of_previous": 0.9256
+     "of_current": 0.9957,
+     "of_previous": 0.9874
     }
    ]
   },
   {
    "district": "서울 송파구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9282,
-   "overlap_previous": 0.9856,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9983,
+   "overlap_previous": 0.9936,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구갑",
-     "of_current": 0.9282,
-     "of_previous": 0.9856
+     "of_current": 0.9983,
+     "of_previous": 0.9936
     }
    ]
   },
   {
    "district": "서울 송파구병",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '서울 송파구병'의 89%만 차지",
-   "overlap_current": 0.9906,
-   "overlap_previous": 0.8856,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9938,
+   "overlap_previous": 0.9937,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구병",
-     "of_current": 0.9906,
-     "of_previous": 0.8856
+     "of_current": 0.9938,
+     "of_previous": 0.9937
     }
    ]
   },
   {
    "district": "서울 송파구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 송파구을' 겹침 95%/88%",
-   "overlap_current": 0.9475,
-   "overlap_previous": 0.8777,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9977,
+   "overlap_previous": 0.9949,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구을",
-     "of_current": 0.9475,
-     "of_previous": 0.8777
+     "of_current": 0.9977,
+     "of_previous": 0.9949
     }
    ]
   },
   {
    "district": "서울 양천구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 양천구갑' 겹침 87%/93%",
-   "overlap_current": 0.8749,
-   "overlap_previous": 0.9292,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9911,
+   "overlap_previous": 0.9957,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 양천구갑",
-     "of_current": 0.8749,
-     "of_previous": 0.9292
-    },
-    {
-     "prev": "서울 양천구을",
-     "of_current": 0.0626,
-     "of_previous": 0.0557
-    },
-    {
-     "prev": "서울 강서구병",
-     "of_current": 0.0422,
-     "of_previous": 0.0542
+     "of_current": 0.9911,
+     "of_previous": 0.9957
     }
    ]
   },
   {
    "district": "서울 양천구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 양천구을' 겹침 90%/80%",
-   "overlap_current": 0.9029,
-   "overlap_previous": 0.7964,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9937,
+   "overlap_previous": 0.9833,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 양천구을",
-     "of_current": 0.9029,
-     "of_previous": 0.7964
-    },
-    {
-     "prev": "서울 강서구갑",
-     "of_current": 0.0488,
-     "of_previous": 0.0673
+     "of_current": 0.9937,
+     "of_previous": 0.9833
     }
    ]
   },
   {
    "district": "서울 영등포구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 영등포구갑' 겹침 88%/98%",
-   "overlap_current": 0.8794,
-   "overlap_previous": 0.9802,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9951,
+   "overlap_previous": 0.9963,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 영등포구갑",
-     "of_current": 0.8794,
-     "of_previous": 0.9802
+     "of_current": 0.9951,
+     "of_previous": 0.9963
     }
    ]
   },
   {
    "district": "서울 영등포구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9108,
-   "overlap_previous": 0.9275,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9971,
+   "overlap_previous": 0.9954,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 영등포구을",
-     "of_current": 0.9108,
-     "of_previous": 0.9275
-    },
-    {
-     "prev": "서울 구로구을",
-     "of_current": 0.0514,
-     "of_previous": 0.086
+     "of_current": 0.9971,
+     "of_previous": 0.9954
     }
    ]
   },
   {
    "district": "서울 용산구",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9547,
-   "overlap_previous": 0.9737,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9956,
+   "overlap_previous": 0.9971,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 용산구",
-     "of_current": 0.9547,
-     "of_previous": 0.9737
+     "of_current": 0.9956,
+     "of_previous": 0.9971
     }
    ]
   },
   {
    "district": "서울 은평구갑",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 은평구갑' 겹침 90%/86%",
-   "overlap_current": 0.8963,
-   "overlap_previous": 0.8601,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9936,
+   "overlap_previous": 0.9982,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 은평구갑",
-     "of_current": 0.8963,
-     "of_previous": 0.8601
-    },
-    {
-     "prev": "서울 은평구을",
-     "of_current": 0.0691,
-     "of_previous": 0.0306
+     "of_current": 0.9936,
+     "of_previous": 0.9982
     }
    ]
   },
   {
    "district": "서울 은평구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/91% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9684,
-   "overlap_previous": 0.9078,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9957,
+   "overlap_previous": 0.9988,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 은평구을",
-     "of_current": 0.9684,
-     "of_previous": 0.9078
+     "of_current": 0.9957,
+     "of_previous": 0.9988
     }
    ]
   },
   {
    "district": "서울 종로구",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 91%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9098,
-   "overlap_previous": 0.9809,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9922,
+   "overlap_previous": 0.9966,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 종로구",
-     "of_current": 0.9098,
-     "of_previous": 0.9809
-    },
-    {
-     "prev": "서울 성북구갑",
-     "of_current": 0.0376,
-     "of_previous": 0.0521
+     "of_current": 0.9922,
+     "of_previous": 0.9966
     }
    ]
   },
   {
    "district": "서울 중구성동구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9736,
-   "overlap_previous": 0.9334,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9953,
+   "overlap_previous": 0.9979,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중구성동구갑",
-     "of_current": 0.9736,
-     "of_previous": 0.9334
+     "of_current": 0.9953,
+     "of_previous": 0.9979
     }
    ]
   },
   {
    "district": "서울 중구성동구을",
    "sido": "서울",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '서울 중구성동구을' 겹침 96%/89%",
-   "overlap_current": 0.9624,
-   "overlap_previous": 0.8889,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9938,
+   "overlap_previous": 0.9906,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중구성동구을",
-     "of_current": 0.9624,
-     "of_previous": 0.8889
+     "of_current": 0.9938,
+     "of_previous": 0.9906
     }
    ]
   },
   {
    "district": "서울 중랑구갑",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9196,
-   "overlap_previous": 0.9632,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중랑구갑",
-     "of_current": 0.9196,
-     "of_previous": 0.9632
-    },
-    {
-     "prev": "서울 광진구갑",
-     "of_current": 0.0514,
-     "of_previous": 0.0396
+     "of_current": 0.9998,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "서울 중랑구을",
    "sido": "서울",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 90%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9049,
-   "overlap_previous": 0.9796,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.9937,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중랑구을",
-     "of_current": 0.9049,
-     "of_previous": 0.9796
+     "of_current": 0.9966,
+     "of_previous": 0.9937
     }
    ]
   },
@@ -3967,15 +3783,15 @@
    "comparable": "no",
    "reason_code": "split_from_previous",
    "reason": "이전 '세종 세종특별자치시'이 2개로 분할",
-   "overlap_current": 0.9752,
-   "overlap_previous": 0.3856,
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.3953,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "세종 세종특별자치시",
-     "of_current": 0.9752,
-     "of_previous": 0.3856
+     "of_current": 0.9993,
+     "of_previous": 0.3953
     }
    ]
   },
@@ -3986,77 +3802,72 @@
    "comparable": "no",
    "reason_code": "split_from_previous",
    "reason": "이전 '세종 세종특별자치시'이 2개로 분할",
-   "overlap_current": 0.9854,
-   "overlap_previous": 0.5954,
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.6039,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "세종 세종특별자치시",
-     "of_current": 0.9854,
-     "of_previous": 0.5954
+     "of_current": 0.9989,
+     "of_previous": 0.6039
     }
    ]
   },
   {
    "district": "울산 남구갑",
    "sido": "울산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '울산 남구갑' 겹침 86%/96%",
-   "overlap_current": 0.862,
-   "overlap_previous": 0.9565,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9965,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 남구갑",
-     "of_current": 0.862,
-     "of_previous": 0.9565
-    },
-    {
-     "prev": "울산 울주군",
-     "of_current": 0.0889,
-     "of_previous": 0.0028
+     "of_current": 0.9988,
+     "of_previous": 0.9965
     }
    ]
   },
   {
    "district": "울산 남구을",
    "sido": "울산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9403,
-   "overlap_previous": 0.9543,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9918,
+   "overlap_previous": 0.9986,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 남구을",
-     "of_current": 0.9403,
-     "of_previous": 0.9543
+     "of_current": 0.9918,
+     "of_previous": 0.9986
     }
    ]
   },
   {
    "district": "울산 동구",
    "sido": "울산",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '울산 동구' 겹침 94%/88%",
-   "overlap_current": 0.9366,
-   "overlap_previous": 0.8829,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9981,
+   "overlap_previous": 0.9963,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 동구",
-     "of_current": 0.9366,
-     "of_previous": 0.8829
+     "of_current": 0.9981,
+     "of_previous": 0.9963
     }
    ]
   },
@@ -4067,15 +3878,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9716,
-   "overlap_previous": 0.9827,
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 북구",
-     "of_current": 0.9716,
-     "of_previous": 0.9827
+     "of_current": 0.9989,
+     "of_previous": 0.9992
     }
    ]
   },
@@ -4086,120 +3897,110 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9844,
-   "overlap_previous": 0.9838,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 울주군",
-     "of_current": 0.9844,
-     "of_previous": 0.9838
-    },
-    {
-     "prev": "울산 중구",
-     "of_current": 0.0036,
-     "of_previous": 0.0688
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
   {
    "district": "울산 중구",
    "sido": "울산",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9688,
-   "overlap_previous": 0.9014,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9947,
+   "overlap_previous": 0.9975,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 중구",
-     "of_current": 0.9688,
-     "of_previous": 0.9014
+     "of_current": 0.9947,
+     "of_previous": 0.9975
     }
    ]
   },
   {
    "district": "인천 계양구갑",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9606,
-   "overlap_previous": 0.9529,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9971,
+   "overlap_previous": 0.9983,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 계양구갑",
-     "of_current": 0.9606,
-     "of_previous": 0.9529
+     "of_current": 0.9971,
+     "of_previous": 0.9983
     }
    ]
   },
   {
    "district": "인천 계양구을",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9179,
-   "overlap_previous": 0.9697,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.997,
+   "overlap_previous": 0.9987,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 계양구을",
-     "of_current": 0.9179,
-     "of_previous": 0.9697
+     "of_current": 0.997,
+     "of_previous": 0.9987
     }
    ]
   },
   {
    "district": "인천 남동구갑",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.927,
-   "overlap_previous": 0.9311,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9967,
+   "overlap_previous": 0.9985,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남동구갑",
-     "of_current": 0.927,
-     "of_previous": 0.9311
+     "of_current": 0.9967,
+     "of_previous": 0.9985
     }
    ]
   },
   {
    "district": "인천 남동구을",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9178,
-   "overlap_previous": 0.9184,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.995,
+   "overlap_previous": 0.9884,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남동구을",
-     "of_current": 0.9178,
-     "of_previous": 0.9184
-    },
-    {
-     "prev": "경기 시흥시갑",
-     "of_current": 0.0529,
-     "of_previous": 0.0141
+     "of_current": 0.995,
+     "of_previous": 0.9884
     }
    ]
   },
@@ -4209,88 +4010,78 @@
    "relation": "unresolvable",
    "comparable": "no",
    "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 인천 남구갑 45%, 인천 중구동구강화군옹진군 31%",
-   "overlap_current": 0.4517,
-   "overlap_previous": 0.9455,
+   "reason": "겹침이 흩어짐 — 인천 남구갑 57%, 인천 중구동구강화군옹진군 42%",
+   "overlap_current": 0.5703,
+   "overlap_previous": 0.996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남구갑",
-     "of_current": 0.4517,
-     "of_previous": 0.9455
+     "of_current": 0.5703,
+     "of_previous": 0.996
     },
     {
      "prev": "인천 중구동구강화군옹진군",
-     "of_current": 0.3097,
-     "of_previous": 0.0078
+     "of_current": 0.4185,
+     "of_previous": 0.0099
     }
    ]
   },
   {
    "district": "인천 동구미추홀구을",
    "sido": "인천",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '인천 남구을' 겹침 89%/96%",
-   "overlap_current": 0.8909,
-   "overlap_previous": 0.9566,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9931,
+   "overlap_previous": 0.9939,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남구을",
-     "of_current": 0.8909,
-     "of_previous": 0.9566
-    },
-    {
-     "prev": "인천 연수구갑",
-     "of_current": 0.0624,
-     "of_previous": 0.0896
-    },
-    {
-     "prev": "인천 남구갑",
-     "of_current": 0.0303,
-     "of_previous": 0.054
+     "of_current": 0.9931,
+     "of_previous": 0.9939
     }
    ]
   },
   {
    "district": "인천 부평구갑",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 92%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9226,
-   "overlap_previous": 0.9308,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.986,
+   "overlap_previous": 0.9947,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 부평구갑",
-     "of_current": 0.9226,
-     "of_previous": 0.9308
+     "of_current": 0.986,
+     "of_previous": 0.9947
     }
    ]
   },
   {
    "district": "인천 부평구을",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9496,
-   "overlap_previous": 0.9653,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9935,
+   "overlap_previous": 0.9958,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 부평구을",
-     "of_current": 0.9496,
-     "of_previous": 0.9653
+     "of_current": 0.9935,
+     "of_previous": 0.9958
     }
    ]
   },
@@ -4300,16 +4091,16 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '인천 서구갑' 겹침 97%/77%",
-   "overlap_current": 0.9689,
-   "overlap_previous": 0.7666,
+   "reason": "이전 '인천 서구갑'의 77%만 차지",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.7664,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 서구갑",
-     "of_current": 0.9689,
-     "of_previous": 0.7666
+     "of_current": 0.9988,
+     "of_previous": 0.7664
     }
    ]
   },
@@ -4319,88 +4110,78 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '인천 서구을' 겹침 88%/96%",
-   "overlap_current": 0.8778,
-   "overlap_previous": 0.9575,
+   "reason": "주 대응 '인천 서구을' 겹침 89%/100%",
+   "overlap_current": 0.8866,
+   "overlap_previous": 0.9984,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 서구을",
-     "of_current": 0.8778,
-     "of_previous": 0.9575
+     "of_current": 0.8866,
+     "of_previous": 0.9984
     },
     {
      "prev": "인천 서구갑",
-     "of_current": 0.0925,
-     "of_previous": 0.1975
+     "of_current": 0.1116,
+     "of_previous": 0.2312
     }
    ]
   },
   {
    "district": "인천 연수구갑",
    "sido": "인천",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '인천 연수구갑' 겹침 84%/88%",
-   "overlap_current": 0.8441,
-   "overlap_previous": 0.8833,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9929,
+   "overlap_previous": 0.9948,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 연수구갑",
-     "of_current": 0.8441,
-     "of_previous": 0.8833
-    },
-    {
-     "prev": "인천 연수구을",
-     "of_current": 0.0941,
-     "of_previous": 0.0215
-    },
-    {
-     "prev": "인천 남동구갑",
-     "of_current": 0.0516,
-     "of_previous": 0.0164
+     "of_current": 0.9929,
+     "of_previous": 0.9948
     }
    ]
   },
   {
    "district": "인천 연수구을",
    "sido": "인천",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '인천 연수구을' 겹침 88%/93%",
-   "overlap_current": 0.8778,
-   "overlap_previous": 0.9263,
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason_code": "geometry_source_mismatch",
+   "reason": "겹침 92%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9249,
+   "overlap_previous": 0.9987,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 연수구을",
-     "of_current": 0.8778,
-     "of_previous": 0.9263
+     "of_current": 0.9249,
+     "of_previous": 0.9987
     }
    ]
   },
   {
    "district": "인천 중구강화군옹진군",
    "sido": "인천",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 90%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '인천 중구동구강화군옹진군'",
-   "overlap_current": 0.9034,
-   "overlap_previous": 0.9567,
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason_code": "renamed_same_area",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9889,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 중구동구강화군옹진군",
-     "of_current": 0.9034,
-     "of_previous": 0.9567
+     "of_current": 0.9985,
+     "of_previous": 0.9889
     }
    ]
   },
@@ -4411,15 +4192,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9837,
-   "overlap_previous": 0.9812,
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 고흥군보성군장흥군강진군",
-     "of_current": 0.9837,
-     "of_previous": 0.9812
+     "of_current": 0.9994,
+     "of_previous": 0.9996
     }
    ]
   },
@@ -4430,15 +4211,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9874,
-   "overlap_previous": 0.988,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 나주시화순군",
-     "of_current": 0.9874,
-     "of_previous": 0.988
+     "of_current": 0.9996,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -4449,34 +4230,34 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9843,
-   "overlap_previous": 0.9845,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 담양군함평군영광군장성군",
-     "of_current": 0.9843,
-     "of_previous": 0.9845
+     "of_current": 0.9995,
+     "of_previous": 0.9996
     }
    ]
   },
   {
    "district": "전남 목포시",
    "sido": "전남",
-   "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '전남 목포시' 겹침 88%/94%",
-   "overlap_current": 0.8839,
-   "overlap_previous": 0.9448,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 목포시",
-     "of_current": 0.8839,
-     "of_previous": 0.9448
+     "of_current": 0.9992,
+     "of_previous": 0.999
     }
    ]
   },
@@ -4486,16 +4267,16 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 99%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 순천시'",
-   "overlap_current": 0.9853,
-   "overlap_previous": 0.935,
+   "reason": "겹침 100%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 순천시'",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9443,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 순천시",
-     "of_current": 0.9853,
-     "of_previous": 0.935
+     "of_current": 0.9996,
+     "of_previous": 0.9443
     }
    ]
   },
@@ -4505,21 +4286,21 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 광양시곡성군구례군'",
-   "overlap_current": 0.9542,
-   "overlap_previous": 0.9889,
+   "reason": "겹침 97%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 광양시곡성군구례군'",
+   "overlap_current": 0.9657,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 광양시곡성군구례군",
-     "of_current": 0.9542,
-     "of_previous": 0.9889
+     "of_current": 0.9657,
+     "of_previous": 0.9995
     },
     {
      "prev": "전남 순천시",
-     "of_current": 0.0359,
-     "of_previous": 0.0598
+     "of_current": 0.0335,
+     "of_previous": 0.0555
     }
    ]
   },
@@ -4529,21 +4310,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '전남 여수시갑' 겹침 66%/97%",
-   "overlap_current": 0.6619,
-   "overlap_previous": 0.9683,
+   "reason": "주 대응 '전남 여수시갑' 겹침 69%/100%",
+   "overlap_current": 0.6852,
+   "overlap_previous": 0.9984,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 여수시갑",
-     "of_current": 0.6619,
-     "of_previous": 0.9683
+     "of_current": 0.6852,
+     "of_previous": 0.9984
     },
     {
      "prev": "전남 여수시을",
-     "of_current": 0.3115,
-     "of_previous": 0.2596
+     "of_current": 0.3132,
+     "of_previous": 0.2563
     }
    ]
   },
@@ -4553,73 +4334,73 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '전남 여수시을' 겹침 91%/71%",
-   "overlap_current": 0.9058,
-   "overlap_previous": 0.7083,
+   "reason": "주 대응 '전남 여수시을' 겹침 97%/74%",
+   "overlap_current": 0.9655,
+   "overlap_previous": 0.7412,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 여수시을",
-     "of_current": 0.9058,
-     "of_previous": 0.7083
+     "of_current": 0.9655,
+     "of_previous": 0.7412
     }
    ]
   },
   {
    "district": "전남 영암군무안군신안군",
    "sido": "전남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9392,
-   "overlap_previous": 0.9547,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9901,
+   "overlap_previous": 0.999,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 영암군무안군신안군",
-     "of_current": 0.9392,
-     "of_previous": 0.9547
+     "of_current": 0.9901,
+     "of_previous": 0.999
     }
    ]
   },
   {
    "district": "전남 해남군완도군진도군",
    "sido": "전남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9781,
-   "overlap_previous": 0.9699,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 해남군완도군진도군",
-     "of_current": 0.9781,
-     "of_previous": 0.9699
+     "of_current": 0.9992,
+     "of_previous": 0.9994
     }
    ]
   },
   {
    "district": "전북 군산시",
    "sido": "전북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9533,
-   "overlap_previous": 0.9823,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9771,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 군산시",
-     "of_current": 0.9533,
-     "of_previous": 0.9823
+     "of_current": 0.9771,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -4629,16 +4410,16 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/99% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.962,
-   "overlap_previous": 0.9866,
+   "reason": "겹침 97%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9687,
+   "overlap_previous": 0.9995,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 김제시부안군",
-     "of_current": 0.962,
-     "of_previous": 0.9866
+     "of_current": 0.9687,
+     "of_previous": 0.9995
     }
    ]
   },
@@ -4649,15 +4430,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9882,
-   "overlap_previous": 0.9885,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 남원시임실군순창군",
-     "of_current": 0.9882,
-     "of_previous": 0.9885
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -4668,15 +4449,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.99,
-   "overlap_previous": 0.9885,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 완주군진안군무주군장수군",
-     "of_current": 0.99,
-     "of_previous": 0.9885
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -4686,21 +4467,21 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "주 대응 '전북 익산시갑' 겹침 87%/98%",
-   "overlap_current": 0.8673,
-   "overlap_previous": 0.9782,
+   "reason": "주 대응 '전북 익산시갑' 겹침 88%/100%",
+   "overlap_current": 0.8753,
+   "overlap_previous": 0.9991,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 익산시갑",
-     "of_current": 0.8673,
-     "of_previous": 0.9782
+     "of_current": 0.8753,
+     "of_previous": 0.9991
     },
     {
      "prev": "전북 익산시을",
-     "of_current": 0.1243,
-     "of_previous": 0.1121
+     "of_current": 0.1241,
+     "of_previous": 0.1127
     }
    ]
   },
@@ -4710,54 +4491,54 @@
    "relation": "boundary_changed",
    "comparable": "no",
    "reason_code": "boundary_moved",
-   "reason": "이전 '전북 익산시을'의 87%만 차지",
-   "overlap_current": 0.9878,
-   "overlap_previous": 0.87,
+   "reason": "이전 '전북 익산시을'의 89%만 차지",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.8865,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 익산시을",
-     "of_current": 0.9878,
-     "of_previous": 0.87
+     "of_current": 0.9988,
+     "of_previous": 0.8865
     }
    ]
   },
   {
    "district": "전북 전주시갑",
    "sido": "전북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 93%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9256,
-   "overlap_previous": 0.9434,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9937,
+   "overlap_previous": 0.9966,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시갑",
-     "of_current": 0.9256,
-     "of_previous": 0.9434
+     "of_current": 0.9937,
+     "of_previous": 0.9966
     }
    ]
   },
   {
    "district": "전북 전주시병",
    "sido": "전북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 94%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9377,
-   "overlap_previous": 0.9632,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9796,
+   "overlap_previous": 0.9982,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시병",
-     "of_current": 0.9377,
-     "of_previous": 0.9632
+     "of_current": 0.9796,
+     "of_previous": 0.9982
     }
    ]
   },
@@ -4767,16 +4548,16 @@
    "relation": "minor_boundary_change",
    "comparable": "unknown",
    "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/93% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9504,
-   "overlap_previous": 0.926,
+   "reason": "겹침 100%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
+   "overlap_current": 0.9953,
+   "overlap_previous": 0.9532,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시을",
-     "of_current": 0.9504,
-     "of_previous": 0.926
+     "of_current": 0.9953,
+     "of_previous": 0.9532
     }
    ]
   },
@@ -4787,15 +4568,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9847,
-   "overlap_previous": 0.9888,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 정읍시고창군",
-     "of_current": 0.9847,
-     "of_previous": 0.9888
+     "of_current": 0.9996,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -4806,15 +4587,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9884,
-   "overlap_previous": 0.9919,
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 서귀포시",
-     "of_current": 0.9884,
-     "of_previous": 0.9919
+     "of_current": 0.9998,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -4825,15 +4606,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9903,
-   "overlap_previous": 0.9906,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 제주시갑",
-     "of_current": 0.9903,
-     "of_previous": 0.9906
+     "of_current": 0.9996,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -4844,15 +4625,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9891,
-   "overlap_previous": 0.9903,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 제주시을",
-     "of_current": 0.9891,
-     "of_previous": 0.9903
+     "of_current": 0.9995,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -4863,15 +4644,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9932,
-   "overlap_previous": 0.9886,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 공주시부여군청양군",
-     "of_current": 0.9932,
-     "of_previous": 0.9886
+     "of_current": 0.9996,
+     "of_previous": 0.9996
     }
    ]
   },
@@ -4882,15 +4663,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9834,
-   "overlap_previous": 0.9828,
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 논산시계룡시금산군",
-     "of_current": 0.9834,
-     "of_previous": 0.9828
+     "of_current": 0.9994,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -4901,53 +4682,53 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9853,
-   "overlap_previous": 0.985,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 당진시",
-     "of_current": 0.9853,
-     "of_previous": 0.985
+     "of_current": 0.9995,
+     "of_previous": 0.9998
     }
    ]
   },
   {
    "district": "충남 보령시서천군",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 97%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9694,
-   "overlap_previous": 0.9777,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 보령시서천군",
-     "of_current": 0.9694,
-     "of_previous": 0.9777
+     "of_current": 0.9996,
+     "of_previous": 0.9996
     }
    ]
   },
   {
    "district": "충남 서산시태안군",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 98%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9816,
-   "overlap_previous": 0.9689,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 서산시태안군",
-     "of_current": 0.9816,
-     "of_previous": 0.9689
+     "of_current": 0.9997,
+     "of_previous": 0.9998
     }
    ]
   },
@@ -4958,15 +4739,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9821,
-   "overlap_previous": 0.9815,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9992,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 아산시갑",
-     "of_current": 0.9821,
-     "of_previous": 0.9815
+     "of_current": 0.9995,
+     "of_previous": 0.9992
     }
    ]
   },
@@ -4977,15 +4758,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9812,
-   "overlap_previous": 0.9845,
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 아산시을",
-     "of_current": 0.9812,
-     "of_previous": 0.9845
+     "of_current": 0.9991,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -4996,53 +4777,53 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9738,
-   "overlap_previous": 0.9766,
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9989,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시갑",
-     "of_current": 0.9738,
-     "of_previous": 0.9766
+     "of_current": 0.9991,
+     "of_previous": 0.9989
     }
    ]
   },
   {
    "district": "충남 천안시병",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9548,
-   "overlap_previous": 0.9581,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9965,
+   "overlap_previous": 0.998,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시병",
-     "of_current": 0.9548,
-     "of_previous": 0.9581
+     "of_current": 0.9965,
+     "of_previous": 0.998
     }
    ]
   },
   {
    "district": "충남 천안시을",
    "sido": "충남",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 96%/98% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9619,
-   "overlap_previous": 0.9818,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9991,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시을",
-     "of_current": 0.9619,
-     "of_previous": 0.9818
+     "of_current": 0.9992,
+     "of_previous": 0.9991
     }
    ]
   },
@@ -5053,15 +4834,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9844,
-   "overlap_previous": 0.9906,
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 홍성군예산군",
-     "of_current": 0.9844,
-     "of_previous": 0.9906
+     "of_current": 0.9998,
+     "of_previous": 0.9996
     }
    ]
   },
@@ -5072,15 +4853,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9884,
-   "overlap_previous": 0.9895,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 보은군옥천군영동군괴산군",
-     "of_current": 0.9884,
-     "of_previous": 0.9895
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -5091,15 +4872,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9894,
-   "overlap_previous": 0.9875,
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제천시단양군",
-     "of_current": 0.9894,
-     "of_previous": 0.9875
+     "of_current": 0.9997,
+     "of_previous": 0.9997
     }
    ]
   },
@@ -5110,15 +4891,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.986,
-   "overlap_previous": 0.9851,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 증평군진천군음성군",
-     "of_current": 0.986,
-     "of_previous": 0.9851
+     "of_current": 0.9995,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -5129,53 +4910,53 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9776,
-   "overlap_previous": 0.9786,
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9993,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시상당구",
-     "of_current": 0.9776,
-     "of_previous": 0.9786
+     "of_current": 0.9996,
+     "of_previous": 0.9993
     }
    ]
   },
   {
    "district": "충북 청주시서원구",
    "sido": "충북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 95%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9532,
-   "overlap_previous": 0.9641,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9985,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시서원구",
-     "of_current": 0.9532,
-     "of_previous": 0.9641
+     "of_current": 0.9988,
+     "of_previous": 0.9985
     }
    ]
   },
   {
    "district": "충북 청주시청원구",
    "sido": "충북",
-   "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason_code": "geometry_source_mismatch",
-   "reason": "겹침 99%/97% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "overlap_current": 0.9851,
-   "overlap_previous": 0.9673,
+   "relation": "exact",
+   "comparable": "yes",
+   "reason_code": "exact_overlap",
+   "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9994,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시청원구",
-     "of_current": 0.9851,
-     "of_previous": 0.9673
+     "of_current": 0.9996,
+     "of_previous": 0.9994
     }
    ]
   },
@@ -5186,15 +4967,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.9758,
-   "overlap_previous": 0.9856,
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9991,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시흥덕구",
-     "of_current": 0.9758,
-     "of_previous": 0.9856
+     "of_current": 0.9988,
+     "of_previous": 0.9991
     }
    ]
   },
@@ -5205,15 +4986,15 @@
    "comparable": "yes",
    "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
-   "overlap_current": 0.986,
-   "overlap_previous": 0.9862,
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9996,
    "source_relation": "source_mismatch",
    "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 충주시",
-     "of_current": 0.986,
-     "of_previous": 0.9862
+     "of_current": 0.9995,
+     "of_previous": 0.9996
     }
    ]
   }
