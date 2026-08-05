@@ -105,6 +105,93 @@ def election_date(eid: str) -> str:
         return ""
 
 
+# ── 집계 게이트 ─────────────────────────────────────────────────────────────
+# `comparable == "yes"`는 **그 선거구 하나의 delta를 계산할 수 있다**는 뜻일 뿐,
+# 그 부분집합을 합친 값이 전국을 대표한다는 뜻이 아니다.
+#
+# 비교 가능한 선거구는 경계가 안정적인 곳이고, 제외되는 곳은 재획정이 많은 도시권에
+# 몰린다. 22↔21에서 실측하니 1위 정당 구성이 민주당 -5.5%p / 국민의힘 +6.1%p
+# 기울었다 — **측정하려는 swing(±4%p)보다 편향(6%p)이 크다.** 그런 값은 정확히
+# 계산해도 전국 변화로 읽히면 안 된다.
+#
+# 문구로 경고하지 않는다. 대표성이 검증되지 않으면 **집계 지표를 만들지 않는다.**
+MIN_ELECTORATE = 0.90    # 선거인 coverage
+MAX_PARTY_SKEW = 3.0     # 1위 정당 점유율 편차(%p) — swing 크기와 맞먹으면 무의미하다
+MIN_SIDO_COVER = 0.30    # 시도별 최저 coverage — 0%인 시도가 있으면 지역 대표성이 없다
+METRO = {"서울", "경기", "인천"}
+
+
+def coverage_audit(units: list, cur: dict) -> dict:
+    """비교 가능 subset이 전체를 대표하는가 — 숫자로 답한다."""
+    yes = {u["district"] for u in units if u["comparable"] == "yes"}
+    all_k = [k for k in cur]
+
+    def electors(ks):
+        return sum(cur[k].get("electors") or 0 for k in ks if k in cur)
+
+    def winner_party(k):
+        cs = sorted(cur[k].get("candidates") or [], key=lambda c: -(c.get("votes") or 0))
+        return (cs[0].get("party") or "무소속") if cs else None
+
+    el_all, el_yes = electors(all_k), electors(yes)
+    by_sido: dict = {}
+    for k in all_k:
+        sd = k.split()[0]
+        b = by_sido.setdefault(sd, {"total": 0, "compared": 0})
+        b["total"] += 1
+        if k in yes:
+            b["compared"] += 1
+    for b in by_sido.values():
+        b["pct"] = round(b["compared"] / b["total"] * 100, 1)
+
+    w_all, w_yes = Counter(), Counter()
+    for k in all_k:
+        p = winner_party(k)
+        if p:
+            w_all[p] += 1
+            if k in yes:
+                w_yes[p] += 1
+    party_share = {}
+    for p in set(w_all):
+        if w_all[p] < 3:
+            continue
+        a = w_all[p] / len(all_k) * 100
+        b = (w_yes[p] / len(yes) * 100) if yes else 0
+        party_share[p] = {"all_pct": round(a, 1), "compared_pct": round(b, 1),
+                          "skew_pp": round(b - a, 1)}
+    metro_all = sum(1 for k in all_k if k.split()[0] in METRO) / len(all_k) * 100
+    metro_yes = (sum(1 for k in yes if k.split()[0] in METRO) / len(yes) * 100) if yes else 0
+
+    return {
+        "districts": {"compared": len(yes), "total": len(all_k),
+                      "pct": round(len(yes) / len(all_k) * 100, 1)},
+        "electorate": {"compared": el_yes, "total": el_all,
+                       "pct": round(el_yes / el_all * 100, 1) if el_all else 0},
+        "metro_share": {"all_pct": round(metro_all, 1), "compared_pct": round(metro_yes, 1),
+                        "skew_pp": round(metro_yes - metro_all, 1)},
+        "by_winning_party": party_share,
+        "by_sido": by_sido,
+    }
+
+
+def aggregation_gate(cov: dict) -> tuple[bool, list]:
+    """집계 지표를 만들어도 되는가. 실패 사유를 전부 남긴다."""
+    fails = []
+    if cov["electorate"]["pct"] < MIN_ELECTORATE * 100:
+        fails.append(f"선거인 coverage {cov['electorate']['pct']}% "
+                     f"< {MIN_ELECTORATE * 100:.0f}%")
+    skew = max((abs(v["skew_pp"]) for v in cov["by_winning_party"].values()), default=0)
+    if skew > MAX_PARTY_SKEW:
+        worst = max(cov["by_winning_party"].items(), key=lambda x: abs(x[1]["skew_pp"]))
+        fails.append(f"1위 정당 구성 편차 {worst[0]} {worst[1]['skew_pp']:+}%p "
+                     f"(한도 ±{MAX_PARTY_SKEW}%p) — 측정하려는 swing보다 편향이 크다")
+    thin = [s for s, b in cov["by_sido"].items() if b["pct"] < MIN_SIDO_COVER * 100]
+    if thin:
+        fails.append(f"coverage {MIN_SIDO_COVER * 100:.0f}% 미만 시도: "
+                     + ", ".join(f"{s}({cov['by_sido'][s]['pct']}%)" for s in sorted(thin)))
+    return (not fails), fails
+
+
 def build(cur_id: str, prev_id: str) -> dict:
     cur_n, prev_n = ordinal(cur_id), ordinal(prev_id)
     cur_date, prev_date = election_date(cur_id), election_date(prev_id)
@@ -212,6 +299,25 @@ def build(cur_id: str, prev_id: str) -> dict:
     n_no = sum(1 for u in units if u["comparable"] == "no")
     margin_moves.sort(key=lambda x: -abs(x["delta"]))
 
+    cov = coverage_audit(units, cur)
+    allowed, gate_fails = aggregation_gate(cov)
+
+    # 게이트를 통과하지 못하면 **집계 지표를 만들지 않는다.**
+    # 문구로 경고하고 값을 내보내면, 그 값은 결국 어딘가에서 전국 지표로 쓰인다.
+    agg = {
+        "party_swing_in_compared": {
+            label.get(p, p): {"mean_pp": round(swing_sum[p] / swing_n[p], 2),
+                              "districts": swing_n[p]}
+            for p in sorted(swing_sum, key=lambda x: -abs(swing_sum[x] / swing_n[x]))
+            if swing_n[p] >= 5
+        },
+        "turnout_in_compared": {
+            "mean_delta_pp": round(sum(turnout_d) / len(turnout_d), 2) if turnout_d else None,
+            "districts": len(turnout_d),
+        },
+        "biggest_moves": margin_moves[:12],
+    } if allowed else {}
+
     return {
         "_meta": {
             "current": cur_id, "previous": prev_id,
@@ -219,8 +325,12 @@ def build(cur_id: str, prev_id: str) -> dict:
             "source": "polis 계산",
             "scope_note": ("**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 "
                            "바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다."),
-            "subset_warning": ("아래 party_swing은 비교 가능한 선거구 안의 값이다. "
-                               "전국 전체 변화가 아니다 — 두 숫자를 섞으면 없는 사실이 된다."),
+            "aggregation_note": (
+                "**정확한 부분집합 ≠ 대표 가능한 전체.** comparable='yes'는 그 선거구 "
+                "하나의 delta를 계산할 수 있다는 뜻일 뿐이다. 비교 가능한 곳은 경계가 "
+                "안정적인 곳이고 제외되는 곳은 재획정이 많은 도시권에 몰리므로, "
+                "부분집합 합계는 전국을 대표하지 않을 수 있다. coverage 감사를 통과할 "
+                "때만 집계 지표를 만든다 — 경고 문구로 대신하지 않는다."),
             "excluded_note": ("split·merged는 관계를 알아도 delta를 만들 수 없다. "
                               "A → B + C에서 A의 과거 득표를 나눌 근거가 없다."),
             "lineage": f"data/district_lineage/{cur_n}__{prev_n}.json",
@@ -233,6 +343,10 @@ def build(cur_id: str, prev_id: str) -> dict:
             "by_relation": dict(rel_n),
             "outcome": dict(outcome_n),
         },
+        # **hard gate** — 문구가 아니라 모델에서 막는다.
+        "aggregation_allowed": allowed,
+        "aggregation_blocked_because": gate_fails,
+        "coverage": cov,
         "swing_denominator": (
             "분모 = 비교 가능한 선거구 중 **두 회차 모두 그 정당이 출마한** 곳. "
             "한쪽만 출마한 곳은 newly_ran·no_longer_ran으로 따로 담는다 — "
@@ -243,17 +357,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             "정당 registry에 계보가 없는 이름들. 추정해서 잇지 않으므로 각각 독립 "
             "identity로 센다. '녹색정의당'처럼 실제로는 계보가 있는 것이 섞여 있으면 "
             "registry를 보강해야 한다 — 여기서 임의로 잇지 않는다."),
-        "party_swing_in_compared": {
-            label.get(p, p): {"mean_pp": round(swing_sum[p] / swing_n[p], 2),
-                              "districts": swing_n[p]}
-            for p in sorted(swing_sum, key=lambda x: -abs(swing_sum[x] / swing_n[x]))
-            if swing_n[p] >= 5          # 표본이 적으면 평균이 뜻을 잃는다
-        },
-        "turnout_in_compared": {
-            "mean_delta_pp": round(sum(turnout_d) / len(turnout_d), 2) if turnout_d else None,
-            "districts": len(turnout_d),
-        },
-        "biggest_moves": margin_moves[:12],
+        **agg,
         "units": units,
     }
 
@@ -274,8 +378,16 @@ def main() -> int:
           file=sys.stderr)
     print(f"   수성 {c['outcome'].get('party_hold', 0)}"
           f" · 교체 {c['outcome'].get('party_flip', 0)}", file=sys.stderr)
-    for p, v in list(d["party_swing_in_compared"].items())[:5]:
-        print(f"   {p} {v['mean_pp']:+.2f}%p (비교 {v['districts']}곳)", file=sys.stderr)
+    cv = d["coverage"]
+    print(f"   선거인 coverage {cv['electorate']['pct']}%"
+          f" · 수도권 편차 {cv['metro_share']['skew_pp']:+}%p", file=sys.stderr)
+    if d["aggregation_allowed"]:
+        for p, v in list(d.get("party_swing_in_compared", {}).items())[:5]:
+            print(f"   {p} {v['mean_pp']:+.2f}%p (비교 {v['districts']}곳)", file=sys.stderr)
+    else:
+        print("   ✗ 집계 지표 생성 차단 — subset이 전국을 대표하지 않는다:", file=sys.stderr)
+        for f in d["aggregation_blocked_because"]:
+            print(f"       · {f}", file=sys.stderr)
     return 0
 
 

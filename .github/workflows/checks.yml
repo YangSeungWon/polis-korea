@@ -119,6 +119,10 @@ jobs:
       - name: 정당 identity (개명·합당 구분·resolver 우회 금지)
         run: python tests/test_party_identity.py
 
+      # 정확한 부분집합 ≠ 대표 가능한 전체. 경고 문구가 아니라 모델에서 막는다.
+      - name: 집계 게이트 (subset을 전국처럼 쓰지 않는가)
+        run: python tests/test_aggregation_gate.py
+
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 
