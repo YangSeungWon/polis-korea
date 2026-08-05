@@ -21,6 +21,9 @@ SITE = "https://polis.ysw.kr"
 
 # sitemap에 넣지 않는 것 — 각각 이유가 있어야 한다.
 EXCLUDE_PREFIX = {
+    # 지역 연표 미리보기·UI 감사용 독립 문서. 아직 사이트에 얹지 않았고 nav·링크도
+    # 없다. 실제 지역 페이지에 삽입할 때 이 줄을 지우고 sitemap에 넣어야 한다.
+    "region-timeline/",
     # OG/공유 카드 캡처용 페이지. 사람이 읽을 화면이 아니고 헤더도 없다.
     "share/",
 }
