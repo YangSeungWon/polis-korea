@@ -1,0 +1,22 @@
+{
+ "_note": "여러 정당이 동시에 겪은 역사적 사건. 개별 정당 속성으로 두면 같은 사건이 여러 곳에 흩어지고, 시간축에 사건선으로 그릴 수도 없다.",
+ "_schema": {
+  "id": "사건 id",
+  "type": "systemic_forced_dissolution | ...",
+  "date": "YYYY-MM-DD (불명확하면 YYYY-MM)",
+  "affected_parties": "이 사건으로 종료된 정당들",
+  "source": "확인한 자료",
+  "note": "맥락"
+ },
+ "events": [
+  {
+   "id": "kr_party_forced_dissolution_1980",
+   "type": "systemic_forced_dissolution",
+   "date": "1980-10",
+   "label": "1980 정당 강제해산",
+   "affected_parties": ["민주공화당", "신민당", "민주통일당"],
+   "note": "신군부 국가보위입법회의 체제에서 기존 정당이 모두 해산되고 1981-01에 민주정의당·민주한국당·한국국민당 등이 새로 창당됐다. 계보 그래프가 이 지점에서 통째로 끊긴다 — 모델 결함이 아니라 실제 제도적 단절이다.",
+   "consequence": "organizational_lineage_break"
+  }
+ ]
+}

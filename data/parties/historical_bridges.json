@@ -1,0 +1,63 @@
+{
+ "_note": "제도적 단절을 건너 **정치적 전통·인적·계파적 연속성**을 표현하는 별도 레이어. 조직 계보(lineage)와 절대로 섞지 않는다.",
+ "_rule": "이 bridge는 same-party identity 판정, rename/merge 판정, 정당 동일성 비교에 **절대 쓰지 않는다**. 계열(lineage_family)의 historical 모드에서만 선택적으로 쓴다. 1:1 관계를 전제하지 않는다 — 하나의 전통이 여러 당으로 갈릴 수 있다.",
+ "_schema": {
+  "from": "단절 이전 정당들 (배열)",
+  "to": "단절 이후 정당들 (배열)",
+  "event": "historical_events.json의 사건 id",
+  "type": "post_forced_dissolution_successor | ...",
+  "basis": "무엇을 근거로 이었는가 (인적 구성·강령·지역 기반 등)",
+  "source": "확인한 자료",
+  "confidence": "supported | contested | insufficient"
+ },
+ "bridges": [
+  {
+   "from": [
+    "신민당"
+   ],
+   "to": [
+    "민주한국당"
+   ],
+   "event": "kr_party_forced_dissolution_1980",
+   "type": "post_forced_dissolution_successor",
+   "basis": "인적 구성 — 신민당 출신 중 신군부 정치규제를 피한 인사들이 창당했고, 초대 총재 유치송은 전 신민당 최고위원이다.",
+   "source": [
+    "https://ko.wikipedia.org/wiki/민주한국당"
+   ],
+   "confidence": "supported",
+   "note": "인적 계승은 자료가 일치한다. 다만 민주한국당은 전두환 정부의 **관제야당**으로 서술된다 — '조직이 이어졌다'가 아니라 '사람과 지지 기반이 이어졌다'는 주장이고, 그 정치적 자율성은 별개 문제다. 정당 동일성 판정에 쓰지 않는다."
+  },
+  {
+   "from": [
+    "민주공화당"
+   ],
+   "to": [
+    "한국국민당"
+   ],
+   "event": "kr_party_forced_dissolution_1980",
+   "type": "post_forced_dissolution_successor",
+   "basis": "인적 구성 — 구 민주공화당·유신정우회 계열 인사들이 창당했다.",
+   "source": [
+    "https://ko.wikipedia.org/wiki/한국국민당_(1981년)"
+   ],
+   "confidence": "supported",
+   "note": "자료가 '사실상의 민주공화당의 후신'으로 서술한다. 다만 민주정의당의 위성정당 성격도 같이 기록돼 있어, 조직적 연속이 아니라 인적·기반 연속으로만 읽어야 한다."
+  },
+  {
+   "from": [
+    "신민당"
+   ],
+   "to": [
+    "신한민주당"
+   ],
+   "event": "kr_party_forced_dissolution_1980",
+   "type": "post_forced_dissolution_successor",
+   "basis": "인적 구성과 당명 — 1984-12 정치활동금지 해제 인사들과 구 신민당 출신이 1985-01-18 창당했다. 당명도 원래 '신민당'으로 하려 했으나 선관위가 거부해, **약칭을 신민당으로 쓸 수 있는** '신한민주당'으로 정했다. 김영삼·김대중이 민주화추진협의회를 거쳐 창당에 참여했다.",
+   "source": [
+    "https://ko.wikipedia.org/wiki/신한민주당"
+   ],
+   "confidence": "supported",
+   "note": "1980 강제해산 뒤 재창당이라 조직적으로는 별개 법인이다. 인적·정치적 전통의 연속이지 법적 승계가 아니다. 같은 사건에서 민주한국당(1981, 관제야당)도 신민당 출신이 만들었다 — 하나의 전통이 여러 당으로 갈린 사례이고, bridge는 1:1을 전제하지 않는다."
+  }
+ ]
+}

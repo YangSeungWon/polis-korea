@@ -201,6 +201,62 @@ def main() -> int:
        {k: v["family"] for k, v in a.items()} == {k: v["family"] for k, v in b.items()},
        str([k for k in a if a[k]["family"] != b[k]["family"]][:3]))
 
+    print("\n[단절] 1980을 잇되 이어졌다고 가장하지 않는가")
+    ev = json.loads((ROOT / "data/parties/historical_events.json")
+                    .read_text(encoding="utf-8"))
+    br = json.loads((ROOT / "data/parties/historical_bridges.json")
+                    .read_text(encoding="utf-8"))
+    ck("강제해산이 정당 속성이 아니라 사건 entity다",
+       any(e["type"] == "systemic_forced_dissolution" for e in ev["events"]))
+    ck("사건이 영향받은 정당들을 갖는다",
+       all(e.get("affected_parties") for e in ev["events"]))
+    ck("bridge를 동일성 판정에 쓰지 않는다는 규칙이 있다",
+       "identity" in br["_rule"] and "절대" in br["_rule"])
+    for b in br["bridges"]:
+        ck(f"bridge {b['from']}→{b['to']}: 근거·출처·confidence",
+           bool(b.get("basis")) and bool(b.get("source"))
+           and b.get("confidence") in CONF)
+        ck(f"bridge {b['to']}: 사건을 참조한다",
+           b.get("event") in {e["id"] for e in ev["events"]})
+    # bridge는 조직 계보(lineage)에 섞이면 안 된다
+    if lf.exists():
+        L = json.loads(lf.read_text(encoding="utf-8"))["parties"]
+        types = {e["type"] for v in L.values() for e in v["lineage"]}
+        ck("조직 계보에 bridge/refounding edge가 없다",
+           not (types & {"historical_bridge", "refounding"}), str(types))
+    # 두 모드가 실제로 다른 답을 준다 — 같으면 나눈 의미가 없다
+    famh = ax["lineage_family_historical"]
+    diff = [n for n in fam if fam[n]["family"] != famh[n]["family"]]
+    ck(f"strict와 historical이 다른 답을 준다 ({len(diff)}종)", bool(diff))
+    ck("strict는 단절을 감추지 않는다",
+       any(v["cause"] == "forced_dissolution_1980"
+           for v in fam.values() if v["family"] == "unknown"))
+
+    print("\n[계열 득표] 분류 안 된 표를 지우지 않는가")
+    fv = ROOT / "data/parties/family_vote_share.json"
+    if fv.exists():
+        F = json.loads(fv.read_text(encoding="utf-8"))
+        ck("선거별 결과가 있다", len(F["elections"]) > 30)
+        for r in F["elections"]:
+            for m in ("strict", "historical"):
+                x = r[m]
+                if not x:
+                    continue
+                # 셋을 하나로 뭉개지 않는다
+                ck(f"{r['election']}/{m}: 세 비중이 따로 있다",
+                   {"known_single_family_share", "mixed_family_share",
+                    "unknown_family_share"} <= set(x))
+                # 재정규화 금지 — 합이 100이어야 하고 known만 100이면 안 된다
+                tot = sum(x["share"].values())
+                ck(f"{r['election']}/{m}: 전체 합이 100 (재정규화 안 함)",
+                   abs(tot - 100) < 0.5, f"{tot:.2f}")
+                if x["unknown_family_share"] > 1:
+                    ck(f"{r['election']}/{m}: 미분류가 남아 있다 "
+                       f"({x['unknown_family_share']}%)",
+                       x["classification_coverage"] < 99.9)
+                break        # 회차마다 두 모드 다 보면 출력이 너무 길다
+        ck("보강 우선순위가 표 수 기준으로 나온다", bool(F.get("unknown_priority")))
+
     print("\n[시점] contemporary_position이 시계열인가")
     pos = ax.get("contemporary_position") or {}
     ck("스키마가 valid_from/valid_to·source·confidence를 요구한다",

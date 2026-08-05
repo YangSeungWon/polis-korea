@@ -42,6 +42,10 @@
    "자유당"
   ]
  },
+ "_modes": {
+  "strict": "조직 계보만. 1980 강제해산 같은 제도적 단절에서 끊긴다 — 정당사 화면은 이걸 쓴다. 단절을 감추지 않는다.",
+  "historical": "조직 계보 + 확인된 historical_bridge. 지역 장기 타임랩스처럼 '수십 년간 어느 계열을 지지했나'를 볼 때 쓴다. 정당 동일성 판정에는 쓰지 않는다."
+ },
  "lineage_family": {
   "더불어민주당": {
    "family": "unknown",
@@ -489,20 +493,24 @@
    "evidence": "씨앗: 이승만 집권여당. 보수계의 초기 조직 축."
   },
   "신민당": {
-   "family": "unknown",
-   "families": [],
-   "basis": "no_path_to_seed",
-   "derivation": "no_path",
-   "cause": "disconnected_component",
-   "evidence": "씨앗에 닿는 계보 경로가 없다"
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 5단계 (민주국민당 ←continuation― 한국민주당)"
   },
   "민정당": {
-   "family": "unknown",
-   "families": [],
-   "basis": "no_path_to_seed",
-   "derivation": "no_path",
-   "cause": "missing_edge",
-   "evidence": "씨앗에 닿는 계보 경로가 없다"
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 3단계 (민주국민당 ←continuation― 한국민주당)"
   },
   "공화당": {
    "family": "unknown",
@@ -703,12 +711,14 @@
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   },
   "민중당": {
-   "family": "unknown",
-   "families": [],
-   "basis": "no_path_to_seed",
-   "derivation": "no_path",
-   "cause": "disconnected_component",
-   "evidence": "씨앗에 닿는 계보 경로가 없다"
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 4단계 (민주국민당 ←continuation― 한국민주당)"
   },
   "민주통일당": {
    "family": "unknown",
@@ -877,6 +887,935 @@
    "derivation": "no_path",
    "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "기본소득당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "자유와혁신": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "노동당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 2단계 (진보신당 ←split_from― 민주노동당)"
+  },
+  "녹색당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민주노동당(2025)": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+  }
+ },
+ "lineage_family_historical": {
+  "더불어민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 17단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 더불어민주연합(absorbed_into), 더불어시민당(absorbed_into), 열린민주당(absorbed_into)"
+  },
+  "새정치민주연합": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 16단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "민주통합당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 14단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "대통합민주신당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 13단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "열린우리당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 12단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "통합민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 13단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "새천년민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 11단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "새정치국민회의": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 10단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "평화민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 8단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "통일민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 7단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "더불어시민당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "더불어민주연합": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "열린민주당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민의힘": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 국민의당(2020)(absorbed_into), 국민의미래(absorbed_into), 미래한국당(absorbed_into)"
+  },
+  "미래통합당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 미래한국당(absorbed_into), 자유선진당(absorbed_into), 자유민주연합(absorbed_into)"
+  },
+  "미래한국당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민의미래": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "자유한국당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "새누리당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "한나라당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "신한국당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당"
+  },
+  "민주자유당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당"
+  },
+  "민주정의당": {
+   "family": "conservative",
+   "families": [
+    "conservative"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 전두환 집권여당. 민자당→신한국당→한나라당→국민의힘."
+  },
+  "신민주공화당": {
+   "family": "regional",
+   "families": [
+    "regional"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 김종필. 충청 지역 기반."
+  },
+  "민주공화당": {
+   "family": "conservative",
+   "families": [
+    "conservative"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 박정희 집권여당. 민정당→민자당→…→국민의힘 계보의 기원."
+  },
+  "자유민주연합": {
+   "family": "regional",
+   "families": [
+    "regional"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 김종필 충청 기반. 지역계 — 이념축과 별개다."
+  },
+  "자유선진당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "통합진보당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 1단계 (통합진보당 ←continuation― 민주노동당)"
+  },
+  "민중연합당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)"
+  },
+  "민중당(2017)": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+  },
+  "민주노동당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 2000년 원내 진입. 통합진보당·정의당·진보당 계보의 출발점."
+  },
+  "정의당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
+  },
+  "진보신당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 1단계 (진보신당 ←split_from― 민주노동당)"
+  },
+  "바른정당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "바른미래당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "민주평화당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 18단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "민생당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "기후민생당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "민주평화당(2025)": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "새로운미래": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 18단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 더불어민주연합(absorbed_into), 더불어시민당(absorbed_into), 열린민주당(absorbed_into)"
+  },
+  "새미래민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 19단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 더불어민주연합(absorbed_into), 더불어시민당(absorbed_into), 열린민주당(absorbed_into)"
+  },
+  "개혁신당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "조국혁신당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "통일국민당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민신당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당"
+  },
+  "국민통합21": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "창조한국당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "자유당": {
+   "family": "conservative",
+   "families": [
+    "conservative"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 이승만 집권여당. 보수계의 초기 조직 축."
+  },
+  "신민당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 5단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "민정당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 3단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "공화당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "한국민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 해방 후 민주당계의 조직적 기원. 민국당→민주당(1955)→신민당→…→더불어민주당으로 이어지는 계보의 출발점."
+  },
+  "민주국민당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 1단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "한국독립당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대한독립촉성국민회": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민주당(1955)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 2단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "민주당(1991)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 9단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "통합민주당(1995)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 10단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "민주당(2005)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 12단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "새누리당(2017)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "정의당(1967)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민의당(1963)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민주국민당(2000)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대한국민당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대동청년단": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "조선민족청년단": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대한청년단": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민회": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대한노동총연맹": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "대한독립촉성농민총연맹": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "일민구락부": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "사회대중당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "자유민주당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "통일당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민중당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 4단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "민주통일당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민주한국당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 6단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "한국국민당": {
+   "family": "conservative",
+   "families": [
+    "conservative"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주공화당까지 계보 1단계 (한국국민당 ←historical_bridge― 민주공화당)"
+  },
+  "한국국민당(2015)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "신한민주당": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 6단계 (민주국민당 ←continuation― 한국민주당)"
+  },
+  "민주사회당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "forced_dissolution_1980",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "민권당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "forced_dissolution_1980",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "신정당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "forced_dissolution_1980",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "신정당(1992)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "사회당": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "사회당(2002)": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "건설국민승리21": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "친박연대": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "disconnected_component",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "국민의당(2016)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 17단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
+  },
+  "국민의당(2020)": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "새로운보수당": {
+   "family": "mixed",
+   "families": [
+    "conservative",
+    "regional"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "merge_of_multiple_families",
+   "cause": null,
+   "evidence": "같은 거리에서 계열이 갈린다 — conservative(민주정의당), regional(신민주공화당) | 민주자유당 ←merged_from― 민주정의당; 민주자유당 ←merged_from― 신민주공화당  · 전파 제외: 자유선진당(absorbed_into), 자유민주연합(absorbed_into), 친박연대(absorbed_into)"
+  },
+  "참주인연합": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "새정치연합": {
+   "family": "unknown",
+   "families": [],
+   "basis": "no_path_to_seed",
+   "derivation": "no_path",
+   "cause": "missing_edge",
+   "evidence": "씨앗에 닿는 계보 경로가 없다"
+  },
+  "진보당": {
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "seed",
+   "derivation": "seed",
+   "cause": null,
+   "evidence": "씨앗: 조봉암. 혁신계의 조직적 기원."
+  },
+  "민주당(2013)": {
+   "family": "democratic",
+   "families": [
+    "democratic"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "한국민주당까지 계보 15단계 (민주국민당 ←continuation― 한국민주당)  · 전파 제외: 국민신당(absorbed_into)"
   },
   "기본소득당": {
    "family": "unknown",

@@ -97,6 +97,29 @@ def load() -> dict:
 
 
 LIFE = ROOT / "data/parties/lifecycle.json"
+BRIDGES = ROOT / "data/parties/historical_bridges.json"
+
+
+def _bridges(reg: dict) -> dict:
+    """제도적 단절을 건너는 **역사적 연속성** — 조직 계보와 섞지 않는다.
+
+    1980-10 신군부가 모든 정당을 해산하고 1981-01에 새 정당이 생겼다. 조직적으로는
+    끊긴 게 맞다. 그런데 사람과 지지 기반은 이어졌고, 그래야 "이 지역이 수십 년 동안
+    어느 계열을 지지했나"를 볼 수 있다. 둘 다 사실이라 **레이어를 나눈다**.
+
+    이 edge는 정당 동일성·개명·합당 판정에 쓰지 않는다. 계열의 historical 모드에서만.
+    """
+    if not BRIDGES.exists():
+        return {}
+    out: dict = {}
+    for b in json.loads(BRIDGES.read_text(encoding="utf-8"))["bridges"]:
+        if b.get("confidence") == "insufficient":
+            continue
+        for t in b["to"]:
+            if t in reg:
+                out.setdefault(t, []).extend(
+                    (f, "historical_bridge") for f in b["from"] if f in reg)
+    return out
 
 
 def _lineage(reg: dict) -> dict:
@@ -125,7 +148,7 @@ def _temporal_ok(reg: dict, child: str, parent: str) -> bool:
     return not (cf and pf and pf > cf)
 
 
-def derive_family(reg: dict) -> dict:
+def derive_family(reg: dict, mode: str = "strict") -> dict:
     """계보 edge를 거슬러 **가장 가까운 씨앗 조상**의 계열을 준다.
 
     순서에 의존하면 안 된다. 전신 하나가 먼저 풀렸다는 이유로 확정하면 국민의힘이
@@ -136,6 +159,10 @@ def derive_family(reg: dict) -> dict:
     """
     from collections import deque
     lin = _lineage(reg)
+    if mode == "historical":
+        # 조직 계보 + **확인된** bridge. 단절 사실을 지우는 게 아니라 다른 질문에 답한다.
+        br = _bridges(reg)
+        lin = {n: lin.get(n, []) + br.get(n, []) for n in set(lin) | set(br)}
 
     out: dict = {}
     for name in reg:
@@ -154,7 +181,9 @@ def derive_family(reg: dict) -> dict:
                 if pr in seen:
                     continue
                 seen.add(pr)
-                if not CARRY_EDGE.get(et, False):
+                if et == "historical_bridge":
+                    pass                    # historical 모드에서만 여기 들어온다
+                elif not CARRY_EDGE.get(et, False):
                     skipped.append(f"{pr}({et})")
                     continue
                 if not _temporal_ok(reg, cur, pr):
@@ -203,7 +232,8 @@ def derive_family(reg: dict) -> dict:
 
 def main() -> int:
     reg = load()
-    fam = derive_family(reg)
+    fam = derive_family(reg, "strict")
+    fam_h = derive_family(reg, "historical")
     # `relation`이 '어떻게 생겼나'와 '어떻게 끝났나'를 한 필드에 담고 있다.
     # 신민당은 relation=dissolve(1980 해산)인데 predecessors=['민중당'](1967 창당 경위)이다.
     # 그래서 계열 전파가 거기서 끊긴다. **값을 고치지 않고 드러낸다** — `stream`과 같은
@@ -255,7 +285,15 @@ def main() -> int:
                       "옳은 해결이고 그건 스키마 변경이다."),
             "parties": conflated,
         },
+        "_modes": {
+            "strict": ("조직 계보만. 1980 강제해산 같은 제도적 단절에서 끊긴다 — "
+                       "정당사 화면은 이걸 쓴다. 단절을 감추지 않는다."),
+            "historical": ("조직 계보 + 확인된 historical_bridge. 지역 장기 타임랩스처럼 "
+                           "'수십 년간 어느 계열을 지지했나'를 볼 때 쓴다. "
+                           "정당 동일성 판정에는 쓰지 않는다."),
+        },
         "lineage_family": fam,
+        "lineage_family_historical": fam_h,
         "_position_schema": {
             "party": "정식명(registry 키)",
             "position": "conservative|center_right|center|center_left|progressive",
@@ -280,7 +318,9 @@ def main() -> int:
     import collections
     c = collections.Counter(v["family"] for v in fam.values())
     print(f"→ {OUT.name}")
-    print("  lineage_family:", dict(c))
+    print("  lineage_family(strict):    ", dict(c))
+    ch = collections.Counter(v["family"] for v in fam_h.values())
+    print("  lineage_family(historical):", dict(ch))
     print(f"  relation 혼재(형성/종료 한 필드): {len(conflated)}종 {conflated[:5]}")
     cu = collections.Counter(v["cause"] for v in fam.values() if v["family"] == "unknown")
     print("  unknown 원인:", dict(cu))
