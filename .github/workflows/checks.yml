@@ -127,6 +127,10 @@ jobs:
       - name: 집계 게이트 (subset을 전국처럼 쓰지 않는가)
         run: python tests/test_aggregation_gate.py
 
+      # 총선의 서로 다른 질문을 한 숫자로 뭉개지 않는가 — 전국/비례/선거구/획정.
+      - name: 총선 4층 분리
+        run: python tests/test_general_layers.py
+
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 

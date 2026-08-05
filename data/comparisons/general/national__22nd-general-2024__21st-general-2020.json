@@ -1,0 +1,739 @@
+{
+ "_meta": {
+  "generated_at": "2026-08-05T16:34:19+09:00",
+  "source": "polis 계산",
+  "method": "각 회차의 **전체 지역구 결과를 독립적으로 전국 합산**한다. 선거구 간 1:1 매칭을 요구하지 않는다 — 공간 분할이 달라져도 전체 모집단은 같기 때문이다.",
+  "why_not_subset": "비교 가능한 선거구만 합치면 편향이 측정 대상보다 크다. 22↔21에서 그 부분집합의 1위 정당 구성이 ±6%p 기울었다. 전국 변화는 여기서, 같은 선거구의 변화는 build_general_comparison.py에서 — 두 질문은 다르다.",
+  "candidacy_note": "전국 득표율은 모든 지역구에 후보를 낸 정당에는 좋은 지표지만 일부에만 낸 정당에는 아니다. ran_in을 함께 읽어야 한다."
+ },
+ "elections": {
+  "22nd-general-2024": {
+   "date": "2024-04-10",
+   "national_district_vote": {
+    "districts": 254,
+    "valid_votes": 29234129,
+    "by_party": {
+     "더불어민주당": {
+      "votes": 14758083,
+      "pct": 50.48,
+      "ran_in": 245,
+      "of_districts": 254
+     },
+     "국민의힘": {
+      "votes": 13179769,
+      "pct": 45.08,
+      "ran_in": 254,
+      "of_districts": 254
+     },
+     "무소속": {
+      "votes": 409761,
+      "pct": 1.4,
+      "ran_in": 254,
+      "of_districts": 254
+     },
+     "진보당": {
+      "votes": 302925,
+      "pct": 1.04,
+      "ran_in": 21,
+      "of_districts": 254
+     },
+     "새로운미래": {
+      "votes": 200502,
+      "pct": 0.69,
+      "ran_in": 28,
+      "of_districts": 254
+     },
+     "개혁신당": {
+      "votes": 195147,
+      "pct": 0.67,
+      "ran_in": 43,
+      "of_districts": 254
+     },
+     "녹색정의당": {
+      "votes": 107029,
+      "pct": 0.37,
+      "ran_in": 17,
+      "of_districts": 254
+     },
+     "소나무당": {
+      "votes": 18939,
+      "pct": 0.06,
+      "ran_in": 2,
+      "of_districts": 254
+     },
+     "자유통일당": {
+      "votes": 18700,
+      "pct": 0.06,
+      "ran_in": 10,
+      "of_districts": 254
+     },
+     "새진보연합": {
+      "votes": 14271,
+      "pct": 0.05,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "우리공화당": {
+      "votes": 12814,
+      "pct": 0.04,
+      "ran_in": 2,
+      "of_districts": 254
+     },
+     "노동당": {
+      "votes": 7465,
+      "pct": 0.03,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "한국농어민당": {
+      "votes": 2804,
+      "pct": 0.01,
+      "ran_in": 2,
+      "of_districts": 254
+     },
+     "한국국민당": {
+      "votes": 1917,
+      "pct": 0.01,
+      "ran_in": 3,
+      "of_districts": 254
+     },
+     "내일로미래로": {
+      "votes": 1333,
+      "pct": 0.0,
+      "ran_in": 2,
+      "of_districts": 254
+     },
+     "자유민주당": {
+      "votes": 1245,
+      "pct": 0.0,
+      "ran_in": 2,
+      "of_districts": 254
+     },
+     "기후민생당": {
+      "votes": 778,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "민중민주당": {
+      "votes": 290,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "기독당": {
+      "votes": 218,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "대한국민당": {
+      "votes": 85,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 254
+     },
+     "가락특권폐지당": {
+      "votes": 54,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 254
+     }
+    }
+   },
+   "proportional": {
+    "available": true,
+    "valid_votes": 28344519,
+    "ballot_parties": [
+     {
+      "ballot_party": "국민의미래",
+      "votes": 10395264,
+      "pct": 36.67,
+      "seats": 18
+     },
+     {
+      "ballot_party": "더불어민주연합",
+      "votes": 7567459,
+      "pct": 26.7,
+      "seats": 14
+     },
+     {
+      "ballot_party": "조국혁신당",
+      "votes": 6874278,
+      "pct": 24.25,
+      "seats": 12
+     },
+     {
+      "ballot_party": "개혁신당",
+      "votes": 1025775,
+      "pct": 3.62,
+      "seats": 2
+     },
+     {
+      "ballot_party": "자유통일당",
+      "votes": 642433,
+      "pct": 2.27,
+      "seats": 0
+     },
+     {
+      "ballot_party": "녹색정의당",
+      "votes": 609313,
+      "pct": 2.15,
+      "seats": 0
+     },
+     {
+      "ballot_party": "새로운미래",
+      "votes": 483827,
+      "pct": 1.71,
+      "seats": 0
+     },
+     {
+      "ballot_party": "소나무당",
+      "votes": 124369,
+      "pct": 0.44,
+      "seats": 0
+     },
+     {
+      "ballot_party": "한나라당",
+      "votes": 72925,
+      "pct": 0.26,
+      "seats": 0
+     },
+     {
+      "ballot_party": "국가혁명당",
+      "votes": 67420,
+      "pct": 0.24,
+      "seats": 0
+     },
+     {
+      "ballot_party": "새누리당",
+      "votes": 57210,
+      "pct": 0.2,
+      "seats": 0
+     },
+     {
+      "ballot_party": "자유민주당",
+      "votes": 39977,
+      "pct": 0.14,
+      "seats": 0
+     },
+     {
+      "ballot_party": "기독당",
+      "votes": 36117,
+      "pct": 0.13,
+      "seats": 0
+     },
+     {
+      "ballot_party": "국민대통합당",
+      "votes": 30323,
+      "pct": 0.11,
+      "seats": 0
+     },
+     {
+      "ballot_party": "우리공화당",
+      "votes": 29895,
+      "pct": 0.11,
+      "seats": 0
+     },
+     {
+      "ballot_party": "가가호호공명선거대한당",
+      "votes": 29481,
+      "pct": 0.1,
+      "seats": 0
+     },
+     {
+      "ballot_party": "여성의당",
+      "votes": 28942,
+      "pct": 0.1,
+      "seats": 0
+     },
+     {
+      "ballot_party": "히시태그국민정책당",
+      "votes": 26906,
+      "pct": 0.09,
+      "seats": 0
+     },
+     {
+      "ballot_party": "노동당",
+      "votes": 25937,
+      "pct": 0.09,
+      "seats": 0
+     },
+     {
+      "ballot_party": "금융개혁당",
+      "votes": 20548,
+      "pct": 0.07,
+      "seats": 0
+     },
+     {
+      "ballot_party": "노인복지당",
+      "votes": 15178,
+      "pct": 0.05,
+      "seats": 0
+     },
+     {
+      "ballot_party": "공화당",
+      "votes": 14912,
+      "pct": 0.05,
+      "seats": 0
+     },
+     {
+      "ballot_party": "홍익당",
+      "votes": 13326,
+      "pct": 0.05,
+      "seats": 0
+     },
+     {
+      "ballot_party": "한국농어민당",
+      "votes": 13035,
+      "pct": 0.05,
+      "seats": 0
+     },
+     {
+      "ballot_party": "대한국민당",
+      "votes": 11947,
+      "pct": 0.04,
+      "seats": 0
+     },
+     {
+      "ballot_party": "미래당",
+      "votes": 11505,
+      "pct": 0.04,
+      "seats": 0
+     },
+     {
+      "ballot_party": "가가국민참여신당",
+      "votes": 10242,
+      "pct": 0.04,
+      "seats": 0
+     },
+     {
+      "ballot_party": "내일로미래로",
+      "votes": 9417,
+      "pct": 0.03,
+      "seats": 0
+     },
+     {
+      "ballot_party": "대한민국당",
+      "votes": 8527,
+      "pct": 0.03,
+      "seats": 0
+     },
+     {
+      "ballot_party": "통일한국당",
+      "votes": 8518,
+      "pct": 0.03,
+      "seats": 0
+     },
+     {
+      "ballot_party": "반공정당코리아",
+      "votes": 7820,
+      "pct": 0.03,
+      "seats": 0
+     },
+     {
+      "ballot_party": "대중민주당",
+      "votes": 7663,
+      "pct": 0.03,
+      "seats": 0
+     },
+     {
+      "ballot_party": "기후민생당",
+      "votes": 6615,
+      "pct": 0.02,
+      "seats": 0
+     },
+     {
+      "ballot_party": "가락특권폐지당",
+      "votes": 4707,
+      "pct": 0.02,
+      "seats": 0
+     },
+     {
+      "ballot_party": "한류연합당",
+      "votes": 3894,
+      "pct": 0.01,
+      "seats": 0
+     },
+     {
+      "ballot_party": "대한상공인당",
+      "votes": 3783,
+      "pct": 0.01,
+      "seats": 0
+     },
+     {
+      "ballot_party": "케이정치혁신연합당",
+      "votes": 3451,
+      "pct": 0.01,
+      "seats": 0
+     },
+     {
+      "ballot_party": "신한반도당",
+      "votes": 1580,
+      "pct": 0.01,
+      "seats": 0
+     }
+    ],
+    "note": "투표용지에 있던 정당명 그대로다. 위성정당(21대 미래한국당·더불어시민당, 22대 국민의미래·더불어민주연합)을 본당과 합치지 않는다 — 유권자가 실제로 마주한 선택지를 왜곡하게 된다. 계열 합산이 필요하면 명시적 정책을 따로 두어야 한다."
+   }
+  },
+  "21st-general-2020": {
+   "date": "2020-04-15",
+   "national_district_vote": {
+    "districts": 253,
+    "valid_votes": 28741408,
+    "by_party": {
+     "더불어민주당": {
+      "votes": 14345425,
+      "pct": 49.91,
+      "ran_in": 253,
+      "of_districts": 253
+     },
+     "미래통합당": {
+      "votes": 11915277,
+      "pct": 41.46,
+      "ran_in": 236,
+      "of_districts": 253
+     },
+     "무소속": {
+      "votes": 1124167,
+      "pct": 3.91,
+      "ran_in": 253,
+      "of_districts": 253
+     },
+     "정의당": {
+      "votes": 492100,
+      "pct": 1.71,
+      "ran_in": 75,
+      "of_districts": 253
+     },
+     "민생당": {
+      "votes": 415473,
+      "pct": 1.45,
+      "ran_in": 58,
+      "of_districts": 253
+     },
+     "국가혁명배당금당": {
+      "votes": 208324,
+      "pct": 0.72,
+      "ran_in": 235,
+      "of_districts": 253
+     },
+     "민중당": {
+      "votes": 157706,
+      "pct": 0.55,
+      "ran_in": 59,
+      "of_districts": 253
+     },
+     "우리공화당": {
+      "votes": 47299,
+      "pct": 0.16,
+      "ran_in": 41,
+      "of_districts": 253
+     },
+     "노동당": {
+      "votes": 15752,
+      "pct": 0.05,
+      "ran_in": 3,
+      "of_districts": 253
+     },
+     "기독자유통일당": {
+      "votes": 7663,
+      "pct": 0.03,
+      "ran_in": 7,
+      "of_districts": 253
+     },
+     "기본소득당": {
+      "votes": 4658,
+      "pct": 0.02,
+      "ran_in": 2,
+      "of_districts": 253
+     },
+     "친박신당": {
+      "votes": 1884,
+      "pct": 0.01,
+      "ran_in": 4,
+      "of_districts": 253
+     },
+     "미래당": {
+      "votes": 1574,
+      "pct": 0.01,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "한나라당": {
+      "votes": 1228,
+      "pct": 0.0,
+      "ran_in": 3,
+      "of_districts": 253
+     },
+     "충청의미래당": {
+      "votes": 1148,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "한국복지당": {
+      "votes": 625,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "통일민주당": {
+      "votes": 512,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "새누리당": {
+      "votes": 269,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "가자!평화인권당": {
+      "votes": 139,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "국민새정당": {
+      "votes": 65,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "민중민주당": {
+      "votes": 63,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     },
+     "공화당": {
+      "votes": 57,
+      "pct": 0.0,
+      "ran_in": 1,
+      "of_districts": 253
+     }
+    }
+   },
+   "proportional": {
+    "available": true,
+    "valid_votes": 27899864,
+    "ballot_parties": [
+     {
+      "ballot_party": "미래한국당",
+      "votes": 9441520,
+      "pct": 33.84,
+      "seats": null
+     },
+     {
+      "ballot_party": "더불어시민당",
+      "votes": 9307112,
+      "pct": 33.36,
+      "seats": null
+     },
+     {
+      "ballot_party": "정의당",
+      "votes": 2697956,
+      "pct": 9.67,
+      "seats": null
+     },
+     {
+      "ballot_party": "국민의당",
+      "votes": 1896719,
+      "pct": 6.8,
+      "seats": null
+     },
+     {
+      "ballot_party": "열린민주당",
+      "votes": 1512763,
+      "pct": 5.42,
+      "seats": null
+     },
+     {
+      "ballot_party": "민생당",
+      "votes": 758778,
+      "pct": 2.72,
+      "seats": null
+     },
+     {
+      "ballot_party": "기독자유통일당",
+      "votes": 513159,
+      "pct": 1.84,
+      "seats": null
+     },
+     {
+      "ballot_party": "민중당",
+      "votes": 295612,
+      "pct": 1.06,
+      "seats": null
+     },
+     {
+      "ballot_party": "우리공화당",
+      "votes": 208719,
+      "pct": 0.75,
+      "seats": null
+     },
+     {
+      "ballot_party": "여성의당",
+      "votes": 208697,
+      "pct": 0.75,
+      "seats": null
+     },
+     {
+      "ballot_party": "국가혁명배당금당",
+      "votes": 200657,
+      "pct": 0.72,
+      "seats": null
+     },
+     {
+      "ballot_party": "친박신당",
+      "votes": 142747,
+      "pct": 0.51,
+      "seats": null
+     },
+     {
+      "ballot_party": "새벽당",
+      "votes": 101819,
+      "pct": 0.36,
+      "seats": null
+     },
+     {
+      "ballot_party": "새누리당",
+      "votes": 80208,
+      "pct": 0.29,
+      "seats": null
+     },
+     {
+      "ballot_party": "미래당",
+      "votes": 71423,
+      "pct": 0.26,
+      "seats": null
+     },
+     {
+      "ballot_party": "미래민주당",
+      "votes": 71297,
+      "pct": 0.26,
+      "seats": null
+     },
+     {
+      "ballot_party": "녹색당",
+      "votes": 58948,
+      "pct": 0.21,
+      "seats": null
+     },
+     {
+      "ballot_party": "한국경제당",
+      "votes": 48807,
+      "pct": 0.17,
+      "seats": null
+     },
+     {
+      "ballot_party": "노동당",
+      "votes": 34272,
+      "pct": 0.12,
+      "seats": null
+     },
+     {
+      "ballot_party": "코리아",
+      "votes": 34012,
+      "pct": 0.12,
+      "seats": null
+     },
+     {
+      "ballot_party": "홍익당",
+      "votes": 22583,
+      "pct": 0.08,
+      "seats": null
+     },
+     {
+      "ballot_party": "자유당",
+      "votes": 20599,
+      "pct": 0.07,
+      "seats": null
+     },
+     {
+      "ballot_party": "자영업당",
+      "votes": 19444,
+      "pct": 0.07,
+      "seats": null
+     },
+     {
+      "ballot_party": "대한민국당",
+      "votes": 19246,
+      "pct": 0.07,
+      "seats": null
+     },
+     {
+      "ballot_party": "한국복지당",
+      "votes": 19159,
+      "pct": 0.07,
+      "seats": null
+     },
+     {
+      "ballot_party": "통일민주당",
+      "votes": 17405,
+      "pct": 0.06,
+      "seats": null
+     },
+     {
+      "ballot_party": "국민참여신당",
+      "votes": 15998,
+      "pct": 0.06,
+      "seats": null
+     },
+     {
+      "ballot_party": "깨어있는시민연대당",
+      "votes": 14242,
+      "pct": 0.05,
+      "seats": null
+     },
+     {
+      "ballot_party": "국민새정당",
+      "votes": 12376,
+      "pct": 0.04,
+      "seats": null
+     },
+     {
+      "ballot_party": "가자환경당",
+      "votes": 11040,
+      "pct": 0.04,
+      "seats": null
+     },
+     {
+      "ballot_party": "충청의미래당",
+      "votes": 10841,
+      "pct": 0.04,
+      "seats": null
+     },
+     {
+      "ballot_party": "남북통일당",
+      "votes": 10833,
+      "pct": 0.04,
+      "seats": null
+     },
+     {
+      "ballot_party": "가자!평화인권당",
+      "votes": 9245,
+      "pct": 0.03,
+      "seats": null
+     },
+     {
+      "ballot_party": "우리당",
+      "votes": 6773,
+      "pct": 0.02,
+      "seats": null
+     },
+     {
+      "ballot_party": "대한당",
+      "votes": 4855,
+      "pct": 0.02,
+      "seats": null
+     }
+    ],
+    "note": "투표용지에 있던 정당명 그대로다. 위성정당(21대 미래한국당·더불어시민당, 22대 국민의미래·더불어민주연합)을 본당과 합치지 않는다 — 유권자가 실제로 마주한 선택지를 왜곡하게 된다. 계열 합산이 필요하면 명시적 정책을 따로 두어야 한다."
+   }
+  }
+ }
+}
