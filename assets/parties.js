@@ -379,6 +379,35 @@ function gapOpacity(gap) {
   return Math.max(0.5, Math.min(1, a));
 }
 
+// 격차 명도의 **키**. 인코딩과 같은 자리에 둔다 — 떨어져 있으면 한쪽만 바뀐다.
+//
+// 명도가 값을 나르는데 범례가 없으면 사용자는 연한 칸을 '데이터가 부실한 곳'으로
+// 읽는다. 실제 뜻은 정반대에 가깝다 — 연할수록 1·2위가 붙었다는 뜻이다.
+// 7개 뷰(시도 1위 hex·시군구 hex·카토그램·역대 지도·여론 hex·재보궐 지도 등)가
+// 이 인코딩을 쓰는데 키는 한 곳에도 없었다.
+//
+// host 다음 형제로 붙이고, 다시 그려도 하나만 남는다(재렌더가 잦은 뷰들이라 필수).
+const GAP_LEGEND_STOPS = [0, 5, 10, 20];
+
+function mountGapLegend(host, opts) {
+  if (!host || !host.parentNode) return null;
+  opts = opts || {};
+  const swatches = GAP_LEGEND_STOPS.map((g) => {
+    const op = gapOpacity(g).toFixed(2);
+    return `<i class="vz-gap-sw" style="opacity:${op}" title="격차 ${g}%p"></i>`;
+  }).join('');
+  let el = host.parentNode.querySelector(':scope > .vz-gap-legend');
+  if (!el) {
+    el = document.createElement('p');
+    el.className = 'vz-gap-legend';
+    host.parentNode.insertBefore(el, host.nextSibling);
+  }
+  el.innerHTML = `<span class="vz-gap-lab">박빙</span>${swatches}`
+    + `<span class="vz-gap-lab">압도</span>`
+    + `<span class="vz-gap-note">${opts.note || '색 진하기 = 1·2위 격차'}</span>`;
+  return el;
+}
+
 // 17 시도 hex 격자 — pointy-top, odd-row 오른쪽 offset.
 // 9회 active layout: 5 row 4·4·4·3·1 (16 cell 빈자리 0). 한국 지도 모양 + lat·lon 정확.
 //   row 0:  [인천][서울][경기][강원]                  (4) — 수도권·강원

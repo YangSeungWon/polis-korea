@@ -342,3 +342,20 @@ body {
   .poll-tl-scroll { display: none; }
   .poll-tl-chips { display: block; }
 }
+
+/* ── 격차 명도 키 ─────────────────────────────────────────────────────────
+   명도가 값을 나르는 지도·hex 옆에 붙는다. 연한 칸을 '자료 부실'로 오해하지
+   않게 하는 것이 목적 — 실제 뜻은 1·2위가 붙었다는 것이다. (parties.js
+   mountGapLegend가 주입) */
+.vz-gap-legend {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 4px 8px;
+  margin: 6px auto 0; font-size: 11px; color: var(--ink-soft);
+}
+.vz-gap-lab { letter-spacing: -0.01em; }
+.vz-gap-sw {
+  display: inline-block; width: 15px; height: 11px; border-radius: 2px;
+  background: var(--ink-soft);
+}
+.vz-gap-sw + .vz-gap-sw { margin-left: -4px; }
+.vz-gap-note { color: var(--ink-mute); margin-left: 4px; }

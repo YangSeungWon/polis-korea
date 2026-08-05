@@ -75,6 +75,7 @@
     });
     const svg = el.querySelector('svg');
     if (svg) svg.classList.add('sido-winner-hex');
+    if (typeof mountGapLegend === 'function' && svg) mountGapLegend(svg);
   }
 
   // tc별 모드 정의: {key, label, draw(viewEl, races)}. geo = 회차별 시도 경계(meta.n/kind 전달).

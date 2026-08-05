@@ -63,6 +63,10 @@ function renderSigunguHex() {
         onSelect: (sido, name, result, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
       });
     if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
+    // 카토그램은 두 가지를 동시에 인코딩한다 — 크기와 명도. 둘 다 키에 적는다.
+    if (typeof mountGapLegend === 'function') {
+      mountGapLegend(svg, { note: '크기 = 투표수 · 색 진하기 = 1·2위 격차' });
+    }
     return;
   }
 
@@ -97,4 +101,5 @@ function renderSigunguHex() {
       },
     });
   if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
+  if (typeof mountGapLegend === 'function') mountGapLegend(svg);
 }

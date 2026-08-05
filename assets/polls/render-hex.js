@@ -87,4 +87,8 @@ async function renderSigunguHex() {
     });
   // 팬·줌 (Phase 3a) — 시군구 hex. 재렌더 후 현재 줌 복원, 리스너 1회.
   if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
+  // 여론 hex는 명도에 두 가지가 실린다 — 격차와 '최근 조사 부족'. 키에 둘 다 적는다.
+  if (typeof mountGapLegend === 'function') {
+    mountGapLegend(svg, { note: '색 진하기 = 1·2위 격차 · 점선·흐림 = 최근 조사 부족' });
+  }
 }

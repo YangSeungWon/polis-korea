@@ -68,6 +68,7 @@ function renderSidoHex() {
     onSelect: (sido) => { state.selected = { sido }; renderAll(); renderDetail(); },
     selected: (state.selected && !state.selected.name) ? state.selected.sido : null,
   });
+  if (typeof mountGapLegend === 'function') mountGapLegend(svg);
   // 줌은 history 자체 enablePinchZoom 사용(SvgViewport와 충돌 금지) — 포커스 전이용 셀만 저장.
   if (meta) svg._focusCells = meta.cells;
 }
