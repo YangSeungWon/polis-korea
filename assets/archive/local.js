@@ -61,7 +61,6 @@
     if (sc) sc.removeAttribute('hidden');
     const setText = (id, txt) => { const e = document.getElementById(id); if (e) e.textContent = txt; };
     const setHTML = (id, html) => { const e = document.getElementById(id); if (e) e.innerHTML = html; };
-    // 연한 정당색(정의당 노랑 등)은 글씨로 안 보임 → 색 배경 pill + 대비 글씨. 어두운 색은 글씨색(무소속 등 partyTextColor 보정).
     // 밝은 정당색(정의당 노랑 등)만 배경으로 칠하는 우회책이 있었다. 그때는
     // partyTextColor가 대비를 보장하지 못해 노랑 글씨가 사실상 안 보였기 때문인데,
     // 이제는 실제 대비(4.5:1)를 맞추므로 우회할 이유가 없다.
@@ -124,7 +123,11 @@
       for (const sido of Object.keys(src.results || {})) {
         const pred = src.results[sido]?.[0]?.party;
         if (!pred || !actual[sido]) continue;
-        total++; if (pred === actual[sido]) hits++;
+        total++;
+        // 아래 예측표(is-hit/is-miss)와 **같은 판정**을 써야 한다 — 다르면
+        // '적중 13/15'와 표의 초록 칸 수가 어긋난다.
+        if (typeof samePartyName === 'function'
+          ? samePartyName(pred, actual[sido]) : pred === actual[sido]) hits++;
       }
       if (total) {
         setText('ar-exit-hit', `${hits}/${total}`);
@@ -199,7 +202,11 @@
       const a = actual[sido], p = predicted[sido];
       if (!a && !p) continue;
       hasAny = true;
-      const hit = a && p && a.party === p.party;
+      // 문자열 동일성 ≠ 정당 동일성. 지금은 출구조사·결과 모두 정식명을 써서 문제가
+      // 없지만, 약칭('민주당')이 한쪽에만 들어오면 조용히 '빗나감'이 된다.
+      // polls 쪽은 이미 samePartyName을 쓴다 — 같은 판정은 같은 함수로.
+      const hit = a && p && (typeof samePartyName === 'function'
+        ? samePartyName(a.party, p.party) : a.party === p.party);
       const partyHTML = (party, pct) => {
         if (!party) return '<span class="party" style="color:#999">—</span>';
         return `<span class="party" style="color:${ptcol(party)}">${party}</span>${pct != null ? ` <span class="pct">${pct.toFixed(1)}%</span>` : ''}`;

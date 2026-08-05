@@ -115,7 +115,7 @@
       if (sel && sel.sido === sido && sel.name === name) path.classList.add('is-selected');
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = win
-        ? `${sido} ${name} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })} · 격차 ${(win.margin || 0).toFixed(1)}%p`
+        ? `${sido} ${name} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })} · 격차 ${fmtPp(win.margin)}`
         : `${sido} ${name} · 데이터 없음`;
       path.appendChild(tt);
       if (opts.onSelect) { path.style.cursor = 'pointer'; path.addEventListener('click', () => opts.onSelect(sido, name)); }

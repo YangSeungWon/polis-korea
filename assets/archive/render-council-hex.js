@@ -492,7 +492,9 @@
       } else { poly.setAttribute('class', 'council-outline no-data'); }
       poly.setAttribute('stroke', 'var(--bg, #fff)'); poly.setAttribute('stroke-width', '0.6');
       g.appendChild(poly);
-      const label = win ? `${cell.sido} ${cell.name} · ${win.name}(${win.party}) ${win.pct.toFixed(1)}% · 격차 ${win.margin.toFixed(1)}%p`
+      // 가드 없이 .toFixed를 부르면 pct·margin이 없는 race에서 TypeError로 죽는다.
+      const label = win ? `${cell.sido} ${cell.name} · ${win.name}(${win.party}) `
+        + `${fmtPct(win.pct, { digits: 1 })} · 격차 ${fmtPp(win.margin)}`
         : `${cell.sido} ${cell.name} · 데이터 없음`;
       const tt = document.createElementNS(NS, 'title'); tt.textContent = label; g.appendChild(tt);
       bindTip(g, label);

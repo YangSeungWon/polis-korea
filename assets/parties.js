@@ -397,6 +397,17 @@ function fmtPct(v, opts) {
   return v.toFixed(opts.digits == null ? 1 : opts.digits) + (opts.unit === false ? '' : '%');
 }
 
+// 격차·증감(%p). 계산 불가(2위 없음·득표율 결손)는 0이 아니다 — race의 4.3%가 그렇다.
+// 부호를 붙일지는 자리마다 다르다: '격차'는 크기라 부호가 없고, '증감'은 방향이 요점이다.
+function fmtPp(v, opts) {
+  opts = opts || {};
+  if (v == null || isNaN(v)) return NO_DATA_MARK;
+  const d = opts.digits == null ? 1 : opts.digits;
+  const sign = opts.sign ? (v > 0 ? '+' : v < 0 ? '−' : '') : '';
+  const n = opts.sign ? Math.abs(v) : v;
+  return `${sign}${n.toFixed(d)}%p`;
+}
+
 // 숫자를 폭에 넣어야 하는 자리(막대 길이 등)용 — 표기가 아니라 계산값이다.
 // 표기(fmtPct)와 계산(pctValue)을 섞지 않는다: 막대는 0으로 그려도 되지만
 // 글씨는 0%라고 쓰면 안 된다.

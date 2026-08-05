@@ -515,10 +515,10 @@ function renderDetail() {
           return `<a class="hist-close-row" data-sido="${r.sido}" data-name="${r.name}" data-kind="${r.scope}">
             <span class="hist-close-loc">${r.sido} ${r.name}</span>
             <span class="hist-close-cands">
-              <span class="hist-close-cand" style="color:${_textLegible(col1)}">${top.name}(${top.party}) ${top.pct.toFixed(1)}</span>
-              <span class="hist-close-cand" style="color:${_textLegible(col2)}">${second.name}(${second.party}) ${second.pct.toFixed(1)}</span>
+              <span class="hist-close-cand" style="color:${_textLegible(col1)}">${top.name}(${top.party}) ${fmtPct(top.pct, { digits: 1, unit: false })}</span>
+              <span class="hist-close-cand" style="color:${_textLegible(col2)}">${second.name}(${second.party}) ${fmtPct(second.pct, { digits: 1, unit: false })}</span>
             </span>
-            <span class="hist-close-margin">+${r.margin.toFixed(2)}%p</span>
+            <span class="hist-close-margin">${fmtPp(r.margin, { digits: 2, sign: true })}</span>
           </a>`;
         }).join('')}
       </div>

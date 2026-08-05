@@ -57,8 +57,8 @@
           const cc = (typeof partyColor === 'function') ? partyColor(c.party) : '#999';
           return `<div class="cand-row">
             <span class="cand-name">${c.name}</span>
-            <span class="cand-bar"><span class="cand-fill" style="width:${c.pct}%;background:${cc}"></span></span>
-            <span class="cand-pct">${c.pct.toFixed(1)}</span>
+            <span class="cand-bar"><span class="cand-fill" style="width:${pctValue(c.pct)}%;background:${cc}"></span></span>
+            <span class="cand-pct">${fmtPct(c.pct, { digits: 1, unit: false })}</span>
           </div>`;
         }).join('') + `</div>`
       : '';
