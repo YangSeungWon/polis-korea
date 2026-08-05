@@ -1,0 +1,244 @@
+{
+ "current": 22,
+ "previous": 21,
+ "sgg": "부천시",
+ "districts": {
+  "부천시갑": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 140371,
+    "share": {
+     "pid:더불어민주당": 61.13,
+     "pid:국민의힘": 38.87
+    }
+   },
+   "prev_reaggregated": null,
+   "swing_attributable_basis": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8924,
+    "excluded_categories": {
+     "home_ship": 779,
+     "out_of_area_early": 44835,
+     "overseas": 1134,
+     "misplaced": 164
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 972,
+     "out_of_area_early": 43973,
+     "overseas": 610,
+     "misplaced": 15
+    },
+    "prev_unmapped": {
+     "no_lineage": 70338
+    },
+    "dong_lineage_applied": [
+     "대산동→부천시병",
+     "범안동→부천시병",
+     "신중동→부천시을"
+    ],
+    "unresolved_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_prev_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.81
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 67.89,
+     "pid:국민의힘": 32.11
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 6.76,
+     "pid:국민의힘": -6.76
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.18,
+     "pid:국민의힘": -7.71,
+     "pid:정의당": 0.3,
+     "무소속": 0.22,
+     "pid:민중당(2017)": 0.02
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 0.42,
+     "pid:국민의힘": 0.96
+    }
+   }
+  },
+  "부천시병": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 155918,
+    "share": {
+     "pid:더불어민주당": 54.44,
+     "pid:국민의힘": 38.04,
+     "pid:새로운미래": 7.52
+    }
+   },
+   "prev_reaggregated": null,
+   "swing_attributable_basis": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8967,
+    "excluded_categories": {
+     "home_ship": 779,
+     "out_of_area_early": 44835,
+     "overseas": 1134,
+     "misplaced": 164
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 972,
+     "out_of_area_early": 43973,
+     "overseas": 610,
+     "misplaced": 15
+    },
+    "prev_unmapped": {
+     "no_lineage": 70338
+    },
+    "dong_lineage_applied": [
+     "대산동→부천시병",
+     "범안동→부천시병",
+     "신중동→부천시을"
+    ],
+    "unresolved_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_prev_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.98
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:새로운미래": 7.13,
+     "pid:더불어민주당": 62.91,
+     "pid:국민의힘": 29.96
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 8.47,
+     "pid:국민의힘": -8.08,
+     "pid:새로운미래": -0.39
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.18,
+     "pid:국민의힘": -7.71,
+     "pid:정의당": 0.3,
+     "무소속": 0.22,
+     "pid:민중당(2017)": 0.02
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 1.29,
+     "pid:국민의힘": 0.37
+    }
+   }
+  },
+  "부천시을": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 147537,
+    "share": {
+     "pid:더불어민주당": 55.9,
+     "pid:국민의힘": 37.94,
+     "pid:새로운미래": 6.16
+    }
+   },
+   "prev_reaggregated": null,
+   "swing_attributable_basis": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8935,
+    "excluded_categories": {
+     "home_ship": 779,
+     "out_of_area_early": 44835,
+     "overseas": 1134,
+     "misplaced": 164
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 972,
+     "out_of_area_early": 43973,
+     "overseas": 610,
+     "misplaced": 15
+    },
+    "prev_unmapped": {
+     "no_lineage": 70338
+    },
+    "dong_lineage_applied": [
+     "대산동→부천시병",
+     "범안동→부천시병",
+     "신중동→부천시을"
+    ],
+    "unresolved_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_prev_dongs": [
+     "부천동",
+     "심곡동"
+    ],
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.81
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:새로운미래": 6.91,
+     "pid:더불어민주당": 61.99,
+     "pid:국민의힘": 31.11
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 6.09,
+     "pid:국민의힘": -6.83,
+     "pid:새로운미래": 0.75
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.18,
+     "pid:국민의힘": -7.71,
+     "pid:정의당": 0.3,
+     "무소속": 0.22,
+     "pid:민중당(2017)": 0.02
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 1.09,
+     "pid:국민의힘": 0.88
+    }
+   }
+  }
+ }
+}

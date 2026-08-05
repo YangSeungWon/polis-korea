@@ -41,6 +41,9 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/build"))
 import party_identity as PI  # noqa: E402
 
+sys.path.insert(0, str(ROOT / "scripts/normalize"))
+import dong_geometry  # noqa: E402
+
 RAW = ROOT / "data/raw/nec"
 OUT = ROOT / "data/reaggregated"
 ELECTION_DATE = {21: "2020-04-15", 22: "2024-04-10", 20: "2016-04-13"}
@@ -197,6 +200,7 @@ def resolve_dong(dong: str, sgg: str, lin: dict, target: set[str]) -> str | None
 
 # ── 본체 ──────────────────────────────────────────────────────────────────
 def run(cur: int, prev: int, tag: str = "") -> dict:
+    fixture = tag[1:] if tag.startswith("_") else tag
     cb, pb = _load(cur, tag), _load(prev, tag)
     cdate, pdate = ELECTION_DATE[cur], ELECTION_DATE[prev]
     dmap = dong_map(cb)
@@ -204,19 +208,24 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
     lin = load_lineage()
     tgt_dongs = set(dmap)
 
-    # 과거 동 → 현 선거구. 계보를 거치고, 못 걸면 버리지 않고 센다.
+    # 과거 동 → 현 선거구. **지오메트리가 먼저다.** 이름 일치는 근거가 못 된다:
+    # 부천은 2019년에 36개 동을 10개 광역동으로 합쳤다가 2024년에 되돌려서,
+    # 2020년 '중동'과 2024년 '중동'이 이름은 같은데 크기가 다르다.
     sgg = pb[0]["sgg_name"] if pb else ""
+    prev_dongs = {r["dong"] for b in pb for r in b["rows"] if r["dong"]}
+    geo, crossing_prev = dong_geometry.resolve(cur, prev, fixture, dmap, prev_dongs)
+
     pmap: dict[str, str] = {}
     unresolved: list[str] = []
-    for b in pb:
-        for r in b["rows"]:
-            if not r["dong"] or r["dong"] in pmap:
-                continue
-            t = resolve_dong(r["dong"], b["sgg_name"], lin, tgt_dongs)
-            if t:
-                pmap[r["dong"]] = dmap[t]
-            else:
-                unresolved.append(r["dong"])
+    for d in sorted(prev_dongs):
+        if d in geo:                      # 폴리곤이 한 선거구 안에 온전히 들어간다
+            pmap[d] = geo[d]
+        elif d in crossing_prev:          # 선거구를 가로지른다 — 동 단위로 못 나눈다
+            unresolved.append(d)
+        elif (t := resolve_dong(d, sgg, lin, tgt_dongs)):
+            pmap[d] = dmap[t]             # 폴리곤이 없을 때만 계보 이름으로 (근거 기록됨)
+        else:
+            unresolved.append(d)
 
     # 과거 회차 제외표 편향은 **그 회차 자신의 선거구 단위**로 잰다. 새 경계로 재집계한
     # 값에서 옛 공식 전체를 빼면 분모가 어긋난다 — 재집계가 고치려던 그 오류다.
@@ -253,20 +262,32 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
         stab = {k: round(abs((exc_s.get(k, 0) - os_.get(k, 0)) - prev_lean[k]), 2)
                 for k in set(os_) & set(prev_lean) if os_[k] > 3}
 
+        # 가로지르는 동이 있으면 그 표를 어디에 담을지 알 수 없다. 면적비로 쪼개지
+        # 않으므로 재집계 자체가 성립하지 않는다 — 계보는 잇되 수치는 내지 않는다.
+        lost = prv_unm.get("crossing_dong", 0) + prv_unm.get("no_lineage", 0)
+        blocked = bool(crossing_prev) and lost > 0.02 * (sum(pa.values()) + lost)
+        if blocked:
+            qual = "insufficient"
+
         swing = None
         if pa and qual != "insufficient":
             # **양쪽 모두 동 귀속표 기준**. 공식 전체와 섞지 않는다.
             swing = {k: round(cs.get(k, 0) - ps.get(k, 0), 2)
                      for k in set(cs) | set(ps) if k != "무소속"}
         districts[d] = {
-            "method": "reaggregated" if pa else "direct",
+            "method": ("context_only" if blocked else
+                       "reaggregated" if pa else "direct"),
             "reaggregation_quality": qual,
-            "attributable": {"votes": att_v, "share": {k: round(v, 2) for k, v in cs.items()}},
+            "attributable": (None if blocked else
+                             {"votes": att_v,
+                              "share": {k: round(v, 2) for k, v in cs.items()}}),
             "official_reference": {"votes": off_v,
                                    "share": {k: round(v, 2) for k, v in os_.items()}},
-            "prev_reaggregated": ({"votes": sum(pa.values()),
-                                   "share": {k: round(v, 2) for k, v in ps.items()}}
-                                  if pa else None),
+            # 차단됐으면 수치를 아예 담지 않는다. 남겨 두고 '주의' 문구를 붙이면
+            # 그 문구가 떨어져 나간 자리에서 그대로 인용된다.
+            "prev_reaggregated": (None if blocked or not pa else
+                                  {"votes": sum(pa.values()),
+                                   "share": {k: round(v, 2) for k, v in ps.items()}}),
             "swing_attributable_basis": swing,
             "provenance": {
                 "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -280,6 +301,7 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
                 "dong_lineage_applied": [f"{k}→{v}" for k, v in sorted(pmap.items())
                                          if k not in tgt_dongs],
                 "unresolved_dongs": sorted(set(unresolved)),
+                "crossing_prev_dongs": crossing_prev,
                 "crossing_dongs": cross,
                 "party_identity": "scripts/build/party_identity.py",
                 "allocation_by_area_or_population": 0,
@@ -303,9 +325,9 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
 def main() -> None:
     a = sys.argv[1:]
     cur, prev = int(a[0]), int(a[1])
-    tag = ""
-    if "--sgg" in a:
-        tag = "_" + "-".join(s.replace(":", "") for s in a[a.index("--sgg") + 1].split(","))
+    tag = ("_" + a[a.index("--name") + 1] if "--name" in a else
+           "_" + "-".join(s.replace(":", "") for s in a[a.index("--sgg") + 1].split(","))
+           if "--sgg" in a else "")
     res = run(cur, prev, tag)
     OUT.mkdir(parents=True, exist_ok=True)
     f = OUT / f"{cur}__{prev}{tag}.json"
@@ -314,6 +336,10 @@ def main() -> None:
         p = v["provenance"]
         print(f"\n[{d}] {v['method']} / {v['reaggregation_quality']}")
         print(f"  커버리지 {p['coverage']*100:.1f}% · 재현오차 {p['current_election_validation_error_pp']}%p")
+        if v["attributable"] is None:
+            print(f"  ✗ 재집계 차단 — 선거구를 가로지르는 동: "
+                  f"{', '.join(p['crossing_prev_dongs'])}")
+            continue
         print(f"  {cur} 동귀속 {v['attributable']['share']}")
         print(f"  {cur} 공식전체 {v['official_reference']['share']}")
         if v["prev_reaggregated"]:

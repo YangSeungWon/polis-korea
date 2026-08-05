@@ -173,7 +173,7 @@ def fetch(n: int, city: str, town: str) -> str:
                   "townCodeFromSgg": "-1", "townCode": town, "x": "30", "y": "10"})
 
 
-def main(n: int, only: list[str] | None = None) -> None:
+def main(n: int, only: list[str] | None = None, fixture: str = "") -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     ov = SIDO_OVERRIDE.get(n, {})
     out = []
@@ -201,7 +201,10 @@ def main(n: int, only: list[str] | None = None) -> None:
                 print(f"    {sido_name} {name}: 행 {len(p['rows'])} · 동 {nd} "
                       f"· 후보 {len(p['candidates'])}", file=sys.stderr)
             time.sleep(0.15)
-    tag = "" if not only else "_" + "-".join(s.replace(":", "") for s in only)
+    # 회차마다 구시군 집합이 다를 수 있다 — 부천은 2024년에 3개 구로 부활했고
+    # 군위군은 경북에서 대구로 옮겨 갔다. 그래서 fixture 이름으로 짝을 맞춘다.
+    tag = ("_" + fixture if fixture else
+           "" if not only else "_" + "-".join(s.replace(":", "") for s in only))
     f = OUT / f"emd_votes_{n}{tag}.json"
     f.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\n→ {f.name}: 구시군 {len(out)}", file=sys.stderr)
@@ -211,4 +214,5 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     rnd = int(a[0])
     sel = a[a.index("--sgg") + 1].split(",") if "--sgg" in a else None
-    main(rnd, sel)
+    nm = a[a.index("--name") + 1] if "--name" in a else ""
+    main(rnd, sel, nm)

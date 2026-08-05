@@ -29,7 +29,7 @@ from reaggregate import (attributable, by_party, crossing, official,  # noqa: E4
                          run, shares, split_candidate)
 from reaggregate import _load  # noqa: E402
 
-TAG = "_41004131"          # 경기 하남 — split 대표 fixture
+TAG = "_hanam"             # 경기 하남 — split 대표 fixture
 fails: list[str] = []
 
 
@@ -147,8 +147,50 @@ def main() -> int:
     ck(f"커버리지 85.6% ({g['provenance']['coverage']*100:.1f}%)",
        abs(g["provenance"]["coverage"] - 0.856) < 0.005)
 
+    print("\n[유형별] 획정 변경 종류마다 옳은 판정이 나오는가")
+    _fixtures()
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
+
+
+def _fixtures() -> None:
+    """대표 fixture — 하나로 되면 다 된다고 하지 않는다.
+
+    · split         하남     2020 하남시 → 2024 갑/을
+    · merge         부산 남구 2020 갑/을 → 2024 남구
+    · 행정동 재편   부천     2019년 36동→10 광역동, 2024년 되돌림 + 선거구 4→3.
+                             광역동이 선거구를 가로질러 **재집계 불가**가 옳은 답이다.
+    """
+    for name, kind, expect in (("hanam", "split", "reaggregated"),
+                               ("busan-nam", "merge", "reaggregated"),
+                               ("bucheon", "행정동 재편+merge", "context_only")):
+        try:
+            r = run(22, 21, "_" + name)
+        except FileNotFoundError:
+            print(f"  · {name} 원자료 없음, 건너뜀")
+            continue
+        ms = {v["method"] for v in r["districts"].values()}
+        ck(f"{name} ({kind}) → {expect}", ms == {expect}, str(ms))
+        for d, v in r["districts"].items():
+            if v["method"] == "context_only":
+                # 차단했으면 **수치가 남아 있으면 안 된다**. 남겨 두고 주의 문구를
+                # 붙이면 문구가 떨어져 나간 자리에서 그대로 인용된다.
+                ck(f"{name}/{d}: 차단 시 수치 없음",
+                   v["attributable"] is None and v["prev_reaggregated"] is None
+                   and v["swing_attributable_basis"] is None)
+                ck(f"{name}/{d}: 차단 이유가 기록됨",
+                   bool(v["provenance"]["crossing_prev_dongs"]))
+            else:
+                ck(f"{name}/{d}: 가로지르는 동 없음",
+                   not v["provenance"]["crossing_prev_dongs"])
+    # 부천이 통과해 버리면 회귀다 — 이름이 같은 다른 크기의 동이 조용히 붙은 것이다
+    try:
+        b = run(22, 21, "_bucheon")
+        ck("부천 광역동이 선거구를 가로지르는 것이 잡힌다",
+           "부천동" in b["districts"]["부천시갑"]["provenance"]["crossing_prev_dongs"])
+    except FileNotFoundError:
+        pass
 
 
 if __name__ == "__main__":
