@@ -94,6 +94,39 @@ def main() -> int:
     ck(f"지역계가 이념 위치로 환원되지 않는다 ({len(reg_fam)}종)", bool(reg_fam))
     ck("families 어휘에 regional이 있다", "regional" in ax["_families"])
 
+    print("\n[edge 의미] 전신 관계를 같은 무게로 보지 않는가")
+    ck("edge 유형 어휘가 정의돼 있다",
+       {"rename", "split", "merge", "absorption", "alliance", "temporary_rename"}
+       <= set(ax["_edge_types"]))
+    ck("흡수는 계열을 잇지 않는다는 규칙이 명시됨", "absorption" in ax["_edge_rule"])
+    # 흡수당한 당이 전신으로 섞이면 계보가 엉뚱한 데로 흐른다. 실제로 그랬다:
+    # 한나라당이 2006년 흡수한 자민련(1995 창당) 때문에 국민의힘이 '충청 지역계'가 됐다.
+    absorbed_any = [n for n, v in parties.items() if v.get("absorbed")]
+    ck(f"흡수가 predecessors와 분리 기록된다 ({len(absorbed_any)}종)", bool(absorbed_any))
+    for n in ("한나라당", "새누리당", "국민의힘"):
+        if n in parties:
+            ck(f"{n}: 계보가 지역계로 흐르지 않는다",
+               fam[n]["family"] != "regional", fam[n]["evidence"][:60])
+    ck("3당합당 후신은 mixed로 남는다 (사실이지 오류가 아니다)",
+       fam["민주자유당"]["family"] == "mixed" and
+       set(fam["민주자유당"]["families"]) == {"conservative", "regional"},
+       str(fam["민주자유당"]))
+    ck("mixed에는 구성 계열이 배열로 남는다",
+       all(len(v["families"]) > 1 for v in fam.values() if v["family"] == "mixed"))
+    ck("derivation이 기록된다", all(v.get("derivation") for v in fam.values()))
+
+    print("\n[시점 정합] 같은 당명만으로 잇지 않는가")
+    for n, v in parties.items():
+        for pnm in v.get("predecessors") or []:
+            if pnm not in parties:
+                continue
+            cf = (v.get("founded") or "")[:7]
+            pf = (parties[pnm].get("founded") or "")[:7]
+            if cf and pf and pf > cf:
+                ck(f"{n} ← {pnm}: 전신이 더 나중에 생기지 않았다", False, f"{pf} > {cf}")
+    ck("전신이 후신보다 나중에 생긴 edge 없음", True)
+    ck("relation 혼재가 드러나 있다", "_relation_conflation" in ax)
+
     print("\n[시점] contemporary_position이 시계열인가")
     pos = ax.get("contemporary_position") or {}
     ck("스키마가 valid_from/valid_to·source·confidence를 요구한다",

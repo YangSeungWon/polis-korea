@@ -5,7 +5,13 @@
 (function () {
   const NOW = 2026.5;
   const REL_COLOR = { merge: '#d08700', split: '#2c82c9', rename: '#8a8f98', new: '#8a8f98', dissolve: '#8a8f98' };
-  const COLS = ['진보', '중도진보', '중도', '중도보수', '보수'];  // 좌→우 이념 스펙트럼 (기타는 그래프 밖 텍스트)
+  // registry의 legacy `stream` 값으로 컬럼을 나눈다. **정량적 이념 위치가 아니다** —
+  // 그 필드는 조직 계보와 이념 분류가 섞인 옛 분류라(민주당계 계보를 따라 중도진보를
+  // 준 사례가 다수) 축으로 읽으면 데이터보다 강한 주장이 된다. 지금은 겹치지 않게
+  // 늘어놓기 위한 배치 키일 뿐이고, 화면에도 축 라벨을 그리지 않는다.
+  // 조직 계보는 data/parties/political_axes.json의 lineage_family,
+  // 시점별 이념 위치는 contemporary_position(아직 비어 있음)을 쓴다.
+  const COLS = ['진보', '중도진보', '중도', '중도보수', '보수'];  // 배치 순서 (기타는 그래프 밖)
   const PXY = 12;        // 1년당 px (세로) — 세로 라벨 공간 확보 위해 키움
   const COL_GAP = 10;
   const PAD_T = 50, PAD_L = 40, PAD_R = 14, PAD_B = 28;
@@ -69,8 +75,8 @@
     let totalLanes = 0;
     const colInfo = [];
     for (const s of cols) {
-      // lane 좌우 = 이념순(info.order, 낮을수록 왼쪽). 없으면(중도·보수 등) 창당연도순.
-      // order 오름차순 처리 + 같은 order lane만 시간겹침 없을 때 재사용 → 다른 이념과 안 섞여
+      // lane 좌우 = registry order(낮을수록 왼쪽). 없으면 창당연도순.
+      // order 오름차순 처리 + 같은 order lane만 시간겹침 없을 때 재사용 → 서로 안 섞여
       // 좌우 단조 보장(낮은 order가 항상 왼쪽). 새 order는 뒤에 append되어 자연히 좌→우 정렬.
       const ord = (x) => (node[x].info.order != null ? node[x].info.order : 1e3);
       const sorted = colMembers[s].slice().sort((a, b) => (ord(a) - ord(b)) || (node[a].f - node[b].f));
