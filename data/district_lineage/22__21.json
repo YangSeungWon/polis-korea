@@ -2,13 +2,26 @@
  "_meta": {
   "current_n": 22,
   "previous_n": 21,
-  "generated_at": "2026-08-05T15:43:17+09:00",
+  "generated_at": "2026-08-05T15:50:33+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
    "exact": 0.97,
+   "near": 0.9,
    "major": 0.6,
    "minor": 0.05
+  },
+  "threshold_version": "2026-08-05.1",
+  "normalization_method": "make_valid(buffer 0)만 적용. 좌표계는 양쪽 WGS84, 단순화·snap은 하지 않는다 — 21↔20 감사에서 tolerance 555m를 줘도 90~97% 구간이 119→106에 그쳐, 차이가 표현이 아니라 경계임이 확인됐다.",
+  "reason_codes": {
+   "exact_overlap": "양방향 겹침이 문턱 이상 · 이름도 같다",
+   "renamed_same_area": "양방향 겹침이 문턱 이상 · 이름만 다르다",
+   "geometry_source_mismatch": "폴리곤 출처가 달라 실제 변화인지 정밀도 차이인지 못 가른다",
+   "boundary_moved": "같은 자리지만 경계가 움직였다",
+   "split_from_previous": "이전 선거구가 여럿으로 갈라졌다",
+   "merged_into_current": "이전 여럿이 하나로 합쳐졌다",
+   "no_predecessor": "대응하는 이전 선거구가 없다",
+   "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다"
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
   "source_profile": {
@@ -50,7 +63,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 강릉시",
@@ -64,7 +82,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 동해시태백시삼척시정선군",
@@ -78,7 +101,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 속초시인제군고성군양양군",
@@ -92,7 +120,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 원주시갑",
@@ -106,7 +139,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 원주시을",
@@ -120,7 +158,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 춘천시철원군화천군양구군갑",
@@ -134,7 +177,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 춘천시철원군화천군양구군을",
@@ -148,7 +196,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 홍천군횡성군영월군평창군",
@@ -162,7 +215,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 92%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9157,
+   "overlap_previous": 0.9732,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시갑",
@@ -181,7 +239,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경기 고양시병' 겹침 95%/88%",
+   "overlap_current": 0.9528,
+   "overlap_previous": 0.8811,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시병",
@@ -195,7 +258,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9761,
+   "overlap_previous": 0.9711,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시을",
@@ -209,7 +277,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 고양시정",
@@ -223,7 +296,12 @@
    "sido": "경기",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경기 광명시을 59%, 경기 광명시갑 41%",
+   "overlap_current": 0.5871,
+   "overlap_previous": 0.4415,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광명시을",
@@ -242,7 +320,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 광명시을'의 56%만 차지",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.5571,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광명시을",
@@ -256,7 +339,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광주시갑",
@@ -270,7 +358,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 광주시을",
@@ -284,7 +377,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 구리시",
@@ -298,7 +396,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 군포시",
@@ -312,7 +415,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 김포시갑",
@@ -326,7 +434,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 김포시을",
@@ -340,7 +453,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시갑",
@@ -354,7 +472,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시병",
@@ -368,7 +491,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 남양주시을",
@@ -382,7 +510,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 양주시'의 77%만 차지",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.7706,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 양주시",
@@ -396,7 +529,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 92%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기 동두천시연천군'",
+   "overlap_current": 0.918,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 동두천시연천군",
@@ -415,7 +553,12 @@
    "sido": "경기",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 경기 부천시정 + 경기 부천시갑 통합",
+   "overlap_current": 0.7163,
+   "overlap_previous": 0.9973,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시정",
@@ -434,7 +577,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경기 부천시병' 겹침 83%/100%",
+   "overlap_current": 0.8281,
+   "overlap_previous": 0.9972,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시병",
@@ -453,7 +601,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 부천시을",
@@ -467,7 +620,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시분당구갑",
@@ -481,7 +639,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9982,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시분당구을",
@@ -495,7 +658,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9979,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시수정구",
@@ -509,7 +677,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9991,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 성남시중원구",
@@ -523,7 +696,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시갑",
@@ -537,7 +715,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9986,
+   "overlap_previous": 0.9563,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시무",
@@ -551,7 +734,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 94%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9392,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시병",
@@ -570,7 +758,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시을",
@@ -584,7 +777,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 수원시정",
@@ -598,7 +796,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9498,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 시흥시갑",
@@ -612,7 +815,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 93%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9273,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 시흥시을",
@@ -631,7 +839,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시상록구갑",
@@ -645,7 +858,12 @@
    "sido": "경기",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 경기 안산시단원구을 + 경기 안산시단원구갑 통합",
+   "overlap_current": 0.7965,
+   "overlap_previous": 0.9331,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시단원구을",
@@ -664,7 +882,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경기 안산시상록구을' 겹침 81%/100%",
+   "overlap_current": 0.8131,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안산시상록구을",
@@ -683,7 +906,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안성시",
@@ -697,7 +925,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시동안구갑",
@@ -711,7 +944,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시동안구을",
@@ -725,7 +963,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 안양시만안구",
@@ -739,7 +982,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 여주시양평군",
@@ -753,7 +1001,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 오산시",
@@ -767,7 +1020,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시갑",
@@ -781,7 +1039,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.9694,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시병",
@@ -795,7 +1058,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 92%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.918,
+   "overlap_previous": 0.9688,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시을",
@@ -814,7 +1082,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경기 용인시정' 겹침 91%/86%",
+   "overlap_current": 0.9139,
+   "overlap_previous": 0.8618,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 용인시정",
@@ -833,7 +1106,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의왕시과천시",
@@ -847,7 +1125,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의정부시갑",
@@ -861,7 +1144,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 의정부시을",
@@ -875,7 +1163,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 이천시",
@@ -889,7 +1182,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 파주시갑'의 26%만 차지",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.2639,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 파주시갑",
@@ -903,7 +1201,12 @@
    "sido": "경기",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 경기 파주시을 + 경기 파주시갑 통합",
+   "overlap_current": 0.7557,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 파주시을",
@@ -922,7 +1225,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 평택시갑'의 87%만 차지",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.8678,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 평택시갑",
@@ -936,7 +1244,12 @@
    "sido": "경기",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경기 평택시을 54%, 경기 평택시갑 46%",
+   "overlap_current": 0.5387,
+   "overlap_previous": 0.0565,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 평택시을",
@@ -955,7 +1268,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9433,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 평택시을",
@@ -969,7 +1287,12 @@
    "sido": "경기",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 포천시가평군",
@@ -983,7 +1306,12 @@
    "sido": "경기",
    "relation": "split",
    "comparable": "no",
+   "reason_code": "split_from_previous",
    "reason": "이전 '경기 하남시'이 2개로 분할",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.8199,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 하남시",
@@ -997,7 +1325,12 @@
    "sido": "경기",
    "relation": "split",
    "comparable": "no",
+   "reason_code": "split_from_previous",
    "reason": "이전 '경기 하남시'이 2개로 분할",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.1795,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 하남시",
@@ -1011,7 +1344,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 91%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9148,
+   "overlap_previous": 0.9358,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시갑",
@@ -1025,7 +1363,12 @@
    "sido": "경기",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 경기 화성시갑 + 경기 화성시병 통합",
+   "overlap_current": 0.6292,
+   "overlap_previous": 0.0641,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시갑",
@@ -1044,7 +1387,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 화성시을'의 65%만 차지",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.6519,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시을",
@@ -1058,7 +1406,12 @@
    "sido": "경기",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경기 화성시을 76%, 경기 화성시병 24%",
+   "overlap_current": 0.7579,
+   "overlap_previous": 0.3479,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 화성시을",
@@ -1077,7 +1430,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.997,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 거제시",
@@ -1091,7 +1449,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9963,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 김해시갑",
@@ -1105,7 +1468,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9927,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 김해시을",
@@ -1119,7 +1487,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 밀양시의령군함안군창녕군",
@@ -1133,7 +1506,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 사천시남해군하동군",
@@ -1147,7 +1525,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 산청군함양군거창군합천군",
@@ -1161,7 +1544,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 양산시갑",
@@ -1175,7 +1563,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 양산시을",
@@ -1189,7 +1582,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 진주시갑",
@@ -1203,7 +1601,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 진주시을",
@@ -1217,7 +1620,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9973,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시마산합포구",
@@ -1231,7 +1639,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시마산회원구",
@@ -1245,7 +1658,12 @@
    "sido": "경남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 93%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.927,
+   "overlap_previous": 0.9979,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시성산구",
@@ -1264,7 +1682,12 @@
    "sido": "경남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/97% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9691,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시의창구",
@@ -1278,7 +1701,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9821,
+   "overlap_previous": 0.9979,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 창원시진해구",
@@ -1292,7 +1720,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9986,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 통영시고성군",
@@ -1306,7 +1739,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 경산시",
@@ -1320,7 +1758,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 경주시",
@@ -1334,7 +1777,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 고령군성주군칠곡군",
@@ -1348,7 +1796,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 구미시갑",
@@ -1362,7 +1815,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 구미시을",
@@ -1376,7 +1834,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 김천시",
@@ -1390,7 +1853,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 상주시문경시",
@@ -1404,7 +1872,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 안동시예천군",
@@ -1418,7 +1891,12 @@
    "sido": "경북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경북 영주시영양군봉화군울진군'의 73%만 차지",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.7301,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 영주시영양군봉화군울진군",
@@ -1432,7 +1910,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 영천시청도군",
@@ -1446,7 +1929,12 @@
    "sido": "경북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경북 군위군의성군청송군영덕군' 겹침 73%/82%",
+   "overlap_current": 0.7338,
+   "overlap_previous": 0.8185,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 군위군의성군청송군영덕군",
@@ -1465,7 +1953,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 포항시남구울릉군",
@@ -1479,7 +1972,12 @@
    "sido": "경북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 포항시북구",
@@ -1493,7 +1991,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 광산구갑",
@@ -1507,7 +2010,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9971,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 광산구을",
@@ -1521,7 +2029,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 동구남구갑",
@@ -1535,7 +2048,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 동구남구을",
@@ -1549,7 +2067,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 북구갑",
@@ -1563,7 +2086,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 북구을",
@@ -1577,7 +2105,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 서구갑",
@@ -1591,7 +2124,12 @@
    "sido": "광주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "광주 서구을",
@@ -1605,7 +2143,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9987,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구갑",
@@ -1619,7 +2162,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9978,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구병",
@@ -1633,7 +2181,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달서구을",
@@ -1647,7 +2200,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 달성군",
@@ -1661,7 +2219,12 @@
    "sido": "대구",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 90%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '대구 동구갑'",
+   "overlap_current": 0.9046,
+   "overlap_previous": 0.9981,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 동구갑",
@@ -1680,7 +2243,12 @@
    "sido": "대구",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 경북 군위군의성군청송군영덕군 + 대구 동구을 통합",
+   "overlap_current": 0.786,
+   "overlap_previous": 0.1814,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 군위군의성군청송군영덕군",
@@ -1699,7 +2267,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 북구갑",
@@ -1713,7 +2286,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 북구을",
@@ -1727,7 +2305,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 서구",
@@ -1741,7 +2324,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 수성구갑",
@@ -1755,7 +2343,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 수성구을",
@@ -1769,7 +2362,12 @@
    "sido": "대구",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대구 중구남구",
@@ -1783,7 +2381,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 대덕구",
@@ -1797,7 +2400,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 동구",
@@ -1811,7 +2419,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9977,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 서구갑",
@@ -1825,7 +2438,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9877,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 서구을",
@@ -1839,7 +2457,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 유성구갑",
@@ -1853,7 +2476,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9986,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 유성구을",
@@ -1867,7 +2495,12 @@
    "sido": "대전",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "대전 중구",
@@ -1881,7 +2514,12 @@
    "sido": "부산",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '부산 북구강서구을'의 90%만 차지",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.8989,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 북구강서구을",
@@ -1895,7 +2533,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 금정구",
@@ -1909,7 +2552,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 기장군",
@@ -1923,7 +2571,12 @@
    "sido": "부산",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 부산 남구갑 + 부산 남구을 통합",
+   "overlap_current": 0.5405,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 남구갑",
@@ -1942,7 +2595,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 동래구",
@@ -1956,7 +2614,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 부산진구갑",
@@ -1970,7 +2633,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 부산진구을",
@@ -1984,7 +2652,12 @@
    "sido": "부산",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '부산 북구강서구갑'의 74%만 차지",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.7428,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 북구강서구갑",
@@ -1998,7 +2671,12 @@
    "sido": "부산",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 부산 북구강서구을 81%, 부산 북구강서구갑 19%",
+   "overlap_current": 0.8077,
+   "overlap_previous": 0.1002,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 북구강서구을",
@@ -2017,7 +2695,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사상구",
@@ -2031,7 +2714,12 @@
    "sido": "부산",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '부산 사하구갑' 겹침 88%/100%",
+   "overlap_current": 0.8817,
+   "overlap_previous": 0.9982,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사하구갑",
@@ -2050,7 +2738,12 @@
    "sido": "부산",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9983,
+   "overlap_previous": 0.9044,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 사하구을",
@@ -2064,7 +2757,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9949,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 서구동구",
@@ -2078,7 +2776,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9978,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 수영구",
@@ -2092,7 +2795,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 연제구",
@@ -2106,7 +2814,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9847,
+   "overlap_previous": 0.9979,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 중구영도구",
@@ -2120,7 +2833,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9971,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 해운대구갑",
@@ -2134,7 +2852,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 해운대구을",
@@ -2148,7 +2871,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구갑",
@@ -2162,7 +2890,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구병",
@@ -2176,7 +2909,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9929,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강남구을",
@@ -2190,7 +2928,12 @@
    "sido": "서울",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9962,
+   "overlap_previous": 0.9026,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강동구갑",
@@ -2204,7 +2947,12 @@
    "sido": "서울",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '서울 강동구을' 겹침 82%/100%",
+   "overlap_current": 0.8189,
+   "overlap_previous": 0.9973,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강동구을",
@@ -2223,7 +2971,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강북구갑",
@@ -2237,7 +2990,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9974,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강북구을",
@@ -2251,7 +3009,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9961,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구갑",
@@ -2265,7 +3028,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구병",
@@ -2279,7 +3047,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 강서구을",
@@ -2293,7 +3066,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 관악구갑",
@@ -2307,7 +3085,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9987,
+   "overlap_previous": 0.9976,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 관악구을",
@@ -2321,7 +3104,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 광진구갑",
@@ -2335,7 +3123,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 광진구을",
@@ -2349,7 +3142,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9945,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 구로구갑",
@@ -2363,7 +3161,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 구로구을",
@@ -2377,7 +3180,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9967,
+   "overlap_previous": 0.9982,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 금천구",
@@ -2391,7 +3199,12 @@
    "sido": "서울",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '서울 노원구갑' 겹침 71%/100%",
+   "overlap_current": 0.7099,
+   "overlap_previous": 0.9984,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 노원구갑",
@@ -2410,7 +3223,12 @@
    "sido": "서울",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '서울 노원구병' 겹침 80%/99%",
+   "overlap_current": 0.7966,
+   "overlap_previous": 0.9944,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 노원구병",
@@ -2429,7 +3247,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 도봉구갑",
@@ -2443,7 +3266,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9978,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 도봉구을",
@@ -2457,7 +3285,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9974,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동대문구갑",
@@ -2471,7 +3304,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9965,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동대문구을",
@@ -2485,7 +3323,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9934,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동작구갑",
@@ -2499,7 +3342,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9947,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 동작구을",
@@ -2513,7 +3361,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 마포구갑",
@@ -2527,7 +3380,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 마포구을",
@@ -2541,7 +3399,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서대문구갑",
@@ -2555,7 +3418,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서대문구을",
@@ -2569,7 +3437,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서초구갑",
@@ -2583,7 +3456,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 서초구을",
@@ -2597,7 +3475,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 성북구갑",
@@ -2611,7 +3494,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9983,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 성북구을",
@@ -2625,7 +3513,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구갑",
@@ -2639,7 +3532,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구병",
@@ -2653,7 +3551,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 송파구을",
@@ -2667,7 +3570,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9954,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 양천구갑",
@@ -2681,7 +3589,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.998,
+   "overlap_previous": 0.9966,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 양천구을",
@@ -2695,7 +3608,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9965,
+   "overlap_previous": 0.9973,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 영등포구갑",
@@ -2709,7 +3627,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9977,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 영등포구을",
@@ -2723,7 +3646,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 용산구",
@@ -2737,7 +3665,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 은평구갑",
@@ -2751,7 +3684,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9986,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 은평구을",
@@ -2765,7 +3703,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9989,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 종로구",
@@ -2779,7 +3722,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9991,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중구성동구갑",
@@ -2793,7 +3741,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9991,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중구성동구을",
@@ -2807,7 +3760,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중랑구갑",
@@ -2821,7 +3779,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9989,
+   "overlap_previous": 0.997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 중랑구을",
@@ -2835,7 +3798,12 @@
    "sido": "세종",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '세종 세종특별자치시갑' 겹침 86%/98%",
+   "overlap_current": 0.8592,
+   "overlap_previous": 0.9791,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "세종 세종특별자치시갑",
@@ -2854,7 +3822,12 @@
    "sido": "세종",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '세종 세종특별자치시을'의 90%만 차지",
+   "overlap_current": 0.985,
+   "overlap_previous": 0.895,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "세종 세종특별자치시을",
@@ -2868,7 +3841,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9987,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 남구갑",
@@ -2882,7 +3860,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9902,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 남구을",
@@ -2896,7 +3879,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9986,
+   "overlap_previous": 0.9989,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 동구",
@@ -2910,7 +3898,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 북구",
@@ -2924,7 +3917,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 울주군",
@@ -2938,7 +3936,12 @@
    "sido": "울산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "울산 중구",
@@ -2952,7 +3955,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '인천 계양구갑' 겹침 78%/67%",
+   "overlap_current": 0.7751,
+   "overlap_previous": 0.6718,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 계양구갑",
@@ -2971,7 +3979,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 91%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9103,
+   "overlap_previous": 0.9428,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 계양구을",
@@ -2990,7 +4003,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9981,
+   "overlap_previous": 0.9976,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남동구갑",
@@ -3004,7 +4022,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9971,
+   "overlap_previous": 0.9982,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 남동구을",
@@ -3018,7 +4041,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9983,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 동구미추홀구갑",
@@ -3032,7 +4060,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9961,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 동구미추홀구을",
@@ -3046,7 +4079,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9963,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 부평구갑",
@@ -3060,7 +4098,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9981,
+   "overlap_previous": 0.9975,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 부평구을",
@@ -3074,7 +4117,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '인천 서구갑'의 79%만 차지",
+   "overlap_current": 0.9963,
+   "overlap_previous": 0.7916,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 서구갑",
@@ -3088,7 +4136,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '인천 서구을'의 61%만 차지",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.6113,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 서구을",
@@ -3102,7 +4155,12 @@
    "sido": "인천",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 인천 서구을 83%, 인천 서구갑 17%",
+   "overlap_current": 0.8334,
+   "overlap_previous": 0.3876,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 서구을",
@@ -3121,7 +4179,12 @@
    "sido": "인천",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 인천 연수구갑 60%, 인천 연수구을 40%",
+   "overlap_current": 0.598,
+   "overlap_previous": 0.9977,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 연수구갑",
@@ -3140,7 +4203,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '인천 연수구을' 겹침 95%/85%",
+   "overlap_current": 0.9535,
+   "overlap_previous": 0.8537,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 연수구을",
@@ -3154,7 +4222,12 @@
    "sido": "인천",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.993,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "인천 중구강화군옹진군",
@@ -3168,7 +4241,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 고흥군보성군장흥군강진군",
@@ -3182,7 +4260,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 나주시화순군",
@@ -3196,7 +4279,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 담양군함평군영광군장성군",
@@ -3210,7 +4298,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9871,
+   "overlap_previous": 0.9969,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 목포시",
@@ -3224,7 +4317,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 순천시광양시곡성군구례군갑",
@@ -3238,7 +4336,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 순천시광양시곡성군구례군을",
@@ -3252,7 +4355,12 @@
    "sido": "전남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '전남 여수시갑' 겹침 89%/100%",
+   "overlap_current": 0.8945,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 여수시갑",
@@ -3271,7 +4379,12 @@
    "sido": "전남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '전남 여수시을'의 88%만 차지",
+   "overlap_current": 0.9984,
+   "overlap_previous": 0.8751,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 여수시을",
@@ -3285,7 +4398,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 영암군무안군신안군",
@@ -3299,7 +4417,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 해남군완도군진도군",
@@ -3313,7 +4436,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '전북 군산시'의 81%만 차지",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.8131,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 군산시",
@@ -3327,7 +4455,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 92%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '전북 김제시부안군'",
+   "overlap_current": 0.9248,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 김제시부안군",
@@ -3346,7 +4479,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '전북 남원시임실군순창군' 겹침 78%/100%",
+   "overlap_current": 0.7758,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 남원시임실군순창군",
@@ -3365,7 +4503,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '전북 완주군진안군무주군장수군'의 81%만 차지",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.8085,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 완주군진안군무주군장수군",
@@ -3379,7 +4522,12 @@
    "sido": "전북",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 전북 익산시갑 84%, 전북 익산시을 16%",
+   "overlap_current": 0.8391,
+   "overlap_previous": 0.5062,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 익산시갑",
@@ -3398,7 +4546,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '전북 익산시을' 겹침 64%/90%",
+   "overlap_current": 0.6406,
+   "overlap_previous": 0.9006,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 익산시을",
@@ -3417,7 +4570,12 @@
    "sido": "전북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9462,
+   "overlap_previous": 0.9967,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시갑",
@@ -3436,7 +4594,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9986,
+   "overlap_previous": 0.9772,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시병",
@@ -3450,7 +4613,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 전주시을",
@@ -3464,7 +4632,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 정읍시고창군",
@@ -3478,7 +4651,12 @@
    "sido": "제주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 서귀포시",
@@ -3492,7 +4670,12 @@
    "sido": "제주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 제주시갑",
@@ -3506,7 +4689,12 @@
    "sido": "제주",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 제주시을",
@@ -3520,7 +4708,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 공주시부여군청양군",
@@ -3534,7 +4727,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 논산시계룡시금산군",
@@ -3548,7 +4746,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 당진시",
@@ -3562,7 +4765,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 보령시서천군",
@@ -3576,7 +4784,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9988,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 서산시태안군",
@@ -3590,7 +4803,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 아산시갑",
@@ -3604,7 +4822,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 아산시을",
@@ -3618,7 +4841,12 @@
    "sido": "충남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9478,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시갑",
@@ -3637,7 +4865,12 @@
    "sido": "충남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '충남 천안시병' 겹침 96%/88%",
+   "overlap_current": 0.9635,
+   "overlap_previous": 0.8766,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시병",
@@ -3651,7 +4884,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9765,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 천안시을",
@@ -3665,7 +4903,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 홍성군예산군",
@@ -3679,7 +4922,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 보은군옥천군영동군괴산군",
@@ -3693,7 +4941,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제천시단양군",
@@ -3707,7 +4960,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 증평군진천군음성군",
@@ -3721,7 +4979,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시상당구",
@@ -3735,7 +4998,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시서원구",
@@ -3749,7 +5017,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시청원구",
@@ -3763,7 +5036,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 청주시흥덕구",
@@ -3777,7 +5055,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 충주시",

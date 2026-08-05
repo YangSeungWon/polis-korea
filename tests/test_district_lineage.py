@@ -91,6 +91,31 @@ def main() -> int:
         ck("보류에 사유가 적혀 있다", all("구분 불가" in u["reason"] for u in u21[:5]))
 
     # ── 불변식 ──────────────────────────────────────────────────────────────
+    print("\n[판정 근거] 재현 가능한가")
+    ck("모든 단위에 reason_code", all(u.get("reason_code") for u in d["units"]))
+    ck("reason_code가 _meta에 정의돼 있다",
+       set(u["reason_code"] for u in d["units"]) <= set(d["_meta"]["reason_codes"]),
+       str(set(u["reason_code"] for u in d["units"]) - set(d["_meta"]["reason_codes"])))
+    ck("양방향 overlap이 남는다 (한 방향만 보면 비대칭을 놓친다)",
+       all(u.get("overlap_current") is not None and u.get("overlap_previous") is not None
+           for u in d["units"] if u["relation"] != "new"))
+    ck("source_relation이 남는다",
+       all(u.get("source_relation") in ("same_source", "source_mismatch") for u in d["units"]))
+    ck("문턱 버전이 기록된다", bool(d["_meta"].get("threshold_version")))
+    ck("정규화 방법이 기록된다", bool(d["_meta"].get("normalization_method")))
+
+    # same-source 쌍에 unknown이 없다 — 문턱을 느슨하게 하면 이게 깨진다
+    print("\n[회귀 조건] same-source에서 unknown=0")
+    bad_ss = []
+    for fp in sorted(LIN.glob("*__*.json")):
+        dd = json.loads(fp.read_text(encoding="utf-8"))
+        if not dd["_meta"]["source_profile"]["same_source"]:
+            continue
+        u = [x for x in dd["units"] if x["comparable"] == "unknown"]
+        if u:
+            bad_ss.append(f"{fp.stem}({len(u)})")
+    ck("출처가 같은 쌍에는 판정 보류가 없다", not bad_ss, str(bad_ss[:3]))
+
     print("\n[불변식]")
     c = d["counts"]
     rel_sum = sum(v for k, v in c.items() if k not in (

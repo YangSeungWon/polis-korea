@@ -45,6 +45,8 @@ OUT = ROOT / "data/district_lineage"
 # boundary_changed로 밀면 멀쩡한 단위를 비교 불가로 버린다.
 # 그래서 **모르는 것을 모른다고 적는다** — comparable을 yes/no가 아니라 3-state로 둔다.
 # (오늘 세운 원칙: null ≠ 0, '최근 데이터 없음' ≠ '수집 실패'와 같은 계열)
+THRESHOLD_VERSION = "2026-08-05.1"   # 문턱이 바뀌면 올린다 — 옛 결과와 비교할 수 있게
+
 EXACT = 0.97      # 양방향 이 이상 → 같은 단위 (확실)
 NEAR = 0.90       # 이 구간(0.90~0.97)은 폴리곤 정밀도 한계 — 판정 불가
 MAJOR = 0.60      # 이 이상이면 '주된 대응'
@@ -129,19 +131,33 @@ def overlaps(cur: list[dict], prev: list[dict]) -> dict:
     return out
 
 
+# 판정 사유 코드 — 나중에 문턱·geometry가 바뀌었을 때 왜 결과가 달라졌는지 추적한다.
+REASON_CODES = {
+    "exact_overlap": "양방향 겹침이 문턱 이상 · 이름도 같다",
+    "renamed_same_area": "양방향 겹침이 문턱 이상 · 이름만 다르다",
+    "geometry_source_mismatch": "폴리곤 출처가 달라 실제 변화인지 정밀도 차이인지 못 가른다",
+    "boundary_moved": "같은 자리지만 경계가 움직였다",
+    "split_from_previous": "이전 선거구가 여럿으로 갈라졌다",
+    "merged_into_current": "이전 여럿이 하나로 합쳐졌다",
+    "no_predecessor": "대응하는 이전 선거구가 없다",
+    "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다",
+}
+
+
 def classify(cur_key: str, ov: list[dict], prev_fanout: dict,
-             same_src: bool) -> tuple[str, str, str]:
+             same_src: bool) -> tuple[str, str, str, str]:
     """(관계, 비교가능 yes/no/unknown, 사유). 사유는 사람이 읽고 판단할 수 있게 남긴다."""
     if not ov:
-        return "new", "no", "대응하는 이전 선거구 없음"
+        return "new", "no", "대응하는 이전 선거구 없음", "no_predecessor"
     top = ov[0]
     major = [o for o in ov if o["of_current"] >= MAJOR or o["of_previous"] >= MAJOR]
 
     # 1:1 — 서로가 서로의 대부분을 차지한다
     if top["of_current"] >= EXACT and top["of_previous"] >= EXACT:
         same_name = cur_key == top["prev"]
-        return ("exact" if same_name else "renamed"), "yes", (
-            "양방향 겹침 ≥97%" + ("" if same_name else " · 이름만 다름"))
+        return (("exact" if same_name else "renamed"), "yes",
+                "양방향 겹침 ≥97%" + ("" if same_name else " · 이름만 다름"),
+                "exact_overlap" if same_name else "renamed_same_area")
 
     # 0.90~0.97 — 두 폴리곤의 **출처가 다르면** 실제 경계 변화인지 정밀도 차이인지
     # 못 가른다. 출처가 같으면 정밀도로 설명할 수 없으므로 실제 변화다.
@@ -149,32 +165,38 @@ def classify(cur_key: str, ov: list[dict], prev_fanout: dict,
         pct = f"{top['of_current'] * 100:.0f}%/{top['of_previous'] * 100:.0f}%"
         named = "" if cur_key == top["prev"] else f" · 이전 '{top['prev']}'"
         if same_src:
-            return "boundary_changed", "no", (
-                f"겹침 {pct} — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다{named}")
-        return "minor_boundary_change", "unknown", (
-            f"겹침 {pct} — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 "
-            f"구분 불가{named}")
+            return ("boundary_changed", "no",
+                    f"겹침 {pct} — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다{named}",
+                    "boundary_moved")
+        return ("minor_boundary_change", "unknown",
+                f"겹침 {pct} — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 "
+                f"구분 불가{named}", "geometry_source_mismatch")
 
     # 현재가 이전 하나에 거의 담긴다 = 이전이 쪼개졌다
     if top["of_current"] >= EXACT and top["of_previous"] < EXACT:
         n = prev_fanout.get(top["prev"], 0)
         if n >= 2:
-            return "split", "no", f"이전 '{top['prev']}'이 {n}개로 분할"
-        return "boundary_changed", "no", (
-            f"이전 '{top['prev']}'의 {top['of_previous'] * 100:.0f}%만 차지")
+            return ("split", "no", f"이전 '{top['prev']}'이 {n}개로 분할",
+                    "split_from_previous")
+        return ("boundary_changed", "no",
+                f"이전 '{top['prev']}'의 {top['of_previous'] * 100:.0f}%만 차지",
+                "boundary_moved")
 
     # 이전 여럿이 현재 하나에 담긴다 = 합쳐졌다
     if len(major) >= 2 and sum(o["of_current"] for o in major) >= EXACT:
-        return "merged", "no", "이전 " + " + ".join(o["prev"] for o in major[:4]) + " 통합"
+        return ("merged", "no",
+                "이전 " + " + ".join(o["prev"] for o in major[:4]) + " 통합",
+                "merged_into_current")
 
     if top["of_current"] >= MAJOR and top["of_previous"] >= MAJOR:
-        return "boundary_changed", "no", (
-            f"주 대응 '{top['prev']}' 겹침 {top['of_current'] * 100:.0f}%"
-            f"/{top['of_previous'] * 100:.0f}%")
+        return ("boundary_changed", "no",
+                f"주 대응 '{top['prev']}' 겹침 {top['of_current'] * 100:.0f}%"
+                f"/{top['of_previous'] * 100:.0f}%", "boundary_moved")
 
-    return "unresolvable", "no", (
-        "겹침이 흩어짐 — " + ", ".join(
-            f"{o['prev']} {o['of_current'] * 100:.0f}%" for o in ov[:3]))
+    return ("unresolvable", "no",
+            "겹침이 흩어짐 — " + ", ".join(
+                f"{o['prev']} {o['of_current'] * 100:.0f}%" for o in ov[:3]),
+            "scattered_overlap")
 
 
 def build(cur_n: int, prev_n: int) -> dict | None:
@@ -194,11 +216,19 @@ def build(cur_n: int, prev_n: int) -> dict | None:
 
     units, counts = [], {}
     for c in cur:
-        rel, comparable, why = classify(c["key"], ov[c["key"]], fanout, same_src)
+        rel, comparable, why, code = classify(c["key"], ov[c["key"]], fanout, same_src)
         counts[rel] = counts.get(rel, 0) + 1
+        top = ov[c["key"]][0] if ov[c["key"]] else None
         units.append({
             "district": c["key"], "sido": c["sido"],
-            "relation": rel, "comparable": comparable, "reason": why,
+            "relation": rel, "comparable": comparable,
+            "reason_code": code, "reason": why,
+            # 판정 근거를 재현 가능하게 남긴다 — 문턱·geometry가 바뀌면 왜 결과가
+            # 달라졌는지 추적해야 한다. 한 방향만 남기면 비대칭을 놓친다.
+            "overlap_current": top["of_current"] if top else None,
+            "overlap_previous": top["of_previous"] if top else None,
+            "source_relation": "same_source" if same_src else "source_mismatch",
+            "decision": "geometry_overlap",
             "previous": [{k: o[k] for k in ("prev", "of_current", "of_previous")}
                          for o in ov[c["key"]][:4]],
         })
@@ -216,7 +246,13 @@ def build(cur_n: int, prev_n: int) -> dict | None:
             "method": ("두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. "
                        f"양방향 {EXACT:.0%} 이상이면 같은 단위, {MAJOR:.0%} 이상이면 주 대응, "
                        f"{MINOR:.0%} 미만은 경계 노이즈로 버린다."),
-            "thresholds": {"exact": EXACT, "major": MAJOR, "minor": MINOR},
+            "thresholds": {"exact": EXACT, "near": NEAR, "major": MAJOR, "minor": MINOR},
+            "threshold_version": THRESHOLD_VERSION,
+            "normalization_method": ("make_valid(buffer 0)만 적용. 좌표계는 양쪽 WGS84, "
+                                     "단순화·snap은 하지 않는다 — 21↔20 감사에서 "
+                                     "tolerance 555m를 줘도 90~97% 구간이 119→106에 "
+                                     "그쳐, 차이가 표현이 아니라 경계임이 확인됐다."),
+            "reason_codes": REASON_CODES,
             "note": ("comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. "
                      "경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. "
                      "'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, "

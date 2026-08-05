@@ -2,13 +2,26 @@
  "_meta": {
   "current_n": 12,
   "previous_n": 11,
-  "generated_at": "2026-08-05T15:43:13+09:00",
+  "generated_at": "2026-08-05T15:50:29+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
    "exact": 0.97,
+   "near": 0.9,
    "major": 0.6,
    "minor": 0.05
+  },
+  "threshold_version": "2026-08-05.1",
+  "normalization_method": "make_valid(buffer 0)만 적용. 좌표계는 양쪽 WGS84, 단순화·snap은 하지 않는다 — 21↔20 감사에서 tolerance 555m를 줘도 90~97% 구간이 119→106에 그쳐, 차이가 표현이 아니라 경계임이 확인됐다.",
+  "reason_codes": {
+   "exact_overlap": "양방향 겹침이 문턱 이상 · 이름도 같다",
+   "renamed_same_area": "양방향 겹침이 문턱 이상 · 이름만 다르다",
+   "geometry_source_mismatch": "폴리곤 출처가 달라 실제 변화인지 정밀도 차이인지 못 가른다",
+   "boundary_moved": "같은 자리지만 경계가 움직였다",
+   "split_from_previous": "이전 선거구가 여럿으로 갈라졌다",
+   "merged_into_current": "이전 여럿이 하나로 합쳐졌다",
+   "no_predecessor": "대응하는 이전 선거구가 없다",
+   "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다"
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
   "source_profile": {
@@ -45,7 +58,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제1선거구(춘천시·춘성군·철원군·화천군)",
@@ -59,7 +77,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제2선거구(원주시·홍천군·횡성군·원성군)",
@@ -73,7 +96,12 @@
    "sido": "강원",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제3선거구(동해시·삼척군)",
@@ -87,7 +115,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제4선거구(강릉시·양양군·명주군)",
@@ -101,7 +134,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제5선거구(속초시·양구군·인제군·고성군)",
@@ -115,7 +153,12 @@
    "sido": "강원",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "강원 제6선거구(영월군·평창군·정선군)",
@@ -129,7 +172,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제12선거구(포천군·연천군·가평군)",
@@ -143,7 +191,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9855,
+   "overlap_previous": 0.9982,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제3선거구(수원시·화성군)",
@@ -157,7 +210,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9984,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제4선거구(성남시·광주군)",
@@ -171,7 +229,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9991,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제5선거구(의정부시·양주군)",
@@ -185,7 +248,12 @@
    "sido": "경기",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 99%/96% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경기 제6선거구(안양시·시흥군·옹진군)'",
+   "overlap_current": 0.9941,
+   "overlap_previous": 0.9596,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제6선거구(안양시·시흥군·옹진군)",
@@ -199,7 +267,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9982,
+   "overlap_previous": 0.996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제7선거구(부천시·김포군·강화군)",
@@ -213,7 +286,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제8선거구(남양주군·양평군)",
@@ -227,7 +305,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9925,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제9선거구(여주군·이천군·용인군)",
@@ -241,7 +324,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제10선거구(평택군·안성군)",
@@ -255,7 +343,12 @@
    "sido": "경기",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제11선거구(파주군·고양군)",
@@ -269,7 +362,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제10선거구(거창군·산청군·함양군)",
@@ -283,7 +381,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제1선거구(마산시)",
@@ -297,7 +400,12 @@
    "sido": "경남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 96%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9638,
+   "overlap_previous": 0.9979,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제2선거구(울산시·울주군)",
@@ -311,7 +419,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제3선거구(진주시·삼천포시·진양군·사천군)",
@@ -325,7 +438,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9993,
+   "overlap_previous": 0.9983,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제4선거구(창원시·진해시·의창군)",
@@ -339,7 +457,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9966,
+   "overlap_previous": 0.997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제5선거구(충무시·통영군·거제군·고성군)",
@@ -353,7 +476,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제6선거구(의령군·함안군·합천군)",
@@ -367,7 +495,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제7선거구(밀양군·창녕군)",
@@ -381,7 +514,12 @@
    "sido": "경남",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9702,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제8선거구(김해군·양산군)",
@@ -395,7 +533,12 @@
    "sido": "경남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경남 제9선거구(하동군·남해군)",
@@ -409,7 +552,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9995,
+   "overlap_previous": 0.9992,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제13선거구(문경군·예천군)",
@@ -423,7 +571,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9984,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제4선거구(포항시·영일군·울릉군)",
@@ -437,7 +590,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제5선거구(경주시·월성군·청도군)",
@@ -451,7 +609,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제6선거구(김천시·금릉군·상주군)",
@@ -465,7 +628,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제7선거구(안동시·의성군·안동군)",
@@ -479,7 +647,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9723,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제8선거구(구미시·군위군·칠곡군·선산군)",
@@ -493,7 +666,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9999,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제9선거구(영주시·영양군·영풍군·봉화군)",
@@ -507,7 +685,12 @@
    "sido": "경북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/91% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경북 제10선거구(달성군·고령군·성주군)'",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9079,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제10선거구(달성군·고령군·성주군)",
@@ -521,7 +704,12 @@
    "sido": "경북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제11선거구(영덕군·청송군·울진군)",
@@ -535,7 +723,12 @@
    "sido": "경북",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '경북 제12선거구(경산군·영천군)'",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9418,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제12선거구(경산군·영천군)",
@@ -549,7 +742,12 @@
    "sido": "대구",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경북 제1선거구(대구시서구·중구) 56%, 경북 제10선거구(달성군·고령군·성주군) 44%",
+   "overlap_current": 0.5562,
+   "overlap_previous": 0.988,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제1선거구(대구시서구·중구)",
@@ -568,7 +766,12 @@
    "sido": "대구",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경북 제2선거구(대구시북구·동구) 37%, 경북 제10선거구(달성군·고령군·성주군) 30%, 경북 제8선거구(구미시·군위군·칠곡군·선산군) 17%",
+   "overlap_current": 0.3726,
+   "overlap_previous": 0.9977,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제2선거구(대구시북구·동구)",
@@ -597,7 +800,12 @@
    "sido": "대구",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 경북 제3선거구(대구시수성구·남구) 41%, 경북 제10선거구(달성군·고령군·성주군) 29%, 경북 제12선거구(경산군·영천군) 29%",
+   "overlap_current": 0.4144,
+   "overlap_previous": 0.9981,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경북 제3선거구(대구시수성구·남구)",
@@ -621,7 +829,12 @@
    "sido": "부산",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9955,
+   "overlap_previous": 0.9866,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제1선거구(중구·영도구·동구)",
@@ -635,7 +848,12 @@
    "sido": "부산",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.983,
+   "overlap_previous": 0.9933,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제2선거구(서구)",
@@ -649,7 +867,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9944,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제3선거구(부산진구·부산진구을)",
@@ -663,7 +886,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9964,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제4선거구(동래구·동래구을)",
@@ -677,7 +905,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9979,
+   "overlap_previous": 0.9976,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제5선거구(남구·해운대구)",
@@ -691,7 +924,12 @@
    "sido": "부산",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9971,
+   "overlap_previous": 0.9989,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "부산 제6선거구(북구)",
@@ -705,7 +943,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9965,
+   "overlap_previous": 0.9903,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제10선거구(영등포구)",
@@ -719,7 +962,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9902,
+   "overlap_previous": 0.9914,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제11선거구(동작구)",
@@ -733,7 +981,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9934,
+   "overlap_previous": 0.9937,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제12선거구(관악구)",
@@ -747,7 +1000,12 @@
    "sido": "서울",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '서울 제13선거구(강남구)' 겹침 75%/100%",
+   "overlap_current": 0.7534,
+   "overlap_previous": 0.9952,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제13선거구(강남구)",
@@ -766,7 +1024,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9923,
+   "overlap_previous": 0.9972,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제14선거구(강동구)",
@@ -780,7 +1043,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9907,
+   "overlap_previous": 0.9932,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제1선거구(종로구·중구)",
@@ -794,7 +1062,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.996,
+   "overlap_previous": 1.0,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제2선거구(마포구·용산구)",
@@ -808,7 +1081,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9962,
+   "overlap_previous": 0.9933,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제3선거구(성동구·성동구을)",
@@ -822,7 +1100,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9945,
+   "overlap_previous": 0.9973,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제4선거구(동대문구·동대문구을)",
@@ -836,7 +1119,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9989,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제5선거구(성북구·성북구을)",
@@ -850,7 +1138,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제6선거구(도봉구·도봉구을)",
@@ -864,7 +1157,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9947,
+   "overlap_previous": 0.9933,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제7선거구(서대문구·은평구)",
@@ -878,7 +1176,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9812,
+   "overlap_previous": 0.9912,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제8선거구(강서구)",
@@ -892,7 +1195,12 @@
    "sido": "서울",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9878,
+   "overlap_previous": 0.9833,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "서울 제9선거구(구로구·구로구을)",
@@ -906,7 +1214,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "이전 '경기 제1선거구(인천시남구·중구)'의 85%만 차지",
+   "overlap_current": 0.9928,
+   "overlap_previous": 0.8488,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제1선거구(인천시남구·중구)",
@@ -920,7 +1233,12 @@
    "sido": "인천",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "주 대응 '경기 제2선거구(인천시북구·동구)' 겹침 82%/100%",
+   "overlap_current": 0.818,
+   "overlap_previous": 0.9953,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "경기 제2선거구(인천시북구·동구)",
@@ -939,7 +1257,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9985,
+   "overlap_previous": 0.9988,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제10선거구(해남군·진도군)",
@@ -953,7 +1276,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제11선거구(영광군·함평군·장성군)",
@@ -967,7 +1295,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9991,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제1선거구(광주시동구·북구)",
@@ -981,7 +1314,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 1.0,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제2선거구(광주시서구)",
@@ -995,7 +1333,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9923,
+   "overlap_previous": 0.9927,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제3선거구(목포시·무안군·신안군)",
@@ -1009,7 +1352,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9963,
+   "overlap_previous": 0.9986,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제4선거구(여수시·광양군·여천군)",
@@ -1023,7 +1371,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제5선거구(순천시·구례군·승주군)",
@@ -1037,7 +1390,12 @@
    "sido": "전남",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제6선거구(나주군·광산군)",
@@ -1051,7 +1409,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제7선거구(담양군·곡성군·화순군)",
@@ -1065,7 +1428,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.999,
+   "overlap_previous": 0.997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제8선거구(보성군·고흥군)",
@@ -1079,7 +1447,12 @@
    "sido": "전남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.996,
+   "overlap_previous": 0.9981,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전남 제9선거구(장흥군·강진군·영암군·완도군)",
@@ -1093,7 +1466,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제1선거구(전주시·완주군)",
@@ -1107,7 +1485,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9939,
+   "overlap_previous": 0.9982,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제2선거구(군산시·옥구군)",
@@ -1121,7 +1504,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9994,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제3선거구(이리시·익산군)",
@@ -1135,7 +1523,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제4선거구(진안군·무주군·장수군)",
@@ -1149,7 +1542,12 @@
    "sido": "전북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제5선거구(남원군·임실군·순창군)",
@@ -1163,7 +1561,12 @@
    "sido": "전북",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제6선거구(정읍군·고창군)",
@@ -1177,7 +1580,12 @@
    "sido": "전북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "전북 제7선거구(김제군·부안군)",
@@ -1191,7 +1599,12 @@
    "sido": "제주",
    "relation": "renamed",
    "comparable": "yes",
+   "reason_code": "renamed_same_area",
    "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "제주 제주도선거구(제주시·북제주군·남제주군)",
@@ -1205,7 +1618,12 @@
    "sido": "충남",
    "relation": "unresolvable",
    "comparable": "no",
+   "reason_code": "scattered_overlap",
    "reason": "겹침이 흩어짐 — 충남 제1선거구(대전시동구) 51%, 충남 제4선거구(대덕군·금산군·연기군) 49%",
+   "overlap_current": 0.5077,
+   "overlap_previous": 0.999,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제1선거구(대전시동구)",
@@ -1224,7 +1642,12 @@
    "sido": "충남",
    "relation": "merged",
    "comparable": "no",
+   "reason_code": "merged_into_current",
    "reason": "이전 충남 제4선거구(대덕군·금산군·연기군) + 충남 제2선거구(대전시중구) 통합",
+   "overlap_current": 0.6513,
+   "overlap_previous": 0.0778,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제4선거구(대덕군·금산군·연기군)",
@@ -1243,7 +1666,12 @@
    "sido": "충남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 94%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9378,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제3선거구(천안시·아산군·천원군)",
@@ -1262,7 +1690,12 @@
    "sido": "충남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/90% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9994,
+   "overlap_previous": 0.9013,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제4선거구(대덕군·금산군·연기군)",
@@ -1276,7 +1709,12 @@
    "sido": "충남",
    "relation": "boundary_changed",
    "comparable": "no",
+   "reason_code": "boundary_moved",
    "reason": "겹침 100%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9493,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제5선거구(논산군·공주군)",
@@ -1290,7 +1728,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제6선거구(부여군·서천군·보령군)",
@@ -1304,7 +1747,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9998,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제7선거구(홍성군·청양군·예산군)",
@@ -1318,7 +1766,12 @@
    "sido": "충남",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9991,
+   "overlap_previous": 0.9993,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충남 제8선거구(서산군·당진군)",
@@ -1332,7 +1785,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9992,
+   "overlap_previous": 0.9995,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제1선거구(청주시·청원군)",
@@ -1346,7 +1804,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9997,
+   "overlap_previous": 0.9997,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제2선거구(충주시·제천시·중원군·제원군·단양군)",
@@ -1360,7 +1823,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9999,
+   "overlap_previous": 0.9996,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제3선거구(영동군·보은군·옥천군)",
@@ -1374,7 +1842,12 @@
    "sido": "충북",
    "relation": "exact",
    "comparable": "yes",
+   "reason_code": "exact_overlap",
    "reason": "양방향 겹침 ≥97%",
+   "overlap_current": 0.9996,
+   "overlap_previous": 0.9998,
+   "source_relation": "same_source",
+   "decision": "geometry_overlap",
    "previous": [
     {
      "prev": "충북 제4선거구(괴산군·진천군·음성군)",
