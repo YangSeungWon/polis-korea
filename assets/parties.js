@@ -392,6 +392,8 @@ const GAP_LEGEND_STOPS = [0, 5, 10, 20];
 function mountGapLegend(host, opts) {
   if (!host || !host.parentNode) return null;
   opts = opts || {};
+  const _e = (t) => String(t == null ? '' : t).replace(/[&<>"]/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const swatches = GAP_LEGEND_STOPS.map((g) => {
     const op = gapOpacity(g).toFixed(2);
     return `<i class="vz-gap-sw" style="opacity:${op}" title="격차 ${g}%p"></i>`;
@@ -402,9 +404,14 @@ function mountGapLegend(host, opts) {
     el.className = 'vz-gap-legend';
     host.parentNode.insertBefore(el, host.nextSibling);
   }
-  el.innerHTML = `<span class="vz-gap-lab">박빙</span>${swatches}`
-    + `<span class="vz-gap-lab">압도</span>`
-    + `<span class="vz-gap-note">${opts.note || '색 진하기 = 1·2위 격차'}</span>`;
+  // 무엇의 척도인지 **먼저** 말한다. '박빙 ▪▪▪▪ 압도 · 색 진하기=격차' 순서면
+  // 회색 칸을 먼저 읽고 뒤 설명으로 의미를 확정해야 한다 — 순서가 거꾸로다.
+  // 두 번째 인코딩(크기 등)이 있으면 별도 항목으로 떼어 한 번에 둘을 해석하지 않게 한다.
+  const scale = `<span class="vz-gap-item"><b>색 진하기 = 1·2위 격차</b>`
+    + `<span class="vz-gap-ramp"><span class="vz-gap-lab">박빙</span>${swatches}`
+    + `<span class="vz-gap-lab">압도</span></span></span>`;
+  const extra = (opts.extra || []).map((t) => `<span class="vz-gap-item"><b>${_e(t)}</b></span>`).join('');
+  el.innerHTML = scale + extra;
   return el;
 }
 

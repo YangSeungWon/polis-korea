@@ -29,7 +29,7 @@ function renderHex() {
   // 시도 hex도 시군구 hex와 같은 인코딩을 쓴다 — 키가 한쪽에만 있으면 더 헷갈린다.
   const svg = host.querySelector('svg');
   if (svg && typeof mountGapLegend === 'function') {
-    mountGapLegend(svg, { note: '색 진하기 = 1·2위 격차 · 점선·흐림 = 최근 조사 부족' });
+    mountGapLegend(svg, { extra: ['점선·흐림 = 최근 조사 부족'] });
   }
 }
 
@@ -99,6 +99,6 @@ async function renderSigunguHex() {
   if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
   // 여론 hex는 명도에 두 가지가 실린다 — 격차와 '최근 조사 부족'. 키에 둘 다 적는다.
   if (typeof mountGapLegend === 'function') {
-    mountGapLegend(svg, { note: '색 진하기 = 1·2위 격차 · 점선·흐림 = 최근 조사 부족' });
+    mountGapLegend(svg, { extra: ['점선·흐림 = 최근 조사 부족'] });
   }
 }

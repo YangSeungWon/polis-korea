@@ -348,15 +348,19 @@ body {
    않게 하는 것이 목적 — 실제 뜻은 1·2위가 붙었다는 것이다. (parties.js
    mountGapLegend가 주입) */
 .vz-gap-legend {
-  display: flex; align-items: center; justify-content: center;
-  flex-wrap: wrap; gap: 4px 8px;
-  margin: 8px auto 0; font-size: 12px; color: var(--ink-soft);
+  /* 가운데 정렬이면 넓은 화면에서 시각화와 떨어져 떠 보인다 — 왼쪽 정렬로 붙인다.
+     범례는 설명하는 mark와 같은 덩어리로 읽혀야 한다. */
+  display: flex; align-items: center; justify-content: flex-start;
+  flex-wrap: wrap; gap: 4px 18px;
+  margin: 8px 0 0; font-size: 12px; color: var(--ink-soft);
 }
-/* 양 끝 라벨(박빙/압도)이 이 키의 요점이다 — 주석처럼 흐리면 목적을 못 한다. */
-.vz-gap-lab { letter-spacing: -0.01em; color: var(--ink); font-weight: 600; }
+/* 항목 = 인코딩 하나. 둘 이상이면 한 번에 해석하지 않게 떼어 놓는다. */
+.vz-gap-item { display: inline-flex; align-items: center; gap: 7px; }
+.vz-gap-item > b { color: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+.vz-gap-ramp { display: inline-flex; align-items: center; gap: 4px; }
+.vz-gap-lab { letter-spacing: -0.01em; color: var(--ink-soft); }
 .vz-gap-sw {
   display: inline-block; width: 15px; height: 11px; border-radius: 2px;
   background: var(--ink-soft);
 }
 .vz-gap-sw + .vz-gap-sw { margin-left: -4px; }
-.vz-gap-note { color: var(--ink-mute); margin-left: 4px; }

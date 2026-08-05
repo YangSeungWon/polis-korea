@@ -22,6 +22,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
+# 스캔에서 뺄 디렉터리 — 우리 페이지가 아니거나 생성 중간물.
+SKIP_DIRS = {".git", "node_modules", ".venv", "dist", "build", ".github"}
+
 # 캐노니컬 메뉴 — 회차 번호·시간 의존 표현 금지 (장기 안정).
 # 데이터 종류가 아니라 **사용자가 묻는 대상**으로 나눈다. 예전 메뉴(여론조사·역대 결과·
 # 역대 판세·정당사…)는 만든 사람에겐 서로 다른 데이터셋이지만 사용자에겐 그렇지 않다.
@@ -126,11 +129,14 @@ def main():
     args = ap.parse_args()
     if args.check:
         args.dry = True
-    htmls = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("*/index.html")) + sorted(ROOT.glob("archive/*/index.html")) + sorted(ROOT.glob("about/*/index.html")) + sorted(ROOT.glob("party/*/index.html")) + sorted(ROOT.glob("person/*/index.html")) + sorted(ROOT.glob("region/*/index.html"))
+    # 저장소의 **모든** HTML을 본다. 예전엔 경로 패턴 allowlist였는데, 새 페이지 유형이
+    # 생기면 조용히 빠졌다 — 실제로 history/{종류}/{회차}/{직}/과 share/*가 목록에 없어
+    # 363개가 4축 재편 이전 nav('지지율 추이·여론조사·역대 결과…')로 굳어 있었고,
+    # --check는 그걸 모른 채 '변경 0'을 냈다. 가드가 안 보는 곳이 가드의 구멍이다.
+    htmls = sorted(p for p in ROOT.rglob("*.html")
+                   if not any(part in SKIP_DIRS for part in p.parts))
     counts = {"changed": 0, "same": 0, "skip": 0}
     for p in htmls:
-        if "node_modules" in str(p) or "/.git/" in str(p):
-            continue
         r = process(p, args.dry)
         counts[r] += 1
         if r == "changed":

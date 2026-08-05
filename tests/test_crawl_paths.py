@@ -85,6 +85,32 @@ def main():
         ck(f"허브가 지역 {len(rg_pages)}개 전부 링크",
            not (rg_pages - rg_linked), sorted(rg_pages - rg_linked)[:5])
 
+    # nav 4축이 **모든 페이지 유형**에 적용됐는지. sync_nav_html --check가 정본
+    # 검사지만 '변경 N'만 알려줘서, 어느 유형이 새는지 보이지 않는다. 실제로
+    # history/{종류}/{회차}/{직}/ 363개가 옛 메뉴로 굳어 있는데도 --check는
+    # 통과했다(가드의 glob이 그 깊이를 안 봤다). 유형별로 못 박는다.
+    import re as _re2
+    AXES = ["지금", "선거", "인물·정당", "역사"]
+    types = {
+        "루트": "index.html", "여론조사": "polls.html", "선거 허브": "elections.html",
+        "회차 폴": next((str(p.relative_to(ROOT)) for p in ROOT.glob("polls/*/index.html")), None),
+        "역대 결과": next((str(p.relative_to(ROOT)) for p in ROOT.glob("history/*/*/index.html")), None),
+        "역대 결과(직위)": next((str(p.relative_to(ROOT)) for p in ROOT.glob("history/*/*/*/index.html")), None),
+        "archive": next((str(p.relative_to(ROOT)) for p in ROOT.glob("archive/*/index.html")), None),
+        "인물": next((str(p.relative_to(ROOT)) for p in ROOT.glob("person/*/index.html")), None),
+        "정당": next((str(p.relative_to(ROOT)) for p in ROOT.glob("party/*/index.html")), None),
+        "지역": next((str(p.relative_to(ROOT)) for p in ROOT.glob("region/*/index.html")), None),
+        "재보궐": "byelection.html", "연표": "chronology.html",
+    }
+    for label, rel in types.items():
+        if not rel or not (ROOT / rel).exists():
+            ck(f"{label} 페이지 존재", False, str(rel))
+            continue
+        t = (ROOT / rel).read_text(encoding="utf-8")
+        m = _re2.search(r"NAV_START[\s\S]*?NAV_END", t)
+        labs = _re2.findall(r'class="hdr-link[^"]*">([^<]+)<', m.group(0)) if m else []
+        ck(f"{label} nav 4축", labs == AXES, f"{rel} → {'/'.join(labs) or '(마커 없음)'}")
+
     # sitemap에 허브가 있다
     sm = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
     ck("sitemap에 허브 등록", "/elections.html" in sm)

@@ -76,11 +76,22 @@ ck('명도 단계가 gapOpacity와 일치',
   leg.innerHTML.slice(0, 120));
 ck('박빙→압도 방향이 옅음→진함', gapOpacity(0) < gapOpacity(20),
   `${gapOpacity(0)} < ${gapOpacity(20)}`);
-ck('기본 설명이 붙는다', /1·2위 격차/.test(leg.innerHTML));
+// 무엇의 척도인지 먼저 말해야 한다 — 회색 칸을 읽고 뒤 설명으로 의미를 확정하는
+// 순서면 거꾸로다. 라벨이 램프보다 앞에 오는지 위치로 검사한다.
+ck('척도 이름이 먼저 나온다',
+  leg.innerHTML.indexOf('색 진하기 = 1·2위 격차') < leg.innerHTML.indexOf('박빙'),
+  leg.innerHTML.slice(0, 100));
+ck('박빙이 압도보다 먼저', leg.innerHTML.indexOf('박빙') < leg.innerHTML.indexOf('압도'));
 
-const leg2 = mountGapLegend(svg, { note: '크기 = 투표수 · 색 진하기 = 1·2위 격차' });
-ck('note를 덮어쓸 수 있다', /크기 = 투표수/.test(leg2.innerHTML));
-ck('note를 바꿔도 여전히 하나', parent.children.length === before);
+// 인코딩이 둘이면 항목을 떼어 놓는다 — 한 문장에 붙이면 한 번에 둘을 해석해야 한다.
+const leg2 = mountGapLegend(svg, { extra: ['크기 = 투표수'] });
+ck('두 번째 인코딩이 별도 항목', /크기 = 투표수/.test(leg2.innerHTML)
+  && (leg2.innerHTML.match(/vz-gap-item/g) || []).length === 2,
+  String((leg2.innerHTML.match(/vz-gap-item/g) || []).length));
+ck('격차 척도는 그대로 남는다', /색 진하기 = 1·2위 격차/.test(leg2.innerHTML));
+ck('항목을 더해도 범례는 하나', parent.children.length === before);
+ck('extra는 이스케이프된다',
+  !/<script>/.test(mountGapLegend(svg, { extra: ['<script>x</script>'] }).innerHTML));
 
 ck('부모 없는 host는 조용히 무시', mountGapLegend(new El('svg')) === null);
 ck('host 없으면 조용히 무시', mountGapLegend(null) === null);
