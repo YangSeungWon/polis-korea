@@ -1,0 +1,1935 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "하남",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "points": [
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시·광주군",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "하남시·광주군",
+   "winner": {
+    "name": "정영훈",
+    "party": "민주자유당",
+    "pct": 37.33
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 18.79,
+     "mixed": 37.33,
+     "unknown": 43.88
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 37.33,
+    "mixed_share": 37.33,
+    "unknown_share": 43.88,
+    "independent_share": 18.79,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79389
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.64,
+     "independent": 18.79,
+     "mixed": 37.33,
+     "unknown": 25.24
+    },
+    "single_family_coverage": 18.64,
+    "lineage_resolved_coverage": 55.97,
+    "mixed_share": 37.33,
+    "unknown_share": 25.24,
+    "independent_share": 18.79,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79389
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 35.45
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.3,
+     "mixed": 35.45,
+     "unknown": 63.25
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 35.45,
+    "mixed_share": 35.45,
+    "unknown_share": 63.25,
+    "independent_share": 1.3,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48686
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 32.63,
+     "independent": 1.3,
+     "mixed": 35.45,
+     "unknown": 30.62
+    },
+    "single_family_coverage": 32.63,
+    "lineage_resolved_coverage": 68.08,
+    "mixed_share": 35.45,
+    "unknown_share": 30.62,
+    "independent_share": 1.3,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48686
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시·광주군",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "하남시·광주군",
+   "winner": {
+    "name": "정영훈",
+    "party": "신한국당",
+    "pct": 39.15
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.15,
+     "regional": 18.63,
+     "unknown": 42.22
+    },
+    "single_family_coverage": 18.63,
+    "lineage_resolved_coverage": 57.78,
+    "mixed_share": 39.15,
+    "unknown_share": 42.22,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79663
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.4,
+     "mixed": 39.15,
+     "regional": 18.63,
+     "unknown": 1.82
+    },
+    "single_family_coverage": 59.03,
+    "lineage_resolved_coverage": 98.18,
+    "mixed_share": 39.15,
+    "unknown_share": 1.82,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79663
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "김대중",
+    "party": "새정치국민회의",
+    "pct": 39.12
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 59.73,
+     "unknown": 40.27
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 59.73,
+    "mixed_share": 59.73,
+    "unknown_share": 40.27,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 67021
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.12,
+     "mixed": 59.73,
+     "unknown": 1.15
+    },
+    "single_family_coverage": 39.12,
+    "lineage_resolved_coverage": 98.85,
+    "mixed_share": 59.73,
+    "unknown_share": 1.15,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 67021
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "유성근",
+    "party": "한나라당",
+    "pct": 40.14
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.14,
+     "regional": 24.93,
+     "unknown": 34.92
+    },
+    "single_family_coverage": 24.93,
+    "lineage_resolved_coverage": 65.08,
+    "mixed_share": 40.14,
+    "unknown_share": 34.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47122
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 34.92,
+     "mixed": 40.14,
+     "regional": 24.93
+    },
+    "single_family_coverage": 59.86,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.14,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 47122
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "문학진",
+    "party": "열린우리당",
+    "pct": 42.65
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 16.29,
+     "mixed": 33.5,
+     "unknown": 50.21
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 33.5,
+    "mixed_share": 33.5,
+    "unknown_share": 50.21,
+    "independent_share": 16.29,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 56626
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.53,
+     "independent": 16.29,
+     "mixed": 33.5,
+     "unknown": 0.67
+    },
+    "single_family_coverage": 49.53,
+    "lineage_resolved_coverage": 83.04,
+    "mixed_share": 33.5,
+    "unknown_share": 0.67,
+    "independent_share": 16.29,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 56626
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "문학진",
+    "party": "통합민주당",
+    "pct": 46.2
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 38.67,
+     "unknown": 61.33
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 38.67,
+    "mixed_share": 38.67,
+    "unknown_share": 61.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48611
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.2,
+     "mixed": 38.67,
+     "unknown": 15.13
+    },
+    "single_family_coverage": 46.2,
+    "lineage_resolved_coverage": 84.87,
+    "mixed_share": 38.67,
+    "unknown_share": 15.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48611
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "이현재",
+    "party": "새누리당",
+    "pct": 52.81
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.94,
+     "mixed": 52.81,
+     "unknown": 42.25
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.81,
+    "mixed_share": 52.81,
+    "unknown_share": 42.25,
+    "independent_share": 4.94,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 64121
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 42.25,
+     "independent": 4.94,
+     "mixed": 52.81
+    },
+    "single_family_coverage": 42.25,
+    "lineage_resolved_coverage": 95.06,
+    "mixed_share": 52.81,
+    "unknown_share": 0.0,
+    "independent_share": 4.94,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 64121
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "이현재",
+    "party": "새누리당",
+    "pct": 50.55
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.55,
+     "unknown": 49.45
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.55,
+    "mixed_share": 50.55,
+    "unknown_share": 49.45,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 82053
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.45,
+     "mixed": 50.55
+    },
+    "single_family_coverage": 49.45,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 50.55,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 82053
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "오수봉",
+    "party": "더불어민주당",
+    "pct": 37.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 34.68,
+     "unknown": 65.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 34.68,
+    "mixed_share": 34.68,
+    "unknown_share": 65.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 52485
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 65.32,
+     "mixed": 34.68
+    },
+    "single_family_coverage": 65.32,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 34.68,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 52485
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "오수봉",
+    "party": "더불어민주당",
+    "pct": 37.8
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 34.68,
+     "unknown": 65.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 34.68,
+    "mixed_share": 34.68,
+    "unknown_share": 65.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 52485
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 65.32,
+     "mixed": 34.68
+    },
+    "single_family_coverage": 65.32,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 34.68,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 52485
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "최종윤",
+    "party": "더불어민주당",
+    "pct": 50.77
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 15.47,
+     "mixed": 33.25,
+     "unknown": 51.29
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 33.25,
+    "mixed_share": 33.25,
+    "unknown_share": 51.29,
+    "independent_share": 15.47,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 150811
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.77,
+     "independent": 15.47,
+     "mixed": 33.25,
+     "unknown": 0.51
+    },
+    "single_family_coverage": 50.77,
+    "lineage_resolved_coverage": 84.02,
+    "mixed_share": 33.25,
+    "unknown_share": 0.51,
+    "independent_share": 15.47,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 150811
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시갑",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "하남시갑",
+   "winner": {
+    "name": "추미애",
+    "party": "더불어민주당",
+    "pct": 50.59
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.41,
+     "unknown": 50.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.41,
+    "mixed_share": 49.41,
+    "unknown_share": 50.59,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101657
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.59,
+     "mixed": 49.41
+    },
+    "single_family_coverage": 50.59,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.41,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101657
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": false,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.68
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.8564,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:하남시을",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "하남시을",
+   "winner": {
+    "name": "김용만",
+    "party": "더불어민주당",
+    "pct": 51.66
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 43.71,
+     "unknown": 56.29
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.71,
+    "mixed_share": 43.71,
+    "unknown_share": 56.29,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 86601
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.29,
+     "mixed": 43.71
+    },
+    "single_family_coverage": 56.29,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 43.71,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 86601
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -2.7
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.841,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-byelection-2026",
+   "election_type": "byelection",
+   "election_date": "2026-06-03",
+   "label": "2026년 국회의원 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:하남시갑",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시갑",
+   "winner": {
+    "name": "이광재",
+    "party": "더불어민주당",
+    "pct": 49.68
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.13,
+     "unknown": 51.87
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.13,
+    "mixed_share": 48.13,
+    "unknown_share": 51.87,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 88995
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.68,
+     "mixed": 48.13,
+     "unknown": 2.19
+    },
+    "single_family_coverage": 49.68,
+    "lineage_resolved_coverage": 97.81,
+    "mixed_share": 48.13,
+    "unknown_share": 2.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 88995
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": false,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.68
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.8564,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-byelection-2026",
+   "election_type": "byelection",
+   "election_date": "2026-06-03",
+   "label": "2026년 국회의원 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:하남시갑",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시갑",
+   "winner": {
+    "name": "이광재",
+    "party": "더불어민주당",
+    "pct": 49.68
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.13,
+     "unknown": 51.87
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.13,
+    "mixed_share": 48.13,
+    "unknown_share": 51.87,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 88995
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.68,
+     "mixed": 48.13,
+     "unknown": 2.19
+    },
+    "single_family_coverage": 49.68,
+    "lineage_resolved_coverage": 97.81,
+    "mixed_share": 48.13,
+    "unknown_share": 2.19,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 88995
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": false,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.68
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed"
+    },
+    "coverage": 0.8564,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "안민석",
+    "party": "",
+    "pct": 51.96
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 168363
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 168363
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "추미애",
+    "party": "더불어민주당",
+    "pct": 52.89
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.73,
+     "progressive": 0.57,
+     "unknown": 57.7
+    },
+    "single_family_coverage": 0.57,
+    "lineage_resolved_coverage": 42.3,
+    "mixed_share": 41.73,
+    "unknown_share": 57.7,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171139
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.89,
+     "mixed": 41.73,
+     "progressive": 0.57,
+     "unknown": 4.8
+    },
+    "single_family_coverage": 53.46,
+    "lineage_resolved_coverage": 95.2,
+    "mixed_share": 41.73,
+    "unknown_share": 4.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171139
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "이현재",
+    "party": "국민의힘",
+    "pct": 51.95
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.95,
+     "unknown": 48.05
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.95,
+    "mixed_share": 51.95,
+    "unknown_share": 48.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171293
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.05,
+     "mixed": 51.95
+    },
+    "single_family_coverage": 48.05,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.95,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171293
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "이현재",
+    "party": "국민의힘",
+    "pct": 51.95
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.95,
+     "unknown": 48.05
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.95,
+    "mixed_share": 51.95,
+    "unknown_share": 48.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171293
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.05,
+     "mixed": 51.95
+    },
+    "single_family_coverage": 48.05,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.95,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171293
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제1선거구",
+   "winner": {
+    "name": "오민용",
+    "party": "더불어민주당",
+    "pct": 52.16
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.23,
+     "mixed": 42.61,
+     "unknown": 52.16
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 42.61,
+    "mixed_share": 42.61,
+    "unknown_share": 52.16,
+    "independent_share": 5.23,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41229
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.16,
+     "independent": 5.23,
+     "mixed": 42.61
+    },
+    "single_family_coverage": 52.16,
+    "lineage_resolved_coverage": 94.77,
+    "mixed_share": 42.61,
+    "unknown_share": 0.0,
+    "independent_share": 5.23,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41229
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제2선거구",
+   "winner": {
+    "name": "강성삼",
+    "party": "더불어민주당",
+    "pct": 51.02
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.98,
+     "unknown": 51.02
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.98,
+    "mixed_share": 48.98,
+    "unknown_share": 51.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 49006
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.02,
+     "mixed": 48.98
+    },
+    "single_family_coverage": 51.02,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.98,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 49006
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제3선거구",
+   "winner": {
+    "name": "오지훈",
+    "party": "더불어민주당",
+    "pct": 59.75
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.25,
+     "unknown": 59.75
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.25,
+    "mixed_share": 40.25,
+    "unknown_share": 59.75,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 50164
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.75,
+     "mixed": 40.25
+    },
+    "single_family_coverage": 59.75,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.25,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 50164
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제4선거구",
+   "winner": {
+    "name": "방미숙",
+    "party": "더불어민주당",
+    "pct": 56.17
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 43.83,
+     "unknown": 56.17
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.83,
+    "mixed_share": 43.83,
+    "unknown_share": 56.17,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29739
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.17,
+     "mixed": 43.83
+    },
+    "single_family_coverage": 56.17,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 43.83,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29739
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제1선거구",
+   "winner": {
+    "name": "오민용",
+    "party": "더불어민주당",
+    "pct": 52.16
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.23,
+     "mixed": 42.61,
+     "unknown": 52.16
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 42.61,
+    "mixed_share": 42.61,
+    "unknown_share": 52.16,
+    "independent_share": 5.23,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41229
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.16,
+     "independent": 5.23,
+     "mixed": 42.61
+    },
+    "single_family_coverage": 52.16,
+    "lineage_resolved_coverage": 94.77,
+    "mixed_share": 42.61,
+    "unknown_share": 0.0,
+    "independent_share": 5.23,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 41229
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제2선거구",
+   "winner": {
+    "name": "강성삼",
+    "party": "더불어민주당",
+    "pct": 51.02
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.98,
+     "unknown": 51.02
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.98,
+    "mixed_share": 48.98,
+    "unknown_share": 51.02,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 49006
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.02,
+     "mixed": 48.98
+    },
+    "single_family_coverage": 51.02,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.98,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 49006
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제3선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제3선거구",
+   "winner": {
+    "name": "오지훈",
+    "party": "더불어민주당",
+    "pct": 59.75
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.25,
+     "unknown": 59.75
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.25,
+    "mixed_share": 40.25,
+    "unknown_share": 59.75,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 50164
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.75,
+     "mixed": 40.25
+    },
+    "single_family_coverage": 59.75,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.25,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 50164
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:하남시제4선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시제4선거구",
+   "winner": {
+    "name": "방미숙",
+    "party": "더불어민주당",
+    "pct": 56.17
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 43.83,
+     "unknown": 56.17
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 43.83,
+    "mixed_share": 43.83,
+    "unknown_share": 56.17,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29739
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 56.17,
+     "mixed": 43.83
+    },
+    "single_family_coverage": 56.17,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 43.83,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 29739
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시나선거구",
+   "winner": {
+    "name": "정혜영",
+    "party": "더불어민주당",
+    "pct": 37.88
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.65,
+     "unknown": 52.35
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.65,
+    "mixed_share": 47.65,
+    "unknown_share": 52.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45279
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.35,
+     "mixed": 47.65
+    },
+    "single_family_coverage": 52.35,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 47.65,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45279
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시다선거구",
+   "winner": {
+    "name": "신선호",
+    "party": "더불어민주당",
+    "pct": 31.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.5,
+     "progressive": 2.21,
+     "unknown": 58.3
+    },
+    "single_family_coverage": 2.21,
+    "lineage_resolved_coverage": 41.7,
+    "mixed_share": 39.5,
+    "unknown_share": 58.3,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48517
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.3,
+     "mixed": 39.5,
+     "progressive": 2.21
+    },
+    "single_family_coverage": 60.5,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 39.5,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48517
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시가선거구",
+   "winner": {
+    "name": "최승태",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시라선거구",
+   "winner": {
+    "name": "오승철",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시나선거구",
+   "winner": {
+    "name": "정혜영",
+    "party": "더불어민주당",
+    "pct": 37.88
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.65,
+     "unknown": 52.35
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.65,
+    "mixed_share": 47.65,
+    "unknown_share": 52.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45279
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.35,
+     "mixed": 47.65
+    },
+    "single_family_coverage": 52.35,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 47.65,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 45279
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:하남시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시다선거구",
+   "winner": {
+    "name": "신선호",
+    "party": "더불어민주당",
+    "pct": 31.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 39.5,
+     "progressive": 2.21,
+     "unknown": 58.3
+    },
+    "single_family_coverage": 2.21,
+    "lineage_resolved_coverage": 41.7,
+    "mixed_share": 39.5,
+    "unknown_share": 58.3,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48517
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.3,
+     "mixed": 39.5,
+     "progressive": 2.21
+    },
+    "single_family_coverage": 60.5,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 39.5,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 48517
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 46.78
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.49,
+     "progressive": 1.48,
+     "unknown": 57.03
+    },
+    "single_family_coverage": 1.48,
+    "lineage_resolved_coverage": 42.97,
+    "mixed_share": 41.49,
+    "unknown_share": 57.03,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171092
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.88,
+     "mixed": 41.49,
+     "progressive": 1.48,
+     "unknown": 10.15
+    },
+    "single_family_coverage": 48.36,
+    "lineage_resolved_coverage": 89.85,
+    "mixed_share": 41.49,
+    "unknown_share": 10.15,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 171092
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:하남시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "하남시",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 54.54
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.46,
+     "unknown": 54.54
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.46,
+    "mixed_share": 45.46,
+    "unknown_share": 54.54,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 170247
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.54,
+     "mixed": 45.46
+    },
+    "single_family_coverage": 54.54,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 45.46,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 170247
+   },
+   "comparison": null
+  }
+ ]
+}

@@ -1,0 +1,2441 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "군위",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "points": [
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제5선거구(군위군)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제5선거구(군위군)",
+   "winner": {
+    "name": "박준",
+    "party": "무소속",
+    "pct": 27.54
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 18.83,
+     "independent": 44.88,
+     "unknown": 36.29
+    },
+    "single_family_coverage": 18.83,
+    "lineage_resolved_coverage": 18.83,
+    "mixed_share": 0.0,
+    "unknown_share": 36.29,
+    "independent_share": 44.88,
+    "mixed_constituents": {},
+    "total_votes": 25246
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.83,
+     "independent": 44.88,
+     "unknown": 36.29
+    },
+    "single_family_coverage": 18.83,
+    "lineage_resolved_coverage": 18.83,
+    "mixed_share": 0.0,
+    "unknown_share": 36.29,
+    "independent_share": 44.88,
+    "mixed_constituents": {},
+    "total_votes": 25246
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제7선거구(군위군)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제7선거구(군위군)",
+   "winner": {
+    "name": "박만원",
+    "party": "무소속",
+    "pct": 14.63
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 12.1,
+     "independent": 87.9
+    },
+    "single_family_coverage": 12.1,
+    "lineage_resolved_coverage": 12.1,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 87.9,
+    "mixed_constituents": {},
+    "total_votes": 26926
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 12.1,
+     "independent": 87.9
+    },
+    "single_family_coverage": 12.1,
+    "lineage_resolved_coverage": 12.1,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 87.9,
+    "mixed_constituents": {},
+    "total_votes": 26926
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-pres-1952",
+   "election_type": "pres",
+   "election_date": "1952-08-05",
+   "label": "2nd-pres-1952",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1952-08-05",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 82.01
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 82.01,
+     "independent": 17.99
+    },
+    "single_family_coverage": 82.01,
+    "lineage_resolved_coverage": 82.01,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 17.99,
+    "mixed_constituents": {},
+    "total_votes": 26915
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 82.01,
+     "independent": 17.99
+    },
+    "single_family_coverage": 82.01,
+    "lineage_resolved_coverage": 82.01,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 17.99,
+    "mixed_constituents": {},
+    "total_votes": 26915
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "박만원",
+    "party": "자유당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-pres-1956",
+   "election_type": "pres",
+   "election_date": "1956-05-15",
+   "label": "3rd-pres-1956",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1956-05-15",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 52.92
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 52.92,
+     "independent": 47.08
+    },
+    "single_family_coverage": 52.92,
+    "lineage_resolved_coverage": 52.92,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 47.08,
+    "mixed_constituents": {},
+    "total_votes": 19879
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 52.92,
+     "independent": 47.08
+    },
+    "single_family_coverage": 52.92,
+    "lineage_resolved_coverage": 52.92,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 47.08,
+    "mixed_constituents": {},
+    "total_votes": 19879
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "박만원",
+    "party": "자유당",
+    "pct": 72.85
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 72.85,
+     "independent": 27.15
+    },
+    "single_family_coverage": 72.85,
+    "lineage_resolved_coverage": 72.85,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 27.15,
+    "mixed_constituents": {},
+    "total_votes": 29120
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 72.85,
+     "independent": 27.15
+    },
+    "single_family_coverage": 72.85,
+    "lineage_resolved_coverage": 72.85,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 27.15,
+    "mixed_constituents": {},
+    "total_votes": 29120
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-pres-1960",
+   "election_type": "pres",
+   "election_date": "1960-03-15",
+   "label": "4th-pres-1960",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1960-03-15",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 100.0
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 27995
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 27995
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "문명호",
+    "party": "민주당(1955)",
+    "pct": 23.36
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 23.36,
+     "independent": 66.28,
+     "unknown": 10.36
+    },
+    "single_family_coverage": 23.36,
+    "lineage_resolved_coverage": 23.36,
+    "mixed_share": 0.0,
+    "unknown_share": 10.36,
+    "independent_share": 66.28,
+    "mixed_constituents": {},
+    "total_votes": 28720
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 23.36,
+     "independent": 66.28,
+     "unknown": 10.36
+    },
+    "single_family_coverage": 23.36,
+    "lineage_resolved_coverage": 23.36,
+    "mixed_share": 0.0,
+    "unknown_share": 10.36,
+    "independent_share": 66.28,
+    "mixed_constituents": {},
+    "total_votes": 28720
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-pres-1963",
+   "election_type": "pres",
+   "election_date": "1963-10-15",
+   "label": "5th-pres-1963",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1963-10-15",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 67.42
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 67.42,
+     "unknown": 32.58
+    },
+    "single_family_coverage": 67.42,
+    "lineage_resolved_coverage": 67.42,
+    "mixed_share": 0.0,
+    "unknown_share": 32.58,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 28345
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 67.42,
+     "democratic": 24.7,
+     "unknown": 7.88
+    },
+    "single_family_coverage": 92.12,
+    "lineage_resolved_coverage": 92.12,
+    "mixed_share": 0.0,
+    "unknown_share": 7.88,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 28345
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-general-1963",
+   "election_type": "general",
+   "election_date": "1963-11-26",
+   "label": "6th-general-1963",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·선산군",
+   "boundary_valid_at": "1963-11-26",
+   "unit_name_at_the_time": "군위군·선산군",
+   "winner": {
+    "name": "김봉환",
+    "party": "민주공화당",
+    "pct": 58.23
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 58.23,
+     "democratic": 2.5,
+     "unknown": 39.27
+    },
+    "single_family_coverage": 60.73,
+    "lineage_resolved_coverage": 60.73,
+    "mixed_share": 0.0,
+    "unknown_share": 39.27,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 65605
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 58.23,
+     "democratic": 8.17,
+     "unknown": 33.6
+    },
+    "single_family_coverage": 66.4,
+    "lineage_resolved_coverage": 66.4,
+    "mixed_share": 0.0,
+    "unknown_share": 33.6,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 65605
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-pres-1967",
+   "election_type": "pres",
+   "election_date": "1967-05-03",
+   "label": "6th-pres-1967",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1967-05-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 71.11
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 71.11,
+     "unknown": 28.89
+    },
+    "single_family_coverage": 71.11,
+    "lineage_resolved_coverage": 71.11,
+    "mixed_share": 0.0,
+    "unknown_share": 28.89,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 30341
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 71.11,
+     "democratic": 21.73,
+     "unknown": 7.16
+    },
+    "single_family_coverage": 92.84,
+    "lineage_resolved_coverage": 92.84,
+    "mixed_share": 0.0,
+    "unknown_share": 7.16,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 30341
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-general-1967",
+   "election_type": "general",
+   "election_date": "1967-06-08",
+   "label": "7th-general-1967",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·선산군",
+   "boundary_valid_at": "1967-06-08",
+   "unit_name_at_the_time": "군위군·선산군",
+   "winner": {
+    "name": "김봉환",
+    "party": "민주공화당",
+    "pct": 67.9
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 68.42,
+     "unknown": 31.58
+    },
+    "single_family_coverage": 68.42,
+    "lineage_resolved_coverage": 68.42,
+    "mixed_share": 0.0,
+    "unknown_share": 31.58,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 77259
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 68.42,
+     "democratic": 26.88,
+     "unknown": 4.7
+    },
+    "single_family_coverage": 95.3,
+    "lineage_resolved_coverage": 95.3,
+    "mixed_share": 0.0,
+    "unknown_share": 4.7,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 77259
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-pres-1971",
+   "election_type": "pres",
+   "election_date": "1971-04-27",
+   "label": "7th-pres-1971",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1971-04-27",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 79.33
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 79.33,
+     "progressive": 0.69,
+     "unknown": 19.98
+    },
+    "single_family_coverage": 80.02,
+    "lineage_resolved_coverage": 80.02,
+    "mixed_share": 0.0,
+    "unknown_share": 19.98,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 27359
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 79.33,
+     "democratic": 19.48,
+     "progressive": 0.69,
+     "unknown": 0.5
+    },
+    "single_family_coverage": 99.5,
+    "lineage_resolved_coverage": 99.5,
+    "mixed_share": 0.0,
+    "unknown_share": 0.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 27359
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "8th-general-1971",
+   "election_type": "general",
+   "election_date": "1971-05-25",
+   "label": "8th-general-1971",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·선산군",
+   "boundary_valid_at": "1971-05-25",
+   "unit_name_at_the_time": "군위군·선산군",
+   "winner": {
+    "name": "김봉환",
+    "party": "민주공화당",
+    "pct": 50.74
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 50.74,
+     "unknown": 49.26
+    },
+    "single_family_coverage": 50.74,
+    "lineage_resolved_coverage": 50.74,
+    "mixed_share": 0.0,
+    "unknown_share": 49.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 66979
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 50.74,
+     "democratic": 49.26
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 66979
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-general-1973",
+   "election_type": "general",
+   "election_date": "1973-02-27",
+   "label": "9th-general-1973",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제8선거구(칠곡군·군위군·성주군·선산군)",
+   "boundary_valid_at": "1973-02-27",
+   "unit_name_at_the_time": "제8선거구(칠곡군·군위군·성주군·선산군)",
+   "winner": {
+    "name": "신현확",
+    "party": "민주공화당",
+    "pct": 28.49
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 28.49,
+     "independent": 41.94,
+     "unknown": 29.57
+    },
+    "single_family_coverage": 28.49,
+    "lineage_resolved_coverage": 28.49,
+    "mixed_share": 0.0,
+    "unknown_share": 29.57,
+    "independent_share": 41.94,
+    "mixed_constituents": {},
+    "total_votes": 159112
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 28.49,
+     "democratic": 23.89,
+     "independent": 41.94,
+     "unknown": 5.68
+    },
+    "single_family_coverage": 52.38,
+    "lineage_resolved_coverage": 52.38,
+    "mixed_share": 0.0,
+    "unknown_share": 5.68,
+    "independent_share": 41.94,
+    "mixed_constituents": {},
+    "total_votes": 159112
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제7선거구(구미시·군위군·성주군·칠곡군·선산군)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제7선거구(구미시·군위군·성주군·칠곡군·선산군)",
+   "winner": {
+    "name": "신현확",
+    "party": "민주공화당",
+    "pct": 30.96
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 30.96,
+     "independent": 49.1,
+     "unknown": 19.94
+    },
+    "single_family_coverage": 30.96,
+    "lineage_resolved_coverage": 30.96,
+    "mixed_share": 0.0,
+    "unknown_share": 19.94,
+    "independent_share": 49.1,
+    "mixed_constituents": {},
+    "total_votes": 182972
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 30.96,
+     "democratic": 19.94,
+     "independent": 49.1
+    },
+    "single_family_coverage": 50.9,
+    "lineage_resolved_coverage": 50.9,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 49.1,
+    "mixed_constituents": {},
+    "total_votes": 182972
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제8선거구(구미시·군위군·칠곡군·선산군)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제8선거구(구미시·군위군·칠곡군·선산군)",
+   "winner": {
+    "name": "박재홍",
+    "party": "민주정의당",
+    "pct": 52.64
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 52.64,
+     "unknown": 47.36
+    },
+    "single_family_coverage": 52.64,
+    "lineage_resolved_coverage": 52.64,
+    "mixed_share": 0.0,
+    "unknown_share": 47.36,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 163756
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 70.84,
+     "democratic": 27.31,
+     "unknown": 1.85
+    },
+    "single_family_coverage": 98.15,
+    "lineage_resolved_coverage": 98.15,
+    "mixed_share": 0.0,
+    "unknown_share": 1.85,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 163756
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제5선거구(구미시·군위군·칠곡군·선산군)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제5선거구(구미시·군위군·칠곡군·선산군)",
+   "winner": {
+    "name": "박재홍",
+    "party": "민주정의당",
+    "pct": 47
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 47.0,
+     "independent": 35.28,
+     "unknown": 17.72
+    },
+    "single_family_coverage": 47.0,
+    "lineage_resolved_coverage": 47.0,
+    "mixed_share": 0.0,
+    "unknown_share": 17.72,
+    "independent_share": 35.28,
+    "mixed_constituents": {},
+    "total_votes": 169531
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 47.0,
+     "democratic": 16.31,
+     "independent": 35.28,
+     "unknown": 1.41
+    },
+    "single_family_coverage": 63.31,
+    "lineage_resolved_coverage": 63.31,
+    "mixed_share": 0.0,
+    "unknown_share": 1.41,
+    "independent_share": 35.28,
+    "mixed_constituents": {},
+    "total_votes": 169531
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "노태우",
+    "party": "민주정의당",
+    "pct": 76.56
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 76.56,
+     "regional": 1.2,
+     "unknown": 22.24
+    },
+    "single_family_coverage": 77.76,
+    "lineage_resolved_coverage": 77.76,
+    "mixed_share": 0.0,
+    "unknown_share": 22.24,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 26835
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 76.56,
+     "democratic": 21.77,
+     "regional": 1.2,
+     "unknown": 0.46
+    },
+    "single_family_coverage": 99.54,
+    "lineage_resolved_coverage": 99.54,
+    "mixed_share": 0.0,
+    "unknown_share": 0.46,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 26835
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·선산군",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "군위군·선산군",
+   "winner": {
+    "name": "김윤환",
+    "party": "민주정의당",
+    "pct": 76.17
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 76.17,
+     "independent": 12.28,
+     "unknown": 11.55
+    },
+    "single_family_coverage": 76.17,
+    "lineage_resolved_coverage": 76.17,
+    "mixed_share": 0.0,
+    "unknown_share": 11.55,
+    "independent_share": 12.28,
+    "mixed_constituents": {},
+    "total_votes": 66552
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 76.17,
+     "democratic": 11.55,
+     "independent": 12.28
+    },
+    "single_family_coverage": 87.72,
+    "lineage_resolved_coverage": 87.72,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 12.28,
+    "mixed_constituents": {},
+    "total_votes": 66552
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·선산군",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "군위군·선산군",
+   "winner": {
+    "name": "김윤환",
+    "party": "민주자유당",
+    "pct": 61.5
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 36.01,
+     "mixed": 61.5,
+     "unknown": 2.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.5,
+    "mixed_share": 61.5,
+    "unknown_share": 2.49,
+    "independent_share": 36.01,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59525
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 36.01,
+     "mixed": 61.5,
+     "unknown": 2.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 61.5,
+    "mixed_share": 61.5,
+    "unknown_share": 2.49,
+    "independent_share": 36.01,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 59525
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 67.5
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.5,
+     "mixed": 67.5,
+     "unknown": 31.01
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 67.5,
+    "mixed_share": 67.5,
+    "unknown_share": 31.01,
+    "independent_share": 1.5,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22134
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 8.23,
+     "independent": 1.5,
+     "mixed": 67.5,
+     "unknown": 22.77
+    },
+    "single_family_coverage": 8.23,
+    "lineage_resolved_coverage": 75.73,
+    "mixed_share": 67.5,
+    "unknown_share": 22.77,
+    "independent_share": 1.5,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 22134
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·칠곡군",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "군위군·칠곡군",
+   "winner": {
+    "name": "장영철",
+    "party": "신한국당",
+    "pct": 31.07
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 51.18,
+     "mixed": 31.07,
+     "regional": 12.74,
+     "unknown": 5.0
+    },
+    "single_family_coverage": 12.74,
+    "lineage_resolved_coverage": 43.82,
+    "mixed_share": 31.07,
+    "unknown_share": 5.0,
+    "independent_share": 51.18,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62410
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 5.0,
+     "independent": 51.18,
+     "mixed": 31.07,
+     "regional": 12.74
+    },
+    "single_family_coverage": 17.74,
+    "lineage_resolved_coverage": 48.82,
+    "mixed_share": 31.07,
+    "unknown_share": 0.0,
+    "independent_share": 51.18,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 62410
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "이회창",
+    "party": "한나라당",
+    "pct": 61.01
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 81.22,
+     "unknown": 18.78
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 81.22,
+    "mixed_share": 81.22,
+    "unknown_share": 18.78,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19749
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 15.88,
+     "mixed": 81.22,
+     "unknown": 2.9
+    },
+    "single_family_coverage": 15.88,
+    "lineage_resolved_coverage": 97.1,
+    "mixed_share": 81.22,
+    "unknown_share": 2.9,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 19749
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·의성군",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "군위군·의성군",
+   "winner": {
+    "name": "정창화",
+    "party": "한나라당",
+    "pct": 50.63
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 39.43,
+     "mixed": 50.63,
+     "unknown": 9.94
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.63,
+    "mixed_share": 50.63,
+    "unknown_share": 9.94,
+    "independent_share": 39.43,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61855
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 9.94,
+     "independent": 39.43,
+     "mixed": 50.63
+    },
+    "single_family_coverage": 9.94,
+    "lineage_resolved_coverage": 60.57,
+    "mixed_share": 50.63,
+    "unknown_share": 0.0,
+    "independent_share": 39.43,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 61855
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군·의성군·청송군",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "군위군·의성군·청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "한나라당",
+    "pct": 47.15
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 34.11,
+     "mixed": 47.15,
+     "unknown": 18.74
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.15,
+    "mixed_share": 47.15,
+    "unknown_share": 18.74,
+    "independent_share": 34.11,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69802
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.74,
+     "independent": 34.11,
+     "mixed": 47.15
+    },
+    "single_family_coverage": 18.74,
+    "lineage_resolved_coverage": 65.89,
+    "mixed_share": 47.15,
+    "unknown_share": 0.0,
+    "independent_share": 34.11,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69802
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군의성군청송군",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "군위군의성군청송군",
+   "winner": {
+    "name": "정해걸",
+    "party": "무소속",
+    "pct": 49.36
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 49.36,
+     "mixed": 44.93,
+     "unknown": 5.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.93,
+    "mixed_share": 44.93,
+    "unknown_share": 5.72,
+    "independent_share": 49.36,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63670
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 49.36,
+     "mixed": 44.93,
+     "unknown": 5.72
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.93,
+    "mixed_share": 44.93,
+    "unknown_share": 5.72,
+    "independent_share": 49.36,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 63670
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군의성군청송군",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "군위군의성군청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "새누리당",
+    "pct": 72.68
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 72.68,
+     "unknown": 27.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 72.68,
+    "mixed_share": 72.68,
+    "unknown_share": 27.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60826
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 27.32,
+     "mixed": 72.68
+    },
+    "single_family_coverage": 27.32,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 72.68,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 60826
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "김종태",
+    "party": "새누리당",
+    "pct": 77.65
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 77.65,
+     "unknown": 22.35
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 77.65,
+    "mixed_share": 77.65,
+    "unknown_share": 22.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110019
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 22.35,
+     "mixed": 77.65
+    },
+    "single_family_coverage": 22.35,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 77.65,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 110019
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "자유한국당",
+    "pct": 47.53
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 29.21,
+     "mixed": 52.75,
+     "unknown": 18.04
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.75,
+    "mixed_share": 52.75,
+    "unknown_share": 18.04,
+    "independent_share": 29.21,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 96831
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 17.59,
+     "independent": 29.21,
+     "mixed": 52.75,
+     "unknown": 0.45
+    },
+    "single_family_coverage": 17.59,
+    "lineage_resolved_coverage": 70.34,
+    "mixed_share": 52.75,
+    "unknown_share": 0.45,
+    "independent_share": 29.21,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 96831
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "성윤환",
+    "party": "무소속",
+    "pct": 47.18
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 47.62,
+     "mixed": 27.7,
+     "unknown": 24.68
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 27.7,
+    "mixed_share": 27.7,
+    "unknown_share": 24.68,
+    "independent_share": 47.62,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 44463
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 24.25,
+     "independent": 47.62,
+     "mixed": 27.7,
+     "unknown": 0.43
+    },
+    "single_family_coverage": 24.25,
+    "lineage_resolved_coverage": 51.94,
+    "mixed_share": 27.7,
+    "unknown_share": 0.43,
+    "independent_share": 47.62,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 44463
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "자유한국당",
+    "pct": 67.48
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 16.39,
+     "mixed": 73.02,
+     "unknown": 10.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 73.02,
+    "mixed_share": 73.02,
+    "unknown_share": 10.59,
+    "independent_share": 16.39,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11985
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 10.25,
+     "independent": 16.39,
+     "mixed": 73.02,
+     "unknown": 0.34
+    },
+    "single_family_coverage": 10.25,
+    "lineage_resolved_coverage": 83.27,
+    "mixed_share": 73.02,
+    "unknown_share": 0.34,
+    "independent_share": 16.39,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 11985
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "자유한국당",
+    "pct": 67.13
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 10.5,
+     "mixed": 77.9,
+     "unknown": 11.6
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 77.9,
+    "mixed_share": 77.9,
+    "unknown_share": 11.6,
+    "independent_share": 10.5,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 27607
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 11.1,
+     "independent": 10.5,
+     "mixed": 77.9,
+     "unknown": 0.5
+    },
+    "single_family_coverage": 11.1,
+    "lineage_resolved_coverage": 89.0,
+    "mixed_share": 77.9,
+    "unknown_share": 0.5,
+    "independent_share": 10.5,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 27607
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2017-04-12",
+   "election_type": "byelection",
+   "election_date": "2017-04-12",
+   "label": "2017년 4·12 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:상주시군위군의성군청송군",
+   "boundary_valid_at": "2017-04-12",
+   "unit_name_at_the_time": "상주시군위군의성군청송군",
+   "winner": {
+    "name": "김재원",
+    "party": "자유한국당",
+    "pct": 62.55
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 17.59,
+     "mixed": 66.61,
+     "unknown": 15.8
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 66.61,
+    "mixed_share": 66.61,
+    "unknown_share": 15.8,
+    "independent_share": 17.59,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 12776
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 15.31,
+     "independent": 17.59,
+     "mixed": 66.61,
+     "unknown": 0.49
+    },
+    "single_family_coverage": 15.31,
+    "lineage_resolved_coverage": 81.92,
+    "mixed_share": 66.61,
+    "unknown_share": 0.49,
+    "independent_share": 17.59,
+    "mixed_constituents": {
+     "바른정당": [
+      "conservative",
+      "regional"
+     ],
+     "자유한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 12776
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:군위군의성군청송군영덕군",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "군위군의성군청송군영덕군",
+   "winner": {
+    "name": "김희국",
+    "party": "미래통합당",
+    "pct": 79.31
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 79.31,
+     "unknown": 20.69
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 79.31,
+    "mixed_share": 79.31,
+    "unknown_share": 20.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 90196
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 18.92,
+     "mixed": 79.31,
+     "unknown": 1.77
+    },
+    "single_family_coverage": 18.92,
+    "lineage_resolved_coverage": 98.23,
+    "mixed_share": 79.31,
+    "unknown_share": 1.77,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 90196
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:동구군위군갑",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "동구군위군갑",
+   "winner": {
+    "name": "최은석",
+    "party": "국민의힘",
+    "pct": 74.49
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 74.49,
+     "unknown": 25.51
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 74.49,
+    "mixed_share": 74.49,
+    "unknown_share": 25.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92047
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.51,
+     "mixed": 74.49
+    },
+    "single_family_coverage": 25.51,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 74.49,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 92047
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": -0.83
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9006,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:동구군위군을",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "동구군위군을",
+   "winner": {
+    "name": "강대식",
+    "party": "국민의힘",
+    "pct": 76.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 76.13,
+     "progressive": 19.47,
+     "unknown": 4.4
+    },
+    "single_family_coverage": 19.47,
+    "lineage_resolved_coverage": 95.6,
+    "mixed_share": 76.13,
+    "unknown_share": 4.4,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108830
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "mixed": 76.13,
+     "progressive": 19.47,
+     "unknown": 4.4
+    },
+    "single_family_coverage": 19.47,
+    "lineage_resolved_coverage": 95.6,
+    "mixed_share": 76.13,
+    "unknown_share": 4.4,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108830
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": false,
+    "delta": null,
+    "delta_blocked": {
+     "pid:국민의힘": "candidacy_configuration_changed",
+     "pid:민중당(2017)": "candidacy_configuration_changed"
+    },
+    "coverage": 0.8875,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "강은희",
+    "party": "",
+    "pct": 61.26
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 16070
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 16070
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "추경호",
+    "party": "국민의힘",
+    "pct": 58.66
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 58.66,
+     "unknown": 41.34
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 58.66,
+    "mixed_share": 58.66,
+    "unknown_share": 41.34,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16722
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.13,
+     "mixed": 58.66,
+     "unknown": 1.21
+    },
+    "single_family_coverage": 40.13,
+    "lineage_resolved_coverage": 98.79,
+    "mixed_share": 58.66,
+    "unknown_share": 1.21,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16722
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "김진열",
+    "party": "국민의힘",
+    "pct": 77.4
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 77.4,
+     "unknown": 22.6
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 77.4,
+    "mixed_share": 77.4,
+    "unknown_share": 22.6,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16741
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 22.6,
+     "mixed": 77.4
+    },
+    "single_family_coverage": 22.6,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 77.4,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16741
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "김진열",
+    "party": "국민의힘",
+    "pct": 77.4
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 77.4,
+     "unknown": 22.6
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 77.4,
+    "mixed_share": 77.4,
+    "unknown_share": 22.6,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16741
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 22.6,
+     "mixed": 77.4
+    },
+    "single_family_coverage": 22.6,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 77.4,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16741
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:군위군선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군선거구",
+   "winner": {
+    "name": "박창석",
+    "party": "국민의힘",
+    "pct": 74.53
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 74.53,
+     "unknown": 25.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 74.53,
+    "mixed_share": 74.53,
+    "unknown_share": 25.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16488
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.47,
+     "mixed": 74.53
+    },
+    "single_family_coverage": 25.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 74.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16488
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:군위군선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군선거구",
+   "winner": {
+    "name": "박창석",
+    "party": "국민의힘",
+    "pct": 74.53
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 74.53,
+     "unknown": 25.47
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 74.53,
+    "mixed_share": 74.53,
+    "unknown_share": 25.47,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16488
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.47,
+     "mixed": 74.53
+    },
+    "single_family_coverage": 25.47,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 74.53,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16488
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:군위군가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군가선거구",
+   "winner": {
+    "name": "서대식",
+    "party": "국민의힘",
+    "pct": 20.06
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 32.83,
+     "mixed": 51.59,
+     "unknown": 15.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.59,
+    "mixed_share": 51.59,
+    "unknown_share": 15.59,
+    "independent_share": 32.83,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 9836
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 15.59,
+     "independent": 32.83,
+     "mixed": 51.59
+    },
+    "single_family_coverage": 15.59,
+    "lineage_resolved_coverage": 67.17,
+    "mixed_share": 51.59,
+    "unknown_share": 0.0,
+    "independent_share": 32.83,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 9836
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:군위군나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군나선거구",
+   "winner": {
+    "name": "박수현",
+    "party": "무소속",
+    "pct": 26.43
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 26.43,
+     "mixed": 56.69,
+     "unknown": 16.89
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.69,
+    "mixed_share": 56.69,
+    "unknown_share": 16.89,
+    "independent_share": 26.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6679
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 16.89,
+     "independent": 26.43,
+     "mixed": 56.69
+    },
+    "single_family_coverage": 16.89,
+    "lineage_resolved_coverage": 73.57,
+    "mixed_share": 56.69,
+    "unknown_share": 0.0,
+    "independent_share": 26.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6679
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:군위군가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군가선거구",
+   "winner": {
+    "name": "서대식",
+    "party": "국민의힘",
+    "pct": 20.06
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 32.83,
+     "mixed": 51.59,
+     "unknown": 15.59
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.59,
+    "mixed_share": 51.59,
+    "unknown_share": 15.59,
+    "independent_share": 32.83,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 9836
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 15.59,
+     "independent": 32.83,
+     "mixed": 51.59
+    },
+    "single_family_coverage": 15.59,
+    "lineage_resolved_coverage": 67.17,
+    "mixed_share": 51.59,
+    "unknown_share": 0.0,
+    "independent_share": 32.83,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 9836
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:군위군나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군나선거구",
+   "winner": {
+    "name": "박수현",
+    "party": "무소속",
+    "pct": 26.43
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 26.43,
+     "mixed": 56.69,
+     "unknown": 16.89
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 56.69,
+    "mixed_share": 56.69,
+    "unknown_share": 16.89,
+    "independent_share": 26.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6679
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 16.89,
+     "independent": 26.43,
+     "mixed": 56.69
+    },
+    "single_family_coverage": 16.89,
+    "lineage_resolved_coverage": 73.57,
+    "mixed_share": 56.69,
+    "unknown_share": 0.0,
+    "independent_share": 26.43,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 6679
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": "국민의힘",
+    "party": "국민의힘",
+    "pct": 72.04
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 72.04,
+     "progressive": 1.44,
+     "unknown": 26.52
+    },
+    "single_family_coverage": 1.44,
+    "lineage_resolved_coverage": 73.48,
+    "mixed_share": 72.04,
+    "unknown_share": 26.52,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16522
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 22.71,
+     "mixed": 72.04,
+     "progressive": 1.44,
+     "unknown": 3.81
+    },
+    "single_family_coverage": 24.15,
+    "lineage_resolved_coverage": 96.19,
+    "mixed_share": 72.04,
+    "unknown_share": 3.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 16522
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:군위군",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "군위군",
+   "winner": {
+    "name": null,
+    "party": "국민의힘",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  }
+ ]
+}

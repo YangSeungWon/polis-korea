@@ -1,0 +1,3251 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "종로",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "points": [
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제2선거구(종로갑구)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제2선거구(종로갑구)",
+   "winner": {
+    "name": "이윤영",
+    "party": "조선민주당",
+    "pct": 56.11
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 8.44,
+     "unknown": 91.56
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 91.56,
+    "independent_share": 8.44,
+    "mixed_constituents": {},
+    "total_votes": 36527
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 8.44,
+     "unknown": 91.56
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 91.56,
+    "independent_share": 8.44,
+    "mixed_constituents": {},
+    "total_votes": 36527
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(종로을구)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제3선거구(종로을구)",
+   "winner": {
+    "name": "장면",
+    "party": "무소속",
+    "pct": 57.06
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 91.51,
+     "unknown": 8.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 8.49,
+    "independent_share": 91.51,
+    "mixed_constituents": {},
+    "total_votes": 40639
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 91.51,
+     "unknown": 8.49
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 8.49,
+    "independent_share": 91.51,
+    "mixed_constituents": {},
+    "total_votes": 40639
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제3선거구(종로 갑구)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제3선거구(종로 갑구)",
+   "winner": {
+    "name": "박순천",
+    "party": "대한부인회",
+    "pct": 54.98
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 45.02,
+     "unknown": 54.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 54.98,
+    "independent_share": 45.02,
+    "mixed_constituents": {},
+    "total_votes": 20463
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 45.02,
+     "unknown": 54.98
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 54.98,
+    "independent_share": 45.02,
+    "mixed_constituents": {},
+    "total_votes": 20463
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(종로 을구)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제4선거구(종로 을구)",
+   "winner": {
+    "name": "오하영",
+    "party": "무소속",
+    "pct": 58.55
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 41.45,
+     "independent": 58.55
+    },
+    "single_family_coverage": 41.45,
+    "lineage_resolved_coverage": 41.45,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 58.55,
+    "mixed_constituents": {},
+    "total_votes": 36209
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.45,
+     "independent": 58.55
+    },
+    "single_family_coverage": 41.45,
+    "lineage_resolved_coverage": 41.45,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 58.55,
+    "mixed_constituents": {},
+    "total_votes": 36209
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-pres-1952",
+   "election_type": "pres",
+   "election_date": "1952-08-05",
+   "label": "2nd-pres-1952",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1952-08-05",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 76.03
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 76.03,
+     "independent": 23.97
+    },
+    "single_family_coverage": 76.03,
+    "lineage_resolved_coverage": 76.03,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 23.97,
+    "mixed_constituents": {},
+    "total_votes": 31996
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 76.03,
+     "independent": 23.97
+    },
+    "single_family_coverage": 76.03,
+    "lineage_resolved_coverage": 76.03,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 23.97,
+    "mixed_constituents": {},
+    "total_votes": 31996
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 갑",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "종로구 갑",
+   "winner": {
+    "name": "윤보선",
+    "party": "민주국민당",
+    "pct": 32.35
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 5.53,
+     "democratic": 32.35,
+     "independent": 62.12
+    },
+    "single_family_coverage": 37.88,
+    "lineage_resolved_coverage": 37.88,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 62.12,
+    "mixed_constituents": {},
+    "total_votes": 29318
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 5.53,
+     "democratic": 32.35,
+     "independent": 62.12
+    },
+    "single_family_coverage": 37.88,
+    "lineage_resolved_coverage": 37.88,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 62.12,
+    "mixed_constituents": {},
+    "total_votes": 29318
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 을",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "종로구 을",
+   "winner": {
+    "name": "김두한",
+    "party": "무소속",
+    "pct": 28.63
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 17.45,
+     "independent": 55.43,
+     "unknown": 27.12
+    },
+    "single_family_coverage": 17.45,
+    "lineage_resolved_coverage": 17.45,
+    "mixed_share": 0.0,
+    "unknown_share": 27.12,
+    "independent_share": 55.43,
+    "mixed_constituents": {},
+    "total_votes": 30604
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 17.45,
+     "independent": 55.43,
+     "unknown": 27.12
+    },
+    "single_family_coverage": 17.45,
+    "lineage_resolved_coverage": 17.45,
+    "mixed_share": 0.0,
+    "unknown_share": 27.12,
+    "independent_share": 55.43,
+    "mixed_constituents": {},
+    "total_votes": 30604
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-pres-1956",
+   "election_type": "pres",
+   "election_date": "1956-05-15",
+   "label": "3rd-pres-1956",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1956-05-15",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 64.51
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 64.51,
+     "independent": 35.49
+    },
+    "single_family_coverage": 64.51,
+    "lineage_resolved_coverage": 64.51,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 35.49,
+    "mixed_constituents": {},
+    "total_votes": 40626
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 64.51,
+     "independent": 35.49
+    },
+    "single_family_coverage": 64.51,
+    "lineage_resolved_coverage": 64.51,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 35.49,
+    "mixed_constituents": {},
+    "total_votes": 40626
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 갑",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "종로구 갑",
+   "winner": {
+    "name": "윤보선",
+    "party": "민주당(1955)",
+    "pct": 63.21
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 18.32,
+     "democratic": 63.21,
+     "independent": 18.47
+    },
+    "single_family_coverage": 81.53,
+    "lineage_resolved_coverage": 81.53,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 18.47,
+    "mixed_constituents": {},
+    "total_votes": 36039
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 18.32,
+     "democratic": 63.21,
+     "independent": 18.47
+    },
+    "single_family_coverage": 81.53,
+    "lineage_resolved_coverage": 81.53,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 18.47,
+    "mixed_constituents": {},
+    "total_votes": 36039
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 을",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "종로구 을",
+   "winner": {
+    "name": "한근조",
+    "party": "민주당(1955)",
+    "pct": 55.69
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 18.5,
+     "democratic": 55.69,
+     "independent": 1.87,
+     "unknown": 23.93
+    },
+    "single_family_coverage": 74.19,
+    "lineage_resolved_coverage": 74.19,
+    "mixed_share": 0.0,
+    "unknown_share": 23.93,
+    "independent_share": 1.87,
+    "mixed_constituents": {},
+    "total_votes": 37550
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 18.5,
+     "democratic": 55.69,
+     "independent": 1.87,
+     "unknown": 23.93
+    },
+    "single_family_coverage": 74.19,
+    "lineage_resolved_coverage": 74.19,
+    "mixed_share": 0.0,
+    "unknown_share": 23.93,
+    "independent_share": 1.87,
+    "mixed_constituents": {},
+    "total_votes": 37550
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-pres-1960",
+   "election_type": "pres",
+   "election_date": "1960-03-15",
+   "label": "4th-pres-1960",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1960-03-15",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 100.0
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 76739
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 76739
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 갑",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "종로구 갑",
+   "winner": {
+    "name": "윤보선",
+    "party": "민주당(1955)",
+    "pct": 81.85
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 81.85,
+     "independent": 10.39,
+     "unknown": 7.76
+    },
+    "single_family_coverage": 81.85,
+    "lineage_resolved_coverage": 81.85,
+    "mixed_share": 0.0,
+    "unknown_share": 7.76,
+    "independent_share": 10.39,
+    "mixed_constituents": {},
+    "total_votes": 39001
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 81.85,
+     "independent": 10.39,
+     "unknown": 7.76
+    },
+    "single_family_coverage": 81.85,
+    "lineage_resolved_coverage": 81.85,
+    "mixed_share": 0.0,
+    "unknown_share": 7.76,
+    "independent_share": 10.39,
+    "mixed_constituents": {},
+    "total_votes": 39001
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구 을",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "종로구 을",
+   "winner": {
+    "name": "한근조",
+    "party": "민주당(1955)",
+    "pct": 48.99
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 48.99,
+     "independent": 44.32,
+     "unknown": 6.69
+    },
+    "single_family_coverage": 48.99,
+    "lineage_resolved_coverage": 48.99,
+    "mixed_share": 0.0,
+    "unknown_share": 6.69,
+    "independent_share": 44.32,
+    "mixed_constituents": {},
+    "total_votes": 41710
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.99,
+     "independent": 44.32,
+     "unknown": 6.69
+    },
+    "single_family_coverage": 48.99,
+    "lineage_resolved_coverage": 48.99,
+    "mixed_share": 0.0,
+    "unknown_share": 6.69,
+    "independent_share": 44.32,
+    "mixed_constituents": {},
+    "total_votes": 41710
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-pres-1963",
+   "election_type": "pres",
+   "election_date": "1963-10-15",
+   "label": "5th-pres-1963",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1963-10-15",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "윤보선",
+    "party": "민정당",
+    "pct": 64.55
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 31.56,
+     "unknown": 68.44
+    },
+    "single_family_coverage": 31.56,
+    "lineage_resolved_coverage": 31.56,
+    "mixed_share": 0.0,
+    "unknown_share": 68.44,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 96796
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 31.56,
+     "democratic": 64.55,
+     "unknown": 3.89
+    },
+    "single_family_coverage": 96.11,
+    "lineage_resolved_coverage": 96.11,
+    "mixed_share": 0.0,
+    "unknown_share": 3.89,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 96796
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "6th-general-1963",
+   "election_type": "general",
+   "election_date": "1963-11-26",
+   "label": "6th-general-1963",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1963-11-26",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "전진한",
+    "party": "민정당",
+    "pct": 50.2
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 22.34,
+     "democratic": 22.6,
+     "unknown": 55.05
+    },
+    "single_family_coverage": 44.95,
+    "lineage_resolved_coverage": 44.95,
+    "mixed_share": 0.0,
+    "unknown_share": 55.05,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 71954
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 22.34,
+     "democratic": 72.81,
+     "unknown": 4.85
+    },
+    "single_family_coverage": 95.15,
+    "lineage_resolved_coverage": 95.15,
+    "mixed_share": 0.0,
+    "unknown_share": 4.85,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 71954
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "6th-pres-1967",
+   "election_type": "pres",
+   "election_date": "1967-05-03",
+   "label": "6th-pres-1967",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1967-05-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "윤보선",
+    "party": "신민당",
+    "pct": 50.48
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 46.85,
+     "unknown": 53.15
+    },
+    "single_family_coverage": 46.85,
+    "lineage_resolved_coverage": 46.85,
+    "mixed_share": 0.0,
+    "unknown_share": 53.15,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 84169
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 46.85,
+     "democratic": 51.21,
+     "unknown": 1.94
+    },
+    "single_family_coverage": 98.06,
+    "lineage_resolved_coverage": 98.06,
+    "mixed_share": 0.0,
+    "unknown_share": 1.94,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 84169
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "7th-general-1967",
+   "election_type": "general",
+   "election_date": "1967-06-08",
+   "label": "7th-general-1967",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1967-06-08",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "유진오",
+    "party": "신민당",
+    "pct": 69.68
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 26.87,
+     "unknown": 73.13
+    },
+    "single_family_coverage": 26.87,
+    "lineage_resolved_coverage": 26.87,
+    "mixed_share": 0.0,
+    "unknown_share": 73.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 79941
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 26.87,
+     "democratic": 70.2,
+     "unknown": 2.94
+    },
+    "single_family_coverage": 97.06,
+    "lineage_resolved_coverage": 97.06,
+    "mixed_share": 0.0,
+    "unknown_share": 2.94,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 79941
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "7th-pres-1971",
+   "election_type": "pres",
+   "election_date": "1971-04-27",
+   "label": "7th-pres-1971",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1971-04-27",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "김대중",
+    "party": "신민당",
+    "pct": 55.4
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 44.15,
+     "progressive": 0.19,
+     "unknown": 55.66
+    },
+    "single_family_coverage": 44.34,
+    "lineage_resolved_coverage": 44.34,
+    "mixed_share": 0.0,
+    "unknown_share": 55.66,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 94882
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 44.15,
+     "democratic": 55.4,
+     "progressive": 0.19,
+     "unknown": 0.26
+    },
+    "single_family_coverage": 99.74,
+    "lineage_resolved_coverage": 99.74,
+    "mixed_share": 0.0,
+    "unknown_share": 0.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 94882
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "8th-general-1971",
+   "election_type": "general",
+   "election_date": "1971-05-25",
+   "label": "8th-general-1971",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1971-05-25",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "권중돈",
+    "party": "신민당",
+    "pct": 55.85
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.47,
+     "unknown": 56.53
+    },
+    "single_family_coverage": 43.47,
+    "lineage_resolved_coverage": 43.47,
+    "mixed_share": 0.0,
+    "unknown_share": 56.53,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 83745
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.47,
+     "democratic": 56.18,
+     "unknown": 0.35
+    },
+    "single_family_coverage": 99.65,
+    "lineage_resolved_coverage": 99.65,
+    "mixed_share": 0.0,
+    "unknown_share": 0.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 83745
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-general-1973",
+   "election_type": "general",
+   "election_date": "1973-02-27",
+   "label": "9th-general-1973",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(종로구·중구)",
+   "boundary_valid_at": "1973-02-27",
+   "unit_name_at_the_time": "제1선거구(종로구·중구)",
+   "winner": {
+    "name": "장기영",
+    "party": "민주공화당",
+    "pct": 43.31
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.31,
+     "unknown": 56.69
+    },
+    "single_family_coverage": 43.31,
+    "lineage_resolved_coverage": 43.31,
+    "mixed_share": 0.0,
+    "unknown_share": 56.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 133004
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.31,
+     "democratic": 35.3,
+     "unknown": 21.39
+    },
+    "single_family_coverage": 78.61,
+    "lineage_resolved_coverage": 78.61,
+    "mixed_share": 0.0,
+    "unknown_share": 21.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 133004
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(종로구·중구)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제1선거구(종로구·중구)",
+   "winner": {
+    "name": "정대철",
+    "party": "신민당",
+    "pct": 42.54
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 29.18,
+     "independent": 26.3,
+     "unknown": 44.52
+    },
+    "single_family_coverage": 29.18,
+    "lineage_resolved_coverage": 29.18,
+    "mixed_share": 0.0,
+    "unknown_share": 44.52,
+    "independent_share": 26.3,
+    "mixed_constituents": {},
+    "total_votes": 249165
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 29.18,
+     "democratic": 42.54,
+     "independent": 26.3,
+     "unknown": 1.98
+    },
+    "single_family_coverage": 71.72,
+    "lineage_resolved_coverage": 71.72,
+    "mixed_share": 0.0,
+    "unknown_share": 1.98,
+    "independent_share": 26.3,
+    "mixed_constituents": {},
+    "total_votes": 249165
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(종로구·중구)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제1선거구(종로구·중구)",
+   "winner": {
+    "name": "이종찬",
+    "party": "민주정의당",
+    "pct": 48.72
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 48.72,
+     "unknown": 51.28
+    },
+    "single_family_coverage": 48.72,
+    "lineage_resolved_coverage": 48.72,
+    "mixed_share": 0.0,
+    "unknown_share": 51.28,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 238677
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 56.27,
+     "democratic": 23.9,
+     "unknown": 19.83
+    },
+    "single_family_coverage": 80.17,
+    "lineage_resolved_coverage": 80.17,
+    "mixed_share": 0.0,
+    "unknown_share": 19.83,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 238677
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제1선거구(종로구·중구)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제1선거구(종로구·중구)",
+   "winner": {
+    "name": "이종찬",
+    "party": "민주정의당",
+    "pct": 32.23
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 32.23,
+     "independent": 7.3,
+     "unknown": 60.47
+    },
+    "single_family_coverage": 32.23,
+    "lineage_resolved_coverage": 32.23,
+    "mixed_share": 0.0,
+    "unknown_share": 60.47,
+    "independent_share": 7.3,
+    "mixed_constituents": {},
+    "total_votes": 261411
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 32.23,
+     "democratic": 58.74,
+     "independent": 7.3,
+     "unknown": 1.73
+    },
+    "single_family_coverage": 90.97,
+    "lineage_resolved_coverage": 90.97,
+    "mixed_share": 0.0,
+    "unknown_share": 1.73,
+    "independent_share": 7.3,
+    "mixed_constituents": {},
+    "total_votes": 261411
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "김대중",
+    "party": "평화민주당",
+    "pct": 34.7
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 30.94,
+     "regional": 7.11,
+     "unknown": 61.94
+    },
+    "single_family_coverage": 38.06,
+    "lineage_resolved_coverage": 38.06,
+    "mixed_share": 0.0,
+    "unknown_share": 61.94,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 149113
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 30.94,
+     "democratic": 61.85,
+     "regional": 7.11,
+     "unknown": 0.09
+    },
+    "single_family_coverage": 99.91,
+    "lineage_resolved_coverage": 99.91,
+    "mixed_share": 0.0,
+    "unknown_share": 0.09,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 149113
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이종찬",
+    "party": "민주정의당",
+    "pct": 37.96
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 37.96,
+     "regional": 12.35,
+     "unknown": 49.69
+    },
+    "single_family_coverage": 50.31,
+    "lineage_resolved_coverage": 50.31,
+    "mixed_share": 0.0,
+    "unknown_share": 49.69,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 122598
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 37.96,
+     "democratic": 36.29,
+     "regional": 12.35,
+     "unknown": 13.41
+    },
+    "single_family_coverage": 86.59,
+    "lineage_resolved_coverage": 86.59,
+    "mixed_share": 0.0,
+    "unknown_share": 13.41,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 122598
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이종찬",
+    "party": "민주자유당",
+    "pct": 35.48
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 13.73,
+     "mixed": 35.48,
+     "unknown": 50.79
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 35.48,
+    "mixed_share": 35.48,
+    "unknown_share": 50.79,
+    "independent_share": 13.73,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 116157
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.67,
+     "independent": 13.73,
+     "mixed": 35.48,
+     "unknown": 25.12
+    },
+    "single_family_coverage": 25.67,
+    "lineage_resolved_coverage": 61.15,
+    "mixed_share": 35.48,
+    "unknown_share": 25.12,
+    "independent_share": 13.73,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 116157
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "김대중",
+    "party": "민주당(1991)",
+    "pct": 39.16
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.47,
+     "mixed": 32.27,
+     "unknown": 66.26
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 32.27,
+    "mixed_share": 32.27,
+    "unknown_share": 66.26,
+    "independent_share": 1.47,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 128270
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.16,
+     "independent": 1.47,
+     "mixed": 32.27,
+     "unknown": 27.1
+    },
+    "single_family_coverage": 39.16,
+    "lineage_resolved_coverage": 71.43,
+    "mixed_share": 32.27,
+    "unknown_share": 27.1,
+    "independent_share": 1.47,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 128270
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이명박",
+    "party": "신한국당",
+    "pct": 41.01
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.86,
+     "mixed": 41.01,
+     "regional": 6.73,
+     "unknown": 51.4
+    },
+    "single_family_coverage": 6.73,
+    "lineage_resolved_coverage": 47.74,
+    "mixed_share": 41.01,
+    "unknown_share": 51.4,
+    "independent_share": 0.86,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98105
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.22,
+     "independent": 0.86,
+     "mixed": 41.01,
+     "regional": 6.73,
+     "unknown": 0.18
+    },
+    "single_family_coverage": 57.95,
+    "lineage_resolved_coverage": 98.96,
+    "mixed_share": 41.01,
+    "unknown_share": 0.18,
+    "independent_share": 0.86,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 98105
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "김대중",
+    "party": "새정치국민회의",
+    "pct": 45.71
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 52.8,
+     "unknown": 47.2
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 52.8,
+    "mixed_share": 52.8,
+    "unknown_share": 47.2,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 114595
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.71,
+     "mixed": 52.8,
+     "unknown": 1.49
+    },
+    "single_family_coverage": 45.71,
+    "lineage_resolved_coverage": 98.51,
+    "mixed_share": 52.8,
+    "unknown_share": 1.49,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 114595
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정인봉",
+    "party": "한나라당",
+    "pct": 48.74
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.95,
+     "mixed": 48.74,
+     "progressive": 1.74,
+     "regional": 4.13,
+     "unknown": 44.44
+    },
+    "single_family_coverage": 5.86,
+    "lineage_resolved_coverage": 54.61,
+    "mixed_share": 48.74,
+    "unknown_share": 44.44,
+    "independent_share": 0.95,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 80989
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.97,
+     "independent": 0.95,
+     "mixed": 48.74,
+     "progressive": 1.74,
+     "regional": 4.13,
+     "unknown": 4.48
+    },
+    "single_family_coverage": 45.83,
+    "lineage_resolved_coverage": 94.57,
+    "mixed_share": 48.74,
+    "unknown_share": 4.48,
+    "independent_share": 0.95,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 80989
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "박진",
+    "party": "한나라당",
+    "pct": 42.81
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 42.81,
+     "progressive": 3.37,
+     "regional": 0.41,
+     "unknown": 53.4
+    },
+    "single_family_coverage": 3.79,
+    "lineage_resolved_coverage": 46.6,
+    "mixed_share": 42.81,
+    "unknown_share": 53.4,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 87429
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 53.14,
+     "mixed": 42.81,
+     "progressive": 3.37,
+     "regional": 0.41,
+     "unknown": 0.26
+    },
+    "single_family_coverage": 56.92,
+    "lineage_resolved_coverage": 99.74,
+    "mixed_share": 42.81,
+    "unknown_share": 0.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 87429
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "박진",
+    "party": "한나라당",
+    "pct": 48.44
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.44,
+     "progressive": 1.62,
+     "unknown": 49.95
+    },
+    "single_family_coverage": 1.62,
+    "lineage_resolved_coverage": 50.05,
+    "mixed_share": 48.44,
+    "unknown_share": 49.95,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 70428
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.77,
+     "mixed": 48.44,
+     "progressive": 1.62,
+     "unknown": 5.18
+    },
+    "single_family_coverage": 46.38,
+    "lineage_resolved_coverage": 94.82,
+    "mixed_share": 48.44,
+    "unknown_share": 5.18,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 70428
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2011-10-26",
+   "election_type": "byelection",
+   "election_date": "2011-10-26",
+   "label": "2011년 10·26 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2011-10-26",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "박원순",
+    "party": "무소속",
+    "pct": 53.98
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 54.37,
+     "mixed": 45.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.63,
+    "mixed_share": 45.63,
+    "unknown_share": 0.0,
+    "independent_share": 54.37,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69973
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 54.37,
+     "mixed": 45.63
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.63,
+    "mixed_share": 45.63,
+    "unknown_share": 0.0,
+    "independent_share": 54.37,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69973
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정세균",
+    "party": "민주통합당",
+    "pct": 52.27
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.48,
+     "mixed": 45.89,
+     "progressive": 0.86,
+     "unknown": 52.77
+    },
+    "single_family_coverage": 0.86,
+    "lineage_resolved_coverage": 46.75,
+    "mixed_share": 45.89,
+    "unknown_share": 52.77,
+    "independent_share": 0.48,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79840
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.27,
+     "independent": 0.48,
+     "mixed": 45.89,
+     "progressive": 0.86,
+     "unknown": 0.5
+    },
+    "single_family_coverage": 53.13,
+    "lineage_resolved_coverage": 99.02,
+    "mixed_share": 45.89,
+    "unknown_share": 0.5,
+    "independent_share": 0.48,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 79840
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정세균",
+    "party": "더불어민주당",
+    "pct": 52.6
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.26,
+     "mixed": 39.79,
+     "progressive": 0.96,
+     "unknown": 58.98
+    },
+    "single_family_coverage": 0.96,
+    "lineage_resolved_coverage": 40.76,
+    "mixed_share": 39.79,
+    "unknown_share": 58.98,
+    "independent_share": 0.26,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84299
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.21,
+     "independent": 0.26,
+     "mixed": 39.79,
+     "progressive": 0.96,
+     "unknown": 0.77
+    },
+    "single_family_coverage": 59.17,
+    "lineage_resolved_coverage": 98.96,
+    "mixed_share": 39.79,
+    "unknown_share": 0.77,
+    "independent_share": 0.26,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84299
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "이낙연",
+    "party": "더불어민주당",
+    "pct": 58.38
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.28,
+     "mixed": 40.05,
+     "progressive": 0.29,
+     "unknown": 59.38
+    },
+    "single_family_coverage": 0.29,
+    "lineage_resolved_coverage": 40.35,
+    "mixed_share": 40.05,
+    "unknown_share": 59.38,
+    "independent_share": 0.28,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94038
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 58.38,
+     "independent": 0.28,
+     "mixed": 40.05,
+     "progressive": 0.29,
+     "unknown": 0.99
+    },
+    "single_family_coverage": 58.68,
+    "lineage_resolved_coverage": 98.73,
+    "mixed_share": 40.05,
+    "unknown_share": 0.99,
+    "independent_share": 0.28,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 94038
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2021-04-07",
+   "election_type": "byelection",
+   "election_date": "2021-04-07",
+   "label": "2021년 4·7 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2021-04-07",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "오세훈",
+    "party": "국민의힘",
+    "pct": 55.24
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 0.57,
+     "mixed": 55.47,
+     "progressive": 0.22,
+     "unknown": 43.74
+    },
+    "single_family_coverage": 0.22,
+    "lineage_resolved_coverage": 55.69,
+    "mixed_share": 55.47,
+    "unknown_share": 43.74,
+    "independent_share": 0.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78298
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 41.26,
+     "independent": 0.57,
+     "mixed": 55.47,
+     "progressive": 0.22,
+     "unknown": 2.47
+    },
+    "single_family_coverage": 41.49,
+    "lineage_resolved_coverage": 96.95,
+    "mixed_share": 55.47,
+    "unknown_share": 2.47,
+    "independent_share": 0.57,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "민생당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78298
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2022-03-09",
+   "election_type": "byelection",
+   "election_date": "2022-03-09",
+   "label": "2022년 3·9 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2022-03-09",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "최재형",
+    "party": "국민의힘",
+    "pct": 52.09
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 30.2,
+     "mixed": 52.09,
+     "progressive": 15.32,
+     "unknown": 2.38
+    },
+    "single_family_coverage": 15.32,
+    "lineage_resolved_coverage": 67.42,
+    "mixed_share": 52.09,
+    "unknown_share": 2.38,
+    "independent_share": 30.2,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95288
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 30.2,
+     "mixed": 52.09,
+     "progressive": 15.32,
+     "unknown": 2.38
+    },
+    "single_family_coverage": 15.32,
+    "lineage_resolved_coverage": 67.42,
+    "mixed_share": 52.09,
+    "unknown_share": 2.38,
+    "independent_share": 30.2,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95288
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2022-03-09",
+   "election_type": "byelection",
+   "election_date": "2022-03-09",
+   "label": "2022년 3·9 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2022-03-09",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "최재형",
+    "party": "국민의힘",
+    "pct": 52.09
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 30.2,
+     "mixed": 52.09,
+     "progressive": 15.32,
+     "unknown": 2.38
+    },
+    "single_family_coverage": 15.32,
+    "lineage_resolved_coverage": 67.42,
+    "mixed_share": 52.09,
+    "unknown_share": 2.38,
+    "independent_share": 30.2,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95288
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 30.2,
+     "mixed": 52.09,
+     "progressive": 15.32,
+     "unknown": 2.38
+    },
+    "single_family_coverage": 15.32,
+    "lineage_resolved_coverage": 67.42,
+    "mixed_share": 52.09,
+    "unknown_share": 2.38,
+    "independent_share": 30.2,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 95288
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "곽상언",
+    "party": "더불어민주당",
+    "pct": 50.92
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 44.13,
+     "unknown": 55.87
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.13,
+    "mixed_share": 44.13,
+    "unknown_share": 55.87,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 87809
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.15,
+     "mixed": 44.13,
+     "unknown": 3.72
+    },
+    "single_family_coverage": 52.15,
+    "lineage_resolved_coverage": 96.28,
+    "mixed_share": 44.13,
+    "unknown_share": 3.72,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 87809
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2024-10-16",
+   "election_type": "byelection",
+   "election_date": "2024-10-16",
+   "label": "2024년 10·16 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2024-10-16",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정근식",
+    "party": "",
+    "pct": 53.48
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 32607
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 32607
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정근식",
+    "party": "",
+    "pct": 28.4
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 74946
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 74946
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "정원오",
+    "party": "더불어민주당",
+    "pct": 49.97
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.03,
+     "progressive": 1.36,
+     "unknown": 51.61
+    },
+    "single_family_coverage": 1.36,
+    "lineage_resolved_coverage": 48.39,
+    "mixed_share": 47.03,
+    "unknown_share": 51.61,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78831
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.97,
+     "mixed": 47.03,
+     "progressive": 1.36,
+     "unknown": 1.64
+    },
+    "single_family_coverage": 51.34,
+    "lineage_resolved_coverage": 98.36,
+    "mixed_share": 47.03,
+    "unknown_share": 1.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78831
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "유찬종",
+    "party": "더불어민주당",
+    "pct": 52.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.48,
+     "unknown": 52.52
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.48,
+    "mixed_share": 47.48,
+    "unknown_share": 52.52,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78457
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.52,
+     "mixed": 47.48
+    },
+    "single_family_coverage": 52.52,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 47.48,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78457
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "유찬종",
+    "party": "더불어민주당",
+    "pct": 52.52
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 47.48,
+     "unknown": 52.52
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.48,
+    "mixed_share": 47.48,
+    "unknown_share": 52.52,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78457
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.52,
+     "mixed": 47.48
+    },
+    "single_family_coverage": 52.52,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 47.48,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78457
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:종로구제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구제1선거구",
+   "winner": {
+    "name": "윤선희",
+    "party": "더불어민주당",
+    "pct": 48.56
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.1,
+     "mixed": 47.34,
+     "unknown": 48.56
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.34,
+    "mixed_share": 47.34,
+    "unknown_share": 48.56,
+    "independent_share": 4.1,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39356
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.56,
+     "independent": 4.1,
+     "mixed": 47.34
+    },
+    "single_family_coverage": 48.56,
+    "lineage_resolved_coverage": 95.9,
+    "mixed_share": 47.34,
+    "unknown_share": 0.0,
+    "independent_share": 4.1,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39356
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:종로구제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구제2선거구",
+   "winner": {
+    "name": "선정환",
+    "party": "더불어민주당",
+    "pct": 52.88
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.14,
+     "mixed": 42.72,
+     "progressive": 2.26,
+     "unknown": 52.88
+    },
+    "single_family_coverage": 2.26,
+    "lineage_resolved_coverage": 44.98,
+    "mixed_share": 42.72,
+    "unknown_share": 52.88,
+    "independent_share": 2.14,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38862
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.88,
+     "independent": 2.14,
+     "mixed": 42.72,
+     "progressive": 2.26
+    },
+    "single_family_coverage": 55.14,
+    "lineage_resolved_coverage": 97.86,
+    "mixed_share": 42.72,
+    "unknown_share": 0.0,
+    "independent_share": 2.14,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38862
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:종로구제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구제1선거구",
+   "winner": {
+    "name": "윤선희",
+    "party": "더불어민주당",
+    "pct": 48.56
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 4.1,
+     "mixed": 47.34,
+     "unknown": 48.56
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 47.34,
+    "mixed_share": 47.34,
+    "unknown_share": 48.56,
+    "independent_share": 4.1,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39356
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.56,
+     "independent": 4.1,
+     "mixed": 47.34
+    },
+    "single_family_coverage": 48.56,
+    "lineage_resolved_coverage": 95.9,
+    "mixed_share": 47.34,
+    "unknown_share": 0.0,
+    "independent_share": 4.1,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39356
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:종로구제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구제2선거구",
+   "winner": {
+    "name": "선정환",
+    "party": "더불어민주당",
+    "pct": 52.88
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 2.14,
+     "mixed": 42.72,
+     "progressive": 2.26,
+     "unknown": 52.88
+    },
+    "single_family_coverage": 2.26,
+    "lineage_resolved_coverage": 44.98,
+    "mixed_share": 42.72,
+    "unknown_share": 52.88,
+    "independent_share": 2.14,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38862
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.88,
+     "independent": 2.14,
+     "mixed": 42.72,
+     "progressive": 2.26
+    },
+    "single_family_coverage": 55.14,
+    "lineage_resolved_coverage": 97.86,
+    "mixed_share": 42.72,
+    "unknown_share": 0.0,
+    "independent_share": 2.14,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38862
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구가선거구",
+   "winner": {
+    "name": "여봉무",
+    "party": "더불어민주당",
+    "pct": 49.35
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.65,
+     "unknown": 49.35
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.65,
+    "mixed_share": 50.65,
+    "unknown_share": 49.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21389
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.35,
+     "mixed": 50.65
+    },
+    "single_family_coverage": 49.35,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 50.65,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21389
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구다선거구",
+   "winner": {
+    "name": "이미자",
+    "party": "더불어민주당",
+    "pct": 32.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.76,
+     "unknown": 59.24
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.76,
+    "mixed_share": 40.76,
+    "unknown_share": 59.24,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15946
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.24,
+     "mixed": 40.76
+    },
+    "single_family_coverage": 59.24,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.76,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15946
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구나선거구",
+   "winner": {
+    "name": "노진경",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구라선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구라선거구",
+   "winner": {
+    "name": "김종보",
+    "party": "더불어민주당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구가선거구",
+   "winner": {
+    "name": "여봉무",
+    "party": "더불어민주당",
+    "pct": 49.35
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 50.65,
+     "unknown": 49.35
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.65,
+    "mixed_share": 50.65,
+    "unknown_share": 49.35,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21389
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.35,
+     "mixed": 50.65
+    },
+    "single_family_coverage": 49.35,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 50.65,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21389
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:종로구다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구다선거구",
+   "winner": {
+    "name": "이미자",
+    "party": "더불어민주당",
+    "pct": 32.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 40.76,
+     "unknown": 59.24
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 40.76,
+    "mixed_share": 40.76,
+    "unknown_share": 59.24,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15946
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 59.24,
+     "mixed": 40.76
+    },
+    "single_family_coverage": 59.24,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 40.76,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 15946
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 44.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.97,
+     "progressive": 3.31,
+     "unknown": 54.72
+    },
+    "single_family_coverage": 3.31,
+    "lineage_resolved_coverage": 45.28,
+    "mixed_share": 41.97,
+    "unknown_share": 54.72,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78563
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.46,
+     "mixed": 41.97,
+     "progressive": 3.31,
+     "unknown": 10.26
+    },
+    "single_family_coverage": 47.77,
+    "lineage_resolved_coverage": 89.74,
+    "mixed_share": 41.97,
+    "unknown_share": 10.26,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78563
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:종로구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "종로구",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 54.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.87,
+     "unknown": 54.13
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 45.87,
+    "mixed_share": 45.87,
+    "unknown_share": 54.13,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78246
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 54.13,
+     "mixed": 45.87
+    },
+    "single_family_coverage": 54.13,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 45.87,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 78246
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": false,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:국민의힘": 5.46,
+     "pid:더불어민주당": -8.11,
+     "pid:민중민주당": 0.17
+    },
+    "delta_blocked": {},
+    "coverage": 0.873,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  }
+ ]
+}

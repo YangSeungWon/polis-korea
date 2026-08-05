@@ -1,0 +1,2592 @@
+{
+ "_note": "지역 정치사 타임라인. 시간축은 합치되 수치 비교는 comparison_series_id가 같은 점 사이에서만 한다. winner와 계보 구성은 별도 층이다 — winner_family를 지역 전체 정치구성의 대리값으로 쓰지 않는다.",
+ "region": "이천",
+ "series": [
+  "byelection:unknown",
+  "general:district",
+  "local:education_superintendent",
+  "local:metro_council_district",
+  "local:metro_council_pr",
+  "local:metro_mayor",
+  "local:municipal_council_district",
+  "local:municipal_council_pr",
+  "local:municipal_mayor",
+  "president:national"
+ ],
+ "points": [
+  {
+   "election_id": "1st-general-1948",
+   "election_type": "general",
+   "election_date": "1948-05-10",
+   "label": "1st-general-1948",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제22선거구(이천군)",
+   "boundary_valid_at": "1948-05-10",
+   "unit_name_at_the_time": "제22선거구(이천군)",
+   "winner": {
+    "name": "송창식",
+    "party": "대한독립촉성국민회",
+    "pct": 32.46
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 56.89,
+     "unknown": 43.11
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 43.11,
+    "independent_share": 56.89,
+    "mixed_constituents": {},
+    "total_votes": 31985
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 56.89,
+     "unknown": 43.11
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 43.11,
+    "independent_share": 56.89,
+    "mixed_constituents": {},
+    "total_votes": 31985
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-general-1950",
+   "election_type": "general",
+   "election_date": "1950-05-30",
+   "label": "2nd-general-1950",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제14선거구(이천군)",
+   "boundary_valid_at": "1950-05-30",
+   "unit_name_at_the_time": "제14선거구(이천군)",
+   "winner": {
+    "name": "이종성",
+    "party": "무소속",
+    "pct": 19.47
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 65.43,
+     "unknown": 34.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 34.57,
+    "independent_share": 65.43,
+    "mixed_constituents": {},
+    "total_votes": 27562
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 65.43,
+     "unknown": 34.57
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 34.57,
+    "independent_share": 65.43,
+    "mixed_constituents": {},
+    "total_votes": 27562
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "2nd-pres-1952",
+   "election_type": "pres",
+   "election_date": "1952-08-05",
+   "label": "2nd-pres-1952",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1952-08-05",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 89.01
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 89.01,
+     "independent": 10.99
+    },
+    "single_family_coverage": 89.01,
+    "lineage_resolved_coverage": 89.01,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 10.99,
+    "mixed_constituents": {},
+    "total_votes": 33428
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 89.01,
+     "independent": 10.99
+    },
+    "single_family_coverage": 89.01,
+    "lineage_resolved_coverage": 89.01,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 10.99,
+    "mixed_constituents": {},
+    "total_votes": 33428
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-general-1954",
+   "election_type": "general",
+   "election_date": "1954-05-20",
+   "label": "3rd-general-1954",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1954-05-20",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "김병철",
+    "party": "자유당",
+    "pct": 29.19
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 29.19,
+     "independent": 70.81
+    },
+    "single_family_coverage": 29.19,
+    "lineage_resolved_coverage": 29.19,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 70.81,
+    "mixed_constituents": {},
+    "total_votes": 34457
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 29.19,
+     "independent": 70.81
+    },
+    "single_family_coverage": 29.19,
+    "lineage_resolved_coverage": 29.19,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 70.81,
+    "mixed_constituents": {},
+    "total_votes": 34457
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "3rd-pres-1956",
+   "election_type": "pres",
+   "election_date": "1956-05-15",
+   "label": "3rd-pres-1956",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1956-05-15",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 87.14
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 87.14,
+     "independent": 12.86
+    },
+    "single_family_coverage": 87.14,
+    "lineage_resolved_coverage": 87.14,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 12.86,
+    "mixed_constituents": {},
+    "total_votes": 27814
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 87.14,
+     "independent": 12.86
+    },
+    "single_family_coverage": 87.14,
+    "lineage_resolved_coverage": 87.14,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 12.86,
+    "mixed_constituents": {},
+    "total_votes": 27814
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "4th-general-1958",
+   "election_type": "general",
+   "election_date": "1958-05-02",
+   "label": "4th-general-1958",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1958-05-02",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이기붕",
+    "party": "자유당",
+    "pct": null
+   },
+   "lineage_composition": {},
+   "lineage_composition_historical": {},
+   "comparison": null
+  },
+  {
+   "election_id": "4th-pres-1960",
+   "election_type": "pres",
+   "election_date": "1960-03-15",
+   "label": "4th-pres-1960",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1960-03-15",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이승만",
+    "party": "자유당",
+    "pct": 100.0
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 40165
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 100.0
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 40165
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-general-1960",
+   "election_type": "general",
+   "election_date": "1960-07-29",
+   "label": "5th-general-1960",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1960-07-29",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "최하영",
+    "party": "무소속",
+    "pct": 16.94
+   },
+   "lineage_composition": {
+    "share": {
+     "democratic": 19.61,
+     "independent": 80.39
+    },
+    "single_family_coverage": 19.61,
+    "lineage_resolved_coverage": 19.61,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 80.39,
+    "mixed_constituents": {},
+    "total_votes": 41571
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 19.61,
+     "independent": 80.39
+    },
+    "single_family_coverage": 19.61,
+    "lineage_resolved_coverage": 19.61,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 80.39,
+    "mixed_constituents": {},
+    "total_votes": 41571
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "5th-pres-1963",
+   "election_type": "pres",
+   "election_date": "1963-10-15",
+   "label": "5th-pres-1963",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1963-10-15",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "윤보선",
+    "party": "민정당",
+    "pct": 50.32
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 37.38,
+     "unknown": 62.62
+    },
+    "single_family_coverage": 37.38,
+    "lineage_resolved_coverage": 37.38,
+    "mixed_share": 0.0,
+    "unknown_share": 62.62,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 46200
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 37.38,
+     "democratic": 50.32,
+     "unknown": 12.3
+    },
+    "single_family_coverage": 87.7,
+    "lineage_resolved_coverage": 87.7,
+    "mixed_share": 0.0,
+    "unknown_share": 12.3,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 46200
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-general-1963",
+   "election_type": "general",
+   "election_date": "1963-11-26",
+   "label": "6th-general-1963",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:광주군·이천군",
+   "boundary_valid_at": "1963-11-26",
+   "unit_name_at_the_time": "광주군·이천군",
+   "winner": {
+    "name": "신하균",
+    "party": "민정당",
+    "pct": 43.74
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 39.28,
+     "democratic": 7.3,
+     "unknown": 53.42
+    },
+    "single_family_coverage": 46.58,
+    "lineage_resolved_coverage": 46.58,
+    "mixed_share": 0.0,
+    "unknown_share": 53.42,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 64160
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 39.28,
+     "democratic": 51.04,
+     "unknown": 9.68
+    },
+    "single_family_coverage": 90.32,
+    "lineage_resolved_coverage": 90.32,
+    "mixed_share": 0.0,
+    "unknown_share": 9.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 64160
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "6th-pres-1967",
+   "election_type": "pres",
+   "election_date": "1967-05-03",
+   "label": "6th-pres-1967",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1967-05-03",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "윤보선",
+    "party": "신민당",
+    "pct": 57.54
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 33.82,
+     "unknown": 66.18
+    },
+    "single_family_coverage": 33.82,
+    "lineage_resolved_coverage": 33.82,
+    "mixed_share": 0.0,
+    "unknown_share": 66.18,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 41758
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 33.82,
+     "democratic": 60.04,
+     "unknown": 6.14
+    },
+    "single_family_coverage": 93.86,
+    "lineage_resolved_coverage": 93.86,
+    "mixed_share": 0.0,
+    "unknown_share": 6.14,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 41758
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-general-1967",
+   "election_type": "general",
+   "election_date": "1967-06-08",
+   "label": "7th-general-1967",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:광주군·이천군",
+   "boundary_valid_at": "1967-06-08",
+   "unit_name_at_the_time": "광주군·이천군",
+   "winner": {
+    "name": "차지철",
+    "party": "민주공화당",
+    "pct": 71.44
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 71.44,
+     "unknown": 28.56
+    },
+    "single_family_coverage": 71.44,
+    "lineage_resolved_coverage": 71.44,
+    "mixed_share": 0.0,
+    "unknown_share": 28.56,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 79344
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 71.44,
+     "democratic": 26.84,
+     "unknown": 1.72
+    },
+    "single_family_coverage": 98.28,
+    "lineage_resolved_coverage": 98.28,
+    "mixed_share": 0.0,
+    "unknown_share": 1.72,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 79344
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "7th-pres-1971",
+   "election_type": "pres",
+   "election_date": "1971-04-27",
+   "label": "7th-pres-1971",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1971-04-27",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "박정희",
+    "party": "민주공화당",
+    "pct": 56.06
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 56.06,
+     "progressive": 1.61,
+     "unknown": 42.33
+    },
+    "single_family_coverage": 57.67,
+    "lineage_resolved_coverage": 57.67,
+    "mixed_share": 0.0,
+    "unknown_share": 42.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 39326
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 56.06,
+     "democratic": 41.42,
+     "progressive": 1.61,
+     "unknown": 0.92
+    },
+    "single_family_coverage": 99.08,
+    "lineage_resolved_coverage": 99.08,
+    "mixed_share": 0.0,
+    "unknown_share": 0.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 39326
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "8th-general-1971",
+   "election_type": "general",
+   "election_date": "1971-05-25",
+   "label": "8th-general-1971",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:광주군·이천군",
+   "boundary_valid_at": "1971-05-25",
+   "unit_name_at_the_time": "광주군·이천군",
+   "winner": {
+    "name": "차지철",
+    "party": "민주공화당",
+    "pct": 57.79
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 57.79,
+     "unknown": 42.21
+    },
+    "single_family_coverage": 57.79,
+    "lineage_resolved_coverage": 57.79,
+    "mixed_share": 0.0,
+    "unknown_share": 42.21,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 93473
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 57.79,
+     "democratic": 39.47,
+     "unknown": 2.73
+    },
+    "single_family_coverage": 97.27,
+    "lineage_resolved_coverage": 97.27,
+    "mixed_share": 0.0,
+    "unknown_share": 2.73,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 93473
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-general-1973",
+   "election_type": "general",
+   "election_date": "1973-02-27",
+   "label": "9th-general-1973",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(여주군·광주군·이천군)",
+   "boundary_valid_at": "1973-02-27",
+   "unit_name_at_the_time": "제4선거구(여주군·광주군·이천군)",
+   "winner": {
+    "name": "차지철",
+    "party": "민주공화당",
+    "pct": 35.71
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 35.71,
+     "independent": 3.24,
+     "unknown": 61.05
+    },
+    "single_family_coverage": 35.71,
+    "lineage_resolved_coverage": 35.71,
+    "mixed_share": 0.0,
+    "unknown_share": 61.05,
+    "independent_share": 3.24,
+    "mixed_constituents": {},
+    "total_votes": 150064
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 35.71,
+     "democratic": 55.9,
+     "independent": 3.24,
+     "unknown": 5.14
+    },
+    "single_family_coverage": 91.61,
+    "lineage_resolved_coverage": 91.61,
+    "mixed_share": 0.0,
+    "unknown_share": 5.14,
+    "independent_share": 3.24,
+    "mixed_constituents": {},
+    "total_votes": 150064
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "10th-general-1978",
+   "election_type": "general",
+   "election_date": "1978-12-12",
+   "label": "10th-general-1978",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제4선거구(성남시·여주군·광주군·이천군)",
+   "boundary_valid_at": "1978-12-12",
+   "unit_name_at_the_time": "제4선거구(성남시·여주군·광주군·이천군)",
+   "winner": {
+    "name": "정동성",
+    "party": "민주공화당",
+    "pct": 30.6
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 30.6,
+     "independent": 37.48,
+     "unknown": 31.92
+    },
+    "single_family_coverage": 30.6,
+    "lineage_resolved_coverage": 30.6,
+    "mixed_share": 0.0,
+    "unknown_share": 31.92,
+    "independent_share": 37.48,
+    "mixed_constituents": {},
+    "total_votes": 250220
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 30.6,
+     "democratic": 24.29,
+     "independent": 37.48,
+     "unknown": 7.63
+    },
+    "single_family_coverage": 54.89,
+    "lineage_resolved_coverage": 54.89,
+    "mixed_share": 0.0,
+    "unknown_share": 7.63,
+    "independent_share": 37.48,
+    "mixed_constituents": {},
+    "total_votes": 250220
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "11th-general-1981",
+   "election_type": "general",
+   "election_date": "1981-03-25",
+   "label": "11th-general-1981",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제9선거구(여주군·이천군·용인군)",
+   "boundary_valid_at": "1981-03-25",
+   "unit_name_at_the_time": "제9선거구(여주군·이천군·용인군)",
+   "winner": {
+    "name": "정동성",
+    "party": "민주정의당",
+    "pct": 38.14
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 38.14,
+     "independent": 32.87,
+     "unknown": 28.98
+    },
+    "single_family_coverage": 38.14,
+    "lineage_resolved_coverage": 38.14,
+    "mixed_share": 0.0,
+    "unknown_share": 28.98,
+    "independent_share": 32.87,
+    "mixed_constituents": {},
+    "total_votes": 152909
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 38.14,
+     "democratic": 17.27,
+     "independent": 32.87,
+     "unknown": 11.71
+    },
+    "single_family_coverage": 55.41,
+    "lineage_resolved_coverage": 55.41,
+    "mixed_share": 0.0,
+    "unknown_share": 11.71,
+    "independent_share": 32.87,
+    "mixed_constituents": {},
+    "total_votes": 152909
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "12th-general-1985",
+   "election_type": "general",
+   "election_date": "1985-02-12",
+   "label": "12th-general-1985",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:제7선거구(여주군·이천군·용인군)",
+   "boundary_valid_at": "1985-02-12",
+   "unit_name_at_the_time": "제7선거구(여주군·이천군·용인군)",
+   "winner": {
+    "name": "정동성",
+    "party": "민주정의당",
+    "pct": 46.41
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 46.41,
+     "unknown": 53.59
+    },
+    "single_family_coverage": 46.41,
+    "lineage_resolved_coverage": 46.41,
+    "mixed_share": 0.0,
+    "unknown_share": 53.59,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 182855
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 59.28,
+     "democratic": 40.72
+    },
+    "single_family_coverage": 100.0,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 182855
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-pres-1987",
+   "election_type": "pres",
+   "election_date": "1987-12-16",
+   "label": "제13대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1987-12-16",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "노태우",
+    "party": "민주정의당",
+    "pct": 50.78
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 50.78,
+     "regional": 6.44,
+     "unknown": 42.78
+    },
+    "single_family_coverage": 57.22,
+    "lineage_resolved_coverage": 57.22,
+    "mixed_share": 0.0,
+    "unknown_share": 42.78,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 72256
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 50.78,
+     "democratic": 42.44,
+     "regional": 6.44,
+     "unknown": 0.33
+    },
+    "single_family_coverage": 99.67,
+    "lineage_resolved_coverage": 99.67,
+    "mixed_share": 0.0,
+    "unknown_share": 0.33,
+    "independent_share": 0.0,
+    "mixed_constituents": {},
+    "total_votes": 72256
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "13th-general-1988",
+   "election_type": "general",
+   "election_date": "1988-04-26",
+   "label": "제13대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1988-04-26",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이영문",
+    "party": "민주정의당",
+    "pct": 43.73
+   },
+   "lineage_composition": {
+    "share": {
+     "conservative": 43.73,
+     "independent": 5.35,
+     "regional": 11.96,
+     "unknown": 38.96
+    },
+    "single_family_coverage": 55.69,
+    "lineage_resolved_coverage": 55.69,
+    "mixed_share": 0.0,
+    "unknown_share": 38.96,
+    "independent_share": 5.35,
+    "mixed_constituents": {},
+    "total_votes": 61796
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "conservative": 43.73,
+     "democratic": 38.96,
+     "independent": 5.35,
+     "regional": 11.96
+    },
+    "single_family_coverage": 94.65,
+    "lineage_resolved_coverage": 94.65,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 5.35,
+    "mixed_constituents": {},
+    "total_votes": 61796
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-general-1992",
+   "election_type": "general",
+   "election_date": "1992-03-24",
+   "label": "제14대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1992-03-24",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "이영문",
+    "party": "민주자유당",
+    "pct": 37.77
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 37.77,
+     "unknown": 62.23
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 37.77,
+    "mixed_share": 37.77,
+    "unknown_share": 62.23,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69858
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 25.66,
+     "mixed": 37.77,
+     "unknown": 36.57
+    },
+    "single_family_coverage": 25.66,
+    "lineage_resolved_coverage": 63.43,
+    "mixed_share": 37.77,
+    "unknown_share": 36.57,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 69858
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "14th-pres-1992",
+   "election_type": "pres",
+   "election_date": "1992-12-18",
+   "label": "제14대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천군",
+   "boundary_valid_at": "1992-12-18",
+   "unit_name_at_the_time": "이천군",
+   "winner": {
+    "name": "김영삼",
+    "party": "민주자유당",
+    "pct": 36.15
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.6,
+     "mixed": 36.15,
+     "unknown": 62.25
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 36.15,
+    "mixed_share": 36.15,
+    "unknown_share": 62.25,
+    "independent_share": 1.6,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77053
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 19.81,
+     "independent": 1.6,
+     "mixed": 36.15,
+     "unknown": 42.44
+    },
+    "single_family_coverage": 19.81,
+    "lineage_resolved_coverage": 55.96,
+    "mixed_share": 36.15,
+    "unknown_share": 42.44,
+    "independent_share": 1.6,
+    "mixed_constituents": {
+     "민주자유당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 77053
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "15th-general-1996",
+   "election_type": "general",
+   "election_date": "1996-04-11",
+   "label": "제15대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "1996-04-11",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "황규선",
+    "party": "통합민주당(1995)",
+    "pct": 32.25
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 23.93,
+     "mixed": 24.3,
+     "regional": 11.06,
+     "unknown": 40.71
+    },
+    "single_family_coverage": 11.06,
+    "lineage_resolved_coverage": 35.36,
+    "mixed_share": 24.3,
+    "unknown_share": 40.71,
+    "independent_share": 23.93,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 64272
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 40.71,
+     "independent": 23.93,
+     "mixed": 24.3,
+     "regional": 11.06
+    },
+    "single_family_coverage": 51.77,
+    "lineage_resolved_coverage": 76.07,
+    "mixed_share": 24.3,
+    "unknown_share": 0.0,
+    "independent_share": 23.93,
+    "mixed_constituents": {
+     "신한국당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 64272
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "15th-pres-1997",
+   "election_type": "pres",
+   "election_date": "1997-12-18",
+   "label": "제15대 대통령선거",
+   "comparison_series_id": "president:national",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "1997-12-18",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "이인제",
+    "party": "국민신당",
+    "pct": 37.46
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 68.01,
+     "unknown": 31.99
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 68.01,
+    "mixed_share": 68.01,
+    "unknown_share": 31.99,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 89399
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 30.31,
+     "mixed": 68.01,
+     "unknown": 1.68
+    },
+    "single_family_coverage": 30.31,
+    "lineage_resolved_coverage": 98.32,
+    "mixed_share": 68.01,
+    "unknown_share": 1.68,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민신당": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 89399
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "16th-general-2000",
+   "election_type": "general",
+   "election_date": "2000-04-13",
+   "label": "제16대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2000-04-13",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "이희규",
+    "party": "새천년민주당",
+    "pct": 44.75
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 34.5,
+     "regional": 15.99,
+     "unknown": 49.51
+    },
+    "single_family_coverage": 15.99,
+    "lineage_resolved_coverage": 50.49,
+    "mixed_share": 34.5,
+    "unknown_share": 49.51,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 67756
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 44.75,
+     "mixed": 34.5,
+     "regional": 15.99,
+     "unknown": 4.76
+    },
+    "single_family_coverage": 60.74,
+    "lineage_resolved_coverage": 95.24,
+    "mixed_share": 34.5,
+    "unknown_share": 4.76,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 67756
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "17th-general-2004",
+   "election_type": "general",
+   "election_date": "2004-04-15",
+   "label": "제17대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시·여주군",
+   "boundary_valid_at": "2004-04-15",
+   "unit_name_at_the_time": "이천시·여주군",
+   "winner": {
+    "name": "이규택",
+    "party": "한나라당",
+    "pct": 41.86
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 41.86,
+     "progressive": 4.22,
+     "unknown": 53.93
+    },
+    "single_family_coverage": 4.22,
+    "lineage_resolved_coverage": 46.07,
+    "mixed_share": 41.86,
+    "unknown_share": 53.93,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117229
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.02,
+     "mixed": 41.86,
+     "progressive": 4.22,
+     "unknown": 2.91
+    },
+    "single_family_coverage": 55.23,
+    "lineage_resolved_coverage": 97.09,
+    "mixed_share": 41.86,
+    "unknown_share": 2.91,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117229
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "18th-general-2008",
+   "election_type": "general",
+   "election_date": "2008-04-09",
+   "label": "제18대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시여주군",
+   "boundary_valid_at": "2008-04-09",
+   "unit_name_at_the_time": "이천시여주군",
+   "winner": {
+    "name": "이범관",
+    "party": "한나라당",
+    "pct": 33.14
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 9.75,
+     "mixed": 33.14,
+     "progressive": 2.88,
+     "unknown": 54.22
+    },
+    "single_family_coverage": 2.88,
+    "lineage_resolved_coverage": 36.02,
+    "mixed_share": 33.14,
+    "unknown_share": 54.22,
+    "independent_share": 9.75,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101396
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 13.69,
+     "independent": 9.75,
+     "mixed": 33.14,
+     "progressive": 2.88,
+     "unknown": 40.53
+    },
+    "single_family_coverage": 16.57,
+    "lineage_resolved_coverage": 49.71,
+    "mixed_share": 33.14,
+    "unknown_share": 40.53,
+    "independent_share": 9.75,
+    "mixed_constituents": {
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 101396
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "19th-general-2012",
+   "election_type": "general",
+   "election_date": "2012-04-11",
+   "label": "제19대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2012-04-11",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "유승우",
+    "party": "새누리당",
+    "pct": 42.43
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 29.38,
+     "mixed": 42.43,
+     "progressive": 28.19
+    },
+    "single_family_coverage": 28.19,
+    "lineage_resolved_coverage": 70.62,
+    "mixed_share": 42.43,
+    "unknown_share": 0.0,
+    "independent_share": 29.38,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74818
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 29.38,
+     "mixed": 42.43,
+     "progressive": 28.19
+    },
+    "single_family_coverage": 28.19,
+    "lineage_resolved_coverage": 70.62,
+    "mixed_share": 42.43,
+    "unknown_share": 0.0,
+    "independent_share": 29.38,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 74818
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "20th-general-2016",
+   "election_type": "general",
+   "election_date": "2016-04-13",
+   "label": "제20대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "송석준",
+    "party": "새누리당",
+    "pct": 50.99
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 9.19,
+     "mixed": 50.99,
+     "unknown": 39.82
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.99,
+    "mixed_share": 50.99,
+    "unknown_share": 39.82,
+    "independent_share": 9.19,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84627
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 39.82,
+     "independent": 9.19,
+     "mixed": 50.99
+    },
+    "single_family_coverage": 39.82,
+    "lineage_resolved_coverage": 90.81,
+    "mixed_share": 50.99,
+    "unknown_share": 0.0,
+    "independent_share": 9.19,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 84627
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:이천시가선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "이천시가선거구",
+   "winner": {
+    "name": "임영길",
+    "party": "더불어민주당",
+    "pct": 55.39
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 44.61,
+     "unknown": 55.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.61,
+    "mixed_share": 44.61,
+    "unknown_share": 55.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 30300
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 55.39,
+     "mixed": 44.61
+    },
+    "single_family_coverage": 55.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 44.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 30300
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "byelection-2016-04-13",
+   "election_type": "byelection",
+   "election_date": "2016-04-13",
+   "label": "2016년 4·13 동시 재·보궐선거",
+   "comparison_series_id": "byelection:unknown",
+   "geography_entity_id": "electoral_district:이천시가선거구",
+   "boundary_valid_at": "2016-04-13",
+   "unit_name_at_the_time": "이천시가선거구",
+   "winner": {
+    "name": "임영길",
+    "party": "더불어민주당",
+    "pct": 55.39
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 44.61,
+     "unknown": 55.39
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 44.61,
+    "mixed_share": 44.61,
+    "unknown_share": 55.39,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 30300
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 55.39,
+     "mixed": 44.61
+    },
+    "single_family_coverage": 55.39,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 44.61,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "새누리당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 30300
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "21st-general-2020",
+   "election_type": "general",
+   "election_date": "2020-04-15",
+   "label": "제21대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2020-04-15",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "송석준",
+    "party": "미래통합당",
+    "pct": 51.99
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 1.54,
+     "mixed": 51.99,
+     "unknown": 46.46
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.99,
+    "mixed_share": 51.99,
+    "unknown_share": 46.46,
+    "independent_share": 1.54,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108749
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 45.69,
+     "independent": 1.54,
+     "mixed": 51.99,
+     "unknown": 0.78
+    },
+    "single_family_coverage": 45.69,
+    "lineage_resolved_coverage": 97.68,
+    "mixed_share": 51.99,
+    "unknown_share": 0.78,
+    "independent_share": 1.54,
+    "mixed_constituents": {
+     "미래통합당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 108749
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "22nd-general-2024",
+   "election_type": "general",
+   "election_date": "2024-04-10",
+   "label": "제22대 국회의원선거",
+   "comparison_series_id": "general:district",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2024-04-10",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "송석준",
+    "party": "국민의힘",
+    "pct": 51.33
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.33,
+     "unknown": 48.67
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.33,
+    "mixed_share": 51.33,
+    "unknown_share": 48.67,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117261
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.67,
+     "mixed": 51.33
+    },
+    "single_family_coverage": 48.67,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.33,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 117261
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_mayor",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "임태희",
+    "party": "",
+    "pct": 51.52
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 104753
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "independent": 100.0
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 0.0,
+    "mixed_share": 0.0,
+    "unknown_share": 0.0,
+    "independent_share": 100.0,
+    "mixed_constituents": {},
+    "total_votes": 104753
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:education_superintendent",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "추미애",
+    "party": "더불어민주당",
+    "pct": 49.82
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 45.43,
+     "progressive": 0.76,
+     "unknown": 53.8
+    },
+    "single_family_coverage": 0.76,
+    "lineage_resolved_coverage": 46.2,
+    "mixed_share": 45.43,
+    "unknown_share": 53.8,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106487
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 49.82,
+     "mixed": 45.43,
+     "progressive": 0.76,
+     "unknown": 3.99
+    },
+    "single_family_coverage": 50.58,
+    "lineage_resolved_coverage": 96.01,
+    "mixed_share": 45.43,
+    "unknown_share": 3.99,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106487
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "성수석",
+    "party": "더불어민주당",
+    "pct": 51.32
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.68,
+     "unknown": 51.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.68,
+    "mixed_share": 48.68,
+    "unknown_share": 51.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107033
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.32,
+     "mixed": 48.68
+    },
+    "single_family_coverage": 51.32,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.68,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107033
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_mayor",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "성수석",
+    "party": "더불어민주당",
+    "pct": 51.32
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.68,
+     "unknown": 51.32
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.68,
+    "mixed_share": 48.68,
+    "unknown_share": 51.32,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107033
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.32,
+     "mixed": 48.68
+    },
+    "single_family_coverage": 51.32,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.68,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 107033
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:이천시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시제1선거구",
+   "winner": {
+    "name": "김일중",
+    "party": "국민의힘",
+    "pct": 51.5
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.5,
+     "unknown": 48.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.5,
+    "mixed_share": 51.5,
+    "unknown_share": 48.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 66812
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.5,
+     "mixed": 51.5
+    },
+    "single_family_coverage": 48.5,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.5,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 66812
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:이천시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시제2선거구",
+   "winner": {
+    "name": "김인영",
+    "party": "더불어민주당",
+    "pct": 50.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.36,
+     "unknown": 50.64
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.36,
+    "mixed_share": 49.36,
+    "unknown_share": 50.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39145
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.64,
+     "mixed": 49.36
+    },
+    "single_family_coverage": 50.64,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.36,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39145
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:이천시제1선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시제1선거구",
+   "winner": {
+    "name": "김일중",
+    "party": "국민의힘",
+    "pct": 51.5
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 51.5,
+     "unknown": 48.5
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 51.5,
+    "mixed_share": 51.5,
+    "unknown_share": 48.5,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 66812
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 48.5,
+     "mixed": 51.5
+    },
+    "single_family_coverage": 48.5,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 51.5,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 66812
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_district",
+   "geography_entity_id": "electoral_district:이천시제2선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시제2선거구",
+   "winner": {
+    "name": "김인영",
+    "party": "더불어민주당",
+    "pct": 50.64
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 49.36,
+     "unknown": 50.64
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 49.36,
+    "mixed_share": 49.36,
+    "unknown_share": 50.64,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39145
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 50.64,
+     "mixed": 49.36
+    },
+    "single_family_coverage": 50.64,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 49.36,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 39145
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시가선거구",
+   "winner": {
+    "name": "조주환",
+    "party": "더불어민주당",
+    "pct": 35.22
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 42.48,
+     "progressive": 5.14,
+     "unknown": 52.37
+    },
+    "single_family_coverage": 5.14,
+    "lineage_resolved_coverage": 47.63,
+    "mixed_share": 42.48,
+    "unknown_share": 52.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43052
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.37,
+     "mixed": 42.48,
+     "progressive": 5.14
+    },
+    "single_family_coverage": 57.52,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 42.48,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43052
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시나선거구",
+   "winner": {
+    "name": "최덕수",
+    "party": "더불어민주당",
+    "pct": 43.28
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.74,
+     "mixed": 50.98,
+     "unknown": 43.28
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.98,
+    "mixed_share": 50.98,
+    "unknown_share": 43.28,
+    "independent_share": 5.74,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21892
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.28,
+     "independent": 5.74,
+     "mixed": 50.98
+    },
+    "single_family_coverage": 43.28,
+    "lineage_resolved_coverage": 94.26,
+    "mixed_share": 50.98,
+    "unknown_share": 0.0,
+    "independent_share": 5.74,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21892
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시다선거구",
+   "winner": {
+    "name": "진재훈",
+    "party": "더불어민주당",
+    "pct": 46.08
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 53.92,
+     "unknown": 46.08
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 53.92,
+    "mixed_share": 53.92,
+    "unknown_share": 46.08,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38239
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.08,
+     "mixed": 53.92
+    },
+    "single_family_coverage": 46.08,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 53.92,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38239
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시가선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시가선거구",
+   "winner": {
+    "name": "조주환",
+    "party": "더불어민주당",
+    "pct": 35.22
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 42.48,
+     "progressive": 5.14,
+     "unknown": 52.37
+    },
+    "single_family_coverage": 5.14,
+    "lineage_resolved_coverage": 47.63,
+    "mixed_share": 42.48,
+    "unknown_share": 52.37,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43052
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 52.37,
+     "mixed": 42.48,
+     "progressive": 5.14
+    },
+    "single_family_coverage": 57.52,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 42.48,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 43052
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시나선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시나선거구",
+   "winner": {
+    "name": "최덕수",
+    "party": "더불어민주당",
+    "pct": 43.28
+   },
+   "lineage_composition": {
+    "share": {
+     "independent": 5.74,
+     "mixed": 50.98,
+     "unknown": 43.28
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 50.98,
+    "mixed_share": 50.98,
+    "unknown_share": 43.28,
+    "independent_share": 5.74,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21892
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 43.28,
+     "independent": 5.74,
+     "mixed": 50.98
+    },
+    "single_family_coverage": 43.28,
+    "lineage_resolved_coverage": 94.26,
+    "mixed_share": 50.98,
+    "unknown_share": 0.0,
+    "independent_share": 5.74,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 21892
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_district",
+   "geography_entity_id": "electoral_district:이천시다선거구",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시다선거구",
+   "winner": {
+    "name": "진재훈",
+    "party": "더불어민주당",
+    "pct": 46.08
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 53.92,
+     "unknown": 46.08
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 53.92,
+    "mixed_share": 53.92,
+    "unknown_share": 46.08,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38239
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.08,
+     "mixed": 53.92
+    },
+    "single_family_coverage": 46.08,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 53.92,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 38239
+   },
+   "comparison": null
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:metro_council_pr",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 46.13
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 44.74,
+     "progressive": 1.25,
+     "unknown": 54.01
+    },
+    "single_family_coverage": 1.25,
+    "lineage_resolved_coverage": 45.99,
+    "mixed_share": 44.74,
+    "unknown_share": 54.01,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106433
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 46.2,
+     "mixed": 44.74,
+     "progressive": 1.25,
+     "unknown": 7.81
+    },
+    "single_family_coverage": 47.45,
+    "lineage_resolved_coverage": 92.19,
+    "mixed_share": 44.74,
+    "unknown_share": 7.81,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ],
+     "한나라당": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106433
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  },
+  {
+   "election_id": "9th-local-2026",
+   "election_type": "local",
+   "election_date": "2026-06-03",
+   "label": "제9회 전국동시지방선거",
+   "comparison_series_id": "local:municipal_council_pr",
+   "geography_entity_id": "electoral_district:이천시",
+   "boundary_valid_at": "2026-06-03",
+   "unit_name_at_the_time": "이천시",
+   "winner": {
+    "name": "더불어민주당",
+    "party": "더불어민주당",
+    "pct": 51.92
+   },
+   "lineage_composition": {
+    "share": {
+     "mixed": 48.08,
+     "unknown": 51.92
+    },
+    "single_family_coverage": 0.0,
+    "lineage_resolved_coverage": 48.08,
+    "mixed_share": 48.08,
+    "unknown_share": 51.92,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106181
+   },
+   "lineage_composition_historical": {
+    "share": {
+     "democratic": 51.92,
+     "mixed": 48.08
+    },
+    "single_family_coverage": 51.92,
+    "lineage_resolved_coverage": 100.0,
+    "mixed_share": 48.08,
+    "unknown_share": 0.0,
+    "independent_share": 0.0,
+    "mixed_constituents": {
+     "국민의힘": [
+      "conservative",
+      "regional"
+     ]
+    },
+    "total_votes": 106181
+   },
+   "comparison": {
+    "method": "reaggregated",
+    "measurement_scope": "attributable_only",
+    "may_show_level": true,
+    "may_show_winner": true,
+    "may_show_delta": true,
+    "delta": {
+     "pid:더불어민주당": 2.84
+    },
+    "delta_blocked": {
+     "pid:국민의힘": "excluded_vote_bias_shift"
+    },
+    "coverage": 0.9058,
+    "note": "동 귀속표 기준 (양 회차 동일)"
+   }
+  }
+ ]
+}
