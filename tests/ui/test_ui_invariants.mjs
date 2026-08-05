@@ -174,7 +174,10 @@ for (const spec of pages) {
       const expect = raw.races.filter((r) => r.sg_typecode === '9'
         && r.scope === 'proportional_sigungu'
         && !(r.candidates || []).some((c) => c.party && (c.votes || 0) > 0)).length;
-      return { expect, cells: sec.querySelectorAll('g.sig-pending').length,
+      const svg = [...sec.querySelectorAll('svg')].find((x) => x.querySelectorAll('polygon').length > 20);
+      const drawn = svg ? [...svg.children].filter((e) => e.tagName === 'g'
+        && !e.classList.contains('sig-pending')).length : 0;
+      return { expect, drawn, cells: sec.querySelectorAll('g.sig-pending').length,
                note: (sec.querySelector('.ar-sgg-prop-note')?.innerText || '').length };
     });
     if (pend && pend.expect) {
@@ -182,6 +185,10 @@ for (const spec of pages) {
       ck(`${vp.id} 미공표 시군구를 빈 칸으로 두지 않는다 (${pend.cells}/${pend.expect})`,
         pend.cells >= pend.expect, JSON.stringify(pend));
       ck(`${vp.id} 미공표 칸에 설명이 있다`, pend.note > 20, JSON.stringify(pend));
+    }
+    // 전부 빗금인 지도는 정보가 0인데 지도인 척한다 — 그럴 땐 지도를 그리지 않는다.
+    if (pend && pend.cells) {
+      ck(`${vp.id} 표심 지도에 실제 값이 하나는 있다`, pend.drawn > 0, JSON.stringify(pend));
     }
 
     // ── 3.8 지선 요약이 **직위가 뽑히는 단위**로 세는가 ────────────────────

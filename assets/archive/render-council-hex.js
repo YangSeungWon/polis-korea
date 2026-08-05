@@ -617,7 +617,7 @@
         if (r.votes_pending || seats.length) {
           putKeys(m, r.sido, r.sigungu, {
             _pending: true, candidates: [], voted: 0,
-            _pending_note: '정당별 득표 미공표'
+            _pending_note: '정당별 득표 자료 없음'
               + (seats.length ? ` (의석 ${seats.reduce((a, c) => a + (c.seats || 0), 0)}석 확정)` : ''),
           }, put);
         }
@@ -628,9 +628,33 @@
     return m;
   }
 
+  // 표심 지도를 그릴 수 없는 회차 — 섹션을 통째로 없애면 '그런 게 없다'가 되고,
+  // 빈 지도를 그리면 '자료가 있는데 안 보인다'가 된다. 둘 다 아니라고 말한다.
+  function mountPropAbsent(ctx, pmap) {
+    document.getElementById('ar-sgg-prop')?.remove();
+    const base = document.getElementById('ar-council-hex') || document.getElementById('ar-sgg-turnout');
+    const anchor = base?.closest('.ar-section') || base?.parentElement;
+    if (!anchor || !anchor.parentElement) return;
+    const n = new Set([...pmap.values()]).size;
+    let el = document.getElementById('ar-sgg-prop-absent');
+    if (!el) {
+      el = document.createElement('p'); el.id = 'ar-sgg-prop-absent'; el.className = 'ar-note';
+      anchor.parentElement.insertBefore(el, anchor.nextSibling);
+    }
+    el.innerHTML = `이 회차는 시·군·구별 <b>정당 득표 자료가 없어</b> 기초의원 비례 `
+      + `표심 지도를 제공하지 않습니다 — 의석${n ? ` ${n}곳` : ''}은 확정입니다. `
+      + '득표를 추정해 채우지 않습니다.';
+  }
+
   async function initProp(ctx) {
     const races = ctx?.results?.races || [];
     const pmap = propBySigungu(races);
+    // **부분 결손과 전부 결손은 다르게 다룬다.**
+    //   일부만 없음(4회 31곳·9회 58곳) → 지도 + 빗금 + 이유
+    //   전부 없음(5~8회)             → 지도를 그리지 않는다. 226칸 전부 빗금인 지도는
+    //                                  정보가 0인데 지도인 척한다. 대신 한 줄로 말한다.
+    const withVotes = [...new Set([...pmap.values()].filter((v) => !v._pending))].length;
+    if (!withVotes) { mountPropAbsent(ctx, pmap); return; }
     if (pmap.size < 4) return;
     const CART = window.Archive && window.Archive.drawSigunguCartogram;
     if (!CART) return;
@@ -657,8 +681,9 @@
     const onSelect = (sido, name) => window.Archive?.winners?.focus?.({ sido, q: name, level: '기초의원' });
     const parties = [...new Set([...pmap.values()].flatMap((v) => v.candidates.map((c) => c.party)))];
     // 빠진 것을 조용히 비우지 않는다 — 몇 곳이 왜 비었는지 화면이 말한다.
-    // putKeys가 한 시군구를 여러 키로 넣는다 — 키가 아니라 **객체 정체성**으로 센다
-    const nPending = new Set([...pmap.values()].filter((v) => v._pending)).size;
+    // **이 지도에 실제로 그려지는 셀만** 센다. pmap 전체를 세면 레이아웃에 없는 단위까지
+    // 들어가 화면(228칸)과 문구(230곳)가 어긋난다.
+    const nPending = hexCells.filter((c) => (lookupKey(pmap, c.sido, c.name) || {})._pending).length;
     let mode = '격자';
     function redraw() {
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
@@ -697,9 +722,10 @@
       // 비어 있는 이유가 둘이면 둘 다 말한다 — 하나로 뭉치면 서로 다른 상태가 같아 보인다.
       const parts = [];
       if (nPending) {
+        // 시제를 넣지 않는다 — 4회(2006)에 '아직 공표되지 않았다'는 말이 안 된다.
         parts.push('<span class="sig-pending-key"></span> '
-          + `빗금 ${nPending}곳은 <b>정당별 득표가 아직 공표되지 않았습니다</b> — `
-          + '의석은 확정입니다(중앙선관위 개표현황 미게시). 표심을 추정해 채우지 않습니다.');
+          + `빗금 ${nPending}곳은 <b>정당별 득표가 중앙선관위 개표현황에 없습니다</b> — `
+          + '의석은 확정입니다. 득표를 추정해 채우지 않습니다.');
       }
       if (noElection.length) {
         parts.push(`${noElection.join('·')}는 <b>기초의회가 없어</b> 기초의원 선거 자체가 `

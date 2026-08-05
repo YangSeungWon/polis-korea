@@ -60851,15 +60851,33 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 53151,
+          "pct": 55.48,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 42641,
+          "pct": 44.51,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 170703,
+      "voters": 99242,
+      "valid_votes": 95792,
+      "invalid_votes": 3450,
+      "abstain": 71461
     },
     {
       "sg_typecode": "9",
@@ -60872,9 +60890,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 23390,
+          "pct": 54.02,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 19905,
+          "pct": 45.97,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 73611,
+      "voters": 44913,
+      "valid_votes": 43295,
+      "invalid_votes": 1618,
+      "abstain": 28698
     },
     {
       "sg_typecode": "9",
@@ -60917,9 +60952,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 6022,
+          "pct": 52.58,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 5431,
+          "pct": 47.41,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 16882,
+      "voters": 11909,
+      "valid_votes": 11453,
+      "invalid_votes": 456,
+      "abstain": 4973
     },
     {
       "sg_typecode": "9",
@@ -60944,12 +60996,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11425,
+          "pct": 53.04,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 10113,
+          "pct": 46.95,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 33315,
+      "voters": 22244,
+      "valid_votes": 21538,
+      "invalid_votes": 706,
+      "abstain": 11071
     },
     {
       "sg_typecode": "9",
@@ -60959,18 +61035,45 @@
       "seats_total": 3,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 60978,
+          "pct": 46.87,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 56094,
+          "pct": 43.11,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 13023,
+          "pct": 10.01,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 234095,
+      "voters": 133486,
+      "valid_votes": 130095,
+      "invalid_votes": 3391,
+      "abstain": 100609
     },
     {
       "sg_typecode": "9",
@@ -61013,9 +61116,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 11619,
+          "pct": 51.02,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11153,
+          "pct": 48.97,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 37358,
+      "voters": 23807,
+      "valid_votes": 22772,
+      "invalid_votes": 1035,
+      "abstain": 13551
     },
     {
       "sg_typecode": "9",
@@ -61025,18 +61145,54 @@
       "seats_total": 3,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 54039,
+          "pct": 44.44,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 49707,
+          "pct": 40.88,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 9675,
+          "pct": 7.95,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 8165,
+          "pct": 6.71,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 206172,
+      "voters": 124827,
+      "valid_votes": 121586,
+      "invalid_votes": 3241,
+      "abstain": 81345
     },
     {
       "sg_typecode": "9",
@@ -61046,12 +61202,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 12847,
+          "pct": 50.19,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 12748,
+          "pct": 49.8,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 40415,
+      "voters": 26818,
+      "valid_votes": 25595,
+      "invalid_votes": 1223,
+      "abstain": 13597
     },
     {
       "sg_typecode": "9",
@@ -61061,12 +61241,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 12521,
+          "pct": 53.48,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 10890,
+          "pct": 46.51,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 35758,
+      "voters": 24418,
+      "valid_votes": 23411,
+      "invalid_votes": 1007,
+      "abstain": 11340
     },
     {
       "sg_typecode": "9",
@@ -61094,9 +61298,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 6853,
+          "pct": 53.36,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 5988,
+          "pct": 46.63,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 19298,
+      "voters": 13435,
+      "valid_votes": 12841,
+      "invalid_votes": 594,
+      "abstain": 5863
     },
     {
       "sg_typecode": "9",
@@ -61106,12 +61327,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 13045,
+          "pct": 54.42,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 10923,
+          "pct": 45.57,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 36396,
+      "voters": 24897,
+      "valid_votes": 23968,
+      "invalid_votes": 929,
+      "abstain": 11499
     },
     {
       "sg_typecode": "9",
@@ -61124,9 +61369,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 17258,
+          "pct": 58.98,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11998,
+          "pct": 41.01,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 47257,
+      "voters": 31045,
+      "valid_votes": 29256,
+      "invalid_votes": 1789,
+      "abstain": 16212
     },
     {
       "sg_typecode": "9",
@@ -61139,21 +61401,69 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 153895,
+          "pct": 41.92,
+          "rank": 1
         },
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 130492,
+          "pct": 35.55,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 48247,
+          "pct": 13.14,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 17771,
+          "pct": 4.84,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 8444,
+          "pct": 2.3,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 8201,
+          "pct": 2.23,
+          "seats": 0,
+          "won": false,
+          "rank": 6
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 707893,
+      "voters": 371908,
+      "valid_votes": 367050,
+      "invalid_votes": 4858,
+      "abstain": 335985
     },
     {
       "sg_typecode": "9",
@@ -61166,9 +61476,26 @@
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 17656,
+          "pct": 50.61,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 17227,
+          "pct": 49.38,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 54323,
+      "voters": 35677,
+      "valid_votes": 34883,
+      "invalid_votes": 794,
+      "abstain": 18646
     },
     {
       "sg_typecode": "9",
@@ -61178,12 +61505,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 44657,
+          "pct": 50.09,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 44480,
+          "pct": 49.9,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 184550,
+      "voters": 90787,
+      "valid_votes": 89137,
+      "invalid_votes": 1650,
+      "abstain": 93763
     },
     {
       "sg_typecode": "9",
@@ -61193,12 +61544,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 70264,
+          "pct": 59.54,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 47738,
+          "pct": 40.45,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 210528,
+      "voters": 119541,
+      "valid_votes": 118002,
+      "invalid_votes": 1539,
+      "abstain": 90987
     },
     {
       "sg_typecode": "9",
@@ -61208,12 +61583,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 46560,
+          "pct": 50.79,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 45110,
+          "pct": 49.2,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 174520,
+      "voters": 93619,
+      "valid_votes": 91670,
+      "invalid_votes": 1949,
+      "abstain": 80901
     },
     {
       "sg_typecode": "9",
@@ -61223,18 +61622,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 90771,
+          "pct": 46.63,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 88121,
+          "pct": 45.27,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 15761,
+          "pct": 8.09,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 404833,
+      "voters": 197831,
+      "valid_votes": 194653,
+      "invalid_votes": 3178,
+      "abstain": 207002
     },
     {
       "sg_typecode": "9",
@@ -61247,9 +61673,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 19276,
+          "pct": 52.78,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 17240,
+          "pct": 47.21,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 72810,
+      "voters": 37829,
+      "valid_votes": 36516,
+      "invalid_votes": 1313,
+      "abstain": 34981
     },
     {
       "sg_typecode": "9",
@@ -61262,15 +61705,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 170429,
+          "pct": 43.43,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 149030,
+          "pct": 37.98,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 47027,
+          "pct": 11.98,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 25866,
+          "pct": 6.59,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 759492,
+      "voters": 397866,
+      "valid_votes": 392352,
+      "invalid_votes": 5514,
+      "abstain": 361626
     },
     {
       "sg_typecode": "9",
@@ -61280,18 +61759,63 @@
       "seats_total": 4,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
-        },
-        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 165309,
+          "pct": 39.94,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 162692,
+          "pct": 39.31,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 49883,
+          "pct": 12.05,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 28541,
+          "pct": 6.89,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 7414,
+          "pct": 1.79,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 806053,
+      "voters": 419649,
+      "valid_votes": 413839,
+      "invalid_votes": 5810,
+      "abstain": 386404
     },
     {
       "sg_typecode": "9",
@@ -61301,18 +61825,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 78306,
+          "pct": 59.37,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 53583,
+          "pct": 40.62,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 292124,
+      "voters": 133777,
+      "valid_votes": 131889,
+      "invalid_votes": 1888,
+      "abstain": 158347
     },
     {
       "sg_typecode": "9",
@@ -61322,24 +61864,63 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 102296,
+          "pct": 42.93,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 90626,
+          "pct": 38.03,
+          "rank": 2
         },
         {
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 26208,
+          "pct": 11.0,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 13991,
+          "pct": 5.87,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 5122,
+          "pct": 2.14,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 522576,
+      "voters": 241522,
+      "valid_votes": 238243,
+      "invalid_votes": 3279,
+      "abstain": 281054
     },
     {
       "sg_typecode": "9",
@@ -61349,12 +61930,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 35310,
+          "pct": 53.65,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 30502,
+          "pct": 46.34,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 132734,
+      "voters": 68123,
+      "valid_votes": 65812,
+      "invalid_votes": 2311,
+      "abstain": 64611
     },
     {
       "sg_typecode": "9",
@@ -61364,24 +61969,54 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 110822,
+          "pct": 42.31,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 107266,
+          "pct": 40.95,
+          "rank": 2
         },
         {
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 29408,
+          "pct": 11.22,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 14398,
+          "pct": 5.49,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 474139,
+      "voters": 265226,
+      "valid_votes": 261894,
+      "invalid_votes": 3332,
+      "abstain": 208913
     },
     {
       "sg_typecode": "9",
@@ -61394,9 +62029,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 35923,
+          "pct": 50.62,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 35040,
+          "pct": 49.37,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 142110,
+      "voters": 72802,
+      "valid_votes": 70963,
+      "invalid_votes": 1839,
+      "abstain": 69308
     },
     {
       "sg_typecode": "9",
@@ -61409,9 +62061,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 27523,
+          "pct": 62.2,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 16725,
+          "pct": 37.79,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 75915,
+      "voters": 45982,
+      "valid_votes": 44248,
+      "invalid_votes": 1734,
+      "abstain": 29933
     },
     {
       "sg_typecode": "9",
@@ -61424,9 +62093,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12198,
+          "pct": 57.41,
+          "rank": 1
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 9049,
+          "pct": 42.58,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 36674,
+      "voters": 22641,
+      "valid_votes": 21247,
+      "invalid_votes": 1394,
+      "abstain": 14033
     },
     {
       "sg_typecode": "9",
@@ -61436,12 +62122,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 34171,
+          "pct": 57.99,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 24749,
+          "pct": 42.0,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 122466,
+      "voters": 60038,
+      "valid_votes": 58920,
+      "invalid_votes": 1118,
+      "abstain": 62428
     },
     {
       "sg_typecode": "9",
@@ -61451,12 +62161,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 35613,
+          "pct": 56.35,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 27580,
+          "pct": 43.64,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 112243,
+      "voters": 64140,
+      "valid_votes": 63193,
+      "invalid_votes": 947,
+      "abstain": 48103
     },
     {
       "sg_typecode": "9",
@@ -61466,18 +62200,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 86668,
+          "pct": 54.48,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 72405,
+          "pct": 45.51,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 328299,
+      "voters": 161754,
+      "valid_votes": 159073,
+      "invalid_votes": 2681,
+      "abstain": 166545
     },
     {
       "sg_typecode": "9",
@@ -61490,9 +62242,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 36965,
+          "pct": 49.72,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 30816,
+          "pct": 41.45,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 6563,
+          "pct": 8.82,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 150045,
+      "voters": 76327,
+      "valid_votes": 74344,
+      "invalid_votes": 1983,
+      "abstain": 73718
     },
     {
       "sg_typecode": "9",
@@ -61502,18 +62280,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 64724,
+          "pct": 51.58,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 60757,
+          "pct": 48.41,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 252147,
+      "voters": 128344,
+      "valid_votes": 125481,
+      "invalid_votes": 2863,
+      "abstain": 123803
     },
     {
       "sg_typecode": "9",
@@ -61526,15 +62322,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 70088,
+          "pct": 45.62,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 65022,
+          "pct": 42.32,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 18500,
+          "pct": 12.04,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 309722,
+      "voters": 157407,
+      "valid_votes": 153610,
+      "invalid_votes": 3797,
+      "abstain": 152315
     },
     {
       "sg_typecode": "9",
@@ -61547,9 +62370,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 34447,
+          "pct": 56.91,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 26078,
+          "pct": 43.08,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 123373,
+      "voters": 62918,
+      "valid_votes": 60525,
+      "invalid_votes": 2393,
+      "abstain": 60455
     },
     {
       "sg_typecode": "9",
@@ -61559,12 +62399,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 32088,
+          "pct": 52.11,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 29484,
+          "pct": 47.88,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 118086,
+      "voters": 62701,
+      "valid_votes": 61572,
+      "invalid_votes": 1129,
+      "abstain": 55385
     },
     {
       "sg_typecode": "9",
@@ -61574,18 +62438,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 102377,
+          "pct": 57.44,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 75852,
+          "pct": 42.55,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 362455,
+      "voters": 181383,
+      "valid_votes": 178229,
+      "invalid_votes": 3154,
+      "abstain": 181072
     },
     {
       "sg_typecode": "9",
@@ -61598,15 +62480,44 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 42280,
+          "pct": 46.36,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 22527,
+          "pct": 24.7,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 16603,
+          "pct": 18.2,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 9779,
+          "pct": 10.72,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 166795,
+      "voters": 93852,
+      "valid_votes": 91189,
+      "invalid_votes": 2663,
+      "abstain": 72943
     },
     {
       "sg_typecode": "9",
@@ -61619,9 +62530,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 21160,
+          "pct": 60.97,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 13545,
+          "pct": 39.02,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 50832,
+      "voters": 37034,
+      "valid_votes": 34705,
+      "invalid_votes": 2329,
+      "abstain": 13798
     },
     {
       "sg_typecode": "9",
@@ -61634,21 +62562,69 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 71652,
+          "pct": 37.52,
+          "rank": 1
         },
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 60036,
+          "pct": 31.44,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 23089,
+          "pct": 12.09,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 17577,
+          "pct": 9.2,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "친박연합",
+          "party": "친박연합",
+          "votes": 10312,
+          "pct": 5.4,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 8275,
+          "pct": 4.33,
+          "seats": 0,
+          "won": false,
+          "rank": 6
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 359474,
+      "voters": 195133,
+      "valid_votes": 190941,
+      "invalid_votes": 4192,
+      "abstain": 164341
     },
     {
       "sg_typecode": "9",
@@ -61676,15 +62652,33 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 33042,
+          "pct": 59.95,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 22068,
+          "pct": 40.04,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 90189,
+      "voters": 58180,
+      "valid_votes": 55110,
+      "invalid_votes": 3070,
+      "abstain": 32009
     },
     {
       "sg_typecode": "9",
@@ -61697,15 +62691,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 33733,
+          "pct": 57.63,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 14819,
+          "pct": 25.31,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9980,
+          "pct": 17.05,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 89018,
+      "voters": 61015,
+      "valid_votes": 58532,
+      "invalid_votes": 2483,
+      "abstain": 28003
     },
     {
       "sg_typecode": "9",
@@ -61718,15 +62732,33 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 52608,
+          "pct": 52.55,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 47489,
+          "pct": 47.44,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 190214,
+      "voters": 102668,
+      "valid_votes": 100097,
+      "invalid_votes": 2571,
+      "abstain": 87546
     },
     {
       "sg_typecode": "9",
@@ -61754,15 +62786,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 87173,
+          "pct": 54.74,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 72050,
+          "pct": 45.25,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 254687,
+      "voters": 164345,
+      "valid_votes": 159223,
+      "invalid_votes": 5122,
+      "abstain": 90342
     },
     {
       "sg_typecode": "9",
@@ -61790,21 +62833,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 40113,
+          "pct": 53.32,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 18031,
+          "pct": 23.96,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 13398,
+          "pct": 17.81,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 3682,
+          "pct": 4.89,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 0,
-          "won": false
+          "won": false,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 130168,
+      "voters": 77353,
+      "valid_votes": 75224,
+      "invalid_votes": 2129,
+      "abstain": 52815
     },
     {
       "sg_typecode": "9",
@@ -61817,15 +62890,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 42619,
+          "pct": 65.86,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 22092,
+          "pct": 34.13,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 108127,
+      "voters": 67400,
+      "valid_votes": 64711,
+      "invalid_votes": 2689,
+      "abstain": 40727
     },
     {
       "sg_typecode": "9",
@@ -61868,9 +62952,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 17566,
+          "pct": 56.1,
+          "rank": 1
+        },
+        {
+          "name": "친박연합",
+          "party": "친박연합",
+          "votes": 13741,
+          "pct": 43.89,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 44353,
+      "voters": 34163,
+      "valid_votes": 31307,
+      "invalid_votes": 2856,
+      "abstain": 10190
     },
     {
       "sg_typecode": "9",
@@ -61883,15 +62984,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 61456,
+          "pct": 68.53,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 18221,
+          "pct": 20.32,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 9989,
+          "pct": 11.14,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 185240,
+      "voters": 93618,
+      "valid_votes": 89666,
+      "invalid_votes": 3952,
+      "abstain": 91622
     },
     {
       "sg_typecode": "9",
@@ -61904,15 +63025,69 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 76110,
+          "pct": 63.42,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 12281,
+          "pct": 10.23,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 11885,
+          "pct": 9.9,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 9659,
+          "pct": 8.04,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 6008,
+          "pct": 5.0,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 4057,
+          "pct": 3.38,
+          "seats": 0,
+          "won": false,
+          "rank": 6
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 211517,
+      "voters": 124939,
+      "valid_votes": 120000,
+      "invalid_votes": 4939,
+      "abstain": 86578
     },
     {
       "sg_typecode": "9",
@@ -61925,21 +63100,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 65128,
+          "pct": 48.43,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 34647,
+          "pct": 25.76,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 21633,
+          "pct": 16.08,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 13069,
+          "pct": 9.71,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 291865,
+      "voters": 138055,
+      "valid_votes": 134477,
+      "invalid_votes": 3578,
+      "abstain": 153810
     },
     {
       "sg_typecode": "9",
@@ -61967,15 +63172,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 37697,
+          "pct": 66.42,
+          "rank": 1
         },
         {
           "name": "미래연합",
           "party": "미래연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 19055,
+          "pct": 33.57,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 87803,
+      "voters": 60532,
+      "valid_votes": 56752,
+      "invalid_votes": 3780,
+      "abstain": 27271
     },
     {
       "sg_typecode": "9",
@@ -61988,15 +63204,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 47758,
+          "pct": 59.68,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 16652,
+          "pct": 20.81,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 15606,
+          "pct": 19.5,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 134118,
+      "voters": 84281,
+      "valid_votes": 80016,
+      "invalid_votes": 4265,
+      "abstain": 49837
     },
     {
       "sg_typecode": "9",
@@ -62009,15 +63245,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 32311,
+          "pct": 56.43,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 13133,
+          "pct": 22.93,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11807,
+          "pct": 20.62,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 90908,
+      "voters": 60323,
+      "valid_votes": 57251,
+      "invalid_votes": 3072,
+      "abstain": 30585
     },
     {
       "sg_typecode": "9",
@@ -62030,9 +63286,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 34202,
+          "pct": 68.85,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 7892,
+          "pct": 15.88,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 7581,
+          "pct": 15.26,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 85134,
+      "voters": 52222,
+      "valid_votes": 49675,
+      "invalid_votes": 2547,
+      "abstain": 32912
     },
     {
       "sg_typecode": "9",
@@ -62045,15 +63327,33 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 25371,
+          "pct": 72.85,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9451,
+          "pct": 27.14,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 51855,
+      "voters": 37004,
+      "valid_votes": 34822,
+      "invalid_votes": 2182,
+      "abstain": 14851
     },
     {
       "sg_typecode": "9",
@@ -62066,15 +63366,60 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 3,
-          "won": true
+          "won": true,
+          "votes": 146547,
+          "pct": 70.74,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 24657,
+          "pct": 11.9,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 17117,
+          "pct": 8.26,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 12632,
+          "pct": 6.09,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 6199,
+          "pct": 2.99,
+          "seats": 0,
+          "won": false,
+          "rank": 5
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 396911,
+      "voters": 212565,
+      "valid_votes": 207152,
+      "invalid_votes": 5413,
+      "abstain": 184346
     },
     {
       "sg_typecode": "9",
@@ -62084,18 +63429,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 64097,
+          "pct": 56.01,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 28714,
+          "pct": 25.09,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 21619,
+          "pct": 18.89,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 242692,
+      "voters": 117056,
+      "valid_votes": 114430,
+      "invalid_votes": 2626,
+      "abstain": 125636
     },
     {
       "sg_typecode": "9",
@@ -62105,18 +63477,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 52293,
+          "pct": 62.05,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 18652,
+          "pct": 22.13,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 13320,
+          "pct": 15.8,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 164726,
+      "voters": 87066,
+      "valid_votes": 84265,
+      "invalid_votes": 2801,
+      "abstain": 77660
     },
     {
       "sg_typecode": "9",
@@ -62126,18 +63525,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 98374,
+          "pct": 59.89,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 38047,
+          "pct": 23.16,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 27834,
+          "pct": 16.94,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 351029,
+      "voters": 168002,
+      "valid_votes": 164255,
+      "invalid_votes": 3747,
+      "abstain": 183027
     },
     {
       "sg_typecode": "9",
@@ -62147,18 +63573,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 62534,
+          "pct": 56.5,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 28783,
+          "pct": 26.0,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 19354,
+          "pct": 17.48,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 222260,
+      "voters": 113772,
+      "valid_votes": 110671,
+      "invalid_votes": 3101,
+      "abstain": 108488
     },
     {
       "sg_typecode": "9",
@@ -62186,15 +63639,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 69067,
+          "pct": 57.07,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 26477,
+          "pct": 21.87,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 25472,
+          "pct": 21.04,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 266834,
+      "voters": 123903,
+      "valid_votes": 121016,
+      "invalid_votes": 2887,
+      "abstain": 142931
     },
     {
       "sg_typecode": "9",
@@ -62222,15 +63695,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 88424,
+          "pct": 55.73,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 70237,
+          "pct": 44.26,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 342990,
+      "voters": 166920,
+      "valid_votes": 158661,
+      "invalid_votes": 8259,
+      "abstain": 176070
     },
     {
       "sg_typecode": "9",
@@ -62258,9 +63742,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 31161,
+          "pct": 38.91,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 28768,
+          "pct": 35.92,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 20149,
+          "pct": 25.16,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 157150,
+      "voters": 81903,
+      "valid_votes": 80078,
+      "invalid_votes": 1825,
+      "abstain": 75247
     },
     {
       "sg_typecode": "9",
@@ -62270,18 +63780,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
-        },
-        {
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 39154,
+          "pct": 40.95,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 32449,
+          "pct": 33.93,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 24009,
+          "pct": 25.11,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 195072,
+      "voters": 97971,
+      "valid_votes": 95612,
+      "invalid_votes": 2359,
+      "abstain": 97101
     },
     {
       "sg_typecode": "9",
@@ -62294,15 +63831,33 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 75747,
+          "pct": 51.39,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 71642,
+          "pct": 48.6,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 375073,
+      "voters": 197454,
+      "valid_votes": 147389,
+      "invalid_votes": 50065,
+      "abstain": 177619
     },
     {
       "sg_typecode": "9",
@@ -62312,12 +63867,45 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 43006,
+          "pct": 39.81,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 38285,
+          "pct": 35.44,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 26721,
+          "pct": 24.73,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 193868,
+      "voters": 109602,
+      "valid_votes": 108012,
+      "invalid_votes": 1590,
+      "abstain": 84266
     },
     {
       "sg_typecode": "9",
@@ -62330,15 +63918,42 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 44611,
+          "pct": 41.52,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 33183,
+          "pct": 30.88,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 29643,
+          "pct": 27.59,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 206384,
+      "voters": 109746,
+      "valid_votes": 107437,
+      "invalid_votes": 2309,
+      "abstain": 96638
     },
     {
       "sg_typecode": "9",
@@ -62351,9 +63966,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 15787,
+          "pct": 55.47,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 12671,
+          "pct": 44.52,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 50837,
+      "voters": 29928,
+      "valid_votes": 28458,
+      "invalid_votes": 1470,
+      "abstain": 20909
     },
     {
       "sg_typecode": "9",
@@ -62366,9 +63998,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 25126,
+          "pct": 58.7,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 17674,
+          "pct": 41.29,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 77263,
+      "voters": 44970,
+      "valid_votes": 42800,
+      "invalid_votes": 2170,
+      "abstain": 32293
     },
     {
       "sg_typecode": "9",
@@ -62381,9 +64030,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 25273,
+          "pct": 60.17,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 16723,
+          "pct": 39.82,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 85200,
+      "voters": 43991,
+      "valid_votes": 41996,
+      "invalid_votes": 1995,
+      "abstain": 41209
     },
     {
       "sg_typecode": "9",
@@ -62396,15 +64062,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 80519,
+          "pct": 52.32,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 51341,
+          "pct": 33.36,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 22020,
+          "pct": 14.3,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 322385,
+      "voters": 157870,
+      "valid_votes": 153880,
+      "invalid_votes": 3990,
+      "abstain": 164515
     },
     {
       "sg_typecode": "9",
@@ -62417,15 +64110,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 47105,
+          "pct": 48.44,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 39565,
+          "pct": 40.69,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 10555,
+          "pct": 10.85,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 204256,
+      "voters": 99542,
+      "valid_votes": 97225,
+      "invalid_votes": 2317,
+      "abstain": 104714
     },
     {
       "sg_typecode": "9",
@@ -62438,15 +64158,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 69060,
+          "pct": 52.19,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 48437,
+          "pct": 36.6,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 14824,
+          "pct": 11.2,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 284062,
+      "voters": 135470,
+      "valid_votes": 132321,
+      "invalid_votes": 3149,
+      "abstain": 148592
     },
     {
       "sg_typecode": "9",
@@ -62459,9 +64206,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 29839,
+          "pct": 62.7,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 17748,
+          "pct": 37.29,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 104507,
+      "voters": 49167,
+      "valid_votes": 47587,
+      "invalid_votes": 1580,
+      "abstain": 55340
     },
     {
       "sg_typecode": "9",
@@ -62474,9 +64238,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 41914,
+          "pct": 60.43,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 27440,
+          "pct": 39.56,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 146237,
+      "voters": 71121,
+      "valid_votes": 69354,
+      "invalid_votes": 1767,
+      "abstain": 75116
     },
     {
       "sg_typecode": "9",
@@ -62489,9 +64270,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 29531,
+          "pct": 51.16,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 20823,
+          "pct": 36.08,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 7359,
+          "pct": 12.75,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 122392,
+      "voters": 59122,
+      "valid_votes": 57713,
+      "invalid_votes": 1409,
+      "abstain": 63270
     },
     {
       "sg_typecode": "9",
@@ -62504,9 +64311,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12901,
+          "pct": 62.87,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 7619,
+          "pct": 37.12,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 41637,
+      "voters": 21344,
+      "valid_votes": 20520,
+      "invalid_votes": 824,
+      "abstain": 20293
     },
     {
       "sg_typecode": "9",
@@ -62519,15 +64343,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 131159,
+          "pct": 57.32,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 85816,
+          "pct": 37.5,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 11815,
+          "pct": 5.16,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 452744,
+      "voters": 231903,
+      "valid_votes": 228790,
+      "invalid_votes": 3113,
+      "abstain": 220841
     },
     {
       "sg_typecode": "9",
@@ -62540,15 +64391,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 92935,
+          "pct": 44.89,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 91814,
+          "pct": 44.34,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 11638,
+          "pct": 5.62,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 10639,
+          "pct": 5.13,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 387779,
+      "voters": 209735,
+      "valid_votes": 207026,
+      "invalid_votes": 2709,
+      "abstain": 178044
     },
     {
       "sg_typecode": "9",
@@ -62558,18 +64445,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 82334,
+          "pct": 58.88,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 57499,
+          "pct": 41.11,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 276171,
+      "voters": 142050,
+      "valid_votes": 139833,
+      "invalid_votes": 2217,
+      "abstain": 134121
     },
     {
       "sg_typecode": "9",
@@ -62579,18 +64484,54 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 117008,
+          "pct": 48.8,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 98150,
+          "pct": 40.93,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 14398,
+          "pct": 6.0,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 10187,
+          "pct": 4.24,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 455047,
+      "voters": 242758,
+      "valid_votes": 239743,
+      "invalid_votes": 3015,
+      "abstain": 212289
     },
     {
       "sg_typecode": "9",
@@ -62600,18 +64541,81 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 105314,
+          "pct": 44.72,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 78079,
+          "pct": 33.15,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 15112,
+          "pct": 6.41,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 13678,
+          "pct": 5.8,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 13171,
+          "pct": 5.59,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 8612,
+          "pct": 3.65,
+          "seats": 0,
+          "won": false,
+          "rank": 6
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 1499,
+          "pct": 0.63,
+          "seats": 0,
+          "won": false,
+          "rank": 7
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 8
         }
-      ]
+      ],
+      "electors": 442049,
+      "voters": 238368,
+      "valid_votes": 235465,
+      "invalid_votes": 2903,
+      "abstain": 203681
     },
     {
       "sg_typecode": "9",
@@ -62621,18 +64625,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 89902,
+          "pct": 57.36,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 66816,
+          "pct": 42.63,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 301603,
+      "voters": 158978,
+      "valid_votes": 156718,
+      "invalid_votes": 2260,
+      "abstain": 142625
     },
     {
       "sg_typecode": "9",
@@ -62642,12 +64664,45 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 56278,
+          "pct": 55.15,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 39108,
+          "pct": 38.33,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 6643,
+          "pct": 6.51,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 197080,
+      "voters": 103661,
+      "valid_votes": 102029,
+      "invalid_votes": 1632,
+      "abstain": 93419
     },
     {
       "sg_typecode": "9",
@@ -62657,18 +64712,54 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 75217,
+          "pct": 47.63,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 66003,
+          "pct": 41.8,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 10266,
+          "pct": 6.5,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 6408,
+          "pct": 4.05,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 297206,
+      "voters": 160461,
+      "valid_votes": 157894,
+      "invalid_votes": 2567,
+      "abstain": 136745
     },
     {
       "sg_typecode": "9",
@@ -62678,18 +64769,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 105133,
+          "pct": 57.85,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 76593,
+          "pct": 42.14,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 325558,
+      "voters": 184207,
+      "valid_votes": 181726,
+      "invalid_votes": 2481,
+      "abstain": 141351
     },
     {
       "sg_typecode": "9",
@@ -62699,18 +64808,45 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 79746,
+          "pct": 46.83,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 68001,
+          "pct": 39.93,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 22518,
+          "pct": 13.22,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 313579,
+      "voters": 172878,
+      "valid_votes": 170265,
+      "invalid_votes": 2613,
+      "abstain": 140701
     },
     {
       "sg_typecode": "9",
@@ -62723,15 +64859,33 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 106333,
+          "pct": 57.96,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 77105,
+          "pct": 42.03,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 341599,
+      "voters": 186064,
+      "valid_votes": 183438,
+      "invalid_votes": 2626,
+      "abstain": 155535
     },
     {
       "sg_typecode": "9",
@@ -62741,18 +64895,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 74076,
+          "pct": 55.63,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 59070,
+          "pct": 44.36,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 250316,
+      "voters": 135268,
+      "valid_votes": 133146,
+      "invalid_votes": 2122,
+      "abstain": 115048
     },
     {
       "sg_typecode": "9",
@@ -62765,15 +64937,60 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 134734,
+          "pct": 46.63,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 112330,
+          "pct": 38.88,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 19086,
+          "pct": 6.6,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 12047,
+          "pct": 4.17,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 10699,
+          "pct": 3.7,
+          "seats": 0,
+          "won": false,
+          "rank": 5
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 539644,
+      "voters": 292453,
+      "valid_votes": 288896,
+      "invalid_votes": 3557,
+      "abstain": 247191
     },
     {
       "sg_typecode": "9",
@@ -62783,18 +65000,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 116472,
+          "pct": 55.14,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 94749,
+          "pct": 44.85,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 382358,
+      "voters": 214836,
+      "valid_votes": 211221,
+      "invalid_votes": 3615,
+      "abstain": 167522
     },
     {
       "sg_typecode": "9",
@@ -62807,15 +65042,69 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 74240,
+          "pct": 41.83,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 74041,
+          "pct": 41.72,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 8664,
+          "pct": 4.88,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 7678,
+          "pct": 4.32,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 6822,
+          "pct": 3.84,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 6020,
+          "pct": 3.39,
+          "seats": 0,
+          "won": false,
+          "rank": 6
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 329379,
+      "voters": 180346,
+      "valid_votes": 177465,
+      "invalid_votes": 2881,
+      "abstain": 149033
     },
     {
       "sg_typecode": "9",
@@ -62828,15 +65117,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 49368,
+          "pct": 47.82,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 44817,
+          "pct": 43.41,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 9040,
+          "pct": 8.75,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 198044,
+      "voters": 104992,
+      "valid_votes": 103225,
+      "invalid_votes": 1767,
+      "abstain": 93052
     },
     {
       "sg_typecode": "9",
@@ -62846,18 +65162,63 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 92984,
+          "pct": 48.89,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 75684,
+          "pct": 39.79,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 11425,
+          "pct": 6.0,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 6362,
+          "pct": 3.34,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "창조한국당",
+          "party": "창조한국당",
+          "votes": 3725,
+          "pct": 1.95,
+          "seats": 0,
+          "won": false,
+          "rank": 5
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 376385,
+      "voters": 192895,
+      "valid_votes": 190180,
+      "invalid_votes": 2715,
+      "abstain": 183490
     },
     {
       "sg_typecode": "9",
@@ -62867,18 +65228,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 42366,
+          "pct": 55.43,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 34056,
+          "pct": 44.56,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 138917,
+      "voters": 77800,
+      "valid_votes": 76422,
+      "invalid_votes": 1378,
+      "abstain": 61117
     },
     {
       "sg_typecode": "9",
@@ -62888,12 +65267,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 32703,
+          "pct": 55.1,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 26648,
+          "pct": 44.89,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 109000,
+      "voters": 60747,
+      "valid_votes": 59351,
+      "invalid_votes": 1396,
+      "abstain": 48253
     },
     {
       "sg_typecode": "9",
@@ -62903,18 +65306,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 94604,
+          "pct": 55.78,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 74986,
+          "pct": 44.21,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 343810,
+      "voters": 172238,
+      "valid_votes": 169590,
+      "invalid_votes": 2648,
+      "abstain": 171572
     },
     {
       "sg_typecode": "9",
@@ -62927,15 +65348,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 68676,
+          "pct": 51.06,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 52551,
+          "pct": 39.07,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 13257,
+          "pct": 9.85,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 258699,
+      "voters": 137076,
+      "valid_votes": 134484,
+      "invalid_votes": 2592,
+      "abstain": 121623
     },
     {
       "sg_typecode": "9",
@@ -62948,9 +65389,26 @@
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 39789,
+          "pct": 52.96,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 35341,
+          "pct": 47.03,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 132325,
+      "voters": 76493,
+      "valid_votes": 75130,
+      "invalid_votes": 1363,
+      "abstain": 55832
     },
     {
       "sg_typecode": "9",
@@ -62963,9 +65421,26 @@
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 38144,
+          "pct": 57.01,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 28761,
+          "pct": 42.98,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 122563,
+      "voters": 67953,
+      "valid_votes": 66905,
+      "invalid_votes": 1048,
+      "abstain": 54610
     },
     {
       "sg_typecode": "9",
@@ -62978,9 +65453,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 44540,
+          "pct": 55.77,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 35323,
+          "pct": 44.22,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 147060,
+      "voters": 82373,
+      "valid_votes": 79863,
+      "invalid_votes": 2510,
+      "abstain": 64687
     },
     {
       "sg_typecode": "9",
@@ -62993,15 +65485,35 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 49491,
+          "pct": 51.75,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 27573,
+          "pct": 28.83,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 18555,
+          "pct": 19.4,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 178158,
+      "voters": 98134,
+      "valid_votes": 95619,
+      "invalid_votes": 2515,
+      "abstain": 80024
     },
     {
       "sg_typecode": "9",
@@ -63014,9 +65526,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 20685,
+          "pct": 60.73,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 13374,
+          "pct": 39.26,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 56586,
+      "voters": 37063,
+      "valid_votes": 34059,
+      "invalid_votes": 3004,
+      "abstain": 19523
     },
     {
       "sg_typecode": "9",
@@ -63026,18 +65555,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 78494,
+          "pct": 60.75,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 50702,
+          "pct": 39.24,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 259089,
+      "voters": 131148,
+      "valid_votes": 129196,
+      "invalid_votes": 1952,
+      "abstain": 127941
     },
     {
       "sg_typecode": "9",
@@ -63047,18 +65594,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 127619,
+          "pct": 59.38,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 87269,
+          "pct": 40.61,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 435655,
+      "voters": 218250,
+      "valid_votes": 214888,
+      "invalid_votes": 3362,
+      "abstain": 217405
     },
     {
       "sg_typecode": "9",
@@ -63071,9 +65636,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 7107,
+          "pct": 65.66,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 3716,
+          "pct": 34.33,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 15665,
+      "voters": 11338,
+      "valid_votes": 10823,
+      "invalid_votes": 515,
+      "abstain": 4327
     },
     {
       "sg_typecode": "9",
@@ -63083,18 +65665,54 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 33346,
+          "pct": 52.66,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12508,
+          "pct": 19.75,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 10498,
+          "pct": 16.57,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6970,
+          "pct": 11.0,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 104440,
+      "voters": 65126,
+      "valid_votes": 63322,
+      "invalid_votes": 1804,
+      "abstain": 39314
     },
     {
       "sg_typecode": "9",
@@ -63104,18 +65722,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 31350,
+          "pct": 64.04,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 17600,
+          "pct": 35.95,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 75246,
+      "voters": 52370,
+      "valid_votes": 48950,
+      "invalid_votes": 3420,
+      "abstain": 22876
     },
     {
       "sg_typecode": "9",
@@ -63140,18 +65776,45 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 57171,
+          "pct": 64.79,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 23971,
+          "pct": 27.16,
+          "rank": 2
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 7089,
+          "pct": 8.03,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 181872,
+      "voters": 91610,
+      "valid_votes": 88231,
+      "invalid_votes": 3379,
+      "abstain": 90262
     },
     {
       "sg_typecode": "9",
@@ -63161,18 +65824,63 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 74607,
+          "pct": 63.16,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 21466,
+          "pct": 18.17,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 9478,
+          "pct": 8.02,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 8268,
+          "pct": 7.0,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 4289,
+          "pct": 3.63,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 200321,
+      "voters": 122943,
+      "valid_votes": 118108,
+      "invalid_votes": 4835,
+      "abstain": 77378
     },
     {
       "sg_typecode": "9",
@@ -63197,18 +65905,54 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 79869,
+          "pct": 63.75,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 24964,
+          "pct": 19.92,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 13919,
+          "pct": 11.11,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 6528,
+          "pct": 5.21,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 225147,
+      "voters": 130617,
+      "valid_votes": 125280,
+      "invalid_votes": 5337,
+      "abstain": 94530
     },
     {
       "sg_typecode": "9",
@@ -63218,18 +65962,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 26073,
+          "pct": 64.11,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 9299,
+          "pct": 22.86,
+          "rank": 2
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 5297,
+          "pct": 13.02,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 65721,
+      "voters": 43881,
+      "valid_votes": 40669,
+      "invalid_votes": 3212,
+      "abstain": 21840
     },
     {
       "sg_typecode": "9",
@@ -63254,18 +66025,63 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 70156,
+          "pct": 64.06,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 14484,
+          "pct": 13.22,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 11206,
+          "pct": 10.23,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 9064,
+          "pct": 8.27,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 4597,
+          "pct": 4.19,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 207328,
+      "voters": 113611,
+      "valid_votes": 109507,
+      "invalid_votes": 4104,
+      "abstain": 93717
     },
     {
       "sg_typecode": "9",
@@ -63275,18 +66091,54 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 30395,
+          "pct": 62.44,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 7634,
+          "pct": 15.68,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6487,
+          "pct": 13.32,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 4159,
+          "pct": 8.54,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 78217,
+      "voters": 51876,
+      "valid_votes": 48675,
+      "invalid_votes": 3201,
+      "abstain": 26341
     },
     {
       "sg_typecode": "9",
@@ -63296,12 +66148,45 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 35374,
+          "pct": 77.78,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 5247,
+          "pct": 11.53,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 4856,
+          "pct": 10.67,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 69420,
+      "voters": 47632,
+      "valid_votes": 45477,
+      "invalid_votes": 2155,
+      "abstain": 21788
     },
     {
       "sg_typecode": "9",
@@ -63326,18 +66211,63 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 75549,
+          "pct": 61.86,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 15770,
+          "pct": 12.91,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 14757,
+          "pct": 12.08,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 10867,
+          "pct": 8.89,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "평화민주당",
+          "party": "평화민주당",
+          "votes": 5183,
+          "pct": 4.24,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 234104,
+      "voters": 126641,
+      "valid_votes": 122126,
+      "invalid_votes": 4515,
+      "abstain": 107463
     },
     {
       "sg_typecode": "9",
@@ -63377,24 +66307,63 @@
       "seats_total": 4,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
-        },
-        {
-          "name": "국민참여당",
-          "party": "국민참여당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 140251,
+          "pct": 57.69,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 36171,
+          "pct": 14.87,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "seats": 1,
+          "won": true,
+          "votes": 27958,
+          "pct": 11.5,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 26828,
+          "pct": 11.03,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 11885,
+          "pct": 4.88,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 473557,
+      "voters": 248052,
+      "valid_votes": 243093,
+      "invalid_votes": 4959,
+      "abstain": 225505
     },
     {
       "sg_typecode": "9",
@@ -63404,18 +66373,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 40531,
+          "pct": 66.79,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "민주노동당",
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 13873,
+          "pct": 22.86,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 6277,
+          "pct": 10.34,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 96698,
+      "voters": 64656,
+      "valid_votes": 60681,
+      "invalid_votes": 3975,
+      "abstain": 32042
     },
     {
       "sg_typecode": "9",
@@ -63425,12 +66421,45 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 7071,
+          "pct": 37.46,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 7060,
+          "pct": 37.4,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 4744,
+          "pct": 25.13,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 30047,
+      "voters": 19329,
+      "valid_votes": 18875,
+      "invalid_votes": 454,
+      "abstain": 10718
     },
     {
       "sg_typecode": "9",
@@ -63443,15 +66472,51 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 23962,
+          "pct": 40.91,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 17604,
+          "pct": 30.05,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 8623,
+          "pct": 14.72,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민중심연합",
+          "party": "국민중심연합",
+          "votes": 8375,
+          "pct": 14.3,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 99709,
+      "voters": 61208,
+      "valid_votes": 58564,
+      "invalid_votes": 2644,
+      "abstain": 38501
     },
     {
       "sg_typecode": "9",
@@ -63464,9 +66529,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 11565,
+          "pct": 42.48,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9318,
+          "pct": 34.23,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6336,
+          "pct": 23.27,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 46562,
+      "voters": 28885,
+      "valid_votes": 27219,
+      "invalid_votes": 1666,
+      "abstain": 17677
     },
     {
       "sg_typecode": "9",
@@ -63476,18 +66567,45 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 26449,
+          "pct": 45.18,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 19160,
+          "pct": 32.73,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 12923,
+          "pct": 22.07,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 101953,
+      "voters": 61118,
+      "valid_votes": 58532,
+      "invalid_votes": 2586,
+      "abstain": 40835
     },
     {
       "sg_typecode": "9",
@@ -63500,15 +66618,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 29618,
+          "pct": 58.49,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12787,
+          "pct": 25.25,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 8226,
+          "pct": 16.24,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 85687,
+      "voters": 53696,
+      "valid_votes": 50631,
+      "invalid_votes": 3065,
+      "abstain": 31991
     },
     {
       "sg_typecode": "9",
@@ -63521,15 +66659,42 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 27903,
+          "pct": 43.44,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 19508,
+          "pct": 30.37,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 16821,
+          "pct": 26.18,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 121199,
+      "voters": 66619,
+      "valid_votes": 64232,
+      "invalid_votes": 2387,
+      "abstain": 54580
     },
     {
       "sg_typecode": "9",
@@ -63542,9 +66707,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 13775,
+          "pct": 43.1,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11693,
+          "pct": 36.58,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6489,
+          "pct": 20.3,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 50167,
+      "voters": 34168,
+      "valid_votes": 31957,
+      "invalid_votes": 2211,
+      "abstain": 15999
     },
     {
       "sg_typecode": "9",
@@ -63554,18 +66745,63 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 32812,
+          "pct": 33.81,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 30770,
+          "pct": 31.7,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 24265,
+          "pct": 25.0,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 6181,
+          "pct": 6.36,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "친박연합",
+          "party": "친박연합",
+          "votes": 3011,
+          "pct": 3.1,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 195443,
+      "voters": 99864,
+      "valid_votes": 97039,
+      "invalid_votes": 2825,
+      "abstain": 95579
     },
     {
       "sg_typecode": "9",
@@ -63578,15 +66814,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 23834,
+          "pct": 57.59,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 10840,
+          "pct": 26.19,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 6708,
+          "pct": 16.2,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 71607,
+      "voters": 44096,
+      "valid_votes": 41382,
+      "invalid_votes": 2714,
+      "abstain": 27511
     },
     {
       "sg_typecode": "9",
@@ -63596,24 +66852,63 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "한나라당",
-          "party": "한나라당",
-          "seats": 1,
-          "won": true
-        },
-        {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 68541,
+          "pct": 36.04,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 56801,
+          "pct": 29.87,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "seats": 1,
+          "won": true,
+          "votes": 52193,
+          "pct": 27.44,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 7895,
+          "pct": 4.15,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 4719,
+          "pct": 2.48,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 404722,
+      "voters": 193692,
+      "valid_votes": 190149,
+      "invalid_votes": 3543,
+      "abstain": 211030
     },
     {
       "sg_typecode": "9",
@@ -63626,9 +66921,26 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12410,
+          "pct": 65.74,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6466,
+          "pct": 34.25,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 27528,
+      "voters": 20470,
+      "valid_votes": 18876,
+      "invalid_votes": 1594,
+      "abstain": 7058
     },
     {
       "sg_typecode": "9",
@@ -63641,9 +66953,26 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 22492,
+          "pct": 68.82,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 10186,
+          "pct": 31.17,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 52517,
+      "voters": 36015,
+      "valid_votes": 32678,
+      "invalid_votes": 3337,
+      "abstain": 16502
     },
     {
       "sg_typecode": "9",
@@ -63656,9 +66985,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 19293,
+          "pct": 47.25,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 12053,
+          "pct": 29.52,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9480,
+          "pct": 23.22,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 70516,
+      "voters": 43141,
+      "valid_votes": 40826,
+      "invalid_votes": 2315,
+      "abstain": 27375
     },
     {
       "sg_typecode": "9",
@@ -63668,12 +67023,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 11845,
+          "pct": 57.1,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 8898,
+          "pct": 42.89,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 31877,
+      "voters": 22349,
+      "valid_votes": 20743,
+      "invalid_votes": 1606,
+      "abstain": 9528
     },
     {
       "sg_typecode": "9",
@@ -63683,12 +67062,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9651,
+          "pct": 53.47,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 8397,
+          "pct": 46.52,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 26512,
+      "voters": 18917,
+      "valid_votes": 18048,
+      "invalid_votes": 869,
+      "abstain": 7595
     },
     {
       "sg_typecode": "9",
@@ -63701,9 +67104,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 11462,
+          "pct": 55.88,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6936,
+          "pct": 33.81,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 2113,
+          "pct": 10.3,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 29345,
+      "voters": 21760,
+      "valid_votes": 20511,
+      "invalid_votes": 1249,
+      "abstain": 7585
     },
     {
       "sg_typecode": "9",
@@ -63716,9 +67145,35 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 12430,
+          "pct": 45.59,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 9980,
+          "pct": 36.61,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 4850,
+          "pct": 17.79,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 41711,
+      "voters": 28875,
+      "valid_votes": 27260,
+      "invalid_votes": 1615,
+      "abstain": 12836
     },
     {
       "sg_typecode": "9",
@@ -63731,9 +67186,26 @@
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 18579,
+          "pct": 64.06,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 10419,
+          "pct": 35.93,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 44298,
+      "voters": 30571,
+      "valid_votes": 28998,
+      "invalid_votes": 1573,
+      "abstain": 13727
     },
     {
       "sg_typecode": "9",
@@ -63743,12 +67215,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 24165,
+          "pct": 62.32,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 14607,
+          "pct": 37.67,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 70936,
+      "voters": 40231,
+      "valid_votes": 38772,
+      "invalid_votes": 1459,
+      "abstain": 30705
     },
     {
       "sg_typecode": "9",
@@ -63758,18 +67254,36 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 32107,
+          "pct": 52.14,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 29468,
+          "pct": 47.85,
+          "rank": 2
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 107034,
+      "voters": 63331,
+      "valid_votes": 61575,
+      "invalid_votes": 1756,
+      "abstain": 43703
     },
     {
       "sg_typecode": "9",
@@ -63779,12 +67293,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9904,
+          "pct": 62.14,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 6034,
+          "pct": 37.85,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 25536,
+      "voters": 16652,
+      "valid_votes": 15938,
+      "invalid_votes": 714,
+      "abstain": 8884
     },
     {
       "sg_typecode": "9",
@@ -63794,12 +67332,45 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 16613,
+          "pct": 58.74,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 8304,
+          "pct": 29.36,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 3362,
+          "pct": 11.88,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 48180,
+      "voters": 29289,
+      "valid_votes": 28279,
+      "invalid_votes": 1010,
+      "abstain": 18891
     },
     {
       "sg_typecode": "9",
@@ -63809,18 +67380,72 @@
       "seats_total": 3,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 2,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 135271,
+          "pct": 52.86,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 80272,
+          "pct": 31.37,
+          "rank": 2
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 14729,
+          "pct": 5.75,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 11552,
+          "pct": 4.51,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 8752,
+          "pct": 3.42,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 5282,
+          "pct": 2.06,
+          "seats": 0,
+          "won": false,
+          "rank": 6
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 2,
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 479590,
+      "voters": 260068,
+      "valid_votes": 255858,
+      "invalid_votes": 4210,
+      "abstain": 219522
     },
     {
       "sg_typecode": "9",
@@ -63830,18 +67455,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 52035,
+          "pct": 56.64,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 39821,
+          "pct": 43.35,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 161522,
+      "voters": 94695,
+      "valid_votes": 91856,
+      "invalid_votes": 2839,
+      "abstain": 66827
     },
     {
       "sg_typecode": "9",
@@ -63851,18 +67494,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 86116,
+          "pct": 61.91,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 52967,
+          "pct": 38.08,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 254601,
+      "voters": 141112,
+      "valid_votes": 139083,
+      "invalid_votes": 2029,
+      "abstain": 113489
     },
     {
       "sg_typecode": "9",
@@ -63872,12 +67533,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 43127,
+          "pct": 55.02,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 35245,
+          "pct": 44.97,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 147833,
+      "voters": 79659,
+      "valid_votes": 78372,
+      "invalid_votes": 1287,
+      "abstain": 68174
     },
     {
       "sg_typecode": "9",
@@ -63890,21 +67575,53 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
-        },
-        {
-          "name": "민주노동당",
-          "party": "민주노동당",
-          "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 129428,
+          "pct": 39.35,
+          "rank": 1
         },
         {
           "name": "국민참여당",
           "party": "국민참여당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 87672,
+          "pct": 26.65,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "seats": 1,
+          "won": true,
+          "votes": 69977,
+          "pct": 21.27,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 27041,
+          "pct": 8.22,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 14749,
+          "pct": 4.48,
+          "seats": 0,
+          "won": false,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 672349,
+      "voters": 335184,
+      "valid_votes": 328867,
+      "invalid_votes": 6317,
+      "abstain": 337165
     },
     {
       "sg_typecode": "9",
@@ -63917,15 +67634,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 154362,
+          "pct": 46.98,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 118754,
+          "pct": 36.14,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 39196,
+          "pct": 11.93,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 16229,
+          "pct": 4.93,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 624528,
+      "voters": 333178,
+      "valid_votes": 328541,
+      "invalid_votes": 4637,
+      "abstain": 291350
     },
     {
       "sg_typecode": "9",
@@ -64178,15 +67931,44 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "votes": 108438,
+          "pct": 55.23,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 37463,
+          "pct": 19.08,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 31657,
+          "pct": 16.12,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 18747,
+          "pct": 9.54,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 454805,
+      "voters": 200163,
+      "valid_votes": 196305,
+      "invalid_votes": 3858,
+      "abstain": 254642
     },
     {
       "sg_typecode": "9",
@@ -64214,15 +67996,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 80853,
+          "pct": 56.31,
+          "rank": 1
         },
         {
           "name": "친박연합",
           "party": "친박연합",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 62710,
+          "pct": 43.68,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 339490,
+      "voters": 150653,
+      "valid_votes": 143563,
+      "invalid_votes": 7090,
+      "abstain": 188837
     },
     {
       "sg_typecode": "9",
@@ -64235,15 +68028,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 54467,
+          "pct": 53.92,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 25026,
+          "pct": 24.77,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 11583,
+          "pct": 11.46,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 9926,
+          "pct": 9.82,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 203914,
+      "voters": 103559,
+      "valid_votes": 101002,
+      "invalid_votes": 2557,
+      "abstain": 100355
     },
     {
       "sg_typecode": "9",
@@ -64256,15 +68085,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 61026,
+          "pct": 53.38,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 37608,
+          "pct": 32.9,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 15671,
+          "pct": 13.7,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 240421,
+      "voters": 116768,
+      "valid_votes": 114305,
+      "invalid_votes": 2463,
+      "abstain": 123653
     },
     {
       "sg_typecode": "9",
@@ -64277,15 +68133,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 57888,
+          "pct": 54.01,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 36644,
+          "pct": 34.18,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 12647,
+          "pct": 11.79,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 224693,
+      "voters": 109633,
+      "valid_votes": 107179,
+      "invalid_votes": 2454,
+      "abstain": 115060
     },
     {
       "sg_typecode": "9",
@@ -64298,15 +68181,42 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 57650,
+          "pct": 48.42,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 44340,
+          "pct": 37.24,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 17062,
+          "pct": 14.33,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 243993,
+      "voters": 121921,
+      "valid_votes": 119052,
+      "invalid_votes": 2869,
+      "abstain": 122072
     },
     {
       "sg_typecode": "9",
@@ -64319,9 +68229,26 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 49366,
+          "pct": 57.68,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 36209,
+          "pct": 42.31,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 169354,
+      "voters": 88030,
+      "valid_votes": 85575,
+      "invalid_votes": 2455,
+      "abstain": 81324
     },
     {
       "sg_typecode": "9",
@@ -64334,15 +68261,51 @@
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 80028,
+          "pct": 51.9,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 39597,
+          "pct": 25.68,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 20198,
+          "pct": 13.09,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 14363,
+          "pct": 9.31,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 328744,
+      "voters": 157509,
+      "valid_votes": 154186,
+      "invalid_votes": 3323,
+      "abstain": 171235
     },
     {
       "sg_typecode": "9",
@@ -64352,18 +68315,45 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 101877,
+          "pct": 54.95,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 72734,
+          "pct": 39.23,
+          "rank": 2
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 10769,
+          "pct": 5.8,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 339568,
+      "voters": 187966,
+      "valid_votes": 185380,
+      "invalid_votes": 2586,
+      "abstain": 151602
     },
     {
       "sg_typecode": "9",
@@ -64373,18 +68363,63 @@
       "seats_total": 3,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 120917,
+          "pct": 46.44,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 103736,
+          "pct": 39.84,
+          "rank": 2
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 23122,
+          "pct": 8.88,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 9329,
+          "pct": 3.58,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 3265,
+          "pct": 1.25,
+          "seats": 0,
+          "won": false,
+          "rank": 5
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 6
         }
-      ]
+      ],
+      "electors": 470325,
+      "voters": 264011,
+      "valid_votes": 260369,
+      "invalid_votes": 3642,
+      "abstain": 206314
     },
     {
       "sg_typecode": "9",
@@ -64394,18 +68429,54 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 69124,
+          "pct": 43.9,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 66650,
+          "pct": 42.33,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 11832,
+          "pct": 7.51,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 9843,
+          "pct": 6.25,
+          "seats": 0,
+          "won": false,
+          "rank": 4
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 292842,
+      "voters": 159937,
+      "valid_votes": 157449,
+      "invalid_votes": 2488,
+      "abstain": 132905
     },
     {
       "sg_typecode": "9",
@@ -64415,18 +68486,54 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 68071,
+          "pct": 47.07,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 58400,
+          "pct": 40.38,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 9353,
+          "pct": 6.46,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 8769,
+          "pct": 6.06,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 5
         }
-      ]
+      ],
+      "electors": 266950,
+      "voters": 146812,
+      "valid_votes": 144593,
+      "invalid_votes": 2219,
+      "abstain": 120138
     },
     {
       "sg_typecode": "9",
@@ -64436,18 +68543,72 @@
       "seats_total": 3,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 86499,
+          "pct": 42.84,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 78900,
+          "pct": 39.08,
+          "rank": 2
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 13340,
+          "pct": 6.6,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "name": "진보신당",
+          "party": "진보신당",
+          "votes": 8627,
+          "pct": 4.27,
+          "seats": 0,
+          "won": false,
+          "rank": 4
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 7958,
+          "pct": 3.94,
+          "seats": 0,
+          "won": false,
+          "rank": 5
+        },
+        {
+          "name": "자유선진당",
+          "party": "자유선진당",
+          "votes": 6568,
+          "pct": 3.25,
+          "seats": 0,
+          "won": false,
+          "rank": 6
         },
         {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 7
         }
-      ]
+      ],
+      "electors": 383508,
+      "voters": 204653,
+      "valid_votes": 201892,
+      "invalid_votes": 2761,
+      "abstain": 178855
     },
     {
       "sg_typecode": "9",
@@ -64457,18 +68618,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 100607,
+          "pct": 57.63,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 73954,
+          "pct": 42.36,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 355642,
+      "voters": 177527,
+      "valid_votes": 174561,
+      "invalid_votes": 2966,
+      "abstain": 178115
     },
     {
       "sg_typecode": "9",
@@ -64478,18 +68657,36 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "통합민주당",
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 81652,
+          "pct": 57.84,
+          "seats": 0,
+          "won": false,
+          "rank": 1
         },
         {
           "name": "한나라당",
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 59515,
+          "pct": 42.15,
+          "rank": 2
+        },
+        {
+          "name": "통합민주당",
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 294322,
+      "voters": 143298,
+      "valid_votes": 141167,
+      "invalid_votes": 2131,
+      "abstain": 151024
     },
     {
       "sg_typecode": "9",
@@ -64499,12 +68696,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 58191,
+          "pct": 53.56,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 50441,
+          "pct": 46.43,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 206407,
+      "voters": 110293,
+      "valid_votes": 108632,
+      "invalid_votes": 1661,
+      "abstain": 96114
     },
     {
       "sg_typecode": "9",
@@ -64529,12 +68750,45 @@
       "seats_total": 2,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 30679,
+          "pct": 70.64,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 7230,
+          "pct": 16.64,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 5520,
+          "pct": 12.71,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 2,
-          "won": true
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 63702,
+      "voters": 47405,
+      "valid_votes": 43429,
+      "invalid_votes": 3976,
+      "abstain": 16297
     },
     {
       "sg_typecode": "9",
@@ -64559,12 +68813,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 10652,
+          "pct": 62.94,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 6272,
+          "pct": 37.05,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 22984,
+      "voters": 18291,
+      "valid_votes": 16924,
+      "invalid_votes": 1367,
+      "abstain": 4693
     },
     {
       "sg_typecode": "9",
@@ -64664,12 +68942,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 13922,
+          "pct": 58.36,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "민주노동당",
+          "party": "민주노동당",
+          "votes": 9931,
+          "pct": 41.63,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 34748,
+      "voters": 25225,
+      "valid_votes": 23853,
+      "invalid_votes": 1372,
+      "abstain": 9523
     },
     {
       "sg_typecode": "9",
@@ -64679,12 +68981,36 @@
       "seats_total": 1,
       "candidates": [
         {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 13070,
+          "pct": 68.77,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "국민참여당",
+          "party": "국민참여당",
+          "votes": 5933,
+          "pct": 31.22,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
           "name": "통합민주당",
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 28171,
+      "voters": 21290,
+      "valid_votes": 19003,
+      "invalid_votes": 2287,
+      "abstain": 6881
     },
     {
       "sg_typecode": "9",
@@ -64784,18 +69110,38 @@
       "seats_total": 2,
       "candidates": [
         {
-          "name": "한나라당",
-          "party": "한나라당",
-          "seats": 1,
-          "won": true
-        },
-        {
           "name": "자유선진당",
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 19864,
+          "pct": 50.21,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "seats": 1,
+          "won": true,
+          "votes": 10026,
+          "pct": 25.34,
+          "rank": 2
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 9667,
+          "pct": 24.43,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 62144,
+      "voters": 41886,
+      "valid_votes": 39557,
+      "invalid_votes": 2329,
+      "abstain": 20258
     },
     {
       "sg_typecode": "9",
@@ -64803,14 +69149,37 @@
       "sigungu": "중구",
       "scope": "proportional_sigungu",
       "seats_total": 1,
-      "votes_pending": true,
       "candidates": [
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 19017,
+          "pct": 51.56,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 17865,
+          "pct": 48.43,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
         {
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 73354,
+      "voters": 37874,
+      "valid_votes": 36882,
+      "invalid_votes": 992,
+      "abstain": 35480
     },
     {
       "sg_typecode": "9",
@@ -64818,14 +69187,30 @@
       "sigungu": "동구",
       "scope": "proportional_sigungu",
       "seats_total": 1,
-      "votes_pending": true,
       "candidates": [
         {
           "party": "민주노동당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 17700,
+          "pct": 52.1,
+          "rank": 1
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 16270,
+          "pct": 47.89,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 62253,
+      "voters": 35092,
+      "valid_votes": 33970,
+      "invalid_votes": 1122,
+      "abstain": 27161
     },
     {
       "sg_typecode": "9",
@@ -64833,19 +69218,36 @@
       "sigungu": "남구",
       "scope": "proportional_sigungu",
       "seats_total": 2,
-      "votes_pending": true,
       "candidates": [
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 88225,
+          "pct": 54.37,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
         {
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 74031,
+          "pct": 45.62,
+          "rank": 2
         },
         {
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 337880,
+      "voters": 165602,
+      "valid_votes": 162256,
+      "invalid_votes": 3346,
+      "abstain": 172278
     },
     {
       "sg_typecode": "9",
@@ -64853,14 +69255,39 @@
       "sigungu": "여주군",
       "scope": "proportional_sigungu",
       "seats_total": 1,
-      "votes_pending": true,
       "candidates": [
         {
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 20625,
+          "pct": 47.36,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 15618,
+          "pct": 35.86,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "미래연합",
+          "party": "미래연합",
+          "votes": 7302,
+          "pct": 16.76,
+          "seats": 0,
+          "won": false,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 85162,
+      "voters": 44839,
+      "valid_votes": 43545,
+      "invalid_votes": 1294,
+      "abstain": 40323
     },
     {
       "sg_typecode": "9",
@@ -64883,19 +69310,36 @@
       "sigungu": "청원군",
       "scope": "proportional_sigungu",
       "seats_total": 2,
-      "votes_pending": true,
       "candidates": [
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 44833,
+          "pct": 66.66,
+          "seats": 0,
+          "won": false,
+          "rank": 1
+        },
         {
           "party": "한나라당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 22419,
+          "pct": 33.33,
+          "rank": 2
         },
         {
           "party": "통합민주당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "rank": 3
         }
-      ]
+      ],
+      "electors": 117270,
+      "voters": 69615,
+      "valid_votes": 67252,
+      "invalid_votes": 2363,
+      "abstain": 47655
     },
     {
       "sg_typecode": "9",
@@ -64903,14 +69347,30 @@
       "sigungu": "연기군",
       "scope": "proportional_sigungu",
       "seats_total": 1,
-      "votes_pending": true,
       "candidates": [
         {
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 18944,
+          "pct": 52.91,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 16856,
+          "pct": 47.08,
+          "seats": 0,
+          "won": false,
+          "rank": 2
         }
-      ]
+      ],
+      "electors": 64534,
+      "voters": 37804,
+      "valid_votes": 35800,
+      "invalid_votes": 2004,
+      "abstain": 26730
     },
     {
       "sg_typecode": "9",
@@ -64918,19 +69378,45 @@
       "sigungu": "당진군",
       "scope": "proportional_sigungu",
       "seats_total": 2,
-      "votes_pending": true,
       "candidates": [
-        {
-          "party": "통합민주당",
-          "seats": 1,
-          "won": true
-        },
         {
           "party": "자유선진당",
           "seats": 1,
-          "won": true
+          "won": true,
+          "votes": 25214,
+          "pct": 43.86,
+          "rank": 1
+        },
+        {
+          "name": "민주당",
+          "party": "민주당",
+          "votes": 18723,
+          "pct": 32.57,
+          "seats": 0,
+          "won": false,
+          "rank": 2
+        },
+        {
+          "name": "한나라당",
+          "party": "한나라당",
+          "votes": 13547,
+          "pct": 23.56,
+          "seats": 0,
+          "won": false,
+          "rank": 3
+        },
+        {
+          "party": "통합민주당",
+          "seats": 1,
+          "won": true,
+          "rank": 4
         }
-      ]
+      ],
+      "electors": 111252,
+      "voters": 59858,
+      "valid_votes": 57484,
+      "invalid_votes": 2374,
+      "abstain": 51394
     },
     {
       "sg_typecode": "9",
