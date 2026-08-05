@@ -10,3 +10,14 @@
 | `iter_compare.py` | 두 build 결과 diff |
 
 CI/cron: `audit_quality.py`.
+
+## full_gate.sh — 커밋 전 필수
+
+```bash
+bash scripts/audit/full_gate.sh
+```
+
+python 테스트 전부 + `regen_check` + UI 감사를 한 번에 돌린다.
+**부분 테스트 성공을 커밋 허가로 간주하지 않는다.** 이 세션에서 두 번,
+관련 테스트만 돌리고 커밋했다가 sitemap 검사가 깨진 채로 올라갔다.
+사람 주의로 막을 종류가 아니라 gate로 만들었다.
