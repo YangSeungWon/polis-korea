@@ -115,6 +115,10 @@ def resolve_version(name: str, date: str, ents: list) -> dict:
     for e in ents:
         if e.get("kind") != "admin_unit":
             continue
+        # 하위 단위(일반구)는 이 지역의 **시점 버전**이 아니다. 포항시남구·북구를 후보로
+        # 세면 '포항'이 늘 셋과 맞물려 모호해진다(실제로 77건이 모호로 잡혔다).
+        if e.get("contained_in"):
+            continue
         if e["name"] not in name and name not in e["name"]:
             continue
         f, t = e.get("valid_from") or "", e.get("valid_to") or "9999-12-31"
@@ -396,5 +400,9 @@ def main(regions: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    args = sys.argv[1:] or ["하남", "부천", "군위", "이천", "종로"]
+    # 인자가 없으면 **이미 만들어 둔 지역 전부**를 다시 만든다. 기본 목록만 돌리면
+    # 나머지가 옛 생성기 결과로 남아 regen_check가 못 잡는다.
+    args = sys.argv[1:] or sorted(
+        {f.stem for f in OUT.glob("*.json")}
+        | {"하남", "부천", "군위", "이천", "종로"})
     sys.exit(main(args))
