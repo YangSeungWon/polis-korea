@@ -1,0 +1,8726 @@
+{
+ "_meta": {
+  "current": "22nd-general-2024",
+  "previous": "21st-general-2020",
+  "generated_at": "2026-08-05T15:39:56+09:00",
+  "source": "polis 계산",
+  "scope_note": "**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다.",
+  "subset_warning": "아래 party_swing은 비교 가능한 선거구 안의 값이다. 전국 전체 변화가 아니다 — 두 숫자를 섞으면 없는 사실이 된다.",
+  "excluded_note": "split·merged는 관계를 알아도 delta를 만들 수 없다. A → B + C에서 A의 과거 득표를 나눌 근거가 없다.",
+  "lineage": "data/district_lineage/22__21.json"
+ },
+ "counts": {
+  "total_districts": 254,
+  "compared": 190,
+  "undetermined": 19,
+  "excluded_redistricting": 45,
+  "by_relation": {
+   "exact": 189,
+   "minor_boundary_change": 19,
+   "boundary_changed": 30,
+   "unresolvable": 7,
+   "merged": 6,
+   "renamed": 1,
+   "split": 2
+  },
+  "outcome": {
+   "party_flip": 15,
+   "party_hold": 175
+  }
+ },
+ "swing_denominator": "분모 = 비교 가능한 선거구 중 **두 회차 모두 그 정당이 출마한** 곳. 한쪽만 출마한 곳은 newly_ran·no_longer_ran으로 따로 담는다 — 0%에서 42.9%가 된 것과 5%에서 47.9%가 된 것은 다른 사실이다. 5곳 미만은 평균이 뜻을 잃어 싣지 않는다.",
+ "unregistered_parties": [
+  "가락특권폐지당",
+  "가자!평화인권당",
+  "국가혁명배당금당",
+  "국민새정당",
+  "기독당",
+  "기독자유통일당",
+  "내일로미래로",
+  "녹색정의당",
+  "미래당",
+  "민중민주당",
+  "새진보연합",
+  "소나무당",
+  "우리공화당",
+  "자유통일당",
+  "충청의미래당",
+  "친박신당",
+  "한국농어민당",
+  "한국복지당"
+ ],
+ "unregistered_note": "정당 registry에 계보가 없는 이름들. 추정해서 잇지 않으므로 각각 독립 identity로 센다. '녹색정의당'처럼 실제로는 계보가 있는 것이 섞여 있으면 registry를 보강해야 한다 — 여기서 임의로 잇지 않는다.",
+ "party_swing_in_compared": {
+  "진보당": {
+   "mean_pp": 5.47,
+   "districts": 8
+  },
+  "국민의힘": {
+   "mean_pp": 3.7,
+   "districts": 176
+  },
+  "더불어민주당": {
+   "mean_pp": 0.82,
+   "districts": 183
+  }
+ },
+ "turnout_in_compared": {
+  "mean_delta_pp": 0.68,
+  "districts": 190
+ },
+ "biggest_moves": [
+  {
+   "district": "강원 강릉시",
+   "party": "국민의힘",
+   "delta": 42.96
+  },
+  {
+   "district": "대구 수성구을",
+   "party": "국민의힘",
+   "delta": 37.08
+  },
+  {
+   "district": "인천 동구미추홀구을",
+   "party": "국민의힘",
+   "delta": 34.86
+  },
+  {
+   "district": "경남 산청군함양군거창군합천군",
+   "party": "국민의힘",
+   "delta": 34.52
+  },
+  {
+   "district": "전남 고흥군보성군장흥군강진군",
+   "party": "더불어민주당",
+   "delta": 27.88
+  },
+  {
+   "district": "광주 북구갑",
+   "party": "더불어민주당",
+   "delta": 25.66
+  },
+  {
+   "district": "전남 담양군함평군영광군장성군",
+   "party": "더불어민주당",
+   "delta": -25.49
+  },
+  {
+   "district": "전남 해남군완도군진도군",
+   "party": "더불어민주당",
+   "delta": 24.85
+  },
+  {
+   "district": "전남 목포시",
+   "party": "더불어민주당",
+   "delta": 22.66
+  },
+  {
+   "district": "대구 북구갑",
+   "party": "국민의힘",
+   "delta": 21.56
+  },
+  {
+   "district": "울산 동구",
+   "party": "더불어민주당",
+   "delta": 21.36
+  },
+  {
+   "district": "경북 안동시예천군",
+   "party": "국민의힘",
+   "delta": 20.36
+  }
+ ],
+ "units": [
+  {
+   "district": "강원 강릉시",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 강릉시",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "권성동",
+    "party": "국민의힘",
+    "pct": 54.24
+   },
+   "previous_winner": {
+    "name": "권성동",
+    "party": "무소속",
+    "pct": 40.85
+   },
+   "margin": 10.9,
+   "previous_margin": 2.09,
+   "margin_delta": 8.81,
+   "turnout": 65.62,
+   "previous_turnout": 66.63,
+   "turnout_delta": -1.01,
+   "share_delta": {
+    "더불어민주당": 4.58,
+    "국민의힘": 42.96
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.41
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.54
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.86
+    }
+   ]
+  },
+  {
+   "district": "강원 동해시태백시삼척시정선군",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 동해시태백시삼척시정선군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이철규",
+    "party": "국민의힘",
+    "pct": 61.22
+   },
+   "previous_winner": {
+    "name": "이철규",
+    "party": "미래통합당",
+    "pct": 53.6
+   },
+   "margin": 24.74,
+   "previous_margin": 10.54,
+   "margin_delta": 14.2,
+   "turnout": 65.82,
+   "previous_turnout": 65.72,
+   "turnout_delta": 0.1,
+   "share_delta": {
+    "더불어민주당": -6.58,
+    "국민의힘": 7.62
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.29
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.86
+    }
+   ]
+  },
+  {
+   "district": "강원 속초시인제군고성군양양군",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 속초시인제군고성군양양군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이양수",
+    "party": "국민의힘",
+    "pct": 55.85
+   },
+   "previous_winner": {
+    "name": "이양수",
+    "party": "미래통합당",
+    "pct": 52.56
+   },
+   "margin": 11.7,
+   "previous_margin": 8.36,
+   "margin_delta": 3.34,
+   "turnout": 66.61,
+   "previous_turnout": 66.21,
+   "turnout_delta": 0.4,
+   "share_delta": {
+    "더불어민주당": -0.05,
+    "국민의힘": 3.29
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.05
+    }
+   ]
+  },
+  {
+   "district": "강원 원주시갑",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 원주시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "박정하",
+    "party": "국민의힘",
+    "pct": 50.72
+   },
+   "previous_winner": {
+    "name": "이광재",
+    "party": "더불어민주당",
+    "pct": 48.57
+   },
+   "margin": 1.44,
+   "previous_margin": 7.44,
+   "margin_delta": -6.0,
+   "turnout": 65.01,
+   "previous_turnout": 61.73,
+   "turnout_delta": 3.28,
+   "share_delta": {
+    "더불어민주당": 0.71,
+    "국민의힘": 9.59
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.51
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.53
+    }
+   ]
+  },
+  {
+   "district": "강원 원주시을",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 원주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "송기헌",
+    "party": "더불어민주당",
+    "pct": 54.09
+   },
+   "previous_winner": {
+    "name": "송기헌",
+    "party": "더불어민주당",
+    "pct": 53.89
+   },
+   "margin": 8.18,
+   "previous_margin": 10.7,
+   "margin_delta": -2.52,
+   "turnout": 66.59,
+   "previous_turnout": 64.6,
+   "turnout_delta": 1.99,
+   "share_delta": {
+    "더불어민주당": 0.2,
+    "국민의힘": 2.72
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.71
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.51
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.85
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.86
+    }
+   ]
+  },
+  {
+   "district": "강원 춘천시철원군화천군양구군갑",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 춘천시철원군화천군양구군갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "허영",
+    "party": "더불어민주당",
+    "pct": 53.44
+   },
+   "previous_winner": {
+    "name": "허영",
+    "party": "더불어민주당",
+    "pct": 51.32
+   },
+   "margin": 8.92,
+   "previous_margin": 7.38,
+   "margin_delta": 1.54,
+   "turnout": 67.5,
+   "previous_turnout": 68.51,
+   "turnout_delta": -1.01,
+   "share_delta": {
+    "더불어민주당": 2.12,
+    "국민의힘": 0.58
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 1.07
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.09
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
+    }
+   ]
+  },
+  {
+   "district": "강원 춘천시철원군화천군양구군을",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 춘천시철원군화천군양구군을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "한기호",
+    "party": "국민의힘",
+    "pct": 53.94
+   },
+   "previous_winner": {
+    "name": "한기호",
+    "party": "미래통합당",
+    "pct": 52.08
+   },
+   "margin": 12.48,
+   "previous_margin": 5.72,
+   "margin_delta": 6.76,
+   "turnout": 66.6,
+   "previous_turnout": 67.3,
+   "turnout_delta": -0.7,
+   "share_delta": {
+    "더불어민주당": -4.9,
+    "국민의힘": 1.86
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.57
+    }
+   ]
+  },
+  {
+   "district": "강원 홍천군횡성군영월군평창군",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "강원 홍천군횡성군영월군평창군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "유상범",
+    "party": "국민의힘",
+    "pct": 57.71
+   },
+   "previous_winner": {
+    "name": "유상범",
+    "party": "미래통합당",
+    "pct": 48.6
+   },
+   "margin": 15.42,
+   "previous_margin": 10.2,
+   "margin_delta": 5.22,
+   "turnout": 69.11,
+   "previous_turnout": 67.09,
+   "turnout_delta": 2.02,
+   "share_delta": {
+    "더불어민주당": 3.89,
+    "국민의힘": 9.11
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.1
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 고양시갑"
+  },
+  {
+   "district": "경기 고양시병",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 고양시병' 겹침 95%/88%",
+   "previous_district": "경기 고양시병"
+  },
+  {
+   "district": "경기 고양시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 고양시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "한준호",
+    "party": "더불어민주당",
+    "pct": 61.25
+   },
+   "previous_winner": {
+    "name": "한준호",
+    "party": "더불어민주당",
+    "pct": 52.47
+   },
+   "margin": 23.91,
+   "previous_margin": 16.7,
+   "margin_delta": 7.21,
+   "turnout": 69.89,
+   "previous_turnout": 68.32,
+   "turnout_delta": 1.57,
+   "share_delta": {
+    "더불어민주당": 8.78,
+    "국민의힘": 1.57
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 7.57
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.39
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.73
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시정",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 고양시정",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김영환",
+    "party": "더불어민주당",
+    "pct": 54.89
+   },
+   "previous_winner": {
+    "name": "이용우",
+    "party": "더불어민주당",
+    "pct": 53.42
+   },
+   "margin": 9.78,
+   "previous_margin": 8.55,
+   "margin_delta": 1.23,
+   "turnout": 69.28,
+   "previous_turnout": 68.9,
+   "turnout_delta": 0.38,
+   "share_delta": {
+    "더불어민주당": 1.47,
+    "국민의힘": 0.24
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.42
+    },
+    {
+     "party": "기본소득당",
+     "previous_pct": 1.28
+    }
+   ]
+  },
+  {
+   "district": "경기 광명시갑",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 광명시을 59%, 경기 광명시갑 41%",
+   "previous_district": "경기 광명시을"
+  },
+  {
+   "district": "경기 광명시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 광명시을'의 56%만 차지",
+   "previous_district": "경기 광명시을"
+  },
+  {
+   "district": "경기 광주시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 광주시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "소병훈",
+    "party": "더불어민주당",
+    "pct": 56.34
+   },
+   "previous_winner": {
+    "name": "소병훈",
+    "party": "더불어민주당",
+    "pct": 56.15
+   },
+   "margin": 12.68,
+   "previous_margin": 13.45,
+   "margin_delta": -0.77,
+   "turnout": 64.31,
+   "previous_turnout": 61.03,
+   "turnout_delta": 3.28,
+   "share_delta": {
+    "더불어민주당": 0.19,
+    "국민의힘": 0.96
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.15
+    }
+   ]
+  },
+  {
+   "district": "경기 광주시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 광주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "안태준",
+    "party": "더불어민주당",
+    "pct": 55.07
+   },
+   "previous_winner": {
+    "name": "임종성",
+    "party": "더불어민주당",
+    "pct": 56.88
+   },
+   "margin": 10.14,
+   "previous_margin": 14.7,
+   "margin_delta": -4.56,
+   "turnout": 62.49,
+   "previous_turnout": 59.88,
+   "turnout_delta": 2.61,
+   "share_delta": {
+    "더불어민주당": -1.81,
+    "국민의힘": 2.75
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.94
+    }
+   ]
+  },
+  {
+   "district": "경기 구리시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 구리시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤호중",
+    "party": "더불어민주당",
+    "pct": 53.98
+   },
+   "previous_winner": {
+    "name": "윤호중",
+    "party": "더불어민주당",
+    "pct": 58.65
+   },
+   "margin": 10.66,
+   "previous_margin": 19.24,
+   "margin_delta": -8.58,
+   "turnout": 68.76,
+   "previous_turnout": 66.15,
+   "turnout_delta": 2.61,
+   "share_delta": {
+    "더불어민주당": -4.67,
+    "국민의힘": 3.91
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.7
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.06
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.88
+    }
+   ]
+  },
+  {
+   "district": "경기 군포시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 군포시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이학영",
+    "party": "더불어민주당",
+    "pct": 56.92
+   },
+   "previous_winner": {
+    "name": "이학영",
+    "party": "더불어민주당",
+    "pct": 57.42
+   },
+   "margin": 13.84,
+   "previous_margin": 17.05,
+   "margin_delta": -3.21,
+   "turnout": 70.45,
+   "previous_turnout": 69.1,
+   "turnout_delta": 1.35,
+   "share_delta": {
+    "더불어민주당": -0.5,
+    "국민의힘": 2.71
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 2.21
+    }
+   ]
+  },
+  {
+   "district": "경기 김포시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 김포시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김주영",
+    "party": "더불어민주당",
+    "pct": 54.27
+   },
+   "previous_winner": {
+    "name": "김주영",
+    "party": "더불어민주당",
+    "pct": 52.89
+   },
+   "margin": 8.54,
+   "previous_margin": 14.4,
+   "margin_delta": -5.86,
+   "turnout": 69.71,
+   "previous_turnout": 67.44,
+   "turnout_delta": 2.27,
+   "share_delta": {
+    "더불어민주당": 1.38,
+    "국민의힘": 7.24
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.53
+    }
+   ]
+  },
+  {
+   "district": "경기 김포시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 김포시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박상혁",
+    "party": "더불어민주당",
+    "pct": 55.53
+   },
+   "previous_winner": {
+    "name": "박상혁",
+    "party": "더불어민주당",
+    "pct": 53.83
+   },
+   "margin": 11.06,
+   "previous_margin": 9.36,
+   "margin_delta": 1.7,
+   "turnout": 64.73,
+   "previous_turnout": 63.32,
+   "turnout_delta": 1.41,
+   "share_delta": {
+    "더불어민주당": 1.7
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.74
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.96
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 남양주시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "최민희",
+    "party": "더불어민주당",
+    "pct": 51.08
+   },
+   "previous_winner": {
+    "name": "조응천",
+    "party": "더불어민주당",
+    "pct": 57.96
+   },
+   "margin": 15.34,
+   "previous_margin": 19.84,
+   "margin_delta": -4.5,
+   "turnout": 63.54,
+   "previous_turnout": 61.52,
+   "turnout_delta": 2.02,
+   "share_delta": {
+    "더불어민주당": -6.88,
+    "국민의힘": -2.38
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 13.18
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.45
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.82
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시병",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 남양주시병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김용민",
+    "party": "더불어민주당",
+    "pct": 54.59
+   },
+   "previous_winner": {
+    "name": "김용민",
+    "party": "더불어민주당",
+    "pct": 50.08
+   },
+   "margin": 12.34,
+   "previous_margin": 2.99,
+   "margin_delta": 9.35,
+   "turnout": 68.48,
+   "previous_turnout": 67.73,
+   "turnout_delta": 0.75,
+   "share_delta": {
+    "더불어민주당": 4.51,
+    "국민의힘": -4.84
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 3.16
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.21
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.62
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 남양주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김병주",
+    "party": "더불어민주당",
+    "pct": 56.95
+   },
+   "previous_winner": {
+    "name": "김한정",
+    "party": "더불어민주당",
+    "pct": 59.08
+   },
+   "margin": 16.14,
+   "previous_margin": 27.65,
+   "margin_delta": -11.51,
+   "turnout": 63.78,
+   "previous_turnout": 60.49,
+   "turnout_delta": 3.29,
+   "share_delta": {
+    "더불어민주당": -2.13,
+    "국민의힘": 9.38
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.24
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.72
+    }
+   ]
+  },
+  {
+   "district": "경기 동두천시양주시연천군갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 양주시'의 77%만 차지",
+   "previous_district": "경기 양주시"
+  },
+  {
+   "district": "경기 동두천시양주시연천군을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기 동두천시연천군'",
+   "previous_district": "경기 동두천시연천군"
+  },
+  {
+   "district": "경기 부천시갑",
+   "sido": "경기",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기 부천시정 + 경기 부천시갑 통합",
+   "previous_district": "경기 부천시정"
+  },
+  {
+   "district": "경기 부천시병",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 부천시병' 겹침 83%/100%",
+   "previous_district": "경기 부천시병"
+  },
+  {
+   "district": "경기 부천시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 부천시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김기표",
+    "party": "더불어민주당",
+    "pct": 55.9
+   },
+   "previous_winner": {
+    "name": "설훈",
+    "party": "더불어민주당",
+    "pct": 54.91
+   },
+   "margin": 17.96,
+   "previous_margin": 15.31,
+   "margin_delta": 2.65,
+   "turnout": 69.67,
+   "previous_turnout": 67.69,
+   "turnout_delta": 1.98,
+   "share_delta": {
+    "더불어민주당": 0.99,
+    "국민의힘": -1.66
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 6.16
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.18
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.5
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.81
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시분당구갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 성남시분당구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "안철수",
+    "party": "국민의힘",
+    "pct": 53.28
+   },
+   "previous_winner": {
+    "name": "김은혜",
+    "party": "미래통합당",
+    "pct": 50.07
+   },
+   "margin": 6.56,
+   "previous_margin": 0.72,
+   "margin_delta": 5.84,
+   "turnout": 77.12,
+   "previous_turnout": 75.64,
+   "turnout_delta": 1.48,
+   "share_delta": {
+    "더불어민주당": -2.63,
+    "국민의힘": 3.21
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시분당구을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 성남시분당구을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김은혜",
+    "party": "국민의힘",
+    "pct": 51.13
+   },
+   "previous_winner": {
+    "name": "김병욱",
+    "party": "더불어민주당",
+    "pct": 47.94
+   },
+   "margin": 2.26,
+   "previous_margin": 2.83,
+   "margin_delta": -0.57,
+   "turnout": 75.03,
+   "previous_turnout": 73.62,
+   "turnout_delta": 1.41,
+   "share_delta": {
+    "더불어민주당": 0.93,
+    "국민의힘": 6.02
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.12
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.21
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.31
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.34
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시수정구",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 성남시수정구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김태년",
+    "party": "더불어민주당",
+    "pct": 58.42
+   },
+   "previous_winner": {
+    "name": "김태년",
+    "party": "더불어민주당",
+    "pct": 60.31
+   },
+   "margin": 16.84,
+   "previous_margin": 24.5,
+   "margin_delta": -7.66,
+   "turnout": 66.83,
+   "previous_turnout": 63.1,
+   "turnout_delta": 3.73,
+   "share_delta": {
+    "더불어민주당": -1.89,
+    "국민의힘": 5.77
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.9
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 2.97
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시중원구",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 성남시중원구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이수진",
+    "party": "더불어민주당",
+    "pct": 60.12
+   },
+   "previous_winner": {
+    "name": "윤영찬",
+    "party": "더불어민주당",
+    "pct": 54.62
+   },
+   "margin": 20.24,
+   "previous_margin": 12.95,
+   "margin_delta": 7.29,
+   "turnout": 66.63,
+   "previous_turnout": 63.51,
+   "turnout_delta": 3.12,
+   "share_delta": {
+    "더불어민주당": 5.5,
+    "국민의힘": -1.79
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 3.05
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 수원시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김승원",
+    "party": "더불어민주당",
+    "pct": 55.55
+   },
+   "previous_winner": {
+    "name": "김승원",
+    "party": "더불어민주당",
+    "pct": 59.17
+   },
+   "margin": 13.38,
+   "previous_margin": 19.59,
+   "margin_delta": -6.21,
+   "turnout": 68.62,
+   "previous_turnout": 66.49,
+   "turnout_delta": 2.13,
+   "share_delta": {
+    "더불어민주당": -3.62,
+    "국민의힘": 2.59
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.29
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.25
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시무",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 수원시무"
+  },
+  {
+   "district": "경기 수원시병",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 수원시병"
+  },
+  {
+   "district": "경기 수원시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 수원시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "백혜련",
+    "party": "더불어민주당",
+    "pct": 61.74
+   },
+   "previous_winner": {
+    "name": "백혜련",
+    "party": "더불어민주당",
+    "pct": 60.69
+   },
+   "margin": 23.48,
+   "previous_margin": 22.39,
+   "margin_delta": 1.09,
+   "turnout": 66.54,
+   "previous_turnout": 66.04,
+   "turnout_delta": 0.5,
+   "share_delta": {
+    "더불어민주당": 1.05,
+    "국민의힘": -0.04
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.01
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시정",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 수원시정",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김준혁",
+    "party": "더불어민주당",
+    "pct": 50.87
+   },
+   "previous_winner": {
+    "name": "박광온",
+    "party": "더불어민주당",
+    "pct": 57.43
+   },
+   "margin": 1.74,
+   "previous_margin": 19.47,
+   "margin_delta": -17.73,
+   "turnout": 70.66,
+   "previous_turnout": 69.4,
+   "turnout_delta": 1.26,
+   "share_delta": {
+    "더불어민주당": -6.56,
+    "국민의힘": 11.17
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.51
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.95
+    }
+   ]
+  },
+  {
+   "district": "경기 시흥시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 시흥시갑"
+  },
+  {
+   "district": "경기 시흥시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 시흥시을"
+  },
+  {
+   "district": "경기 안산시갑",
+   "sido": "경기",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous_district": "경기 안산시상록구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "양문석",
+    "party": "더불어민주당",
+    "pct": 55.62
+   },
+   "previous_winner": {
+    "name": "전해철",
+    "party": "더불어민주당",
+    "pct": 58.56
+   },
+   "margin": 11.24,
+   "previous_margin": 20.49,
+   "margin_delta": -9.25,
+   "turnout": 61.55,
+   "previous_turnout": 60.93,
+   "turnout_delta": 0.62,
+   "share_delta": {
+    "더불어민주당": -2.94,
+    "국민의힘": 6.31
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.65
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.74
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.99
+    }
+   ]
+  },
+  {
+   "district": "경기 안산시병",
+   "sido": "경기",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기 안산시단원구을 + 경기 안산시단원구갑 통합",
+   "previous_district": "경기 안산시단원구을"
+  },
+  {
+   "district": "경기 안산시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안산시상록구을' 겹침 81%/100%",
+   "previous_district": "경기 안산시상록구을"
+  },
+  {
+   "district": "경기 안성시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 안성시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤종군",
+    "party": "더불어민주당",
+    "pct": 50.72
+   },
+   "previous_winner": {
+    "name": "이규민",
+    "party": "더불어민주당",
+    "pct": 51.45
+   },
+   "margin": 3.35,
+   "previous_margin": 4.32,
+   "margin_delta": -0.97,
+   "turnout": 63.4,
+   "previous_turnout": 63.52,
+   "turnout_delta": -0.12,
+   "share_delta": {
+    "더불어민주당": -0.73,
+    "국민의힘": 0.24
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.91
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.42
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시동안구갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 안양시동안구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "민병덕",
+    "party": "더불어민주당",
+    "pct": 57.33
+   },
+   "previous_winner": {
+    "name": "민병덕",
+    "party": "더불어민주당",
+    "pct": 55.34
+   },
+   "margin": 14.66,
+   "previous_margin": 15.57,
+   "margin_delta": -0.91,
+   "turnout": 72.42,
+   "previous_turnout": 70.57,
+   "turnout_delta": 1.85,
+   "share_delta": {
+    "더불어민주당": 1.99,
+    "국민의힘": 2.9
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.27
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.63
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시동안구을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 안양시동안구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이재정",
+    "party": "더불어민주당",
+    "pct": 53.86
+   },
+   "previous_winner": {
+    "name": "이재정",
+    "party": "더불어민주당",
+    "pct": 54.15
+   },
+   "margin": 7.72,
+   "previous_margin": 12.42,
+   "margin_delta": -4.7,
+   "turnout": 75.69,
+   "previous_turnout": 75.82,
+   "turnout_delta": -0.13,
+   "share_delta": {
+    "더불어민주당": -0.29,
+    "국민의힘": 4.41
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.24
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.27
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.6
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시만안구",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 안양시만안구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강득구",
+    "party": "더불어민주당",
+    "pct": 56.86
+   },
+   "previous_winner": {
+    "name": "강득구",
+    "party": "더불어민주당",
+    "pct": 53.61
+   },
+   "margin": 13.72,
+   "previous_margin": 11.27,
+   "margin_delta": 2.45,
+   "turnout": 68.98,
+   "previous_turnout": 67.29,
+   "turnout_delta": 1.69,
+   "share_delta": {
+    "더불어민주당": 3.25,
+    "국민의힘": 0.8
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.35
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
+    }
+   ]
+  },
+  {
+   "district": "경기 여주시양평군",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 여주시양평군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김선교",
+    "party": "국민의힘",
+    "pct": 53.58
+   },
+   "previous_winner": {
+    "name": "김선교",
+    "party": "미래통합당",
+    "pct": 54.98
+   },
+   "margin": 7.16,
+   "previous_margin": 14.8,
+   "margin_delta": -7.64,
+   "turnout": 66.84,
+   "previous_turnout": 65.75,
+   "turnout_delta": 1.09,
+   "share_delta": {
+    "더불어민주당": 6.24,
+    "국민의힘": -1.4
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.56
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.58
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
+    }
+   ]
+  },
+  {
+   "district": "경기 오산시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 오산시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "차지호",
+    "party": "더불어민주당",
+    "pct": 59.02
+   },
+   "previous_winner": {
+    "name": "안민석",
+    "party": "더불어민주당",
+    "pct": 56.72
+   },
+   "margin": 18.04,
+   "previous_margin": 15.66,
+   "margin_delta": 2.38,
+   "turnout": 60.2,
+   "previous_turnout": 60.6,
+   "turnout_delta": -0.4,
+   "share_delta": {
+    "더불어민주당": 2.3,
+    "국민의힘": -0.08
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.22
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 용인시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "이상식",
+    "party": "더불어민주당",
+    "pct": 50.22
+   },
+   "previous_winner": {
+    "name": "정찬민",
+    "party": "미래통합당",
+    "pct": 53.14
+   },
+   "margin": 6.39,
+   "previous_margin": 7.2,
+   "margin_delta": -0.81,
+   "turnout": 63.34,
+   "previous_turnout": 62.55,
+   "turnout_delta": 0.79,
+   "share_delta": {
+    "더불어민주당": 4.28,
+    "국민의힘": -9.31
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 3.21
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.92
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시병",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 용인시병"
+  },
+  {
+   "district": "경기 용인시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 용인시을"
+  },
+  {
+   "district": "경기 용인시정",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 용인시정' 겹침 91%/86%",
+   "previous_district": "경기 용인시정"
+  },
+  {
+   "district": "경기 의왕시과천시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 의왕시과천시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이소영",
+    "party": "더불어민주당",
+    "pct": 54.37
+   },
+   "previous_winner": {
+    "name": "이소영",
+    "party": "더불어민주당",
+    "pct": 43.39
+   },
+   "margin": 8.74,
+   "previous_margin": 5.44,
+   "margin_delta": 3.3,
+   "turnout": 74.72,
+   "previous_turnout": 72.69,
+   "turnout_delta": 2.03,
+   "share_delta": {
+    "더불어민주당": 10.98,
+    "국민의힘": 7.68
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.37
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 15.29
+    }
+   ]
+  },
+  {
+   "district": "경기 의정부시갑",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 의정부시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박지혜",
+    "party": "더불어민주당",
+    "pct": 54.89
+   },
+   "previous_winner": {
+    "name": "오영환",
+    "party": "더불어민주당",
+    "pct": 53.03
+   },
+   "margin": 11.44,
+   "previous_margin": 15.64,
+   "margin_delta": -4.2,
+   "turnout": 61.81,
+   "previous_turnout": 58.74,
+   "turnout_delta": 3.07,
+   "share_delta": {
+    "더불어민주당": 1.86,
+    "국민의힘": 6.06
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.66
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.02
+    }
+   ]
+  },
+  {
+   "district": "경기 의정부시을",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 의정부시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이재강",
+    "party": "더불어민주당",
+    "pct": 55.28
+   },
+   "previous_winner": {
+    "name": "김민철",
+    "party": "더불어민주당",
+    "pct": 55.99
+   },
+   "margin": 10.56,
+   "previous_margin": 17.16,
+   "margin_delta": -6.6,
+   "turnout": 65.47,
+   "previous_turnout": 62.43,
+   "turnout_delta": 3.04,
+   "share_delta": {
+    "더불어민주당": -0.71,
+    "국민의힘": 5.89
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.85
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 4.33
+    }
+   ]
+  },
+  {
+   "district": "경기 이천시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 이천시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "송석준",
+    "party": "국민의힘",
+    "pct": 51.33
+   },
+   "previous_winner": {
+    "name": "송석준",
+    "party": "미래통합당",
+    "pct": 51.99
+   },
+   "margin": 2.66,
+   "previous_margin": 6.3,
+   "margin_delta": -3.64,
+   "turnout": 62.87,
+   "previous_turnout": 61.5,
+   "turnout_delta": 1.37,
+   "share_delta": {
+    "더불어민주당": 2.98,
+    "국민의힘": -0.66
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.78
+    }
+   ]
+  },
+  {
+   "district": "경기 파주시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 파주시갑'의 26%만 차지",
+   "previous_district": "경기 파주시갑"
+  },
+  {
+   "district": "경기 파주시을",
+   "sido": "경기",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기 파주시을 + 경기 파주시갑 통합",
+   "previous_district": "경기 파주시을"
+  },
+  {
+   "district": "경기 평택시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 평택시갑'의 87%만 차지",
+   "previous_district": "경기 평택시갑"
+  },
+  {
+   "district": "경기 평택시병",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 평택시을 54%, 경기 평택시갑 46%",
+   "previous_district": "경기 평택시을"
+  },
+  {
+   "district": "경기 평택시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 평택시을"
+  },
+  {
+   "district": "경기 포천시가평군",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경기 포천시가평군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김용태",
+    "party": "국민의힘",
+    "pct": 50.48
+   },
+   "previous_winner": {
+    "name": "최춘식",
+    "party": "미래통합당",
+    "pct": 50.26
+   },
+   "margin": 2.12,
+   "previous_margin": 3.58,
+   "margin_delta": -1.46,
+   "turnout": 64.54,
+   "previous_turnout": 60.23,
+   "turnout_delta": 4.31,
+   "share_delta": {
+    "더불어민주당": 1.68,
+    "국민의힘": 0.22
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.16
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.14
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.92
+    }
+   ]
+  },
+  {
+   "district": "경기 하남시갑",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 하남시'이 2개로 분할",
+   "previous_district": "경기 하남시"
+  },
+  {
+   "district": "경기 하남시을",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 하남시'이 2개로 분할",
+   "previous_district": "경기 하남시"
+  },
+  {
+   "district": "경기 화성시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경기 화성시갑"
+  },
+  {
+   "district": "경기 화성시병",
+   "sido": "경기",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기 화성시갑 + 경기 화성시병 통합",
+   "previous_district": "경기 화성시갑"
+  },
+  {
+   "district": "경기 화성시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 화성시을'의 65%만 차지",
+   "previous_district": "경기 화성시을"
+  },
+  {
+   "district": "경기 화성시정",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 화성시을 76%, 경기 화성시병 24%",
+   "previous_district": "경기 화성시을"
+  },
+  {
+   "district": "경남 거제시",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 거제시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서일준",
+    "party": "국민의힘",
+    "pct": 51.23
+   },
+   "previous_winner": {
+    "name": "서일준",
+    "party": "미래통합당",
+    "pct": 50.89
+   },
+   "margin": 4.55,
+   "previous_margin": 12.85,
+   "margin_delta": -8.3,
+   "turnout": 67.54,
+   "previous_turnout": 66.14,
+   "turnout_delta": 1.4,
+   "share_delta": {
+    "더불어민주당": 8.64,
+    "국민의힘": 0.34
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.09
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.33
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.82
+    }
+   ]
+  },
+  {
+   "district": "경남 김해시갑",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 김해시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "민홍철",
+    "party": "더불어민주당",
+    "pct": 52.48
+   },
+   "previous_winner": {
+    "name": "민홍철",
+    "party": "더불어민주당",
+    "pct": 51.06
+   },
+   "margin": 4.96,
+   "previous_margin": 5.97,
+   "margin_delta": -1.01,
+   "turnout": 64.11,
+   "previous_turnout": 63.22,
+   "turnout_delta": 0.89,
+   "share_delta": {
+    "더불어민주당": 1.42,
+    "국민의힘": 2.43
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.87
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
+    }
+   ]
+  },
+  {
+   "district": "경남 김해시을",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 김해시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김정호",
+    "party": "더불어민주당",
+    "pct": 56.19
+   },
+   "previous_winner": {
+    "name": "김정호",
+    "party": "더불어민주당",
+    "pct": 49.68
+   },
+   "margin": 12.38,
+   "previous_margin": 8.07,
+   "margin_delta": 4.31,
+   "turnout": 65.06,
+   "previous_turnout": 65.31,
+   "turnout_delta": -0.25,
+   "share_delta": {
+    "더불어민주당": 6.51,
+    "국민의힘": 2.2
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 5.04
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.55
+    }
+   ]
+  },
+  {
+   "district": "경남 밀양시의령군함안군창녕군",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 밀양시의령군함안군창녕군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박상웅",
+    "party": "국민의힘",
+    "pct": 66.86
+   },
+   "previous_winner": {
+    "name": "조해진",
+    "party": "미래통합당",
+    "pct": 68.0
+   },
+   "margin": 33.72,
+   "previous_margin": 37.73,
+   "margin_delta": -4.01,
+   "turnout": 67.35,
+   "previous_turnout": 66.8,
+   "turnout_delta": 0.55,
+   "share_delta": {
+    "더불어민주당": 2.87,
+    "국민의힘": -1.14
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.73
+    }
+   ]
+  },
+  {
+   "district": "경남 사천시남해군하동군",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 사천시남해군하동군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서천호",
+    "party": "국민의힘",
+    "pct": 55.59
+   },
+   "previous_winner": {
+    "name": "하영제",
+    "party": "미래통합당",
+    "pct": 59.59
+   },
+   "margin": 23.25,
+   "previous_margin": 21.97,
+   "margin_delta": 1.28,
+   "turnout": 69.95,
+   "previous_turnout": 69.64,
+   "turnout_delta": 0.31,
+   "share_delta": {
+    "더불어민주당": -5.28,
+    "국민의힘": -4.0
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
+    }
+   ]
+  },
+  {
+   "district": "경남 산청군함양군거창군합천군",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 산청군함양군거창군합천군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "신성범",
+    "party": "국민의힘",
+    "pct": 70.99
+   },
+   "previous_winner": {
+    "name": "김태호",
+    "party": "무소속",
+    "pct": 42.59
+   },
+   "margin": 41.98,
+   "previous_margin": 6.12,
+   "margin_delta": 35.86,
+   "turnout": 70.17,
+   "previous_turnout": 72.6,
+   "turnout_delta": -2.43,
+   "share_delta": {
+    "더불어민주당": 11.06,
+    "국민의힘": 34.52
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.07
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.62
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.55
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.75
+    }
+   ]
+  },
+  {
+   "district": "경남 양산시갑",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 양산시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤영석",
+    "party": "국민의힘",
+    "pct": 53.62
+   },
+   "previous_winner": {
+    "name": "윤영석",
+    "party": "미래통합당",
+    "pct": 57.0
+   },
+   "margin": 8.84,
+   "previous_margin": 14.96,
+   "margin_delta": -6.12,
+   "turnout": 66.66,
+   "previous_turnout": 66.16,
+   "turnout_delta": 0.5,
+   "share_delta": {
+    "더불어민주당": 2.74,
+    "국민의힘": -3.38
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.6
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.96
+    }
+   ]
+  },
+  {
+   "district": "경남 양산시을",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 양산시을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김태호",
+    "party": "국민의힘",
+    "pct": 51.05
+   },
+   "previous_winner": {
+    "name": "김두관",
+    "party": "더불어민주당",
+    "pct": 48.95
+   },
+   "margin": 2.1,
+   "previous_margin": 1.69,
+   "margin_delta": 0.41,
+   "turnout": 68.5,
+   "previous_turnout": 67.32,
+   "turnout_delta": 1.18,
+   "share_delta": {
+    "국민의힘": 3.79
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.95
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.84
+    }
+   ]
+  },
+  {
+   "district": "경남 진주시갑",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 진주시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박대출",
+    "party": "국민의힘",
+    "pct": 58.3
+   },
+   "previous_winner": {
+    "name": "박대출",
+    "party": "미래통합당",
+    "pct": 54.76
+   },
+   "margin": 16.6,
+   "previous_margin": 16.28,
+   "margin_delta": 0.32,
+   "turnout": 68.87,
+   "previous_turnout": 69.14,
+   "turnout_delta": -0.27,
+   "share_delta": {
+    "더불어민주당": 3.22,
+    "국민의힘": 3.54
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.56
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.37
+    }
+   ]
+  },
+  {
+   "district": "경남 진주시을",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 진주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강민국",
+    "party": "국민의힘",
+    "pct": 56.14
+   },
+   "previous_winner": {
+    "name": "강민국",
+    "party": "미래통합당",
+    "pct": 59.03
+   },
+   "margin": 25.92,
+   "previous_margin": 25.2,
+   "margin_delta": 0.72,
+   "turnout": 67.45,
+   "previous_turnout": 66.67,
+   "turnout_delta": 0.78,
+   "share_delta": {
+    "더불어민주당": -3.61,
+    "국민의힘": -2.89
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.79
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.81
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시마산합포구",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 창원시마산합포구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "최형두",
+    "party": "국민의힘",
+    "pct": 64.05
+   },
+   "previous_winner": {
+    "name": "최형두",
+    "party": "미래통합당",
+    "pct": 62.97
+   },
+   "margin": 28.1,
+   "previous_margin": 28.79,
+   "margin_delta": -0.69,
+   "turnout": 67.39,
+   "previous_turnout": 68.29,
+   "turnout_delta": -0.9,
+   "share_delta": {
+    "더불어민주당": 1.77,
+    "국민의힘": 1.08
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.97
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시마산회원구",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 창원시마산회원구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤한홍",
+    "party": "국민의힘",
+    "pct": 59.77
+   },
+   "previous_winner": {
+    "name": "윤한홍",
+    "party": "미래통합당",
+    "pct": 56.43
+   },
+   "margin": 19.54,
+   "previous_margin": 14.48,
+   "margin_delta": 5.06,
+   "turnout": 68.87,
+   "previous_turnout": 70.21,
+   "turnout_delta": -1.34,
+   "share_delta": {
+    "더불어민주당": -1.72,
+    "국민의힘": 3.34
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.74
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.88
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시성산구",
+   "sido": "경남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경남 창원시성산구"
+  },
+  {
+   "district": "경남 창원시의창구",
+   "sido": "경남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "경남 창원시의창구"
+  },
+  {
+   "district": "경남 창원시진해구",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 창원시진해구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이종욱",
+    "party": "국민의힘",
+    "pct": 50.24
+   },
+   "previous_winner": {
+    "name": "이달곤",
+    "party": "미래통합당",
+    "pct": 50.22
+   },
+   "margin": 0.48,
+   "previous_margin": 1.36,
+   "margin_delta": -0.88,
+   "turnout": 65.09,
+   "previous_turnout": 67.91,
+   "turnout_delta": -2.82,
+   "share_delta": {
+    "더불어민주당": 0.9,
+    "국민의힘": 0.02
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.91
+    }
+   ]
+  },
+  {
+   "district": "경남 통영시고성군",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경남 통영시고성군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정점식",
+    "party": "국민의힘",
+    "pct": 61.45
+   },
+   "previous_winner": {
+    "name": "정점식",
+    "party": "미래통합당",
+    "pct": 58.35
+   },
+   "margin": 22.9,
+   "previous_margin": 19.43,
+   "margin_delta": 3.47,
+   "turnout": 68.63,
+   "previous_turnout": 67.51,
+   "turnout_delta": 1.12,
+   "share_delta": {
+    "더불어민주당": -0.37,
+    "국민의힘": 3.1
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.65
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.08
+    }
+   ]
+  },
+  {
+   "district": "경북 경산시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 경산시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "조지연",
+    "party": "국민의힘",
+    "pct": 43.43
+   },
+   "previous_winner": {
+    "name": "윤두현",
+    "party": "미래통합당",
+    "pct": 63.76
+   },
+   "margin": 1.15,
+   "previous_margin": 36.58,
+   "margin_delta": -35.43,
+   "turnout": 63.48,
+   "previous_turnout": 62.88,
+   "turnout_delta": 0.6,
+   "share_delta": {
+    "진보당": 6.08,
+    "국민의힘": -20.33
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 6.29
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "더불어민주당",
+     "previous_pct": 27.18
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.88
+    }
+   ]
+  },
+  {
+   "district": "경북 경주시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 경주시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김석기",
+    "party": "국민의힘",
+    "pct": 65.78
+   },
+   "previous_winner": {
+    "name": "김석기",
+    "party": "미래통합당",
+    "pct": 52.68
+   },
+   "margin": 41.51,
+   "previous_margin": 32.82,
+   "margin_delta": 8.69,
+   "turnout": 65.37,
+   "previous_turnout": 67.16,
+   "turnout_delta": -1.79,
+   "share_delta": {
+    "더불어민주당": 9.54,
+    "국민의힘": 13.1
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 1.02
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 11.57
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.57
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "경북 고령군성주군칠곡군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 고령군성주군칠곡군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정희용",
+    "party": "국민의힘",
+    "pct": 76.24
+   },
+   "previous_winner": {
+    "name": "정희용",
+    "party": "미래통합당",
+    "pct": 62.71
+   },
+   "margin": 54.75,
+   "previous_margin": 38.69,
+   "margin_delta": 16.06,
+   "turnout": 64.4,
+   "previous_turnout": 63.84,
+   "turnout_delta": 0.56,
+   "share_delta": {
+    "더불어민주당": -2.53,
+    "국민의힘": 13.53
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.03
+    }
+   ]
+  },
+  {
+   "district": "경북 구미시갑",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 구미시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "구자근",
+    "party": "국민의힘",
+    "pct": 72.58
+   },
+   "previous_winner": {
+    "name": "구자근",
+    "party": "미래통합당",
+    "pct": 65.58
+   },
+   "margin": 45.16,
+   "previous_margin": 33.99,
+   "margin_delta": 11.17,
+   "turnout": 61.51,
+   "previous_turnout": 63.93,
+   "turnout_delta": -2.42,
+   "share_delta": {
+    "더불어민주당": -4.17,
+    "국민의힘": 7.0
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.86
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
+    }
+   ]
+  },
+  {
+   "district": "경북 구미시을",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 구미시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강명구",
+    "party": "국민의힘",
+    "pct": 65.29
+   },
+   "previous_winner": {
+    "name": "김영식",
+    "party": "미래통합당",
+    "pct": 56.44
+   },
+   "margin": 31.92,
+   "previous_margin": 20.75,
+   "margin_delta": 11.17,
+   "turnout": 57.8,
+   "previous_turnout": 60.47,
+   "turnout_delta": -2.67,
+   "share_delta": {
+    "더불어민주당": -2.32,
+    "국민의힘": 8.85
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 1.34
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.86
+    }
+   ]
+  },
+  {
+   "district": "경북 김천시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 김천시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "송언석",
+    "party": "국민의힘",
+    "pct": 65.79
+   },
+   "previous_winner": {
+    "name": "송언석",
+    "party": "미래통합당",
+    "pct": 74.52
+   },
+   "margin": 42.56,
+   "previous_margin": 53.51,
+   "margin_delta": -10.95,
+   "turnout": 66.82,
+   "previous_turnout": 67.86,
+   "turnout_delta": -1.04,
+   "share_delta": {
+    "더불어민주당": 2.22,
+    "국민의힘": -8.73
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.14
+    }
+   ]
+  },
+  {
+   "district": "경북 상주시문경시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 상주시문경시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "임이자",
+    "party": "국민의힘",
+    "pct": 77.65
+   },
+   "previous_winner": {
+    "name": "임이자",
+    "party": "미래통합당",
+    "pct": 64.8
+   },
+   "margin": 58.81,
+   "previous_margin": 46.73,
+   "margin_delta": 12.08,
+   "turnout": 69.43,
+   "previous_turnout": 68.66,
+   "turnout_delta": 0.77,
+   "share_delta": {
+    "더불어민주당": 0.77,
+    "국민의힘": 12.85
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 3.51
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.19
+    }
+   ]
+  },
+  {
+   "district": "경북 안동시예천군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 안동시예천군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김형동",
+    "party": "국민의힘",
+    "pct": 67.47
+   },
+   "previous_winner": {
+    "name": "김형동",
+    "party": "미래통합당",
+    "pct": 47.11
+   },
+   "margin": 38.54,
+   "previous_margin": 20.96,
+   "margin_delta": 17.58,
+   "turnout": 67.45,
+   "previous_turnout": 67.97,
+   "turnout_delta": -0.52,
+   "share_delta": {
+    "더불어민주당": 2.78,
+    "국민의힘": 20.36
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 1.66
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.86
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.76
+    }
+   ]
+  },
+  {
+   "district": "경북 영주시영양군봉화군",
+   "sido": "경북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경북 영주시영양군봉화군울진군'의 73%만 차지",
+   "previous_district": "경북 영주시영양군봉화군울진군"
+  },
+  {
+   "district": "경북 영천시청도군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 영천시청도군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이만희",
+    "party": "국민의힘",
+    "pct": 62.88
+   },
+   "previous_winner": {
+    "name": "이만희",
+    "party": "미래통합당",
+    "pct": 64.63
+   },
+   "margin": 43.34,
+   "previous_margin": 42.07,
+   "margin_delta": 1.27,
+   "turnout": 69.09,
+   "previous_turnout": 69.61,
+   "turnout_delta": -0.52,
+   "share_delta": {
+    "더불어민주당": -3.02,
+    "국민의힘": -1.75
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
+    }
+   ]
+  },
+  {
+   "district": "경북 의성군청송군영덕군울진군",
+   "sido": "경북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경북 군위군의성군청송군영덕군' 겹침 73%/82%",
+   "previous_district": "경북 군위군의성군청송군영덕군"
+  },
+  {
+   "district": "경북 포항시남구울릉군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 포항시남구울릉군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이상휘",
+    "party": "국민의힘",
+    "pct": 70.03
+   },
+   "previous_winner": {
+    "name": "김병욱",
+    "party": "미래통합당",
+    "pct": 55.83
+   },
+   "margin": 40.06,
+   "previous_margin": 21.52,
+   "margin_delta": 18.54,
+   "turnout": 61.84,
+   "previous_turnout": 65.81,
+   "turnout_delta": -3.97,
+   "share_delta": {
+    "더불어민주당": -4.34,
+    "국민의힘": 14.2
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.62
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경북 포항시북구",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "경북 포항시북구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김정재",
+    "party": "국민의힘",
+    "pct": 62.34
+   },
+   "previous_winner": {
+    "name": "김정재",
+    "party": "미래통합당",
+    "pct": 64.78
+   },
+   "margin": 33.43,
+   "previous_margin": 33.39,
+   "margin_delta": 0.04,
+   "turnout": 64.79,
+   "previous_turnout": 67.31,
+   "turnout_delta": -2.52,
+   "share_delta": {
+    "더불어민주당": -2.48,
+    "국민의힘": -2.44
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.99
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.84
+    }
+   ]
+  },
+  {
+   "district": "광주 광산구갑",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 광산구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박균택",
+    "party": "더불어민주당",
+    "pct": 81.7
+   },
+   "previous_winner": {
+    "name": "이용빈",
+    "party": "더불어민주당",
+    "pct": 77.78
+   },
+   "margin": 74.73,
+   "previous_margin": 64.45,
+   "margin_delta": 10.28,
+   "turnout": 66.6,
+   "previous_turnout": 63.4,
+   "turnout_delta": 3.2,
+   "share_delta": {
+    "더불어민주당": 3.92,
+    "진보당": 2.79
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 3.47
+    },
+    {
+     "party": "국민의힘",
+     "pct": 6.97
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.41
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.89
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 13.33
+    }
+   ]
+  },
+  {
+   "district": "광주 광산구을",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 광산구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "민형배",
+    "party": "더불어민주당",
+    "pct": 76.1
+   },
+   "previous_winner": {
+    "name": "민형배",
+    "party": "더불어민주당",
+    "pct": 84.06
+   },
+   "margin": 62.25,
+   "previous_margin": 76.59,
+   "margin_delta": -14.34,
+   "turnout": 67.26,
+   "previous_turnout": 64.08,
+   "turnout_delta": 3.18,
+   "share_delta": {
+    "더불어민주당": -7.96
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 13.85
+    },
+    {
+     "party": "녹색정의당",
+     "pct": 1.18
+    },
+    {
+     "party": "국민의힘",
+     "pct": 4.77
+    },
+    {
+     "party": "진보당",
+     "pct": 4.1
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 6.17
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.08
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 7.47
+    },
+    {
+     "party": "노동당",
+     "previous_pct": 1.22
+    }
+   ]
+  },
+  {
+   "district": "광주 동구남구갑",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 동구남구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정진욱",
+    "party": "더불어민주당",
+    "pct": 88.7
+   },
+   "previous_winner": {
+    "name": "윤영덕",
+    "party": "더불어민주당",
+    "pct": 77.24
+   },
+   "margin": 77.4,
+   "previous_margin": 56.63,
+   "margin_delta": 20.77,
+   "turnout": 69.64,
+   "previous_turnout": 67.35,
+   "turnout_delta": 2.29,
+   "share_delta": {
+    "더불어민주당": 11.46
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 11.3
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.8
+    },
+    {
+     "party": "기독자유통일당",
+     "previous_pct": 1.35
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 20.61
+    }
+   ]
+  },
+  {
+   "district": "광주 동구남구을",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 동구남구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "안도걸",
+    "party": "더불어민주당",
+    "pct": 70.17
+   },
+   "previous_winner": {
+    "name": "이병훈",
+    "party": "더불어민주당",
+    "pct": 72.28
+   },
+   "margin": 54.01,
+   "previous_margin": 57.25,
+   "margin_delta": -3.24,
+   "turnout": 70.23,
+   "previous_turnout": 67.26,
+   "turnout_delta": 2.97,
+   "share_delta": {
+    "더불어민주당": -2.11
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.66
+    },
+    {
+     "party": "진보당",
+     "pct": 3.39
+    },
+    {
+     "party": "국민의힘",
+     "pct": 8.63
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.01
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 10.11
+    }
+   ]
+  },
+  {
+   "district": "광주 북구갑",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 북구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정준호",
+    "party": "더불어민주당",
+    "pct": 83.46
+   },
+   "previous_winner": {
+    "name": "조오섭",
+    "party": "더불어민주당",
+    "pct": 57.8
+   },
+   "margin": 74.94,
+   "previous_margin": 20.19,
+   "margin_delta": 54.75,
+   "turnout": 66.53,
+   "previous_turnout": 66.33,
+   "turnout_delta": 0.2,
+   "share_delta": {
+    "더불어민주당": 25.66,
+    "국민의힘": 6.15
+   },
+   "newly_ran": [
+    {
+     "party": "진보당",
+     "pct": 6.16
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 1.75
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.47
+    }
+   ]
+  },
+  {
+   "district": "광주 북구을",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 북구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "전진숙",
+    "party": "더불어민주당",
+    "pct": 72.12
+   },
+   "previous_winner": {
+    "name": "이형석",
+    "party": "더불어민주당",
+    "pct": 78.83
+   },
+   "margin": 55.77,
+   "previous_margin": 67.7,
+   "margin_delta": -11.93,
+   "turnout": 69.22,
+   "previous_turnout": 66.55,
+   "turnout_delta": 2.67,
+   "share_delta": {
+    "더불어민주당": -6.71,
+    "진보당": 13.06
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 7.12
+    },
+    {
+     "party": "개혁신당",
+     "pct": 1.04
+    },
+    {
+     "party": "새로운미래",
+     "pct": 3.37
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.98
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.5
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 11.13
+    },
+    {
+     "party": "기독자유통일당",
+     "previous_pct": 0.93
+    }
+   ]
+  },
+  {
+   "district": "광주 서구갑",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 서구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "조인철",
+    "party": "더불어민주당",
+    "pct": 68.43
+   },
+   "previous_winner": {
+    "name": "송갑석",
+    "party": "더불어민주당",
+    "pct": 82.18
+   },
+   "margin": 51.05,
+   "previous_margin": 72.13,
+   "margin_delta": -21.08,
+   "turnout": 66.8,
+   "previous_turnout": 64.86,
+   "turnout_delta": 1.94,
+   "share_delta": {
+    "더불어민주당": -13.75,
+    "진보당": 2.11,
+    "국민의힘": 4.92
+   },
+   "newly_ran": [
+    {
+     "party": "소나무당",
+     "pct": 17.38
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 10.05
+    }
+   ]
+  },
+  {
+   "district": "광주 서구을",
+   "sido": "광주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "광주 서구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "양부남",
+    "party": "더불어민주당",
+    "pct": 71.39
+   },
+   "previous_winner": {
+    "name": "양향자",
+    "party": "더불어민주당",
+    "pct": 75.83
+   },
+   "margin": 56.72,
+   "previous_margin": 56.34,
+   "margin_delta": 0.38,
+   "turnout": 69.38,
+   "previous_turnout": 67.63,
+   "turnout_delta": 1.75,
+   "share_delta": {
+    "더불어민주당": -4.44
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.4
+    },
+    {
+     "party": "기독당",
+     "pct": 0.27
+    },
+    {
+     "party": "진보당",
+     "pct": 4.45
+    },
+    {
+     "party": "녹색정의당",
+     "pct": 14.67
+    },
+    {
+     "party": "국민의힘",
+     "pct": 7.82
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.05
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.52
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 19.49
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구갑",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 달서구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "유영하",
+    "party": "국민의힘",
+    "pct": 71.39
+   },
+   "previous_winner": {
+    "name": "홍석준",
+    "party": "미래통합당",
+    "pct": 57.61
+   },
+   "margin": 42.78,
+   "previous_margin": 30.73,
+   "margin_delta": 12.05,
+   "turnout": 63.48,
+   "previous_turnout": 66.43,
+   "turnout_delta": -2.95,
+   "share_delta": {
+    "더불어민주당": 1.73,
+    "국민의힘": 13.78
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.37
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.72
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.94
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구병",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 달서구병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "권영진",
+    "party": "국민의힘",
+    "pct": 67.09
+   },
+   "previous_winner": {
+    "name": "김용판",
+    "party": "미래통합당",
+    "pct": 55.79
+   },
+   "margin": 50.27,
+   "previous_margin": 28.17,
+   "margin_delta": 22.1,
+   "turnout": 61.27,
+   "previous_turnout": 64.23,
+   "turnout_delta": -2.96,
+   "share_delta": {
+    "우리공화당": 1.73,
+    "국민의힘": 11.3
+   },
+   "newly_ran": [
+    {
+     "party": "진보당",
+     "pct": 16.09
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "더불어민주당",
+     "previous_pct": 27.62
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.92
+    },
+    {
+     "party": "기독자유통일당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구을",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 달서구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤재옥",
+    "party": "국민의힘",
+    "pct": 72.48
+   },
+   "previous_winner": {
+    "name": "윤재옥",
+    "party": "미래통합당",
+    "pct": 65.37
+   },
+   "margin": 44.96,
+   "previous_margin": 37.3,
+   "margin_delta": 7.66,
+   "turnout": 66.59,
+   "previous_turnout": 69.01,
+   "turnout_delta": -2.42,
+   "share_delta": {
+    "더불어민주당": -0.55,
+    "국민의힘": 7.11
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.32
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.85
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.49
+    }
+   ]
+  },
+  {
+   "district": "대구 달성군",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 달성군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "추경호",
+    "party": "국민의힘",
+    "pct": 75.31
+   },
+   "previous_winner": {
+    "name": "추경호",
+    "party": "미래통합당",
+    "pct": 67.34
+   },
+   "margin": 50.62,
+   "previous_margin": 40.32,
+   "margin_delta": 10.3,
+   "turnout": 62.95,
+   "previous_turnout": 64.2,
+   "turnout_delta": -1.25,
+   "share_delta": {
+    "더불어민주당": -2.33,
+    "국민의힘": 7.97
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.99
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.51
+    }
+   ]
+  },
+  {
+   "district": "대구 동구군위군갑",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 90%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '대구 동구갑'",
+   "previous_district": "대구 동구갑"
+  },
+  {
+   "district": "대구 동구군위군을",
+   "sido": "대구",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경북 군위군의성군청송군영덕군 + 대구 동구을 통합",
+   "previous_district": "경북 군위군의성군청송군영덕군"
+  },
+  {
+   "district": "대구 북구갑",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 북구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "우재준",
+    "party": "국민의힘",
+    "pct": 71.38
+   },
+   "previous_winner": {
+    "name": "양금희",
+    "party": "미래통합당",
+    "pct": 49.82
+   },
+   "margin": 44.11,
+   "previous_margin": 24.03,
+   "margin_delta": 20.08,
+   "turnout": 64.04,
+   "previous_turnout": 67.26,
+   "turnout_delta": -3.22,
+   "share_delta": {
+    "더불어민주당": 1.48,
+    "국민의힘": 21.56
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 1.35
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.03
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.66
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.77
+    }
+   ]
+  },
+  {
+   "district": "대구 북구을",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 북구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김승수",
+    "party": "국민의힘",
+    "pct": 67.86
+   },
+   "previous_winner": {
+    "name": "김승수",
+    "party": "미래통합당",
+    "pct": 61.69
+   },
+   "margin": 42.38,
+   "previous_margin": 28.14,
+   "margin_delta": 14.24,
+   "turnout": 62.66,
+   "previous_turnout": 66.9,
+   "turnout_delta": -4.24,
+   "share_delta": {
+    "더불어민주당": -8.07,
+    "국민의힘": 6.17
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 5.07
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.95
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.81
+    }
+   ]
+  },
+  {
+   "district": "대구 서구",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 서구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김상훈",
+    "party": "국민의힘",
+    "pct": 72.02
+   },
+   "previous_winner": {
+    "name": "김상훈",
+    "party": "미래통합당",
+    "pct": 67.44
+   },
+   "margin": 44.04,
+   "previous_margin": 49.63,
+   "margin_delta": -5.59,
+   "turnout": 61.64,
+   "previous_turnout": 63.61,
+   "turnout_delta": -1.97,
+   "share_delta": {
+    "국민의힘": 4.58
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.37
+    },
+    {
+     "party": "더불어민주당",
+     "previous_pct": 17.81
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.84
+    }
+   ]
+  },
+  {
+   "district": "대구 수성구갑",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 수성구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "주호영",
+    "party": "국민의힘",
+    "pct": 65.64
+   },
+   "previous_winner": {
+    "name": "주호영",
+    "party": "미래통합당",
+    "pct": 59.81
+   },
+   "margin": 35.31,
+   "previous_margin": 20.51,
+   "margin_delta": 14.8,
+   "turnout": 68.6,
+   "previous_turnout": 74.91,
+   "turnout_delta": -6.31,
+   "share_delta": {
+    "더불어민주당": -8.97,
+    "국민의힘": 5.83
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 2.18
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.45
+    },
+    {
+     "party": "친박신당",
+     "previous_pct": 0.44
+    }
+   ]
+  },
+  {
+   "district": "대구 수성구을",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 수성구을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "이인선",
+    "party": "국민의힘",
+    "pct": 72.85
+   },
+   "previous_winner": {
+    "name": "홍준표",
+    "party": "무소속",
+    "pct": 38.51
+   },
+   "margin": 57.28,
+   "previous_margin": 2.74,
+   "margin_delta": 54.54,
+   "turnout": 65.09,
+   "previous_turnout": 70.06,
+   "turnout_delta": -4.97,
+   "share_delta": {
+    "국민의힘": 37.08
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 7.38
+    },
+    {
+     "party": "새진보연합",
+     "pct": 15.57
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "더불어민주당",
+     "previous_pct": 25.13
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
+    }
+   ]
+  },
+  {
+   "district": "대구 중구남구",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대구 중구남구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김기웅",
+    "party": "국민의힘",
+    "pct": 57.92
+   },
+   "previous_winner": {
+    "name": "곽상도",
+    "party": "미래통합당",
+    "pct": 67.49
+   },
+   "margin": 31.69,
+   "previous_margin": 36.48,
+   "margin_delta": -4.79,
+   "turnout": 62.12,
+   "previous_turnout": 64.62,
+   "turnout_delta": -2.5,
+   "share_delta": {
+    "더불어민주당": -4.78,
+    "국민의힘": -9.57
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.5
+    }
+   ]
+  },
+  {
+   "district": "대전 대덕구",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 대덕구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박정현",
+    "party": "더불어민주당",
+    "pct": 50.93
+   },
+   "previous_winner": {
+    "name": "박영순",
+    "party": "더불어민주당",
+    "pct": 49.4
+   },
+   "margin": 7.88,
+   "previous_margin": 3.15,
+   "margin_delta": 4.73,
+   "turnout": 65.45,
+   "previous_turnout": 64.5,
+   "turnout_delta": 0.95,
+   "share_delta": {
+    "더불어민주당": 1.53,
+    "국민의힘": -3.2
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 6.02
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.82
+    }
+   ]
+  },
+  {
+   "district": "대전 동구",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 동구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "장철민",
+    "party": "더불어민주당",
+    "pct": 53.33
+   },
+   "previous_winner": {
+    "name": "장철민",
+    "party": "더불어민주당",
+    "pct": 51.02
+   },
+   "margin": 8.32,
+   "previous_margin": 3.46,
+   "margin_delta": 4.86,
+   "turnout": 64.41,
+   "previous_turnout": 62.82,
+   "turnout_delta": 1.59,
+   "share_delta": {
+    "더불어민주당": 2.31,
+    "국민의힘": -2.55
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.66
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.42
+    }
+   ]
+  },
+  {
+   "district": "대전 서구갑",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 서구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "장종태",
+    "party": "더불어민주당",
+    "pct": 52.83
+   },
+   "previous_winner": {
+    "name": "박병석",
+    "party": "더불어민주당",
+    "pct": 55.59
+   },
+   "margin": 11.39,
+   "previous_margin": 12.8,
+   "margin_delta": -1.41,
+   "turnout": 64.47,
+   "previous_turnout": 64.0,
+   "turnout_delta": 0.47,
+   "share_delta": {
+    "더불어민주당": -2.76,
+    "국민의힘": -1.35
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 2.34
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.77
+    },
+    {
+     "party": "충청의미래당",
+     "previous_pct": 0.85
+    }
+   ]
+  },
+  {
+   "district": "대전 서구을",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 서구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박범계",
+    "party": "더불어민주당",
+    "pct": 54.59
+   },
+   "previous_winner": {
+    "name": "박범계",
+    "party": "더불어민주당",
+    "pct": 57.5
+   },
+   "margin": 11.72,
+   "previous_margin": 16.72,
+   "margin_delta": -5.0,
+   "turnout": 66.01,
+   "previous_turnout": 66.05,
+   "turnout_delta": -0.04,
+   "share_delta": {
+    "더불어민주당": -2.91,
+    "국민의힘": 2.09
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.02
+    },
+    {
+     "party": "자유통일당",
+     "pct": 0.52
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.93
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.79
+    }
+   ]
+  },
+  {
+   "district": "대전 유성구갑",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 유성구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "조승래",
+    "party": "더불어민주당",
+    "pct": 56.78
+   },
+   "previous_winner": {
+    "name": "조승래",
+    "party": "더불어민주당",
+    "pct": 56.53
+   },
+   "margin": 15.94,
+   "previous_margin": 16.18,
+   "margin_delta": -0.24,
+   "turnout": 67.02,
+   "previous_turnout": 66.66,
+   "turnout_delta": 0.36,
+   "share_delta": {
+    "더불어민주당": 0.25,
+    "국민의힘": 0.49
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.38
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.56
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.38
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 2.19
+    }
+   ]
+  },
+  {
+   "district": "대전 유성구을",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 유성구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "황정아",
+    "party": "더불어민주당",
+    "pct": 59.76
+   },
+   "previous_winner": {
+    "name": "이상민",
+    "party": "더불어민주당",
+    "pct": 55.86
+   },
+   "margin": 22.56,
+   "previous_margin": 18.86,
+   "margin_delta": 3.7,
+   "turnout": 71.57,
+   "previous_turnout": 72.21,
+   "turnout_delta": -0.64,
+   "share_delta": {
+    "더불어민주당": 3.9,
+    "국민의힘": 0.2
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 3.04
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 6.6
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.54
+    }
+   ]
+  },
+  {
+   "district": "대전 중구",
+   "sido": "대전",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "대전 중구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박용갑",
+    "party": "더불어민주당",
+    "pct": 52.09
+   },
+   "previous_winner": {
+    "name": "황운하",
+    "party": "더불어민주당",
+    "pct": 50.31
+   },
+   "margin": 4.18,
+   "previous_margin": 2.13,
+   "margin_delta": 2.05,
+   "turnout": 66.45,
+   "previous_turnout": 64.83,
+   "turnout_delta": 1.62,
+   "share_delta": {
+    "더불어민주당": 1.78,
+    "국민의힘": -0.27
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.51
+    }
+   ]
+  },
+  {
+   "district": "부산 강서구",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '부산 북구강서구을'의 90%만 차지",
+   "previous_district": "부산 북구강서구을"
+  },
+  {
+   "district": "부산 금정구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 금정구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "백종헌",
+    "party": "국민의힘",
+    "pct": 56.62
+   },
+   "previous_winner": {
+    "name": "백종헌",
+    "party": "미래통합당",
+    "pct": 54.19
+   },
+   "margin": 13.24,
+   "previous_margin": 13.78,
+   "margin_delta": -0.54,
+   "turnout": 68.35,
+   "previous_turnout": 68.55,
+   "turnout_delta": -0.2,
+   "share_delta": {
+    "더불어민주당": 2.97,
+    "국민의힘": 2.43
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.16
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.74
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.49
+    }
+   ]
+  },
+  {
+   "district": "부산 기장군",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 기장군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정동만",
+    "party": "국민의힘",
+    "pct": 52.34
+   },
+   "previous_winner": {
+    "name": "정동만",
+    "party": "미래통합당",
+    "pct": 49.63
+   },
+   "margin": 4.68,
+   "previous_margin": 5.21,
+   "margin_delta": -0.53,
+   "turnout": 64.97,
+   "previous_turnout": 64.64,
+   "turnout_delta": 0.33,
+   "share_delta": {
+    "더불어민주당": 3.24,
+    "국민의힘": 2.71
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.94
+    }
+   ]
+  },
+  {
+   "district": "부산 남구",
+   "sido": "부산",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 부산 남구갑 + 부산 남구을 통합",
+   "previous_district": "부산 남구갑"
+  },
+  {
+   "district": "부산 동래구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 동래구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서지영",
+    "party": "국민의힘",
+    "pct": 54.27
+   },
+   "previous_winner": {
+    "name": "김희곤",
+    "party": "미래통합당",
+    "pct": 51.86
+   },
+   "margin": 11.05,
+   "previous_margin": 9.07,
+   "margin_delta": 1.98,
+   "turnout": 69.0,
+   "previous_turnout": 68.53,
+   "turnout_delta": 0.47,
+   "share_delta": {
+    "더불어민주당": 0.43,
+    "국민의힘": 2.41
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.52
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.24
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.69
+    }
+   ]
+  },
+  {
+   "district": "부산 부산진구갑",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 부산진구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정성국",
+    "party": "국민의힘",
+    "pct": 52.79
+   },
+   "previous_winner": {
+    "name": "서병수",
+    "party": "미래통합당",
+    "pct": 48.52
+   },
+   "margin": 5.58,
+   "previous_margin": 3.5,
+   "margin_delta": 2.08,
+   "turnout": 67.09,
+   "previous_turnout": 69.13,
+   "turnout_delta": -2.04,
+   "share_delta": {
+    "더불어민주당": 2.19,
+    "국민의힘": 4.27
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.54
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.4
+    }
+   ]
+  },
+  {
+   "district": "부산 부산진구을",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 부산진구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이헌승",
+    "party": "국민의힘",
+    "pct": 53.72
+   },
+   "previous_winner": {
+    "name": "이헌승",
+    "party": "미래통합당",
+    "pct": 55.03
+   },
+   "margin": 9.58,
+   "previous_margin": 11.32,
+   "margin_delta": -1.74,
+   "turnout": 63.0,
+   "previous_turnout": 64.81,
+   "turnout_delta": -1.81,
+   "share_delta": {
+    "더불어민주당": 0.43,
+    "국민의힘": -1.31
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 2.15
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.26
+    }
+   ]
+  },
+  {
+   "district": "부산 북구갑",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '부산 북구강서구갑'의 74%만 차지",
+   "previous_district": "부산 북구강서구갑"
+  },
+  {
+   "district": "부산 북구을",
+   "sido": "부산",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 부산 북구강서구을 81%, 부산 북구강서구갑 19%",
+   "previous_district": "부산 북구강서구을"
+  },
+  {
+   "district": "부산 사상구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 사상구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김대식",
+    "party": "국민의힘",
+    "pct": 52.64
+   },
+   "previous_winner": {
+    "name": "장제원",
+    "party": "미래통합당",
+    "pct": 52.04
+   },
+   "margin": 5.28,
+   "previous_margin": 5.5,
+   "margin_delta": -0.22,
+   "turnout": 66.71,
+   "previous_turnout": 67.36,
+   "turnout_delta": -0.65,
+   "share_delta": {
+    "더불어민주당": 0.82,
+    "국민의힘": 0.6
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.63
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.79
+    }
+   ]
+  },
+  {
+   "district": "부산 사하구갑",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 사하구갑' 겹침 88%/100%",
+   "previous_district": "부산 사하구갑"
+  },
+  {
+   "district": "부산 사하구을",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "부산 사하구을"
+  },
+  {
+   "district": "부산 서구동구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 서구동구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "곽규택",
+    "party": "국민의힘",
+    "pct": 57.96
+   },
+   "previous_winner": {
+    "name": "안병길",
+    "party": "미래통합당",
+    "pct": 56.04
+   },
+   "margin": 15.92,
+   "previous_margin": 13.83,
+   "margin_delta": 2.09,
+   "turnout": 65.83,
+   "previous_turnout": 65.23,
+   "turnout_delta": 0.6,
+   "share_delta": {
+    "더불어민주당": -0.17,
+    "국민의힘": 1.92
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.02
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.73
+    }
+   ]
+  },
+  {
+   "district": "부산 수영구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 수영구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정연욱",
+    "party": "국민의힘",
+    "pct": 50.33
+   },
+   "previous_winner": {
+    "name": "전봉민",
+    "party": "미래통합당",
+    "pct": 55.93
+   },
+   "margin": 9.85,
+   "previous_margin": 14.92,
+   "margin_delta": -5.07,
+   "turnout": 66.19,
+   "previous_turnout": 66.77,
+   "turnout_delta": -0.58,
+   "share_delta": {
+    "더불어민주당": -0.53,
+    "국민의힘": -5.6
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.04
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.02
+    }
+   ]
+  },
+  {
+   "district": "부산 연제구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 연제구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김희정",
+    "party": "국민의힘",
+    "pct": 54.42
+   },
+   "previous_winner": {
+    "name": "이주환",
+    "party": "미래통합당",
+    "pct": 50.95
+   },
+   "margin": 8.84,
+   "previous_margin": 3.21,
+   "margin_delta": 5.63,
+   "turnout": 69.41,
+   "previous_turnout": 70.38,
+   "turnout_delta": -0.97,
+   "share_delta": {
+    "국민의힘": 3.47
+   },
+   "newly_ran": [
+    {
+     "party": "진보당",
+     "pct": 45.58
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "더불어민주당",
+     "previous_pct": 47.74
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.3
+    }
+   ]
+  },
+  {
+   "district": "부산 중구영도구",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 중구영도구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "조승환",
+    "party": "국민의힘",
+    "pct": 54.82
+   },
+   "previous_winner": {
+    "name": "황보승희",
+    "party": "미래통합당",
+    "pct": 51.86
+   },
+   "margin": 11.27,
+   "previous_margin": 6.94,
+   "margin_delta": 4.33,
+   "turnout": 64.35,
+   "previous_turnout": 64.82,
+   "turnout_delta": -0.47,
+   "share_delta": {
+    "더불어민주당": -1.37,
+    "국민의힘": 2.96
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 1.63
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.02
+    }
+   ]
+  },
+  {
+   "district": "부산 해운대구갑",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 해운대구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "주진우",
+    "party": "국민의힘",
+    "pct": 53.7
+   },
+   "previous_winner": {
+    "name": "하태경",
+    "party": "미래통합당",
+    "pct": 59.48
+   },
+   "margin": 9.08,
+   "previous_margin": 22.1,
+   "margin_delta": -13.02,
+   "turnout": 69.14,
+   "previous_turnout": 70.0,
+   "turnout_delta": -0.86,
+   "share_delta": {
+    "더불어민주당": 7.24,
+    "국민의힘": -5.78
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.14
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.41
+    }
+   ]
+  },
+  {
+   "district": "부산 해운대구을",
+   "sido": "부산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "부산 해운대구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김미애",
+    "party": "국민의힘",
+    "pct": 58.34
+   },
+   "previous_winner": {
+    "name": "김미애",
+    "party": "미래통합당",
+    "pct": 52.87
+   },
+   "margin": 16.68,
+   "previous_margin": 6.96,
+   "margin_delta": 9.72,
+   "turnout": 66.72,
+   "previous_turnout": 66.75,
+   "turnout_delta": -0.03,
+   "share_delta": {
+    "더불어민주당": -4.25,
+    "국민의힘": 5.47
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.22
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강남구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서명옥",
+    "party": "국민의힘",
+    "pct": 64.19
+   },
+   "previous_winner": {
+    "name": "태구민",
+    "party": "미래통합당",
+    "pct": 58.41
+   },
+   "margin": 28.38,
+   "previous_margin": 18.77,
+   "margin_delta": 9.61,
+   "turnout": 61.37,
+   "previous_turnout": 62.37,
+   "turnout_delta": -1.0,
+   "share_delta": {
+    "더불어민주당": -3.83,
+    "국민의힘": 5.78
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.62
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.33
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구병",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강남구병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "고동진",
+    "party": "국민의힘",
+    "pct": 66.29
+   },
+   "previous_winner": {
+    "name": "유경준",
+    "party": "미래통합당",
+    "pct": 65.38
+   },
+   "margin": 33.53,
+   "previous_margin": 31.8,
+   "margin_delta": 1.73,
+   "turnout": 70.63,
+   "previous_turnout": 72.13,
+   "turnout_delta": -1.5,
+   "share_delta": {
+    "더불어민주당": -0.82,
+    "국민의힘": 0.91
+   },
+   "newly_ran": [
+    {
+     "party": "내일로미래로",
+     "pct": 0.96
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.32
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.23
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 0.25
+    },
+    {
+     "party": "친박신당",
+     "previous_pct": 0.25
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강남구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박수민",
+    "party": "국민의힘",
+    "pct": 58.57
+   },
+   "previous_winner": {
+    "name": "박진",
+    "party": "미래통합당",
+    "pct": 50.95
+   },
+   "margin": 17.14,
+   "previous_margin": 4.54,
+   "margin_delta": 12.6,
+   "turnout": 73.67,
+   "previous_turnout": 73.02,
+   "turnout_delta": 0.65,
+   "share_delta": {
+    "더불어민주당": -4.98,
+    "국민의힘": 7.62
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.42
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.32
+    }
+   ]
+  },
+  {
+   "district": "서울 강동구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "서울 강동구갑"
+  },
+  {
+   "district": "서울 강동구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강동구을' 겹침 82%/100%",
+   "previous_district": "서울 강동구을"
+  },
+  {
+   "district": "서울 강북구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강북구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "천준호",
+    "party": "더불어민주당",
+    "pct": 57.24
+   },
+   "previous_winner": {
+    "name": "천준호",
+    "party": "더불어민주당",
+    "pct": 57.75
+   },
+   "margin": 14.48,
+   "previous_margin": 18.26,
+   "margin_delta": -3.78,
+   "turnout": 64.03,
+   "previous_turnout": 61.79,
+   "turnout_delta": 2.24,
+   "share_delta": {
+    "더불어민주당": -0.51,
+    "국민의힘": 3.27
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "진보당",
+     "previous_pct": 1.7
+    }
+   ]
+  },
+  {
+   "district": "서울 강북구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강북구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "한민수",
+    "party": "더불어민주당",
+    "pct": 52.94
+   },
+   "previous_winner": {
+    "name": "박용진",
+    "party": "더불어민주당",
+    "pct": 64.45
+   },
+   "margin": 11.43,
+   "previous_margin": 29.74,
+   "margin_delta": -18.31,
+   "turnout": 66.71,
+   "previous_turnout": 65.19,
+   "turnout_delta": 1.52,
+   "share_delta": {
+    "더불어민주당": -11.51,
+    "국민의힘": 6.8
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 5.54
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.83
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강서구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강선우",
+    "party": "더불어민주당",
+    "pct": 58.55
+   },
+   "previous_winner": {
+    "name": "강선우",
+    "party": "더불어민주당",
+    "pct": 55.9
+   },
+   "margin": 19.87,
+   "previous_margin": 17.53,
+   "margin_delta": 2.34,
+   "turnout": 66.47,
+   "previous_turnout": 65.91,
+   "turnout_delta": 0.56,
+   "share_delta": {
+    "더불어민주당": 2.65,
+    "국민의힘": 0.31
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 2.77
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.42
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구병",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강서구병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "한정애",
+    "party": "더불어민주당",
+    "pct": 59.14
+   },
+   "previous_winner": {
+    "name": "한정애",
+    "party": "더불어민주당",
+    "pct": 59.92
+   },
+   "margin": 18.28,
+   "previous_margin": 23.37,
+   "margin_delta": -5.09,
+   "turnout": 67.32,
+   "previous_turnout": 67.53,
+   "turnout_delta": -0.21,
+   "share_delta": {
+    "더불어민주당": -0.78,
+    "국민의힘": 4.31
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.52
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.46
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 강서구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "진성준",
+    "party": "더불어민주당",
+    "pct": 54.85
+   },
+   "previous_winner": {
+    "name": "진성준",
+    "party": "더불어민주당",
+    "pct": 56.15
+   },
+   "margin": 9.7,
+   "previous_margin": 13.81,
+   "margin_delta": -4.11,
+   "turnout": 68.81,
+   "previous_turnout": 68.33,
+   "turnout_delta": 0.48,
+   "share_delta": {
+    "더불어민주당": -1.3,
+    "국민의힘": 2.81
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.92
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "서울 관악구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 관악구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박민규",
+    "party": "더불어민주당",
+    "pct": 57.08
+   },
+   "previous_winner": {
+    "name": "유기홍",
+    "party": "더불어민주당",
+    "pct": 55.93
+   },
+   "margin": 14.16,
+   "previous_margin": 22.38,
+   "margin_delta": -8.22,
+   "turnout": 66.3,
+   "previous_turnout": 66.57,
+   "turnout_delta": -0.27,
+   "share_delta": {
+    "더불어민주당": 1.15
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 42.92
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.22
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.63
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 2.33
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.84
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.49
+    }
+   ]
+  },
+  {
+   "district": "서울 관악구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 관악구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정태호",
+    "party": "더불어민주당",
+    "pct": 57.98
+   },
+   "previous_winner": {
+    "name": "정태호",
+    "party": "더불어민주당",
+    "pct": 53.9
+   },
+   "margin": 19.14,
+   "previous_margin": 12.19,
+   "margin_delta": 6.95,
+   "turnout": 63.41,
+   "previous_turnout": 64.97,
+   "turnout_delta": -1.56,
+   "share_delta": {
+    "더불어민주당": 4.08,
+    "진보당": 2.08,
+    "국민의힘": -2.87
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.46
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.59
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.44
+    }
+   ]
+  },
+  {
+   "district": "서울 광진구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 광진구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이정헌",
+    "party": "더불어민주당",
+    "pct": 52.54
+   },
+   "previous_winner": {
+    "name": "전혜숙",
+    "party": "더불어민주당",
+    "pct": 53.68
+   },
+   "margin": 5.08,
+   "previous_margin": 13.07,
+   "margin_delta": -7.99,
+   "turnout": 69.45,
+   "previous_turnout": 68.03,
+   "turnout_delta": 1.42,
+   "share_delta": {
+    "더불어민주당": -1.14,
+    "국민의힘": 6.85
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.5
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.47
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.75
+    }
+   ]
+  },
+  {
+   "district": "서울 광진구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 광진구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "고민정",
+    "party": "더불어민주당",
+    "pct": 51.48
+   },
+   "previous_winner": {
+    "name": "고민정",
+    "party": "더불어민주당",
+    "pct": 50.37
+   },
+   "margin": 3.88,
+   "previous_margin": 2.55,
+   "margin_delta": 1.33,
+   "turnout": 69.31,
+   "previous_turnout": 71.19,
+   "turnout_delta": -1.88,
+   "share_delta": {
+    "더불어민주당": 1.11,
+    "국민의힘": -0.22
+   },
+   "newly_ran": [
+    {
+     "party": "한국국민당",
+     "pct": 0.92
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.34
+    },
+    {
+     "party": "미래당",
+     "previous_pct": 1.46
+    }
+   ]
+  },
+  {
+   "district": "서울 구로구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 구로구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이인영",
+    "party": "더불어민주당",
+    "pct": 55.74
+   },
+   "previous_winner": {
+    "name": "이인영",
+    "party": "더불어민주당",
+    "pct": 53.93
+   },
+   "margin": 11.48,
+   "previous_margin": 14.59,
+   "margin_delta": -3.11,
+   "turnout": 71.06,
+   "previous_turnout": 69.05,
+   "turnout_delta": 2.01,
+   "share_delta": {
+    "더불어민주당": 1.81,
+    "국민의힘": 4.92
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.78
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.45
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.41
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.09
+    }
+   ]
+  },
+  {
+   "district": "서울 구로구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 구로구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤건영",
+    "party": "더불어민주당",
+    "pct": 59.87
+   },
+   "previous_winner": {
+    "name": "윤건영",
+    "party": "더불어민주당",
+    "pct": 57.05
+   },
+   "margin": 19.74,
+   "previous_margin": 19.38,
+   "margin_delta": 0.36,
+   "turnout": 69.02,
+   "previous_turnout": 67.78,
+   "turnout_delta": 1.24,
+   "share_delta": {
+    "더불어민주당": 2.82,
+    "국민의힘": 2.46
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
+    }
+   ]
+  },
+  {
+   "district": "서울 금천구",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 금천구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "최기상",
+    "party": "더불어민주당",
+    "pct": 59.04
+   },
+   "previous_winner": {
+    "name": "최기상",
+    "party": "더불어민주당",
+    "pct": 49.63
+   },
+   "margin": 18.08,
+   "previous_margin": 14.15,
+   "margin_delta": 3.93,
+   "turnout": 65.27,
+   "previous_turnout": 63.63,
+   "turnout_delta": 1.64,
+   "share_delta": {
+    "더불어민주당": 9.41,
+    "국민의힘": 5.48
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.81
+    }
+   ]
+  },
+  {
+   "district": "서울 노원구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 노원구갑' 겹침 71%/100%",
+   "previous_district": "서울 노원구갑"
+  },
+  {
+   "district": "서울 노원구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 노원구병' 겹침 80%/99%",
+   "previous_district": "서울 노원구병"
+  },
+  {
+   "district": "서울 도봉구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 도봉구갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김재섭",
+    "party": "국민의힘",
+    "pct": 49.06
+   },
+   "previous_winner": {
+    "name": "인재근",
+    "party": "더불어민주당",
+    "pct": 54.03
+   },
+   "margin": 1.17,
+   "previous_margin": 13.53,
+   "margin_delta": -12.36,
+   "turnout": 69.75,
+   "previous_turnout": 66.4,
+   "turnout_delta": 3.35,
+   "share_delta": {
+    "더불어민주당": -6.14,
+    "국민의힘": 8.56
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 3.05
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.88
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "서울 도봉구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 도봉구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "오기형",
+    "party": "더불어민주당",
+    "pct": 52.84
+   },
+   "previous_winner": {
+    "name": "오기형",
+    "party": "더불어민주당",
+    "pct": 53.01
+   },
+   "margin": 5.68,
+   "previous_margin": 7.38,
+   "margin_delta": -1.7,
+   "turnout": 69.82,
+   "previous_turnout": 66.55,
+   "turnout_delta": 3.27,
+   "share_delta": {
+    "더불어민주당": -0.17,
+    "국민의힘": 1.53
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.66
+    }
+   ]
+  },
+  {
+   "district": "서울 동대문구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 동대문구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "안규백",
+    "party": "더불어민주당",
+    "pct": 52.9
+   },
+   "previous_winner": {
+    "name": "안규백",
+    "party": "더불어민주당",
+    "pct": 52.73
+   },
+   "margin": 8.43,
+   "previous_margin": 10.92,
+   "margin_delta": -2.49,
+   "turnout": 68.18,
+   "previous_turnout": 66.47,
+   "turnout_delta": 1.71,
+   "share_delta": {
+    "더불어민주당": 0.17,
+    "국민의힘": 2.66
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.64
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.72
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.29
+    }
+   ]
+  },
+  {
+   "district": "서울 동대문구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 동대문구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "장경태",
+    "party": "더불어민주당",
+    "pct": 54.63
+   },
+   "previous_winner": {
+    "name": "장경태",
+    "party": "더불어민주당",
+    "pct": 54.55
+   },
+   "margin": 9.26,
+   "previous_margin": 10.74,
+   "margin_delta": -1.48,
+   "turnout": 70.02,
+   "previous_turnout": 66.55,
+   "turnout_delta": 3.47,
+   "share_delta": {
+    "더불어민주당": 0.08,
+    "국민의힘": 1.56
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.46
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.18
+    }
+   ]
+  },
+  {
+   "district": "서울 동작구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 동작구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김병기",
+    "party": "더불어민주당",
+    "pct": 50.5
+   },
+   "previous_winner": {
+    "name": "김병기",
+    "party": "더불어민주당",
+    "pct": 55.29
+   },
+   "margin": 5.48,
+   "previous_margin": 12.4,
+   "margin_delta": -6.92,
+   "turnout": 70.54,
+   "previous_turnout": 69.41,
+   "turnout_delta": 1.13,
+   "share_delta": {
+    "더불어민주당": -4.79,
+    "국민의힘": 2.13
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 4.48
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.18
+    }
+   ]
+  },
+  {
+   "district": "서울 동작구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 동작구을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "나경원",
+    "party": "국민의힘",
+    "pct": 54.02
+   },
+   "previous_winner": {
+    "name": "이수진",
+    "party": "더불어민주당",
+    "pct": 52.16
+   },
+   "margin": 8.04,
+   "previous_margin": 7.12,
+   "margin_delta": 0.92,
+   "turnout": 74.18,
+   "previous_turnout": 73.44,
+   "turnout_delta": 0.74,
+   "share_delta": {
+    "더불어민주당": -6.18,
+    "국민의힘": 8.98
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 1.98
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.29
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.52
+    }
+   ]
+  },
+  {
+   "district": "서울 마포구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 마포구갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "조정훈",
+    "party": "국민의힘",
+    "pct": 48.3
+   },
+   "previous_winner": {
+    "name": "노웅래",
+    "party": "더불어민주당",
+    "pct": 56.0
+   },
+   "margin": 0.59,
+   "previous_margin": 13.05,
+   "margin_delta": -12.46,
+   "turnout": 72.22,
+   "previous_turnout": 70.55,
+   "turnout_delta": 1.67,
+   "share_delta": {
+    "더불어민주당": -8.29,
+    "국민의힘": 5.35
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.96
+    },
+    {
+     "party": "녹색정의당",
+     "pct": 2.03
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.51
+    },
+    {
+     "party": "통일민주당",
+     "previous_pct": 0.54
+    }
+   ]
+  },
+  {
+   "district": "서울 마포구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 마포구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정청래",
+    "party": "더불어민주당",
+    "pct": 52.44
+   },
+   "previous_winner": {
+    "name": "정청래",
+    "party": "더불어민주당",
+    "pct": 53.76
+   },
+   "margin": 13.67,
+   "previous_margin": 16.98,
+   "margin_delta": -3.31,
+   "turnout": 68.54,
+   "previous_turnout": 68.84,
+   "turnout_delta": -0.3,
+   "share_delta": {
+    "더불어민주당": -1.32,
+    "국민의힘": 1.99
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 8.78
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 8.87
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "서울 서대문구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 서대문구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김동아",
+    "party": "더불어민주당",
+    "pct": 50.76
+   },
+   "previous_winner": {
+    "name": "우상호",
+    "party": "더불어민주당",
+    "pct": 53.25
+   },
+   "margin": 7.27,
+   "previous_margin": 11.61,
+   "margin_delta": -4.34,
+   "turnout": 69.17,
+   "previous_turnout": 69.05,
+   "turnout_delta": 0.12,
+   "share_delta": {
+    "더불어민주당": -2.49,
+    "국민의힘": 1.85
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 5.75
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.37
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.37
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.14
+    }
+   ]
+  },
+  {
+   "district": "서울 서대문구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 서대문구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김영호",
+    "party": "더불어민주당",
+    "pct": 57.63
+   },
+   "previous_winner": {
+    "name": "김영호",
+    "party": "더불어민주당",
+    "pct": 61.33
+   },
+   "margin": 15.26,
+   "previous_margin": 23.63,
+   "margin_delta": -8.37,
+   "turnout": 71.1,
+   "previous_turnout": 68.27,
+   "turnout_delta": 2.83,
+   "share_delta": {
+    "더불어민주당": -3.7,
+    "국민의힘": 4.67
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.97
+    }
+   ]
+  },
+  {
+   "district": "서울 서초구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 서초구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "조은희",
+    "party": "국민의힘",
+    "pct": 68.45
+   },
+   "previous_winner": {
+    "name": "윤희숙",
+    "party": "미래통합당",
+    "pct": 62.6
+   },
+   "margin": 36.9,
+   "previous_margin": 25.7,
+   "margin_delta": 11.2,
+   "turnout": 71.67,
+   "previous_turnout": 72.17,
+   "turnout_delta": -0.5,
+   "share_delta": {
+    "더불어민주당": -5.35,
+    "국민의힘": 5.85
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.49
+    }
+   ]
+  },
+  {
+   "district": "서울 서초구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 서초구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "신동욱",
+    "party": "국민의힘",
+    "pct": 57.49
+   },
+   "previous_winner": {
+    "name": "박성중",
+    "party": "미래통합당",
+    "pct": 53.66
+   },
+   "margin": 14.98,
+   "previous_margin": 8.65,
+   "margin_delta": 6.33,
+   "turnout": 72.1,
+   "previous_turnout": 71.4,
+   "turnout_delta": 0.7,
+   "share_delta": {
+    "더불어민주당": -2.5,
+    "국민의힘": 3.83
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.53
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.8
+    }
+   ]
+  },
+  {
+   "district": "서울 성북구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 성북구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김영배",
+    "party": "더불어민주당",
+    "pct": 55.69
+   },
+   "previous_winner": {
+    "name": "김영배",
+    "party": "더불어민주당",
+    "pct": 60.9
+   },
+   "margin": 16.55,
+   "previous_margin": 24.39,
+   "margin_delta": -7.84,
+   "turnout": 69.4,
+   "previous_turnout": 68.31,
+   "turnout_delta": 1.09,
+   "share_delta": {
+    "더불어민주당": -5.21,
+    "국민의힘": 2.63
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 5.17
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.94
+    }
+   ]
+  },
+  {
+   "district": "서울 성북구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 성북구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김남근",
+    "party": "더불어민주당",
+    "pct": 56.83
+   },
+   "previous_winner": {
+    "name": "기동민",
+    "party": "더불어민주당",
+    "pct": 59.36
+   },
+   "margin": 13.66,
+   "previous_margin": 21.14,
+   "margin_delta": -7.48,
+   "turnout": 68.98,
+   "previous_turnout": 66.73,
+   "turnout_delta": 2.25,
+   "share_delta": {
+    "더불어민주당": -2.53,
+    "국민의힘": 4.95
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.73
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 송파구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박정훈",
+    "party": "국민의힘",
+    "pct": 52.24
+   },
+   "previous_winner": {
+    "name": "김웅",
+    "party": "미래통합당",
+    "pct": 51.2
+   },
+   "margin": 7.11,
+   "previous_margin": 3.17,
+   "margin_delta": 3.94,
+   "turnout": 72.16,
+   "previous_turnout": 72.08,
+   "turnout_delta": 0.08,
+   "share_delta": {
+    "더불어민주당": -2.9,
+    "국민의힘": 1.04
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.62
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.77
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구병",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 송파구병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "남인순",
+    "party": "더불어민주당",
+    "pct": 51.04
+   },
+   "previous_winner": {
+    "name": "남인순",
+    "party": "더불어민주당",
+    "pct": 52.49
+   },
+   "margin": 2.08,
+   "previous_margin": 9.27,
+   "margin_delta": -7.19,
+   "turnout": 72.21,
+   "previous_turnout": 70.26,
+   "turnout_delta": 1.95,
+   "share_delta": {
+    "더불어민주당": -1.45,
+    "국민의힘": 5.74
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.48
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.21
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 송파구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "배현진",
+    "party": "국민의힘",
+    "pct": 57.21
+   },
+   "previous_winner": {
+    "name": "배현진",
+    "party": "미래통합당",
+    "pct": 50.46
+   },
+   "margin": 14.42,
+   "previous_margin": 4.42,
+   "margin_delta": 10.0,
+   "turnout": 71.47,
+   "previous_turnout": 71.98,
+   "turnout_delta": -0.51,
+   "share_delta": {
+    "더불어민주당": -3.25,
+    "국민의힘": 6.75
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.03
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.21
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.25
+    }
+   ]
+  },
+  {
+   "district": "서울 양천구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 양천구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "황희",
+    "party": "더불어민주당",
+    "pct": 49.79
+   },
+   "previous_winner": {
+    "name": "황희",
+    "party": "더불어민주당",
+    "pct": 51.85
+   },
+   "margin": 1.63,
+   "previous_margin": 6.88,
+   "margin_delta": -5.25,
+   "turnout": 73.98,
+   "previous_turnout": 73.6,
+   "turnout_delta": 0.38,
+   "share_delta": {
+    "더불어민주당": -2.06,
+    "국민의힘": 3.19
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.37
+    }
+   ]
+  },
+  {
+   "district": "서울 양천구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 양천구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이용선",
+    "party": "더불어민주당",
+    "pct": 57.47
+   },
+   "previous_winner": {
+    "name": "이용선",
+    "party": "더불어민주당",
+    "pct": 57.54
+   },
+   "margin": 14.94,
+   "previous_margin": 16.26,
+   "margin_delta": -1.32,
+   "turnout": 68.27,
+   "previous_turnout": 66.65,
+   "turnout_delta": 1.62,
+   "share_delta": {
+    "더불어민주당": -0.07,
+    "국민의힘": 1.25
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.5
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.68
+    }
+   ]
+  },
+  {
+   "district": "서울 영등포구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 영등포구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "채현일",
+    "party": "더불어민주당",
+    "pct": 54.53
+   },
+   "previous_winner": {
+    "name": "김영주",
+    "party": "더불어민주당",
+    "pct": 56.26
+   },
+   "margin": 12.85,
+   "previous_margin": 17.98,
+   "margin_delta": -5.13,
+   "turnout": 70.21,
+   "previous_turnout": 69.2,
+   "turnout_delta": 1.01,
+   "share_delta": {
+    "더불어민주당": -1.73,
+    "국민의힘": 3.4
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 3.79
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.87
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.59
+    }
+   ]
+  },
+  {
+   "district": "서울 영등포구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 영등포구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김민석",
+    "party": "더불어민주당",
+    "pct": 50.18
+   },
+   "previous_winner": {
+    "name": "김민석",
+    "party": "더불어민주당",
+    "pct": 50.26
+   },
+   "margin": 1.15,
+   "previous_margin": 5.91,
+   "margin_delta": -4.76,
+   "turnout": 70.77,
+   "previous_turnout": 68.02,
+   "turnout_delta": 2.75,
+   "share_delta": {
+    "더불어민주당": -0.08,
+    "기후민생당": -0.57,
+    "국민의힘": 4.68
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.49
+    }
+   ]
+  },
+  {
+   "district": "서울 용산구",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 용산구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "권영세",
+    "party": "국민의힘",
+    "pct": 51.78
+   },
+   "previous_winner": {
+    "name": "권영세",
+    "party": "미래통합당",
+    "pct": 47.81
+   },
+   "margin": 4.75,
+   "previous_margin": 0.67,
+   "margin_delta": 4.08,
+   "turnout": 68.91,
+   "previous_turnout": 66.45,
+   "turnout_delta": 2.46,
+   "share_delta": {
+    "더불어민주당": -0.11,
+    "국민의힘": 3.97
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 3.18
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.98
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.48
+    }
+   ]
+  },
+  {
+   "district": "서울 은평구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 은평구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박주민",
+    "party": "더불어민주당",
+    "pct": 60.79
+   },
+   "previous_winner": {
+    "name": "박주민",
+    "party": "더불어민주당",
+    "pct": 64.29
+   },
+   "margin": 21.58,
+   "previous_margin": 30.35,
+   "margin_delta": -8.77,
+   "turnout": 68.09,
+   "previous_turnout": 65.61,
+   "turnout_delta": 2.48,
+   "share_delta": {
+    "더불어민주당": -3.5,
+    "국민의힘": 5.27
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.61
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.15
+    }
+   ]
+  },
+  {
+   "district": "서울 은평구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 은평구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김우영",
+    "party": "더불어민주당",
+    "pct": 56.95
+   },
+   "previous_winner": {
+    "name": "강병원",
+    "party": "더불어민주당",
+    "pct": 57.41
+   },
+   "margin": 17.34,
+   "previous_margin": 21.17,
+   "margin_delta": -3.83,
+   "turnout": 67.77,
+   "previous_turnout": 66.17,
+   "turnout_delta": 1.6,
+   "share_delta": {
+    "더불어민주당": -0.46,
+    "국민의힘": 3.37
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 3.44
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.46
+    },
+    {
+     "party": "기본소득당",
+     "previous_pct": 1.89
+    }
+   ]
+  },
+  {
+   "district": "서울 종로구",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 종로구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "곽상언",
+    "party": "더불어민주당",
+    "pct": 50.92
+   },
+   "previous_winner": {
+    "name": "이낙연",
+    "party": "더불어민주당",
+    "pct": 58.38
+   },
+   "margin": 6.79,
+   "previous_margin": 18.4,
+   "margin_delta": -11.61,
+   "turnout": 70.44,
+   "previous_turnout": 70.8,
+   "turnout_delta": -0.36,
+   "share_delta": {
+    "더불어민주당": -7.46,
+    "국민의힘": 4.15,
+    "민중민주당": 0.26
+   },
+   "newly_ran": [
+    {
+     "party": "가락특권폐지당",
+     "pct": 0.06
+    },
+    {
+     "party": "개혁신당",
+     "pct": 3.23
+    },
+    {
+     "party": "새로운미래",
+     "pct": 1.23
+    },
+    {
+     "party": "대한국민당",
+     "pct": 0.1
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.21
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.44
+    },
+    {
+     "party": "공화당",
+     "previous_pct": 0.06
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.29
+    },
+    {
+     "party": "국민새정당",
+     "previous_pct": 0.07
+    },
+    {
+     "party": "가자!평화인권당",
+     "previous_pct": 0.15
+    },
+    {
+     "party": "한나라당",
+     "previous_pct": 0.08
+    }
+   ]
+  },
+  {
+   "district": "서울 중구성동구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 중구성동구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "전현희",
+    "party": "더불어민주당",
+    "pct": 52.61
+   },
+   "previous_winner": {
+    "name": "홍익표",
+    "party": "더불어민주당",
+    "pct": 54.25
+   },
+   "margin": 5.22,
+   "previous_margin": 13.32,
+   "margin_delta": -8.1,
+   "turnout": 69.63,
+   "previous_turnout": 68.28,
+   "turnout_delta": 1.35,
+   "share_delta": {
+    "더불어민주당": -1.64,
+    "국민의힘": 6.46
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.21
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.61
+    }
+   ]
+  },
+  {
+   "district": "서울 중구성동구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 중구성동구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박성준",
+    "party": "더불어민주당",
+    "pct": 50.81
+   },
+   "previous_winner": {
+    "name": "박성준",
+    "party": "더불어민주당",
+    "pct": 51.96
+   },
+   "margin": 2.27,
+   "previous_margin": 4.68,
+   "margin_delta": -2.41,
+   "turnout": 69.38,
+   "previous_turnout": 67.85,
+   "turnout_delta": 1.53,
+   "share_delta": {
+    "더불어민주당": -1.15,
+    "국민의힘": 1.26
+   },
+   "newly_ran": [
+    {
+     "party": "한국국민당",
+     "pct": 0.65
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.76
+    }
+   ]
+  },
+  {
+   "district": "서울 중랑구갑",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 중랑구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서영교",
+    "party": "더불어민주당",
+    "pct": 61.93
+   },
+   "previous_winner": {
+    "name": "서영교",
+    "party": "더불어민주당",
+    "pct": 57.76
+   },
+   "margin": 23.86,
+   "previous_margin": 21.47,
+   "margin_delta": 2.39,
+   "turnout": 63.83,
+   "previous_turnout": 61.04,
+   "turnout_delta": 2.79,
+   "share_delta": {
+    "더불어민주당": 4.17,
+    "국민의힘": 1.78
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.83
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.51
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.79
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.65
+    }
+   ]
+  },
+  {
+   "district": "서울 중랑구을",
+   "sido": "서울",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "서울 중랑구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박홍근",
+    "party": "더불어민주당",
+    "pct": 57.73
+   },
+   "previous_winner": {
+    "name": "박홍근",
+    "party": "더불어민주당",
+    "pct": 59.29
+   },
+   "margin": 15.46,
+   "previous_margin": 21.22,
+   "margin_delta": -5.76,
+   "turnout": 68.65,
+   "previous_turnout": 65.68,
+   "turnout_delta": 2.97,
+   "share_delta": {
+    "더불어민주당": -1.56,
+    "국민의힘": 4.2
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.58
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.56
+    },
+    {
+     "party": "한국복지당",
+     "previous_pct": 0.5
+    }
+   ]
+  },
+  {
+   "district": "세종 세종특별자치시갑",
+   "sido": "세종",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '세종 세종특별자치시갑' 겹침 86%/98%",
+   "previous_district": "세종 세종특별자치시갑"
+  },
+  {
+   "district": "세종 세종특별자치시을",
+   "sido": "세종",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '세종 세종특별자치시을'의 90%만 차지",
+   "previous_district": "세종 세종특별자치시을"
+  },
+  {
+   "district": "울산 남구갑",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 남구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김상욱",
+    "party": "국민의힘",
+    "pct": 53.86
+   },
+   "previous_winner": {
+    "name": "이채익",
+    "party": "미래통합당",
+    "pct": 53.41
+   },
+   "margin": 11.17,
+   "previous_margin": 10.13,
+   "margin_delta": 1.04,
+   "turnout": 67.98,
+   "previous_turnout": 70.71,
+   "turnout_delta": -2.73,
+   "share_delta": {
+    "더불어민주당": -0.59,
+    "국민의힘": 0.45
+   },
+   "newly_ran": [
+    {
+     "party": "우리공화당",
+     "pct": 0.35
+    },
+    {
+     "party": "새로운미래",
+     "pct": 3.1
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.07
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.24
+    }
+   ]
+  },
+  {
+   "district": "울산 남구을",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 남구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김기현",
+    "party": "국민의힘",
+    "pct": 56.23
+   },
+   "previous_winner": {
+    "name": "김기현",
+    "party": "미래통합당",
+    "pct": 58.48
+   },
+   "margin": 12.46,
+   "previous_margin": 18.37,
+   "margin_delta": -5.91,
+   "turnout": 64.77,
+   "previous_turnout": 66.91,
+   "turnout_delta": -2.14,
+   "share_delta": {
+    "더불어민주당": 3.66,
+    "국민의힘": -2.25
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.41
+    }
+   ]
+  },
+  {
+   "district": "울산 동구",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 동구",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김태선",
+    "party": "더불어민주당",
+    "pct": 45.89
+   },
+   "previous_winner": {
+    "name": "권명호",
+    "party": "미래통합당",
+    "pct": 38.37
+   },
+   "margin": 0.68,
+   "previous_margin": 4.49,
+   "margin_delta": -3.81,
+   "turnout": 66.64,
+   "previous_turnout": 68.47,
+   "turnout_delta": -1.83,
+   "share_delta": {
+    "더불어민주당": 21.36,
+    "국민의힘": 6.84,
+    "노동당": 6.41
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.73
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 33.88
+    }
+   ]
+  },
+  {
+   "district": "울산 북구",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 북구",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "윤종오",
+    "party": "진보당",
+    "pct": 55.13
+   },
+   "previous_winner": {
+    "name": "이상헌",
+    "party": "더불어민주당",
+    "pct": 46.35
+   },
+   "margin": 12.24,
+   "previous_margin": 5.46,
+   "margin_delta": 6.78,
+   "turnout": 66.27,
+   "previous_turnout": 68.16,
+   "turnout_delta": -1.89,
+   "share_delta": {
+    "국민의힘": 2.0
+   },
+   "newly_ran": [
+    {
+     "party": "진보당",
+     "pct": 55.13
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 9.89
+    },
+    {
+     "party": "더불어민주당",
+     "previous_pct": 46.35
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.65
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.96
+    }
+   ]
+  },
+  {
+   "district": "울산 울주군",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 울주군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서범수",
+    "party": "국민의힘",
+    "pct": 53.49
+   },
+   "previous_winner": {
+    "name": "서범수",
+    "party": "미래통합당",
+    "pct": 52.75
+   },
+   "margin": 6.98,
+   "previous_margin": 9.35,
+   "margin_delta": -2.37,
+   "turnout": 67.34,
+   "previous_turnout": 68.39,
+   "turnout_delta": -1.05,
+   "share_delta": {
+    "더불어민주당": 3.11,
+    "국민의힘": 0.74
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.96
+    }
+   ]
+  },
+  {
+   "district": "울산 중구",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "울산 중구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박성민",
+    "party": "국민의힘",
+    "pct": 56.45
+   },
+   "previous_winner": {
+    "name": "박성민",
+    "party": "미래통합당",
+    "pct": 54.05
+   },
+   "margin": 12.9,
+   "previous_margin": 19.72,
+   "margin_delta": -6.82,
+   "turnout": 67.7,
+   "previous_turnout": 68.98,
+   "turnout_delta": -1.28,
+   "share_delta": {
+    "더불어민주당": 9.22,
+    "국민의힘": 2.4
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.84
+    },
+    {
+     "party": "노동당",
+     "previous_pct": 9.47
+    }
+   ]
+  },
+  {
+   "district": "인천 계양구갑",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 계양구갑' 겹침 78%/67%",
+   "previous_district": "인천 계양구갑"
+  },
+  {
+   "district": "인천 계양구을",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "인천 계양구을"
+  },
+  {
+   "district": "인천 남동구갑",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 남동구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "맹성규",
+    "party": "더불어민주당",
+    "pct": 56.96
+   },
+   "previous_winner": {
+    "name": "맹성규",
+    "party": "더불어민주당",
+    "pct": 54.39
+   },
+   "margin": 16.7,
+   "previous_margin": 9.95,
+   "margin_delta": 6.75,
+   "turnout": 62.9,
+   "previous_turnout": 61.75,
+   "turnout_delta": 1.15,
+   "share_delta": {
+    "더불어민주당": 2.57,
+    "국민의힘": -4.18
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 2.78
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.17
+    }
+   ]
+  },
+  {
+   "district": "인천 남동구을",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 남동구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이훈기",
+    "party": "더불어민주당",
+    "pct": 54.48
+   },
+   "previous_winner": {
+    "name": "윤관석",
+    "party": "더불어민주당",
+    "pct": 54.58
+   },
+   "margin": 8.96,
+   "previous_margin": 17.0,
+   "margin_delta": -8.04,
+   "turnout": 65.77,
+   "previous_turnout": 63.86,
+   "turnout_delta": 1.91,
+   "share_delta": {
+    "더불어민주당": -0.1,
+    "국민의힘": 7.94
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.99
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.69
+    }
+   ]
+  },
+  {
+   "district": "인천 동구미추홀구갑",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 동구미추홀구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "허종식",
+    "party": "더불어민주당",
+    "pct": 53.73
+   },
+   "previous_winner": {
+    "name": "허종식",
+    "party": "더불어민주당",
+    "pct": 48.78
+   },
+   "margin": 7.46,
+   "previous_margin": 6.61,
+   "margin_delta": 0.85,
+   "turnout": 62.33,
+   "previous_turnout": 59.41,
+   "turnout_delta": 2.92,
+   "share_delta": {
+    "더불어민주당": 4.95,
+    "국민의힘": 4.1
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 7.91
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.15
+    }
+   ]
+  },
+  {
+   "district": "인천 동구미추홀구을",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 동구미추홀구을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "윤상현",
+    "party": "국민의힘",
+    "pct": 50.44
+   },
+   "previous_winner": {
+    "name": "윤상현",
+    "party": "무소속",
+    "pct": 40.6
+   },
+   "margin": 0.88,
+   "previous_margin": 0.15,
+   "margin_delta": 0.73,
+   "turnout": 63.53,
+   "previous_turnout": 61.93,
+   "turnout_delta": 1.6,
+   "share_delta": {
+    "더불어민주당": 9.11,
+    "국민의힘": 34.86
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.81
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.56
+    }
+   ]
+  },
+  {
+   "district": "인천 부평구갑",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 부평구갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "노종면",
+    "party": "더불어민주당",
+    "pct": 55.2
+   },
+   "previous_winner": {
+    "name": "이성만",
+    "party": "더불어민주당",
+    "pct": 56.69
+   },
+   "margin": 10.4,
+   "previous_margin": 14.87,
+   "margin_delta": -4.47,
+   "turnout": 61.61,
+   "previous_turnout": 59.63,
+   "turnout_delta": 1.98,
+   "share_delta": {
+    "더불어민주당": -1.49,
+    "국민의힘": 2.98
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.49
+    }
+   ]
+  },
+  {
+   "district": "인천 부평구을",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 부평구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박선원",
+    "party": "더불어민주당",
+    "pct": 51.37
+   },
+   "previous_winner": {
+    "name": "홍영표",
+    "party": "더불어민주당",
+    "pct": 56.13
+   },
+   "margin": 12.62,
+   "previous_margin": 20.01,
+   "margin_delta": -7.39,
+   "turnout": 67.67,
+   "previous_turnout": 65.31,
+   "turnout_delta": 2.36,
+   "share_delta": {
+    "더불어민주당": -4.76,
+    "국민의힘": 2.63
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 8.26
+    },
+    {
+     "party": "녹색정의당",
+     "pct": 1.62
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 6.04
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.77
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.94
+    }
+   ]
+  },
+  {
+   "district": "인천 서구갑",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '인천 서구갑'의 79%만 차지",
+   "previous_district": "인천 서구갑"
+  },
+  {
+   "district": "인천 서구병",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '인천 서구을'의 61%만 차지",
+   "previous_district": "인천 서구을"
+  },
+  {
+   "district": "인천 서구을",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 서구을 83%, 인천 서구갑 17%",
+   "previous_district": "인천 서구을"
+  },
+  {
+   "district": "인천 연수구갑",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 연수구갑 60%, 인천 연수구을 40%",
+   "previous_district": "인천 연수구갑"
+  },
+  {
+   "district": "인천 연수구을",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 연수구을' 겹침 95%/85%",
+   "previous_district": "인천 연수구을"
+  },
+  {
+   "district": "인천 중구강화군옹진군",
+   "sido": "인천",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "인천 중구강화군옹진군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "배준영",
+    "party": "국민의힘",
+    "pct": 54.99
+   },
+   "previous_winner": {
+    "name": "배준영",
+    "party": "미래통합당",
+    "pct": 50.28
+   },
+   "margin": 11.1,
+   "previous_margin": 2.63,
+   "margin_delta": 8.47,
+   "turnout": 65.92,
+   "previous_turnout": 64.37,
+   "turnout_delta": 1.55,
+   "share_delta": {
+    "더불어민주당": -3.76,
+    "국민의힘": 4.71
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 1.16
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.91
+    }
+   ]
+  },
+  {
+   "district": "전남 고흥군보성군장흥군강진군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 고흥군보성군장흥군강진군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "문금주",
+    "party": "더불어민주당",
+    "pct": 90.7
+   },
+   "previous_winner": {
+    "name": "김승남",
+    "party": "더불어민주당",
+    "pct": 62.82
+   },
+   "margin": 81.4,
+   "previous_margin": 28.51,
+   "margin_delta": 52.89,
+   "turnout": 71.33,
+   "previous_turnout": 73.38,
+   "turnout_delta": -2.05,
+   "share_delta": {
+    "더불어민주당": 27.88
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 9.3
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 34.31
+    }
+   ]
+  },
+  {
+   "district": "전남 나주시화순군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 나주시화순군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "신정훈",
+    "party": "더불어민주당",
+    "pct": 71.07
+   },
+   "previous_winner": {
+    "name": "신정훈",
+    "party": "더불어민주당",
+    "pct": 78.81
+   },
+   "margin": 51.31,
+   "previous_margin": 59.26,
+   "margin_delta": -7.95,
+   "turnout": 68.97,
+   "previous_turnout": 65.28,
+   "turnout_delta": 3.69,
+   "share_delta": {
+    "더불어민주당": -7.74,
+    "진보당": 0.21
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 9.17
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.65
+    }
+   ]
+  },
+  {
+   "district": "전남 담양군함평군영광군장성군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 담양군함평군영광군장성군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이개호",
+    "party": "더불어민주당",
+    "pct": 56.47
+   },
+   "previous_winner": {
+    "name": "이개호",
+    "party": "더불어민주당",
+    "pct": 81.96
+   },
+   "margin": 20.55,
+   "previous_margin": 70.29,
+   "margin_delta": -49.74,
+   "turnout": 72.48,
+   "previous_turnout": 68.53,
+   "turnout_delta": 3.95,
+   "share_delta": {
+    "더불어민주당": -25.49
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 1.02
+    },
+    {
+     "party": "새로운미래",
+     "pct": 2.06
+    },
+    {
+     "party": "국민의힘",
+     "pct": 4.54
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.81
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 4.59
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.98
+    }
+   ]
+  },
+  {
+   "district": "전남 목포시",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 목포시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김원이",
+    "party": "더불어민주당",
+    "pct": 71.43
+   },
+   "previous_winner": {
+    "name": "김원이",
+    "party": "더불어민주당",
+    "pct": 48.77
+   },
+   "margin": 57.77,
+   "previous_margin": 11.43,
+   "margin_delta": 46.34,
+   "turnout": 64.92,
+   "previous_turnout": 67.87,
+   "turnout_delta": -2.95,
+   "share_delta": {
+    "더불어민주당": 22.66,
+    "국민의힘": 3.51
+   },
+   "newly_ran": [
+    {
+     "party": "소나무당",
+     "pct": 4.01
+    },
+    {
+     "party": "진보당",
+     "pct": 3.06
+    },
+    {
+     "party": "녹색정의당",
+     "pct": 2.31
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 11.88
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 37.34
+    }
+   ]
+  },
+  {
+   "district": "전남 순천시광양시곡성군구례군갑",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 순천시광양시곡성군구례군갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김문수",
+    "party": "더불어민주당",
+    "pct": 64.34
+   },
+   "previous_winner": {
+    "name": "소병철",
+    "party": "더불어민주당",
+    "pct": 58.56
+   },
+   "margin": 46.29,
+   "previous_margin": 26.86,
+   "margin_delta": 19.43,
+   "turnout": 70.01,
+   "previous_turnout": 70.35,
+   "turnout_delta": -0.34,
+   "share_delta": {
+    "더불어민주당": 5.78,
+    "진보당": 13.62,
+    "국민의힘": 5.73
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 0.94
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.27
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.79
+    },
+    {
+     "party": "기독자유통일당",
+     "previous_pct": 0.29
+    }
+   ]
+  },
+  {
+   "district": "전남 순천시광양시곡성군구례군을",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 순천시광양시곡성군구례군을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "권향엽",
+    "party": "더불어민주당",
+    "pct": 70.1
+   },
+   "previous_winner": {
+    "name": "서동용",
+    "party": "더불어민주당",
+    "pct": 64.75
+   },
+   "margin": 46.43,
+   "previous_margin": 40.67,
+   "margin_delta": 5.76,
+   "turnout": 69.1,
+   "previous_turnout": 67.15,
+   "turnout_delta": 1.95,
+   "share_delta": {
+    "더불어민주당": 5.35,
+    "진보당": 3.79,
+    "국민의힘": 19.33
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.93
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.43
+    }
+   ]
+  },
+  {
+   "district": "전남 여수시갑",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 여수시갑' 겹침 89%/100%",
+   "previous_district": "전남 여수시갑"
+  },
+  {
+   "district": "전남 여수시을",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전남 여수시을'의 88%만 차지",
+   "previous_district": "전남 여수시을"
+  },
+  {
+   "district": "전남 영암군무안군신안군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 영암군무안군신안군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "서삼석",
+    "party": "더불어민주당",
+    "pct": 69.17
+   },
+   "previous_winner": {
+    "name": "서삼석",
+    "party": "더불어민주당",
+    "pct": 76.97
+   },
+   "margin": 48.67,
+   "previous_margin": 57.55,
+   "margin_delta": -8.88,
+   "turnout": 69.25,
+   "previous_turnout": 65.74,
+   "turnout_delta": 3.51,
+   "share_delta": {
+    "더불어민주당": -7.8,
+    "국민의힘": 2.9
+   },
+   "newly_ran": [
+    {
+     "party": "한국농어민당",
+     "pct": 0.69
+    },
+    {
+     "party": "진보당",
+     "pct": 3.11
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 19.42
+    }
+   ]
+  },
+  {
+   "district": "전남 해남군완도군진도군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전남 해남군완도군진도군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박지원",
+    "party": "더불어민주당",
+    "pct": 92.36
+   },
+   "previous_winner": {
+    "name": "윤재갑",
+    "party": "더불어민주당",
+    "pct": 67.51
+   },
+   "margin": 84.72,
+   "previous_margin": 36.61,
+   "margin_delta": 48.11,
+   "turnout": 69.82,
+   "previous_turnout": 68.04,
+   "turnout_delta": 1.78,
+   "share_delta": {
+    "더불어민주당": 24.85
+   },
+   "newly_ran": [
+    {
+     "party": "국민의힘",
+     "pct": 7.64
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.59
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 30.9
+    }
+   ]
+  },
+  {
+   "district": "전북 군산시김제시부안군갑",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전북 군산시'의 81%만 차지",
+   "previous_district": "전북 군산시"
+  },
+  {
+   "district": "전북 군산시김제시부안군을",
+   "sido": "전북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북 김제시부안군'",
+   "previous_district": "전북 김제시부안군"
+  },
+  {
+   "district": "전북 남원시장수군임실군순창군",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북 남원시임실군순창군' 겹침 78%/100%",
+   "previous_district": "전북 남원시임실군순창군"
+  },
+  {
+   "district": "전북 완주군진안군무주군",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전북 완주군진안군무주군장수군'의 81%만 차지",
+   "previous_district": "전북 완주군진안군무주군장수군"
+  },
+  {
+   "district": "전북 익산시갑",
+   "sido": "전북",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전북 익산시갑 84%, 전북 익산시을 16%",
+   "previous_district": "전북 익산시갑"
+  },
+  {
+   "district": "전북 익산시을",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북 익산시을' 겹침 64%/90%",
+   "previous_district": "전북 익산시을"
+  },
+  {
+   "district": "전북 전주시갑",
+   "sido": "전북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "전북 전주시갑"
+  },
+  {
+   "district": "전북 전주시병",
+   "sido": "전북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전북 전주시병",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "정동영",
+    "party": "더불어민주당",
+    "pct": 82.09
+   },
+   "previous_winner": {
+    "name": "김성주",
+    "party": "더불어민주당",
+    "pct": 66.65
+   },
+   "margin": 69.79,
+   "previous_margin": 34.6,
+   "margin_delta": 35.19,
+   "turnout": 68.31,
+   "previous_turnout": 68.22,
+   "turnout_delta": 0.09,
+   "share_delta": {
+    "더불어민주당": 15.44
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 5.61
+    },
+    {
+     "party": "국민의힘",
+     "pct": 12.3
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.3
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 32.05
+    }
+   ]
+  },
+  {
+   "district": "전북 전주시을",
+   "sido": "전북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전북 전주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이성윤",
+    "party": "더불어민주당",
+    "pct": 66.38
+   },
+   "previous_winner": {
+    "name": "이상직",
+    "party": "더불어민주당",
+    "pct": 62.54
+   },
+   "margin": 45.75,
+   "previous_margin": 42.46,
+   "margin_delta": 3.29,
+   "turnout": 67.9,
+   "previous_turnout": 65.92,
+   "turnout_delta": 1.98,
+   "share_delta": {
+    "더불어민주당": 3.84,
+    "국민의힘": 14.06
+   },
+   "newly_ran": [
+    {
+     "party": "자유민주당",
+     "pct": 0.52
+    },
+    {
+     "party": "진보당",
+     "pct": 11.5
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.21
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.4
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 3.57
+    }
+   ]
+  },
+  {
+   "district": "전북 정읍시고창군",
+   "sido": "전북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "전북 정읍시고창군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "윤준병",
+    "party": "더불어민주당",
+    "pct": 86.86
+   },
+   "previous_winner": {
+    "name": "윤준병",
+    "party": "더불어민주당",
+    "pct": 69.78
+   },
+   "margin": 76.39,
+   "previous_margin": 39.56,
+   "margin_delta": 36.83,
+   "turnout": 68.28,
+   "previous_turnout": 65.95,
+   "turnout_delta": 2.33,
+   "share_delta": {
+    "더불어민주당": 17.08
+   },
+   "newly_ran": [
+    {
+     "party": "자유통일당",
+     "pct": 2.67
+    },
+    {
+     "party": "국민의힘",
+     "pct": 10.47
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "기후민생당",
+     "previous_pct": 30.22
+    }
+   ]
+  },
+  {
+   "district": "제주 서귀포시",
+   "sido": "제주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "제주 서귀포시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "위성곤",
+    "party": "더불어민주당",
+    "pct": 54.01
+   },
+   "previous_winner": {
+    "name": "위성곤",
+    "party": "더불어민주당",
+    "pct": 55.49
+   },
+   "margin": 8.02,
+   "previous_margin": 12.13,
+   "margin_delta": -4.11,
+   "turnout": 64.79,
+   "previous_turnout": 63.88,
+   "turnout_delta": 0.91,
+   "share_delta": {
+    "더불어민주당": -1.48,
+    "국민의힘": 2.63
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.15
+    }
+   ]
+  },
+  {
+   "district": "제주 제주시갑",
+   "sido": "제주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "제주 제주시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "문대림",
+    "party": "더불어민주당",
+    "pct": 62.88
+   },
+   "previous_winner": {
+    "name": "송재호",
+    "party": "더불어민주당",
+    "pct": 48.7
+   },
+   "margin": 25.76,
+   "previous_margin": 11.63,
+   "margin_delta": 14.13,
+   "turnout": 59.66,
+   "previous_turnout": 61.36,
+   "turnout_delta": -1.7,
+   "share_delta": {
+    "더불어민주당": 14.18,
+    "국민의힘": 0.05
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 7.32
+    },
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.61
+    }
+   ]
+  },
+  {
+   "district": "제주 제주시을",
+   "sido": "제주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "제주 제주시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "김한규",
+    "party": "더불어민주당",
+    "pct": 64.64
+   },
+   "previous_winner": {
+    "name": "오영훈",
+    "party": "더불어민주당",
+    "pct": 55.35
+   },
+   "margin": 32.68,
+   "previous_margin": 14.28,
+   "margin_delta": 18.4,
+   "turnout": 63.22,
+   "previous_turnout": 64.05,
+   "turnout_delta": -0.83,
+   "share_delta": {
+    "더불어민주당": 9.29,
+    "국민의힘": -9.11
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 3.4
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.52
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 2.67
+    },
+    {
+     "party": "한나라당",
+     "previous_pct": 0.39
+    }
+   ]
+  },
+  {
+   "district": "충남 공주시부여군청양군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 공주시부여군청양군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "박수현",
+    "party": "더불어민주당",
+    "pct": 50.67
+   },
+   "previous_winner": {
+    "name": "정진석",
+    "party": "미래통합당",
+    "pct": 48.65
+   },
+   "margin": 2.25,
+   "previous_margin": 2.22,
+   "margin_delta": 0.03,
+   "turnout": 71.89,
+   "previous_turnout": 66.1,
+   "turnout_delta": 5.79,
+   "share_delta": {
+    "더불어민주당": 4.24,
+    "국민의힘": -0.23
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 0.6
+    }
+   ]
+  },
+  {
+   "district": "충남 논산시계룡시금산군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 논산시계룡시금산군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "황명선",
+    "party": "더불어민주당",
+    "pct": 50.85
+   },
+   "previous_winner": {
+    "name": "김종민",
+    "party": "더불어민주당",
+    "pct": 51.01
+   },
+   "margin": 3.7,
+   "previous_margin": 4.67,
+   "margin_delta": -0.97,
+   "turnout": 67.57,
+   "previous_turnout": 63.79,
+   "turnout_delta": 3.78,
+   "share_delta": {
+    "더불어민주당": -0.16,
+    "국민의힘": 0.81
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.1
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.54
+    }
+   ]
+  },
+  {
+   "district": "충남 당진시",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 당진시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "어기구",
+    "party": "더불어민주당",
+    "pct": 51.78
+   },
+   "previous_winner": {
+    "name": "어기구",
+    "party": "더불어민주당",
+    "pct": 47.66
+   },
+   "margin": 3.56,
+   "previous_margin": 17.41,
+   "margin_delta": -13.85,
+   "turnout": 62.87,
+   "previous_turnout": 59.49,
+   "turnout_delta": 3.38,
+   "share_delta": {
+    "더불어민주당": 4.12,
+    "국민의힘": 17.97
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "우리공화당",
+     "previous_pct": 0.53
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.64
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.95
+    }
+   ]
+  },
+  {
+   "district": "충남 보령시서천군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 보령시서천군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "장동혁",
+    "party": "국민의힘",
+    "pct": 51.51
+   },
+   "previous_winner": {
+    "name": "김태흠",
+    "party": "미래통합당",
+    "pct": 50.86
+   },
+   "margin": 4.1,
+   "previous_margin": 1.72,
+   "margin_delta": 2.38,
+   "turnout": 71.04,
+   "previous_turnout": 68.52,
+   "turnout_delta": 2.52,
+   "share_delta": {
+    "더불어민주당": -1.73,
+    "국민의힘": 0.65
+   },
+   "newly_ran": [],
+   "no_longer_ran": []
+  },
+  {
+   "district": "충남 서산시태안군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 서산시태안군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "성일종",
+    "party": "국민의힘",
+    "pct": 51.56
+   },
+   "previous_winner": {
+    "name": "성일종",
+    "party": "미래통합당",
+    "pct": 52.7
+   },
+   "margin": 3.12,
+   "previous_margin": 8.5,
+   "margin_delta": -5.38,
+   "turnout": 67.79,
+   "previous_turnout": 64.07,
+   "turnout_delta": 3.72,
+   "share_delta": {
+    "더불어민주당": 4.24,
+    "국민의힘": -1.14
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 2.3
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.8
+    }
+   ]
+  },
+  {
+   "district": "충남 아산시갑",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 아산시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "복기왕",
+    "party": "더불어민주당",
+    "pct": 53.79
+   },
+   "previous_winner": {
+    "name": "이명수",
+    "party": "미래통합당",
+    "pct": 49.83
+   },
+   "margin": 9.69,
+   "previous_margin": 0.74,
+   "margin_delta": 8.95,
+   "turnout": 63.03,
+   "previous_turnout": 61.66,
+   "turnout_delta": 1.37,
+   "share_delta": {
+    "더불어민주당": 4.7,
+    "국민의힘": -5.73
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 2.11
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.08
+    }
+   ]
+  },
+  {
+   "district": "충남 아산시을",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 아산시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강훈식",
+    "party": "더불어민주당",
+    "pct": 60.35
+   },
+   "previous_winner": {
+    "name": "강훈식",
+    "party": "더불어민주당",
+    "pct": 59.72
+   },
+   "margin": 20.7,
+   "previous_margin": 19.44,
+   "margin_delta": 1.26,
+   "turnout": 61.59,
+   "previous_turnout": 60.94,
+   "turnout_delta": 0.65,
+   "share_delta": {
+    "국민의힘": -0.63,
+    "더불어민주당": 0.63
+   },
+   "newly_ran": [],
+   "no_longer_ran": []
+  },
+  {
+   "district": "충남 천안시갑",
+   "sido": "충남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/100% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous_district": "충남 천안시갑"
+  },
+  {
+   "district": "충남 천안시병",
+   "sido": "충남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '충남 천안시병' 겹침 96%/88%",
+   "previous_district": "충남 천안시병"
+  },
+  {
+   "district": "충남 천안시을",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 천안시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이재관",
+    "party": "더불어민주당",
+    "pct": 55.13
+   },
+   "previous_winner": {
+    "name": "박완주",
+    "party": "더불어민주당",
+    "pct": 58.84
+   },
+   "margin": 13.33,
+   "previous_margin": 23.95,
+   "margin_delta": -10.62,
+   "turnout": 59.32,
+   "previous_turnout": 60.74,
+   "turnout_delta": -1.42,
+   "share_delta": {
+    "더불어민주당": -3.71,
+    "국민의힘": 6.91
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 4.82
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.68
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 0.77
+    }
+   ]
+  },
+  {
+   "district": "충남 홍성군예산군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충남 홍성군예산군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "강승규",
+    "party": "국민의힘",
+    "pct": 54.84
+   },
+   "previous_winner": {
+    "name": "홍문표",
+    "party": "미래통합당",
+    "pct": 53.95
+   },
+   "margin": 9.68,
+   "previous_margin": 9.47,
+   "margin_delta": 0.21,
+   "turnout": 68.17,
+   "previous_turnout": 62.96,
+   "turnout_delta": 5.21,
+   "share_delta": {
+    "더불어민주당": 0.68,
+    "국민의힘": 0.89
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.57
+    }
+   ]
+  },
+  {
+   "district": "충북 보은군옥천군영동군괴산군",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 보은군옥천군영동군괴산군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "박덕흠",
+    "party": "국민의힘",
+    "pct": 52.93
+   },
+   "previous_winner": {
+    "name": "박덕흠",
+    "party": "미래통합당",
+    "pct": 56.88
+   },
+   "margin": 5.86,
+   "previous_margin": 15.44,
+   "margin_delta": -9.58,
+   "turnout": 72.5,
+   "previous_turnout": 68.56,
+   "turnout_delta": 3.94,
+   "share_delta": {
+    "더불어민주당": 5.63,
+    "국민의힘": -3.95
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.01
+    },
+    {
+     "party": "한나라당",
+     "previous_pct": 0.67
+    }
+   ]
+  },
+  {
+   "district": "충북 제천시단양군",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 제천시단양군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "엄태영",
+    "party": "국민의힘",
+    "pct": 49.44
+   },
+   "previous_winner": {
+    "name": "엄태영",
+    "party": "미래통합당",
+    "pct": 54.1
+   },
+   "margin": 8.0,
+   "previous_margin": 9.5,
+   "margin_delta": -1.5,
+   "turnout": 68.26,
+   "previous_turnout": 67.33,
+   "turnout_delta": 0.93,
+   "share_delta": {
+    "더불어민주당": -3.16,
+    "국민의힘": -4.66
+   },
+   "newly_ran": [
+    {
+     "party": "새로운미래",
+     "pct": 4.24
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.3
+    }
+   ]
+  },
+  {
+   "district": "충북 증평군진천군음성군",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 증평군진천군음성군",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "임호선",
+    "party": "더불어민주당",
+    "pct": 53.95
+   },
+   "previous_winner": {
+    "name": "임호선",
+    "party": "더불어민주당",
+    "pct": 50.69
+   },
+   "margin": 7.9,
+   "previous_margin": 2.85,
+   "margin_delta": 5.05,
+   "turnout": 63.14,
+   "previous_turnout": 59.82,
+   "turnout_delta": 3.32,
+   "share_delta": {
+    "더불어민주당": 3.26,
+    "국민의힘": -1.79
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.48
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시상당구",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 청주시상당구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이강일",
+    "party": "더불어민주당",
+    "pct": 51.45
+   },
+   "previous_winner": {
+    "name": "정정순",
+    "party": "더불어민주당",
+    "pct": 47.1
+   },
+   "margin": 5.27,
+   "previous_margin": 3.12,
+   "margin_delta": 2.15,
+   "turnout": 64.61,
+   "previous_turnout": 64.89,
+   "turnout_delta": -0.28,
+   "share_delta": {
+    "더불어민주당": 4.35,
+    "국민의힘": 2.2
+   },
+   "newly_ran": [
+    {
+     "party": "녹색정의당",
+     "pct": 1.63
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "정의당",
+     "previous_pct": 6.91
+    },
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.7
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.32
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시서원구",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 청주시서원구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이광희",
+    "party": "더불어민주당",
+    "pct": 52.46
+   },
+   "previous_winner": {
+    "name": "이장섭",
+    "party": "더불어민주당",
+    "pct": 49.86
+   },
+   "margin": 4.92,
+   "previous_margin": 3.07,
+   "margin_delta": 1.85,
+   "turnout": 65.74,
+   "previous_turnout": 64.9,
+   "turnout_delta": 0.84,
+   "share_delta": {
+    "더불어민주당": 2.6,
+    "국민의힘": 0.75
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.98
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 2.37
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시청원구",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 청주시청원구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "송재봉",
+    "party": "더불어민주당",
+    "pct": 53.29
+   },
+   "previous_winner": {
+    "name": "변재일",
+    "party": "더불어민주당",
+    "pct": 52.99
+   },
+   "margin": 6.58,
+   "previous_margin": 8.57,
+   "margin_delta": -1.99,
+   "turnout": 63.09,
+   "previous_turnout": 61.76,
+   "turnout_delta": 1.33,
+   "share_delta": {
+    "더불어민주당": 0.3,
+    "국민의힘": 2.29
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 0.96
+    },
+    {
+     "party": "진보당",
+     "previous_pct": 1.63
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시흥덕구",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 청주시흥덕구",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이연희",
+    "party": "더불어민주당",
+    "pct": 51.77
+   },
+   "previous_winner": {
+    "name": "도종환",
+    "party": "더불어민주당",
+    "pct": 55.81
+   },
+   "margin": 7.18,
+   "previous_margin": 12.85,
+   "margin_delta": -5.67,
+   "turnout": 61.28,
+   "previous_turnout": 62.29,
+   "turnout_delta": -1.01,
+   "share_delta": {
+    "더불어민주당": -4.04,
+    "국민의힘": 1.63
+   },
+   "newly_ran": [
+    {
+     "party": "개혁신당",
+     "pct": 3.65
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.23
+    }
+   ]
+  },
+  {
+   "district": "충북 충주시",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous_district": "충북 충주시",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이종배",
+    "party": "국민의힘",
+    "pct": 51.12
+   },
+   "previous_winner": {
+    "name": "이종배",
+    "party": "미래통합당",
+    "pct": 52.25
+   },
+   "margin": 2.24,
+   "previous_margin": 7.33,
+   "margin_delta": -5.09,
+   "turnout": 65.86,
+   "previous_turnout": 63.89,
+   "turnout_delta": 1.97,
+   "share_delta": {
+    "더불어민주당": 3.96,
+    "국민의힘": -1.13
+   },
+   "newly_ran": [],
+   "no_longer_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "previous_pct": 1.03
+    },
+    {
+     "party": "기후민생당",
+     "previous_pct": 1.8
+    }
+   ]
+  }
+ ]
+}
