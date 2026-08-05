@@ -1,0 +1,84 @@
+{
+ "_meta": {
+  "note": "events.json에서 파생 — 직접 편집하지 않는다.",
+  "n": 10
+ },
+ "entities": [
+  {
+   "id": "admin_unit:경기도:이천군",
+   "kind": "admin_unit",
+   "parent": "경기도",
+   "name": "이천군",
+   "valid_to": "1996-03-01"
+  },
+  {
+   "id": "admin_unit:경기도:이천시",
+   "kind": "admin_unit",
+   "parent": "경기도",
+   "name": "이천시",
+   "valid_from": "1996-03-01"
+  },
+  {
+   "id": "admin_unit:경상북도:군위군",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "군위군",
+   "valid_to": "2023-07-01"
+  },
+  {
+   "id": "admin_unit:대구광역시:군위군",
+   "kind": "admin_unit",
+   "parent": "대구광역시",
+   "name": "군위군",
+   "valid_from": "2023-07-01"
+  },
+  {
+   "id": "electoral_district:21:경기:부천시갑",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "부천시갑",
+   "round": 21,
+   "valid_to": "2024-04-10"
+  },
+  {
+   "id": "electoral_district:21:경기:부천시정",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "부천시정",
+   "round": 21,
+   "valid_to": "2024-04-10"
+  },
+  {
+   "id": "electoral_district:21:경기:하남시",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "하남시",
+   "round": 21,
+   "valid_to": "2024-04-10"
+  },
+  {
+   "id": "electoral_district:22:경기:부천시갑",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "부천시갑",
+   "round": 22,
+   "valid_from": "2024-04-10"
+  },
+  {
+   "id": "electoral_district:22:경기:하남시갑",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "하남시갑",
+   "round": 22,
+   "valid_from": "2024-04-10"
+  },
+  {
+   "id": "electoral_district:22:경기:하남시을",
+   "kind": "electoral_district",
+   "parent": "경기",
+   "name": "하남시을",
+   "round": 22,
+   "valid_from": "2024-04-10"
+  }
+ ]
+}

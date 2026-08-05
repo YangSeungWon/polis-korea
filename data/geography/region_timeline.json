@@ -1,0 +1,64 @@
+{
+ "_meta": {
+  "note": "지역 페이지 타임라인용 — 선거 기록 사이에 끼울 행정구역 변화 이벤트. events.json에서 파생, 직접 편집하지 않는다.",
+  "n": 4
+ },
+ "by_region": {
+  "경기도-이천시": [
+   {
+    "date": "1996-03-01",
+    "type": "promotion",
+    "label": "이천군에서 이천시로 승격",
+    "from": [
+     "경기도 이천군"
+    ],
+    "comparison_capability": "direct",
+    "predecessor_slugs": [
+     "경기도-이천군"
+    ]
+   }
+  ],
+  "경기도-이천군": [
+   {
+    "date": "1996-03-01",
+    "type": "promotion",
+    "label": "이천군에서 이천시로 승격",
+    "to": [
+     "경기도 이천시"
+    ],
+    "comparison_capability": "direct",
+    "successor_slugs": [
+     "경기도-이천시"
+    ]
+   }
+  ],
+  "대구광역시-군위군": [
+   {
+    "date": "2023-07-01",
+    "type": "transfer",
+    "label": "경상북도 군위군이 대구광역시로 편입",
+    "from": [
+     "경상북도 군위군"
+    ],
+    "comparison_capability": "direct",
+    "predecessor_slugs": [
+     "경상북도-군위군"
+    ]
+   }
+  ],
+  "경상북도-군위군": [
+   {
+    "date": "2023-07-01",
+    "type": "transfer",
+    "label": "경상북도 군위군이 대구광역시로 편입",
+    "to": [
+     "대구광역시 군위군"
+    ],
+    "comparison_capability": "direct",
+    "successor_slugs": [
+     "대구광역시-군위군"
+    ]
+   }
+  ]
+ }
+}

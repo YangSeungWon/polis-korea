@@ -114,6 +114,10 @@ jobs:
       - name: 선거구 계보 (비교 가능 단위 판정)
         run: python tests/test_district_lineage.py
 
+      # entity는 분리, lineage는 연결. 역사가 이어진다 ≠ 숫자가 직접 비교된다.
+      - name: 지리 계보 (행정구역·선거구 변화 그래프)
+        run: python tests/test_geography_lineage.py
+
       # 정당 문자열 ≠ 비교 identity. 분리하지 않으면 같은 버그가 연산마다 다르게 난다
       # (승자 판정은 same_party, 득표 집계는 raw name → 국민의힘 +46%p/미래통합당 -45%p).
       - name: 정당 identity (개명·합당 구분·resolver 우회 금지)

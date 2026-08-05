@@ -1,0 +1,173 @@
+{
+ "_meta": {
+  "note": "확정 이벤트. 근거(evidence) 없이 추가하지 않는다. candidates.json은 자동 탐지 후보이고 여기가 사실이다.",
+  "principle": "entity는 분리, lineage는 연결 — 이천군과 이천시는 다른 entity이고 promotion 이벤트로 이어진다.",
+  "capability_note": "comparison_capability는 event type에서 기계적으로 나오지 않는다. merge라도 전신 전체가 후신에 정확히 포함될 때만 aggregated이고, 아니면 context_only다.",
+  "coverage": "전국 행정구역사를 먼저 만들지 않는다. polis 데이터가 실제로 만나는 변화부터 채운다.",
+  "entity_id_note": "선거구 id에는 **회차**가 들어간다. 21대 부천시갑과 22대 부천시갑은 이름만 같고 영역이 다르다 — 이름으로만 식별하면 한 entity가 되어 '2024-04-10 ~ 2024-04-10'처럼 유효기간이 모순된다(실제로 그렇게 나왔다). 행정구역은 다르다: 이천시는 1996년부터 지금까지 하나의 entity다."
+ },
+ "events": [
+  {
+   "id": "geo:1996-03-01:icheon-promotion",
+   "type": "promotion",
+   "kind": "admin_unit",
+   "effective_date": "1996-03-01",
+   "from": [
+    {
+     "id": "admin_unit:경기도:이천군",
+     "kind": "admin_unit",
+     "parent": "경기도",
+     "name": "이천군"
+    }
+   ],
+   "to": [
+    {
+     "id": "admin_unit:경기도:이천시",
+     "kind": "admin_unit",
+     "parent": "경기도",
+     "name": "이천시"
+    }
+   ],
+   "territorial_continuity": "same",
+   "comparison_capability": "direct",
+   "capability_reason": "영역이 그대로이고 법적 지위만 군에서 시로 바뀌었다.",
+   "label": "이천군에서 이천시로 승격",
+   "evidence": [
+    {
+     "source": "이천시청 연혁",
+     "url": "https://www.icheon.go.kr/portal/contents.do?mid=0501000000"
+    },
+    {
+     "source": "polis 데이터",
+     "note": "이천군 마지막 1995-06-27 · 이천시 첫 1997-12-18 — 승격일과 모순 없음"
+    }
+   ]
+  },
+  {
+   "id": "geo:2023-07-01:gunwi-transfer",
+   "type": "transfer",
+   "kind": "admin_unit",
+   "effective_date": "2023-07-01",
+   "from": [
+    {
+     "id": "admin_unit:경상북도:군위군",
+     "kind": "admin_unit",
+     "parent": "경상북도",
+     "name": "군위군"
+    }
+   ],
+   "to": [
+    {
+     "id": "admin_unit:대구광역시:군위군",
+     "kind": "admin_unit",
+     "parent": "대구광역시",
+     "name": "군위군"
+    }
+   ],
+   "territorial_continuity": "same",
+   "comparison_capability": "direct",
+   "capability_reason": "영역이 그대로이고 상위 행정구역만 바뀌었다. 다만 시도 단위 집계에서는 두 시도의 구성이 달라진다.",
+   "label": "경상북도 군위군이 대구광역시로 편입",
+   "evidence": [
+    {
+     "source": "경상북도 군위군의 대구광역시 편입에 관한 법률",
+     "note": "2023-07-01 시행"
+    },
+    {
+     "source": "polis 데이터",
+     "note": "경북 군위군 마지막 2022-06-01 · 대구 군위군 첫 2025-06-03"
+    },
+    {
+     "source": "district_lineage/22__21",
+     "note": "22대 '대구 동구군위군을'이 경북 군위군의성군청송군영덕군 + 대구 동구을 통합으로 판정됨 — 시도 경계를 넘는 변화라 이름 비교로는 안 보인다"
+    }
+   ]
+  },
+  {
+   "id": "geo:2024-22nd:hanam-split",
+   "type": "split",
+   "kind": "electoral_district",
+   "effective_date": "2024-04-10",
+   "from": [
+    {
+     "id": "electoral_district:21:경기:하남시",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "하남시",
+     "round": 21
+    }
+   ],
+   "to": [
+    {
+     "id": "electoral_district:22:경기:하남시갑",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "하남시갑",
+     "round": 22
+    },
+    {
+     "id": "electoral_district:22:경기:하남시을",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "하남시을",
+     "round": 22
+    }
+   ],
+   "territorial_continuity": "same_total",
+   "comparison_capability": "context_only",
+   "capability_reason": "갑·을을 합치면 이전 하남시와 같은 영역이지만, 2020년 하남시 득표를 갑/을로 나눌 하위 단위 실측이 없다. 인구·면적 비례 배분은 추정이지 재집계가 아니다.",
+   "label": "하남시가 갑·을로 분구",
+   "evidence": [
+    {
+     "source": "district_lineage/22__21",
+     "note": "하남시갑·을이 각각 이전 하남시에 100% 담기고, 이전 하남시의 82.0% / 17.9%를 차지"
+    }
+   ]
+  },
+  {
+   "id": "geo:2024-22nd:bucheon-merge",
+   "type": "merge",
+   "kind": "electoral_district",
+   "effective_date": "2024-04-10",
+   "from": [
+    {
+     "id": "electoral_district:21:경기:부천시정",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "부천시정",
+     "round": 21
+    },
+    {
+     "id": "electoral_district:21:경기:부천시갑",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "부천시갑",
+     "round": 21
+    }
+   ],
+   "to": [
+    {
+     "id": "electoral_district:22:경기:부천시갑",
+     "kind": "electoral_district",
+     "parent": "경기",
+     "name": "부천시갑",
+     "round": 22
+    }
+   ],
+   "territorial_continuity": "partial",
+   "comparison_capability": "context_only",
+   "capability_reason": "aggregated가 아니다. 이전 부천시정은 99.7%가 들어왔지만 이전 부천시갑은 74.7%만 들어왔고 나머지는 부천시을·병으로 갔다. 전신 전체가 후신에 포함되지 않으므로 단순 합산이 성립하지 않는다.",
+   "label": "부천 4개 선거구가 3개로 통합",
+   "evidence": [
+    {
+     "source": "district_lineage/22__21",
+     "note": "22대 부천시갑 ← 부천시정(이전의 99.7%) + 부천시갑(이전의 74.7%)"
+    },
+    {
+     "source": "polis 데이터",
+     "note": "21대 부천 갑·을·병·정 4곳 → 22대 갑·을·병 3곳"
+    }
+   ]
+  }
+ ]
+}
