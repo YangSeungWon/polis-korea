@@ -48,8 +48,12 @@ def lastmod_map() -> dict:
     out: dict[str, str] = {}
     try:
         r = subprocess.run(
-            ["git", "log", "--format=%cs", "--name-only", "--since=2024-01-01",
-             "--", "person/", "party/", "archive/", "history/", "polls/"],
+            # core.quotepath=false — 없으면 git이 한글 경로를 "person/\352\260..."로
+            # 이스케이프해 내보낸다. 그러면 키가 절대 안 맞아 person/party/region
+            # 4천여 개가 조용히 빌드일(TODAY)로 떨어진다 — lastmod를 넣은 뜻이 사라진다.
+            ["git", "-c", "core.quotepath=false", "log", "--format=%cs", "--name-only",
+             "--since=2024-01-01", "--",
+             "person/", "party/", "archive/", "history/", "polls/", "region/"],
             cwd=ROOT, capture_output=True, text=True, timeout=120)
         cur = ""
         for line in r.stdout.splitlines():
@@ -72,8 +76,9 @@ def dirty_paths() -> set:
     global _DIRTY
     if _DIRTY is None:
         try:
-            r = subprocess.run(["git", "status", "--porcelain", "--", "person/", "party/",
-                                "archive/", "history/", "polls/"],
+            r = subprocess.run(["git", "-c", "core.quotepath=false", "status", "--porcelain",
+                                "--", "person/", "party/", "archive/", "history/",
+                                "polls/", "region/"],
                                cwd=ROOT, capture_output=True, text=True, timeout=60)
             _DIRTY = {ln[3:].strip().strip('"') for ln in r.stdout.splitlines() if len(ln) > 3}
         except Exception:
@@ -93,7 +98,8 @@ def git_lastmod(rel_path: str) -> str:
     """index.html의 git 마지막 커밋일(YYYY-MM-DD) = 페이지 실제 수정일.
     lastmod에 선거일(1948 등 웹 이전) 쓰면 Search Console이 '잘못된 날짜'로 거부 → 커밋일로."""
     try:
-        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", rel_path],
+        out = subprocess.run(["git", "-c", "core.quotepath=false", "log", "-1",
+                              "--format=%cs", "--", rel_path],
                              cwd=ROOT, capture_output=True, text=True, timeout=10)
         d = out.stdout.strip()
         if d and d[:4] >= "2024":   # 사이트 개설(2024+) 이후만 유효 — 이전이면 커밋이력 없음
@@ -243,11 +249,15 @@ def main():
     (ROOT / "sitemap.xml").write_text(out, encoding="utf-8")
     (ROOT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
+    # 개수는 **쓴 것**을 센다. 손으로 더한 합계는 항목이 늘 때마다 어긋난다 —
+    # 실제로 poll_election_urls가 빠져 있어 4,951이라고 찍으면서 4,960을 쓰고 있었다.
+    # 빌드 로그가 사실과 다르면 로그를 보고 판단할 수 없게 된다.
+    total = out.count("<loc>")
     n_arch, n_hist = len(archive_urls()), len(history_urls())
-    total = len(STATIC) + n_arch + n_hist + len(parties) + len(persons) + len(regions)
+    n_poll = len(poll_election_urls())
     print(f"→ sitemap.xml: {total} URLs ({len(STATIC)} static + {n_arch} archive + "
-          f"{n_hist} history + {len(parties)} party + {len(regions)} region + "
-          f"{len(persons)} person) · robots.txt")
+          f"{n_hist} history + {n_poll} poll + {len(parties)} party + "
+          f"{len(regions)} region + {len(persons)} person) · robots.txt")
 
 
 if __name__ == "__main__":

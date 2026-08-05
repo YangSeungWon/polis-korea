@@ -5,7 +5,7 @@ name: Checks (구조 불변식)
 # 지금 지키는 것:
 #   nav 단일 출처 · 신뢰 상태 적용 범위 · 비교 모델 불변조건 · 인물 링크 무결성
 #   · archive 구조(앵커·그룹) · 크롤 경로(홈→허브→archive) · 글씨 대비 · 범례 멱등
-#   · 지역 페이지 · 연표 레이아웃 · 공약 카피 · 숫자 표기
+#   · 지역 페이지 · sitemap 완전성 · 연표 레이아웃 · 공약 카피 · 숫자 표기
 #   · UI 불변식(실제 브라우저 — 넘침·예외·범례·토글 잔존)
 #
 # 전부 '화면은 멀쩡한데 조용히 틀리는' 종류를 잡는다. 비교에서 단위가 사라지면 실제로
@@ -74,6 +74,9 @@ jobs:
 
       - name: 지역 페이지 (없는 값이 0으로 새지 않는지)
         run: python tests/test_region_pages.py
+
+      - name: sitemap (새 페이지 유형이 조용히 빠지지 않는지)
+        run: python tests/test_sitemap.py
 
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
