@@ -107,6 +107,13 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      # 지도 모듈은 gitignore된 빌드 산출물이다(src/history/*.ts → assets/*.js).
+      # 이걸 빼면 감사는 배포본과 **다른 상태**를 보게 된다 — 실제로 CI 첫 실행에서
+      # hexCenter is not defined가 났고, 로컬은 예전 빌드가 남아 있어 통과했다.
+      # 배포(pages.yml)와 같은 순서로 빌드한 뒤 검사한다.
+      - name: Build map module
+        run: npm run build:map
+
       - name: Install chromium
         run: npx playwright install --with-deps chromium
 
