@@ -571,6 +571,10 @@
       else { svg.setAttribute('class', 'council-hex-svg cartogram-map'); meta = CART(svg, hexCells, resultFn, { mode, r: 22, onSelect }); }
       area.innerHTML = ''; area.appendChild(svg);
       if (window.SvgViewport && meta && meta.cells) window.SvgViewport.applyHost(area, svg, { cells: meta.cells }, keep);
+      // 격차 명도는 **단색 모드에만** 있다(격자·원형은 크기 비례). 공용 키를 쓴다 —
+      // 같은 뜻을 여기서만 문장으로 적으면 페이지마다 문법이 갈린다.
+      if (mode === '단색' && typeof mountGapLegend === 'function') mountGapLegend(svg);
+      else if (typeof removeGapLegend === 'function') removeGapLegend(svg);
     }
     // 인코딩 토글 — 아이콘+가족(1위[단색] | 표 비례[격자·원형]). 공용 EncodingToggle, 없으면 폴백.
     if (window.EncodingToggle) {
@@ -589,7 +593,7 @@
       }));
     }
     leg.innerHTML = parties.map((p) => `<span class="ch-leg" style="color:${(typeof partyTextColor==='function')?partyTextColor(p):pcol(p)}">■ ${p}</span>`).join(' ')
-      + ' <span class="ar-genhex-note">· 단색 명도=격차 · 격자 1칸=2만표</span>';
+      + ' <span class="ar-genhex-note">· 격자 1칸=2만표</span>';   // 명도 설명은 공용 키(mountGapLegend)로
     redraw();
     return { parties };
   }

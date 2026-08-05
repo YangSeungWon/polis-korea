@@ -66,9 +66,14 @@ function renderSigunguHex() {
         onSelect: (sido, name, result, cell) => { state.selected = { sido, name, code: cell.code }; renderAll(); renderDetail(); },
       });
     if (meta) svg._focusCells = meta.cells;   // 줌은 enablePinchZoom, 셀은 포커스 전이용
-    // 카토그램은 두 가지를 동시에 인코딩한다 — 크기와 명도. 둘 다 키에 적는다.
+    // 카토그램이라고 다 같지 않다. **원형(dorling)만** 격차 명도를 쓰고, 격자는
+    // 크기만 쓴다(render-sigungu-cartogram의 gapOp은 dorling 분기에만 있다).
+    // 격자에 '색 진하기 = 격차'를 붙이면 범례가 없는 인코딩을 설명한다고 말한다.
     if (typeof mountGapLegend === 'function') {
-      mountGapLegend(svg, { extra: ['크기 = 투표수'] });
+      // 격자는 크기만, 원형은 크기+격차 명도. 키도 그대로 따라간다 —
+      // 격자에서 격차 키를 붙이면 없는 인코딩을 설명하고, 크기 키까지 걷으면
+      // 점 크기가 무엇인지 알 수 없게 된다.
+      mountGapLegend(svg, { scale: sizingMode === 'dorling', extra: ['크기 = 투표수'] });
     }
     return;
   }

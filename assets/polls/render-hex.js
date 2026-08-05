@@ -27,9 +27,22 @@ function renderHex() {
   // 팬·줌 (Phase 1) — draw가 viewBox를 base로 리셋하므로 매 렌더 후 현재 줌 복원. 리스너는 1회만.
   if (window.SvgViewport && meta) window.SvgViewport.attach(host, { baseViewBox: meta.viewBox, cells: meta.cells });
   // 시도 hex도 시군구 hex와 같은 인코딩을 쓴다 — 키가 한쪽에만 있으면 더 헷갈린다.
-  const svg = host.querySelector('svg');
-  if (svg && typeof mountGapLegend === 'function') {
-    mountGapLegend(svg, { extra: ['점선·흐림 = 최근 조사 부족'] });
+  // #hex는 <div>가 아니라 <svg> **자체**다. querySelector('svg')로 찾으면 null이라
+  // 범례가 아예 안 붙는다(실제로 안 붙어 있었다 — UI 감사에서 0개로 잡혔다).
+  //
+  // 단, '실제' 모드는 확정 결과라 gap=99 sentinel이 들어가 모든 칸이 같은 명도다.
+  // 거기에 '색 진하기 = 격차'를 붙이면 범례가 설명하지 않는 걸 설명한다고 말한다.
+  mountOrClearGapLegend(host);
+}
+
+// 명도가 값을 나르는 모드에서만 키를 붙이고, 아니면 걷는다.
+function mountOrClearGapLegend(hostSvg) {
+  if (!hostSvg) return;
+  const encodes = state.mode !== 'result';   // 여론조사 모드에서만 격차 명도가 산다
+  if (encodes && typeof mountGapLegend === 'function') {
+    mountGapLegend(hostSvg, { extra: ['점선·흐림 = 최근 조사 부족'] });
+  } else if (typeof removeGapLegend === 'function') {
+    removeGapLegend(hostSvg);
   }
 }
 
@@ -98,7 +111,6 @@ async function renderSigunguHex() {
   // 팬·줌 (Phase 3a) — 시군구 hex. 재렌더 후 현재 줌 복원, 리스너 1회.
   if (window.SvgViewport && meta) window.SvgViewport.attach(svg, { baseViewBox: meta.viewBox, cells: meta.cells });
   // 여론 hex는 명도에 두 가지가 실린다 — 격차와 '최근 조사 부족'. 키에 둘 다 적는다.
-  if (typeof mountGapLegend === 'function') {
-    mountGapLegend(svg, { extra: ['점선·흐림 = 최근 조사 부족'] });
-  }
+  // '실제' 모드는 명도가 균일하므로 키를 걷는다(위 mountOrClearGapLegend 참고).
+  mountOrClearGapLegend(svg);
 }

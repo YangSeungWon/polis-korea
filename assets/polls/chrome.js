@@ -184,6 +184,14 @@ function setView(v) {
   $('#map').toggleAttribute('hidden', v !== 'map');
   $('#hex').toggleAttribute('hidden', !(v === 'hex' && !sigungu));
   $('#hex2').toggleAttribute('hidden', !(v === 'hex' && sigungu));
+  // 지도를 숨기면 그 지도의 범례도 숨긴다 — 안 보이는 지도를 설명하는 키가 남으면
+  // 사용자는 그 키를 지금 보이는 화면에 적용해 읽는다.
+  for (const id of ['#hex', '#hex2']) {
+    const el = $(id), leg = el && el.nextElementSibling;
+    if (leg && leg.classList.contains('vz-gap-legend')) {
+      leg.toggleAttribute('hidden', el.hasAttribute('hidden'));
+    }
+  }
   // 활성 버튼 동기화 — 정적 마크업(data-view)·EncodingToggle(.view-toggle data-enc) 모두 처리.
   document.querySelectorAll('[data-view]').forEach((b) => {
     b.classList.toggle('is-active', b.dataset.view === v);

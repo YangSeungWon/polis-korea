@@ -432,10 +432,14 @@ function mountGapLegend(host, opts) {
   // 무엇의 척도인지 **먼저** 말한다. '박빙 ▪▪▪▪ 압도 · 색 진하기=격차' 순서면
   // 회색 칸을 먼저 읽고 뒤 설명으로 의미를 확정해야 한다 — 순서가 거꾸로다.
   // 두 번째 인코딩(크기 등)이 있으면 별도 항목으로 떼어 한 번에 둘을 해석하지 않게 한다.
-  const scale = `<span class="vz-gap-item"><b>색 진하기 = 1·2위 격차</b>`
-    + `<span class="vz-gap-ramp"><span class="vz-gap-lab">박빙</span>${swatches}`
-    + `<span class="vz-gap-lab">압도</span></span></span>`;
+  // 격차 명도를 안 쓰는 모드(격자 등)도 다른 인코딩은 있다 — 그때는 램프만 빼고
+  // 나머지 키는 남긴다. 인코딩이 있는데 키가 통째로 없으면 점 크기가 뭔지 알 수 없다.
+  const scale = opts.scale === false ? ''
+    : `<span class="vz-gap-item"><b>색 진하기 = 1·2위 격차</b>`
+      + `<span class="vz-gap-ramp"><span class="vz-gap-lab">박빙</span>${swatches}`
+      + `<span class="vz-gap-lab">압도</span></span></span>`;
   const extra = (opts.extra || []).map((t) => `<span class="vz-gap-item"><b>${_e(t)}</b></span>`).join('');
+  if (!scale && !extra) { removeGapLegend(host); return null; }   // 설명할 게 없으면 붙이지 않는다
   el.innerHTML = scale + extra;
   return el;
 }

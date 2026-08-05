@@ -60,10 +60,17 @@
     <!-- 지도 마커는 세 가지를 동시에 인코딩한다. 키가 없으면 큰 점을 '중요한 곳',
          흐린 점을 '자료 부실'로 읽는다 — 둘 다 틀린 해석이다. 값이 고정이라 JS 없이
          HTML로 둔다. -->
-    <p class="boe-key">
-      <span class="boe-key-item"><i class="boe-key-dot is-big"></i>클수록 조사 많음</span>
-      <span class="boe-key-item"><i class="boe-key-dot is-pale"></i>흐릴수록 1·2위 접전</span>
-      <span class="boe-key-item"><i class="boe-key-dot is-dash"></i>점선 = 조사 없음</span>
+    <p class="vz-gap-legend boe-key">
+      <span class="vz-gap-item boe-key-item"><b>크기 = 조사 수</b><i class="boe-key-dot is-big"></i></span>
+      <!-- 명도 단계는 parties.js gapOpacity(0·5·10·20%p)와 같은 값이다. 이 페이지는
+           지도가 leaflet이라 키를 JS로 주입할 자리가 없어 정적으로 두되, 마크업은
+           공용 문법(.vz-gap-item/.vz-gap-ramp/.vz-gap-sw)을 그대로 쓴다. -->
+      <span class="vz-gap-item"><b>색 진하기 = 1·2위 격차</b>
+        <span class="vz-gap-ramp"><span class="vz-gap-lab">박빙</span>
+          <i class="vz-gap-sw" style="opacity:0.55"></i><i class="vz-gap-sw" style="opacity:0.73"></i>
+          <i class="vz-gap-sw" style="opacity:0.84"></i><i class="vz-gap-sw" style="opacity:0.95"></i>
+          <span class="vz-gap-lab">압도</span></span></span>
+      <span class="vz-gap-item boe-key-item"><b>점선 = 조사 없음</b><i class="boe-key-dot is-dash"></i></span>
     </p>
   </section>
 
