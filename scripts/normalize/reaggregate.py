@@ -362,49 +362,88 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
         # '지난번엔 아예 안 나왔다'와 '표가 줄었다'는 다르다. 대구 동구군위군을에서
         # 2020년 민주당은 나왔고 2024년엔 안 나왔는데, 그대로 빼면 '민주당 -24.8%p'가
         # 되어 없던 이탈처럼 읽힌다. 양쪽 다 나온 정당만 swing으로 센다.
-        # capability — 이 방법으로 무엇을 주장할 수 있는가. 서로 독립이다.
-        # 무소속은 정당이 아니라 사람이라 회차 간 이어지지 않는다 — 판정에서 뺀다
-        stab = {k: v for k, v in stab.items() if k != "무소속"}
-        shift = max(stab.values(), default=0.0)
+        # 측정과 일반화를 나눈다. 하남시갑의 동 귀속표 49.35/50.65는 **틀린 값이 아니다** —
+        # '동 귀속 가능한 표에서 잰 값'으로는 정확하다. 틀리는 건 그걸 전체 공식 득표
+        # 수준이라고 말하는 것이다. `level=false`라고 쓰면 측정 자체가 무효로 읽힌다.
+        #
+        #     measurement            부분집합에서 실제로 쟀는가
+        #     inference_to_full      그 값을 전체 결과로 일반화해도 되는가
+        #     comparison.delta       같은 분모끼리의 변화량을 말할 수 있는가
+        #
+        # 부분집합에서 정확한 값 ≠ 전체 수준값으로 쓸 수 있는 값.
+        measured = bool(att_v) and not blocked
+        infer_level = bool(agree and err <= GOOD_ERR and cov >= GOOD_COV)
+        infer_reason = (None if infer_level else
+                        "excluded_votes_change_winner" if not agree else
+                        "attributable_does_not_reproduce_official"
+                        if err > GOOD_ERR else "coverage_too_low")
+
+        # 경쟁 구도가 달라졌는지 — 한쪽 회차에만 있는 유효 규모 후보/정당.
+        # 하남시갑 2020년 무소속 이현재 15.67%가 그 예다. 이걸 '제외표 편향 문제'라고
+        # 부르면 관외사전 표본 탓으로 오해된다. 실제로는 **정당 득표 delta의 해석이
+        # 깨진 것**이다 — 보수표가 무소속으로 갈렸으니 국민의힘 변화량은 뜻이 다르다.
+        MAJOR = 5.0
+        only_one = {k for k in set(cs) | set(ps)
+                    if abs(cs.get(k, 0) - ps.get(k, 0)) >= MAJOR
+                    and (k not in cs or k not in ps)}
+        struct_changed = bool(only_one)
+
+        def _delta_reason(party: str) -> str | None:
+            if party not in ps:
+                return "party_entry"
+            if party not in cs:
+                return "party_exit"
+            if stab.get(party, 0.0) <= MAX_BIAS_SHIFT:
+                return None
+            # 편향이 흔들리는 이유가 둘로 갈린다 — 섞으면 안 된다
+            return ("candidacy_configuration_changed" if struct_changed
+                    else "excluded_vote_bias_shift")
+
+        both = sorted(k for k in set(cs) & set(ps) if k != "무소속")
+        delta_by = {k: {"allowed": _delta_reason(k) is None,
+                        "bias_shift_pp": round(stab.get(k, 0.0), 2),
+                        "reason": _delta_reason(k)} for k in both}
+        delta_ok = any(v["allowed"] for v in delta_by.values())
+
         cap = {
-            "level": {"valid": bool(agree and err <= GOOD_ERR and cov >= GOOD_COV),
-                      "reason": ("excluded_votes_change_winner" if not agree else
-                                 "validation_error_too_large" if err > GOOD_ERR else
-                                 "coverage_too_low" if cov < GOOD_COV else None)},
-            # delta는 **정당마다 따로** 판정한다. 하나로 묶으면 한 정당의 사정이
-            # 나머지를 끌어내린다. 하남시갑은 민주당 편향이 0.24%p로 안정적인데,
-            # 국민의힘은 2020년 무소속 이현재(15.67%)로 보수표가 갈려 4.11%p 흔들린다.
-            # 민주당 변화량은 말할 수 있고 국민의힘 변화량은 말할 수 없다 — 둘 다 사실이다.
-            "delta": {"valid": bool(pa and any(v <= MAX_BIAS_SHIFT
-                                               for v in stab.values())),
-                      "by_party": {k: {"bias_shift_pp": round(v, 2),
-                                       "valid": v <= MAX_BIAS_SHIFT}
-                                   for k, v in sorted(stab.items())},
-                      "bias_shift_pp": round(min(stab.values(), default=0.0), 2),
-                      "reason": ("no_previous_data" if not pa else
-                                 "no_common_party" if not stab else
-                                 None if any(v <= MAX_BIAS_SHIFT
-                                             for v in stab.values())
-                                 # 양쪽 다 나온 정당이 있는데 전부 편향이 흔들린다.
-                                 # 동구군위군을이 그렇다 — 2020년 민주당이 있던 자리를
-                                 # 2024년 진보당이 채워 구도 자체가 달라졌다.
-                                 else "excluded_vote_bias_unstable_all")},
-            "winner": {"valid": bool(agree),
-                       "reason": None if agree else "excluded_votes_change_winner"},
+            "measurement": {
+                "attributable_level": {
+                    "valid": measured,
+                    "note": "동 귀속 가능한 표에서 잰 값 — 그 범위에서는 정확하다",
+                    "reason": None if measured else "reaggregation_blocked"},
+                "attributable_winner": {"valid": measured},
+            },
+            "inference_to_full_result": {
+                "level": {"allowed": infer_level and measured,
+                          "reason": None if (infer_level and measured)
+                          else ("reaggregation_blocked" if not measured
+                                else infer_reason)},
+                "winner": {"allowed": bool(agree) and measured,
+                           "reason": None if (agree and measured)
+                           else ("reaggregation_blocked" if not measured
+                                 else "excluded_votes_change_winner")},
+            },
+            "comparison": {
+                "delta": {"allowed": bool(pa) and delta_ok and measured,
+                          "by_party": delta_by,
+                          "reason": (None if (pa and delta_ok and measured) else
+                                     "reaggregation_blocked" if not measured else
+                                     "no_previous_data" if not pa else
+                                     "no_common_party" if not delta_by else
+                                     "candidacy_configuration_changed"
+                                     if struct_changed else
+                                     "excluded_vote_bias_shift")},
+            },
         }
-        if blocked:
-            for k in cap:
-                cap[k]["valid"] = False
-                cap[k]["reason"] = "reaggregation_blocked"
 
         swing = unstable = None
         entered = {k: round(cs[k], 2) for k in cs if k not in ps and k != "무소속"}
         left = {k: round(ps[k], 2) for k in ps if k not in cs and k != "무소속"}
-        if pa and qual != "insufficient" and cap["delta"]["valid"]:
+        if pa and qual != "insufficient" and cap["comparison"]["delta"]["allowed"]:
             # **양쪽 모두 동 귀속표 기준**. 공식 전체와 섞지 않는다.
             # 편향이 안정적인 정당만 낸다. 흔들리는 정당의 변화량은 제외표 이동이
             # 섞여 있어 그대로 쓰면 없던 변화를 만든다.
-            ok_p = {k for k, v in stab.items() if v <= MAX_BIAS_SHIFT}
+            ok_p = {k for k, v in delta_by.items() if v["allowed"]}
             swing = {k: round(cs[k] - ps[k], 2)
                      for k in sorted(set(cs) & set(ps))
                      if k != "무소속" and k in ok_p}
@@ -446,6 +485,11 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
                 "unresolved_dongs": sorted(set(unresolved)),
                 "crossing_prev_dongs": sorted(n for n, ds in crossing_map.items()
                                               if d in ds),
+                # '우리 알고리즘이 못 푼다'가 아니라 '읍면동 해상도에 정보가 없다'다.
+                # 투표구 경계 자료가 생기면 다음 단계로 풀린다. 없으면 배분하지 않는다.
+                "resolution_required": ("precinct" if any(d in ds for ds
+                                                          in crossing_map.values())
+                                        else None),
                 "votes_unplaceable": lost,
                 "partial_fetch": d in partial,
                 "crossing_dongs": cross,

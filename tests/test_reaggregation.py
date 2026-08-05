@@ -244,12 +244,16 @@ def _taxonomy() -> None:
 
 
 def _capability() -> None:
-    """`reaggregated`는 하나의 신뢰 상태가 아니다.
+    """`reaggregated`는 하나의 신뢰 상태가 아니고, `level=false`는 '값이 틀렸다'가 아니다.
 
-    **재집계된 수준값은 틀릴 수 있어도 같은 분모의 변화량은 유효할 수 있다.**
-    하남시갑이 증거다 — 동 귀속표만 보면 승자가 뒤집히는데(관외사전 민주 +7.4%p),
-    그 편향이 회차 사이에 0.24%p밖에 안 움직여서 차이를 빼면 상쇄된다.
-    level / delta / winner를 따로 판정하고, 서로 끌어내리지 않는다.
+    하남시갑의 동 귀속표 49.35/50.65는 **틀린 값이 아니다** — 동 귀속 가능한 표에서는
+    정확하다. 틀리는 건 그걸 전체 공식 득표 수준이라고 말하는 것이다. 그래서 셋을 나눈다.
+
+        measurement            부분집합에서 실제로 쟀는가
+        inference_to_full      그 값을 전체 결과로 일반화해도 되는가
+        comparison.delta       같은 분모끼리의 변화량을 말할 수 있는가
+
+    **부분집합에서 정확한 값 ≠ 전체 수준값으로 쓸 수 있는 값.**
     """
     for name in ("hanam", "busan-nam", "bucheon", "goyang", "gunwi"):
         try:
@@ -257,34 +261,52 @@ def _capability() -> None:
         except FileNotFoundError:
             continue
         for d, v in r["districts"].items():
-            c = v.get("capability")
-            ck(f"{name}/{d}: capability 3축이 있다",
-               bool(c) and {"level", "delta", "winner"} <= set(c))
+            c = v.get("capability") or {}
+            ck(f"{name}/{d}: 측정·일반화·비교가 나뉘어 있다",
+               {"measurement", "inference_to_full_result", "comparison"} <= set(c))
             if not c:
                 continue
-            ck(f"{name}/{d}: 못 서는 축에는 사유가 있다",
-               all(x["valid"] or x.get("reason") for x in c.values()))
-            # swing이 나왔으면 delta가 서 있어야 하고, 그 반대도 마찬가지
-            ck(f"{name}/{d}: swing 유무 = delta capability",
-               bool(v["swing_attributable_basis"]) == c["delta"]["valid"])
-            # winner가 안 서는데 승자를 정치적 사실로 쓰면 안 된다
-            if not c["winner"]["valid"] and v["attributable"]:
-                ck(f"{name}/{d}: 승자 불일치가 기록됨",
-                   v["validation"]["winner_agrees"] is False)
-            # 편향이 흔들리는 정당은 swing에 넣지 않는다
-            bad = {k for k, x in c["delta"]["by_party"].items() if not x["valid"]}
-            ck(f"{name}/{d}: 편향 불안정 정당은 swing에서 빠진다",
+            m = c["measurement"]["attributable_level"]
+            inf = c["inference_to_full_result"]
+            dl = c["comparison"]["delta"]
+            # 잰 게 없으면 일반화도 비교도 할 수 없다 — 반대는 성립하지 않는다
+            if not m["valid"]:
+                ck(f"{name}/{d}: 못 쟀으면 일반화·비교도 불가",
+                   not inf["level"]["allowed"] and not dl["allowed"])
+            ck(f"{name}/{d}: 막힌 축에는 사유가 있다",
+               all(x.get("allowed", x.get("valid")) or x.get("reason")
+                   for x in (m, inf["level"], inf["winner"], dl)))
+            ck(f"{name}/{d}: swing 유무 = delta 허용 여부",
+               bool(v["swing_attributable_basis"]) == dl["allowed"])
+            bad = {k for k, x in dl["by_party"].items() if not x["allowed"]}
+            ck(f"{name}/{d}: 막힌 정당은 swing에서 빠진다",
                not (bad & set(v["swing_attributable_basis"] or {})))
 
-    # level이 false여도 delta는 true일 수 있다 — 이게 사라지면 모델이 퇴화한 것이다
     h = run(22, 21, "_hanam")["districts"]["경기 하남시갑"]
-    ck("하남시갑: level=false · delta=true (독립 판정)",
-       h["capability"]["level"]["valid"] is False
-       and h["capability"]["delta"]["valid"] is True)
-    ck("하남시갑: 민주당 편향이동이 0.5%p 미만",
-       h["capability"]["delta"]["by_party"]["pid:더불어민주당"]["bias_shift_pp"] < 0.5)
-    ck("하남시갑: 국민의힘은 불안정으로 분리",
-       "pid:국민의힘" in (h["swing_bias_unstable"] or {}))
+    c = h["capability"]
+    # 이게 이 모델의 핵심 사례다 — 사라지면 모델이 퇴화한 것이다
+    ck("하남시갑: 측정 자체는 유효하다 (값이 틀린 게 아니다)",
+       c["measurement"]["attributable_level"]["valid"] is True)
+    ck("하남시갑: 전체 수준·승자로 일반화는 불가",
+       c["inference_to_full_result"]["level"]["allowed"] is False
+       and c["inference_to_full_result"]["winner"]["allowed"] is False)
+    ck("하남시갑: 그래도 변화량은 성립",
+       c["comparison"]["delta"]["allowed"] is True)
+    by = c["comparison"]["delta"]["by_party"]
+    ck("하남시갑: 민주당 변화량 허용 (편향이동 0.5%p 미만)",
+       by["pid:더불어민주당"]["allowed"] and by["pid:더불어민주당"]["bias_shift_pp"] < 0.5)
+    # 국민의힘이 막히는 이유는 '관외사전 표본 문제'가 아니라 구도 변화다.
+    # 2020년 무소속 이현재 15.67%로 보수표가 갈렸다 — 뭉뚱그리면 오해가 생긴다.
+    ck("하남시갑: 국민의힘 차단 사유가 '구도 변화'로 구분된다",
+       by["pid:국민의힘"]["reason"] == "candidacy_configuration_changed")
+
+    print("  · 다음 해상도 명시")
+    b = run(22, 21, "_bucheon")["districts"]["경기 부천시갑"]
+    ck("가로지르는 동은 다음 해상도(precinct)를 밝힌다",
+       b["provenance"]["resolution_required"] == "precinct")
+    ck("성립한 곳에는 다음 해상도가 없다",
+       run(22, 21, "_hanam")["districts"]["경기 하남시갑"]
+       ["provenance"]["resolution_required"] is None)
 
 
 def _feedback() -> None:

@@ -62,14 +62,24 @@ def apply_lineage() -> int:
                     v["provenance"]["current_election_validation_error_pp"],
                 "winner_agrees": v["validation"]["winner_agrees"],
                 # 방법과 주장 가능성은 다르다. level이 안 서도 delta는 설 수 있다.
+                # 측정과 일반화를 나눠 싣는다. '동 귀속표에서 잰 값'은 그 범위에서
+                # 정확하고, 그걸 전체 결과로 일반화할 수 있느냐가 따로 있다.
                 "capability": {
-                    "level": v["capability"]["level"]["valid"],
-                    "delta": v["capability"]["delta"]["valid"],
-                    "winner": v["capability"]["winner"]["valid"],
-                    "delta_valid_parties": [k for k, d in
-                                            v["capability"]["delta"]["by_party"].items()
-                                            if d["valid"]],
+                    "measured": v["capability"]["measurement"]
+                                 ["attributable_level"]["valid"],
+                    "infer_level": v["capability"]["inference_to_full_result"]
+                                    ["level"]["allowed"],
+                    "infer_winner": v["capability"]["inference_to_full_result"]
+                                     ["winner"]["allowed"],
+                    "delta": v["capability"]["comparison"]["delta"]["allowed"],
+                    "delta_allowed_parties": [
+                        k for k, x in v["capability"]["comparison"]
+                        ["delta"]["by_party"].items() if x["allowed"]],
+                    "delta_blocked": {
+                        k: x["reason"] for k, x in v["capability"]["comparison"]
+                        ["delta"]["by_party"].items() if not x["allowed"]},
                 },
+                "resolution_required": v["provenance"].get("resolution_required"),
                 "source": v["provenance"]["source"],
                 "fixture": f.stem,
             }
@@ -77,7 +87,7 @@ def apply_lineage() -> int:
             # 수준값이 안 서도(하남시갑) 같은 분모의 변화량은 유효할 수 있다.
             usable = (v["method"] == "reaggregated"
                       and v["reaggregation_quality"] != "insufficient"
-                      and v["capability"]["delta"]["valid"])
+                      and v["capability"]["comparison"]["delta"]["allowed"])
             if usable and u.get("comparable") != "yes":
                 u["comparable"] = "yes"
                 u["reason_code"] = "reaggregated_from_dong"
@@ -85,9 +95,11 @@ def apply_lineage() -> int:
                                f"{res['current']}대 경계에 다시 담아 비교한다 "
                                f"(동 귀속표 기준, 커버리지 "
                                f"{v['provenance']['coverage']*100:.1f}%). "
-                               + ("수준값도 쓸 수 있다."
-                                  if v["capability"]["level"]["valid"]
-                                  else "수준값은 쓰지 않는다 — 변화량만 유효하다."))
+                               + ("전체 수준값으로도 쓸 수 있다."
+                                  if v["capability"]["inference_to_full_result"]
+                                       ["level"]["allowed"]
+                                  else "전체 수준값·승자로는 쓰지 않는다 — "
+                                       "변화량만 쓴다."))
                 n += 1
             elif v["method"] == "context_only":
                 # 판정을 바꾸지 않는다 — 왜 못 하는지만 남긴다

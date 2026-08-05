@@ -23,9 +23,18 @@ TAXONOMY = {
     "crossing_dong": (
         "과거 읍면동이 현 선거구 경계를 가로지른다 — 동 단위로 나눌 수 없다. "
         "투표구 단위 경계 자료가 있어야 더 내려간다.", "needs_precinct_geometry"),
-    "bias_unstable": (
-        "재집계는 되지만 제외표(관외사전·국외부재자) 편향이 회차 사이에 흔들려 "
-        "변화량을 주장할 수 없다. 대개 한쪽 회차에 구도가 크게 달라진 곳이다.", "no"),
+    # delta 차단은 하나가 아니다. 지오메트리를 더 정밀하게 해도 안 풀리는 통계·구도
+    # 문제인데, 원인이 다르면 대응도 다르다. 하남시갑 국민의힘은 관외사전 표본 문제가
+    # 아니라 2020년 무소속 이현재(15.67%)로 보수표가 갈려 delta 해석이 깨진 것이다.
+    "candidacy_configuration_changed": (
+        "경쟁 구도가 달라져 같은 정당의 득표 변화량을 그대로 해석할 수 없다 "
+        "(유효 규모 무소속·신당의 등장·퇴장). 계열 합산이면 살아날 수 있다.",
+        "needs_political_family"),
+    "excluded_vote_bias_shift": (
+        "제외표(관외사전·국외부재자)의 정치적 치우침이 회차 사이에 달라졌다. "
+        "구도는 그대로인데 표본이 움직인 경우다.", "no"),
+    "party_entry_exit": (
+        "한쪽 회차에만 출마했다 — 변화량이 아니라 진입·퇴장이다.", "no"),
     "partial_fetch": (
         "선거구가 여러 시군구에 걸치는데 일부만 회수됐다 — 회수하면 풀린다.",
         "refetch"),
@@ -51,8 +60,15 @@ def classify(u: dict) -> str:
             return "partial_fetch"
         return "crossing_dong"
     if p == "reaggregated":
-        # 재집계는 됐는데 변화량을 못 낸 경우
-        return "bias_unstable"
+        # 재집계는 됐는데 변화량을 못 낸 경우 — 이유별로 가른다
+        cap = r.get("capability") or {}
+        rs = set((cap.get("delta_blocked") or {}).values())
+        for code in ("candidacy_configuration_changed", "excluded_vote_bias_shift"):
+            if code in rs:
+                return code
+        if {"party_entry", "party_exit"} & rs:
+            return "party_entry_exit"
+        return "excluded_vote_bias_shift"
     code = u.get("reason_code") or ""
     if code in TAXONOMY:
         return code
