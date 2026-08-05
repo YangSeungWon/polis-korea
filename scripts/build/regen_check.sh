@@ -33,7 +33,7 @@ GENERATORS=(
   build_party_pages      # /party/{name}/
   build_region_pages     # /region/{시도-시군구}/
   build_home_capabilities
-  map_timelapse          # data/map_timelapse/ (경계·선거·투영 상태)
+  map_timelapse          # data/map_timelapse/ (경계·선거·투영 상태 — 포항·하남)
   render_map_timelapse   #   └ map-timelapse/*.html (반드시 뒤에)
   build_sitemap          # sitemap.xml·robots.txt (마지막 — 위 산출물을 훑는다)
 )

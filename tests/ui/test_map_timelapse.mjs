@@ -5,7 +5,7 @@
 //
 //   · 한 번에 한 프레임만 — 보간 없는 이산 상태
 //   · 사건 전후로 polygon 개수가 실제로 바뀐다 (형태 morphing 아님)
-//   · unavailable 폴리곤에 계열색이 새지 않는다
+//   · unavailable 폴리곤에 계열색이 새지 않는다 (하남: 재집계됐지만 수준값 금지)
 //   · 화면 문장이 backend의 displayable_claim과 같다
 //   · series를 섞지 않는다
 //
@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 
 const ROOT = path.resolve(process.cwd());
-const REGIONS = ['포항'];
+const REGIONS = ['포항', '하남'];
 const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'tablet', width: 768, height: 1024 },
@@ -88,6 +88,17 @@ for (const region of REGIONS) {
         ck(`${tag}/${s.state_id}: 문장이 backend와 일치`,
           (await f.locator('.mt-claim').innerText()).trim() === s.displayable_claim);
 
+        // 표가 한글을 한 글자씩 끊어 세로로 흘리던 적이 있다(하남). 넘치지는 않아서
+        // 가로 넘침 검사로는 안 잡혔다 — 칸 자체의 폭을 본다.
+        const tw = await f.locator('.mt-tab th[scope=row]').evaluateAll(
+          (els) => els.map((e) => e.getBoundingClientRect().width));
+        ck(`${tag}/${s.state_id}: 표 칸이 무너지지 않았다`, tw.every((w) => w > 48),
+          JSON.stringify(tw));
+        // 두 단위가 같은 채움이면 이름표가 유일한 식별 수단이다
+        const nLab = await f.locator('.mt-lb').count();
+        ck(`${tag}/${s.state_id}: 단위 이름표`,
+          nLab === Object.keys(s.political_projection.per_unit).length, `${nLab}`);
+
         // **핵심** — 칠할 수 없는 경계에 계열색이 새지 않는다
         const unav = Object.values(s.political_projection.per_unit)
           .filter((p) => p.method === 'unavailable').length;
@@ -98,8 +109,11 @@ for (const region of REGIONS) {
             (e.getAttribute('fill') || '').toLowerCase())).length, FAM_HEX);
         ck(`${tag}/${s.state_id}: 표시 불가에 계열색 없음`, leaked === 0, `${leaked}`);
         if (unav && unav === Object.keys(s.political_projection.per_unit).length) {
-          ck(`${tag}/${s.state_id}: 전부 불가면 문장도 그렇게 말한다`,
-            (await f.locator('.mt-claim').innerText()).includes('표시할 수 없'));
+          // 칠할 게 하나도 없으면 문장이 결과를 주장해선 안 된다. '표시할 수 없다'와
+          // '수준값은 낼 수 없다'는 다른 문장이지만 둘 다 수치를 말하지 않는다.
+          const txt = await f.locator('.mt-claim').innerText();
+          ck(`${tag}/${s.state_id}: 전부 불가면 부정형으로 말한다`, txt.includes('없'), txt);
+          ck(`${tag}/${s.state_id}: 전부 불가면 수치를 말하지 않는다`, !/\d+(\.\d+)?%/.test(txt), txt);
         }
       }
     }

@@ -916,7 +916,7 @@
     {
      "state_id": "president:national@1994-12-31#before_geo_event",
      "role": "before_geo_event",
-     "role_label": "행정구역 사건 직전",
+     "role_label": "경계 사건 직전",
      "date": "1994-12-31",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
@@ -1379,7 +1379,327 @@
     {
      "state_id": "president:national@1995-01-01#after_geo_event",
      "role": "after_geo_event",
-     "role_label": "행정구역 사건 직후",
+     "role_label": "경계 사건 직후",
+     "date": "1995-01-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "entity_version_ids": [
+       "admin_unit:경상북도:포항시"
+      ],
+      "units": [
+       "포항시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "포항시",
+      "area_km2_approx": {
+       "포항시": 1113.4
+      },
+      "features": [
+       {
+        "model_unit": "포항시",
+        "boundary_name": "포항시",
+        "code": "37011",
+        "area_km2_approx": 1113.4,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            129.51826,
+            35.84194
+           ],
+           [
+            129.52739,
+            35.90544
+           ],
+           [
+            129.5189,
+            35.92716
+           ],
+           [
+            129.5545,
+            35.96788
+           ],
+           [
+            129.58336,
+            36.01982
+           ],
+           [
+            129.57524,
+            36.06229
+           ],
+           [
+            129.55558,
+            36.08608
+           ],
+           [
+            129.50291,
+            36.02566
+           ],
+           [
+            129.45194,
+            35.99166
+           ],
+           [
+            129.38405,
+            36.02982
+           ],
+           [
+            129.3809,
+            36.06041
+           ],
+           [
+            129.42024,
+            36.07661
+           ],
+           [
+            129.43159,
+            36.11158
+           ],
+           [
+            129.39775,
+            36.13489
+           ],
+           [
+            129.39981,
+            36.16461
+           ],
+           [
+            129.37716,
+            36.18971
+           ],
+           [
+            129.38515,
+            36.24046
+           ],
+           [
+            129.37627,
+            36.2683
+           ],
+           [
+            129.30417,
+            36.26776
+           ],
+           [
+            129.25195,
+            36.32091
+           ],
+           [
+            129.22,
+            36.30399
+           ],
+           [
+            129.22073,
+            36.27318
+           ],
+           [
+            129.17114,
+            36.22459
+           ],
+           [
+            129.13237,
+            36.26215
+           ],
+           [
+            129.08128,
+            36.27733
+           ],
+           [
+            129.05309,
+            36.26376
+           ],
+           [
+            129.08196,
+            36.23495
+           ],
+           [
+            129.03925,
+            36.21904
+           ],
+           [
+            129.02819,
+            36.18709
+           ],
+           [
+            128.98749,
+            36.16796
+           ],
+           [
+            129.04374,
+            36.15868
+           ],
+           [
+            129.05676,
+            36.13122
+           ],
+           [
+            129.1009,
+            36.08908
+           ],
+           [
+            129.15157,
+            36.05484
+           ],
+           [
+            129.20418,
+            36.04307
+           ],
+           [
+            129.2465,
+            36.07366
+           ],
+           [
+            129.28662,
+            36.06983
+           ],
+           [
+            129.2786,
+            36.0247
+           ],
+           [
+            129.30333,
+            35.9958
+           ],
+           [
+            129.33274,
+            35.90178
+           ],
+           [
+            129.39225,
+            35.86305
+           ],
+           [
+            129.42512,
+            35.88422
+           ],
+           [
+            129.44974,
+            35.84926
+           ],
+           [
+            129.51826,
+            35.84194
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "model_matches_boundary": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-pres-1992",
+      "label": "제14대 대통령선거",
+      "date": "1992-12-18",
+      "comparison_series_id": "president:national",
+      "unit_names": [
+       "포항시",
+       "영일군"
+      ],
+      "unit_namespaces": [
+       "admin_unit"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "포항시": {
+        "method": "aggregated",
+        "why": "2개 단위의 표를 실제로 더해 이 경계에 투영했다 — 비율 배분이 아니다",
+        "licensed_by": [
+         "geo:1995-01-01:pohang-merge"
+        ],
+        "source_units": [
+         "영일군",
+         "포항시"
+        ],
+        "candidates": [
+         {
+          "name": "김영삼",
+          "party": "민주자유당",
+          "votes": 156742,
+          "pct": 62.49
+         },
+         {
+          "name": "정주영",
+          "party": "통일국민당",
+          "votes": 40205,
+          "pct": 16.03
+         },
+         {
+          "name": "김대중",
+          "party": "민주당(1991)",
+          "votes": 27757,
+          "pct": 11.07
+         },
+         {
+          "name": "박찬종",
+          "party": "신정당",
+          "votes": 22153,
+          "pct": 8.83
+         },
+         {
+          "name": "백기완",
+          "party": "무소속",
+          "votes": 2835,
+          "pct": 1.13
+         },
+         {
+          "name": "김옥선",
+          "party": "무소속",
+          "votes": 822,
+          "pct": 0.33
+         },
+         {
+          "name": "이병호",
+          "party": "대한정의당",
+          "votes": 322,
+          "pct": 0.13
+         }
+        ],
+        "winner": {
+         "name": "김영삼",
+         "party": "민주자유당",
+         "pct": 62.49
+        },
+        "lineage_composition": {
+         "share": {
+          "independent": 1.46,
+          "mixed": 62.49,
+          "unknown": 36.05
+         },
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 62.49,
+         "mixed_share": 62.49,
+         "unknown_share": 36.05,
+         "independent_share": 1.46,
+         "mixed_constituents": {
+          "민주자유당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 250836
+        },
+        "paint": {
+         "state": "mixed",
+         "share": 62.49,
+         "note": "복수 계보 — 계열 hue를 주지 않는다"
+        }
+       }
+      },
+      "summary": {
+       "aggregated": 1
+      },
+      "paintable_units": [
+       "포항시"
+      ]
+     },
+     "displayable_claim": "제14대 대통령선거 결과 · 1995년 경계에 합산"
+    },
+    {
+     "state_id": "president:national@1995-01-01#previous_on_new_boundary",
+     "role": "previous_on_new_boundary",
+     "role_label": "새 경계 · 이전 선거 결과",
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",
@@ -2791,7 +3111,7 @@
     {
      "state_id": "general:district@1994-12-31#before_geo_event",
      "role": "before_geo_event",
-     "role_label": "행정구역 사건 직전",
+     "role_label": "경계 사건 직전",
      "date": "1994-12-31",
      "geography_at_date": {
       "boundary_source": "sigungu_1990",
@@ -3168,7 +3488,254 @@
     {
      "state_id": "general:district@1995-01-01#after_geo_event",
      "role": "after_geo_event",
-     "role_label": "행정구역 사건 직후",
+     "role_label": "경계 사건 직후",
+     "date": "1995-01-01",
+     "geography_at_date": {
+      "boundary_source": "sigungu_1995",
+      "entity_version_ids": [
+       "admin_unit:경상북도:포항시"
+      ],
+      "units": [
+       "포항시"
+      ],
+      "boundary_granularity": null,
+      "topology_signature": "포항시",
+      "area_km2_approx": {
+       "포항시": 1113.4
+      },
+      "features": [
+       {
+        "model_unit": "포항시",
+        "boundary_name": "포항시",
+        "code": "37011",
+        "area_km2_approx": 1113.4,
+        "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+          [
+           [
+            129.51826,
+            35.84194
+           ],
+           [
+            129.52739,
+            35.90544
+           ],
+           [
+            129.5189,
+            35.92716
+           ],
+           [
+            129.5545,
+            35.96788
+           ],
+           [
+            129.58336,
+            36.01982
+           ],
+           [
+            129.57524,
+            36.06229
+           ],
+           [
+            129.55558,
+            36.08608
+           ],
+           [
+            129.50291,
+            36.02566
+           ],
+           [
+            129.45194,
+            35.99166
+           ],
+           [
+            129.38405,
+            36.02982
+           ],
+           [
+            129.3809,
+            36.06041
+           ],
+           [
+            129.42024,
+            36.07661
+           ],
+           [
+            129.43159,
+            36.11158
+           ],
+           [
+            129.39775,
+            36.13489
+           ],
+           [
+            129.39981,
+            36.16461
+           ],
+           [
+            129.37716,
+            36.18971
+           ],
+           [
+            129.38515,
+            36.24046
+           ],
+           [
+            129.37627,
+            36.2683
+           ],
+           [
+            129.30417,
+            36.26776
+           ],
+           [
+            129.25195,
+            36.32091
+           ],
+           [
+            129.22,
+            36.30399
+           ],
+           [
+            129.22073,
+            36.27318
+           ],
+           [
+            129.17114,
+            36.22459
+           ],
+           [
+            129.13237,
+            36.26215
+           ],
+           [
+            129.08128,
+            36.27733
+           ],
+           [
+            129.05309,
+            36.26376
+           ],
+           [
+            129.08196,
+            36.23495
+           ],
+           [
+            129.03925,
+            36.21904
+           ],
+           [
+            129.02819,
+            36.18709
+           ],
+           [
+            128.98749,
+            36.16796
+           ],
+           [
+            129.04374,
+            36.15868
+           ],
+           [
+            129.05676,
+            36.13122
+           ],
+           [
+            129.1009,
+            36.08908
+           ],
+           [
+            129.15157,
+            36.05484
+           ],
+           [
+            129.20418,
+            36.04307
+           ],
+           [
+            129.2465,
+            36.07366
+           ],
+           [
+            129.28662,
+            36.06983
+           ],
+           [
+            129.2786,
+            36.0247
+           ],
+           [
+            129.30333,
+            35.9958
+           ],
+           [
+            129.33274,
+            35.90178
+           ],
+           [
+            129.39225,
+            35.86305
+           ],
+           [
+            129.42512,
+            35.88422
+           ],
+           [
+            129.44974,
+            35.84926
+           ],
+           [
+            129.51826,
+            35.84194
+           ]
+          ]
+         ]
+        }
+       }
+      ],
+      "model_matches_boundary": true
+     },
+     "election_snapshot": {
+      "election_id": "14th-general-1992",
+      "label": "제14대 국회의원선거",
+      "date": "1992-03-24",
+      "comparison_series_id": "general:district",
+      "unit_names": [
+       "영일군·울릉군",
+       "포항시"
+      ],
+      "unit_namespaces": [
+       "electoral_district"
+      ]
+     },
+     "political_projection": {
+      "per_unit": {
+       "포항시": {
+        "method": "unavailable",
+        "reason": "snapshot_unit_extends_beyond_target",
+        "detail": [
+         {
+          "unit": "영일군·울릉군",
+          "outside": [
+           "울릉군"
+          ]
+         }
+        ],
+        "why": "집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다"
+       }
+      },
+      "summary": {
+       "unavailable": 1
+      },
+      "paintable_units": []
+     },
+     "displayable_claim": "제14대 국회의원선거 결과는 이 경계로 표시할 수 없습니다"
+    },
+    {
+     "state_id": "general:district@1995-01-01#previous_on_new_boundary",
+     "role": "previous_on_new_boundary",
+     "role_label": "새 경계 · 이전 선거 결과",
      "date": "1995-01-01",
      "geography_at_date": {
       "boundary_source": "sigungu_1995",

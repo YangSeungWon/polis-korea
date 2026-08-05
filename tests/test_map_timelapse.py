@@ -19,8 +19,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/build"))
 
 DOC = json.loads((ROOT / "data/map_timelapse/포항.json").read_text(encoding="utf-8"))
+HANAM = json.loads((ROOT / "data/map_timelapse/하남.json").read_text(encoding="utf-8"))
 ROLES = ["before_election", "election", "before_geo_event", "after_geo_event",
-         "next_election"]
+         "previous_on_new_boundary", "next_election"]
 MERGE = "geo:1995-01-01:pohang-merge"
 fails: list = []
 
@@ -46,6 +47,16 @@ for b in DOC["series_blocks"]:
        str([s["role"] for s in b["states"]]))
     ck(f"{sid}: 날짜 단조증가",
        [s["date"] for s in b["states"]] == sorted(s["date"] for s in b["states"]))
+    # '새 경계 · 이전 결과'는 사건 **이전** snapshot을 써야 의미가 있다
+    pn = next(s for s in b["states"] if s["role"] == "previous_on_new_boundary")
+    ae = next(s for s in b["states"] if s["role"] == "after_geo_event")
+    ck(f"{sid}: 새 경계·이전 결과는 사건 전 선거를 쓴다",
+       pn["election_snapshot"]["date"] < pn["date"]
+       or pn["election_snapshot"]["date"] < ae["date"],
+       pn["election_snapshot"]["date"])
+    ck(f"{sid}: 그때도 경계는 사건 이후",
+       pn["geography_at_date"]["topology_signature"]
+       == ae["geography_at_date"]["topology_signature"])
     # series를 섞지 않는다 — 프레임의 snapshot이 그 series 것이어야 한다
     ck(f"{sid}: snapshot이 같은 series",
        all(s["election_snapshot"]["comparison_series_id"] == sid for s in b["states"]))
@@ -114,9 +125,65 @@ ck("울릉군을 지목한다", "울릉군" in json.dumps(g["detail"], ensure_as
 # 같은 날짜·같은 사건인데 series에 따라 답이 다르다 — 이게 series를 먼저 고르는 이유다
 ck("같은 사건에서 series별 판정이 갈린다", p["method"] != g["method"])
 
+# ── 분구: 합의 반대 방향은 그냥 나누기가 아니다 ──────────────────────────
+hb = HANAM["series_blocks"][0]
+ck("하남은 선거구 namespace", HANAM["namespace"] == "electoral_district",
+   HANAM["namespace"])
+hs = next(s for s in hb["states"] if s["role"] == "previous_on_new_boundary")
+hp = hs["political_projection"]["per_unit"]["하남시갑"]
+ck("분구는 direct도 aggregated도 아니다", hp["method"] not in ("direct", "aggregated"),
+   hp["method"])
+ck("분구 사유는 재집계 capability", hp["reason"] == "level_inference_not_allowed",
+   hp["reason"])
+ck("재집계는 됐다고 밝힌다", (hp.get("reaggregation") or {}).get("method")
+   == "reaggregated")
+# 막힌 것만 말하고 끝내지 않는다 — 열려 있는 주장도 같이 싣는다
+ck("delta는 열려 있다고 싣는다", hp["reaggregation"]["delta_allowed"] is True)
+ck("정당별로 갈린다는 것까지",
+   hp["reaggregation"]["delta_by_party"] == {"pid:국민의힘": False,
+                                             "pid:더불어민주당": True},
+   str(hp["reaggregation"]["delta_by_party"]))
+ck("문장이 수준값만 막혔다고 말한다",
+   "수준값" in hs["displayable_claim"] and "변화량" in hs["displayable_claim"],
+   hs["displayable_claim"])
+# 선거일에 획정이 발효되므로 '사건 직후'는 곧 새 선거다 — 다섯 상태만으로는
+# 분구가 한 번도 시험되지 않는다. 여섯째 상태가 그래서 있다.
+ha = next(s for s in hb["states"] if s["role"] == "after_geo_event")
+ck("사건 직후는 새 선거라 direct",
+   {x["method"] for x in ha["political_projection"]["per_unit"].values()} == {"direct"})
+
+# reaggregated 분기는 아직 실물이 없다 — 그래도 **동작은** 확인한다.
+# (있는 것처럼 데이터를 만들지 않고, 함수에 직접 물린다)
+from map_timelapse import split_projection  # noqa: E402
+
+
+class _FakeGeo:
+    ents = {"x": {"name": "하남시갑", "parent": "경기"}}
+
+
+_ev = [{"id": "ev:test", "comparison_capability": "reaggregated"}]
+_snap = {"date": "2020-04-15"}
+import map_timelapse as _mt  # noqa: E402
+
+_orig = _mt._reagg_capability
+_mt._reagg_capability = lambda n, p: {
+    "pair": "fake", "method": "reaggregated",
+    "capability": {"inference_to_full_result": {"level": {"allowed": True}},
+                   "comparison": {"delta": {"allowed": True, "by_party": {}}}},
+    "provenance": {"coverage": 0.9}}
+_r = split_projection(_FakeGeo(), "x", _snap, _ev)
+_mt._reagg_capability = _orig
+ck("level이 허용되면 reaggregated로 나온다", _r["method"] == "reaggregated", _r["method"])
+_mt._reagg_capability = lambda n, p: None
+_r2 = split_projection(_FakeGeo(), "x", _snap, _ev)
+_mt._reagg_capability = _orig
+ck("하위 실측이 없으면 unavailable",
+   _r2["method"] == "unavailable"
+   and _r2["reason"] == "split_without_subunit_measurement", str(_r2["reason"]))
+
 # ── unavailable은 정치색을 만들지 않는다 ──────────────────────────────────
 n_unav = 0
-for b in DOC["series_blocks"]:
+for b in DOC["series_blocks"] + HANAM["series_blocks"]:
     for s in b["states"]:
         for name, pr in s["political_projection"]["per_unit"].items():
             if pr["method"] != "unavailable":
@@ -147,10 +214,10 @@ ck("같은 이름 다른 시점 = 다른 entity", a != z and a and z, f"{a} / {z
 # 일반구는 후신이 아니다 — 상위 단위를 끝내면 안 된다
 ck("포항시는 1995 이후로도 살아 있다",
    geo.ents["admin_unit:경상북도:포항시"].get("valid_to") is None)
-fp, via = footprint(geo, "admin_unit:경상북도:포항시", "1992-12-18")
+fp, via, _sp = footprint(geo, "admin_unit:경상북도:포항시", "1992-12-18")
 ck("1992로 되돌리면 두 단위", fp == {"admin_unit:경상북도:포항시(구)",
                                     "admin_unit:경상북도:영일군"}, str(fp))
-fp2, _ = footprint(geo, "admin_unit:경상북도:포항시", "1997-12-18")
+fp2, _, _ = footprint(geo, "admin_unit:경상북도:포항시", "1997-12-18")
 ck("사건 이후 시점은 되돌리지 않는다", fp2 == {"admin_unit:경상북도:포항시"}, str(fp2))
 
 # 못 쪼개는 선거구명은 **추측하지 않는다**
@@ -171,8 +238,8 @@ ck("포함관계는 exhaustive일 때만 합산",
 
 # ── 재생성이 같은 결과를 내는가 ───────────────────────────────────────────
 before = (ROOT / "data/map_timelapse/포항.json").read_text(encoding="utf-8")
-subprocess.run([sys.executable, "scripts/build/map_timelapse.py"], cwd=ROOT,
-               check=True, capture_output=True)
+subprocess.run([sys.executable, "scripts/build/map_timelapse.py", "포항", "하남"],
+               cwd=ROOT, check=True, capture_output=True)
 ck("재생성 결과가 같다",
    (ROOT / "data/map_timelapse/포항.json").read_text(encoding="utf-8") == before)
 

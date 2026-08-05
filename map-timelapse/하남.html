@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>하남 지도 타임랩스</title><style>
+:root{--mt-ink:#14181d;--mt-dim:#5d6672;--mt-line:#d8dde3;--mt-bg:#fff;--mt-card:#f7f8fa}
+@media (prefers-color-scheme:dark){:root{--mt-ink:#e8ecf1;--mt-dim:#9aa4b0;
+--mt-line:#333c47;--mt-bg:#0f1317;--mt-card:#171c22}}
+.mt{color:var(--mt-ink);background:var(--mt-bg);font:15px/1.6 system-ui,sans-serif;
+padding:20px;max-width:1080px;margin:0 auto}
+.mt h2{font-size:20px;margin:0 0 4px}
+.mt .mt-lead{color:var(--mt-dim);margin:0 0 16px;font-size:14px}
+.mt-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px}
+.mt-ctl label{font-size:13px;color:var(--mt-dim)}
+.mt-seg{display:flex;flex-wrap:wrap;gap:4px}
+.mt-seg button{font:inherit;font-size:13px;padding:5px 11px;border:1px solid var(--mt-line);
+background:var(--mt-bg);color:var(--mt-ink);border-radius:999px;cursor:pointer}
+.mt-seg button[aria-pressed=true]{background:var(--mt-ink);color:var(--mt-bg);
+border-color:var(--mt-ink)}
+.mt-seg button:focus-visible{outline:2px solid #0a5cb8;outline-offset:2px}
+.mt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;
+align-items:start}
+@media (max-width:820px){.mt-grid{grid-template-columns:1fr}}
+.mt-svg{width:100%;height:auto;background:var(--mt-card);border-radius:8px;
+border:1px solid var(--mt-line)}
+.mt-u{stroke:var(--mt-bg);stroke-width:2.5}
+.mt-lb{font:600 12px system-ui,sans-serif;fill:var(--mt-ink);paint-order:stroke;
+stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
+.mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
+.mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
+.mt-h{font-size:15px;margin:14px 0 8px}
+.mt-claim{font-weight:600;margin:0 0 8px}
+.mt-ev{margin:0 0 10px;font-size:13px;color:var(--mt-dim);border-left:3px solid var(--mt-line);
+padding-left:9px}
+.mt-layers{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:0 0 12px;
+font-size:14px}
+.mt-layers dt{color:var(--mt-dim);font-size:13px}
+.mt-layers dd{margin:0}
+.mt-dim{color:var(--mt-dim);font-size:12px}
+.mt-tab{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;
+word-break:keep-all}
+.mt-tab col.c1{width:27%}.mt-tab col.c2{width:19%}.mt-tab col.c3{width:26%}
+.mt-why td{color:var(--mt-dim);font-size:12.5px;border-top:0;padding-top:0;
+line-height:1.55}
+.mt-tab caption{text-align:left;color:var(--mt-dim);font-size:12px;padding-bottom:4px}
+.mt-tab th,.mt-tab td{text-align:left;padding:5px 6px;border-top:1px solid var(--mt-line);
+vertical-align:top}
+.mt-tab thead th{color:var(--mt-dim);font-weight:500;border-top:0}
+.mt-b{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;
+border:1px solid var(--mt-line)}
+.mt-b-direct{border-color:#2a7d4f;color:#2a7d4f}
+.mt-b-aggregated{border-color:#8a6d1f;color:#8a6d1f}
+.mt-b-unavailable{border-color:#98a1ab;color:var(--mt-dim)}
+@media (prefers-color-scheme:dark){.mt-b-direct{border-color:#6fd39a;color:#6fd39a}
+.mt-b-aggregated{border-color:#dcb54a;color:#dcb54a}}
+.mt-key{display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-size:12px;
+color:var(--mt-dim)}
+.mt-key i{width:13px;height:13px;border-radius:3px;display:inline-block;
+border:1px solid var(--mt-line)}
+.mt-legend{margin:12px 0 0;line-height:2}
+.mt-note{color:var(--mt-dim);font-size:12.5px;margin:10px 0 0}
+</style></head><body><section class="mt" data-series="general:district"
+ data-role="before_election">
+<h2>하남 지도 타임랩스</h2>
+<p class="mt-lead">경계 · 선거 · 투영은 다른 층입니다. <b>결과가 있다고 해서 지금
+경계에 칠할 수 있는 것은 아닙니다</b> — 칠할 수 없는 경계는 그리되 정치색을 주지
+않습니다.</p>
+<div class="mt-ctl"><label>비교 series</label><div class="mt-seg"><button type="button" data-set="series=general:district">국회의원</button></div></div>
+<div class="mt-ctl"><label>시점</label><div class="mt-seg"><button type="button" data-set="role=before_election">선거 직전</button><button type="button" data-set="role=election">선거 시점</button><button type="button" data-set="role=before_geo_event">경계 사건 직전</button><button type="button" data-set="role=after_geo_event">경계 사건 직후</button><button type="button" data-set="role=previous_on_new_boundary">새 경계 · 이전 선거 결과</button><button type="button" data-set="role=next_election">다음 선거</button></div></div>
+<svg width="0" height="0" aria-hidden="true"><defs>
+<pattern id="mt-mixed" width="7" height="7" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(45)"><rect width="7" height="7" fill="#9aa3ad"/>
+<line x1="0" y1="0" x2="0" y2="7" stroke="#f6f7f9" stroke-width="2.5"/></pattern>
+<pattern id="mt-unknown" width="6" height="6" patternUnits="userSpaceOnUse">
+<rect width="6" height="6" fill="#d7dbe0"/><circle cx="3" cy="3" r="1" fill="#8b939c"/>
+</pattern>
+<pattern id="mt-none" width="8" height="8" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(135)"><rect width="8" height="8" fill="#eceef1"/>
+<line x1="0" y1="0" x2="0" y2="8" stroke="#b9c0c8" stroke-width="1.5"/></pattern>
+</defs></svg><section class="mt-frame" data-role="before_election"
+ data-series="general:district" data-state="general:district@2020-04-14#before_election">
+<h3 class="mt-h">선거 직전 · 2020-04-14</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-14 시점 경계 하남시"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L324.3,155.8L312.3,142.4L292.7,136.5L285.1,128.2L283.8,99.3L260.5,82.9L235.3,46.1L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,151.2L155.2,184.7L160.5,189.7L160.2,204.4L139.6,217.0L117.7,219.1L95.1,218.2L83.1,235.0L63.2,265.5L63.5,274.3L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L22.7,354.8L18.0,371.1L19.0,371.9L22.3,384.1L43.6,393.3L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L75.8,448.6L75.8,452.4L50.9,470.0L42.9,482.1L41.9,501.8L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.4L79.8,528.6L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.3,503.5L136.6,468.3L145.6,467.9L165.5,476.7L179.4,489.2L193.7,484.6L206.4,491.3L216.3,490.1L224.0,475.0L230.6,488.0L269.1,480.9L281.4,482.1L288.1,490.9L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.3,424.3L394.0,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시 — 복수 계보 50.55%, 투영 그대로"><title>하남시
+복수 계보 50.55%
+투영: 그대로</title></path>
+<text class="mt-lb" x="214" y="342" text-anchor="middle" aria-hidden="true">하남시</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시
+ <span class="mt-dim">(district_20)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 50.55%</td><td class="mt-src">새누리당 이현재 50.55%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="general:district" data-state="general:district@2020-04-15#election" hidden>
+<h3 class="mt-h">선거 시점 · 2020-04-15</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-15 시점 경계 하남시"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L325.3,157.5L313.6,143.7L292.7,136.5L285.1,128.2L283.8,99.3L260.5,82.9L235.6,46.5L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,150.8L155.2,184.7L160.5,189.7L160.2,204.4L139.6,217.0L124.6,216.1L107.4,221.1L94.7,218.2L84.8,232.9L83.1,235.0L63.2,265.5L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L24.6,341.4L19.3,364.0L18.0,371.1L19.0,371.9L22.3,384.1L38.6,393.3L51.9,387.0L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L76.8,447.8L75.8,448.6L51.2,469.5L42.9,482.1L41.9,502.2L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.8L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.6,504.3L136.6,468.3L164.2,474.2L167.5,482.9L179.4,489.2L193.7,484.6L212.0,492.2L224.0,475.0L230.6,488.0L239.6,488.8L268.5,480.9L281.4,482.1L288.4,490.1L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.0,423.9L394.4,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시 — 계보 미확인, 투영 그대로"><title>하남시
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="212" y="339" text-anchor="middle" aria-hidden="true">하남시</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시
+ <span class="mt-dim">(district_21)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 최종윤 50.77%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="general:district" data-state="general:district@2024-04-09#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2024-04-09</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-09 시점 경계 하남시"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L325.3,157.5L313.6,143.7L292.7,136.5L285.1,128.2L283.8,99.3L260.5,82.9L235.6,46.5L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,150.8L155.2,184.7L160.5,189.7L160.2,204.4L139.6,217.0L124.6,216.1L107.4,221.1L94.7,218.2L84.8,232.9L83.1,235.0L63.2,265.5L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L24.6,341.4L19.3,364.0L18.0,371.1L19.0,371.9L22.3,384.1L38.6,393.3L51.9,387.0L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L76.8,447.8L75.8,448.6L51.2,469.5L42.9,482.1L41.9,502.2L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.8L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.6,504.3L136.6,468.3L164.2,474.2L167.5,482.9L179.4,489.2L193.7,484.6L212.0,492.2L224.0,475.0L230.6,488.0L239.6,488.8L268.5,480.9L281.4,482.1L288.4,490.1L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.0,423.9L394.4,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시 — 계보 미확인, 투영 그대로"><title>하남시
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="212" y="339" text-anchor="middle" aria-hidden="true">하남시</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시
+ <span class="mt-dim">(district_21)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 최종윤 50.77%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="general:district" data-state="general:district@2024-04-10#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 하남시갑|하남시을"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L325.3,157.5L313.6,143.7L290.7,134.9L281.1,134.9L281.1,180.1L288.7,184.7L282.8,196.4L262.2,180.1L260.2,200.6L240.6,225.8L231.3,245.9L230.9,245.9L230.9,246.7L222.3,239.2L230.3,226.2L214.7,213.2L207.7,221.1L205.4,234.1L187.4,244.2L176.1,243.3L174.8,226.2L162.5,217.4L155.2,211.5L139.6,217.0L124.6,216.1L107.4,221.1L94.7,218.2L84.8,232.9L75.8,243.3L63.2,265.5L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L24.6,341.4L19.3,364.0L18.0,371.1L19.0,371.9L22.3,384.1L38.6,393.3L51.9,387.0L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L76.8,447.8L75.8,448.6L51.2,469.5L42.9,482.1L41.9,502.2L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.8L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.6,504.3L136.6,468.3L164.2,474.2L167.5,482.9L179.4,489.2L193.7,484.6L212.0,492.2L224.0,475.0L230.6,488.0L239.6,488.8L268.5,480.9L281.4,482.1L288.4,490.1L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.0,423.9L394.4,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시갑 — 계보 미확인, 투영 그대로"><title>하남시갑
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,150.8L155.2,184.7L160.5,189.7L160.2,204.4L162.5,217.4L174.8,226.2L176.1,243.3L187.4,244.2L205.4,234.1L207.7,221.1L214.7,213.2L230.3,226.2L222.3,239.2L230.9,246.7L230.9,245.9L231.3,245.9L240.6,225.8L260.2,200.6L262.2,180.1L282.8,196.4L288.7,184.7L281.1,180.1L281.1,134.9L290.7,134.9L285.1,128.2L283.8,99.3L260.5,82.9L235.6,46.5L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8Z" role="img" aria-label="하남시을 — 계보 미확인, 투영 그대로"><title>하남시을
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="221" y="360" text-anchor="middle" aria-hidden="true">하남시갑</text><text class="mt-lb" x="204" y="154" text-anchor="middle" aria-hidden="true">하남시을</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제22대 국회의원선거 결과 · 당시 경계</p>
+<p class="mt-ev">이 시점에 행정구역이 바뀌었습니다 — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시갑 · 하남시을
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제22대 국회의원선거
+ <span class="mt-dim">2024-04-10</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 추미애 50.59%</td></tr><tr><th scope="row">하남시을</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김용만 51.66%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="general:district" data-state="general:district@2024-04-10#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 하남시갑|하남시을"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L325.3,157.5L313.6,143.7L290.7,134.9L281.1,134.9L281.1,180.1L288.7,184.7L282.8,196.4L262.2,180.1L260.2,200.6L240.6,225.8L231.3,245.9L230.9,245.9L230.9,246.7L222.3,239.2L230.3,226.2L214.7,213.2L207.7,221.1L205.4,234.1L187.4,244.2L176.1,243.3L174.8,226.2L162.5,217.4L155.2,211.5L139.6,217.0L124.6,216.1L107.4,221.1L94.7,218.2L84.8,232.9L75.8,243.3L63.2,265.5L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L24.6,341.4L19.3,364.0L18.0,371.1L19.0,371.9L22.3,384.1L38.6,393.3L51.9,387.0L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L76.8,447.8L75.8,448.6L51.2,469.5L42.9,482.1L41.9,502.2L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.8L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.6,504.3L136.6,468.3L164.2,474.2L167.5,482.9L179.4,489.2L193.7,484.6L212.0,492.2L224.0,475.0L230.6,488.0L239.6,488.8L268.5,480.9L281.4,482.1L288.4,490.1L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.0,423.9L394.4,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시갑 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>하남시갑
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,150.8L155.2,184.7L160.5,189.7L160.2,204.4L162.5,217.4L174.8,226.2L176.1,243.3L187.4,244.2L205.4,234.1L207.7,221.1L214.7,213.2L230.3,226.2L222.3,239.2L230.9,246.7L230.9,245.9L231.3,245.9L240.6,225.8L260.2,200.6L262.2,180.1L282.8,196.4L288.7,184.7L281.1,180.1L281.1,134.9L290.7,134.9L285.1,128.2L283.8,99.3L260.5,82.9L235.6,46.5L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8Z" role="img" aria-label="하남시을 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>하남시을
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="221" y="360" text-anchor="middle" aria-hidden="true">하남시갑</text><text class="mt-lb" x="204" y="154" text-anchor="middle" aria-hidden="true">하남시을</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 이 경계 기준 수준값은 낼 수 없습니다 (정당별 변화량은 별도 비교에서 가능)</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시갑 · 하남시을
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 2곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시갑</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">읍면동 실측으로 재집계는 되지만 전체 결과 수준값 추론이 막혀 있다(excluded_votes_change_winner) — 지도는 수준값을 칠하므로 이 경계에는 색을 주지 않는다</td></tr><tr><th scope="row">하남시을</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">읍면동 실측으로 재집계는 되지만 전체 결과 수준값 추론이 막혀 있다(attributable_does_not_reproduce_official) — 지도는 수준값을 칠하므로 이 경계에는 색을 주지 않는다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="general:district" data-state="general:district@2024-04-10#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2024-04-10</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2024-04-10 시점 경계 하남시갑|하남시을"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M502.0,346.4L497.7,316.2L487.4,301.6L430.9,271.4L412.3,255.9L372.8,232.5L357.5,227.0L343.2,212.4L332.3,173.8L325.3,157.5L313.6,143.7L290.7,134.9L281.1,134.9L281.1,180.1L288.7,184.7L282.8,196.4L262.2,180.1L260.2,200.6L240.6,225.8L231.3,245.9L230.9,245.9L230.9,246.7L222.3,239.2L230.3,226.2L214.7,213.2L207.7,221.1L205.4,234.1L187.4,244.2L176.1,243.3L174.8,226.2L162.5,217.4L155.2,211.5L139.6,217.0L124.6,216.1L107.4,221.1L94.7,218.2L84.8,232.9L75.8,243.3L63.2,265.5L61.8,284.8L49.6,298.6L43.9,314.1L36.9,315.0L34.9,336.3L24.6,341.4L19.3,364.0L18.0,371.1L19.0,371.9L22.3,384.1L38.6,393.3L51.9,387.0L58.2,394.1L89.1,405.9L83.8,420.1L83.8,433.5L76.8,447.8L75.8,448.6L51.2,469.5L42.9,482.1L41.9,502.2L32.6,501.8L29.6,516.0L66.5,517.7L66.2,524.8L97.7,529.0L114.3,537.4L136.3,524.4L136.3,524.0L146.9,512.3L135.6,504.3L136.6,468.3L164.2,474.2L167.5,482.9L179.4,489.2L193.7,484.6L212.0,492.2L224.0,475.0L230.6,488.0L239.6,488.8L268.5,480.9L281.4,482.1L288.4,490.1L303.7,491.3L311.7,501.0L331.3,501.4L346.5,506.0L365.5,504.7L373.4,486.7L367.1,483.4L364.8,469.1L373.4,464.5L395.4,469.5L403.0,454.5L412.0,449.4L413.6,439.4L403.0,423.9L394.4,393.3L398.7,380.3L423.6,375.7L441.2,379.1L470.1,371.5L484.1,351.8L502.0,346.4Z" role="img" aria-label="하남시갑 — 계보 미확인, 투영 그대로"><title>하남시갑
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M113.0,75.8L141.2,67.8L135.6,78.3L136.6,93.4L148.2,117.7L149.2,131.5L157.5,150.8L155.2,184.7L160.5,189.7L160.2,204.4L162.5,217.4L174.8,226.2L176.1,243.3L187.4,244.2L205.4,234.1L207.7,221.1L214.7,213.2L230.3,226.2L222.3,239.2L230.9,246.7L230.9,245.9L231.3,245.9L240.6,225.8L260.2,200.6L262.2,180.1L282.8,196.4L288.7,184.7L281.1,180.1L281.1,134.9L290.7,134.9L285.1,128.2L283.8,99.3L260.5,82.9L235.6,46.5L224.6,33.5L207.3,25.9L161.8,22.6L151.5,38.1L119.6,67.4L113.0,75.8Z" role="img" aria-label="하남시을 — 계보 미확인, 투영 그대로"><title>하남시을
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="221" y="360" text-anchor="middle" aria-hidden="true">하남시갑</text><text class="mt-lb" x="204" y="154" text-anchor="middle" aria-hidden="true">하남시을</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제22대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">하남시갑 · 하남시을
+ <span class="mt-dim">(district_22)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제22대 국회의원선거
+ <span class="mt-dim">2024-04-10</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">하남시갑</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 추미애 50.59%</td></tr><tr><th scope="row">하남시을</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김용만 51.66%</td></tr></tbody></table>
+</div></div></section>
+<p class="mt-legend"><span class="mt-key"><i style="background:#d2352b"></i>보수계</span><span class="mt-key"><i style="background:#0a5cb8"></i>민주계</span><span class="mt-key"><i style="background:#e8a300"></i>진보계</span><span class="mt-key"><i style="background:#00875a"></i>지역계</span><span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보(계열 hue 없음)</span><span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속</span><span class="mt-key"><i style="background:#eceef1"></i>이 경계로 표시 불가</span><br><span class="mt-key">1위 계열 득표 비율</span><span class="mt-key"><i style="background:#d2352b;opacity:0.42"></i>45% 미만</span><span class="mt-key"><i style="background:#d2352b;opacity:0.68"></i>45–60%</span><span class="mt-key"><i style="background:#d2352b;opacity:1.0"></i>60% 이상</span></p>
+<p class="mt-note">선거 사이를 보간하지 않습니다. 각 시점은 그 이전 마지막 선거의
+결과를 보여주며, 경계는 행정구역 사건일에 이산 전환합니다.</p>
+</section><script>
+(function(){
+ var root=document.querySelector('.mt'); if(!root) return;
+ var st={series:root.dataset.series,role:root.dataset.role};
+ function draw(){
+  root.querySelectorAll('.mt-frame').forEach(function(f){
+   f.hidden=!(f.dataset.series===st.series&&f.dataset.role===st.role);});
+  root.querySelectorAll('[data-set]').forEach(function(b){
+   var kv=b.dataset.set.split('=');
+   b.setAttribute('aria-pressed',String(st[kv[0]]===kv[1]));});
+ }
+ root.querySelectorAll('[data-set]').forEach(function(b){
+  b.addEventListener('click',function(){var kv=b.dataset.set.split('=');
+   st[kv[0]]=kv[1];draw();});});
+ draw();
+})();
+</script></body></html>

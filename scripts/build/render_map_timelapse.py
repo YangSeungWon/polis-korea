@@ -77,6 +77,13 @@ def projector(bb: tuple):
     return f
 
 
+def label_at(g: dict, pr) -> tuple:
+    """가장 큰 링의 무게중심. 폴리곤이 두 개면 이름이 어디 붙는지가 곧 식별이다."""
+    ring = max(_rings(g), key=len)
+    pts = [pr(x, y) for x, y in ring]
+    return (sum(a for a, _ in pts) / len(pts), sum(b for _, b in pts) / len(pts))
+
+
 def path_of(g: dict, pr) -> str:
     out = []
     for ring in _rings(g):
@@ -114,6 +121,16 @@ def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
             f' role="img" aria-label="{esc(f["model_unit"])} — {esc(desc)},'
             f' 투영 {esc(METHOD_LABEL[m])}"><title>{esc(f["model_unit"])}'
             f'\n{esc(desc)}\n투영: {esc(METHOD_LABEL[m])}</title></path>')
+    # 이름이 없으면 두 단위가 같은 채움일 때 한 덩어리로 읽힌다(하남 갑·을이 그랬다).
+    seen = set()
+    for f in g["features"]:
+        if f["model_unit"] in seen:
+            continue
+        seen.add(f["model_unit"])
+        lx, ly = label_at(f["geometry"], pr)
+        labels.append(f'<text class="mt-lb" x="{lx:.0f}" y="{ly:.0f}" '
+                      f'text-anchor="middle" aria-hidden="true">'
+                      f'{esc(f["model_unit"])}</text>')
     rows = []
     for name, p in sorted(proj["per_unit"].items()):
         _, _, desc = fill_for(p)
@@ -121,13 +138,18 @@ def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
         src = p.get("source_units") or []
         detail = (f'{esc(w.get("party"))} {esc(w.get("name"))} {w.get("pct")}%'
                   if w.get("name") else esc(p.get("why") or p.get("reason") or ""))
+        # 사유는 길다. 좁은 칸에 밀어 넣으면 한글이 한 글자씩 끊긴다(실제로 그랬다).
+        # 자기 줄을 준다.
         rows.append(
             f'<tr><th scope="row">{esc(name)}</th>'
             f'<td><span class="mt-b mt-b-{p["method"]}">{METHOD_LABEL[p["method"]]}'
-            f'</span></td><td>{esc(desc)}</td><td class="mt-src">{detail}'
-            + (f'<br><span class="mt-dim">집계 단위: {esc(" + ".join(src))}</span>'
+            f'</span></td><td>{esc(desc)}</td><td class="mt-src">{detail if w.get("name") else ""}'
+            + (f'<br><span class="mt-dim">집계 단위 {esc(" + ".join(src))}</span>'
                if len(src) > 1 else "")
             + '</td></tr>')
+        note = p.get("why") or p.get("reason")
+        if not w.get("name") and note:
+            rows.append(f'<tr class="mt-why"><td colspan="4">{esc(note)}</td></tr>')
     ev = ('<p class="mt-ev">이 시점에 행정구역이 바뀌었습니다 — 경계는 사건일에 '
           '이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>'
           if s["role"] == "after_geo_event" else "")
@@ -147,9 +169,11 @@ def frame(s: dict, pr, sid: str, visible: bool = False) -> str:
 <dt>선거</dt><dd class="mt-snap">{esc(snap['label'] if snap else '없음')}
  <span class="mt-dim">{esc(snap['date'] if snap else '')}</span></dd>
 <dt>투영</dt><dd class="mt-proj">{esc(' · '.join(
-    f'{METHOD_LABEL[k]} {v}' for k, v in sorted(proj['summary'].items())) or '없음')}</dd>
+    f'{METHOD_LABEL[k]} {v}곳' for k, v in sorted(proj['summary'].items())) or '없음')}</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
 </div></div></section>"""
@@ -188,7 +212,9 @@ align-items:start}
 @media (max-width:820px){.mt-grid{grid-template-columns:1fr}}
 .mt-svg{width:100%;height:auto;background:var(--mt-card);border-radius:8px;
 border:1px solid var(--mt-line)}
-.mt-u{stroke:var(--mt-bg);stroke-width:1.5}
+.mt-u{stroke:var(--mt-bg);stroke-width:2.5}
+.mt-lb{font:600 12px system-ui,sans-serif;fill:var(--mt-ink);paint-order:stroke;
+stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
 .mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
 .mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
 .mt-h{font-size:15px;margin:14px 0 8px}
@@ -200,7 +226,11 @@ font-size:14px}
 .mt-layers dt{color:var(--mt-dim);font-size:13px}
 .mt-layers dd{margin:0}
 .mt-dim{color:var(--mt-dim);font-size:12px}
-.mt-tab{width:100%;border-collapse:collapse;font-size:13px}
+.mt-tab{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;
+word-break:keep-all}
+.mt-tab col.c1{width:27%}.mt-tab col.c2{width:19%}.mt-tab col.c3{width:26%}
+.mt-why td{color:var(--mt-dim);font-size:12.5px;border-top:0;padding-top:0;
+line-height:1.55}
 .mt-tab caption{text-align:left;color:var(--mt-dim);font-size:12px;padding-bottom:4px}
 .mt-tab th,.mt-tab td{text-align:left;padding:5px 6px;border-top:1px solid var(--mt-line);
 vertical-align:top}
@@ -262,9 +292,11 @@ def render(doc: dict) -> str:
             '<span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속'
             '</span><span class="mt-key"><i style="background:#eceef1"></i>'
             '이 경계로 표시 불가</span>')
-    leg += "<br>" + "".join(
-        f'<span class="mt-key"><i style="background:currentColor;opacity:{o}"></i>'
-        f'1위 계열 {lab}</span>' for _, _, lab, o in STEPS)
+    # 명도로 무언가를 인코딩하면 키가 있어야 한다. currentColor로 두면 세 칸이
+    # 전부 흐린 회색이라 단계가 안 보였다 — 실제 계열색 하나로 예시를 든다.
+    leg += ('<br><span class="mt-key">1위 계열 득표 비율</span>' + "".join(
+        f'<span class="mt-key"><i style="background:{FAM_COLOR["conservative"]};'
+        f'opacity:{o}"></i>{lab}</span>' for _, _, lab, o in STEPS))
     d0 = blocks[0]
     return f"""<section class="mt" data-series="{esc(d0['comparison_series_id'])}"
  data-role="{esc(d0['states'][0]['role'])}">

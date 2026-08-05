@@ -19,7 +19,9 @@ align-items:start}
 @media (max-width:820px){.mt-grid{grid-template-columns:1fr}}
 .mt-svg{width:100%;height:auto;background:var(--mt-card);border-radius:8px;
 border:1px solid var(--mt-line)}
-.mt-u{stroke:var(--mt-bg);stroke-width:1.5}
+.mt-u{stroke:var(--mt-bg);stroke-width:2.5}
+.mt-lb{font:600 12px system-ui,sans-serif;fill:var(--mt-ink);paint-order:stroke;
+stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
 .mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
 .mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
 .mt-h{font-size:15px;margin:14px 0 8px}
@@ -31,7 +33,11 @@ font-size:14px}
 .mt-layers dt{color:var(--mt-dim);font-size:13px}
 .mt-layers dd{margin:0}
 .mt-dim{color:var(--mt-dim);font-size:12px}
-.mt-tab{width:100%;border-collapse:collapse;font-size:13px}
+.mt-tab{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;
+word-break:keep-all}
+.mt-tab col.c1{width:27%}.mt-tab col.c2{width:19%}.mt-tab col.c3{width:26%}
+.mt-why td{color:var(--mt-dim);font-size:12.5px;border-top:0;padding-top:0;
+line-height:1.55}
 .mt-tab caption{text-align:left;color:var(--mt-dim);font-size:12px;padding-bottom:4px}
 .mt-tab th,.mt-tab td{text-align:left;padding:5px 6px;border-top:1px solid var(--mt-line);
 vertical-align:top}
@@ -56,7 +62,7 @@ border:1px solid var(--mt-line)}
 경계에 칠할 수 있는 것은 아닙니다</b> — 칠할 수 없는 경계는 그리되 정치색을 주지
 않습니다.</p>
 <div class="mt-ctl"><label>비교 series</label><div class="mt-seg"><button type="button" data-set="series=president:national">대통령</button><button type="button" data-set="series=general:district">국회의원</button></div></div>
-<div class="mt-ctl"><label>시점</label><div class="mt-seg"><button type="button" data-set="role=before_election">선거 직전</button><button type="button" data-set="role=election">선거 시점</button><button type="button" data-set="role=before_geo_event">행정구역 사건 직전</button><button type="button" data-set="role=after_geo_event">행정구역 사건 직후</button><button type="button" data-set="role=next_election">다음 선거</button></div></div>
+<div class="mt-ctl"><label>시점</label><div class="mt-seg"><button type="button" data-set="role=before_election">선거 직전</button><button type="button" data-set="role=election">선거 시점</button><button type="button" data-set="role=before_geo_event">경계 사건 직전</button><button type="button" data-set="role=after_geo_event">경계 사건 직후</button><button type="button" data-set="role=previous_on_new_boundary">새 경계 · 이전 선거 결과</button><button type="button" data-set="role=next_election">다음 선거</button></div></div>
 <svg width="0" height="0" aria-hidden="true"><defs>
 <pattern id="mt-mixed" width="7" height="7" patternUnits="userSpaceOnUse"
  patternTransform="rotate(45)"><rect width="7" height="7" fill="#9aa3ad"/>
@@ -77,7 +83,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-op100" fill="#d2352b" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 보수계 64.1%, 투영 그대로"><title>영일군
 보수계 64.1%
 투영: 그대로</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제13대 대통령선거 결과 · 당시 경계</p>
 
@@ -86,9 +92,11 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제13대 대통령선거
  <span class="mt-dim">1987-12-16</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 2</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
 <tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>보수계 64.1%</td><td class="mt-src">민주정의당 노태우 64.1%</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>보수계 53.92%</td><td class="mt-src">민주정의당 노태우 53.92%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="election"
@@ -101,7 +109,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 복수 계보 63.08%, 투영 그대로"><title>영일군
 복수 계보 63.08%
 투영: 그대로</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 대통령선거 결과 · 당시 경계</p>
 
@@ -110,14 +118,16 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 대통령선거
  <span class="mt-dim">1992-12-18</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 2</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
 <tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 63.08%</td><td class="mt-src">민주자유당 김영삼 63.08%</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 62.14%</td><td class="mt-src">민주자유당 김영삼 62.14%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="before_geo_event"
  data-series="president:national" data-state="president:national@1994-12-31#before_geo_event" hidden>
-<h3 class="mt-h">행정구역 사건 직전 · 1994-12-31</h3>
+<h3 class="mt-h">경계 사건 직전 · 1994-12-31</h3>
 <div class="mt-grid">
 <svg class="mt-svg" viewBox="0 0 520 560" role="group"
  aria-label="1994-12-31 시점 경계 영일군|포항시"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M367.0,279.8L322.8,269.2L280.3,339.2L292.3,358.3L324.0,359.8L346.0,386.9L379.0,365.7L340.1,331.9L337.6,301.1L367.0,279.8Z" role="img" aria-label="포항시 — 복수 계보 62.14%, 투영 그대로"><title>포항시
@@ -125,7 +135,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 복수 계보 63.08%, 투영 그대로"><title>영일군
 복수 계보 63.08%
 투영: 그대로</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 대통령선거 결과 · 당시 경계</p>
 
@@ -134,20 +144,22 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 대통령선거
  <span class="mt-dim">1992-12-18</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 2</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 2곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
 <tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 63.08%</td><td class="mt-src">민주자유당 김영삼 63.08%</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 62.14%</td><td class="mt-src">민주자유당 김영삼 62.14%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="after_geo_event"
  data-series="president:national" data-state="president:national@1995-01-01#after_geo_event" hidden>
-<h3 class="mt-h">행정구역 사건 직후 · 1995-01-01</h3>
+<h3 class="mt-h">경계 사건 직후 · 1995-01-01</h3>
 <div class="mt-grid">
 <svg class="mt-svg" viewBox="0 0 520 560" role="group"
  aria-label="1995-01-01 시점 경계 포항시"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 복수 계보 62.49%, 투영 합산"><title>포항시
 복수 계보 62.49%
 투영: 합산</title></path>
-</svg>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 대통령선거 결과 · 1995년 경계에 합산</p>
 <p class="mt-ev">이 시점에 행정구역이 바뀌었습니다 — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>
@@ -156,11 +168,37 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1995)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 대통령선거
  <span class="mt-dim">1992-12-18</span></dd>
-<dt>투영</dt><dd class="mt-proj">합산 1</dd>
+<dt>투영</dt><dd class="mt-proj">합산 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-aggregated">합산</span></td><td>복수 계보 62.49%</td><td class="mt-src">민주자유당 김영삼 62.49%<br><span class="mt-dim">집계 단위: 영일군 + 포항시</span></td></tr></tbody></table>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-aggregated">합산</span></td><td>복수 계보 62.49%</td><td class="mt-src">민주자유당 김영삼 62.49%<br><span class="mt-dim">집계 단위 영일군 + 포항시</span></td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="president:national" data-state="president:national@1995-01-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 1995-01-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="1995-01-01 시점 경계 포항시"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 복수 계보 62.49%, 투영 합산"><title>포항시
+복수 계보 62.49%
+투영: 합산</title></path>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제14대 대통령선거 결과 · 1995년 경계에 합산</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">포항시
+ <span class="mt-dim">(sigungu_1995)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제14대 대통령선거
+ <span class="mt-dim">1992-12-18</span></dd>
+<dt>투영</dt><dd class="mt-proj">합산 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-aggregated">합산</span></td><td>복수 계보 62.49%</td><td class="mt-src">민주자유당 김영삼 62.49%<br><span class="mt-dim">집계 단위 영일군 + 포항시</span></td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="next_election"
  data-series="president:national" data-state="president:national@1997-12-18#next_election" hidden>
 <h3 class="mt-h">다음 선거 · 1997-12-18</h3>
@@ -169,7 +207,7 @@ border:1px solid var(--mt-line)}
  aria-label="1997-12-18 시점 경계 포항시"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 복수 계보 84.31%, 투영 합산"><title>포항시
 복수 계보 84.31%
 투영: 합산</title></path>
-</svg>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제15대 대통령선거 결과 · 1995년 경계에 합산</p>
 
@@ -178,11 +216,13 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1995)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제15대 대통령선거
  <span class="mt-dim">1997-12-18</span></dd>
-<dt>투영</dt><dd class="mt-proj">합산 1</dd>
+<dt>투영</dt><dd class="mt-proj">합산 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-aggregated">합산</span></td><td>복수 계보 84.31%</td><td class="mt-src">한나라당 이회창 66.57%<br><span class="mt-dim">집계 단위: 포항시남구 + 포항시북구</span></td></tr></tbody></table>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-aggregated">합산</span></td><td>복수 계보 84.31%</td><td class="mt-src">한나라당 이회창 66.57%<br><span class="mt-dim">집계 단위 포항시남구 + 포항시북구</span></td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="before_election"
  data-series="general:district" data-state="general:district@1992-03-23#before_election" hidden>
 <h3 class="mt-h">선거 직전 · 1992-03-23</h3>
@@ -193,7 +233,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>영일군
 이 경계로 표시할 수 없음
 투영: 표시 불가</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제13대 국회의원선거 결과 · 일부 경계만 표시 가능</p>
 
@@ -202,11 +242,13 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제13대 국회의원선거
  <span class="mt-dim">1988-04-26</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 1 · 표시 불가 1</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳 · 표시 불가 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>보수계 43.47%</td><td class="mt-src">민주정의당 이진우 43.47%</td></tr></tbody></table>
+<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>보수계 43.47%</td><td class="mt-src">민주정의당 이진우 43.47%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="election"
  data-series="general:district" data-state="general:district@1992-03-24#election" hidden>
 <h3 class="mt-h">선거 시점 · 1992-03-24</h3>
@@ -217,7 +259,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>영일군
 이 경계로 표시할 수 없음
 투영: 표시 불가</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 국회의원선거 결과 · 일부 경계만 표시 가능</p>
 
@@ -226,14 +268,16 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 국회의원선거
  <span class="mt-dim">1992-03-24</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 1 · 표시 불가 1</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳 · 표시 불가 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src">무소속 허화평 46.33%</td></tr></tbody></table>
+<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src">무소속 허화평 46.33%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="before_geo_event"
  data-series="general:district" data-state="general:district@1994-12-31#before_geo_event" hidden>
-<h3 class="mt-h">행정구역 사건 직전 · 1994-12-31</h3>
+<h3 class="mt-h">경계 사건 직전 · 1994-12-31</h3>
 <div class="mt-grid">
 <svg class="mt-svg" viewBox="0 0 520 560" role="group"
  aria-label="1994-12-31 시점 경계 영일군|포항시"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M367.0,279.8L322.8,269.2L280.3,339.2L292.3,358.3L324.0,359.8L346.0,386.9L379.0,365.7L340.1,331.9L337.6,301.1L367.0,279.8Z" role="img" aria-label="포항시 — 무소속, 투영 그대로"><title>포항시
@@ -241,7 +285,7 @@ border:1px solid var(--mt-line)}
 투영: 그대로</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M367.0,279.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L299.8,456.8L332.7,499.1L449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.5,275.4L436.7,336.0L395.3,370.2L379.0,365.7L346.0,386.9L324.0,359.8L292.3,358.3L280.3,339.2L322.8,269.2L367.0,279.8Z" role="img" aria-label="영일군 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>영일군
 이 경계로 표시할 수 없음
 투영: 표시 불가</title></path>
-</svg>
+<text class="mt-lb" x="336" y="327" text-anchor="middle" aria-hidden="true">포항시</text><text class="mt-lb" x="278" y="261" text-anchor="middle" aria-hidden="true">영일군</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 국회의원선거 결과 · 일부 경계만 표시 가능</p>
 
@@ -250,20 +294,22 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1990)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 국회의원선거
  <span class="mt-dim">1992-03-24</span></dd>
-<dt>투영</dt><dd class="mt-proj">그대로 1 · 표시 불가 1</dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳 · 표시 불가 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src">무소속 허화평 46.33%</td></tr></tbody></table>
+<tbody><tr><th scope="row">영일군</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src">무소속 허화평 46.33%</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="after_geo_event"
  data-series="general:district" data-state="general:district@1995-01-01#after_geo_event" hidden>
-<h3 class="mt-h">행정구역 사건 직후 · 1995-01-01</h3>
+<h3 class="mt-h">경계 사건 직후 · 1995-01-01</h3>
 <div class="mt-grid">
 <svg class="mt-svg" viewBox="0 0 520 560" role="group"
  aria-label="1995-01-01 시점 경계 포항시"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>포항시
 이 경계로 표시할 수 없음
 투영: 표시 불가</title></path>
-</svg>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제14대 국회의원선거 결과는 이 경계로 표시할 수 없습니다</p>
 <p class="mt-ev">이 시점에 행정구역이 바뀌었습니다 — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.</p>
@@ -272,11 +318,37 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1995)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제14대 국회의원선거
  <span class="mt-dim">1992-03-24</span></dd>
-<dt>투영</dt><dd class="mt-proj">표시 불가 1</dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr></tbody></table>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="general:district" data-state="general:district@1995-01-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 1995-01-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="1995-01-01 시점 경계 포항시"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>포항시
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제14대 국회의원선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">포항시
+ <span class="mt-dim">(sigungu_1995)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제14대 국회의원선거
+ <span class="mt-dim">1992-03-24</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr></tbody></table>
 </div></div></section><section class="mt-frame" data-role="next_election"
  data-series="general:district" data-state="general:district@1996-04-11#next_election" hidden>
 <h3 class="mt-h">다음 선거 · 1996-04-11</h3>
@@ -285,7 +357,7 @@ border:1px solid var(--mt-line)}
  aria-label="1996-04-11 시점 경계 포항시"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M449.1,520.7L456.5,456.9L449.6,435.0L478.6,394.1L502.0,341.9L495.4,299.2L479.4,275.3L436.7,336.0L395.3,370.2L340.1,331.9L337.6,301.1L369.5,284.8L378.7,249.7L351.2,226.3L352.9,196.4L334.5,171.2L341.0,120.2L333.8,92.2L275.2,92.7L232.8,39.3L206.9,56.3L207.5,87.3L167.2,136.1L135.7,98.4L94.2,83.1L71.3,96.7L94.7,125.7L60.0,141.7L51.1,173.8L18.0,193.0L63.7,202.4L74.3,230.0L110.1,272.3L151.3,306.7L194.0,318.5L228.4,287.8L261.0,291.7L254.5,337.0L274.5,366.1L298.4,460.6L346.8,499.5L373.5,478.2L393.5,513.3L449.1,520.7Z" role="img" aria-label="포항시 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>포항시
 이 경계로 표시할 수 없음
 투영: 표시 불가</title></path>
-</svg>
+<text class="mt-lb" x="281" y="268" text-anchor="middle" aria-hidden="true">포항시</text></svg>
 <div class="mt-side">
 <p class="mt-claim">제15대 국회의원선거 결과는 이 경계로 표시할 수 없습니다</p>
 
@@ -294,13 +366,15 @@ border:1px solid var(--mt-line)}
  <span class="mt-dim">(sigungu_1995)</span></dd>
 <dt>선거</dt><dd class="mt-snap">제15대 국회의원선거
  <span class="mt-dim">1996-04-11</span></dd>
-<dt>투영</dt><dd class="mt-proj">표시 불가 1</dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption><thead><tr><th>경계 단위</th>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
 <th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
-<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr></tbody></table>
+<tbody><tr><th scope="row">포항시</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">집계 단위가 이 경계 밖까지 포함한다 — 빼낼 하위 실측이 없으면 합산도 분할도 성립하지 않는다</td></tr></tbody></table>
 </div></div></section>
-<p class="mt-legend"><span class="mt-key"><i style="background:#d2352b"></i>보수계</span><span class="mt-key"><i style="background:#0a5cb8"></i>민주계</span><span class="mt-key"><i style="background:#e8a300"></i>진보계</span><span class="mt-key"><i style="background:#00875a"></i>지역계</span><span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보(계열 hue 없음)</span><span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속</span><span class="mt-key"><i style="background:#eceef1"></i>이 경계로 표시 불가</span><br><span class="mt-key"><i style="background:currentColor;opacity:0.42"></i>1위 계열 45% 미만</span><span class="mt-key"><i style="background:currentColor;opacity:0.68"></i>1위 계열 45–60%</span><span class="mt-key"><i style="background:currentColor;opacity:1.0"></i>1위 계열 60% 이상</span></p>
+<p class="mt-legend"><span class="mt-key"><i style="background:#d2352b"></i>보수계</span><span class="mt-key"><i style="background:#0a5cb8"></i>민주계</span><span class="mt-key"><i style="background:#e8a300"></i>진보계</span><span class="mt-key"><i style="background:#00875a"></i>지역계</span><span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보(계열 hue 없음)</span><span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속</span><span class="mt-key"><i style="background:#eceef1"></i>이 경계로 표시 불가</span><br><span class="mt-key">1위 계열 득표 비율</span><span class="mt-key"><i style="background:#d2352b;opacity:0.42"></i>45% 미만</span><span class="mt-key"><i style="background:#d2352b;opacity:0.68"></i>45–60%</span><span class="mt-key"><i style="background:#d2352b;opacity:1.0"></i>60% 이상</span></p>
 <p class="mt-note">선거 사이를 보간하지 않습니다. 각 시점은 그 이전 마지막 선거의
 결과를 보여주며, 경계는 행정구역 사건일에 이산 전환합니다.</p>
 </section><script>
