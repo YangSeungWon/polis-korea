@@ -15,7 +15,33 @@
     }
    },
    "prev_reaggregated": null,
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    },
+    "delta": {
+     "valid": false,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 0.96,
+       "valid": true
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 0.42,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 0.42,
+     "reason": "reaggregation_blocked"
+    },
+    "winner": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    }
+   },
    "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
    "newly_ran": null,
    "no_longer_ran": null,
    "provenance": {
@@ -97,7 +123,33 @@
     }
    },
    "prev_reaggregated": null,
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    },
+    "delta": {
+     "valid": false,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 0.37,
+       "valid": true
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 1.29,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 0.37,
+     "reason": "reaggregation_blocked"
+    },
+    "winner": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    }
+   },
    "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
    "newly_ran": null,
    "no_longer_ran": null,
    "provenance": {
@@ -197,10 +249,36 @@
      "무소속": 0.47
     }
    },
+   "capability": {
+    "level": {
+     "valid": true,
+     "reason": null
+    },
+    "delta": {
+     "valid": true,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 0.88,
+       "valid": true
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 1.09,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 0.88,
+     "reason": null
+    },
+    "winner": {
+     "valid": true,
+     "reason": null
+    }
+   },
    "swing_attributable_basis": {
     "pid:국민의힘": -1.52,
     "pid:더불어민주당": 0.86
    },
+   "swing_bias_unstable": null,
    "newly_ran": {
     "pid:새로운미래": 6.07
    },

@@ -31,10 +31,36 @@
      "pid:민중당(2017)": 0.1
     }
    },
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "validation_error_too_large"
+    },
+    "delta": {
+     "valid": true,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 0.38,
+       "valid": true
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 0.22,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 0.22,
+     "reason": null
+    },
+    "winner": {
+     "valid": true,
+     "reason": null
+    }
+   },
    "swing_attributable_basis": {
     "pid:국민의힘": 5.29,
     "pid:더불어민주당": -0.83
    },
+   "swing_bias_unstable": null,
    "newly_ran": {},
    "no_longer_ran": {
     "pid:정의당": 2.22,
@@ -81,8 +107,8 @@
     "winner_official": "pid:국민의힘",
     "winner_agrees": true,
     "excluded_share": {
-     "pid:국민의힘": 62.95,
-     "pid:더불어민주당": 37.05
+     "pid:더불어민주당": 37.05,
+     "pid:국민의힘": 62.95
     },
     "excluded_lean_pp": {
      "pid:더불어민주당": 11.54,
@@ -97,8 +123,8 @@
      "pid:민중당(2017)": 0.16
     },
     "bias_stability_pp": {
-     "pid:국민의힘": 0.38,
-     "pid:더불어민주당": 0.22
+     "pid:더불어민주당": 0.22,
+     "pid:국민의힘": 0.38
     }
    }
   },
@@ -131,15 +157,35 @@
      "무소속": 6.73
     }
    },
-   "swing_attributable_basis": {
-    "pid:국민의힘": 9.51,
-    "pid:민중당(2017)": 18.11
+   "capability": {
+    "level": {
+     "valid": true,
+     "reason": null
+    },
+    "delta": {
+     "valid": false,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 6.19,
+       "valid": false
+      },
+      "pid:민중당(2017)": {
+       "bias_shift_pp": 4.91,
+       "valid": false
+      }
+     },
+     "bias_shift_pp": 4.91,
+     "reason": "excluded_vote_bias_unstable_all"
+    },
+    "winner": {
+     "valid": true,
+     "reason": null
+    }
    },
-   "newly_ran": {},
-   "no_longer_ran": {
-    "pid:더불어민주당": 24.79,
-    "pid:기후민생당": 0.42
-   },
+   "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
+   "newly_ran": null,
+   "no_longer_ran": null,
    "provenance": {
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "basis_boundary": "22대 선거구",
@@ -180,9 +226,9 @@
     "winner_official": "pid:국민의힘",
     "winner_agrees": true,
     "excluded_share": {
-     "무소속": 5.06,
      "pid:민중당(2017)": 24.54,
-     "pid:국민의힘": 70.41
+     "pid:국민의힘": 70.41,
+     "무소속": 5.06
     },
     "excluded_lean_pp": {
      "pid:국민의힘": -5.73,
@@ -198,9 +244,8 @@
      "pid:민중당(2017)": 0.16
     },
     "bias_stability_pp": {
-     "무소속": 1.17,
-     "pid:국민의힘": 6.19,
-     "pid:민중당(2017)": 4.91
+     "pid:민중당(2017)": 4.91,
+     "pid:국민의힘": 6.19
     }
    }
   },
@@ -216,7 +261,29 @@
     }
    },
    "prev_reaggregated": null,
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    },
+    "delta": {
+     "valid": false,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 3.22,
+       "valid": false
+      }
+     },
+     "bias_shift_pp": 3.22,
+     "reason": "reaggregation_blocked"
+    },
+    "winner": {
+     "valid": false,
+     "reason": "reaggregation_blocked"
+    }
+   },
    "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
    "newly_ran": null,
    "no_longer_ran": null,
    "provenance": {
@@ -275,7 +342,6 @@
      "pid:민중당(2017)": 0.16
     },
     "bias_stability_pp": {
-     "무소속": 9.21,
      "pid:국민의힘": 3.22
     }
    }

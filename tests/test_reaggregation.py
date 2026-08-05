@@ -150,6 +150,9 @@ def main() -> int:
     print("\n[유형별] 획정 변경 종류마다 옳은 판정이 나오는가")
     _fixtures()
 
+    print("\n[capability] 방법과 주장할 수 있는 것을 분리했는가")
+    _capability()
+
     print("\n[되먹임] 계보에 반영될 때 근거 없이 올라가지 않는가")
     _feedback()
 
@@ -216,6 +219,50 @@ def _fixtures() -> None:
         pass
 
 
+def _capability() -> None:
+    """`reaggregated`는 하나의 신뢰 상태가 아니다.
+
+    **재집계된 수준값은 틀릴 수 있어도 같은 분모의 변화량은 유효할 수 있다.**
+    하남시갑이 증거다 — 동 귀속표만 보면 승자가 뒤집히는데(관외사전 민주 +7.4%p),
+    그 편향이 회차 사이에 0.24%p밖에 안 움직여서 차이를 빼면 상쇄된다.
+    level / delta / winner를 따로 판정하고, 서로 끌어내리지 않는다.
+    """
+    for name in ("hanam", "busan-nam", "bucheon", "goyang", "gunwi"):
+        try:
+            r = run(22, 21, "_" + name)
+        except FileNotFoundError:
+            continue
+        for d, v in r["districts"].items():
+            c = v.get("capability")
+            ck(f"{name}/{d}: capability 3축이 있다",
+               bool(c) and {"level", "delta", "winner"} <= set(c))
+            if not c:
+                continue
+            ck(f"{name}/{d}: 못 서는 축에는 사유가 있다",
+               all(x["valid"] or x.get("reason") for x in c.values()))
+            # swing이 나왔으면 delta가 서 있어야 하고, 그 반대도 마찬가지
+            ck(f"{name}/{d}: swing 유무 = delta capability",
+               bool(v["swing_attributable_basis"]) == c["delta"]["valid"])
+            # winner가 안 서는데 승자를 정치적 사실로 쓰면 안 된다
+            if not c["winner"]["valid"] and v["attributable"]:
+                ck(f"{name}/{d}: 승자 불일치가 기록됨",
+                   v["validation"]["winner_agrees"] is False)
+            # 편향이 흔들리는 정당은 swing에 넣지 않는다
+            bad = {k for k, x in c["delta"]["by_party"].items() if not x["valid"]}
+            ck(f"{name}/{d}: 편향 불안정 정당은 swing에서 빠진다",
+               not (bad & set(v["swing_attributable_basis"] or {})))
+
+    # level이 false여도 delta는 true일 수 있다 — 이게 사라지면 모델이 퇴화한 것이다
+    h = run(22, 21, "_hanam")["districts"]["하남시갑"]
+    ck("하남시갑: level=false · delta=true (독립 판정)",
+       h["capability"]["level"]["valid"] is False
+       and h["capability"]["delta"]["valid"] is True)
+    ck("하남시갑: 민주당 편향이동이 0.5%p 미만",
+       h["capability"]["delta"]["by_party"]["pid:더불어민주당"]["bias_shift_pp"] < 0.5)
+    ck("하남시갑: 국민의힘은 불안정으로 분리",
+       "pid:국민의힘" in (h["swing_bias_unstable"] or {}))
+
+
 def _feedback() -> None:
     """재집계 결과가 선거구 계보로 되먹여질 때의 불변식.
 
@@ -231,7 +278,11 @@ def _feedback() -> None:
         r = u.get("reaggregation") or {}
         m = r.get("method")
         if m == "reaggregated":
-            ck(f"{u['district']}: 재집계면 비교 가능", u["comparable"] == "yes")
+            # 재집계했다고 비교 가능이 아니다 — **변화량을 주장할 수 있어야** 한다.
+            # 동구군위군을은 재집계는 되는데 2020 민주당 자리를 2024 진보당이 채워
+            # 제외표 편향이 회차 사이에 흔들린다. 그래서 비교 불가로 남는다.
+            ck(f"{u['district']}: 비교 가능 여부 = delta capability",
+               (u["comparable"] == "yes") == bool((r.get("capability") or {}).get("delta")))
             ck(f"{u['district']}: 품질이 insufficient가 아님",
                r.get("quality") != "insufficient")
             ck(f"{u['district']}: 분모가 명시됨",

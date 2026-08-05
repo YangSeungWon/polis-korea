@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 22,
   "previous_n": 21,
-  "generated_at": "2026-08-05T17:28:45+09:00",
+  "generated_at": "2026-08-05T17:35:58+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -48,7 +48,7 @@
   "renamed": 1,
   "split": 2,
   "total": 254,
-  "comparable": 196,
+  "comparable": 195,
   "comparable_unknown": 0,
   "previous_total": 253,
   "previous_unmatched": 3
@@ -241,6 +241,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.17,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": false,
+     "winner": false,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_goyang",
     "blocked_by": "선거구를 가로지르는 동: 흥도동"
@@ -252,7 +261,7 @@
    "relation": "boundary_changed",
    "comparable": "yes",
    "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.0%)",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.0%). 수준값은 쓰지 않는다 — 변화량만 유효하다.",
    "overlap_current": 0.9528,
    "overlap_previous": 0.8811,
    "source_relation": "same_source",
@@ -271,6 +280,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.15,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": true,
+     "winner": true,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_goyang"
    }
@@ -608,6 +626,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 0.81,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": false,
+     "winner": false,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_bucheon",
     "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
@@ -643,6 +670,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 0.98,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": false,
+     "winner": false,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_bucheon",
     "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
@@ -1363,7 +1399,7 @@
    "relation": "split",
    "comparable": "yes",
    "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 85.6%)",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 85.6%). 수준값은 쓰지 않는다 — 변화량만 유효하다.",
    "overlap_current": 0.9996,
    "overlap_previous": 0.8199,
    "source_relation": "same_source",
@@ -1382,6 +1418,14 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.24,
     "winner_agrees": false,
+    "capability": {
+     "level": false,
+     "delta": true,
+     "winner": false,
+     "delta_valid_parties": [
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_hanam"
    }
@@ -1392,7 +1436,7 @@
    "relation": "split",
    "comparable": "yes",
    "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 84.1%)",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 84.1%). 수준값은 쓰지 않는다 — 변화량만 유효하다.",
    "overlap_current": 1.0,
    "overlap_previous": 0.1795,
    "source_relation": "same_source",
@@ -1411,6 +1455,14 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.19,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": true,
+     "winner": true,
+     "delta_valid_parties": [
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_hanam"
    }
@@ -2030,6 +2082,12 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 0.93,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": false,
+     "winner": false,
+     "delta_valid_parties": []
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_gunwi",
     "blocked_by": "선거구 일부만 회수"
@@ -2307,7 +2365,7 @@
    "relation": "boundary_changed",
    "comparable": "yes",
    "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%)",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%). 수준값은 쓰지 않는다 — 변화량만 유효하다.",
    "overlap_current": 0.9046,
    "overlap_previous": 0.9981,
    "source_relation": "same_source",
@@ -2331,6 +2389,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.27,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": true,
+     "winner": true,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_gunwi"
    }
@@ -2339,9 +2406,9 @@
    "district": "대구 동구군위군을",
    "sido": "대구",
    "relation": "merged",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.8%)",
+   "comparable": "no",
+   "reason_code": "merged_into_current",
+   "reason": "이전 경북 군위군의성군청송군영덕군 + 대구 동구을 통합",
    "overlap_current": 0.786,
    "overlap_previous": 0.1814,
    "source_relation": "same_source",
@@ -2365,6 +2432,12 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 0.73,
     "winner_agrees": true,
+    "capability": {
+     "level": true,
+     "delta": false,
+     "winner": true,
+     "delta_valid_parties": []
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_gunwi"
    }
@@ -2679,7 +2752,7 @@
    "relation": "merged",
    "comparable": "yes",
    "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%)",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 수준값은 쓰지 않는다 — 변화량만 유효하다.",
    "overlap_current": 0.5405,
    "overlap_previous": 0.9999,
    "source_relation": "same_source",
@@ -2703,6 +2776,15 @@
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.27,
     "winner_agrees": true,
+    "capability": {
+     "level": false,
+     "delta": true,
+     "winner": true,
+     "delta_valid_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ]
+    },
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21_busan-nam"
    }

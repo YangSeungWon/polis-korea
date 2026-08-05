@@ -28,9 +28,36 @@
      "무소속": 15.67
     }
    },
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "excluded_votes_change_winner"
+    },
+    "delta": {
+     "valid": true,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 4.11,
+       "valid": false
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 0.24,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 0.24,
+     "reason": null
+    },
+    "winner": {
+     "valid": false,
+     "reason": "excluded_votes_change_winner"
+    }
+   },
    "swing_attributable_basis": {
-    "pid:국민의힘": 12.99,
     "pid:더불어민주당": 2.68
+   },
+   "swing_bias_unstable": {
+    "pid:국민의힘": 12.99
    },
    "newly_ran": {},
    "no_longer_ran": {},
@@ -70,8 +97,8 @@
     "winner_official": "pid:더불어민주당",
     "winner_agrees": false,
     "excluded_share": {
-     "pid:더불어민주당": 57.97,
-     "pid:국민의힘": 42.03
+     "pid:국민의힘": 42.03,
+     "pid:더불어민주당": 57.97
     },
     "excluded_lean_pp": {
      "pid:더불어민주당": 7.39,
@@ -83,8 +110,8 @@
      "무소속": -4.35
     },
     "bias_stability_pp": {
-     "pid:더불어민주당": 0.24,
-     "pid:국민의힘": 4.11
+     "pid:국민의힘": 4.11,
+     "pid:더불어민주당": 0.24
     }
    }
   },
@@ -115,9 +142,36 @@
      "무소속": 17.25
     }
    },
+   "capability": {
+    "level": {
+     "valid": false,
+     "reason": "validation_error_too_large"
+    },
+    "delta": {
+     "valid": true,
+     "by_party": {
+      "pid:국민의힘": {
+       "bias_shift_pp": 2.33,
+       "valid": false
+      },
+      "pid:더불어민주당": {
+       "bias_shift_pp": 1.32,
+       "valid": true
+      }
+     },
+     "bias_shift_pp": 1.32,
+     "reason": null
+    },
+    "winner": {
+     "valid": true,
+     "reason": null
+    }
+   },
    "swing_attributable_basis": {
-    "pid:국민의힘": 15.18,
     "pid:더불어민주당": -2.7
+   },
+   "swing_bias_unstable": {
+    "pid:국민의힘": 15.18
    },
    "newly_ran": {
     "pid:새로운미래": 4.77
@@ -159,9 +213,9 @@
     "winner_official": "pid:더불어민주당",
     "winner_agrees": true,
     "excluded_share": {
-     "pid:국민의힘": 38.1,
      "pid:새로운미래": 3.94,
-     "pid:더불어민주당": 57.96
+     "pid:더불어민주당": 57.96,
+     "pid:국민의힘": 38.1
     },
     "excluded_lean_pp": {
      "pid:더불어민주당": 6.31,
@@ -174,8 +228,8 @@
      "무소속": -4.35
     },
     "bias_stability_pp": {
-     "pid:더불어민주당": 1.32,
-     "pid:국민의힘": 2.33
+     "pid:국민의힘": 2.33,
+     "pid:더불어민주당": 1.32
     }
    }
   }

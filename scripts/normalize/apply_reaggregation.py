@@ -60,18 +60,33 @@ def apply_lineage() -> int:
                 "validation_error_pp":
                     v["provenance"]["current_election_validation_error_pp"],
                 "winner_agrees": v["validation"]["winner_agrees"],
+                # 방법과 주장 가능성은 다르다. level이 안 서도 delta는 설 수 있다.
+                "capability": {
+                    "level": v["capability"]["level"]["valid"],
+                    "delta": v["capability"]["delta"]["valid"],
+                    "winner": v["capability"]["winner"]["valid"],
+                    "delta_valid_parties": [k for k, d in
+                                            v["capability"]["delta"]["by_party"].items()
+                                            if d["valid"]],
+                },
                 "source": v["provenance"]["source"],
                 "fixture": f.stem,
             }
+            # 비교 가능으로 올리는 근거는 **변화량을 말할 수 있는가**다.
+            # 수준값이 안 서도(하남시갑) 같은 분모의 변화량은 유효할 수 있다.
             usable = (v["method"] == "reaggregated"
-                      and v["reaggregation_quality"] != "insufficient")
+                      and v["reaggregation_quality"] != "insufficient"
+                      and v["capability"]["delta"]["valid"])
             if usable and u.get("comparable") != "yes":
                 u["comparable"] = "yes"
                 u["reason_code"] = "reaggregated_from_dong"
                 u["reason"] = (f"획정은 바뀌었지만 {res['previous']}대 표를 읍면동 단위로 "
                                f"{res['current']}대 경계에 다시 담아 비교한다 "
                                f"(동 귀속표 기준, 커버리지 "
-                               f"{v['provenance']['coverage']*100:.1f}%)")
+                               f"{v['provenance']['coverage']*100:.1f}%). "
+                               + ("수준값도 쓸 수 있다."
+                                  if v["capability"]["level"]["valid"]
+                                  else "수준값은 쓰지 않는다 — 변화량만 유효하다."))
                 n += 1
             elif v["method"] == "context_only":
                 # 판정을 바꾸지 않는다 — 왜 못 하는지만 남긴다

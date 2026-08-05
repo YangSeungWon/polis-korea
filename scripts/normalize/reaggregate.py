@@ -17,6 +17,24 @@
 빠지기 때문이다. swing은 **양 회차 모두 동 귀속표 기준**끼리만 계산한다.
 공식 전체는 참조값으로 따로 들고 있는다.
 
+## 방법(method)과 주장할 수 있는 것(capability)은 다르다
+
+**재집계된 수준값은 틀릴 수 있어도 같은 분모의 변화량은 유효할 수 있다.**
+하남시갑이 그 증거다. 동 귀속표만 보면 승자가 뒤집히는데(관외사전이 민주 +7.4%p 편향),
+그 편향이 두 회차 사이에 거의 안 움직여서(0.24%p) 차이를 빼면 상쇄된다.
+
+그래서 `reaggregated`를 하나의 신뢰 상태로 쓰지 않는다. 방법은 어떻게 구했는지고,
+capability는 그것으로 **무엇을 주장할 수 있는지**다. 셋을 따로 판정한다.
+
+    level    이 값을 '그 지역의 득표율'이라고 말할 수 있는가
+             → 제외표를 빼도 공식 결과가 재현될 때만. 하남시갑은 false.
+    delta    '이만큼 변했다'고 말할 수 있는가
+             → 제외표 편향이 회차 사이에 안정적일 때. 하남시갑은 true.
+    winner   '누가 이겼다'를 이 값으로 말할 수 있는가
+             → 동 귀속표 승자와 공식 승자가 같을 때만.
+
+셋은 서로를 끌어내리지 않는다. level이 false여도 delta는 true일 수 있다.
+
 ## 품질을 커버리지로만 판단하지 않는다
 
 현 회차에는 두 값이 다 있다 — 동 귀속표 기준과 공식 전체. 둘의 차이가 곧
@@ -50,6 +68,7 @@ ELECTION_DATE = {21: "2020-04-15", 22: "2024-04-10", 20: "2016-04-13"}
 
 GOOD_ERR, OK_ERR = 1.0, 3.0
 GOOD_COV, OK_COV = 0.85, 0.70
+MAX_BIAS_SHIFT = 2.0    # 제외표 편향이 회차 사이에 이만큼 넘게 흔들리면 delta도 못 믿는다
 
 
 # ── 후보 문자열 분해 ───────────────────────────────────────────────────────
@@ -324,13 +343,55 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
         # '지난번엔 아예 안 나왔다'와 '표가 줄었다'는 다르다. 대구 동구군위군을에서
         # 2020년 민주당은 나왔고 2024년엔 안 나왔는데, 그대로 빼면 '민주당 -24.8%p'가
         # 되어 없던 이탈처럼 읽힌다. 양쪽 다 나온 정당만 swing으로 센다.
-        swing = None
+        # capability — 이 방법으로 무엇을 주장할 수 있는가. 서로 독립이다.
+        # 무소속은 정당이 아니라 사람이라 회차 간 이어지지 않는다 — 판정에서 뺀다
+        stab = {k: v for k, v in stab.items() if k != "무소속"}
+        shift = max(stab.values(), default=0.0)
+        cap = {
+            "level": {"valid": bool(agree and err <= GOOD_ERR and cov >= GOOD_COV),
+                      "reason": ("excluded_votes_change_winner" if not agree else
+                                 "validation_error_too_large" if err > GOOD_ERR else
+                                 "coverage_too_low" if cov < GOOD_COV else None)},
+            # delta는 **정당마다 따로** 판정한다. 하나로 묶으면 한 정당의 사정이
+            # 나머지를 끌어내린다. 하남시갑은 민주당 편향이 0.24%p로 안정적인데,
+            # 국민의힘은 2020년 무소속 이현재(15.67%)로 보수표가 갈려 4.11%p 흔들린다.
+            # 민주당 변화량은 말할 수 있고 국민의힘 변화량은 말할 수 없다 — 둘 다 사실이다.
+            "delta": {"valid": bool(pa and any(v <= MAX_BIAS_SHIFT
+                                               for v in stab.values())),
+                      "by_party": {k: {"bias_shift_pp": round(v, 2),
+                                       "valid": v <= MAX_BIAS_SHIFT}
+                                   for k, v in sorted(stab.items())},
+                      "bias_shift_pp": round(min(stab.values(), default=0.0), 2),
+                      "reason": ("no_previous_data" if not pa else
+                                 "no_common_party" if not stab else
+                                 None if any(v <= MAX_BIAS_SHIFT
+                                             for v in stab.values())
+                                 # 양쪽 다 나온 정당이 있는데 전부 편향이 흔들린다.
+                                 # 동구군위군을이 그렇다 — 2020년 민주당이 있던 자리를
+                                 # 2024년 진보당이 채워 구도 자체가 달라졌다.
+                                 else "excluded_vote_bias_unstable_all")},
+            "winner": {"valid": bool(agree),
+                       "reason": None if agree else "excluded_votes_change_winner"},
+        }
+        if blocked:
+            for k in cap:
+                cap[k]["valid"] = False
+                cap[k]["reason"] = "reaggregation_blocked"
+
+        swing = unstable = None
         entered = {k: round(cs[k], 2) for k in cs if k not in ps and k != "무소속"}
         left = {k: round(ps[k], 2) for k in ps if k not in cs and k != "무소속"}
-        if pa and qual != "insufficient":
+        if pa and qual != "insufficient" and cap["delta"]["valid"]:
             # **양쪽 모두 동 귀속표 기준**. 공식 전체와 섞지 않는다.
+            # 편향이 안정적인 정당만 낸다. 흔들리는 정당의 변화량은 제외표 이동이
+            # 섞여 있어 그대로 쓰면 없던 변화를 만든다.
+            ok_p = {k for k, v in stab.items() if v <= MAX_BIAS_SHIFT}
             swing = {k: round(cs[k] - ps[k], 2)
-                     for k in sorted(set(cs) & set(ps)) if k != "무소속"}
+                     for k in sorted(set(cs) & set(ps))
+                     if k != "무소속" and k in ok_p}
+            unstable = {k: round(cs[k] - ps[k], 2)
+                        for k in sorted(set(cs) & set(ps))
+                        if k != "무소속" and k not in ok_p}
         districts[d] = {
             "method": ("context_only" if blocked else
                        "reaggregated" if pa else "direct"),
@@ -345,7 +406,10 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
             "prev_reaggregated": (None if blocked or not pa else
                                   {"votes": sum(pa.values()),
                                    "share": {k: round(v, 2) for k, v in ps.items()}}),
+            "capability": cap,
             "swing_attributable_basis": swing,
+            # 편향이 흔들려 변화량을 주장할 수 없는 정당 — 버리지 않고 드러낸다
+            "swing_bias_unstable": unstable or None,
             # 증감이 아니다 — 한쪽 회차에만 출마한 정당은 따로 담는다
             "newly_ran": entered if swing is not None else None,
             "no_longer_ran": left if swing is not None else None,
