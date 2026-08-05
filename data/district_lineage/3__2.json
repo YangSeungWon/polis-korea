@@ -1,0 +1,3153 @@
+{
+ "_meta": {
+  "current_n": 3,
+  "previous_n": 2,
+  "generated_at": "2026-08-05T15:09:25+09:00",
+  "source": "polis 계산 — 선거구 폴리곤 교차 면적",
+  "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
+  "thresholds": {
+   "exact": 0.97,
+   "major": 0.6,
+   "minor": 0.05
+  },
+  "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
+  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+ },
+ "counts": {
+  "boundary_changed": 35,
+  "minor_boundary_change": 45,
+  "merged": 3,
+  "unresolvable": 10,
+  "renamed": 106,
+  "split": 1,
+  "new": 3,
+  "total": 203,
+  "comparable": 106,
+  "comparable_unknown": 45,
+  "previous_total": 206,
+  "previous_unmatched": 10
+ },
+ "previous_unmatched": [
+  "경기도 제25선거구(장단군)",
+  "경기도 제26선거구(개풍군)",
+  "경기도 제27선거구(연백군 갑구)",
+  "경기도 제28선거구(연백군 을구)",
+  "경기도 제29선거구(옹진군 갑구)",
+  "경기도 제4선거구(개성시)",
+  "경상남도 제2선거구(부산시 을구)",
+  "경상북도 제1선거구(대구시 갑구)",
+  "전라남도 제16선거구(나주군 갑구)",
+  "전라남도 제17선거구(나주군 을구)"
+ ],
+ "units": [
+  {
+   "district": "서울특별시 중구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 제1선거구(중구 갑구)' 겹침 75%/93%",
+   "previous": [
+    {
+     "prev": "서울특별시 제1선거구(중구 갑구)",
+     "of_current": 0.7522,
+     "of_previous": 0.9284
+    },
+    {
+     "prev": "서울특별시 제2선거구(중구 을구)",
+     "of_current": 0.2438,
+     "of_previous": 0.2036
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 중구 을",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울특별시 제2선거구(중구 을구)'의 80%만 차지",
+   "previous": [
+    {
+     "prev": "서울특별시 제2선거구(중구 을구)",
+     "of_current": 0.9927,
+     "of_previous": 0.7964
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 종로구 갑",
+   "sido": "서울특별시",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제3선거구(종로 갑구)'",
+   "previous": [
+    {
+     "prev": "서울특별시 제3선거구(종로 갑구)",
+     "of_current": 0.9437,
+     "of_previous": 0.9725
+    },
+    {
+     "prev": "서울특별시 제4선거구(종로 을구)",
+     "of_current": 0.0563,
+     "of_previous": 0.1227
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 종로구 을",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 제4선거구(종로 을구)' 겹침 90%/88%",
+   "previous": [
+    {
+     "prev": "서울특별시 제4선거구(종로 을구)",
+     "of_current": 0.9034,
+     "of_previous": 0.8773
+    },
+    {
+     "prev": "경기도 제6선거구(고양군)",
+     "of_current": 0.0637,
+     "of_previous": 0.0048
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 동대문구",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 제5선거구(동대문구)' 겹침 81%/92%",
+   "previous": [
+    {
+     "prev": "서울특별시 제5선거구(동대문구)",
+     "of_current": 0.8102,
+     "of_previous": 0.9232
+    },
+    {
+     "prev": "서울특별시 제6선거구(성북구)",
+     "of_current": 0.0989,
+     "of_previous": 0.0358
+    },
+    {
+     "prev": "경기도 제6선거구(고양군)",
+     "of_current": 0.0985,
+     "of_previous": 0.0353
+    },
+    {
+     "prev": "서울특별시 제7선거구(성동 갑구)",
+     "of_current": 0.0913,
+     "of_previous": 0.0533
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성북구",
+   "sido": "서울특별시",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제6선거구(성북구)'",
+   "previous": [
+    {
+     "prev": "서울특별시 제6선거구(성북구)",
+     "of_current": 0.9803,
+     "of_previous": 0.9382
+    },
+    {
+     "prev": "경기도 제6선거구(고양군)",
+     "of_current": 0.9774,
+     "of_previous": 0.9252
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울특별시 제7선거구(성동 갑구)'의 28%만 차지",
+   "previous": [
+    {
+     "prev": "서울특별시 제7선거구(성동 갑구)",
+     "of_current": 1.0,
+     "of_previous": 0.2777
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 을",
+   "sido": "서울특별시",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 서울특별시 제8선거구(성동 을구) + 서울특별시 제7선거구(성동 갑구) 통합",
+   "previous": [
+    {
+     "prev": "서울특별시 제8선거구(성동 을구)",
+     "of_current": 0.5789,
+     "of_previous": 0.9852
+    },
+    {
+     "prev": "서울특별시 제7선거구(성동 갑구)",
+     "of_current": 0.3964,
+     "of_previous": 0.6579
+    },
+    {
+     "prev": "서울특별시 제5선거구(동대문구)",
+     "of_current": 0.0237,
+     "of_previous": 0.0768
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 제9선거구(서대문 갑구)' 겹침 93%/71%",
+   "previous": [
+    {
+     "prev": "서울특별시 제9선거구(서대문 갑구)",
+     "of_current": 0.9251,
+     "of_previous": 0.708
+    },
+    {
+     "prev": "서울특별시 제10선거구(서대문 을구)",
+     "of_current": 0.0605,
+     "of_previous": 0.0049
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 을",
+   "sido": "서울특별시",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '서울특별시 제10선거구(서대문 을구)'",
+   "previous": [
+    {
+     "prev": "서울특별시 제10선거구(서대문 을구)",
+     "of_current": 0.9371,
+     "of_previous": 0.9399
+    },
+    {
+     "prev": "서울특별시 제9선거구(서대문 갑구)",
+     "of_current": 0.0216,
+     "of_previous": 0.2069
+    },
+    {
+     "prev": "서울특별시 제11선거구(마포 갑구)",
+     "of_current": 0.0061,
+     "of_previous": 0.0626
+    },
+    {
+     "prev": "서울특별시 제1선거구(중구 갑구)",
+     "of_current": 0.0032,
+     "of_previous": 0.0716
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 마포구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 제12선거구(마포 을구) 94%, 서울특별시 제13선거구(용산 갑구) 6%",
+   "previous": [
+    {
+     "prev": "서울특별시 제12선거구(마포 을구)",
+     "of_current": 0.9432,
+     "of_previous": 0.2494
+    },
+    {
+     "prev": "서울특별시 제13선거구(용산 갑구)",
+     "of_current": 0.0568,
+     "of_previous": 0.0141
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 마포구 을",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 제11선거구(마포 갑구) 50%, 서울특별시 제12선거구(마포 을구) 44%, 서울특별시 제9선거구(서대문 갑구) 5%",
+   "previous": [
+    {
+     "prev": "서울특별시 제11선거구(마포 갑구)",
+     "of_current": 0.4992,
+     "of_previous": 0.8619
+    },
+    {
+     "prev": "서울특별시 제12선거구(마포 을구)",
+     "of_current": 0.4401,
+     "of_previous": 0.7388
+    },
+    {
+     "prev": "서울특별시 제9선거구(서대문 갑구)",
+     "of_current": 0.0532,
+     "of_previous": 0.0851
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 용산구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 제13선거구(용산 갑구) 55%, 서울특별시 제14선거구(용산 을구) 45%",
+   "previous": [
+    {
+     "prev": "서울특별시 제13선거구(용산 갑구)",
+     "of_current": 0.5491,
+     "of_previous": 0.8766
+    },
+    {
+     "prev": "서울특별시 제14선거구(용산 을구)",
+     "of_current": 0.4509,
+     "of_previous": 0.2621
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 용산구 을",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울특별시 제14선거구(용산 을구)'의 73%만 차지",
+   "previous": [
+    {
+     "prev": "서울특별시 제14선거구(용산 을구)",
+     "of_current": 0.9857,
+     "of_previous": 0.7338
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 제16선거구(영등포 을구) 58%, 서울특별시 제15선거구(영등포 갑구) 42%",
+   "previous": [
+    {
+     "prev": "서울특별시 제16선거구(영등포 을구)",
+     "of_current": 0.583,
+     "of_previous": 0.2132
+    },
+    {
+     "prev": "서울특별시 제15선거구(영등포 갑구)",
+     "of_current": 0.416,
+     "of_previous": 0.8134
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 을",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 제16선거구(영등포 을구)' 겹침 92%/74%",
+   "previous": [
+    {
+     "prev": "서울특별시 제16선거구(영등포 을구)",
+     "of_current": 0.9186,
+     "of_previous": 0.7434
+    },
+    {
+     "prev": "서울특별시 제13선거구(용산 갑구)",
+     "of_current": 0.0757,
+     "of_previous": 0.078
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 갑",
+   "sido": "경기도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기도 제1선거구(인천시 갑구)'의 89%만 차지",
+   "previous": [
+    {
+     "prev": "경기도 제1선거구(인천시 갑구)",
+     "of_current": 0.9706,
+     "of_previous": 0.8853
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 을",
+   "sido": "경기도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기도 제2선거구(인천시 을구)' 겹침 88%/93%",
+   "previous": [
+    {
+     "prev": "경기도 제2선거구(인천시 을구)",
+     "of_current": 0.8764,
+     "of_previous": 0.926
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 병",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제3선거구(인천시 병구)'",
+   "previous": [
+    {
+     "prev": "경기도 제3선거구(인천시 병구)",
+     "of_current": 0.9305,
+     "of_previous": 0.9249
+    },
+    {
+     "prev": "경기도 제2선거구(인천시 을구)",
+     "of_current": 0.0382,
+     "of_previous": 0.0548
+    }
+   ]
+  },
+  {
+   "district": "경기도 수원시",
+   "sido": "경기도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기도 제5선거구(수원시)'의 88%만 차지",
+   "previous": [
+    {
+     "prev": "경기도 제5선거구(수원시)",
+     "of_current": 0.978,
+     "of_previous": 0.8833
+    }
+   ]
+  },
+  {
+   "district": "경기도 고양군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제6선거구(고양군)'",
+   "previous": [
+    {
+     "prev": "경기도 제6선거구(고양군)",
+     "of_current": 0.9675,
+     "of_previous": 0.9342
+    },
+    {
+     "prev": "서울특별시 제6선거구(성북구)",
+     "of_current": 0.961,
+     "of_previous": 0.938
+    },
+    {
+     "prev": "서울특별시 제11선거구(마포 갑구)",
+     "of_current": 0.0086,
+     "of_previous": 0.0684
+    }
+   ]
+  },
+  {
+   "district": "경기도 광주군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제7선거구(광주군)",
+     "of_current": 0.9918,
+     "of_previous": 0.9924
+    }
+   ]
+  },
+  {
+   "district": "경기도 양주군 갑",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제8선거구(양주군 갑구)",
+     "of_current": 0.9847,
+     "of_previous": 0.9909
+    }
+   ]
+  },
+  {
+   "district": "경기도 양주군 을",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제9선거구(양주군 을구)",
+     "of_current": 0.9887,
+     "of_previous": 0.9878
+    }
+   ]
+  },
+  {
+   "district": "경기도 포천군",
+   "sido": "경기도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기도 제10선거구(포천군)' 겹침 60%/99%",
+   "previous": [
+    {
+     "prev": "경기도 제10선거구(포천군)",
+     "of_current": 0.6002,
+     "of_previous": 0.9878
+    }
+   ]
+  },
+  {
+   "district": "경기도 가평군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제11선거구(가평군)'",
+   "previous": [
+    {
+     "prev": "경기도 제11선거구(가평군)",
+     "of_current": 0.966,
+     "of_previous": 0.9944
+    }
+   ]
+  },
+  {
+   "district": "경기도 양평군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제12선거구(양평군)",
+     "of_current": 0.9848,
+     "of_previous": 0.9877
+    }
+   ]
+  },
+  {
+   "district": "경기도 여주군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제13선거구(여주군)",
+     "of_current": 0.991,
+     "of_previous": 0.9834
+    }
+   ]
+  },
+  {
+   "district": "경기도 이천군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제14선거구(이천군)",
+     "of_current": 0.9787,
+     "of_previous": 0.9851
+    }
+   ]
+  },
+  {
+   "district": "경기도 용인군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제15선거구(용인군)",
+     "of_current": 0.9862,
+     "of_previous": 0.9828
+    }
+   ]
+  },
+  {
+   "district": "경기도 안성군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제16선거구(안성군)",
+     "of_current": 0.975,
+     "of_previous": 0.9885
+    }
+   ]
+  },
+  {
+   "district": "경기도 평택군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제17선거구(평택군)'",
+   "previous": [
+    {
+     "prev": "경기도 제17선거구(평택군)",
+     "of_current": 0.9685,
+     "of_previous": 0.9407
+    }
+   ]
+  },
+  {
+   "district": "경기도 화성군 갑",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제18선거구(화성군 갑구)'",
+   "previous": [
+    {
+     "prev": "경기도 제18선거구(화성군 갑구)",
+     "of_current": 0.9312,
+     "of_previous": 0.9619
+    }
+   ]
+  },
+  {
+   "district": "경기도 화성군 을",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제19선거구(화성군 을구)",
+     "of_current": 0.9821,
+     "of_previous": 0.9782
+    },
+    {
+     "prev": "경기도 제5선거구(수원시)",
+     "of_current": 0.0073,
+     "of_previous": 0.1167
+    }
+   ]
+  },
+  {
+   "district": "경기도 시흥군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제20선거구(시흥군)",
+     "of_current": 0.9859,
+     "of_previous": 0.986
+    },
+    {
+     "prev": "서울특별시 제15선거구(영등포 갑구)",
+     "of_current": 0.0007,
+     "of_previous": 0.1824
+    }
+   ]
+  },
+  {
+   "district": "경기도 부천군",
+   "sido": "경기도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기도 제21선거구(부천군)' 겹침 95%/66%",
+   "previous": [
+    {
+     "prev": "경기도 제21선거구(부천군)",
+     "of_current": 0.9475,
+     "of_previous": 0.6628
+    }
+   ]
+  },
+  {
+   "district": "경기도 김포군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제22선거구(김포군)'",
+   "previous": [
+    {
+     "prev": "경기도 제22선거구(김포군)",
+     "of_current": 0.9751,
+     "of_previous": 0.9697
+    }
+   ]
+  },
+  {
+   "district": "경기도 강화군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기도 제23선거구(강화군)'",
+   "previous": [
+    {
+     "prev": "경기도 제23선거구(강화군)",
+     "of_current": 0.9742,
+     "of_previous": 0.9144
+    }
+   ]
+  },
+  {
+   "district": "경기도 파주군",
+   "sido": "경기도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경기도 제24선거구(파주군)",
+     "of_current": 0.9837,
+     "of_previous": 0.9815
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 춘천시",
+   "sido": "강원특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '강원특별자치도 제1선거구(춘천시)' 겹침 90%/89%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제1선거구(춘천시)",
+     "of_current": 0.8982,
+     "of_previous": 0.8934
+    },
+    {
+     "prev": "강원특별자치도 제2선거구(춘성군)",
+     "of_current": 0.1018,
+     "of_previous": 0.0031
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 춘성군",
+   "sido": "강원특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '강원특별자치도 제2선거구(춘성군)' 겹침 76%/99%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제2선거구(춘성군)",
+     "of_current": 0.761,
+     "of_previous": 0.9854
+    },
+    {
+     "prev": "강원특별자치도 제1선거구(춘천시)",
+     "of_current": 0.0025,
+     "of_previous": 0.1066
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 홍천군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제12선거구(홍천군)",
+     "of_current": 0.9874,
+     "of_previous": 0.9824
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 횡성군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제11선거구(횡성군)",
+     "of_current": 0.9831,
+     "of_previous": 0.9862
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 원주군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제10선거구(원주군)",
+     "of_current": 0.9833,
+     "of_previous": 0.979
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 영월군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제9선거구(영월군)",
+     "of_current": 0.9819,
+     "of_previous": 0.9818
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 평창군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제8선거구(평창군)",
+     "of_current": 0.9877,
+     "of_previous": 0.9893
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 정선군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제7선거구(정선군)",
+     "of_current": 0.9872,
+     "of_previous": 0.9828
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 강릉군 갑",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제3선거구(강릉군 갑구)",
+     "of_current": 0.9885,
+     "of_previous": 0.9854
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 강릉군 을",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제4선거구(강릉군 을구)",
+     "of_current": 0.9877,
+     "of_previous": 0.9888
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 삼척군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제5선거구(삼척군)",
+     "of_current": 0.9905,
+     "of_previous": 0.9912
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 울진군",
+   "sido": "강원특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "강원특별자치도 제6선거구(울진군)",
+     "of_current": 0.9879,
+     "of_previous": 0.9864
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청주시",
+   "sido": "충청북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청북도 제1선거구(청주시) + 충청북도 제2선거구(청원군 갑구) 통합",
+   "previous": [
+    {
+     "prev": "충청북도 제1선거구(청주시)",
+     "of_current": 0.9277,
+     "of_previous": 0.7145
+    },
+    {
+     "prev": "충청북도 제2선거구(청원군 갑구)",
+     "of_current": 0.633,
+     "of_previous": 0.0223
+    },
+    {
+     "prev": "충청북도 제3선거구(청원군 을구)",
+     "of_current": 0.367,
+     "of_previous": 0.0129
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청원군 갑",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제2선거구(청원군 갑구)",
+     "of_current": 0.9824,
+     "of_previous": 0.9937
+    },
+    {
+     "prev": "충청북도 제1선거구(청주시)",
+     "of_current": 0.0222,
+     "of_previous": 0.4897
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청원군 을",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제3선거구(청원군 을구)",
+     "of_current": 0.982,
+     "of_previous": 0.983
+    },
+    {
+     "prev": "충청북도 제1선거구(청주시)",
+     "of_current": 0.0233,
+     "of_previous": 0.5103
+    }
+   ]
+  },
+  {
+   "district": "충청북도 보은군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제4선거구(보은군)",
+     "of_current": 0.9879,
+     "of_previous": 0.9856
+    }
+   ]
+  },
+  {
+   "district": "충청북도 옥천군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제5선거구(옥천군)",
+     "of_current": 0.9821,
+     "of_previous": 0.982
+    }
+   ]
+  },
+  {
+   "district": "충청북도 영동군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제6선거구(영동군)",
+     "of_current": 0.9884,
+     "of_previous": 0.9859
+    }
+   ]
+  },
+  {
+   "district": "충청북도 진천군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제7선거구(진천군)",
+     "of_current": 0.9821,
+     "of_previous": 0.9766
+    }
+   ]
+  },
+  {
+   "district": "충청북도 괴산군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제8선거구(괴산군)",
+     "of_current": 0.9764,
+     "of_previous": 0.9807
+    }
+   ]
+  },
+  {
+   "district": "충청북도 음성군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제9선거구(음성군)",
+     "of_current": 0.9759,
+     "of_previous": 0.9717
+    }
+   ]
+  },
+  {
+   "district": "충청북도 충주군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제10선거구(충주군)",
+     "of_current": 0.9858,
+     "of_previous": 0.9832
+    }
+   ]
+  },
+  {
+   "district": "충청북도 제천군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제11선거구(제천군)",
+     "of_current": 0.9775,
+     "of_previous": 0.9852
+    }
+   ]
+  },
+  {
+   "district": "충청북도 단양군",
+   "sido": "충청북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청북도 제12선거구(단양군)",
+     "of_current": 0.9899,
+     "of_previous": 0.9798
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대전시",
+   "sido": "충청남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '충청남도 제1선거구(대전시)'의 89%만 차지",
+   "previous": [
+    {
+     "prev": "충청남도 제1선거구(대전시)",
+     "of_current": 0.9883,
+     "of_previous": 0.8861
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대덕군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제2선거구(대덕군)",
+     "of_current": 0.9767,
+     "of_previous": 0.9754
+    },
+    {
+     "prev": "충청남도 제1선거구(대전시)",
+     "of_current": 0.008,
+     "of_previous": 0.1139
+    }
+   ]
+  },
+  {
+   "district": "충청남도 연기군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제3선거구(연기군)",
+     "of_current": 0.9847,
+     "of_previous": 0.9875
+    }
+   ]
+  },
+  {
+   "district": "충청남도 공주군 갑",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제4선거구(공주군 갑구)",
+     "of_current": 0.9897,
+     "of_previous": 0.9927
+    }
+   ]
+  },
+  {
+   "district": "충청남도 공주군 을",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제5선거구(공주군 을구)",
+     "of_current": 0.9955,
+     "of_previous": 0.9966
+    }
+   ]
+  },
+  {
+   "district": "충청남도 논산군 갑",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제6선거구(논산군 갑구)",
+     "of_current": 0.9861,
+     "of_previous": 0.988
+    }
+   ]
+  },
+  {
+   "district": "충청남도 논산군 을",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제7선거구(논산군 을구)",
+     "of_current": 0.9805,
+     "of_previous": 0.9867
+    }
+   ]
+  },
+  {
+   "district": "충청남도 부여군 갑",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제8선거구(부여군 갑구)'",
+   "previous": [
+    {
+     "prev": "충청남도 제8선거구(부여군 갑구)",
+     "of_current": 0.9892,
+     "of_previous": 0.9698
+    }
+   ]
+  },
+  {
+   "district": "충청남도 부여군 을",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제9선거구(부여군 을구)",
+     "of_current": 0.9893,
+     "of_previous": 0.9817
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서천군",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제10선거구(서천군)'",
+   "previous": [
+    {
+     "prev": "충청남도 제10선거구(서천군)",
+     "of_current": 0.9692,
+     "of_previous": 0.975
+    }
+   ]
+  },
+  {
+   "district": "충청남도 보령군",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제11선거구(보령군)'",
+   "previous": [
+    {
+     "prev": "충청남도 제11선거구(보령군)",
+     "of_current": 0.9599,
+     "of_previous": 0.9407
+    }
+   ]
+  },
+  {
+   "district": "충청남도 청양군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제12선거구(청양군)",
+     "of_current": 0.9818,
+     "of_previous": 0.9883
+    }
+   ]
+  },
+  {
+   "district": "충청남도 홍성군",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제13선거구(홍성군)'",
+   "previous": [
+    {
+     "prev": "충청남도 제13선거구(홍성군)",
+     "of_current": 0.9644,
+     "of_previous": 0.9784
+    }
+   ]
+  },
+  {
+   "district": "충청남도 예산군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제14선거구(예산군)",
+     "of_current": 0.9841,
+     "of_previous": 0.9789
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서산군 갑",
+   "sido": "충청남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '충청남도 제15선거구(서산 갑구)' 겹침 90%/84%",
+   "previous": [
+    {
+     "prev": "충청남도 제15선거구(서산 갑구)",
+     "of_current": 0.8986,
+     "of_previous": 0.839
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서산군 을",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제16선거구(서산 을구)'",
+   "previous": [
+    {
+     "prev": "충청남도 제16선거구(서산 을구)",
+     "of_current": 0.9412,
+     "of_previous": 0.9655
+    }
+   ]
+  },
+  {
+   "district": "충청남도 당진군",
+   "sido": "충청남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '충청남도 제17선거구(당진군)'",
+   "previous": [
+    {
+     "prev": "충청남도 제17선거구(당진군)",
+     "of_current": 0.95,
+     "of_previous": 0.9544
+    }
+   ]
+  },
+  {
+   "district": "충청남도 아산군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제18선거구(아산군)",
+     "of_current": 0.9786,
+     "of_previous": 0.9803
+    }
+   ]
+  },
+  {
+   "district": "충청남도 천안군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "충청남도 제19선거구(천안군)",
+     "of_current": 0.9823,
+     "of_previous": 0.9776
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 전주시",
+   "sido": "전북특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북특별자치도 제1선거구(전주시)' 겹침 89%/91%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제1선거구(전주시)",
+     "of_current": 0.8938,
+     "of_previous": 0.9058
+    },
+    {
+     "prev": "전북특별자치도 제4선거구(완주군 갑구)",
+     "of_current": 0.1062,
+     "of_previous": 0.0021
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 군산시",
+   "sido": "전북특별자치도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전북특별자치도 제2선거구(군산시) 84%, 전북특별자치도 제20선거구(옥구군) 16%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제2선거구(군산시)",
+     "of_current": 0.8445,
+     "of_previous": 0.1233
+    },
+    {
+     "prev": "전북특별자치도 제20선거구(옥구군)",
+     "of_current": 0.1555,
+     "of_previous": 0.0001
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 이리시",
+   "sido": "전북특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북특별자치도 제3선거구(이리시)' 겹침 93%/74%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제3선거구(이리시)",
+     "of_current": 0.9315,
+     "of_previous": 0.7406
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 완주군 갑",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제4선거구(완주군 갑구)",
+     "of_current": 0.9882,
+     "of_previous": 0.9798
+    },
+    {
+     "prev": "전북특별자치도 제1선거구(전주시)",
+     "of_current": 0.0018,
+     "of_previous": 0.0942
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 완주군 을",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제5선거구(완주군 을구)",
+     "of_current": 0.9895,
+     "of_previous": 0.9843
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 진안군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제6선거구(진안군)",
+     "of_current": 0.9843,
+     "of_previous": 0.9889
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 금산군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제7선거구(금산군)",
+     "of_current": 0.9847,
+     "of_previous": 0.975
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 무주군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제8선거구(무주군)",
+     "of_current": 0.9773,
+     "of_previous": 0.9834
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 장수군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제9선거구(장수군)",
+     "of_current": 0.9791,
+     "of_previous": 0.9858
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 임실군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제10선거구(임실군)",
+     "of_current": 0.9858,
+     "of_previous": 0.9778
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 남원군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제11선거구(남원군)",
+     "of_current": 0.9828,
+     "of_previous": 0.9805
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 순창군",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제12선거구(순창군)",
+     "of_current": 0.9731,
+     "of_previous": 0.978
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 정읍군 갑",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제13선거구(정읍군 갑구)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제13선거구(정읍군 갑구)",
+     "of_current": 0.985,
+     "of_previous": 0.9645
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 정읍군 을",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제14선거구(정읍군 을구)",
+     "of_current": 0.9813,
+     "of_previous": 0.9767
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 고창군 갑",
+   "sido": "전북특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제15선거구(고창군 갑구)",
+     "of_current": 0.9732,
+     "of_previous": 0.9705
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 고창군 을",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제16선거구(고창군 을구)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제16선거구(고창군 을구)",
+     "of_current": 0.9647,
+     "of_previous": 0.9923
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 부안군",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제17선거구(부안군)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제17선거구(부안군)",
+     "of_current": 0.981,
+     "of_previous": 0.9577
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 김제군 갑",
+   "sido": "전북특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북특별자치도 제19선거구(김제군 을구)' 겹침 69%/81%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제19선거구(김제군 을구)",
+     "of_current": 0.6929,
+     "of_previous": 0.807
+    },
+    {
+     "prev": "전북특별자치도 제18선거구(김제군 갑구)",
+     "of_current": 0.271,
+     "of_previous": 0.3156
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 김제군 을",
+   "sido": "전북특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북특별자치도 제18선거구(김제군 갑구)' 겹침 73%/67%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제18선거구(김제군 갑구)",
+     "of_current": 0.732,
+     "of_previous": 0.6708
+    },
+    {
+     "prev": "전북특별자치도 제19선거구(김제군 을구)",
+     "of_current": 0.1425,
+     "of_previous": 0.1306
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 옥구군",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제20선거구(옥구군)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제20선거구(옥구군)",
+     "of_current": 0.9577,
+     "of_previous": 0.9229
+    },
+    {
+     "prev": "전북특별자치도 제2선거구(군산시)",
+     "of_current": 0.0037,
+     "of_previous": 0.7493
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 익산군 갑",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제21선거구(익산군 갑구)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제21선거구(익산군 갑구)",
+     "of_current": 0.9597,
+     "of_previous": 0.9789
+    },
+    {
+     "prev": "전북특별자치도 제3선거구(이리시)",
+     "of_current": 0.01,
+     "of_previous": 0.2594
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 익산군 을",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 제22선거구(익산군 을구)'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 제22선거구(익산군 을구)",
+     "of_current": 0.9466,
+     "of_previous": 0.9858
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광주시",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제2선거구(광주시)'",
+   "previous": [
+    {
+     "prev": "전라남도 제2선거구(광주시)",
+     "of_current": 0.982,
+     "of_previous": 0.9115
+    }
+   ]
+  },
+  {
+   "district": "전라남도 목포시",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제1선거구(목포시)' 겹침 96%/77%",
+   "previous": [
+    {
+     "prev": "전라남도 제1선거구(목포시)",
+     "of_current": 0.96,
+     "of_previous": 0.7684
+    }
+   ]
+  },
+  {
+   "district": "전라남도 여수시",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전라남도 제29선거구(여천군)'의 9%만 차지",
+   "previous": [
+    {
+     "prev": "전라남도 제29선거구(여천군)",
+     "of_current": 0.9868,
+     "of_previous": 0.0895
+    },
+    {
+     "prev": "전라남도 제3선거구(여수시)",
+     "of_current": 0.9114,
+     "of_previous": 0.9319
+    }
+   ]
+  },
+  {
+   "district": "전라남도 순천시",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제4선거구(순천시)'",
+   "previous": [
+    {
+     "prev": "전라남도 제4선거구(순천시)",
+     "of_current": 0.9724,
+     "of_previous": 0.9331
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광산군 갑",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제5선거구(광주군 갑구)'",
+   "previous": [
+    {
+     "prev": "전라남도 제5선거구(광주군 갑구)",
+     "of_current": 0.9213,
+     "of_previous": 0.9388
+    },
+    {
+     "prev": "전라남도 제2선거구(광주시)",
+     "of_current": 0.0613,
+     "of_previous": 0.0642
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광산군 을",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제6선거구(광주군 을구)' 겹침 80%/98%",
+   "previous": [
+    {
+     "prev": "전라남도 제6선거구(광주군 을구)",
+     "of_current": 0.7995,
+     "of_previous": 0.9767
+    },
+    {
+     "prev": "전라남도 제5선거구(광주군 갑구)",
+     "of_current": 0.1421,
+     "of_previous": 0.035
+    }
+   ]
+  },
+  {
+   "district": "전라남도 담양군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제21선거구(담양군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제21선거구(담양군)",
+     "of_current": 0.9681,
+     "of_previous": 0.9775
+    }
+   ]
+  },
+  {
+   "district": "전라남도 곡성군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제22선거구(곡성군)",
+     "of_current": 0.9886,
+     "of_previous": 0.9845
+    }
+   ]
+  },
+  {
+   "district": "전라남도 구례군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제23선거구(구례군)",
+     "of_current": 0.9846,
+     "of_previous": 0.9834
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광양군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제24선거구(광양군)",
+     "of_current": 0.9835,
+     "of_previous": 0.9745
+    }
+   ]
+  },
+  {
+   "district": "전라남도 여천군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 제29선거구(여천군) + 전라남도 제3선거구(여수시) 통합",
+   "previous": [
+    {
+     "prev": "전라남도 제29선거구(여천군)",
+     "of_current": 0.9455,
+     "of_previous": 0.8452
+    },
+    {
+     "prev": "전라남도 제3선거구(여수시)",
+     "of_current": 0.094,
+     "of_previous": 0.9476
+    }
+   ]
+  },
+  {
+   "district": "전라남도 승주군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제30선거구(승주군)",
+     "of_current": 0.9749,
+     "of_previous": 0.9812
+    },
+    {
+     "prev": "전라남도 제4선거구(순천시)",
+     "of_current": 0.0059,
+     "of_previous": 0.0669
+    }
+   ]
+  },
+  {
+   "district": "전라남도 고흥군 갑",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제25선거구(고흥군 갑구)'",
+   "previous": [
+    {
+     "prev": "전라남도 제25선거구(고흥군 갑구)",
+     "of_current": 0.9209,
+     "of_previous": 0.9111
+    }
+   ]
+  },
+  {
+   "district": "전라남도 고흥군 을",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제26선거구(고흥군 을구)'",
+   "previous": [
+    {
+     "prev": "전라남도 제26선거구(고흥군 을구)",
+     "of_current": 0.9403,
+     "of_previous": 0.9431
+    }
+   ]
+  },
+  {
+   "district": "전라남도 보성군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제7선거구(보성군)",
+     "of_current": 0.9737,
+     "of_previous": 0.9744
+    }
+   ]
+  },
+  {
+   "district": "전라남도 화순군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제8선거구(화순군)",
+     "of_current": 0.9893,
+     "of_previous": 0.987
+    }
+   ]
+  },
+  {
+   "district": "전라남도 장흥군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제9선거구(장흥군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제9선거구(장흥군)",
+     "of_current": 0.9683,
+     "of_previous": 0.9556
+    }
+   ]
+  },
+  {
+   "district": "전라남도 강진군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제10선거구(강진군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제10선거구(강진군)",
+     "of_current": 0.9609,
+     "of_previous": 0.9659
+    }
+   ]
+  },
+  {
+   "district": "전라남도 해남군 갑",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제11선거구(해남군 갑구)' 겹침 91%/89%",
+   "previous": [
+    {
+     "prev": "전라남도 제11선거구(해남군 갑구)",
+     "of_current": 0.9076,
+     "of_previous": 0.89
+    }
+   ]
+  },
+  {
+   "district": "전라남도 해남군 을",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제12선거구(해남군 을구)'",
+   "previous": [
+    {
+     "prev": "전라남도 제12선거구(해남군 을구)",
+     "of_current": 0.9751,
+     "of_previous": 0.9665
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영암군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제13선거구(영암군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제13선거구(영암군)",
+     "of_current": 0.9486,
+     "of_previous": 0.9514
+    }
+   ]
+  },
+  {
+   "district": "전라남도 무안군 갑",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제14선거구(무안군 갑구)' 겹침 92%/68%",
+   "previous": [
+    {
+     "prev": "전라남도 제14선거구(무안군 갑구)",
+     "of_current": 0.9221,
+     "of_previous": 0.6849
+    }
+   ]
+  },
+  {
+   "district": "전라남도 무안군 을",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제15선거구(무안군 을구)' 겹침 90%/83%",
+   "previous": [
+    {
+     "prev": "전라남도 제15선거구(무안군 을구)",
+     "of_current": 0.8955,
+     "of_previous": 0.83
+    }
+   ]
+  },
+  {
+   "district": "전라남도 나주군 갑",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 제17선거구(나주군 을구) 52%, 전라남도 제16선거구(나주군 갑구) 44%",
+   "previous": [
+    {
+     "prev": "전라남도 제17선거구(나주군 을구)",
+     "of_current": 0.5222,
+     "of_previous": 0.4767
+    },
+    {
+     "prev": "전라남도 제16선거구(나주군 갑구)",
+     "of_current": 0.4417,
+     "of_previous": 0.4024
+    }
+   ]
+  },
+  {
+   "district": "전라남도 나주군 을",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 제16선거구(나주군 갑구) 52%, 전라남도 제17선거구(나주군 을구) 46%",
+   "previous": [
+    {
+     "prev": "전라남도 제16선거구(나주군 갑구)",
+     "of_current": 0.5173,
+     "of_previous": 0.5764
+    },
+    {
+     "prev": "전라남도 제17선거구(나주군 을구)",
+     "of_current": 0.4557,
+     "of_previous": 0.5087
+    }
+   ]
+  },
+  {
+   "district": "전라남도 함평군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제18선거구(함평군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제18선거구(함평군)",
+     "of_current": 0.9655,
+     "of_previous": 0.9715
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영광군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 제19선거구(영광군)'",
+   "previous": [
+    {
+     "prev": "전라남도 제19선거구(영광군)",
+     "of_current": 0.9653,
+     "of_previous": 0.9263
+    }
+   ]
+  },
+  {
+   "district": "전라남도 장성군",
+   "sido": "전라남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전라남도 제20선거구(장성군)",
+     "of_current": 0.9791,
+     "of_previous": 0.9756
+    }
+   ]
+  },
+  {
+   "district": "전라남도 완도군",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제27선거구(완도군)' 겹침 94%/72%",
+   "previous": [
+    {
+     "prev": "전라남도 제27선거구(완도군)",
+     "of_current": 0.9408,
+     "of_previous": 0.7188
+    }
+   ]
+  },
+  {
+   "district": "전라남도 진도군",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전라남도 제28선거구(진도군)' 겹침 92%/85%",
+   "previous": [
+    {
+     "prev": "전라남도 제28선거구(진도군)",
+     "of_current": 0.9185,
+     "of_previous": 0.8495
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 갑",
+   "sido": "경상북도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경상북도 제1선거구(대구시 갑구)'의 54%만 차지",
+   "previous": [
+    {
+     "prev": "경상북도 제1선거구(대구시 갑구)",
+     "of_current": 1.0,
+     "of_previous": 0.5436
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 을",
+   "sido": "경상북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제2선거구(대구시 을구)'",
+   "previous": [
+    {
+     "prev": "경상북도 제2선거구(대구시 을구)",
+     "of_current": 0.9334,
+     "of_previous": 0.9396
+    },
+    {
+     "prev": "경상북도 제1선거구(대구시 갑구)",
+     "of_current": 0.0498,
+     "of_previous": 0.0963
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 병",
+   "sido": "경상북도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상북도 제3선거구(대구시 병구)' 겹침 83%/95%",
+   "previous": [
+    {
+     "prev": "경상북도 제3선거구(대구시 병구)",
+     "of_current": 0.8258,
+     "of_previous": 0.9503
+    },
+    {
+     "prev": "경상북도 제1선거구(대구시 갑구)",
+     "of_current": 0.143,
+     "of_previous": 0.3442
+    }
+   ]
+  },
+  {
+   "district": "경상북도 포항시",
+   "sido": "경상북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제4선거구(포항시)'",
+   "previous": [
+    {
+     "prev": "경상북도 제4선거구(포항시)",
+     "of_current": 0.935,
+     "of_previous": 0.9194
+    }
+   ]
+  },
+  {
+   "district": "경상북도 김천시",
+   "sido": "경상북도",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경상북도 제26선거구(금릉군)'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "경상북도 제26선거구(금릉군)",
+     "of_current": 1.0,
+     "of_previous": 0.0355
+    },
+    {
+     "prev": "경상북도 제5선거구(김천시)",
+     "of_current": 0.9518,
+     "of_previous": 0.8771
+    }
+   ]
+  },
+  {
+   "district": "경상북도 달성군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제6선거구(달성군)",
+     "of_current": 0.9815,
+     "of_previous": 0.983
+    }
+   ]
+  },
+  {
+   "district": "경상북도 의성군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제8선거구(의성군 갑구)",
+     "of_current": 0.9906,
+     "of_previous": 0.9951
+    }
+   ]
+  },
+  {
+   "district": "경상북도 의성군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제9선거구(의성군 을구)",
+     "of_current": 0.9948,
+     "of_previous": 0.9938
+    }
+   ]
+  },
+  {
+   "district": "경상북도 안동군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제10선거구(안동군 갑구)",
+     "of_current": 0.9938,
+     "of_previous": 0.9851
+    }
+   ]
+  },
+  {
+   "district": "경상북도 안동군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제11선거구(안동군 을구)",
+     "of_current": 0.9892,
+     "of_previous": 0.9896
+    }
+   ]
+  },
+  {
+   "district": "경상북도 청송군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제13선거구(청송군)",
+     "of_current": 0.988,
+     "of_previous": 0.9837
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영양군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제12선거구(영양군)",
+     "of_current": 0.9904,
+     "of_previous": 0.9867
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영덕군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제14선거구(영덕군)",
+     "of_current": 0.9839,
+     "of_previous": 0.9876
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영일군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제15선거구(영일군 갑구)",
+     "of_current": 0.9778,
+     "of_previous": 0.989
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영일군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제16선거구(영일군 을구)",
+     "of_current": 0.9792,
+     "of_previous": 0.9777
+    },
+    {
+     "prev": "경상북도 제4선거구(포항시)",
+     "of_current": 0.0042,
+     "of_previous": 0.057
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경주군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제17선거구(경주군 갑구)",
+     "of_current": 0.987,
+     "of_previous": 0.9946
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경주군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제18선거구(경주군 을구)",
+     "of_current": 0.989,
+     "of_previous": 0.9896
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영천군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제19선거구(영천군 갑구)",
+     "of_current": 0.9798,
+     "of_previous": 0.9907
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영천군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제20선거구(영천군 을구)",
+     "of_current": 0.9967,
+     "of_previous": 0.9837
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경산군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제21선거구(경산군)",
+     "of_current": 0.9756,
+     "of_previous": 0.9824
+    }
+   ]
+  },
+  {
+   "district": "경상북도 청도군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제22선거구(청도군)",
+     "of_current": 0.9863,
+     "of_previous": 0.9811
+    }
+   ]
+  },
+  {
+   "district": "경상북도 고령군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제23선거구(고령군)",
+     "of_current": 0.9897,
+     "of_previous": 0.9732
+    }
+   ]
+  },
+  {
+   "district": "경상북도 성주군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제24선거구(성주군)",
+     "of_current": 0.9812,
+     "of_previous": 0.9856
+    }
+   ]
+  },
+  {
+   "district": "경상북도 칠곡군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제25선거구(칠곡군)",
+     "of_current": 0.9837,
+     "of_previous": 0.9854
+    }
+   ]
+  },
+  {
+   "district": "경상북도 금릉군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제26선거구(금릉군)",
+     "of_current": 0.9841,
+     "of_previous": 0.9851
+    },
+    {
+     "prev": "경상북도 제5선거구(김천시)",
+     "of_current": 0.0384,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 선산군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제27선거구(선산군)",
+     "of_current": 0.9796,
+     "of_previous": 0.9808
+    }
+   ]
+  },
+  {
+   "district": "경상북도 상주군 갑",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제28선거구(상주군 갑구)",
+     "of_current": 0.991,
+     "of_previous": 0.9925
+    }
+   ]
+  },
+  {
+   "district": "경상북도 상주군 을",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제29선거구(상주군 을구)",
+     "of_current": 0.9923,
+     "of_previous": 0.9938
+    }
+   ]
+  },
+  {
+   "district": "경상북도 문경군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제30선거구(문경군)",
+     "of_current": 0.9827,
+     "of_previous": 0.9881
+    }
+   ]
+  },
+  {
+   "district": "경상북도 예천군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제31선거구(예천군)",
+     "of_current": 0.9823,
+     "of_previous": 0.9789
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영주군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제32선거구(영주군)",
+     "of_current": 0.9803,
+     "of_previous": 0.9837
+    }
+   ]
+  },
+  {
+   "district": "경상북도 봉화군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제33선거구(봉화군)",
+     "of_current": 0.9871,
+     "of_previous": 0.9867
+    }
+   ]
+  },
+  {
+   "district": "경상북도 울릉군",
+   "sido": "경상북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상북도 제34선거구(울릉군)'",
+   "previous": [
+    {
+     "prev": "경상북도 제34선거구(울릉군)",
+     "of_current": 0.9853,
+     "of_previous": 0.9446
+    }
+   ]
+  },
+  {
+   "district": "경상남도 부산시 갑",
+   "sido": "경상남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 제4선거구(부산시 정구) 29%, 경상남도 제5선거구(부산시 무구) 28%, 경상남도 제3선거구(부산시 병구) 24%",
+   "previous": [
+    {
+     "prev": "경상남도 제4선거구(부산시 정구)",
+     "of_current": 0.288,
+     "of_previous": 0.9528
+    },
+    {
+     "prev": "경상남도 제5선거구(부산시 무구)",
+     "of_current": 0.275,
+     "of_previous": 0.9182
+    },
+    {
+     "prev": "경상남도 제3선거구(부산시 병구)",
+     "of_current": 0.2357,
+     "of_previous": 0.7848
+    },
+    {
+     "prev": "경상남도 제2선거구(부산시 을구)",
+     "of_current": 0.1579,
+     "of_previous": 0.5209
+    }
+   ]
+  },
+  {
+   "district": "경상남도 부산시 을",
+   "sido": "경상남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 제2선거구(부산시 을구) 67%, 경상남도 제3선거구(부산시 병구) 18%, 경상남도 제1선거구(부산시 갑구) 9%",
+   "previous": [
+    {
+     "prev": "경상남도 제2선거구(부산시 을구)",
+     "of_current": 0.6737,
+     "of_previous": 0.2204
+    },
+    {
+     "prev": "경상남도 제3선거구(부산시 병구)",
+     "of_current": 0.1842,
+     "of_previous": 0.0608
+    },
+    {
+     "prev": "경상남도 제1선거구(부산시 갑구)",
+     "of_current": 0.0872,
+     "of_previous": 0.03
+    }
+   ]
+  },
+  {
+   "district": "경상남도 부산시 병",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경상남도 제2선거구(부산시 을구)'의 9%만 차지",
+   "previous": [
+    {
+     "prev": "경상남도 제2선거구(부산시 을구)",
+     "of_current": 0.989,
+     "of_previous": 0.0875
+    }
+   ]
+  },
+  {
+   "district": "경상남도 부산시 정",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 제1선거구(부산시 갑구)' 겹침 88%/79%",
+   "previous": [
+    {
+     "prev": "경상남도 제1선거구(부산시 갑구)",
+     "of_current": 0.8835,
+     "of_previous": 0.7874
+    }
+   ]
+  },
+  {
+   "district": "경상남도 부산시 무",
+   "sido": "경상남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 제2선거구(부산시 을구) 58%, 경상남도 제3선거구(부산시 병구) 34%",
+   "previous": [
+    {
+     "prev": "경상남도 제2선거구(부산시 을구)",
+     "of_current": 0.5787,
+     "of_previous": 0.1161
+    },
+    {
+     "prev": "경상남도 제3선거구(부산시 병구)",
+     "of_current": 0.3355,
+     "of_previous": 0.0679
+    }
+   ]
+  },
+  {
+   "district": "경상남도 마산시",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제6선거구(마산시)'",
+   "previous": [
+    {
+     "prev": "경상남도 제6선거구(마산시)",
+     "of_current": 0.9356,
+     "of_previous": 0.9399
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진주시",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제7선거구(진주시)'",
+   "previous": [
+    {
+     "prev": "경상남도 제7선거구(진주시)",
+     "of_current": 0.9828,
+     "of_previous": 0.9286
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진양군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제8선거구(진양군)",
+     "of_current": 0.9755,
+     "of_previous": 0.987
+    },
+    {
+     "prev": "경상남도 제7선거구(진주시)",
+     "of_current": 0.006,
+     "of_previous": 0.0714
+    }
+   ]
+  },
+  {
+   "district": "경상남도 의령군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제9선거구(의령군)",
+     "of_current": 0.9842,
+     "of_previous": 0.9866
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함안군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제10선거구(함안군)",
+     "of_current": 0.9832,
+     "of_previous": 0.9744
+    }
+   ]
+  },
+  {
+   "district": "경상남도 창녕군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제11선거구(창녕군)",
+     "of_current": 0.987,
+     "of_previous": 0.9883
+    }
+   ]
+  },
+  {
+   "district": "경상남도 밀양군 갑",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제12선거구(밀양군 갑구)",
+     "of_current": 0.9879,
+     "of_previous": 0.9863
+    }
+   ]
+  },
+  {
+   "district": "경상남도 밀양군 을",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제13선거구(밀양군 을구)",
+     "of_current": 0.9879,
+     "of_previous": 0.9911
+    }
+   ]
+  },
+  {
+   "district": "경상남도 양산군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제14선거구(양산군)",
+     "of_current": 0.9825,
+     "of_previous": 0.9879
+    }
+   ]
+  },
+  {
+   "district": "경상남도 울산군 갑",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제15선거구(울산군 갑구)",
+     "of_current": 0.9945,
+     "of_previous": 0.9834
+    }
+   ]
+  },
+  {
+   "district": "경상남도 울산군 을",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제16선거구(울산군 을구)",
+     "of_current": 0.9711,
+     "of_previous": 0.9705
+    }
+   ]
+  },
+  {
+   "district": "경상남도 동래군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제17선거구(동래군)'",
+   "previous": [
+    {
+     "prev": "경상남도 제17선거구(동래군)",
+     "of_current": 0.9633,
+     "of_previous": 0.9727
+    }
+   ]
+  },
+  {
+   "district": "경상남도 김해군 갑",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제18선거구(김해군 갑구)",
+     "of_current": 0.9796,
+     "of_previous": 0.9803
+    }
+   ]
+  },
+  {
+   "district": "경상남도 김해군 을",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제19선거구(김해군 을구)",
+     "of_current": 0.9959,
+     "of_previous": 0.9897
+    }
+   ]
+  },
+  {
+   "district": "경상남도 창원군 갑",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제20선거구(창원군 갑구)'",
+   "previous": [
+    {
+     "prev": "경상남도 제20선거구(창원군 갑구)",
+     "of_current": 0.9394,
+     "of_previous": 0.9576
+    }
+   ]
+  },
+  {
+   "district": "경상남도 창원군 을",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제21선거구(창원군 을구)'",
+   "previous": [
+    {
+     "prev": "경상남도 제21선거구(창원군 을구)",
+     "of_current": 0.964,
+     "of_previous": 0.9358
+    }
+   ]
+  },
+  {
+   "district": "경상남도 통영군 갑",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 제22선거구(통영군 갑구)' 겹침 93%/73%",
+   "previous": [
+    {
+     "prev": "경상남도 제22선거구(통영군 갑구)",
+     "of_current": 0.9266,
+     "of_previous": 0.7271
+    }
+   ]
+  },
+  {
+   "district": "경상남도 통영군 을",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 제23선거구(통영군 을구)' 겹침 93%/89%",
+   "previous": [
+    {
+     "prev": "경상남도 제23선거구(통영군 을구)",
+     "of_current": 0.9286,
+     "of_previous": 0.887
+    }
+   ]
+  },
+  {
+   "district": "경상남도 고성군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제24선거구(고성군)'",
+   "previous": [
+    {
+     "prev": "경상남도 제24선거구(고성군)",
+     "of_current": 0.9464,
+     "of_previous": 0.9747
+    }
+   ]
+  },
+  {
+   "district": "경상남도 사천군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제25선거구(사천군)'",
+   "previous": [
+    {
+     "prev": "경상남도 제25선거구(사천군)",
+     "of_current": 0.9478,
+     "of_previous": 0.9602
+    }
+   ]
+  },
+  {
+   "district": "경상남도 남해군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 제26선거구(남해군)'",
+   "previous": [
+    {
+     "prev": "경상남도 제26선거구(남해군)",
+     "of_current": 0.9586,
+     "of_previous": 0.9442
+    }
+   ]
+  },
+  {
+   "district": "경상남도 하동군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제27선거구(하동군)",
+     "of_current": 0.981,
+     "of_previous": 0.9783
+    }
+   ]
+  },
+  {
+   "district": "경상남도 산청군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제28선거구(산청군)",
+     "of_current": 0.9895,
+     "of_previous": 0.9863
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함양군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제29선거구(함양군)",
+     "of_current": 0.9824,
+     "of_previous": 0.9885
+    }
+   ]
+  },
+  {
+   "district": "경상남도 거창군",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제30선거구(거창군)",
+     "of_current": 0.991,
+     "of_previous": 0.9851
+    }
+   ]
+  },
+  {
+   "district": "경상남도 합천군 갑",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제31선거구(합천군 갑구)",
+     "of_current": 0.9891,
+     "of_previous": 0.9785
+    }
+   ]
+  },
+  {
+   "district": "경상남도 합천군 을",
+   "sido": "경상남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상남도 제32선거구(합천군 을구)",
+     "of_current": 0.9791,
+     "of_previous": 0.9891
+    }
+   ]
+  },
+  {
+   "district": "경상북도 군위군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 제7선거구(군위군)",
+     "of_current": 0.9877,
+     "of_previous": 0.9807
+    }
+   ]
+  },
+  {
+   "district": "제주특별자치도 북제주군 갑",
+   "sido": "제주특별자치도",
+   "relation": "new",
+   "comparable": "no",
+   "reason": "대응하는 이전 선거구 없음",
+   "previous": []
+  },
+  {
+   "district": "제주특별자치도 북제주군 을",
+   "sido": "제주특별자치도",
+   "relation": "new",
+   "comparable": "no",
+   "reason": "대응하는 이전 선거구 없음",
+   "previous": []
+  },
+  {
+   "district": "제주특별자치도 남제주군",
+   "sido": "제주특별자치도",
+   "relation": "new",
+   "comparable": "no",
+   "reason": "대응하는 이전 선거구 없음",
+   "previous": []
+  }
+ ]
+}

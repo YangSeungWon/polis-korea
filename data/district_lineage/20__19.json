@@ -1,0 +1,4114 @@
+{
+ "_meta": {
+  "current_n": 20,
+  "previous_n": 19,
+  "generated_at": "2026-08-05T15:09:29+09:00",
+  "source": "polis 계산 — 선거구 폴리곤 교차 면적",
+  "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
+  "thresholds": {
+   "exact": 0.97,
+   "major": 0.6,
+   "minor": 0.05
+  },
+  "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
+  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+ },
+ "counts": {
+  "exact": 30,
+  "boundary_changed": 101,
+  "minor_boundary_change": 80,
+  "merged": 9,
+  "split": 6,
+  "unresolvable": 26,
+  "total": 252,
+  "comparable": 30,
+  "comparable_unknown": 80,
+  "previous_total": 246,
+  "previous_unmatched": 13
+ },
+ "previous_unmatched": [
+  "경기 광주시",
+  "경기 남양주시갑",
+  "경기 포천시연천군",
+  "경남 김해시을",
+  "경남 의령군함안군합천군",
+  "경남 통영시고성군",
+  "대전 유성구",
+  "서울 강서구갑",
+  "인천 서구강화군갑",
+  "전북 고창군부안군",
+  "충북 증평군진천군괴산군음성군",
+  "충북 청원군",
+  "충북 청주시상당구"
+ ],
+ "units": [
+  {
+   "district": "강원 강릉시",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원 강릉시",
+     "of_current": 0.9882,
+     "of_previous": 0.9871
+    }
+   ]
+  },
+  {
+   "district": "강원 동해시삼척시",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원 동해시삼척시",
+     "of_current": 0.9888,
+     "of_previous": 0.9894
+    }
+   ]
+  },
+  {
+   "district": "강원 속초시고성군양양군",
+   "sido": "강원",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '강원 속초시고성군양양군'의 87%만 차지",
+   "previous": [
+    {
+     "prev": "강원 속초시고성군양양군",
+     "of_current": 0.9901,
+     "of_previous": 0.8718
+    }
+   ]
+  },
+  {
+   "district": "강원 원주시갑",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원 원주시갑",
+     "of_current": 0.9742,
+     "of_previous": 0.9814
+    }
+   ]
+  },
+  {
+   "district": "강원 원주시을",
+   "sido": "강원",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "강원 원주시을",
+     "of_current": 0.98,
+     "of_previous": 0.9615
+    }
+   ]
+  },
+  {
+   "district": "강원 춘천시",
+   "sido": "강원",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원 춘천시",
+     "of_current": 0.9895,
+     "of_previous": 0.9778
+    }
+   ]
+  },
+  {
+   "district": "강원 태백시횡성군영월군평창군정선군",
+   "sido": "강원",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '강원 태백시영월군평창군정선군' 겹침 80%/99%",
+   "previous": [
+    {
+     "prev": "강원 태백시영월군평창군정선군",
+     "of_current": 0.7984,
+     "of_previous": 0.9925
+    },
+    {
+     "prev": "강원 홍천군횡성군",
+     "of_current": 0.1936,
+     "of_previous": 0.3505
+    }
+   ]
+  },
+  {
+   "district": "강원 홍천군철원군화천군양구군인제군",
+   "sido": "강원",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 강원 철원군화천군양구군인제군 + 강원 홍천군횡성군 통합",
+   "previous": [
+    {
+     "prev": "강원 철원군화천군양구군인제군",
+     "of_current": 0.6768,
+     "of_previous": 0.9519
+    },
+    {
+     "prev": "강원 홍천군횡성군",
+     "of_current": 0.3129,
+     "of_previous": 0.6439
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 고양시덕양구갑' 겹침 88%/96%",
+   "previous": [
+    {
+     "prev": "경기 고양시덕양구갑",
+     "of_current": 0.8785,
+     "of_previous": 0.9567
+    },
+    {
+     "prev": "경기 고양시일산동구",
+     "of_current": 0.0934,
+     "of_previous": 0.1314
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시병",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 고양시일산동구' 겹침 93%/82%",
+   "previous": [
+    {
+     "prev": "경기 고양시일산동구",
+     "of_current": 0.9255,
+     "of_previous": 0.8244
+    },
+    {
+     "prev": "경기 고양시일산서구",
+     "of_current": 0.0447,
+     "of_previous": 0.0553
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경기 고양시덕양구을'",
+   "previous": [
+    {
+     "prev": "경기 고양시덕양구을",
+     "of_current": 0.9413,
+     "of_previous": 0.9301
+    },
+    {
+     "prev": "서울 은평구을",
+     "of_current": 0.0181,
+     "of_previous": 0.0696
+    }
+   ]
+  },
+  {
+   "district": "경기 고양시정",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 고양시일산서구' 겹침 97%/89%",
+   "previous": [
+    {
+     "prev": "경기 고양시일산서구",
+     "of_current": 0.9663,
+     "of_previous": 0.892
+    }
+   ]
+  },
+  {
+   "district": "경기 광명시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 광명시갑' 겹침 89%/93%",
+   "previous": [
+    {
+     "prev": "경기 광명시갑",
+     "of_current": 0.8867,
+     "of_previous": 0.9299
+    },
+    {
+     "prev": "경기 광명시을",
+     "of_current": 0.0901,
+     "of_previous": 0.0228
+    }
+   ]
+  },
+  {
+   "district": "경기 광명시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 광명시을",
+     "of_current": 0.9598,
+     "of_previous": 0.9327
+    }
+   ]
+  },
+  {
+   "district": "경기 광주시갑",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 광주시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "경기 광주시",
+     "of_current": 0.9731,
+     "of_previous": 0.4557
+    }
+   ]
+  },
+  {
+   "district": "경기 광주시을",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 광주시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "경기 광주시",
+     "of_current": 0.9846,
+     "of_previous": 0.5256
+    }
+   ]
+  },
+  {
+   "district": "경기 구리시",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 구리시",
+     "of_current": 0.9052,
+     "of_previous": 0.9512
+    },
+    {
+     "prev": "서울 강동구갑",
+     "of_current": 0.045,
+     "of_previous": 0.0845
+    }
+   ]
+  },
+  {
+   "district": "경기 군포시갑",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 군포시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "경기 군포시",
+     "of_current": 0.9918,
+     "of_previous": 0.6735
+    }
+   ]
+  },
+  {
+   "district": "경기 군포시을",
+   "sido": "경기",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '경기 군포시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "경기 군포시",
+     "of_current": 0.9828,
+     "of_previous": 0.225
+    }
+   ]
+  },
+  {
+   "district": "경기 김포시갑",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 김포시 94%",
+   "previous": [
+    {
+     "prev": "경기 김포시",
+     "of_current": 0.9431,
+     "of_previous": 0.1642
+    }
+   ]
+  },
+  {
+   "district": "경기 김포시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 김포시' 겹침 95%/78%",
+   "previous": [
+    {
+     "prev": "경기 김포시",
+     "of_current": 0.947,
+     "of_previous": 0.7817
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 남양주시갑'의 56%만 차지",
+   "previous": [
+    {
+     "prev": "경기 남양주시갑",
+     "of_current": 0.9908,
+     "of_previous": 0.5634
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시병",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 남양주시갑 71%, 경기 남양주시을 27%",
+   "previous": [
+    {
+     "prev": "경기 남양주시갑",
+     "of_current": 0.7114,
+     "of_previous": 0.4223
+    },
+    {
+     "prev": "경기 남양주시을",
+     "of_current": 0.2659,
+     "of_previous": 0.2468
+    }
+   ]
+  },
+  {
+   "district": "경기 남양주시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 남양주시을'의 73%만 차지",
+   "previous": [
+    {
+     "prev": "경기 남양주시을",
+     "of_current": 0.9828,
+     "of_previous": 0.7256
+    }
+   ]
+  },
+  {
+   "district": "경기 동두천시연천군",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 포천시연천군 87%, 경기 양주시동두천시 12%",
+   "previous": [
+    {
+     "prev": "경기 포천시연천군",
+     "of_current": 0.8679,
+     "of_previous": 0.4512
+    },
+    {
+     "prev": "경기 양주시동두천시",
+     "of_current": 0.121,
+     "of_previous": 0.2359
+    }
+   ]
+  },
+  {
+   "district": "경기 부천시소사구",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 부천시소사구",
+     "of_current": 0.963,
+     "of_previous": 0.9512
+    }
+   ]
+  },
+  {
+   "district": "경기 부천시오정구",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 부천시오정구",
+     "of_current": 0.9092,
+     "of_previous": 0.9598
+    },
+    {
+     "prev": "경기 부천시원미구갑",
+     "of_current": 0.0626,
+     "of_previous": 0.1256
+    }
+   ]
+  },
+  {
+   "district": "경기 부천시원미구갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 부천시원미구갑' 겹침 96%/82%",
+   "previous": [
+    {
+     "prev": "경기 부천시원미구갑",
+     "of_current": 0.9615,
+     "of_previous": 0.8152
+    }
+   ]
+  },
+  {
+   "district": "경기 부천시원미구을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 부천시원미구을",
+     "of_current": 0.9504,
+     "of_previous": 0.9482
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시분당구갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 성남시분당구갑",
+     "of_current": 0.9492,
+     "of_previous": 0.918
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시분당구을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 성남시분당구을' 겹침 84%/97%",
+   "previous": [
+    {
+     "prev": "경기 성남시분당구을",
+     "of_current": 0.8426,
+     "of_previous": 0.9688
+    },
+    {
+     "prev": "경기 성남시분당구갑",
+     "of_current": 0.1282,
+     "of_previous": 0.0635
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시수정구",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 성남시수정구",
+     "of_current": 0.9702,
+     "of_previous": 0.9346
+    }
+   ]
+  },
+  {
+   "district": "경기 성남시중원구",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 성남시중원구",
+     "of_current": 0.9537,
+     "of_previous": 0.9371
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 수원시갑' 겹침 95%/90%",
+   "previous": [
+    {
+     "prev": "경기 수원시갑",
+     "of_current": 0.9461,
+     "of_previous": 0.8983
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시무",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 수원시을 72%, 경기 수원시정 27%",
+   "previous": [
+    {
+     "prev": "경기 수원시을",
+     "of_current": 0.7152,
+     "of_previous": 0.2811
+    },
+    {
+     "prev": "경기 수원시정",
+     "of_current": 0.2748,
+     "of_previous": 0.163
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시병",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 수원시병' 겹침 86%/65%",
+   "previous": [
+    {
+     "prev": "경기 수원시병",
+     "of_current": 0.8604,
+     "of_previous": 0.6463
+    },
+    {
+     "prev": "경기 수원시을",
+     "of_current": 0.067,
+     "of_previous": 0.0213
+    },
+    {
+     "prev": "경기 수원시정",
+     "of_current": 0.0568,
+     "of_previous": 0.0272
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 수원시을' 겹침 72%/66%",
+   "previous": [
+    {
+     "prev": "경기 수원시을",
+     "of_current": 0.7247,
+     "of_previous": 0.6606
+    },
+    {
+     "prev": "경기 수원시병",
+     "of_current": 0.1576,
+     "of_previous": 0.3401
+    },
+    {
+     "prev": "경기 수원시갑",
+     "of_current": 0.0746,
+     "of_previous": 0.0861
+    }
+   ]
+  },
+  {
+   "district": "경기 수원시정",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 수원시정' 겹침 95%/74%",
+   "previous": [
+    {
+     "prev": "경기 수원시정",
+     "of_current": 0.9504,
+     "of_previous": 0.7403
+    }
+   ]
+  },
+  {
+   "district": "경기 시흥시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 시흥시갑",
+     "of_current": 0.9703,
+     "of_previous": 0.959
+    },
+    {
+     "prev": "인천 남동구을",
+     "of_current": 0.0133,
+     "of_previous": 0.0516
+    }
+   ]
+  },
+  {
+   "district": "경기 시흥시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 시흥시을' 겹침 86%/94%",
+   "previous": [
+    {
+     "prev": "경기 시흥시을",
+     "of_current": 0.8612,
+     "of_previous": 0.9373
+    }
+   ]
+  },
+  {
+   "district": "경기 안산시단원구갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안산시단원구갑' 겹침 87%/94%",
+   "previous": [
+    {
+     "prev": "경기 안산시단원구갑",
+     "of_current": 0.8671,
+     "of_previous": 0.94
+    },
+    {
+     "prev": "경기 안산시단원구을",
+     "of_current": 0.0641,
+     "of_previous": 0.0199
+    }
+   ]
+  },
+  {
+   "district": "경기 안산시단원구을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안산시단원구을' 겹침 71%/89%",
+   "previous": [
+    {
+     "prev": "경기 안산시단원구을",
+     "of_current": 0.7113,
+     "of_previous": 0.8939
+    }
+   ]
+  },
+  {
+   "district": "경기 안산시상록구갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안산시상록구갑' 겹침 88%/95%",
+   "previous": [
+    {
+     "prev": "경기 안산시상록구갑",
+     "of_current": 0.88,
+     "of_previous": 0.9474
+    }
+   ]
+  },
+  {
+   "district": "경기 안산시상록구을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 90%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 안산시상록구을",
+     "of_current": 0.9045,
+     "of_previous": 0.9365
+    },
+    {
+     "prev": "경기 군포시",
+     "of_current": 0.0518,
+     "of_previous": 0.0403
+    }
+   ]
+  },
+  {
+   "district": "경기 안성시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기 안성시",
+     "of_current": 0.9776,
+     "of_previous": 0.9835
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시동안구갑",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안양시동안구갑' 겹침 95%/88%",
+   "previous": [
+    {
+     "prev": "경기 안양시동안구갑",
+     "of_current": 0.9486,
+     "of_previous": 0.8849
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시동안구을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 안양시동안구을' 겹침 82%/94%",
+   "previous": [
+    {
+     "prev": "경기 안양시동안구을",
+     "of_current": 0.8233,
+     "of_previous": 0.9391
+    },
+    {
+     "prev": "경기 의왕시과천시",
+     "of_current": 0.0808,
+     "of_previous": 0.0071
+    },
+    {
+     "prev": "경기 안양시동안구갑",
+     "of_current": 0.0805,
+     "of_previous": 0.0431
+    }
+   ]
+  },
+  {
+   "district": "경기 안양시만안구",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 안양시만안구",
+     "of_current": 0.9271,
+     "of_previous": 0.9539
+    }
+   ]
+  },
+  {
+   "district": "경기 양주시",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 양주시동두천시'의 75%만 차지",
+   "previous": [
+    {
+     "prev": "경기 양주시동두천시",
+     "of_current": 0.9787,
+     "of_previous": 0.7492
+    }
+   ]
+  },
+  {
+   "district": "경기 여주시양평군",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 여주군양평군가평군'의 63%만 차지",
+   "previous": [
+    {
+     "prev": "경기 여주군양평군가평군",
+     "of_current": 0.9936,
+     "of_previous": 0.6312
+    }
+   ]
+  },
+  {
+   "district": "경기 오산시",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 오산시",
+     "of_current": 0.9584,
+     "of_previous": 0.9489
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 용인시갑",
+     "of_current": 0.9839,
+     "of_previous": 0.9496
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시병",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경기 용인시병' 겹침 93%/83%",
+   "previous": [
+    {
+     "prev": "경기 용인시병",
+     "of_current": 0.9344,
+     "of_previous": 0.8336
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 용인시을'의 75%만 차지",
+   "previous": [
+    {
+     "prev": "경기 용인시을",
+     "of_current": 0.9706,
+     "of_previous": 0.7476
+    }
+   ]
+  },
+  {
+   "district": "경기 용인시정",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 용인시갑 45%, 경기 용인시을 39%, 경기 용인시병 16%",
+   "previous": [
+    {
+     "prev": "경기 용인시갑",
+     "of_current": 0.4451,
+     "of_previous": 0.0317
+    },
+    {
+     "prev": "경기 용인시을",
+     "of_current": 0.3932,
+     "of_previous": 0.2004
+    },
+    {
+     "prev": "경기 용인시병",
+     "of_current": 0.1565,
+     "of_previous": 0.1326
+    }
+   ]
+  },
+  {
+   "district": "경기 의왕시과천시",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 의왕시과천시",
+     "of_current": 0.9616,
+     "of_previous": 0.961
+    }
+   ]
+  },
+  {
+   "district": "경기 의정부시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 의정부시갑",
+     "of_current": 0.9502,
+     "of_previous": 0.9463
+    }
+   ]
+  },
+  {
+   "district": "경기 의정부시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 의정부시을",
+     "of_current": 0.961,
+     "of_previous": 0.9667
+    }
+   ]
+  },
+  {
+   "district": "경기 이천시",
+   "sido": "경기",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기 이천시",
+     "of_current": 0.98,
+     "of_previous": 0.9823
+    }
+   ]
+  },
+  {
+   "district": "경기 파주시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 파주시갑",
+     "of_current": 0.9493,
+     "of_previous": 0.9681
+    }
+   ]
+  },
+  {
+   "district": "경기 파주시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 파주시을'의 86%만 차지",
+   "previous": [
+    {
+     "prev": "경기 파주시을",
+     "of_current": 0.9763,
+     "of_previous": 0.8635
+    }
+   ]
+  },
+  {
+   "district": "경기 평택시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 평택시갑",
+     "of_current": 0.9784,
+     "of_previous": 0.9319
+    }
+   ]
+  },
+  {
+   "district": "경기 평택시을",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 평택시을",
+     "of_current": 0.9614,
+     "of_previous": 0.981
+    }
+   ]
+  },
+  {
+   "district": "경기 포천시가평군",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 여주군양평군가평군 50%, 경기 포천시연천군 49%",
+   "previous": [
+    {
+     "prev": "경기 여주군양평군가평군",
+     "of_current": 0.5004,
+     "of_previous": 0.3605
+    },
+    {
+     "prev": "경기 포천시연천군",
+     "of_current": 0.4919,
+     "of_previous": 0.5377
+    }
+   ]
+  },
+  {
+   "district": "경기 하남시",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 하남시",
+     "of_current": 0.9787,
+     "of_previous": 0.9587
+    }
+   ]
+  },
+  {
+   "district": "경기 화성시갑",
+   "sido": "경기",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기 화성시갑",
+     "of_current": 0.9465,
+     "of_previous": 0.9072
+    }
+   ]
+  },
+  {
+   "district": "경기 화성시병",
+   "sido": "경기",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기 화성시갑 59%, 경기 화성시을 39%",
+   "previous": [
+    {
+     "prev": "경기 화성시갑",
+     "of_current": 0.5865,
+     "of_previous": 0.0722
+    },
+    {
+     "prev": "경기 화성시을",
+     "of_current": 0.3908,
+     "of_previous": 0.3477
+    }
+   ]
+  },
+  {
+   "district": "경기 화성시을",
+   "sido": "경기",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경기 화성시을'의 62%만 차지",
+   "previous": [
+    {
+     "prev": "경기 화성시을",
+     "of_current": 0.9845,
+     "of_previous": 0.6198
+    }
+   ]
+  },
+  {
+   "district": "경남 거제시",
+   "sido": "경남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경남 거제시",
+     "of_current": 0.9606,
+     "of_previous": 0.9393
+    }
+   ]
+  },
+  {
+   "district": "경남 김해시갑",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 김해시갑' 겹침 66%/98%",
+   "previous": [
+    {
+     "prev": "경남 김해시갑",
+     "of_current": 0.6564,
+     "of_previous": 0.9809
+    },
+    {
+     "prev": "경남 김해시을",
+     "of_current": 0.3279,
+     "of_previous": 0.3892
+    }
+   ]
+  },
+  {
+   "district": "경남 김해시을",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경남 김해시을'의 59%만 차지",
+   "previous": [
+    {
+     "prev": "경남 김해시을",
+     "of_current": 0.9834,
+     "of_previous": 0.5889
+    }
+   ]
+  },
+  {
+   "district": "경남 밀양시의령군함안군창녕군",
+   "sido": "경남",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경남 밀양시창녕군 59%, 경남 의령군함안군합천군 40%",
+   "previous": [
+    {
+     "prev": "경남 밀양시창녕군",
+     "of_current": 0.5906,
+     "of_previous": 0.9917
+    },
+    {
+     "prev": "경남 의령군함안군합천군",
+     "of_current": 0.4003,
+     "of_previous": 0.4742
+    }
+   ]
+  },
+  {
+   "district": "경남 사천시남해군하동군",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경남 사천시남해군하동군",
+     "of_current": 0.9768,
+     "of_previous": 0.9792
+    }
+   ]
+  },
+  {
+   "district": "경남 산청군함양군거창군합천군",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 산청군함양군거창군' 겹침 70%/99%",
+   "previous": [
+    {
+     "prev": "경남 산청군함양군거창군",
+     "of_current": 0.6969,
+     "of_previous": 0.9937
+    },
+    {
+     "prev": "경남 의령군함안군합천군",
+     "of_current": 0.2976,
+     "of_previous": 0.5214
+    }
+   ]
+  },
+  {
+   "district": "경남 양산시갑",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경남 양산시'의 74%만 차지",
+   "previous": [
+    {
+     "prev": "경남 양산시",
+     "of_current": 0.9812,
+     "of_previous": 0.7372
+    }
+   ]
+  },
+  {
+   "district": "경남 양산시을",
+   "sido": "경남",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경남 양산시 96%",
+   "previous": [
+    {
+     "prev": "경남 양산시",
+     "of_current": 0.9648,
+     "of_previous": 0.2499
+    }
+   ]
+  },
+  {
+   "district": "경남 진주시갑",
+   "sido": "경남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경남 진주시갑",
+     "of_current": 0.9765,
+     "of_previous": 0.9647
+    }
+   ]
+  },
+  {
+   "district": "경남 진주시을",
+   "sido": "경남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경남 진주시을",
+     "of_current": 0.9791,
+     "of_previous": 0.9843
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시마산합포구",
+   "sido": "경남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경남 창원시마산합포구",
+     "of_current": 0.9738,
+     "of_previous": 0.9124
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시마산회원구",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 창원시마산회원구' 겹침 97%/83%",
+   "previous": [
+    {
+     "prev": "경남 창원시마산회원구",
+     "of_current": 0.9687,
+     "of_previous": 0.833
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시성산구",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 창원시성산구' 겹침 92%/83%",
+   "previous": [
+    {
+     "prev": "경남 창원시성산구",
+     "of_current": 0.9231,
+     "of_previous": 0.8277
+    },
+    {
+     "prev": "경남 창원시마산합포구",
+     "of_current": 0.0548,
+     "of_previous": 0.0173
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시의창구",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 창원시의창구' 겹침 89%/98%",
+   "previous": [
+    {
+     "prev": "경남 창원시의창구",
+     "of_current": 0.8901,
+     "of_previous": 0.977
+    },
+    {
+     "prev": "경남 창원시마산회원구",
+     "of_current": 0.0716,
+     "of_previous": 0.1457
+    }
+   ]
+  },
+  {
+   "district": "경남 창원시진해구",
+   "sido": "경남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경남 창원시진해구' 겹침 76%/95%",
+   "previous": [
+    {
+     "prev": "경남 창원시진해구",
+     "of_current": 0.7576,
+     "of_previous": 0.9496
+    },
+    {
+     "prev": "경남 창원시성산구",
+     "of_current": 0.1006,
+     "of_previous": 0.142
+    }
+   ]
+  },
+  {
+   "district": "경북 경산시",
+   "sido": "경북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '경북 경산시청도군'의 37%만 차지",
+   "previous": [
+    {
+     "prev": "경북 경산시청도군",
+     "of_current": 0.9802,
+     "of_previous": 0.3683
+    }
+   ]
+  },
+  {
+   "district": "경북 경주시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 경주시",
+     "of_current": 0.989,
+     "of_previous": 0.9873
+    }
+   ]
+  },
+  {
+   "district": "경북 고령군성주군칠곡군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 고령군성주군칠곡군",
+     "of_current": 0.9857,
+     "of_previous": 0.9854
+    }
+   ]
+  },
+  {
+   "district": "경북 구미시갑",
+   "sido": "경북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경북 구미시갑",
+     "of_current": 0.9525,
+     "of_previous": 0.9592
+    }
+   ]
+  },
+  {
+   "district": "경북 구미시을",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 구미시을",
+     "of_current": 0.9868,
+     "of_previous": 0.9725
+    }
+   ]
+  },
+  {
+   "district": "경북 김천시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 김천시",
+     "of_current": 0.9844,
+     "of_previous": 0.988
+    }
+   ]
+  },
+  {
+   "district": "경북 상주시군위군의성군청송군",
+   "sido": "경북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경북 군위군의성군청송군 + 경북 상주시 통합",
+   "previous": [
+    {
+     "prev": "경북 군위군의성군청송군",
+     "of_current": 0.6702,
+     "of_previous": 0.9893
+    },
+    {
+     "prev": "경북 상주시",
+     "of_current": 0.3196,
+     "of_previous": 0.9887
+    }
+   ]
+  },
+  {
+   "district": "경북 안동시",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 안동시",
+     "of_current": 0.9901,
+     "of_previous": 0.9876
+    }
+   ]
+  },
+  {
+   "district": "경북 영양군영덕군봉화군울진군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 영양군영덕군봉화군울진군",
+     "of_current": 0.9932,
+     "of_previous": 0.9936
+    }
+   ]
+  },
+  {
+   "district": "경북 영주시문경시예천군",
+   "sido": "경북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경북 문경시예천군 + 경북 영주시 통합",
+   "previous": [
+    {
+     "prev": "경북 문경시예천군",
+     "of_current": 0.6919,
+     "of_previous": 0.9901
+    },
+    {
+     "prev": "경북 영주시",
+     "of_current": 0.2949,
+     "of_previous": 0.988
+    }
+   ]
+  },
+  {
+   "district": "경북 영천시청도군",
+   "sido": "경북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경북 영천시 + 경북 경산시청도군 통합",
+   "previous": [
+    {
+     "prev": "경북 영천시",
+     "of_current": 0.5641,
+     "of_previous": 0.9897
+    },
+    {
+     "prev": "경북 경산시청도군",
+     "of_current": 0.4247,
+     "of_previous": 0.621
+    }
+   ]
+  },
+  {
+   "district": "경북 포항시남구울릉군",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 포항시남구울릉군",
+     "of_current": 0.9736,
+     "of_previous": 0.9778
+    }
+   ]
+  },
+  {
+   "district": "경북 포항시북구",
+   "sido": "경북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경북 포항시북구",
+     "of_current": 0.9849,
+     "of_previous": 0.9872
+    }
+   ]
+  },
+  {
+   "district": "광주 광산구갑",
+   "sido": "광주",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "광주 광산구갑",
+     "of_current": 0.9792,
+     "of_previous": 0.961
+    }
+   ]
+  },
+  {
+   "district": "광주 광산구을",
+   "sido": "광주",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "광주 광산구을",
+     "of_current": 0.9684,
+     "of_previous": 0.9519
+    }
+   ]
+  },
+  {
+   "district": "광주 동구남구갑",
+   "sido": "광주",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '광주 남구' 겹침 96%/88%",
+   "previous": [
+    {
+     "prev": "광주 남구",
+     "of_current": 0.9571,
+     "of_previous": 0.8849
+    }
+   ]
+  },
+  {
+   "district": "광주 동구남구을",
+   "sido": "광주",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '광주 동구' 겹침 88%/97%",
+   "previous": [
+    {
+     "prev": "광주 동구",
+     "of_current": 0.8839,
+     "of_previous": 0.9652
+    },
+    {
+     "prev": "광주 남구",
+     "of_current": 0.0732,
+     "of_previous": 0.0646
+    }
+   ]
+  },
+  {
+   "district": "광주 북구갑",
+   "sido": "광주",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '광주 북구갑' 겹침 88%/94%",
+   "previous": [
+    {
+     "prev": "광주 북구갑",
+     "of_current": 0.8806,
+     "of_previous": 0.9409
+    },
+    {
+     "prev": "광주 북구을",
+     "of_current": 0.0767,
+     "of_previous": 0.09
+    }
+   ]
+  },
+  {
+   "district": "광주 북구을",
+   "sido": "광주",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '광주 북구을'의 87%만 차지",
+   "previous": [
+    {
+     "prev": "광주 북구을",
+     "of_current": 0.9874,
+     "of_previous": 0.8654
+    }
+   ]
+  },
+  {
+   "district": "광주 서구갑",
+   "sido": "광주",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '광주 서구갑' 겹침 87%/97%",
+   "previous": [
+    {
+     "prev": "광주 서구갑",
+     "of_current": 0.8675,
+     "of_previous": 0.9724
+    },
+    {
+     "prev": "광주 북구을",
+     "of_current": 0.0556,
+     "of_previous": 0.0175
+    }
+   ]
+  },
+  {
+   "district": "광주 서구을",
+   "sido": "광주",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "광주 서구을",
+     "of_current": 0.9564,
+     "of_previous": 0.9589
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구갑",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 달서구갑",
+     "of_current": 0.9574,
+     "of_previous": 0.94
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구병",
+   "sido": "대구",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '대구 달서구병' 겹침 95%/87%",
+   "previous": [
+    {
+     "prev": "대구 달서구병",
+     "of_current": 0.9521,
+     "of_previous": 0.8652
+    }
+   ]
+  },
+  {
+   "district": "대구 달서구을",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 달서구을",
+     "of_current": 0.9475,
+     "of_previous": 0.9425
+    },
+    {
+     "prev": "대구 달서구병",
+     "of_current": 0.0278,
+     "of_previous": 0.081
+    }
+   ]
+  },
+  {
+   "district": "대구 달성군",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 달성군",
+     "of_current": 0.9671,
+     "of_previous": 0.9755
+    }
+   ]
+  },
+  {
+   "district": "대구 동구갑",
+   "sido": "대구",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 대구 동구갑 52%, 대구 동구을 40%, 대구 수성구갑 8%",
+   "previous": [
+    {
+     "prev": "대구 동구갑",
+     "of_current": 0.5173,
+     "of_previous": 0.8471
+    },
+    {
+     "prev": "대구 동구을",
+     "of_current": 0.4004,
+     "of_previous": 0.0279
+    },
+    {
+     "prev": "대구 수성구갑",
+     "of_current": 0.0823,
+     "of_previous": 0.0189
+    }
+   ]
+  },
+  {
+   "district": "대구 동구을",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 동구을",
+     "of_current": 0.9808,
+     "of_previous": 0.9546
+    }
+   ]
+  },
+  {
+   "district": "대구 북구갑",
+   "sido": "대구",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '대구 북구갑' 겹침 69%/96%",
+   "previous": [
+    {
+     "prev": "대구 북구갑",
+     "of_current": 0.6861,
+     "of_previous": 0.955
+    },
+    {
+     "prev": "대구 북구을",
+     "of_current": 0.2426,
+     "of_previous": 0.0617
+    },
+    {
+     "prev": "대구 동구갑",
+     "of_current": 0.0545,
+     "of_previous": 0.1497
+    }
+   ]
+  },
+  {
+   "district": "대구 북구을",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 북구을",
+     "of_current": 0.9715,
+     "of_previous": 0.9023
+    }
+   ]
+  },
+  {
+   "district": "대구 서구",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 서구",
+     "of_current": 0.9574,
+     "of_previous": 0.9515
+    }
+   ]
+  },
+  {
+   "district": "대구 수성구갑",
+   "sido": "대구",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대구 수성구갑",
+     "of_current": 0.9342,
+     "of_previous": 0.9257
+    },
+    {
+     "prev": "대구 수성구을",
+     "of_current": 0.0591,
+     "of_previous": 0.132
+    }
+   ]
+  },
+  {
+   "district": "대구 수성구을",
+   "sido": "대구",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '대구 수성구을' 겹침 95%/84%",
+   "previous": [
+    {
+     "prev": "대구 수성구을",
+     "of_current": 0.9533,
+     "of_previous": 0.8424
+    }
+   ]
+  },
+  {
+   "district": "대구 중구남구",
+   "sido": "대구",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "대구 중구남구",
+     "of_current": 0.9756,
+     "of_previous": 0.9715
+    }
+   ]
+  },
+  {
+   "district": "대전 대덕구",
+   "sido": "대전",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '대전 대덕구' 겹침 97%/89%",
+   "previous": [
+    {
+     "prev": "대전 대덕구",
+     "of_current": 0.9671,
+     "of_previous": 0.8943
+    }
+   ]
+  },
+  {
+   "district": "대전 동구",
+   "sido": "대전",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대전 동구",
+     "of_current": 0.9363,
+     "of_previous": 0.9684
+    }
+   ]
+  },
+  {
+   "district": "대전 서구갑",
+   "sido": "대전",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대전 서구갑",
+     "of_current": 0.9674,
+     "of_previous": 0.9222
+    }
+   ]
+  },
+  {
+   "district": "대전 서구을",
+   "sido": "대전",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대전 서구을",
+     "of_current": 0.948,
+     "of_previous": 0.918
+    }
+   ]
+  },
+  {
+   "district": "대전 유성구갑",
+   "sido": "대전",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '대전 유성구'의 46%만 차지",
+   "previous": [
+    {
+     "prev": "대전 유성구",
+     "of_current": 0.9871,
+     "of_previous": 0.4594
+    }
+   ]
+  },
+  {
+   "district": "대전 유성구을",
+   "sido": "대전",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 대전 유성구 97%",
+   "previous": [
+    {
+     "prev": "대전 유성구",
+     "of_current": 0.9691,
+     "of_previous": 0.5091
+    }
+   ]
+  },
+  {
+   "district": "대전 중구",
+   "sido": "대전",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "대전 중구",
+     "of_current": 0.9503,
+     "of_previous": 0.9426
+    }
+   ]
+  },
+  {
+   "district": "부산 금정구",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "부산 금정구",
+     "of_current": 0.9565,
+     "of_previous": 0.9673
+    }
+   ]
+  },
+  {
+   "district": "부산 기장군",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '부산 해운대구기장군을'",
+   "previous": [
+    {
+     "prev": "부산 해운대구기장군을",
+     "of_current": 0.9818,
+     "of_previous": 0.9077
+    }
+   ]
+  },
+  {
+   "district": "부산 남구갑",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "부산 남구갑",
+     "of_current": 0.9416,
+     "of_previous": 0.9533
+    }
+   ]
+  },
+  {
+   "district": "부산 남구을",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 남구을' 겹침 87%/91%",
+   "previous": [
+    {
+     "prev": "부산 남구을",
+     "of_current": 0.8696,
+     "of_previous": 0.9122
+    }
+   ]
+  },
+  {
+   "district": "부산 동래구",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "부산 동래구",
+     "of_current": 0.9813,
+     "of_previous": 0.9311
+    }
+   ]
+  },
+  {
+   "district": "부산 부산진구갑",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 부산진구갑' 겹침 89%/92%",
+   "previous": [
+    {
+     "prev": "부산 부산진구갑",
+     "of_current": 0.8911,
+     "of_previous": 0.9243
+    },
+    {
+     "prev": "부산 부산진구을",
+     "of_current": 0.0741,
+     "of_previous": 0.0978
+    }
+   ]
+  },
+  {
+   "district": "부산 부산진구을",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 부산진구을' 겹침 95%/82%",
+   "previous": [
+    {
+     "prev": "부산 부산진구을",
+     "of_current": 0.9483,
+     "of_previous": 0.8186
+    }
+   ]
+  },
+  {
+   "district": "부산 북구강서구갑",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 북구강서구갑' 겹침 87%/95%",
+   "previous": [
+    {
+     "prev": "부산 북구강서구갑",
+     "of_current": 0.8733,
+     "of_previous": 0.9523
+    },
+    {
+     "prev": "부산 북구강서구을",
+     "of_current": 0.098,
+     "of_previous": 0.0085
+    }
+   ]
+  },
+  {
+   "district": "부산 북구강서구을",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 북구강서구을' 겹침 95%/90%",
+   "previous": [
+    {
+     "prev": "부산 북구강서구을",
+     "of_current": 0.9468,
+     "of_previous": 0.8986
+    }
+   ]
+  },
+  {
+   "district": "부산 사상구",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "부산 사상구",
+     "of_current": 0.9502,
+     "of_previous": 0.9758
+    }
+   ]
+  },
+  {
+   "district": "부산 사하구갑",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 사하구갑' 겹침 88%/88%",
+   "previous": [
+    {
+     "prev": "부산 사하구갑",
+     "of_current": 0.8814,
+     "of_previous": 0.881
+    }
+   ]
+  },
+  {
+   "district": "부산 사하구을",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 사하구을' 겹침 72%/85%",
+   "previous": [
+    {
+     "prev": "부산 사하구을",
+     "of_current": 0.7238,
+     "of_previous": 0.8529
+    }
+   ]
+  },
+  {
+   "district": "부산 서구동구",
+   "sido": "부산",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 부산 서구 50%, 부산 중구동구 39%, 부산 사하구을 5%",
+   "previous": [
+    {
+     "prev": "부산 서구",
+     "of_current": 0.4973,
+     "of_previous": 0.866
+    },
+    {
+     "prev": "부산 중구동구",
+     "of_current": 0.3855,
+     "of_previous": 0.7769
+    },
+    {
+     "prev": "부산 사하구을",
+     "of_current": 0.0459,
+     "of_previous": 0.0508
+    }
+   ]
+  },
+  {
+   "district": "부산 수영구",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 수영구' 겹침 88%/95%",
+   "previous": [
+    {
+     "prev": "부산 수영구",
+     "of_current": 0.8797,
+     "of_previous": 0.954
+    }
+   ]
+  },
+  {
+   "district": "부산 연제구",
+   "sido": "부산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "부산 연제구",
+     "of_current": 0.9206,
+     "of_previous": 0.9421
+    }
+   ]
+  },
+  {
+   "district": "부산 중구영도구",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 영도구' 겹침 80%/92%",
+   "previous": [
+    {
+     "prev": "부산 영도구",
+     "of_current": 0.7984,
+     "of_previous": 0.9194
+    },
+    {
+     "prev": "부산 중구동구",
+     "of_current": 0.134,
+     "of_previous": 0.1766
+    }
+   ]
+  },
+  {
+   "district": "부산 해운대구갑",
+   "sido": "부산",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 부산 해운대구기장군을 53%, 부산 해운대구기장군갑 43%",
+   "previous": [
+    {
+     "prev": "부산 해운대구기장군을",
+     "of_current": 0.5327,
+     "of_previous": 0.064
+    },
+    {
+     "prev": "부산 해운대구기장군갑",
+     "of_current": 0.432,
+     "of_previous": 0.3343
+    }
+   ]
+  },
+  {
+   "district": "부산 해운대구을",
+   "sido": "부산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '부산 해운대구기장군갑' 겹침 95%/62%",
+   "previous": [
+    {
+     "prev": "부산 해운대구기장군갑",
+     "of_current": 0.9537,
+     "of_previous": 0.6218
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강남구갑' 겹침 94%/62%",
+   "previous": [
+    {
+     "prev": "서울 강남구갑",
+     "of_current": 0.9386,
+     "of_previous": 0.6216
+    },
+    {
+     "prev": "서울 서초구갑",
+     "of_current": 0.0506,
+     "of_previous": 0.0573
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구병",
+   "sido": "서울",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울 강남구갑 62%, 서울 강남구을 36%",
+   "previous": [
+    {
+     "prev": "서울 강남구갑",
+     "of_current": 0.6188,
+     "of_previous": 0.3286
+    },
+    {
+     "prev": "서울 강남구을",
+     "of_current": 0.3583,
+     "of_previous": 0.1726
+    }
+   ]
+  },
+  {
+   "district": "서울 강남구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강남구을' 겹침 90%/79%",
+   "previous": [
+    {
+     "prev": "서울 강남구을",
+     "of_current": 0.9043,
+     "of_previous": 0.7873
+    },
+    {
+     "prev": "서울 서초구을",
+     "of_current": 0.0616,
+     "of_previous": 0.029
+    }
+   ]
+  },
+  {
+   "district": "서울 강동구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강동구갑' 겹침 97%/87%",
+   "previous": [
+    {
+     "prev": "서울 강동구갑",
+     "of_current": 0.9663,
+     "of_previous": 0.8691
+    },
+    {
+     "prev": "서울 강동구을",
+     "of_current": 0.0282,
+     "of_previous": 0.0627
+    }
+   ]
+  },
+  {
+   "district": "서울 강동구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강동구을' 겹침 87%/93%",
+   "previous": [
+    {
+     "prev": "서울 강동구을",
+     "of_current": 0.8747,
+     "of_previous": 0.933
+    },
+    {
+     "prev": "서울 강동구갑",
+     "of_current": 0.055,
+     "of_previous": 0.0237
+    }
+   ]
+  },
+  {
+   "district": "서울 강북구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강북구갑' 겹침 97%/86%",
+   "previous": [
+    {
+     "prev": "서울 강북구갑",
+     "of_current": 0.9678,
+     "of_previous": 0.8611
+    }
+   ]
+  },
+  {
+   "district": "서울 강북구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강북구을' 겹침 89%/94%",
+   "previous": [
+    {
+     "prev": "서울 강북구을",
+     "of_current": 0.894,
+     "of_previous": 0.9385
+    },
+    {
+     "prev": "서울 강북구갑",
+     "of_current": 0.1057,
+     "of_previous": 0.0327
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구갑",
+   "sido": "서울",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울 강서구갑 95%",
+   "previous": [
+    {
+     "prev": "서울 강서구갑",
+     "of_current": 0.9512,
+     "of_previous": 0.5568
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구병",
+   "sido": "서울",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울 강서구갑 48%, 서울 강서구을 46%, 서울 양천구갑 6%",
+   "previous": [
+    {
+     "prev": "서울 강서구갑",
+     "of_current": 0.4771,
+     "of_previous": 0.3031
+    },
+    {
+     "prev": "서울 강서구을",
+     "of_current": 0.4634,
+     "of_previous": 0.0989
+    },
+    {
+     "prev": "서울 양천구갑",
+     "of_current": 0.0594,
+     "of_previous": 0.0447
+    }
+   ]
+  },
+  {
+   "district": "서울 강서구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 강서구을' 겹침 93%/84%",
+   "previous": [
+    {
+     "prev": "서울 강서구을",
+     "of_current": 0.9274,
+     "of_previous": 0.8424
+    }
+   ]
+  },
+  {
+   "district": "서울 관악구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 관악구갑' 겹침 92%/85%",
+   "previous": [
+    {
+     "prev": "서울 관악구갑",
+     "of_current": 0.9246,
+     "of_previous": 0.8526
+    },
+    {
+     "prev": "서울 동작구을",
+     "of_current": 0.062,
+     "of_previous": 0.0795
+    }
+   ]
+  },
+  {
+   "district": "서울 관악구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 90%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 관악구을",
+     "of_current": 0.9017,
+     "of_previous": 0.9784
+    },
+    {
+     "prev": "서울 관악구갑",
+     "of_current": 0.0502,
+     "of_previous": 0.0697
+    }
+   ]
+  },
+  {
+   "district": "서울 광진구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 광진구갑",
+     "of_current": 0.9522,
+     "of_previous": 0.9405
+    }
+   ]
+  },
+  {
+   "district": "서울 광진구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 광진구을",
+     "of_current": 0.9818,
+     "of_previous": 0.9055
+    }
+   ]
+  },
+  {
+   "district": "서울 구로구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 구로구갑",
+     "of_current": 0.9539,
+     "of_previous": 0.9458
+    },
+    {
+     "prev": "경기 광명시갑",
+     "of_current": 0.0343,
+     "of_previous": 0.0578
+    }
+   ]
+  },
+  {
+   "district": "서울 구로구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 구로구을' 겹침 89%/97%",
+   "previous": [
+    {
+     "prev": "서울 구로구을",
+     "of_current": 0.8886,
+     "of_previous": 0.9658
+    },
+    {
+     "prev": "서울 영등포구을",
+     "of_current": 0.0772,
+     "of_previous": 0.0544
+    }
+   ]
+  },
+  {
+   "district": "서울 금천구",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 금천구' 겹침 95%/89%",
+   "previous": [
+    {
+     "prev": "서울 금천구",
+     "of_current": 0.9461,
+     "of_previous": 0.8942
+    }
+   ]
+  },
+  {
+   "district": "서울 노원구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 노원구갑",
+     "of_current": 0.9517,
+     "of_previous": 0.9436
+    }
+   ]
+  },
+  {
+   "district": "서울 노원구병",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 노원구병",
+     "of_current": 0.9417,
+     "of_previous": 0.9314
+    }
+   ]
+  },
+  {
+   "district": "서울 노원구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 노원구을",
+     "of_current": 0.9265,
+     "of_previous": 0.9311
+    }
+   ]
+  },
+  {
+   "district": "서울 도봉구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 도봉구갑' 겹침 74%/89%",
+   "previous": [
+    {
+     "prev": "서울 도봉구갑",
+     "of_current": 0.7389,
+     "of_previous": 0.8924
+    },
+    {
+     "prev": "서울 강북구갑",
+     "of_current": 0.1345,
+     "of_previous": 0.0466
+    },
+    {
+     "prev": "서울 도봉구을",
+     "of_current": 0.1081,
+     "of_previous": 0.0484
+    }
+   ]
+  },
+  {
+   "district": "서울 도봉구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 도봉구을' 겹침 90%/90%",
+   "previous": [
+    {
+     "prev": "서울 도봉구을",
+     "of_current": 0.8972,
+     "of_previous": 0.8995
+    },
+    {
+     "prev": "서울 도봉구갑",
+     "of_current": 0.0325,
+     "of_previous": 0.0878
+    }
+   ]
+  },
+  {
+   "district": "서울 동대문구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 동대문구갑",
+     "of_current": 0.9708,
+     "of_previous": 0.9052
+    }
+   ]
+  },
+  {
+   "district": "서울 동대문구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울 동대문구을'의 87%만 차지",
+   "previous": [
+    {
+     "prev": "서울 동대문구을",
+     "of_current": 0.9701,
+     "of_previous": 0.8716
+    }
+   ]
+  },
+  {
+   "district": "서울 동작구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 동작구갑' 겹침 93%/88%",
+   "previous": [
+    {
+     "prev": "서울 동작구갑",
+     "of_current": 0.9266,
+     "of_previous": 0.8756
+    }
+   ]
+  },
+  {
+   "district": "서울 동작구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울 동작구을'의 81%만 차지",
+   "previous": [
+    {
+     "prev": "서울 동작구을",
+     "of_current": 0.9963,
+     "of_previous": 0.8071
+    }
+   ]
+  },
+  {
+   "district": "서울 마포구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울 마포구갑'의 85%만 차지",
+   "previous": [
+    {
+     "prev": "서울 마포구갑",
+     "of_current": 0.9894,
+     "of_previous": 0.8452
+    }
+   ]
+  },
+  {
+   "district": "서울 마포구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 마포구을",
+     "of_current": 0.9498,
+     "of_previous": 0.9469
+    }
+   ]
+  },
+  {
+   "district": "서울 서대문구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 서대문구갑",
+     "of_current": 0.9652,
+     "of_previous": 0.9444
+    }
+   ]
+  },
+  {
+   "district": "서울 서대문구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 서대문구을' 겹침 88%/97%",
+   "previous": [
+    {
+     "prev": "서울 서대문구을",
+     "of_current": 0.8849,
+     "of_previous": 0.9696
+    },
+    {
+     "prev": "서울 서대문구갑",
+     "of_current": 0.0538,
+     "of_previous": 0.0435
+    }
+   ]
+  },
+  {
+   "district": "서울 서초구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 서초구갑' 겹침 93%/88%",
+   "previous": [
+    {
+     "prev": "서울 서초구갑",
+     "of_current": 0.93,
+     "of_previous": 0.8817
+    }
+   ]
+  },
+  {
+   "district": "서울 서초구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 서초구을",
+     "of_current": 0.953,
+     "of_previous": 0.9436
+    }
+   ]
+  },
+  {
+   "district": "서울 성북구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 성북구갑' 겹침 89%/100%",
+   "previous": [
+    {
+     "prev": "서울 성북구갑",
+     "of_current": 0.8851,
+     "of_previous": 0.9964
+    },
+    {
+     "prev": "서울 종로구",
+     "of_current": 0.074,
+     "of_previous": 0.0522
+    }
+   ]
+  },
+  {
+   "district": "서울 성북구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 성북구을",
+     "of_current": 0.9504,
+     "of_previous": 0.9522
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 송파구갑",
+     "of_current": 0.932,
+     "of_previous": 0.9319
+    },
+    {
+     "prev": "서울 광진구을",
+     "of_current": 0.0444,
+     "of_previous": 0.0642
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구병",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 송파구병' 겹침 88%/99%",
+   "previous": [
+    {
+     "prev": "서울 송파구병",
+     "of_current": 0.8801,
+     "of_previous": 0.9863
+    }
+   ]
+  },
+  {
+   "district": "서울 송파구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 송파구을",
+     "of_current": 0.9092,
+     "of_previous": 0.9442
+    },
+    {
+     "prev": "서울 강남구을",
+     "of_current": 0.0528,
+     "of_previous": 0.033
+    }
+   ]
+  },
+  {
+   "district": "서울 양천구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 양천구갑' 겹침 95%/86%",
+   "previous": [
+    {
+     "prev": "서울 양천구갑",
+     "of_current": 0.949,
+     "of_previous": 0.8619
+    }
+   ]
+  },
+  {
+   "district": "서울 양천구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 양천구을' 겹침 80%/92%",
+   "previous": [
+    {
+     "prev": "서울 양천구을",
+     "of_current": 0.8011,
+     "of_previous": 0.9176
+    },
+    {
+     "prev": "서울 강서구갑",
+     "of_current": 0.1007,
+     "of_previous": 0.0923
+    },
+    {
+     "prev": "서울 양천구갑",
+     "of_current": 0.0528,
+     "of_previous": 0.0572
+    }
+   ]
+  },
+  {
+   "district": "서울 영등포구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 영등포구갑' 겹침 90%/89%",
+   "previous": [
+    {
+     "prev": "서울 영등포구갑",
+     "of_current": 0.8957,
+     "of_previous": 0.8918
+    },
+    {
+     "prev": "서울 강서구을",
+     "of_current": 0.0623,
+     "of_previous": 0.0199
+    }
+   ]
+  },
+  {
+   "district": "서울 영등포구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 영등포구을' 겹침 80%/92%",
+   "previous": [
+    {
+     "prev": "서울 영등포구을",
+     "of_current": 0.7979,
+     "of_previous": 0.9218
+    },
+    {
+     "prev": "서울 영등포구갑",
+     "of_current": 0.055,
+     "of_previous": 0.0699
+    },
+    {
+     "prev": "서울 마포구갑",
+     "of_current": 0.0519,
+     "of_previous": 0.1121
+    },
+    {
+     "prev": "서울 동작구갑",
+     "of_current": 0.0477,
+     "of_previous": 0.0764
+    }
+   ]
+  },
+  {
+   "district": "서울 용산구",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 용산구",
+     "of_current": 0.9232,
+     "of_previous": 0.9356
+    },
+    {
+     "prev": "서울 동작구을",
+     "of_current": 0.0308,
+     "of_previous": 0.0695
+    }
+   ]
+  },
+  {
+   "district": "서울 은평구갑",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 은평구갑' 겹침 78%/91%",
+   "previous": [
+    {
+     "prev": "서울 은평구갑",
+     "of_current": 0.7779,
+     "of_previous": 0.9128
+    },
+    {
+     "prev": "경기 고양시덕양구을",
+     "of_current": 0.1274,
+     "of_previous": 0.0147
+    },
+    {
+     "prev": "서울 은평구을",
+     "of_current": 0.0811,
+     "of_previous": 0.0364
+    }
+   ]
+  },
+  {
+   "district": "서울 은평구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 은평구을' 겹침 91%/89%",
+   "previous": [
+    {
+     "prev": "서울 은평구을",
+     "of_current": 0.9121,
+     "of_previous": 0.8885
+    },
+    {
+     "prev": "서울 은평구갑",
+     "of_current": 0.0199,
+     "of_previous": 0.0506
+    }
+   ]
+  },
+  {
+   "district": "서울 종로구",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울 종로구'의 89%만 차지",
+   "previous": [
+    {
+     "prev": "서울 종로구",
+     "of_current": 0.9855,
+     "of_previous": 0.8932
+    }
+   ]
+  },
+  {
+   "district": "서울 중구성동구갑",
+   "sido": "서울",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울 성동구을 51%, 서울 성동구갑 41%, 서울 동대문구을 4%",
+   "previous": [
+    {
+     "prev": "서울 성동구을",
+     "of_current": 0.5128,
+     "of_previous": 0.9578
+    },
+    {
+     "prev": "서울 성동구갑",
+     "of_current": 0.4142,
+     "of_previous": 0.6305
+    },
+    {
+     "prev": "서울 동대문구을",
+     "of_current": 0.036,
+     "of_previous": 0.077
+    }
+   ]
+  },
+  {
+   "district": "서울 중구성동구을",
+   "sido": "서울",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울 중구' 겹침 66%/96%",
+   "previous": [
+    {
+     "prev": "서울 중구",
+     "of_current": 0.6576,
+     "of_previous": 0.9621
+    },
+    {
+     "prev": "서울 성동구갑",
+     "of_current": 0.211,
+     "of_previous": 0.3552
+    },
+    {
+     "prev": "서울 용산구",
+     "of_current": 0.0531,
+     "of_previous": 0.0377
+    }
+   ]
+  },
+  {
+   "district": "서울 중랑구갑",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 중랑구갑",
+     "of_current": 0.9352,
+     "of_previous": 0.9482
+    }
+   ]
+  },
+  {
+   "district": "서울 중랑구을",
+   "sido": "서울",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울 중랑구을",
+     "of_current": 0.9767,
+     "of_previous": 0.9544
+    }
+   ]
+  },
+  {
+   "district": "세종 세종특별자치시",
+   "sido": "세종",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "세종 세종특별자치시",
+     "of_current": 0.982,
+     "of_previous": 0.9797
+    }
+   ]
+  },
+  {
+   "district": "울산 남구갑",
+   "sido": "울산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '울산 남구갑' 겹침 93%/84%",
+   "previous": [
+    {
+     "prev": "울산 남구갑",
+     "of_current": 0.9323,
+     "of_previous": 0.8436
+    }
+   ]
+  },
+  {
+   "district": "울산 남구을",
+   "sido": "울산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "울산 남구을",
+     "of_current": 0.9671,
+     "of_previous": 0.9177
+    }
+   ]
+  },
+  {
+   "district": "울산 동구",
+   "sido": "울산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "울산 동구",
+     "of_current": 0.9193,
+     "of_previous": 0.9196
+    }
+   ]
+  },
+  {
+   "district": "울산 북구",
+   "sido": "울산",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "울산 북구",
+     "of_current": 0.9788,
+     "of_previous": 0.9652
+    }
+   ]
+  },
+  {
+   "district": "울산 울주군",
+   "sido": "울산",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "울산 울주군",
+     "of_current": 0.9799,
+     "of_previous": 0.9794
+    },
+    {
+     "prev": "울산 남구갑",
+     "of_current": 0.0033,
+     "of_previous": 0.105
+    }
+   ]
+  },
+  {
+   "district": "울산 중구",
+   "sido": "울산",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '울산 중구' 겹침 89%/97%",
+   "previous": [
+    {
+     "prev": "울산 중구",
+     "of_current": 0.8882,
+     "of_previous": 0.966
+    },
+    {
+     "prev": "울산 울주군",
+     "of_current": 0.0814,
+     "of_previous": 0.0043
+    }
+   ]
+  },
+  {
+   "district": "인천 계양구갑",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "인천 계양구갑",
+     "of_current": 0.9471,
+     "of_previous": 0.9636
+    }
+   ]
+  },
+  {
+   "district": "인천 계양구을",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "인천 계양구을",
+     "of_current": 0.9738,
+     "of_previous": 0.9119
+    }
+   ]
+  },
+  {
+   "district": "인천 남구갑",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 남구갑' 겹침 94%/79%",
+   "previous": [
+    {
+     "prev": "인천 남구갑",
+     "of_current": 0.9415,
+     "of_previous": 0.7899
+    },
+    {
+     "prev": "인천 남구을",
+     "of_current": 0.057,
+     "of_previous": 0.0323
+    }
+   ]
+  },
+  {
+   "district": "인천 남구을",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 남구을' 겹침 92%/87%",
+   "previous": [
+    {
+     "prev": "인천 남구을",
+     "of_current": 0.9236,
+     "of_previous": 0.8687
+    },
+    {
+     "prev": "인천 남구갑",
+     "of_current": 0.0359,
+     "of_previous": 0.05
+    }
+   ]
+  },
+  {
+   "district": "인천 남동구갑",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "인천 남동구갑",
+     "of_current": 0.9377,
+     "of_previous": 0.9082
+    },
+    {
+     "prev": "인천 남구갑",
+     "of_current": 0.0189,
+     "of_previous": 0.0649
+    }
+   ]
+  },
+  {
+   "district": "인천 남동구을",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 90%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "인천 남동구을",
+     "of_current": 0.9015,
+     "of_previous": 0.9306
+    },
+    {
+     "prev": "인천 남동구갑",
+     "of_current": 0.0609,
+     "of_previous": 0.0395
+    }
+   ]
+  },
+  {
+   "district": "인천 부평구갑",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 부평구갑' 겹침 90%/89%",
+   "previous": [
+    {
+     "prev": "인천 부평구갑",
+     "of_current": 0.9041,
+     "of_previous": 0.8891
+    },
+    {
+     "prev": "인천 부평구을",
+     "of_current": 0.0713,
+     "of_previous": 0.0857
+    }
+   ]
+  },
+  {
+   "district": "인천 부평구을",
+   "sido": "인천",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 90%/90% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "인천 부평구을",
+     "of_current": 0.9036,
+     "of_previous": 0.9041
+    },
+    {
+     "prev": "인천 부평구갑",
+     "of_current": 0.0678,
+     "of_previous": 0.0555
+    }
+   ]
+  },
+  {
+   "district": "인천 서구갑",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 서구강화군갑 94%",
+   "previous": [
+    {
+     "prev": "인천 서구강화군갑",
+     "of_current": 0.9421,
+     "of_previous": 0.551
+    }
+   ]
+  },
+  {
+   "district": "인천 서구을",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 서구강화군을 58%, 인천 서구강화군갑 37%",
+   "previous": [
+    {
+     "prev": "인천 서구강화군을",
+     "of_current": 0.5808,
+     "of_previous": 0.1016
+    },
+    {
+     "prev": "인천 서구강화군갑",
+     "of_current": 0.3746,
+     "of_previous": 0.4289
+    }
+   ]
+  },
+  {
+   "district": "인천 연수구갑",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 연수구 88%, 인천 남구을 11%",
+   "previous": [
+    {
+     "prev": "인천 연수구",
+     "of_current": 0.8794,
+     "of_previous": 0.1318
+    },
+    {
+     "prev": "인천 남구을",
+     "of_current": 0.1138,
+     "of_previous": 0.08
+    }
+   ]
+  },
+  {
+   "district": "인천 연수구을",
+   "sido": "인천",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '인천 연수구' 겹침 91%/63%",
+   "previous": [
+    {
+     "prev": "인천 연수구",
+     "of_current": 0.9136,
+     "of_previous": 0.6264
+    }
+   ]
+  },
+  {
+   "district": "인천 중구동구강화군옹진군",
+   "sido": "인천",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 인천 서구강화군을 56%, 인천 중구동구옹진군 40%, 인천 남구갑 0%",
+   "previous": [
+    {
+     "prev": "인천 서구강화군을",
+     "of_current": 0.5624,
+     "of_previous": 0.7701
+    },
+    {
+     "prev": "인천 중구동구옹진군",
+     "of_current": 0.401,
+     "of_previous": 0.8509
+    },
+    {
+     "prev": "인천 남구갑",
+     "of_current": 0.0013,
+     "of_previous": 0.0876
+    }
+   ]
+  },
+  {
+   "district": "전남 고흥군보성군장흥군강진군",
+   "sido": "전남",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전남 고흥군보성군 + 전남 장흥군강진군영암군 통합",
+   "previous": [
+    {
+     "prev": "전남 고흥군보성군",
+     "of_current": 0.5511,
+     "of_previous": 0.9734
+    },
+    {
+     "prev": "전남 장흥군강진군영암군",
+     "of_current": 0.4246,
+     "of_previous": 0.6561
+    }
+   ]
+  },
+  {
+   "district": "전남 광양시곡성군구례군",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 광양시구례군' 겹침 61%/98%",
+   "previous": [
+    {
+     "prev": "전남 광양시구례군",
+     "of_current": 0.6142,
+     "of_previous": 0.983
+    },
+    {
+     "prev": "전남 순천시곡성군",
+     "of_current": 0.3761,
+     "of_previous": 0.3754
+    }
+   ]
+  },
+  {
+   "district": "전남 나주시화순군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전남 나주시화순군",
+     "of_current": 0.9882,
+     "of_previous": 0.9872
+    }
+   ]
+  },
+  {
+   "district": "전남 담양군함평군영광군장성군",
+   "sido": "전남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전남 담양군함평군영광군장성군",
+     "of_current": 0.9842,
+     "of_previous": 0.9756
+    }
+   ]
+  },
+  {
+   "district": "전남 목포시",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 목포시' 겹침 92%/88%",
+   "previous": [
+    {
+     "prev": "전남 목포시",
+     "of_current": 0.9183,
+     "of_previous": 0.8828
+    }
+   ]
+  },
+  {
+   "district": "전남 순천시",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전남 순천시곡성군'의 62%만 차지",
+   "previous": [
+    {
+     "prev": "전남 순천시곡성군",
+     "of_current": 0.9908,
+     "of_previous": 0.6155
+    }
+   ]
+  },
+  {
+   "district": "전남 여수시갑",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 여수시갑' 겹침 81%/93%",
+   "previous": [
+    {
+     "prev": "전남 여수시갑",
+     "of_current": 0.8069,
+     "of_previous": 0.9328
+    },
+    {
+     "prev": "전남 여수시을",
+     "of_current": 0.0997,
+     "of_previous": 0.0526
+    }
+   ]
+  },
+  {
+   "district": "전남 여수시을",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 여수시을' 겹침 95%/88%",
+   "previous": [
+    {
+     "prev": "전남 여수시을",
+     "of_current": 0.9509,
+     "of_previous": 0.8808
+    }
+   ]
+  },
+  {
+   "district": "전남 영암군무안군신안군",
+   "sido": "전남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전남 무안군신안군' 겹침 61%/82%",
+   "previous": [
+    {
+     "prev": "전남 무안군신안군",
+     "of_current": 0.6105,
+     "of_previous": 0.8236
+    },
+    {
+     "prev": "전남 장흥군강진군영암군",
+     "of_current": 0.3291,
+     "of_previous": 0.3332
+    }
+   ]
+  },
+  {
+   "district": "전남 해남군완도군진도군",
+   "sido": "전남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "전남 해남군완도군진도군",
+     "of_current": 0.9302,
+     "of_previous": 0.9542
+    }
+   ]
+  },
+  {
+   "district": "전북 군산시",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북 군산시' 겹침 87%/95%",
+   "previous": [
+    {
+     "prev": "전북 군산시",
+     "of_current": 0.8729,
+     "of_previous": 0.9518
+    }
+   ]
+  },
+  {
+   "district": "전북 김제시부안군",
+   "sido": "전북",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전북 김제시완주군 48%, 전북 고창군부안군 45%",
+   "previous": [
+    {
+     "prev": "전북 김제시완주군",
+     "of_current": 0.485,
+     "of_previous": 0.3806
+    },
+    {
+     "prev": "전북 고창군부안군",
+     "of_current": 0.4525,
+     "of_previous": 0.4352
+    }
+   ]
+  },
+  {
+   "district": "전북 남원시임실군순창군",
+   "sido": "전북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '전북 남원시순창군' 겹침 67%/99%",
+   "previous": [
+    {
+     "prev": "전북 남원시순창군",
+     "of_current": 0.6661,
+     "of_previous": 0.9851
+    },
+    {
+     "prev": "전북 진안군무주군장수군임실군",
+     "of_current": 0.3252,
+     "of_previous": 0.2343
+    }
+   ]
+  },
+  {
+   "district": "전북 완주군진안군무주군장수군",
+   "sido": "전북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북 진안군무주군장수군임실군 + 전북 김제시완주군 통합",
+   "previous": [
+    {
+     "prev": "전북 진안군무주군장수군임실군",
+     "of_current": 0.6977,
+     "of_previous": 0.76
+    },
+    {
+     "prev": "전북 김제시완주군",
+     "of_current": 0.292,
+     "of_previous": 0.6083
+    }
+   ]
+  },
+  {
+   "district": "전북 익산시갑",
+   "sido": "전북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북 익산시갑",
+     "of_current": 0.9723,
+     "of_previous": 0.9797
+    }
+   ]
+  },
+  {
+   "district": "전북 익산시을",
+   "sido": "전북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북 익산시을",
+     "of_current": 0.9762,
+     "of_previous": 0.9821
+    }
+   ]
+  },
+  {
+   "district": "전북 전주시갑",
+   "sido": "전북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북 전주시완산구갑'",
+   "previous": [
+    {
+     "prev": "전북 전주시완산구갑",
+     "of_current": 0.9262,
+     "of_previous": 0.9357
+    }
+   ]
+  },
+  {
+   "district": "전북 전주시병",
+   "sido": "전북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북 전주시덕진구'",
+   "previous": [
+    {
+     "prev": "전북 전주시덕진구",
+     "of_current": 0.9584,
+     "of_previous": 0.942
+    }
+   ]
+  },
+  {
+   "district": "전북 전주시을",
+   "sido": "전북",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북 전주시완산구을'",
+   "previous": [
+    {
+     "prev": "전북 전주시완산구을",
+     "of_current": 0.9361,
+     "of_previous": 0.919
+    }
+   ]
+  },
+  {
+   "district": "전북 정읍시고창군",
+   "sido": "전북",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전북 정읍시 52%, 전북 고창군부안군 46%",
+   "previous": [
+    {
+     "prev": "전북 정읍시",
+     "of_current": 0.5248,
+     "of_previous": 0.9831
+    },
+    {
+     "prev": "전북 고창군부안군",
+     "of_current": 0.4611,
+     "of_previous": 0.5508
+    }
+   ]
+  },
+  {
+   "district": "제주 서귀포시",
+   "sido": "제주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "제주 서귀포시",
+     "of_current": 0.9873,
+     "of_previous": 0.9791
+    }
+   ]
+  },
+  {
+   "district": "제주 제주시갑",
+   "sido": "제주",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "제주 제주시갑",
+     "of_current": 0.9797,
+     "of_previous": 0.9758
+    }
+   ]
+  },
+  {
+   "district": "제주 제주시을",
+   "sido": "제주",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "제주 제주시을",
+     "of_current": 0.9928,
+     "of_previous": 0.9663
+    }
+   ]
+  },
+  {
+   "district": "충남 공주시부여군청양군",
+   "sido": "충남",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충남 부여군청양군 + 충남 공주시 통합",
+   "previous": [
+    {
+     "prev": "충남 부여군청양군",
+     "of_current": 0.5541,
+     "of_previous": 0.9911
+    },
+    {
+     "prev": "충남 공주시",
+     "of_current": 0.4345,
+     "of_previous": 0.9946
+    }
+   ]
+  },
+  {
+   "district": "충남 논산시계룡시금산군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충남 논산시계룡시금산군",
+     "of_current": 0.9822,
+     "of_previous": 0.9847
+    }
+   ]
+  },
+  {
+   "district": "충남 당진시",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충남 당진시",
+     "of_current": 0.9775,
+     "of_previous": 0.9824
+    }
+   ]
+  },
+  {
+   "district": "충남 보령시서천군",
+   "sido": "충남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "충남 보령시서천군",
+     "of_current": 0.9717,
+     "of_previous": 0.9581
+    }
+   ]
+  },
+  {
+   "district": "충남 서산시태안군",
+   "sido": "충남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "충남 서산시태안군",
+     "of_current": 0.9411,
+     "of_previous": 0.9404
+    }
+   ]
+  },
+  {
+   "district": "충남 아산시갑",
+   "sido": "충남",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '충남 아산시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "충남 아산시",
+     "of_current": 0.99,
+     "of_previous": 0.2991
+    }
+   ]
+  },
+  {
+   "district": "충남 아산시을",
+   "sido": "충남",
+   "relation": "split",
+   "comparable": "no",
+   "reason": "이전 '충남 아산시'이 2개로 분할",
+   "previous": [
+    {
+     "prev": "충남 아산시",
+     "of_current": 0.982,
+     "of_previous": 0.6864
+    }
+   ]
+  },
+  {
+   "district": "충남 천안시갑",
+   "sido": "충남",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '충남 천안시갑' 겹침 97%/68%",
+   "previous": [
+    {
+     "prev": "충남 천안시갑",
+     "of_current": 0.969,
+     "of_previous": 0.6773
+    }
+   ]
+  },
+  {
+   "district": "충남 천안시병",
+   "sido": "충남",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충남 천안시갑 97%",
+   "previous": [
+    {
+     "prev": "충남 천안시갑",
+     "of_current": 0.9657,
+     "of_previous": 0.301
+    }
+   ]
+  },
+  {
+   "district": "충남 천안시을",
+   "sido": "충남",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/94% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "충남 천안시을",
+     "of_current": 0.9842,
+     "of_previous": 0.9351
+    }
+   ]
+  },
+  {
+   "district": "충남 홍성군예산군",
+   "sido": "충남",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충남 홍성군예산군",
+     "of_current": 0.9835,
+     "of_previous": 0.9748
+    }
+   ]
+  },
+  {
+   "district": "충북 보은군옥천군영동군괴산군",
+   "sido": "충북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '충북 보은군옥천군영동군' 겹침 69%/99%",
+   "previous": [
+    {
+     "prev": "충북 보은군옥천군영동군",
+     "of_current": 0.6935,
+     "of_previous": 0.9895
+    },
+    {
+     "prev": "충북 증평군진천군괴산군음성군",
+     "of_current": 0.2971,
+     "of_previous": 0.4496
+    }
+   ]
+  },
+  {
+   "district": "충북 제천시단양군",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충북 제천시단양군",
+     "of_current": 0.9858,
+     "of_previous": 0.9881
+    }
+   ]
+  },
+  {
+   "district": "충북 증평군진천군음성군",
+   "sido": "충북",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '충북 증평군진천군괴산군음성군'의 54%만 차지",
+   "previous": [
+    {
+     "prev": "충북 증평군진천군괴산군음성군",
+     "of_current": 0.9889,
+     "of_previous": 0.5398
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시상당구",
+   "sido": "충북",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충북 청원군 89%, 충북 청주시상당구 9%",
+   "previous": [
+    {
+     "prev": "충북 청원군",
+     "of_current": 0.8909,
+     "of_previous": 0.4569
+    },
+    {
+     "prev": "충북 청주시상당구",
+     "of_current": 0.0914,
+     "of_previous": 0.5375
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시서원구",
+   "sido": "충북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충북 청원군 + 충북 청주시흥덕구갑 통합",
+   "previous": [
+    {
+     "prev": "충북 청원군",
+     "of_current": 0.8117,
+     "of_previous": 0.1256
+    },
+    {
+     "prev": "충북 청주시흥덕구갑",
+     "of_current": 0.1719,
+     "of_previous": 0.9386
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시청원구",
+   "sido": "충북",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충북 청원군 83%, 충북 청주시상당구 14%",
+   "previous": [
+    {
+     "prev": "충북 청원군",
+     "of_current": 0.8321,
+     "of_previous": 0.2321
+    },
+    {
+     "prev": "충북 청주시상당구",
+     "of_current": 0.1409,
+     "of_previous": 0.4505
+    }
+   ]
+  },
+  {
+   "district": "충북 청주시흥덕구",
+   "sido": "충북",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충북 청원군 + 충북 청주시흥덕구을 통합",
+   "previous": [
+    {
+     "prev": "충북 청원군",
+     "of_current": 0.6756,
+     "of_previous": 0.1693
+    },
+    {
+     "prev": "충북 청주시흥덕구을",
+     "of_current": 0.3161,
+     "of_previous": 0.9848
+    }
+   ]
+  },
+  {
+   "district": "충북 충주시",
+   "sido": "충북",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충북 충주시",
+     "of_current": 0.9869,
+     "of_previous": 0.9854
+    }
+   ]
+  }
+ ]
+}

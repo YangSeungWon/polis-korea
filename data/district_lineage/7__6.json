@@ -1,0 +1,1899 @@
+{
+ "_meta": {
+  "current_n": 7,
+  "previous_n": 6,
+  "generated_at": "2026-08-05T15:09:26+09:00",
+  "source": "polis 계산 — 선거구 폴리곤 교차 면적",
+  "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
+  "thresholds": {
+   "exact": 0.97,
+   "major": 0.6,
+   "minor": 0.05
+  },
+  "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
+  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+ },
+ "counts": {
+  "exact": 123,
+  "minor_boundary_change": 3,
+  "boundary_changed": 4,
+  "merged": 1,
+  "total": 131,
+  "comparable": 123,
+  "comparable_unknown": 3,
+  "previous_total": 131,
+  "previous_unmatched": 0
+ },
+ "previous_unmatched": [],
+ "units": [
+  {
+   "district": "서울특별시 종로구",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 종로구",
+     "of_current": 0.9972,
+     "of_previous": 0.9732
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 중구",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 중구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 동대문구 갑",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 동대문구 갑",
+     "of_current": 1.0,
+     "of_previous": 0.9994
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 동대문구 을",
+   "sido": "서울특별시",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울특별시 동대문구 을",
+     "of_current": 0.9923,
+     "of_previous": 0.9275
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울특별시 성동구 갑'의 16%만 차지",
+   "previous": [
+    {
+     "prev": "서울특별시 성동구 갑",
+     "of_current": 0.9998,
+     "of_previous": 0.1582
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 을",
+   "sido": "서울특별시",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 서울특별시 성동구 을 + 서울특별시 성동구 갑 통합",
+   "previous": [
+    {
+     "prev": "서울특별시 성동구 을",
+     "of_current": 0.5377,
+     "of_previous": 0.9976
+    },
+    {
+     "prev": "서울특별시 성동구 갑",
+     "of_current": 0.4522,
+     "of_previous": 0.8365
+    },
+    {
+     "prev": "서울특별시 동대문구 을",
+     "of_current": 0.0101,
+     "of_previous": 0.0725
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성북구 갑",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 성북구 갑",
+     "of_current": 0.993,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성북구 을",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 성북구 을",
+     "of_current": 0.9998,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '서울특별시 서대문구 갑'의 88%만 차지",
+   "previous": [
+    {
+     "prev": "서울특별시 서대문구 갑",
+     "of_current": 0.9755,
+     "of_previous": 0.877
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 을",
+   "sido": "서울특별시",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/97% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "서울특별시 서대문구 을",
+     "of_current": 0.995,
+     "of_previous": 0.9675
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 마포구",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 마포구' 겹침 82%/98%",
+   "previous": [
+    {
+     "prev": "서울특별시 마포구",
+     "of_current": 0.8199,
+     "of_previous": 0.9847
+    },
+    {
+     "prev": "서울특별시 서대문구 을",
+     "of_current": 0.1185,
+     "of_previous": 0.0325
+    },
+    {
+     "prev": "서울특별시 서대문구 갑",
+     "of_current": 0.0609,
+     "of_previous": 0.0718
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 용산구",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 용산구",
+     "of_current": 0.9896,
+     "of_previous": 0.9995
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 갑",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 영등포구 갑",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 을",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 영등포구 을",
+     "of_current": 0.9995,
+     "of_previous": 0.9999
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 중구",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 중구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 영도구",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 영도구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 서구",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 서구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 동구",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 동구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 부산진구 갑",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 부산진구 갑",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 부산진구 을",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 부산진구 을",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 동래구",
+   "sido": "부산광역시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "부산광역시 동래구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 갑",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 인천시 갑",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 을",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 인천시 을",
+     "of_current": 1.0,
+     "of_previous": 0.9999
+    }
+   ]
+  },
+  {
+   "district": "경기도 수원시",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 수원시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 의정부시·양주군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 의정부시·양주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 광주군·이천군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 광주군·이천군",
+     "of_current": 0.9997,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 포천군·가평군·연천군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 포천군·가평군·연천군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 여주군·양평군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 여주군·양평군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 용인군·안성군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 용인군·안성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 평택군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 평택군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 화성군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 화성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 고양군·파주군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 고양군·파주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경기도 김포군·강화군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 김포군·강화군",
+     "of_current": 0.9938,
+     "of_previous": 0.9745
+    }
+   ]
+  },
+  {
+   "district": "경기도 시흥군·부천군·옹진군",
+   "sido": "경기도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경기도 시흥군·부천군·옹진군",
+     "of_current": 0.9912,
+     "of_previous": 0.9906
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 춘천시·춘성군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 춘천시·춘성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 원주시·원성군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 원주시·원성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "강원특별자치도 횡성군·평창군",
+     "of_current": 1.0,
+     "of_previous": 0.2519
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 강릉시·명주군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 강릉시·명주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 홍천군·인제군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 홍천군·인제군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 영월군·정선군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 영월군·정선군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 철원군·화천군·양구군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 철원군·화천군·양구군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 속초시·양양군·고성군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 속초시·양양군·고성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 횡성군·평창군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 횡성군·평창군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "강원특별자치도 원주시·원성군",
+     "of_current": 0.2519,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 삼척군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 삼척군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청주시",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 청주시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청원군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 청원군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 충주시·중원군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 충주시·중원군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 옥천군·보은군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 옥천군·보은군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 괴산군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 괴산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 영동군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 영동군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 진천군·음성군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 진천군·음성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청북도 제천군·단양군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 제천군·단양군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대전시",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 대전시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대덕군·연기군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 대덕군·연기군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 공주군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 공주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 논산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 논산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 부여군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 부여군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서천군·보령군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 서천군·보령군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 청양군·홍성군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 청양군·홍성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 예산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 예산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 서산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 당진군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 당진군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 아산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 아산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 천안시·천원군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 천안시·천원군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 금산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 금산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 전주시",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 전주시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 군산시·옥구군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 군산시·옥구군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 이리시·익산군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 이리시·익산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 완주군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 완주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 진안군·장수군·무주군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 진안군·장수군·무주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 임실군·순창군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 임실군·순창군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 남원군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 남원군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 정읍군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 정읍군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 고창군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 고창군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 부안군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 부안군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 김제군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 김제군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광주시 갑",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 광주시 갑",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광주시 을",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 광주시 을",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 목포시",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 목포시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 여수시·여천군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 여수시·여천군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 순천시·승주군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 순천시·승주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 담양군·장성군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 담양군·장성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 화순군·곡성군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 화순군·곡성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 구례군·광양군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 구례군·광양군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 고흥군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 고흥군",
+     "of_current": 1.0,
+     "of_previous": 0.9917
+    }
+   ]
+  },
+  {
+   "district": "전라남도 보성군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 보성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 장흥군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 장흥군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영암군·강진군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 영암군·강진군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 완도군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 완도군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 해남군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 해남군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 무안군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 무안군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 나주군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 나주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광산군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 광산군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영광군·함평군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 영광군·함평군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 진도군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 진도군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 중구",
+   "sido": "경상북도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상북도 대구시 중구' 겹침 79%/100%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 중구",
+     "of_current": 0.7881,
+     "of_previous": 0.998
+    },
+    {
+     "prev": "경상북도 대구시 북구·서구",
+     "of_current": 0.2119,
+     "of_previous": 0.0189
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 동구",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 동구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 남구",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 남구",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 북구·서구",
+   "sido": "경상북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 100%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 북구·서구",
+     "of_current": 0.9999,
+     "of_previous": 0.9613
+    }
+   ]
+  },
+  {
+   "district": "경상북도 포항시·영일군·울릉군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 포항시·영일군·울릉군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 김천시·금릉군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 김천시·금릉군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경주시·월성군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 경주시·월성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 달성군·고령군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 달성군·고령군",
+     "of_current": 0.9987,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 군위군·선산군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 군위군·선산군",
+     "of_current": 0.9995,
+     "of_previous": 0.9999
+    }
+   ]
+  },
+  {
+   "district": "경상북도 의성군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 의성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 안동시·안동군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 안동시·안동군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 청송군·영덕군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 청송군·영덕군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영양군·울진군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 영양군·울진군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영천군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 영천군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경산군·청도군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 경산군·청도군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 성주군·칠곡군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 성주군·칠곡군",
+     "of_current": 1.0,
+     "of_previous": 0.9999
+    }
+   ]
+  },
+  {
+   "district": "경상북도 상주군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 상주군",
+     "of_current": 1.0,
+     "of_previous": 0.9996
+    }
+   ]
+  },
+  {
+   "district": "경상북도 문경군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 문경군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 예천군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 예천군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영주군·봉화군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 영주군·봉화군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 마산시",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 마산시",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진주시·진양군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 진주시·진양군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 충무시·통영군·고성군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 충무시·통영군·고성군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 거제군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 거제군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진해시·창원군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 진해시·창원군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 삼천포시·사천군·하동군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 삼천포시·사천군·하동군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함안군·의령군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 함안군·의령군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 창녕군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 창녕군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 산청군·합천군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 산청군·합천군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 밀양군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 밀양군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 양산군·동래군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 양산군·동래군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 울산시·울주군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 울산시·울주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 김해군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 김해군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 남해군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 남해군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함양군·거창군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 함양군·거창군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "제주특별자치도 제주시·북제주군",
+   "sido": "제주특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "제주특별자치도 제주시·북제주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "제주특별자치도 남제주군",
+   "sido": "제주특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "제주특별자치도 남제주군",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  }
+ ]
+}

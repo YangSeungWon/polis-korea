@@ -1,0 +1,2669 @@
+{
+ "_meta": {
+  "current_n": 6,
+  "previous_n": 5,
+  "generated_at": "2026-08-05T15:09:26+09:00",
+  "source": "polis 계산 — 선거구 폴리곤 교차 면적",
+  "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
+  "thresholds": {
+   "exact": 0.97,
+   "major": 0.6,
+   "minor": 0.05
+  },
+  "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
+  "polygon_caveat": "21·22대는 오마이뉴스 원본(1.5MB), 나머지는 재구성본(436KB~784KB)이라 단순화 수준이 다르다. 경계가 실제로 안 바뀌었는데도 겹침이 94~97%에 머무는 쌍이 많다."
+ },
+ "counts": {
+  "unresolvable": 39,
+  "exact": 11,
+  "merged": 56,
+  "boundary_changed": 10,
+  "minor_boundary_change": 12,
+  "renamed": 3,
+  "total": 131,
+  "comparable": 14,
+  "comparable_unknown": 12,
+  "previous_total": 233,
+  "previous_unmatched": 7
+ },
+ "previous_unmatched": [
+  "경상남도 부산시 영도구 갑",
+  "경상북도 대구시 갑",
+  "경상북도 대구시 기",
+  "경상북도 대구시 정",
+  "전라남도 목포시",
+  "전라남도 무안군 을",
+  "충청남도 서산군 을"
+ ],
+ "units": [
+  {
+   "district": "서울특별시 종로구",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 종로구 을 60%, 서울특별시 종로구 갑 36%",
+   "previous": [
+    {
+     "prev": "서울특별시 종로구 을",
+     "of_current": 0.597,
+     "of_previous": 0.9708
+    },
+    {
+     "prev": "서울특별시 종로구 갑",
+     "of_current": 0.3586,
+     "of_previous": 0.967
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 중구",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 중구 갑 51%, 서울특별시 중구 을 45%",
+   "previous": [
+    {
+     "prev": "서울특별시 중구 갑",
+     "of_current": 0.5133,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "서울특별시 중구 을",
+     "of_current": 0.4493,
+     "of_previous": 0.9781
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 동대문구 갑",
+   "sido": "서울특별시",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "서울특별시 동대문구 갑",
+     "of_current": 1.0,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 동대문구 을",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 양주군 갑 42%, 서울특별시 동대문구 을 33%, 경기도 양주군 을 11%",
+   "previous": [
+    {
+     "prev": "경기도 양주군 갑",
+     "of_current": 0.4237,
+     "of_previous": 0.0182
+    },
+    {
+     "prev": "서울특별시 동대문구 을",
+     "of_current": 0.3309,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "경기도 양주군 을",
+     "of_current": 0.1112,
+     "of_previous": 0.0048
+    },
+    {
+     "prev": "서울특별시 성북구",
+     "of_current": 0.0676,
+     "of_previous": 0.0308
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 광주군 52%, 서울특별시 성동구 갑 34%, 서울특별시 성동구 을 11%",
+   "previous": [
+    {
+     "prev": "경기도 광주군",
+     "of_current": 0.5243,
+     "of_previous": 0.055
+    },
+    {
+     "prev": "서울특별시 성동구 갑",
+     "of_current": 0.3444,
+     "of_previous": 0.9677
+    },
+    {
+     "prev": "서울특별시 성동구 을",
+     "of_current": 0.1073,
+     "of_previous": 0.3293
+    },
+    {
+     "prev": "서울특별시 용산구 을",
+     "of_current": 0.0105,
+     "of_previous": 0.0542
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성동구 을",
+   "sido": "서울특별시",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 광주군 + 서울특별시 성동구 을 통합",
+   "previous": [
+    {
+     "prev": "경기도 광주군",
+     "of_current": 0.7814,
+     "of_previous": 0.0818
+    },
+    {
+     "prev": "서울특별시 성동구 을",
+     "of_current": 0.2125,
+     "of_previous": 0.6499
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성북구 갑",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 성북구' 겹침 69%/79%",
+   "previous": [
+    {
+     "prev": "서울특별시 성북구",
+     "of_current": 0.687,
+     "of_previous": 0.7914
+    },
+    {
+     "prev": "경기도 양주군 갑",
+     "of_current": 0.2839,
+     "of_previous": 0.0307
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 성북구 을",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 양주군 갑 82%, 서울특별시 성북구 15%",
+   "previous": [
+    {
+     "prev": "경기도 양주군 갑",
+     "of_current": 0.8228,
+     "of_previous": 0.0847
+    },
+    {
+     "prev": "서울특별시 성북구",
+     "of_current": 0.1541,
+     "of_previous": 0.169
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 서울특별시 서대문구 을 90%, 서울특별시 서대문구 갑 9%",
+   "previous": [
+    {
+     "prev": "서울특별시 서대문구 을",
+     "of_current": 0.8965,
+     "of_previous": 0.2082
+    },
+    {
+     "prev": "서울특별시 서대문구 갑",
+     "of_current": 0.0861,
+     "of_previous": 0.0794
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 서대문구 을",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 서대문구 을' 겹침 78%/78%",
+   "previous": [
+    {
+     "prev": "서울특별시 서대문구 을",
+     "of_current": 0.7788,
+     "of_previous": 0.7787
+    },
+    {
+     "prev": "서울특별시 서대문구 갑",
+     "of_current": 0.1802,
+     "of_previous": 0.7159
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 마포구",
+   "sido": "서울특별시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '서울특별시 마포구' 겹침 75%/94%",
+   "previous": [
+    {
+     "prev": "서울특별시 마포구",
+     "of_current": 0.7524,
+     "of_previous": 0.9443
+    },
+    {
+     "prev": "서울특별시 서대문구 갑",
+     "of_current": 0.2259,
+     "of_previous": 0.2046
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 용산구",
+   "sido": "서울특별시",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 서울특별시 용산구 을 + 서울특별시 용산구 갑 통합",
+   "previous": [
+    {
+     "prev": "서울특별시 용산구 을",
+     "of_current": 0.7121,
+     "of_previous": 0.942
+    },
+    {
+     "prev": "서울특별시 용산구 갑",
+     "of_current": 0.2823,
+     "of_previous": 0.9171
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 갑",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 시흥군 88%, 서울특별시 영등포구 갑 8%, 서울특별시 영등포구 을 4%",
+   "previous": [
+    {
+     "prev": "경기도 시흥군",
+     "of_current": 0.8752,
+     "of_previous": 0.1181
+    },
+    {
+     "prev": "서울특별시 영등포구 갑",
+     "of_current": 0.0811,
+     "of_previous": 0.3611
+    },
+    {
+     "prev": "서울특별시 영등포구 을",
+     "of_current": 0.0414,
+     "of_previous": 0.0568
+    }
+   ]
+  },
+  {
+   "district": "서울특별시 영등포구 을",
+   "sido": "서울특별시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 김포군 36%, 경기도 시흥군 26%, 서울특별시 영등포구 을 21%",
+   "previous": [
+    {
+     "prev": "경기도 김포군",
+     "of_current": 0.3575,
+     "of_previous": 0.1625
+    },
+    {
+     "prev": "경기도 시흥군",
+     "of_current": 0.2552,
+     "of_previous": 0.1125
+    },
+    {
+     "prev": "서울특별시 영등포구 을",
+     "of_current": 0.2107,
+     "of_previous": 0.9432
+    },
+    {
+     "prev": "경기도 부천군",
+     "of_current": 0.1233,
+     "of_previous": 0.0689
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 중구",
+   "sido": "부산광역시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 부산시 중구 43%, 경상남도 부산시 동구 갑 7%",
+   "previous": [
+    {
+     "prev": "경상남도 부산시 중구",
+     "of_current": 0.43,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "경상남도 부산시 동구 갑",
+     "of_current": 0.0714,
+     "of_previous": 0.0212
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 영도구",
+   "sido": "부산광역시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 부산시 영도구 을 26%, 경상남도 부산시 영도구 갑 11%",
+   "previous": [
+    {
+     "prev": "경상남도 부산시 영도구 을",
+     "of_current": 0.2638,
+     "of_previous": 0.7923
+    },
+    {
+     "prev": "경상남도 부산시 영도구 갑",
+     "of_current": 0.1093,
+     "of_previous": 0.4063
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 서구",
+   "sido": "부산광역시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 부산시 서구 갑' 겹침 80%/88%",
+   "previous": [
+    {
+     "prev": "경상남도 부산시 서구 갑",
+     "of_current": 0.7963,
+     "of_previous": 0.8768
+    },
+    {
+     "prev": "경상남도 부산시 서구 을",
+     "of_current": 0.0666,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 동구",
+   "sido": "부산광역시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 부산시 동구 갑 42%, 경상남도 부산시 동구 을 39%, 경상남도 부산시 서구 갑 12%",
+   "previous": [
+    {
+     "prev": "경상남도 부산시 동구 갑",
+     "of_current": 0.4243,
+     "of_previous": 0.9607
+    },
+    {
+     "prev": "경상남도 부산시 동구 을",
+     "of_current": 0.3854,
+     "of_previous": 0.9814
+    },
+    {
+     "prev": "경상남도 부산시 서구 갑",
+     "of_current": 0.1198,
+     "of_previous": 0.027
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 부산진구 갑",
+   "sido": "부산광역시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 동래군 36%, 경상남도 부산시 부산진구 을 30%, 경상남도 부산시 부산진구 갑 29%",
+   "previous": [
+    {
+     "prev": "경상남도 동래군",
+     "of_current": 0.3612,
+     "of_previous": 0.0695
+    },
+    {
+     "prev": "경상남도 부산시 부산진구 을",
+     "of_current": 0.2969,
+     "of_previous": 0.8612
+    },
+    {
+     "prev": "경상남도 부산시 부산진구 갑",
+     "of_current": 0.2882,
+     "of_previous": 0.6513
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 부산진구 을",
+   "sido": "부산광역시",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 동래군 83%, 경상남도 부산시 부산진구 갑 15%",
+   "previous": [
+    {
+     "prev": "경상남도 동래군",
+     "of_current": 0.8339,
+     "of_previous": 0.1654
+    },
+    {
+     "prev": "경상남도 부산시 부산진구 갑",
+     "of_current": 0.1468,
+     "of_previous": 0.342
+    }
+   ]
+  },
+  {
+   "district": "부산광역시 동래구",
+   "sido": "부산광역시",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 부산시 동래구' 겹침 74%/97%",
+   "previous": [
+    {
+     "prev": "경상남도 부산시 동래구",
+     "of_current": 0.7356,
+     "of_previous": 0.9683
+    },
+    {
+     "prev": "경상남도 동래군",
+     "of_current": 0.2517,
+     "of_previous": 0.1013
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 갑",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 인천시 을 38%, 경기도 인천시 병 31%",
+   "previous": [
+    {
+     "prev": "경기도 인천시 을",
+     "of_current": 0.3794,
+     "of_previous": 0.0288
+    },
+    {
+     "prev": "경기도 인천시 병",
+     "of_current": 0.3067,
+     "of_previous": 0.0258
+    }
+   ]
+  },
+  {
+   "district": "경기도 인천시 을",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 인천시 을 41%, 경기도 인천시 병 37%, 경기도 인천시 갑 16%",
+   "previous": [
+    {
+     "prev": "경기도 인천시 을",
+     "of_current": 0.4083,
+     "of_previous": 0.9315
+    },
+    {
+     "prev": "경기도 인천시 병",
+     "of_current": 0.3732,
+     "of_previous": 0.941
+    },
+    {
+     "prev": "경기도 인천시 갑",
+     "of_current": 0.1649,
+     "of_previous": 0.925
+    }
+   ]
+  },
+  {
+   "district": "경기도 수원시",
+   "sido": "경기도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 화성군 을 + 경기도 수원시 통합",
+   "previous": [
+    {
+     "prev": "경기도 화성군 을",
+     "of_current": 0.6815,
+     "of_previous": 0.1319
+    },
+    {
+     "prev": "경기도 수원시",
+     "of_current": 0.3102,
+     "of_previous": 0.9986
+    }
+   ]
+  },
+  {
+   "district": "경기도 의정부시·양주군",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 양주군 을 51%, 경기도 양주군 갑 45%",
+   "previous": [
+    {
+     "prev": "경기도 양주군 을",
+     "of_current": 0.5053,
+     "of_previous": 0.9765
+    },
+    {
+     "prev": "경기도 양주군 갑",
+     "of_current": 0.4461,
+     "of_previous": 0.8613
+    }
+   ]
+  },
+  {
+   "district": "경기도 광주군·이천군",
+   "sido": "경기도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 광주군 + 경기도 이천군 통합",
+   "previous": [
+    {
+     "prev": "경기도 광주군",
+     "of_current": 0.5855,
+     "of_previous": 0.8574
+    },
+    {
+     "prev": "경기도 이천군",
+     "of_current": 0.406,
+     "of_previous": 0.9905
+    }
+   ]
+  },
+  {
+   "district": "경기도 포천군·가평군·연천군",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 가평군 34%, 경기도 포천군 31%, 경기도 연천군 30%",
+   "previous": [
+    {
+     "prev": "경기도 가평군",
+     "of_current": 0.3366,
+     "of_previous": 0.9466
+    },
+    {
+     "prev": "경기도 포천군",
+     "of_current": 0.3093,
+     "of_previous": 0.9933
+    },
+    {
+     "prev": "경기도 연천군",
+     "of_current": 0.296,
+     "of_previous": 0.9883
+    },
+    {
+     "prev": "강원특별자치도 철원군",
+     "of_current": 0.0497,
+     "of_previous": 0.2219
+    }
+   ]
+  },
+  {
+   "district": "경기도 여주군·양평군",
+   "sido": "경기도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 양평군 + 경기도 여주군 통합",
+   "previous": [
+    {
+     "prev": "경기도 양평군",
+     "of_current": 0.5777,
+     "of_previous": 0.9916
+    },
+    {
+     "prev": "경기도 여주군",
+     "of_current": 0.4137,
+     "of_previous": 0.9918
+    }
+   ]
+  },
+  {
+   "district": "경기도 용인군·안성군",
+   "sido": "경기도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 용인군 + 경기도 안성군 통합",
+   "previous": [
+    {
+     "prev": "경기도 용인군",
+     "of_current": 0.53,
+     "of_previous": 0.9898
+    },
+    {
+     "prev": "경기도 안성군",
+     "of_current": 0.4617,
+     "of_previous": 0.9912
+    }
+   ]
+  },
+  {
+   "district": "경기도 평택군",
+   "sido": "경기도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경기도 평택군",
+     "of_current": 0.9884,
+     "of_previous": 0.9567
+    }
+   ]
+  },
+  {
+   "district": "경기도 화성군",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 화성군 갑 55%, 경기도 화성군 을 41%",
+   "previous": [
+    {
+     "prev": "경기도 화성군 갑",
+     "of_current": 0.5508,
+     "of_previous": 0.9782
+    },
+    {
+     "prev": "경기도 화성군 을",
+     "of_current": 0.4129,
+     "of_previous": 0.7527
+    }
+   ]
+  },
+  {
+   "district": "경기도 고양군·파주군",
+   "sido": "경기도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경기도 파주군 + 경기도 고양군 통합",
+   "previous": [
+    {
+     "prev": "경기도 파주군",
+     "of_current": 0.6007,
+     "of_previous": 0.9843
+    },
+    {
+     "prev": "경기도 고양군",
+     "of_current": 0.3848,
+     "of_previous": 0.9753
+    }
+   ]
+  },
+  {
+   "district": "경기도 김포군·강화군",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 강화군 54%, 경기도 김포군 43%",
+   "previous": [
+    {
+     "prev": "경기도 강화군",
+     "of_current": 0.539,
+     "of_previous": 0.9384
+    },
+    {
+     "prev": "경기도 김포군",
+     "of_current": 0.4296,
+     "of_previous": 0.8199
+    }
+   ]
+  },
+  {
+   "district": "경기도 시흥군·부천군·옹진군",
+   "sido": "경기도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경기도 시흥군 43%, 경기도 부천군 37%, 경기도 화성군 을 8%",
+   "previous": [
+    {
+     "prev": "경기도 시흥군",
+     "of_current": 0.4293,
+     "of_previous": 0.7614
+    },
+    {
+     "prev": "경기도 부천군",
+     "of_current": 0.3703,
+     "of_previous": 0.8326
+    },
+    {
+     "prev": "경기도 화성군 을",
+     "of_current": 0.0784,
+     "of_previous": 0.112
+    },
+    {
+     "prev": "경기도 옹진군",
+     "of_current": 0.0746,
+     "of_previous": 0.7218
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 춘천시·춘성군",
+   "sido": "강원특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 97%/98% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '강원특별자치도 춘성군'",
+   "previous": [
+    {
+     "prev": "강원특별자치도 춘성군",
+     "of_current": 0.9675,
+     "of_previous": 0.9831
+    },
+    {
+     "prev": "강원특별자치도 춘천시",
+     "of_current": 0.0228,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 원주시·원성군",
+   "sido": "강원특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '강원특별자치도 원성군'",
+   "previous": [
+    {
+     "prev": "강원특별자치도 원성군",
+     "of_current": 0.9147,
+     "of_previous": 0.9898
+    },
+    {
+     "prev": "강원특별자치도 원주시",
+     "of_current": 0.0796,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 강릉시·명주군",
+   "sido": "강원특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 93%/93% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '강원특별자치도 명주군'",
+   "previous": [
+    {
+     "prev": "강원특별자치도 명주군",
+     "of_current": 0.9278,
+     "of_previous": 0.9324
+    },
+    {
+     "prev": "강원특별자치도 강릉시",
+     "of_current": 0.0642,
+     "of_previous": 0.9999
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 홍천군·인제군",
+   "sido": "강원특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 강원특별자치도 홍천군 + 강원특별자치도 인제군 통합",
+   "previous": [
+    {
+     "prev": "강원특별자치도 홍천군",
+     "of_current": 0.5152,
+     "of_previous": 0.9951
+    },
+    {
+     "prev": "강원특별자치도 인제군",
+     "of_current": 0.4754,
+     "of_previous": 0.992
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 영월군·정선군",
+   "sido": "강원특별자치도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 강원특별자치도 정선군 49%, 강원특별자치도 영월군 47%, 경상북도 봉화군 3%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 정선군",
+     "of_current": 0.4929,
+     "of_previous": 0.9937
+    },
+    {
+     "prev": "강원특별자치도 영월군",
+     "of_current": 0.4683,
+     "of_previous": 0.9056
+    },
+    {
+     "prev": "경상북도 봉화군",
+     "of_current": 0.0301,
+     "of_previous": 0.053
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 철원군·화천군·양구군",
+   "sido": "강원특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 강원특별자치도 화천군 + 강원특별자치도 양구군 + 강원특별자치도 김화군 + 강원특별자치도 철원군 통합",
+   "previous": [
+    {
+     "prev": "강원특별자치도 화천군",
+     "of_current": 0.3283,
+     "of_previous": 0.9926
+    },
+    {
+     "prev": "강원특별자치도 양구군",
+     "of_current": 0.2714,
+     "of_previous": 0.9915
+    },
+    {
+     "prev": "강원특별자치도 김화군",
+     "of_current": 0.2064,
+     "of_previous": 0.9811
+    },
+    {
+     "prev": "강원특별자치도 철원군",
+     "of_current": 0.1787,
+     "of_previous": 0.7716
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 속초시·양양군·고성군",
+   "sido": "강원특별자치도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '강원특별자치도 양양군' 겹침 62%/99%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 양양군",
+     "of_current": 0.6157,
+     "of_previous": 0.9895
+    },
+    {
+     "prev": "강원특별자치도 고성군",
+     "of_current": 0.3281,
+     "of_previous": 0.9849
+    },
+    {
+     "prev": "강원특별자치도 명주군",
+     "of_current": 0.0425,
+     "of_previous": 0.0557
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 횡성군·평창군",
+   "sido": "강원특별자치도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 강원특별자치도 평창군 44%, 강원특별자치도 횡성군 27%, 강원특별자치도 원성군 23%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 평창군",
+     "of_current": 0.4398,
+     "of_previous": 0.993
+    },
+    {
+     "prev": "강원특별자치도 횡성군",
+     "of_current": 0.2748,
+     "of_previous": 0.9867
+    },
+    {
+     "prev": "강원특별자치도 원성군",
+     "of_current": 0.2314,
+     "of_previous": 0.9939
+    },
+    {
+     "prev": "강원특별자치도 영월군",
+     "of_current": 0.0313,
+     "of_previous": 0.0898
+    }
+   ]
+  },
+  {
+   "district": "강원특별자치도 삼척군",
+   "sido": "강원특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "강원특별자치도 삼척군",
+     "of_current": 0.9913,
+     "of_previous": 0.9927
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청주시",
+   "sido": "충청북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충청북도 청원군 갑 60%, 충청북도 청원군 을 40%, 충청북도 청주시 33%",
+   "previous": [
+    {
+     "prev": "충청북도 청원군 갑",
+     "of_current": 0.6016,
+     "of_previous": 0.0805
+    },
+    {
+     "prev": "충청북도 청원군 을",
+     "of_current": 0.3984,
+     "of_previous": 0.0532
+    },
+    {
+     "prev": "충청북도 청주시",
+     "of_current": 0.3275,
+     "of_previous": 0.9842
+    }
+   ]
+  },
+  {
+   "district": "충청북도 청원군",
+   "sido": "충청북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청북도 청원군 을 + 충청북도 청원군 갑 통합",
+   "previous": [
+    {
+     "prev": "충청북도 청원군 을",
+     "of_current": 0.5001,
+     "of_previous": 0.9284
+    },
+    {
+     "prev": "충청북도 청원군 갑",
+     "of_current": 0.4934,
+     "of_previous": 0.9177
+    }
+   ]
+  },
+  {
+   "district": "충청북도 충주시·중원군",
+   "sido": "충청북도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '충청북도 중원군' 겹침 82%/99%",
+   "previous": [
+    {
+     "prev": "충청북도 중원군",
+     "of_current": 0.8155,
+     "of_previous": 0.9863
+    },
+    {
+     "prev": "충청북도 충주시",
+     "of_current": 0.0939,
+     "of_previous": 1.0
+    },
+    {
+     "prev": "충청북도 괴산군",
+     "of_current": 0.0791,
+     "of_previous": 0.0792
+    }
+   ]
+  },
+  {
+   "district": "충청북도 옥천군·보은군",
+   "sido": "충청북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청북도 보은군 + 충청북도 옥천군 통합",
+   "previous": [
+    {
+     "prev": "충청북도 보은군",
+     "of_current": 0.5201,
+     "of_previous": 0.9899
+    },
+    {
+     "prev": "충청북도 옥천군",
+     "of_current": 0.4671,
+     "of_previous": 0.9959
+    }
+   ]
+  },
+  {
+   "district": "충청북도 괴산군",
+   "sido": "충청북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/91% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "충청북도 괴산군",
+     "of_current": 0.9472,
+     "of_previous": 0.9146
+    }
+   ]
+  },
+  {
+   "district": "충청북도 영동군",
+   "sido": "충청북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청북도 영동군",
+     "of_current": 0.9855,
+     "of_previous": 0.9879
+    }
+   ]
+  },
+  {
+   "district": "충청북도 진천군·음성군",
+   "sido": "충청북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청북도 음성군 + 충청북도 진천군 통합",
+   "previous": [
+    {
+     "prev": "충청북도 음성군",
+     "of_current": 0.5583,
+     "of_previous": 0.9828
+    },
+    {
+     "prev": "충청북도 진천군",
+     "of_current": 0.4264,
+     "of_previous": 0.9941
+    }
+   ]
+  },
+  {
+   "district": "충청북도 제천군·단양군",
+   "sido": "충청북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청북도 제천군 + 충청북도 단양군 통합",
+   "previous": [
+    {
+     "prev": "충청북도 제천군",
+     "of_current": 0.5236,
+     "of_previous": 0.9856
+    },
+    {
+     "prev": "충청북도 단양군",
+     "of_current": 0.4711,
+     "of_previous": 0.996
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대전시",
+   "sido": "충청남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충청남도 대덕군 60%, 충청남도 대전시 을 22%, 충청남도 대전시 갑 19%",
+   "previous": [
+    {
+     "prev": "충청남도 대덕군",
+     "of_current": 0.5966,
+     "of_previous": 0.0959
+    },
+    {
+     "prev": "충청남도 대전시 을",
+     "of_current": 0.218,
+     "of_previous": 0.9302
+    },
+    {
+     "prev": "충청남도 대전시 갑",
+     "of_current": 0.1853,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "충청남도 대덕군·연기군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 대덕군 + 충청남도 연기군 통합",
+   "previous": [
+    {
+     "prev": "충청남도 대덕군",
+     "of_current": 0.5582,
+     "of_previous": 0.8865
+    },
+    {
+     "prev": "충청남도 연기군",
+     "of_current": 0.4289,
+     "of_previous": 0.9508
+    },
+    {
+     "prev": "충청남도 대전시 을",
+     "of_current": 0.0017,
+     "of_previous": 0.0698
+    }
+   ]
+  },
+  {
+   "district": "충청남도 공주군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 공주군 을 + 충청남도 공주군 갑 통합",
+   "previous": [
+    {
+     "prev": "충청남도 공주군 을",
+     "of_current": 0.5931,
+     "of_previous": 0.9814
+    },
+    {
+     "prev": "충청남도 공주군 갑",
+     "of_current": 0.3793,
+     "of_previous": 0.9831
+    }
+   ]
+  },
+  {
+   "district": "충청남도 논산군",
+   "sido": "충청남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충청남도 논산군 을 47%, 충청남도 논산군 갑 46%, 전북특별자치도 익산군 을 6%",
+   "previous": [
+    {
+     "prev": "충청남도 논산군 을",
+     "of_current": 0.4668,
+     "of_previous": 0.9805
+    },
+    {
+     "prev": "충청남도 논산군 갑",
+     "of_current": 0.4633,
+     "of_previous": 0.9774
+    },
+    {
+     "prev": "전북특별자치도 익산군 을",
+     "of_current": 0.061,
+     "of_previous": 0.14
+    }
+   ]
+  },
+  {
+   "district": "충청남도 부여군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 부여군 을 + 충청남도 부여군 갑 통합",
+   "previous": [
+    {
+     "prev": "충청남도 부여군 을",
+     "of_current": 0.4909,
+     "of_previous": 0.9926
+    },
+    {
+     "prev": "충청남도 부여군 갑",
+     "of_current": 0.4864,
+     "of_previous": 0.9945
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서천군·보령군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 보령군 + 충청남도 서천군 통합",
+   "previous": [
+    {
+     "prev": "충청남도 보령군",
+     "of_current": 0.5777,
+     "of_previous": 0.9546
+    },
+    {
+     "prev": "충청남도 서천군",
+     "of_current": 0.4046,
+     "of_previous": 0.991
+    }
+   ]
+  },
+  {
+   "district": "충청남도 청양군·홍성군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 청양군 + 충청남도 홍성군 통합",
+   "previous": [
+    {
+     "prev": "충청남도 청양군",
+     "of_current": 0.5254,
+     "of_previous": 0.9884
+    },
+    {
+     "prev": "충청남도 홍성군",
+     "of_current": 0.4574,
+     "of_previous": 0.9853
+    }
+   ]
+  },
+  {
+   "district": "충청남도 예산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 예산군",
+     "of_current": 0.9813,
+     "of_previous": 0.9817
+    }
+   ]
+  },
+  {
+   "district": "충청남도 서산군",
+   "sido": "충청남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 충청남도 서산군 갑 49%, 충청남도 서산군 을 42%",
+   "previous": [
+    {
+     "prev": "충청남도 서산군 갑",
+     "of_current": 0.4912,
+     "of_previous": 0.8202
+    },
+    {
+     "prev": "충청남도 서산군 을",
+     "of_current": 0.4208,
+     "of_previous": 0.5578
+    }
+   ]
+  },
+  {
+   "district": "충청남도 당진군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 당진군 을 + 충청남도 당진군 갑 통합",
+   "previous": [
+    {
+     "prev": "충청남도 당진군 을",
+     "of_current": 0.4895,
+     "of_previous": 0.9365
+    },
+    {
+     "prev": "충청남도 당진군 갑",
+     "of_current": 0.4881,
+     "of_previous": 0.7234
+    }
+   ]
+  },
+  {
+   "district": "충청남도 아산군",
+   "sido": "충청남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "충청남도 아산군",
+     "of_current": 0.9855,
+     "of_previous": 0.9891
+    }
+   ]
+  },
+  {
+   "district": "충청남도 천안시·천원군",
+   "sido": "충청남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 충청남도 천안군 갑 + 충청남도 천안군 을 통합",
+   "previous": [
+    {
+     "prev": "충청남도 천안군 갑",
+     "of_current": 0.4952,
+     "of_previous": 0.9891
+    },
+    {
+     "prev": "충청남도 천안군 을",
+     "of_current": 0.4898,
+     "of_previous": 0.9765
+    }
+   ]
+  },
+  {
+   "district": "충청남도 금산군",
+   "sido": "충청남도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "전북특별자치도 금산군",
+     "of_current": 0.9922,
+     "of_previous": 0.9865
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 전주시",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 전주시 갑 + 전북특별자치도 전주시 을 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 전주시 갑",
+     "of_current": 0.4965,
+     "of_previous": 0.8787
+    },
+    {
+     "prev": "전북특별자치도 전주시 을",
+     "of_current": 0.4797,
+     "of_previous": 0.9632
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 군산시·옥구군",
+   "sido": "전북특별자치도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 94%/96% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전북특별자치도 옥구군'",
+   "previous": [
+    {
+     "prev": "전북특별자치도 옥구군",
+     "of_current": 0.9419,
+     "of_previous": 0.9628
+    },
+    {
+     "prev": "전북특별자치도 군산시",
+     "of_current": 0.015,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 이리시·익산군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 익산군 갑 + 전북특별자치도 익산군 을 + 전북특별자치도 이리시 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 익산군 갑",
+     "of_current": 0.5155,
+     "of_previous": 0.9742
+    },
+    {
+     "prev": "전북특별자치도 익산군 을",
+     "of_current": 0.4413,
+     "of_previous": 0.8364
+    },
+    {
+     "prev": "전북특별자치도 이리시",
+     "of_current": 0.0179,
+     "of_previous": 0.9813
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 완주군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 완주군 갑 + 전북특별자치도 완주군 을 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 완주군 갑",
+     "of_current": 0.4858,
+     "of_previous": 0.961
+    },
+    {
+     "prev": "전북특별자치도 완주군 을",
+     "of_current": 0.4849,
+     "of_previous": 0.9914
+    },
+    {
+     "prev": "전북특별자치도 전주시 갑",
+     "of_current": 0.0081,
+     "of_previous": 0.1213
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 진안군·장수군·무주군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 진안군 + 전북특별자치도 무주군 + 전북특별자치도 장수군 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 진안군",
+     "of_current": 0.4033,
+     "of_previous": 0.9971
+    },
+    {
+     "prev": "전북특별자치도 무주군",
+     "of_current": 0.3215,
+     "of_previous": 0.9962
+    },
+    {
+     "prev": "전북특별자치도 장수군",
+     "of_current": 0.2642,
+     "of_previous": 0.9868
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 임실군·순창군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 임실군 + 전북특별자치도 순창군 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 임실군",
+     "of_current": 0.5363,
+     "of_previous": 0.9872
+    },
+    {
+     "prev": "전북특별자치도 순창군",
+     "of_current": 0.4504,
+     "of_previous": 0.9722
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 남원군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 남원군 을 + 전북특별자치도 남원군 갑 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 남원군 을",
+     "of_current": 0.6408,
+     "of_previous": 0.9619
+    },
+    {
+     "prev": "전북특별자치도 남원군 갑",
+     "of_current": 0.3397,
+     "of_previous": 0.9864
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 정읍군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 정읍군 을 + 전북특별자치도 정읍군 갑 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 정읍군 을",
+     "of_current": 0.5071,
+     "of_previous": 0.9761
+    },
+    {
+     "prev": "전북특별자치도 정읍군 갑",
+     "of_current": 0.476,
+     "of_previous": 0.9758
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 고창군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 고창군 을 + 전북특별자치도 고창군 갑 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 고창군 을",
+     "of_current": 0.5089,
+     "of_previous": 0.9969
+    },
+    {
+     "prev": "전북특별자치도 고창군 갑",
+     "of_current": 0.4857,
+     "of_previous": 0.9818
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 부안군",
+   "sido": "전북특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전북특별자치도 부안군",
+     "of_current": 0.985,
+     "of_previous": 0.9779
+    }
+   ]
+  },
+  {
+   "district": "전북특별자치도 김제군",
+   "sido": "전북특별자치도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전북특별자치도 김제군 갑 + 전북특별자치도 김제군 을 통합",
+   "previous": [
+    {
+     "prev": "전북특별자치도 김제군 갑",
+     "of_current": 0.5839,
+     "of_previous": 0.9738
+    },
+    {
+     "prev": "전북특별자치도 김제군 을",
+     "of_current": 0.3865,
+     "of_previous": 0.8044
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광주시 갑",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 광주시 갑 71%, 전라남도 광주시 을 29%",
+   "previous": [
+    {
+     "prev": "전라남도 광주시 갑",
+     "of_current": 0.712,
+     "of_previous": 0.0002
+    },
+    {
+     "prev": "전라남도 광주시 을",
+     "of_current": 0.288,
+     "of_previous": 0.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광주시 을",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 광주시 갑 46%, 전라남도 광주시 병 45%, 전라남도 광주시 을 10%",
+   "previous": [
+    {
+     "prev": "전라남도 광주시 갑",
+     "of_current": 0.4558,
+     "of_previous": 0.0829
+    },
+    {
+     "prev": "전라남도 광주시 병",
+     "of_current": 0.4472,
+     "of_previous": 0.0294
+    },
+    {
+     "prev": "전라남도 광주시 을",
+     "of_current": 0.097,
+     "of_previous": 0.0076
+    }
+   ]
+  },
+  {
+   "district": "전라남도 목포시",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 무안군 병 65%, 전라남도 목포시 28%",
+   "previous": [
+    {
+     "prev": "전라남도 무안군 병",
+     "of_current": 0.65,
+     "of_previous": 0.0169
+    },
+    {
+     "prev": "전라남도 목포시",
+     "of_current": 0.2757,
+     "of_previous": 0.3718
+    }
+   ]
+  },
+  {
+   "district": "전라남도 여수시·여천군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 여천군 + 전라남도 여수시 통합",
+   "previous": [
+    {
+     "prev": "전라남도 여천군",
+     "of_current": 0.9426,
+     "of_previous": 0.8939
+    },
+    {
+     "prev": "전라남도 여수시",
+     "of_current": 0.0947,
+     "of_previous": 0.9501
+    }
+   ]
+  },
+  {
+   "district": "전라남도 순천시·승주군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 91%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '전라남도 승주군'",
+   "previous": [
+    {
+     "prev": "전라남도 승주군",
+     "of_current": 0.9122,
+     "of_previous": 0.9866
+    },
+    {
+     "prev": "전라남도 순천시",
+     "of_current": 0.0785,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "전라남도 담양군·장성군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 장성군 + 전라남도 담양군 통합",
+   "previous": [
+    {
+     "prev": "전라남도 장성군",
+     "of_current": 0.5278,
+     "of_previous": 0.9944
+    },
+    {
+     "prev": "전라남도 담양군",
+     "of_current": 0.4574,
+     "of_previous": 0.9848
+    }
+   ]
+  },
+  {
+   "district": "전라남도 화순군·곡성군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 화순군 + 전라남도 곡성군 통합",
+   "previous": [
+    {
+     "prev": "전라남도 화순군",
+     "of_current": 0.5837,
+     "of_previous": 0.993
+    },
+    {
+     "prev": "전라남도 곡성군",
+     "of_current": 0.413,
+     "of_previous": 0.9942
+    }
+   ]
+  },
+  {
+   "district": "전라남도 구례군·광양군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 구례군 + 전라남도 광양군 통합",
+   "previous": [
+    {
+     "prev": "전라남도 구례군",
+     "of_current": 0.5166,
+     "of_previous": 0.9928
+    },
+    {
+     "prev": "전라남도 광양군",
+     "of_current": 0.4766,
+     "of_previous": 0.9914
+    }
+   ]
+  },
+  {
+   "district": "전라남도 고흥군",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 고흥군 을 51%, 전라남도 고흥군 갑 46%",
+   "previous": [
+    {
+     "prev": "전라남도 고흥군 을",
+     "of_current": 0.5092,
+     "of_previous": 0.9426
+    },
+    {
+     "prev": "전라남도 고흥군 갑",
+     "of_current": 0.4596,
+     "of_previous": 0.8935
+    }
+   ]
+  },
+  {
+   "district": "전라남도 보성군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 보성군",
+     "of_current": 0.9849,
+     "of_previous": 0.9887
+    }
+   ]
+  },
+  {
+   "district": "전라남도 장흥군",
+   "sido": "전라남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "전라남도 장흥군",
+     "of_current": 0.9817,
+     "of_previous": 0.9766
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영암군·강진군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 강진군 + 전라남도 영암군 통합",
+   "previous": [
+    {
+     "prev": "전라남도 강진군",
+     "of_current": 0.4919,
+     "of_previous": 0.9881
+    },
+    {
+     "prev": "전라남도 영암군",
+     "of_current": 0.4863,
+     "of_previous": 0.967
+    }
+   ]
+  },
+  {
+   "district": "전라남도 완도군",
+   "sido": "전라남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "이전 '전라남도 완도군'의 78%만 차지",
+   "previous": [
+    {
+     "prev": "전라남도 완도군",
+     "of_current": 0.9882,
+     "of_previous": 0.7802
+    }
+   ]
+  },
+  {
+   "district": "전라남도 해남군",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 해남군 을 50%, 전라남도 해남군 갑 46%",
+   "previous": [
+    {
+     "prev": "전라남도 해남군 을",
+     "of_current": 0.5037,
+     "of_previous": 0.9864
+    },
+    {
+     "prev": "전라남도 해남군 갑",
+     "of_current": 0.464,
+     "of_previous": 0.9317
+    }
+   ]
+  },
+  {
+   "district": "전라남도 무안군",
+   "sido": "전라남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 전라남도 무안군 병 49%, 전라남도 무안군 갑 23%, 전라남도 무안군 을 20%",
+   "previous": [
+    {
+     "prev": "전라남도 무안군 병",
+     "of_current": 0.4895,
+     "of_previous": 0.9074
+    },
+    {
+     "prev": "전라남도 무안군 갑",
+     "of_current": 0.2346,
+     "of_previous": 0.6605
+    },
+    {
+     "prev": "전라남도 무안군 을",
+     "of_current": 0.1954,
+     "of_previous": 0.5298
+    }
+   ]
+  },
+  {
+   "district": "전라남도 나주군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 나주군 을 + 전라남도 나주군 갑 통합",
+   "previous": [
+    {
+     "prev": "전라남도 나주군 을",
+     "of_current": 0.4973,
+     "of_previous": 0.9957
+    },
+    {
+     "prev": "전라남도 나주군 갑",
+     "of_current": 0.4943,
+     "of_previous": 0.993
+    }
+   ]
+  },
+  {
+   "district": "전라남도 광산군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 광산군 + 전라남도 광주시 병 + 전라남도 광주시 을 + 전라남도 광주시 갑 통합",
+   "previous": [
+    {
+     "prev": "전라남도 광산군",
+     "of_current": 0.3331,
+     "of_previous": 0.9747
+    },
+    {
+     "prev": "전라남도 광주시 병",
+     "of_current": 0.295,
+     "of_previous": 0.957
+    },
+    {
+     "prev": "전라남도 광주시 을",
+     "of_current": 0.2534,
+     "of_previous": 0.9819
+    },
+    {
+     "prev": "전라남도 광주시 갑",
+     "of_current": 0.1015,
+     "of_previous": 0.91
+    }
+   ]
+  },
+  {
+   "district": "전라남도 영광군·함평군",
+   "sido": "전라남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 전라남도 영광군 + 전라남도 함평군 통합",
+   "previous": [
+    {
+     "prev": "전라남도 영광군",
+     "of_current": 0.5039,
+     "of_previous": 0.9881
+    },
+    {
+     "prev": "전라남도 함평군",
+     "of_current": 0.4761,
+     "of_previous": 0.9952
+    }
+   ]
+  },
+  {
+   "district": "전라남도 진도군",
+   "sido": "전라남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 96%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "전라남도 진도군",
+     "of_current": 0.9612,
+     "of_previous": 0.9478
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 중구",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 대구시 정 55%, 경상북도 대구시 갑 42%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 정",
+     "of_current": 0.5498,
+     "of_previous": 0.0609
+    },
+    {
+     "prev": "경상북도 대구시 갑",
+     "of_current": 0.4169,
+     "of_previous": 0.3715
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 동구",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 대구시 기 57%, 경상북도 대구시 병 38%, 경상북도 대구시 갑 2%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 기",
+     "of_current": 0.57,
+     "of_previous": 0.3277
+    },
+    {
+     "prev": "경상북도 대구시 병",
+     "of_current": 0.3763,
+     "of_previous": 0.2364
+    },
+    {
+     "prev": "경상북도 대구시 갑",
+     "of_current": 0.0156,
+     "of_previous": 0.3065
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 남구",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 대구시 정 77%, 경상북도 대구시 병 15%, 경상북도 대구시 갑 3%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 정",
+     "of_current": 0.7735,
+     "of_previous": 0.4021
+    },
+    {
+     "prev": "경상북도 대구시 병",
+     "of_current": 0.1537,
+     "of_previous": 0.0205
+    },
+    {
+     "prev": "경상북도 대구시 갑",
+     "of_current": 0.0309,
+     "of_previous": 0.1291
+    }
+   ]
+  },
+  {
+   "district": "경상북도 대구시 북구·서구",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 대구시 을 54%, 경상북도 대구시 기 24%, 경상북도 대구시 무 18%",
+   "previous": [
+    {
+     "prev": "경상북도 대구시 을",
+     "of_current": 0.5438,
+     "of_previous": 0.9832
+    },
+    {
+     "prev": "경상북도 대구시 기",
+     "of_current": 0.245,
+     "of_previous": 0.0909
+    },
+    {
+     "prev": "경상북도 대구시 무",
+     "of_current": 0.1773,
+     "of_previous": 0.1941
+    },
+    {
+     "prev": "경상북도 대구시 갑",
+     "of_current": 0.0152,
+     "of_previous": 0.1929
+    }
+   ]
+  },
+  {
+   "district": "경상북도 포항시·영일군·울릉군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 영일군 갑 + 경상북도 영일군 을 + 경상북도 울릉군 + 경상북도 포항시 통합",
+   "previous": [
+    {
+     "prev": "경상북도 영일군 갑",
+     "of_current": 0.4646,
+     "of_previous": 0.991
+    },
+    {
+     "prev": "경상북도 영일군 을",
+     "of_current": 0.4251,
+     "of_previous": 0.9909
+    },
+    {
+     "prev": "경상북도 울릉군",
+     "of_current": 0.0547,
+     "of_previous": 0.9025
+    },
+    {
+     "prev": "경상북도 포항시",
+     "of_current": 0.0302,
+     "of_previous": 0.9869
+    }
+   ]
+  },
+  {
+   "district": "경상북도 김천시·금릉군",
+   "sido": "경상북도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "경상북도 금릉군",
+     "of_current": 0.9887,
+     "of_previous": 0.9815
+    },
+    {
+     "prev": "경상북도 김천시",
+     "of_current": 0.0357,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경주시·월성군",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 월성군 갑 29%, 경상북도 경주시 16%, 경상북도 월성군 을 0%",
+   "previous": [
+    {
+     "prev": "경상북도 월성군 갑",
+     "of_current": 0.2858,
+     "of_previous": 0.9593
+    },
+    {
+     "prev": "경상북도 경주시",
+     "of_current": 0.164,
+     "of_previous": 0.9973
+    },
+    {
+     "prev": "경상북도 월성군 을",
+     "of_current": 0.0,
+     "of_previous": 0.8111
+    }
+   ]
+  },
+  {
+   "district": "경상북도 달성군·고령군",
+   "sido": "경상북도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상북도 고령군 39%, 경상북도 달성군 33%, 경상북도 대구시 병 11%",
+   "previous": [
+    {
+     "prev": "경상북도 고령군",
+     "of_current": 0.3933,
+     "of_previous": 0.9914
+    },
+    {
+     "prev": "경상북도 달성군",
+     "of_current": 0.3278,
+     "of_previous": 0.995
+    },
+    {
+     "prev": "경상북도 대구시 병",
+     "of_current": 0.111,
+     "of_previous": 0.7339
+    },
+    {
+     "prev": "경상북도 대구시 기",
+     "of_current": 0.0932,
+     "of_previous": 0.5637
+    }
+   ]
+  },
+  {
+   "district": "경상북도 군위군·선산군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 군위군 + 경상북도 선산군 통합",
+   "previous": [
+    {
+     "prev": "경상북도 군위군",
+     "of_current": 0.4947,
+     "of_previous": 0.983
+    },
+    {
+     "prev": "경상북도 선산군",
+     "of_current": 0.4865,
+     "of_previous": 0.9851
+    }
+   ]
+  },
+  {
+   "district": "경상북도 의성군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 의성군 갑 + 경상북도 의성군 을 통합",
+   "previous": [
+    {
+     "prev": "경상북도 의성군 갑",
+     "of_current": 0.5393,
+     "of_previous": 0.9678
+    },
+    {
+     "prev": "경상북도 의성군 을",
+     "of_current": 0.4441,
+     "of_previous": 0.9687
+    }
+   ]
+  },
+  {
+   "district": "경상북도 안동시·안동군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 안동군 을 + 경상북도 안동군 갑 통합",
+   "previous": [
+    {
+     "prev": "경상북도 안동군 을",
+     "of_current": 0.4986,
+     "of_previous": 0.994
+    },
+    {
+     "prev": "경상북도 안동군 갑",
+     "of_current": 0.4906,
+     "of_previous": 0.9861
+    }
+   ]
+  },
+  {
+   "district": "경상북도 청송군·영덕군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 청송군 + 경상북도 영덕군 통합",
+   "previous": [
+    {
+     "prev": "경상북도 청송군",
+     "of_current": 0.5254,
+     "of_previous": 0.9933
+    },
+    {
+     "prev": "경상북도 영덕군",
+     "of_current": 0.4616,
+     "of_previous": 0.9877
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영양군·울진군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 강원특별자치도 울진군 + 경상북도 영양군 통합",
+   "previous": [
+    {
+     "prev": "강원특별자치도 울진군",
+     "of_current": 0.5562,
+     "of_previous": 0.9886
+    },
+    {
+     "prev": "경상북도 영양군",
+     "of_current": 0.4344,
+     "of_previous": 0.9915
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영천군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 영천군 갑 + 경상북도 영천군 을 통합",
+   "previous": [
+    {
+     "prev": "경상북도 영천군 갑",
+     "of_current": 0.5002,
+     "of_previous": 0.9868
+    },
+    {
+     "prev": "경상북도 영천군 을",
+     "of_current": 0.4905,
+     "of_previous": 0.9891
+    },
+    {
+     "prev": "경상북도 월성군 을",
+     "of_current": 0.0,
+     "of_previous": 0.1637
+    }
+   ]
+  },
+  {
+   "district": "경상북도 경산군·청도군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 청도군 + 경상북도 경산군 통합",
+   "previous": [
+    {
+     "prev": "경상북도 청도군",
+     "of_current": 0.5761,
+     "of_previous": 0.9899
+    },
+    {
+     "prev": "경상북도 경산군",
+     "of_current": 0.4122,
+     "of_previous": 0.9947
+    }
+   ]
+  },
+  {
+   "district": "경상북도 성주군·칠곡군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 성주군 + 경상북도 칠곡군 통합",
+   "previous": [
+    {
+     "prev": "경상북도 성주군",
+     "of_current": 0.5258,
+     "of_previous": 0.994
+    },
+    {
+     "prev": "경상북도 칠곡군",
+     "of_current": 0.4616,
+     "of_previous": 0.9828
+    }
+   ]
+  },
+  {
+   "district": "경상북도 상주군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 상주군 을 + 경상북도 상주군 갑 통합",
+   "previous": [
+    {
+     "prev": "경상북도 상주군 을",
+     "of_current": 0.5682,
+     "of_previous": 0.9757
+    },
+    {
+     "prev": "경상북도 상주군 갑",
+     "of_current": 0.4118,
+     "of_previous": 0.9815
+    }
+   ]
+  },
+  {
+   "district": "경상북도 문경군",
+   "sido": "경상북도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 98%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경상북도 문경군",
+     "of_current": 0.9825,
+     "of_previous": 0.9508
+    }
+   ]
+  },
+  {
+   "district": "경상북도 예천군",
+   "sido": "경상북도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상북도 예천군",
+     "of_current": 0.9811,
+     "of_previous": 0.9866
+    }
+   ]
+  },
+  {
+   "district": "경상북도 영주군·봉화군",
+   "sido": "경상북도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상북도 봉화군 + 경상북도 영주군 통합",
+   "previous": [
+    {
+     "prev": "경상북도 봉화군",
+     "of_current": 0.6076,
+     "of_previous": 0.9378
+    },
+    {
+     "prev": "경상북도 영주군",
+     "of_current": 0.3846,
+     "of_previous": 0.9899
+    }
+   ]
+  },
+  {
+   "district": "경상남도 마산시",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 마산시' 겹침 94%/86%",
+   "previous": [
+    {
+     "prev": "경상남도 마산시",
+     "of_current": 0.9359,
+     "of_previous": 0.86
+    },
+    {
+     "prev": "경상남도 창원군 갑",
+     "of_current": 0.0036,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진주시·진양군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 92%/99% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가 · 이전 '경상남도 진양군'",
+   "previous": [
+    {
+     "prev": "경상남도 진양군",
+     "of_current": 0.9159,
+     "of_previous": 0.9943
+    },
+    {
+     "prev": "경상남도 진주시",
+     "of_current": 0.0787,
+     "of_previous": 1.0
+    }
+   ]
+  },
+  {
+   "district": "경상남도 충무시·통영군·고성군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 고성군 + 경상남도 통영군 + 경상남도 충무시 통합",
+   "previous": [
+    {
+     "prev": "경상남도 고성군",
+     "of_current": 0.7716,
+     "of_previous": 0.9801
+    },
+    {
+     "prev": "경상남도 통영군",
+     "of_current": 0.1824,
+     "of_previous": 0.7546
+    },
+    {
+     "prev": "경상남도 충무시",
+     "of_current": 0.0175,
+     "of_previous": 0.7129
+    }
+   ]
+  },
+  {
+   "district": "경상남도 거제군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 95%/92% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경상남도 거제군",
+     "of_current": 0.9517,
+     "of_previous": 0.9225
+    }
+   ]
+  },
+  {
+   "district": "경상남도 진해시·창원군",
+   "sido": "경상남도",
+   "relation": "unresolvable",
+   "comparable": "no",
+   "reason": "겹침이 흩어짐 — 경상남도 창원군 을 45%, 경상남도 진해시 5%, 경상남도 마산시 0%",
+   "previous": [
+    {
+     "prev": "경상남도 창원군 을",
+     "of_current": 0.4454,
+     "of_previous": 0.9626
+    },
+    {
+     "prev": "경상남도 진해시",
+     "of_current": 0.0524,
+     "of_previous": 0.9752
+    },
+    {
+     "prev": "경상남도 마산시",
+     "of_current": 0.0037,
+     "of_previous": 0.0835
+    }
+   ]
+  },
+  {
+   "district": "경상남도 삼천포시·사천군·하동군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 하동군 + 경상남도 사천군 + 경상남도 삼천포시 통합",
+   "previous": [
+    {
+     "prev": "경상남도 하동군",
+     "of_current": 0.6148,
+     "of_previous": 0.999
+    },
+    {
+     "prev": "경상남도 사천군",
+     "of_current": 0.3114,
+     "of_previous": 0.9989
+    },
+    {
+     "prev": "경상남도 삼천포시",
+     "of_current": 0.0537,
+     "of_previous": 0.9882
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함안군·의령군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 의령군 + 경상남도 함안군 통합",
+   "previous": [
+    {
+     "prev": "경상남도 의령군",
+     "of_current": 0.5076,
+     "of_previous": 0.9868
+    },
+    {
+     "prev": "경상남도 함안군",
+     "of_current": 0.4849,
+     "of_previous": 0.9964
+    }
+   ]
+  },
+  {
+   "district": "경상남도 창녕군",
+   "sido": "경상남도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "경상남도 창녕군",
+     "of_current": 0.9971,
+     "of_previous": 0.9918
+    }
+   ]
+  },
+  {
+   "district": "경상남도 산청군·합천군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 산청군 + 경상남도 합천군 을 + 경상남도 합천군 갑 통합",
+   "previous": [
+    {
+     "prev": "경상남도 산청군",
+     "of_current": 0.4378,
+     "of_previous": 0.9958
+    },
+    {
+     "prev": "경상남도 합천군 을",
+     "of_current": 0.2921,
+     "of_previous": 0.9895
+    },
+    {
+     "prev": "경상남도 합천군 갑",
+     "of_current": 0.2601,
+     "of_previous": 0.9806
+    }
+   ]
+  },
+  {
+   "district": "경상남도 밀양군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 밀양군 을 + 경상남도 밀양군 갑 통합",
+   "previous": [
+    {
+     "prev": "경상남도 밀양군 을",
+     "of_current": 0.4948,
+     "of_previous": 0.994
+    },
+    {
+     "prev": "경상남도 밀양군 갑",
+     "of_current": 0.4946,
+     "of_previous": 0.9946
+    }
+   ]
+  },
+  {
+   "district": "경상남도 양산군·동래군",
+   "sido": "경상남도",
+   "relation": "boundary_changed",
+   "comparable": "no",
+   "reason": "주 대응 '경상남도 양산군' 겹침 65%/100%",
+   "previous": [
+    {
+     "prev": "경상남도 양산군",
+     "of_current": 0.6523,
+     "of_previous": 0.9951
+    },
+    {
+     "prev": "경상남도 동래군",
+     "of_current": 0.2949,
+     "of_previous": 0.643
+    },
+    {
+     "prev": "경상남도 울산군 을",
+     "of_current": 0.0425,
+     "of_previous": 0.0614
+    }
+   ]
+  },
+  {
+   "district": "경상남도 울산시·울주군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 울산군 갑 + 경상남도 울산군 을 통합",
+   "previous": [
+    {
+     "prev": "경상남도 울산군 갑",
+     "of_current": 0.5088,
+     "of_previous": 0.994
+    },
+    {
+     "prev": "경상남도 울산군 을",
+     "of_current": 0.4705,
+     "of_previous": 0.927
+    }
+   ]
+  },
+  {
+   "district": "경상남도 김해군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 김해군 을 + 경상남도 김해군 갑 통합",
+   "previous": [
+    {
+     "prev": "경상남도 김해군 을",
+     "of_current": 0.4948,
+     "of_previous": 0.9975
+    },
+    {
+     "prev": "경상남도 김해군 갑",
+     "of_current": 0.4912,
+     "of_previous": 0.9822
+    }
+   ]
+  },
+  {
+   "district": "경상남도 남해군",
+   "sido": "경상남도",
+   "relation": "minor_boundary_change",
+   "comparable": "unknown",
+   "reason": "겹침 99%/95% — 실제 경계 변화인지 폴리곤 정밀도 차이인지 구분 불가",
+   "previous": [
+    {
+     "prev": "경상남도 남해군",
+     "of_current": 0.9867,
+     "of_previous": 0.9532
+    }
+   ]
+  },
+  {
+   "district": "경상남도 함양군·거창군",
+   "sido": "경상남도",
+   "relation": "merged",
+   "comparable": "no",
+   "reason": "이전 경상남도 거창군 + 경상남도 함양군 통합",
+   "previous": [
+    {
+     "prev": "경상남도 거창군",
+     "of_current": 0.5136,
+     "of_previous": 0.9913
+    },
+    {
+     "prev": "경상남도 함양군",
+     "of_current": 0.4708,
+     "of_previous": 0.9918
+    }
+   ]
+  },
+  {
+   "district": "제주특별자치도 제주시·북제주군",
+   "sido": "제주특별자치도",
+   "relation": "renamed",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97% · 이름만 다름",
+   "previous": [
+    {
+     "prev": "제주특별자치도 북제주군",
+     "of_current": 0.9926,
+     "of_previous": 0.9836
+    },
+    {
+     "prev": "제주특별자치도 제주시",
+     "of_current": 0.2614,
+     "of_previous": 0.9887
+    }
+   ]
+  },
+  {
+   "district": "제주특별자치도 남제주군",
+   "sido": "제주특별자치도",
+   "relation": "exact",
+   "comparable": "yes",
+   "reason": "양방향 겹침 ≥97%",
+   "previous": [
+    {
+     "prev": "제주특별자치도 남제주군",
+     "of_current": 0.9908,
+     "of_previous": 0.9833
+    }
+   ]
+  }
+ ]
+}
