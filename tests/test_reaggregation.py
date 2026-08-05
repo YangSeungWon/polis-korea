@@ -159,6 +159,9 @@ def main() -> int:
     print("\n[분류] 남은 비교 불가가 왜 불가인지 전부 설명되는가")
     _taxonomy()
 
+    print("\n[대조군] 경계가 그대로인 곳에서 direct와 수렴하는가")
+    _control()
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
@@ -203,7 +206,8 @@ def _fixtures() -> None:
     try:
         b = run(22, 21, "_bucheon")
         ck("부천 광역동이 선거구를 가로지르는 것이 잡힌다",
-           "부천동" in b["districts"]["경기 부천시갑"]["provenance"]["crossing_prev_dongs"])
+           any(x.endswith(":부천동") for x in
+               b["districts"]["경기 부천시갑"]["provenance"]["crossing_prev_dongs"]))
         ck("가로지르는 동이 안 닿는 선거구는 막지 않는다",
            b["districts"]["경기 부천시을"]["method"] == "reaggregated")
         g = run(22, 21, "_goyang")
@@ -220,6 +224,38 @@ def _fixtures() -> None:
            and w["districts"]["경북 의성군청송군영덕군울진군"]["attributable"] is None)
     except FileNotFoundError:
         pass
+
+
+def _control() -> None:
+    """엔진 외부 검증 — 획정 변경 지역에서는 얻을 수 없는 control group.
+
+    경계가 그대로인 선거구에서는 direct(공식 전체)와 reaggregated(동 귀속표)의
+    delta를 둘 다 구할 수 있다. 분모가 다르니 똑같을 수는 없지만, 제외표 편향이
+    안정적이면 수렴해야 한다. 어긋나면 엔진에 문제가 있다는 뜻이다.
+
+    실제로 이 검사가 두 개의 큰 버그를 잡았다:
+      · 직전 회차 제외표 편향을 전국 평균 하나로 계산해 모든 선거구에 갖다 댔다
+      · 동을 이름만으로 키 잡아 전국에서 223종이 충돌했다 (다른 도시 표가 섞였다)
+    고치고 나서 p90이 1.65%p → 0.37%p로 떨어졌다.
+    """
+    from validate_reaggregation import run as vrun
+    for cur, prev in ((22, 21), (21, 20)):
+        try:
+            r = vrun(cur, prev)
+        except FileNotFoundError:
+            print(f"  · {cur}↔{prev} 원자료 없음, 건너뜀")
+            continue
+        if not r.get("pairs"):
+            continue
+        ck(f"{cur}↔{prev}: 대조군이 충분하다 ({r['control_districts']}곳)",
+           r["control_districts"] >= 50)
+        ck(f"{cur}↔{prev}: |차이| 중앙값 ≤ 0.5%p ({r['abs_diff_median_pp']})",
+           r["abs_diff_median_pp"] <= 0.5)
+        ck(f"{cur}↔{prev}: |차이| p90 ≤ 1.5%p ({r['abs_diff_p90_pp']})",
+           r["abs_diff_p90_pp"] <= 1.5)
+        # 부호 평균이 0에서 멀면 한쪽으로 쏠린 계통 오차다
+        ck(f"{cur}↔{prev}: 계통 편차 없음 (부호평균 {r['signed_mean_pp']}%p)",
+           abs(r["signed_mean_pp"]) <= 0.3)
 
 
 def _taxonomy() -> None:

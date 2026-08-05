@@ -1,0 +1,84 @@
+{
+ "current": 21,
+ "previous": 20,
+ "control_districts": 78,
+ "pairs": 94,
+ "abs_diff_median_pp": 0.115,
+ "abs_diff_p90_pp": 0.46,
+ "abs_diff_max_pp": 2.08,
+ "signed_mean_pp": -0.13,
+ "converges": true,
+ "worst": [
+  {
+   "district": "충북 청주시서원구",
+   "party": "pid:더불어민주당",
+   "direct": 6.36,
+   "reaggregated": 4.28,
+   "diff": -2.08
+  },
+  {
+   "district": "서울 종로구",
+   "party": "pid:새누리당",
+   "direct": -39.72,
+   "reaggregated": -38.75,
+   "diff": 0.97
+  },
+  {
+   "district": "충북 보은군옥천군영동군괴산군",
+   "party": "pid:새누리당",
+   "direct": -56.02,
+   "reaggregated": -56.85,
+   "diff": -0.83
+  },
+  {
+   "district": "제주 제주시을",
+   "party": "pid:새누리당",
+   "direct": -42.72,
+   "reaggregated": -43.53,
+   "diff": -0.81
+  },
+  {
+   "district": "경기 고양시을",
+   "party": "pid:민중당(2017)",
+   "direct": -1.28,
+   "reaggregated": -0.65,
+   "diff": 0.63
+  },
+  {
+   "district": "경북 포항시남구울릉군",
+   "party": "pid:민중당(2017)",
+   "direct": -14.07,
+   "reaggregated": -13.46,
+   "diff": 0.61
+  },
+  {
+   "district": "서울 동작구갑",
+   "party": "pid:더불어민주당",
+   "direct": 18.76,
+   "reaggregated": 18.27,
+   "diff": -0.49
+  },
+  {
+   "district": "서울 은평구을",
+   "party": "pid:더불어민주당",
+   "direct": 19.52,
+   "reaggregated": 19.04,
+   "diff": -0.48
+  },
+  {
+   "district": "대전 서구갑",
+   "party": "pid:더불어민주당",
+   "direct": 6.93,
+   "reaggregated": 6.47,
+   "diff": -0.46
+  },
+  {
+   "district": "서울 관악구갑",
+   "party": "pid:더불어민주당",
+   "direct": 18.37,
+   "reaggregated": 17.91,
+   "diff": -0.46
+  }
+ ],
+ "_note": "경계가 그대로인 선거구에서 direct(공식 전체)와 reaggregated(동 귀속표)의 delta를 비교한다. 분모가 달라 똑같을 수는 없고, 제외표 편향이 안정적이면 수렴한다. 계통 편차가 있으면 분모나 membership 처리에 문제가 있다는 뜻이다."
+}

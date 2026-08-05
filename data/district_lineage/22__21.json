@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 22,
   "previous_n": 21,
-  "generated_at": "2026-08-05T18:01:27+09:00",
+  "generated_at": "2026-08-05T18:18:57+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -48,7 +48,7 @@
   "renamed": 1,
   "split": 2,
   "total": 254,
-  "comparable": 219,
+  "comparable": 237,
   "comparable_unknown": 0,
   "previous_total": 253,
   "previous_unmatched": 3
@@ -287,16 +287,16 @@
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 흥도동"
+    "blocked_by": "선거구를 가로지르는 동: 4120:흥도동"
    }
   },
   {
    "district": "경기 고양시병",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 고양시병' 겹침 95%/88%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.0%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.9528,
    "overlap_previous": 0.8811,
    "source_relation": "same_source",
@@ -309,27 +309,26 @@
     }
    ],
    "reaggregation": {
-    "method": "context_only",
-    "quality": "insufficient",
+    "method": "reaggregated",
+    "quality": "limited",
     "coverage": 0.8804,
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 1.15,
     "winner_agrees": true,
     "capability": {
-     "measured": false,
+     "measured": true,
      "infer_level": false,
-     "infer_winner": false,
-     "delta": false,
+     "infer_winner": true,
+     "delta": true,
      "delta_allowed_parties": [
       "pid:국민의힘",
       "pid:더불어민주당"
      ],
      "delta_blocked": {}
     },
-    "resolution_required": "precinct",
+    "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
-    "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 풍산동"
+    "fixture": "22__21"
    }
   },
   {
@@ -382,9 +381,9 @@
    "district": "경기 광명시갑",
    "sido": "경기",
    "relation": "unresolvable",
-   "comparable": "no",
-   "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 경기 광명시을 59%, 경기 광명시갑 41%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.5871,
    "overlap_previous": 0.4415,
    "source_relation": "same_source",
@@ -412,10 +411,11 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
       "pid:더불어민주당": "candidacy_configuration_changed"
      }
     },
@@ -428,9 +428,9 @@
    "district": "경기 광명시을",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '경기 광명시을'의 56%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.0%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 1.0,
    "overlap_previous": 0.5571,
    "source_relation": "same_source",
@@ -453,12 +453,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
-      "pid:더불어민주당": "candidacy_configuration_changed"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -749,10 +749,11 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘",
       "pid:더불어민주당"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:국민의힘": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -795,15 +796,16 @@
      "infer_winner": false,
      "delta": false,
      "delta_allowed_parties": [
-      "pid:국민의힘",
       "pid:더불어민주당"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:국민의힘": "candidacy_configuration_changed"
+     }
     },
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
+    "blocked_by": "선거구를 가로지르는 동: 4145:부천동, 4145:심곡동"
    }
   },
   {
@@ -850,7 +852,7 @@
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
+    "blocked_by": "선거구를 가로지르는 동: 4145:부천동, 4145:심곡동"
    }
   },
   {
@@ -1128,9 +1130,9 @@
    "district": "경기 시흥시갑",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 100%/95% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9996,
    "overlap_previous": 0.9498,
    "source_relation": "same_source",
@@ -1153,12 +1155,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -1169,9 +1171,9 @@
    "district": "경기 시흥시을",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.4%). 전체 수준값으로도 쓸 수 있다.",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "겹침 93%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
    "overlap_current": 0.9273,
    "overlap_previous": 0.999,
    "source_relation": "same_source",
@@ -1199,12 +1201,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": true,
-     "delta_allowed_parties": [
-      "pid:국민의힘",
-      "pid:더불어민주당"
-     ],
-     "delta_blocked": {}
+     "delta": false,
+     "delta_allowed_parties": [],
+     "delta_blocked": {
+      "pid:국민의힘": "excluded_vote_bias_shift",
+      "pid:더불어민주당": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -1270,11 +1272,10 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘"
+      "pid:국민의힘",
+      "pid:더불어민주당"
      ],
-     "delta_blocked": {
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -1317,10 +1318,10 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘"
+      "pid:더불어민주당"
      ],
      "delta_blocked": {
-      "pid:더불어민주당": "excluded_vote_bias_shift"
+      "pid:국민의힘": "candidacy_configuration_changed"
      }
     },
     "resolution_required": null,
@@ -1520,10 +1521,11 @@
      "infer_winner": false,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘",
-      "pid:더불어민주당"
+      "pid:국민의힘"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:더불어민주당": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -1718,9 +1720,9 @@
    "district": "경기 파주시갑",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '경기 파주시갑'의 26%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 87.8%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9995,
    "overlap_previous": 0.2639,
    "source_relation": "same_source",
@@ -1743,12 +1745,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -1759,9 +1761,9 @@
    "district": "경기 파주시을",
    "sido": "경기",
    "relation": "merged",
-   "comparable": "no",
-   "reason_code": "merged_into_current",
-   "reason": "이전 경기 파주시을 + 경기 파주시갑 통합",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.7557,
    "overlap_previous": 1.0,
    "source_relation": "same_source",
@@ -1779,27 +1781,26 @@
     }
    ],
    "reaggregation": {
-    "method": "context_only",
-    "quality": "insufficient",
+    "method": "reaggregated",
+    "quality": "validated",
     "coverage": 0.9021,
     "denominator": "동 귀속표 기준 (양 회차 동일)",
     "validation_error_pp": 0.82,
     "winner_agrees": true,
     "capability": {
-     "measured": false,
-     "infer_level": false,
-     "infer_winner": false,
-     "delta": false,
+     "measured": true,
+     "infer_level": true,
+     "infer_winner": true,
+     "delta": true,
      "delta_allowed_parties": [
       "pid:국민의힘",
       "pid:더불어민주당"
      ],
      "delta_blocked": {}
     },
-    "resolution_required": "precinct",
+    "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
-    "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 진동면, 진서면"
+    "fixture": "22__21"
    }
   },
   {
@@ -1841,7 +1842,7 @@
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 송탄동"
+    "blocked_by": "선거구를 가로지르는 동: 4115:송탄동"
    }
   },
   {
@@ -1879,16 +1880,17 @@
      "infer_level": false,
      "infer_winner": false,
      "delta": false,
-     "delta_allowed_parties": [],
+     "delta_allowed_parties": [
+      "pid:더불어민주당"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
+      "pid:국민의힘": "excluded_vote_bias_shift"
      }
     },
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 송탄동"
+    "blocked_by": "선거구를 가로지르는 동: 4115:송탄동"
    }
   },
   {
@@ -1994,7 +1996,7 @@
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
-    "fixture": "22__21_hanam"
+    "fixture": "22__21"
    }
   },
   {
@@ -2036,16 +2038,16 @@
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
-    "fixture": "22__21_hanam"
+    "fixture": "22__21"
    }
   },
   {
    "district": "경기 화성시갑",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 91%/94% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.2%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9148,
    "overlap_previous": 0.9358,
    "source_relation": "same_source",
@@ -2068,11 +2070,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:더불어민주당"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
+      "pid:국민의힘": "excluded_vote_bias_shift"
      }
     },
     "resolution_required": null,
@@ -2084,9 +2087,9 @@
    "district": "경기 화성시병",
    "sido": "경기",
    "relation": "merged",
-   "comparable": "no",
-   "reason_code": "merged_into_current",
-   "reason": "이전 경기 화성시갑 + 경기 화성시병 통합",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 87.4%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.6292,
    "overlap_previous": 0.0641,
    "source_relation": "same_source",
@@ -2114,12 +2117,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -2130,9 +2133,9 @@
    "district": "경기 화성시을",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.0%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "이전 '경기 화성시을'의 65%만 차지",
    "overlap_current": 0.9987,
    "overlap_previous": 0.6519,
    "source_relation": "same_source",
@@ -2155,12 +2158,11 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": true,
-     "delta_allowed_parties": [
-      "pid:더불어민주당"
-     ],
+     "delta": false,
+     "delta_allowed_parties": [],
      "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed"
+      "pid:국민의힘": "candidacy_configuration_changed",
+      "pid:더불어민주당": "candidacy_configuration_changed"
      }
     },
     "resolution_required": null,
@@ -2172,9 +2174,9 @@
    "district": "경기 화성시정",
    "sido": "경기",
    "relation": "unresolvable",
-   "comparable": "no",
-   "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 경기 화성시을 76%, 경기 화성시병 24%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 87.1%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.7579,
    "overlap_previous": 0.3479,
    "source_relation": "same_source",
@@ -2202,12 +2204,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
-      "pid:더불어민주당": "candidacy_configuration_changed"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -2526,16 +2528,15 @@
      "infer_winner": false,
      "delta": false,
      "delta_allowed_parties": [
+      "pid:국민의힘",
       "pid:더불어민주당"
      ],
-     "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed"
-     }
+     "delta_blocked": {}
     },
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 봉림동"
+    "blocked_by": "선거구를 가로지르는 동: 4821:봉림동, 4821:팔룡동"
    }
   },
   {
@@ -2577,7 +2578,7 @@
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 봉림동"
+    "blocked_by": "선거구를 가로지르는 동: 4821:봉림동, 4821:팔룡동"
    }
   },
   {
@@ -2814,9 +2815,9 @@
    "district": "경북 영주시영양군봉화군",
    "sido": "경북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '경북 영주시영양군봉화군울진군'의 73%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 92.3%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 1.0,
    "overlap_previous": 0.7301,
    "source_relation": "same_source",
@@ -2839,11 +2840,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:더불어민주당"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
-      "pid:더불어민주당": "candidacy_configuration_changed"
+      "pid:국민의힘": "candidacy_configuration_changed"
      }
     },
     "resolution_required": null,
@@ -2878,9 +2880,9 @@
    "district": "경북 의성군청송군영덕군울진군",
    "sido": "경북",
    "relation": "boundary_changed",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.7%). 전체 수준값으로도 쓸 수 있다.",
+   "comparable": "no",
+   "reason_code": "boundary_moved",
+   "reason": "주 대응 '경북 군위군의성군청송군영덕군' 겹침 73%/82%",
    "overlap_current": 0.7338,
    "overlap_previous": 0.8185,
    "source_relation": "same_source",
@@ -2908,11 +2910,11 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": true,
-     "delta_allowed_parties": [
-      "pid:국민의힘"
-     ],
-     "delta_blocked": {}
+     "delta": false,
+     "delta_allowed_parties": [],
+     "delta_blocked": {
+      "pid:국민의힘": "candidacy_configuration_changed"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -3245,9 +3247,9 @@
    "district": "대구 동구군위군갑",
    "sido": "대구",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 90%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '대구 동구갑'",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.9046,
    "overlap_previous": 0.9981,
    "source_relation": "same_source",
@@ -3275,11 +3277,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:더불어민주당"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
+      "pid:국민의힘": "excluded_vote_bias_shift"
      }
     },
     "resolution_required": null,
@@ -3291,9 +3294,9 @@
    "district": "대구 동구군위군을",
    "sido": "대구",
    "relation": "merged",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.8%). 전체 수준값으로도 쓸 수 있다.",
+   "comparable": "no",
+   "reason_code": "merged_into_current",
+   "reason": "이전 경북 군위군의성군청송군영덕군 + 대구 동구을 통합",
    "overlap_current": 0.786,
    "overlap_previous": 0.1814,
    "source_relation": "same_source",
@@ -3321,11 +3324,10 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": true,
-     "delta_allowed_parties": [
-      "pid:국민의힘"
-     ],
+     "delta": false,
+     "delta_allowed_parties": [],
      "delta_blocked": {
+      "pid:국민의힘": "candidacy_configuration_changed",
       "pid:민중당(2017)": "candidacy_configuration_changed"
      }
     },
@@ -3637,9 +3639,9 @@
    "district": "부산 강서구",
    "sido": "부산",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '부산 북구강서구을'의 90%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.1%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9996,
    "overlap_previous": 0.8989,
    "source_relation": "same_source",
@@ -3662,12 +3664,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -3724,9 +3726,9 @@
    "district": "부산 남구",
    "sido": "부산",
    "relation": "merged",
-   "comparable": "no",
-   "reason_code": "merged_into_current",
-   "reason": "이전 부산 남구갑 + 부산 남구을 통합",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.5405,
    "overlap_previous": 0.9999,
    "source_relation": "same_source",
@@ -3754,12 +3756,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -3880,9 +3882,9 @@
    "district": "부산 북구을",
    "sido": "부산",
    "relation": "unresolvable",
-   "comparable": "yes",
-   "reason_code": "reaggregated_from_dong",
-   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "comparable": "no",
+   "reason_code": "scattered_overlap",
+   "reason": "겹침이 흩어짐 — 부산 북구강서구을 81%, 부산 북구강서구갑 19%",
    "overlap_current": 0.8077,
    "overlap_previous": 0.1002,
    "source_relation": "same_source",
@@ -3910,12 +3912,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": true,
-     "delta_allowed_parties": [
-      "pid:국민의힘",
-      "pid:더불어민주당"
-     ],
-     "delta_blocked": {}
+     "delta": false,
+     "delta_allowed_parties": [],
+     "delta_blocked": {
+      "pid:국민의힘": "excluded_vote_bias_shift",
+      "pid:더불어민주당": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -3949,9 +3951,9 @@
    "district": "부산 사하구갑",
    "sido": "부산",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '부산 사하구갑' 겹침 88%/100%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.6%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.8817,
    "overlap_previous": 0.9982,
    "source_relation": "same_source",
@@ -3979,12 +3981,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -4684,10 +4686,11 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘",
-      "pid:더불어민주당"
+      "pid:국민의힘"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:더불어민주당": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -5404,7 +5407,7 @@
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 도담동, 연기면, 연동면"
+    "blocked_by": "선거구를 가로지르는 동: 5101:도담동, 5101:연기면, 5101:연동면"
    }
   },
   {
@@ -5437,16 +5440,16 @@
      "infer_level": false,
      "infer_winner": false,
      "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 도담동, 연기면, 연동면"
+    "blocked_by": "선거구를 가로지르는 동: 5101:도담동, 5101:연기면, 5101:연동면"
    }
   },
   {
@@ -5848,10 +5851,11 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘",
-      "pid:더불어민주당"
+      "pid:국민의힘"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:더불어민주당": "excluded_vote_bias_shift"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -5889,11 +5893,10 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘"
+      "pid:국민의힘",
+      "pid:더불어민주당"
      ],
-     "delta_blocked": {
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -5904,9 +5907,9 @@
    "district": "인천 서구을",
    "sido": "인천",
    "relation": "unresolvable",
-   "comparable": "no",
-   "reason_code": "scattered_overlap",
-   "reason": "겹침이 흩어짐 — 인천 서구을 83%, 인천 서구갑 17%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.6%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.8334,
    "overlap_previous": 0.3876,
    "source_relation": "same_source",
@@ -5934,12 +5937,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6023,10 +6026,11 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
-      "pid:국민의힘",
       "pid:더불어민주당"
      ],
-     "delta_blocked": {}
+     "delta_blocked": {
+      "pid:국민의힘": "candidacy_configuration_changed"
+     }
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6198,9 +6202,9 @@
    "district": "전남 여수시갑",
    "sido": "전남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '전남 여수시갑' 겹침 89%/100%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.8945,
    "overlap_previous": 0.9992,
    "source_relation": "same_source",
@@ -6228,10 +6232,11 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
       "pid:더불어민주당": "candidacy_configuration_changed"
      }
     },
@@ -6244,9 +6249,9 @@
    "district": "전남 여수시을",
    "sido": "전남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '전남 여수시을'의 88%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 86.0%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9984,
    "overlap_previous": 0.8751,
    "source_relation": "same_source",
@@ -6269,12 +6274,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6331,9 +6336,9 @@
    "district": "전북 군산시김제시부안군갑",
    "sido": "전북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "이전 '전북 군산시'의 81%만 차지",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 92.3%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9998,
    "overlap_previous": 0.8131,
    "source_relation": "same_source",
@@ -6356,10 +6361,11 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
       "pid:더불어민주당": "candidacy_configuration_changed"
      }
     },
@@ -6403,25 +6409,26 @@
      "infer_level": false,
      "infer_winner": false,
      "delta": false,
-     "delta_allowed_parties": [],
+     "delta_allowed_parties": [
+      "pid:국민의힘"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
       "pid:더불어민주당": "excluded_vote_bias_shift"
      }
     },
     "resolution_required": "precinct",
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "fixture": "22__21",
-    "blocked_by": "선거구를 가로지르는 동: 옥도면, 진서면"
+    "blocked_by": "선거구를 가로지르는 동: 4503:옥도면"
    }
   },
   {
    "district": "전북 남원시장수군임실군순창군",
    "sido": "전북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '전북 남원시임실군순창군' 겹침 78%/100%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.4%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.7758,
    "overlap_previous": 1.0,
    "source_relation": "same_source",
@@ -6449,11 +6456,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘"
+     ],
      "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
+      "pid:더불어민주당": "candidacy_configuration_changed"
      }
     },
     "resolution_required": null,
@@ -6538,12 +6546,11 @@
      "infer_winner": true,
      "delta": true,
      "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당",
       "pid:민중당(2017)"
      ],
-     "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
-      "pid:더불어민주당": "candidacy_configuration_changed"
-     }
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6554,9 +6561,9 @@
    "district": "전북 익산시을",
    "sido": "전북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '전북 익산시을' 겹침 64%/90%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 85.8%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.6406,
    "overlap_previous": 0.9006,
    "source_relation": "same_source",
@@ -6584,12 +6591,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "candidacy_configuration_changed",
-      "pid:더불어민주당": "candidacy_configuration_changed"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6600,9 +6607,9 @@
    "district": "전북 전주시갑",
    "sido": "전북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 84.1%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.9462,
    "overlap_previous": 0.9967,
    "source_relation": "same_source",
@@ -6630,11 +6637,11 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:더불어민주당": "candidacy_configuration_changed"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6944,9 +6951,9 @@
    "district": "충남 천안시갑",
    "sido": "충남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 95%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.8%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
    "overlap_current": 0.9478,
    "overlap_previous": 1.0,
    "source_relation": "same_source",
@@ -6974,12 +6981,12 @@
      "measured": true,
      "infer_level": false,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -6990,9 +6997,9 @@
    "district": "충남 천안시병",
    "sido": "충남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '충남 천안시병' 겹침 96%/88%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.1%). 전체 수준값으로도 쓸 수 있다.",
    "overlap_current": 0.9635,
    "overlap_previous": 0.8766,
    "source_relation": "same_source",
@@ -7015,12 +7022,12 @@
      "measured": true,
      "infer_level": true,
      "infer_winner": true,
-     "delta": false,
-     "delta_allowed_parties": [],
-     "delta_blocked": {
-      "pid:국민의힘": "excluded_vote_bias_shift",
-      "pid:더불어민주당": "excluded_vote_bias_shift"
-     }
+     "delta": true,
+     "delta_allowed_parties": [
+      "pid:국민의힘",
+      "pid:더불어민주당"
+     ],
+     "delta_blocked": {}
     },
     "resolution_required": null,
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
@@ -7259,7 +7266,7 @@
   }
  ],
  "reaggregation_counts": {
-  "reaggregated": 52,
-  "context_only": 12
+  "reaggregated": 54,
+  "context_only": 10
  }
 }

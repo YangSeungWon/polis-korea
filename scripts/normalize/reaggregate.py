@@ -61,6 +61,7 @@ import party_identity as PI  # noqa: E402
 
 sys.path.insert(0, str(ROOT / "scripts/normalize"))
 import dong_geometry  # noqa: E402
+from dong_geometry import ukey  # noqa: E402
 
 RAW = ROOT / "data/raw/nec"
 OUT = ROOT / "data/reaggregated"
@@ -106,6 +107,13 @@ _PN: set[str] | None = None
 
 
 def _party_names() -> set[str]:
+    """정당 이름 사전. registry + **실제 결과에 나온 이름**.
+
+    registry에만 기대면 등록되지 않은 원외정당(국가혁명배당금당 등 293종)이 전부
+    잘리지 않아 빈 키 하나로 뭉친다. 21대 서울 영등포구을에서 그런 표가 4.03%였고,
+    그게 다른 미등록 정당들과 합쳐져 있었다. 이름을 못 가르는 것과 여러 당을 한
+    덩어리로 세는 것은 다른 문제이고, 후자가 더 나쁘다.
+    """
     global _PN
     if _PN is None:
         reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))
@@ -116,6 +124,15 @@ def _party_names() -> set[str]:
                 out.add(p["abbr"])
             for a in p.get("aliases") or []:
                 out.add(a)
+        for f in sorted((ROOT / "data/results").glob("national_assembly_*.json")):
+            try:
+                d = json.loads(f.read_text(encoding="utf-8"))
+            except Exception:                                   # noqa: BLE001
+                continue
+            for r in d.get("district") or []:
+                for c in (r.get("candidates") or []) if isinstance(r, dict) else []:
+                    if c.get("party"):
+                        out.add(c["party"])
         _PN = {x for x in out if x}
     return _PN
 
@@ -134,7 +151,8 @@ def dong_map(blocks: list[dict]) -> dict[str, str]:
     for b in blocks:
         for r in b["rows"]:
             if r["dong"]:
-                seen.setdefault(r["dong"], set()).add(dkey(b["sido"], r["district"]))
+                seen.setdefault(ukey(b["sgg_code"], r["dong"]), set()).add(
+                    dkey(b["sido"], r["district"]))
     return {d: next(iter(v)) for d, v in seen.items() if len(v) == 1}
 
 
@@ -143,7 +161,8 @@ def crossing(blocks: list[dict]) -> list[str]:
     for b in blocks:
         for r in b["rows"]:
             if r["dong"]:
-                seen.setdefault(r["dong"], set()).add(dkey(b["sido"], r["district"]))
+                seen.setdefault(ukey(b["sgg_code"], r["dong"]), set()).add(
+                    dkey(b["sido"], r["district"]))
     return sorted(d for d, v in seen.items() if len(v) > 1)
 
 
@@ -173,7 +192,8 @@ def attributable(blocks: list[dict], dmap: dict[str, str] | None = None):
             if not r["dong"]:                      # 합동투표구 — 동을 특정 못 한다
                 unmapped["joint_precinct"] = unmapped.get("joint_precinct", 0) + r["valid"]
                 continue
-            tgt = dmap.get(r["dong"]) if dmap is not None else dkey(b["sido"], r["district"])
+            tgt = (dmap.get(ukey(b["sgg_code"], r["dong"])) if dmap is not None
+                   else dkey(b["sido"], r["district"]))
             if tgt is None:
                 unmapped["no_lineage"] = unmapped.get("no_lineage", 0) + r["valid"]
                 continue
@@ -231,26 +251,41 @@ def _partial_districts(rnd: int, off: dict) -> set[str]:
     return bad
 
 
-def _excluded_lean(blocks: list[dict], date: str) -> dict[str, float]:
-    """그 회차의 제외표가 공식 전체보다 어느 정당 쪽으로 몇 %p 치우쳤나.
+def _excluded_lean_by_district(blocks: list[dict], date: str) -> dict[str, dict]:
+    """**선거구마다** 제외표가 공식 전체보다 어느 정당 쪽으로 몇 %p 치우쳤나.
 
-    선거구별로 재고 선거인 규모로 가중평균한다. 재집계 대상 회차의 경계로 옮겨서
-    재면 분모가 어긋나므로, **그 회차 자신의 선거구**에서만 잰다.
+    전국 하나로 뭉치면 안 된다. 관외사전·국외부재자의 정치적 치우침은 지역마다 다르다.
+    전국 평균을 모든 선거구에 갖다 대면 실제로는 안정적인 곳을 불안정으로 보거나
+    그 반대가 된다 — 대조군 검증에서 서울 영등포구을이 동 구성은 양 회차 완전히
+    같은데도 direct와 5.2%p 어긋나는 걸로 드러났다.
+
+    그 회차 자신의 선거구에서만 잰다. 재집계 대상 회차의 경계로 옮겨 재면 분모가 어긋난다.
     """
     att, _, _ = attributable(blocks)
     off = official(blocks)
-    acc: dict[str, float] = {}
-    wsum = 0.0
+    out: dict[str, dict] = {}
     for d, orow in off.items():
         o = by_party([orow], date)
         a = by_party(att.get(d, []), date)
         osh = shares(o)
         ex = shares({k: v for k in set(o) | set(a) if (v := o.get(k, 0) - a.get(k, 0)) > 0})
-        w = float(orow["electors"]) or 1.0
-        wsum += w
-        for k in osh:
-            acc[k] = acc.get(k, 0.0) + (ex.get(k, 0) - osh[k]) * w
-    return {k: v / wsum for k, v in acc.items()} if wsum else {}
+        out[d] = {k: ex.get(k, 0) - osh[k] for k in osh}
+    return out
+
+
+def _prev_lean_for(cur_d: str, contrib: dict, lean_by: dict) -> dict:
+    """현 선거구에 표를 보낸 **과거 선거구들**의 편향을 기여 규모로 가중평균한다.
+
+    획정이 바뀌었으면 여러 과거 선거구에서 표가 온다. 하나만 쓰거나 전국 평균을 쓰면
+    비교 대상이 어긋난다.
+    """
+    src = contrib.get(cur_d) or {}
+    tot = sum(src.values()) or 1.0
+    out: dict = {}
+    for pd_, w in src.items():
+        for k, v in (lean_by.get(pd_) or {}).items():
+            out[k] = out.get(k, 0.0) + v * w / tot
+    return out
 
 
 def shares(pv: dict[str, int]) -> dict[str, float]:
@@ -262,6 +297,15 @@ def shares(pv: dict[str, int]) -> dict[str, float]:
 def load_lineage() -> dict:
     f = ROOT / "data/geography/dong_lineage.json"
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
+def _short(keys) -> dict:
+    """{시군구코드:동 → 선거구}에서 이름만 뽑아 본다. 계보 파일이 이름 기반이라
+    폴리곤이 없을 때의 보조 경로에서만 쓴다 — 충돌 가능성이 있으므로 우선순위는 낮다."""
+    out: dict = {}
+    for k, v in keys.items():
+        out.setdefault(k.split(":", 1)[-1], v)
+    return out
 
 
 def resolve_dong(dong: str, sgg: str, lin: dict, target: set[str]) -> str | None:
@@ -284,16 +328,18 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
     dmap = dong_map(cb)
     cross = crossing(cb)
     lin = load_lineage()
-    tgt_dongs = set(dmap)
+    tgt_dongs = dmap
 
     # 과거 동 → 현 선거구. **지오메트리가 먼저다.** 이름 일치는 근거가 못 된다:
     # 부천은 2019년에 36개 동을 10개 광역동으로 합쳤다가 2024년에 되돌려서,
     # 2020년 '중동'과 2024년 '중동'이 이름은 같은데 크기가 다르다.
     sgg = pb[0]["sgg_name"] if pb else ""
-    prev_dongs = {r["dong"] for b in pb for r in b["rows"] if r["dong"]}
-    geo, crossing_map = dong_geometry.resolve(cur, prev, fixture, dmap, prev_dongs)
+    geo, crossing_map = dong_geometry.resolve(cur, prev, fixture, cb, pb, dmap)
+    prev_dongs = {ukey(b["sgg_code"], r["dong"])
+                  for b in pb for r in b["rows"] if r["dong"]}
     crossing_prev = sorted(crossing_map)
 
+    short = _short(dmap)          # 이름 → 선거구 (계보 보조 경로 전용)
     pmap: dict[str, str] = {}
     unresolved: list[str] = []
     for d in sorted(prev_dongs):
@@ -301,14 +347,26 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
             pmap[d] = geo[d]
         elif d in crossing_map:           # 선거구를 가로지른다 — 동 단위로 못 나눈다
             unresolved.append(d)
-        elif (t := resolve_dong(d, sgg, lin, tgt_dongs)):
-            pmap[d] = dmap[t]             # 폴리곤이 없을 때만 계보 이름으로 (근거 기록됨)
+        elif (t := resolve_dong(d.split(":", 1)[-1], sgg, lin, short)):
+            pmap[d] = short[t]            # 폴리곤이 없을 때만 계보 이름으로 (근거 기록됨)
         else:
             unresolved.append(d)
 
     # 과거 회차 제외표 편향은 **그 회차 자신의 선거구 단위**로 잰다. 새 경계로 재집계한
     # 값에서 옛 공식 전체를 빼면 분모가 어긋난다 — 재집계가 고치려던 그 오류다.
-    prev_lean = _excluded_lean(pb, pdate)
+    lean_by = _excluded_lean_by_district(pb, pdate)
+    # 현 선거구 ← 과거 선거구별 기여 규모(유효표). 편향 비교의 짝을 맞추는 데 쓴다.
+    contrib: dict[str, dict] = {}
+    for b in pb:
+        for r in b["rows"]:
+            if r["kind"] != "precinct" or not r["dong"]:
+                continue
+            tgt = pmap.get(ukey(b["sgg_code"], r["dong"]))
+            if not tgt:
+                continue
+            src = dkey(b["sido"], r["district"])
+            c = contrib.setdefault(tgt, {})
+            c[src] = c.get(src, 0) + r["valid"]
 
     cur_att, cur_exc, cur_unm = attributable(cb)
     prv_att, prv_exc, prv_unm = attributable(pb, pmap)
@@ -320,10 +378,9 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
     lost_by: dict[str, int] = {}
     for b in pb:
         for r in b["rows"]:
-            for t_ in crossing_map.get(r["dong"] or "", []):
+            for t_ in crossing_map.get(ukey(b["sgg_code"], r["dong"] or ""), []):
                 if r["kind"] == "precinct":
                     lost_by[t_] = lost_by.get(t_, 0) + r["valid"]
-    partial = _partial_districts(cur, cur_off)
 
     districts = {}
     for d in sorted(cur_att):
@@ -349,6 +406,7 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
         # 제외표 편향이 회차 사이에 얼마나 흔들리나. swing은 양쪽에서 같은 종류의 표를
         # 빼므로, 편향이 **안정적이면 상쇄되고** 흔들리면 그만큼 swing에 섞인다.
         # 하남 실측: 민주 +7.63%p(2020) → +7.39%p(2024). 안정적이라 swing이 선다.
+        prev_lean = _prev_lean_for(d, contrib, lean_by)
         stab = {k: round(abs((exc_s.get(k, 0) - os_.get(k, 0)) - prev_lean[k]), 2)
                 for k in set(os_) & set(prev_lean) if os_[k] > 3}
 

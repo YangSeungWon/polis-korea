@@ -1,0 +1,420 @@
+{
+ "current": 22,
+ "previous": 21,
+ "sgg": "동구",
+ "districts": {
+  "경북 의성군청송군영덕군울진군": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 69485,
+    "share": {
+     "pid:국민의힘": 83.26,
+     "무소속": 16.74
+    }
+   },
+   "prev_reaggregated": null,
+   "capability": {
+    "measurement": {
+     "attributable_level": {
+      "valid": false,
+      "note": "동 귀속 가능한 표에서 잰 값 — 그 범위에서는 정확하다",
+      "reason": "reaggregation_blocked"
+     },
+     "attributable_winner": {
+      "valid": false
+     }
+    },
+    "inference_to_full_result": {
+     "level": {
+      "allowed": false,
+      "reason": "reaggregation_blocked"
+     },
+     "winner": {
+      "allowed": false,
+      "reason": "reaggregation_blocked"
+     }
+    },
+    "comparison": {
+     "delta": {
+      "allowed": false,
+      "by_party": {
+       "pid:국민의힘": {
+        "allowed": false,
+        "bias_shift_pp": 4.42,
+        "reason": "candidacy_configuration_changed"
+       }
+      },
+      "reason": "reaggregation_blocked"
+     }
+    }
+   },
+   "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
+   "newly_ran": null,
+   "no_longer_ran": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.9037,
+    "excluded_categories": {
+     "home_ship": 794,
+     "out_of_area_early": 26835,
+     "overseas": 446,
+     "misplaced": 9
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1193,
+     "out_of_area_early": 24681,
+     "overseas": 240,
+     "misplaced": 14
+    },
+    "prev_unmapped": {
+     "no_lineage": 31261
+    },
+    "dong_lineage_applied": [
+     "4718:고로면→대구 동구군위군을",
+     "4718:군위읍→대구 동구군위군을",
+     "4718:부계면→대구 동구군위군을",
+     "4718:산성면→대구 동구군위군을",
+     "4718:소보면→대구 동구군위군을",
+     "4718:우보면→대구 동구군위군을",
+     "4718:의흥면→대구 동구군위군을",
+     "4718:효령면→대구 동구군위군을"
+    ],
+    "unresolved_dongs": [
+     "2702:안심3·4동"
+    ],
+    "crossing_prev_dongs": [],
+    "resolution_required": null,
+    "votes_unplaceable": 0,
+    "partial_fetch": true,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.93
+   },
+   "validation": {
+    "winner_attributable": "pid:국민의힘",
+    "winner_official": "pid:국민의힘",
+    "winner_agrees": true,
+    "excluded_share": {
+     "무소속": 25.44,
+     "pid:국민의힘": 74.56
+    },
+    "excluded_lean_pp": {
+     "pid:국민의힘": -8.7,
+     "무소속": 8.7
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 12.9,
+     "pid:국민의힘": -13.12,
+     "pid:국가혁명배당금당": 0.22
+    },
+    "bias_stability_pp": {
+     "pid:국민의힘": 4.42
+    }
+   }
+  },
+  "대구 동구군위군갑": {
+   "method": "reaggregated",
+   "reaggregation_quality": "limited",
+   "attributable": {
+    "votes": 82895,
+    "share": {
+     "pid:더불어민주당": 24.24,
+     "pid:국민의힘": 75.76
+    }
+   },
+   "official_reference": {
+    "votes": 92047,
+    "share": {
+     "pid:더불어민주당": 25.51,
+     "pid:국민의힘": 74.49
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 84348,
+    "share": {
+     "pid:더불어민주당": 25.07,
+     "pid:국민의힘": 70.47,
+     "pid:정의당": 2.22,
+     "pid:국가혁명배당금당": 1.03,
+     "pid:기후민생당": 0.08,
+     "pid:민중당(2017)": 0.1,
+     "무소속": 1.03
+    }
+   },
+   "capability": {
+    "measurement": {
+     "attributable_level": {
+      "valid": true,
+      "note": "동 귀속 가능한 표에서 잰 값 — 그 범위에서는 정확하다",
+      "reason": null
+     },
+     "attributable_winner": {
+      "valid": true
+     }
+    },
+    "inference_to_full_result": {
+     "level": {
+      "allowed": false,
+      "reason": "attributable_does_not_reproduce_official"
+     },
+     "winner": {
+      "allowed": true,
+      "reason": null
+     }
+    },
+    "comparison": {
+     "delta": {
+      "allowed": true,
+      "by_party": {
+       "pid:국민의힘": {
+        "allowed": false,
+        "bias_shift_pp": 2.1,
+        "reason": "excluded_vote_bias_shift"
+       },
+       "pid:더불어민주당": {
+        "allowed": true,
+        "bias_shift_pp": 0.83,
+        "reason": null
+       }
+      },
+      "reason": null
+     }
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:더불어민주당": -0.83
+   },
+   "swing_bias_unstable": {
+    "pid:국민의힘": 5.29
+   },
+   "newly_ran": {},
+   "no_longer_ran": {
+    "pid:정의당": 2.22,
+    "pid:국가혁명배당금당": 1.03,
+    "pid:기후민생당": 0.08,
+    "pid:민중당(2017)": 0.1
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.9006,
+    "excluded_categories": {
+     "home_ship": 794,
+     "out_of_area_early": 26835,
+     "overseas": 446,
+     "misplaced": 9
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1193,
+     "out_of_area_early": 24681,
+     "overseas": 240,
+     "misplaced": 14
+    },
+    "prev_unmapped": {
+     "no_lineage": 31261
+    },
+    "dong_lineage_applied": [
+     "4718:고로면→대구 동구군위군을",
+     "4718:군위읍→대구 동구군위군을",
+     "4718:부계면→대구 동구군위군을",
+     "4718:산성면→대구 동구군위군을",
+     "4718:소보면→대구 동구군위군을",
+     "4718:우보면→대구 동구군위군을",
+     "4718:의흥면→대구 동구군위군을",
+     "4718:효령면→대구 동구군위군을"
+    ],
+    "unresolved_dongs": [
+     "2702:안심3·4동"
+    ],
+    "crossing_prev_dongs": [],
+    "resolution_required": null,
+    "votes_unplaceable": 0,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.27
+   },
+   "validation": {
+    "winner_attributable": "pid:국민의힘",
+    "winner_official": "pid:국민의힘",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 37.05,
+     "pid:국민의힘": 62.95
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 11.54,
+     "pid:국민의힘": -11.54
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 12.37,
+     "pid:국민의힘": -13.63,
+     "pid:정의당": 1.18,
+     "pid:국가혁명배당금당": 0.22,
+     "pid:기후민생당": 0.04,
+     "pid:민중당(2017)": 0.05,
+     "무소속": -0.22
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 0.83,
+     "pid:국민의힘": 2.1
+    }
+   }
+  },
+  "대구 동구군위군을": {
+   "method": "reaggregated",
+   "reaggregation_quality": "validated",
+   "attributable": {
+    "votes": 96588,
+    "share": {
+     "pid:국민의힘": 76.86,
+     "pid:자유통일당": 4.31,
+     "pid:민중당(2017)": 18.83
+    }
+   },
+   "official_reference": {
+    "votes": 108830,
+    "share": {
+     "pid:국민의힘": 76.13,
+     "pid:자유통일당": 4.4,
+     "pid:민중당(2017)": 19.47
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 71862,
+    "share": {
+     "pid:더불어민주당": 24.79,
+     "pid:국민의힘": 67.34,
+     "pid:기후민생당": 0.42,
+     "pid:민중당(2017)": 0.72,
+     "pid:국가혁명배당금당": 1.0,
+     "무소속": 5.73
+    }
+   },
+   "capability": {
+    "measurement": {
+     "attributable_level": {
+      "valid": true,
+      "note": "동 귀속 가능한 표에서 잰 값 — 그 범위에서는 정확하다",
+      "reason": null
+     },
+     "attributable_winner": {
+      "valid": true
+     }
+    },
+    "inference_to_full_result": {
+     "level": {
+      "allowed": true,
+      "reason": null
+     },
+     "winner": {
+      "allowed": true,
+      "reason": null
+     }
+    },
+    "comparison": {
+     "delta": {
+      "allowed": false,
+      "by_party": {
+       "pid:국민의힘": {
+        "allowed": false,
+        "bias_shift_pp": 4.38,
+        "reason": "candidacy_configuration_changed"
+       },
+       "pid:민중당(2017)": {
+        "allowed": false,
+        "bias_shift_pp": 4.76,
+        "reason": "candidacy_configuration_changed"
+       }
+      },
+      "reason": "candidacy_configuration_changed"
+     }
+    }
+   },
+   "swing_attributable_basis": null,
+   "swing_bias_unstable": null,
+   "newly_ran": null,
+   "no_longer_ran": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8875,
+    "excluded_categories": {
+     "home_ship": 794,
+     "out_of_area_early": 26835,
+     "overseas": 446,
+     "misplaced": 9
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1193,
+     "out_of_area_early": 24681,
+     "overseas": 240,
+     "misplaced": 14
+    },
+    "prev_unmapped": {
+     "no_lineage": 31261
+    },
+    "dong_lineage_applied": [
+     "4718:고로면→대구 동구군위군을",
+     "4718:군위읍→대구 동구군위군을",
+     "4718:부계면→대구 동구군위군을",
+     "4718:산성면→대구 동구군위군을",
+     "4718:소보면→대구 동구군위군을",
+     "4718:우보면→대구 동구군위군을",
+     "4718:의흥면→대구 동구군위군을",
+     "4718:효령면→대구 동구군위군을"
+    ],
+    "unresolved_dongs": [
+     "2702:안심3·4동"
+    ],
+    "crossing_prev_dongs": [],
+    "resolution_required": null,
+    "votes_unplaceable": 0,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.73
+   },
+   "validation": {
+    "winner_attributable": "pid:국민의힘",
+    "winner_official": "pid:국민의힘",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:국민의힘": 70.41,
+     "pid:자유통일당": 5.06,
+     "pid:민중당(2017)": 24.54
+    },
+    "excluded_lean_pp": {
+     "pid:국민의힘": -5.73,
+     "pid:자유통일당": 0.66,
+     "pid:민중당(2017)": 5.07
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 10.78,
+     "pid:국민의힘": -10.1,
+     "pid:기후민생당": 0.23,
+     "pid:민중당(2017)": 0.31,
+     "pid:국가혁명배당금당": 0.23,
+     "무소속": -1.45
+    },
+    "bias_stability_pp": {
+     "pid:국민의힘": 4.38,
+     "pid:민중당(2017)": 4.76
+    }
+   }
+  }
+ }
+}

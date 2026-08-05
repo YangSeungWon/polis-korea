@@ -37,7 +37,10 @@ def _match(units: list, name: str):
 
 def apply_lineage() -> int:
     n = 0
+    # validation_*.json은 검증 산출물이지 재집계 결과가 아니다
     for f in sorted(REAGG.glob("*.json")):
+        if f.name.startswith("validation_"):
+            continue
         res = json.loads(f.read_text(encoding="utf-8"))
         lf = LIN / f"{res['current']}__{res['previous']}.json"
         if not lf.exists():
@@ -133,6 +136,8 @@ def apply_events() -> int:
     # 선거구명 → 재집계 판정
     verdict: dict = {}
     for f in REAGG.glob("*.json"):
+        if f.name.startswith("validation_"):
+            continue
         r = json.loads(f.read_text(encoding="utf-8"))
         for name, v in r["districts"].items():
             verdict[name] = v

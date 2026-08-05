@@ -1,0 +1,84 @@
+{
+ "current": 22,
+ "previous": 21,
+ "control_districts": 156,
+ "pairs": 276,
+ "abs_diff_median_pp": 0.15,
+ "abs_diff_p90_pp": 0.37,
+ "abs_diff_max_pp": 2.52,
+ "signed_mean_pp": -0.017,
+ "converges": true,
+ "worst": [
+  {
+   "district": "경기 광주시갑",
+   "party": "pid:더불어민주당",
+   "direct": 0.19,
+   "reaggregated": 2.71,
+   "diff": 2.52
+  },
+  {
+   "district": "경기 광주시갑",
+   "party": "pid:국민의힘",
+   "direct": 0.97,
+   "reaggregated": -1.52,
+   "diff": -2.49
+  },
+  {
+   "district": "서울 종로구",
+   "party": "pid:국민의힘",
+   "direct": 4.15,
+   "reaggregated": 5.46,
+   "diff": 1.31
+  },
+  {
+   "district": "부산 해운대구갑",
+   "party": "pid:국민의힘",
+   "direct": -5.78,
+   "reaggregated": -4.6,
+   "diff": 1.18
+  },
+  {
+   "district": "부산 해운대구갑",
+   "party": "pid:더불어민주당",
+   "direct": 7.23,
+   "reaggregated": 6.14,
+   "diff": -1.09
+  },
+  {
+   "district": "충남 천안시을",
+   "party": "pid:국민의힘",
+   "direct": 6.9,
+   "reaggregated": 5.87,
+   "diff": -1.03
+  },
+  {
+   "district": "충북 청주시서원구",
+   "party": "pid:더불어민주당",
+   "direct": 2.6,
+   "reaggregated": 1.64,
+   "diff": -0.96
+  },
+  {
+   "district": "충북 청주시서원구",
+   "party": "pid:국민의힘",
+   "direct": 0.75,
+   "reaggregated": 1.59,
+   "diff": 0.84
+  },
+  {
+   "district": "서울 종로구",
+   "party": "pid:더불어민주당",
+   "direct": -7.46,
+   "reaggregated": -8.11,
+   "diff": -0.65
+  },
+  {
+   "district": "서울 강남구갑",
+   "party": "pid:더불어민주당",
+   "direct": -3.82,
+   "reaggregated": -4.46,
+   "diff": -0.64
+  }
+ ],
+ "_note": "경계가 그대로인 선거구에서 direct(공식 전체)와 reaggregated(동 귀속표)의 delta를 비교한다. 분모가 달라 똑같을 수는 없고, 제외표 편향이 안정적이면 수렴한다. 계통 편차가 있으면 분모나 membership 처리에 문제가 있다는 뜻이다."
+}

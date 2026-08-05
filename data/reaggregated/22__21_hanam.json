@@ -25,7 +25,8 @@
     "share": {
      "pid:더불어민주당": 46.68,
      "pid:국민의힘": 37.66,
-     "무소속": 15.67
+     "pid:국가혁명배당금당": 0.55,
+     "무소속": 15.12
     }
    },
    "capability": {
@@ -75,7 +76,9 @@
     "pid:국민의힘": 12.99
    },
    "newly_ran": {},
-   "no_longer_ran": {},
+   "no_longer_ran": {
+    "pid:국가혁명배당금당": 0.55
+   },
    "provenance": {
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "basis_boundary": "22대 선거구",
@@ -96,10 +99,11 @@
     },
     "prev_unmapped": {},
     "dong_lineage_applied": [
-     "풍산동→경기 하남시을"
+     "4131:풍산동→경기 하남시을"
     ],
     "unresolved_dongs": [],
     "crossing_prev_dongs": [],
+    "resolution_required": null,
     "votes_unplaceable": 0,
     "partial_fetch": false,
     "crossing_dongs": [],
@@ -112,8 +116,8 @@
     "winner_official": "pid:더불어민주당",
     "winner_agrees": false,
     "excluded_share": {
-     "pid:국민의힘": 42.03,
-     "pid:더불어민주당": 57.97
+     "pid:더불어민주당": 57.97,
+     "pid:국민의힘": 42.03
     },
     "excluded_lean_pp": {
      "pid:더불어민주당": 7.39,
@@ -122,11 +126,12 @@
     "excluded_lean_prev_pp": {
      "pid:더불어민주당": 7.63,
      "pid:국민의힘": -3.28,
-     "무소속": -4.35
+     "pid:국가혁명배당금당": 0.1,
+     "무소속": -4.45
     },
     "bias_stability_pp": {
-     "pid:국민의힘": 4.11,
-     "pid:더불어민주당": 0.24
+     "pid:더불어민주당": 0.24,
+     "pid:국민의힘": 4.11
     }
    }
   },
@@ -154,7 +159,8 @@
     "share": {
      "pid:더불어민주당": 53.16,
      "pid:국민의힘": 29.58,
-     "무소속": 17.25
+     "pid:국가혁명배당금당": 0.45,
+     "무소속": 16.8
     }
    },
    "capability": {
@@ -206,7 +212,9 @@
    "newly_ran": {
     "pid:새로운미래": 4.77
    },
-   "no_longer_ran": {},
+   "no_longer_ran": {
+    "pid:국가혁명배당금당": 0.45
+   },
    "provenance": {
     "source": "info.nec.go.kr VCCP08 투표구별 개표",
     "basis_boundary": "22대 선거구",
@@ -227,10 +235,11 @@
     },
     "prev_unmapped": {},
     "dong_lineage_applied": [
-     "풍산동→경기 하남시을"
+     "4131:풍산동→경기 하남시을"
     ],
     "unresolved_dongs": [],
     "crossing_prev_dongs": [],
+    "resolution_required": null,
     "votes_unplaceable": 0,
     "partial_fetch": false,
     "crossing_dongs": [],
@@ -244,8 +253,8 @@
     "winner_agrees": true,
     "excluded_share": {
      "pid:더불어민주당": 57.96,
-     "pid:새로운미래": 3.94,
-     "pid:국민의힘": 38.1
+     "pid:국민의힘": 38.1,
+     "pid:새로운미래": 3.94
     },
     "excluded_lean_pp": {
      "pid:더불어민주당": 6.31,
@@ -255,11 +264,12 @@
     "excluded_lean_prev_pp": {
      "pid:더불어민주당": 7.63,
      "pid:국민의힘": -3.28,
-     "무소속": -4.35
+     "pid:국가혁명배당금당": 0.1,
+     "무소속": -4.45
     },
     "bias_stability_pp": {
-     "pid:국민의힘": 2.33,
-     "pid:더불어민주당": 1.32
+     "pid:더불어민주당": 1.32,
+     "pid:국민의힘": 2.33
     }
    }
   }

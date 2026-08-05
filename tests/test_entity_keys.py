@@ -43,6 +43,8 @@ def ck(name: str, cond: bool, detail: str = "") -> None:
 def main() -> int:
     print("\n[선거구] 키에 시도가 들어 있는가")
     for f in sorted((ROOT / "data/reaggregated").glob("*.json")):
+        if f.name.startswith("validation_"):
+            continue
         d = json.loads(f.read_text(encoding="utf-8"))
         keys = list(d["districts"])
         bare = [k for k in keys if not k.split(" ")[0] in SIDO]
@@ -65,6 +67,25 @@ def main() -> int:
         dup = {b for b in bare if bare.count(b) > 1}
         ck(f"시도를 떼면 충돌이 생긴다 ({len(dup)}종) — 규칙의 근거",
            len(dup) > 0, "충돌이 없으면 이 검사의 전제를 다시 봐야 한다")
+
+    print("\n[읍면동] 동 키에 시군구가 있는가")
+    mem = sorted((ROOT / "data/geography/dong_membership").glob("*.json"))
+    for f in mem[:4]:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        ks = list(d["membership"])
+        ck(f"{f.stem}: 동 키가 '시군구코드:이름'",
+           all(":" in k for k in ks), str([k for k in ks if ":" not in k][:3]))
+    # 규칙의 근거는 데이터에 있어야 한다. 전국 파일에서 실제로 충돌하는지 센다 —
+    # 무조건 통과하는 검사는 검사가 없는 것보다 나쁘다.
+    nat = [f for f in mem if f.stem.endswith("_all")]
+    if nat:
+        d = json.loads(nat[0].read_text(encoding="utf-8"))
+        bare = [k.split(":", 1)[-1] for k in d["membership"]]
+        dup = {b for b in bare if bare.count(b) > 1}
+        ck(f"시군구를 떼면 동 이름이 충돌한다 ({len(dup)}종) — 규칙의 근거",
+           len(dup) > 50, f"{len(dup)}종 — 충돌이 없으면 이 검사의 전제를 다시 봐야 한다")
+    else:
+        ck("전국 동 membership 파일이 있다", False, "regen 필요")
 
     print("\n[지리 entity] id에 namespace와 시점이 있는가")
     ev = ROOT / "data/geography/events.json"
@@ -97,6 +118,8 @@ def main() -> int:
     ck("identity_id는 표시용이 아니다 (pid: 접두)",
        PI.identity("국민의힘", "2024-04-10").startswith("pid:"))
     for f in sorted((ROOT / "data/reaggregated").glob("*.json")):
+        if f.name.startswith("validation_"):
+            continue
         d = json.loads(f.read_text(encoding="utf-8"))
         for k, v in d["districts"].items():
             for blk in ("attributable", "prev_reaggregated"):
