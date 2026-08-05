@@ -1,0 +1,172 @@
+{
+ "current": 22,
+ "previous": 21,
+ "sgg": "하남시",
+ "districts": {
+  "하남시갑": {
+   "method": "reaggregated",
+   "reaggregation_quality": "limited",
+   "attributable": {
+    "votes": 87061,
+    "share": {
+     "pid:더불어민주당": 49.35,
+     "pid:국민의힘": 50.65
+    }
+   },
+   "official_reference": {
+    "votes": 101657,
+    "share": {
+     "pid:더불어민주당": 50.59,
+     "pid:국민의힘": 49.41
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 67711,
+    "share": {
+     "pid:더불어민주당": 46.68,
+     "pid:국민의힘": 37.66,
+     "무소속": 15.67
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:국민의힘": 12.99,
+    "pid:더불어민주당": 2.68
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8564,
+    "excluded_categories": {
+     "home_ship": 286,
+     "out_of_area_early": 27432,
+     "overseas": 646,
+     "misplaced": 1
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 200,
+     "out_of_area_early": 14683,
+     "overseas": 192,
+     "misplaced": 4
+    },
+    "prev_unmapped": {},
+    "dong_lineage_applied": [
+     "풍산동→하남시을"
+    ],
+    "unresolved_dongs": [],
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.24
+   },
+   "validation": {
+    "winner_attributable": "pid:국민의힘",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": false,
+    "excluded_share": {
+     "pid:국민의힘": 42.03,
+     "pid:더불어민주당": 57.97
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 7.39,
+     "pid:국민의힘": -7.39
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.63,
+     "pid:국민의힘": -3.28,
+     "무소속": -4.35
+    },
+    "bias_stability_pp": {
+     "pid:국민의힘": 4.11,
+     "pid:더불어민주당": 0.24
+    }
+   }
+  },
+  "하남시을": {
+   "method": "reaggregated",
+   "reaggregation_quality": "limited",
+   "attributable": {
+    "votes": 72832,
+    "share": {
+     "pid:더불어민주당": 50.46,
+     "pid:국민의힘": 44.77,
+     "pid:새로운미래": 4.77
+    }
+   },
+   "official_reference": {
+    "votes": 86601,
+    "share": {
+     "pid:더불어민주당": 51.66,
+     "pid:국민의힘": 43.71,
+     "pid:새로운미래": 4.64
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 68021,
+    "share": {
+     "pid:더불어민주당": 53.16,
+     "pid:국민의힘": 29.58,
+     "무소속": 17.25
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:국민의힘": 15.18,
+    "pid:더불어민주당": -2.7,
+    "pid:새로운미래": 4.77
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.841,
+    "excluded_categories": {
+     "home_ship": 286,
+     "out_of_area_early": 27432,
+     "overseas": 646,
+     "misplaced": 1
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 200,
+     "out_of_area_early": 14683,
+     "overseas": 192,
+     "misplaced": 4
+    },
+    "prev_unmapped": {},
+    "dong_lineage_applied": [
+     "풍산동→하남시을"
+    ],
+    "unresolved_dongs": [],
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.19
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:국민의힘": 38.1,
+     "pid:더불어민주당": 57.96,
+     "pid:새로운미래": 3.94
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 6.31,
+     "pid:국민의힘": -5.61,
+     "pid:새로운미래": -0.7
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.63,
+     "pid:국민의힘": -3.28,
+     "무소속": -4.35
+    },
+    "bias_stability_pp": {
+     "pid:국민의힘": 2.33,
+     "pid:더불어민주당": 1.32
+    }
+   }
+  }
+ }
+}

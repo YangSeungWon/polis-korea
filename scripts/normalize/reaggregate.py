@@ -1,0 +1,326 @@
+"""읍면동 실측 득표를 **다른 회차의 선거구 경계**로 다시 더한다.
+
+획정이 바뀌면 선거구는 비교할 수 없다 — 지금까지 그렇게 보류해 왔다. 그런데 NEC
+투표구별 개표(VCCP08)에는 선거구·투표구·후보별 득표가 한 표에 같이 있다. 과거 표를
+**그 표가 나온 동 그대로** 현재 선거구에 다시 담으면 추정 없이 비교가 선다.
+
+## 하지 않는 것
+
+면적비·인구비 배분을 하지 않는다. 한 건도. 어느 동 표인지 모르는 표(관외사전·
+국외부재자·거소선상)는 **나누지 않고 제외하고, 제외했다는 사실과 규모를 남긴다**.
+그래서 재집계 결과는 전체 결과가 아니라 `동 귀속표 기준` 결과다.
+
+## 분모를 맞춘다 — 이게 가장 큰 함정
+
+2020을 2024 경계로 재집계한 값(동 귀속표)을 2024 **공식 전체** 득표율과 빼면
+획정 문제를 고치고 분모 불일치라는 새 오류를 만든다. 제외한 10%가 양쪽에서 다르게
+빠지기 때문이다. swing은 **양 회차 모두 동 귀속표 기준**끼리만 계산한다.
+공식 전체는 참조값으로 따로 들고 있는다.
+
+## 품질을 커버리지로만 판단하지 않는다
+
+현 회차에는 두 값이 다 있다 — 동 귀속표 기준과 공식 전체. 둘의 차이가 곧
+"귀속 불가 표를 뺐을 때 결과가 얼마나 흔들리는가"의 실측치다. 관외사전이 정치적으로
+치우친 지역이면 커버리지가 높아도 차이가 크게 난다. 그래서 커버리지와 별개로
+이 재현 오차를 품질 판정에 쓴다.
+
+    validated     재현 오차 ≤ 1.0%p  그리고 커버리지 ≥ 85%
+    limited       재현 오차 ≤ 3.0%p  그리고 커버리지 ≥ 70%
+    insufficient  그 밖 — 수치를 내지 않는다
+
+사용: python scripts/normalize/reaggregate.py 22 21 --sgg 4100:4131
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts/build"))
+import party_identity as PI  # noqa: E402
+
+RAW = ROOT / "data/raw/nec"
+OUT = ROOT / "data/reaggregated"
+ELECTION_DATE = {21: "2020-04-15", 22: "2024-04-10", 20: "2016-04-13"}
+
+GOOD_ERR, OK_ERR = 1.0, 3.0
+GOOD_COV, OK_COV = 0.85, 0.70
+
+
+# ── 후보 문자열 분해 ───────────────────────────────────────────────────────
+def split_candidate(s: str) -> tuple[str, str]:
+    """'더불어민주당최종윤' → ('더불어민주당', '최종윤'). registry 이름으로만 자른다."""
+    names = sorted(_party_names(), key=len, reverse=True)
+    for p in names:
+        if s.startswith(p):
+            return p, s[len(p):]
+    if s.startswith("무소속"):
+        return "무소속", s[3:]
+    return "", s
+
+
+_PN: set[str] | None = None
+
+
+def _party_names() -> set[str]:
+    global _PN
+    if _PN is None:
+        reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))
+        out: set[str] = set()
+        for name, p in reg["parties"].items():
+            out.add(name)
+            if p.get("abbr"):
+                out.add(p["abbr"])
+            for a in p.get("aliases") or []:
+                out.add(a)
+        _PN = {x for x in out if x}
+    return _PN
+
+
+# ── 집계 ──────────────────────────────────────────────────────────────────
+def _load(n: int, tag: str) -> list[dict]:
+    f = RAW / f"emd_votes_{n}{tag}.json"
+    if not f.exists():
+        raise FileNotFoundError(f"{f} — 먼저 fetch_emd_votes.py {n} 로 받아라")
+    return json.loads(f.read_text(encoding="utf-8"))
+
+
+def dong_map(blocks: list[dict]) -> dict[str, str]:
+    """동 → 선거구. 한 동이 두 선거구에 걸치면 담지 않는다(가로지르는 동)."""
+    seen: dict[str, set[str]] = {}
+    for b in blocks:
+        for r in b["rows"]:
+            if r["dong"]:
+                seen.setdefault(r["dong"], set()).add(r["district"])
+    return {d: next(iter(v)) for d, v in seen.items() if len(v) == 1}
+
+
+def crossing(blocks: list[dict]) -> list[str]:
+    seen: dict[str, set[str]] = {}
+    for b in blocks:
+        for r in b["rows"]:
+            if r["dong"]:
+                seen.setdefault(r["dong"], set()).add(r["district"])
+    return sorted(d for d, v in seen.items() if len(v) > 1)
+
+
+def by_party(rows: list[dict], date: str) -> dict[str, int]:
+    """후보 득표 → 정당 identity별 합. 정당 비교는 전부 resolver를 거친다."""
+    out: dict[str, int] = {}
+    for r in rows:
+        for cand, v in r["per_candidate"].items():
+            p, _ = split_candidate(cand)
+            key = PI.identity(p, date) if p and p != "무소속" else "무소속"
+            out[key] = out.get(key, 0) + v
+    return out
+
+
+def attributable(blocks: list[dict], dmap: dict[str, str] | None = None):
+    """동에 귀속되는 행만 선거구별로 모은다. dmap을 주면 그 경계로 다시 담는다."""
+    per: dict[str, list[dict]] = {}
+    excluded: dict[str, int] = {}
+    unmapped: dict[str, int] = {}
+    for b in blocks:
+        for r in b["rows"]:
+            if r["kind"] == "subtotal":
+                continue
+            if r["kind"] != "precinct" and r["unit"] != "관내사전투표":
+                excluded[r["kind"]] = excluded.get(r["kind"], 0) + r["valid"]
+                continue
+            if not r["dong"]:                      # 합동투표구 — 동을 특정 못 한다
+                unmapped["joint_precinct"] = unmapped.get("joint_precinct", 0) + r["valid"]
+                continue
+            tgt = dmap.get(r["dong"]) if dmap is not None else r["district"]
+            if tgt is None:
+                unmapped["no_lineage"] = unmapped.get("no_lineage", 0) + r["valid"]
+                continue
+            per.setdefault(tgt, []).append(r)
+    return per, excluded, unmapped
+
+
+def official(blocks: list[dict]) -> dict[str, dict]:
+    """각 선거구 '계' 행 — 공식 전체 결과. 참조값으로만 쓴다."""
+    out = {}
+    for b in blocks:
+        for r in b["rows"]:
+            if r["kind"] == "subtotal" and r["unit"] == "계":
+                out[r["district"]] = r
+    return out
+
+
+def _excluded_lean(blocks: list[dict], date: str) -> dict[str, float]:
+    """그 회차의 제외표가 공식 전체보다 어느 정당 쪽으로 몇 %p 치우쳤나.
+
+    선거구별로 재고 선거인 규모로 가중평균한다. 재집계 대상 회차의 경계로 옮겨서
+    재면 분모가 어긋나므로, **그 회차 자신의 선거구**에서만 잰다.
+    """
+    att, _, _ = attributable(blocks)
+    off = official(blocks)
+    acc: dict[str, float] = {}
+    wsum = 0.0
+    for d, orow in off.items():
+        o = by_party([orow], date)
+        a = by_party(att.get(d, []), date)
+        osh = shares(o)
+        ex = shares({k: v for k in set(o) | set(a) if (v := o.get(k, 0) - a.get(k, 0)) > 0})
+        w = float(orow["electors"]) or 1.0
+        wsum += w
+        for k in osh:
+            acc[k] = acc.get(k, 0.0) + (ex.get(k, 0) - osh[k]) * w
+    return {k: v / wsum for k, v in acc.items()} if wsum else {}
+
+
+def shares(pv: dict[str, int]) -> dict[str, float]:
+    t = sum(pv.values())
+    return {k: v / t * 100 for k, v in pv.items()} if t else {}
+
+
+# ── 동 계보 ───────────────────────────────────────────────────────────────
+def load_lineage() -> dict:
+    f = ROOT / "data/geography/dong_lineage.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
+def resolve_dong(dong: str, sgg: str, lin: dict, target: set[str]) -> str | None:
+    """과거 동 이름 → 현 회차 동 이름. 없으면 None(추정하지 않는다)."""
+    if dong in target:
+        return dong
+    for e in lin.get(sgg, []):
+        if e["from"] == dong:
+            to = e["to"]
+            return to[0] if len(to) == 1 and to[0] in target else (
+                to[0] if all(t in target for t in to) and e.get("same_district") else None)
+    return None
+
+
+# ── 본체 ──────────────────────────────────────────────────────────────────
+def run(cur: int, prev: int, tag: str = "") -> dict:
+    cb, pb = _load(cur, tag), _load(prev, tag)
+    cdate, pdate = ELECTION_DATE[cur], ELECTION_DATE[prev]
+    dmap = dong_map(cb)
+    cross = crossing(cb)
+    lin = load_lineage()
+    tgt_dongs = set(dmap)
+
+    # 과거 동 → 현 선거구. 계보를 거치고, 못 걸면 버리지 않고 센다.
+    sgg = pb[0]["sgg_name"] if pb else ""
+    pmap: dict[str, str] = {}
+    unresolved: list[str] = []
+    for b in pb:
+        for r in b["rows"]:
+            if not r["dong"] or r["dong"] in pmap:
+                continue
+            t = resolve_dong(r["dong"], b["sgg_name"], lin, tgt_dongs)
+            if t:
+                pmap[r["dong"]] = dmap[t]
+            else:
+                unresolved.append(r["dong"])
+
+    # 과거 회차 제외표 편향은 **그 회차 자신의 선거구 단위**로 잰다. 새 경계로 재집계한
+    # 값에서 옛 공식 전체를 빼면 분모가 어긋난다 — 재집계가 고치려던 그 오류다.
+    prev_lean = _excluded_lean(pb, pdate)
+
+    cur_att, cur_exc, cur_unm = attributable(cb)
+    prv_att, prv_exc, prv_unm = attributable(pb, pmap)
+    cur_off = official(cb)
+
+    districts = {}
+    for d in sorted(cur_att):
+        ca = by_party(cur_att[d], cdate)
+        pa = by_party(prv_att.get(d, []), pdate)
+        off = cur_off.get(d)
+        off_p = by_party([off], cdate) if off else {}
+        cs, ps, os_ = shares(ca), shares(pa), shares(off_p)
+        # 재현 오차 — 현 회차에서 동 귀속표가 공식 전체를 얼마나 되살리나
+        err = max((abs(cs.get(k, 0) - os_.get(k, 0)) for k in set(cs) | set(os_)),
+                  default=0.0)
+        att_v, off_v = sum(ca.values()), sum(off_p.values())
+        cov = att_v / off_v if off_v else 0.0
+        # 제외한 표만 따로 — 이 표가 정치적으로 치우쳤는지 직접 잰다.
+        # 오차 크기만으로는 부족하다: 하남시갑은 오차 1.24%p인데 승자가 뒤집힌다.
+        exc_p = {k: off_p.get(k, 0) - ca.get(k, 0) for k in set(off_p) | set(ca)}
+        exc_s = shares({k: v for k, v in exc_p.items() if v > 0})
+        w_att = max(cs, key=cs.get, default=None)
+        w_off = max(os_, key=os_.get, default=None)
+        agree = w_att == w_off
+        qual = ("validated" if err <= GOOD_ERR and cov >= GOOD_COV and agree else
+                "limited" if err <= OK_ERR and cov >= OK_COV else "insufficient")
+        # 제외표 편향이 회차 사이에 얼마나 흔들리나. swing은 양쪽에서 같은 종류의 표를
+        # 빼므로, 편향이 **안정적이면 상쇄되고** 흔들리면 그만큼 swing에 섞인다.
+        # 하남 실측: 민주 +7.63%p(2020) → +7.39%p(2024). 안정적이라 swing이 선다.
+        stab = {k: round(abs((exc_s.get(k, 0) - os_.get(k, 0)) - prev_lean[k]), 2)
+                for k in set(os_) & set(prev_lean) if os_[k] > 3}
+
+        swing = None
+        if pa and qual != "insufficient":
+            # **양쪽 모두 동 귀속표 기준**. 공식 전체와 섞지 않는다.
+            swing = {k: round(cs.get(k, 0) - ps.get(k, 0), 2)
+                     for k in set(cs) | set(ps) if k != "무소속"}
+        districts[d] = {
+            "method": "reaggregated" if pa else "direct",
+            "reaggregation_quality": qual,
+            "attributable": {"votes": att_v, "share": {k: round(v, 2) for k, v in cs.items()}},
+            "official_reference": {"votes": off_v,
+                                   "share": {k: round(v, 2) for k, v in os_.items()}},
+            "prev_reaggregated": ({"votes": sum(pa.values()),
+                                   "share": {k: round(v, 2) for k, v in ps.items()}}
+                                  if pa else None),
+            "swing_attributable_basis": swing,
+            "provenance": {
+                "source": "info.nec.go.kr VCCP08 투표구별 개표",
+                "basis_boundary": f"{cur}대 선거구",
+                "denominator": "동 귀속표 기준 (양 회차 동일)",
+                "coverage": round(cov, 4),
+                "excluded_categories": cur_exc,
+                "unmapped": cur_unm,
+                "prev_excluded_categories": prv_exc,
+                "prev_unmapped": prv_unm,
+                "dong_lineage_applied": [f"{k}→{v}" for k, v in sorted(pmap.items())
+                                         if k not in tgt_dongs],
+                "unresolved_dongs": sorted(set(unresolved)),
+                "crossing_dongs": cross,
+                "party_identity": "scripts/build/party_identity.py",
+                "allocation_by_area_or_population": 0,
+                "current_election_validation_error_pp": round(err, 2),
+            },
+            # 현 회차로 잰 검증값. 재집계 수치를 화면에 쓸 때 **반드시 같이** 나간다.
+            "validation": {
+                "winner_attributable": w_att,
+                "winner_official": w_off,
+                "winner_agrees": agree,
+                "excluded_share": {k: round(v, 2) for k, v in exc_s.items()},
+                "excluded_lean_pp": {k: round(exc_s.get(k, 0) - os_.get(k, 0), 2)
+                                     for k in os_},
+                "excluded_lean_prev_pp": {k: round(v, 2) for k, v in prev_lean.items()},
+                "bias_stability_pp": stab,
+            },
+        }
+    return {"current": cur, "previous": prev, "sgg": sgg, "districts": districts}
+
+
+def main() -> None:
+    a = sys.argv[1:]
+    cur, prev = int(a[0]), int(a[1])
+    tag = ""
+    if "--sgg" in a:
+        tag = "_" + "-".join(s.replace(":", "") for s in a[a.index("--sgg") + 1].split(","))
+    res = run(cur, prev, tag)
+    OUT.mkdir(parents=True, exist_ok=True)
+    f = OUT / f"{cur}__{prev}{tag}.json"
+    f.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    for d, v in res["districts"].items():
+        p = v["provenance"]
+        print(f"\n[{d}] {v['method']} / {v['reaggregation_quality']}")
+        print(f"  커버리지 {p['coverage']*100:.1f}% · 재현오차 {p['current_election_validation_error_pp']}%p")
+        print(f"  {cur} 동귀속 {v['attributable']['share']}")
+        print(f"  {cur} 공식전체 {v['official_reference']['share']}")
+        if v["prev_reaggregated"]:
+            print(f"  {prev} 재집계 {v['prev_reaggregated']['share']}")
+            print(f"  swing {v['swing_attributable_basis']}")
+    print(f"\n→ {f}")
+
+
+if __name__ == "__main__":
+    main()

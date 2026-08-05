@@ -205,8 +205,13 @@ def build(cur_id: str, prev_id: str) -> dict:
     # 대표키 → 현재 회차에서 실제로 쓰인 이름. 계보 대표가 옛 이름('미래통합당')이라
     # 그대로 쓰면 화면에 없는 당이 나온다.
     # 현재 회차 이름이 우선 — 계보 대표는 '미래통합당' 같은 옛 이름이라 라벨로 못 쓴다.
-    label = labels_for(list(prev.values()), prev_date)
-    label.update(labels_for(list(cur.values()), cur_date))
+    # 라벨은 **회차별로 따로** 둔다. 하나로 병합하면 나중 회차 이름이 앞 회차를 덮어써서
+    # 같은 표가 두 이름으로 나온다. 실제로 그랬다: 2020년 총선에 등록한 군소 '한나라당'이
+    # 1997년 한나라당(→새누리당 계보)과 같은 identity라, 강릉시 no_longer_ran이
+    # 2016년 새누리당 57.16%를 '한나라당'으로 표시했다(previous_winner는 새누리당).
+    # 어느 쪽 이름을 쓸지는 **그 값이 어느 회차 것이냐**로 정해진다.
+    label_prev = labels_for(list(prev.values()), prev_date)
+    label = labels_for(list(cur.values()), cur_date)
 
     # registry에 관계가 없는 정당 — 추정해서 잇지 않되 조용히 버리지도 않는다.
     unreg: dict = {}
@@ -261,7 +266,7 @@ def build(cur_id: str, prev_id: str) -> dict:
         for pty in set(cs) | set(ps):
             in_cur, in_prev = pty in cs, pty in ps
             d = round(cs.get(pty, 0) - ps.get(pty, 0), 2)
-            name = label.get(pty, pty)
+            name = label.get(pty) or label_prev.get(pty) or pty
             if in_cur and in_prev:
                 if d:
                     d_share[name] = d
@@ -270,7 +275,15 @@ def build(cur_id: str, prev_id: str) -> dict:
             elif in_cur:
                 entered.append({"party": name, "pct": cs[pty]})
             else:
-                left.append({"party": name, "previous_pct": ps[pty]})
+                # 지난 회차에만 나온 정당 — 그 회차 투표용지 이름으로 적는다
+                left.append({"party": label_prev.get(pty) or name,
+                             "previous_pct": ps[pty]})
+
+        # identity 값이 바뀌면 집합 순회 순서가 흔들린다 — 값은 그대로인데 diff가 난다.
+        # 표시 이름으로 정렬해 출력을 고정한다.
+        entered.sort(key=lambda x: x["party"])
+        left.sort(key=lambda x: x["party"])
+        d_share = dict(sorted(d_share.items()))
 
         rec.update({
             "previous_district": p_key,

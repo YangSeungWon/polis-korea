@@ -80,14 +80,27 @@ def _chains() -> dict:
             x = parent[x]
         return x
 
+    # predecessors는 **관계가 섞인 목록**이다. 개명 전신과 나중에 합당해 들어온 당이
+    # 같이 들어 있다. 국민의힘의 predecessors는 [국민의당(2020), 미래통합당]인데
+    # 미래통합당만 개명 전신이고 국민의당(2020)은 2022년에 흡수된 별개 정당이다.
+    # 목록을 통째로 union하면 2020년 국민의당 표가 국민의힘 계보로 빨려 들어간다.
+    #
+    # 개명은 **끊김 없이 이어진다** — 전신이 해산한 달에 후신이 생긴다. 이 시점
+    # 일치를 union 조건으로 쓴다. 등록된 날짜가 없으면 잇지 않는다(추정 금지).
+    def continuous(pred: str, succ: dict) -> bool:
+        d, f = (reg.get(pred) or {}).get("dissolved"), succ.get("founded")
+        return bool(d and f and d[:7] == f[:7])
+
     for name, info in reg.items():
         find(name)
-        if info.get("relation") == "rename":
-            for pr in info.get("predecessors") or []:
-                if pr in reg:
-                    a, b = find(pr), find(name)
-                    if a != b:
-                        parent[b] = a
+        if info.get("relation") != "rename":
+            continue
+        preds = [p for p in (info.get("predecessors") or []) if p in reg]
+        # 전신이 하나뿐이면 그게 개명 전신이다. 여럿이면 시점이 맞물린 것만.
+        for pr in preds if len(preds) == 1 else [p for p in preds if continuous(p, info)]:
+            a, b = find(pr), find(name)
+            if a != b:
+                parent[b] = a
     # id는 사슬에서 사전순 최소 — 결정적이되 **표시용이 아니다**
     groups: dict = {}
     for n in parent:
