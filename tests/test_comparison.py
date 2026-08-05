@@ -101,6 +101,38 @@ def check_file(fp: Path):
            abs((t["current"] - t["previous"]) - t["delta"]) < 0.05)
 
 
+def check_rename(ck):
+    """개명은 정권 교체가 아니다.
+
+    한나라당→새누리당(2012)·새정치민주연합→더불어민주당(2015)을 문자열로 비교하면
+    '전부 정당 교체'가 된다. 실제로 6회 지선 광역단체장이 party_flip 16·hold 0으로
+    찍히고 있었다 — 화면에는 '16곳 전부 정당이 바뀌었다'로 나간다. 명백한 오독이다.
+    합당·분당은 이어 붙이지 않는다. 그건 정말로 정치적 변화다.
+    """
+    import sys as _s
+    from pathlib import Path as _P
+    _s.path.insert(0, str(_P(__file__).resolve().parents[1] / "scripts/build"))
+    from build_comparison import same_party
+    ck("개명은 같은 당 — 한나라당↔새누리당", same_party("한나라당", "새누리당"))
+    ck("개명 사슬 2단계 — 새누리당↔자유한국당", same_party("새누리당", "자유한국당"))
+    ck("개명은 같은 당 — 새정치민주연합↔더불어민주당",
+       same_party("새정치민주연합", "더불어민주당"))
+    ck("다른 당은 다르다 — 더불어민주당↔국민의힘",
+       not same_party("더불어민주당", "국민의힘"))
+    ck("합당은 잇지 않는다 — 한나라당↔민주당(2008)",
+       not same_party("한나라당", "민주당(2008)"))
+    ck("빈 값은 같다고 하지 않는다", not same_party("", ""))
+
+    # 실데이터 — 개명이 걸린 회차에서 hold가 0이면 보정이 안 된 것이다.
+    import json
+    from pathlib import Path
+    fp = Path(__file__).resolve().parents[1] / "data/comparisons/6th-local-2014__5th-local-2010.json"
+    if fp.exists():
+        c = json.loads(fp.read_text(encoding="utf-8"))["offices"]["3"]["counts"]
+        ck(f"6회 지선 광역단체장 유지 {c['party_hold']}곳 (개명 보정 전엔 0이었다)",
+           c["party_hold"] > 0, str(c))
+
+
 def main():
     files = sorted(glob.glob(str(ROOT / "data/comparisons/*.json")))
     if not files:
@@ -108,6 +140,7 @@ def main():
         return 0
     for f in files:
         check_file(Path(f))
+    check_rename(ck)
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

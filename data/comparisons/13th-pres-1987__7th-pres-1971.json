@@ -1,0 +1,266 @@
+{
+  "_meta": {
+    "current": "13th-pres-1987",
+    "previous": "7th-pres-1971",
+    "current_name": "제13대 대통령선거",
+    "previous_name": "제7대 대통령선거",
+    "generated_at": "2026-08-05T11:38:18+09:00",
+    "source": "polis 계산",
+    "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
+  },
+  "turnout": {
+    "previous": 79.8,
+    "current": 89.2,
+    "delta": 9.4
+  },
+  "nation": {
+    "previous": {
+      "민주공화당": 53.2,
+      "신민당": 45.26,
+      "정의당": 1.03,
+      "국민당": 0.37,
+      "자민당": 0.15
+    },
+    "current": {
+      "민주정의당": 36.64,
+      "통일민주당": 28.03,
+      "평화민주당": 27.04,
+      "신민주공화당": 8.06
+    },
+    "delta": {
+      "국민당": -0.37,
+      "민주공화당": -53.2,
+      "민주정의당": 36.64,
+      "신민당": -45.26,
+      "신민주공화당": 8.06,
+      "자민당": -0.15,
+      "정의당": -1.03,
+      "통일민주당": 28.03,
+      "평화민주당": 27.04
+    },
+    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+  },
+  "offices": {
+    "1": {
+      "label": "대통령 — 시도별",
+      "counts": {
+        "previous_units": 11,
+        "current_units": 14,
+        "direct_comparable": 10,
+        "previous_unmatched": 1,
+        "current_unmatched": 4,
+        "party_hold": 0,
+        "party_flip": 10,
+        "independent_to_independent": 0
+      },
+      "party_seats": {
+        "previous": {
+          "민주공화당": 7,
+          "신민당": 4
+        },
+        "current": {
+          "민주정의당": 7,
+          "평화민주당": 4,
+          "통일민주당": 2,
+          "신민주공화당": 1
+        },
+        "delta": {
+          "민주공화당": -7,
+          "민주정의당": 7,
+          "신민당": -4,
+          "신민주공화당": 1,
+          "통일민주당": 2,
+          "평화민주당": 4
+        }
+      },
+      "delta_compared_only": {
+        "민주공화당": -6,
+        "민주정의당": 4,
+        "신민당": -4,
+        "신민주공화당": 1,
+        "통일민주당": 2,
+        "평화민주당": 3
+      },
+      "units": [
+        {
+          "sido": "강원특별자치도",
+          "unit": "강원특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "민주정의당",
+          "prev_pct": 59.85,
+          "cur_pct": 59.3,
+          "prev_margin": 21.09,
+          "cur_margin": 33.2,
+          "margin_delta": 12.11
+        },
+        {
+          "sido": "경기도",
+          "unit": "경기도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "신민당",
+          "cur_party": "민주정의당",
+          "prev_pct": 49.48,
+          "cur_pct": 41.4,
+          "prev_margin": 0.61,
+          "cur_margin": 13.9,
+          "margin_delta": 13.29
+        },
+        {
+          "sido": "경상남도",
+          "unit": "경상남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "통일민주당",
+          "prev_pct": 73.36,
+          "cur_pct": 51.3,
+          "prev_margin": 47.79,
+          "cur_margin": 10.1,
+          "margin_delta": -37.69
+        },
+        {
+          "sido": "경상북도",
+          "unit": "경상북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "민주정의당",
+          "prev_pct": 75.62,
+          "cur_pct": 66.4,
+          "prev_margin": 52.3,
+          "cur_margin": 38.2,
+          "margin_delta": -14.1
+        },
+        {
+          "sido": "부산광역시",
+          "unit": "부산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "통일민주당",
+          "prev_pct": 55.66,
+          "cur_pct": 56.0,
+          "prev_margin": 12.05,
+          "cur_margin": 23.9,
+          "margin_delta": 11.85
+        },
+        {
+          "sido": "서울특별시",
+          "unit": "서울특별시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "신민당",
+          "cur_party": "평화민주당",
+          "prev_pct": 59.4,
+          "cur_pct": 32.6,
+          "prev_margin": 19.45,
+          "cur_margin": 2.6,
+          "margin_delta": -16.85
+        },
+        {
+          "sido": "전라남도",
+          "unit": "전라남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "신민당",
+          "cur_party": "평화민주당",
+          "prev_pct": 62.8,
+          "cur_pct": 90.3,
+          "prev_margin": 28.37,
+          "cur_margin": 82.1,
+          "margin_delta": 53.73
+        },
+        {
+          "sido": "전북특별자치도",
+          "unit": "전북특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_flip",
+          "prev_party": "신민당",
+          "cur_party": "평화민주당",
+          "prev_pct": 61.53,
+          "cur_pct": 83.5,
+          "prev_margin": 26.04,
+          "cur_margin": 69.4,
+          "margin_delta": 43.36
+        },
+        {
+          "sido": "충청남도",
+          "unit": "충청남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "신민주공화당",
+          "prev_pct": 53.49,
+          "cur_pct": 45.0,
+          "prev_margin": 9.1,
+          "cur_margin": 18.8,
+          "margin_delta": 9.7
+        },
+        {
+          "sido": "충청북도",
+          "unit": "충청북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주공화당",
+          "cur_party": "민주정의당",
+          "prev_pct": 57.32,
+          "cur_pct": 46.9,
+          "prev_margin": 16.62,
+          "cur_margin": 18.7,
+          "margin_delta": 2.08
+        }
+      ],
+      "not_compared": [
+        {
+          "sido": "제주특별자치도",
+          "unit": "제주특별자치도",
+          "side": "previous",
+          "match_type": "abolished",
+          "reason_code": "abolished_unit",
+          "reason": "이번 회차에 없는 단위",
+          "note": "이번 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "광주광역시",
+          "unit": "광주광역시",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "대구광역시",
+          "unit": "대구광역시",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "인천광역시",
+          "unit": "인천광역시",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "제주도",
+          "unit": "제주도",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        }
+      ]
+    }
+  },
+  "councils": {}
+}

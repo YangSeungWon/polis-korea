@@ -1,0 +1,314 @@
+{
+  "_meta": {
+    "current": "19th-pres-2017",
+    "previous": "18th-pres-2012",
+    "current_name": "제19대 대통령선거",
+    "previous_name": "제18대 대통령선거",
+    "generated_at": "2026-08-05T11:38:18+09:00",
+    "source": "polis 계산",
+    "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
+  },
+  "turnout": {
+    "previous": 75.8,
+    "current": 77.2,
+    "delta": 1.4
+  },
+  "nation": {
+    "previous": {
+      "새누리당": 51.56,
+      "민주통합당": 48.02,
+      "무소속": 0.04
+    },
+    "current": {
+      "더불어민주당": 41.09,
+      "자유한국당": 24.04,
+      "국민의당": 21.42,
+      "바른정당": 6.76,
+      "정의당": 6.17,
+      "새누리당": 0.13,
+      "무소속": 0.1,
+      "민중연합당": 0.08,
+      "국민대통합당": 0.07,
+      "홍익당": 0.06,
+      "한국국민당": 0.03,
+      "늘푸른한국당": 0.03,
+      "경제애국당": 0.02
+    },
+    "delta": {
+      "국민대통합당": 0.07,
+      "국민의당": 21.42,
+      "더불어민주당": 41.09,
+      "무소속": 0.06,
+      "민주통합당": -48.02,
+      "민중연합당": 0.08,
+      "바른정당": 6.76,
+      "새누리당": -51.43,
+      "자유한국당": 24.04,
+      "정의당": 6.17,
+      "홍익당": 0.06
+    },
+    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+  },
+  "offices": {
+    "1": {
+      "label": "대통령 — 시도별",
+      "counts": {
+        "previous_units": 17,
+        "current_units": 17,
+        "direct_comparable": 17,
+        "previous_unmatched": 0,
+        "current_unmatched": 0,
+        "party_hold": 3,
+        "party_flip": 14,
+        "independent_to_independent": 0
+      },
+      "party_seats": {
+        "previous": {
+          "새누리당": 13,
+          "민주통합당": 4
+        },
+        "current": {
+          "더불어민주당": 14,
+          "자유한국당": 3
+        },
+        "delta": {
+          "더불어민주당": 14,
+          "민주통합당": -4,
+          "새누리당": -13,
+          "자유한국당": 3
+        }
+      },
+      "delta_compared_only": {
+        "더불어민주당": 14,
+        "민주통합당": -4,
+        "새누리당": -13,
+        "자유한국당": 3
+      },
+      "units": [
+        {
+          "sido": "강원특별자치도",
+          "unit": "강원특별자치도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 61.97,
+          "cur_pct": 34.16,
+          "prev_margin": 24.44,
+          "cur_margin": 4.19,
+          "margin_delta": -20.25
+        },
+        {
+          "sido": "경기도",
+          "unit": "경기도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 50.44,
+          "cur_pct": 42.09,
+          "prev_margin": 1.24,
+          "cur_margin": 19.18,
+          "margin_delta": 17.94
+        },
+        {
+          "sido": "경상남도",
+          "unit": "경상남도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새누리당",
+          "cur_party": "자유한국당",
+          "prev_pct": 63.12,
+          "cur_pct": 37.24,
+          "prev_margin": 26.78,
+          "cur_margin": 0.51,
+          "margin_delta": -26.27
+        },
+        {
+          "sido": "경상북도",
+          "unit": "경상북도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새누리당",
+          "cur_party": "자유한국당",
+          "prev_pct": 80.82,
+          "cur_pct": 48.63,
+          "prev_margin": 62.21,
+          "cur_margin": 26.9,
+          "margin_delta": -35.31
+        },
+        {
+          "sido": "광주광역시",
+          "unit": "광주광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주통합당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 91.98,
+          "cur_pct": 61.15,
+          "prev_margin": 84.21,
+          "cur_margin": 31.07,
+          "margin_delta": -53.14
+        },
+        {
+          "sido": "대구광역시",
+          "unit": "대구광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새누리당",
+          "cur_party": "자유한국당",
+          "prev_pct": 80.15,
+          "cur_pct": 45.36,
+          "prev_margin": 60.61,
+          "cur_margin": 23.6,
+          "margin_delta": -37.01
+        },
+        {
+          "sido": "대전광역시",
+          "unit": "대전광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 49.96,
+          "cur_pct": 42.93,
+          "prev_margin": 0.25,
+          "cur_margin": 19.71,
+          "margin_delta": 19.46
+        },
+        {
+          "sido": "부산광역시",
+          "unit": "부산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 59.82,
+          "cur_pct": 38.71,
+          "prev_margin": 19.95,
+          "cur_margin": 6.73,
+          "margin_delta": -13.22
+        },
+        {
+          "sido": "서울특별시",
+          "unit": "서울특별시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주통합당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 51.42,
+          "cur_pct": 42.34,
+          "prev_margin": 3.23,
+          "cur_margin": 19.62,
+          "margin_delta": 16.39
+        },
+        {
+          "sido": "세종특별자치시",
+          "unit": "세종특별자치시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 51.91,
+          "cur_pct": 51.08,
+          "prev_margin": 4.32,
+          "cur_margin": 30.05,
+          "margin_delta": 25.73
+        },
+        {
+          "sido": "울산광역시",
+          "unit": "울산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 59.79,
+          "cur_pct": 38.15,
+          "prev_margin": 20.01,
+          "cur_margin": 10.69,
+          "margin_delta": -9.32
+        },
+        {
+          "sido": "인천광역시",
+          "unit": "인천광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 51.58,
+          "cur_pct": 41.21,
+          "prev_margin": 3.53,
+          "cur_margin": 17.55,
+          "margin_delta": 14.02
+        },
+        {
+          "sido": "전라남도",
+          "unit": "전라남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주통합당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 89.28,
+          "cur_pct": 59.88,
+          "prev_margin": 79.28,
+          "cur_margin": 29.19,
+          "margin_delta": -50.09
+        },
+        {
+          "sido": "전북특별자치도",
+          "unit": "전북특별자치도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주통합당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 86.25,
+          "cur_pct": 64.84,
+          "prev_margin": 73.02,
+          "cur_margin": 41.07,
+          "margin_delta": -31.95
+        },
+        {
+          "sido": "제주특별자치도",
+          "unit": "제주특별자치도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 50.46,
+          "cur_pct": 45.51,
+          "prev_margin": 1.5,
+          "cur_margin": 24.6,
+          "margin_delta": 23.1
+        },
+        {
+          "sido": "충청남도",
+          "unit": "충청남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 56.66,
+          "cur_pct": 38.63,
+          "prev_margin": 13.87,
+          "cur_margin": 13.78,
+          "margin_delta": -0.09
+        },
+        {
+          "sido": "충청북도",
+          "unit": "충청북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "새누리당",
+          "cur_party": "더불어민주당",
+          "prev_pct": 56.23,
+          "cur_pct": 38.62,
+          "prev_margin": 12.97,
+          "cur_margin": 12.29,
+          "margin_delta": -0.68
+        }
+      ],
+      "not_compared": []
+    }
+  },
+  "councils": {}
+}

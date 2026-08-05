@@ -369,3 +369,11 @@ body {
    '49.4 / 8.12 / 100.0'이 들쭉날쭉해 보인다 — 표는 세로 비교가 용도라 정렬이 곧 기능이다.
    (숫자에만 적용되므로 한글 셀은 영향 없다.) */
 table td, table th { font-variant-numeric: tabular-nums; }
+
+/* 앵커로 들어올 때 sticky 헤더가 제목을 덮지 않게 — 헤더 높이(약 59px)만큼 띄운다.
+   archive는 섹션마다 id가 있고 외부에서 #ar-compare-section 같은 링크로 들어온다.
+   이게 없으면 '왜 중간부터 보이지?'가 되고, 앵커가 있는 뜻이 반쯤 사라진다. */
+:target,
+[id^="ar-"],
+section[id],
+h2[id], h3[id] { scroll-margin-top: 72px; }

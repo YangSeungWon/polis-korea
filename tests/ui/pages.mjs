@@ -8,6 +8,7 @@ export const PAGES = [
   { id: 'archive-local', url: '/archive/9th-local-2026/',         why: '가장 복잡한 archive(7직위·hex 다수)' },
   { id: 'archive-pres',  url: '/archive/21st-pres-2025/',         why: '대선 — 지도·격자·여론·출구조사' },
   { id: 'archive-gen',   url: '/archive/22nd-general-2024/',      why: '총선 — 선거구 254개' },
+  { id: 'archive-cmp',   url: '/archive/6th-local-2014/',         why: '비교 — 개명 보정(한나라당→새누리당)이 걸린 회차' },
   { id: 'archive-old',   url: '/archive/2nd-pres-1952/',          why: '데이터 빈약한 옛 회차(결손 표기)' },
   { id: 'archive-by',    url: '/archive/byelection-2025-04-02/',  why: '재보궐 — 다른 구조' },
   { id: 'polls',         url: '/polls.html',                      why: '인터랙티브 stress(토글 다수)' },

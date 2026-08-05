@@ -1,0 +1,289 @@
+{
+  "_meta": {
+    "current": "14th-pres-1992",
+    "previous": "13th-pres-1987",
+    "current_name": "제14대 대통령선거",
+    "previous_name": "제13대 대통령선거",
+    "generated_at": "2026-08-05T11:38:18+09:00",
+    "source": "polis 계산",
+    "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
+  },
+  "turnout": {
+    "previous": 89.2,
+    "current": 81.9,
+    "delta": -7.3
+  },
+  "nation": {
+    "previous": {
+      "민주정의당": 36.64,
+      "통일민주당": 28.03,
+      "평화민주당": 27.04,
+      "신민주공화당": 8.06
+    },
+    "current": {
+      "민주자유당": 41.96,
+      "민주당(1991)": 33.82,
+      "통일국민당": 16.32,
+      "신정당": 6.38,
+      "무소속": 0.36,
+      "대한정의당": 0.15
+    },
+    "delta": {
+      "대한정의당": 0.15,
+      "무소속": 0.36,
+      "민주당(1991)": 33.82,
+      "민주자유당": 41.96,
+      "민주정의당": -36.64,
+      "신민주공화당": -8.06,
+      "신정당": 6.38,
+      "통일국민당": 16.32,
+      "통일민주당": -28.03,
+      "평화민주당": -27.04
+    },
+    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+  },
+  "offices": {
+    "1": {
+      "label": "대통령 — 시도별",
+      "counts": {
+        "previous_units": 14,
+        "current_units": 15,
+        "direct_comparable": 13,
+        "previous_unmatched": 1,
+        "current_unmatched": 2,
+        "party_hold": 0,
+        "party_flip": 13,
+        "independent_to_independent": 0
+      },
+      "party_seats": {
+        "previous": {
+          "민주정의당": 7,
+          "평화민주당": 4,
+          "통일민주당": 2,
+          "신민주공화당": 1
+        },
+        "current": {
+          "민주자유당": 11,
+          "민주당(1991)": 4
+        },
+        "delta": {
+          "민주당(1991)": 4,
+          "민주자유당": 11,
+          "민주정의당": -7,
+          "신민주공화당": -1,
+          "통일민주당": -2,
+          "평화민주당": -4
+        }
+      },
+      "delta_compared_only": {
+        "민주당(1991)": 4,
+        "민주자유당": 9,
+        "민주정의당": -6,
+        "신민주공화당": -1,
+        "통일민주당": -2,
+        "평화민주당": -4
+      },
+      "units": [
+        {
+          "sido": "강원특별자치도",
+          "unit": "강원특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 59.3,
+          "cur_pct": 41.51,
+          "prev_margin": 33.2,
+          "cur_margin": 7.42,
+          "margin_delta": -25.78
+        },
+        {
+          "sido": "경기도",
+          "unit": "경기도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 41.4,
+          "cur_pct": 36.33,
+          "prev_margin": 13.9,
+          "cur_margin": 4.36,
+          "margin_delta": -9.54
+        },
+        {
+          "sido": "경상남도",
+          "unit": "경상남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "통일민주당",
+          "cur_party": "민주자유당",
+          "prev_pct": 51.3,
+          "cur_pct": 72.32,
+          "prev_margin": 10.1,
+          "cur_margin": 60.8,
+          "margin_delta": 50.7
+        },
+        {
+          "sido": "경상북도",
+          "unit": "경상북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 66.4,
+          "cur_pct": 64.73,
+          "prev_margin": 38.2,
+          "cur_margin": 49.02,
+          "margin_delta": 10.82
+        },
+        {
+          "sido": "광주광역시",
+          "unit": "광주광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "평화민주당",
+          "cur_party": "민주당(1991)",
+          "prev_pct": 94.4,
+          "cur_pct": 95.85,
+          "prev_margin": 89.6,
+          "cur_margin": 93.72,
+          "margin_delta": 4.12
+        },
+        {
+          "sido": "대구광역시",
+          "unit": "대구광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 70.7,
+          "cur_pct": 59.6,
+          "prev_margin": 46.4,
+          "cur_margin": 40.2,
+          "margin_delta": -6.2
+        },
+        {
+          "sido": "부산광역시",
+          "unit": "부산광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "통일민주당",
+          "cur_party": "민주자유당",
+          "prev_pct": 56.0,
+          "cur_pct": 73.34,
+          "prev_margin": 23.9,
+          "cur_margin": 60.81,
+          "margin_delta": 36.91
+        },
+        {
+          "sido": "서울특별시",
+          "unit": "서울특별시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "평화민주당",
+          "cur_party": "민주당(1991)",
+          "prev_pct": 32.6,
+          "cur_pct": 37.75,
+          "prev_margin": 2.6,
+          "cur_margin": 1.34,
+          "margin_delta": -1.26
+        },
+        {
+          "sido": "인천광역시",
+          "unit": "인천광역시",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 39.4,
+          "cur_pct": 37.27,
+          "prev_margin": 9.4,
+          "cur_margin": 5.52,
+          "margin_delta": -3.88
+        },
+        {
+          "sido": "전라남도",
+          "unit": "전라남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "평화민주당",
+          "cur_party": "민주당(1991)",
+          "prev_pct": 90.3,
+          "cur_pct": 92.16,
+          "prev_margin": 82.1,
+          "cur_margin": 87.96,
+          "margin_delta": 5.86
+        },
+        {
+          "sido": "전북특별자치도",
+          "unit": "전북특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_flip",
+          "prev_party": "평화민주당",
+          "cur_party": "민주당(1991)",
+          "prev_pct": 83.5,
+          "cur_pct": 89.13,
+          "prev_margin": 69.4,
+          "cur_margin": 83.45,
+          "margin_delta": 14.05
+        },
+        {
+          "sido": "충청남도",
+          "unit": "충청남도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "신민주공화당",
+          "cur_party": "민주자유당",
+          "prev_pct": 45.0,
+          "cur_pct": 36.94,
+          "prev_margin": 18.8,
+          "cur_margin": 8.39,
+          "margin_delta": -10.41
+        },
+        {
+          "sido": "충청북도",
+          "unit": "충청북도",
+          "match_type": "exact",
+          "outcome": "party_flip",
+          "prev_party": "민주정의당",
+          "cur_party": "민주자유당",
+          "prev_pct": 46.9,
+          "cur_pct": 38.26,
+          "prev_margin": 18.7,
+          "cur_margin": 12.21,
+          "margin_delta": -6.49
+        }
+      ],
+      "not_compared": [
+        {
+          "sido": "제주도",
+          "unit": "제주도",
+          "side": "previous",
+          "match_type": "abolished",
+          "reason_code": "abolished_unit",
+          "reason": "이번 회차에 없는 단위",
+          "note": "이번 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "대전광역시",
+          "unit": "대전광역시",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        },
+        {
+          "sido": "제주특별자치도",
+          "unit": "제주특별자치도",
+          "side": "current",
+          "match_type": "new",
+          "reason_code": "new_unit",
+          "reason": "지난 회차에 없던 단위",
+          "note": "지난 회차에 대응 단위가 없다"
+        }
+      ]
+    }
+  },
+  "councils": {}
+}

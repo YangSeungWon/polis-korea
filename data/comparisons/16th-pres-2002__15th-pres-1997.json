@@ -1,0 +1,295 @@
+{
+  "_meta": {
+    "current": "16th-pres-2002",
+    "previous": "15th-pres-1997",
+    "current_name": "제16대 대통령선거",
+    "previous_name": "제15대 대통령선거",
+    "generated_at": "2026-08-05T11:38:18+09:00",
+    "source": "polis 계산",
+    "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
+  },
+  "turnout": {
+    "previous": 80.7,
+    "current": 70.8,
+    "delta": -9.9
+  },
+  "nation": {
+    "previous": {
+      "새정치국민회의": 40.27,
+      "한나라당": 38.75,
+      "국민신당": 19.21,
+      "건설국민승리21": 1.19,
+      "통일한국당": 0.24,
+      "바른정치연합": 0.19,
+      "공화당": 0.15
+    },
+    "current": {
+      "새천년민주당": 48.91,
+      "한나라당": 46.59,
+      "민주노동당": 3.9,
+      "하나로국민연합": 0.3,
+      "호국당": 0.21,
+      "사회당": 0.09
+    },
+    "delta": {
+      "건설국민승리21": -1.19,
+      "공화당": -0.15,
+      "국민신당": -19.21,
+      "민주노동당": 3.9,
+      "바른정치연합": -0.19,
+      "사회당": 0.09,
+      "새정치국민회의": -40.27,
+      "새천년민주당": 48.91,
+      "통일한국당": -0.24,
+      "하나로국민연합": 0.3,
+      "한나라당": 7.84,
+      "호국당": 0.21
+    },
+    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+  },
+  "offices": {
+    "1": {
+      "label": "대통령 — 시도별",
+      "counts": {
+        "previous_units": 16,
+        "current_units": 16,
+        "direct_comparable": 16,
+        "previous_unmatched": 0,
+        "current_unmatched": 0,
+        "party_hold": 16,
+        "party_flip": 0,
+        "independent_to_independent": 0
+      },
+      "party_seats": {
+        "previous": {
+          "새정치국민회의": 10,
+          "한나라당": 6
+        },
+        "current": {
+          "새천년민주당": 10,
+          "한나라당": 6
+        },
+        "delta": {
+          "새정치국민회의": -10,
+          "새천년민주당": 10
+        }
+      },
+      "delta_compared_only": {
+        "새정치국민회의": -10,
+        "새천년민주당": 10
+      },
+      "units": [
+        {
+          "sido": "강원특별자치도",
+          "unit": "강원특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 43.19,
+          "cur_pct": 52.48,
+          "prev_margin": 12.24,
+          "cur_margin": 10.97,
+          "margin_delta": -1.27
+        },
+        {
+          "sido": "경기도",
+          "unit": "경기도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 39.28,
+          "cur_pct": 50.65,
+          "prev_margin": 3.74,
+          "cur_margin": 6.46,
+          "margin_delta": 2.72
+        },
+        {
+          "sido": "경상남도",
+          "unit": "경상남도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 55.15,
+          "cur_pct": 67.52,
+          "prev_margin": 23.85,
+          "cur_margin": 40.44,
+          "margin_delta": 16.59
+        },
+        {
+          "sido": "경상북도",
+          "unit": "경상북도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 61.92,
+          "cur_pct": 73.47,
+          "prev_margin": 40.16,
+          "cur_margin": 51.82,
+          "margin_delta": 11.66
+        },
+        {
+          "sido": "광주광역시",
+          "unit": "광주광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 97.29,
+          "cur_pct": 95.18,
+          "prev_margin": 95.58,
+          "cur_margin": 91.6,
+          "margin_delta": -3.98
+        },
+        {
+          "sido": "대구광역시",
+          "unit": "대구광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 72.65,
+          "cur_pct": 77.75,
+          "prev_margin": 59.58,
+          "cur_margin": 59.07,
+          "margin_delta": -0.51
+        },
+        {
+          "sido": "대전광역시",
+          "unit": "대전광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 45.03,
+          "cur_pct": 55.09,
+          "prev_margin": 15.85,
+          "cur_margin": 15.27,
+          "margin_delta": -0.58
+        },
+        {
+          "sido": "부산광역시",
+          "unit": "부산광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 53.34,
+          "cur_pct": 66.75,
+          "prev_margin": 23.56,
+          "cur_margin": 36.89,
+          "margin_delta": 13.33
+        },
+        {
+          "sido": "서울특별시",
+          "unit": "서울특별시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 44.87,
+          "cur_pct": 51.3,
+          "prev_margin": 3.98,
+          "cur_margin": 6.34,
+          "margin_delta": 2.36
+        },
+        {
+          "sido": "울산광역시",
+          "unit": "울산광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "한나라당",
+          "cur_party": "한나라당",
+          "prev_pct": 51.36,
+          "cur_pct": 52.88,
+          "prev_margin": 24.66,
+          "cur_margin": 17.61,
+          "margin_delta": -7.05
+        },
+        {
+          "sido": "인천광역시",
+          "unit": "인천광역시",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 38.51,
+          "cur_pct": 49.83,
+          "prev_margin": 2.11,
+          "cur_margin": 5.26,
+          "margin_delta": 3.15
+        },
+        {
+          "sido": "전라남도",
+          "unit": "전라남도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 94.61,
+          "cur_pct": 93.39,
+          "prev_margin": 91.42,
+          "cur_margin": 88.76,
+          "margin_delta": -2.66
+        },
+        {
+          "sido": "전북특별자치도",
+          "unit": "전북특별자치도",
+          "match_type": "renamed",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 92.28,
+          "cur_pct": 91.59,
+          "prev_margin": 87.74,
+          "cur_margin": 85.4,
+          "margin_delta": -2.34
+        },
+        {
+          "sido": "제주특별자치도",
+          "unit": "제주특별자치도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 40.58,
+          "cur_pct": 56.05,
+          "prev_margin": 3.99,
+          "cur_margin": 16.12,
+          "margin_delta": 12.13
+        },
+        {
+          "sido": "충청남도",
+          "unit": "충청남도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 48.25,
+          "cur_pct": 52.16,
+          "prev_margin": 22.1,
+          "cur_margin": 10.93,
+          "margin_delta": -11.17
+        },
+        {
+          "sido": "충청북도",
+          "unit": "충청북도",
+          "match_type": "exact",
+          "outcome": "party_hold",
+          "prev_party": "새정치국민회의",
+          "cur_party": "새천년민주당",
+          "prev_pct": 37.43,
+          "cur_pct": 50.42,
+          "prev_margin": 6.64,
+          "cur_margin": 7.53,
+          "margin_delta": 0.89
+        }
+      ],
+      "not_compared": []
+    }
+  },
+  "councils": {}
+}

@@ -84,6 +84,11 @@ jobs:
       - name: 회차 간 구조 이상치 (직위 소실·지역 필드 결측)
         run: python scripts/audit/audit_structure.py
 
+      # 비교 파일이 있는데 회차 메타에 링크가 없으면 화면엔 아무것도 안 나온다.
+      # 손으로 관리하면 둘이 어긋나고, 어긋난 쪽은 조용하다.
+      - name: 비교 파일 ↔ 회차 메타 링크
+        run: python scripts/build/link_comparisons.py --check
+
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 

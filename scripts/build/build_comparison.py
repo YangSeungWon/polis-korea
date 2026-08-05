@@ -67,6 +67,57 @@ def load_boundary_map(cur_id: str, prev_id: str) -> dict:
 # 결과 분류. '수성'을 정당 기준으로 못 박는다. 무소속→무소속은 서로 다른 사람인데
 # party bucket만 같은 것이라 수성으로 부르면 정치적으로 틀린 말이 된다.
 OUTCOME_INDEP = "independent_to_independent"
+# 개명은 정권 교체가 아니다. 한나라당→새누리당(2012)·새정치민주연합→더불어민주당(2015)은
+# 같은 당이 이름을 바꾼 것인데, 문자열로 비교하면 '16곳 전부 정당 교체'가 된다 —
+# 실제로 6회 지선 광역단체장이 그렇게 찍히고 있었다. 명백한 오독을 만드는 종류다.
+#
+# registry의 relation='rename' 간선만 따라간다. 합당(merge)·분당(split)은 다른 당이
+# 되는 사건이라 이어 붙이지 않는다 — 그건 정말로 정치적 변화다.
+RENAME_REL = {"rename"}
+
+
+def rename_groups() -> dict:
+    """정당명 → 개명 사슬의 대표 이름. 개명으로만 이어진 것끼리 한 덩어리."""
+    try:
+        reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
+    except Exception:
+        return {}
+    parent = {}
+
+    def find(x):
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    for name, info in reg.items():
+        find(name)
+        if info.get("relation") in RENAME_REL:
+            for pr in info.get("predecessors") or []:
+                if pr in reg:
+                    union(pr, name)
+    return {n: find(n) for n in parent}
+
+
+_RENAME = None
+
+
+def same_party(a: str, b: str) -> bool:
+    """개명 사슬까지 감안한 동일성. 무소속은 정당이 아니므로 여기서 다루지 않는다."""
+    global _RENAME
+    if not a or not b:
+        return False      # 정당명이 없으면 '같다'고 말할 근거가 없다
+    if a == b:
+        return True
+    if _RENAME is None:
+        _RENAME = rename_groups()
+    return bool(a and b and _RENAME.get(a, a) == _RENAME.get(b, b))
 
 # 단독 선출직만 단위 대조가 가능하다(1위 정당이 곧 결과).
 # 대선(tc1)은 시도가 곧 비교 단위다 — 전국 1석짜리 선거라 '의석 증감'은 뜻이 없고
@@ -145,19 +196,38 @@ def council_seats(races, tc):
     return seats
 
 
+def election_name(eid: str) -> str | None:
+    """회차 메타의 정식 명칭. results _meta에 없을 때 쓰는 보조 출처."""
+    fp = ROOT / "data/elections" / f"{eid}.json"
+    if fp.exists():
+        try:
+            return json.loads(fp.read_text(encoding="utf-8")).get("name")
+        except Exception:
+            pass
+    return None
+
+
 def turnout(races):
     """전국 투표율. 회차 종류마다 최상위 직이 다르므로(대선 1·지선 3·총선 2) 고정하지 않고
     sido scope에서 선거인수가 가장 많은 직을 쓴다 — 그게 전 유권자를 덮는 직이다."""
-    by_tc = defaultdict(lambda: [0, 0])
+    # 결손을 0으로 더하지 않는다. 옛 회차(2·3·5대 대선 등)는 원자료에 투표수가 없어
+    # `voters or 0`으로 합치면 '투표율 0.0%'라는 없던 사실이 만들어진다.
+    # 일부 시도만 있어도 그 합은 전국 투표율이 아니므로, **전부 있을 때만** 계산한다.
+    by_tc = defaultdict(lambda: [0, 0, 0, 0])   # [electors, voters, 행수, voters 있는 행수]
     for r in races:
         if r.get("scope") == "sido":
             b = by_tc[r.get("sg_typecode")]
             b[0] += r.get("electors") or 0
-            b[1] += r.get("voters") or 0
+            b[2] += 1
+            if r.get("voters") is not None:
+                b[1] += r["voters"]
+                b[3] += 1
     if not by_tc:
         return None
-    el, vo = max(by_tc.values(), key=lambda b: b[0])
-    return round(vo / el * 100, 1) if el else None
+    el, vo, n, n_vo = max(by_tc.values(), key=lambda b: b[0])
+    if not el or n_vo != n:
+        return None
+    return round(vo / el * 100, 1)
 
 
 def delta_counter(prev: Counter, cur: Counter) -> dict:
@@ -193,8 +263,8 @@ def build(cur_id: str, prev_id: str) -> dict:
             mt = "renamed" if (scope == "sido" and p.get("raw_sido") != c.get("raw_sido")) else "exact"
             if p["party"] == "무소속" and c["party"] == "무소속":
                 outcome = OUTCOME_INDEP          # 같은 정당이 아니라 정당이 없는 것
-            elif p["party"] == c["party"]:
-                outcome = "party_hold"
+            elif same_party(p["party"], c["party"]):
+                outcome = "party_hold"   # 개명 포함 — 이름이 바뀐 것과 당이 바뀐 것은 다르다
             else:
                 outcome = "party_flip"
             outcome_n[outcome] += 1
@@ -297,7 +367,10 @@ def build(cur_id: str, prev_id: str) -> dict:
         "_meta": {
             "current": cur_id, "previous": prev_id,
             "current_name": cur_doc["_meta"].get("election"),
-            "previous_name": prev_doc["_meta"].get("election"),
+            # 옛 회차는 results _meta에 이름이 없다 — 없으면 회차 메타에서 가져온다.
+            # 비면 화면에 '2nd-pres-1952와 비교'처럼 내부 ID가 그대로 나간다.
+            "previous_name": (prev_doc["_meta"].get("election")
+                              or election_name(prev_id)),
             "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
             "source": "polis 계산",
             "method": ("같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 "
@@ -322,7 +395,9 @@ def main():
     fp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"→ {fp.relative_to(ROOT)}", file=sys.stderr)
     t = data["turnout"]
-    print(f"   투표율 {t['previous']}% → {t['current']}% ({t['delta']:+})", file=sys.stderr)
+    fmt = lambda v: f"{v}%" if v is not None else "자료 없음"
+    d = f" ({t['delta']:+})" if t["delta"] is not None else ""
+    print(f"   투표율 {fmt(t['previous'])} → {fmt(t['current'])}{d}", file=sys.stderr)
     for tc, o in data["offices"].items():
         n = o["counts"]
         print(f"   {o['label']}: 이전 {n['previous_units']} → 현재 {n['current_units']}"
