@@ -127,6 +127,80 @@ def main() -> int:
     ck("전신이 후신보다 나중에 생긴 edge 없음", True)
     ck("relation 혼재가 드러나 있다", "_relation_conflation" in ax)
 
+    print("\n[생애/계보 분리] relation 하나에 두 의미를 담지 않는가")
+    lf = ROOT / "data/parties/lifecycle.json"
+    if lf.exists():
+        life = json.loads(lf.read_text(encoding="utf-8"))
+        L = life["parties"]
+        ck("모든 정당에 formed_by·ended_by가 있다",
+           all("formed_by" in v and "ended_by" in v for v in L.values()))
+        ck("legacy relation이 보존된다",
+           all("legacy_relation" in v for v in L.values()))
+        # 한 값이 생성·종료 의미로 동시에 쓰이는 경우가 없어야 한다
+        F = {v["formed_by"]["type"] for v in L.values()} - {None}
+        E = {v["ended_by"]["type"] for v in L.values()} - {None}
+        ck("생성 유형 어휘",
+           F <= {"foundation", "rename", "merger", "split", "temporary_rename",
+                 "ambiguous"}, str(F))
+        ck("종료 유형 어휘",
+           E <= {"dissolution", "rename", "merger", "absorption_into", "split",
+                 "ambiguous"}, str(E))
+        ck("확정 못 한 것은 ambiguous로 남는다 (추정하지 않는다)",
+           all(v["ambiguity_cause"] for v in L.values() if v["migration"] == "ambiguous"))
+        # 종료 방식이 계보를 끊지 않는다 — 신민당은 1980 해산이지만 1967년 계보가 있다
+        sm = L.get("신민당")
+        if sm:
+            ck("해산해도 계보 edge는 남는다 (신민당)",
+               sm["ended_by"]["type"] == "dissolution"
+               and any(e["type"] == "continuation" for e in sm["lineage"]),
+               str(sm["ended_by"]["type"]) + "/" + str(sm["lineage"]))
+        # 흡수는 계열을 전파하지 않는다
+        ck("absorbed_into는 전파 대상이 아니다",
+           life["_rules"]["propagate"]["absorbed_into"] is False)
+        ck("continuation·split_from·merged_from은 전파한다",
+           all(life["_rules"]["propagate"][k] for k in
+               ("continuation", "split_from", "merged_from")))
+        # 계보 그래프에 순환이 없어야 한다
+        adj = {n: [e["to"] for e in v["lineage"] if e["type"] != "absorbed_into"]
+               for n, v in L.items()}
+        state: dict = {}
+
+        def cyc(n):
+            if state.get(n) == 1:
+                return True
+            if state.get(n) == 2:
+                return False
+            state[n] = 1
+            r = any(cyc(m) for m in adj.get(n, []) if m in adj)
+            state[n] = 2
+            return r
+        ck("계보 그래프에 순환이 없다", not any(cyc(n) for n in adj))
+        # 모든 edge가 실재하는 정당과 날짜를 가진다
+        ck("edge 상대가 전부 실재 정당",
+           all(e["to"] in parties for v in L.values() for e in v["lineage"]))
+
+    print("\n[unknown 원인] 왜 남았는지 전부 설명되는가")
+    unk = {n: v for n, v in fam.items() if v["family"] == "unknown"}
+    ck(f"모든 unknown에 원인이 있다 ({len(unk)}종)",
+       all(v.get("cause") for v in unk.values()),
+       str([n for n, v in unk.items() if not v.get("cause")][:3]))
+    ck("원인 어휘가 문서화돼 있다",
+       {v["cause"] for v in unk.values()} <= set(ax["_unknown_causes"]),
+       str({v["cause"] for v in unk.values()} - set(ax["_unknown_causes"])))
+    # 1980 강제해산은 결함이 아니라 실제 단절이다 — 그 사실이 남아 있어야 한다
+    ck("1980 강제해산 단절이 원인으로 잡힌다",
+       any(v["cause"] == "forced_dissolution_1980" for v in unk.values()))
+
+    print("\n[순서 독립] 입력 순서가 결과를 바꾸지 않는가")
+    sys.path.insert(0, str(ROOT / "scripts/build"))
+    from political_axes import derive_family
+    base = json.loads(REG.read_text(encoding="utf-8"))["parties"]
+    a = derive_family(base)
+    b = derive_family({k: base[k] for k in reversed(list(base))})
+    ck("역순으로 넣어도 같은 결과",
+       {k: v["family"] for k, v in a.items()} == {k: v["family"] for k, v in b.items()},
+       str([k for k in a if a[k]["family"] != b[k]["family"]][:3]))
+
     print("\n[시점] contemporary_position이 시계열인가")
     pos = ax.get("contemporary_position") or {}
     ck("스키마가 valid_from/valid_to·source·confidence를 요구한다",

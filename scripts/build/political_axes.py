@@ -56,10 +56,15 @@ EDGE = {
     "new": "신설 — 잇지 않는다",
     "dissolve": "해산",
 }
-# 계열이 그대로 이어지는 관계. merge만 mixed를 만든다.
-CARRY = {"rename", "continuation", "split", "temporary_rename"}
-# 흡수: 흡수한 쪽(주체)의 계열을 유지한다. registry에 주체를 표시하는 키가 필요하다.
-ABSORB = "absorbed"          # predecessors 중 흡수당한 쪽 목록
+# lineage edge 유형별 전파 여부. 생애 사건(formed_by/ended_by)이 아니라 **edge**를 본다.
+CARRY_EDGE = {
+    "continuation": True,    # 개명·조직 연속
+    "split_from": True,      # 모체 계열을 후보값으로
+    "merged_from": True,     # 진짜 합당 — 갈리면 mixed
+    "absorbed_into": False,  # 흡수당의 계열을 존속당에 전파하지 않는다
+    "alliance": False,
+    "unrelated": False,
+}
 
 FAMILIES = {
     "conservative": "보수계",
@@ -91,17 +96,22 @@ def load() -> dict:
     return json.loads(REGISTRY.read_text(encoding="utf-8"))["parties"]
 
 
-def _edges(reg: dict, name: str) -> list[tuple[str, str]]:
-    """(전신, edge 유형). 흡수당한 전신은 계열 전파에서 뺀다."""
-    info = reg.get(name) or {}
-    rel = info.get("relation") or "new"
-    absorbed = set(info.get(ABSORB) or [])
-    out = []
-    for p in info.get("predecessors") or []:
-        if p not in reg:
-            continue
-        out.append((p, "absorption" if p in absorbed else rel))
-    return out
+LIFE = ROOT / "data/parties/lifecycle.json"
+
+
+def _lineage(reg: dict) -> dict:
+    """정당 → [(전신, edge 유형)]. **생애 사건이 아니라 계보 edge만** 본다.
+
+    `ended_by=dissolution`이라고 계보가 끊기는 게 아니다 — 신민당은 1980년에 해산했지만
+    1967년에 민중당에서 이어져 나왔고, 그 계보는 유효하다. 반대로
+    `ended_by=absorption_into A`라고 A가 흡수당의 계열을 상속하는 것도 아니다.
+    """
+    if not LIFE.exists():
+        return {}
+    life = json.loads(LIFE.read_text(encoding="utf-8"))["parties"]
+    return {n: [(e["to"], e["type"]) for e in v.get("lineage") or []
+                if e["to"] in reg]
+            for n, v in life.items() if n in reg}
 
 
 def _temporal_ok(reg: dict, child: str, parent: str) -> bool:
@@ -112,70 +122,81 @@ def _temporal_ok(reg: dict, child: str, parent: str) -> bool:
     """
     cf = (reg[child].get("founded") or "")[:7]
     pf = (reg[parent].get("founded") or "")[:7]
-    pd_ = (reg[parent].get("dissolved") or "9999-99")[:7]
-    if not cf or not pf:
-        return True                     # 날짜가 없으면 판단하지 않는다(막지도 않는다)
-    if pf > cf:
-        return False                    # 전신이 후신보다 나중에 생겼다
-    return pd_ >= cf or pd_ == "9999-99"    # 흡수·존속은 해산일이 없을 수 있다
+    return not (cf and pf and pf > cf)
 
 
 def derive_family(reg: dict) -> dict:
-    """전신 그래프를 거슬러 **가장 가까운 씨앗 조상**의 계열을 준다.
+    """계보 edge를 거슬러 **가장 가까운 씨앗 조상**의 계열을 준다.
 
     순서에 의존하면 안 된다. 전신 하나가 먼저 풀렸다는 이유로 확정하면 국민의힘이
     '국민의당(2020)에서 rename'이 되어 버린다(실제로 그랬다) — 개명 전신은 미래통합당인데.
 
-    edge 유형을 본다. 흡수(absorption)는 흡수당한 쪽을 타고 올라가지 않는다 —
-    자유선진당을 흡수했다고 새누리당이 충청계와 섞인 게 아니다. 진짜 합당(merge)에서
+    edge 유형별로 전파 여부가 다르다(PROPAGATE). 흡수·선거연합은 타고 올라가지 않는다.
     같은 거리에 다른 계열이 있으면 `mixed`고, 그건 줄여야 할 오류가 아니라 사실이다.
     """
     from collections import deque
+    lin = _lineage(reg)
 
     out: dict = {}
     for name in reg:
         if name in SEEDS:
             out[name] = {"family": SEEDS[name][0], "families": [SEEDS[name][0]],
-                         "basis": "seed", "derivation": "seed",
+                         "basis": "seed", "derivation": "seed", "cause": None,
                          "evidence": f"씨앗: {SEEDS[name][1]}"}
             continue
         seen, q, found, dist, skipped = {name}, deque([(name, 0)]), {}, None, []
+        via_edges: list = []
         while q:
             cur, d = q.popleft()
             if dist is not None and d > dist:
                 break
-            for pr, et in _edges(reg, cur):
+            for pr, et in lin.get(cur, []):
                 if pr in seen:
                     continue
                 seen.add(pr)
-                if et in ("absorption", "alliance", "new", "dissolve"):
-                    skipped.append(f"{pr}({EDGE.get(et, et)})")
-                    continue                      # 계열을 잇지 않는 관계
+                if not CARRY_EDGE.get(et, False):
+                    skipped.append(f"{pr}({et})")
+                    continue
                 if not _temporal_ok(reg, cur, pr):
                     skipped.append(f"{pr}(시점 불일치)")
                     continue
                 if pr in SEEDS:
                     dist = d + 1
                     found.setdefault(SEEDS[pr][0], []).append(pr)
+                    via_edges.append(f"{cur} ←{et}― {pr}")
                 else:
                     q.append((pr, d + 1))
         note = ("  · 전파 제외: " + ", ".join(skipped[:3])) if skipped else ""
         if not found:
+            # 왜 못 닿았는지 남긴다. 숫자보다 원인이 중요하다.
+            has_edges = bool(lin.get(name))
+            f4 = (reg[name].get("founded") or "")[:4]
+            # 1980-10 신군부가 모든 정당을 강제해산했고(민주공화당·신민당·민주통일당),
+            # 1981-01에 새 정당들이 생겼다. 계보 그래프가 여기서 통째로 끊긴다.
+            # **모델 결함이 아니라 실제 역사적 단절이다.** 이어붙일지는 판단이 필요하다.
+            cause = ("forced_dissolution_1980" if f4 in ("1980", "1981") and not has_edges
+                     else "ambiguous_relation" if not has_edges
+                     and (reg[name].get("predecessors") or []) else
+                     "missing_edge" if not has_edges else "disconnected_component")
             out[name] = {"family": "unknown", "families": [], "basis": "no_path_to_seed",
-                         "derivation": "no_path",
+                         "derivation": "no_path", "cause": cause,
                          "evidence": "씨앗에 닿는 계보 경로가 없다" + note}
         elif len(found) == 1:
             f, via = next(iter(found.items()))
             out[name] = {"family": f, "families": [f], "basis": "lineage_graph",
-                         "derivation": "single_family_ancestry",
-                         "evidence": f"{'·'.join(sorted(via))}까지 전신 {dist}단계" + note}
+                         "derivation": "single_family_ancestry", "cause": None,
+                         "evidence": f"{'·'.join(sorted(via))}까지 계보 {dist}단계"
+                                     + (f" ({via_edges[0]})" if via_edges else "") + note}
         else:
             out[name] = {
                 "family": "mixed", "families": sorted(found),
                 "basis": "lineage_graph", "derivation": "merge_of_multiple_families",
+                "cause": None,
                 "evidence": ("같은 거리에서 계열이 갈린다 — "
                              + ", ".join(f"{k}({'·'.join(sorted(v))})"
-                                         for k, v in sorted(found.items())) + note),
+                                         for k, v in sorted(found.items()))
+                             + (" | " + "; ".join(via_edges[:3]) if via_edges else "")
+                             + note),
             }
     return out
 
@@ -216,6 +237,16 @@ def main() -> int:
             "contested": "자료가 갈린다 — 값을 쓰지 않고 갈린다는 사실을 남긴다",
             "insufficient": "근거가 부족하다",
         },
+        "_unknown_causes": {
+            "forced_dissolution_1980": ("1980-10 신군부가 모든 정당을 강제해산하고 "
+                                        "1981-01에 새 정당이 창당됐다. 계보 그래프가 "
+                                        "통째로 끊긴다 — 실제 역사적 단절이지 결함이 "
+                                        "아니다. 이어붙이려면 '강제해산 뒤 재창당을 "
+                                        "조직적 연속으로 볼 것인가'라는 판단이 필요하다."),
+            "missing_edge": "전신 기록 자체가 없다",
+            "ambiguous_relation": "전신은 있는데 관계 유형을 확정할 수 없다",
+            "disconnected_component": "계보는 이어지는데 그 줄기가 씨앗에 닿지 않는다",
+        },
         "_relation_conflation": {
             "_note": ("registry의 `relation`이 형성(new/rename/merge/split)과 "
                       "종료(dissolve)를 한 필드에 담고 있다. 아래 정당들은 종료 값이 "
@@ -251,6 +282,8 @@ def main() -> int:
     print(f"→ {OUT.name}")
     print("  lineage_family:", dict(c))
     print(f"  relation 혼재(형성/종료 한 필드): {len(conflated)}종 {conflated[:5]}")
+    cu = collections.Counter(v["cause"] for v in fam.values() if v["family"] == "unknown")
+    print("  unknown 원인:", dict(cu))
     print(f"  contemporary_position: {len(doc['contemporary_position'])}종 기록 "
           f"(나머지는 unknown — 근거 없이 채우지 않는다)")
     return 0

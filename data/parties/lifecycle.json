@@ -1,0 +1,2366 @@
+{
+ "_note": "정당의 생애 사건(formed_by/ended_by)과 계보 edge(lineage)를 나눠 담는다. registry의 `relation`은 두 의미가 섞여 있어 그대로 두고(legacy_relation) 여기서 다시 세운다. 날짜는 검증 근거이지 사실 생성기가 아니다 — 확정되는 것만 유도하고 나머지는 ambiguous다.",
+ "_rules": {
+  "ended_by=dissolution": "계보에 후신이 없다는 뜻이 **아니다**",
+  "ended_by=absorption_into A": "A가 흡수당의 계열을 상속한다는 뜻이 **아니다**",
+  "propagate": {
+   "continuation": true,
+   "split_from": true,
+   "merged_from": true,
+   "absorbed_into": false,
+   "alliance": false,
+   "unrelated": false
+  }
+ },
+ "parties": {
+  "더불어민주당": {
+   "founded": "2015-12",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "새정치민주연합"
+    ],
+    "why": "새정치민주연합이 2015-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "새정치민주연합",
+     "type": "continuation"
+    },
+    {
+     "to": "더불어민주연합",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    },
+    {
+     "to": "더불어시민당",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    },
+    {
+     "to": "열린민주당",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새정치민주연합": {
+   "founded": "2014-03",
+   "dissolved": "2015-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "민주당(2013)",
+     "새정치연합"
+    ],
+    "why": "전신 2곳이 모두 2014-03에 해산했다"
+   },
+   "ended_by": {
+    "type": "split",
+    "parties": [
+     "국민의당(2016)",
+     "더불어민주당"
+    ],
+    "why": "2015-12에 여러 곳으로 갈라졌다"
+   },
+   "lineage": [
+    {
+     "to": "민주당(2013)",
+     "type": "merged_from"
+    },
+    {
+     "to": "새정치연합",
+     "type": "merged_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주통합당": {
+   "founded": "2011-12",
+   "dissolved": "2013-05",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "통합민주당"
+    ],
+    "why": "통합민주당이 2011-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주당(2013)"
+    ],
+    "why": "민주당(2013)이 같은 달(2013-05)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "통합민주당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "대통합민주신당": {
+   "founded": "2007-08",
+   "dissolved": "2008-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "열린우리당"
+    ],
+    "why": "열린우리당이 2007-08에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "통합민주당"
+    ],
+    "why": "통합민주당이 같은 달(2008-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "열린우리당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "열린우리당": {
+   "founded": "2003-11",
+   "dissolved": "2007-08",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "새천년민주당"
+    ],
+    "why": "새천년민주당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "대통합민주신당"
+    ],
+    "why": "대통합민주신당이 같은 달(2007-08)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "새천년민주당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "통합민주당": {
+   "founded": "2008-02",
+   "dissolved": "2011-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "대통합민주신당",
+     "민주당(2005)"
+    ],
+    "why": "전신 2곳이 모두 2008-02에 해산했다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주통합당"
+    ],
+    "why": "민주통합당이 같은 달(2011-12)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "대통합민주신당",
+     "type": "merged_from"
+    },
+    {
+     "to": "민주당(2005)",
+     "type": "merged_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새천년민주당": {
+   "founded": "2000-01",
+   "dissolved": "2005-05",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "새정치국민회의"
+    ],
+    "why": "새정치국민회의이 2000-01에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "열린우리당"
+    ],
+    "why": "열린우리당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "새정치국민회의",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새정치국민회의": {
+   "founded": "1995-09",
+   "dissolved": "2000-01",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "민주당(1991)"
+    ],
+    "why": "민주당(1991)이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "새천년민주당"
+    ],
+    "why": "새천년민주당이 같은 달(2000-01)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민주당(1991)",
+     "type": "split_from"
+    },
+    {
+     "to": "국민신당",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "평화민주당": {
+   "founded": "1987-11",
+   "dissolved": "1991-09",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "통일민주당"
+    ],
+    "why": "통일민주당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주당(1991)"
+    ],
+    "why": "민주당(1991)이 같은 달(1991-09)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "통일민주당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "통일민주당": {
+   "founded": "1987-05",
+   "dissolved": "1990-02",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "신한민주당"
+    ],
+    "why": "신한민주당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "평화민주당"
+    ],
+    "why": "평화민주당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "신한민주당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "더불어시민당": {
+   "founded": "2020-03",
+   "dissolved": "2020-05",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "더불어민주당"
+    ],
+    "why": "더불어민주당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "더불어민주연합": {
+   "founded": "2024-02",
+   "dissolved": "2024-05",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "더불어민주당"
+    ],
+    "why": "더불어민주당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "열린민주당": {
+   "founded": "2020-03",
+   "dissolved": "2022-01",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "더불어민주당"
+    ],
+    "why": "더불어민주당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민의힘": {
+   "founded": "2020-09",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "미래통합당"
+    ],
+    "why": "미래통합당이 2020-09에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "미래통합당",
+     "type": "continuation"
+    },
+    {
+     "to": "국민의당(2020)",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    },
+    {
+     "to": "국민의미래",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "미래통합당": {
+   "founded": "2020-02",
+   "dissolved": "2020-09",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "새로운보수당",
+     "자유한국당"
+    ],
+    "why": "전신 2곳이 모두 2020-02에 해산했다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "국민의힘"
+    ],
+    "why": "국민의힘이 같은 달(2020-09)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "새로운보수당",
+     "type": "merged_from"
+    },
+    {
+     "to": "자유한국당",
+     "type": "merged_from"
+    },
+    {
+     "to": "미래한국당",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "미래한국당": {
+   "founded": "2020-02",
+   "dissolved": "2020-05",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "미래통합당"
+    ],
+    "why": "미래통합당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민의미래": {
+   "founded": "2024-02",
+   "dissolved": "2024-05",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "국민의힘"
+    ],
+    "why": "국민의힘은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유한국당": {
+   "founded": "2017-02",
+   "dissolved": "2020-02",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "새누리당"
+    ],
+    "why": "새누리당이 2017-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "미래통합당"
+    ],
+    "why": "미래통합당이 같은 달(2020-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "새누리당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새누리당": {
+   "founded": "2012-02",
+   "dissolved": "2017-02",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "한나라당"
+    ],
+    "why": "한나라당이 2012-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "바른정당"
+    ],
+    "why": "바른정당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "한나라당",
+     "type": "continuation"
+    },
+    {
+     "to": "자유선진당",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "한나라당": {
+   "founded": "1997-11",
+   "dissolved": "2012-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "신한국당",
+     "통합민주당(1995)"
+    ],
+    "why": "전신 2곳이 모두 1997-11에 해산했다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "새누리당"
+    ],
+    "why": "새누리당이 같은 달(2012-02)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "신한국당",
+     "type": "merged_from"
+    },
+    {
+     "to": "통합민주당(1995)",
+     "type": "merged_from"
+    },
+    {
+     "to": "자유민주연합",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    },
+    {
+     "to": "친박연대",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "신한국당": {
+   "founded": "1995-12",
+   "dissolved": "1997-11",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민주자유당"
+    ],
+    "why": "민주자유당이 1995-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "split",
+    "parties": [
+     "국민신당",
+     "한나라당"
+    ],
+    "why": "1997-11에 여러 곳으로 갈라졌다"
+   },
+   "lineage": [
+    {
+     "to": "민주자유당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주자유당": {
+   "founded": "1990-02",
+   "dissolved": "1995-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "민주정의당",
+     "신민주공화당",
+     "통일민주당"
+    ],
+    "why": "전신 3곳이 모두 1990-02에 해산했다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "자유민주연합"
+    ],
+    "why": "자유민주연합은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "민주정의당",
+     "type": "merged_from"
+    },
+    {
+     "to": "신민주공화당",
+     "type": "merged_from"
+    },
+    {
+     "to": "통일민주당",
+     "type": "merged_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주정의당": {
+   "founded": "1981-01",
+   "dissolved": "1990-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "민주자유당"
+    ],
+    "why": "민주자유당이 같은 달(1990-02)에 생겼고 그 전신이 3곳이다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "신민주공화당": {
+   "founded": "1987-10",
+   "dissolved": "1990-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "민주자유당"
+    ],
+    "why": "민주자유당이 같은 달(1990-02)에 생겼고 그 전신이 3곳이다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주공화당": {
+   "founded": "1963-02",
+   "dissolved": "1980-10",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유민주연합": {
+   "founded": "1995-03",
+   "dissolved": "2006-04",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "민주자유당"
+    ],
+    "why": "민주자유당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "한나라당"
+    ],
+    "why": "한나라당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "민주자유당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "자유선진당": {
+   "founded": "2008-02",
+   "dissolved": "2012-11",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "새누리당"
+    ],
+    "why": "새누리당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "통합진보당": {
+   "founded": "2011-12",
+   "dissolved": "2014-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민주노동당"
+    ],
+    "why": "민주노동당이 2011-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "정의당"
+    ],
+    "why": "정의당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "민주노동당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민중연합당": {
+   "founded": "2016-02",
+   "dissolved": "2017-10",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "통합진보당"
+    ],
+    "why": "통합진보당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민중당(2017)"
+    ],
+    "why": "민중당(2017)이 같은 달(2017-10)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "통합진보당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민중당(2017)": {
+   "founded": "2017-10",
+   "dissolved": "2020-06",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민중연합당"
+    ],
+    "why": "민중연합당이 2017-10에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "진보당"
+    ],
+    "why": "진보당이 같은 달(2020-06)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민중연합당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주노동당": {
+   "founded": "2000-01",
+   "dissolved": "2011-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "건설국민승리21"
+    ],
+    "why": "건설국민승리21이 2000-01에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "진보신당"
+    ],
+    "why": "진보신당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "건설국민승리21",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "정의당": {
+   "founded": "2012-10",
+   "dissolved": null,
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "통합진보당"
+    ],
+    "why": "통합진보당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "통합진보당",
+     "type": "split_from"
+    },
+    {
+     "to": "민주노동당(2025)",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "진보신당": {
+   "founded": "2008-03",
+   "dissolved": "2013-07",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "민주노동당"
+    ],
+    "why": "민주노동당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "노동당"
+    ],
+    "why": "노동당이 같은 달(2013-07)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민주노동당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "바른정당": {
+   "founded": "2017-01",
+   "dissolved": "2018-02",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "새누리당"
+    ],
+    "why": "새누리당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "바른미래당"
+    ],
+    "why": "바른미래당이 같은 달(2018-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "새누리당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "바른미래당": {
+   "founded": "2018-02",
+   "dissolved": "2020-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "국민의당(2016)",
+     "바른정당"
+    ],
+    "why": "전신 2곳이 모두 2018-02에 해산했다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "새로운보수당"
+    ],
+    "why": "새로운보수당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "국민의당(2016)",
+     "type": "merged_from"
+    },
+    {
+     "to": "바른정당",
+     "type": "merged_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주평화당": {
+   "founded": "2018-02",
+   "dissolved": "2020-02",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "국민의당(2016)"
+    ],
+    "why": "국민의당(2016)이 2018-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "민생당"
+    ],
+    "why": "민생당이 같은 달(2020-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "국민의당(2016)",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민생당": {
+   "founded": "2020-02",
+   "dissolved": "2024-03",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "merger",
+    "parties": [
+     "민주평화당",
+     "바른미래당"
+    ],
+    "why": "전신 2곳이 모두 2020-02에 해산했다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "기후민생당"
+    ],
+    "why": "기후민생당이 같은 달(2024-03)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민주평화당",
+     "type": "merged_from"
+    },
+    {
+     "to": "바른미래당",
+     "type": "merged_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "기후민생당": {
+   "founded": "2024-03",
+   "dissolved": "2025-04",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민생당"
+    ],
+    "why": "민생당이 2024-03에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주평화당(2025)"
+    ],
+    "why": "민주평화당(2025)이 같은 달(2025-04)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민생당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주평화당(2025)": {
+   "founded": "2025-04",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "기후민생당"
+    ],
+    "why": "기후민생당이 2025-04에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "기후민생당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새로운미래": {
+   "founded": "2024-02",
+   "dissolved": "2024-09",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "더불어민주당"
+    ],
+    "why": "더불어민주당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "새미래민주당"
+    ],
+    "why": "새미래민주당이 같은 달(2024-09)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "더불어민주당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새미래민주당": {
+   "founded": "2024-09",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "새로운미래"
+    ],
+    "why": "새로운미래이 2024-09에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "새로운미래",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "개혁신당": {
+   "founded": "2024-01",
+   "dissolved": null,
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "조국혁신당": {
+   "founded": "2024-03",
+   "dissolved": null,
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "통일국민당": {
+   "founded": "1992-01",
+   "dissolved": "1994",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민신당": {
+   "founded": "1997-11",
+   "dissolved": "1998-09",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "신한국당"
+    ],
+    "why": "신한국당이 1997-11에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "새정치국민회의"
+    ],
+    "why": "새정치국민회의은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "신한국당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "국민통합21": {
+   "founded": "2002-11",
+   "dissolved": "2004",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "창조한국당": {
+   "founded": "2007-10",
+   "dissolved": "2012",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유당": {
+   "founded": "1951-12",
+   "dissolved": "1970",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "대한국민당"
+    ],
+    "why": "대한국민당이 1951-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [
+    {
+     "to": "대한국민당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "신민당": {
+   "founded": "1967-02",
+   "dissolved": "1980-10",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민중당"
+    ],
+    "why": "민중당이 1967-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [
+    {
+     "to": "민중당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민정당": {
+   "founded": "1963-05",
+   "dissolved": "1965",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "ambiguous",
+    "parties": [
+     "민중당"
+    ],
+    "why": "후신 시점이 해산 시점과 맞물리지 않는다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "공화당": {
+   "founded": "1997",
+   "dissolved": "1998",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "한국민주당": {
+   "founded": "1945-09",
+   "dissolved": "1949-02",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주국민당"
+    ],
+    "why": "민주국민당이 같은 달(1949-02)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주국민당": {
+   "founded": "1949-02",
+   "dissolved": "1955-09",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "한국민주당"
+    ],
+    "why": "한국민주당이 1949-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주당(1955)"
+    ],
+    "why": "민주당(1955)이 같은 달(1955-09)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "한국민주당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "한국독립당": {
+   "founded": "1940",
+   "dissolved": "1970",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한독립촉성국민회": {
+   "founded": "1946-02",
+   "dissolved": "1951",
+   "legacy_relation": "dissolve",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주당(1955)": {
+   "founded": "1955-09",
+   "dissolved": "1967",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민주국민당"
+    ],
+    "why": "민주국민당이 1955-09에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [
+    {
+     "to": "민주국민당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주당(1991)": {
+   "founded": "1991-09",
+   "dissolved": "1995-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "평화민주당"
+    ],
+    "why": "평화민주당이 1991-09에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "새정치국민회의"
+    ],
+    "why": "새정치국민회의은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "평화민주당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "통합민주당(1995)": {
+   "founded": "1995-12",
+   "dissolved": "1997-11",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민주당(1991)"
+    ],
+    "why": "민주당(1991)이 1995-12에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "한나라당"
+    ],
+    "why": "한나라당이 같은 달(1997-11)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민주당(1991)",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주당(2005)": {
+   "founded": "2005-05",
+   "dissolved": "2008-02",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "새천년민주당"
+    ],
+    "why": "새천년민주당이 2005-05에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "통합민주당"
+    ],
+    "why": "통합민주당이 같은 달(2008-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "새천년민주당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새누리당(2017)": {
+   "founded": "2017-03",
+   "dissolved": "2022-03",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "정의당(1967)": {
+   "founded": "1967",
+   "dissolved": "1970",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민의당(1963)": {
+   "founded": "1963",
+   "dissolved": "1964",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주국민당(2000)": {
+   "founded": "2000-02",
+   "dissolved": "2001",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한국민당": {
+   "founded": "1948-11",
+   "dissolved": "1951-12",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "자유당"
+    ],
+    "why": "자유당이 같은 달(1951-12)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대동청년단": {
+   "founded": "1947-09",
+   "dissolved": "1949-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "조선민족청년단": {
+   "founded": "1946-10",
+   "dissolved": "1949",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한청년단": {
+   "founded": "1948-12",
+   "dissolved": "1953",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민회": {
+   "founded": "1948",
+   "dissolved": "1951",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한노동총연맹": {
+   "founded": "1946",
+   "dissolved": "1955",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한독립촉성농민총연맹": {
+   "founded": "1947",
+   "dissolved": "1950",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "일민구락부": {
+   "founded": "1949",
+   "dissolved": "1950",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "사회대중당": {
+   "founded": "1960-06",
+   "dissolved": "1961-05",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유민주당": {
+   "founded": "1963-09",
+   "dissolved": "1964",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "통일당": {
+   "founded": "1958",
+   "dissolved": "1961",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민중당": {
+   "founded": "1965-06",
+   "dissolved": "1967-02",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "민정당"
+    ],
+    "why": "민정당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "신민당"
+    ],
+    "why": "신민당이 같은 달(1967-02)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민정당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주통일당": {
+   "founded": "1973-01",
+   "dissolved": "1980-10",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주한국당": {
+   "founded": "1981-01",
+   "dissolved": "1988",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "한국국민당": {
+   "founded": "1981-01",
+   "dissolved": "1988",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "한국국민당(2015)": {
+   "founded": "2015-08",
+   "dissolved": null,
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "신한민주당": {
+   "founded": "1985-01",
+   "dissolved": "1988-05",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=split는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "통일민주당"
+    ],
+    "why": "통일민주당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주사회당": {
+   "founded": "1981-01",
+   "dissolved": "1985",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민권당": {
+   "founded": "1981",
+   "dissolved": "1985",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "신정당": {
+   "founded": "1981",
+   "dissolved": "1985",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "신정당(1992)": {
+   "founded": "1992",
+   "dissolved": "1994",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "사회당": {
+   "founded": "1948",
+   "dissolved": "1950",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "사회당(2002)": {
+   "founded": "1998",
+   "dissolved": "2012",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "건설국민승리21": {
+   "founded": "1997-11",
+   "dissolved": "2000-01",
+   "legacy_relation": "merge",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "민주노동당"
+    ],
+    "why": "민주노동당이 같은 달(2000-01)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "친박연대": {
+   "founded": "2008-03",
+   "dissolved": "2012-02",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "참주인연합"
+    ],
+    "why": "참주인연합이 2008-03에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "한나라당"
+    ],
+    "why": "한나라당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "참주인연합",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "국민의당(2016)": {
+   "founded": "2016-02",
+   "dissolved": "2018-02",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "새정치민주연합"
+    ],
+    "why": "새정치민주연합이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "split",
+    "parties": [
+     "민주평화당",
+     "바른미래당"
+    ],
+    "why": "2018-02에 여러 곳으로 갈라졌다"
+   },
+   "lineage": [
+    {
+     "to": "새정치민주연합",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "국민의당(2020)": {
+   "founded": "2020-02",
+   "dissolved": "2022-04",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "바른미래당"
+    ],
+    "why": "바른미래당이 2020-02에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "국민의힘"
+    ],
+    "why": "국민의힘은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "바른미래당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새로운보수당": {
+   "founded": "2020-01",
+   "dissolved": "2020-02",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "바른미래당"
+    ],
+    "why": "바른미래당이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "미래통합당"
+    ],
+    "why": "미래통합당이 같은 달(2020-02)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "바른미래당",
+     "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "참주인연합": {
+   "founded": "2007-10",
+   "dissolved": "2008-03",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "친박연대"
+    ],
+    "why": "친박연대이 같은 달(2008-03)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "새정치연합": {
+   "founded": "2014-03",
+   "dissolved": "2014-03",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "새정치민주연합"
+    ],
+    "why": "새정치민주연합이 같은 달(2014-03)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "진보당": {
+   "founded": "2020-06",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민중당(2017)"
+    ],
+    "why": "민중당(2017)이 2020-06에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "민중당(2017)",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "민주당(2013)": {
+   "founded": "2013-05",
+   "dissolved": "2014-03",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "민주통합당"
+    ],
+    "why": "민주통합당이 2013-05에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "새정치민주연합"
+    ],
+    "why": "새정치민주연합이 같은 달(2014-03)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [
+    {
+     "to": "민주통합당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "기본소득당": {
+   "founded": "2020-01",
+   "dissolved": null,
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유와혁신": {
+   "founded": "2025-07",
+   "dissolved": null,
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "노동당": {
+   "founded": "2013-07",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "진보신당"
+    ],
+    "why": "진보신당이 2013-07에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "진보신당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "녹색당": {
+   "founded": "2012-03",
+   "dissolved": null,
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민주노동당(2025)": {
+   "founded": "2025-05",
+   "dissolved": "2025-07",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "temporary_rename",
+    "parties": [
+     "정의당"
+    ],
+    "why": "정의당의 전신이자 후신 — 한시 당명(같은 정당)"
+   },
+   "ended_by": {
+    "type": "absorption_into",
+    "parties": [
+     "정의당"
+    ],
+    "why": "정의당은 이미 있던 정당이다 — 흡수됐다"
+   },
+   "lineage": [
+    {
+     "to": "정의당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  }
+ }
+}
