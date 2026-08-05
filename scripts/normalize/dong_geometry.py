@@ -90,16 +90,25 @@ def membership(cur: int, prev: int, fixture: str,
     cur_g = _polys(cur, pfx_c, set(cur_dmap))
     prev_g = _polys(prev, pfx_p, prev_dongs)
 
+    # 전국이면 양쪽 3,500개씩이라 전수 교차(1,200만 회)는 못 끝낸다. 공간 색인으로
+    # 후보를 좁힌다 — 판정 결과는 같고 속도만 다르다.
+    from shapely.strtree import STRtree
+    names = list(cur_g)
+    tree = STRtree([cur_g[m] for m in names])
+
     out: dict = {}
     for n, g in prev_g.items():
         if g.area <= 0:
             continue
         sh: dict = {}
-        for m, h in cur_g.items():
-            if g.intersects(h):
-                r = g.intersection(h).area / g.area
-                if r > 0.005:
-                    sh[cur_dmap[m]] = round(sh.get(cur_dmap[m], 0) + r, 4)
+        for i in tree.query(g):
+            m = names[i]
+            h = cur_g[m]
+            if not g.intersects(h):
+                continue
+            r = g.intersection(h).area / g.area
+            if r > 0.005:
+                sh[cur_dmap[m]] = round(sh.get(cur_dmap[m], 0) + r, 4)
         out[n] = sh
     res = {
         "_note": ("과거 동이 현 선거구에 걸치는 면적비. 표를 이 비율로 나누는 데 쓰지 "

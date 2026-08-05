@@ -156,6 +156,9 @@ def main() -> int:
     print("\n[되먹임] 계보에 반영될 때 근거 없이 올라가지 않는가")
     _feedback()
 
+    print("\n[분류] 남은 비교 불가가 왜 불가인지 전부 설명되는가")
+    _taxonomy()
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
@@ -217,6 +220,27 @@ def _fixtures() -> None:
            and w["districts"]["의성군청송군영덕군울진군"]["attributable"] is None)
     except FileNotFoundError:
         pass
+
+
+def _taxonomy() -> None:
+    """좋은 산출물은 '비교 가능 196'이 아니라 **남은 불가가 전부 설명된 상태**다.
+
+    분류 안 된 잔여가 있으면 우리가 모르는 유형이 있다는 뜻이고, 숫자를 늘리는 것보다
+    그 사실을 드러내는 게 먼저다. 그래서 미분류는 통과시키지 않는다.
+    """
+    from reaggregation_taxonomy import TAXONOMY, report
+    for f in sorted((ROOT / "data/district_lineage").glob("*__*.json")):
+        if f.stem == "blocked_taxonomy":
+            continue
+        r = report(f.stem)
+        ck(f"{f.stem}: 비교 불가 사유가 전부 분류됨",
+           not r["unclassified"], f"{len(r['unclassified'])}건")
+        ck(f"{f.stem}: 사유마다 뜻과 대응이 적혀 있다",
+           all(v["meaning"] and v["actionable"] for v in r["by_cause"].values()))
+        ck(f"{f.stem}: 분류 합 = 비교 불가 수",
+           sum(v["count"] for v in r["by_cause"].values()) == r["blocked"])
+    ck("taxonomy 코드에 전부 설명이 있다",
+       all(len(v) == 2 and v[0] and v[1] for v in TAXONOMY.values()))
 
 
 def _capability() -> None:
