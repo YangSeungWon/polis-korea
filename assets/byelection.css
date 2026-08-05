@@ -68,3 +68,18 @@
   font-size: 11px; color: var(--ink-soft);
   margin-top: 6px;
 }
+
+/* ── 지도 마커 키 ─────────────────────────────────────────────────────────
+   반지름=조사 수, 명도=격차, 점선=조사 없음. 셋 다 눈으로는 뜻을 알 수 없다. */
+.boe-key {
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+  margin: 6px 0 0; font-size: 11px; color: var(--ink-soft);
+}
+.boe-key-item { display: inline-flex; align-items: center; gap: 5px; }
+.boe-key-dot {
+  display: inline-block; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--ink-soft); border: 1.4px solid var(--ink-soft);
+}
+.boe-key-dot.is-big { width: 14px; height: 14px; }
+.boe-key-dot.is-pale { opacity: 0.45; }
+.boe-key-dot.is-dash { background: none; border-style: dashed; }

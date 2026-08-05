@@ -57,6 +57,14 @@
 
   <section class="controls">
     <div class="seg seg-wrap" role="tablist" aria-label="선거구" id="boe-chips"></div>
+    <!-- 지도 마커는 세 가지를 동시에 인코딩한다. 키가 없으면 큰 점을 '중요한 곳',
+         흐린 점을 '자료 부실'로 읽는다 — 둘 다 틀린 해석이다. 값이 고정이라 JS 없이
+         HTML로 둔다. -->
+    <p class="boe-key">
+      <span class="boe-key-item"><i class="boe-key-dot is-big"></i>클수록 조사 많음</span>
+      <span class="boe-key-item"><i class="boe-key-dot is-pale"></i>흐릴수록 1·2위 접전</span>
+      <span class="boe-key-item"><i class="boe-key-dot is-dash"></i>점선 = 조사 없음</span>
+    </p>
   </section>
 
   <section class="viz byelection-viz">

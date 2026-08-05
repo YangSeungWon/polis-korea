@@ -267,8 +267,6 @@
   .pres-sgg-body .pres-sgg-detail { flex: none; width: 100%; max-height: none; }
 }
 .pres-sgg-host .council-hex-svg { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
-.pres-sgg-legend { margin-top: 8px; font-size: 12px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
-.pres-sgg-legend .ch-leg { font-weight: 700; }
 .pres-sgg-note { color: var(--ink-mute); }
 
 /* 시군구 결과 — 단색/격자/dorling 토글 + cartogram */
@@ -276,8 +274,6 @@
 :has(> .sgg-mode-toggle) { position: relative; }
 .sgg-mode-toggle { position: absolute; top: 6px; right: 6px; z-index: 5; display: flex; gap: 6px; margin: 0; }
 .cartogram-map { width: 100%; height: auto; max-width: 820px; display: block; margin: 0 auto; }
-.sgg-result-legend { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
-.sgg-result-legend .ch-leg { font-weight: 700; }
 
 /* 여론조사 성·연령 추이 (render-poll-demographics) */
 .pd-section { margin: 18px 0 24px; }

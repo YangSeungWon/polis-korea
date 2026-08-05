@@ -157,6 +157,8 @@
     if (typeof drawSidoEdgeLabels === 'function') drawSidoEdgeLabels(svg, labels);
     host.innerHTML = '';
     host.appendChild(svg);
+    // margin 모드일 때만 명도가 값을 나른다 — 광역장은 flat이라 키가 붙으면 거짓말이 된다.
+    if (margin && typeof mountGapLegend === 'function') mountGapLegend(svg);
   }
 
   // 단독 호출용 (sidoView 없이도 동작)

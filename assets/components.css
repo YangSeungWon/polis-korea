@@ -522,3 +522,16 @@
 [data-theme="dark"] .council-outline.no-data {
   fill: rgba(255,255,255,0.06);
 }
+
+/* ── 지도 범례 한 줄 ─────────────────────────────────────────────────────
+   같은 규칙이 archive.css·polls.css에 3벌 흩어져 있었다. 한쪽만 고치면 같은
+   화면의 자매 뷰끼리 어긋난다 — 정본을 여기 하나 둔다. */
+.sgg-result-legend,
+.ar-sgg-result-legend,
+.pres-sgg-legend {
+  margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px;
+  align-items: center; font-size: 12px; color: var(--ink-soft);
+}
+.sgg-result-legend .ch-leg,
+.ar-sgg-result-legend .ch-leg,
+.pres-sgg-legend .ch-leg { font-weight: 700; }
