@@ -379,6 +379,31 @@ function gapOpacity(gap) {
   return Math.max(0.5, Math.min(1, a));
 }
 
+// ── 숫자 표기 문법 ─────────────────────────────────────────────────────────
+// 값 / 무투표(도메인 사실) / 자료 없음(결손)은 **서로 다르게** 보여야 한다.
+//
+// 흩어진 렌더러들이 각자 `(pct || 0).toFixed(1)`로 쓰고 있었다. null이 0.0%가 되면
+// '아무도 안 찍었다'는 없는 사실이 만들어진다 — 실측으로 1위 후보 득표율이 없는
+// race가 2,668건이라 잠재 결함이 아니라 매일 화면에 나가던 오표기였다.
+// (같은 원인으로 지역 페이지 투표율 924행이 0.0%였다.)
+//
+// 표기를 한곳에 모은다. 문법이 흩어지면 페이지마다 같은 뜻이 다르게 보인다.
+const NO_DATA_MARK = '—';
+
+function fmtPct(v, opts) {
+  opts = opts || {};
+  if (opts.uncontested) return opts.longFact ? '무투표 당선' : '무투표';
+  if (v == null || isNaN(v)) return NO_DATA_MARK;
+  return v.toFixed(opts.digits == null ? 1 : opts.digits) + (opts.unit === false ? '' : '%');
+}
+
+// 숫자를 폭에 넣어야 하는 자리(막대 길이 등)용 — 표기가 아니라 계산값이다.
+// 표기(fmtPct)와 계산(pctValue)을 섞지 않는다: 막대는 0으로 그려도 되지만
+// 글씨는 0%라고 쓰면 안 된다.
+function pctValue(v) {
+  return (v == null || isNaN(v)) ? 0 : v;
+}
+
 // 격차 명도의 **키**. 인코딩과 같은 자리에 둔다 — 떨어져 있으면 한쪽만 바뀐다.
 //
 // 명도가 값을 나르는데 범례가 없으면 사용자는 연한 칸을 '데이터가 부실한 곳'으로

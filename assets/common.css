@@ -364,3 +364,8 @@ body {
   background: var(--ink-soft);
 }
 .vz-gap-sw + .vz-gap-sw { margin-left: -4px; }
+
+/* 표의 숫자는 세로로 줄을 맞춘다. 비례폭 숫자는 행마다 소수점 위치가 흔들려
+   '49.4 / 8.12 / 100.0'이 들쭉날쭉해 보인다 — 표는 세로 비교가 용도라 정렬이 곧 기능이다.
+   (숫자에만 적용되므로 한글 셀은 영향 없다.) */
+table td, table th { font-variant-numeric: tabular-nums; }

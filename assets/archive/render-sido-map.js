@@ -146,7 +146,7 @@
       }
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = win
-        ? `${name} · ${win.name}(${win.party}) ${(win.pct || 0).toFixed(1)}%`
+        ? `${name} · ${win.name}(${win.party}) ${fmtPct(win.pct, { digits: 1 })}`
         : `${name} · 데이터 없음`;
       path.appendChild(tt);
       svg.appendChild(path);

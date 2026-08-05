@@ -236,7 +236,7 @@ function loadJson(p) {
         const col = partyColor(c.party, r.date);
         return `<div class="tld-bar-row"><span class="tld-name">${c.name || c.party}</span>`
           + `<span class="tld-bar"><span class="tld-bar-fill" style="width:${((c.pct || 0) / max * 100).toFixed(1)}%;background:${col}"></span></span>`
-          + `<span class="tld-pct">${(c.pct || 0).toFixed(1)}</span></div>`;
+          + `<span class="tld-pct">${fmtPct(c.pct, { digits: 1 })}</span></div>`;
       }).join('');
       return `<div class="tld-win">${win.name || ''} <span class="tld-wtag" style="color:${wc};border-color:${wc}">${win.party}</span></div><div class="tld-bars">${bars}</div>`;
     }

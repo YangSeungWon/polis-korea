@@ -48,7 +48,9 @@
     const focusCells = cells.map((d) => { const [cx, cy] = ctr(d); return { region: d.sido + '|' + d.name, cx, cy }; });
     const isSel = (d) => !!(sel && sel.sido === d.sido && sel.name === d.name);
     const bindClick = (g, d) => { if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(d.sido, d.name, resultFn(d.sido, d.name), d)); } };
-    const pctStr = (top) => (top.uncontested ? '무투표 당선' : ((top.pct != null ? top.pct.toFixed(1) : '0') + '%'));
+    // 득표율이 없으면 '0%'가 아니라 '—'. 0%는 '아무도 안 찍었다'는 없는 사실이다.
+    const pctStr = (top) => (top.uncontested ? '무투표 당선'
+      : (top.pct != null ? top.pct.toFixed(1) + '%' : '득표율 자료 없음'));
     const titleText = (d, top, extra) => (top
       ? `${psido(d.sido, date)} ${uname(d.name)} · ${top.name || top.party}(${top.party}) ${pctStr(top)}${extra || ''}`
       : `${psido(d.sido, date)} ${uname(d.name)}`);

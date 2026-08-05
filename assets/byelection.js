@@ -254,13 +254,13 @@ function renderCards() {
         <span class="boe-rank">1위</span>
         <span class="boe-name" style="color:${t1};font-weight:700">${r1.name}</span>
         <span class="boe-party" style="color:${t1}">${r1.party}</span>
-        <span class="boe-pct">${(r1.pct || 0).toFixed(2)}%</span>
+        <span class="boe-pct">${fmtPct(r1.pct, { digits: 2 })}</span>
       </div>
       ${r2 ? `<div class="boe-result-row">
         <span class="boe-rank">2위</span>
         <span class="boe-name">${r2.name}</span>
         <span class="boe-party" style="color:${(typeof partyTextColor === 'function') ? partyTextColor(r2.party) : partyColor(r2.party)}">${r2.party}</span>
-        <span class="boe-pct">${(r2.pct || 0).toFixed(2)}%</span>
+        <span class="boe-pct">${fmtPct(r2.pct, { digits: 2 })}</span>
       </div>` : ''}
       ${margin != null ? `<div class="boe-result-margin">격차 ${margin.toFixed(2)}%p</div>` : ''}
     </div>`;

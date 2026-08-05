@@ -30,10 +30,10 @@
     const LABEL_MIN = 2;                        // 라벨은 ≥2% 후보(당선자는 항상)
     const shown = cands.filter((c, i) => i === 0 || (c.pct || 0) >= LABEL_MIN);
     const restPct = Math.max(0, 100 - shown.reduce((s, c) => s + (c.pct || 0), 0));
-    const segOf = (c) => `<span class="ar-pres-seg" style="flex:${(c.pct || 0).toFixed(3)};background:${pcol(c.party)}" title="${c.name} ${c.party} ${(c.pct || 0).toFixed(2)}%"></span>`;
+    const segOf = (c) => `<span class="ar-pres-seg" style="flex:${(c.pct || 0).toFixed(3)};background:${pcol(c.party)}" title="${c.name} ${c.party} ${fmtPct(c.pct, { digits: 2 })}"></span>`;
     const segs = shown.map(segOf).join('')
       + (restPct > 0.3 ? `<span class="ar-pres-seg ar-pres-seg-etc" style="flex:${restPct.toFixed(3)}" title="기타 ${restPct.toFixed(1)}%"></span>` : '');
-    const labs = shown.map((c, i) => `<span class="ar-pres-lab${i === 0 ? ' is-win' : ''}" style="color:${ptcol(c.party)}"><b>${c.name}</b> ${(c.pct || 0).toFixed(1)}<span class="u">%</span></span>`).join('')
+    const labs = shown.map((c, i) => `<span class="ar-pres-lab${i === 0 ? ' is-win' : ''}" style="color:${ptcol(c.party)}"><b>${c.name}</b> ${fmtPct(c.pct, { digits: 1 })}</span>`).join('')
       + (restPct >= 1 ? `<span class="ar-pres-lab ar-pres-lab-etc">기타 ${restPct.toFixed(1)}<span class="u">%</span></span>` : '');
     const wcol = pcol(top.party), wtcol = ptcol(top.party);
     sc.innerHTML = `
@@ -43,7 +43,7 @@
         <span class="ar-pres-badge">당선</span>
       </div>
       <div class="ar-pres-wstat">
-        <b class="ar-pres-wpct" style="color:${wcol}">${(top.pct || 0).toFixed(1)}<span class="u">%</span></b>
+        <b class="ar-pres-wpct" style="color:${wcol}">${fmtPct(top.pct, { digits: 1 })}</b>
         <span class="ar-pres-wmeta">${(top.votes || 0).toLocaleString()}표${margin != null ? ` · 2위와 +${margin.toFixed(2)}%p` : ''}${turnout != null ? ` · 투표율 ${turnout.toFixed(1)}%` : ''}</span>
       </div>
       <div class="ar-pres-racebar">${segs}</div>
@@ -93,7 +93,7 @@
       html += `<div class="ar-nation-row">
         <div class="ar-nation-name"><span style="color:${tcol};font-weight:700">${c.name}</span> <span class="ar-nation-party">${c.party}</span></div>
         <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
-        <div class="ar-nation-pct">${(c.pct || 0).toFixed(2)}<span class="unit">%</span></div>
+        <div class="ar-nation-pct">${fmtPct(c.pct, { digits: 2 })}</div>
         <div class="ar-nation-votes">${(c.votes || 0).toLocaleString()}표</div>
       </div>`;
     }
@@ -121,7 +121,7 @@
         <div class="ar-count-sido">${ssh(sido)}</div>
         <div class="ar-count-bar"><span class="ar-count-fill" style="width:${(top.pct || 0).toFixed(1)}%;background:${col}"></span></div>
         <div class="ar-count-meta">
-          <span style="color:${ptcol(top.party)};font-weight:700">${top.name} ${(top.pct || 0).toFixed(1)}</span>
+          <span style="color:${ptcol(top.party)};font-weight:700">${top.name} ${fmtPct(top.pct, { digits: 1 })}</span>
           ${margin != null ? `<span class="ar-count-pct">+${margin.toFixed(1)}%p</span>` : ''}
         </div>
       `;

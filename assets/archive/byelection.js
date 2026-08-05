@@ -125,12 +125,12 @@
         <div class="ar-by-sido-winner" style="border-left:4px solid ${col}">
           <span class="ar-by-sido-w-name" style="color:${tcol};font-weight:700">${top.name}</span>
           <span class="ar-by-sido-w-party" style="color:${tcol}">${nameOf(top.party)}</span>
-          <span class="ar-by-sido-w-pct">${(top.pct || 0).toFixed(2)}%</span>
+          <span class="ar-by-sido-w-pct">${fmtPct(top.pct, { digits: 2 })}</span>
         </div>
         ${second ? `<div class="ar-by-sido-second">
           <span>2위 ${second.name}</span>
           <span style="color:${tcolOf(second.party)}">${nameOf(second.party)}</span>
-          <span>${(second.pct || 0).toFixed(2)}%</span>
+          <span>${fmtPct(second.pct, { digits: 2 })}</span>
         </div>` : ''}
         ${margin != null ? `<div class="ar-by-sido-meta">격차 ${margin.toFixed(2)}%p · 투표율 ${turnout.toFixed(1)}%</div>` : ''}
       `;
@@ -161,7 +161,7 @@
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${r.sigungu}</span>
           <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
-          <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+          <span class="ar-dist-meta">${fmtPct(top.pct, { digits: 1 })}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
       html += '</div></div>';
@@ -193,7 +193,7 @@
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${name}</span>
           <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
-          <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+          <span class="ar-dist-meta">${fmtPct(top.pct, { digits: 1 })}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
       html += '</div></div>';
@@ -252,7 +252,7 @@
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${r.district}</span>
           <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
-          <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+          <span class="ar-dist-meta">${fmtPct(top.pct, { digits: 1 })}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
       html += '</div></div>';

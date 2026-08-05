@@ -98,7 +98,7 @@
       else { path.setAttribute('class', 'district-map-region no-data'); }
       if (sel && sel.sgg === sgg) path.classList.add('is-selected');
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = win ? `${f.properties.SIDO_SGG || (sido + ' ' + name)} · ${win.name || ''}(${win.party}) ${(win.pct || 0).toFixed(1)}%` : `${f.properties.SIDO_SGG || ''} · 데이터 없음`;
+      tt.textContent = win ? `${f.properties.SIDO_SGG || (sido + ' ' + name)} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })}` : `${f.properties.SIDO_SGG || ''} · 데이터 없음`;
       path.appendChild(tt);
       if (opts.onSelect && win) { path.style.cursor = 'pointer'; path.addEventListener('click', () => opts.onSelect(sido, name, sgg)); }
       svg.appendChild(path);

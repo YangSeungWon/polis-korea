@@ -267,14 +267,16 @@
       const card = document.createElement('div');
       card.className = 'ar-by-card ar-by-result-card';
       const col = pcol(top.party), tcol = ptcol(top.party);
+      // 무투표는 pct가 0으로 저장돼 있다 — 그대로 쓰면 '0.00%'가 된다.
+      const unc = !!(race.is_uncontested || top.uncontested);
       card.innerHTML = `
         <div class="ar-by-elpc">${race.sido || ''} ${race.district || race.sigungu || ''}</div>
         <div class="ar-by-result-winner" style="border-left:3px solid ${col}">
           <span style="color:${tcol};font-weight:700">${top.name}</span>
           <span style="color:${tcol};font-size:11px">${top.party}</span>
-          <span style="font-weight:700;font-variant-numeric:tabular-nums">${(top.pct || 0).toFixed(2)}%</span>
+          <span style="font-weight:700;font-variant-numeric:tabular-nums">${fmtPct(top.pct, { digits: 2, uncontested: unc })}</span>
         </div>
-        ${second ? `<div class="ar-by-result-second">2위 <span style="color:${ptcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${(second.pct || 0).toFixed(2)}%</span></div>` : ''}
+        ${second ? `<div class="ar-by-result-second">2위 <span style="color:${ptcol(second.party)};font-weight:600">${second.name}</span> <span style="font-size:11px">${second.party}</span> <span style="font-variant-numeric:tabular-nums">${fmtPct(second.pct, { digits: 2 })}</span></div>` : ''}
         ${margin != null ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:4px">격차 ${margin.toFixed(2)}%p</div>` : ''}
       `;
       host.appendChild(card);

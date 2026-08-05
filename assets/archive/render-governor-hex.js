@@ -119,7 +119,7 @@
       const tt = document.createElementNS(NS, 'title');
       tt.textContent = opts.titleOf ? opts.titleOf(cell.sido, cell.win)
         : ((cell.win
-          ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${(cell.win.pct || 0).toFixed(1)}%`
+          ? `${cell.sido} · ${cell.win.name}(${cell.win.party}) ${fmtPct(cell.win.pct, { digits: 1 })}`
           : `${cell.sido} · 데이터 없음`) + (missCol ? ' · 여론조사는 빗나감(테두리=조사 1위 정당)' : ''));
       g.appendChild(tt);
       // 시도 라벨
@@ -150,7 +150,7 @@
         t3.setAttribute('class', 'gov-hex-pct');
         t3.setAttribute('font-variant-numeric', 'tabular-nums');
         if (textCol) t3.setAttribute('fill', textCol);
-        t3.textContent = `${(cell.win.pct || 0).toFixed(1)}%`;
+        t3.textContent = `${fmtPct(cell.win.pct, { digits: 1 })}`;
         g.appendChild(t3);
       }
       if (opts.onSelect) { g.style.cursor = cell.win ? 'pointer' : 'default'; g.addEventListener('click', () => opts.onSelect(cell.sido)); }

@@ -479,8 +479,11 @@ function renderDetail() {
       const barRows = sorted.slice(0, 10).map((c) => {
         const color = partyColor(c.party);
         const w = unopposed ? 100 : (single ? (c.pct || 0) : (maxPct > 0 ? (c.pct / maxPct) * 100 : 0));
+        // 득표율이 없다고 무투표인 것이 아니다. 결손을 '무투표'로 쓰면 '투표가
+        // 없었다'는 사실을 데이터 없이 주장하게 된다 — 옛 회차는 득표율만 빠진
+        // 경우가 흔하다. 사실(무투표)과 결손(—)은 다른 표기를 쓴다.
         const pctTxt = (unopposed || c.uncontested) ? '무투표'
-          : (c.pct != null ? c.pct.toFixed(1) + '%' : '무투표');
+          : (c.pct != null ? c.pct.toFixed(1) + '%' : '—');
         return `<div class="rc-bar-row">
           <span class="name">${candLabel(c)}</span>
           <span class="rc-bar"><span class="rc-bar-fill" style="width:${w}%;background:${color}"></span></span>

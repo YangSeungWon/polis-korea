@@ -163,7 +163,7 @@
       html += `<div class="ar-nation-row">
         <div class="ar-nation-name"><span style="color:${tcol};font-weight:700">${c.party}</span></div>
         <div class="ar-nation-bar"><span class="ar-nation-fill" style="width:${w.toFixed(2)}%;background:${col}"></span></div>
-        <div class="ar-nation-pct">${(c.pct || 0).toFixed(2)}<span class="unit">%</span></div>
+        <div class="ar-nation-pct">${fmtPct(c.pct, { digits: 2 })}</div>
         <div class="ar-nation-votes">${(c.votes || 0).toLocaleString()}표</div>
       </div>`;
     }
@@ -223,7 +223,7 @@
         html += `<div class="ar-dist-row" style="border-left:3px solid ${col}">
           <span class="ar-dist-name">${name}</span>
           <span class="ar-dist-cand" style="color:${tcol};font-weight:700">${top.name}</span>
-          <span class="ar-dist-meta">${(top.pct || 0).toFixed(1)}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
+          <span class="ar-dist-meta">${fmtPct(top.pct, { digits: 1 })}${margin != null ? ` <span style="color:var(--ink-mute)">+${margin.toFixed(1)}</span>` : ''}</span>
         </div>`;
       }
       html += '</div></div>';
