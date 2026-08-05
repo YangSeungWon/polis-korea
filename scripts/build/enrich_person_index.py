@@ -56,6 +56,27 @@ def match_by_career(nm, dob, races, by_name):
     return max(votes, key=votes.get) if votes else None
 
 
+_GENERAL_EID = None
+
+
+def general_eid(n: int) -> str | None:
+    """총선 회차 n → archive id(20th-general-2016). 회차 메타가 정본이다."""
+    global _GENERAL_EID
+    if _GENERAL_EID is None:
+        m = {}
+        for fp in sorted((ROOT / "data/elections").glob("*.json")):
+            if fp.name == "index.json":
+                continue
+            try:
+                d = json.loads(fp.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            if isinstance(d, dict) and d.get("kind") == "general_election" and d.get("n"):
+                m[d["n"]] = d["id"]
+        _GENERAL_EID = m
+    return _GENERAL_EID.get(n)
+
+
 def main():
     person = json.loads(PERSON_IDX.read_text(encoding="utf-8"))
     asm = json.loads(ASSEMBLY_MAP.read_text(encoding="utf-8"))
@@ -95,7 +116,10 @@ def main():
         races = []
         for c in birs:
             dt = TERM_DATE.get(c["n"], "")
-            races.append({"eid": f"general-{c['n']}", "year": int(dt[:4]) if dt[:4].isdigit() else None,
+            # eid는 archive 디렉터리명과 같아야 한다. 'general-20'으로 쓰면
+            # /archive/general-20/ 링크가 죽는다 — 실제로 452건이 그랬다.
+            eid = general_eid(c["n"]) or f"general-{c['n']}"
+            races.append({"eid": eid, "year": int(dt[:4]) if dt[:4].isdigit() else None,
                           "round": f"{c['n']}대 총선", "date": dt, "place": "비례대표",
                           "party": disambiguate_party(c.get("party") or "", dt),
                           "pct": None, "rank": None, "won": True, "tc": "7"})
@@ -127,11 +151,23 @@ def main():
             by_aid[ap["id"]] = entry
             n_bir_new += 1
 
+    # eid 정규화 — 이미 색인에 박힌 옛 형식('general-20')을 매 실행마다 스스로 고친다.
+    # 신규 생성만 고치면 기존 데이터는 영원히 죽은 링크로 남는다(452건이 그랬다).
+    n_fix = 0
+    for entry in person["persons"]:
+        for r in entry.get("races") or []:
+            e = r.get("eid") or ""
+            if e.startswith("general-") and e[8:].isdigit():
+                canon = general_eid(int(e[8:]))
+                if canon and canon != e:
+                    r["eid"] = canon
+                    n_fix += 1
+
     person["persons"].sort(key=lambda p: (-len(p["races"]), -p.get("wins", 0), p["name"]))
     person["_meta"]["n_persons"] = len(person["persons"])
     person["_meta"]["assembly_matched"] = n_aid
     PERSON_IDX.write_text(json.dumps(person, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"→ {PERSON_IDX.relative_to(ROOT)}: {len(person['persons'])} persons · aid {n_aid} · 비례 보강 +{n_bir_add}/{n_bir_new}")
+    print(f"→ {PERSON_IDX.relative_to(ROOT)}: {len(person['persons'])} persons · aid {n_aid} · 비례 보강 +{n_bir_add}/{n_bir_new} · eid 정규화 {n_fix}")
 
 
 if __name__ == "__main__":

@@ -153,6 +153,30 @@ def party_cell(name: str | None, date: str) -> str:
     return esc(name)
 
 
+_ARCHIVE_PAGES: set | None = None
+
+
+def archive_cell(r: dict) -> str:
+    """회차 이름 — archive 페이지가 **실재할 때만** 링크한다.
+
+    eid가 archive 디렉터리명과 어긋나면 죽은 링크가 된다. 실제로 비례대표 이력이
+    'general-20'(archive는 20th-general-2016)을 써서 452건, archive가 없는
+    9회 재보궐이 46건 죽어 있었다. 원인은 고쳤지만 새 회차가 생길 때 또 어긋날 수
+    있으므로 여기서 실재를 확인하고, 없으면 링크 없이 글자로 둔다.
+    """
+    global _ARCHIVE_PAGES
+    if _ARCHIVE_PAGES is None:
+        d = ROOT / "archive"
+        _ARCHIVE_PAGES = ({x.name for x in d.iterdir()
+                           if x.is_dir() and (x / "index.html").exists()}
+                          if d.exists() else set())
+    eid = r.get("eid") or ""
+    label = esc(r.get("round") or eid)
+    if eid in _ARCHIVE_PAGES:
+        return f'<a href="/archive/{quote(eid)}/">{label}</a>'
+    return label
+
+
 def place_cell(r: dict) -> str:
     place = r.get("place") or ""
     h = region_href(place, r.get("tc") or "")
@@ -236,7 +260,7 @@ def static_body(p: dict) -> tuple[str, str]:
         rank = f"{r['rank']}위" if r.get("rank") and r["rank"] < 99 else ""
         rows.append(
             f'<tr><td>{esc(r.get("year") or "")}</td>'
-            f'<td><a href="/archive/{esc(r.get("eid"))}/">{esc(r.get("round") or r.get("eid"))}</a></td>'
+            f'<td>{archive_cell(r)}</td>'
             f'<td>{place_cell(r)}</td>'
             f'<td>{party_cell(r.get("party"), r.get("date") or "")}</td>'
             f'<td>{pct}</td><td>{esc(rank)}</td><td>{tag}</td></tr>')

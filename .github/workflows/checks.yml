@@ -100,6 +100,11 @@ jobs:
       - name: 링크 그래프 (대표 경로·고아·false link)
         run: python tests/test_link_graph.py
 
+      # 깨진 내부 링크는 화면이 멀쩡해서 눈으로는 안 보인다 — 실제로 15종이 죽어 있었다.
+      # 데이터 신선도는 경고만 낸다(외부 발표 지연과 fetcher 고장을 코드로 못 가른다).
+      - name: health (깨진 내부 링크·데이터 신선도)
+        run: python scripts/audit/health.py --strict
+
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 
