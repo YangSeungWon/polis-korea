@@ -144,13 +144,53 @@ def attributable(blocks: list[dict], dmap: dict[str, str] | None = None):
 
 
 def official(blocks: list[dict]) -> dict[str, dict]:
-    """각 선거구 '계' 행 — 공식 전체 결과. 참조값으로만 쓴다."""
-    out = {}
+    """각 선거구 '계' 행 — 공식 전체 결과. 참조값으로만 쓴다.
+
+    '계'는 (구시군 × 선거구)마다 하나다. 선거구가 여러 시군구에 걸치면
+    (동구군위군을 = 대구 동구 일부 + 군위군) 여러 개가 나오므로 **더한다**.
+    덮어쓰면 분모가 일부만 남아 커버리지가 100%를 넘는다 — 실제로 614%가 나왔다.
+    """
+    out: dict[str, dict] = {}
     for b in blocks:
         for r in b["rows"]:
-            if r["kind"] == "subtotal" and r["unit"] == "계":
-                out[r["district"]] = r
+            if r["kind"] != "subtotal" or r["unit"] != "계":
+                continue
+            cur = out.get(r["district"])
+            if cur is None:
+                out[r["district"]] = dict(r, per_candidate=dict(r["per_candidate"]))
+                continue
+            for k in ("electors", "votes", "valid", "invalid"):
+                cur[k] += r[k]
+            for k, v in r["per_candidate"].items():
+                cur["per_candidate"][k] = cur["per_candidate"].get(k, 0) + v
     return out
+
+
+def _partial_districts(rnd: int, off: dict) -> set[str]:
+    """회수한 구시군만으로는 선거구 전체가 안 되는 곳. 공식 결과 파일과 대사한다.
+
+    fixture는 구시군 단위로 받는데 선거구는 시군구를 넘나든다. 한 조각만 받고도
+    합계가 그럴듯해 보이면 '정확한 부분집합'을 전체로 착각하게 된다.
+    """
+    f = ROOT / f"data/results/national_assembly_{rnd}.json"
+    if not f.exists():
+        return set()
+    d = json.loads(f.read_text(encoding="utf-8"))
+    want: dict[str, int] = {}
+    for r in (d.get("district") or {}).values() if isinstance(d.get("district"), dict) \
+            else (d.get("district") or []):
+        if not isinstance(r, dict):
+            continue
+        nm = (r.get("district") or r.get("name") or "").split()[-1]
+        v = sum(c.get("votes") or 0 for c in (r.get("candidates") or []))
+        if nm and v:
+            want[nm] = v
+    bad = set()
+    for k, row in off.items():
+        w = want.get(k.split()[-1])
+        if w and abs(sum(row["per_candidate"].values()) - w) > 0.01 * w:
+            bad.add(k)
+    return bad
 
 
 def _excluded_lean(blocks: list[dict], date: str) -> dict[str, float]:
@@ -213,14 +253,15 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
     # 2020년 '중동'과 2024년 '중동'이 이름은 같은데 크기가 다르다.
     sgg = pb[0]["sgg_name"] if pb else ""
     prev_dongs = {r["dong"] for b in pb for r in b["rows"] if r["dong"]}
-    geo, crossing_prev = dong_geometry.resolve(cur, prev, fixture, dmap, prev_dongs)
+    geo, crossing_map = dong_geometry.resolve(cur, prev, fixture, dmap, prev_dongs)
+    crossing_prev = sorted(crossing_map)
 
     pmap: dict[str, str] = {}
     unresolved: list[str] = []
     for d in sorted(prev_dongs):
         if d in geo:                      # 폴리곤이 한 선거구 안에 온전히 들어간다
             pmap[d] = geo[d]
-        elif d in crossing_prev:          # 선거구를 가로지른다 — 동 단위로 못 나눈다
+        elif d in crossing_map:           # 선거구를 가로지른다 — 동 단위로 못 나눈다
             unresolved.append(d)
         elif (t := resolve_dong(d, sgg, lin, tgt_dongs)):
             pmap[d] = dmap[t]             # 폴리곤이 없을 때만 계보 이름으로 (근거 기록됨)
@@ -234,6 +275,17 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
     cur_att, cur_exc, cur_unm = attributable(cb)
     prv_att, prv_exc, prv_unm = attributable(pb, pmap)
     cur_off = official(cb)
+    partial = _partial_districts(cur, cur_off)
+
+    # 가로지르는 동의 표는 어느 선거구 것인지 모른다. 그 동이 **닿는** 선거구에만
+    # '잃은 표'로 달아 둔다 — 면적비로 나누지 않는다. 안 닿는 선거구는 멀쩡하다.
+    lost_by: dict[str, int] = {}
+    for b in pb:
+        for r in b["rows"]:
+            for t_ in crossing_map.get(r["dong"] or "", []):
+                if r["kind"] == "precinct":
+                    lost_by[t_] = lost_by.get(t_, 0) + r["valid"]
+    partial = _partial_districts(cur, cur_off)
 
     districts = {}
     for d in sorted(cur_att):
@@ -264,16 +316,21 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
 
         # 가로지르는 동이 있으면 그 표를 어디에 담을지 알 수 없다. 면적비로 쪼개지
         # 않으므로 재집계 자체가 성립하지 않는다 — 계보는 잇되 수치는 내지 않는다.
-        lost = prv_unm.get("crossing_dong", 0) + prv_unm.get("no_lineage", 0)
-        blocked = bool(crossing_prev) and lost > 0.02 * (sum(pa.values()) + lost)
+        lost = lost_by.get(d, 0)
+        blocked = (d in partial) or lost > 0.02 * (sum(pa.values()) + lost)
         if blocked:
             qual = "insufficient"
 
+        # '지난번엔 아예 안 나왔다'와 '표가 줄었다'는 다르다. 대구 동구군위군을에서
+        # 2020년 민주당은 나왔고 2024년엔 안 나왔는데, 그대로 빼면 '민주당 -24.8%p'가
+        # 되어 없던 이탈처럼 읽힌다. 양쪽 다 나온 정당만 swing으로 센다.
         swing = None
+        entered = {k: round(cs[k], 2) for k in cs if k not in ps and k != "무소속"}
+        left = {k: round(ps[k], 2) for k in ps if k not in cs and k != "무소속"}
         if pa and qual != "insufficient":
             # **양쪽 모두 동 귀속표 기준**. 공식 전체와 섞지 않는다.
-            swing = {k: round(cs.get(k, 0) - ps.get(k, 0), 2)
-                     for k in set(cs) | set(ps) if k != "무소속"}
+            swing = {k: round(cs[k] - ps[k], 2)
+                     for k in sorted(set(cs) & set(ps)) if k != "무소속"}
         districts[d] = {
             "method": ("context_only" if blocked else
                        "reaggregated" if pa else "direct"),
@@ -289,6 +346,9 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
                                   {"votes": sum(pa.values()),
                                    "share": {k: round(v, 2) for k, v in ps.items()}}),
             "swing_attributable_basis": swing,
+            # 증감이 아니다 — 한쪽 회차에만 출마한 정당은 따로 담는다
+            "newly_ran": entered if swing is not None else None,
+            "no_longer_ran": left if swing is not None else None,
             "provenance": {
                 "source": "info.nec.go.kr VCCP08 투표구별 개표",
                 "basis_boundary": f"{cur}대 선거구",
@@ -301,7 +361,10 @@ def run(cur: int, prev: int, tag: str = "") -> dict:
                 "dong_lineage_applied": [f"{k}→{v}" for k, v in sorted(pmap.items())
                                          if k not in tgt_dongs],
                 "unresolved_dongs": sorted(set(unresolved)),
-                "crossing_prev_dongs": crossing_prev,
+                "crossing_prev_dongs": sorted(n for n, ds in crossing_map.items()
+                                              if d in ds),
+                "votes_unplaceable": lost,
+                "partial_fetch": d in partial,
                 "crossing_dongs": cross,
                 "party_identity": "scripts/build/party_identity.py",
                 "allocation_by_area_or_population": 0,
@@ -337,8 +400,9 @@ def main() -> None:
         print(f"\n[{d}] {v['method']} / {v['reaggregation_quality']}")
         print(f"  커버리지 {p['coverage']*100:.1f}% · 재현오차 {p['current_election_validation_error_pp']}%p")
         if v["attributable"] is None:
-            print(f"  ✗ 재집계 차단 — 선거구를 가로지르는 동: "
-                  f"{', '.join(p['crossing_prev_dongs'])}")
+            why = ("선거구 일부만 회수됨(구시군 누락)" if p["partial_fetch"]
+                   else "선거구를 가로지르는 동: " + ", ".join(p["crossing_prev_dongs"]))
+            print(f"  ✗ 재집계 차단 — {why}")
             continue
         print(f"  {cur} 동귀속 {v['attributable']['share']}")
         print(f"  {cur} 공식전체 {v['official_reference']['share']}")

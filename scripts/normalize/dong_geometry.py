@@ -40,25 +40,36 @@ def _read(rnd: int):
     return sf, ic, inm
 
 
-def _prefix(rnd: int, names: set[str]) -> str | None:
-    """이름 집합이 가장 많이 맞는 시군구 코드 접두. 동명이동이 많아 이렇게 고른다."""
+def _prefixes(rnd: int, names: set[str]) -> set[str]:
+    """이름 집합을 덮는 시군구 코드 접두들.
+
+    동명이동이 흔해서(반송동·중동·남구…) 이름만으로는 못 고른다. 그렇다고 하나만
+    고를 수도 없다 — 선거구가 여러 시군구에 걸치고, 군위군처럼 시도를 옮겨 가면
+    (경북→대구, 2023) 회차마다 접두가 달라진다. 많이 맞는 것부터 욕심껏 덮는다.
+    """
     import collections
     sf, ic, inm = _read(rnd)
-    sc: collections.Counter = collections.Counter()
+    by: dict = collections.defaultdict(set)
     for r in sf.records():
-        if str(r[inm]) in names:
-            sc[str(r[ic])[:4]] += 1
-    return sc.most_common(1)[0][0] if sc else None
+        n = str(r[inm])
+        if n in names:
+            by[str(r[ic])[:4]].add(n)
+    out, seen = set(), set()
+    for pfx, ns in sorted(by.items(), key=lambda x: -len(x[1])):
+        if ns - seen:                 # 새로 덮는 이름이 있을 때만 채택
+            out.add(pfx)
+            seen |= ns
+    return out
 
 
-def _polys(rnd: int, pfx: str, keep: set[str] | None = None) -> dict:
+def _polys(rnd: int, pfx: set[str], keep: set[str] | None = None) -> dict:
     from shapely.geometry import shape
     from shapely.ops import unary_union
     sf, ic, inm = _read(rnd)
     out: dict = {}
     for sr in sf.shapeRecords():
         c, n = str(sr.record[ic]), str(sr.record[inm])
-        if c.startswith(pfx) and (keep is None or n in keep):
+        if c[:4] in pfx and (keep is None or n in keep):
             g = shape(sr.shape.__geo_interface__)
             out[n] = unary_union([out[n], g]) if n in out else g
     return out
@@ -72,8 +83,8 @@ def membership(cur: int, prev: int, fixture: str,
     if f.exists():
         return json.loads(f.read_text(encoding="utf-8"))
 
-    pfx_c = _prefix(cur, set(cur_dmap))
-    pfx_p = _prefix(prev, prev_dongs)
+    pfx_c = _prefixes(cur, set(cur_dmap))
+    pfx_p = _prefixes(prev, prev_dongs)
     if not pfx_c or not pfx_p:
         return {}
     cur_g = _polys(cur, pfx_c, set(cur_dmap))
@@ -103,16 +114,20 @@ def membership(cur: int, prev: int, fixture: str,
 
 
 def resolve(cur: int, prev: int, fixture: str, cur_dmap: dict[str, str],
-            prev_dongs: set[str]) -> tuple[dict[str, str], list[str]]:
-    """과거 동 → 현 선거구(단일). 가로지르면 담지 않고 따로 돌려준다."""
+            prev_dongs: set[str]) -> tuple[dict[str, str], dict[str, list[str]]]:
+    """과거 동 → 현 선거구(단일). 가로지르는 동은 **닿는 선거구 목록과 함께** 돌려준다.
+
+    가로지르는 동 하나 때문에 그 시군구 전체를 막지 않는다. 고양시는 흥도동만
+    갑·병에 걸치는데 을·정까지 막으면 멀쩡한 비교를 버리는 것이다.
+    """
     m = membership(cur, prev, fixture, cur_dmap, prev_dongs)
     if not m:
-        return {}, []
-    ok, cross = {}, []
+        return {}, {}
+    ok, cross = {}, {}
     for n, sh in m["membership"].items():
-        big = [k for k, v in sh.items() if v > MIN_SHARE]
+        big = sorted(k for k, v in sh.items() if v > MIN_SHARE)
         if len(big) == 1:
             ok[n] = big[0]
         elif len(big) > 1:
-            cross.append(n)
-    return ok, sorted(cross)
+            cross[n] = big
+    return ok, cross

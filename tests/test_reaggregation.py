@@ -157,38 +157,58 @@ def main() -> int:
 def _fixtures() -> None:
     """대표 fixture — 하나로 되면 다 된다고 하지 않는다.
 
-    · split         하남     2020 하남시 → 2024 갑/을
-    · merge         부산 남구 2020 갑/을 → 2024 남구
-    · 행정동 재편   부천     2019년 36동→10 광역동, 2024년 되돌림 + 선거구 4→3.
-                             광역동이 선거구를 가로질러 **재집계 불가**가 옳은 답이다.
+    · split            하남      2020 하남시 → 2024 갑/을
+    · merge            부산 남구  2020 갑/을 → 2024 남구
+    · 행정동 재편       부천      2019년 36동→10 광역동, 2024년 되돌림 + 선거구 4→3
+    · boundary exchange 고양      인접 선거구끼리 동이 오갔다
+    · 광역단체 transfer  군위      경북 → 대구(2023). 시도가 바뀌어 코드 접두도 바뀐다
+
+    막히는 것도 결과다. 부천 갑·병은 광역동이 선거구를 가로질러 재집계가 성립하지
+    않는다. 다만 **닿지 않는 선거구까지 막지는 않는다** — 부천을·고양정은 멀쩡하다.
     """
-    for name, kind, expect in (("hanam", "split", "reaggregated"),
-                               ("busan-nam", "merge", "reaggregated"),
-                               ("bucheon", "행정동 재편+merge", "context_only")):
+    for name in ("hanam", "busan-nam", "bucheon", "goyang", "gunwi"):
         try:
             r = run(22, 21, "_" + name)
         except FileNotFoundError:
             print(f"  · {name} 원자료 없음, 건너뜀")
             continue
-        ms = {v["method"] for v in r["districts"].values()}
-        ck(f"{name} ({kind}) → {expect}", ms == {expect}, str(ms))
         for d, v in r["districts"].items():
+            p = v["provenance"]
+            hurt = bool(p["crossing_prev_dongs"]) or p["partial_fetch"]
             if v["method"] == "context_only":
                 # 차단했으면 **수치가 남아 있으면 안 된다**. 남겨 두고 주의 문구를
                 # 붙이면 문구가 떨어져 나간 자리에서 그대로 인용된다.
                 ck(f"{name}/{d}: 차단 시 수치 없음",
                    v["attributable"] is None and v["prev_reaggregated"] is None
                    and v["swing_attributable_basis"] is None)
-                ck(f"{name}/{d}: 차단 이유가 기록됨",
-                   bool(v["provenance"]["crossing_prev_dongs"]))
+                ck(f"{name}/{d}: 차단 이유가 기록됨", hurt)
             else:
-                ck(f"{name}/{d}: 가로지르는 동 없음",
-                   not v["provenance"]["crossing_prev_dongs"])
-    # 부천이 통과해 버리면 회귀다 — 이름이 같은 다른 크기의 동이 조용히 붙은 것이다
+                ck(f"{name}/{d}: 성립하면 방해 요인이 없다", not hurt)
+                ck(f"{name}/{d}: 커버리지가 100%를 넘지 않는다",
+                   p["coverage"] <= 1.0, f"{p['coverage']:.3f}")
+                ck(f"{name}/{d}: swing은 양쪽 다 출마한 정당만",
+                   not (set(v["swing_attributable_basis"] or {})
+                        & (set(v["newly_ran"] or {}) | set(v["no_longer_ran"] or {}))))
+
+    # 아래는 사실 확인이다 — 사라지면 회귀다
     try:
         b = run(22, 21, "_bucheon")
         ck("부천 광역동이 선거구를 가로지르는 것이 잡힌다",
            "부천동" in b["districts"]["부천시갑"]["provenance"]["crossing_prev_dongs"])
+        ck("가로지르는 동이 안 닿는 선거구는 막지 않는다",
+           b["districts"]["부천시을"]["method"] == "reaggregated")
+        g = run(22, 21, "_goyang")
+        ck("고양은 흥도동이 닿는 갑·을만 막힌다",
+           {d for d, v in g["districts"].items() if v["method"] == "context_only"}
+           == {"고양시갑", "고양시을"})
+        w = run(22, 21, "_gunwi")
+        # 군위군은 2023년에 경북에서 대구로 옮겨 갔다 — 코드 접두가 회차마다 다르다
+        ck("시도 이관(군위)도 재집계된다",
+           w["districts"]["동구군위군을"]["method"] == "reaggregated")
+        # 선거구가 여러 시군구에 걸치면 '계'가 여럿이다. 덮어쓰면 커버리지 614%가 나온다
+        ck("일부만 회수된 선거구는 수치를 내지 않는다",
+           w["districts"]["의성군청송군영덕군울진군"]["provenance"]["partial_fetch"]
+           and w["districts"]["의성군청송군영덕군울진군"]["attributable"] is None)
     except FileNotFoundError:
         pass
 

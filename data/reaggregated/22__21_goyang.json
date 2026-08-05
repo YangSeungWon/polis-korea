@@ -1,0 +1,374 @@
+{
+ "current": 22,
+ "previous": 21,
+ "sgg": "고양시덕양구",
+ "districts": {
+  "고양시갑": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 153653,
+    "share": {
+     "pid:더불어민주당": 45.31,
+     "pid:국민의힘": 35.34,
+     "무소속": 19.35
+    }
+   },
+   "prev_reaggregated": null,
+   "swing_attributable_basis": null,
+   "newly_ran": null,
+   "no_longer_ran": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8714,
+    "excluded_categories": {
+     "home_ship": 1239,
+     "out_of_area_early": 72871,
+     "overseas": 2587,
+     "misplaced": 22
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1680,
+     "out_of_area_early": 58438,
+     "overseas": 1185,
+     "misplaced": 26
+    },
+    "prev_unmapped": {
+     "no_lineage": 21380
+    },
+    "dong_lineage_applied": [
+     "삼송동→고양시을",
+     "송산동→고양시정",
+     "중산동→고양시병",
+     "탄현동→고양시정"
+    ],
+    "unresolved_dongs": [
+     "흥도동"
+    ],
+    "crossing_prev_dongs": [
+     "흥도동"
+    ],
+    "votes_unplaceable": 21380,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.17
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 53.22,
+     "무소속": 18.23,
+     "pid:국민의힘": 28.55
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 7.91,
+     "pid:국민의힘": -6.8,
+     "무소속": -1.12
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.95,
+     "pid:국민의힘": -8.21,
+     "pid:정의당": -0.16,
+     "무소속": 0.45,
+     "pid:민중당(2017)": -0.08,
+     "pid:기본소득당": 0.03
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 0.04,
+     "무소속": 1.57,
+     "pid:국민의힘": 1.41
+    }
+   }
+  },
+  "고양시병": {
+   "method": "reaggregated",
+   "reaggregation_quality": "limited",
+   "attributable": {
+    "votes": 138638,
+    "share": {
+     "pid:더불어민주당": 52.91,
+     "pid:국민의힘": 47.09
+    }
+   },
+   "official_reference": {
+    "votes": 157466,
+    "share": {
+     "pid:더불어민주당": 54.07,
+     "pid:국민의힘": 45.93
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 142300,
+    "share": {
+     "pid:더불어민주당": 53.1,
+     "pid:국민의힘": 44.5,
+     "pid:정의당": 1.05,
+     "pid:민중당(2017)": 0.19,
+     "무소속": 1.17
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:국민의힘": 2.59,
+    "pid:더불어민주당": -0.18
+   },
+   "newly_ran": {},
+   "no_longer_ran": {
+    "pid:정의당": 1.05,
+    "pid:민중당(2017)": 0.19
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8804,
+    "excluded_categories": {
+     "home_ship": 1239,
+     "out_of_area_early": 72871,
+     "overseas": 2587,
+     "misplaced": 22
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1680,
+     "out_of_area_early": 58438,
+     "overseas": 1185,
+     "misplaced": 26
+    },
+    "prev_unmapped": {
+     "no_lineage": 21380
+    },
+    "dong_lineage_applied": [
+     "삼송동→고양시을",
+     "송산동→고양시정",
+     "중산동→고양시병",
+     "탄현동→고양시정"
+    ],
+    "unresolved_dongs": [
+     "흥도동"
+    ],
+    "crossing_prev_dongs": [],
+    "votes_unplaceable": 0,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.15
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 62.56,
+     "pid:국민의힘": 37.44
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 8.49,
+     "pid:국민의힘": -8.49
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.95,
+     "pid:국민의힘": -8.21,
+     "pid:정의당": -0.16,
+     "무소속": 0.45,
+     "pid:민중당(2017)": -0.08,
+     "pid:기본소득당": 0.03
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 0.54,
+     "pid:국민의힘": 0.28
+    }
+   }
+  },
+  "고양시을": {
+   "method": "context_only",
+   "reaggregation_quality": "insufficient",
+   "attributable": null,
+   "official_reference": {
+    "votes": 159030,
+    "share": {
+     "pid:더불어민주당": 61.25,
+     "pid:국민의힘": 37.34,
+     "무소속": 1.42
+    }
+   },
+   "prev_reaggregated": null,
+   "swing_attributable_basis": null,
+   "newly_ran": null,
+   "no_longer_ran": null,
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.869,
+    "excluded_categories": {
+     "home_ship": 1239,
+     "out_of_area_early": 72871,
+     "overseas": 2587,
+     "misplaced": 22
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1680,
+     "out_of_area_early": 58438,
+     "overseas": 1185,
+     "misplaced": 26
+    },
+    "prev_unmapped": {
+     "no_lineage": 21380
+    },
+    "dong_lineage_applied": [
+     "삼송동→고양시을",
+     "송산동→고양시정",
+     "중산동→고양시병",
+     "탄현동→고양시정"
+    ],
+    "unresolved_dongs": [
+     "흥도동"
+    ],
+    "crossing_prev_dongs": [
+     "흥도동"
+    ],
+    "votes_unplaceable": 21380,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.88
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 66.78,
+     "무소속": 1.72,
+     "pid:국민의힘": 31.5
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 5.53,
+     "pid:국민의힘": -5.84,
+     "무소속": 0.31
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.95,
+     "pid:국민의힘": -8.21,
+     "pid:정의당": -0.16,
+     "무소속": 0.45,
+     "pid:민중당(2017)": -0.08,
+     "pid:기본소득당": 0.03
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 2.42,
+     "pid:국민의힘": 2.37
+    }
+   }
+  },
+  "고양시정": {
+   "method": "reaggregated",
+   "reaggregation_quality": "validated",
+   "attributable": {
+    "votes": 138747,
+    "share": {
+     "pid:더불어민주당": 53.93,
+     "pid:국민의힘": 46.07
+    }
+   },
+   "official_reference": {
+    "votes": 156047,
+    "share": {
+     "pid:더불어민주당": 54.89,
+     "pid:국민의힘": 45.11
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 145876,
+    "share": {
+     "pid:더불어민주당": 52.6,
+     "pid:국민의힘": 45.74,
+     "무소속": 0.4,
+     "pid:기본소득당": 1.27
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:국민의힘": 0.33,
+    "pid:더불어민주당": 1.33
+   },
+   "newly_ran": {},
+   "no_longer_ran": {
+    "pid:기본소득당": 1.27
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.8891,
+    "excluded_categories": {
+     "home_ship": 1239,
+     "out_of_area_early": 72871,
+     "overseas": 2587,
+     "misplaced": 22
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 1680,
+     "out_of_area_early": 58438,
+     "overseas": 1185,
+     "misplaced": 26
+    },
+    "prev_unmapped": {
+     "no_lineage": 21380
+    },
+    "dong_lineage_applied": [
+     "삼송동→고양시을",
+     "송산동→고양시정",
+     "중산동→고양시병",
+     "탄현동→고양시정"
+    ],
+    "unresolved_dongs": [
+     "흥도동"
+    ],
+    "crossing_prev_dongs": [],
+    "votes_unplaceable": 0,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 0.96
+   },
+   "validation": {
+    "winner_attributable": "pid:더불어민주당",
+    "winner_official": "pid:더불어민주당",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:더불어민주당": 62.61,
+     "pid:국민의힘": 37.39
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 7.72,
+     "pid:국민의힘": -7.72
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 7.95,
+     "pid:국민의힘": -8.21,
+     "pid:정의당": -0.16,
+     "무소속": 0.45,
+     "pid:민중당(2017)": -0.08,
+     "pid:기본소득당": 0.03
+    },
+    "bias_stability_pp": {
+     "pid:더불어민주당": 0.24,
+     "pid:국민의힘": 0.49
+    }
+   }
+  }
+ }
+}
