@@ -265,6 +265,12 @@ def inject_body(html: str, intro: str, jsonld: str = '') -> str:
     return html
 
 
+# 실제로 생성한 history 경로. 클라이언트가 링크를 **추측하지 않게** 내보낸다.
+#   {type: {n: [office_slug, ...]}}  — 빈 리스트면 /history/{type}/{n}/ 자체가 페이지
+ROUTES: dict = {}
+HISTORY_ROUTES = ROOT / 'data/results/history_routes.json'
+
+
 def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
     slugs = archive_slug_map()
@@ -310,6 +316,10 @@ def build_history(manifest: dict, elections: dict, urls: list):
                                        intro, ld)
                     write_page(ROOT / 'history' / type_slug / str(n) / off_slug / 'index.html', html)
                     urls.append((canon, '0.6', 'yearly'))
+                    # 실제로 만든 경로를 남긴다 — 클라이언트(lens-switcher)가 링크를
+                    # 조립할 때 추측하지 않게. 지선은 /history/local/{n}/ 자체가 없고
+                    # 직위 세그먼트까지 있어야 하는데, 그걸 모르고 만들어 404가 났다.
+                    ROUTES.setdefault(type_key, {}).setdefault(str(n), []).append(off_slug)
                     n_made += 1
             else:
                 winner = meta.get('winner', '')
@@ -318,6 +328,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 title = f'polis · {n}{unit} {type_short} ({el_date}){winner_str}'
                 desc = f'{n}{unit} {type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
                 canon = f'/history/{type_slug}/{n}/'
+                ROUTES.setdefault(type_key, {}).setdefault(str(n), [])
                 init_state = {'type': type_key, 'n': n}
                 turnout = meta.get('turnout')
                 bits = [f'{el_date} 실시']
@@ -357,6 +368,11 @@ def main():
     build_poll_elections(urls)    # /polls/{id}/ 선거별 여론조사 vs 실제 + 디렉터리
     build_polls(urls)             # /, /governor/ 등 페이지 생성
     build_history(manifest, elections, urls)   # history/**/index.html 생성
+    HISTORY_ROUTES.write_text(
+        json.dumps(ROUTES, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n',
+        encoding='utf-8')
+    print(f'→ {HISTORY_ROUTES.relative_to(ROOT)}: '
+          f'{sum(len(v) for v in ROUTES.values())} 회차', file=sys.stderr)
     # 홈 능력 블록 — 수치를 손으로 적으면 데이터가 늘 때마다 어긋난다(nav와 같은 이유).
     try:
         import build_home_capabilities as _caps

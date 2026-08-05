@@ -141,6 +141,29 @@ for (const spec of pages) {
     ck(`${vp.id} 명도가 안 변하면 램프도 없다`, enc.varying > 0 || enc.legs === 0,
       `명도 지도 ${enc.varying} · 램프 ${enc.legs}`);
 
+    // ── 4.5 클릭 가능한 링크가 실제로 살아 있는가 ─────────────────────────
+    // 정적 href 감사(108,439개)는 통과했는데 /history/local/9/가 404였다.
+    // lens-switcher가 **런타임에 조립**하는 URL이라 파일을 훑어서는 안 보인다.
+    // '정적 링크 무결성'과 '실제 navigation 무결성'은 별개의 검사다.
+    if (vp.id === 'desktop') {
+      const runtime = await page.evaluate(() => {
+        const out = new Set();
+        // 파일에 없던 링크만 — 정적 감사가 이미 본 것을 또 볼 이유가 없다.
+        for (const a of document.querySelectorAll('a[href^="/"]')) {
+          const h = a.getAttribute('href').split('#')[0].split('?')[0];
+          if (h && h !== '/') out.add(h);
+        }
+        return [...out];
+      });
+      const dead = [];
+      for (const h of runtime.slice(0, 60)) {
+        const r = await page.request.get(srv.url + h, { failOnStatusCode: false });
+        if (r.status() >= 400) dead.push(`${h} → ${r.status()}`);
+      }
+      ck(`렌더된 링크 ${Math.min(runtime.length, 60)}개가 전부 살아 있음`,
+        !dead.length, dead.slice(0, 4).join(' · '));
+    }
+
     if (vp.id === 'desktop') {
       // ── 4. 숨긴 요소가 자리를 차지하지 않는다 ─────────────────────────────
       const ghost = await page.evaluate(() => {

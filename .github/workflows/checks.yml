@@ -164,6 +164,11 @@ jobs:
       - name: UI 불변식 (넘침·예외·범례·토글 잔존)
         run: node tests/ui/test_ui_invariants.mjs
 
+      # 정적 href 감사와 **별개**다. /history/local/9/는 정적 링크 0 broken 상태에서
+      # 404였다 — 런타임 조립·pushState는 파일을 훑어서는 안 보인다.
+      - name: route 무결성 (렌더·토글 후·주소창)
+        run: node tests/ui/test_routes.mjs
+
       # 스크린샷은 판정이 아니라 사람이 보는 용도 — 실패시키지 않고 아티팩트로 남긴다.
       - name: 대표 화면 촬영
         if: always()

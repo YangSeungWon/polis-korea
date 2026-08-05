@@ -13,15 +13,18 @@
     return `${ordinal(Number(n))}-${w}-${String(date).slice(0, 4)}`;
   }
 
-  let _idx = null, _man = null;
+  let _idx = null, _man = null, _routes = null;
   async function gates() {
-    if (_idx && _man) return { idx: _idx, man: _man };
-    const [idx, man] = await Promise.all([
+    if (_idx && _man && _routes) return { idx: _idx, man: _man, routes: _routes };
+    const [idx, man, routes] = await Promise.all([
       fetch('data/polls/election_index.json').then((r) => (r.ok ? r.json() : [])).catch(() => []),
       fetch('data/results/manifest.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      // 실제로 생성된 경로. 추측해서 조립하면 404가 난다 — 지선은
+      // /history/local/{n}/ 자체가 없고 직위 세그먼트까지 있어야 한다.
+      fetch('data/results/history_routes.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
     ]);
-    _idx = idx; _man = man;
-    return { idx, man };
+    _idx = idx; _man = man; _routes = routes;
+    return { idx, man, routes };
   }
 
   async function mount(opts) {
@@ -31,14 +34,20 @@
     const type = opts.type, n = opts.n;
     const id = opts.id || deriveId(type, n, opts.date);
     if (!id || !type || n == null) { host.innerHTML = ''; return; }
-    const { idx, man } = await gates();
+    const { idx, man, routes } = await gates();
     const hasPolls = Array.isArray(idx) && idx.some((e) => e.slug === id);
-    const hasHistory = Array.isArray(man[type]) && man[type].includes(Number(n));
+    // 생성된 경로가 정본이다. manifest(회차 보유)만 보면 지선에서 직위 세그먼트를
+    // 빠뜨려 /history/local/9/ 같은 404를 만든다.
+    const offices = (routes && routes[type] && routes[type][String(n)]) || null;
+    const hasHistory = offices !== null
+      || (Array.isArray(man[type]) && man[type].includes(Number(n)));
+    const historyHref = `/history/${type.replace(/_/g, '-')}/${n}/`
+      + (offices && offices.length ? `${offices[0]}/` : '');
     const lenses = [
       { key: 'archive', label: '종합 결과', href: `/archive/${id}/`, on: true },
       { key: 'polls', label: '여론조사 vs 실제', href: `/polls/${id}/`, on: hasPolls },
       // URL 슬러그는 하이픈(history/national-assembly/) — manifest 키는 언더스코어(national_assembly).
-      { key: 'history', label: '역대 흐름', href: `/history/${type.replace(/_/g, '-')}/${n}/`, on: hasHistory },
+      { key: 'history', label: '역대 흐름', href: historyHref, on: hasHistory },
     ].filter((l) => l.on);
     if (lenses.length < 2) { host.innerHTML = ''; return; }   // 전환할 다른 렌즈 없으면 숨김
     host.innerHTML = '<nav class="lens-switcher" aria-label="이 선거 보는 방식">'
