@@ -26,10 +26,11 @@ LIN = ROOT / "data/district_lineage"
 REAGG = ROOT / "data/reaggregated"
 EVENTS = ROOT / "data/geography/events.json"
 
-# 재집계 결과의 선거구명은 시도 접두가 없다(하남시갑). 계보는 '경기 하남시갑'이다.
 def _match(units: list, name: str):
+    """선거구 키는 양쪽 다 '경기 하남시갑' 형태다 — 시도를 떼고 맞추면 안 된다.
+    '남구'는 부산·대구·인천·광주·울산에 다 있다."""
     for u in units:
-        if u["district"].split(" ", 1)[-1] == name:
+        if u["district"] == name:
             return u
     return None
 
@@ -127,8 +128,12 @@ def apply_events() -> int:
     for e in ev["events"]:
         if e.get("kind") == "admin_unit":
             continue
-        # entity id는 'electoral_district:22:경기:하남시갑' — 마지막 조각이 선거구명
-        names = [x["id"].split(":")[-1] for x in e.get("to") or []]
+        # entity id는 'electoral_district:22:경기:하남시갑'. 재집계 키는 '경기 하남시갑'이라
+        # 시도까지 붙여 맞춘다 — 마지막 조각만 쓰면 '남구'류가 엉뚱하게 걸린다.
+        names = []
+        for x in e.get("to") or []:
+            q = x["id"].split(":")
+            names.append(f"{q[2]} {q[3]}" if len(q) >= 4 else q[-1])
         touched = [verdict[k] for k in names if k in verdict]
         if not touched:
             continue

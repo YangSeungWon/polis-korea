@@ -3,7 +3,7 @@
  "previous": 21,
  "sgg": "하남시",
  "districts": {
-  "하남시갑": {
+  "경기 하남시갑": {
    "method": "reaggregated",
    "reaggregation_quality": "limited",
    "attributable": {
@@ -81,7 +81,7 @@
     },
     "prev_unmapped": {},
     "dong_lineage_applied": [
-     "풍산동→하남시을"
+     "풍산동→경기 하남시을"
     ],
     "unresolved_dongs": [],
     "crossing_prev_dongs": [],
@@ -115,7 +115,7 @@
     }
    }
   },
-  "하남시을": {
+  "경기 하남시을": {
    "method": "reaggregated",
    "reaggregation_quality": "limited",
    "attributable": {
@@ -197,7 +197,7 @@
     },
     "prev_unmapped": {},
     "dong_lineage_applied": [
-     "풍산동→하남시을"
+     "풍산동→경기 하남시을"
     ],
     "unresolved_dongs": [],
     "crossing_prev_dongs": [],
@@ -213,8 +213,8 @@
     "winner_official": "pid:더불어민주당",
     "winner_agrees": true,
     "excluded_share": {
-     "pid:더불어민주당": 57.96,
      "pid:새로운미래": 3.94,
+     "pid:더불어민주당": 57.96,
      "pid:국민의힘": 38.1
     },
     "excluded_lean_pp": {

@@ -66,6 +66,25 @@ RAW = ROOT / "data/raw/nec"
 OUT = ROOT / "data/reaggregated"
 ELECTION_DATE = {21: "2020-04-15", 22: "2024-04-10", 20: "2016-04-13"}
 
+# 선거구 이름은 시도 안에서만 유일하다. '남구'는 부산·대구·인천·광주·울산에 다 있고
+# '동구'·'중구'·'서구'도 마찬가지다. 시도를 빼고 키를 잡으면 전국 실행에서 다른
+# 선거구의 표가 한 덩어리로 합쳐진다 — 254곳이 244곳으로 줄어드는 걸로 드러났다.
+# **문자열 동일성 ≠ 의미 동일성**은 정당만의 함정이 아니다.
+SIDO_SHORT = {
+    "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구",
+    "인천광역시": "인천", "광주광역시": "광주", "대전광역시": "대전",
+    "울산광역시": "울산", "세종특별자치시": "세종", "경기도": "경기",
+    "강원도": "강원", "강원특별자치도": "강원", "충청북도": "충북",
+    "충청남도": "충남", "전라북도": "전북", "전북특별자치도": "전북",
+    "전라남도": "전남", "경상북도": "경북", "경상남도": "경남",
+    "제주특별자치도": "제주",
+}
+
+
+def dkey(sido: str, district: str) -> str:
+    """선거구 키 — 시도를 반드시 붙인다. 계보 파일과 같은 표기('부산 남구')."""
+    return f"{SIDO_SHORT.get(sido, sido)} {district}"
+
 GOOD_ERR, OK_ERR = 1.0, 3.0
 GOOD_COV, OK_COV = 0.85, 0.70
 MAX_BIAS_SHIFT = 2.0    # 제외표 편향이 회차 사이에 이만큼 넘게 흔들리면 delta도 못 믿는다
@@ -115,7 +134,7 @@ def dong_map(blocks: list[dict]) -> dict[str, str]:
     for b in blocks:
         for r in b["rows"]:
             if r["dong"]:
-                seen.setdefault(r["dong"], set()).add(r["district"])
+                seen.setdefault(r["dong"], set()).add(dkey(b["sido"], r["district"]))
     return {d: next(iter(v)) for d, v in seen.items() if len(v) == 1}
 
 
@@ -124,7 +143,7 @@ def crossing(blocks: list[dict]) -> list[str]:
     for b in blocks:
         for r in b["rows"]:
             if r["dong"]:
-                seen.setdefault(r["dong"], set()).add(r["district"])
+                seen.setdefault(r["dong"], set()).add(dkey(b["sido"], r["district"]))
     return sorted(d for d, v in seen.items() if len(v) > 1)
 
 
@@ -154,7 +173,7 @@ def attributable(blocks: list[dict], dmap: dict[str, str] | None = None):
             if not r["dong"]:                      # 합동투표구 — 동을 특정 못 한다
                 unmapped["joint_precinct"] = unmapped.get("joint_precinct", 0) + r["valid"]
                 continue
-            tgt = dmap.get(r["dong"]) if dmap is not None else r["district"]
+            tgt = dmap.get(r["dong"]) if dmap is not None else dkey(b["sido"], r["district"])
             if tgt is None:
                 unmapped["no_lineage"] = unmapped.get("no_lineage", 0) + r["valid"]
                 continue
@@ -174,9 +193,9 @@ def official(blocks: list[dict]) -> dict[str, dict]:
         for r in b["rows"]:
             if r["kind"] != "subtotal" or r["unit"] != "계":
                 continue
-            cur = out.get(r["district"])
+            cur = out.get(dkey(b["sido"], r["district"]))
             if cur is None:
-                out[r["district"]] = dict(r, per_candidate=dict(r["per_candidate"]))
+                out[dkey(b["sido"], r["district"])] = dict(r, per_candidate=dict(r["per_candidate"]))
                 continue
             for k in ("electors", "votes", "valid", "invalid"):
                 cur[k] += r[k]
@@ -196,17 +215,17 @@ def _partial_districts(rnd: int, off: dict) -> set[str]:
         return set()
     d = json.loads(f.read_text(encoding="utf-8"))
     want: dict[str, int] = {}
-    for r in (d.get("district") or {}).values() if isinstance(d.get("district"), dict) \
-            else (d.get("district") or []):
+    for r in d.get("district") or []:
         if not isinstance(r, dict):
             continue
-        nm = (r.get("district") or r.get("name") or "").split()[-1]
+        # 여기서도 시도를 붙인다 — '남구'만으로 맞추면 다른 시도 것과 대사하게 된다
+        nm = dkey(r.get("sido") or "", r.get("name") or r.get("district") or "")
         v = sum(c.get("votes") or 0 for c in (r.get("candidates") or []))
-        if nm and v:
+        if nm.strip() and v:
             want[nm] = v
     bad = set()
     for k, row in off.items():
-        w = want.get(k.split()[-1])
+        w = want.get(k)
         if w and abs(sum(row["per_candidate"].values()) - w) > 0.01 * w:
             bad.add(k)
     return bad

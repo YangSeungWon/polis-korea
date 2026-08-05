@@ -121,7 +121,7 @@ def main() -> int:
                v["reaggregation_quality"] != "validated")
     # 하남시갑이 바로 그 사례다 — 이 사실이 사라지면 회귀다
     ck("하남시갑에서 승자 불일치가 잡힌다",
-       ds["하남시갑"]["validation"]["winner_agrees"] is False)
+       ds["경기 하남시갑"]["validation"]["winner_agrees"] is False)
 
     print("\n[정당] identity resolver를 거치는가")
     ck("후보 문자열이 정당·이름으로 갈린다",
@@ -133,7 +133,7 @@ def main() -> int:
            all(k.startswith("pid:") or k == "무소속" for k in ks), str(ks))
     # 미래통합당(2020)과 국민의힘(2024)은 개명 — 한 키로 이어져야 한다
     ck("미래통합당↔국민의힘이 한 identity",
-       "pid:국민의힘" in ds["하남시갑"]["prev_reaggregated"]["share"])
+       "pid:국민의힘" in ds["경기 하남시갑"]["prev_reaggregated"]["share"])
     # 국민의당(2020)은 2022년에 흡수됐다 — 2020년 그 표가 국민의힘으로 새면 안 된다
     sys.path.insert(0, str(ROOT / "scripts/build"))
     import party_identity as PI
@@ -141,7 +141,7 @@ def main() -> int:
        PI.identity("국민의당(2020)", "2020-04-15") != PI.identity("국민의힘", "2024-04-10"))
 
     print("\n[실측] 하남 수치가 원자료에서 재현되는가")
-    g = ds["하남시갑"]
+    g = ds["경기 하남시갑"]
     ck(f"21대 하남갑 영역 민주 46.7% ({g['prev_reaggregated']['share'].get('pid:더불어민주당')})",
        abs(g["prev_reaggregated"]["share"].get("pid:더불어민주당", 0) - 46.7) < 0.2)
     ck(f"커버리지 85.6% ({g['provenance']['coverage']*100:.1f}%)",
@@ -203,21 +203,21 @@ def _fixtures() -> None:
     try:
         b = run(22, 21, "_bucheon")
         ck("부천 광역동이 선거구를 가로지르는 것이 잡힌다",
-           "부천동" in b["districts"]["부천시갑"]["provenance"]["crossing_prev_dongs"])
+           "부천동" in b["districts"]["경기 부천시갑"]["provenance"]["crossing_prev_dongs"])
         ck("가로지르는 동이 안 닿는 선거구는 막지 않는다",
-           b["districts"]["부천시을"]["method"] == "reaggregated")
+           b["districts"]["경기 부천시을"]["method"] == "reaggregated")
         g = run(22, 21, "_goyang")
         ck("고양은 흥도동이 닿는 갑·을만 막힌다",
            {d for d, v in g["districts"].items() if v["method"] == "context_only"}
-           == {"고양시갑", "고양시을"})
+           == {"경기 고양시갑", "경기 고양시을"})
         w = run(22, 21, "_gunwi")
         # 군위군은 2023년에 경북에서 대구로 옮겨 갔다 — 코드 접두가 회차마다 다르다
         ck("시도 이관(군위)도 재집계된다",
-           w["districts"]["동구군위군을"]["method"] == "reaggregated")
+           w["districts"]["대구 동구군위군을"]["method"] == "reaggregated")
         # 선거구가 여러 시군구에 걸치면 '계'가 여럿이다. 덮어쓰면 커버리지 614%가 나온다
         ck("일부만 회수된 선거구는 수치를 내지 않는다",
-           w["districts"]["의성군청송군영덕군울진군"]["provenance"]["partial_fetch"]
-           and w["districts"]["의성군청송군영덕군울진군"]["attributable"] is None)
+           w["districts"]["경북 의성군청송군영덕군울진군"]["provenance"]["partial_fetch"]
+           and w["districts"]["경북 의성군청송군영덕군울진군"]["attributable"] is None)
     except FileNotFoundError:
         pass
 
@@ -277,7 +277,7 @@ def _capability() -> None:
                not (bad & set(v["swing_attributable_basis"] or {})))
 
     # level이 false여도 delta는 true일 수 있다 — 이게 사라지면 모델이 퇴화한 것이다
-    h = run(22, 21, "_hanam")["districts"]["하남시갑"]
+    h = run(22, 21, "_hanam")["districts"]["경기 하남시갑"]
     ck("하남시갑: level=false · delta=true (독립 판정)",
        h["capability"]["level"]["valid"] is False
        and h["capability"]["delta"]["valid"] is True)

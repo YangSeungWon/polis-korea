@@ -56,11 +56,26 @@ def main() -> int:
 
     # 경계만 움직인 곳은 '같다'로 쓰면 안 된다
     print("\n[경계 변화] 이름이 같아도 비교 가능이 아니다")
+    # 경계가 움직였으면 **폴리곤만으로는** 비교 가능이 아니다. 다만 과거 표를 읍면동
+    # 단위로 현 경계에 다시 담을 수 있으면 비교가 선다 — 그건 다른 근거이지 예외가
+    # 아니다. 그 경우엔 reason_code와 capability가 반드시 붙어 있어야 한다.
     for name, why in [("서울 노원구갑", "노원 3→2 재획정"),
                       ("전북 남원시장수군임실군순창군", "장수군 편입")]:
         u = by.get(name)
-        ck(f"{name} 비교 불가 ({why})",
-           bool(u) and u["comparable"] == "no", (u or {}).get("comparable", "(없음)"))
+        if not u:
+            ck(f"{name} 존재", False, "(없음)")
+            continue
+        if u["comparable"] == "yes":
+            r = u.get("reaggregation") or {}
+            ck(f"{name} 비교 가능이면 재집계 근거가 있다 ({why})",
+               u.get("reason_code") == "reaggregated_from_dong"
+               and r.get("method") == "reaggregated"
+               and (r.get("capability") or {}).get("delta") is True,
+               f"reason_code={u.get('reason_code')} method={r.get('method')}")
+            ck(f"{name} 재집계여도 가로지르는 동은 없다",
+               not (r.get("blocked_by")))
+        else:
+            ck(f"{name} 비교 불가 ({why})", u["comparable"] == "no", u["comparable"])
 
     # ── 판정 불가를 '같다'로도 '다르다'로도 쓰지 않는다 ─────────────────────
     print("\n[3-state] 모르는 것을 안다고 하지 않는가")
