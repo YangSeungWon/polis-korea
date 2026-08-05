@@ -76,6 +76,9 @@ jobs:
       - name: 연표 레이아웃 (넓은 화면 벌어짐 · 좁은 화면 해제)
         run: python tests/test_chronology_layout.py
 
+      - name: 공약 카피 (분모 오해·파이프라인 말투)
+        run: node tests/test_pledge_copy.mjs
+
       - name: 글씨 대비 (정당 원색이 글씨로 새지 않는지)
         run: node tests/test_text_contrast.mjs
 

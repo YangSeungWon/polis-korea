@@ -43,12 +43,23 @@
     const max = Math.max(...d.realms.map((r) => r.n));
     // 무엇을 세었는지 먼저 밝힌다 — 당선인만인지 전 후보인지에 따라 분포가 달라진다.
     const who = d.roster_scope === 'all_candidates' ? '등록 후보' : '당선인';
-    const note = `${who} ${d.n_people.toLocaleString()}명 · 공약 ${d.n_pledges.toLocaleString()}건`
-      + (d.n_unclassified ? ` · 미분류 ${d.n_unclassified.toLocaleString()}건 제외` : '');
-    host.innerHTML = `<p class="pr-note">${esc(note)}</p>
+    // 차트 합계가 공약 수와 다른 이유를 먼저 말한다. '미분류 N건 제외'라고 쓰면
+    // 사용자는 10건을 분모로 잡고 '왜 2건이 22.2%지?' 하게 된다 — 실제 분모는 9건이다.
+    // 알고 싶은 건 처리 로직(제외했다)이 아니라 분모가 얼마인가다.
+    // note에 <b>를 쓰므로 값은 숫자로 강제한다 — 문자열이 그대로 들어가면 마크업이 샌다.
+    const num = (v) => (Number(v) || 0).toLocaleString();
+    const note = `${who} ${num(d.n_people)}명 · `
+      + (d.n_unclassified
+        ? `공약 ${num(d.n_pledges)}건 중 <b>${num(total)}건 분류</b>`
+          + ` · 미분류 ${num(d.n_unclassified)}건`
+        : `공약 ${num(d.n_pledges)}건`);
+    // 출처·가공 여부는 신뢰 문법의 값 단위 칩으로 — 문장으로 세 번 반복하지 않는다.
+    const chip = (window.Trust && window.Trust.fieldChip)
+      ? window.Trust.fieldChip('autoClassified') : '';
+    host.innerHTML = `<p class="pr-note">${note}</p>
       <div class="pr-chart">${d.realms.map((r) => row(r, max, total)).join('')}</div>
-      <p class="pr-fine">분야는 NEC 원본이 비어 있어 공약 제목·본문에서 자동 추정한 값입니다
-        (대표 분야 1개 기준). 추정이라 오분류가 있을 수 있습니다.</p>`;
+      <p class="pr-fine">${chip} NEC 원문에 분야 정보가 없어 공약 제목과 본문을 바탕으로
+        분류했습니다. 공약마다 대표 분야 1개를 적용했으며, 일부 오분류가 있을 수 있습니다.</p>`;
     sec.hidden = false;
   }
 

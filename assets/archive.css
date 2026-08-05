@@ -881,6 +881,8 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 /* ── 공약 분야 분포 ───────────────────────────────────────────────────────
    계열이 하나(건수)뿐이라 색은 한 가지. 분야 정체성은 왼쪽 라벨이 갖는다. */
 .pr-note { font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; }
+/* 분모(분류된 건수)는 차트를 읽는 기준이라 본문색으로 세운다 — 나머지는 배경 정보. */
+.pr-note b { color: var(--ink); font-weight: 700; }
 .pr-chart { display: flex; flex-direction: column; gap: 6px; }
 .pr-row {
   display: grid; grid-template-columns: 104px 1fr 84px;
@@ -902,6 +904,8 @@ a.ar-nav-cell:hover { background: var(--bg3); border-color: var(--rule-strong); 
 }
 .pr-pct { font-size: 11px; font-weight: 600; color: var(--ink-mute); }
 .pr-fine { font-size: 11px; color: var(--ink-mute); margin: 12px 0 0; line-height: 1.6; }
+/* 칩이 문장 첫머리에 오므로 줄과 어긋나지 않게 맞춘다. */
+.pr-fine .tr-chip { vertical-align: baseline; margin-right: 2px; }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .pr-bar { background: #8b85f0; }

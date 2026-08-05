@@ -382,11 +382,11 @@ SECTIONS_LOCAL = """
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">무엇을 약속했나<span class="ar-group-sub">당선인·후보의 공약</span></h2>
+    <h2 class="ar-group-title">공약<span class="ar-group-sub">NEC에 등록된 선거공약</span></h2>
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
   </div>
@@ -430,7 +430,7 @@ SECTIONS_PRES = """
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
 
@@ -483,7 +483,7 @@ SECTIONS_BYELECTION = """
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API · 분야는 제목·본문에서 자동 추정.</p>
+    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
 """
@@ -693,7 +693,11 @@ G_RESULT = ("결과", "이 선거에서 무슨 일이 있었나")
 G_CHANGE = ("무엇이 바뀌었나", "지난 회차와 견줘서")
 G_WHO = ("누가 경쟁했나", "당선인과 후보")
 G_BEFORE = ("선거 전에는 어떻게 보였나", "여론조사·출구조사와 실제의 거리")
-G_PLEDGE = ("무엇을 약속했나", "당선인·후보의 공약")
+# 섹션 이름은 짧고 건조하게 — nav의 "선거 / 인물·정당 / 역사"와 같은 명명법.
+# 부제는 링크가 아니라 부제다(다른 그룹과 동일). "당선인·후보의"는 두 집단인지
+# 헷갈리게 하고, 회차마다 모집단이 달라(당선인만/등록 후보 전체) 고정 문구로는
+# 정확할 수 없다 — 정확한 모집단은 차트 위 note가 말한다.
+G_PLEDGE = ("공약", "NEC에 등록된 선거공약")
 G_TOGETHER = ("함께 치러진 선거", "같은 날 실시된 재·보궐")
 
 GROUPS_BY_KIND = {
