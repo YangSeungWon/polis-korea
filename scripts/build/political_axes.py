@@ -292,6 +292,21 @@ def main() -> int:
                            "'수십 년간 어느 계열을 지지했나'를 볼 때 쓴다. "
                            "정당 동일성 판정에는 쓰지 않는다."),
         },
+        "_dominant_schema": {
+            "value": "conservative|democratic|progressive|regional|unknown",
+            "valid_from": "YYYY-MM (선택 — 주도 계열이 시기에 따라 달라질 수 있다)",
+            "valid_to": "YYYY-MM 또는 null",
+            "basis": "무엇을 근거로 주류라고 보는가",
+            "source": "확인한 자료",
+            "confidence": "supported|contested|insufficient",
+        },
+        "_dominant_rule": ("mixed를 단일 계열로 **재분류하지 않는다**. lineage_family는 "
+                           "mixed 그대로 두고, 장기 흐름을 읽기 위한 별도 projection에서만 "
+                           "쓴다. mixed인데 dominant가 없는 것은 정상이다 — dominant "
+                           "coverage를 높이는 것이 목표가 아니다. 득표를 70/30처럼 수치로 "
+                           "쪼개는 근거로는 절대 쓰지 않는다."),
+        # 근거를 확인한 것만. 비어 있는 것이 기본값이다.
+        "dominant_family": {},
         "lineage_family": fam,
         "lineage_family_historical": fam_h,
         "_position_schema": {
@@ -312,7 +327,10 @@ def main() -> int:
     }
     if OUT.exists():
         prev = json.loads(OUT.read_text(encoding="utf-8"))
-        doc["contemporary_position"] = prev.get("contemporary_position", {})
+        # 손으로 채우는 값은 재생성 때 보존한다 — 생성기가 덮어쓰면 근거가 날아간다
+        for k in ("contemporary_position", "dominant_family"):
+            if prev.get(k):
+                doc[k] = prev[k]
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     import collections

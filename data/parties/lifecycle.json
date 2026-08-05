@@ -1314,11 +1314,9 @@
    "dissolved": "1965",
    "legacy_relation": "merge",
    "formed_by": {
-    "type": "split",
-    "parties": [
-     "민주당(1955)"
-    ],
-    "why": "민주당(1955)이 존속하는 중에 갈라져 나왔다"
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
    },
    "ended_by": {
     "type": "ambiguous",
@@ -1327,14 +1325,9 @@
     ],
     "why": "후신 시점이 해산 시점과 맞물리지 않는다"
    },
-   "lineage": [
-    {
-     "to": "민주당(1955)",
-     "type": "split_from"
-    }
-   ],
+   "lineage": [],
    "migration": "ambiguous",
-   "ambiguity_cause": "successor_timing_mismatch"
+   "ambiguity_cause": "missing_predecessor_record"
   },
   "공화당": {
    "founded": "1997",
@@ -2364,6 +2357,31 @@
     {
      "to": "정의당",
      "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "신민당(1960)": {
+   "founded": "1960-11",
+   "dissolved": "1961-05",
+   "legacy_relation": "split",
+   "formed_by": {
+    "type": "split",
+    "parties": [
+     "민주당(1955)"
+    ],
+    "why": "민주당(1955)이 존속하는 중에 갈라져 나왔다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [
+    {
+     "to": "민주당(1955)",
+     "type": "split_from"
     }
    ],
    "migration": "derived",
