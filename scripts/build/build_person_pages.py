@@ -115,10 +115,13 @@ def region_slug_index() -> dict:
         by: dict = {}
         d = ROOT / "region"
         if d.exists():
-            for sub in d.iterdir():
+            # sorted() 필수 — iterdir()는 파일시스템 순서라 기계마다 다르다.
+            # 이 dict가 그대로 JSON으로 페이지에 박히므로, 정렬하지 않으면 같은 입력에서
+            # 다른 출력이 나온다(CI가 로컬과 다른 결과를 내며 잡아냈다).
+            for sub in sorted(d.iterdir(), key=lambda x: x.name):
                 if sub.is_dir() and "-" in sub.name:
                     by.setdefault(sub.name.split("-", 1)[1], []).append(sub.name)
-        _REGION_BY_NAME = {k: v[0] for k, v in by.items() if len(v) == 1}
+        _REGION_BY_NAME = {k: by[k][0] for k in sorted(by) if len(by[k]) == 1}
     return _REGION_BY_NAME
 
 
