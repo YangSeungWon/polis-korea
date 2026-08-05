@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "generated_at": "2026-08-05T16:32:28+09:00",
+  "generated_at": "2026-08-05T21:15:49+09:00",
   "note": "우리 선거 데이터에서 **자동 탐지**한 변화 후보다. 누락을 막는 그물이지 사실의 출처가 아니다 — 실제 날짜와 성격은 자료로 확인해 events.json에 옮긴다. 여기 있다고 사실이 아니다."
  },
  "admin_unit": [
@@ -624,8 +624,8 @@
     "경기 안산시단원구을",
     "경기 안산시단원구갑"
    ],
-   "reason": "이전 경기 안산시단원구을 + 경기 안산시단원구갑 통합",
-   "reason_code": "merged_into_current",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.9%). 전체 수준값으로도 쓸 수 있다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   },
   {
@@ -637,8 +637,8 @@
     "경기 파주시을",
     "경기 파주시갑"
    ],
-   "reason": "이전 경기 파주시을 + 경기 파주시갑 통합",
-   "reason_code": "merged_into_current",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값으로도 쓸 수 있다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   },
   {
@@ -649,8 +649,8 @@
    "previous": [
     "경기 하남시"
    ],
-   "reason": "이전 '경기 하남시'이 2개로 분할",
-   "reason_code": "split_from_previous",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 85.6%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   },
   {
@@ -661,8 +661,8 @@
    "previous": [
     "경기 하남시"
    ],
-   "reason": "이전 '경기 하남시'이 2개로 분할",
-   "reason_code": "split_from_previous",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 84.1%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   },
   {
@@ -674,8 +674,8 @@
     "경기 화성시갑",
     "경기 화성시병"
    ],
-   "reason": "이전 경기 화성시갑 + 경기 화성시병 통합",
-   "reason_code": "merged_into_current",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 87.4%). 전체 수준값으로도 쓸 수 있다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   },
   {
@@ -700,8 +700,8 @@
     "부산 남구갑",
     "부산 남구을"
    ],
-   "reason": "이전 부산 남구갑 + 부산 남구을 통합",
-   "reason_code": "merged_into_current",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "reason_code": "reaggregated_from_dong",
    "source": "district_lineage/22__21"
   }
  ]

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "note": "지역 페이지 타임라인용 — 선거 기록 사이에 끼울 행정구역 변화 이벤트. events.json에서 파생, 직접 편집하지 않는다.",
-  "n": 4
+  "n": 6
  },
  "by_region": {
   "경기도-이천시": [
@@ -57,6 +57,48 @@
     "comparison_capability": "direct",
     "successor_slugs": [
      "대구광역시-군위군"
+    ]
+   }
+  ],
+  "경상북도-포항시": [
+   {
+    "date": "1995-01-01",
+    "type": "merge",
+    "label": "포항시·영일군 통합(1차 도농통합)",
+    "from": [
+     "경상북도 포항시",
+     "경상북도 영일군"
+    ],
+    "comparison_capability": "aggregated",
+    "predecessor_slugs": [
+     "경상북도-포항시",
+     "경상북도-영일군"
+    ]
+   },
+   {
+    "date": "1995-01-01",
+    "type": "merge",
+    "label": "포항시·영일군 통합(1차 도농통합)",
+    "to": [
+     "경상북도 포항시"
+    ],
+    "comparison_capability": "aggregated",
+    "successor_slugs": [
+     "경상북도-포항시"
+    ]
+   }
+  ],
+  "경상북도-영일군": [
+   {
+    "date": "1995-01-01",
+    "type": "merge",
+    "label": "포항시·영일군 통합(1차 도농통합)",
+    "to": [
+     "경상북도 포항시"
+    ],
+    "comparison_capability": "aggregated",
+    "successor_slugs": [
+     "경상북도-포항시"
     ]
    }
   ]

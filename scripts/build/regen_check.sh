@@ -33,6 +33,8 @@ GENERATORS=(
   build_party_pages      # /party/{name}/
   build_region_pages     # /region/{시도-시군구}/
   build_home_capabilities
+  map_timelapse          # data/map_timelapse/ (경계·선거·투영 상태)
+  render_map_timelapse   #   └ map-timelapse/*.html (반드시 뒤에)
   build_sitemap          # sitemap.xml·robots.txt (마지막 — 위 산출물을 훑는다)
 )
 
@@ -47,13 +49,18 @@ done
 OUT_PATHS=(person party region history polls archive share sitemap.xml robots.txt
            index.html elections.html
            assets/person-index.json data/timeline.json)
-CHANGED="$(git status --porcelain -- "${OUT_PATHS[@]}" '*.html')"
+# **stage된 것은 통과**시킨다. 이 검사가 막으려는 것은 "커밋에 안 들어가는 산출물"이지
+# "새로 생긴 산출물"이 아니다. 새 생성기를 추가하는 커밋은 산출물이 HEAD에 없는 게
+# 당연한데, 그걸 실패로 보면 새 산출물을 **영원히** 커밋할 수 없다(add → 여전히 실패).
+# porcelain의 둘째 칸이 공백이면 stage됨 — 지금 만들 커밋에 들어간다는 뜻이다.
+CHANGED="$(git status --porcelain -- "${OUT_PATHS[@]}" '*.html' | grep -Ev '^[AMRDC] ' || true)"
 if [ -n "$CHANGED" ]; then
   echo
-  echo "✗ 생성기를 돌렸더니 저장소가 달라졌다 — 커밋된 산출물이 정본과 어긋나 있다."
-  echo "  원인은 대개 둘이다:"
+  echo "✗ 생성기를 돌렸더니 커밋 밖에 남는 산출물이 있다."
+  echo "  원인은 대개 셋이다:"
   echo "    1) 생성기를 돌리고 결과를 커밋하지 않았다(CI의 git add 범위 확인)"
   echo "    2) 생성된 파일을 손으로 고쳤다(다음 빌드에 조용히 날아간다)"
+  echo "    3) 새 산출물이 stage되지 않았다 — git add 하면 된다"
   echo
   echo "$CHANGED" | head -20
   echo
@@ -61,4 +68,4 @@ if [ -n "$CHANGED" ]; then
   exit 1
 fi
 echo
-echo "✓ 생성기 재실행 후에도 저장소 동일 — 커밋된 산출물이 정본과 일치"
+echo "✓ 생성기 재실행 후 남는 산출물 없음 — 커밋될 내용이 정본과 일치"

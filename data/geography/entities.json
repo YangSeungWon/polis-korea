@@ -1,7 +1,7 @@
 {
  "_meta": {
   "note": "events.json에서 파생 — 직접 편집하지 않는다.",
-  "n": 10
+  "n": 15
  },
  "entities": [
   {
@@ -24,6 +24,43 @@
    "parent": "경상북도",
    "name": "군위군",
    "valid_to": "2023-07-01"
+  },
+  {
+   "id": "admin_unit:경상북도:영일군",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "영일군",
+   "valid_to": "1995-01-01"
+  },
+  {
+   "id": "admin_unit:경상북도:포항시",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "포항시",
+   "valid_from": "1995-01-01"
+  },
+  {
+   "id": "admin_unit:경상북도:포항시(구)",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "포항시",
+   "valid_to": "1995-01-01"
+  },
+  {
+   "id": "admin_unit:경상북도:포항시남구",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "포항시남구",
+   "valid_from": "1995-01-01",
+   "contained_in": "admin_unit:경상북도:포항시"
+  },
+  {
+   "id": "admin_unit:경상북도:포항시북구",
+   "kind": "admin_unit",
+   "parent": "경상북도",
+   "name": "포항시북구",
+   "valid_from": "1995-01-01",
+   "contained_in": "admin_unit:경상북도:포항시"
   },
   {
    "id": "admin_unit:대구광역시:군위군",
@@ -79,29 +116,6 @@
    "name": "하남시을",
    "round": 22,
    "valid_from": "2024-04-10"
-  },
-  {
-   "id": "admin_unit:경상북도:포항시(구)",
-   "kind": "admin_unit",
-   "parent": "경상북도",
-   "name": "포항시",
-   "valid_to": "1995-01-01",
-   "note": "1995-01-01 영일군과 통합해 도농복합 포항시가 되기 전의 포항시."
-  },
-  {
-   "id": "admin_unit:경상북도:영일군",
-   "kind": "admin_unit",
-   "parent": "경상북도",
-   "name": "영일군",
-   "valid_to": "1995-01-01"
-  },
-  {
-   "id": "admin_unit:경상북도:포항시",
-   "kind": "admin_unit",
-   "parent": "경상북도",
-   "name": "포항시",
-   "valid_from": "1995-01-01",
-   "note": "1995-01-01 포항시+영일군 도농통합. 같은 해 남구·북구로 분구."
   }
  ]
 }

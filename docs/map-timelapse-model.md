@@ -62,12 +62,47 @@ map_state
   unknown·무소속은 각각 다른 상태. tooltip은 전체 composition과 coverage를 보여준다.
 - 색 = 1위 계열, 강도 = 득표 비율 정도로 시작한다. 합성색을 처음부터 만들지 않는다.
 
-## 첫 vertical slice
+## 첫 vertical slice — 포항 (구현됨)
 
-**포항** — topology 사건(1995 도농통합)과 결과 snapshot이 둘 다 있고, 같은 이름의
-다른 entity까지 있어 세 층 분리가 실제로 되는지 확인된다.
-scrubber 전후에서 polygon version과 결과가 정확히 바뀌는지 구조 assertion +
-스크린샷으로 검증한다.
+`scripts/build/map_timelapse.py` → `data/map_timelapse/포항.json` →
+`scripts/build/render_map_timelapse.py` → `map-timelapse/포항.html`.
+
+다섯 상태를 낸다: 선거 직전 / 선거 / 사건 직전 / 사건 직후 / 다음 선거.
+
+### 슬라이스가 실제로 찾아낸 것
+
+**같은 사건, 같은 날짜인데 series에 따라 답이 다르다.**
+
+| series | 1992 snapshot 단위 | 1995 통합 경계로 | 왜 |
+|---|---|---|---|
+| `president:national` | 포항시 · 영일군 | **aggregated** | 두 단위가 통합 포항시를 정확히 이룬다 |
+| `general:district` | 포항시 · 영일군**·울릉군** | **unavailable** | 선거구가 울릉군까지 포함한다 — 뺄 하위 실측이 없다 |
+
+대선은 시군구로 집계돼 지도 단위와 집계 단위가 같지만, 총선은 선거구라 한 겹이 더
+있다. `series를 먼저 고른다`가 취향이 아니라 **정확성 요건**인 이유가 이것이다.
+기본 series도 이 이유로 정한다(coverage가 높아서가 아니다).
+
+실제 합산(김영삼): 포항시 97,780 + 영일군 58,962 = 156,742 / 250,836 = **62.49%**.
+포항시만 보면 62.14%, 영일군만 보면 63.08%다. 어느 쪽도 통합 경계의 값이 아니다.
+
+1997 대선은 포항시남구·북구로 집계돼 지도 단위(포항시)보다 잘다. 이건 승계가 아니라
+**포함관계**여서 `data/geography/containment.json`에 따로 둔다 — `from/to`로 적으면
+entity 파생기가 포항시를 1995년에 소멸시킨다. `exhaustive: true`(관할구역을 남김없이
+나눈다)일 때만 합산을 허용한다.
+
+### 검증
+
+- `tests/test_map_timelapse.py` — 다섯 상태, 이산 전환, **합산이 원자료의 정확한 합인지**,
+  unavailable에 색·후보·구성이 새지 않는지, 이름이 아니라 id로 세는지
+- **면적 보존** — `territorial_continuity: same_total`이면 사건 전후 면적 합이 보존돼야
+  한다. 이게 없으면 옛 폴리곤에 새 이름만 붙여도 테스트가 통과한다(실제로 통과했다)
+- `tests/ui/test_map_timelapse.mjs` — 3뷰포트 + JS 없는 경우. 렌더 회귀는 픽셀이 아니라
+  **SVG path·채움 골든**(`tests/golden/map_timelapse/`)으로 잡는다 — 폰트에 흔들리지
+  않으면서 좌표·투영·색이 바뀌면 반드시 걸린다
+
+### 다음
+
+split 사례(하남 22대)와 `reaggregated` 경로를 같은 gate에 태우고, 그다음 전국.
 
 ## 커밋 전
 

@@ -1,0 +1,35 @@
+{
+ "_meta": {
+  "note": "행정구역 **포함관계**. events.json의 승계와 다른 ontology다 — 포항시남구·북구는 포항시의 후신이 아니라 하위 일반구다. from/to로 적으면 entity 파생기가 포항시를 1995년에 소멸시킨다.",
+  "why": "결과 집계 단위가 지도 단위보다 잘게 나올 때(1997 대선은 포항시남구·북구로 집계됨) 합산을 허용할 근거가 필요하다. 근거는 '두 구가 관할구역을 남김없이 나눈다'는 사실이지 renderer의 추정이 아니다.",
+  "exhaustive": "true일 때만 children의 합을 parent로 쓸 수 있다. 일부만 아는 포함관계는 false로 두고 합산하지 않는다."
+ },
+ "containments": [
+  {
+   "id": "contain:1995-01-01:pohang-gu",
+   "parent": "admin_unit:경상북도:포항시",
+   "children": [
+    "admin_unit:경상북도:포항시남구",
+    "admin_unit:경상북도:포항시북구"
+   ],
+   "effective_date": "1995-01-01",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "도농통합 포항시 출범과 동시에 설치된 일반구 둘이 관할구역 전체를 남김없이 나눈다. 합치면 포항시다.",
+   "evidence": [
+    {
+     "source": "경상북도 포항시 등 5개 도농복합형태의 시 설치 등에 관한 법률",
+     "note": "1995-01-01 시행 — 통합 포항시 출범과 동시에 남구·북구 설치"
+    },
+    {
+     "source": "polis 데이터",
+     "note": "1992 대선까지 '포항시'·'영일군' 단위로 집계되고 1997 대선부터 '포항시남구'·'포항시북구' 둘로만 집계된다 — 셋째 단위가 없다"
+    },
+    {
+     "source": "https://encykorea.aks.ac.kr/Article/E0068765",
+     "note": "1995 도농통합과 같은 해 남구·북구 분구"
+    }
+   ]
+  }
+ ]
+}

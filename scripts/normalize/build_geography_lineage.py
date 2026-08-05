@@ -27,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data/geography"
 EVENTS = OUT / "events.json"
+CONTAIN = OUT / "containment.json"
 
 sys.path.insert(0, str(ROOT / "scripts/build"))
 from build_region_pages import collect as collect_regions  # noqa: E402
@@ -119,8 +120,19 @@ def load_events() -> list:
     return []
 
 
-def derive_entities(events: list) -> list:
-    """확정 이벤트에서 entity와 유효기간을 파생한다."""
+def load_containments() -> list:
+    if CONTAIN.exists():
+        return json.loads(CONTAIN.read_text(encoding="utf-8")).get("containments") or []
+    return []
+
+
+def derive_entities(events: list, contains: list | None = None) -> list:
+    """확정 이벤트에서 entity와 유효기간을 파생한다.
+
+    포함관계(containment)의 하위 단위도 entity로 싣되 **상위 단위를 끝내지 않는다**.
+    포항시남구는 포항시의 후신이 아니라 하위 일반구다 — from/to로 적으면 포항시가
+    1995년에 소멸한 것이 된다.
+    """
     ents: dict = {}
 
     def touch(e: dict):
@@ -134,6 +146,11 @@ def derive_entities(events: list) -> list:
         for side, dk in (("from", "valid_to"), ("to", "valid_from")):
             for ent in ev.get(side) or []:
                 touch({**ent, dk: ev["effective_date"]})
+    for c in contains or []:
+        for cid in c["children"]:
+            kind, parent, name = cid.split(":", 2)
+            touch({"id": cid, "kind": kind, "parent": parent, "name": name,
+                   "valid_from": c["effective_date"], "contained_in": c["parent"]})
     return sorted(ents.values(), key=lambda x: (x["kind"], x["id"]))
 
 
@@ -192,7 +209,7 @@ def main() -> int:
         json.dumps(cand, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     events = load_events()
-    ents = derive_entities(events)
+    ents = derive_entities(events, load_containments())
     (OUT / "entities.json").write_text(json.dumps(
         {"_meta": {"note": "events.json에서 파생 — 직접 편집하지 않는다.",
                    "n": len(ents)},
