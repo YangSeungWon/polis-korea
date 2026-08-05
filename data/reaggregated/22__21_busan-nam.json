@@ -1,0 +1,97 @@
+{
+ "current": 22,
+ "previous": 21,
+ "sgg": "남구",
+ "districts": {
+  "남구": {
+   "method": "reaggregated",
+   "reaggregation_quality": "limited",
+   "attributable": {
+    "votes": 140136,
+    "share": {
+     "pid:더불어민주당": 44.32,
+     "pid:국민의힘": 55.68
+    }
+   },
+   "official_reference": {
+    "votes": 155431,
+    "share": {
+     "pid:더불어민주당": 45.59,
+     "pid:국민의힘": 54.41
+    }
+   },
+   "prev_reaggregated": {
+    "votes": 147074,
+    "share": {
+     "pid:더불어민주당": 45.33,
+     "pid:국민의힘": 52.45,
+     "pid:정의당": 1.06,
+     "pid:민중당(2017)": 0.54,
+     "무소속": 0.62
+    }
+   },
+   "swing_attributable_basis": {
+    "pid:국민의힘": 3.23,
+    "pid:더불어민주당": -1.0
+   },
+   "newly_ran": {},
+   "no_longer_ran": {
+    "pid:정의당": 1.06,
+    "pid:민중당(2017)": 0.54
+   },
+   "provenance": {
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "basis_boundary": "22대 선거구",
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "coverage": 0.9016,
+    "excluded_categories": {
+     "home_ship": 421,
+     "out_of_area_early": 14447,
+     "overseas": 425,
+     "misplaced": 2
+    },
+    "unmapped": {},
+    "prev_excluded_categories": {
+     "home_ship": 664,
+     "out_of_area_early": 14975,
+     "overseas": 228,
+     "misplaced": 19
+    },
+    "prev_unmapped": {},
+    "dong_lineage_applied": [],
+    "unresolved_dongs": [],
+    "crossing_prev_dongs": [],
+    "votes_unplaceable": 0,
+    "partial_fetch": false,
+    "crossing_dongs": [],
+    "party_identity": "scripts/build/party_identity.py",
+    "allocation_by_area_or_population": 0,
+    "current_election_validation_error_pp": 1.27
+   },
+   "validation": {
+    "winner_attributable": "pid:국민의힘",
+    "winner_official": "pid:국민의힘",
+    "winner_agrees": true,
+    "excluded_share": {
+     "pid:국민의힘": 42.76,
+     "pid:더불어민주당": 57.24
+    },
+    "excluded_lean_pp": {
+     "pid:더불어민주당": 11.65,
+     "pid:국민의힘": -11.65
+    },
+    "excluded_lean_prev_pp": {
+     "pid:더불어민주당": 10.74,
+     "pid:국민의힘": -11.77,
+     "pid:정의당": 0.5,
+     "pid:민중당(2017)": 0.08,
+     "무소속": 0.45
+    },
+    "bias_stability_pp": {
+     "pid:국민의힘": 0.12,
+     "pid:더불어민주당": 0.91
+    }
+   }
+  }
+ }
+}

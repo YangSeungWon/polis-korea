@@ -114,15 +114,17 @@
     }
    ],
    "territorial_continuity": "same_total",
-   "comparison_capability": "context_only",
+   "comparison_capability": "reaggregated",
    "capability_reason": "갑·을을 합치면 이전 하남시와 같은 영역이지만, 2020년 하남시 득표를 갑/을로 나눌 하위 단위 실측이 없다. 인구·면적 비례 배분은 추정이지 재집계가 아니다.",
    "label": "하남시가 갑·을로 분구",
    "evidence": [
     {
      "source": "district_lineage/22__21",
      "note": "하남시갑·을이 각각 이전 하남시에 100% 담기고, 이전 하남시의 82.0% / 17.9%를 차지"
-    }
-   ]
+    },
+    "읍면동 실측 득표(NEC 투표구별 개표)로 재집계 성립"
+   ],
+   "capability_evidence": "읍면동 실측 득표로 재집계 성립"
   },
   {
    "id": "geo:2024-22nd:bucheon-merge",
@@ -166,8 +168,10 @@
     {
      "source": "polis 데이터",
      "note": "21대 부천 갑·을·병·정 4곳 → 22대 갑·을·병 3곳"
-    }
-   ]
+    },
+    "읍면동 단위로 나눌 수 없음 — 가로지르는 동: 부천동, 심곡동"
+   ],
+   "capability_evidence": "읍면동 단위로 나눌 수 없음 — 가로지르는 동: 부천동, 심곡동"
   }
  ]
 }

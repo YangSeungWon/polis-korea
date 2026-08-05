@@ -150,6 +150,9 @@ def main() -> int:
     print("\n[유형별] 획정 변경 종류마다 옳은 판정이 나오는가")
     _fixtures()
 
+    print("\n[되먹임] 계보에 반영될 때 근거 없이 올라가지 않는가")
+    _feedback()
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
@@ -211,6 +214,43 @@ def _fixtures() -> None:
            and w["districts"]["의성군청송군영덕군울진군"]["attributable"] is None)
     except FileNotFoundError:
         pass
+
+
+def _feedback() -> None:
+    """재집계 결과가 선거구 계보로 되먹여질 때의 불변식.
+
+    계보 판정을 올리는 건 **근거가 있을 때만**이다. context_only는 그대로 둔다 —
+    계보는 이어져 있고 수치만 못 낸다는 뜻이라 원래 판정과 같다.
+    역사가 이어진다 ≠ 숫자가 직접 비교된다.
+    """
+    f = ROOT / "data/district_lineage/22__21.json"
+    if not f.exists():
+        return
+    lin = json.loads(f.read_text(encoding="utf-8"))
+    for u in lin["units"]:
+        r = u.get("reaggregation") or {}
+        m = r.get("method")
+        if m == "reaggregated":
+            ck(f"{u['district']}: 재집계면 비교 가능", u["comparable"] == "yes")
+            ck(f"{u['district']}: 품질이 insufficient가 아님",
+               r.get("quality") != "insufficient")
+            ck(f"{u['district']}: 분모가 명시됨",
+               (r.get("denominator") or "").startswith("동 귀속표"))
+        elif m == "context_only":
+            # 못 하는 이유가 없는 채로 막혀 있으면 안 된다
+            ck(f"{u['district']}: 차단 이유가 있다", bool(r.get("blocked_by")))
+            ck(f"{u['district']}: 차단인데 비교 가능으로 올리지 않음",
+               u.get("reason_code") != "reaggregated_from_dong")
+    # 근거 없이 comparable이 올라간 게 없는지 — reason_code가 있어야 한다
+    ck("재집계로 올린 곳은 전부 reason_code가 붙어 있다",
+       all((u.get("reaggregation") or {}).get("method") == "reaggregated"
+           for u in lin["units"] if u.get("reason_code") == "reaggregated_from_dong"))
+    ev = json.loads((ROOT / "data/geography/events.json").read_text(encoding="utf-8"))
+    for e in ev["events"]:
+        if e.get("kind") == "admin_unit":
+            continue
+        if e.get("comparison_capability") in ("reaggregated", "context_only"):
+            ck(f"{e['id']}: 등급에 근거가 붙어 있다", bool(e.get("capability_evidence")))
 
 
 if __name__ == "__main__":

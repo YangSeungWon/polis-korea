@@ -141,6 +141,9 @@ REASON_CODES = {
     "merged_into_current": "이전 여럿이 하나로 합쳐졌다",
     "no_predecessor": "대응하는 이전 선거구가 없다",
     "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다",
+    # 폴리곤만 보면 비교 불가지만, 과거 표를 읍면동 단위로 현 경계에 다시 담아
+    # 비교가 서는 경우. apply_reaggregation.py가 실측 근거와 함께 붙인다.
+    "reaggregated_from_dong": "획정은 바뀌었지만 읍면동 실측 득표로 재집계해 비교한다",
 }
 
 

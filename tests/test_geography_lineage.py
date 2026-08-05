@@ -141,9 +141,16 @@ def main() -> int:
     FIX = [
         ("geo:1996-03-01:icheon-promotion", "promotion", "direct", "영역 그대로 · 군→시"),
         ("geo:2023-07-01:gunwi-transfer", "transfer", "direct", "영역 그대로 · 상위만 변경"),
-        ("geo:2024-22nd:hanam-split", "split", "context_only", "갑/을로 나눌 하위 실측 없음"),
+        # 처음엔 context_only였다 — 갑/을로 나눌 하위 실측이 없다고 봤기 때문이다.
+        # NEC 투표구별 개표(VCCP08)에 읍면동별 후보 득표가 있다는 걸 확인하고 재집계했다.
+        # 2020년 하남시 동 14곳이 전부 2024년 선거구 하나에 99.9%↑ 들어가고(가로지르는
+        # 동 없음), 풍산동→미사3동은 SGIS 행정동코드 계승으로 확인했다.
+        # 기준을 낮춘 게 아니라 '하위 실측 provenance가 있을 때만'이라는 요건이 충족됐다.
+        ("geo:2024-22nd:hanam-split", "split", "reaggregated", "읍면동 실측으로 재집계 성립"),
+        # 부천은 여전히 막힌다. 2019년 광역동 통합으로 부천동·심곡동이 2024년
+        # 선거구 경계를 가로질러 동 단위로 나눌 수 없다 — 읍면동 자료가 있어도 안 된다.
         ("geo:2024-22nd:bucheon-merge", "merge", "context_only",
-         "전신 전체가 안 들어와 합산 불가"),
+         "광역동이 선거구를 가로질러 나눌 수 없음"),
     ]
     for eid, typ, cap, why in FIX:
         e = by.get(eid)

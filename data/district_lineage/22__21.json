@@ -2,7 +2,7 @@
  "_meta": {
   "current_n": 22,
   "previous_n": 21,
-  "generated_at": "2026-08-05T16:42:19+09:00",
+  "generated_at": "2026-08-05T17:28:45+09:00",
   "source": "polis 계산 — 선거구 폴리곤 교차 면적",
   "method": "두 회차 선거구 폴리곤의 교차 면적으로 대응을 찾는다. 양방향 97% 이상이면 같은 단위, 60% 이상이면 주 대응, 5% 미만은 경계 노이즈로 버린다.",
   "thresholds": {
@@ -21,7 +21,8 @@
    "split_from_previous": "이전 선거구가 여럿으로 갈라졌다",
    "merged_into_current": "이전 여럿이 하나로 합쳐졌다",
    "no_predecessor": "대응하는 이전 선거구가 없다",
-   "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다"
+   "scattered_overlap": "겹침이 흩어져 어느 쪽으로도 못 정한다",
+   "reaggregated_from_dong": "획정은 바뀌었지만 읍면동 실측 득표로 재집계해 비교한다"
   },
   "note": "comparable='yes'인 단위로만 회차 간 득표율·swing을 만든다. 경계가 바뀐 단위를 이어 붙이면 없던 변화가 만들어진다. 'unknown'은 폴리곤 출처·정밀도가 회차마다 달라 판정할 수 없는 것으로, '같다'로도 '다르다'로도 쓰지 않는다.",
   "source_profile": {
@@ -47,7 +48,7 @@
   "renamed": 1,
   "split": 2,
   "total": 254,
-  "comparable": 190,
+  "comparable": 196,
   "comparable_unknown": 0,
   "previous_total": 253,
   "previous_unmatched": 3
@@ -232,15 +233,26 @@
      "of_current": 0.0838,
      "of_previous": 0.1183
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "context_only",
+    "quality": "insufficient",
+    "coverage": 0.8714,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.17,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_goyang",
+    "blocked_by": "선거구를 가로지르는 동: 흥도동"
+   }
   },
   {
    "district": "경기 고양시병",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "주 대응 '경기 고양시병' 겹침 95%/88%",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.0%)",
    "overlap_current": 0.9528,
    "overlap_previous": 0.8811,
    "source_relation": "same_source",
@@ -251,7 +263,17 @@
      "of_current": 0.9528,
      "of_previous": 0.8811
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "limited",
+    "coverage": 0.8804,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.15,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_goyang"
+   }
   },
   {
    "district": "경기 고양시을",
@@ -270,7 +292,11 @@
      "of_current": 0.9761,
      "of_previous": 0.9711
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "direct",
+    "note": "경계가 사실상 같아 재집계 없이 비교한다"
+   }
   },
   {
    "district": "경기 고양시정",
@@ -289,7 +315,11 @@
      "of_current": 0.9992,
      "of_previous": 0.9996
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "direct",
+    "note": "경계가 사실상 같아 재집계 없이 비교한다"
+   }
   },
   {
    "district": "경기 광명시갑",
@@ -570,7 +600,18 @@
      "of_current": 0.2836,
      "of_previous": 0.7468
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "context_only",
+    "quality": "insufficient",
+    "coverage": 0.8924,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 0.81,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_bucheon",
+    "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
+   }
   },
   {
    "district": "경기 부천시병",
@@ -594,7 +635,18 @@
      "of_current": 0.1683,
      "of_previous": 0.2483
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "context_only",
+    "quality": "insufficient",
+    "coverage": 0.8967,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 0.98,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_bucheon",
+    "blocked_by": "선거구를 가로지르는 동: 부천동, 심곡동"
+   }
   },
   {
    "district": "경기 부천시을",
@@ -613,7 +665,11 @@
      "of_current": 0.9998,
      "of_previous": 1.0
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "direct",
+    "note": "경계가 사실상 같아 재집계 없이 비교한다"
+   }
   },
   {
    "district": "경기 성남시분당구갑",
@@ -1305,9 +1361,9 @@
    "district": "경기 하남시갑",
    "sido": "경기",
    "relation": "split",
-   "comparable": "no",
-   "reason_code": "split_from_previous",
-   "reason": "이전 '경기 하남시'이 2개로 분할",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 85.6%)",
    "overlap_current": 0.9996,
    "overlap_previous": 0.8199,
    "source_relation": "same_source",
@@ -1318,15 +1374,25 @@
      "of_current": 0.9996,
      "of_previous": 0.8199
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "limited",
+    "coverage": 0.8564,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.24,
+    "winner_agrees": false,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_hanam"
+   }
   },
   {
    "district": "경기 하남시을",
    "sido": "경기",
    "relation": "split",
-   "comparable": "no",
-   "reason_code": "split_from_previous",
-   "reason": "이전 '경기 하남시'이 2개로 분할",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 84.1%)",
    "overlap_current": 1.0,
    "overlap_previous": 0.1795,
    "source_relation": "same_source",
@@ -1337,7 +1403,17 @@
      "of_current": 1.0,
      "of_previous": 0.1795
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "limited",
+    "coverage": 0.841,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.19,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_hanam"
+   }
   },
   {
    "district": "경기 화성시갑",
@@ -1946,7 +2022,18 @@
      "of_current": 0.2661,
      "of_previous": 0.2699
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "context_only",
+    "quality": "insufficient",
+    "coverage": 0.9037,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 0.93,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_gunwi",
+    "blocked_by": "선거구 일부만 회수"
+   }
   },
   {
    "district": "경북 포항시남구울릉군",
@@ -2218,9 +2305,9 @@
    "district": "대구 동구군위군갑",
    "sido": "대구",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason_code": "boundary_moved",
-   "reason": "겹침 90%/100% — 같은 출처 폴리곤이라 정밀도 차이로 설명되지 않는다 · 이전 '대구 동구갑'",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.1%)",
    "overlap_current": 0.9046,
    "overlap_previous": 0.9981,
    "source_relation": "same_source",
@@ -2236,15 +2323,25 @@
      "of_current": 0.0954,
      "of_previous": 0.008
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "limited",
+    "coverage": 0.9006,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.27,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_gunwi"
+   }
   },
   {
    "district": "대구 동구군위군을",
    "sido": "대구",
    "relation": "merged",
-   "comparable": "no",
-   "reason_code": "merged_into_current",
-   "reason": "이전 경북 군위군의성군청송군영덕군 + 대구 동구을 통합",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.8%)",
    "overlap_current": 0.786,
    "overlap_previous": 0.1814,
    "source_relation": "same_source",
@@ -2260,7 +2357,17 @@
      "of_current": 0.2139,
      "of_previous": 0.9915
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "validated",
+    "coverage": 0.8875,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 0.73,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_gunwi"
+   }
   },
   {
    "district": "대구 북구갑",
@@ -2570,9 +2677,9 @@
    "district": "부산 남구",
    "sido": "부산",
    "relation": "merged",
-   "comparable": "no",
-   "reason_code": "merged_into_current",
-   "reason": "이전 부산 남구갑 + 부산 남구을 통합",
+   "comparable": "yes",
+   "reason_code": "reaggregated_from_dong",
+   "reason": "획정은 바뀌었지만 21대 표를 읍면동 단위로 22대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%)",
    "overlap_current": 0.5405,
    "overlap_previous": 0.9999,
    "source_relation": "same_source",
@@ -2588,7 +2695,17 @@
      "of_current": 0.4567,
      "of_previous": 0.9998
     }
-   ]
+   ],
+   "reaggregation": {
+    "method": "reaggregated",
+    "quality": "limited",
+    "coverage": 0.9016,
+    "denominator": "동 귀속표 기준 (양 회차 동일)",
+    "validation_error_pp": 1.27,
+    "winner_agrees": true,
+    "source": "info.nec.go.kr VCCP08 투표구별 개표",
+    "fixture": "22__21_busan-nam"
+   }
   },
   {
    "district": "부산 동래구",
@@ -5069,5 +5186,9 @@
     }
    ]
   }
- ]
+ ],
+ "reaggregation_counts": {
+  "reaggregated": 6,
+  "context_only": 4
+ }
 }
