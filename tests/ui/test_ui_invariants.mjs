@@ -18,8 +18,12 @@ const only = (process.argv.find((a) => a.startsWith('--only=')) || '').split('='
 const pages = only ? PAGES.filter((p) => p.id === only) : PAGES;
 
 let pass = 0; const fails = [];
+// **실패 줄만 봐도 어느 페이지인지 알아야 한다.** 페이지 헤더는 위쪽에 한 번 찍히는데,
+// gate는 로그 끝 몇 줄만 남겨서 그 헤더가 잘려 나간다 — 실제로 어느 화면에서 난
+// 콘솔 에러인지 못 찾았다. 요약에는 페이지 id를 붙인다.
+let curPage = '';
 const ck = (name, cond, detail) => {
-  if (cond) { pass++; } else { fails.push(`${name}${detail ? ' — ' + detail : ''}`); }
+  if (cond) { pass++; } else { fails.push(`[${curPage}] ${name}${detail ? ' — ' + detail : ''}`); }
   console.log(`  ${cond ? '✓' : '✗'} ${name}${cond || !detail ? '' : ' — ' + detail}`);
 };
 
@@ -30,6 +34,7 @@ const srv = await serve(ROOT, 8099);
 const browser = await chromium.launch();
 
 for (const spec of pages) {
+  curPage = spec.id;
   console.log(`\n[${spec.id}] ${spec.url}  (${spec.why})`);
   for (const vp of VIEWPORTS) {
     const ctx = await browser.newContext({
