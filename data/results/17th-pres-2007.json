@@ -1,1443 +1,1443 @@
 {
-  "_meta": {
-    "election": "제17대 대통령선거",
-    "election_id": "17th-pres-2007",
-    "election_date": "2007-12-19",
-    "fetched_at": "2026-06-04T00:44:56+09:00",
-    "is_final": true,
-    "n_calls": 17,
-    "n_rows": 265,
-    "chunked": true,
-    "sigungu_file": "sigungu"
-  },
-  "races": [
+ "_meta": {
+  "election": "제17대 대통령선거",
+  "election_id": "17th-pres-2007",
+  "election_date": "2007-12-19",
+  "fetched_at": "2026-06-04T00:44:56+09:00",
+  "is_final": true,
+  "n_calls": 17,
+  "n_rows": 265,
+  "chunked": true,
+  "sigungu_file": "sigungu"
+ },
+ "races": [
+  {
+   "sg_typecode": "1",
+   "sido": "",
+   "sigungu": "",
+   "scope": "nation",
+   "electors": 37653518,
+   "voters": 23732854,
+   "valid_votes": 23612880,
+   "invalid_votes": 119974,
+   "abstain": 13920664,
+   "candidates": [
     {
-      "sg_typecode": "1",
-      "sido": "",
-      "sigungu": "",
-      "scope": "nation",
-      "electors": 37653518,
-      "voters": 23732854,
-      "valid_votes": 23612880,
-      "invalid_votes": 119974,
-      "abstain": 13920664,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 11492389,
-          "pct": 48.67,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 6174681,
-          "pct": 26.15,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 3559963,
-          "pct": 15.08,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 1375498,
-          "pct": 5.83,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 712121,
-          "pct": 3.02,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 160708,
-          "pct": 0.68,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 96756,
-          "pct": 0.41,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 18223,
-          "pct": 0.08,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 15380,
-          "pct": 0.07,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 7161,
-          "pct": 0.03,
-          "rank": 10
-        }
-      ]
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 11492389,
+     "pct": 48.67,
+     "rank": 1,
+     "won": true
     },
     {
-      "sg_typecode": "1",
-      "sido": "서울특별시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 8051696,
-      "voters": 5066022,
-      "valid_votes": 5051369,
-      "invalid_votes": 14653,
-      "abstain": 2985674,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 2689162,
-          "pct": 53.24,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 1237812,
-          "pct": 24.5,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 596226,
-          "pct": 11.8,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 358781,
-          "pct": 7.1,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 116344,
-          "pct": 2.3,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 23214,
-          "pct": 0.46,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 22405,
-          "pct": 0.44,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 3501,
-          "pct": 0.07,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 3013,
-          "pct": 0.06,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 911,
-          "pct": 0.02,
-          "rank": 10
-        }
-      ]
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 6174681,
+     "pct": 26.15,
+     "rank": 2
     },
     {
-      "sg_typecode": "1",
-      "sido": "부산광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 2843063,
-      "voters": 1765231,
-      "valid_votes": 1759252,
-      "invalid_votes": 5979,
-      "abstain": 1077832,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 1018715,
-          "pct": 57.91,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 346319,
-          "pct": 19.69,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 236708,
-          "pct": 13.46,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 94285,
-          "pct": 5.36,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 48901,
-          "pct": 2.78,
-          "rank": 5
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 7351,
-          "pct": 0.42,
-          "rank": 6
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 4599,
-          "pct": 0.26,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 1198,
-          "pct": 0.07,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 770,
-          "pct": 0.04,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 406,
-          "pct": 0.02,
-          "rank": 10
-        }
-      ]
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 3559963,
+     "pct": 15.08,
+     "rank": 3
     },
     {
-      "sg_typecode": "1",
-      "sido": "대구광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1896866,
-      "voters": 1267969,
-      "valid_votes": 1263678,
-      "invalid_votes": 4291,
-      "abstain": 628897,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 876719,
-          "pct": 69.38,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 228199,
-          "pct": 18.06,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 75932,
-          "pct": 6.01,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 50514,
-          "pct": 4.0,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 25777,
-          "pct": 2.04,
-          "rank": 5
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 3375,
-          "pct": 0.27,
-          "rank": 6
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 1847,
-          "pct": 0.15,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 727,
-          "pct": 0.06,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 367,
-          "pct": 0.03,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 221,
-          "pct": 0.02,
-          "rank": 10
-        }
-      ]
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 1375498,
+     "pct": 5.83,
+     "rank": 4
     },
     {
-      "sg_typecode": "1",
-      "sido": "인천광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 2005874,
-      "voters": 1210220,
-      "valid_votes": 1205357,
-      "invalid_votes": 4863,
-      "abstain": 795654,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 593283,
-          "pct": 49.22,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 286565,
-          "pct": 23.77,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 183057,
-          "pct": 15.19,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 84814,
-          "pct": 7.04,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 42069,
-          "pct": 3.49,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 7612,
-          "pct": 0.63,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 5769,
-          "pct": 0.48,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 1068,
-          "pct": 0.09,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 797,
-          "pct": 0.07,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 323,
-          "pct": 0.03,
-          "rank": 10
-        }
-      ]
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 712121,
+     "pct": 3.02,
+     "rank": 5
     },
     {
-      "sg_typecode": "1",
-      "sido": "광주광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1031333,
-      "voters": 663338,
-      "valid_votes": 661552,
-      "invalid_votes": 1786,
-      "abstain": 367995,
-      "candidates": [
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 527588,
-          "pct": 79.75,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 56875,
-          "pct": 8.6,
-          "rank": 2
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 31524,
-          "pct": 4.77,
-          "rank": 3
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 22520,
-          "pct": 3.4,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 13597,
-          "pct": 2.06,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 7118,
-          "pct": 1.08,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 1547,
-          "pct": 0.23,
-          "rank": 7
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 398,
-          "pct": 0.06,
-          "rank": 8
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 289,
-          "pct": 0.04,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 96,
-          "pct": 0.01,
-          "rank": 10
-        }
-      ]
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 160708,
+     "pct": 0.68,
+     "rank": 6
     },
     {
-      "sg_typecode": "1",
-      "sido": "대전광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1098977,
-      "voters": 680264,
-      "valid_votes": 677948,
-      "invalid_votes": 2316,
-      "abstain": 418713,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 246008,
-          "pct": 36.29,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 195957,
-          "pct": 28.9,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 159700,
-          "pct": 23.56,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 48143,
-          "pct": 7.1,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 17207,
-          "pct": 2.54,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 7223,
-          "pct": 1.07,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 2356,
-          "pct": 0.35,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 683,
-          "pct": 0.1,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 467,
-          "pct": 0.07,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 204,
-          "pct": 0.03,
-          "rank": 10
-        }
-      ]
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 96756,
+     "pct": 0.41,
+     "rank": 7
     },
     {
-      "sg_typecode": "1",
-      "sido": "울산광역시",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 806423,
-      "voters": 521216,
-      "valid_votes": 518586,
-      "invalid_votes": 2630,
-      "abstain": 285207,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 279891,
-          "pct": 53.97,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 90905,
-          "pct": 17.53,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 70736,
-          "pct": 13.64,
-          "rank": 3
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 43607,
-          "pct": 8.41,
-          "rank": 4
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 28605,
-          "pct": 5.52,
-          "rank": 5
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 2099,
-          "pct": 0.4,
-          "rank": 6
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 1884,
-          "pct": 0.36,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 467,
-          "pct": 0.09,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 271,
-          "pct": 0.05,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 121,
-          "pct": 0.02,
-          "rank": 10
-        }
-      ]
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 18223,
+     "pct": 0.08,
+     "rank": 8
     },
     {
-      "sg_typecode": "1",
-      "sido": "경기도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 8222124,
-      "voters": 5035641,
-      "valid_votes": 5017407,
-      "invalid_votes": 18234,
-      "abstain": 3186483,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 2603443,
-          "pct": 51.89,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 1181936,
-          "pct": 23.56,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 670742,
-          "pct": 13.37,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 354492,
-          "pct": 7.07,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 144830,
-          "pct": 2.89,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 30513,
-          "pct": 0.61,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 23554,
-          "pct": 0.47,
-          "rank": 7
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 3378,
-          "pct": 0.07,
-          "rank": 8
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 3207,
-          "pct": 0.06,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 1312,
-          "pct": 0.03,
-          "rank": 10
-        }
-      ]
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 15380,
+     "pct": 0.07,
+     "rank": 9
     },
     {
-      "sg_typecode": "1",
-      "sido": "충청북도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1146102,
-      "voters": 702593,
-      "valid_votes": 696096,
-      "invalid_votes": 6497,
-      "abstain": 443509,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 289499,
-          "pct": 41.59,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 165637,
-          "pct": 23.8,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 162750,
-          "pct": 23.38,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 39884,
-          "pct": 5.73,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 25285,
-          "pct": 3.63,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 7965,
-          "pct": 1.14,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 3435,
-          "pct": 0.49,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 759,
-          "pct": 0.11,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 561,
-          "pct": 0.08,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 321,
-          "pct": 0.05,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "충청남도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1532751,
-      "voters": 924039,
-      "valid_votes": 915505,
-      "invalid_votes": 8534,
-      "abstain": 608712,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 313693,
-          "pct": 34.26,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 304259,
-          "pct": 33.23,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 192999,
-          "pct": 21.08,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 43383,
-          "pct": 4.74,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 32132,
-          "pct": 3.51,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 22592,
-          "pct": 2.47,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 3814,
-          "pct": 0.42,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 1131,
-          "pct": 0.12,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 934,
-          "pct": 0.1,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 568,
-          "pct": 0.06,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "전라남도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1500831,
-      "voters": 971461,
-      "valid_votes": 962851,
-      "invalid_votes": 8610,
-      "abstain": 529370,
-      "candidates": [
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 757309,
-          "pct": 78.65,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 88834,
-          "pct": 9.23,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 34790,
-          "pct": 3.61,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 31289,
-          "pct": 3.25,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 23178,
-          "pct": 2.41,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 23074,
-          "pct": 2.4,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 2179,
-          "pct": 0.23,
-          "rank": 7
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 938,
-          "pct": 0.1,
-          "rank": 8
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 743,
-          "pct": 0.08,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 517,
-          "pct": 0.05,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "경상북도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 2097394,
-      "voters": 1437209,
-      "valid_votes": 1424472,
-      "invalid_votes": 12737,
-      "abstain": 660185,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 1033957,
-          "pct": 72.59,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 195526,
-          "pct": 13.73,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 96822,
-          "pct": 6.8,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 47345,
-          "pct": 3.32,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 39327,
-          "pct": 2.76,
-          "rank": 5
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 4696,
-          "pct": 0.33,
-          "rank": 6
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 3823,
-          "pct": 0.27,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 1458,
-          "pct": 0.1,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 819,
-          "pct": 0.06,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 699,
-          "pct": 0.05,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "경상남도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 2416351,
-      "voters": 1549070,
-      "valid_votes": 1533330,
-      "invalid_votes": 15740,
-      "abstain": 867281,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 843662,
-          "pct": 55.02,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 329486,
-          "pct": 21.49,
-          "rank": 2
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 189463,
-          "pct": 12.36,
-          "rank": 3
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 82645,
-          "pct": 5.39,
-          "rank": 4
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 73893,
-          "pct": 4.82,
-          "rank": 5
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 6063,
-          "pct": 0.4,
-          "rank": 6
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 4935,
-          "pct": 0.32,
-          "rank": 7
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 1310,
-          "pct": 0.09,
-          "rank": 8
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 1261,
-          "pct": 0.08,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 612,
-          "pct": 0.04,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "강원도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1164655,
-      "voters": 728895,
-      "valid_votes": 723503,
-      "invalid_votes": 5392,
-      "abstain": 435760,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 376004,
-          "pct": 51.97,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 136668,
-          "pct": 18.89,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 127102,
-          "pct": 17.57,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 42552,
-          "pct": 5.88,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 28129,
-          "pct": 3.89,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 6085,
-          "pct": 0.84,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 5063,
-          "pct": 0.7,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 849,
-          "pct": 0.12,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 615,
-          "pct": 0.09,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 436,
-          "pct": 0.06,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "전라북도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 1425056,
-      "voters": 957575,
-      "valid_votes": 952452,
-      "invalid_votes": 5123,
-      "abstain": 467481,
-      "candidates": [
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 777236,
-          "pct": 81.6,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 86149,
-          "pct": 9.04,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 34630,
-          "pct": 3.64,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 26573,
-          "pct": 2.79,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 18139,
-          "pct": 1.9,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 6550,
-          "pct": 0.69,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 1777,
-          "pct": 0.19,
-          "rank": 7
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 590,
-          "pct": 0.06,
-          "rank": 8
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 538,
-          "pct": 0.06,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 270,
-          "pct": 0.03,
-          "rank": 10
-        }
-      ]
-    },
-    {
-      "sg_typecode": "1",
-      "sido": "제주특별자치도",
-      "sigungu": "",
-      "scope": "sido",
-      "electors": 414022,
-      "voters": 252111,
-      "valid_votes": 249522,
-      "invalid_votes": 2589,
-      "abstain": 161911,
-      "candidates": [
-        {
-          "name": "이명박",
-          "party": "한나라당",
-          "votes": 96495,
-          "pct": 38.67,
-          "rank": 1,
-          "won": true
-        },
-        {
-          "name": "정동영",
-          "party": "대통합민주신당",
-          "votes": 81570,
-          "pct": 32.69,
-          "rank": 2
-        },
-        {
-          "name": "이회창",
-          "party": "무소속",
-          "votes": 37495,
-          "pct": 15.03,
-          "rank": 3
-        },
-        {
-          "name": "문국현",
-          "party": "창조한국당",
-          "votes": 19421,
-          "pct": 7.78,
-          "rank": 4
-        },
-        {
-          "name": "권영길",
-          "party": "민주노동당",
-          "votes": 10954,
-          "pct": 4.39,
-          "rank": 5
-        },
-        {
-          "name": "이인제",
-          "party": "민주당(2005)",
-          "votes": 1674,
-          "pct": 0.67,
-          "rank": 6
-        },
-        {
-          "name": "허경영",
-          "party": "경제공화당",
-          "votes": 1273,
-          "pct": 0.51,
-          "rank": 7
-        },
-        {
-          "name": "금민",
-          "party": "한국사회당",
-          "votes": 344,
-          "pct": 0.14,
-          "rank": 8
-        },
-        {
-          "name": "정근모",
-          "party": "참주인연합",
-          "votes": 152,
-          "pct": 0.06,
-          "rank": 9
-        },
-        {
-          "name": "전관",
-          "party": "새시대참사람연합",
-          "votes": 144,
-          "pct": 0.06,
-          "rank": 10
-        }
-      ]
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 7161,
+     "pct": 0.03,
+     "rank": 10
     }
-  ]
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "서울특별시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 8051696,
+   "voters": 5066022,
+   "valid_votes": 5051369,
+   "invalid_votes": 14653,
+   "abstain": 2985674,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 2689162,
+     "pct": 53.24,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 1237812,
+     "pct": 24.5,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 596226,
+     "pct": 11.8,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 358781,
+     "pct": 7.1,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 116344,
+     "pct": 2.3,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 23214,
+     "pct": 0.46,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 22405,
+     "pct": 0.44,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 3501,
+     "pct": 0.07,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 3013,
+     "pct": 0.06,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 911,
+     "pct": 0.02,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "부산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2843063,
+   "voters": 1765231,
+   "valid_votes": 1759252,
+   "invalid_votes": 5979,
+   "abstain": 1077832,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 1018715,
+     "pct": 57.91,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 346319,
+     "pct": 19.69,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 236708,
+     "pct": 13.46,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 94285,
+     "pct": 5.36,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 48901,
+     "pct": 2.78,
+     "rank": 5
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 7351,
+     "pct": 0.42,
+     "rank": 6
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 4599,
+     "pct": 0.26,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 1198,
+     "pct": 0.07,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 770,
+     "pct": 0.04,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 406,
+     "pct": 0.02,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대구광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1896866,
+   "voters": 1267969,
+   "valid_votes": 1263678,
+   "invalid_votes": 4291,
+   "abstain": 628897,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 876719,
+     "pct": 69.38,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 228199,
+     "pct": 18.06,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 75932,
+     "pct": 6.01,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 50514,
+     "pct": 4.0,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 25777,
+     "pct": 2.04,
+     "rank": 5
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 3375,
+     "pct": 0.27,
+     "rank": 6
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 1847,
+     "pct": 0.15,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 727,
+     "pct": 0.06,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 367,
+     "pct": 0.03,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 221,
+     "pct": 0.02,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "인천광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2005874,
+   "voters": 1210220,
+   "valid_votes": 1205357,
+   "invalid_votes": 4863,
+   "abstain": 795654,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 593283,
+     "pct": 49.22,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 286565,
+     "pct": 23.77,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 183057,
+     "pct": 15.19,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 84814,
+     "pct": 7.04,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 42069,
+     "pct": 3.49,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 7612,
+     "pct": 0.63,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 5769,
+     "pct": 0.48,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 1068,
+     "pct": 0.09,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 797,
+     "pct": 0.07,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 323,
+     "pct": 0.03,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "광주광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1031333,
+   "voters": 663338,
+   "valid_votes": 661552,
+   "invalid_votes": 1786,
+   "abstain": 367995,
+   "candidates": [
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 527588,
+     "pct": 79.75,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 56875,
+     "pct": 8.6,
+     "rank": 2
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 31524,
+     "pct": 4.77,
+     "rank": 3
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 22520,
+     "pct": 3.4,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 13597,
+     "pct": 2.06,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 7118,
+     "pct": 1.08,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 1547,
+     "pct": 0.23,
+     "rank": 7
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 398,
+     "pct": 0.06,
+     "rank": 8
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 289,
+     "pct": 0.04,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 96,
+     "pct": 0.01,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "대전광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1098977,
+   "voters": 680264,
+   "valid_votes": 677948,
+   "invalid_votes": 2316,
+   "abstain": 418713,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 246008,
+     "pct": 36.29,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 195957,
+     "pct": 28.9,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 159700,
+     "pct": 23.56,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 48143,
+     "pct": 7.1,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 17207,
+     "pct": 2.54,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 7223,
+     "pct": 1.07,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 2356,
+     "pct": 0.35,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 683,
+     "pct": 0.1,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 467,
+     "pct": 0.07,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 204,
+     "pct": 0.03,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "울산광역시",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 806423,
+   "voters": 521216,
+   "valid_votes": 518586,
+   "invalid_votes": 2630,
+   "abstain": 285207,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 279891,
+     "pct": 53.97,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 90905,
+     "pct": 17.53,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 70736,
+     "pct": 13.64,
+     "rank": 3
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 43607,
+     "pct": 8.41,
+     "rank": 4
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 28605,
+     "pct": 5.52,
+     "rank": 5
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 2099,
+     "pct": 0.4,
+     "rank": 6
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 1884,
+     "pct": 0.36,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 467,
+     "pct": 0.09,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 271,
+     "pct": 0.05,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 121,
+     "pct": 0.02,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경기도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 8222124,
+   "voters": 5035641,
+   "valid_votes": 5017407,
+   "invalid_votes": 18234,
+   "abstain": 3186483,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 2603443,
+     "pct": 51.89,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 1181936,
+     "pct": 23.56,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 670742,
+     "pct": 13.37,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 354492,
+     "pct": 7.07,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 144830,
+     "pct": 2.89,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 30513,
+     "pct": 0.61,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 23554,
+     "pct": 0.47,
+     "rank": 7
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 3378,
+     "pct": 0.07,
+     "rank": 8
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 3207,
+     "pct": 0.06,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 1312,
+     "pct": 0.03,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1146102,
+   "voters": 702593,
+   "valid_votes": 696096,
+   "invalid_votes": 6497,
+   "abstain": 443509,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 289499,
+     "pct": 41.59,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 165637,
+     "pct": 23.8,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 162750,
+     "pct": 23.38,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 39884,
+     "pct": 5.73,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 25285,
+     "pct": 3.63,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 7965,
+     "pct": 1.14,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 3435,
+     "pct": 0.49,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 759,
+     "pct": 0.11,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 561,
+     "pct": 0.08,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 321,
+     "pct": 0.05,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "충청남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1532751,
+   "voters": 924039,
+   "valid_votes": 915505,
+   "invalid_votes": 8534,
+   "abstain": 608712,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 313693,
+     "pct": 34.26,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 304259,
+     "pct": 33.23,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 192999,
+     "pct": 21.08,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 43383,
+     "pct": 4.74,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 32132,
+     "pct": 3.51,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 22592,
+     "pct": 2.47,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 3814,
+     "pct": 0.42,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 1131,
+     "pct": 0.12,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 934,
+     "pct": 0.1,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 568,
+     "pct": 0.06,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1500831,
+   "voters": 971461,
+   "valid_votes": 962851,
+   "invalid_votes": 8610,
+   "abstain": 529370,
+   "candidates": [
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 757309,
+     "pct": 78.65,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 88834,
+     "pct": 9.23,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 34790,
+     "pct": 3.61,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 31289,
+     "pct": 3.25,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 23178,
+     "pct": 2.41,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 23074,
+     "pct": 2.4,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 2179,
+     "pct": 0.23,
+     "rank": 7
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 938,
+     "pct": 0.1,
+     "rank": 8
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 743,
+     "pct": 0.08,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 517,
+     "pct": 0.05,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2097394,
+   "voters": 1437209,
+   "valid_votes": 1424472,
+   "invalid_votes": 12737,
+   "abstain": 660185,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 1033957,
+     "pct": 72.59,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 195526,
+     "pct": 13.73,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 96822,
+     "pct": 6.8,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 47345,
+     "pct": 3.32,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 39327,
+     "pct": 2.76,
+     "rank": 5
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 4696,
+     "pct": 0.33,
+     "rank": 6
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 3823,
+     "pct": 0.27,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 1458,
+     "pct": 0.1,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 819,
+     "pct": 0.06,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 699,
+     "pct": 0.05,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "경상남도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 2416351,
+   "voters": 1549070,
+   "valid_votes": 1533330,
+   "invalid_votes": 15740,
+   "abstain": 867281,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 843662,
+     "pct": 55.02,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 329486,
+     "pct": 21.49,
+     "rank": 2
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 189463,
+     "pct": 12.36,
+     "rank": 3
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 82645,
+     "pct": 5.39,
+     "rank": 4
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 73893,
+     "pct": 4.82,
+     "rank": 5
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 6063,
+     "pct": 0.4,
+     "rank": 6
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 4935,
+     "pct": 0.32,
+     "rank": 7
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 1310,
+     "pct": 0.09,
+     "rank": 8
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 1261,
+     "pct": 0.08,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 612,
+     "pct": 0.04,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "강원도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1164655,
+   "voters": 728895,
+   "valid_votes": 723503,
+   "invalid_votes": 5392,
+   "abstain": 435760,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 376004,
+     "pct": 51.97,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 136668,
+     "pct": 18.89,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 127102,
+     "pct": 17.57,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 42552,
+     "pct": 5.88,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 28129,
+     "pct": 3.89,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 6085,
+     "pct": 0.84,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 5063,
+     "pct": 0.7,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 849,
+     "pct": 0.12,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 615,
+     "pct": 0.09,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 436,
+     "pct": 0.06,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "전라북도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 1425056,
+   "voters": 957575,
+   "valid_votes": 952452,
+   "invalid_votes": 5123,
+   "abstain": 467481,
+   "candidates": [
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 777236,
+     "pct": 81.6,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 86149,
+     "pct": 9.04,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 34630,
+     "pct": 3.64,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 26573,
+     "pct": 2.79,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 18139,
+     "pct": 1.9,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 6550,
+     "pct": 0.69,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 1777,
+     "pct": 0.19,
+     "rank": 7
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 590,
+     "pct": 0.06,
+     "rank": 8
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 538,
+     "pct": 0.06,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 270,
+     "pct": 0.03,
+     "rank": 10
+    }
+   ]
+  },
+  {
+   "sg_typecode": "1",
+   "sido": "제주특별자치도",
+   "sigungu": "",
+   "scope": "sido",
+   "electors": 414022,
+   "voters": 252111,
+   "valid_votes": 249522,
+   "invalid_votes": 2589,
+   "abstain": 161911,
+   "candidates": [
+    {
+     "name": "이명박",
+     "party": "한나라당",
+     "votes": 96495,
+     "pct": 38.67,
+     "rank": 1,
+     "won": true
+    },
+    {
+     "name": "정동영",
+     "party": "대통합민주신당",
+     "votes": 81570,
+     "pct": 32.69,
+     "rank": 2
+    },
+    {
+     "name": "이회창",
+     "party": "무소속",
+     "votes": 37495,
+     "pct": 15.03,
+     "rank": 3
+    },
+    {
+     "name": "문국현",
+     "party": "창조한국당",
+     "votes": 19421,
+     "pct": 7.78,
+     "rank": 4
+    },
+    {
+     "name": "권영길",
+     "party": "민주노동당",
+     "votes": 10954,
+     "pct": 4.39,
+     "rank": 5
+    },
+    {
+     "name": "이인제",
+     "party": "민주당",
+     "votes": 1674,
+     "pct": 0.67,
+     "rank": 6
+    },
+    {
+     "name": "허경영",
+     "party": "경제공화당",
+     "votes": 1273,
+     "pct": 0.51,
+     "rank": 7
+    },
+    {
+     "name": "금민",
+     "party": "한국사회당",
+     "votes": 344,
+     "pct": 0.14,
+     "rank": 8
+    },
+    {
+     "name": "정근모",
+     "party": "참주인연합",
+     "votes": 152,
+     "pct": 0.06,
+     "rank": 9
+    },
+    {
+     "name": "전관",
+     "party": "새시대참사람연합",
+     "votes": 144,
+     "pct": 0.06,
+     "rank": 10
+    }
+   ]
+  }
+ ]
 }

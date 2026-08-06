@@ -188,5 +188,27 @@ if _leak:
     for x in _leak:
         print(f"    · {x}")
 
+# ⑤ 원자료에 **우리 표기**가 들어가지 않았는가
+#
+# registry 캐노니컬 이름은 우리가 만든 것이다. NEC는 '민주당(1955)' 같은 이름을 주지
+# 않는다. 그게 data/results에 있다면 정규화가 원자료를 덮어썼다는 뜻이고, 실제로
+# 4,796행이 그랬다(f87861d37). 덮어쓰면 두 가지를 잃는다:
+#   · 나중에 시기 경계를 고쳐도 저장된 값은 안 따라온다 (2013 재보궐이 그래서 틀려 있었다)
+#   · 서로 다른 정당이 한 이름으로 합쳐지면 되돌릴 수 없다 (2016 민주당)
+# 시기 분기는 **읽는 시점에** 한다. 원자료는 NEC가 준 그대로 둔다.
+import re as _re  # noqa: E402
+
+_ours = []
+for _fp in sorted(_RES.glob("*.json")):
+    try:
+        _doc = json.loads(_fp.read_text(encoding="utf-8"))
+    except Exception:                                            # noqa: BLE001
+        continue
+    for _r in _doc.get("races") or []:
+        for _c in _r.get("candidates") or []:
+            if _re.search(r"\(\d{4}\)$", _c.get("party") or ""):
+                _ours.append(f'{_fp.name}:{_c["party"]}')
+ck(f"원자료에 캐노니컬 표기가 없다 ({len(_ours)}건)", not _ours, str(_ours[:3]))
+
 print(f"\n[관측 정당 층] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)
