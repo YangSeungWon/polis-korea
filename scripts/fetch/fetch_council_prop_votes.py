@@ -63,6 +63,11 @@ CITY_CODES = {
 }
 
 
+def _today() -> str:
+    from datetime import date
+    return date.today().isoformat()
+
+
 def alias_map():
     reg = json.loads((ROOT / "data/parties/registry.json").read_text()).get("parties", {})
     m = {}
@@ -177,6 +182,20 @@ def _api_key() -> str:
     return ""
 
 
+def uncon_keys(sido: str, sgg: str) -> set:
+    """(시도, 시군구) → 대조용 키 집합. **API 행과 내부 행이 같은 함수를 거친다.**
+    한쪽만 정규화하면 '강원특별자치도' 행이 '강원도' 키와 안 맞아 통째로 놓친다."""
+    sd = _SIDO_EQ.get(sido, sido)
+    out = {(sd, sgg), (sd, _SGG_ALIAS.get(sgg, sgg))}
+    if sgg in _SIDO_FREE:
+        out.add(("*", sgg))              # 시도가 바뀐 곳은 이름만으로 (동명 없을 때만)
+    return out
+
+
+def is_uncontested(row: dict, uncon: set) -> bool:
+    return bool(uncon_keys(row.get("sido") or "", row.get("sigungu") or "") & uncon)
+
+
 def fetch_uncontested(sg_id: str) -> set:
     """무투표 당선된 (시도, 시군구). **응답이 {"response": {...}}로 한 겹 더 싸여 있다** —
     그걸 놓치면 body가 None이라 API가 죽은 줄 알게 된다(실제로 그랬다)."""
@@ -211,12 +230,7 @@ def fetch_uncontested(sg_id: str) -> set:
         if isinstance(it, dict):
             it = [it]
         for i in it:
-            sd = _SIDO_EQ.get(i.get("sdName"), i.get("sdName"))
-            sg = i.get("sggName")
-            out.add((sd, sg))
-            out.add((sd, _SGG_ALIAS.get(sg, sg)))
-            if sg in _SIDO_FREE:
-                out.add(("*", sg))
+            out |= uncon_keys(i.get("sdName") or "", i.get("sggName") or "")
         if len(it) < 20:
             break
         page += 1
@@ -299,16 +313,24 @@ def backfill(n, dry):
     for r in rows:
         if any(c.get("party") and (c.get("votes") or 0) > 0 for c in (r.get("candidates") or [])):
             continue
-        sd = _SIDO_EQ.get(r.get("sido"), r.get("sido"))
-        sg = r.get("sigungu")
-        if ((sd, sg) in uncon or (sd, _SGG_ALIAS.get(sg, sg)) in uncon
-                or ("*", sg) in uncon):
+        if is_uncontested(r, uncon):
             r["uncontested"] = True
             r.pop("votes_pending", None)
+            r.pop("unknown_reason", None)
+            r.pop("checked_sources", None)
             for c in r.get("candidates") or []:
                 if c.get("seats"):
                     c["uncontested"] = True
             marked += 1
+        else:
+            # 원인을 못 찾은 것도 **찾아본 흔적을 남긴다** — 다음에 같은 조사를 반복하지
+            # 않게. 결손을 조용히 두는 것과 '어디를 봤는데 없더라'는 다르다.
+            r["unknown_reason"] = "개표현황·무투표 명부 어디에도 없음"
+            r["checked_sources"] = [
+                f"info.nec.go.kr VCCP09 electionCode=9 (sgId={sg_id})",
+                f"data.go.kr WtvtelpcInfoInqireService sgTypecode=9 (sgId={sg_id})",
+            ]
+            r["last_verified"] = _today()
 
     after = sum(1 for r in rows
                 if any(c.get("party") and (c.get("votes") or 0) > 0 for c in (r.get("candidates") or [])))

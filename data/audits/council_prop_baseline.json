@@ -1,0 +1,49 @@
+{
+ "_note": "기초의원 비례(tc9) 시군구 커버리지 기준선. **숫자를 고정하려는 게 아니라 급감을 잡으려는 것**이다 — API 페이지 하나가 조용히 실패해 무투표 판정이 61→12로 줄었을 때 단순 assertion으로는 안 잡혔다.",
+ "_rule": "직전 기준선 대비 uncontested가 50% 이상 줄면 gate 실패. 늘어나는 것은 정상(회수).",
+ "_updated": "2026-08-06",
+ "rounds": {
+  "4": {
+   "file": "4th-local-2006.sigungu.json",
+   "rows": 230,
+   "with_votes": 199,
+   "uncontested": 31,
+   "unknown": 0
+  },
+  "5": {
+   "file": "5th-local-2010.sigungu.json",
+   "rows": 230,
+   "with_votes": 174,
+   "uncontested": 54,
+   "unknown": 2
+  },
+  "6": {
+   "file": "6th-local-2014.sigungu.json",
+   "rows": 227,
+   "with_votes": 162,
+   "uncontested": 65,
+   "unknown": 0
+  },
+  "7": {
+   "file": "7th-local-2018.sigungu.json",
+   "rows": 226,
+   "with_votes": 198,
+   "uncontested": 28,
+   "unknown": 0
+  },
+  "8": {
+   "file": "8th-local-2022.sigungu.json",
+   "rows": 226,
+   "with_votes": 164,
+   "uncontested": 62,
+   "unknown": 0
+  },
+  "9": {
+   "file": "9th-local-2026.json",
+   "rows": 227,
+   "with_votes": 169,
+   "uncontested": 58,
+   "unknown": 0
+  }
+ }
+}
