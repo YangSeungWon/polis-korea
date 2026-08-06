@@ -100,7 +100,11 @@ def block() -> str:
         rows.append(
             f'<div class="tk-sum-item"><div class="tk-sum-label">{who}국정수행 긍정</div>'
             f'<div class="tk-sum-value">{ap["positive"]}%</div>'
-            f'<div class="tk-sum-sub">부정 {ap["negative"]}% · 최근 {ap["n"]}개 조사 평균 '
+            # **산출방식이 값과 같은 자리에 있어야 한다.** 숫자만 떼어 보면(스니펫·공유)
+            # 'polis의 자체 집계' 또는 '최신 단일 조사'로 읽힌다. 서로 다른 기관·기간·
+            # 방법론을 단순평균한 것 자체가 또 하나의 방법론이라 감출 수 없다.
+            f'<div class="tk-sum-sub">부정 {ap["negative"]}% · '
+            f'<b>최근 {ap["n"]}개 조사 단순평균</b> '
             f'· {esc(", ".join(ap["agencies"][:3]))}</div></div>')
     if pt and pt["parties"]:
         # 헤드라인이 1위를 이미 말했다 — 아래 줄에서 또 쓰면 같은 값이 두 번 나온다
@@ -117,9 +121,11 @@ def block() -> str:
            '    <div class="tk-sum-grid">']
     out += ["    " + r for r in rows]
     out += ['    </div>',
-            f'    <p class="tk-sum-meta">조사 기간 기준 {esc(as_of)}까지 · '
-            '값은 개별 조사이며 기관마다 차이가 있습니다(house effect). '
-            '아래 그래프에서 기관별 산포와 추세를 봅니다.</p>',
+            f'    <p class="tk-sum-meta">조사 기간 기준 {esc(as_of)}까지. '
+            f'국정수행 평가는 <b>최근 {ap["n"] if ap else RECENT_N}개 조사의 단순평균</b>이고 '
+            '정당 지지도는 <b>가장 최근 조사 하나</b>를 그대로 인용합니다 — '
+            'polis가 따로 보정하거나 가중하지 않습니다. '
+            '기관마다 값이 다르므로(house effect) 아래 그래프에서 산포와 추세를 봅니다.</p>',
             '  </section>',
             "  " + END]
     return "\n".join(out)
