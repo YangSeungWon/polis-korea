@@ -73,5 +73,47 @@ ck("큐 항목이 실제로 관측된 이름이다",
    str([x["name"] for x in hom["unresolved"]
         if x["name"] not in {r["name"] for r in rows}]))
 
+# ④ 이름을 재사용한 정당은 **시점으로 갈라져야 한다**
+#
+# disambiguate_party는 registry의 시기 노드 범위(founded~dissolved)로 가른다. 어느
+# 범위에도 안 걸리면 조용히 **베이스 이름 그대로** 남는데, 그게 최신 노드로 흘러든다.
+# 실제로 그랬다: 정의당(1967)의 dissolved가 1970으로 잘못 적혀 있어 1971년 7대 대선
+# 진복기(정의당) 122,914표가 2012년 심상정 정의당 몫으로 붙어 있었다.
+#
+# 그래서 '이름'이 아니라 **시점 경계**를 검사한다. 관측 구간이 그 이름의 시기 노드
+# 범위 안에 들어와야 한다.
+sys.path.insert(0, str(ROOT / "scripts/build"))
+from party_canon import _BASE_ERAS, _REUSED_BASES, disambiguate_party  # noqa: E402
+
+_by_name = {r["name"]: r for r in rows}
+_j = _by_name.get("정의당")
+ck("현대 정의당 관측이 2012-10 이후에서 시작한다",
+   bool(_j) and _j["first"][:7] >= "2012-10", _j and _j["first"])
+ck("1971년 정의당은 정의당(1967)로 간다",
+   disambiguate_party("정의당", "1971-04-27") == "정의당(1967)",
+   disambiguate_party("정의당", "1971-04-27"))
+ck("정의당(1967) 범위가 그 시절 관측을 덮는다",
+   bool(_by_name.get("정의당(1967)"))
+   and _by_name["정의당(1967)"]["last"][:7] <= (reg["정의당(1967)"].get("dissolved") or ""),
+   str(_by_name.get("정의당(1967)")))
+
+# 같은 구멍이 남은 이름들 — **막지는 않되 보이게 둔다.** 여기 있는 것은 시기 노드
+# 범위 밖 관측이 섞여 있다는 뜻이고, 정의당과 같은 방식(1차 자료로 경계 확인)으로
+# 하나씩 처리해야 한다. 수를 상한으로 막으면 발견이 억제된다.
+_leak = []
+for r in rows:
+    if r["name"] not in _REUSED_BASES:
+        continue
+    spans = [(f, d) for nm, f, d in _BASE_ERAS[r["name"]] if nm == r["name"]]
+    if not spans:
+        continue
+    f, d = spans[0]
+    if r["first"][:7] < f or r["last"][:7] > d:
+        _leak.append(f'{r["name"]}({r["first"][:7]}~{r["last"][:7]} vs {f}~{d})')
+if _leak:
+    print(f"\n  [다음 큐] 시기 노드 범위 밖 관측이 섞인 이름 {len(_leak)}종")
+    for x in _leak:
+        print(f"    · {x}")
+
 print(f"\n[관측 정당 층] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)
