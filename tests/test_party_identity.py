@@ -43,11 +43,34 @@ def main() -> int:
            f"{identity(a, da)} vs {identity(b, db)}")
         ck(f"{a}→{b} 전이 = same", policy(a, da, b, db) == "same", policy(a, da, b, db))
 
+    # ── 한시 당명 ──────────────────────────────────────────────────────────
+    # 같은 등록 정당이 한동안 다른 이름을 썼다가 되돌린 경우다. registry에서
+    # predecessors ∩ successors 가 자기 자신을 가리키는 모양(왕복)으로 나타난다.
+    #
+    # 이 유형은 **하나로 묶어서 검사한다.** 개별로 적으면 하나만 등록됐을 때
+    # 다른 하나가 조용히 다르게 동작해도 통과한다 — 실제로 녹색정의당이
+    # 미등록이라 '비교 불가'였고, 그건 판단이 아니라 registry 공백이었다.
+    print("\n[한시 당명] 같은 등록 정당이 이름만 잠깐 바꿨다")
+    TEMP = [("녹색정의당", G24, "2024.2 녹색당과 선거연합 · 2024.4 정의당 환원"),
+            ("민주노동당(2025)", "2025-06-01", "2025.5 변경 · 2025.7 정의당 환원")]
+    pols = set()
+    for nm, dt, why in TEMP:
+        ck(f"정의당 ≡ {nm} ({why})", identity("정의당", G20) == identity(nm, dt),
+           f'{identity("정의당", G20)} vs {identity(nm, dt)}')
+        pols.add(policy("정의당", G20, nm, dt))
+    # 두 사례가 갈리면 둘 중 하나는 registry 공백 때문에 그렇게 보이는 것이다
+    ck(f"한시 당명이 서로 같은 정책을 받는다 ({pols})", len(pols) == 1, str(pols))
+    # 다만 identity가 같다고 '표가 같은 선택지'는 아니다 — 선거연합이 섞여 있으면
+    # registry note가 그걸 말하고 있어야 한다(policy는 아직 이를 구분하지 못한다).
+    _reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
+    for nm, _dt, _why in TEMP:
+        ck(f"{nm}: 한시 당명이라는 사실이 registry에 적혀 있다",
+           "한시 당명" in (_reg.get(nm, {}).get("note") or ""))
+
     # ── 합당·분당은 잇지 않는다 ────────────────────────────────────────────
     print("\n[합당·분당] 표를 귀속시킬 근거가 없다")
     for a, b, why in [("더불어시민당", "더불어민주당", "위성정당 합당 — 유권자 선택 구조가 달랐다"),
-                      ("열린민주당", "더불어민주당", "합당"),
-                      ("정의당", "녹색정의당", "선거연합 성격 — registry에 관계 없음")]:
+                      ("열린민주당", "더불어민주당", "합당")]:
         ck(f"{a} ≢ {b} ({why})", identity(a, G20) != identity(b, G24),
            f"{identity(a, G20)} == {identity(b, G24)}")
         ck(f"{a}→{b} 전이가 same이 아니다", policy(a, G20, b, G24) != "same",
@@ -78,7 +101,14 @@ def main() -> int:
         ck(f"선거구 delta가 현실적 범위 (최대 {worst:.1f}%p < 60)", worst < 60, str(worst))
         ck("분모 규칙이 적혀 있다", "두 회차 모두" in d.get("swing_denominator", ""))
         ck("registry 공백이 드러난다", "unregistered_parties" in d)
-        ck("녹색정의당이 공백으로 잡힌다", "녹색정의당" in d["unregistered_parties"])
+        # 공백 목록은 **registry를 채우면 줄어야 한다.** 여기 이름을 하나 박아두면
+        # 그 이름을 해소한 순간 검사가 거짓이 된다(녹색정의당이 그랬다).
+        # 검사할 것은 특정 이름이 아니라 **목록이 registry와 어긋나지 않는가**다.
+        ck("공백 목록이 여전히 드러난다 (0이 되면 그것도 의심스럽다)",
+           bool(d["unregistered_parties"]))
+        ck("registry에 있는 이름은 공백 목록에 없다",
+           not [p for p in d["unregistered_parties"] if p in _reg],
+           str([p for p in d["unregistered_parties"] if p in _reg][:3]))
 
     # ── 비교 코드에 raw 문자열 비교가 남아 있지 않은가 ──────────────────────
     print("\n[전수] 비교 코드가 resolver를 우회하지 않는가")
