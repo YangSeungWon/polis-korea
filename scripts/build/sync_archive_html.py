@@ -58,6 +58,72 @@ def kday(date_str: str) -> str:
     return f"{date_str} ({DOW[date.fromordinal(date(y, m, d).toordinal()).weekday()]})"
 
 
+_SUM_CACHE: dict = {}
+
+
+def result_summary(meta: dict) -> str:
+    """결과 파일에서 히어로 한 줄 요약을 뽑는다. 종류마다 '무엇이 결과인가'가 다르다.
+
+        대선   1·2위 후보 득표율
+        총선   정당별 의석
+        지선   직위별 정당 곳수 (광역단체장·기초단체장)
+
+    없으면 빈 문자열 — 없는 숫자를 만들지 않는다.
+    """
+    eid = meta.get("id") or ""
+    if eid in _SUM_CACHE:
+        return _SUM_CACHE[eid]
+    rp = (meta.get("archive") or {}).get("results_path") or f"data/results/{eid}.json"
+    f = ROOT / rp
+    out = ""
+    try:
+        races = json.loads(f.read_text(encoding="utf-8")).get("races") or []
+    except Exception:                                            # noqa: BLE001
+        races = []
+    kind = meta.get("kind")
+    if kind == "presidential":
+        nat = next((r for r in races if r.get("scope") == "nation"
+                    and r.get("sg_typecode") == "1"), None)
+        cs = sorted((nat or {}).get("candidates") or [],
+                    key=lambda c: -(c.get("pct") or 0))[:2]
+        if cs and cs[0].get("pct") is not None:
+            out = " / ".join(f'{c.get("name")}({c.get("party")}) {c["pct"]:.2f}%'
+                             for c in cs if c.get("pct") is not None)
+    elif kind == "general_election":
+        seats: dict = {}
+        for r in races:
+            if r.get("scope") not in ("district", None):
+                continue
+            for c in r.get("candidates") or []:
+                if c.get("won") and c.get("party"):
+                    seats[c["party"]] = seats.get(c["party"], 0) + 1
+        for r in races:                       # 비례 의석 합산
+            for c in r.get("candidates") or []:
+                if (c.get("proportional_seats") or 0) and c.get("party"):
+                    seats[c["party"]] = seats.get(c["party"], 0) + c["proportional_seats"]
+        top = sorted(seats.items(), key=lambda kv: -kv[1])[:4]
+        if top:
+            out = " · ".join(f"{p} {n}석" for p, n in top)
+    elif kind == "local":
+        # 직위별로 1위 정당이 몇 곳인가. 지선은 '한 줄 결과'가 없어 두 직위를 함께 쓴다.
+        parts = []
+        for tc, label, scope in (("11", "광역단체장", "sido"), ("4", "기초단체장", "sigungu")):
+            won: dict = {}
+            for r in races:
+                if r.get("sg_typecode") != tc or r.get("scope") != scope:
+                    continue
+                cs = sorted(r.get("candidates") or [],
+                            key=lambda c: -(c.get("votes") or 0))
+                if cs and cs[0].get("party"):
+                    won[cs[0]["party"]] = won.get(cs[0]["party"], 0) + 1
+            top = sorted(won.items(), key=lambda kv: -kv[1])[:2]
+            if top:
+                parts.append(f"{label} " + " · ".join(f"{p} {n}곳" for p, n in top))
+        out = " / ".join(parts)
+    _SUM_CACHE[eid] = out
+    return out
+
+
 def derive(meta: dict) -> dict:
     """meta + archive 블록 → 템플릿에 박을 변수."""
     kind = meta["kind"]
@@ -65,7 +131,13 @@ def derive(meta: dict) -> dict:
     ar = meta["archive"]
     sg_id = meta.get("nec", {}).get("sg_id", "")
     gubun = meta.get("nesdc", {}).get("gubun", "")
-    context = ar.get("context_note", "")
+    # 히어로의 결과 요약. **손으로 적은 context_note가 우선**이고(편집 맥락이 들어 있다 —
+    # "윤석열 탄핵 인용 후 조기 대선" 같은 건 데이터에서 못 나온다), 없으면 결과에서 뽑는다.
+    #
+    # 이 자리가 비면 검색엔진이 보는 페이지에 **숫자가 하나도 없다**. scorecard는 JS가
+    # 채우고 기본값이 hidden이라, 크롤러에는 '—'만 남는다. 9회 지선처럼 최신·최다 검색
+    # 회차가 그랬다 — 손으로 적는 필드라 새 회차부터 비어 있었다(16회차).
+    context = ar.get("context_note", "") or result_summary(meta)
     date_label = kday(meta["date"])
     if context:
         date_label += f" · {context}"

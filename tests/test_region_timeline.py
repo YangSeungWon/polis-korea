@@ -158,9 +158,26 @@ def main() -> int:
            all(p.get("unit_name_at_the_time") and p.get("boundary_valid_at")
                for p in d["points"]))
 
+    # ── 직위 코드가 뒤바뀌지 않았는가 ─────────────────────────────────────
+    # 이름만 보고는 못 잡는다. **교육감은 정당 공천이 없다** — 그 series의 당선자에
+    # 정당이 붙어 있으면 다른 직위가 들어온 것이다. 실제로 3(광역단체장)과 11(교육감)을
+    # 뒤집어 놓아 포항 연표에 도지사(이철우·국민의힘)가 '교육감'으로 들어가 있었다.
+    for f in sorted((ROOT / "data/region_timeline").glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for pt in d["points"]:
+            sid, w = pt["comparison_series_id"], pt.get("winner") or {}
+            party = (w.get("party") or "").strip()
+            if sid == "local:education_superintendent":
+                ck(f"{d['region']} 교육감({pt['election_date']}) 당선자에 정당이 없다",
+                   not party, f"{w.get('name')} / {party}")
+            elif sid == "local:metro_mayor" and pt["election_date"] >= "1995-01-01":
+                ck(f"{d['region']} 광역단체장({pt['election_date']}) 당선자에 정당이 있다",
+                   bool(party), f"{w.get('name')} / {party}")
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
+

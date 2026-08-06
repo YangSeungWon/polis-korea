@@ -42,6 +42,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/build"))
 from party_canon import disambiguate_party  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts"))
+from _geo import TC_OFFICE  # noqa: E402  (직위 코드 단일 출처)
 sys.path.insert(0, str(ROOT / "scripts/normalize"))
 from reaggregate import dkey  # noqa: E402  (선거구 키는 '경기 하남시갑' — 시도 필수)
 
@@ -57,15 +59,18 @@ FAMILIES = ("conservative", "democratic", "progressive", "regional", "other")
 # 선거 종류 → 비교 series. 같은 지방선거라도 직위가 다르면 잇지 않는다.
 # NEC sg_typecode가 직위를 가른다. 같은 지방선거라도 시도지사와 시군구청장은
 # 다른 시계열이다 — 직위도 유권자 구성도 다르다.
-LOCAL_OFFICE = {
-    "11": "metro_mayor",            # 시도지사
-    "3": "education_superintendent",  # 교육감
-    "4": "municipal_mayor",         # 시군구청장
-    "5": "metro_council_district",  # 시도의원
-    "6": "municipal_council_district",  # 시군구의원
-    "8": "metro_council_pr",        # 시도의원 비례
-    "9": "municipal_council_pr",    # 시군구의원 비례
+# 직위 코드는 **손으로 다시 적지 않는다** — scripts/_geo.py의 TC_OFFICE가 정본이다
+# (assets/parties.js와 같은 표). 여기서 따로 적었다가 3(광역단체장)과 11(교육감)을
+# 뒤집어, 포항 연표에 교육감(임종식·무소속)이 '광역단체장'으로 들어가 있었다.
+# 사본을 만들면 언젠가 어긋난다 — 그게 이번 세션에 반복해서 나온 실패다.
+_OFFICE_SLUG = {
+    "광역단체장": "metro_mayor", "기초단체장": "municipal_mayor",
+    "광역의원": "metro_council_district", "기초의원": "municipal_council_district",
+    "교육감": "education_superintendent",
 }
+LOCAL_OFFICE = {tc: _OFFICE_SLUG[label]
+                for tc, label in TC_OFFICE.items() if label in _OFFICE_SLUG}
+LOCAL_OFFICE.update({"8": "metro_council_pr", "9": "municipal_council_pr"})
 
 
 def kind_of(eid: str) -> str:

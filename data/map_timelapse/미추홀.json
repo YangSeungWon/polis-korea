@@ -5163,51 +5163,52 @@
         ],
         "candidates": [
          {
-          "name": "이본수",
-          "party": "",
-          "votes": 53184,
-          "pct": 31.64
+          "name": "유정복",
+          "party": "새누리당",
+          "votes": 92490,
+          "pct": 53.67
          },
          {
-          "name": "이청연",
-          "party": "",
-          "votes": 47615,
-          "pct": 28.33
+          "name": "송영길",
+          "party": "새정치민주연합",
+          "votes": 76984,
+          "pct": 44.67
          },
          {
-          "name": "김영태",
-          "party": "",
-          "votes": 35764,
-          "pct": 21.28
-         },
-         {
-          "name": "안경수",
-          "party": "",
-          "votes": 31530,
-          "pct": 18.76
+          "name": "신창현",
+          "party": "통합진보당",
+          "votes": 2854,
+          "pct": 1.66
          }
         ],
         "winner": {
-         "name": "이본수",
-         "party": "",
-         "pct": 31.64
+         "name": "유정복",
+         "party": "새누리당",
+         "pct": 53.67
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 53.67,
+          "progressive": 1.66,
+          "unknown": 44.67
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 168093
+         "single_family_coverage": 1.66,
+         "lineage_resolved_coverage": 55.33,
+         "mixed_share": 53.67,
+         "unknown_share": 44.67,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "새누리당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 172328
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "mixed",
+         "share": 53.67,
+         "note": "복수 계보 — 계열 hue를 주지 않는다"
         }
        }
       },
@@ -5530,45 +5531,62 @@
         ],
         "candidates": [
          {
-          "name": "도성훈",
-          "party": "",
-          "votes": 78434,
-          "pct": 44.15
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 97347,
+          "pct": 53.87
          },
          {
-          "name": "고승의",
-          "party": "",
-          "votes": 51601,
-          "pct": 29.05
+          "name": "유정복",
+          "party": "자유한국당",
+          "votes": 71278,
+          "pct": 39.45
          },
          {
-          "name": "최순자",
-          "party": "",
-          "votes": 47615,
-          "pct": 26.8
+          "name": "문병호",
+          "party": "바른미래당",
+          "votes": 6754,
+          "pct": 3.74
+         },
+         {
+          "name": "김응호",
+          "party": "정의당",
+          "votes": 5318,
+          "pct": 2.94
          }
         ],
         "winner": {
-         "name": "도성훈",
-         "party": "",
-         "pct": 44.15
+         "name": "박남춘",
+         "party": "더불어민주당",
+         "pct": 53.87
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 43.18,
+          "progressive": 2.94,
+          "unknown": 53.87
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 177650
+         "single_family_coverage": 2.94,
+         "lineage_resolved_coverage": 46.13,
+         "mixed_share": 43.18,
+         "unknown_share": 53.87,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "바른미래당": [
+           "conservative",
+           "regional"
+          ],
+          "자유한국당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 180697
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "unknown",
+         "share": 53.87,
+         "note": "계보 미확인"
         }
        }
       },
@@ -5891,45 +5909,62 @@
         ],
         "candidates": [
          {
-          "name": "도성훈",
-          "party": "",
-          "votes": 78434,
-          "pct": 44.15
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 97347,
+          "pct": 53.87
          },
          {
-          "name": "고승의",
-          "party": "",
-          "votes": 51601,
-          "pct": 29.05
+          "name": "유정복",
+          "party": "자유한국당",
+          "votes": 71278,
+          "pct": 39.45
          },
          {
-          "name": "최순자",
-          "party": "",
-          "votes": 47615,
-          "pct": 26.8
+          "name": "문병호",
+          "party": "바른미래당",
+          "votes": 6754,
+          "pct": 3.74
+         },
+         {
+          "name": "김응호",
+          "party": "정의당",
+          "votes": 5318,
+          "pct": 2.94
          }
         ],
         "winner": {
-         "name": "도성훈",
-         "party": "",
-         "pct": 44.15
+         "name": "박남춘",
+         "party": "더불어민주당",
+         "pct": 53.87
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 43.18,
+          "progressive": 2.94,
+          "unknown": 53.87
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 177650
+         "single_family_coverage": 2.94,
+         "lineage_resolved_coverage": 46.13,
+         "mixed_share": 43.18,
+         "unknown_share": 53.87,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "바른미래당": [
+           "conservative",
+           "regional"
+          ],
+          "자유한국당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 180697
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "unknown",
+         "share": 53.87,
+         "note": "계보 미확인"
         }
        }
       },
@@ -6258,45 +6293,62 @@
         ],
         "candidates": [
          {
-          "name": "도성훈",
-          "party": "",
-          "votes": 78434,
-          "pct": 44.15
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 97347,
+          "pct": 53.87
          },
          {
-          "name": "고승의",
-          "party": "",
-          "votes": 51601,
-          "pct": 29.05
+          "name": "유정복",
+          "party": "자유한국당",
+          "votes": 71278,
+          "pct": 39.45
          },
          {
-          "name": "최순자",
-          "party": "",
-          "votes": 47615,
-          "pct": 26.8
+          "name": "문병호",
+          "party": "바른미래당",
+          "votes": 6754,
+          "pct": 3.74
+         },
+         {
+          "name": "김응호",
+          "party": "정의당",
+          "votes": 5318,
+          "pct": 2.94
          }
         ],
         "winner": {
-         "name": "도성훈",
-         "party": "",
-         "pct": 44.15
+         "name": "박남춘",
+         "party": "더불어민주당",
+         "pct": 53.87
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 43.18,
+          "progressive": 2.94,
+          "unknown": 53.87
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 177650
+         "single_family_coverage": 2.94,
+         "lineage_resolved_coverage": 46.13,
+         "mixed_share": 43.18,
+         "unknown_share": 53.87,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "바른미래당": [
+           "conservative",
+           "regional"
+          ],
+          "자유한국당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 180697
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "unknown",
+         "share": 53.87,
+         "note": "계보 미확인"
         }
        }
       },
@@ -6625,45 +6677,62 @@
         ],
         "candidates": [
          {
-          "name": "도성훈",
-          "party": "",
-          "votes": 78434,
-          "pct": 44.15
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 97347,
+          "pct": 53.87
          },
          {
-          "name": "고승의",
-          "party": "",
-          "votes": 51601,
-          "pct": 29.05
+          "name": "유정복",
+          "party": "자유한국당",
+          "votes": 71278,
+          "pct": 39.45
          },
          {
-          "name": "최순자",
-          "party": "",
-          "votes": 47615,
-          "pct": 26.8
+          "name": "문병호",
+          "party": "바른미래당",
+          "votes": 6754,
+          "pct": 3.74
+         },
+         {
+          "name": "김응호",
+          "party": "정의당",
+          "votes": 5318,
+          "pct": 2.94
          }
         ],
         "winner": {
-         "name": "도성훈",
-         "party": "",
-         "pct": 44.15
+         "name": "박남춘",
+         "party": "더불어민주당",
+         "pct": 53.87
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 43.18,
+          "progressive": 2.94,
+          "unknown": 53.87
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 177650
+         "single_family_coverage": 2.94,
+         "lineage_resolved_coverage": 46.13,
+         "mixed_share": 43.18,
+         "unknown_share": 53.87,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "바른미래당": [
+           "conservative",
+           "regional"
+          ],
+          "자유한국당": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 180697
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "unknown",
+         "share": 53.87,
+         "note": "계보 미확인"
         }
        }
       },
@@ -6990,45 +7059,58 @@
         ],
         "candidates": [
          {
-          "name": "최계운",
-          "party": "",
-          "votes": 62973,
-          "pct": 40.85
+          "name": "유정복",
+          "party": "국민의힘",
+          "votes": 86217,
+          "pct": 54.48
          },
          {
-          "name": "도성훈",
-          "party": "",
-          "votes": 61138,
-          "pct": 39.66
+          "name": "박남춘",
+          "party": "더불어민주당",
+          "votes": 66673,
+          "pct": 42.13
          },
          {
-          "name": "서정호",
-          "party": "",
-          "votes": 30044,
-          "pct": 19.49
+          "name": "이정미",
+          "party": "정의당",
+          "votes": 4487,
+          "pct": 2.84
+         },
+         {
+          "name": "김한별",
+          "party": "기본소득당",
+          "votes": 890,
+          "pct": 0.56
          }
         ],
         "winner": {
-         "name": "최계운",
-         "party": "",
-         "pct": 40.85
+         "name": "유정복",
+         "party": "국민의힘",
+         "pct": 54.48
         },
         "lineage_composition": {
          "share": {
-          "independent": 100.0
+          "mixed": 54.48,
+          "progressive": 2.84,
+          "unknown": 42.69
          },
-         "single_family_coverage": 0.0,
-         "lineage_resolved_coverage": 0.0,
-         "mixed_share": 0.0,
-         "unknown_share": 0.0,
-         "independent_share": 100.0,
-         "mixed_constituents": {},
-         "total_votes": 154155
+         "single_family_coverage": 2.84,
+         "lineage_resolved_coverage": 57.31,
+         "mixed_share": 54.48,
+         "unknown_share": 42.69,
+         "independent_share": 0.0,
+         "mixed_constituents": {
+          "국민의힘": [
+           "conservative",
+           "regional"
+          ]
+         },
+         "total_votes": 158267
         },
         "paint": {
-         "state": "independent",
-         "share": 100.0,
-         "note": "무소속 — 정당 계보로 추정하지 않는다"
+         "state": "mixed",
+         "share": 54.48,
+         "note": "복수 계보 — 계열 hue를 주지 않는다"
         }
        }
       },
@@ -12739,52 +12821,51 @@
         ],
         "candidates": [
          {
-          "name": "유정복",
-          "party": "새누리당",
-          "votes": 92490,
-          "pct": 53.67
+          "name": "이본수",
+          "party": "",
+          "votes": 53184,
+          "pct": 31.64
          },
          {
-          "name": "송영길",
-          "party": "새정치민주연합",
-          "votes": 76984,
-          "pct": 44.67
+          "name": "이청연",
+          "party": "",
+          "votes": 47615,
+          "pct": 28.33
          },
          {
-          "name": "신창현",
-          "party": "통합진보당",
-          "votes": 2854,
-          "pct": 1.66
+          "name": "김영태",
+          "party": "",
+          "votes": 35764,
+          "pct": 21.28
+         },
+         {
+          "name": "안경수",
+          "party": "",
+          "votes": 31530,
+          "pct": 18.76
          }
         ],
         "winner": {
-         "name": "유정복",
-         "party": "새누리당",
-         "pct": 53.67
+         "name": "이본수",
+         "party": "",
+         "pct": 31.64
         },
         "lineage_composition": {
          "share": {
-          "mixed": 53.67,
-          "progressive": 1.66,
-          "unknown": 44.67
+          "independent": 100.0
          },
-         "single_family_coverage": 1.66,
-         "lineage_resolved_coverage": 55.33,
-         "mixed_share": 53.67,
-         "unknown_share": 44.67,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "새누리당": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 172328
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 168093
         },
         "paint": {
-         "state": "mixed",
-         "share": 53.67,
-         "note": "복수 계보 — 계열 hue를 주지 않는다"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
@@ -13107,62 +13188,45 @@
         ],
         "candidates": [
          {
-          "name": "박남춘",
-          "party": "더불어민주당",
-          "votes": 97347,
-          "pct": 53.87
+          "name": "도성훈",
+          "party": "",
+          "votes": 78434,
+          "pct": 44.15
          },
          {
-          "name": "유정복",
-          "party": "자유한국당",
-          "votes": 71278,
-          "pct": 39.45
+          "name": "고승의",
+          "party": "",
+          "votes": 51601,
+          "pct": 29.05
          },
          {
-          "name": "문병호",
-          "party": "바른미래당",
-          "votes": 6754,
-          "pct": 3.74
-         },
-         {
-          "name": "김응호",
-          "party": "정의당",
-          "votes": 5318,
-          "pct": 2.94
+          "name": "최순자",
+          "party": "",
+          "votes": 47615,
+          "pct": 26.8
          }
         ],
         "winner": {
-         "name": "박남춘",
-         "party": "더불어민주당",
-         "pct": 53.87
+         "name": "도성훈",
+         "party": "",
+         "pct": 44.15
         },
         "lineage_composition": {
          "share": {
-          "mixed": 43.18,
-          "progressive": 2.94,
-          "unknown": 53.87
+          "independent": 100.0
          },
-         "single_family_coverage": 2.94,
-         "lineage_resolved_coverage": 46.13,
-         "mixed_share": 43.18,
-         "unknown_share": 53.87,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "바른미래당": [
-           "conservative",
-           "regional"
-          ],
-          "자유한국당": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 180697
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 177650
         },
         "paint": {
-         "state": "unknown",
-         "share": 53.87,
-         "note": "계보 미확인"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
@@ -13485,62 +13549,45 @@
         ],
         "candidates": [
          {
-          "name": "박남춘",
-          "party": "더불어민주당",
-          "votes": 97347,
-          "pct": 53.87
+          "name": "도성훈",
+          "party": "",
+          "votes": 78434,
+          "pct": 44.15
          },
          {
-          "name": "유정복",
-          "party": "자유한국당",
-          "votes": 71278,
-          "pct": 39.45
+          "name": "고승의",
+          "party": "",
+          "votes": 51601,
+          "pct": 29.05
          },
          {
-          "name": "문병호",
-          "party": "바른미래당",
-          "votes": 6754,
-          "pct": 3.74
-         },
-         {
-          "name": "김응호",
-          "party": "정의당",
-          "votes": 5318,
-          "pct": 2.94
+          "name": "최순자",
+          "party": "",
+          "votes": 47615,
+          "pct": 26.8
          }
         ],
         "winner": {
-         "name": "박남춘",
-         "party": "더불어민주당",
-         "pct": 53.87
+         "name": "도성훈",
+         "party": "",
+         "pct": 44.15
         },
         "lineage_composition": {
          "share": {
-          "mixed": 43.18,
-          "progressive": 2.94,
-          "unknown": 53.87
+          "independent": 100.0
          },
-         "single_family_coverage": 2.94,
-         "lineage_resolved_coverage": 46.13,
-         "mixed_share": 43.18,
-         "unknown_share": 53.87,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "바른미래당": [
-           "conservative",
-           "regional"
-          ],
-          "자유한국당": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 180697
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 177650
         },
         "paint": {
-         "state": "unknown",
-         "share": 53.87,
-         "note": "계보 미확인"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
@@ -13869,62 +13916,45 @@
         ],
         "candidates": [
          {
-          "name": "박남춘",
-          "party": "더불어민주당",
-          "votes": 97347,
-          "pct": 53.87
+          "name": "도성훈",
+          "party": "",
+          "votes": 78434,
+          "pct": 44.15
          },
          {
-          "name": "유정복",
-          "party": "자유한국당",
-          "votes": 71278,
-          "pct": 39.45
+          "name": "고승의",
+          "party": "",
+          "votes": 51601,
+          "pct": 29.05
          },
          {
-          "name": "문병호",
-          "party": "바른미래당",
-          "votes": 6754,
-          "pct": 3.74
-         },
-         {
-          "name": "김응호",
-          "party": "정의당",
-          "votes": 5318,
-          "pct": 2.94
+          "name": "최순자",
+          "party": "",
+          "votes": 47615,
+          "pct": 26.8
          }
         ],
         "winner": {
-         "name": "박남춘",
-         "party": "더불어민주당",
-         "pct": 53.87
+         "name": "도성훈",
+         "party": "",
+         "pct": 44.15
         },
         "lineage_composition": {
          "share": {
-          "mixed": 43.18,
-          "progressive": 2.94,
-          "unknown": 53.87
+          "independent": 100.0
          },
-         "single_family_coverage": 2.94,
-         "lineage_resolved_coverage": 46.13,
-         "mixed_share": 43.18,
-         "unknown_share": 53.87,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "바른미래당": [
-           "conservative",
-           "regional"
-          ],
-          "자유한국당": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 180697
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 177650
         },
         "paint": {
-         "state": "unknown",
-         "share": 53.87,
-         "note": "계보 미확인"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
@@ -14253,62 +14283,45 @@
         ],
         "candidates": [
          {
-          "name": "박남춘",
-          "party": "더불어민주당",
-          "votes": 97347,
-          "pct": 53.87
+          "name": "도성훈",
+          "party": "",
+          "votes": 78434,
+          "pct": 44.15
          },
          {
-          "name": "유정복",
-          "party": "자유한국당",
-          "votes": 71278,
-          "pct": 39.45
+          "name": "고승의",
+          "party": "",
+          "votes": 51601,
+          "pct": 29.05
          },
          {
-          "name": "문병호",
-          "party": "바른미래당",
-          "votes": 6754,
-          "pct": 3.74
-         },
-         {
-          "name": "김응호",
-          "party": "정의당",
-          "votes": 5318,
-          "pct": 2.94
+          "name": "최순자",
+          "party": "",
+          "votes": 47615,
+          "pct": 26.8
          }
         ],
         "winner": {
-         "name": "박남춘",
-         "party": "더불어민주당",
-         "pct": 53.87
+         "name": "도성훈",
+         "party": "",
+         "pct": 44.15
         },
         "lineage_composition": {
          "share": {
-          "mixed": 43.18,
-          "progressive": 2.94,
-          "unknown": 53.87
+          "independent": 100.0
          },
-         "single_family_coverage": 2.94,
-         "lineage_resolved_coverage": 46.13,
-         "mixed_share": 43.18,
-         "unknown_share": 53.87,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "바른미래당": [
-           "conservative",
-           "regional"
-          ],
-          "자유한국당": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 180697
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 177650
         },
         "paint": {
-         "state": "unknown",
-         "share": 53.87,
-         "note": "계보 미확인"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
@@ -14635,58 +14648,45 @@
         ],
         "candidates": [
          {
-          "name": "유정복",
-          "party": "국민의힘",
-          "votes": 86217,
-          "pct": 54.48
+          "name": "최계운",
+          "party": "",
+          "votes": 62973,
+          "pct": 40.85
          },
          {
-          "name": "박남춘",
-          "party": "더불어민주당",
-          "votes": 66673,
-          "pct": 42.13
+          "name": "도성훈",
+          "party": "",
+          "votes": 61138,
+          "pct": 39.66
          },
          {
-          "name": "이정미",
-          "party": "정의당",
-          "votes": 4487,
-          "pct": 2.84
-         },
-         {
-          "name": "김한별",
-          "party": "기본소득당",
-          "votes": 890,
-          "pct": 0.56
+          "name": "서정호",
+          "party": "",
+          "votes": 30044,
+          "pct": 19.49
          }
         ],
         "winner": {
-         "name": "유정복",
-         "party": "국민의힘",
-         "pct": 54.48
+         "name": "최계운",
+         "party": "",
+         "pct": 40.85
         },
         "lineage_composition": {
          "share": {
-          "mixed": 54.48,
-          "progressive": 2.84,
-          "unknown": 42.69
+          "independent": 100.0
          },
-         "single_family_coverage": 2.84,
-         "lineage_resolved_coverage": 57.31,
-         "mixed_share": 54.48,
-         "unknown_share": 42.69,
-         "independent_share": 0.0,
-         "mixed_constituents": {
-          "국민의힘": [
-           "conservative",
-           "regional"
-          ]
-         },
-         "total_votes": 158267
+         "single_family_coverage": 0.0,
+         "lineage_resolved_coverage": 0.0,
+         "mixed_share": 0.0,
+         "unknown_share": 0.0,
+         "independent_share": 100.0,
+         "mixed_constituents": {},
+         "total_votes": 154155
         },
         "paint": {
-         "state": "mixed",
-         "share": 54.48,
-         "note": "복수 계보 — 계열 hue를 주지 않는다"
+         "state": "independent",
+         "share": 100.0,
+         "note": "무소속 — 정당 계보로 추정하지 않는다"
         }
        }
       },
