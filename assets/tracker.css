@@ -76,3 +76,12 @@
 #tk-tip .tk-tip-src { display: block; margin-top: 3px; font-size: 9.5px; opacity: 0.62; font-variant-numeric: normal; }
 .tk-chart svg { cursor: crosshair; }
 
+
+/* 정적 요약 — JS 없이도 읽히는 현재 지표. 차트는 이걸 대체하지 않고 위에 얹힌다. */
+.tk-summary { margin: 0 0 18px; }
+.tk-sum-grid { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.tk-sum-item { min-width: 200px; }
+.tk-sum-label { font-size: 12.5px; color: var(--ink-soft); }
+.tk-sum-value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.tk-sum-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
+.tk-sum-meta { margin: 10px 0 0; font-size: 12.5px; color: var(--ink-soft); max-width: 62ch; }

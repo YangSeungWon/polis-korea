@@ -349,3 +349,17 @@
   background: var(--bg3); border-radius: 5px;
   font-size: 11px; color: var(--ink-soft, #666); line-height: 1.45;
 }
+
+/* 빈 상태를 시작점으로 — '선택하세요'가 아니라 '여기부터 보세요'. 표준 <a href>라
+   JS 없이도 동작하고 크롤러도 그대로 따라간다. */
+.hs-start { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--rule); }
+.hs-start-title { font-size: 15px; margin: 0 0 10px; }
+.hs-start-group { display: flex; gap: 12px; align-items: baseline; margin: 0 0 8px;
+  flex-wrap: wrap; }
+.hs-start-label { font-size: 12.5px; color: var(--ink-soft); min-width: 66px; }
+.hs-start-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px 18px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); flex: 1 1 320px; }
+.hs-start-list.hs-inline { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.hs-start-list a { font-size: 14px; }
+.hs-date { color: var(--ink-soft); font-size: 12px; margin-left: 6px;
+  font-variant-numeric: tabular-nums; }

@@ -267,6 +267,7 @@ def main(regions: list[str]) -> int:
         # 감사·미리보기용 독립 문서. 실제 사이트에 얹을 땐 body만 쓴다.
         html = (f'<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">'
                 f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+                f'<meta name="robots" content="noindex">'
                 f'<title>{esc(d["region"])} 지역 정치사</title>{STYLE}</head>'
                 f'<body>{body}</body></html>')
         (OUT / f"{f.stem}.html").write_text(html, encoding="utf-8")

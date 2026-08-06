@@ -10,14 +10,22 @@
   async function loadData() {
     if (_cache) return _cache;
     const APPR = ['gallup', 'realmeter', 'nbs', 'hrc', 'general'].map((s) => `data/polls/approval_${s}.json`);
+    // catch는 fetch **거부**만 잡는다. 본문이 `null`이면 r.json()은 null로 정상 resolve해
+    // 그대로 통과하고, 다음 줄의 `etc.polls`가 터진다 — 전체 UI 감사에서 간헐적으로 났다.
+    // 상태 코드도 봐야 한다: 404가 JSON을 돌려주면 그게 데이터가 된다.
+    const getJson = (f, fallback) => fetch(f)
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null)
+      .then((d) => (d && typeof d === 'object' ? d : fallback));
     const [apprAll, etc] = await Promise.all([
-      Promise.all(APPR.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ records: [] })))),
-      fetch('data/polls/aggregated_etc.json').then((r) => r.json()).catch(() => ({ polls: [] })),
+      Promise.all(APPR.map((f) => getJson(f, { records: [] }))),
+      getJson('data/polls/aggregated_etc.json', { polls: [] }),
     ]);
     const seen = new Set();
-    const approval = apprAll.flatMap((d) => d.records || [])
+    const approval = apprAll.flatMap((d) => (d && d.records) || [])
       .filter((r) => r.positive != null && r.period_end && !seen.has(r.ntt_id) && seen.add(r.ntt_id));
-    const party = (etc.polls || []).filter((p) => p.metric_type === '정당지지' && !p.sido && p.period_end);
+    const party = ((etc && etc.polls) || []).filter(
+      (p) => p.metric_type === '정당지지' && !p.sido && p.period_end);
     _cache = { approval, party };
     return _cache;
   }
@@ -50,7 +58,7 @@
     // per-election 폴(그 선거 정당지지)을 트래커 데이터와 병합 — 트래커가 듬성한 시즌을 채움(22대
     // 조국혁신당처럼 신생당이 트래커엔 빠진 경우). ntt_id 스킴이 파일마다 달라 내용키(기관|기간)로 dedup,
     // per-election을 먼저 둬 같은 폴이면 그쪽(후보 풍부)을 채택.
-    const elParty = (opts.polls || []).filter((p) => (p.metric_type === '정당지지' || p.office_level === '정당지지') && !p.sido && p.period_end);
+    const elParty = ((opts && opts.polls) || []).filter((p) => (p.metric_type === '정당지지' || p.office_level === '정당지지') && !p.sido && p.period_end);
     const seen = new Set(); const mergedParty = [];
     for (const p of [...elParty, ...party]) {
       const k = `${p.agency || ''}|${p.period_start || ''}|${p.period_end || ''}`;

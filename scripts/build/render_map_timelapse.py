@@ -346,6 +346,7 @@ def main(regions: list[str]) -> int:
             continue
         html = (f'<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">'
                 f'<meta name="viewport" content="width=device-width,initial-scale=1">'
+                f'<meta name="robots" content="noindex">'
                 f'<title>{esc(d["region"])} 지도 타임랩스</title>{STYLE}</head>'
                 f'<body>{render(d)}{SCRIPT}</body></html>')
         (OUT / f"{f.stem}.html").write_text(html, encoding="utf-8")
