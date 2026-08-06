@@ -178,6 +178,7 @@ PAGE = """<!DOCTYPE html>
   </section>
   {lineage}
   {elections}
+  {runs}
   {members}
   {regions}
   <footer class="foot">
@@ -271,6 +272,95 @@ def render_regions(name: str, strength: dict, page_slugs: set) -> str:
             f'<div class="pty-rg-grid">{"".join(chips)}</div></section>')
 
 
+_RUNS_CACHE: dict = {}
+
+
+def build_runs() -> dict:
+    """정당별 **출마 기록** — 선거마다 후보 수·득표.
+
+    기존 '등장 선거'는 당선자 기준이라 원외 정당은 아무것도 안 나온다. 녹색당은
+    16회 선거에 871명이 나와 318만표를 얻었는데 페이지에는 한 줄도 없었다.
+    당선되지 않았다는 것과 참여하지 않았다는 것은 다르다.
+
+    같은 선거의 다른 표현(.sigungu · national_assembly_* 등)을 두 번 세지 않는다 —
+    family_vote_share.py와 같은 규칙이다.
+    """
+    if _RUNS_CACHE:
+        return _RUNS_CACHE
+    import collections
+    agg: dict = collections.defaultdict(dict)
+    for f in sorted((ROOT / "data/results").glob("*.json")):
+        if ".sigungu" in f.name or f.name.startswith(
+                ("local_", "national_assembly_", "presidential_")):
+            continue
+        try:
+            doc = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        meta = doc.get("_meta") or {}
+        date = meta.get("election_date") or meta.get("date") or ""
+        if not date:
+            continue
+        label = meta.get("election") or f.stem
+        seen: dict = collections.defaultdict(lambda: [0, 0, 0])
+
+        def walk(o):
+            if isinstance(o, dict):
+                for c in o.get("candidates") or []:
+                    if not isinstance(c, dict):
+                        continue
+                    party = c.get("party")
+                    if not party:
+                        continue
+                    row = seen[party]
+                    row[0] += 1
+                    row[1] += c.get("votes") or 0
+                    if c.get("won"):
+                        row[2] += 1
+                for v in o.values():
+                    walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    walk(v)
+
+        walk(doc)
+        for party, (n, votes, won) in seen.items():
+            cur = agg[party].get(date)
+            # 한 선거가 여러 파일에 있으면 후보 수가 가장 많은 쪽(가장 완전한 표현)
+            if cur is None or n > cur["candidates"]:
+                agg[party][date] = {"date": date, "label": label,
+                                    "candidates": n, "votes": votes, "won": won}
+    _RUNS_CACHE.update({k: sorted(v.values(), key=lambda r: r["date"], reverse=True)
+                        for k, v in agg.items()})
+    return _RUNS_CACHE
+
+
+def render_runs(name: str) -> str:
+    runs = build_runs().get(name) or []
+    if not runs:
+        return ""
+    n_el = len(runs)
+    tot_c = sum(r["candidates"] for r in runs)
+    tot_v = sum(r["votes"] for r in runs)
+    tot_w = sum(r["won"] for r in runs)
+    rows = []
+    for r in runs[:14]:
+        won = f'<span class="pty-run-w">당선 {r["won"]}</span>' if r["won"] else ""
+        rows.append(
+            f'<li><span class="pty-run-d">{esc(r["date"])}</span>'
+            f'<span class="pty-run-l">{esc(r["label"])}</span>'
+            f'<span class="pty-run-n">후보 {r["candidates"]}</span>'
+            f'<span class="pty-run-v">{r["votes"]:,}표</span>{won}</li>')
+    more = (f'<li class="pty-run-more">외 {n_el - 14}회</li>' if n_el > 14 else "")
+    head = (f'선거 {n_el}회 · 후보 {tot_c:,}명 · 득표 {tot_v:,}'
+            + (f' · 당선 {tot_w:,}' if tot_w else " · 당선 없음"))
+    return (f'<section class="pty-sec"><h2>출마 기록 <span class="pty-cnt">{n_el}</span></h2>'
+            f'<p class="pty-run-sum">{head}</p>'
+            f'<ul class="pty-runs">{"".join(rows)}{more}</ul>'
+            f'<p class="fine">당선 여부와 무관하게 후보를 낸 선거 전부. '
+            f'같은 선거의 중복 표현은 한 번만 셉니다.</p></section>')
+
+
 def render(name, info, known, appearances, members, regions=""):
     abbr = info.get("abbr")
     abbr_badge = f' <span class="pty-abbr" data-party="{esc(name)}">{esc(abbr)}</span>' if abbr else ""
@@ -334,7 +424,8 @@ def render(name, info, known, appearances, members, regions=""):
     return PAGE.format(
         nav=render_nav(menu_for_path("party/x/index.html")),
         name=esc(name), abbr_badge=abbr_badge, life=life, note=note_html,
-        lineage=lineage, elections=elections, members=members_html,
+        lineage=lineage, elections=elections, runs=render_runs(name),
+        members=members_html,
         regions=regions,
         desc=esc(desc[:160]), canon=purl(name), qname=quote(name),
         jsonld=party_jsonld(name, info, esc(desc[:160])),

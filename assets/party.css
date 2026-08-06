@@ -81,3 +81,15 @@ a.pty-rg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   font-size: 11px; color: var(--ink-mute);
   font-variant-numeric: tabular-nums;
 }
+
+/* 출마 기록 — 당선되지 않았다는 것과 참여하지 않았다는 것은 다르다. 원외 정당도
+   자기 페이지에 자기 사실이 있어야 한다. */
+.pty-run-sum { margin: 0 0 8px; font-size: 14px; }
+.pty-runs { list-style: none; margin: 0; padding: 0; }
+.pty-runs > li { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;
+  padding: 5px 0; border-top: 1px solid var(--rule); font-size: 13.5px; }
+.pty-run-d { color: var(--ink-soft); font-variant-numeric: tabular-nums; min-width: 84px; }
+.pty-run-l { flex: 1 1 180px; }
+.pty-run-n, .pty-run-v { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.pty-run-w { font-weight: 600; }
+.pty-run-more { color: var(--ink-soft); }
