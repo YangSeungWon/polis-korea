@@ -62,8 +62,16 @@ for r in rows[:50]:
 # ③ 동음이의는 예외 목록이 아니라 큐다 — 사유와 상태가 있어야 한다
 ck("동음이의 항목에 사유·상태가 있다",
    all(x.get("reason") and x.get("status") and x.get("note") for x in hom["unresolved"]))
-ck("동음이의 큐가 무한정 늘지 않는다", len(hom["unresolved"]) <= 12,
-   f'{len(hom["unresolved"])}건 — 늘어나면 해소해야 한다')
+# 개수 상한을 두지 않는다 — **새 동음이의를 발견하면 큐가 느는 게 정상**이다.
+# 상한을 걸면 발견을 억제하게 된다. 대신 큐가 큐답게 동작하는지를 본다:
+# 해소된 항목이 unresolved로 남아 있지 않은가.
+_stale = [x["name"] for x in hom["unresolved"]
+          if x.get("status") == "resolved" or x["name"] in reg and "(" in x["name"]]
+ck("해소된 항목이 큐에 남아 있지 않다", not _stale, str(_stale))
+ck("큐 항목이 실제로 관측된 이름이다",
+   all(x["name"] in {r["name"] for r in rows} for x in hom["unresolved"]),
+   str([x["name"] for x in hom["unresolved"]
+        if x["name"] not in {r["name"] for r in rows}]))
 
 print(f"\n[관측 정당 층] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)
