@@ -1,0 +1,1634 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>미추홀 지도 타임랩스</title><style>
+:root{--mt-ink:#14181d;--mt-dim:#5d6672;--mt-line:#d8dde3;--mt-bg:#fff;--mt-card:#f7f8fa}
+@media (prefers-color-scheme:dark){:root{--mt-ink:#e8ecf1;--mt-dim:#9aa4b0;
+--mt-line:#333c47;--mt-bg:#0f1317;--mt-card:#171c22}}
+.mt{color:var(--mt-ink);background:var(--mt-bg);font:15px/1.6 system-ui,sans-serif;
+padding:20px;max-width:1080px;margin:0 auto}
+.mt h2{font-size:20px;margin:0 0 4px}
+.mt .mt-lead{color:var(--mt-dim);margin:0 0 16px;font-size:14px}
+.mt-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px}
+.mt-ctl label{font-size:13px;color:var(--mt-dim)}
+.mt-seg{display:flex;flex-wrap:wrap;gap:4px}
+.mt-seg button{font:inherit;font-size:13px;padding:5px 11px;border:1px solid var(--mt-line);
+background:var(--mt-bg);color:var(--mt-ink);border-radius:999px;cursor:pointer}
+.mt-seg button[aria-pressed=true]{background:var(--mt-ink);color:var(--mt-bg);
+border-color:var(--mt-ink)}
+.mt-seg button:focus-visible{outline:2px solid #0a5cb8;outline-offset:2px}
+.mt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;
+align-items:start}
+@media (max-width:820px){.mt-grid{grid-template-columns:1fr}}
+.mt-svg{width:100%;height:auto;background:var(--mt-card);border-radius:8px;
+border:1px solid var(--mt-line)}
+.mt-u{stroke:var(--mt-bg);stroke-width:2.5}
+.mt-lb{font:600 12px system-ui,sans-serif;fill:var(--mt-ink);paint-order:stroke;
+stroke:var(--mt-card);stroke-width:3.5px;stroke-linejoin:round}
+.mt-op42{fill-opacity:.42}.mt-op68{fill-opacity:.68}.mt-op100{fill-opacity:1}
+.mt-unavailable{stroke:#98a1ab;stroke-dasharray:4 3}
+.mt-h{font-size:15px;margin:14px 0 8px}
+.mt-svg-empty{border-style:dashed}
+.mt-empty{font:13px system-ui,sans-serif;fill:var(--mt-dim)}
+.mt-claim{font-weight:600;margin:0 0 8px}
+.mt-ev{margin:0 0 10px;font-size:13px;color:var(--mt-dim);border-left:3px solid var(--mt-line);
+padding-left:9px}
+.mt-layers{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:0 0 12px;
+font-size:14px}
+.mt-layers dt{color:var(--mt-dim);font-size:13px}
+.mt-layers dd{margin:0}
+.mt-dim{color:var(--mt-dim);font-size:12px}
+.mt-tab{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;
+word-break:keep-all}
+.mt-tab col.c1{width:27%}.mt-tab col.c2{width:19%}.mt-tab col.c3{width:26%}
+.mt-why td{color:var(--mt-dim);font-size:12.5px;border-top:0;padding-top:0;
+line-height:1.55}
+.mt-tab caption{text-align:left;color:var(--mt-dim);font-size:12px;padding-bottom:4px}
+.mt-tab th,.mt-tab td{text-align:left;padding:5px 6px;border-top:1px solid var(--mt-line);
+vertical-align:top}
+.mt-tab thead th{color:var(--mt-dim);font-weight:500;border-top:0}
+.mt-b{display:inline-block;font-size:12px;padding:1px 7px;border-radius:999px;
+border:1px solid var(--mt-line)}
+.mt-b-direct{border-color:#2a7d4f;color:#2a7d4f}
+.mt-b-aggregated{border-color:#8a6d1f;color:#8a6d1f}
+.mt-b-unavailable{border-color:#98a1ab;color:var(--mt-dim)}
+@media (prefers-color-scheme:dark){.mt-b-direct{border-color:#6fd39a;color:#6fd39a}
+.mt-b-aggregated{border-color:#dcb54a;color:#dcb54a}}
+.mt-key{display:inline-flex;align-items:center;gap:5px;margin-right:12px;font-size:12px;
+color:var(--mt-dim)}
+.mt-key i{width:13px;height:13px;border-radius:3px;display:inline-block;
+border:1px solid var(--mt-line)}
+.mt-legend{margin:12px 0 0;line-height:2}
+.mt-note{color:var(--mt-dim);font-size:12.5px;margin:10px 0 0}
+</style></head><body><section class="mt" data-series="president:national"
+ data-role="before_election">
+<h2>미추홀 지도 타임랩스</h2>
+<p class="mt-lead">경계 · 선거 · 투영은 다른 층입니다. <b>결과가 있다고 해서 지금
+경계에 칠할 수 있는 것은 아닙니다</b> — 칠할 수 없는 경계는 그리되 정치색을 주지
+않습니다.</p>
+<div class="mt-ctl"><label>비교 series</label><div class="mt-seg"><button type="button" data-set="series=president:national">대통령</button><button type="button" data-set="series=local:municipal_mayor">기초단체장</button><button type="button" data-set="series=local:metro_mayor">광역단체장</button><button type="button" data-set="series=general:district">국회의원</button><button type="button" data-set="series=general:pr">국회의원 비례</button><button type="button" data-set="series=local:education_superintendent">교육감</button><button type="button" data-set="series=local:metro_council_district">광역의원</button><button type="button" data-set="series=local:municipal_council_district">기초의원</button></div></div>
+<div class="mt-ctl"><label>시점</label><div class="mt-seg"><button type="button" data-set="role=before_election">선거 직전</button><button type="button" data-set="role=election">선거 시점</button><button type="button" data-set="role=before_geo_event">경계 사건 직전</button><button type="button" data-set="role=after_geo_event">경계 사건 직후</button><button type="button" data-set="role=previous_on_new_boundary">새 경계 · 이전 선거 결과</button><button type="button" data-set="role=next_election">다음 선거</button></div></div>
+<svg width="0" height="0" aria-hidden="true"><defs>
+<pattern id="mt-mixed" width="7" height="7" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(45)"><rect width="7" height="7" fill="#9aa3ad"/>
+<line x1="0" y1="0" x2="0" y2="7" stroke="#f6f7f9" stroke-width="2.5"/></pattern>
+<pattern id="mt-unknown" width="6" height="6" patternUnits="userSpaceOnUse">
+<rect width="6" height="6" fill="#d7dbe0"/><circle cx="3" cy="3" r="1" fill="#8b939c"/>
+</pattern>
+<pattern id="mt-none" width="8" height="8" patternUnits="userSpaceOnUse"
+ patternTransform="rotate(135)"><rect width="8" height="8" fill="#eceef1"/>
+<line x1="0" y1="0" x2="0" y2="8" stroke="#b9c0c8" stroke-width="1.5"/></pattern>
+</defs></svg><section class="mt-frame" data-role="before_election"
+ data-series="president:national" data-state="president:national@2017-05-08#before_election">
+<h3 class="mt-h">선거 직전 · 2017-05-08</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2017-05-08 시점 경계 남구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 복수 계보 54.92%, 투영 그대로"><title>남구
+복수 계보 54.92%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 복수 계보 54.92%, 투영 그대로"><title>남구
+복수 계보 54.92%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 복수 계보 54.92%, 투영 그대로"><title>남구
+복수 계보 54.92%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 복수 계보 54.92%, 투영 그대로"><title>남구
+복수 계보 54.92%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 복수 계보 54.92%, 투영 그대로"><title>남구
+복수 계보 54.92%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제18대 대통령선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제18대 대통령선거
+ <span class="mt-dim">2012-12-19</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 54.92%</td><td class="mt-src">새누리당 박근혜 54.92%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="president:national" data-state="president:national@2017-05-09#election" hidden>
+<h3 class="mt-h">선거 시점 · 2017-05-09</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2017-05-09 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 대통령선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 대통령선거
+ <span class="mt-dim">2017-05-09</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 문재인 38.08%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="president:national" data-state="president:national@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 대통령선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 대통령선거
+ <span class="mt-dim">2017-05-09</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 문재인 38.08%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="president:national" data-state="president:national@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 대통령선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 대통령선거
+ <span class="mt-dim">2017-05-09</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 문재인 38.08%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="president:national" data-state="president:national@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 대통령선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 대통령선거
+ <span class="mt-dim">2017-05-09</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 문재인 38.08%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="president:national" data-state="president:national@2022-03-09#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-03-09</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-03-09 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 대통령선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 대통령선거
+ <span class="mt-dim">2022-03-09</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">국민의힘 윤석열 48.26%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2018-06-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2018-06-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-12 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제6회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제6회 전국동시지방선거
+ <span class="mt-dim">2014-06-04</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">새정치민주연합 박우섭 50.2%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2018-06-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2018-06-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-13 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김정식 52.28%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김정식 52.28%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김정식 52.28%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 김정식 52.28%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="local:municipal_mayor" data-state="local:municipal_mayor@2022-06-01#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-06-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-06-01 시점 경계 미추홀구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 복수 계보 54.73%, 투영 그대로"><title>미추홀구
+복수 계보 54.73%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 복수 계보 54.73%, 투영 그대로"><title>미추홀구
+복수 계보 54.73%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 복수 계보 54.73%, 투영 그대로"><title>미추홀구
+복수 계보 54.73%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 복수 계보 54.73%, 투영 그대로"><title>미추홀구
+복수 계보 54.73%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 복수 계보 54.73%, 투영 그대로"><title>미추홀구
+복수 계보 54.73%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제8회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제8회 전국동시지방선거
+ <span class="mt-dim">2022-06-01</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 54.73%</td><td class="mt-src">국민의힘 이영훈 54.73%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2018-06-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2018-06-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-12 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제6회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제6회 전국동시지방선거
+ <span class="mt-dim">2014-06-04</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 이본수 31.64%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2018-06-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2018-06-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-13 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 도성훈 44.15%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 무소속, 투영 그대로"><title>남구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 도성훈 44.15%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 도성훈 44.15%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 도성훈 44.15%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="local:metro_mayor" data-state="local:metro_mayor@2022-06-01#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-06-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-06-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 무소속, 투영 그대로"><title>미추홀구
+무소속
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제8회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제8회 전국동시지방선거
+ <span class="mt-dim">2022-06-01</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>무소속</td><td class="mt-src"> 최계운 40.85%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="general:district" data-state="general:district@2016-04-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2016-04-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2016-04-12 시점 경계 남구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 복수 계보 55.05%, 투영 그대로"><title>남구
+복수 계보 55.05%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 복수 계보 55.05%, 투영 그대로"><title>남구
+복수 계보 55.05%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 복수 계보 55.05%, 투영 그대로"><title>남구
+복수 계보 55.05%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 복수 계보 55.05%, 투영 그대로"><title>남구
+복수 계보 55.05%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 복수 계보 55.05%, 투영 그대로"><title>남구
+복수 계보 55.05%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 국회의원선거
+ <span class="mt-dim">2012-04-11</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 55.05%</td><td class="mt-src">새누리당 윤상현 30.66%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="general:district" data-state="general:district@2016-04-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2016-04-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2016-04-13 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">무소속 윤상현 25.41%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="general:district" data-state="general:district@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">무소속 윤상현 25.41%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="general:district" data-state="general:district@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">무소속 윤상현 25.41%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="general:district" data-state="general:district@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">무소속 윤상현 25.41%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="general:district" data-state="general:district@2020-04-15#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2020-04-15</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-15 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">무소속 윤상현 22.27%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="general:pr" data-state="general:pr@2016-04-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2016-04-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2016-04-12 시점 경계 남구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 복수 계보 47.7%, 투영 그대로"><title>남구
+복수 계보 47.7%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 복수 계보 47.7%, 투영 그대로"><title>남구
+복수 계보 47.7%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 복수 계보 47.7%, 투영 그대로"><title>남구
+복수 계보 47.7%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 복수 계보 47.7%, 투영 그대로"><title>남구
+복수 계보 47.7%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 복수 계보 47.7%, 투영 그대로"><title>남구
+복수 계보 47.7%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제19대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제19대 국회의원선거
+ <span class="mt-dim">2012-04-11</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 47.7%</td><td class="mt-src">새누리당 새누리당 46.89%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="general:pr" data-state="general:pr@2016-04-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2016-04-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2016-04-13 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">새누리당 새누리당 37.23%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="general:pr" data-state="general:pr@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">새누리당 새누리당 37.23%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="general:pr" data-state="general:pr@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">새누리당 새누리당 37.23%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="general:pr" data-state="general:pr@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제20대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제20대 국회의원선거
+ <span class="mt-dim">2016-04-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">새누리당 새누리당 37.23%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="general:pr" data-state="general:pr@2020-04-15#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2020-04-15</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2020-04-15 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제21대 국회의원선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제21대 국회의원선거
+ <span class="mt-dim">2020-04-15</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">미래한국당 미래한국당 33.23%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2018-06-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2018-06-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-12 시점 경계 남구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 복수 계보 53.67%, 투영 그대로"><title>남구
+복수 계보 53.67%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 복수 계보 53.67%, 투영 그대로"><title>남구
+복수 계보 53.67%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 복수 계보 53.67%, 투영 그대로"><title>남구
+복수 계보 53.67%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 복수 계보 53.67%, 투영 그대로"><title>남구
+복수 계보 53.67%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 복수 계보 53.67%, 투영 그대로"><title>남구
+복수 계보 53.67%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제6회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제6회 전국동시지방선거
+ <span class="mt-dim">2014-06-04</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 53.67%</td><td class="mt-src">새누리당 유정복 53.67%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2018-06-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2018-06-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-13 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 박남춘 53.87%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 계보 미확인, 투영 그대로"><title>남구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 박남춘 53.87%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 박남춘 53.87%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path><path class="mt-u mt-unknown" fill="url(#mt-unknown)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 계보 미확인, 투영 그대로"><title>미추홀구
+계보 미확인
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>계보 미확인</td><td class="mt-src">더불어민주당 박남춘 53.87%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="local:education_superintendent" data-state="local:education_superintendent@2022-06-01#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-06-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-06-01 시점 경계 미추홀구"><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 복수 계보 54.48%, 투영 그대로"><title>미추홀구
+복수 계보 54.48%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 복수 계보 54.48%, 투영 그대로"><title>미추홀구
+복수 계보 54.48%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 복수 계보 54.48%, 투영 그대로"><title>미추홀구
+복수 계보 54.48%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 복수 계보 54.48%, 투영 그대로"><title>미추홀구
+복수 계보 54.48%
+투영: 그대로</title></path><path class="mt-u mt-mixed" fill="url(#mt-mixed)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 복수 계보 54.48%, 투영 그대로"><title>미추홀구
+복수 계보 54.48%
+투영: 그대로</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제8회 전국동시지방선거 결과 · 당시 경계</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제8회 전국동시지방선거
+ <span class="mt-dim">2022-06-01</span></dd>
+<dt>투영</dt><dd class="mt-proj">그대로 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-direct">그대로</span></td><td>복수 계보 54.48%</td><td class="mt-src">국민의힘 유정복 54.48%</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2018-06-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2018-06-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-12 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제6회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제6회 전국동시지방선거
+ <span class="mt-dim">2014-06-04</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2018-06-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2018-06-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-13 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="local:metro_council_district" data-state="local:metro_council_district@2022-06-01#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-06-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-06-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제8회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제8회 전국동시지방선거
+ <span class="mt-dim">2022-06-01</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_election"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2018-06-12#before_election" hidden>
+<h3 class="mt-h">선거 직전 · 2018-06-12</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-12 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제6회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제6회 전국동시지방선거
+ <span class="mt-dim">2014-06-04</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="election"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2018-06-13#election" hidden>
+<h3 class="mt-h">선거 시점 · 2018-06-13</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-13 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="before_geo_event"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2018-06-30#before_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직전 · 2018-06-30</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-06-30 시점 경계 남구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="남구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>남구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">남구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">남구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">남구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="after_geo_event"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2018-07-01#after_geo_event" hidden>
+<h3 class="mt-h">경계 사건 직후 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+<p class="mt-ev">인천 남구가 미추홀구로 개칭 — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.</p>
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="previous_on_new_boundary"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2018-07-01#previous_on_new_boundary" hidden>
+<h3 class="mt-h">새 경계 · 이전 선거 결과 · 2018-07-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2018-07-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제7회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제7회 전국동시지방선거
+ <span class="mt-dim">2018-06-13</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section><section class="mt-frame" data-role="next_election"
+ data-series="local:municipal_council_district" data-state="local:municipal_council_district@2022-06-01#next_election" hidden>
+<h3 class="mt-h">다음 선거 · 2022-06-01</h3>
+<div class="mt-grid">
+<svg class="mt-svg" viewBox="0 0 520 560" role="group"
+ aria-label="2022-06-01 시점 경계 미추홀구"><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M443.9,525.3L444.2,530.1L449.0,531.9L454.8,529.5L452.0,524.1L449.0,518.4L446.9,519.1L443.7,522.8L443.9,525.3Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M358.4,367.5L355.0,373.0L360.3,378.8L361.2,378.3L363.7,375.1L364.3,368.6L358.4,367.5Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M20.3,27.9L27.4,28.1L32.1,26.2L29.2,19.0L28.9,18.8L26.5,18.0L21.7,19.8L19.4,23.2L20.3,27.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M68.3,521.2L64.0,521.7L64.5,527.8L49.6,533.4L44.0,538.2L52.4,542.0L58.8,536.5L65.1,536.5L69.9,533.6L68.8,528.5L71.3,525.7L68.3,521.2Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path><path class="mt-u mt-unavailable" fill="url(#mt-none)" d="M478.7,432.9L479.1,438.7L485.0,446.5L490.9,449.1L495.5,454.1L499.5,450.6L500.6,445.4L500.3,441.0L494.2,434.9L478.7,432.9Z" role="img" aria-label="미추홀구 — 이 경계로 표시할 수 없음, 투영 표시 불가"><title>미추홀구
+이 경계로 표시할 수 없음
+투영: 표시 불가</title></path>
+<text class="mt-lb" x="447" y="525" text-anchor="middle" aria-hidden="true">미추홀구</text></svg>
+<div class="mt-side">
+<p class="mt-claim">제8회 전국동시지방선거 결과는 이 경계로 표시할 수 없습니다</p>
+
+<dl class="mt-layers">
+<dt>경계</dt><dd class="mt-geo">미추홀구
+ <span class="mt-dim">(sigungu_2013)</span></dd>
+<dt>선거</dt><dd class="mt-snap">제8회 전국동시지방선거
+ <span class="mt-dim">2022-06-01</span></dd>
+<dt>투영</dt><dd class="mt-proj">표시 불가 1곳</dd>
+</dl>
+<table class="mt-tab"><caption>단위별 투영</caption>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+<thead><tr><th>경계 단위</th>
+<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<tbody><tr><th scope="row">미추홀구</th><td><span class="mt-b mt-b-unavailable">표시 불가</span></td><td>이 경계로 표시할 수 없음</td><td class="mt-src"></td></tr><tr class="mt-why"><td colspan="4">선거구가 어떤 행정구역으로 이뤄졌는지 기록이 없다</td></tr></tbody></table>
+</div></div></section>
+<p class="mt-legend"><span class="mt-key"><i style="background:#d2352b"></i>보수계</span><span class="mt-key"><i style="background:#0a5cb8"></i>민주계</span><span class="mt-key"><i style="background:#e8a300"></i>진보계</span><span class="mt-key"><i style="background:#00875a"></i>지역계</span><span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보(계열 hue 없음)</span><span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속</span><span class="mt-key"><i style="background:#eceef1"></i>이 경계로 표시 불가</span><br><span class="mt-key">1위 계열 득표 비율</span><span class="mt-key"><i style="background:#d2352b;opacity:0.42"></i>45% 미만</span><span class="mt-key"><i style="background:#d2352b;opacity:0.68"></i>45–60%</span><span class="mt-key"><i style="background:#d2352b;opacity:1.0"></i>60% 이상</span></p>
+<p class="mt-note">선거 사이를 보간하지 않습니다. 각 시점은 그 이전 마지막 선거의
+결과를 보여주며, 경계는 행정구역 사건일에 이산 전환합니다.</p>
+</section><script>
+(function(){
+ var root=document.querySelector('.mt'); if(!root) return;
+ var st={series:root.dataset.series,role:root.dataset.role};
+ function draw(){
+  root.querySelectorAll('.mt-frame').forEach(function(f){
+   f.hidden=!(f.dataset.series===st.series&&f.dataset.role===st.role);});
+  root.querySelectorAll('[data-set]').forEach(function(b){
+   var kv=b.dataset.set.split('=');
+   b.setAttribute('aria-pressed',String(st[kv[0]]===kv[1]));});
+ }
+ root.querySelectorAll('[data-set]').forEach(function(b){
+  b.addEventListener('click',function(){var kv=b.dataset.set.split('=');
+   st[kv[0]]=kv[1];draw();});});
+ draw();
+})();
+</script></body></html>

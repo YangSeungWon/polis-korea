@@ -213,6 +213,47 @@
     "1995-01-01 1차 도농통합으로 포항시와 영일군을 통합해 도농복합시가 됐다(같은 해 남구·북구 분구). 두 단위의 영역 합이 그대로 새 포항시가 되므로 이전 두 곳을 합산하면 비교가 선다.",
     "https://encykorea.aks.ac.kr/Article/E0068765"
    ]
+  },
+  {
+   "id": "geo:2018-07-01:incheon-namgu-rename",
+   "type": "rename",
+   "kind": "admin_unit",
+   "effective_date": "2018-07-01",
+   "from": [
+    {
+     "id": "admin_unit:인천광역시:남구",
+     "kind": "admin_unit",
+     "parent": "인천광역시",
+     "name": "남구"
+    }
+   ],
+   "to": [
+    {
+     "id": "admin_unit:인천광역시:미추홀구",
+     "kind": "admin_unit",
+     "parent": "인천광역시",
+     "name": "미추홀구"
+    }
+   ],
+   "territorial_continuity": "same",
+   "comparison_capability": "direct",
+   "capability_reason": "영역이 그대로이고 이름만 바뀌었다.",
+   "label": "인천 남구가 미추홀구로 개칭",
+   "note": "개칭 **이후** 이름으로 소급 표기하는 소스가 있어 같은 지역이 두 이름으로 들어온다. 7회(2018-06-13)는 개칭 전이라 '남구'가 그 시점 이름이다.",
+   "evidence": [
+    {
+     "source": "인천광역시 남구 → 미추홀구 명칭 변경",
+     "note": "2018-07-01 시행 — 7회 지선(2018-06-13)보다 뒤"
+    },
+    {
+     "source": "polis 데이터",
+     "note": "7회 개표는 '남구'(득표 178,715·2석), 8회부터 '미추홀구'. 7회에 '미추홀구' 빈 행이 함께 들어와 있었다"
+    },
+    {
+     "source": "assets/archive/render-council-hex.js NAME_ALIAS",
+     "note": "프런트엔드는 이미 남구↔미추홀구를 같은 곳으로 조회한다"
+    }
+   ]
   }
  ]
 }

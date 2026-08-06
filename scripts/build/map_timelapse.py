@@ -73,7 +73,12 @@ def region_name(ent: dict) -> str:
         if n.endswith(suf) and len(n) > 2:
             n = n[:-1]
             break
-    return n.removesuffix("(구)").removesuffix("시").removesuffix("군") or n
+    n = n.removesuffix("(구)")
+    # 접미사를 떼되 **한 글자만 남으면 떼지 않는다** — '남구'를 '남'이라 부를 수는 없다.
+    for suf in ("시", "군", "구"):
+        if n.endswith(suf) and len(n) - 1 >= 2:
+            return n[:-1]
+    return n
 
 
 def auto_regions(geo: "Geo") -> dict:

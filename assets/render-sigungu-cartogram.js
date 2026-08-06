@@ -87,14 +87,29 @@
       ln.setAttribute('x1', '0'); ln.setAttribute('y1', '0');
       ln.setAttribute('x2', '0'); ln.setAttribute('y2', '6');
       ln.setAttribute('stroke', 'var(--rule-strong, #b9c0c8)'); ln.setAttribute('stroke-width', '1.6');
-      pat.appendChild(bg); pat.appendChild(ln); defs.appendChild(pat); svg.appendChild(defs);
+      pat.appendChild(bg); pat.appendChild(ln); defs.appendChild(pat);
+      // 무투표 — 빗금 대신 점. '값이 없다'가 아니라 '투표를 안 했다'는 다른 상태다.
+      const up = document.createElementNS(NS, 'pattern');
+      up.setAttribute('id', 'sig-uncon-dots'); up.setAttribute('width', '5');
+      up.setAttribute('height', '5'); up.setAttribute('patternUnits', 'userSpaceOnUse');
+      const ub = document.createElementNS(NS, 'rect');
+      ub.setAttribute('width', '5'); ub.setAttribute('height', '5');
+      ub.setAttribute('fill', 'var(--bg2, #f2f4f8)');
+      const dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('cx', '2.5'); dot.setAttribute('cy', '2.5'); dot.setAttribute('r', '1');
+      dot.setAttribute('fill', 'var(--rule-strong, #b9c0c8)');
+      up.appendChild(ub); up.appendChild(dot); defs.appendChild(up);
+      svg.appendChild(defs);
       for (const [d, res] of pending) {
         const [cx, cy] = ctr(d);
         const g = document.createElementNS(NS, 'g'); bindClick(g, d); g.setAttribute('data-sido', d.sido);
-        g.setAttribute('class', 'sig-pending');
+        g.setAttribute('class', res._pending_kind === 'uncontested'
+          ? 'sig-pending sig-uncontested' : 'sig-pending sig-unknown');
         const poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', hexPoints(cx, cy, r - 1));
-        poly.setAttribute('class', 'sig-pending-fill');
+        // 무투표(제도적으로 표가 없음)와 원인 미상은 다른 상태다 — 같은 무늬로 뭉치지 않는다
+        poly.setAttribute('class', res._pending_kind === 'uncontested'
+          ? 'sig-uncon-fill' : 'sig-pending-fill');
         g.appendChild(poly);
         const tt = document.createElementNS(NS, 'title');
         tt.textContent = `${psido(d.sido, date)} ${uname(d.name)} · `

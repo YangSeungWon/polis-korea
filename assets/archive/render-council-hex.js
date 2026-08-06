@@ -610,15 +610,24 @@
       const cs = (r.candidates || []).filter((c) => c.party && (c.votes || 0) > 0);
       const voted = r.valid_votes ?? cs.reduce((s, c) => s + (c.votes || 0), 0);
       if (!cs.length || !voted) {
-        // 의석은 확정인데 정당별 득표가 아직 공표되지 않은 시군구(9회 58곳).
-        // 그냥 건너뛰면 지도에 빈 칸으로 남아 '선거가 없었다'처럼 보인다 — 실제로
-        // 그렇게 보였다. 표심을 지어내지 않되, **비어 있는 이유는 말한다**.
+        // 득표가 없는 데는 **두 가지 다른 이유**가 있다. 뭉뚱그리면 안 된다:
+        //   무투표 당선 — 후보 수가 정수 이하라 투표를 안 했다. 표심이 '없는' 게 아니라
+        //                 애초에 측정되지 않았다. 회차당 30~65곳으로 결코 예외가 아니다.
+        //   원인 미상   — 개표현황에도 무투표 명부에도 없다. 왜인지 모른다.
+        // 그냥 건너뛰면 둘 다 빈 칸이 되어 '선거가 없었다'와도 구별되지 않는다.
         const seats = (r.candidates || []).filter((c) => c.seats);
-        if (r.votes_pending || seats.length) {
+        const nSeat = seats.reduce((a, c) => a + (c.seats || 0), 0);
+        if (r.uncontested) {
           putKeys(m, r.sido, r.sigungu, {
-            _pending: true, candidates: [], voted: 0,
-            _pending_note: '정당별 득표 자료 없음'
-              + (seats.length ? ` (의석 ${seats.reduce((a, c) => a + (c.seats || 0), 0)}석 확정)` : ''),
+            _pending: true, _pending_kind: 'uncontested', candidates: [], voted: 0,
+            _pending_note: '무투표 당선 — 후보가 정수 이하라 투표를 실시하지 않았습니다'
+              + (seats.length ? ` (${seats.map((c) => c.party).join('·')} ${nSeat}석)` : ''),
+          }, put);
+        } else if (r.votes_pending || seats.length) {
+          putKeys(m, r.sido, r.sigungu, {
+            _pending: true, _pending_kind: 'unknown', candidates: [], voted: 0,
+            _pending_note: '정당별 득표가 개표현황에 없습니다 — 원인 미상'
+              + (seats.length ? ` (의석 ${nSeat}석 확정)` : ''),
           }, put);
         }
         continue;
@@ -683,7 +692,10 @@
     // 빠진 것을 조용히 비우지 않는다 — 몇 곳이 왜 비었는지 화면이 말한다.
     // **이 지도에 실제로 그려지는 셀만** 센다. pmap 전체를 세면 레이아웃에 없는 단위까지
     // 들어가 화면(228칸)과 문구(230곳)가 어긋난다.
-    const nPending = hexCells.filter((c) => (lookupKey(pmap, c.sido, c.name) || {})._pending).length;
+    const kindOf = (c) => (lookupKey(pmap, c.sido, c.name) || {})._pending_kind;
+    const nUncon = hexCells.filter((c) => kindOf(c) === 'uncontested').length;
+    const nUnknown = hexCells.filter((c) => kindOf(c) === 'unknown').length;
+    const nPending = nUncon + nUnknown;
     let mode = '격자';
     function redraw() {
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
@@ -721,11 +733,15 @@
       // 몇 곳인지, 무엇이 없는지, 무엇은 있는지를 같이 말한다.
       // 비어 있는 이유가 둘이면 둘 다 말한다 — 하나로 뭉치면 서로 다른 상태가 같아 보인다.
       const parts = [];
-      if (nPending) {
-        // 시제를 넣지 않는다 — 4회(2006)에 '아직 공표되지 않았다'는 말이 안 된다.
+      if (nUncon) {
+        parts.push('<span class="sig-uncon-key"></span> '
+          + `${nUncon}곳은 <b>무투표 당선</b>입니다 — 후보가 정수 이하라 투표를 `
+          + '실시하지 않았습니다. 의석은 확정이지만 표심은 측정되지 않았습니다.');
+      }
+      if (nUnknown) {
         parts.push('<span class="sig-pending-key"></span> '
-          + `빗금 ${nPending}곳은 <b>정당별 득표가 중앙선관위 개표현황에 없습니다</b> — `
-          + '의석은 확정입니다. 득표를 추정해 채우지 않습니다.');
+          + `${nUnknown}곳은 <b>개표현황·무투표 명부 어디에도 없습니다</b> — 원인 미상. `
+          + '득표를 추정해 채우지 않습니다.');
       }
       if (noElection.length) {
         parts.push(`${noElection.join('·')}는 <b>기초의회가 없어</b> 기초의원 선거 자체가 `

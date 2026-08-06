@@ -384,6 +384,17 @@ h2[id], h3[id] { scroll-margin-top: 72px; }
   fill: url(#sig-pending-hatch);
   stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 3 2;
 }
+/* 무투표 당선 — 투표를 실시하지 않아 표심이 애초에 없다. '자료가 없다'와 다르다. */
+.sig-uncon-fill {
+  fill: url(#sig-uncon-dots);
+  stroke: var(--rule-strong); stroke-width: 1;
+}
+.sig-uncon-key {
+  display: inline-block; width: 13px; height: 11px; vertical-align: -1px;
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  background: radial-gradient(currentColor 1px, transparent 1.2px) 0 0 / 4px 4px;
+  color: var(--ink-soft);
+}
 .sig-pending-key {
   display: inline-block; width: 13px; height: 11px; vertical-align: -1px;
   border: 1px dashed var(--rule-strong); border-radius: 2px;

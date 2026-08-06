@@ -1,7 +1,7 @@
 {
  "_meta": {
   "note": "events.json에서 파생 — 직접 편집하지 않는다.",
-  "n": 15
+  "n": 17
  },
  "entities": [
   {
@@ -68,6 +68,20 @@
    "parent": "대구광역시",
    "name": "군위군",
    "valid_from": "2023-07-01"
+  },
+  {
+   "id": "admin_unit:인천광역시:남구",
+   "kind": "admin_unit",
+   "parent": "인천광역시",
+   "name": "남구",
+   "valid_to": "2018-07-01"
+  },
+  {
+   "id": "admin_unit:인천광역시:미추홀구",
+   "kind": "admin_unit",
+   "parent": "인천광역시",
+   "name": "미추홀구",
+   "valid_from": "2018-07-01"
   },
   {
    "id": "electoral_district:21:경기:부천시갑",

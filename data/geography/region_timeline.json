@@ -1,7 +1,7 @@
 {
  "_meta": {
   "note": "지역 페이지 타임라인용 — 선거 기록 사이에 끼울 행정구역 변화 이벤트. events.json에서 파생, 직접 편집하지 않는다.",
-  "n": 6
+  "n": 8
  },
  "by_region": {
   "경기도-이천시": [
@@ -99,6 +99,34 @@
     "comparison_capability": "aggregated",
     "successor_slugs": [
      "경상북도-포항시"
+    ]
+   }
+  ],
+  "인천광역시-미추홀구": [
+   {
+    "date": "2018-07-01",
+    "type": "rename",
+    "label": "인천 남구가 미추홀구로 개칭",
+    "from": [
+     "인천광역시 남구"
+    ],
+    "comparison_capability": "direct",
+    "predecessor_slugs": [
+     "인천광역시-남구"
+    ]
+   }
+  ],
+  "인천광역시-남구": [
+   {
+    "date": "2018-07-01",
+    "type": "rename",
+    "label": "인천 남구가 미추홀구로 개칭",
+    "to": [
+     "인천광역시 미추홀구"
+    ],
+    "comparison_capability": "direct",
+    "successor_slugs": [
+     "인천광역시-미추홀구"
     ]
    }
   ]

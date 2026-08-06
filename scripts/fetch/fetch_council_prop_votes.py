@@ -15,6 +15,15 @@
 손으로 관리하면 조용히 한 시도가 통째로 빠진다 — 후보 코드를 **훑어서 응답이 있는
 것만** 쓴다.
 
+## 남는 결손은 '자료 없음'이 아니라 '무투표 당선'이다
+
+개표현황에 없는 시군구를 무투표 API(tc=9)와 대조하니 거의 완전히 일치했다
+(9회 58/58, 8회 61/62, 6회 64/65 — 어긋난 것은 군위군·미추홀구·마산/진해처럼
+이름·시도가 바뀐 곳뿐이다). **투표를 안 했으니 개표가 없는 것**이지 자료가 빠진 게
+아니다. 둘은 전혀 다른 사실이라 그렇게 표시해야 한다 — `uncontested`로 표시한다.
+
+(광역 비례 tc=8은 무투표가 0건이다. 기초 비례만 정수가 작아 실제로 생긴다.)
+
 사용: python scripts/fetch/fetch_council_prop_votes.py [--n 5 6 7 8 9] [--dry-run]
 의존: pandas, lxml.
 """
@@ -140,6 +149,80 @@ def fetch_sido(election_name: str, city_code: str) -> dict:
     return out
 
 
+UNCON_API = ("https://apis.data.go.kr/9760000/WtvtelpcInfoInqireService/"
+             "getWtvtelpcsccnInfoInqire")
+# 무투표 대조용 정규화. **양쪽 다 거쳐야 한다** — API만 정규화하고 우리 데이터를
+# 그대로 두면 '강원특별자치도' 행이 '강원도' 키와 안 맞아 통째로 놓친다(9회 49곳이 그랬다).
+_SIDO_EQ = {"강원특별자치도": "강원도", "전북특별자치도": "전라북도",
+            "제주특별자치도": "제주도"}
+# 시군구 개명·이관·통합 — 무투표 명부는 그 시점 이름이고 우리 행은 현행 이름일 수 있다.
+_SGG_ALIAS = {
+    "미추홀구": "남구",          # 인천 2018-07 개칭
+    "군위군": "군위군",          # 경북→대구(2023) — 시도만 다르므로 아래에서 시도 무시
+}
+# 시도가 바뀐 시군구는 시도를 빼고 이름만으로 맞춘다(동명이 없을 때만 안전).
+_SIDO_FREE = {"군위군", "마산시", "진해시"}
+
+
+def _api_key() -> str:
+    import os
+    key = os.environ.get("NEC_API_KEY")
+    if key:
+        return key
+    env = ROOT / ".env"
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if line.startswith("NEC_API_KEY="):
+                return line.split("=", 1)[1].strip().strip('"\'')
+    return ""
+
+
+def fetch_uncontested(sg_id: str) -> set:
+    """무투표 당선된 (시도, 시군구). **응답이 {"response": {...}}로 한 겹 더 싸여 있다** —
+    그걸 놓치면 body가 None이라 API가 죽은 줄 알게 된다(실제로 그랬다)."""
+    import time
+    key = _api_key()
+    if not key:
+        print("  ! NEC_API_KEY 없음 — 무투표 대조 건너뜀"); return set()
+    out, page = set(), 1
+    while page < 30:
+        q = urllib.parse.urlencode({"serviceKey": key, "pageNo": page, "numOfRows": 20,
+                                    "sgId": sg_id, "sgTypecode": "9", "resultType": "json"},
+                                   safe="%")
+        d = None
+        for _ in range(6):
+            try:
+                d = json.loads(urllib.request.urlopen(f"{UNCON_API}?{q}", timeout=90).read())
+                break
+            except Exception:                                    # noqa: BLE001
+                time.sleep(6)
+        if d is None:
+            # **부분 실패를 완료로 취급하지 않는다.** 조용히 끊으면 못 받은 페이지의
+            # 시군구가 '무투표 아님'으로 남아 원인 미상이 된다 — 8회가 61→12로 줄었다.
+            raise RuntimeError(f"무투표 API 응답 실패 (sgId={sg_id}, page={page}) — "
+                               "부분 결과로 표시를 바꾸지 않는다")
+        d = d.get("response") or {}
+        code = (d.get("header") or {}).get("resultCode")
+        if code == "INFO-03":
+            break                       # 해당 선거에 무투표 없음 — 정상
+        if code != "INFO-00":
+            raise RuntimeError(f"무투표 API 오류 {code} (sgId={sg_id}, page={page})")
+        it = ((d.get("body") or {}).get("items") or {}).get("item") or []
+        if isinstance(it, dict):
+            it = [it]
+        for i in it:
+            sd = _SIDO_EQ.get(i.get("sdName"), i.get("sdName"))
+            sg = i.get("sggName")
+            out.add((sd, sg))
+            out.add((sd, _SGG_ALIAS.get(sg, sg)))
+            if sg in _SIDO_FREE:
+                out.add(("*", sg))
+        if len(it) < 20:
+            break
+        page += 1
+    return out
+
+
 def target_path(fid: str) -> Path:
     """tc9 행이 실제로 들어 있는 파일. 5~8회는 .sigungu 청크, 9회는 본 파일이다."""
     chunk = RESULTS / f"{fid}.sigungu.json"
@@ -210,11 +293,30 @@ def backfill(n, dry):
         for i, c in enumerate(r["candidates"]):
             c["rank"] = i + 1
 
+    # 남은 결손이 무투표 당선인지 확인해 **사실을 붙인다**. '자료 없음'과 다르다.
+    uncon = fetch_uncontested(sg_id)
+    marked = 0
+    for r in rows:
+        if any(c.get("party") and (c.get("votes") or 0) > 0 for c in (r.get("candidates") or [])):
+            continue
+        sd = _SIDO_EQ.get(r.get("sido"), r.get("sido"))
+        sg = r.get("sigungu")
+        if ((sd, sg) in uncon or (sd, _SGG_ALIAS.get(sg, sg)) in uncon
+                or ("*", sg) in uncon):
+            r["uncontested"] = True
+            r.pop("votes_pending", None)
+            for c in r.get("candidates") or []:
+                if c.get("seats"):
+                    c["uncontested"] = True
+            marked += 1
+
     after = sum(1 for r in rows
                 if any(c.get("party") and (c.get("votes") or 0) > 0 for c in (r.get("candidates") or [])))
+    left = len(rows) - after - marked
     print(f"  {fid} ({path.name}) 기초비례 {len(rows)}곳: "
-          f"득표 {before} → {after} · 남은 결손 {unmatched}{' [dry]' if dry else ''}")
-    if not dry and matched:
+          f"득표 {before} → {after} · 무투표 {marked} · 원인 미상 {left}"
+          f"{' [dry]' if dry else ''}")
+    if not dry and (matched or marked):
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
 
