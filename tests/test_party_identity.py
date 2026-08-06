@@ -96,6 +96,72 @@ def main() -> int:
         ck(f"{a}→{b} 전이가 same이 아니다", policy(a, G20, b, G24) != "same",
            policy(a, G20, b, G24))
 
+    # ── 매칭 실패는 최신 노드로 가지 않는다 ────────────────────────────────
+    #
+    # 두 번 같은 방식으로 틀렸다: 1971년 정의당(122,914표)이 2012년 정의당으로,
+    # 2016년 민주당(209,872표)이 더불어민주당으로. 둘 다 '어느 구간에도 안 걸림'을
+    # '최신 것'으로 바꿔서 생겼다. 사례별 검사 대신 **함수 수준 불변식**으로 건다.
+    print("\n[fallback 금지] 모르면 최신 정당으로 보내지 않는다")
+    from party_canon import _BASE_ERAS, _REUSED_BASES, disambiguate_party  # noqa: E402
+
+    def next_month(ym):
+        # registry에는 연도만 적힌 것도 있다("1988"). 그 경우 12월로 본다 —
+        # 빈틈을 **좁게** 잡아야 없는 빈틈을 만들지 않는다.
+        y = int(ym[:4])
+        m = int(ym[5:7]) if len(ym) >= 7 and ym[5:7].isdigit() else 12
+        return f"{y + (m == 12)}-{(m % 12) + 1:02d}"
+
+    for base in sorted(_REUSED_BASES):
+        spans = sorted(((f, d) for _n, f, d in _BASE_ERAS[base] if f), key=lambda t: t[0])
+        # ① 첫 노드보다 이른 날짜
+        ck(f"{base}: 첫 구간보다 이르면 원자료 이름 그대로",
+           disambiguate_party(base, "1800-01-01") == base,
+           f'→ {disambiguate_party(base, "1800-01-01")}')
+        # ② 마지막 노드보다 늦은 날짜 — **현존 정당이면 건너뛴다**(dissolved가 없으니
+        #    2999년도 그 구간 안이다. 그건 fallback이 아니라 정상 매칭이다)
+        if all(d != "9999-99" for _f, d in spans):
+            probe = f"{int(spans[-1][1][:4]) + 50}-01-01"
+            ck(f"{base}: 마지막 구간보다 늦으면 원자료 이름 그대로",
+               disambiguate_party(base, probe) == base,
+               f"→ {disambiguate_party(base, probe)}")
+        # ③ 구간 **사이의 빈틈** — 2016년 민주당이 바로 여기 떨어졌다.
+        #    '민주당'만은 registry 노드가 아니라 _MINJOO_ERAS(연속 구간)로 가른다.
+        #    1963·1967 재편처럼 노드 사이가 비어도 같은 계열로 이어지는 구간이 있어서
+        #    빈틈 탐침이 성립하지 않는다 — 아래 전용 검사로 따로 본다.
+        for (_f1, d1), (f2, _d2) in (zip(spans, spans[1:]) if base != "민주당" else []):
+            if d1 == "9999-99" or not d1 or next_month(d1) >= f2:
+                continue
+            gap = next_month(d1) + "-15"
+            ck(f"{base}@{gap[:7]}: 구간 사이 빈틈이면 원자료 이름 그대로",
+               disambiguate_party(base, gap) == base,
+               f"→ {disambiguate_party(base, gap)}")
+    ck("민주당 2016: 최신 노드(더불어민주당)로 가지 않는다",
+       disambiguate_party("민주당", "2016-04-13") != "더불어민주당",
+       disambiguate_party("민주당", "2016-04-13"))
+    ck("민주당 1948: 아래쪽으로도 새지 않는다",
+       disambiguate_party("민주당", "1948-05-10") == "민주당",
+       disambiguate_party("민주당", "1948-05-10"))
+    # 그렇다고 분기 자체가 죽으면 안 된다 — 걸리는 구간은 여전히 걸려야 한다
+    for dt, want in [("1958-05-02", "민주당(1955)"), ("1992-03-24", "민주당(1991)"),
+                     ("2012-04-11", "민주통합당")]:
+        ck(f"민주당@{dt} → {want}", disambiguate_party("민주당", dt) == want,
+           disambiguate_party("민주당", dt))
+
+    # ── 2016년 두 민주당이 동시에 살아 있는가 ──────────────────────────────
+    # 원자료를 정규화로 덮어써서 한 정당이 사라졌던 자리다(f87861d37).
+    print("\n[원자료 보존] 2016 비례에 두 실체가 함께 있다")
+    _r16 = json.loads((ROOT / "data/results/20th-general-2016.json")
+                      .read_text(encoding="utf-8"))
+    _nat = [r for r in _r16["races"]
+            if r.get("sg_typecode") == "7" and r.get("scope") == "nation"]
+    _v = {c["party"]: c["votes"] for r in _nat for c in r["candidates"]}
+    ck("더불어민주당 6,069,744", _v.get("더불어민주당") == 6069744, str(_v.get("더불어민주당")))
+    ck("민주당 209,872", _v.get("민주당") == 209872, str(_v.get("민주당")))
+    ck(f"비례 정당 21종 (NEC 원자료와 같은 수)", len(_v) == 21, str(len(_v)))
+    ck("둘은 다른 identity",
+       identity("민주당", "2016-04-13") != identity("더불어민주당", "2016-04-13"),
+       identity("민주당", "2016-04-13"))
+
     # ── 동음이의 ────────────────────────────────────────────────────────────
     print("\n[동음이의] 이름이 같아도 다른 당")
     ck("민중당 1965 ≠ 민중당 2017",

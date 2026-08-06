@@ -73,6 +73,23 @@
    ]
   },
   {
+   "name": "민주당",
+   "span": "1948~2016",
+   "note": "'민주당'은 11회 넘게 재사용된 이름이라 party_canon._MINJOO_ERAS로 시기별로 가른다. 2014-03 이후 구간이 비어 있고, 2016년 20대 총선에 실재한 민주당(비례 209,872표)이 여기 떨어진다. 지금은 최신 정당으로 보내지 않고 원자료 이름 그대로 둔다 — 이 정당의 정식명·창당 시점을 1차 자료로 확인하면 registry 시기 노드로 나눌 수 있다.",
+   "status": "needs_disambiguation",
+   "reason": "same label used by multiple historical parties",
+   "occurrences": [
+    {
+     "election_date": "2016-04-13",
+     "election": "20대 총선",
+     "proportional_votes": 209872,
+     "resolved_to": null,
+     "evidence": "NEC 개표 API가 '민주당'으로 준다. 20대 비례 21종 중 6위(0.88%)",
+     "status": "open"
+    }
+   ]
+  },
+  {
    "name": "한국독립당",
    "span": "1948~2026",
    "note": "임정 계열 한국독립당과 후대 동명 정당들",

@@ -2,7 +2,7 @@
  "_meta": {
   "current": "21st-general-2020",
   "previous": "20th-general-2016",
-  "generated_at": "2026-08-06T21:12:52+09:00",
+  "generated_at": "2026-08-06T23:23:35+09:00",
   "source": "polis 계산",
   "scope_note": "**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다.",
   "aggregation_note": "**정확한 부분집합 ≠ 대표 가능한 전체.** comparable='yes'는 그 선거구 하나의 delta를 계산할 수 있다는 뜻일 뿐이다. 비교 가능한 곳은 경계가 안정적인 곳이고 제외되는 곳은 재획정이 많은 도시권에 몰리므로, 부분집합 합계는 전국을 대표하지 않을 수 있다. coverage 감사를 통과할 때만 집계 지표를 만든다 — 경고 문구로 대신하지 않는다.",
@@ -163,6 +163,7 @@
   "국민새정당",
   "대한민국당",
   "미래당",
+  "민주당",
   "민중민주당",
   "복지국가당",
   "우리공화당",
@@ -4245,7 +4246,7 @@
    "previous_turnout": 58.76,
    "turnout_delta": 4.64,
    "share_delta": {
-    "더불어민주당": 41.65,
+    "더불어민주당": 43.55,
     "민중당": 0.14,
     "정의당": 0.93
    },
@@ -4263,6 +4264,10 @@
     {
      "party": "국민의당",
      "previous_pct": 53.04
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 1.9
     },
     {
      "party": "새누리당",
@@ -6770,7 +6775,7 @@
    "previous_turnout": 59.13,
    "turnout_delta": 6.78,
    "share_delta": {
-    "더불어민주당": 12.22
+    "더불어민주당": 18.65
    },
    "newly_ran": [
     {
@@ -6786,6 +6791,10 @@
     {
      "party": "국민의당",
      "previous_pct": 15.94
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 6.43
     },
     {
      "party": "새누리당",
@@ -6980,7 +6989,7 @@
    "previous_turnout": 58.83,
    "turnout_delta": 6.14,
    "share_delta": {
-    "더불어민주당": 16.35,
+    "더불어민주당": 17.55,
     "민중당": -0.82
    },
    "newly_ran": [
@@ -7005,6 +7014,10 @@
     {
      "party": "국민의당",
      "previous_pct": 23.48
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 1.2
     },
     {
      "party": "새누리당",
@@ -7873,7 +7886,7 @@
    "previous_turnout": 62.23,
    "turnout_delta": 6.82,
    "share_delta": {
-    "더불어민주당": -3.67
+    "더불어민주당": -1.64
    },
    "newly_ran": [
     {
@@ -7897,6 +7910,10 @@
     {
      "party": "녹색당",
      "previous_pct": 2.82
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 2.03
     },
     {
      "party": "새누리당",
@@ -8648,7 +8665,7 @@
    "previous_turnout": 58.07,
    "turnout_delta": 8.1,
    "share_delta": {
-    "더불어민주당": 19.52
+    "더불어민주당": 20.67
    },
    "newly_ran": [
     {
@@ -8668,6 +8685,10 @@
     {
      "party": "국민의당",
      "previous_pct": 27.47
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 1.15
     },
     {
      "party": "민중연합당",
@@ -9110,9 +9131,7 @@
    "turnout": 68.47,
    "previous_turnout": 64.03,
    "turnout_delta": 4.44,
-   "share_delta": {
-    "더불어민주당": 21.62
-   },
+   "share_delta": {},
    "newly_ran": [
     {
      "party": "국가혁명배당금당",
@@ -9121,6 +9140,10 @@
     {
      "party": "노동당",
      "pct": 2.49
+    },
+    {
+     "party": "더불어민주당",
+     "pct": 24.53
     },
     {
      "party": "미래통합당",
@@ -9135,6 +9158,10 @@
     {
      "party": "국민의당",
      "previous_pct": 5.45
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 2.91
     },
     {
      "party": "새누리당",
@@ -10145,7 +10172,7 @@
    "previous_turnout": 68.82,
    "turnout_delta": 1.53,
    "share_delta": {
-    "더불어민주당": 18.95,
+    "더불어민주당": 19.49,
     "민중당": 2.84
    },
    "newly_ran": [
@@ -10174,6 +10201,10 @@
     {
      "party": "국민의당",
      "previous_pct": 11.84
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 0.54
     },
     {
      "party": "새누리당",
@@ -10568,7 +10599,7 @@
    "previous_turnout": 67.99,
    "turnout_delta": 5.67,
    "share_delta": {
-    "더불어민주당": 21.42
+    "더불어민주당": 23.0
    },
    "newly_ran": [
     {
@@ -10580,6 +10611,10 @@
     {
      "party": "국민의당",
      "previous_pct": 39.12
+    },
+    {
+     "party": "민주당",
+     "previous_pct": 1.58
     },
     {
      "party": "민중연합당",
