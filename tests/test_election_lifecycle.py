@@ -100,5 +100,18 @@ for eid in idx.get("active", []):
        f"status={d.get('status')}인데 index.active에 있다 — "
        "수집을 멈추거나 collect_reason을 남긴다")
 
+# 네 번째 축이 다시 index.active를 빌려 쓰지 못하게 한다.
+#   status(끝났나) · is_final(확정인가) · active(더 수집하나) · date(앞으로 있나)
+# 앞의 셋은 수집·자료 상태고 마지막은 일정이다. timeline이 active를 앵커로 쓰면
+# '수집을 멈추면 미래 일정이 사라지는' 결합이 생긴다 — 실제로 그 구조였다.
+src = (ROOT / "scripts/build/build_timeline.py").read_text(encoding="utf-8")
+code = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+ck("build_timeline이 index.active를 일정 앵커로 쓰지 않는다",
+   'idx.get("active"' not in code and "idx.get('active'" not in code,
+   "일정은 각 선거 메타의 date에서 읽는다")
+
+# active가 비어 있는 것은 정상이다 — 지금 수집 중인 선거가 없다는 뜻일 뿐이다.
+ck("index.json에 세 축의 뜻이 적혀 있다", bool(idx.get("_meaning")))
+
 print(f"\n[선거 상태 정합] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)

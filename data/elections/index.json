@@ -1,9 +1,8 @@
 {
   "_schema": "선거 메타 레지스트리. active 배열의 각 id는 data/elections/{id}.json 메타 파일 참조. archive는 종료된 선거.",
-  "active": [
-    "9th-byelection-2026"
-  ],
+  "active": [],
   "archive": [
+    "9th-byelection-2026",
     "9th-local-2026",
     "21st-pres-2025",
     "byelection-2025-04-02",
@@ -84,7 +83,7 @@
   ],
   "_note": "선거 메타 레지스트리. **active는 '수집 대상'이지 '선거 진행 중'이 아니다** — NESDC 일일 스캔·sitemap 갱신 주기가 이걸 본다. 선거 생애 상태는 각 메타 파일의 `status`(active|archive)이고, 자료 확정 여부는 결과 파일의 `_meta.is_final`이다. 셋을 섞으면 지난 선거가 '진행'으로 남는다(실제로 그랬다).",
   "_meaning": {
-    "index.active": "아직 수집·갱신할 것이 남은 선거 (여론조사 스캔·잦은 sitemap 갱신)",
+    "index.active": "아직 수집·갱신할 것이 남은 선거 (NESDC 일일 순회·잦은 sitemap 갱신). **일정·예측과 무관하다** — 앞으로 표시할 일정은 각 메타의 date에서 읽는다.",
     "{id}.json status": "선거 생애 — 진행 중인가 끝났는가",
     "results _meta.is_final": "개표 자료가 확정인가"
   }

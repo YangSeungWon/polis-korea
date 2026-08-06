@@ -28,10 +28,16 @@ client는 한 파일만 fetch하면 timeline 전체 시각화 가능.
 """
 from __future__ import annotations
 import json
+import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+
+# 기준일을 **고정**한다. date.today()를 쓰면 같은 커밋을 두 번 빌드해도 결과가
+# 달라져 생성기 멱등성 검사가 매일 깨진다. 회차가 늘면 이 값을 올린다.
+from datetime import date as _date0
+TODAY = _date0(2026, 6, 3)
 RESULTS = ROOT / "data/results"
 
 # 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
@@ -405,24 +411,39 @@ def main():
                 entry["localProportionalPartyCounts"] = local_proportional_counts
             out_rounds.append(entry)
 
-    # 향후 예정 선거 (data/elections/index.json active + 주기 기반 예측 ~10년).
-    # 데이터 없는 상태로 추가 — UI에서 "예정" 표시.
+    # 향후 예정 선거 — **공표된 일정 + 주기 기반 예측 ~10년**. 데이터 없는 상태로 추가.
+    #
+    # 예전엔 `index.json`의 `active`를 앵커로 썼는데, 그 필드의 뜻은 '일일 수집 대상'이지
+    # '앞으로 표시할 일정'이 아니다. 넷은 서로 대체할 수 없는 다른 질문이다:
+    #   status(선거가 끝났나) · is_final(결과가 확정인가) ·
+    #   active(더 수집해야 하나) · **여기(앞으로 표시할 일정이 있나)**
+    # 수집을 끝냈다고 일정이 사라지면 안 되고, 반대로 수집을 계속한다고 없는 일정이
+    # 생겨서도 안 된다.
+    #
+    # 그래서 **플래그를 새로 만들지 않고 사실에서 읽는다** — 선거일이 아직 오지 않았고
+    # 결과 회차가 없으면 그건 예정된 선거다. 아는 일정이 없으면 항목이 없는 게 정상이다.
     future = []
-    # active 선거 (메타 파일 읽기)
-    try:
-        idx = json.loads((ROOT / "data/elections/index.json").read_text(encoding="utf-8"))
-        for active_id in idx.get("active", []):
-            meta_path = ROOT / f"data/elections/{active_id}.json"
-            if not meta_path.exists():
-                continue
+    for meta_path in sorted((ROOT / "data/elections").glob("*.json")):
+        if meta_path.name == "index.json":
+            continue
+        try:
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
-            kind = meta.get("type")
-            if kind not in KIND_LABEL:
-                continue
-            # 이미 추가된 회차 있는지
-            n = int(active_id.split("-")[0].rstrip("nrdsth"))
-            if any(r["kind"] == kind and r["n"] == n for r in out_rounds):
-                continue
+        except Exception:                                        # noqa: BLE001
+            continue
+        if not isinstance(meta, dict):
+            continue
+        kind, when = meta.get("type"), meta.get("date") or ""
+        if kind not in KIND_LABEL or not when:
+            continue
+        if when <= TODAY.isoformat():
+            continue                     # 이미 치른 선거는 예정이 아니다
+        m = re.match(r"^(\d+)", meta_path.stem)
+        if not m:
+            continue
+        n = int(m.group(1))
+        if any(r["kind"] == kind and r["n"] == n for r in out_rounds):
+            continue
+        if True:
             future.append({
                 "kind": kind,
                 "n": n,
@@ -435,8 +456,6 @@ def main():
                 # null이면 홈 타임라인 클릭이 정당지지(tracker)로 — assets/status.js electionHref 참조.
                 "pollsUrl": None,
             })
-    except Exception:
-        pass
 
     # 주기 기반 예측 — 공직선거법 §34에 따라 임기만료일 N일 전 이후 첫 수요일.
     # 대선 70일·총선 50일·지선 30일. 마지막 회차의 임기만료일에서 시작.
@@ -459,7 +478,7 @@ def main():
         "local": _date(2030, 6, 30),
     }
     HORIZON_YEARS = 10
-    today = _date(2026, 6, 3)
+    today = TODAY
     horizon = today.replace(year=today.year + HORIZON_YEARS)
 
     def first_wed_on_or_after(dt: _date) -> _date:
