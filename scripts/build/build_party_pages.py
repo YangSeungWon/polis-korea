@@ -288,6 +288,11 @@ def build_runs() -> dict:
     if _RUNS_CACHE:
         return _RUNS_CACHE
     import collections
+    # **같은 이름의 다른 정당을 한 덩어리로 세지 않는다.** 원자료의 '국민의당'은
+    # 1963·2016·2020이 다 그 이름이라, 그대로 세면 1963~2022 · 35M표 · 당선 39가
+    # 한 정당의 기록이 된다. registry의 괄호 표기(민주당(1991) 등)와도 안 맞아
+    # 18종 중 14종이 조용히 빈 채로 남았다. 저장소의 단일 출처를 쓴다.
+    from party_canon import disambiguate_party
     agg: dict = collections.defaultdict(dict)
     for f in sorted((ROOT / "data/results").glob("*.json")):
         if ".sigungu" in f.name or f.name.startswith(
@@ -309,9 +314,10 @@ def build_runs() -> dict:
                 for c in o.get("candidates") or []:
                     if not isinstance(c, dict):
                         continue
-                    party = c.get("party")
-                    if not party:
+                    raw = c.get("party")
+                    if not raw or raw == "무소속":
                         continue
+                    party = disambiguate_party(raw, date)
                     row = seen[party]
                     row[0] += 1
                     row[1] += c.get("votes") or 0
