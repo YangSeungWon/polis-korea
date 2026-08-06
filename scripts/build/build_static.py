@@ -165,6 +165,47 @@ def _poll_election_meta(el: dict) -> dict | None:
     }
 
 
+def poll_election_block(meta: dict, el: dict) -> str:
+    """그 회차 여론조사의 실측 요약 — 건수·기간·기관.
+
+    **meta는 평탄화된 dict다**(polls_path가 최상위, archive 키 없음). 원본 el에서만
+    polls_window를 얻을 수 있어 둘 다 받는다 — 여기서 meta['archive']를 찾다가
+    빈 문자열을 돌려줬고, 그러면 마커만 지워져 아무 티도 나지 않았다.
+    """
+    ar = el.get('archive') or {}
+    win = ar.get('polls_window') or []
+    path = ROOT / (meta.get('polls_path') or '')
+    if len(win) < 2 or not path.exists():
+        return ''
+    try:
+        polls = json.loads(path.read_text(encoding='utf-8')).get('polls') or []
+    except Exception:                                            # noqa: BLE001
+        return ''
+    sel = [p for p in polls if p.get('period_end')
+           and win[0] <= p['period_end'] <= win[1] and not p.get('is_self_poll')]
+    if not sel:
+        return ''
+    ends = sorted(p['period_end'] for p in sel)
+    agencies = sorted({p.get('agency', '') for p in sel if p.get('agency')})
+    offices = sorted({p.get('office_level', '') for p in sel if p.get('office_level')})
+    name, date_s = _esc(meta['name']), _esc(meta['date'])
+    li = ''.join(f'<li>{_esc(a)}</li>' for a in agencies[:8])
+    more = f'<li>외 {len(agencies) - 8}곳</li>' if len(agencies) > 8 else ''
+    off = ' · '.join(_esc(o) for o in offices[:5])
+    return (
+        f'<section class="pe-static"><h2 class="pe-static-title">{name} 여론조사</h2>'
+        f'<p class="pe-static-lede">{date_s} 선거를 앞두고 중앙선거여론조사심의위원회'
+        f'(NESDC)에 등록·공표된 조사 <b>{len(sel):,}건</b>을 실제 결과와 대조합니다. '
+        f'조사 기간 {_esc(ends[0])} ~ {_esc(ends[-1])} · 조사기관 {len(agencies)}곳'
+        + (f' · 직위 {off}' if off else '') + '.</p>'
+        f'<p class="pe-static-lede">기관마다 방법·표본이 달라 값이 갈립니다(house '
+        f'effect). 아래에서 조사별 표본수·응답률·표본오차를 실제 득표와 나란히 봅니다.</p>'
+        f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
+        f'<ul class="pe-agency-list">{li}{more}</ul></details>'
+        f'<p class="pe-static-links"><a href="/archive/{_esc(meta["slug"])}/">'
+        f'{name} 결과 아카이브 →</a></p></section>')
+
+
 def build_poll_elections(urls: list):
     """선거별 여론조사 vs 실제 페이지 /polls/{id}/ + 디렉터리 index.json 생성."""
     template = INDEX_TEMPLATE.read_text(encoding='utf-8')
@@ -191,6 +232,11 @@ def build_poll_elections(urls: list):
         og_image = f'{SITE}/og/{slug}.png' if _og.exists() else None
         # __INITIAL_STATE__.election 주입 — core.js POLL_ELECTION 기본값을 덮어씀.
         html = replace_meta(template, title, desc, canon, {'election': meta}, og_image=og_image)
+        # **회차 고유 내용을 정적으로.** 없으면 9개 페이지의 정적 본문이 전부 같다
+        # (허브 껍데기 1,228자). 각 회차는 다른 사실을 담는 문서인데 크롤러에겐 같은
+        # 페이지로 보였다. 블록이 비면 마커만 지워지고 티가 안 나므로 아래에서 검사한다.
+        html = html.replace('<!-- PE_STATIC --><!-- /PE_STATIC -->',
+                            poll_election_block(meta, el), 1)
         write_page(ROOT / 'polls' / slug / 'index.html', html)
         urls.append((canon, '0.6', 'monthly'))
         made.append({'slug': slug, 'name': meta['name'], 'date': date_s, 'n': n})

@@ -286,3 +286,12 @@
 .pd-trend { width: 100%; height: auto; display: block; }
 .pd-dim { margin: 6px 0 6px; }
 .pd-gap-note { font-size: 12px; color: var(--ink-soft); margin: 6px 0 8px; line-height: 1.5; }
+
+/* 회차별 정적 요약 — JS 없이도 이 문서가 무엇을 담는지 읽힌다. 9개가 같은 껍데기였다. */
+.pe-static { margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.pe-static-title { font-size: 18px; margin: 0 0 6px; }
+.pe-static-lede { margin: 0 0 6px; color: var(--ink-soft); font-size: 14px; max-width: 66ch; }
+.pe-static-more > summary { font-size: 13px; color: var(--ink-soft); cursor: pointer; }
+.pe-agency-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex;
+  flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--ink-soft); }
+.pe-static-links { margin: 8px 0 0; font-size: 14px; }
