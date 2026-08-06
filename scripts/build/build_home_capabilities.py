@@ -212,8 +212,36 @@ def build(c: dict) -> str:
             out.append(row(href, title, sub, fig, viz).rstrip("\n"))
         out.append('    </div>')
     out.append('  </section>')
+    # 데이터 제품에서 freshness는 장식이 아니다 — '지난 선거를 진행이라 하네'를 한 번
+    # 겪으면 나머지 숫자도 의심받는다. 무엇이 언제 갱신됐는지 화면에 남긴다.
+    fresh = data_freshness()
+    if fresh:
+        out.append(f'  <p class="cap-fresh">데이터 갱신 <time datetime="{fresh}">'
+                   f'{fresh}</time> · 출처는 각 화면에 표기</p>')
     out.append("  " + END)
     return "\n".join(out)
+
+
+def data_freshness() -> str:
+    """화면이 실제로 쓰는 데이터의 최신 갱신일. **빌드 시각이 아니다** — 빌드는 매일
+    돌아도 데이터가 안 바뀔 수 있고, 사용자가 알고 싶은 건 자료 쪽이다."""
+    # 파일 **내용**의 타임스탬프만 쓴다. mtime이나 빌드 시각을 쓰면 같은 커밋에서
+    # 두 번 돌릴 때 값이 달라져 생성기 멱등성 검사가 매번 깨진다.
+    #
+    # 결과 파일은 크다 — 통째로 파싱하지 않고 앞부분에서 `_meta`만 훑는다.
+    newest = ""
+    heads = [ROOT / "data/polls/aggregated.json", ROOT / "data/timeline.json"]
+    heads += sorted((ROOT / "data/results").glob("*.json"))
+    pat = re.compile(r'"(?:fetched_at|generated_at|updated|_updated)"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+    for f in heads:
+        try:
+            with f.open(encoding="utf-8") as fh:
+                head = fh.read(4096)
+        except OSError:
+            continue
+        for m in pat.finditer(head):
+            newest = max(newest, m.group(1))
+    return newest
 
 
 def main():

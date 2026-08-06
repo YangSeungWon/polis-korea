@@ -209,3 +209,18 @@ a.pp-party:hover { background: var(--bg2); }
   color: var(--ink-soft); text-decoration: none; white-space: nowrap;
 }
 .pp-region:hover { border-color: var(--rule-strong); color: var(--ink); }
+
+/* 지역 허브 찾기 — 목록을 눈으로 훑는 대신 좁혀 들어간다. */
+.rg-find { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; flex-wrap: wrap; }
+.rg-find label { font-size: 13px; color: var(--ink-soft); }
+.rg-find input {
+  flex: 1 1 260px; max-width: 360px; padding: 7px 11px; font: inherit; font-size: 14px;
+  border: 1px solid var(--rule-strong); border-radius: 6px;
+  background: var(--bg); color: var(--ink);
+}
+.rg-find input:focus-visible { outline: 2px solid var(--accent, #0a5cb8); outline-offset: 1px; }
+.rg-hit { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+/* 폐지·변경된 행정구역 — 자료는 남기되 '내 지역 찾기' 동선에서는 접어 둔다. */
+.rg-past { margin-top: 8px; }
+.rg-past > summary { font-size: 13px; color: var(--ink-soft); cursor: pointer; padding: 2px 0; }
+.rg-item.is-past { opacity: 0.72; }

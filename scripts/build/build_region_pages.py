@@ -315,30 +315,75 @@ HUB = """<!DOCTYPE html>
   <section class="intro">
     <h1>지역별 선거 기록</h1>
     <p class="lede">시군구 {n}곳 — 역대 대선·총선·지선에서 그 지역이 어떻게 갈렸는지.</p>
+    <form class="rg-find" role="search" onsubmit="return false">
+      <label for="rg-q">지역 찾기</label>
+      <input id="rg-q" type="search" autocomplete="off" placeholder="예: 성남, 분당, 김천"
+             aria-describedby="rg-hit">
+      <span id="rg-hit" class="rg-hit" aria-live="polite"></span>
+    </form>
   </section>
 {body}
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>
+<script src="assets/region-hub.js"></script>
 </body>
 </html>
 """
 
 
+def current_units() -> set:
+    """지금 존재하는 시군구 이름. **목록을 손으로 적지 않는다** — 현행 경계 파일에서 읽는다.
+
+    폐지·개칭된 곳(명주군·원성군·춘성군…)이 현재 지역과 같은 줄에 섞여 있으면 '내 지역
+    찾기'가 어려워진다. 자료로서는 남아야 하지만 **찾는 동선에서는 갈라야** 한다.
+    """
+    names: set = set()
+    for y in (2026, 2025):
+        f = ROOT / f"data/geo/sigungu_{y}.json"
+        if not f.exists():
+            continue
+        d = json.loads(f.read_text(encoding="utf-8"))
+        for ft in (d.get("features") or d):
+            n = (ft.get("properties") or {}).get("name") or ""
+            if n:
+                names.add(n)
+                # 일반구(성남시분당구)는 시(성남시)로도 인정 — 지역 페이지가 시 단위다
+                m = re.match(r"^([가-힣]+시)[가-힣]+구$", n)
+                if m:
+                    names.add(m.group(1))
+        if names:
+            break
+    return names
+
+
 def build_hub(entries: list) -> str:
-    """시도별로 묶은 전체 목록. 400개를 한 페이지에서 직접 링크해 크롤 경로를 1-hop으로 둔다."""
+    """시도별로 묶은 전체 목록. 400개를 한 페이지에서 직접 링크해 크롤 경로를 1-hop으로 둔다.
+
+    현재 지역이 먼저, 폐지·변경된 행정구역은 그 아래 따로. 둘을 섞으면 목록에서 자기
+    지역을 찾는 게 어려워진다 — 자료는 그대로 두되 **동선만** 가른다.
+    """
+    cur = current_units()
     by_sido = defaultdict(list)
     for sd, sg, slug in entries:
         by_sido[sd].append((sg, slug))
     blocks = []
     for sd in sorted(by_sido):
-        items = "".join(
-            f'<a class="rg-item" href="/region/{slug}/">{esc(sg)}</a>'
-            for sg, slug in sorted(by_sido[sd]))
-        blocks.append(f'<section class="dash-section"><h2 class="dash-section-title">{esc(sd)}'
-                      f'<span class="rg-count">{len(by_sido[sd])}</span></h2>'
-                      f'<div class="rg-grid">{items}</div></section>')
+        live = sorted((sg, slug) for sg, slug in by_sido[sd] if sg in cur)
+        past = sorted((sg, slug) for sg, slug in by_sido[sd] if sg not in cur)
+        item = (lambda sg, slug, past_: f'<a class="rg-item{" is-past" if past_ else ""}" '
+                f'href="/region/{slug}/" data-name="{esc(sg)}">{esc(sg)}</a>')
+        grid = "".join(item(sg, slug, False) for sg, slug in live)
+        if past:
+            grid += ('<details class="rg-past"><summary>폐지·변경된 행정구역 '
+                     f'{len(past)}곳</summary><div class="rg-grid">'
+                     + "".join(item(sg, slug, True) for sg, slug in past)
+                     + '</div></details>')
+        blocks.append(f'<section class="dash-section" data-sido="{esc(sd)}">'
+                      f'<h2 class="dash-section-title">{esc(sd)}'
+                      f'<span class="rg-count">{len(live)}</span></h2>'
+                      f'<div class="rg-grid">{grid}</div></section>')
     return "\n".join(blocks)
 
 

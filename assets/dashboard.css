@@ -250,3 +250,8 @@
   .cap-viz-cell { grid-column: 1 / -1; }
   .cap-viz { height: 30px; margin-top: 4px; }
 }
+
+/* 데이터 갱신일 — 빌드 시각이 아니라 자료 쪽. 신뢰의 근거라 작게라도 항상 보인다. */
+.cap-fresh {
+  margin: 10px 0 0; font-size: 12.5px; color: var(--ink-soft);
+}
