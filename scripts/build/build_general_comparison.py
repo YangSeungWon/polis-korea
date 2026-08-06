@@ -110,9 +110,10 @@ def election_date(eid: str) -> str:
 # 그 부분집합을 합친 값이 전국을 대표한다는 뜻이 아니다.
 #
 # 비교 가능한 선거구는 경계가 안정적인 곳이고, 제외되는 곳은 재획정이 많은 도시권에
-# 몰린다. 22↔21에서 실측하니 1위 정당 구성이 민주당 -5.5%p / 국민의힘 +6.1%p
-# 기울었다 — **측정하려는 swing(±4%p)보다 편향(6%p)이 크다.** 그런 값은 정확히
-# 계산해도 전국 변화로 읽히면 안 된다.
+# 몰린다. 선거구 계보를 고치기 전 22↔21 실측에서 1위 정당 구성이 민주당 -5.5%p /
+# 국민의힘 +6.1%p 기울었다 — **측정하려는 swing(±4%p)보다 편향이 컸다.** 계보가
+# 좋아진 지금 그 편차는 0.9%p지만 세종 coverage 0%로 여전히 차단된다.
+# 편차 수치는 입력이 좋아지면 변한다 — 그래서 상수로 박지 않고 매번 재는 것이다.
 #
 # 문구로 경고하지 않는다. 대표성이 검증되지 않으면 **집계 지표를 만들지 않는다.**
 MIN_ELECTORATE = 0.90    # 선거인 coverage
@@ -152,7 +153,9 @@ def coverage_audit(units: list, cur: dict) -> dict:
             if k in yes:
                 w_yes[p] += 1
     party_share = {}
-    for p in set(w_all):
+    # set 순회는 실행마다 순서가 달라 같은 입력에서도 diff가 생긴다. 그러면 이 파일은
+    # '항상 변경됨'이 되어 낡은 것과 구별되지 않는다 — 정렬해서 결정적으로 만든다.
+    for p in sorted(w_all):
         if w_all[p] < 3:
             continue
         a = w_all[p] / len(all_k) * 100
@@ -375,15 +378,62 @@ def build(cur_id: str, prev_id: str) -> dict:
     }
 
 
+def existing_pairs() -> list:
+    """이미 만들어 둔 비교 쌍 — 인자 없이 실행하면 그것들을 다시 만든다.
+
+    이 산출물은 registry(정당 identity)와 선거구 계보를 **둘 다** 입력으로 받는데,
+    어느 쪽을 고쳐도 자동으로 다시 만들어지지 않아 조용히 낡았다. 실제로 그랬다:
+    선거구 계보가 좋아진 뒤에도 committed 파일은 compared 204(→226)에 멈춰 있었다.
+    그래서 regen_check가 인자 없이 돌릴 수 있어야 한다.
+    """
+    out = []
+    for fp in sorted(OUT.glob("*__*.json")):
+        if fp.name.startswith("national__"):
+            continue                      # 전국 집계는 build_general_national의 산출물
+        cur, _, prev = fp.stem.partition("__")
+        if cur and prev and "__" not in prev:
+            out.append((cur, prev))
+    return out
+
+
+def write_one(cur_id: str, prev_id: str) -> dict:
+    """생성 시각은 **내용이 바뀔 때만** 바꾼다.
+
+    매번 새 timestamp를 쓰면 내용이 같아도 diff가 생겨서, 이 파일은 '항상 변경됨'이
+    되고 결국 freshness 검사에서 빠지게 된다 — 낡아도 아무도 모르게 된다.
+    """
+    d = build(cur_id, prev_id)
+    OUT.mkdir(parents=True, exist_ok=True)
+    fp = OUT / f"{cur_id}__{prev_id}.json"
+    if fp.exists():
+        try:
+            old = json.loads(fp.read_text(encoding="utf-8"))
+            prev_at = (old.get("_meta") or {}).get("generated_at")
+            probe = json.loads(json.dumps(d))
+            probe["_meta"]["generated_at"] = prev_at
+            if probe == old and prev_at:
+                d["_meta"]["generated_at"] = prev_at
+        except Exception:                                        # noqa: BLE001
+            pass
+    fp.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return d
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--current", required=True)
-    ap.add_argument("--previous", required=True)
+    ap.add_argument("--current")
+    ap.add_argument("--previous")
     args = ap.parse_args()
-    d = build(args.current, args.previous)
-    OUT.mkdir(parents=True, exist_ok=True)
+    if not args.current or not args.previous:
+        pairs = existing_pairs()
+        if not pairs:
+            ap.error("--current/--previous 가 필요하다 (기존 산출물도 없다)")
+        for cur, prev in pairs:
+            write_one(cur, prev)
+            print(f"→ {cur}__{prev}", file=sys.stderr)
+        return 0
+    d = write_one(args.current, args.previous)
     fp = OUT / f"{args.current}__{args.previous}.json"
-    fp.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     c = d["counts"]
     print(f"→ {fp.relative_to(ROOT)}", file=sys.stderr)
     print(f"   전체 {c['total_districts']} · 직접 비교 {c['compared']}"

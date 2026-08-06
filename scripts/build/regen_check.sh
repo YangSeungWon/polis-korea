@@ -24,6 +24,11 @@ PY="${PYTHON:-python}"
 # 사라진다(실제로 그랬다). 의존 관계가 있는 것은 반드시 짝으로 넣는다.
 GENERATORS=(
   build_timeline         # data/timeline.json (정당·회차 메타)
+  # 비교 산출물은 registry(정당 identity)와 선거구 계보를 **둘 다** 입력으로 받는데
+  # 어느 쪽을 고쳐도 자동으로 다시 만들어지지 않아 조용히 낡았다 — compared 204에
+  # 멈춰 있었고 다시 돌리자 226이 됐다. 인자 없이 돌면 기존 조합을 전부 다시 만든다.
+  build_general_comparison  # data/comparisons/general/{cur}__{prev}.json
+  build_general_national    # data/comparisons/general/national__*.json
   build_person_index     # assets/person-index.json 뼈대
   enrich_person_index    #   └ assembly_id·비례 보강 (반드시 뒤에)
   sync_nav_html          # nav 정본 → 모든 HTML
@@ -53,7 +58,8 @@ done
 # 있는 것은 정상이므로, 추적 중인 변경 + 생성 경로의 새 파일만 본다.
 OUT_PATHS=(person party region history polls archive share sitemap.xml robots.txt
            index.html elections.html
-           assets/person-index.json data/timeline.json)
+           assets/person-index.json data/timeline.json
+           data/comparisons)
 # **stage된 것은 통과**시킨다. 이 검사가 막으려는 것은 "커밋에 안 들어가는 산출물"이지
 # "새로 생긴 산출물"이 아니다. 새 생성기를 추가하는 커밋은 산출물이 HEAD에 없는 게
 # 당연한데, 그걸 실패로 보면 새 산출물을 **영원히** 커밋할 수 없다(add → 여전히 실패).

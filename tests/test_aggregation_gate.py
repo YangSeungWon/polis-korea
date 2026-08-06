@@ -4,8 +4,10 @@
 그 부분집합을 합친 값이 전국을 대표한다는 뜻이 아니다.
 
 비교 가능한 곳은 경계가 안정적인 곳이고 제외되는 곳은 재획정이 많은 도시권에 몰린다.
-22↔21에서 실측하니 1위 정당 구성이 민주당 -5.5%p / 국민의힘 +6.1%p 기울었다 —
-**측정하려는 swing(±4%p)보다 편향(6%p)이 크다.**
+선거구 계보를 고치기 전 22↔21 실측에서 1위 정당 구성이 민주당 -5.5%p / 국민의힘
++6.1%p 기울었다 — **측정하려는 swing(±4%p)보다 편향이 컸다.** 계보가 좋아진 지금
+그 편차는 0.9%p로 내려갔고, 차단은 세종 coverage 0%가 이어받았다.
+**그래서 검사는 특정 수치가 아니라 '적힌 사유가 기록된 수치에서 나오는가'를 본다.**
 
 그래서 경고 문구로 해결하지 않는다. 대표성이 검증되지 않으면 **집계 지표를 만들지
 않는다.** 값이 존재하면 결국 어딘가에서 전국 지표로 쓰인다.
@@ -65,14 +67,29 @@ def main() -> int:
         bad = [u["district"] for u in with_delta if u["comparable"] != "yes"]
         ck("비교 불가 단위에는 delta가 없다", not bad, str(bad[:3]))
 
-        # ── 22↔21은 편향이 커서 차단되어야 한다 (실측 근거) ────────────────
+        # ── 차단 사유가 기록된 숫자에서 실제로 나오는가 ────────────────────
+        # 예전엔 '22↔21은 1위 정당 구성 ±6%p라서 차단'을 상수로 박아 뒀다. 그런데
+        # 선거구 계보가 좋아져 비교 가능 선거구가 215→237로 늘자 그 편차는 0.9%p로
+        # 내려갔고(차단은 세종 coverage 0%로 유지), **사실이 나아졌는데 검사가 실패**했다.
+        # 그러니 특정 수치가 아니라 사유와 수치의 대응을 본다.
         if "22nd" in fp.stem:
-            ck("22↔21은 집계가 차단된다 (1위 정당 구성 ±6%p 편향)",
-               allowed is False, str(d.get("aggregation_blocked_because")))
+            ck("22↔21은 집계가 차단된다", allowed is False,
+               str(d.get("aggregation_blocked_because")))
             skews = {p: v["skew_pp"] for p, v in cov["by_winning_party"].items()}
             ck("정당 구성 편차가 기록돼 있다", bool(skews), str(skews))
-            ck("편차가 실제로 3%p를 넘는다",
-               max(abs(v) for v in skews.values()) > 3.0, str(skews))
+        for why in (d.get("aggregation_blocked_because") or []):
+            if "선거인 coverage" in why:
+                ok, ev = cov["electorate"]["pct"] < 90, cov["electorate"]["pct"]
+            elif "1위 정당 구성 편차" in why:
+                ev = max((abs(v["skew_pp"]) for v in cov["by_winning_party"].values()),
+                         default=0)
+                ok = ev > 3.0
+            elif "미만 시도" in why:
+                thin = {s: b["pct"] for s, b in cov["by_sido"].items() if b["pct"] < 30}
+                ok, ev = bool(thin), thin
+            else:
+                ok, ev = False, "알 수 없는 사유 형식"
+            ck(f"차단 사유가 수치와 맞는다 — {why[:34]}", ok, str(ev))
 
     # ── 생성기에 게이트가 하드코딩으로 우회되지 않았는가 ──────────────────
     print("\n[생성기]")

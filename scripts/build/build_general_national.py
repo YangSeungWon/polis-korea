@@ -1,9 +1,10 @@
 """총선 전국 집계 — **선거구 매칭 없이** 계산한다.
 
 전국 정당 변화를 보려고 비교 가능한 선거구 부분집합을 합치면 안 된다. 그 부분집합은
-경계가 안정적인 곳에 쏠려 있어 편향이 측정 대상보다 크다(22↔21에서 1위 정당 구성이
-±6%p 기울었다). 그런데 **전국 전체를 각 회차마다 독립적으로 합치면** 그 문제가
-아예 생기지 않는다 — 공간 분할이 달라졌을 뿐 모집단은 같기 때문이다.
+경계가 안정적인 곳에 쏠려 있어 편향이 측정 대상보다 클 수 있다(선거구 계보를 고치기
+전 22↔21 실측에서 1위 정당 구성이 ±6%p 기울었다 — 계보가 좋아진 지금은 0.9%p로
+내려갔지만, 부분집합이 대표성을 보장하지 않는다는 사실 자체는 그대로다).
+그런데 **전국 전체를 각 회차마다 독립적으로 합치면** 그 문제가 아예 생기지 않는다 — 공간 분할이 달라졌을 뿐 모집단은 같기 때문이다.
 
 그래서 총선 비교는 네 층으로 나뉜다:
   ① 전국 집계        여기 — 선거구 lineage 불필요
@@ -134,8 +135,10 @@ def build(eids: list) -> dict:
             "method": ("각 회차의 **전체 지역구 결과를 독립적으로 전국 합산**한다. "
                        "선거구 간 1:1 매칭을 요구하지 않는다 — 공간 분할이 달라져도 "
                        "전체 모집단은 같기 때문이다."),
-            "why_not_subset": ("비교 가능한 선거구만 합치면 편향이 측정 대상보다 크다. "
-                               "22↔21에서 그 부분집합의 1위 정당 구성이 ±6%p 기울었다. "
+            "why_not_subset": ("비교 가능한 선거구만 합치면 그 부분집합이 전국을 대표한다는 "
+                               "보장이 없다. 편향은 계보 품질에 따라 변한다 — 22↔21은 "
+                               "예전 계보에서 1위 정당 구성이 ±6%p 기울었고 지금은 0.9%p다. "
+                               "그래도 세종 coverage 0%로 집계는 여전히 차단된다. "
                                "전국 변화는 여기서, 같은 선거구의 변화는 "
                                "build_general_comparison.py에서 — 두 질문은 다르다."),
             "candidacy_note": ("전국 득표율은 모든 지역구에 후보를 낸 정당에는 좋은 지표지만 "
@@ -145,14 +148,49 @@ def build(eids: list) -> dict:
     }
 
 
+def existing_sets() -> list:
+    """이미 만들어 둔 조합 — 인자 없이 실행하면 그것들을 다시 만든다(regen_check용)."""
+    out = []
+    for fp in sorted(OUT.glob("national__*.json")):
+        els = fp.stem[len("national__"):].split("__")
+        if all(els):
+            out.append(els)
+    return out
+
+
+def write_one(els: list) -> dict:
+    """생성 시각은 **내용이 바뀔 때만** 바꾼다 — 매번 바뀌면 낡은 것과 구별되지 않는다."""
+    d = build(els)
+    OUT.mkdir(parents=True, exist_ok=True)
+    fp = OUT / ("national__" + "__".join(els) + ".json")
+    if fp.exists():
+        try:
+            old = json.loads(fp.read_text(encoding="utf-8"))
+            prev_at = (old.get("_meta") or {}).get("generated_at")
+            probe = json.loads(json.dumps(d))
+            probe["_meta"]["generated_at"] = prev_at
+            if probe == old and prev_at:
+                d["_meta"]["generated_at"] = prev_at
+        except Exception:                                        # noqa: BLE001
+            pass
+    fp.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return d
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--elections", nargs="+", required=True)
+    ap.add_argument("--elections", nargs="+")
     args = ap.parse_args()
-    d = build(args.elections)
-    OUT.mkdir(parents=True, exist_ok=True)
+    if not args.elections:
+        sets = existing_sets()
+        if not sets:
+            ap.error("--elections 가 필요하다 (기존 산출물도 없다)")
+        for els in sets:
+            write_one(els)
+            print("→ national__" + "__".join(els), file=sys.stderr)
+        return 0
+    d = write_one(args.elections)
     fp = OUT / ("national__" + "__".join(args.elections) + ".json")
-    fp.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"→ {fp.relative_to(ROOT)}", file=sys.stderr)
     for eid, e in d["elections"].items():
         nd = e["national_district_vote"]

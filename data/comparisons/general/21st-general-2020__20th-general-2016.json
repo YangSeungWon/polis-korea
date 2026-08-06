@@ -2,7 +2,7 @@
  "_meta": {
   "current": "21st-general-2020",
   "previous": "20th-general-2016",
-  "generated_at": "2026-08-05T17:11:12+09:00",
+  "generated_at": "2026-08-06T17:29:51+09:00",
   "source": "polis 계산",
   "scope_note": "**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다.",
   "aggregation_note": "**정확한 부분집합 ≠ 대표 가능한 전체.** comparable='yes'는 그 선거구 하나의 delta를 계산할 수 있다는 뜻일 뿐이다. 비교 가능한 곳은 경계가 안정적인 곳이고 제외되는 곳은 재획정이 많은 도시권에 몰리므로, 부분집합 합계는 전국을 대표하지 않을 수 있다. coverage 감사를 통과할 때만 집계 지표를 만든다 — 경고 문구로 대신하지 않는다.",
@@ -11,9 +11,9 @@
  },
  "counts": {
   "total_districts": 253,
-  "compared": 204,
-  "undetermined": 18,
-  "excluded_redistricting": 31,
+  "compared": 226,
+  "undetermined": 9,
+  "excluded_redistricting": 18,
   "by_relation": {
    "exact": 198,
    "unresolvable": 8,
@@ -24,47 +24,47 @@
    "split": 2
   },
   "outcome": {
-   "party_flip": 114,
-   "party_hold": 88,
+   "party_flip": 132,
+   "party_hold": 92,
    "independent_to_independent": 2
   }
  },
  "aggregation_allowed": false,
  "aggregation_blocked_because": [
-  "선거인 coverage 80.6% < 90%",
+  "선거인 coverage 89.5% < 90%",
   "coverage 30% 미만 시도: 세종(0.0%)"
  ],
  "coverage": {
   "districts": {
-   "compared": 204,
+   "compared": 226,
    "total": 253,
-   "pct": 80.6
+   "pct": 89.3
   },
   "electorate": {
-   "compared": 35451494,
+   "compared": 39352794,
    "total": 43961157,
-   "pct": 80.6
+   "pct": 89.5
   },
   "metro_share": {
    "all_pct": 47.8,
-   "compared_pct": 49.5,
-   "skew_pp": 1.7
+   "compared_pct": 48.7,
+   "skew_pp": 0.8
   },
   "by_winning_party": {
    "더불어민주당": {
     "all_pct": 64.4,
-    "compared_pct": 65.2,
-    "skew_pp": 0.8
-   },
-   "미래통합당": {
-    "all_pct": 33.2,
-    "compared_pct": 32.4,
-    "skew_pp": -0.8
+    "compared_pct": 64.6,
+    "skew_pp": 0.2
    },
    "무소속": {
     "all_pct": 2.0,
-    "compared_pct": 2.5,
-    "skew_pp": 0.5
+    "compared_pct": 2.2,
+    "skew_pp": 0.2
+   },
+   "미래통합당": {
+    "all_pct": 33.2,
+    "compared_pct": 32.7,
+    "skew_pp": -0.5
    }
   },
   "by_sido": {
@@ -85,8 +85,8 @@
    },
    "인천": {
     "total": 13,
-    "compared": 9,
-    "pct": 69.2
+    "compared": 12,
+    "pct": 92.3
    },
    "광주": {
     "total": 8,
@@ -105,8 +105,8 @@
    },
    "경기": {
     "total": 59,
-    "compared": 43,
-    "pct": 72.9
+    "compared": 49,
+    "pct": 83.1
    },
    "충북": {
     "total": 8,
@@ -120,18 +120,18 @@
    },
    "전남": {
     "total": 10,
-    "compared": 6,
-    "pct": 60.0
+    "compared": 10,
+    "pct": 100.0
    },
    "경북": {
     "total": 13,
-    "compared": 9,
-    "pct": 69.2
+    "compared": 12,
+    "pct": 92.3
    },
    "경남": {
     "total": 16,
-    "compared": 9,
-    "pct": 56.2
+    "compared": 12,
+    "pct": 75.0
    },
    "세종": {
     "total": 2,
@@ -140,13 +140,13 @@
    },
    "강원": {
     "total": 8,
-    "compared": 3,
-    "pct": 37.5
+    "compared": 5,
+    "pct": 62.5
    },
    "전북": {
     "total": 10,
-    "compared": 6,
-    "pct": 60.0
+    "compared": 7,
+    "pct": 70.0
    },
    "제주": {
     "total": 3,
@@ -209,16 +209,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 0.86
+     "party": "국가혁명배당금당",
+     "pct": 0.54
     },
     {
      "party": "미래통합당",
      "pct": 11.28
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.54
+     "party": "민중당",
+     "pct": 0.86
     }
    ],
    "no_longer_ran": [
@@ -277,30 +277,30 @@
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 0.51
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.53
     },
     {
      "party": "미래통합당",
      "pct": 41.13
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.51
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.17
+     "party": "국민의당",
+     "previous_pct": 8.92
     },
     {
      "party": "새누리당",
      "previous_pct": 44.05
     },
     {
-     "party": "국민의당",
-     "previous_pct": 8.92
+     "party": "정의당",
+     "previous_pct": 3.17
     }
    ]
   },
@@ -329,35 +329,35 @@
    "previous_turnout": 57.83,
    "turnout_delta": 6.77,
    "share_delta": {
-    "민중당": -0.38,
-    "더불어민주당": 9.61
+    "더불어민주당": 9.61,
+    "민중당": -0.38
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 0.51
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.71
+    },
+    {
+     "party": "미래통합당",
+     "pct": 43.19
     },
     {
      "party": "민생당",
      "pct": 0.85
     },
     {
-     "party": "미래통합당",
-     "pct": 43.19
+     "party": "우리공화당",
+     "pct": 0.51
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 43.82
-    },
-    {
      "party": "국민의당",
      "previous_pct": 10.66
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 43.82
     }
    ]
   },
@@ -365,9 +365,46 @@
    "district": "강원 춘천시철원군화천군양구군갑",
    "sido": "강원",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "이전 '강원 춘천시'의 36%만 차지",
-   "previous_district": "강원 춘천시"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.8%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "강원 춘천시",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "허영",
+    "party": "더불어민주당",
+    "pct": 51.32
+   },
+   "previous_winner": {
+    "name": "김진태",
+    "party": "새누리당",
+    "pct": 50.55
+   },
+   "margin": 7.38,
+   "previous_margin": 4.61,
+   "margin_delta": 2.77,
+   "turnout": 68.51,
+   "previous_turnout": 59.14,
+   "turnout_delta": 9.37,
+   "share_delta": {
+    "더불어민주당": 5.38,
+    "정의당": 0.58
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.64
+    },
+    {
+     "party": "미래통합당",
+     "pct": 43.94
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 50.55
+    }
+   ]
   },
   {
    "district": "강원 춘천시철원군화천군양구군을",
@@ -381,17 +418,94 @@
    "district": "강원 홍천군횡성군영월군평창군",
    "sido": "강원",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '강원 태백시횡성군영월군평창군정선군' 겹침 66%/70%",
-   "previous_district": "강원 태백시횡성군영월군평창군정선군"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.5%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "강원 태백시횡성군영월군평창군정선군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "유상범",
+    "party": "미래통합당",
+    "pct": 48.6
+   },
+   "previous_winner": {
+    "name": "염동열",
+    "party": "새누리당",
+    "pct": 40.75
+   },
+   "margin": 10.2,
+   "previous_margin": 1.26,
+   "margin_delta": 8.94,
+   "turnout": 67.09,
+   "previous_turnout": 59.73,
+   "turnout_delta": 7.36,
+   "share_delta": {
+    "더불어민주당": 18.64
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 1.1
+    },
+    {
+     "party": "미래통합당",
+     "pct": 48.6
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 40.75
+    }
+   ]
   },
   {
    "district": "경기 고양시갑",
    "sido": "경기",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/92% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "경기 고양시갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.3%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 고양시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "심상정",
+    "party": "정의당",
+    "pct": 39.39
+   },
+   "previous_winner": {
+    "name": "심상정",
+    "party": "정의당",
+    "pct": 52.97
+   },
+   "margin": 6.63,
+   "previous_margin": 16.17,
+   "margin_delta": -9.54,
+   "turnout": 66.64,
+   "previous_turnout": 60.41,
+   "turnout_delta": 6.23,
+   "share_delta": {
+    "더불어민주당": 18.63,
+    "정의당": -13.58
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.49
+    },
+    {
+     "party": "미래통합당",
+     "pct": 32.76
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "노동당",
+     "previous_pct": 1.49
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 36.8
+    }
+   ]
   },
   {
    "district": "경기 고양시병",
@@ -426,14 +540,10 @@
    "previous_turnout": 60.48,
    "turnout_delta": 7.84,
    "share_delta": {
-    "민중당": -1.29,
-    "더불어민주당": 10.21
+    "더불어민주당": 10.21,
+    "민중당": -1.29
    },
    "newly_ran": [
-    {
-     "party": "정의당",
-     "pct": 7.57
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.39
@@ -441,16 +551,20 @@
     {
      "party": "미래통합당",
      "pct": 35.77
+    },
+    {
+     "party": "정의당",
+     "pct": 7.57
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 41.32
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.41
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 41.32
     }
    ]
   },
@@ -483,16 +597,16 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.42
+    },
+    {
      "party": "기본소득당",
      "pct": 1.28
     },
     {
      "party": "미래통합당",
      "pct": 44.87
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.42
     }
    ],
    "no_longer_ran": [
@@ -518,9 +632,53 @@
    "district": "경기 광명시을",
    "sido": "경기",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/95% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "경기 광명시을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.5%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 광명시을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "양기대",
+    "party": "더불어민주당",
+    "pct": 64.1
+   },
+   "previous_winner": {
+    "name": "이언주",
+    "party": "더불어민주당",
+    "pct": 52.18
+   },
+   "margin": 33.59,
+   "previous_margin": 20.68,
+   "margin_delta": 12.91,
+   "turnout": 69.78,
+   "previous_turnout": 66.04,
+   "turnout_delta": 3.74,
+   "share_delta": {
+    "더불어민주당": 11.92
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.51
+    },
+    {
+     "party": "미래통합당",
+     "pct": 30.51
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 12.99
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 31.5
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 3.32
+    }
+   ]
   },
   {
    "district": "경기 광주시갑",
@@ -551,12 +709,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 42.7
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.15
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.7
     }
    ],
    "no_longer_ran": [
@@ -595,12 +753,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 42.18
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.94
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.18
     }
    ],
    "no_longer_ran": [
@@ -639,12 +797,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 39.41
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.88
+    },
+    {
+     "party": "미래통합당",
+     "pct": 39.41
     },
     {
      "party": "우리공화당",
@@ -666,9 +824,53 @@
    "district": "경기 군포시",
    "sido": "경기",
    "relation": "merged",
-   "comparable": "no",
-   "reason": "이전 경기 군포시갑 + 경기 군포시을 통합",
-   "previous_district": "경기 군포시갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 92.4%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 군포시갑",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "이학영",
+    "party": "더불어민주당",
+    "pct": 57.42
+   },
+   "previous_winner": {
+    "name": "김정우",
+    "party": "더불어민주당",
+    "pct": 38.51
+   },
+   "margin": 17.05,
+   "previous_margin": 1.09,
+   "margin_delta": 15.96,
+   "turnout": 69.1,
+   "previous_turnout": 59.14,
+   "turnout_delta": 9.96,
+   "share_delta": {
+    "더불어민주당": 18.91
+   },
+   "newly_ran": [
+    {
+     "party": "미래통합당",
+     "pct": 40.37
+    },
+    {
+     "party": "민중당",
+     "pct": 2.21
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 21.41
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 37.42
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 2.66
+    }
+   ]
   },
   {
    "district": "경기 김포시갑",
@@ -699,12 +901,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 38.49
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.53
+    },
+    {
+     "party": "미래통합당",
+     "pct": 38.49
     }
    ],
    "no_longer_ran": [
@@ -743,16 +945,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.96
+     "party": "국가혁명배당금당",
+     "pct": 0.74
     },
     {
      "party": "미래통합당",
      "pct": 44.47
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.74
+     "party": "민생당",
+     "pct": 0.96
     }
    ],
    "no_longer_ran": [
@@ -795,23 +997,27 @@
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 0.45
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.65
+    },
+    {
+     "party": "미래통합당",
+     "pct": 38.12
     },
     {
      "party": "민생당",
      "pct": 2.82
     },
     {
-     "party": "미래통합당",
-     "pct": 38.12
+     "party": "우리공화당",
+     "pct": 0.45
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 16.53
+    },
     {
      "party": "민중연합당",
      "previous_pct": 0.85
@@ -819,10 +1025,6 @@
     {
      "party": "새누리당",
      "previous_pct": 39.77
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 16.53
     }
    ]
   },
@@ -855,16 +1057,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.21
+     "party": "국가혁명배당금당",
+     "pct": 0.62
     },
     {
      "party": "미래통합당",
      "pct": 47.09
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.62
+     "party": "정의당",
+     "pct": 2.21
     }
    ],
    "no_longer_ran": [
@@ -907,12 +1109,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 31.43
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.72
+    },
+    {
+     "party": "미래통합당",
+     "pct": 31.43
     }
    ],
    "no_longer_ran": [
@@ -921,12 +1123,12 @@
      "previous_pct": 25.46
     },
     {
-     "party": "정의당",
-     "previous_pct": 1.73
-    },
-    {
      "party": "새누리당",
      "previous_pct": 34.17
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 1.73
     }
    ]
   },
@@ -959,12 +1161,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 53.61
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.37
+    },
+    {
+     "party": "미래통합당",
+     "pct": 53.61
     }
    ],
    "no_longer_ran": [
@@ -1007,16 +1209,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.69
+     "party": "국가혁명배당금당",
+     "pct": 1.06
     },
     {
      "party": "미래통합당",
      "pct": 36.08
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.06
+     "party": "정의당",
+     "pct": 3.69
     }
    ],
    "no_longer_ran": [
@@ -1055,8 +1257,8 @@
    "previous_turnout": 58.6,
    "turnout_delta": 5.75,
    "share_delta": {
-    "정의당": 3.67,
-    "더불어민주당": 16.81
+    "더불어민주당": 16.81,
+    "정의당": 3.67
    },
    "newly_ran": [
     {
@@ -1070,12 +1272,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 36.86
-    },
-    {
      "party": "국민의당",
      "previous_pct": 17.0
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 36.86
     }
    ]
   },
@@ -1104,14 +1306,10 @@
    "previous_turnout": 61.44,
    "turnout_delta": 6.25,
    "share_delta": {
-    "민중당": -0.57,
-    "더불어민주당": 12.06
+    "더불어민주당": 12.06,
+    "민중당": -0.57
    },
    "newly_ran": [
-    {
-     "party": "정의당",
-     "pct": 4.18
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.5
@@ -1119,16 +1317,20 @@
     {
      "party": "미래통합당",
      "pct": 39.6
+    },
+    {
+     "party": "정의당",
+     "pct": 4.18
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 35.91
-    },
-    {
      "party": "국민의당",
      "previous_pct": 19.87
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 35.91
     }
    ]
   },
@@ -1157,8 +1359,8 @@
    "previous_turnout": 52.71,
    "turnout_delta": 6.14,
    "share_delta": {
-    "정의당": 3.42,
-    "더불어민주당": 11.96
+    "더불어민주당": 11.96,
+    "정의당": 3.42
    },
    "newly_ran": [
     {
@@ -1172,12 +1374,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 31.12
-    },
-    {
      "party": "국민의당",
      "previous_pct": 21.8
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 31.12
     }
    ]
   },
@@ -1210,12 +1412,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 50.07
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.58
+    },
+    {
+     "party": "미래통합당",
+     "pct": 50.07
     }
    ],
    "no_longer_ran": [
@@ -1254,18 +1456,10 @@
    "previous_turnout": 65.75,
    "turnout_delta": 7.87,
    "share_delta": {
-    "민중당": -0.64,
-    "더불어민주당": 8.09
+    "더불어민주당": 8.09,
+    "민중당": -0.64
    },
    "newly_ran": [
-    {
-     "party": "정의당",
-     "pct": 2.12
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.31
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.21
@@ -1273,16 +1467,24 @@
     {
      "party": "미래통합당",
      "pct": 45.11
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.31
+    },
+    {
+     "party": "정의당",
+     "pct": 2.12
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 30.97
-    },
-    {
      "party": "국민의당",
      "previous_pct": 9.39
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 30.97
     }
    ]
   },
@@ -1311,8 +1513,8 @@
    "previous_turnout": 53.44,
    "turnout_delta": 9.66,
    "share_delta": {
-    "민중당": 0.76,
-    "더불어민주당": 15.73
+    "더불어민주당": 15.73,
+    "민중당": 0.76
    },
    "newly_ran": [
     {
@@ -1326,12 +1528,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 33.28
-    },
-    {
      "party": "국민의당",
      "previous_pct": 19.92
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 33.28
     }
    ]
   },
@@ -1364,16 +1566,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 3.05
+     "party": "국가혁명배당금당",
+     "pct": 0.65
     },
     {
      "party": "미래통합당",
      "pct": 41.67
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.65
+     "party": "민중당",
+     "pct": 3.05
     }
    ],
    "no_longer_ran": [
@@ -1416,12 +1618,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 39.58
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.25
+    },
+    {
+     "party": "미래통합당",
+     "pct": 39.58
     }
    ],
    "no_longer_ran": [
@@ -1472,20 +1674,20 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.4
-    },
-    {
-     "party": "정의당",
-     "pct": 2.54
-    },
-    {
      "party": "미래통합당",
      "pct": 42.54
     },
     {
+     "party": "민중당",
+     "pct": 1.4
+    },
+    {
      "party": "우리공화당",
      "pct": 0.45
+    },
+    {
+     "party": "정의당",
+     "pct": 2.54
     }
    ],
    "no_longer_ran": [
@@ -1524,22 +1726,22 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 38.3
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.01
+    },
+    {
+     "party": "미래통합당",
+     "pct": 38.3
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 1.98
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.89
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 1.98
     },
     {
      "party": "새누리당",
@@ -1584,16 +1786,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.73
+     "party": "국가혁명배당금당",
+     "pct": 0.66
     },
     {
      "party": "미래통합당",
      "pct": 44.89
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.66
+     "party": "정의당",
+     "pct": 2.73
     }
    ],
    "no_longer_ran": [
@@ -1636,12 +1838,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 31.64
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.34
+    },
+    {
+     "party": "미래통합당",
+     "pct": 31.64
     }
    ],
    "no_longer_ran": [
@@ -1684,16 +1886,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.89
+     "party": "국가혁명배당금당",
+     "pct": 1.11
     },
     {
      "party": "미래통합당",
      "pct": 41.25
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.11
+     "party": "민중당",
+     "pct": 1.89
     }
    ],
    "no_longer_ran": [
@@ -1736,30 +1938,30 @@
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 1.05
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.75
     },
     {
      "party": "미래통합당",
      "pct": 46.88
+    },
+    {
+     "party": "우리공화당",
+     "pct": 1.05
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.39
+     "party": "국민의당",
+     "previous_pct": 33.19
     },
     {
      "party": "새누리당",
      "previous_pct": 38.08
     },
     {
-     "party": "국민의당",
-     "previous_pct": 33.19
+     "party": "정의당",
+     "previous_pct": 3.39
     }
    ]
   },
@@ -1800,12 +2002,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 40.74
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.48
+    },
+    {
+     "party": "미래통합당",
+     "pct": 40.74
     }
    ],
    "no_longer_ran": [
@@ -1848,22 +2050,22 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 47.13
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.42
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.13
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 2.38
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.53
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 2.38
     },
     {
      "party": "새누리당",
@@ -1900,19 +2102,23 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.27
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.63
     },
     {
      "party": "미래통합당",
      "pct": 39.77
+    },
+    {
+     "party": "정의당",
+     "pct": 4.27
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 15.76
+    },
     {
      "party": "민중연합당",
      "previous_pct": 1.22
@@ -1920,10 +2126,6 @@
     {
      "party": "새누리당",
      "previous_pct": 32.97
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 15.76
     }
    ]
   },
@@ -1952,21 +2154,21 @@
    "previous_turnout": 65.62,
    "turnout_delta": 10.2,
    "share_delta": {
-    "정의당": -15.78,
-    "더불어민주당": 14.63
+    "더불어민주당": 14.63,
+    "정의당": -15.78
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.6
+     "party": "국가혁명배당금당",
+     "pct": 0.27
     },
     {
      "party": "미래통합당",
      "pct": 41.73
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.27
+     "party": "민생당",
+     "pct": 0.6
     }
    ],
    "no_longer_ran": [
@@ -2005,16 +2207,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.35
+     "party": "국가혁명배당금당",
+     "pct": 0.7
     },
     {
      "party": "미래통합당",
      "pct": 42.34
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.7
+     "party": "정의당",
+     "pct": 3.35
     }
    ],
    "no_longer_ran": [
@@ -2057,12 +2259,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 36.22
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.14
+    },
+    {
+     "party": "미래통합당",
+     "pct": 36.22
     }
    ],
    "no_longer_ran": [
@@ -2101,20 +2303,20 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.56
+     "party": "국가혁명배당금당",
+     "pct": 0.7
     },
     {
      "party": "미래통합당",
      "pct": 54.98
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.7
-    },
-    {
      "party": "우리공화당",
      "pct": 0.58
+    },
+    {
+     "party": "정의당",
+     "pct": 3.56
     }
    ],
    "no_longer_ran": [
@@ -2153,12 +2355,12 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 2.22
-    },
-    {
      "party": "미래통합당",
      "pct": 41.06
+    },
+    {
+     "party": "민생당",
+     "pct": 2.22
     }
    ],
    "no_longer_ran": [
@@ -2201,12 +2403,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 53.14
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.92
+    },
+    {
+     "party": "미래통합당",
+     "pct": 53.14
     }
    ],
    "no_longer_ran": [
@@ -2224,9 +2426,53 @@
    "district": "경기 용인시병",
    "sido": "경기",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "경기 용인시병"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.8%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 용인시병",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "정춘숙",
+    "party": "더불어민주당",
+    "pct": 51.56
+   },
+   "previous_winner": {
+    "name": "한선교",
+    "party": "새누리당",
+    "pct": 42.21
+   },
+   "margin": 3.62,
+   "previous_margin": 4.83,
+   "margin_delta": -1.21,
+   "turnout": 73.44,
+   "previous_turnout": 64.28,
+   "turnout_delta": 9.16,
+   "share_delta": {
+    "더불어민주당": 14.18
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.5
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.94
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 16.19
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 42.21
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 2.05
+    }
+   ]
   },
   {
    "district": "경기 용인시을",
@@ -2269,20 +2515,24 @@
    "previous_turnout": 63.39,
    "turnout_delta": 9.3,
    "share_delta": {
-    "정의당": -0.1,
-    "더불어민주당": 2.03
+    "더불어민주당": 2.03,
+    "정의당": -0.1
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 15.29
-    },
-    {
      "party": "미래통합당",
      "pct": 37.95
+    },
+    {
+     "party": "민생당",
+     "pct": 15.29
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 13.9
+    },
     {
      "party": "녹색당",
      "previous_pct": 3.23
@@ -2290,10 +2540,6 @@
     {
      "party": "새누리당",
      "previous_pct": 38.04
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 13.9
     }
    ]
   },
@@ -2326,12 +2572,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 37.39
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.02
+    },
+    {
+     "party": "미래통합당",
+     "pct": 37.39
     }
    ],
    "no_longer_ran": [
@@ -2370,8 +2616,8 @@
    "previous_turnout": 56.09,
    "turnout_delta": 6.34,
    "share_delta": {
-    "민중당": 0.56,
-    "더불어민주당": 23.23
+    "더불어민주당": 23.23,
+    "민중당": 0.56
    },
    "newly_ran": [
     {
@@ -2385,12 +2631,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 41.51
-    },
-    {
      "party": "국민의당",
      "previous_pct": 21.96
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 41.51
     }
    ]
   },
@@ -2423,12 +2669,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 51.99
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.78
+    },
+    {
+     "party": "미래통합당",
+     "pct": 51.99
     }
    ],
    "no_longer_ran": [
@@ -2481,16 +2727,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 12.75
+    },
+    {
      "party": "민중연합당",
      "previous_pct": 1.27
     },
     {
      "party": "새누리당",
      "previous_pct": 34.42
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 12.75
     }
    ]
   },
@@ -2523,12 +2769,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 44.29
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.37
+    },
+    {
+     "party": "미래통합당",
+     "pct": 44.29
     }
    ],
    "no_longer_ran": [
@@ -2542,17 +2788,102 @@
    "district": "경기 평택시갑",
    "sido": "경기",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '경기 평택시갑' 겹침 87%/98%",
-   "previous_district": "경기 평택시갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.2%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 평택시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "홍기원",
+    "party": "더불어민주당",
+    "pct": 50.22
+   },
+   "previous_winner": {
+    "name": "원유철",
+    "party": "새누리당",
+    "pct": 55.49
+   },
+   "margin": 2.81,
+   "previous_margin": 34.77,
+   "margin_delta": -31.96,
+   "turnout": 59.02,
+   "previous_turnout": 52.12,
+   "turnout_delta": 6.9,
+   "share_delta": {
+    "더불어민주당": 30.28
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.73
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.41
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 20.72
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 55.49
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 3.85
+    }
+   ]
   },
   {
    "district": "경기 평택시을",
    "sido": "경기",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 99%/96% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "경기 평택시을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.0%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "경기 평택시을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "유의동",
+    "party": "미래통합당",
+    "pct": 47.67
+   },
+   "previous_winner": {
+    "name": "유의동",
+    "party": "새누리당",
+    "pct": 40.54
+   },
+   "margin": 1.56,
+   "previous_margin": 7.03,
+   "margin_delta": -5.47,
+   "turnout": 58.83,
+   "previous_turnout": 51.87,
+   "turnout_delta": 6.96,
+   "share_delta": {
+    "더불어민주당": 12.6,
+    "민중당": -0.84
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.73
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.67
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 23.61
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 40.54
+    }
+   ]
   },
   {
    "district": "경기 포천시가평군",
@@ -2583,16 +2914,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.92
+     "party": "국가혁명배당금당",
+     "pct": 1.14
     },
     {
      "party": "미래통합당",
      "pct": 50.26
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.14
+     "party": "민중당",
+     "pct": 1.92
     }
    ],
    "no_longer_ran": [
@@ -2631,12 +2962,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 33.25
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.51
+    },
+    {
+     "party": "미래통합당",
+     "pct": 33.25
     }
    ],
    "no_longer_ran": [
@@ -2703,12 +3034,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 50.89
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.82
+    },
+    {
+     "party": "미래통합당",
+     "pct": 50.89
     },
     {
      "party": "우리공화당",
@@ -2751,16 +3082,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.87
+     "party": "국가혁명배당금당",
+     "pct": 0.98
     },
     {
      "party": "미래통합당",
      "pct": 45.09
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.98
+     "party": "정의당",
+     "pct": 2.87
     }
    ],
    "no_longer_ran": [
@@ -2799,16 +3130,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 5.04
+     "party": "국가혁명배당금당",
+     "pct": 0.55
     },
     {
      "party": "미래통합당",
      "pct": 41.61
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.55
+     "party": "정의당",
+     "pct": 5.04
     }
    ],
    "no_longer_ran": [
@@ -2845,16 +3176,16 @@
    "share_delta": {},
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 1.73
+    },
+    {
      "party": "더불어민주당",
      "pct": 30.27
     },
     {
      "party": "미래통합당",
      "pct": 68.0
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 1.73
     }
    ],
    "no_longer_ran": [
@@ -2905,34 +3236,34 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 0.75
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.62
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.07
+    },
+    {
+     "party": "미래통합당",
+     "pct": 36.47
     },
     {
      "party": "민생당",
      "pct": 0.55
     },
     {
-     "party": "미래통합당",
-     "pct": 36.47
+     "party": "민중당",
+     "pct": 0.75
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.62
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 62.68
-    },
-    {
      "party": "국민의당",
      "previous_pct": 6.38
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 62.68
     }
    ]
   },
@@ -2965,12 +3296,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 57.0
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.96
+    },
+    {
+     "party": "미래통합당",
+     "pct": 57.0
     }
    ],
    "no_longer_ran": [
@@ -3013,16 +3344,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.95
+     "party": "국가혁명배당금당",
+     "pct": 0.84
     },
     {
      "party": "미래통합당",
      "pct": 47.26
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.84
+     "party": "정의당",
+     "pct": 2.95
     }
    ],
    "no_longer_ran": [
@@ -3036,25 +3367,145 @@
    "district": "경남 진주시갑",
    "sido": "경남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "이전 '경남 진주시갑'의 86%만 차지",
-   "previous_district": "경남 진주시갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.6%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경남 진주시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "박대출",
+    "party": "미래통합당",
+    "pct": 54.76
+   },
+   "previous_winner": {
+    "name": "박대출",
+    "party": "새누리당",
+    "pct": 54.49
+   },
+   "margin": 16.28,
+   "previous_margin": 20.59,
+   "margin_delta": -4.31,
+   "turnout": 69.14,
+   "previous_turnout": 59.1,
+   "turnout_delta": 10.04,
+   "share_delta": {
+    "더불어민주당": 4.58
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.56
+    },
+    {
+     "party": "미래통합당",
+     "pct": 54.76
+    },
+    {
+     "party": "민중당",
+     "pct": 1.37
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 54.49
+    }
+   ]
   },
   {
    "district": "경남 진주시을",
    "sido": "경남",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/90% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "경남 진주시을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.2%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경남 진주시을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "강민국",
+    "party": "미래통합당",
+    "pct": 59.03
+   },
+   "previous_winner": {
+    "name": "김재경",
+    "party": "새누리당",
+    "pct": 59.61
+   },
+   "margin": 25.2,
+   "previous_margin": 33.2,
+   "margin_delta": -8.0,
+   "turnout": 66.67,
+   "previous_turnout": 55.65,
+   "turnout_delta": 11.02,
+   "share_delta": {
+    "더불어민주당": 7.42
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.81
+    },
+    {
+     "party": "미래통합당",
+     "pct": 59.03
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.79
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 59.61
+    }
+   ]
   },
   {
    "district": "경남 창원시마산합포구",
    "sido": "경남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "이전 '경남 창원시마산합포구'의 81%만 차지",
-   "previous_district": "경남 창원시마산합포구"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 92.3%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경남 창원시마산합포구",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "최형두",
+    "party": "미래통합당",
+    "pct": 62.97
+   },
+   "previous_winner": {
+    "name": "이주영",
+    "party": "새누리당",
+    "pct": 65.25
+   },
+   "margin": 28.79,
+   "previous_margin": 36.14,
+   "margin_delta": -7.35,
+   "turnout": 68.29,
+   "previous_turnout": 54.99,
+   "turnout_delta": 13.3,
+   "share_delta": {
+    "더불어민주당": 5.07
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.97
+    },
+    {
+     "party": "미래통합당",
+     "pct": 62.97
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "노동당",
+     "previous_pct": 5.64
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 65.25
+    }
+   ]
   },
   {
    "district": "경남 창원시마산회원구",
@@ -3085,12 +3536,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 56.43
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.88
+    },
+    {
+     "party": "미래통합당",
+     "pct": 56.43
     },
     {
      "party": "우리공화당",
@@ -3145,20 +3596,20 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 2.38
-    },
-    {
-     "party": "민생당",
-     "pct": 1.04
+     "party": "국가혁명배당금당",
+     "pct": 0.83
     },
     {
      "party": "미래통합당",
      "pct": 59.05
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.83
+     "party": "민생당",
+     "pct": 1.04
+    },
+    {
+     "party": "민중당",
+     "pct": 2.38
     }
    ],
    "no_longer_ran": [
@@ -3215,8 +3666,8 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.92
+     "party": "국가혁명배당금당",
+     "pct": 0.88
     },
     {
      "party": "더불어민주당",
@@ -3227,18 +3678,18 @@
      "pct": 63.76
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.88
+     "party": "민중당",
+     "pct": 1.92
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 30.37
-    },
-    {
      "party": "새누리당",
      "previous_pct": 69.63
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 30.37
     }
    ]
   },
@@ -3271,20 +3722,20 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.59
-    },
-    {
-     "party": "정의당",
-     "pct": 11.57
+     "party": "국가혁명배당금당",
+     "pct": 0.57
     },
     {
      "party": "미래통합당",
      "pct": 52.68
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.57
+     "party": "민생당",
+     "pct": 0.59
+    },
+    {
+     "party": "정의당",
+     "pct": 11.57
     }
    ],
    "no_longer_ran": [
@@ -3323,12 +3774,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 62.71
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.03
+    },
+    {
+     "party": "미래통합당",
+     "pct": 62.71
     }
    ],
    "no_longer_ran": [
@@ -3365,16 +3816,16 @@
    "share_delta": {},
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.98
+    },
+    {
      "party": "더불어민주당",
      "pct": 31.59
     },
     {
      "party": "미래통합당",
      "pct": 65.58
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.98
     },
     {
      "party": "우리공화당",
@@ -3419,16 +3870,16 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 56.44
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.86
     },
     {
      "party": "더불어민주당",
      "pct": 35.69
+    },
+    {
+     "party": "미래통합당",
+     "pct": 56.44
     }
    ],
    "no_longer_ran": [
@@ -3442,9 +3893,45 @@
    "district": "경북 군위군의성군청송군영덕군",
    "sido": "경북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '경북 상주시군위군의성군청송군' 겹침 78%/68%",
-   "previous_district": "경북 상주시군위군의성군청송군"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.0%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경북 상주시군위군의성군청송군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김희국",
+    "party": "미래통합당",
+    "pct": 79.31
+   },
+   "previous_winner": {
+    "name": "김종태",
+    "party": "새누리당",
+    "pct": 77.65
+   },
+   "margin": 60.39,
+   "previous_margin": 55.3,
+   "margin_delta": 5.09,
+   "turnout": 72.05,
+   "previous_turnout": 62.16,
+   "turnout_delta": 9.89,
+   "share_delta": {
+    "더불어민주당": -3.43
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 1.77
+    },
+    {
+     "party": "미래통합당",
+     "pct": 79.31
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 77.65
+    }
+   ]
   },
   {
    "district": "경북 김천시",
@@ -3473,16 +3960,16 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 74.52
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.14
     },
     {
      "party": "더불어민주당",
      "pct": 21.01
+    },
+    {
+     "party": "미래통합당",
+     "pct": 74.52
     }
    ],
    "no_longer_ran": [
@@ -3496,17 +3983,97 @@
    "district": "경북 상주시문경시",
    "sido": "경북",
    "relation": "unresolvable",
-   "comparable": "no",
-   "reason": "겹침이 흩어짐 — 경북 상주시군위군의성군청송군 58%, 경북 영주시문경시예천군 42%",
-   "previous_district": "경북 상주시군위군의성군청송군"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.8%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경북 상주시군위군의성군청송군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "임이자",
+    "party": "미래통합당",
+    "pct": 64.8
+   },
+   "previous_winner": {
+    "name": "김종태",
+    "party": "새누리당",
+    "pct": 77.65
+   },
+   "margin": 46.73,
+   "previous_margin": 55.3,
+   "margin_delta": -8.57,
+   "turnout": 68.66,
+   "previous_turnout": 62.16,
+   "turnout_delta": 6.5,
+   "share_delta": {
+    "더불어민주당": -4.28
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 1.19
+    },
+    {
+     "party": "미래통합당",
+     "pct": 64.8
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 77.65
+    }
+   ]
   },
   {
    "district": "경북 안동시예천군",
    "sido": "경북",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '경북 안동시' 겹침 70%/100%",
-   "previous_district": "경북 안동시"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.8%). 전체 수준값·승자로는 쓰지 않는다 — 변화량만 쓴다.",
+   "previous_district": "경북 안동시",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김형동",
+    "party": "미래통합당",
+    "pct": 47.11
+   },
+   "previous_winner": {
+    "name": "김광림",
+    "party": "새누리당",
+    "pct": 68.67
+   },
+   "margin": 20.96,
+   "previous_margin": 52.63,
+   "margin_delta": -31.67,
+   "turnout": 67.97,
+   "previous_turnout": 58.58,
+   "turnout_delta": 9.39,
+   "share_delta": {
+    "더불어민주당": 10.11
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.76
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.11
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.86
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 15.29
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 68.67
+    }
+   ]
   },
   {
    "district": "경북 영주시영양군봉화군울진군",
@@ -3543,16 +4110,16 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 64.63
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.98
     },
     {
      "party": "더불어민주당",
      "pct": 22.56
+    },
+    {
+     "party": "미래통합당",
+     "pct": 64.63
     }
    ],
    "no_longer_ran": [
@@ -3591,16 +4158,16 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.62
+    },
+    {
      "party": "더불어민주당",
      "pct": 34.31
     },
     {
      "party": "미래통합당",
      "pct": 55.83
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.62
     }
    ],
    "no_longer_ran": [
@@ -3635,17 +4202,17 @@
    "previous_turnout": 59.7,
    "turnout_delta": 7.61,
    "share_delta": {
-    "정의당": -2.05,
-    "더불어민주당": 18.68
+    "더불어민주당": 18.68,
+    "정의당": -2.05
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 64.78
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.84
+    },
+    {
+     "party": "미래통합당",
+     "pct": 64.78
     }
    ],
    "no_longer_ran": [
@@ -3680,9 +4247,9 @@
    "previous_turnout": 58.76,
    "turnout_delta": 4.64,
    "share_delta": {
+    "더불어민주당": 41.65,
     "민중당": 0.14,
-    "정의당": 0.93,
-    "더불어민주당": 41.65
+    "정의당": 0.93
    },
    "newly_ran": [
     {
@@ -3696,12 +4263,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 3.91
-    },
-    {
      "party": "국민의당",
      "previous_pct": 53.04
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 3.91
     }
    ]
   },
@@ -3730,17 +4297,17 @@
    "previous_turnout": 61.66,
    "turnout_delta": 2.42,
    "share_delta": {
-    "정의당": 3.82,
-    "더불어민주당": 40.81
+    "더불어민주당": 40.81,
+    "정의당": 3.82
    },
    "newly_ran": [
     {
-     "party": "노동당",
-     "pct": 1.22
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.08
+    },
+    {
+     "party": "노동당",
+     "pct": 1.22
     },
     {
      "party": "민생당",
@@ -3749,16 +4316,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 50.15
+    },
+    {
      "party": "민중연합당",
      "previous_pct": 1.64
     },
     {
      "party": "새누리당",
      "previous_pct": 1.92
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 50.15
     }
    ]
   },
@@ -3795,15 +4362,19 @@
      "pct": 0.8
     },
     {
-     "party": "민생당",
-     "pct": 20.61
-    },
-    {
      "party": "기독자유통일당",
      "pct": 1.35
+    },
+    {
+     "party": "민생당",
+     "pct": 20.61
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 55.62
+    },
     {
      "party": "민중연합당",
      "previous_pct": 3.2
@@ -3811,10 +4382,6 @@
     {
      "party": "새누리당",
      "previous_pct": 2.35
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 55.62
     }
    ]
   },
@@ -3847,19 +4414,23 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.01
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.58
     },
     {
      "party": "민생당",
      "pct": 10.11
+    },
+    {
+     "party": "정의당",
+     "pct": 2.01
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 54.71
+    },
     {
      "party": "민중연합당",
      "previous_pct": 3.07
@@ -3867,10 +4438,6 @@
     {
      "party": "새누리당",
      "previous_pct": 2.78
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 54.71
     }
    ]
   },
@@ -3903,26 +4470,26 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 1.75
+     "party": "국가혁명배당금당",
+     "pct": 0.47
     },
     {
      "party": "미래통합당",
      "pct": 2.37
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.47
+     "party": "정의당",
+     "pct": 1.75
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 3.15
-    },
-    {
      "party": "국민의당",
      "previous_pct": 70.8
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 3.15
     }
    ]
   },
@@ -3951,35 +4518,35 @@
    "previous_turnout": 62.94,
    "turnout_delta": 3.61,
    "share_delta": {
-    "민중당": -0.7,
-    "더불어민주당": 43.27
+    "더불어민주당": 43.27,
+    "민중당": -0.7
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.98
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.5
+    },
+    {
+     "party": "기독자유통일당",
+     "pct": 0.93
     },
     {
      "party": "민생당",
      "pct": 11.13
     },
     {
-     "party": "기독자유통일당",
-     "pct": 0.93
+     "party": "정의당",
+     "pct": 2.98
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 2.28
-    },
-    {
      "party": "국민의당",
      "previous_pct": 55.29
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 2.28
     }
    ]
   },
@@ -4008,8 +4575,8 @@
    "previous_turnout": 61.35,
    "turnout_delta": 3.51,
    "share_delta": {
-    "민중당": -0.61,
-    "더불어민주당": 46.85
+    "더불어민주당": 46.85,
+    "민중당": -0.61
    },
    "newly_ran": [
     {
@@ -4017,26 +4584,26 @@
      "pct": 0.59
     },
     {
-     "party": "민생당",
-     "pct": 10.05
-    },
-    {
      "party": "미래통합당",
      "pct": 4.2
+    },
+    {
+     "party": "민생당",
+     "pct": 10.05
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 2.24
+     "party": "국민의당",
+     "previous_pct": 56.24
     },
     {
      "party": "새누리당",
      "previous_pct": 2.61
     },
     {
-     "party": "국민의당",
-     "previous_pct": 56.24
+     "party": "정의당",
+     "previous_pct": 2.24
     }
    ]
   },
@@ -4065,8 +4632,8 @@
    "previous_turnout": 63.81,
    "turnout_delta": 3.82,
    "share_delta": {
-    "정의당": -2.63,
-    "더불어민주당": 44.34
+    "더불어민주당": 44.34,
+    "정의당": -2.63
    },
    "newly_ran": [
     {
@@ -4080,16 +4647,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 54.52
+    },
+    {
      "party": "민중연합당",
      "previous_pct": 1.37
     },
     {
      "party": "새누리당",
      "previous_pct": 2.43
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 54.52
     }
    ]
   },
@@ -4120,8 +4687,8 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.94
+     "party": "국가혁명배당금당",
+     "pct": 0.72
     },
     {
      "party": "더불어민주당",
@@ -4132,8 +4699,8 @@
      "pct": 57.61
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.72
+     "party": "민생당",
+     "pct": 0.94
     },
     {
      "party": "우리공화당",
@@ -4178,20 +4745,20 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "더불어민주당",
-     "pct": 27.62
+     "party": "국가혁명배당금당",
+     "pct": 0.92
     },
     {
      "party": "기독자유통일당",
      "pct": 0.59
     },
     {
-     "party": "미래통합당",
-     "pct": 55.79
+     "party": "더불어민주당",
+     "pct": 27.62
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.92
+     "party": "미래통합당",
+     "pct": 55.79
     },
     {
      "party": "우리공화당",
@@ -4200,12 +4767,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "친반통일당",
-     "previous_pct": 9.76
-    },
-    {
      "party": "새누리당",
      "previous_pct": 66.25
+    },
+    {
+     "party": "친반통일당",
+     "previous_pct": 9.76
     }
    ]
   },
@@ -4238,20 +4805,20 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.32
+     "party": "국가혁명배당금당",
+     "pct": 0.49
     },
     {
      "party": "미래통합당",
      "pct": 65.37
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.49
-    },
-    {
      "party": "우리공화당",
      "pct": 0.85
+    },
+    {
+     "party": "정의당",
+     "pct": 3.32
     }
    ],
    "no_longer_ran": [
@@ -4290,16 +4857,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.51
+     "party": "국가혁명배당금당",
+     "pct": 0.99
     },
     {
      "party": "미래통합당",
      "pct": 67.34
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.99
+     "party": "민중당",
+     "pct": 1.51
     }
    ],
    "no_longer_ran": [
@@ -4346,20 +4913,20 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 0.99
-    },
-    {
-     "party": "민생당",
-     "pct": 0.56
+     "party": "국가혁명배당금당",
+     "pct": 0.69
     },
     {
      "party": "미래통합당",
      "pct": 60.33
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.69
+     "party": "민생당",
+     "pct": 0.56
+    },
+    {
+     "party": "민중당",
+     "pct": 0.99
     }
    ],
    "no_longer_ran": []
@@ -4393,20 +4960,20 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.03
+     "party": "국가혁명배당금당",
+     "pct": 0.66
     },
     {
      "party": "미래통합당",
      "pct": 49.82
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.66
-    },
-    {
      "party": "우리공화당",
      "pct": 0.77
+    },
+    {
+     "party": "정의당",
+     "pct": 3.03
     }
    ],
    "no_longer_ran": [
@@ -4449,26 +5016,26 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.81
+    },
+    {
      "party": "더불어민주당",
      "pct": 33.55
     },
     {
      "party": "미래통합당",
      "pct": 61.69
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.81
     }
    ],
    "no_longer_ran": [
     {
-     "party": "친반평화통일당",
-     "previous_pct": 0.49
-    },
-    {
      "party": "새누리당",
      "previous_pct": 39.04
+    },
+    {
+     "party": "친반평화통일당",
+     "previous_pct": 0.49
     }
    ]
   },
@@ -4499,8 +5066,8 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.37
+     "party": "국가혁명배당금당",
+     "pct": 0.84
     },
     {
      "party": "더불어민주당",
@@ -4511,8 +5078,8 @@
      "pct": 67.44
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.84
+     "party": "정의당",
+     "pct": 4.37
     }
    ],
    "no_longer_ran": [
@@ -4551,16 +5118,16 @@
    },
    "newly_ran": [
     {
-     "party": "친박신당",
-     "pct": 0.44
+     "party": "국가혁명배당금당",
+     "pct": 0.45
     },
     {
      "party": "미래통합당",
      "pct": 59.81
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.45
+     "party": "친박신당",
+     "pct": 0.44
     }
    ],
    "no_longer_ran": [
@@ -4599,12 +5166,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 35.77
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.58
+    },
+    {
+     "party": "미래통합당",
+     "pct": 35.77
     }
    ],
    "no_longer_ran": [
@@ -4643,12 +5210,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 67.49
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.5
+    },
+    {
+     "party": "미래통합당",
+     "pct": 67.49
     }
    ],
    "no_longer_ran": [
@@ -4691,12 +5258,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 46.25
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.82
+    },
+    {
+     "party": "미래통합당",
+     "pct": 46.25
     }
    ],
    "no_longer_ran": [
@@ -4739,12 +5306,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 47.56
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.42
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.56
     }
    ],
    "no_longer_ran": [
@@ -4791,15 +5358,19 @@
      "pct": 0.77
     },
     {
-     "party": "충청의미래당",
-     "pct": 0.85
-    },
-    {
      "party": "미래통합당",
      "pct": 42.79
+    },
+    {
+     "party": "충청의미래당",
+     "pct": 0.85
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 10.13
+    },
     {
      "party": "민중연합당",
      "previous_pct": 1.37
@@ -4807,10 +5378,6 @@
     {
      "party": "새누리당",
      "previous_pct": 39.83
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 10.13
     }
    ]
   },
@@ -4843,30 +5410,30 @@
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 0.79
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.93
     },
     {
      "party": "미래통합당",
      "pct": 40.78
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.79
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 4.45
+     "party": "국민의당",
+     "previous_pct": 11.22
     },
     {
      "party": "새누리당",
      "previous_pct": 34.79
     },
     {
-     "party": "국민의당",
-     "previous_pct": 11.22
+     "party": "정의당",
+     "previous_pct": 4.45
     }
    ]
   },
@@ -4899,34 +5466,34 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 2.19
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.38
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.56
     },
     {
      "party": "미래통합당",
      "pct": 40.35
+    },
+    {
+     "party": "민중당",
+     "pct": 2.19
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.38
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.48
+     "party": "국민의당",
+     "previous_pct": 14.5
     },
     {
      "party": "새누리당",
      "previous_pct": 33.73
     },
     {
-     "party": "국민의당",
-     "previous_pct": 14.5
+     "party": "정의당",
+     "previous_pct": 3.48
     }
    ]
   },
@@ -4955,8 +5522,8 @@
    "previous_turnout": 65.94,
    "turnout_delta": 6.27,
    "share_delta": {
-    "정의당": 1.94,
-    "더불어민주당": -1.01
+    "더불어민주당": -1.01,
+    "정의당": 1.94
    },
    "newly_ran": [
     {
@@ -4970,16 +5537,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 11.19
+    },
+    {
      "party": "노동당",
      "previous_pct": 1.1
     },
     {
      "party": "새누리당",
      "previous_pct": 26.18
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 11.19
     }
    ]
   },
@@ -5012,12 +5579,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 48.18
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.51
+    },
+    {
+     "party": "미래통합당",
+     "pct": 48.18
     }
    ],
    "no_longer_ran": [
@@ -5056,21 +5623,21 @@
    "previous_turnout": 55.76,
    "turnout_delta": 12.79,
    "share_delta": {
-    "정의당": -8.46,
-    "더불어민주당": 7.62
+    "더불어민주당": 7.62,
+    "정의당": -8.46
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 2.49
+     "party": "국가혁명배당금당",
+     "pct": 0.74
     },
     {
      "party": "미래통합당",
      "pct": 54.19
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.74
+     "party": "민생당",
+     "pct": 2.49
     }
    ],
    "no_longer_ran": [
@@ -5109,22 +5676,22 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 49.63
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.94
+    },
+    {
+     "party": "미래통합당",
+     "pct": 49.63
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 5.52
-    },
-    {
      "party": "새누리당",
      "previous_pct": 41.55
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 5.52
     }
    ]
   },
@@ -5173,16 +5740,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.24
+     "party": "국가혁명배당금당",
+     "pct": 0.69
     },
     {
      "party": "미래통합당",
      "pct": 51.86
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.69
+     "party": "정의당",
+     "pct": 2.24
     }
    ],
    "no_longer_ran": [
@@ -5225,16 +5792,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.4
+     "party": "국가혁명배당금당",
+     "pct": 0.54
     },
     {
      "party": "미래통합당",
      "pct": 48.52
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.54
+     "party": "민생당",
+     "pct": 0.4
     }
    ],
    "no_longer_ran": [
@@ -5273,12 +5840,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 55.03
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.26
+    },
+    {
+     "party": "미래통합당",
+     "pct": 55.03
     }
    ],
    "no_longer_ran": [
@@ -5321,12 +5888,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 48.58
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.84
+    },
+    {
+     "party": "미래통합당",
+     "pct": 48.58
     }
    ],
    "no_longer_ran": [
@@ -5365,16 +5932,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 1.86
+     "party": "국가혁명배당금당",
+     "pct": 0.49
     },
     {
      "party": "미래통합당",
      "pct": 52.03
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.49
+     "party": "정의당",
+     "pct": 1.86
     }
    ],
    "no_longer_ran": [
@@ -5417,12 +5984,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 52.04
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.79
+    },
+    {
+     "party": "미래통합당",
+     "pct": 52.04
     },
     {
      "party": "우리공화당",
@@ -5465,12 +6032,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 49.14
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.86
+    },
+    {
+     "party": "미래통합당",
+     "pct": 49.14
     }
    ],
    "no_longer_ran": [
@@ -5509,34 +6076,34 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.16
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.52
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.74
     },
     {
      "party": "미래통합당",
      "pct": 58.8
+    },
+    {
+     "party": "민중당",
+     "pct": 1.16
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.52
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 1.7
+     "party": "국민의당",
+     "previous_pct": 10.32
     },
     {
      "party": "새누리당",
      "previous_pct": 59.66
     },
     {
-     "party": "국민의당",
-     "previous_pct": 10.32
+     "party": "정의당",
+     "previous_pct": 1.7
     }
    ]
   },
@@ -5569,12 +6136,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 56.04
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.73
+    },
+    {
+     "party": "미래통합당",
+     "pct": 56.04
     },
     {
      "party": "우리공화당",
@@ -5617,16 +6184,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 2.02
+     "party": "국가혁명배당금당",
+     "pct": 1.04
     },
     {
      "party": "미래통합당",
      "pct": 55.93
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.04
+     "party": "민생당",
+     "pct": 2.02
     }
    ],
    "no_longer_ran": [
@@ -5669,12 +6236,12 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.3
-    },
-    {
      "party": "미래통합당",
      "pct": 50.95
+    },
+    {
+     "party": "민생당",
+     "pct": 1.3
     }
    ],
    "no_longer_ran": [
@@ -5713,12 +6280,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 51.86
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.02
+    },
+    {
+     "party": "미래통합당",
+     "pct": 51.86
     }
    ],
    "no_longer_ran": [
@@ -5757,26 +6324,26 @@
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 1.14
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.41
     },
     {
      "party": "미래통합당",
      "pct": 59.48
+    },
+    {
+     "party": "우리공화당",
+     "pct": 1.14
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 6.38
-    },
-    {
      "party": "새누리당",
      "previous_pct": 51.76
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 6.38
     },
     {
      "party": "통일한국당",
@@ -5813,12 +6380,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 52.87
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.22
+    },
+    {
+     "party": "미래통합당",
+     "pct": 52.87
     }
    ],
    "no_longer_ran": [
@@ -5857,16 +6424,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.33
+     "party": "국가혁명배당금당",
+     "pct": 0.62
     },
     {
      "party": "미래통합당",
      "pct": 58.41
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.62
+     "party": "민생당",
+     "pct": 1.33
     }
    ],
    "no_longer_ran": [
@@ -5905,8 +6472,12 @@
    },
    "newly_ran": [
     {
-     "party": "친박신당",
-     "pct": 0.25
+     "party": "국가혁명배당금당",
+     "pct": 0.32
+    },
+    {
+     "party": "미래통합당",
+     "pct": 65.38
     },
     {
      "party": "새누리당",
@@ -5917,12 +6488,8 @@
      "pct": 0.23
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.32
-    },
-    {
-     "party": "미래통합당",
-     "pct": 65.38
+     "party": "친박신당",
+     "pct": 0.25
     }
    ],
    "no_longer_ran": [
@@ -5965,16 +6532,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.32
+     "party": "국가혁명배당금당",
+     "pct": 0.42
     },
     {
      "party": "미래통합당",
      "pct": 50.95
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.42
+     "party": "민생당",
+     "pct": 1.32
     }
    ],
    "no_longer_ran": [
@@ -6013,12 +6580,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 47.71
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.79
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.71
     }
    ],
    "no_longer_ran": [
@@ -6061,16 +6628,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.76
+     "party": "국가혁명배당금당",
+     "pct": 0.65
     },
     {
      "party": "미래통합당",
      "pct": 42.05
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.65
+     "party": "정의당",
+     "pct": 2.76
     }
    ],
    "no_longer_ran": [
@@ -6113,12 +6680,12 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.7
-    },
-    {
      "party": "미래통합당",
      "pct": 39.49
+    },
+    {
+     "party": "민중당",
+     "pct": 1.7
     }
    ],
    "no_longer_ran": [
@@ -6161,12 +6728,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 34.71
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.83
+    },
+    {
+     "party": "미래통합당",
+     "pct": 34.71
     }
    ],
    "no_longer_ran": [
@@ -6209,12 +6776,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 38.37
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.42
+    },
+    {
+     "party": "미래통합당",
+     "pct": 38.37
     }
    ],
    "no_longer_ran": [
@@ -6257,30 +6824,30 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.46
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.52
     },
     {
      "party": "미래통합당",
      "pct": 36.55
+    },
+    {
+     "party": "민중당",
+     "pct": 1.46
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.58
+     "party": "국민의당",
+     "previous_pct": 20.6
     },
     {
      "party": "새누리당",
      "previous_pct": 32.28
     },
     {
-     "party": "국민의당",
-     "previous_pct": 20.6
+     "party": "정의당",
+     "previous_pct": 3.58
     }
    ]
   },
@@ -6313,12 +6880,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 42.34
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.59
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.34
     },
     {
      "party": "우리공화당",
@@ -6361,15 +6928,11 @@
    "previous_turnout": 60.87,
    "turnout_delta": 5.7,
    "share_delta": {
+    "더불어민주당": 18.37,
     "민중당": 0.55,
-    "정의당": 1.23,
-    "더불어민주당": 18.37
+    "정의당": 1.23
    },
    "newly_ran": [
-    {
-     "party": "우리공화당",
-     "pct": 2.33
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.63
@@ -6377,16 +6940,20 @@
     {
      "party": "민생당",
      "pct": 1.84
+    },
+    {
+     "party": "우리공화당",
+     "pct": 2.33
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 20.09
-    },
-    {
      "party": "국민의당",
      "previous_pct": 38.43
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 20.09
     }
    ]
   },
@@ -6415,35 +6982,35 @@
    "previous_turnout": 58.83,
    "turnout_delta": 6.14,
    "share_delta": {
-    "민중당": -0.82,
-    "더불어민주당": 16.35
+    "더불어민주당": 16.35,
+    "민중당": -0.82
    },
    "newly_ran": [
     {
-     "party": "우리공화당",
-     "pct": 0.44
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.46
+    },
+    {
+     "party": "미래통합당",
+     "pct": 41.71
     },
     {
      "party": "민생당",
      "pct": 1.59
     },
     {
-     "party": "미래통합당",
-     "pct": 41.71
+     "party": "우리공화당",
+     "pct": 0.44
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 37.05
-    },
-    {
      "party": "국민의당",
      "previous_pct": 23.48
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 37.05
     }
    ]
   },
@@ -6476,20 +7043,20 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.5
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.47
+    },
+    {
+     "party": "미래통합당",
+     "pct": 40.61
     },
     {
      "party": "민생당",
      "pct": 1.75
     },
     {
-     "party": "미래통합당",
-     "pct": 40.61
+     "party": "정의당",
+     "pct": 3.5
     }
    ],
    "no_longer_ran": [
@@ -6498,12 +7065,12 @@
      "previous_pct": 0.87
     },
     {
-     "party": "새누리당",
-     "previous_pct": 38.52
-    },
-    {
      "party": "국민의당",
      "previous_pct": 19.94
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 38.52
     }
    ]
   },
@@ -6536,16 +7103,16 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.34
+    },
+    {
      "party": "미래당",
      "pct": 1.46
     },
     {
      "party": "미래통합당",
      "pct": 47.82
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.34
     }
    ],
    "no_longer_ran": [
@@ -6584,15 +7151,11 @@
    "previous_turnout": 62.84,
    "turnout_delta": 6.21,
    "share_delta": {
+    "더불어민주당": 1.9,
     "민중당": 0.21,
-    "정의당": 2.43,
-    "더불어민주당": 1.9
+    "정의당": 2.43
    },
    "newly_ran": [
-    {
-     "party": "우리공화당",
-     "pct": 0.41
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.45
@@ -6600,16 +7163,20 @@
     {
      "party": "미래통합당",
      "pct": 39.34
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.41
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 33.94
-    },
-    {
      "party": "국민의당",
      "previous_pct": 10.8
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 33.94
     }
    ]
   },
@@ -6642,22 +7209,22 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 37.67
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.65
+    },
+    {
+     "party": "미래통합당",
+     "pct": 37.67
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 1.73
-    },
-    {
      "party": "국민의당",
      "previous_pct": 12.62
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 1.73
     },
     {
      "party": "새누리당",
@@ -6694,12 +7261,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 35.48
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.81
+    },
+    {
+     "party": "미래통합당",
+     "pct": 35.48
     }
    ],
    "no_longer_ran": [
@@ -6742,16 +7309,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 3.96
+     "party": "국가혁명배당금당",
+     "pct": 0.51
     },
     {
      "party": "미래통합당",
      "pct": 38.74
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.51
+     "party": "민중당",
+     "pct": 3.96
     }
    ],
    "no_longer_ran": [
@@ -6790,9 +7357,9 @@
    "previous_turnout": 64.93,
    "turnout_delta": 4.68,
    "share_delta": {
+    "더불어민주당": 39.21,
     "민중당": 0.24,
-    "정의당": -0.28,
-    "더불어민주당": 39.21
+    "정의당": -0.28
    },
    "newly_ran": [
     {
@@ -6806,16 +7373,16 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 31.33
-    },
-    {
      "party": "국민의당",
      "previous_pct": 52.33
     },
     {
      "party": "대한민국당",
      "previous_pct": 0.26
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 31.33
     }
    ]
   },
@@ -6848,12 +7415,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 36.53
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.79
+    },
+    {
+     "party": "미래통합당",
+     "pct": 36.53
     }
    ],
    "no_longer_ran": [
@@ -6896,16 +7463,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.88
+     "party": "국가혁명배당금당",
+     "pct": 0.59
     },
     {
      "party": "미래통합당",
      "pct": 40.5
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.59
+     "party": "정의당",
+     "pct": 4.88
     }
    ],
    "no_longer_ran": [
@@ -6944,12 +7511,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 45.63
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.66
+    },
+    {
+     "party": "미래통합당",
+     "pct": 45.63
     }
    ],
    "no_longer_ran": [
@@ -6992,34 +7559,34 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.29
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.4
+    },
+    {
+     "party": "미래통합당",
+     "pct": 41.81
     },
     {
      "party": "민생당",
      "pct": 1.72
     },
     {
-     "party": "미래통합당",
-     "pct": 41.81
+     "party": "민중당",
+     "pct": 1.29
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 3.13
+     "party": "국민의당",
+     "previous_pct": 15.79
     },
     {
      "party": "새누리당",
      "previous_pct": 38.31
     },
     {
-     "party": "국민의당",
-     "previous_pct": 15.79
+     "party": "정의당",
+     "previous_pct": 3.13
     }
    ]
   },
@@ -7048,17 +7615,17 @@
    "previous_turnout": 58.99,
    "turnout_delta": 7.56,
    "share_delta": {
-    "민중당": -2.5,
-    "더불어민주당": -3.61
+    "더불어민주당": -3.61,
+    "민중당": -2.5
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 43.81
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.46
+    },
+    {
+     "party": "미래통합당",
+     "pct": 43.81
     }
    ],
    "no_longer_ran": [
@@ -7093,8 +7660,8 @@
    "previous_turnout": 61.59,
    "turnout_delta": 7.82,
    "share_delta": {
-    "민중당": 0.23,
-    "더불어민주당": 18.75
+    "더불어민주당": 18.75,
+    "민중당": 0.23
    },
    "newly_ran": [
     {
@@ -7108,16 +7675,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 24.75
+    },
+    {
      "party": "녹색당",
      "previous_pct": 3.05
     },
     {
      "party": "새누리당",
      "previous_pct": 34.71
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 24.75
     }
    ]
   },
@@ -7146,14 +7713,10 @@
    "previous_turnout": 64.41,
    "turnout_delta": 9.03,
    "share_delta": {
-    "민중당": -0.08,
-    "더불어민주당": 20.71
+    "더불어민주당": 20.71,
+    "민중당": -0.08
    },
    "newly_ran": [
-    {
-     "party": "정의당",
-     "pct": 1.98
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.29
@@ -7161,16 +7724,20 @@
     {
      "party": "미래통합당",
      "pct": 45.04
+    },
+    {
+     "party": "정의당",
+     "pct": 1.98
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 43.41
-    },
-    {
      "party": "국민의당",
      "previous_pct": 24.54
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 43.41
     }
    ]
   },
@@ -7203,19 +7770,23 @@
    },
    "newly_ran": [
     {
-     "party": "통일민주당",
-     "pct": 0.54
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.51
     },
     {
      "party": "미래통합당",
      "pct": 42.95
+    },
+    {
+     "party": "통일민주당",
+     "pct": 0.54
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 9.09
+    },
     {
      "party": "복지국가당",
      "previous_pct": 1.51
@@ -7223,10 +7794,6 @@
     {
      "party": "새누리당",
      "previous_pct": 33.21
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 9.09
     }
    ]
   },
@@ -7255,8 +7822,8 @@
    "previous_turnout": 61.9,
    "turnout_delta": 6.94,
    "share_delta": {
-    "정의당": 4.9,
-    "더불어민주당": 11.47
+    "더불어민주당": 11.47,
+    "정의당": 4.9
    },
    "newly_ran": [
     {
@@ -7270,16 +7837,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 15.68
+    },
+    {
      "party": "노동당",
      "previous_pct": 1.93
     },
     {
      "party": "새누리당",
      "previous_pct": 31.95
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 15.68
     }
    ]
   },
@@ -7312,16 +7879,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.14
+     "party": "국가혁명배당금당",
+     "pct": 0.37
     },
     {
      "party": "미래통합당",
      "pct": 41.64
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.37
+     "party": "민중당",
+     "pct": 1.14
     },
     {
      "party": "우리공화당",
@@ -7368,12 +7935,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 37.7
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.97
+    },
+    {
+     "party": "미래통합당",
+     "pct": 37.7
     }
    ],
    "no_longer_ran": [
@@ -7416,12 +7983,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 62.6
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.49
+    },
+    {
+     "party": "미래통합당",
+     "pct": 62.6
     }
    ],
    "no_longer_ran": [
@@ -7464,16 +8031,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.8
+     "party": "국가혁명배당금당",
+     "pct": 0.53
     },
     {
      "party": "미래통합당",
      "pct": 53.66
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.53
+     "party": "민생당",
+     "pct": 0.8
     }
    ],
    "no_longer_ran": [
@@ -7520,15 +8087,19 @@
      "pct": 0.65
     },
     {
-     "party": "민생당",
-     "pct": 1.94
-    },
-    {
      "party": "미래통합당",
      "pct": 36.51
+    },
+    {
+     "party": "민생당",
+     "pct": 1.94
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 14.81
+    },
     {
      "party": "민중연합당",
      "previous_pct": 1.05
@@ -7536,10 +8107,6 @@
     {
      "party": "새누리당",
      "previous_pct": 36.26
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 14.81
     }
    ]
   },
@@ -7572,30 +8139,30 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.73
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.7
     },
     {
      "party": "미래통합당",
      "pct": 38.22
+    },
+    {
+     "party": "민중당",
+     "pct": 1.73
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 2.14
+     "party": "국민의당",
+     "previous_pct": 21.57
     },
     {
      "party": "새누리당",
      "previous_pct": 32.45
     },
     {
-     "party": "국민의당",
-     "previous_pct": 21.57
+     "party": "정의당",
+     "previous_pct": 2.14
     }
    ]
   },
@@ -7628,12 +8195,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 51.2
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.77
+    },
+    {
+     "party": "미래통합당",
+     "pct": 51.2
     }
    ],
    "no_longer_ran": [
@@ -7676,16 +8243,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 2.21
+     "party": "국가혁명배당금당",
+     "pct": 0.48
     },
     {
      "party": "미래통합당",
      "pct": 43.22
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.48
+     "party": "민생당",
+     "pct": 2.21
     }
    ],
    "no_longer_ran": [
@@ -7728,20 +8295,20 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 3.03
+     "party": "국가혁명배당금당",
+     "pct": 0.25
     },
     {
      "party": "미래통합당",
      "pct": 50.46
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.25
-    },
-    {
      "party": "우리공화당",
      "pct": 0.21
+    },
+    {
+     "party": "정의당",
+     "pct": 3.03
     }
    ],
    "no_longer_ran": [
@@ -7780,12 +8347,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 44.97
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.37
+    },
+    {
+     "party": "미래통합당",
+     "pct": 44.97
     }
    ],
    "no_longer_ran": [
@@ -7824,12 +8391,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 41.28
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.68
+    },
+    {
+     "party": "미래통합당",
+     "pct": 41.28
     },
     {
      "party": "우리공화당",
@@ -7872,8 +8439,8 @@
    "previous_turnout": 62.95,
    "turnout_delta": 6.25,
    "share_delta": {
-    "정의당": 0.99,
-    "더불어민주당": 10.98
+    "더불어민주당": 10.98,
+    "정의당": 0.99
    },
    "newly_ran": [
     {
@@ -7887,12 +8454,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 39.75
-    },
-    {
      "party": "국민의당",
      "previous_pct": 11.08
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 39.75
     }
    ]
   },
@@ -7929,15 +8496,19 @@
      "pct": 0.49
     },
     {
-     "party": "민생당",
-     "pct": 1.36
-    },
-    {
      "party": "미래통합당",
      "pct": 44.35
+    },
+    {
+     "party": "민생당",
+     "pct": 1.36
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 18.72
+    },
     {
      "party": "민중연합당",
      "previous_pct": 0.69
@@ -7945,10 +8516,6 @@
     {
      "party": "새누리당",
      "previous_pct": 37.7
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 18.72
     }
    ]
   },
@@ -7977,9 +8544,9 @@
    "previous_turnout": 57.73,
    "turnout_delta": 8.72,
    "share_delta": {
+    "더불어민주당": 4.36,
     "민중당": -0.25,
-    "정의당": 0.42,
-    "더불어민주당": 4.36
+    "정의당": 0.42
    },
    "newly_ran": [
     {
@@ -7987,22 +8554,22 @@
      "pct": 0.4
     },
     {
-     "party": "민생당",
-     "pct": 0.98
-    },
-    {
      "party": "미래통합당",
      "pct": 47.81
+    },
+    {
+     "party": "민생당",
+     "pct": 0.98
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 39.92
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.81
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 39.92
     }
    ]
   },
@@ -8035,16 +8602,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.15
+     "party": "국가혁명배당금당",
+     "pct": 0.61
     },
     {
      "party": "미래통합당",
      "pct": 33.94
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.61
+     "party": "민생당",
+     "pct": 1.15
     }
    ],
    "no_longer_ran": [
@@ -8087,26 +8654,26 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.46
-    },
-    {
      "party": "기본소득당",
      "pct": 1.89
     },
     {
      "party": "미래통합당",
      "pct": 36.24
+    },
+    {
+     "party": "정의당",
+     "pct": 4.46
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 0.58
-    },
-    {
      "party": "국민의당",
      "previous_pct": 27.47
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 0.58
     }
    ]
   },
@@ -8135,29 +8702,21 @@
    "previous_turnout": 63.11,
    "turnout_delta": 7.69,
    "share_delta": {
-    "한나라당": -39.72,
-    "더불어민주당": 5.78
+    "더불어민주당": 5.78,
+    "한나라당": -39.72
    },
    "newly_ran": [
-    {
-     "party": "민중당",
-     "pct": 0.29
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.44
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.21
-    },
     {
      "party": "가자!평화인권당",
      "pct": 0.15
     },
     {
-     "party": "민중민주당",
-     "pct": 0.07
+     "party": "공화당",
+     "pct": 0.06
+    },
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.21
     },
     {
      "party": "국민새정당",
@@ -8168,11 +8727,27 @@
      "pct": 39.98
     },
     {
-     "party": "공화당",
-     "pct": 0.06
+     "party": "민중당",
+     "pct": 0.29
+    },
+    {
+     "party": "민중민주당",
+     "pct": 0.07
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.44
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 5.61
+    },
+    {
+     "party": "노동당",
+     "previous_pct": 0.42
+    },
     {
      "party": "녹색당",
      "previous_pct": 0.7
@@ -8180,14 +8755,6 @@
     {
      "party": "정의당",
      "previous_pct": 0.54
-    },
-    {
-     "party": "노동당",
-     "previous_pct": 0.42
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 5.61
     },
     {
      "party": "진리대한당",
@@ -8220,8 +8787,8 @@
    "previous_turnout": 59.81,
    "turnout_delta": 8.47,
    "share_delta": {
-    "정의당": 2.09,
-    "더불어민주당": 9.17
+    "더불어민주당": 9.17,
+    "정의당": 2.09
    },
    "newly_ran": [
     {
@@ -8235,12 +8802,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 39.4
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.41
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 39.4
     }
    ]
   },
@@ -8283,16 +8850,16 @@
    ],
    "no_longer_ran": [
     {
+     "party": "국민의당",
+     "previous_pct": 36.28
+    },
+    {
      "party": "민중연합당",
      "previous_pct": 1.1
     },
     {
      "party": "새누리당",
      "previous_pct": 38.03
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 36.28
     },
     {
      "party": "코리아",
@@ -8325,35 +8892,35 @@
    "previous_turnout": 53.37,
    "turnout_delta": 7.67,
    "share_delta": {
-    "민중당": -0.24,
-    "더불어민주당": 3.61
+    "더불어민주당": 3.61,
+    "민중당": -0.24
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.83
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.51
+    },
+    {
+     "party": "미래통합당",
+     "pct": 36.29
     },
     {
      "party": "민생당",
      "pct": 0.79
     },
     {
-     "party": "미래통합당",
-     "pct": 36.29
+     "party": "정의당",
+     "pct": 2.83
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 31.45
-    },
-    {
      "party": "국민의당",
      "previous_pct": 13.5
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 31.45
     }
    ]
   },
@@ -8386,20 +8953,20 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.56
-    },
-    {
-     "party": "한국복지당",
-     "pct": 0.5
+     "party": "국가혁명배당금당",
+     "pct": 0.58
     },
     {
      "party": "미래통합당",
      "pct": 38.07
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.58
+     "party": "민중당",
+     "pct": 1.56
+    },
+    {
+     "party": "한국복지당",
+     "pct": 0.5
     }
    ],
    "no_longer_ran": [
@@ -8458,16 +9025,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 2.24
+     "party": "국가혁명배당금당",
+     "pct": 1.07
     },
     {
      "party": "미래통합당",
      "pct": 53.41
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.07
+     "party": "민생당",
+     "pct": 2.24
     }
    ],
    "no_longer_ran": [
@@ -8506,12 +9073,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 58.48
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.41
+    },
+    {
+     "party": "미래통합당",
+     "pct": 58.48
     }
    ],
    "no_longer_ran": [
@@ -8550,8 +9117,8 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 33.88
+     "party": "국가혁명배당금당",
+     "pct": 0.73
     },
     {
      "party": "노동당",
@@ -8562,8 +9129,8 @@
      "pct": 38.37
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.73
+     "party": "민중당",
+     "pct": 33.88
     }
    ],
    "no_longer_ran": [
@@ -8604,12 +9171,8 @@
    "share_delta": {},
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.96
-    },
-    {
-     "party": "정의당",
-     "pct": 9.89
+     "party": "국가혁명배당금당",
+     "pct": 0.65
     },
     {
      "party": "더불어민주당",
@@ -8620,8 +9183,12 @@
      "pct": 40.89
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.65
+     "party": "민생당",
+     "pct": 0.96
+    },
+    {
+     "party": "정의당",
+     "pct": 9.89
     }
    ],
    "no_longer_ran": [
@@ -8660,12 +9227,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 52.75
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.96
+    },
+    {
+     "party": "미래통합당",
+     "pct": 52.75
     }
    ],
    "no_longer_ran": [
@@ -8719,12 +9286,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 46.98
-    },
-    {
      "party": "국민의당",
      "previous_pct": 12.83
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 46.98
     }
    ]
   },
@@ -8757,12 +9324,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 36.58
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.71
+    },
+    {
+     "party": "미래통합당",
+     "pct": 36.58
     }
    ],
    "no_longer_ran": [
@@ -8805,16 +9372,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.74
+     "party": "국가혁명배당금당",
+     "pct": 0.84
     },
     {
      "party": "미래통합당",
      "pct": 38.75
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.84
+     "party": "민중당",
+     "pct": 1.74
     }
    ],
    "no_longer_ran": [
@@ -8857,22 +9424,22 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 44.44
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.17
+    },
+    {
+     "party": "미래통합당",
+     "pct": 44.44
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 1.54
-    },
-    {
      "party": "국민의당",
      "previous_pct": 14.73
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 1.54
     },
     {
      "party": "새누리당",
@@ -8909,26 +9476,26 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.99
+     "party": "국가혁명배당금당",
+     "pct": 0.69
     },
     {
      "party": "미래통합당",
      "pct": 37.58
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.69
+     "party": "정의당",
+     "pct": 4.99
     }
    ],
    "no_longer_ran": [
     {
-     "party": "진리대한당",
-     "previous_pct": 2.68
-    },
-    {
      "party": "새누리당",
      "previous_pct": 41.83
+    },
+    {
+     "party": "진리대한당",
+     "previous_pct": 2.68
     }
    ]
   },
@@ -8969,16 +9536,16 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.56
+    },
+    {
      "party": "더불어민주당",
      "pct": 40.45
     },
     {
      "party": "미래통합당",
      "pct": 15.58
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.56
     }
    ],
    "no_longer_ran": [
@@ -9021,12 +9588,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 41.82
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.49
+    },
+    {
+     "party": "미래통합당",
+     "pct": 41.82
     }
    ],
    "no_longer_ran": [
@@ -9069,20 +9636,20 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 0.94
-    },
-    {
-     "party": "정의당",
-     "pct": 6.04
+     "party": "국가혁명배당금당",
+     "pct": 0.77
     },
     {
      "party": "미래통합당",
      "pct": 36.12
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.77
+     "party": "민중당",
+     "pct": 0.94
+    },
+    {
+     "party": "정의당",
+     "pct": 6.04
     }
    ],
    "no_longer_ran": [
@@ -9100,17 +9667,101 @@
    "district": "인천 서구갑",
    "sido": "인천",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "이전 '인천 서구갑'의 77%만 차지",
-   "previous_district": "인천 서구갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.7%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "인천 서구갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김교흥",
+    "party": "더불어민주당",
+    "pct": 53.24
+   },
+   "previous_winner": {
+    "name": "이학재",
+    "party": "새누리당",
+    "pct": 44.45
+   },
+   "margin": 10.74,
+   "previous_margin": 6.22,
+   "margin_delta": 4.52,
+   "turnout": 63.85,
+   "previous_turnout": 56.82,
+   "turnout_delta": 7.03,
+   "share_delta": {
+    "더불어민주당": 15.01
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.49
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.5
+    },
+    {
+     "party": "정의당",
+     "pct": 2.09
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 14.87
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 44.45
+    }
+   ]
   },
   {
    "district": "인천 서구을",
    "sido": "인천",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '인천 서구을' 겹침 89%/100%",
-   "previous_district": "인천 서구을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 90.9%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "인천 서구을",
+   "outcome": "party_hold",
+   "winner": {
+    "name": "신동근",
+    "party": "더불어민주당",
+    "pct": 61.64
+   },
+   "previous_winner": {
+    "name": "신동근",
+    "party": "더불어민주당",
+    "pct": 45.85
+   },
+   "margin": 24.24,
+   "previous_margin": 7.93,
+   "margin_delta": 16.31,
+   "turnout": 62.15,
+   "previous_turnout": 54.29,
+   "turnout_delta": 7.86,
+   "share_delta": {
+    "더불어민주당": 15.79
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.96
+    },
+    {
+     "party": "미래통합당",
+     "pct": 37.4
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 16.24
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 37.92
+    }
+   ]
   },
   {
    "district": "인천 연수구갑",
@@ -9141,12 +9792,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 42.08
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.04
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.08
     }
    ],
    "no_longer_ran": [
@@ -9164,9 +9815,53 @@
    "district": "인천 연수구을",
    "sido": "인천",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 92%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "인천 연수구을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.5%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "인천 연수구을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "정일영",
+    "party": "더불어민주당",
+    "pct": 41.79
+   },
+   "previous_winner": {
+    "name": "민경욱",
+    "party": "새누리당",
+    "pct": 44.36
+   },
+   "margin": 2.29,
+   "previous_margin": 7.3,
+   "margin_delta": -5.01,
+   "turnout": 72.04,
+   "previous_turnout": 62.97,
+   "turnout_delta": 9.07,
+   "share_delta": {
+    "더불어민주당": 4.73
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.34
+    },
+    {
+     "party": "미래통합당",
+     "pct": 39.5
+    },
+    {
+     "party": "정의당",
+     "pct": 18.38
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 18.58
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 44.36
+    }
+   ]
   },
   {
    "district": "인천 중구강화군옹진군",
@@ -9195,16 +9890,16 @@
    "share_delta": {},
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.91
+    },
+    {
      "party": "더불어민주당",
      "pct": 47.65
     },
     {
      "party": "미래통합당",
      "pct": 50.28
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.91
     },
     {
      "party": "우리공화당",
@@ -9217,12 +9912,12 @@
      "previous_pct": 14.9
     },
     {
-     "party": "정의당",
-     "previous_pct": 22.62
-    },
-    {
      "party": "새누리당",
      "previous_pct": 30.6
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 22.62
     }
    ]
   },
@@ -9261,12 +9956,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 4.49
-    },
-    {
      "party": "국민의당",
      "previous_pct": 51.12
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 4.49
     },
     {
      "party": "새누리당",
@@ -9303,12 +9998,12 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 19.55
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.65
+    },
+    {
+     "party": "민중당",
+     "pct": 19.55
     }
    ],
    "no_longer_ran": [
@@ -9351,16 +10046,16 @@
    },
    "newly_ran": [
     {
+     "party": "국가혁명배당금당",
+     "pct": 0.81
+    },
+    {
      "party": "민생당",
      "pct": 4.59
     },
     {
      "party": "우리공화당",
      "pct": 0.98
-    },
-    {
-     "party": "국가혁명배당금당",
-     "pct": 0.81
     }
    ],
    "no_longer_ran": [
@@ -9399,20 +10094,24 @@
    "previous_turnout": 56.03,
    "turnout_delta": 11.84,
    "share_delta": {
-    "정의당": 6.43,
-    "더불어민주당": 28.5
+    "더불어민주당": 28.5,
+    "정의당": 6.43
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 37.34
-    },
-    {
      "party": "미래통합당",
      "pct": 2.01
+    },
+    {
+     "party": "민생당",
+     "pct": 37.34
     }
    ],
    "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 56.38
+    },
     {
      "party": "민중연합당",
      "previous_pct": 1.69
@@ -9420,10 +10119,6 @@
     {
      "party": "새누리당",
      "previous_pct": 6.54
-    },
-    {
-     "party": "국민의당",
-     "previous_pct": 56.38
     }
    ]
   },
@@ -9431,33 +10126,212 @@
    "district": "전남 순천시광양시곡성군구례군갑",
    "sido": "전남",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 100%/94% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 순천시'",
-   "previous_district": "전남 순천시"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.9%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "전남 순천시",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "소병철",
+    "party": "더불어민주당",
+    "pct": 58.56
+   },
+   "previous_winner": {
+    "name": "이정현",
+    "party": "새누리당",
+    "pct": 44.55
+   },
+   "margin": 26.86,
+   "previous_margin": 5.48,
+   "margin_delta": 21.38,
+   "turnout": 70.35,
+   "previous_turnout": 68.82,
+   "turnout_delta": 1.53,
+   "share_delta": {
+    "더불어민주당": 18.95,
+    "민중당": 2.84
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.27
+    },
+    {
+     "party": "기독자유통일당",
+     "pct": 0.29
+    },
+    {
+     "party": "미래통합당",
+     "pct": 3.03
+    },
+    {
+     "party": "민생당",
+     "pct": 0.79
+    },
+    {
+     "party": "정의당",
+     "pct": 0.94
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 11.84
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 44.55
+    }
+   ]
   },
   {
    "district": "전남 순천시광양시곡성군구례군을",
    "sido": "전남",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가 · 이전 '전남 광양시곡성군구례군'",
-   "previous_district": "전남 광양시곡성군구례군"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.3%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "전남 광양시곡성군구례군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "서동용",
+    "party": "더불어민주당",
+    "pct": 64.75
+   },
+   "previous_winner": {
+    "name": "정인화",
+    "party": "국민의당",
+    "pct": 49.89
+   },
+   "margin": 40.67,
+   "previous_margin": 12.22,
+   "margin_delta": 28.45,
+   "turnout": 67.15,
+   "previous_turnout": 64.01,
+   "turnout_delta": 3.14,
+   "share_delta": {
+    "더불어민주당": 27.08,
+    "민중당": -3.48
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.43
+    },
+    {
+     "party": "미래통합당",
+     "pct": 4.34
+    },
+    {
+     "party": "정의당",
+     "pct": 2.93
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 49.89
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 4.77
+    }
+   ]
   },
   {
    "district": "전남 여수시갑",
    "sido": "전남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '전남 여수시갑' 겹침 69%/100%",
-   "previous_district": "전남 여수시갑"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 91.5%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "전남 여수시갑",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "주철현",
+    "party": "더불어민주당",
+    "pct": 64.44
+   },
+   "previous_winner": {
+    "name": "이용주",
+    "party": "국민의당",
+    "pct": 43.91
+   },
+   "margin": 33.65,
+   "previous_margin": 9.47,
+   "margin_delta": 24.18,
+   "turnout": 64.47,
+   "previous_turnout": 60.02,
+   "turnout_delta": 4.45,
+   "share_delta": {
+    "더불어민주당": 30.0
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.98
+    },
+    {
+     "party": "미래통합당",
+     "pct": 3.79
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 43.91
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 4.77
+    }
+   ]
   },
   {
    "district": "전남 여수시을",
    "sido": "전남",
    "relation": "boundary_changed",
-   "comparable": "no",
-   "reason": "주 대응 '전남 여수시을' 겹침 97%/74%",
-   "previous_district": "전남 여수시을"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 88.4%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "전남 여수시을",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "김회재",
+    "party": "더불어민주당",
+    "pct": 71.58
+   },
+   "previous_winner": {
+    "name": "주승용",
+    "party": "국민의당",
+    "pct": 50.43
+   },
+   "margin": 51.76,
+   "previous_margin": 13.63,
+   "margin_delta": 38.13,
+   "turnout": 65.08,
+   "previous_turnout": 59.54,
+   "turnout_delta": 5.54,
+   "share_delta": {
+    "더불어민주당": 34.78,
+    "정의당": 2.48
+   },
+   "newly_ran": [
+    {
+     "party": "미래통합당",
+     "pct": 3.71
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 50.43
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 6.16
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 4.19
+    }
+   ]
   },
   {
    "district": "전남 영암군무안군신안군",
@@ -9488,30 +10362,30 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 19.42
-    },
-    {
      "party": "미래통합당",
      "pct": 3.62
+    },
+    {
+     "party": "민생당",
+     "pct": 19.42
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 1.82
+     "party": "국민의당",
+     "previous_pct": 41.73
     },
     {
-     "party": "정의당",
-     "previous_pct": 3.3
+     "party": "민중연합당",
+     "previous_pct": 1.82
     },
     {
      "party": "새누리당",
      "previous_pct": 14.66
     },
     {
-     "party": "국민의당",
-     "previous_pct": 41.73
+     "party": "정의당",
+     "previous_pct": 3.3
     }
    ]
   },
@@ -9544,22 +10418,22 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 30.9
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.59
+    },
+    {
+     "party": "민생당",
+     "pct": 30.9
     }
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 2.27
-    },
-    {
      "party": "국민의당",
      "previous_pct": 54.39
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 2.27
     },
     {
      "party": "새누리당",
@@ -9596,12 +10470,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 3.55
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.48
+    },
+    {
+     "party": "미래통합당",
+     "pct": 3.55
     }
    ],
    "no_longer_ran": [
@@ -9610,12 +10484,12 @@
      "previous_pct": 47.12
     },
     {
-     "party": "정의당",
-     "previous_pct": 3.6
-    },
-    {
      "party": "새누리당",
      "previous_pct": 8.22
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 3.6
     }
    ]
   },
@@ -9623,9 +10497,53 @@
    "district": "전북 김제시부안군",
    "sido": "전북",
    "relation": "minor_boundary_change",
-   "comparable": "unknown",
-   "reason": "겹침 97%/100% — 폴리곤 출처가 달라 실제 경계 변화인지 정밀도 차이인지 구분 불가",
-   "previous_district": "전북 김제시부안군"
+   "comparable": "yes",
+   "reason": "획정은 바뀌었지만 20대 표를 읍면동 단위로 21대 경계에 다시 담아 비교한다 (동 귀속표 기준, 커버리지 89.6%). 전체 수준값으로도 쓸 수 있다.",
+   "previous_district": "전북 김제시부안군",
+   "outcome": "party_flip",
+   "winner": {
+    "name": "이원택",
+    "party": "더불어민주당",
+    "pct": 66.68
+   },
+   "previous_winner": {
+    "name": "김종회",
+    "party": "국민의당",
+    "pct": 45.97
+   },
+   "margin": 39.53,
+   "previous_margin": 3.03,
+   "margin_delta": 36.5,
+   "turnout": 65.53,
+   "previous_turnout": 62.36,
+   "turnout_delta": 3.17,
+   "share_delta": {
+    "더불어민주당": 23.74
+   },
+   "newly_ran": [
+    {
+     "party": "국가혁명배당금당",
+     "pct": 0.83
+    },
+    {
+     "party": "민생당",
+     "pct": 5.35
+    }
+   ],
+   "no_longer_ran": [
+    {
+     "party": "국민의당",
+     "previous_pct": 45.97
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 4.35
+    },
+    {
+     "party": "정의당",
+     "previous_pct": 6.75
+    }
+   ]
   },
   {
    "district": "전북 남원시임실군순창군",
@@ -9662,12 +10580,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "민중연합당",
-     "previous_pct": 3.64
-    },
-    {
      "party": "국민의당",
      "previous_pct": 39.12
+    },
+    {
+     "party": "민중연합당",
+     "previous_pct": 3.64
     },
     {
      "party": "새누리당",
@@ -9764,16 +10682,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 6.11
+     "party": "국가혁명배당금당",
+     "pct": 0.73
     },
     {
      "party": "기독자유통일당",
      "pct": 1.82
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.73
+     "party": "정의당",
+     "pct": 6.11
     }
    ],
    "no_longer_ran": [
@@ -9816,12 +10734,12 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 32.05
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.3
+    },
+    {
+     "party": "민생당",
+     "pct": 32.05
     }
    ],
    "no_longer_ran": [
@@ -9912,12 +10830,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 43.36
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.15
+    },
+    {
+     "party": "미래통합당",
+     "pct": 43.36
     }
    ],
    "no_longer_ran": [
@@ -9956,16 +10874,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 7.32
-    },
-    {
      "party": "미래통합당",
      "pct": 37.07
     },
     {
      "party": "우리공화당",
      "pct": 0.61
+    },
+    {
+     "party": "정의당",
+     "pct": 7.32
     }
    ],
    "no_longer_ran": [
@@ -10009,16 +10927,16 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 2.67
+     "party": "국가혁명배당금당",
+     "pct": 0.52
     },
     {
      "party": "미래통합당",
      "pct": 41.07
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.52
+     "party": "민중당",
+     "pct": 2.67
     }
    ],
    "no_longer_ran": [
@@ -10057,16 +10975,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 0.6
+     "party": "국가혁명배당금당",
+     "pct": 0.64
     },
     {
      "party": "미래통합당",
      "pct": 48.65
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.64
+     "party": "민생당",
+     "pct": 0.6
     }
    ],
    "no_longer_ran": [
@@ -10109,16 +11027,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.54
+     "party": "국가혁명배당금당",
+     "pct": 1.1
     },
     {
      "party": "미래통합당",
      "pct": 46.34
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.1
+     "party": "민생당",
+     "pct": 1.54
     }
    ],
    "no_longer_ran": [
@@ -10161,38 +11079,38 @@
    },
    "newly_ran": [
     {
-     "party": "민중당",
-     "pct": 1.95
-    },
-    {
-     "party": "우리공화당",
-     "pct": 0.53
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 0.64
     },
     {
      "party": "미래통합당",
      "pct": 30.25
+    },
+    {
+     "party": "민중당",
+     "pct": 1.95
+    },
+    {
+     "party": "우리공화당",
+     "pct": 0.53
     }
    ],
    "no_longer_ran": [
     {
-     "party": "기독자유당",
-     "previous_pct": 1.95
+     "party": "국민의당",
+     "previous_pct": 18.14
     },
     {
-     "party": "친반통합",
-     "previous_pct": 0.7
+     "party": "기독자유당",
+     "previous_pct": 1.95
     },
     {
      "party": "새누리당",
      "previous_pct": 38.77
     },
     {
-     "party": "국민의당",
-     "previous_pct": 18.14
+     "party": "친반통합",
+     "previous_pct": 0.7
     }
    ]
   },
@@ -10265,16 +11183,16 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 2.3
+     "party": "국가혁명배당금당",
+     "pct": 0.8
     },
     {
      "party": "미래통합당",
      "pct": 52.7
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.8
+     "party": "정의당",
+     "pct": 2.3
     }
    ],
    "no_longer_ran": [
@@ -10313,12 +11231,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 49.83
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.08
+    },
+    {
+     "party": "미래통합당",
+     "pct": 49.83
     }
    ],
    "no_longer_ran": [
@@ -10401,20 +11319,20 @@
    },
    "newly_ran": [
     {
-     "party": "친박신당",
-     "pct": 0.72
+     "party": "국가혁명배당금당",
+     "pct": 1.22
     },
     {
      "party": "미래통합당",
      "pct": 47.92
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.22
-    },
-    {
      "party": "우리공화당",
      "pct": 0.79
+    },
+    {
+     "party": "친박신당",
+     "pct": 0.72
     }
    ],
    "no_longer_ran": [
@@ -10457,12 +11375,12 @@
    },
    "newly_ran": [
     {
-     "party": "정의당",
-     "pct": 4.13
-    },
-    {
      "party": "미래통합당",
      "pct": 41.04
+    },
+    {
+     "party": "정의당",
+     "pct": 4.13
     }
    ],
    "no_longer_ran": [
@@ -10501,14 +11419,10 @@
    "previous_turnout": 53.4,
    "turnout_delta": 7.34,
    "share_delta": {
-    "정의당": 1.31,
-    "더불어민주당": 6.13
+    "더불어민주당": 6.13,
+    "정의당": 1.31
    },
    "newly_ran": [
-    {
-     "party": "민중당",
-     "pct": 0.77
-    },
     {
      "party": "국가혁명배당금당",
      "pct": 0.68
@@ -10516,16 +11430,20 @@
     {
      "party": "미래통합당",
      "pct": 34.89
+    },
+    {
+     "party": "민중당",
+     "pct": 0.77
     }
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 29.04
-    },
-    {
      "party": "국민의당",
      "previous_pct": 14.75
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 29.04
     }
    ]
   },
@@ -10558,12 +11476,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 53.95
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.57
+    },
+    {
+     "party": "미래통합당",
+     "pct": 53.95
     }
    ],
    "no_longer_ran": [
@@ -10607,12 +11525,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 56.88
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.01
+    },
+    {
+     "party": "미래통합당",
+     "pct": 56.88
     }
    ],
    "no_longer_ran": []
@@ -10646,12 +11564,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 54.1
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.3
+    },
+    {
+     "party": "미래통합당",
+     "pct": 54.1
     }
    ],
    "no_longer_ran": [
@@ -10694,12 +11612,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 47.84
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.48
+    },
+    {
+     "party": "미래통합당",
+     "pct": 47.84
     }
    ],
    "no_longer_ran": [
@@ -10742,30 +11660,30 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.32
-    },
-    {
-     "party": "정의당",
-     "pct": 6.91
+     "party": "국가혁명배당금당",
+     "pct": 0.7
     },
     {
      "party": "미래통합당",
      "pct": 43.98
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 0.7
+     "party": "민생당",
+     "pct": 1.32
+    },
+    {
+     "party": "정의당",
+     "pct": 6.91
     }
    ],
    "no_longer_ran": [
     {
-     "party": "친반통일당",
-     "previous_pct": 3.59
-    },
-    {
      "party": "새누리당",
      "previous_pct": 49.27
+    },
+    {
+     "party": "친반통일당",
+     "previous_pct": 3.59
     }
    ]
   },
@@ -10802,26 +11720,26 @@
      "pct": 0.98
     },
     {
-     "party": "민생당",
-     "pct": 2.37
-    },
-    {
      "party": "미래통합당",
      "pct": 46.79
+    },
+    {
+     "party": "민생당",
+     "pct": 2.37
     }
    ],
    "no_longer_ran": [
     {
-     "party": "정의당",
-     "previous_pct": 2.72
+     "party": "국민의당",
+     "previous_pct": 11.55
     },
     {
      "party": "새누리당",
      "previous_pct": 42.22
     },
     {
-     "party": "국민의당",
-     "previous_pct": 11.55
+     "party": "정의당",
+     "previous_pct": 2.72
     }
    ]
   },
@@ -10850,8 +11768,8 @@
    "previous_turnout": 57.18,
    "turnout_delta": 4.58,
    "share_delta": {
-    "민중당": -0.11,
-    "더불어민주당": 10.39
+    "더불어민주당": 10.39,
+    "민중당": -0.11
    },
    "newly_ran": [
     {
@@ -10865,12 +11783,12 @@
    ],
    "no_longer_ran": [
     {
-     "party": "새누리당",
-     "previous_pct": 38.82
-    },
-    {
      "party": "국민의당",
      "previous_pct": 12.7
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 38.82
     }
    ]
   },
@@ -10903,12 +11821,12 @@
    },
    "newly_ran": [
     {
-     "party": "미래통합당",
-     "pct": 42.96
-    },
-    {
      "party": "국가혁명배당금당",
      "pct": 1.23
+    },
+    {
+     "party": "미래통합당",
+     "pct": 42.96
     }
    ],
    "no_longer_ran": [
@@ -10951,16 +11869,16 @@
    },
    "newly_ran": [
     {
-     "party": "민생당",
-     "pct": 1.8
+     "party": "국가혁명배당금당",
+     "pct": 1.03
     },
     {
      "party": "미래통합당",
      "pct": 52.25
     },
     {
-     "party": "국가혁명배당금당",
-     "pct": 1.03
+     "party": "민생당",
+     "pct": 1.8
     }
    ],
    "no_longer_ran": [
