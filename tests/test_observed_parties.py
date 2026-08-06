@@ -114,7 +114,8 @@ def prop_votes(date: str, party: str) -> int:
 
 for _q in hom["unresolved"]:
     for _o in _q.get("occurrences") or []:
-        _actual = prop_votes(_o["election_date"], _q["name"])
+        # 해소 층이 이름을 옮긴 회차는 원자료에 다른 문자열이 적혀 있다
+        _actual = prop_votes(_o["election_date"], _o.get("stored_as") or _q["name"])
         ck(f'{_q["name"]} {_o["election"]}: 큐에 적은 득표가 원자료와 같다',
            _actual == _o["proportional_votes"],
            f'큐 {_o["proportional_votes"]:,} vs 원자료 {_actual:,}')

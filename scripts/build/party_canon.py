@@ -32,6 +32,39 @@ PARTY_ABBR: dict[str, str] = {
 }
 
 
+# ── 등록약칭 해소 층 ────────────────────────────────────────────────────────
+# NEC 개표 API는 정당의 **등록약칭**을 준다. 그 약칭이 회차마다 다른 정당을 가리키는
+# 일이 있다 — '기독당'은 2004 한국기독당, 2008 기독사랑실천당, 2012 기독자유민주당이다.
+# 이름만 보고는 못 가르고, registry 시점 표기로도 못 가른다(그 회차의 정당은 애초에
+# 그 이름이 아니었다). 가를 수 있는 건 **(선거일, 저장 문자열)** 쌍뿐이다.
+#
+# **원자료는 건드리지 않는다.** 2016년 민주당 사고가 정확히 원자료를 치환해서 났다.
+# 여기서는 읽는 시점에만 바꾼다 — data/results는 NEC가 준 그대로 남는다.
+_FIDELITY_PATH = ROOT / "data/parties/name_fidelity.json"
+try:
+    # status=applied인 것만 적용한다. 정식명을 알아도 적용하면 **다른 정당과 합쳐지는**
+    # 경우가 있다 — 2004년 '공화당'의 정식명은 민주공화당인데, registry의 민주공화당은
+    # 1963년 박정희 정당이다. 그런 건은 registry를 나누기 전까지 막아 둔다.
+    NAME_FIDELITY: dict = {
+        (c["election_date"], c["stored"]): c["official"]
+        for c in json.loads(_FIDELITY_PATH.read_text(encoding="utf-8"))["cases"]
+        if c.get("status") == "applied"
+    }
+except Exception:                                                # noqa: BLE001
+    NAME_FIDELITY = {}
+
+
+def resolve_recorded_name(name, date):
+    """저장된 문자열 → 그 회차의 정식명. 기록에 없으면 그대로.
+
+    기록에 있는 것만 바꾼다. '짧으니 약칭이겠지' 같은 추정은 하지 않는다 —
+    미래당·시민당처럼 그 자체가 정식명인 경우가 많다.
+    """
+    if not name or not date:
+        return name
+    return NAME_FIDELITY.get((date[:10], name), name)
+
+
 def canon_party(p):
     """정당명 정규화 — 별칭을 정식명으로. None/빈값은 그대로."""
     if not p:
@@ -106,6 +139,9 @@ def disambiguate_party(name, date):
       · 2016년 민주당(209,872표)이 더불어민주당으로 (상한 없는 fallback)
     둘 다 '모른다'를 '최신 것'으로 바꿔서 생긴 일이다. 모르면 모르는 채로 둔다.
     """
+    # ① 등록약칭 먼저 푼다 — 그래야 그 다음 단계가 **정식명**을 보고 판단한다.
+    #    순서를 바꾸면 '기독당'이 시기 노드를 찾다가 엉뚱한 데 걸린다.
+    name = resolve_recorded_name(name, date)
     if name == "민주당":
         return disambiguate_minjoo(date) or name
     if name in _REUSED_BASES:

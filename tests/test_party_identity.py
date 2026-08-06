@@ -162,6 +162,60 @@ def main() -> int:
        identity("민주당", "2016-04-13") != identity("더불어민주당", "2016-04-13"),
        identity("민주당", "2016-04-13"))
 
+    # ── 등록약칭 해소 층 ───────────────────────────────────────────────────
+    # NEC 개표 API는 등록약칭을 준다. 그 약칭이 회차마다 다른 정당을 가리키는 일이 있어
+    # (선거일, 문자열) 쌍으로만 가를 수 있다. **원자료는 건드리지 않는다** —
+    # 2016년 민주당 사고가 정확히 원자료를 치환해서 났다.
+    print("\n[약칭 해소] 읽는 시점에만 바꾼다")
+    from party_canon import resolve_recorded_name  # noqa: E402
+
+    _fid = json.loads((ROOT / "data/parties/name_fidelity.json").read_text(encoding="utf-8"))
+    _applied = [c for c in _fid["cases"] if c["status"] == "applied"]
+    _defer = [c for c in _fid["cases"] if c["status"] == "deferred"]
+    ck(f"적용 대상이 있다 ({len(_applied)}건)", bool(_applied))
+    for c in _applied:
+        ck(f'{c["election"]} {c["stored"]} → {c["official"]}',
+           disambiguate_party(c["stored"], c["election_date"]) == c["official"],
+           disambiguate_party(c["stored"], c["election_date"]))
+        # 같은 문자열이라도 **다른 회차는 건드리지 않는다** — 그게 이 층의 요점이다
+        ck(f'{c["stored"]}: 날짜가 없으면 바꾸지 않는다',
+           resolve_recorded_name(c["stored"], "") == c["stored"])
+        # 해소가 **그때 없던 정당**에 표를 붙이면 안 된다. 2004년 '공화당'의 정식명은
+        # 민주공화당이지만 registry의 민주공화당은 1963년 박정희 정당이다 — 그대로
+        # 적용하면 24,360표가 그 정당에 붙는다. 그래서 그 건은 deferred다.
+        _node = json.loads((ROOT / "data/parties/registry.json")
+                           .read_text(encoding="utf-8"))["parties"].get(c["official"])
+        if _node:
+            _f = (_node.get("founded") or "")[:7]
+            _d = (_node.get("dissolved") or "9999-99")[:7]
+            _ym = c["election_date"][:7]
+            ck(f'{c["election"]} {c["official"]}: 그 시점에 존재하던 정당이다',
+               bool(_f) and _f <= _ym <= _d, f"{_f}~{_d} vs {_ym}")
+    for c in _defer:
+        ck(f'{c["election"]} {c["stored"]}: 막아 둔 건은 적용되지 않는다',
+           resolve_recorded_name(c["stored"], c["election_date"]) == c["stored"],
+           resolve_recorded_name(c["stored"], c["election_date"]))
+        ck(f'{c["election"]} {c["stored"]}: 막은 이유가 적혀 있다', bool(c.get("blocked_by")))
+    # 원자료 불변 — 해소된 이름이 results 파일에 스며들지 않았는가
+    for c in _fid["cases"]:
+        eid_files = sorted((ROOT / "data/results").glob("*.json"))
+        raw_has_stored = raw_has_official = False
+        for fp in eid_files:
+            try:
+                doc = json.loads(fp.read_text(encoding="utf-8"))
+            except Exception:                                    # noqa: BLE001
+                continue
+            if (doc.get("_meta") or {}).get("election_date") != c["election_date"]:
+                continue
+            names = {x.get("party") for r in doc.get("races") or []
+                     for x in r.get("candidates") or []}
+            raw_has_stored |= c["stored"] in names
+            raw_has_official |= c["official"] in names
+        ck(f'{c["election"]} 원자료에 저장 문자열이 그대로 있다 ({c["stored"]})',
+           raw_has_stored)
+        ck(f'{c["election"]} 원자료에 해소된 이름이 스며들지 않았다 ({c["official"]})',
+           not raw_has_official)
+
     # ── 동음이의 ────────────────────────────────────────────────────────────
     print("\n[동음이의] 이름이 같아도 다른 당")
     ck("민중당 1965 ≠ 민중당 2017",

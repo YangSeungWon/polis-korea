@@ -15,7 +15,8 @@
    "official": "한국기독당",
    "proportional_votes": 228837,
    "type": "abbrev_collision",
-   "note": "같은 약칭이 18·19대엔 다른 정당을 가리킨다"
+   "note": "같은 약칭이 18·19대엔 다른 정당을 가리킨다",
+   "status": "applied"
   },
   {
    "election_date": "2004-04-15",
@@ -24,7 +25,9 @@
    "official": "민주공화당",
    "proportional_votes": 24360,
    "type": "abbrev_collision",
-   "note": "22대 '공화당'은 다른 정당이다"
+   "note": "22대 '공화당'은 다른 정당이다",
+   "status": "deferred",
+   "blocked_by": "정식명은 민주공화당이 맞지만, registry의 민주공화당은 1963년 박정희 정당이다. 그대로 적용하면 2004년 24,360표가 73,254,662표짜리 그 정당에 붙는다. 2004년 것은 1997-09-04 창당한 허경영 민주공화당으로 보이나 1차 자료를 못 구했다 — registry에 시기 노드를 나누기 전에는 적용하지 않는다."
   },
   {
    "election_date": "2008-04-09",
@@ -32,7 +35,8 @@
    "stored": "기독당",
    "official": "기독사랑실천당",
    "proportional_votes": 443775,
-   "type": "abbrev_collision"
+   "type": "abbrev_collision",
+   "status": "applied"
   },
   {
    "election_date": "2008-04-09",
@@ -40,7 +44,8 @@
    "stored": "문화예술당",
    "official": "한국문화예술당",
    "proportional_votes": 33966,
-   "type": "abbrev"
+   "type": "abbrev",
+   "status": "applied"
   },
   {
    "election_date": "2012-04-11",
@@ -49,7 +54,8 @@
    "official": "기독자유민주당",
    "proportional_votes": 257190,
    "type": "abbrev_collision",
-   "note": "같은 회차에 한국기독당(54,332)이 별도로 있다"
+   "note": "같은 회차에 한국기독당(54,332)이 별도로 있다",
+   "status": "applied"
   },
   {
    "election_date": "2012-04-11",
@@ -57,7 +63,8 @@
    "stored": "불교연합당",
    "official": "불교정도화합통일연합당",
    "proportional_votes": 36262,
-   "type": "abbrev"
+   "type": "abbrev",
+   "status": "applied"
   },
   {
    "election_date": "2020-04-15",
@@ -65,7 +72,8 @@
    "stored": "새벽당",
    "official": "자유의새벽당",
    "proportional_votes": 101819,
-   "type": "abbrev"
+   "type": "abbrev",
+   "status": "applied"
   },
   {
    "election_date": "2020-04-15",
@@ -74,7 +82,8 @@
    "official": "가자코리아",
    "proportional_votes": 34012,
    "type": "abbrev_collision",
-   "note": "20대·22대의 '코리아'도 각각 다른 정당일 수 있다 — 미확인"
+   "note": "20대·22대의 '코리아'도 각각 다른 정당일 수 있다 — 미확인",
+   "status": "applied"
   },
   {
    "election_date": "2020-04-15",
@@ -82,7 +91,8 @@
    "stored": "자영업당",
    "official": "중소자영업당",
    "proportional_votes": 19444,
-   "type": "abbrev"
+   "type": "abbrev",
+   "status": "applied"
   },
   {
    "election_date": "2024-04-10",
@@ -90,7 +100,8 @@
    "stored": "반공정당코리아",
    "official": "가나반공정당코리아",
    "proportional_votes": 7820,
-   "type": "abbrev"
+   "type": "abbrev",
+   "status": "applied"
   },
   {
    "election_date": "2024-04-10",
@@ -99,8 +110,14 @@
    "official": "K정치혁신연합당",
    "proportional_votes": 3451,
    "type": "transliteration",
-   "note": "한글 전사 — 정식명은 로마자 K"
+   "note": "한글 전사 — 정식명은 로마자 K",
+   "status": "applied"
   }
  ],
- "_recovered": "20대 총선의 '더불어민주당 ← 민주당(209,872표)'은 여기 있었다. 우리 정규화가 원자료를 덮어써서 두 정당이 한 행으로 합쳐진 건이었고, f87861d37 직전 파일로 복구해 NEC 응답과 다시 일치시켰다(비례 21종). 남은 문제는 '그 민주당이 어느 정당인가'이고 그건 정당명 충실도가 아니라 동음이의라, known_homonyms.json의 '민주당' 항목으로 옮겼다."
+ "_recovered": "20대 총선의 '더불어민주당 ← 민주당(209,872표)'은 여기 있었다. 우리 정규화가 원자료를 덮어써서 두 정당이 한 행으로 합쳐진 건이었고, f87861d37 직전 파일로 복구해 NEC 응답과 다시 일치시켰다(비례 21종). 남은 문제는 '그 민주당이 어느 정당인가'이고 그건 정당명 충실도가 아니라 동음이의라, known_homonyms.json의 '민주당' 항목으로 옮겼다.",
+ "_status": {
+  "applied": "해소 층이 실제로 적용한다",
+  "deferred": "정식명은 알지만 적용하면 다른 정당과 합쳐진다 — 막아 둔다"
+ },
+ "_layer": "party_canon.resolve_recorded_name()이 (선거일, 저장 문자열) → 정식명으로 바꾼다. **읽는 시점에만** 바꾸고 data/results는 NEC가 준 그대로 둔다 — 2016년 민주당 사고가 원자료를 치환해서 났다. status가 applied인 것만 적용한다."
 }

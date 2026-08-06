@@ -130,11 +130,63 @@
    "note": "registry 미등록 — 시기별로 다른 정당",
    "status": "needs_disambiguation",
    "reason": "same label used by multiple historical parties"
+  },
+  {
+   "name": "한국기독당",
+   "span": "2004~2012",
+   "note": "17대는 저장 문자열이 '기독당'이었고 해소 층이 한국기독당으로 옮겼다. 19대에도 한국기독당이 따로 있다(54,332표). 두 회차가 같은 법적 실체인지 확인하지 않았다 — 8년 간격이고 그 사이 2008·2012에 기독 계열 정당이 여럿 명멸했다.",
+   "status": "needs_disambiguation",
+   "reason": "abbreviation layer merged two elections under one name — identity unverified",
+   "occurrences": [
+    {
+     "election_date": "2004-04-15",
+     "election": "17대 총선",
+     "proportional_votes": 228837,
+     "resolved_to": null,
+     "evidence": "등록약칭 해소 층이 이 회차를 이 이름으로 옮겼다 — 같은 실체인지는 미확인",
+     "status": "open",
+     "stored_as": "기독당"
+    },
+    {
+     "election_date": "2012-04-11",
+     "election": "19대 총선",
+     "proportional_votes": 54332,
+     "resolved_to": null,
+     "evidence": "등록약칭 해소 층이 이 회차를 이 이름으로 옮겼다 — 같은 실체인지는 미확인",
+     "status": "open"
+    }
+   ]
+  },
+  {
+   "name": "한국문화예술당",
+   "span": "2008~2012",
+   "note": "18대는 저장 문자열이 '문화예술당'이었고 해소 층이 한국문화예술당으로 옮겼다. 19대에도 한국문화예술당이 있다. 같은 실체로 보이나 확인하지 않았다.",
+   "status": "needs_disambiguation",
+   "reason": "abbreviation layer merged two elections under one name — identity unverified",
+   "occurrences": [
+    {
+     "election_date": "2008-04-09",
+     "election": "18대 총선",
+     "proportional_votes": 33966,
+     "resolved_to": null,
+     "evidence": "등록약칭 해소 층이 이 회차를 이 이름으로 옮겼다 — 같은 실체인지는 미확인",
+     "status": "open",
+     "stored_as": "문화예술당"
+    },
+    {
+     "election_date": "2012-04-11",
+     "election": "19대 총선",
+     "proportional_votes": 23330,
+     "resolved_to": null,
+     "evidence": "등록약칭 해소 층이 이 회차를 이 이름으로 옮겼다 — 같은 실체인지는 미확인",
+     "status": "open"
+    }
+   ]
   }
  ],
  "_status": {
   "needs_disambiguation": "자료로 확인해 registry에 시점 표기로 나눠야 한다",
   "resolved": "나눴다 — 여기서 지운다"
  },
- "_occurrence_note": "occurrences는 **원자료에서 다시 잴 수 있는 값**만 적는다(그 회차 비례 득표수). 검사가 실제 결과와 대조하므로 여기 적은 판정이 조용히 낡지 않는다. resolved_to가 null이면 아직 모른다는 뜻이지 없다는 뜻이 아니다."
+ "_occurrence_note": "occurrences는 **원자료에서 다시 잴 수 있는 값**만 적는다(그 회차 비례 득표수). 검사가 실제 결과와 대조하므로 여기 적은 판정이 조용히 낡지 않는다. resolved_to가 null이면 아직 모른다는 뜻이지 없다는 뜻이 아니다. stored_as는 **원자료에 실제로 적힌 문자열**이다 — 해소 층이 이름을 옮긴 회차는 큐 이름으로 원자료를 찾을 수 없으므로 이 값으로 대조한다."
 }
