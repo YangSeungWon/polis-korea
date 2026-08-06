@@ -124,6 +124,32 @@ for _q in hom["unresolved"]:
            all(o.get("resolved_to") is None for o in _open),
            str([o["election"] for o in _open if o.get("resolved_to") is not None]))
 
+# ③-3 정당명 충실도 기록이 원자료와 맞는가
+#
+# 우리가 저장한 문자열이 그 회차 정식명과 다른 사례들(대부분 NEC가 등록약칭을 준다).
+# 판정 근거는 여기서도 **그 회차 비례 득표수**다 — 숫자가 어긋나면 판정을 다시 봐야 한다.
+_fid = json.loads((ROOT / "data/parties/name_fidelity.json").read_text(encoding="utf-8"))
+for _c in _fid["cases"]:
+    _actual = prop_votes(_c["election_date"], _c["stored"])
+    # 덮어쓴 사례는 저장 문자열만으로 원래 득표를 되찾을 수 없다 — 다른 정당에 **합쳐졌다**.
+    # 그러니 '합쳐졌다'는 사실 자체를 검사한다: 합계 = 원래 그 당 + 삼켜진 당.
+    if _c["type"] == "pipeline_corruption":
+        ck(f'{_c["election"]} {_c["stored"]}: 두 정당이 한 행으로 합쳐져 있다',
+           _actual == _c["stored_total_votes"]
+           == _c["absorbed_by_votes"] + _c["proportional_votes"],
+           f'원자료 합계 {_actual:,}')
+    else:
+        ck(f'{_c["election"]} {_c["stored"]}→{_c["official"]}: 득표가 원자료와 같다',
+           _actual == _c["proportional_votes"],
+           f'기록 {_c["proportional_votes"]:,} vs 원자료 {_actual:,}')
+    ck(f'{_c["election"]} {_c["stored"]}: 저장 문자열과 정식명이 실제로 다르다',
+       _c["stored"] != _c["official"])
+ck("충실도 유형 어휘가 정의돼 있다",
+   {c["type"] for c in _fid["cases"]} <= set(_fid["_types"]),
+   str({c["type"] for c in _fid["cases"]} - set(_fid["_types"])))
+# 조사 범위를 적어 두지 않으면 '여기 없으면 없다'로 읽힌다
+ck("조사 범위가 적혀 있다", "지역구" in _fid["_scope"] and "총선 비례" in _fid["_scope"])
+
 # ④ 이름을 재사용한 정당은 **시점으로 갈라져야 한다**
 #
 # disambiguate_party는 registry의 시기 노드 범위(founded~dissolved)로 가른다. 어느
