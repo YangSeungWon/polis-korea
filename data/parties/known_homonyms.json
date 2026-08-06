@@ -5,6 +5,74 @@
  "_todo": "각 항목의 실제 정당들을 자료로 확인해 registry에 시점 표기(예: 자유당(1951))로 나누고 여기서 지운다.",
  "unresolved": [
   {
+   "name": "기독당",
+   "span": "2004~2026",
+   "note": "우리 자료의 '기독당'은 회차마다 **다른 이름의 정당**을 가리킨다. 시대가 겹치는 동음이의가 아니라 등록약칭 충돌이라, registry에 시점 표기로 나누는 방식(자유당(1951) 같은)으로는 풀리지 않는다 — 그 회차의 정당은 애초에 '기독당'이라는 이름이 아니었다. 회차별 비례 득표수가 지문 역할을 해서 실체를 특정할 수 있었다.",
+   "status": "needs_disambiguation",
+   "reason": "registered abbreviation shared by differently-named parties",
+   "occurrences": [
+    {
+     "election_date": "2004-04-15",
+     "election": "17대 총선",
+     "proportional_votes": 228837,
+     "resolved_to": "한국기독당",
+     "evidence": "비례 228,837표(1.07%) = 한국기독당",
+     "status": "confirmed"
+    },
+    {
+     "election_date": "2008-04-09",
+     "election": "18대 총선",
+     "proportional_votes": 443775,
+     "resolved_to": "기독사랑실천당",
+     "evidence": "비례 443,775표(2.59%) = 기독사랑실천당",
+     "status": "confirmed"
+    },
+    {
+     "election_date": "2012-04-11",
+     "election": "19대 총선",
+     "proportional_votes": 257190,
+     "resolved_to": "기독자유민주당",
+     "evidence": "비례 257,190표(1.20%) = 기독자유민주당. 같은 회차에 한국기독당(54,332)이 별도 행으로 있다",
+     "status": "confirmed"
+    },
+    {
+     "election_date": "2016-04-13",
+     "election": "20대 총선",
+     "proportional_votes": 129978,
+     "resolved_to": "기독당(2016)",
+     "evidence": "비례 129,978표(0.54%) = 정식명 기독당",
+     "status": "confirmed"
+    },
+    {
+     "election_date": "2024-04-10",
+     "election": "22대 총선",
+     "proportional_votes": 36117,
+     "resolved_to": null,
+     "evidence": "선관위 정당등록현황의 기독당은 등록연월일 2020-08-24·대표자 박두식. 2016년 기독당과 같은 법적 실체인지(재창당인지) 확인하지 못했다",
+     "status": "open"
+    },
+    {
+     "election_date": "2026-06-03",
+     "election": "9회 지선",
+     "proportional_votes": 4949,
+     "resolved_to": null,
+     "evidence": "2024년과 같은 정당으로 보이나 확인하지 않았다",
+     "status": "open"
+    }
+   ],
+   "open_questions": [
+    "2008년 지역구 후보 3명(김당수·나용집·고영석, 3,720표)이 기독사랑실천당 소속인지, 같은 해 지역구에만 후보를 낸 별개 기독당 소속인지",
+    "2016년 기독당과 2020-08-24 등록된 기독당이 같은 실체인지 — 2016년 득표 0.54%로 등록취소 대상이었다"
+   ],
+   "source": [
+    "https://ko.wikipedia.org/wiki/대한민국_제17대_국회의원_선거",
+    "https://ko.wikipedia.org/wiki/대한민국_제18대_국회의원_선거",
+    "https://ko.wikipedia.org/wiki/대한민국_제19대_국회의원_선거",
+    "https://ko.wikipedia.org/wiki/대한민국_제20대_국회의원_선거",
+    "https://www.nec.go.kr/site/nec/ex/bbs/List.do?cbIdx=1239"
+   ]
+  },
+  {
    "name": "한국독립당",
    "span": "1948~2026",
    "note": "임정 계열 한국독립당과 후대 동명 정당들",
@@ -50,5 +118,6 @@
  "_status": {
   "needs_disambiguation": "자료로 확인해 registry에 시점 표기로 나눠야 한다",
   "resolved": "나눴다 — 여기서 지운다"
- }
+ },
+ "_occurrence_note": "occurrences는 **원자료에서 다시 잴 수 있는 값**만 적는다(그 회차 비례 득표수). 검사가 실제 결과와 대조하므로 여기 적은 판정이 조용히 낡지 않는다. resolved_to가 null이면 아직 모른다는 뜻이지 없다는 뜻이 아니다."
 }

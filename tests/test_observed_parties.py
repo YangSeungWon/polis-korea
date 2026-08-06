@@ -73,6 +73,57 @@ ck("큐 항목이 실제로 관측된 이름이다",
    str([x["name"] for x in hom["unresolved"]
         if x["name"] not in {r["name"] for r in rows}]))
 
+# ③-2 큐에 적은 회차별 판정이 원자료와 맞는가
+#
+# 기독당은 시대가 겹치는 동음이의가 아니라 **등록약칭 충돌**이다. 회차마다 다른 이름의
+# 정당(한국기독당·기독사랑실천당·기독자유민주당·기독당)이 같은 문자열로 들어와 있어서,
+# registry에 시점 표기로 나누는 방식으로는 풀리지 않는다.
+#
+# 실체를 특정한 근거가 **그 회차 비례 득표수**다. 그러니 그 숫자가 원자료와 어긋나면
+# 판정 전체를 다시 봐야 한다 — 여기서 대조한다. 문장으로만 적어 두면 조용히 낡는다.
+_RES = ROOT / "data/results"
+_prop_cache: dict = {}
+
+
+def prop_votes(date: str, party: str) -> int:
+    """그 선거일의 비례(tc7·tc8) 전국·시도 행에서 그 이름의 득표 합."""
+    key = (date, party)
+    if key in _prop_cache:
+        return _prop_cache[key]
+    total = 0
+    for fp in sorted(_RES.glob("*.json")):
+        if ".sigungu" in fp.name:
+            continue
+        try:
+            doc = json.loads(fp.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        if (doc.get("_meta") or {}).get("election_date") != date:
+            continue
+        for r in doc.get("races") or []:
+            if r.get("sg_typecode") not in ("7", "8"):
+                continue
+            if r.get("scope") not in ("nation", "proportional_sido"):
+                continue
+            for c in r.get("candidates") or []:
+                if c.get("party") == party:
+                    total += c.get("votes") or 0
+    _prop_cache[key] = total
+    return total
+
+
+for _q in hom["unresolved"]:
+    for _o in _q.get("occurrences") or []:
+        _actual = prop_votes(_o["election_date"], _q["name"])
+        ck(f'{_q["name"]} {_o["election"]}: 큐에 적은 득표가 원자료와 같다',
+           _actual == _o["proportional_votes"],
+           f'큐 {_o["proportional_votes"]:,} vs 원자료 {_actual:,}')
+    _open = [o for o in (_q.get("occurrences") or []) if o.get("status") == "open"]
+    if _open:
+        ck(f'{_q["name"]}: 미해소 회차는 resolved_to를 비워 둔다',
+           all(o.get("resolved_to") is None for o in _open),
+           str([o["election"] for o in _open if o.get("resolved_to") is not None]))
+
 # ④ 이름을 재사용한 정당은 **시점으로 갈라져야 한다**
 #
 # disambiguate_party는 registry의 시기 노드 범위(founded~dissolved)로 가른다. 어느
