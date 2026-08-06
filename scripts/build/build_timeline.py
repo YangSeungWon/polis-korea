@@ -34,10 +34,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# 기준일을 **고정**한다. date.today()를 쓰면 같은 커밋을 두 번 빌드해도 결과가
-# 달라져 생성기 멱등성 검사가 매일 깨진다. 회차가 늘면 이 값을 올린다.
+# **이 데이터셋이 보는 세계의 기준일**. '오늘'이 아니다 — 이름을 TODAY로 두면 움직이는
+# 값으로 읽히고, 실제로는 사람이 올려 주는 고정점이다(이번 세션에서 계속 고쳐 온 그 문제다).
+#
+# date.today()를 쓰면 같은 커밋을 두 번 빌드해도 결과가 달라져 멱등성 검사가 매일 깨진다.
+# 반대로 테스트 편의로 아무 날짜나 박아 두면 '예정/과거' 판정이 사실과 어긋난다.
+# 새 회차 결과를 넣을 때 **함께** 올린다 — 그게 이 값의 유일한 갱신 사유다.
 from datetime import date as _date0
-TODAY = _date0(2026, 6, 3)
+AS_OF_DATE = _date0(2026, 6, 3)
 RESULTS = ROOT / "data/results"
 
 # 정당명 정규화 공용 모듈 (같은 디렉터리) — registry.json 단일 출처.
@@ -422,6 +426,10 @@ def main():
     #
     # 그래서 **플래그를 새로 만들지 않고 사실에서 읽는다** — 선거일이 아직 오지 않았고
     # 결과 회차가 없으면 그건 예정된 선거다. 아는 일정이 없으면 항목이 없는 게 정상이다.
+    #
+    # 취소·연기된 선거가 들어오면 date만으로는 부족해진다. 그때도 `timeline_anchor` 같은
+    # **UI 상태를 저장하지 말고**, 실제로 일어난 사실(`cancelled`, `postponed_to`)을 메타에
+    # 적고 일정은 거기서 다시 유도한다 — 저장하는 것은 사실이고, 예정은 계산 결과다.
     future = []
     for meta_path in sorted((ROOT / "data/elections").glob("*.json")):
         if meta_path.name == "index.json":
@@ -435,7 +443,7 @@ def main():
         kind, when = meta.get("type"), meta.get("date") or ""
         if kind not in KIND_LABEL or not when:
             continue
-        if when <= TODAY.isoformat():
+        if when <= AS_OF_DATE.isoformat():
             continue                     # 이미 치른 선거는 예정이 아니다
         m = re.match(r"^(\d+)", meta_path.stem)
         if not m:
@@ -478,7 +486,7 @@ def main():
         "local": _date(2030, 6, 30),
     }
     HORIZON_YEARS = 10
-    today = TODAY
+    today = AS_OF_DATE
     horizon = today.replace(year=today.year + HORIZON_YEARS)
 
     def first_wed_on_or_after(dt: _date) -> _date:
