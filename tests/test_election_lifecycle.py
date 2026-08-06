@@ -7,6 +7,16 @@
 정치 데이터 제품에서 freshness는 장식이 아니다. 지난 선거를 '진행'이라고 말하는
 화면은 나머지 숫자도 최신이 아닐 거라는 의심을 만든다.
 
+## 상태는 셋이고, 서로 다른 것을 말한다
+
+    {id}.json status        선거 생애 — 진행 중인가 끝났는가
+    results _meta.is_final  개표 자료가 확정인가
+    index.json active       **수집 대상**인가 (NESDC 일일 스캔·sitemap 주기)
+
+세 번째가 특히 헷갈린다. `active`라는 이름 때문에 '선거 진행 중'으로 읽히지만
+실제 의미는 '아직 수집할 게 남았다'다. 선거가 끝나도 한동안 수집이 이어질 수 있고,
+그건 모순이 아니라 **다른 축**이다. 이 검사는 그 경우 명시적으로 적게만 한다.
+
 상태 축:  예정 → 투표일 → 개표 중 → 잠정 → 확정
 
 이 검사는 라벨을 고정하지 않는다. **모순만** 잡는다:
@@ -72,6 +82,23 @@ for f in sorted(ELECTIONS.glob("*.json")):
     if eday > today:
         ck(f"{eid}: 아직 안 치른 선거가 '확정'이 아니다", label != "확정",
            f"선거일 {when}")
+
+# index.active('수집 대상')와 status('선거 생애')는 다른 축이다 — 다만 **끝난 선거를
+# 계속 수집한다면 그건 의도여야 한다.** 우연히 남아 있는 것과 구별되게 이유를 적게 한다.
+idx = json.loads((ELECTIONS / "index.json").read_text(encoding="utf-8"))
+for eid in idx.get("active", []):
+    f = ELECTIONS / f"{eid}.json"
+    if not f.exists():
+        continue
+    d = json.loads(f.read_text(encoding="utf-8"))
+    # status를 명시적으로 끝났다고 적은 것만 본다. status 필드가 아예 없는 메타
+    # (재보궐 등 다른 shape)까지 끌어들이면 검사가 사실이 아닌 것을 주장하게 된다.
+    if d.get("status") != "archive":
+        continue
+    ck(f"{eid}: 끝난 선거를 계속 수집한다면 이유를 적는다",
+       bool(d.get("collect_reason")),
+       f"status={d.get('status')}인데 index.active에 있다 — "
+       "수집을 멈추거나 collect_reason을 남긴다")
 
 print(f"\n[선거 상태 정합] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)

@@ -19,9 +19,12 @@
     if ((meta.archive?.data_source_note || '').includes('위키')) return 'wiki';
     if ((meta._data_caveat || '').includes('위키')) return 'wiki';
     if ((meta.nec?._note || '').includes('미가용')) return 'wiki';
-    // status: active이고 fetch_nec_live 시기면 잠정
+    // **선거 생애로 자료 상태를 판정하지 않는다.** 예전엔 status === 'active'면 곧바로
+    // '잠정(live)'이라 했는데, status는 '선거가 진행 중인가'이고 자료가 잠정인지는
+    // 별개다 — 선거가 끝나도 자료는 한동안 잠정이고, 진행 중이어도 확정된 부분이 있다.
+    // 자료 쪽 신호(is_final)가 메타에 있으면 그걸 쓰고, 없으면 연도로만 가른다.
     const date = meta.date || '';
-    if (meta.status === 'active') return 'live';
+    if (meta.is_final === false) return 'live';
     // 2010 이후이면 NEC API, 이전이면 wiki (소수 옛 회차)
     const year = parseInt(date.slice(0, 4)) || 0;
     if (year >= 2010) return 'nec';
