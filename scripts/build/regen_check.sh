@@ -30,7 +30,8 @@ GENERATORS=(
   sync_archive_html      # archive 목록·그룹 구조
   build_static           # history/·polls/ 프리렌더
   build_person_pages     # /person/{slug}/
-  build_party_pages      # /party/{name}/
+  build_party_pages
+  build_observed_parties # data/parties/observed.json (관측 층 — registry와 분리)      # /party/{name}/
   build_region_pages     # /region/{시도-시군구}/
   build_home_capabilities
   build_tracker_static   # tracker.html 정적 요약 (JS 없이 읽히는 현재 지표)
