@@ -180,6 +180,11 @@ for _q in hom["unresolved"]:
             _want = _o["proportional_votes"]
         ck(f'{_q["name"]} {_o["election"]}: 큐에 적은 득표가 원자료와 같다',
            _actual == _want, f'큐 {_want:,} vs 원자료 {_actual:,}')
+    # 못 푼 이유를 적었으면 **무엇을 못 풀었는지**도 재현 가능해야 한다. blocked_by만
+    # 있고 occurrence가 없으면 다음 사람이 처음부터 다시 찾아야 한다.
+    if _q.get("blocked_by"):
+        ck(f'{_q["name"]}: 막힌 건에 확인 가능한 occurrence가 있다',
+           bool(_q.get("occurrences")))
     _open = [o for o in (_q.get("occurrences") or []) if o.get("status") == "open"]
     if _open:
         ck(f'{_q["name"]}: 미해소 회차는 resolved_to를 비워 둔다',
