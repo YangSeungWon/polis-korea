@@ -246,6 +246,10 @@ def main() -> int:
         ck(f"평화민주당@{dt} → {want}",
            disambiguate_party("평화민주당", dt) == want,
            disambiguate_party("평화민주당", dt))
+    for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
+        ck(f"친박연대@{dt} → {want}",
+           disambiguate_party("친박연대", dt) == want,
+           disambiguate_party("친박연대", dt))
     ck("자유당 1970~2020 사이는 원자료 이름 그대로",
        disambiguate_party("자유당", "1990-01-01") == "자유당",
        disambiguate_party("자유당", "1990-01-01"))
