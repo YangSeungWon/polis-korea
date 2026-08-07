@@ -21,7 +21,7 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 321,
+ "n": 323,
  "parties": [
   {
    "name": "더불어민주당",
@@ -47,21 +47,14 @@
   },
   {
    "name": "한나라당",
-   "elections": 20,
-   "candidates": 1438,
-   "votes": 194642612,
+   "elections": 14,
+   "candidates": 1300,
+   "votes": 193936700,
    "wins": 552,
    "first": "1997-12-18",
-   "last": "2026-06-03",
+   "last": "2011-10-26",
    "registry_id": "한나라당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "1997-11~2012-02",
-    "observed_span": "1997-12~2026-06",
-    "months_before": 0,
-    "months_after": 172,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
+   "status": "registry"
   },
   {
    "name": "새누리당",
@@ -1211,6 +1204,17 @@
    "status": "needs_disambiguation"
   },
   {
+   "name": "한나라당(2012)",
+   "elections": 1,
+   "candidates": 19,
+   "votes": 364098,
+   "wins": 0,
+   "first": "2012-04-11",
+   "last": "2012-04-11",
+   "registry_id": "한나라당(2012)",
+   "status": "registry"
+  },
+  {
    "name": "국민생각",
    "elections": 1,
    "candidates": 38,
@@ -1231,6 +1235,17 @@
    "last": "2026-06-03",
    "registry_id": null,
    "status": "needs_disambiguation"
+  },
+  {
+   "name": "한나라당(2014)",
+   "elections": 5,
+   "candidates": 119,
+   "votes": 341814,
+   "wins": 0,
+   "first": "2015-10-28",
+   "last": "2026-06-03",
+   "registry_id": "한나라당(2014)",
+   "status": "registry"
   },
   {
    "name": "친박연합",

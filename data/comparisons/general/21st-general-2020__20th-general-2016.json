@@ -2,7 +2,7 @@
  "_meta": {
   "current": "21st-general-2020",
   "previous": "20th-general-2016",
-  "generated_at": "2026-08-06T23:23:35+09:00",
+  "generated_at": "2026-08-07T13:32:23+09:00",
   "source": "polis 계산",
   "scope_note": "**비교 가능한 선거구만** 계산했다. 선거구는 회차마다 획정이 바뀌어, 이름이 같아도 유권자가 다르면 그 delta는 거짓이다.",
   "aggregation_note": "**정확한 부분집합 ≠ 대표 가능한 전체.** comparable='yes'는 그 선거구 하나의 delta를 계산할 수 있다는 뜻일 뿐이다. 비교 가능한 곳은 경계가 안정적인 곳이고 제외되는 곳은 재획정이 많은 도시권에 몰리므로, 부분집합 합계는 전국을 대표하지 않을 수 있다. coverage 감사를 통과할 때만 집계 지표를 만든다 — 경고 문구로 대신하지 않는다.",
@@ -6502,7 +6502,11 @@
     },
     {
      "party": "새누리당",
-     "previous_pct": 58.79
+     "previous_pct": 57.81
+    },
+    {
+     "party": "한나라당",
+     "previous_pct": 0.98
     }
    ]
   },
@@ -7081,7 +7085,11 @@
     },
     {
      "party": "새누리당",
-     "previous_pct": 38.52
+     "previous_pct": 37.94
+    },
+    {
+     "party": "한나라당",
+     "previous_pct": 0.58
     }
    ]
   },
@@ -8722,7 +8730,7 @@
    "turnout_delta": 7.69,
    "share_delta": {
     "더불어민주당": 5.78,
-    "한나라당": -39.72
+    "한나라당": 0.01
    },
    "newly_ran": [
     {
@@ -8770,6 +8778,10 @@
     {
      "party": "녹색당",
      "previous_pct": 0.7
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 39.73
     },
     {
      "party": "정의당",
@@ -10956,7 +10968,7 @@
    "turnout_delta": 6.03,
    "share_delta": {
     "더불어민주당": 10.15,
-    "한나라당": -42.72
+    "한나라당": -0.46
    },
    "newly_ran": [
     {
@@ -10976,6 +10988,10 @@
     {
      "party": "국민의당",
      "previous_pct": 11.69
+    },
+    {
+     "party": "새누리당",
+     "previous_pct": 42.26
     }
    ]
   },
@@ -11553,8 +11569,7 @@
    "previous_turnout": 61.67,
    "turnout_delta": 6.89,
    "share_delta": {
-    "더불어민주당": -1.88,
-    "한나라당": -56.01
+    "더불어민주당": -1.88
    },
    "newly_ran": [
     {
@@ -11564,9 +11579,18 @@
     {
      "party": "미래통합당",
      "pct": 56.88
+    },
+    {
+     "party": "한나라당",
+     "pct": 0.67
     }
    ],
-   "no_longer_ran": []
+   "no_longer_ran": [
+    {
+     "party": "새누리당",
+     "previous_pct": 56.68
+    }
+   ]
   },
   {
    "district": "충북 제천시단양군",

@@ -585,6 +585,42 @@
    "migration": "derived",
    "ambiguity_cause": null
   },
+  "한나라당(2012)": {
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "한나라당(2014)": {
+   "founded": "2014-02",
+   "dissolved": null,
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
   "신한국당": {
    "founded": "1995-12",
    "dissolved": "1997-11",
