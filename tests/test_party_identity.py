@@ -322,6 +322,12 @@ def main() -> int:
        identity("민중당", "1948-05-10") == "pid:민중당(미상)",
        identity("민중당", "1948-05-10"))
 
+    # 김구 한독당과, 국제녹색당(2007 등록)이 2022 개명한 한독당.
+    for dt, want in [("1948-05-10", "한국독립당"), ("2026-06-03", "한국독립당(2022)")]:
+        ck(f"한국독립당@{dt} → {want}",
+           disambiguate_party("한국독립당", dt) == want,
+           disambiguate_party("한국독립당", dt))
+
     for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
         ck(f"친박연대@{dt} → {want}",
            disambiguate_party("친박연대", dt) == want,
