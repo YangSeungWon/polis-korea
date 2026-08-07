@@ -21,7 +21,7 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 323,
+ "n": 324,
  "parties": [
   {
    "name": "더불어민주당",
@@ -80,21 +80,14 @@
   },
   {
    "name": "자유당",
-   "elections": 9,
-   "candidates": 1243,
-   "votes": 66960845,
+   "elections": 8,
+   "candidates": 1225,
+   "votes": 66919647,
    "wins": 272,
    "first": "1952-08-05",
-   "last": "2020-04-15",
+   "last": "1967-06-08",
    "registry_id": "자유당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "1951-12~1970-12",
-    "observed_span": "1952-08~2020-04",
-    "months_before": 0,
-    "months_after": 592,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
+   "status": "registry"
   },
   {
    "name": "민주통합당",
@@ -2129,6 +2122,17 @@
    "last": "2024-04-10",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "자유당(2020)",
+   "elections": 1,
+   "candidates": 18,
+   "votes": 41198,
+   "wins": 0,
+   "first": "2020-04-15",
+   "last": "2020-04-15",
+   "registry_id": "자유당(2020)",
+   "status": "registry"
   },
   {
    "name": "금융개혁당",
