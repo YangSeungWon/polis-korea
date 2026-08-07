@@ -89,6 +89,28 @@ def main() -> int:
         ck(f"{n}: 계보=민주계 · stream은 그대로 보존",
            fam[n]["family"] == "democratic" and parties[n].get("stream") == "중도진보")
 
+    print("\n[한시 당명] 이름을 되돌린 것은 흡수가 아니다")
+    life = json.loads((ROOT / "data/parties/lifecycle.json").read_text(encoding="utf-8"))
+    _L = life.get("parties", life)
+    # 형성 쪽에서만 왕복(predecessors ∩ successors)을 보고 종료 쪽에서 안 보면,
+    # 모체가 먼저 생겼다는 이유로 absorption_into가 붙어 '정의당에 흡수됐다'가 된다.
+    _temp = [n for n, v in _L.items()
+             if isinstance(v, dict) and (v.get("formed_by") or {}).get("type") == "temporary_rename"]
+    ck(f"한시 당명 사례가 있다 ({len(_temp)}종)", bool(_temp), str(_temp))
+    for n in _temp:
+        et = (_L[n].get("ended_by") or {}).get("type")
+        ck(f"{n}: 종료도 한시 당명으로 읽는다", et in ("temporary_rename", None), str(et))
+        ck(f"{n}: 흡수로 적히지 않았다", et != "absorption_into", str(et))
+    # 진짜 흡수는 그대로 흡수여야 한다 — 이 수정이 다른 관계를 건드리지 않았는가
+    _abs = [n for n, v in _L.items()
+            if isinstance(v, dict) and (v.get("ended_by") or {}).get("type") == "absorption_into"]
+    ck(f"흡수 사례는 남아 있다 ({len(_abs)}종)", len(_abs) >= 15, str(len(_abs)))
+    for n in ("더불어시민당", "미래한국당", "국민의미래"):
+        if n in _L:
+            ck(f"{n}: 위성정당 흡수는 그대로",
+               (_L[n].get("ended_by") or {}).get("type") == "absorption_into",
+               str((_L[n].get("ended_by") or {}).get("type")))
+
     print("\n[이념축에 못 얹는 것]")
     reg_fam = [n for n, v in fam.items() if v["family"] == "regional"]
     ck(f"지역계가 이념 위치로 환원되지 않는다 ({len(reg_fam)}종)", bool(reg_fam))
@@ -142,9 +164,11 @@ def main() -> int:
         ck("생성 유형 어휘",
            F <= {"foundation", "rename", "merger", "split", "temporary_rename",
                  "ambiguous"}, str(F))
+        # temporary_rename: 한시 당명을 접고 원래 이름으로 되돌린 것. 종료가 아니라
+        # 이름 복귀다 — 형성 쪽 어휘에만 있으면 종료가 absorption_into로 잘못 읽힌다.
         ck("종료 유형 어휘",
            E <= {"dissolution", "rename", "merger", "absorption_into", "split",
-                 "ambiguous"}, str(E))
+                 "temporary_rename", "ambiguous"}, str(E))
         ck("확정 못 한 것은 ambiguous로 남는다 (추정하지 않는다)",
            all(v["ambiguity_cause"] for v in L.values() if v["migration"] == "ambiguous"))
         # 종료 방식이 계보를 끊지 않는다 — 신민당은 1980 해산이지만 1967년 계보가 있다

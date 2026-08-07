@@ -310,7 +310,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 1단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 1단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민중연합당": {
    "family": "progressive",
@@ -320,7 +320,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민중당(2017)": {
    "family": "progressive",
@@ -330,7 +330,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민주노동당": {
    "family": "progressive",
@@ -350,15 +350,17 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←merged_from― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
   },
   "녹색정의당": {
-   "family": "unknown",
-   "families": [],
-   "basis": "no_path_to_seed",
-   "derivation": "no_path",
-   "cause": "ambiguous_relation",
-   "evidence": "씨앗에 닿는 계보 경로가 없다"
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
   },
   "진보신당": {
    "family": "progressive",
@@ -942,7 +944,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "신민당(1960)": {
    "family": "democratic",
@@ -975,7 +977,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   },
   "국민혁명당": {
@@ -983,7 +985,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   },
   "자유통일당": {
@@ -991,7 +993,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   }
  },
@@ -1269,7 +1271,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 1단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 1단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민중연합당": {
    "family": "progressive",
@@ -1279,7 +1281,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민중당(2017)": {
    "family": "progressive",
@@ -1289,7 +1291,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "민주노동당": {
    "family": "progressive",
@@ -1309,15 +1311,17 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←continuation― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
+   "evidence": "민주노동당까지 계보 2단계 (통합진보당 ←merged_from― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
   },
   "녹색정의당": {
-   "family": "unknown",
-   "families": [],
-   "basis": "no_path_to_seed",
-   "derivation": "no_path",
-   "cause": "ambiguous_relation",
-   "evidence": "씨앗에 닿는 계보 경로가 없다"
+   "family": "progressive",
+   "families": [
+    "progressive"
+   ],
+   "basis": "lineage_graph",
+   "derivation": "single_family_ancestry",
+   "cause": null,
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)  · 전파 제외: 민주노동당(2025)(absorbed_into)"
   },
   "진보신당": {
    "family": "progressive",
@@ -1929,7 +1933,7 @@
    "basis": "lineage_graph",
    "derivation": "single_family_ancestry",
    "cause": null,
-   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←continuation― 민주노동당)"
+   "evidence": "민주노동당까지 계보 3단계 (통합진보당 ←merged_from― 민주노동당)"
   },
   "신민당(1960)": {
    "family": "democratic",
@@ -1962,7 +1966,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   },
   "국민혁명당": {
@@ -1970,7 +1974,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   },
   "자유통일당": {
@@ -1978,7 +1982,7 @@
    "families": [],
    "basis": "no_path_to_seed",
    "derivation": "no_path",
-   "cause": "ambiguous_relation",
+   "cause": "disconnected_component",
    "evidence": "씨앗에 닿는 계보 경로가 없다"
   }
  },

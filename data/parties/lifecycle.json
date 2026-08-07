@@ -760,11 +760,12 @@
    "dissolved": "2014-12",
    "legacy_relation": "merge",
    "formed_by": {
-    "type": "rename",
+    "type": "merger",
     "parties": [
-     "민주노동당"
+     "민주노동당",
+     "국민참여당"
     ],
-    "why": "민주노동당이 2011-12에 해산하고 같은 달에 생겼다"
+    "why": "전신 2곳이 모두 2011-12에 해산했다"
    },
    "ended_by": {
     "type": "absorption_into",
@@ -776,7 +777,11 @@
    "lineage": [
     {
      "to": "민주노동당",
-     "type": "continuation"
+     "type": "merged_from"
+    },
+    {
+     "to": "국민참여당",
+     "type": "merged_from"
     }
    ],
    "migration": "derived",
@@ -888,6 +893,33 @@
      "to": "민주노동당(2025)",
      "type": "absorbed_into",
      "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "녹색정의당": {
+   "founded": "2024-02",
+   "dissolved": "2024-04",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "temporary_rename",
+    "parties": [
+     "정의당"
+    ],
+    "why": "정의당의 전신이자 후신 — 한시 당명(같은 정당)"
+   },
+   "ended_by": {
+    "type": "temporary_rename",
+    "parties": [
+     "정의당"
+    ],
+    "why": "정의당으로 이름을 되돌렸다 — 흡수가 아니다"
+   },
+   "lineage": [
+    {
+     "to": "정의당",
+     "type": "continuation"
     }
    ],
    "migration": "derived",
@@ -1555,8 +1587,8 @@
    "ambiguity_cause": "missing_predecessor_record"
   },
   "정의당(1967)": {
-   "founded": "1967",
-   "dissolved": "1970",
+   "founded": "1967-03",
+   "dissolved": "1971-05",
    "legacy_relation": null,
    "formed_by": {
     "type": "ambiguous",
@@ -2347,11 +2379,11 @@
     "why": "정의당의 전신이자 후신 — 한시 당명(같은 정당)"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "temporary_rename",
     "parties": [
      "정의당"
     ],
-    "why": "정의당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "정의당으로 이름을 되돌렸다 — 흡수가 아니다"
    },
    "lineage": [
     {
@@ -2382,6 +2414,125 @@
     {
      "to": "민주당(1955)",
      "type": "split_from"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "국민참여당": {
+   "founded": "2010-01",
+   "dissolved": "2011-12",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "merger",
+    "parties": [
+     "통합진보당"
+    ],
+    "why": "통합진보당이 같은 달(2011-12)에 생겼고 그 전신이 2곳이다"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "기독자유당": {
+   "founded": "2016-03",
+   "dissolved": "2020-03",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "기독자유통일당"
+    ],
+    "why": "기독자유통일당이 같은 달(2020-03)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "기독자유통일당": {
+   "founded": "2020-03",
+   "dissolved": "2021-06",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "기독자유당"
+    ],
+    "why": "기독자유당이 2020-03에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "국민혁명당"
+    ],
+    "why": "국민혁명당이 같은 달(2021-06)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "기독자유당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "국민혁명당": {
+   "founded": "2021-06",
+   "dissolved": "2022-04",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "기독자유통일당"
+    ],
+    "why": "기독자유통일당이 2021-06에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": "rename",
+    "parties": [
+     "자유통일당"
+    ],
+    "why": "자유통일당이 같은 달(2022-04)에 생겼고 그 전신이 1곳이다"
+   },
+   "lineage": [
+    {
+     "to": "기독자유통일당",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "자유통일당": {
+   "founded": "2022-04",
+   "dissolved": null,
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "rename",
+    "parties": [
+     "국민혁명당"
+    ],
+    "why": "국민혁명당이 2022-04에 해산하고 같은 달에 생겼다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "국민혁명당",
+     "type": "continuation"
     }
    ],
    "migration": "derived",

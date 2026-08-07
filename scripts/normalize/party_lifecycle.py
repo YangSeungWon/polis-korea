@@ -96,6 +96,12 @@ def derive(reg: dict) -> dict:
             ended, ewhy = None, "현존"
         elif not succs:
             ended, ewhy = "dissolution", "후신 기록이 없다"
+        elif roundtrip and set(succs) <= set(roundtrip):
+            # 한시 당명은 **끝난 게 아니라 이름을 되돌린 것**이다. 형성 쪽에서만
+            # roundtrip을 보고 종료 쪽에서 안 보면, 모체가 먼저 생겼다는 이유로
+            # absorption_into가 붙어 '정의당에 흡수됐다'가 된다 — 흡수가 아니다.
+            ended, eparts = "temporary_rename", list(roundtrip)
+            ewhy = f"{'·'.join(roundtrip)}으로 이름을 되돌렸다 — 흡수가 아니다"
         else:
             later = [s for s in succs if ym(reg[s].get("founded")) == d]
             earlier = [s for s in succs if ym(reg[s].get("founded")) and
