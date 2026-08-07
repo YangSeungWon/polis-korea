@@ -241,6 +241,11 @@ def main() -> int:
         ck(f"통일민주당@{dt} → {want}",
            disambiguate_party("통일민주당", dt) == want,
            disambiguate_party("통일민주당", dt))
+    # '구 평화민주당을 계승한다'는 창당 명분은 계보가 아니다. 별도 등록·19년 공백.
+    for dt, want in [("1988-04-26", "평화민주당"), ("2010-06-02", "평화민주당(2010)")]:
+        ck(f"평화민주당@{dt} → {want}",
+           disambiguate_party("평화민주당", dt) == want,
+           disambiguate_party("평화민주당", dt))
     ck("자유당 1970~2020 사이는 원자료 이름 그대로",
        disambiguate_party("자유당", "1990-01-01") == "자유당",
        disambiguate_party("자유당", "1990-01-01"))

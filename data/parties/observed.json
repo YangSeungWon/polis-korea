@@ -21,7 +21,7 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 325,
+ "n": 326,
  "parties": [
   {
    "name": "더불어민주당",
@@ -208,21 +208,14 @@
   },
   {
    "name": "평화민주당",
-   "elections": 3,
-   "candidates": 423,
-   "votes": 26013022,
+   "elections": 2,
+   "candidates": 419,
+   "votes": 25906683,
    "wins": 58,
    "first": "1987-12-16",
-   "last": "2010-06-02",
+   "last": "1988-04-26",
    "registry_id": "평화민주당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "1987-11~1991-09",
-    "observed_span": "1987-12~2010-06",
-    "months_before": 0,
-    "months_after": 225,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
+   "status": "registry"
   },
   {
    "name": "통합민주당",
@@ -1712,6 +1705,17 @@
    "last": "1992-12-18",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "평화민주당(2010)",
+   "elections": 1,
+   "candidates": 4,
+   "votes": 106339,
+   "wins": 0,
+   "first": "2010-06-02",
+   "last": "2010-06-02",
+   "registry_id": "평화민주당(2010)",
+   "status": "registry"
   },
   {
    "name": "한국기민당",
