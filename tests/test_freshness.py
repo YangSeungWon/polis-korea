@@ -15,6 +15,8 @@ null ≠ 0, 무투표 ≠ 결손과 같은 계열이다. 경과일만 보면 **�
 실행: .venv/bin/python tests/test_freshness.py
 """
 from __future__ import annotations
+import json
+import statistics
 import sys
 from datetime import date
 from pathlib import Path
@@ -75,6 +77,23 @@ def main() -> int:
        all(f["state"] in {"fresh", "expected_pause", "manual_refresh",
                           "overdue", "fetch_failed"} for f in fresh),
        str(states))
+    # 주기 상수가 **그 파일의 실제 발표 간격**보다 짧으면 늘 overdue가 뜬다.
+    # 갤럽 차기주자가 그랬다 — 국정평가와 같은 10일을 썼는데 평시 실제 간격은
+    # 77~147일이다. 상수를 데이터에 묶어 둔다.
+    for _lbl, _rel, _cad, _key in REFRESH_TARGETS:
+        _fp = ROOT / _rel
+        if not _fp.exists():
+            continue
+        _recs = json.loads(_fp.read_text(encoding="utf-8")).get("records") or []
+        _ds = sorted({r["date"] for r in _recs if r.get("date")})[-6:]
+        if len(_ds) < 3:
+            continue
+        _gaps = [(date.fromisoformat(b) - date.fromisoformat(a)).days
+                 for a, b in zip(_ds, _ds[1:])]
+        _med = statistics.median(_gaps)
+        ck(f"{_lbl}: 주기 {_cad}일이 실제 발표 간격(중앙값 {_med:.0f}일)을 덮는다",
+           _cad >= _med, f"{_cad} < {_med}")
+
     # 갤럽 휴간이 overdue로 잡히면 모델이 되돌아간 것이다
     gal = [f for f in fresh if "갤럽" in f["label"]]
     ck("갤럽이 overdue로 잡히지 않는다 (휴간 반영)",

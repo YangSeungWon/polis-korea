@@ -107,7 +107,11 @@ CI_BLOCKED = {"realmeter"}
 REFRESH_TARGETS = [
     # (라벨, 파일, 주기(일), 소스 키)
     ("갤럽 국정평가", "data/polls/approval_gallup.json", 10, "gallup"),
-    ("갤럽 차기주자", "data/polls/gallup_leaders.json", 10, "gallup"),
+    # 차기주자는 국정평가와 **주기가 다르다**. 갤럽 '장래 정치 지도자 선호도'는
+    # 대선 국면에만 주간이고 평시엔 분기다 — 실제 간격이 2025-04까지 7일이었다가
+    # 그 뒤 147·77·91·98일로 벌어졌다. 국정평가와 같은 10일을 쓰면 평시엔 늘
+    # overdue가 뜬다(실제로 그랬다). 관측된 간격을 덮는 값으로 둔다.
+    ("갤럽 차기주자", "data/polls/gallup_leaders.json", 150, "gallup"),
     ("리얼미터 국정평가", "data/polls/approval_realmeter.json", 10, "realmeter"),
     ("NBS", "data/polls/approval_nbs.json", 14, "nbs"),
 ]
