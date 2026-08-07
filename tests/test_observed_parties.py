@@ -138,10 +138,39 @@ def dist_votes(date: str, district: str, candidate: str) -> int:
     return 0
 
 
+def name_votes(date: str, party: str) -> int:
+    """그 선거일의 지역구(tc2) 전체에서 그 정당명의 득표 합.
+
+    후보가 여럿이라 (선거구, 후보) 하나로는 못 재는 경우가 있다 — 1948년 민중당이
+    그렇다. 비례가 없던 시절이라 비례 지문도 못 쓴다.
+    """
+    total = 0
+    for fp in sorted(_RES.glob("*.json")):
+        if ".sigungu" in fp.name:
+            continue
+        try:
+            doc = json.loads(fp.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        if (doc.get("_meta") or {}).get("election_date") != date:
+            continue
+        for r in doc.get("races") or []:
+            if r.get("sg_typecode") != "2" or r.get("scope") != "district":
+                continue
+            for c in r.get("candidates") or []:
+                if c.get("party") == party:
+                    total += c.get("votes") or 0
+    return total
+
+
 for _q in hom["unresolved"]:
     for _o in _q.get("occurrences") or []:
         # 해소 층이 이름을 옮긴 회차는 원자료에 다른 문자열이 적혀 있다
-        if "district_votes" in _o:
+        if "district_total_votes" in _o:
+            _actual = name_votes(_o["election_date"],
+                                 _o.get("stored_as") or _q["name"])
+            _want = _o["district_total_votes"]
+        elif "district_votes" in _o:
             _actual = dist_votes(_o["election_date"], _o["district"].split()[-1],
                                  _o["candidate"])
             _want = _o["district_votes"]

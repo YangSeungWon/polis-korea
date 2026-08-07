@@ -1957,6 +1957,42 @@
    "migration": "derived",
    "ambiguity_cause": null
   },
+  "민중당(1967)": {
+   "founded": "1967-02",
+   "dissolved": "1973-07",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "민중당(1990)": {
+   "founded": "1990-11",
+   "dissolved": "1992-03",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
   "민주통일당": {
    "founded": "1973-01",
    "dissolved": "1980-10",
