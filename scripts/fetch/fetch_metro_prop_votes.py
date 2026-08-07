@@ -1,10 +1,25 @@
-"""info.nec.go.kr VCCP09 개표현황 → 광역의회 비례(electionCode=8) 시도별 득표 + 당선인 API 의석.
+"""지선 광역의회 비례(sgTypecode=8) 시도별 **득표** + 당선인 API 의석. 3~8회.
 
-fetch_metro_prop_old(의석만, votes_pending)를 대체 — 시도별 개표(정당 득표수·득표율·선거인수·
-투표수·무효·기권)를 VCCP09에서 받고, 의석은 NEC 당선인 API(sgTypecode=8)로 받아 합쳐
-완전한 proportional_sido race를 만든다. 정당명은 그 선거 표기로 정규화(election-aware + override).
+fetch_metro_prop_old(의석만, votes_pending)를 대체 — 시도별 개표(정당 득표수·득표율·
+선거인수·투표수·무효·기권)를 받고, 의석은 NEC 당선인 API로 받아 합쳐 완전한
+proportional_sido race를 만든다.
 
-사용: NEC_API_KEY는 .env. python scripts/fetch/fetch_metro_prop_votes.py [--n 3] [--dry-run]
+## 왜 5~8회가 비어 있었나
+
+3·4회만 이 스크립트를 돌렸고, 5~8회는 당선인 API로 **의석만** 받아 놨었다. 그래서
+2010·2014·2018·2022 광역비례는 정당이 3~6종(의석 얻은 당)뿐이고 득표가 전부 0이었다.
+실제로는 9~13종이 나왔고 회차당 2천만 표가 넘는다. '데이터가 그렇다'가 아니라
+'안 받아 왔다'였다.
+
+## 출처가 둘인 이유
+
+VCCP09(info.nec.go.kr)가 주 경로인데 **세종·제주에는 아무것도 주지 않는다**(특별자치라
+페이지 구조가 다르다). 그 자리를 '개표 미상'으로 두면 득표가 있는데 없다고 적는
+것이 되므로, 개표 API(VoteXmntckInfoInqireService2, sgTypecode=8)로 메운다. 이
+API는 cityCode를 무시하고 전 시도를 페이지로 주므로 회차당 한 번 받아 캐시한다.
+득표율은 안 주므로 유효표로 나눠 채운다(유도지 추정이 아니다).
+
+사용: NEC_API_KEY는 .env. python scripts/fetch/fetch_metro_prop_votes.py [--n 5] [--dry-run]
 의존: pandas, lxml.
 """
 from __future__ import annotations
@@ -25,8 +40,14 @@ ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "data" / "results"
 WINNER_API = "https://apis.data.go.kr/9760000/WinnerInfoInqireService2/getWinnerInfoInqire"
 VCCP_URL = "https://info.nec.go.kr/electioninfo/electionInfo_report.xhtml"
+VOTE_API = "https://apis.data.go.kr/9760000/VoteXmntckInfoInqireService2/getXmntckSttusInfoInqire"
 
-ELECTIONS = {3: ("3rd-local-2002", "20020613"), 4: ("4th-local-2006", "20060531")}
+ELECTIONS = {3: ("3rd-local-2002", "20020613"), 4: ("4th-local-2006", "20060531"),
+             5: ("5th-local-2010", "20100602"), 6: ("6th-local-2014", "20140604"),
+             7: ("7th-local-2018", "20180613"), 8: ("8th-local-2022", "20220601")}
+# OVERRIDE는 **원자료에 다른 이름을 적는** 일이라 최소로 쓴다. 2016년 민주당 사고가
+# 정확히 그렇게 났다. 5~8회는 넣지 않는다 — 그 회차의 '민주당'은 읽는 시점에
+# party_canon이 시기별로 가른다(2010-06은 통합민주당). 여기서 미리 정하지 않는다.
 OVERRIDE = {4: {"민주당": "민주당(2005)"}}
 
 # 시도 핵심명 → NEC cityCode. by_sido(당선인 API sdName)를 핵심명으로 정규화해 매칭.
@@ -149,10 +170,70 @@ def fetch_votes(election_name: str, city_code: str) -> dict | None:
     }
 
 
+_API_CACHE: dict = {}
+
+
+def fetch_votes_api(key: str, sg_id: str) -> dict:
+    """개표 API(sgTypecode=8) → {sido_core: fetch_votes와 같은 모양}.
+
+    VCCP09는 세종·제주에 아무것도 주지 않는다(특별자치라 페이지 구조가 다르다).
+    그 자리를 '개표 미상, 의석만'으로 두면 **득표가 있는데 없다고 적는** 것이 된다.
+    이 API는 cityCode를 무시하고 전 시도를 페이지로 주므로 한 번 받아 캐시한다.
+    """
+    if sg_id in _API_CACHE:
+        return _API_CACHE[sg_id]
+    out, page = {}, 1
+    while True:
+        url = (f"{VOTE_API}?serviceKey={key}&sgId={sg_id}&sgTypecode=8"
+               f"&pageNo={page}&numOfRows=100&resultType=xml")
+        root = ET.fromstring(urllib.request.urlopen(url, timeout=60).read())
+        if root.findtext("header/resultCode") != "INFO-00":
+            break
+        items = root.findall("body/items/item")
+        if not items:
+            break
+        for it in items:
+            # 시도 합계 행만 — 시군구 행까지 더하면 두 번 세어진다
+            if (it.findtext("sdName") or "").strip() != "합계":
+                continue
+            if (it.findtext("wiwName") or "").strip() not in ("합계", "", None):
+                continue
+            core = sido_core((it.findtext("sggName") or "").strip())
+            if not core:
+                continue
+            def n(tag):
+                try:
+                    return int((it.findtext(tag) or "0").strip() or 0)
+                except ValueError:
+                    return 0
+            parties = {}
+            for i in range(1, 51):
+                nm = (it.findtext(f"jd{i:02d}") or "").strip()
+                if not nm:
+                    continue
+                v = n(f"dugsu{i:02d}")
+                parties[nm] = (v, None)
+            if parties:
+                out[core] = {"electors": n("sunsu"), "voters": n("tusu"),
+                             "valid": n("yutusu"), "invalid": n("mutusu"),
+                             "abstain": n("gigwonsu"), "parties": parties}
+        total = int(root.findtext("body/totalCount") or 0)
+        if page * 100 >= total:
+            break
+        page += 1
+    _API_CACHE[sg_id] = out
+    return out
+
+
 def build_race(sido_full, votes, seats_map, canon):
     cands = []
     for party_raw, (v, pct) in votes["parties"].items():
         party = canon(party_raw)
+        # 개표 API는 득표율을 안 준다. 유효표로 나눈 값은 유도지 추정이 아니므로
+        # 여기서 채운다 — 한 회차 안에서 어떤 시도는 pct가 있고 어떤 시도는 없으면
+        # 읽는 쪽이 '없는 것'과 '0'을 구별하지 못한다.
+        if pct is None and v is not None and votes.get("valid"):
+            pct = round(v / votes["valid"] * 100, 2)
         cands.append({"name": party, "party": party, "votes": v, "pct": pct,
                       "seats": seats_map.get(party_raw, seats_map.get(party, 0))})
     cands.sort(key=lambda c: -(c["votes"] or 0))
@@ -184,11 +265,14 @@ def backfill(n, key, dry):
     races = [r for r in data.get("races", []) if r.get("sg_typecode") != "8"]
     new, tot_v, tot_s = [], 0, 0
     for core, seats_map in seats.items():
-        cc = CITYCODE.get(core)
         full = full_by_core.get(core, core)
-        if not cc:
-            print(f"  ! cityCode 없음: {core}"); continue
-        votes = fetch_votes(sg_id, cc)
+        cc = CITYCODE.get(core)
+        votes = fetch_votes(sg_id, cc) if cc else None
+        if not votes:
+            # 세종·제주는 VCCP09가 비어 있다 — 개표 API로 메운다(득표율은 안 준다).
+            votes = fetch_votes_api(key, sg_id).get(core)
+            if votes:
+                print(f"  · {core}: VCCP09 없음 → 개표 API")
         if not votes:
             # 제주 등 VCCP09 무투표/구조차이 — 의석만(votes_pending).
             cands = [{"name": canon(p), "party": canon(p), "votes": None, "pct": None,
@@ -212,6 +296,18 @@ def backfill(n, key, dry):
     print(f"  {fid}: {len(new)}시도 · {tot_s}석 · 총득표 {tot_v:,} — {summ}{' [dry]' if dry else ''}")
     if not dry:
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+        # 5~8회는 의석만 있는 tc8이 .sigungu 쪽에 들어가 있다(청크 뒤에 덧붙여진 탓).
+        # 득표를 본 파일에 넣었으니 그 자리는 비운다 — 안 그러면 같은 회차 광역비례가
+        # 두 벌이 되고, 하나는 득표 0이라 합계가 조용히 틀린다.
+        sub = path.with_suffix(".sigungu.json")
+        if sub.exists():
+            sd = json.loads(sub.read_text())
+            keep = [r for r in sd.get("races", []) if r.get("sg_typecode") != "8"]
+            if len(keep) != len(sd.get("races", [])):
+                dropped = len(sd["races"]) - len(keep)
+                sd["races"] = keep
+                sub.write_text(json.dumps(sd, ensure_ascii=False, indent=2) + "\n")
+                print(f"    .sigungu에서 의석만 tc8 {dropped}행 제거")
 
 
 def main():

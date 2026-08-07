@@ -21,14 +21,14 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 335,
+ "n": 337,
  "parties": [
   {
    "name": "더불어민주당",
    "elections": 16,
-   "candidates": 7137,
-   "votes": 300630015,
-   "wins": 4223,
+   "candidates": 7162,
+   "votes": 335876189,
+   "wins": 4246,
    "first": "2016-04-13",
    "last": "2026-06-03",
    "registry_id": "더불어민주당",
@@ -37,9 +37,9 @@
   {
    "name": "국민의힘",
    "elections": 10,
-   "candidates": 5785,
-   "votes": 212787908,
-   "wins": 2753,
+   "candidates": 5802,
+   "votes": 224385350,
+   "wins": 2770,
    "first": "2021-04-07",
    "last": "2026-06-03",
    "registry_id": "국민의힘",
@@ -48,9 +48,9 @@
   {
    "name": "한나라당",
    "elections": 14,
-   "candidates": 1300,
-   "votes": 193936700,
-   "wins": 552,
+   "candidates": 1316,
+   "votes": 202166671,
+   "wins": 567,
    "first": "1997-12-18",
    "last": "2011-10-26",
    "registry_id": "한나라당",
@@ -59,9 +59,9 @@
   {
    "name": "새누리당",
    "elections": 9,
-   "candidates": 667,
-   "votes": 96790771,
-   "wins": 366,
+   "candidates": 684,
+   "votes": 107854687,
+   "wins": 382,
    "first": "2012-04-11",
    "last": "2016-04-13",
    "registry_id": "새누리당",
@@ -185,6 +185,17 @@
    "status": "registry"
   },
   {
+   "name": "자유한국당",
+   "elections": 4,
+   "candidates": 106,
+   "votes": 31092490,
+   "wins": 50,
+   "first": "2017-04-12",
+   "last": "2019-04-03",
+   "registry_id": "자유한국당",
+   "status": "registry"
+  },
+  {
    "name": "국민의당(2016)",
    "elections": 3,
    "candidates": 233,
@@ -193,6 +204,17 @@
    "first": "2016-04-13",
    "last": "2017-05-09",
    "registry_id": "국민의당(2016)",
+   "status": "registry"
+  },
+  {
+   "name": "통합민주당",
+   "elections": 6,
+   "candidates": 393,
+   "votes": 29104161,
+   "wins": 162,
+   "first": "2008-04-09",
+   "last": "2011-10-26",
+   "registry_id": "통합민주당",
    "status": "registry"
   },
   {
@@ -218,14 +240,25 @@
    "status": "registry"
   },
   {
-   "name": "통합민주당",
-   "elections": 6,
-   "candidates": 378,
-   "votes": 21851971,
-   "wins": 148,
-   "first": "2008-04-09",
-   "last": "2011-10-26",
-   "registry_id": "통합민주당",
+   "name": "정의당",
+   "elections": 15,
+   "candidates": 677,
+   "votes": 21463603,
+   "wins": 23,
+   "first": "2014-06-04",
+   "last": "2026-06-03",
+   "registry_id": "정의당",
+   "status": "registry"
+  },
+  {
+   "name": "새정치민주연합",
+   "elections": 4,
+   "candidates": 124,
+   "votes": 20917752,
+   "wins": 46,
+   "first": "2014-06-04",
+   "last": "2015-10-28",
+   "registry_id": "새정치민주연합",
    "status": "registry"
   },
   {
@@ -237,6 +270,17 @@
    "first": "2024-04-10",
    "last": "2024-04-10",
    "registry_id": "국민의미래",
+   "status": "registry"
+  },
+  {
+   "name": "민주노동당",
+   "elections": 12,
+   "candidates": 446,
+   "votes": 20235503,
+   "wins": 39,
+   "first": "2000-04-13",
+   "last": "2011-10-26",
+   "registry_id": "민주노동당",
    "status": "registry"
   },
   {
@@ -273,17 +317,6 @@
    "status": "registry"
   },
   {
-   "name": "민주노동당",
-   "elections": 12,
-   "candidates": 430,
-   "votes": 18716139,
-   "wins": 33,
-   "first": "2000-04-13",
-   "last": "2011-10-26",
-   "registry_id": "민주노동당",
-   "status": "registry"
-  },
-  {
    "name": "더불어시민당",
    "elections": 1,
    "candidates": 18,
@@ -303,28 +336,6 @@
    "first": "2024-04-10",
    "last": "2026-06-03",
    "registry_id": "조국혁신당",
-   "status": "registry"
-  },
-  {
-   "name": "정의당",
-   "elections": 15,
-   "candidates": 627,
-   "votes": 17455700,
-   "wins": 12,
-   "first": "2014-06-04",
-   "last": "2026-06-03",
-   "registry_id": "정의당",
-   "status": "registry"
-  },
-  {
-   "name": "자유한국당",
-   "elections": 4,
-   "candidates": 96,
-   "votes": 16775092,
-   "wins": 37,
-   "first": "2017-04-12",
-   "last": "2019-04-03",
-   "registry_id": "자유한국당",
    "status": "registry"
   },
   {
@@ -405,17 +416,6 @@
    "status": "registry"
   },
   {
-   "name": "새정치민주연합",
-   "elections": 4,
-   "candidates": 107,
-   "votes": 11506260,
-   "wins": 29,
-   "first": "2014-06-04",
-   "last": "2015-10-28",
-   "registry_id": "새정치민주연합",
-   "status": "registry"
-  },
-  {
    "name": "개혁신당",
    "elections": 3,
    "candidates": 707,
@@ -451,9 +451,9 @@
   {
    "name": "통합진보당",
    "elections": 5,
-   "candidates": 112,
-   "votes": 6231526,
-   "wins": 7,
+   "candidates": 128,
+   "votes": 7204751,
+   "wins": 10,
    "first": "2012-04-11",
    "last": "2014-07-30",
    "registry_id": "통합진보당",
@@ -462,9 +462,9 @@
   {
    "name": "자유선진당",
    "elections": 6,
-   "candidates": 202,
-   "votes": 6025683,
-   "wins": 30,
+   "candidates": 210,
+   "votes": 6962640,
+   "wins": 32,
    "first": "2008-04-09",
    "last": "2012-04-11",
    "registry_id": "자유선진당",
@@ -504,6 +504,17 @@
    "status": "registry"
   },
   {
+   "name": "진보당",
+   "elections": 9,
+   "candidates": 1031,
+   "votes": 4673793,
+   "wins": 53,
+   "first": "2021-04-07",
+   "last": "2026-06-03",
+   "registry_id": "진보당",
+   "status": "registry"
+  },
+  {
    "name": "바른정당",
    "elections": 2,
    "candidates": 45,
@@ -523,17 +534,6 @@
    "first": "1996-04-11",
    "last": "1996-04-11",
    "registry_id": "통합민주당(1995)",
-   "status": "registry"
-  },
-  {
-   "name": "진보당",
-   "elections": 9,
-   "candidates": 1015,
-   "votes": 4470494,
-   "wins": 53,
-   "first": "2021-04-07",
-   "last": "2026-06-03",
-   "registry_id": "진보당",
    "status": "registry"
   },
   {
@@ -559,6 +559,17 @@
    "status": "registry"
   },
   {
+   "name": "바른미래당",
+   "elections": 2,
+   "candidates": 33,
+   "votes": 3892452,
+   "wins": 4,
+   "first": "2018-06-13",
+   "last": "2019-04-03",
+   "registry_id": "바른미래당",
+   "status": "registry"
+  },
+  {
    "name": "민주당(2005)",
    "elections": 2,
    "candidates": 34,
@@ -581,6 +592,17 @@
    "status": "registry"
   },
   {
+   "name": "국민참여당",
+   "elections": 4,
+   "candidates": 29,
+   "votes": 3754055,
+   "wins": 2,
+   "first": "2010-06-02",
+   "last": "2011-10-26",
+   "registry_id": "국민참여당",
+   "status": "registry"
+  },
+  {
    "name": "열린민주당",
    "elections": 1,
    "candidates": 18,
@@ -592,21 +614,10 @@
    "status": "registry"
   },
   {
-   "name": "국민참여당",
-   "elections": 4,
-   "candidates": 13,
-   "votes": 2379104,
-   "wins": 0,
-   "first": "2010-06-02",
-   "last": "2011-10-26",
-   "registry_id": "국민참여당",
-   "status": "registry"
-  },
-  {
    "name": "진보신당",
    "elections": 5,
-   "candidates": 106,
-   "votes": 2232924,
+   "candidates": 122,
+   "votes": 2880270,
    "wins": 0,
    "first": "2008-04-09",
    "last": "2012-04-11",
@@ -709,6 +720,28 @@
    "status": "registry"
   },
   {
+   "name": "녹색당",
+   "elections": 8,
+   "candidates": 107,
+   "votes": 1252992,
+   "wins": 2,
+   "first": "2012-04-11",
+   "last": "2026-06-03",
+   "registry_id": "녹색당",
+   "status": "registry"
+  },
+  {
+   "name": "민중당(2017)",
+   "elections": 3,
+   "candidates": 101,
+   "votes": 1200849,
+   "wins": 0,
+   "first": "2018-06-13",
+   "last": "2020-04-15",
+   "registry_id": "민중당(2017)",
+   "status": "registry"
+  },
+  {
    "name": "새로운미래",
    "elections": 1,
    "candidates": 46,
@@ -739,17 +772,6 @@
    "first": "2020-04-15",
    "last": "2020-04-15",
    "registry_id": "기독자유통일당",
-   "status": "registry"
-  },
-  {
-   "name": "민중당(2017)",
-   "elections": 3,
-   "candidates": 85,
-   "votes": 955412,
-   "wins": 0,
-   "first": "2018-06-13",
-   "last": "2020-04-15",
-   "registry_id": "민중당(2017)",
    "status": "registry"
   },
   {
@@ -808,17 +830,6 @@
    "status": "unresolved"
   },
   {
-   "name": "녹색당",
-   "elections": 7,
-   "candidates": 73,
-   "votes": 855294,
-   "wins": 2,
-   "first": "2012-04-11",
-   "last": "2026-06-03",
-   "registry_id": "녹색당",
-   "status": "registry"
-  },
-  {
    "name": "한국민주당",
    "elections": 1,
    "candidates": 86,
@@ -827,6 +838,28 @@
    "first": "1948-05-10",
    "last": "1948-05-10",
    "registry_id": "한국민주당",
+   "status": "registry"
+  },
+  {
+   "name": "노동당",
+   "elections": 8,
+   "candidates": 142,
+   "votes": 818850,
+   "wins": 0,
+   "first": "2014-06-04",
+   "last": "2026-06-03",
+   "registry_id": "노동당",
+   "status": "registry"
+  },
+  {
+   "name": "기본소득당",
+   "elections": 5,
+   "candidates": 365,
+   "votes": 805410,
+   "wins": 0,
+   "first": "2020-04-15",
+   "last": "2026-06-03",
+   "registry_id": "기본소득당",
    "status": "registry"
   },
   {
@@ -885,15 +918,15 @@
    "status": "registry"
   },
   {
-   "name": "기본소득당",
-   "elections": 5,
-   "candidates": 348,
-   "votes": 711081,
-   "wins": 0,
-   "first": "2020-04-15",
-   "last": "2026-06-03",
-   "registry_id": "기본소득당",
-   "status": "registry"
+   "name": "친박연합",
+   "elections": 3,
+   "candidates": 30,
+   "votes": 716049,
+   "wins": 2,
+   "first": "2010-06-02",
+   "last": "2012-04-11",
+   "registry_id": null,
+   "status": "unresolved"
   },
   {
    "name": "민주국민당(2000)",
@@ -926,6 +959,17 @@
    "first": "2025-06-03",
    "last": "2025-06-03",
    "registry_id": "민주노동당(2025)",
+   "status": "registry"
+  },
+  {
+   "name": "민주평화당",
+   "elections": 2,
+   "candidates": 14,
+   "votes": 687111,
+   "wins": 4,
+   "first": "2018-06-13",
+   "last": "2019-04-03",
+   "registry_id": "민주평화당",
    "status": "registry"
   },
   {
@@ -1061,6 +1105,17 @@
    "status": "registry"
   },
   {
+   "name": "사회당(2002)",
+   "elections": 5,
+   "candidates": 76,
+   "votes": 526928,
+   "wins": 0,
+   "first": "2002-06-13",
+   "last": "2010-07-28",
+   "registry_id": "사회당(2002)",
+   "status": "registry"
+  },
+  {
    "name": "민주사회당",
    "elections": 1,
    "candidates": 50,
@@ -1094,28 +1149,6 @@
    "status": "registry"
   },
   {
-   "name": "노동당",
-   "elections": 7,
-   "candidates": 120,
-   "votes": 490882,
-   "wins": 0,
-   "first": "2014-06-04",
-   "last": "2026-06-03",
-   "registry_id": "노동당",
-   "status": "registry"
-  },
-  {
-   "name": "사회당(2002)",
-   "elections": 4,
-   "candidates": 60,
-   "votes": 445671,
-   "wins": 0,
-   "first": "2002-06-13",
-   "last": "2010-07-28",
-   "registry_id": "사회당(2002)",
-   "status": "registry"
-  },
-  {
    "name": "민주당",
    "elections": 1,
    "candidates": 26,
@@ -1128,13 +1161,24 @@
   },
   {
    "name": "새누리당(2017)",
-   "elections": 4,
-   "candidates": 73,
-   "votes": 370943,
+   "elections": 5,
+   "candidates": 74,
+   "votes": 378921,
    "wins": 0,
    "first": "2017-05-09",
    "last": "2024-04-10",
    "registry_id": "새누리당(2017)",
+   "status": "registry"
+  },
+  {
+   "name": "한나라당(2014)",
+   "elections": 6,
+   "candidates": 120,
+   "votes": 377302,
+   "wins": 0,
+   "first": "2014-06-04",
+   "last": "2026-06-03",
+   "registry_id": "한나라당(2014)",
    "status": "registry"
   },
   {
@@ -1169,28 +1213,6 @@
    "last": "2026-06-03",
    "registry_id": null,
    "status": "needs_disambiguation"
-  },
-  {
-   "name": "한나라당(2014)",
-   "elections": 5,
-   "candidates": 119,
-   "votes": 341814,
-   "wins": 0,
-   "first": "2015-10-28",
-   "last": "2026-06-03",
-   "registry_id": "한나라당(2014)",
-   "status": "registry"
-  },
-  {
-   "name": "친박연합",
-   "elections": 2,
-   "candidates": 26,
-   "votes": 336312,
-   "wins": 0,
-   "first": "2011-10-26",
-   "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
   },
   {
    "name": "민중당(1990)",
@@ -1261,8 +1283,8 @@
   {
    "name": "통일한국당",
    "elections": 5,
-   "candidates": 319,
-   "votes": 269673,
+   "candidates": 320,
+   "votes": 272113,
    "wins": 0,
    "first": "1997-12-18",
    "last": "2024-04-10",
@@ -1299,6 +1321,17 @@
    "wins": 0,
    "first": "2004-04-15",
    "last": "2004-04-15",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
+   "name": "미래연합",
+   "elections": 3,
+   "candidates": 37,
+   "votes": 244477,
+   "wins": 0,
+   "first": "2010-06-02",
+   "last": "2012-04-11",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -1387,6 +1420,17 @@
    "status": "unresolved"
   },
   {
+   "name": "평화민주당(2010)",
+   "elections": 1,
+   "candidates": 11,
+   "votes": 189431,
+   "wins": 0,
+   "first": "2010-06-02",
+   "last": "2010-06-02",
+   "registry_id": "평화민주당(2010)",
+   "status": "registry"
+  },
+  {
    "name": "국민실향안보당",
    "elections": 1,
    "candidates": 19,
@@ -1473,17 +1517,6 @@
    "last": "2008-04-09",
    "registry_id": null,
    "status": "unresolved"
-  },
-  {
-   "name": "바른미래당",
-   "elections": 2,
-   "candidates": 20,
-   "votes": 163172,
-   "wins": 0,
-   "first": "2018-06-13",
-   "last": "2019-04-03",
-   "registry_id": "바른미래당",
-   "status": "registry"
   },
   {
    "name": "청년당",
@@ -1596,6 +1629,17 @@
    "status": "unresolved"
   },
   {
+   "name": "대한애국당",
+   "elections": 2,
+   "candidates": 15,
+   "votes": 117902,
+   "wins": 0,
+   "first": "2018-06-13",
+   "last": "2019-04-03",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
    "name": "국민대통합당",
    "elections": 3,
    "candidates": 134,
@@ -1673,17 +1717,6 @@
    "status": "unresolved"
   },
   {
-   "name": "평화민주당(2010)",
-   "elections": 1,
-   "candidates": 4,
-   "votes": 106339,
-   "wins": 0,
-   "first": "2010-06-02",
-   "last": "2010-06-02",
-   "registry_id": "평화민주당(2010)",
-   "status": "registry"
-  },
-  {
    "name": "한국기민당",
    "elections": 1,
    "candidates": 15,
@@ -1746,17 +1779,6 @@
    "status": "unresolved"
   },
   {
-   "name": "민주평화당",
-   "elections": 2,
-   "candidates": 10,
-   "votes": 95226,
-   "wins": 2,
-   "first": "2018-06-13",
-   "last": "2019-04-03",
-   "registry_id": "민주평화당",
-   "status": "registry"
-  },
-  {
    "name": "국민행복당",
    "elections": 2,
    "candidates": 42,
@@ -1790,13 +1812,13 @@
    "status": "unresolved"
   },
   {
-   "name": "미래연합",
-   "elections": 3,
-   "candidates": 30,
-   "votes": 84974,
+   "name": "새정치당",
+   "elections": 1,
+   "candidates": 8,
+   "votes": 85293,
    "wins": 0,
-   "first": "2010-06-02",
-   "last": "2012-04-11",
+   "first": "2014-06-04",
+   "last": "2014-06-04",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -2065,6 +2087,17 @@
    "status": "unresolved"
   },
   {
+   "name": "한류연합당",
+   "elections": 3,
+   "candidates": 39,
+   "votes": 48188,
+   "wins": 0,
+   "first": "2022-03-09",
+   "last": "2024-04-10",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
    "name": "시민당",
    "elections": 2,
    "candidates": 19,
@@ -2094,17 +2127,6 @@
    "wins": 0,
    "first": "2006-05-31",
    "last": "2006-05-31",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
-   "name": "한류연합당",
-   "elections": 2,
-   "candidates": 36,
-   "votes": 42398,
-   "wins": 0,
-   "first": "2022-03-09",
-   "last": "2024-04-10",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -2142,6 +2164,17 @@
    "status": "unresolved"
   },
   {
+   "name": "우리미래",
+   "elections": 1,
+   "candidates": 4,
+   "votes": 39043,
+   "wins": 0,
+   "first": "2018-06-13",
+   "last": "2018-06-13",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
    "name": "한국복지당",
    "elections": 1,
    "candidates": 19,
@@ -2162,6 +2195,17 @@
    "last": "2020-04-15",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "공화당(2014)",
+   "elections": 5,
+   "candidates": 25,
+   "votes": 37361,
+   "wins": 0,
+   "first": "2014-06-04",
+   "last": "2020-04-15",
+   "registry_id": "공화당(2014)",
+   "status": "registry"
   },
   {
    "name": "노농청년연맹",
@@ -2307,17 +2351,6 @@
    "status": "unresolved"
   },
   {
-   "name": "공화당(2014)",
-   "elections": 4,
-   "candidates": 24,
-   "votes": 28783,
-   "wins": 0,
-   "first": "2015-04-29",
-   "last": "2020-04-15",
-   "registry_id": "공화당(2014)",
-   "status": "registry"
-  },
-  {
    "name": "깨어있는시민연대당",
    "elections": 1,
    "candidates": 18,
@@ -2461,6 +2494,17 @@
    "status": "unresolved"
   },
   {
+   "name": "친박연대(2017)",
+   "elections": 1,
+   "candidates": 3,
+   "votes": 22861,
+   "wins": 0,
+   "first": "2018-06-13",
+   "last": "2018-06-13",
+   "registry_id": "친박연대(2017)",
+   "status": "registry"
+  },
+  {
    "name": "충청의미래당",
    "elections": 1,
    "candidates": 19,
@@ -2512,17 +2556,6 @@
    "wins": 0,
    "first": "1950-05-30",
    "last": "1950-05-30",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
-   "name": "새정치당",
-   "elections": 1,
-   "candidates": 2,
-   "votes": 21240,
-   "wins": 0,
-   "first": "2014-06-04",
-   "last": "2014-06-04",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -2600,17 +2633,6 @@
    "wins": 0,
    "first": "2020-04-15",
    "last": "2020-04-15",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
-   "name": "대한애국당",
-   "elections": 2,
-   "candidates": 14,
-   "votes": 18490,
-   "wins": 0,
-   "first": "2018-06-13",
-   "last": "2019-04-03",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -2857,17 +2879,6 @@
    "status": "unresolved"
   },
   {
-   "name": "우리미래",
-   "elections": 1,
-   "candidates": 1,
-   "votes": 11599,
-   "wins": 0,
-   "first": "2018-06-13",
-   "last": "2018-06-13",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
    "name": "한국당",
    "elections": 1,
    "candidates": 1,
@@ -2919,6 +2930,17 @@
    "wins": 0,
    "first": "2024-04-10",
    "last": "2024-04-10",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
+   "name": "국제녹색당",
+   "elections": 2,
+   "candidates": 2,
+   "votes": 9354,
+   "wins": 0,
+   "first": "2014-06-04",
+   "last": "2018-06-13",
    "registry_id": null,
    "status": "unresolved"
   },
@@ -3271,17 +3293,6 @@
    "status": "unresolved"
   },
   {
-   "name": "친박연대(2017)",
-   "elections": 1,
-   "candidates": 1,
-   "votes": 4021,
-   "wins": 0,
-   "first": "2018-06-13",
-   "last": "2018-06-13",
-   "registry_id": "친박연대(2017)",
-   "status": "registry"
-  },
-  {
    "name": "국민주권당",
    "elections": 1,
    "candidates": 4,
@@ -3333,6 +3344,17 @@
    "wins": 0,
    "first": "1996-04-11",
    "last": "1996-04-11",
+   "registry_id": null,
+   "status": "unresolved"
+  },
+  {
+   "name": "독도당",
+   "elections": 1,
+   "candidates": 1,
+   "votes": 2974,
+   "wins": 0,
+   "first": "2022-06-01",
+   "last": "2022-06-01",
    "registry_id": null,
    "status": "unresolved"
   },
