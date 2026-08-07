@@ -21,7 +21,7 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 332,
+ "n": 335,
  "parties": [
   {
    "name": "더불어민주당",
@@ -1281,24 +1281,6 @@
    "status": "unresolved"
   },
   {
-   "name": "공화당",
-   "elections": 9,
-   "candidates": 491,
-   "votes": 253171,
-   "wins": 0,
-   "first": "1997-12-18",
-   "last": "2026-06-03",
-   "registry_id": "공화당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "1997-01~1998-12",
-    "observed_span": "1997-12~2026-06",
-    "months_before": 0,
-    "months_after": 330,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
-  },
-  {
    "name": "한겨레민주당",
    "elections": 1,
    "candidates": 63,
@@ -1590,6 +1572,17 @@
    "last": "2000-04-13",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "공화당",
+   "elections": 2,
+   "candidates": 267,
+   "votes": 121115,
+   "wins": 0,
+   "first": "1997-12-18",
+   "last": "2000-04-13",
+   "registry_id": "공화당",
+   "status": "registry"
   },
   {
    "name": "가자!대국민중심당",
@@ -2039,6 +2032,28 @@
    "status": "unresolved"
   },
   {
+   "name": "공화당(2024)",
+   "elections": 2,
+   "candidates": 178,
+   "votes": 52148,
+   "wins": 0,
+   "first": "2024-04-10",
+   "last": "2026-06-03",
+   "registry_id": "공화당(2024)",
+   "status": "registry"
+  },
+  {
+   "name": "민주공화당(1997)",
+   "elections": 1,
+   "candidates": 22,
+   "votes": 51125,
+   "wins": 0,
+   "first": "2004-04-15",
+   "last": "2004-04-15",
+   "registry_id": "민주공화당(1997)",
+   "status": "registry"
+  },
+  {
    "name": "일제·위안부·인권정당",
    "elections": 1,
    "candidates": 18,
@@ -2290,6 +2305,17 @@
    "last": "2016-04-13",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "공화당(2014)",
+   "elections": 4,
+   "candidates": 24,
+   "votes": 28783,
+   "wins": 0,
+   "first": "2015-04-29",
+   "last": "2020-04-15",
+   "registry_id": "공화당(2014)",
+   "status": "registry"
   },
   {
    "name": "깨어있는시민연대당",

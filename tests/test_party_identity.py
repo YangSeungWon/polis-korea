@@ -371,6 +371,19 @@ def main() -> int:
     ck("대한국민당 ≢ 자유당 — 주류 이탈은 후신이 아니다",
        identity("대한국민당", "1954-05-20") != identity("자유당", "1954-05-20"),
        identity("대한국민당", "1954-05-20"))
+    # '공화당'은 세 정당이 쓴 이름이고, 그중 하나는 도중에 정식명이 바뀌었다.
+    for dt, want in [("1997-12-18", "공화당"), ("2000-04-13", "공화당"),
+                     ("2004-04-15", "민주공화당(1997)"),
+                     ("2016-04-13", "공화당(2014)"), ("2020-04-15", "공화당(2014)"),
+                     ("2024-04-10", "공화당(2024)"), ("2026-06-03", "공화당(2024)")]:
+        ck(f"공화당@{dt} → {want}", disambiguate_party("공화당", dt) == want,
+           disambiguate_party("공화당", dt))
+    ck("2004 공화당이 박정희 민주공화당으로 가지 않는다",
+       identity("공화당", "2004-04-15") != identity("민주공화당", "1967-06-08"),
+       identity("공화당", "2004-04-15"))
+    ck("1997·2004는 같은 정당 (등록명만 바뀌었다)",
+       identity("공화당", "1997-12-18") == identity("공화당", "2004-04-15"),
+       f'{identity("공화당", "1997-12-18")} vs {identity("공화당", "2004-04-15")}')
     ck("대한독립촉성국민회 ≡ 국민회 (1948-12-26 개칭)",
        identity("대한독립촉성국민회", "1948-05-10") == identity("국민회", "1950-05-30"),
        f'{identity("대한독립촉성국민회", "1948-05-10")} vs {identity("국민회", "1950-05-30")}')
@@ -401,22 +414,29 @@ def main() -> int:
     _defer = [c for c in _fid["cases"] if c["status"] == "deferred"]
     ck(f"적용 대상이 있다 ({len(_applied)}건)", bool(_applied))
     for c in _applied:
+        # 이 층이 하는 일은 **문자열 → 그 회차 정식명**까지다. 그 뒤 시기 분기가
+        # 정식명을 재사용 이름으로 보고 노드를 고르는 건 다음 층의 일이다.
         ck(f'{c["election"]} {c["stored"]} → {c["official"]}',
-           disambiguate_party(c["stored"], c["election_date"]) == c["official"],
-           disambiguate_party(c["stored"], c["election_date"]))
+           resolve_recorded_name(c["stored"], c["election_date"]) == c["official"],
+           resolve_recorded_name(c["stored"], c["election_date"]))
         # 같은 문자열이라도 **다른 회차는 건드리지 않는다** — 그게 이 층의 요점이다
         ck(f'{c["stored"]}: 날짜가 없으면 바꾸지 않는다',
            resolve_recorded_name(c["stored"], "") == c["stored"])
         # 해소가 **그때 없던 정당**에 표를 붙이면 안 된다. 2004년 '공화당'의 정식명은
-        # 민주공화당이지만 registry의 민주공화당은 1963년 박정희 정당이다 — 그대로
-        # 적용하면 24,360표가 그 정당에 붙는다. 그래서 그 건은 deferred다.
-        _node = json.loads((ROOT / "data/parties/registry.json")
-                           .read_text(encoding="utf-8"))["parties"].get(c["official"])
+        # 민주공화당인데 registry의 민주공화당은 1963년 박정희 정당이었다 — 그대로
+        # 적용하면 24,360표가 그 정당에 붙는다. 민주공화당(1997) 노드가 생기기
+        # 전까지 이 건이 deferred였던 이유다. 두 층을 다 거친 결과로 확인한다.
+        _final = disambiguate_party(c["stored"], c["election_date"])
+        _reg_all = json.loads((ROOT / "data/parties/registry.json")
+                              .read_text(encoding="utf-8"))["parties"]
+        ck(f'{c["election"]} {c["stored"]}: 정식명 계열로 간다',
+           re.sub(r"\(\d{4}\)$", "", _final) == c["official"], _final)
+        _node = _reg_all.get(_final)
         if _node:
             _f = (_node.get("founded") or "")[:7]
             _d = (_node.get("dissolved") or "9999-99")[:7]
             _ym = c["election_date"][:7]
-            ck(f'{c["election"]} {c["official"]}: 그 시점에 존재하던 정당이다',
+            ck(f'{c["election"]} {_final}: 그 시점에 존재하던 정당이다',
                bool(_f) and _f <= _ym <= _d, f"{_f}~{_d} vs {_ym}")
     for c in _defer:
         ck(f'{c["election"]} {c["stored"]}: 막아 둔 건은 적용되지 않는다',
