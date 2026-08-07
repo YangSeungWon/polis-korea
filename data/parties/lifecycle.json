@@ -312,6 +312,24 @@
    "migration": "derived",
    "ambiguity_cause": null
   },
+  "통일민주당(2020)": {
+   "founded": "2020-03",
+   "dissolved": "2021-01",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
   "더불어시민당": {
    "founded": "2020-03",
    "dissolved": "2020-05",
