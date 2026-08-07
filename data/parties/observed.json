@@ -58,21 +58,14 @@
   },
   {
    "name": "새누리당",
-   "elections": 10,
-   "candidates": 685,
-   "votes": 96905191,
+   "elections": 9,
+   "candidates": 667,
+   "votes": 96790771,
    "wins": 366,
    "first": "2012-04-11",
-   "last": "2024-04-10",
+   "last": "2016-04-13",
    "registry_id": "새누리당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "2012-02~2017-02",
-    "observed_span": "2012-04~2024-04",
-    "months_before": 0,
-    "months_after": 86,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
+   "status": "registry"
   },
   {
    "name": "민주공화당",
@@ -1204,6 +1197,17 @@
    "status": "needs_disambiguation"
   },
   {
+   "name": "새누리당(2017)",
+   "elections": 4,
+   "candidates": 73,
+   "votes": 370943,
+   "wins": 0,
+   "first": "2017-05-09",
+   "last": "2024-04-10",
+   "registry_id": "새누리당(2017)",
+   "status": "registry"
+  },
+  {
    "name": "한나라당(2012)",
    "elections": 1,
    "candidates": 19,
@@ -1334,17 +1338,6 @@
    "last": "2024-04-10",
    "registry_id": null,
    "status": "unresolved"
-  },
-  {
-   "name": "새누리당(2017)",
-   "elections": 3,
-   "candidates": 55,
-   "votes": 256523,
-   "wins": 0,
-   "first": "2017-05-09",
-   "last": "2022-03-09",
-   "registry_id": "새누리당(2017)",
-   "status": "registry"
   },
   {
    "name": "공화당",

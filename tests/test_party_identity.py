@@ -111,6 +111,38 @@ def main() -> int:
         m = int(ym[5:7]) if len(ym) >= 7 and ym[5:7].isdigit() else 12
         return f"{y + (m == 12)}-{(m % 12) + 1:02d}"
 
+    # ── 같은 이름의 두 구간이 겹치지 않는가 ────────────────────────────────
+    # 겹치면 분기 결과가 registry의 **기재 순서**에 달린다. 순서는 데이터 모델이
+    # 아니라 파일 편집의 흔적이므로, 그 위에 판정을 얹으면 안 된다.
+    # 월 해상도 때문에만 겹치는 경우가 하나 있다. 감추지 말고 목록으로 고정한다 —
+    # 예외가 늘면 검사가 실패해서 드러난다.
+    MONTH_RESOLUTION_OVERLAPS = {
+        # 박근혜 새누리당은 2017-02-13 자유한국당으로 개명했고, 조원진 등이 만든
+        # 새누리당은 2017-02-21 창당이다. 실제로는 8일 차이로 안 겹친다.
+        ("새누리당", "새누리당(2017)"): "2017-02",
+    }
+    print("\n[시기 노드] 같은 이름의 구간이 겹치지 않는다")
+    _obs_months = {(r["name"], m[:7]) for r in json.loads(
+        (ROOT / "data/parties/observed.json").read_text(encoding="utf-8"))["parties"]
+        for m in (r["first"], r["last"])}
+    for base in sorted(_REUSED_BASES):
+        nodes = sorted((n_f_d for n_f_d in _BASE_ERAS[base] if n_f_d[1]),
+                       key=lambda t: t[1])
+        for (n1, _f1, d1), (n2, f2, _d2) in zip(nodes, nodes[1:]):
+            if f2 > d1:
+                ck(f"{n1} ~ {n2}: 구간이 안 겹친다", True)
+                continue
+            month = MONTH_RESOLUTION_OVERLAPS.get((n1, n2))
+            ck(f"{n1} ~ {n2}: 겹침이 월 해상도 탓임이 기록돼 있다",
+               month is not None and month == f2,
+               f"{f2} ~ {d1} 겹침 — 알려진 예외가 아니다")
+            # 알려진 예외라도 **그 달에 관측이 떨어지면** 순서 의존이 실제 판정을
+            # 바꾼다. 그때는 예외로 넘길 수 없다.
+            ck(f"{n1} ~ {n2}: 겹치는 달({month})에 관측이 없다",
+               (base, month) not in _obs_months and month not in
+               {m for n, m in _obs_months if n == base},
+               f"{base} 관측이 {month}에 있다")
+
     for base in sorted(_REUSED_BASES):
         spans = sorted(((f, d) for _n, f, d in _BASE_ERAS[base] if f), key=lambda t: t[0])
         # ① 첫 노드보다 이른 날짜
@@ -182,6 +214,23 @@ def main() -> int:
     ck("2012 두 이름은 다른 identity",
        identity("한나라당", "2012-04-11") != identity("새누리당", "2012-04-11"),
        identity("한나라당", "2012-04-11"))
+    # 조원진 새누리당은 **소멸하지 않았다**. dissolved=2022-03이 잘못 적혀 있어
+    # 22대 총선 비례 57,210표가 구간 밖으로 떨어져 있었다. 선관위 정당등록현황에
+    # 등록연월일 2017-04-10으로 지금도 있다.
+    for dt, want in [("2016-04-13", "새누리당"), ("2017-05-09", "새누리당(2017)"),
+                     ("2022-03-09", "새누리당(2017)"), ("2024-04-10", "새누리당(2017)")]:
+        ck(f"새누리당@{dt} → {want}", disambiguate_party("새누리당", dt) == want,
+           disambiguate_party("새누리당", dt))
+    _r24 = json.loads((ROOT / "data/results/22nd-general-2024.json")
+                      .read_text(encoding="utf-8"))
+    _v24 = {c["party"]: c["votes"] for r in _r24["races"]
+            if r.get("sg_typecode") == "7" and r.get("scope") == "nation"
+            for c in r["candidates"]}
+    ck("2024 비례에 새누리당 57,210", _v24.get("새누리당") == 57210, str(_v24.get("새누리당")))
+    ck("2024 새누리당 ≠ 국민의미래",
+       identity("새누리당", "2024-04-10") != identity("국민의미래", "2024-04-10"),
+       identity("새누리당", "2024-04-10"))
+
     # 2013-04 재등록 ~ 2014-02 개명 사이에는 '한나라당'이라는 정당이 없었다.
     # 없는 것을 있는 것으로 만들지 않는다.
     ck("2013 공백기엔 원자료 이름 그대로",
