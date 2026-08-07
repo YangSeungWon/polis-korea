@@ -5,6 +5,13 @@
  "_todo": "각 항목의 실제 정당들을 자료로 확인해 registry에 시점 표기(예: 자유당(1951))로 나누고 여기서 지운다.",
  "unresolved": [
   {
+   "name": "국민당",
+   "span": "1958~2026",
+   "note": "registry 미등록 — 시기별로 다른 정당",
+   "status": "needs_disambiguation",
+   "reason": "same label used by multiple historical parties"
+  },
+  {
    "name": "기독당",
    "span": "2004~2026",
    "note": "우리 자료의 '기독당'은 회차마다 **다른 이름의 정당**을 가리킨다. 시대가 겹치는 동음이의가 아니라 등록약칭 충돌이라, registry에 시점 표기로 나누는 방식(자유당(1951) 같은)으로는 풀리지 않는다 — 그 회차의 정당은 애초에 '기독당'이라는 이름이 아니었다. 회차별 비례 득표수가 지문 역할을 해서 실체를 특정할 수 있었다.",
@@ -73,6 +80,13 @@
    ]
   },
   {
+   "name": "대한국민당",
+   "span": "1950~2026",
+   "note": "1949 창당 대한국민당과 후대 동명 정당들",
+   "status": "needs_disambiguation",
+   "reason": "same label used by multiple historical parties"
+  },
+  {
    "name": "민주당",
    "span": "1948~2016",
    "note": "'민주당'은 11회 넘게 재사용된 이름이라 party_canon._MINJOO_ERAS로 시기별로 가른다. 2014-03 이후 구간이 비어 있고, 2016년 20대 총선에 실재한 민주당(비례 209,872표)이 여기 떨어진다. 지금은 최신 정당으로 보내지 않고 원자료 이름 그대로 둔다 — 이 정당의 정식명·창당 시점을 1차 자료로 확인하면 registry 시기 노드로 나눌 수 있다.",
@@ -90,37 +104,29 @@
    ]
   },
   {
-   "name": "한국독립당",
-   "span": "1948~2026",
-   "note": "임정 계열 한국독립당과 후대 동명 정당들",
+   "name": "민주통일당",
+   "span": "1973~2012",
+   "note": "1973-01 양일동 민주통일당(유신 시기 야당, 1980-10 신군부 강제해산)과 2012년 19대 총선에 나온 동명 정당. 뒤엣것은 목포시 지역구 후보 정일용 한 명뿐이고(524표·0.59%·기호 6) 비례에는 나오지 않아 선관위 비례 기호 공고에도 안 잡힌다. 등록취소된 군소정당이라 선관위 정당등록현황·강령당헌 어디에도 남지 않았고, 창당·등록 시점을 1차 자료로도 위키로도 확인하지 못했다. **날짜를 모르면 시기 노드를 만들 수 없다** — 표를 맞추려고 경계를 지어내지 않는다. identity 층에서 pid:민주통일당(미상)으로 떨어져 있어 양일동 정당과 섞이지는 않는다.",
    "status": "needs_disambiguation",
-   "reason": "same label used by multiple historical parties"
-  },
-  {
-   "name": "자유당",
-   "span": "1952~2020",
-   "note": "이승만 자유당과 후대 동명 정당들",
-   "status": "needs_disambiguation",
-   "reason": "same label used by multiple historical parties"
-  },
-  {
-   "name": "대한국민당",
-   "span": "1950~2026",
-   "note": "1949 창당 대한국민당과 후대 동명 정당들",
-   "status": "needs_disambiguation",
-   "reason": "same label used by multiple historical parties"
+   "reason": "same label used by multiple historical parties",
+   "blocked_by": "2012년 정당의 창당·등록 시점을 찾지 못했다 (등록취소 정당은 선관위 조회에 남지 않는다)",
+   "occurrences": [
+    {
+     "election_date": "2012-04-11",
+     "election": "19대 총선",
+     "district": "전라남도 목포시",
+     "candidate": "정일용",
+     "district_votes": 524,
+     "resolved_to": null,
+     "evidence": "선관위 개표 자료와 나무위키 목포시 선거구 문서가 둘 다 기호 6·정일용·524표·민주통일당으로 일치한다. 정당의 실체는 특정하지 못했다",
+     "status": "open"
+    }
+   ]
   },
   {
    "name": "자유민주당",
    "span": "1963~2026",
    "note": "여러 시기에 같은 이름이 반복 등장",
-   "status": "needs_disambiguation",
-   "reason": "same label used by multiple historical parties"
-  },
-  {
-   "name": "국민당",
-   "span": "1958~2026",
-   "note": "registry 미등록 — 시기별로 다른 정당",
    "status": "needs_disambiguation",
    "reason": "same label used by multiple historical parties"
   },
@@ -156,6 +162,13 @@
      "status": "open"
     }
    ]
+  },
+  {
+   "name": "한국독립당",
+   "span": "1948~2026",
+   "note": "임정 계열 한국독립당과 후대 동명 정당들",
+   "status": "needs_disambiguation",
+   "reason": "same label used by multiple historical parties"
   },
   {
    "name": "한국문화예술당",

@@ -112,13 +112,45 @@ def prop_votes(date: str, party: str) -> int:
     return total
 
 
+def dist_votes(date: str, district: str, candidate: str) -> int:
+    """그 선거일의 지역구(tc2) 행에서 그 선거구·후보의 득표.
+
+    비례에 안 나온 정당은 비례 득표수를 지문으로 쓸 수 없다 — 2012년 민주통일당은
+    목포시 후보 한 명뿐이다. 그런 건은 (선거구, 후보)로 잰다.
+    """
+    for fp in sorted(_RES.glob("*.json")):
+        if ".sigungu" in fp.name:
+            continue
+        try:
+            doc = json.loads(fp.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        if (doc.get("_meta") or {}).get("election_date") != date:
+            continue
+        for r in doc.get("races") or []:
+            if r.get("sg_typecode") != "2":
+                continue
+            if district not in f'{r.get("sido") or ""} {r.get("district") or ""}':
+                continue
+            for c in r.get("candidates") or []:
+                if c.get("name") == candidate:
+                    return c.get("votes") or 0
+    return 0
+
+
 for _q in hom["unresolved"]:
     for _o in _q.get("occurrences") or []:
         # 해소 층이 이름을 옮긴 회차는 원자료에 다른 문자열이 적혀 있다
-        _actual = prop_votes(_o["election_date"], _o.get("stored_as") or _q["name"])
+        if "district_votes" in _o:
+            _actual = dist_votes(_o["election_date"], _o["district"].split()[-1],
+                                 _o["candidate"])
+            _want = _o["district_votes"]
+        else:
+            _actual = prop_votes(_o["election_date"],
+                                 _o.get("stored_as") or _q["name"])
+            _want = _o["proportional_votes"]
         ck(f'{_q["name"]} {_o["election"]}: 큐에 적은 득표가 원자료와 같다',
-           _actual == _o["proportional_votes"],
-           f'큐 {_o["proportional_votes"]:,} vs 원자료 {_actual:,}')
+           _actual == _want, f'큐 {_want:,} vs 원자료 {_actual:,}')
     _open = [o for o in (_q.get("occurrences") or []) if o.get("status") == "open"]
     if _open:
         ck(f'{_q["name"]}: 미해소 회차는 resolved_to를 비워 둔다',
