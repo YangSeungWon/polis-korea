@@ -11,6 +11,7 @@
 실행: .venv/bin/python tests/test_party_identity.py
 """
 from __future__ import annotations
+import collections
 import json
 import re
 import sys
@@ -19,6 +20,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/build"))
 from party_identity import identity, policy, unregistered, display_name  # noqa: E402
+from party_identity import canonical  # noqa: E402
+
+
+def _edate(fp):
+    """결과 파일에 date가 없으면 elections 메타에서 가져온다."""
+    eid = fp.name[:-5].split(".")[0]
+    try:
+        return json.loads((ROOT / "data/elections" / f"{eid}.json")
+                          .read_text(encoding="utf-8")).get("date") or ""
+    except Exception:                                            # noqa: BLE001
+        return ""
 
 G20, G24 = "2020-04-15", "2024-04-10"
 fails: list[str] = []
@@ -246,6 +258,48 @@ def main() -> int:
         ck(f"평화민주당@{dt} → {want}",
            disambiguate_party("평화민주당", dt) == want,
            disambiguate_party("평화민주당", dt))
+    # ── identity 층에서도 같은 병합이 일어나면 안 된다 ─────────────────────
+    # disambiguate_party의 fallback은 막아 뒀는데, 못 가른 이름이 마침 registry에
+    # 있으면 identity()가 한 층 뒤에서 그 정당의 pid를 내줬다. 1,654,284표가
+    # 그렇게 '아는 정당'에 붙어 있었다.
+    print("\n[생애 밖] 그 정당이 없던 때의 표를 그 정당에 붙이지 않는다")
+    from party_identity import _outside_lifetime  # noqa: E402
+    _stray, _bad_date = collections.Counter(), {}
+    for _fp in sorted((ROOT / "data/results").glob("*.json")):
+        if ".sigungu." in _fp.name:
+            continue
+        try:
+            _d = json.loads(_fp.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        _dt = _d.get("date") or _edate(_fp)
+        for _r in _d.get("races") or []:
+            if _r.get("scope") not in ("nation", "district", "sido"):
+                continue
+            for _c in _r.get("candidates") or []:
+                _p = _c.get("party") or ""
+                if not _p or _p == "무소속":
+                    continue
+                _cn = canonical(_p, _dt)
+                if _outside_lifetime(_cn, _dt):
+                    _stray[_cn] += _c.get("votes") or 0
+                    _bad_date[_cn] = _dt
+    ck(f"생애 밖 관측이 남아 있다 ({len(_stray)}종, {sum(_stray.values()):,}표) — "
+       "0이면 검사가 죽은 것이다", bool(_stray))
+    # 생애 밖 이름이 그 정당의 pid를 받으면 안 된다
+    for _n in sorted(_stray):
+        ck(f"{_n}: 생애 밖 표가 pid:{_n}로 가지 않는다",
+           identity(_n, _bad_date[_n]) != f"pid:{_n}",
+           identity(_n, _bad_date[_n]))
+    # 생애 안/밖이 같은 pid를 받으면 안 된다
+    for _n, _out, _in in [("민주통일당", "2012-04-11", "1973-02-27"),
+                          ("국민회", "1954-05-20", "1950-05-30"),
+                          ("대한국민당", "2024-04-10", "1950-05-30"),
+                          ("공화당", "2024-04-10", "1997-12-18")]:
+        ck(f"{_n}: {_out} ≠ {_in}",
+           identity(_n, _out) != identity(_n, _in),
+           f"{identity(_n, _out)} == {identity(_n, _in)}")
+
     for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
         ck(f"친박연대@{dt} → {want}",
            disambiguate_party("친박연대", dt) == want,

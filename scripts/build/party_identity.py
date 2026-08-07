@@ -118,12 +118,42 @@ def canonical(name: str, date: str = "") -> str:
     return disambiguate_party(name, date or "") if name else ""
 
 
+def _outside_lifetime(c: str, date: str) -> bool:
+    """canonical 이름이 registry에 있지만 **그 정당이 없던 때의 관측**인가.
+
+    disambiguate_party는 시기 노드를 못 찾으면 원자료 이름을 그대로 돌려준다.
+    그 이름이 마침 registry에 있으면 여기서 조용히 그 정당의 pid를 받아 간다 —
+    fallback을 막아 놓고 한 층 뒤에서 같은 병합이 일어나는 것이다. 실제로:
+      · 2020년 종로 '한나라당' 0.08%가 pid:새누리당에 붙어 2016년 새누리당
+        39.73%와 짝지어졌다(direct -39.72%p짜리 가짜 pair)
+      · 2012년 목포 '민주통일당' 524표가 1973년 양일동 민주통일당에 붙는다
+    """
+    node = _registry().get(c)
+    if not node or not date:
+        return False
+    ym = date[:7]
+    f = (node.get("founded") or "")[:7]
+    d = (node.get("dissolved") or "")[:7]
+    # 연도만 적힌 경계는 **넓게** 읽는다("1988" → 1988-01~1988-12). 좁게 읽으면
+    # 1988-04 관측이 구간 밖으로 잘못 튄다(전에 이 버그로 오탐 6건이 났다).
+    if f and len(f) == 4:
+        f += "-01"
+    if d and len(d) == 4:
+        d += "-12"
+    return bool(f) and (ym < f or (bool(d) and ym > d))
+
+
 def identity(name: str, date: str = "") -> str:
     """비교용 stable id. **화면에 내보내지 않는다.**
     registry에 없으면 그 이름 자체가 독립 identity — 추정해서 잇지 않는다."""
     c = canonical(name, date)
     if not c:
         return ""
+    if _outside_lifetime(c, date):
+        # 그 정당이 아니다. 어느 정당인지는 모른다. 둘을 합치지 않는다 —
+        # 같은 이름의 미해소 관측끼리만 묶고, 아는 정당과는 섞지 않는다.
+        # 시기 노드를 만들어 주면 이 버킷은 사라진다.
+        return f"pid:{c}(미상)"
     return _chains().get(c, f"pid:{c}")
 
 
