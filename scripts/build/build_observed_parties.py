@@ -52,6 +52,20 @@ def main() -> int:
                        else "needs_disambiguation" if name in hom
                        else "unresolved"),
         })
+        # 이름이 같다고 **그 정당인 것은 아니다.** registry 노드의 생존 구간을
+        # 벗어난 관측이 섞여 있으면 그 사실을 적는다 — 링크를 조용히 유지하면
+        # '한나라당 1997~2026 한 정당'처럼 없는 사실이 만들어진다.
+        # (예전엔 1971년 정의당·2016년 민주당이 이런 식으로 최신 정당에 붙었다)
+        r = rows[-1]
+        node = reg.get(r["registry_id"] or "")
+        if node:
+            f = (node.get("founded") or "")[:7]
+            d = (node.get("dissolved") or "9999-99")[:7]
+            if f and (r["first"][:7] < f or r["last"][:7] > d):
+                r["outside_registry_interval"] = {
+                    "node_span": f"{f}~{d}", "observed_span": f'{r["first"][:7]}~{r["last"][:7]}',
+                    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다",
+                }
     # 영향도 순 — 222종을 다 조사하는 게 목표가 아니다. 큰 것부터 확인하면 된다.
     rows.sort(key=lambda r: (-r["votes"], -r["candidates"], r["name"]))
     doc = {
@@ -65,6 +79,12 @@ def main() -> int:
             "unresolved": "아직 확인하지 않았다 (없는 정당이라는 뜻이 **아니다**)",
         },
         "_order": "votes desc — 영향이 큰 것부터 확인한다",
+        "_outside_registry_interval": (
+            "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. "
+            "링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다"
+            "(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). "
+            "행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, "
+            "그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다."),
         "n": len(rows),
         "parties": rows,
     }

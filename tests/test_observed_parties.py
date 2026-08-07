@@ -146,6 +146,29 @@ ck("조사 범위가 적혀 있다", "지역구" in _fid["_scope"] and "총선 �
 ck("덮어쓰기 사례가 목록에서 빠졌다", all(c["type"] != "pipeline_corruption" for c in _fid["cases"]))
 ck("어디로 갔는지는 적어 둔다", "known_homonyms" in _fid.get("_recovered", ""))
 
+# ③-4 registry 링크가 생존 구간을 벗어나면 **그 사실이 적혀 있어야 한다**
+#
+# 이름이 같다고 그 정당인 게 아니다. 한나라당 관측은 1997~2026인데 노드는 2012-02에
+# 끝난다 — 2016·2024·2026의 한나라당은 이름을 다시 쓴 다른 정당이다. 링크를 끊지는
+# 않는다(1997~2012 관측은 맞으니까). 대신 **어긋난다는 사실을 계산으로** 붙인다.
+_mismatch = []
+for r in rows:
+    _node = reg.get(r.get("registry_id") or "")
+    if not _node:
+        ck(f'{r["name"]}: 링크가 없으면 구간 표시도 없다', not r.get("outside_registry_interval"))
+        continue
+    _f = (_node.get("founded") or "")[:7]
+    _d = (_node.get("dissolved") or "9999-99")[:7]
+    _out = bool(_f) and (r["first"][:7] < _f or r["last"][:7] > _d)
+    ck(f'{r["name"]}: 구간 표시가 실제 계산과 일치',
+       _out == bool(r.get("outside_registry_interval")),
+       f'계산 {_out} vs 기록 {bool(r.get("outside_registry_interval"))}')
+    if _out:
+        _mismatch.append(r["name"])
+        ck(f'{r["name"]}: 구간 값이 적혀 있다',
+           r["outside_registry_interval"].get("node_span") == f"{_f}~{_d}")
+ck(f"구간 밖 링크가 드러나 있다 ({len(_mismatch)}종)", bool(_mismatch))
+
 # ④ 이름을 재사용한 정당은 **시점으로 갈라져야 한다**
 #
 # disambiguate_party는 registry의 시기 노드 범위(founded~dissolved)로 가른다. 어느

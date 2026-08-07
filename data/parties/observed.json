@@ -20,6 +20,7 @@
   "unresolved": "아직 확인하지 않았다 (없는 정당이라는 뜻이 **아니다**)"
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
+ "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
  "n": 321,
  "parties": [
   {
@@ -53,7 +54,12 @@
    "first": "1997-12-18",
    "last": "2026-06-03",
    "registry_id": "한나라당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1997-11~2012-02",
+    "observed_span": "1997-12~2026-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "새누리당",
@@ -64,7 +70,12 @@
    "first": "2012-04-11",
    "last": "2024-04-10",
    "registry_id": "새누리당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2012-02~2017-02",
+    "observed_span": "2012-04~2024-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "민주공화당",
@@ -86,7 +97,12 @@
    "first": "1952-08-05",
    "last": "2020-04-15",
    "registry_id": "자유당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1951-12~1970",
+    "observed_span": "1952-08~2020-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "민주통합당",
@@ -130,7 +146,12 @@
    "first": "1980-08-27",
    "last": "1988-04-26",
    "registry_id": "민주정의당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1981-01~1990-02",
+    "observed_span": "1980-08~1988-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "신민당",
@@ -196,7 +217,12 @@
    "first": "1987-12-16",
    "last": "2020-04-15",
    "registry_id": "통일민주당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1987-05~1990-02",
+    "observed_span": "1987-12~2020-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "평화민주당",
@@ -207,7 +233,12 @@
    "first": "1987-12-16",
    "last": "2010-06-02",
    "registry_id": "평화민주당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1987-11~1991-09",
+    "observed_span": "1987-12~2010-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "통합민주당",
@@ -427,7 +458,12 @@
    "first": "1958-05-02",
    "last": "1967-06-08",
    "registry_id": "민주당(1955)",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1955-09~1967",
+    "observed_span": "1958-05~1967-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "민주한국당",
@@ -438,7 +474,12 @@
    "first": "1981-02-25",
    "last": "1988-04-26",
    "registry_id": "민주한국당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1981-01~1988",
+    "observed_span": "1981-02~1988-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "통합진보당",
@@ -482,7 +523,12 @@
    "first": "2008-04-09",
    "last": "2018-06-13",
    "registry_id": "친박연대",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2008-03~2012-02",
+    "observed_span": "2008-04~2018-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "신정당(1992)",
@@ -537,7 +583,12 @@
    "first": "2007-12-19",
    "last": "2012-04-11",
    "registry_id": "창조한국당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2007-10~2012",
+    "observed_span": "2007-12~2012-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "한국국민당",
@@ -548,7 +599,12 @@
    "first": "1981-02-25",
    "last": "1988-04-26",
    "registry_id": "한국국민당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1981-01~1988",
+    "observed_span": "1981-02~1988-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "민주당(2005)",
@@ -614,7 +670,12 @@
    "first": "1973-02-27",
    "last": "2012-04-11",
    "registry_id": "민주통일당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1973-01~1980-10",
+    "observed_span": "1973-02~2012-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "민생당",
@@ -658,7 +719,12 @@
    "first": "1950-05-30",
    "last": "2004-04-15",
    "registry_id": "민주국민당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1949-02~1955-09",
+    "observed_span": "1950-05~2004-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "녹색정의당",
@@ -691,7 +757,12 @@
    "first": "1948-05-10",
    "last": "1992-03-24",
    "registry_id": "민중당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1965-06~1967-02",
+    "observed_span": "1948-05~1992-03",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "기독자유당",
@@ -724,7 +795,12 @@
    "first": "1981-02-25",
    "last": "1985-02-12",
    "registry_id": "민권당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1981~1985",
+    "observed_span": "1981-02~1985-02",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "기독자유통일당",
@@ -757,7 +833,12 @@
    "first": "1948-05-10",
    "last": "2026-06-03",
    "registry_id": "한국독립당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1940~1970",
+    "observed_span": "1948-05~2026-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "건설국민승리21",
@@ -823,7 +904,12 @@
    "first": "1963-11-26",
    "last": "2026-06-03",
    "registry_id": "자유민주당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1963-09~1964",
+    "observed_span": "1963-11~2026-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "국가혁명당",
@@ -944,7 +1030,12 @@
    "first": "1950-05-30",
    "last": "1958-05-02",
    "registry_id": "국민회",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1948~1951",
+    "observed_span": "1950-05~1958-05",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "여성의당",
@@ -977,7 +1068,12 @@
    "first": "1950-05-30",
    "last": "2026-06-03",
    "registry_id": "대한국민당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1948-11~1951-12",
+    "observed_span": "1950-05~2026-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "국가혁명배당금당",
@@ -1153,7 +1249,12 @@
    "first": "2004-04-15",
    "last": "2004-04-15",
    "registry_id": "국민통합21",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2002-11~2004",
+    "observed_span": "2004-04~2004-04",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "신정사회당",
@@ -1241,7 +1342,12 @@
    "first": "1997-12-18",
    "last": "2026-06-03",
    "registry_id": "공화당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1997~1998",
+    "observed_span": "1997-12~2026-06",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "한겨레민주당",
@@ -1296,7 +1402,12 @@
    "first": "1950-05-30",
    "last": "1981-03-25",
    "registry_id": "사회당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1948~1950",
+    "observed_span": "1950-05~1981-03",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "자유의새벽당",
@@ -1637,7 +1748,12 @@
    "first": "1958-05-02",
    "last": "2010-07-28",
    "registry_id": "통일당",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1958~1961",
+    "observed_span": "1958-05~2010-07",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "한국경제당",
@@ -1791,7 +1907,12 @@
    "first": "1950-05-30",
    "last": "1950-05-30",
    "registry_id": "일민구락부",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1949~1950",
+    "observed_span": "1950-05~1950-05",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "가자코리아",
@@ -3496,7 +3617,12 @@
    "first": "1948-05-10",
    "last": "1948-05-10",
    "registry_id": "대한청년단",
-   "status": "registry"
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1948-12~1953",
+    "observed_span": "1948-05~1948-05",
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "반공연맹",
