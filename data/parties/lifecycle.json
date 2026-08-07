@@ -1398,9 +1398,11 @@
     "why": "relation=new이고 전신이 없다"
    },
    "ended_by": {
-    "type": "dissolution",
-    "parties": [],
-    "why": "후신 기록이 없다"
+    "type": "absorption_into",
+    "parties": [
+     "자유민주당(2021)"
+    ],
+    "why": "자유민주당(2021)은 이미 있던 정당이다 — 흡수됐다"
    },
    "lineage": [],
    "migration": "derived",
@@ -1929,6 +1931,30 @@
    "lineage": [],
    "migration": "ambiguous",
    "ambiguity_cause": "missing_predecessor_record"
+  },
+  "자유민주당(2021)": {
+   "founded": "2021-03",
+   "dissolved": null,
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [
+    {
+     "to": "자유당(2020)",
+     "type": "absorbed_into",
+     "note": "계열 전파 없음"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": null
   },
   "통일당": {
    "founded": "1958",

@@ -328,6 +328,16 @@ def main() -> int:
            disambiguate_party("한국독립당", dt) == want,
            disambiguate_party("한국독립당", dt))
 
+    for dt, want in [("1963-11-26", "자유민주당"), ("2024-04-10", "자유민주당(2021)")]:
+        ck(f"자유민주당@{dt} → {want}",
+           disambiguate_party("자유민주당", dt) == want,
+           disambiguate_party("자유민주당", dt))
+    # 흡수는 계열을 전파하지 않는다 — 자유당(2020)이 자유민주당(2021)에 흡수됐어도
+    # 2020년 자유당 표를 2024년 자유민주당 표와 같은 identity로 세지 않는다.
+    ck("자유당(2020) ≢ 자유민주당(2021) — 흡수는 합산 근거가 아니다",
+       identity("자유당", "2020-04-15") != identity("자유민주당", "2024-04-10"),
+       identity("자유당", "2020-04-15"))
+
     for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
         ck(f"친박연대@{dt} → {want}",
            disambiguate_party("친박연대", dt) == want,
