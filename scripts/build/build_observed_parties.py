@@ -59,11 +59,29 @@ def main() -> int:
         r = rows[-1]
         node = reg.get(r["registry_id"] or "")
         if node:
-            f = (node.get("founded") or "")[:7]
-            d = (node.get("dissolved") or "9999-99")[:7]
+            # 경계가 연도만 적힌 것도 있다("1988"). 그대로 문자열 비교하면
+            # "1988-04" > "1988"이 참이 되어 **없는 어긋남**이 생긴다(6종이 그랬다).
+            # 아래는 그 해 1월, 위는 그 해 12월로 채워서 비교한다.
+            def _lo(x):
+                return x if len(x) >= 7 else (x + "-01" if x else "")
+
+            def _hi(x):
+                return x if len(x) >= 7 else (x + "-12" if x else "")
+            f = _lo((node.get("founded") or "")[:7])
+            d = _hi((node.get("dissolved") or "9999-99")[:7])
             if f and (r["first"][:7] < f or r["last"][:7] > d):
+                def _m(ym):
+                    y = int(ym[:4])
+                    mo = int(ym[5:7]) if len(ym) >= 7 and ym[5:7].isdigit() else 6
+                    return y * 12 + mo
+                before = max(0, _m(f) - _m(r["first"][:7]))
+                after = 0 if d == "9999-99" else max(0, _m(r["last"][:7]) - _m(d))
+                # **판정하지 않는다. 재기만 한다.** 벗어난 폭이 몇 달이면 노드의 날짜가
+                # 한두 달 틀렸을 수 있고, 수십 년이면 이름을 다시 쓴 다른 정당이다.
+                # 어느 쪽인지는 1차 자료로 확인할 일이라 여기서 단정하지 않는다.
                 r["outside_registry_interval"] = {
                     "node_span": f"{f}~{d}", "observed_span": f'{r["first"][:7]}~{r["last"][:7]}',
+                    "months_before": before, "months_after": after,
                     "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다",
                 }
     # 영향도 순 — 222종을 다 조사하는 게 목표가 아니다. 큰 것부터 확인하면 된다.

@@ -157,8 +157,12 @@ for r in rows:
     if not _node:
         ck(f'{r["name"]}: 링크가 없으면 구간 표시도 없다', not r.get("outside_registry_interval"))
         continue
+    # 연도만 적힌 경계는 아래를 1월, 위를 12월로 채운다 — 그냥 문자열로 비교하면
+    # "1988-04" > "1988"이 참이 되어 없는 어긋남이 생긴다
     _f = (_node.get("founded") or "")[:7]
     _d = (_node.get("dissolved") or "9999-99")[:7]
+    _f = _f if len(_f) >= 7 else (_f + "-01" if _f else "")
+    _d = _d if len(_d) >= 7 else (_d + "-12" if _d else "")
     _out = bool(_f) and (r["first"][:7] < _f or r["last"][:7] > _d)
     ck(f'{r["name"]}: 구간 표시가 실제 계산과 일치',
        _out == bool(r.get("outside_registry_interval")),
