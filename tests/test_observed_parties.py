@@ -173,6 +173,47 @@ for r in rows:
            r["outside_registry_interval"].get("node_span") == f"{_f}~{_d}")
 ck(f"구간 밖 링크가 드러나 있다 ({len(_mismatch)}종)", bool(_mismatch))
 
+# ③-5 소급 당적이 canonical identity를 오염시키지 않는가
+#
+# 출처가 나중 당적을 과거 기록에 소급 적용한 경우가 있다. NEC 당선인명부는 1980-08-27
+# 11대 대선(통일주체국민회의 간선) 전두환의 소속을 민주정의당으로 적는데, 그 당은
+# 1981-01 창당이다. **원자료는 고치지 않는다** — 출처가 그렇게 기록한 것이 사실이고,
+# 이 anomaly를 소비하는 기능도 아직 없다. 대신 **늘어나지 않는지**만 지킨다.
+#
+# 이 검사가 지키는 진짜 대상은 해소 층이다. 해소를 안 태우면 1967·1971년 '정의당'
+# 439행이 2012년 정의당으로 붙는다 — 3건이 439건이 되는 것을 여기서 잡는다.
+sys.path.insert(0, str(ROOT / "scripts/build"))
+from party_canon import disambiguate_party as _dp  # noqa: E402
+
+KNOWN_ANACHRONISTIC = {
+    ("1948-05-10", "대한청년단"),   # 결성 1948-12 — 제헌 총선보다 뒤
+    ("1948-05-10", "민중당"),       # registry 민중당은 1965-06 (1948 것은 별개 정당)
+    ("1980-08-27", "민주정의당"),   # 창당 1981-01 — 11대 대선 당시엔 없던 당
+}
+_found = set()
+for _fp in sorted(_RES.glob("*.json")):
+    if ".sigungu" in _fp.name:
+        continue
+    try:
+        _doc = json.loads(_fp.read_text(encoding="utf-8"))
+    except Exception:                                            # noqa: BLE001
+        continue
+    _dt = (_doc.get("_meta") or {}).get("election_date") or ""
+    if not _dt:
+        continue
+    for _r in _doc.get("races") or []:
+        for _c in _r.get("candidates") or []:
+            _p = _dp(_c.get("party"), _dt)          # **해소 층을 태운 뒤** 본다
+            _n = reg.get(_p or "")
+            if not _n:
+                continue
+            _f = (_n.get("founded") or "")[:7]
+            _f = _f if len(_f) >= 7 else (_f + "-01" if _f else "")
+            if _f and _dt[:7] < _f:
+                _found.add((_dt, _p))
+ck(f"소급 당적이 알려진 것뿐이다 ({len(_found)}건)", _found == KNOWN_ANACHRONISTIC,
+   f"새로 생김 {sorted(_found - KNOWN_ANACHRONISTIC)} · 사라짐 {sorted(KNOWN_ANACHRONISTIC - _found)}")
+
 # ④ 이름을 재사용한 정당은 **시점으로 갈라져야 한다**
 #
 # disambiguate_party는 registry의 시기 노드 범위(founded~dissolved)로 가른다. 어느
