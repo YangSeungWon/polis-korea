@@ -426,6 +426,27 @@ def main() -> int:
         # 민주공화당인데 registry의 민주공화당은 1963년 박정희 정당이었다 — 그대로
         # 적용하면 24,360표가 그 정당에 붙는다. 민주공화당(1997) 노드가 생기기
         # 전까지 이 건이 deferred였던 이유다. 두 층을 다 거친 결과로 확인한다.
+        # **약칭과 별개 정당을 가르는 신호**: 같은 회차에 정식명이 따로 행으로
+        # 있으면 그건 약칭이 아니라 두 정당이다. 2016년 민주당 사고가 바로 그
+        # 구별을 못 해서 났다. 19대 '기독당'(=기독자유민주당) 옆에 한국기독당이
+        # 따로 있는 것처럼, 비슷한 이름이 같이 있는 회차가 실제로 많다.
+        _same_day = set()
+        for _fp2 in sorted((ROOT / "data/results").glob("*.json")):
+            if ".sigungu." in _fp2.name:
+                continue
+            try:
+                _d2 = json.loads(_fp2.read_text(encoding="utf-8"))
+            except Exception:                                    # noqa: BLE001
+                continue
+            if (_d2.get("date") or _edate(_fp2)) != c["election_date"]:
+                continue
+            for _r2 in _d2.get("races") or []:
+                for _c2 in _r2.get("candidates") or []:
+                    if _c2.get("party"):
+                        _same_day.add(_c2["party"])
+        ck(f'{c["election"]} {c["stored"]}: 같은 회차에 정식명이 따로 없다',
+           c["official"] not in _same_day,
+           f'{c["official"]}가 별도 행으로 있다 — 약칭이 아니라 다른 정당이다')
         _final = disambiguate_party(c["stored"], c["election_date"])
         _reg_all = json.loads((ROOT / "data/parties/registry.json")
                               .read_text(encoding="utf-8"))["parties"]

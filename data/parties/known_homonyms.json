@@ -153,6 +153,24 @@
    ]
   },
   {
+   "name": "시민당",
+   "span": "2006~2008",
+   "note": "4회 지선 광역비례 7,583표·광역단체장 4,790표와 18대 총선 비례 17,656표가 같은 정당인지 확인하지 못했다. 선관위 현행 정당등록현황에 '시민당'은 없다(등록취소). name_fidelity의 _unverified에 있던 항목인데, 문자열 축(약칭인가)이 아니라 관계 축(같은 실체인가) 문제라 이쪽으로 옮겼다.",
+   "status": "needs_disambiguation",
+   "reason": "same label used by multiple historical parties",
+   "blocked_by": "2006년 시민당과 2008년 시민당의 등록 기록을 못 찾았다",
+   "occurrences": [
+    {
+     "election_date": "2008-04-09",
+     "election": "18대 총선",
+     "proportional_votes": 17656,
+     "resolved_to": null,
+     "evidence": "18대 비례 17,656표(0.10%)",
+     "status": "open"
+    }
+   ]
+  },
+  {
    "name": "청년당",
    "span": "1948~2012",
    "note": "registry 미등록 — 시기별로 다른 정당",
