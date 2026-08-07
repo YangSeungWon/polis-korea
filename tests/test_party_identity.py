@@ -296,7 +296,6 @@ def main() -> int:
            identity(_n, _bad_date[_n]))
     # 생애 안/밖이 같은 pid를 받으면 안 된다
     for _n, _out, _in in [("민주통일당", "2012-04-11", "1973-02-27"),
-                          ("국민회", "1954-05-20", "1950-05-30"),
                           ("대한국민당", "2024-04-10", "1950-05-30"),
                           ("공화당", "2024-04-10", "1997-12-18")]:
         ck(f"{_n}: {_out} ≠ {_in}",
@@ -337,6 +336,33 @@ def main() -> int:
     ck("자유당(2020) ≢ 자유민주당(2021) — 흡수는 합산 근거가 아니다",
        identity("자유당", "2020-04-15") != identity("자유민주당", "2024-04-10"),
        identity("자유당", "2020-04-15"))
+
+    # ── '소멸했다'와 '거기까지만 안다'를 가른다 ────────────────────────────
+    # 국민회는 1951년에 여당 지위를 잃었을 뿐 3·4대 총선에 계속 나왔다. 소멸 시점은
+    # 모른다 — dissolved를 지우면 뒤 시대를 삼키고, 지어내면 없는 사실을 만든다.
+    print("\n[미상 경계] dissolved가 소멸을 뜻하지 않는 경우")
+    _bounded = {n: i for n, i in _reg.items() if i.get("dissolved_bound")}
+    ck(f"dissolved_bound를 쓰는 노드가 있다 ({len(_bounded)}종)", bool(_bounded))
+    _life = json.loads((ROOT / "data/parties/lifecycle.json")
+                       .read_text(encoding="utf-8"))["parties"]
+    for _n, _i in _bounded.items():
+        ck(f"{_n}: bound 값이 어휘 안에 있다",
+           _i["dissolved_bound"] == "last_known_active", _i["dissolved_bound"])
+        ck(f"{_n}: dissolved가 비어 있지 않다 (경계는 있어야 한다)", bool(_i.get("dissolved")))
+        ck(f"{_n}: 생애 사건이 dissolution으로 굳지 않는다",
+           (_life.get(_n) or {}).get("ended_by", {}).get("type") == "unknown",
+           str((_life.get(_n) or {}).get("ended_by")))
+        # 경계 자체는 살아 있어야 한다 — 뒤 시대 관측을 삼키면 안 된다
+        _after = f"{int(_i['dissolved'][:4]) + 20}-01-01"
+        ck(f"{_n}: 확인 범위 밖({_after[:4]})은 그 정당으로 안 간다",
+           identity(_n, _after) != f"pid:{_n}", identity(_n, _after))
+    for dt, want in [("1950-05-30", "국민회"), ("1954-05-20", "국민회"),
+                     ("1958-05-02", "국민회")]:
+        ck(f"국민회@{dt} → {want}", disambiguate_party("국민회", dt) == want,
+           disambiguate_party("국민회", dt))
+    ck("대한독립촉성국민회 ≡ 국민회 (1948-12-26 개칭)",
+       identity("대한독립촉성국민회", "1948-05-10") == identity("국민회", "1950-05-30"),
+       f'{identity("대한독립촉성국민회", "1948-05-10")} vs {identity("국민회", "1950-05-30")}')
 
     for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
         ck(f"친박연대@{dt} → {want}",

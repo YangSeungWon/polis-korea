@@ -94,6 +94,11 @@ def derive(reg: dict) -> dict:
         ended, ewhy, eparts = None, "", []
         if not d:
             ended, ewhy = None, "현존"
+        elif info.get("dissolved_bound") == "last_known_active":
+            # dissolved에 적힌 것은 **마지막으로 확인된 활동 시점**이지 소멸이 아니다.
+            # 이걸 dissolution으로 읽으면 '모른다'가 '없어졌다'로 굳는다.
+            ended, ewhy = "unknown", f"{d}까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+            cause = cause or "dissolution_date_unknown"
         elif not succs:
             ended, ewhy = "dissolution", "후신 기록이 없다"
         elif roundtrip and set(succs) <= set(roundtrip):

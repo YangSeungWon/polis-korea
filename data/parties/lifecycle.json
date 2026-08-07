@@ -1556,17 +1556,19 @@
   },
   "대한독립촉성국민회": {
    "founded": "1946-02",
-   "dissolved": "1951",
-   "legacy_relation": "dissolve",
+   "dissolved": "1948-12",
+   "legacy_relation": "rename",
    "formed_by": {
     "type": "ambiguous",
     "parties": [],
-    "why": "legacy relation=dissolve는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
    },
    "ended_by": {
-    "type": "dissolution",
-    "parties": [],
-    "why": "후신 기록이 없다"
+    "type": "rename",
+    "parties": [
+     "국민회"
+    ],
+    "why": "국민회이 같은 달(1948-12)에 생겼고 그 전신이 1곳이다"
    },
    "lineage": [],
    "migration": "ambiguous",
@@ -1825,22 +1827,29 @@
    "ambiguity_cause": "missing_predecessor_record"
   },
   "국민회": {
-   "founded": "1948",
-   "dissolved": "1951",
-   "legacy_relation": null,
+   "founded": "1948-12",
+   "dissolved": "1958-05",
+   "legacy_relation": "rename",
    "formed_by": {
-    "type": "ambiguous",
-    "parties": [],
-    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "type": "rename",
+    "parties": [
+     "대한독립촉성국민회"
+    ],
+    "why": "대한독립촉성국민회이 1948-12에 해산하고 같은 달에 생겼다"
    },
    "ended_by": {
-    "type": "dissolution",
+    "type": "unknown",
     "parties": [],
-    "why": "후신 기록이 없다"
+    "why": "1958-05까지 활동한 것만 확인됐다 — 소멸 시점 미상"
    },
-   "lineage": [],
-   "migration": "ambiguous",
-   "ambiguity_cause": "missing_predecessor_record"
+   "lineage": [
+    {
+     "to": "대한독립촉성국민회",
+     "type": "continuation"
+    }
+   ],
+   "migration": "derived",
+   "ambiguity_cause": "dissolution_date_unknown"
   },
   "대한노동총연맹": {
    "founded": "1946",

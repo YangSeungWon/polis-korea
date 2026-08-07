@@ -166,9 +166,12 @@ def main() -> int:
                  "ambiguous"}, str(F))
         # temporary_rename: 한시 당명을 접고 원래 이름으로 되돌린 것. 종료가 아니라
         # 이름 복귀다 — 형성 쪽 어휘에만 있으면 종료가 absorption_into로 잘못 읽힌다.
+        # unknown: dissolved에 적힌 것이 소멸 시점이 아니라 '마지막으로 확인된 활동'인
+        # 경우(registry의 dissolved_bound). '언제 없어졌는지 모른다'를 dissolution으로
+        # 읽으면 모르는 것이 사실로 굳는다 — ambiguous(자료가 서로 안 맞음)와도 다르다.
         ck("종료 유형 어휘",
            E <= {"dissolution", "rename", "merger", "absorption_into", "split",
-                 "temporary_rename", "ambiguous"}, str(E))
+                 "temporary_rename", "unknown", "ambiguous"}, str(E))
         ck("확정 못 한 것은 ambiguous로 남는다 (추정하지 않는다)",
            all(v["ambiguity_cause"] for v in L.values() if v["migration"] == "ambiguous"))
         # 종료 방식이 계보를 끊지 않는다 — 신민당은 1980 해산이지만 1967년 계보가 있다
