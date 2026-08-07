@@ -300,6 +300,14 @@ def main() -> int:
            identity(_n, _out) != identity(_n, _in),
            f"{identity(_n, _out)} == {identity(_n, _in)}")
 
+    # 민국당은 2001년이 아니라 17대 총선(2004-04)까지 살아 있었다. dissolved 오기로
+    # 2004년 지역구 4,347표가 한민당계 민주국민당(1949)에 붙어 있었다.
+    for dt, want in [("1950-05-30", "민주국민당"), ("2000-04-13", "민주국민당(2000)"),
+                     ("2004-04-15", "민주국민당(2000)")]:
+        ck(f"민주국민당@{dt} → {want}",
+           disambiguate_party("민주국민당", dt) == want,
+           disambiguate_party("민주국민당", dt))
+
     for dt, want in [("2008-04-09", "친박연대"), ("2018-06-13", "친박연대(2017)")]:
         ck(f"친박연대@{dt} → {want}",
            disambiguate_party("친박연대", dt) == want,
