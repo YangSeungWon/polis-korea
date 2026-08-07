@@ -1368,11 +1368,11 @@
    "dissolved": "1970",
    "legacy_relation": "dissolve",
    "formed_by": {
-    "type": "rename",
+    "type": "split",
     "parties": [
      "대한국민당"
     ],
-    "why": "대한국민당이 1951-12에 해산하고 같은 달에 생겼다"
+    "why": "대한국민당이 존속하는 중에 갈라져 나왔다"
    },
    "ended_by": {
     "type": "dissolution",
@@ -1382,7 +1382,7 @@
    "lineage": [
     {
      "to": "대한국민당",
-     "type": "continuation"
+     "type": "split_from"
     }
    ],
    "migration": "derived",
@@ -1754,19 +1754,19 @@
   },
   "대한국민당": {
    "founded": "1948-11",
-   "dissolved": "1951-12",
-   "legacy_relation": "merge",
+   "dissolved": "1958-07",
+   "legacy_relation": "split",
    "formed_by": {
     "type": "ambiguous",
     "parties": [],
-    "why": "legacy relation=merge는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "why": "legacy relation=split는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
    },
    "ended_by": {
-    "type": "rename",
+    "type": "absorption_into",
     "parties": [
      "자유당"
     ],
-    "why": "자유당이 같은 달(1951-12)에 생겼고 그 전신이 1곳이다"
+    "why": "자유당은 이미 있던 정당이다 — 흡수됐다"
    },
    "lineage": [],
    "migration": "ambiguous",
@@ -2732,6 +2732,24 @@
      "type": "continuation"
     }
    ],
+   "migration": "derived",
+   "ambiguity_cause": null
+  },
+  "대한국민당(2021)": {
+   "founded": "2021-06",
+   "dissolved": null,
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": null,
+    "parties": [],
+    "why": "현존"
+   },
+   "lineage": [],
    "migration": "derived",
    "ambiguity_cause": null
   }
