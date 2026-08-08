@@ -218,6 +218,9 @@ for _q in hom["unresolved"]:
     if _q.get("blocked_by"):
         ck(f'{_q["name"]}: 막힌 건에 확인 가능한 occurrence가 있다',
            bool(_q.get("occurrences")))
+        # 막혔다면 **어디까지 찾아봤는지**도 있어야 한다. 없으면 다음 사람이 같은
+        # 길을 다시 간다 — 실제로 전자관보·선관위 공고 게시판을 한 번씩 더 팠다.
+        ck(f'{_q["name"]}: 찾아본 경로가 적혀 있다', bool(_q.get("searched")))
     # ── 판정의 두 축이 섞이지 않는가 ──────────────────────────────────────
     # resolved_to 하나가 '그 회차 정식명'과 'registry 노드'를 같이 담고 있었다.
     # 그래서 registry에 없는 이름(한국기독당·기독사랑실천당…)이 노드 키인 척

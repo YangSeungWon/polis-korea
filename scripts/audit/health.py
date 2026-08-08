@@ -127,13 +127,19 @@ def in_pause(key: str | None, d: date) -> tuple[str, str] | None:
 
 def next_expected(last: date, cadence: int, key: str | None) -> date:
     """다음 발표 예정일. 휴간에 걸리면 휴간이 끝난 뒤로 민다.
-    경과일만 보면 예정된 휴간이 '지연'으로 잡힌다."""
+    경과일만 보면 예정된 휴간이 '지연'으로 잡힌다.
+
+    휴간 뒤로 밀 때 **다음 날이 아니라 한 주기 뒤**로 민다. 휴간이 끝난 이튿날
+    바로 발표하는 기관은 없다 — 갤럽은 화~목 조사하고 금요일에 낸다. 이튿날로
+    밀었더니 휴간 종료(08-07) 다음 날인 08-08을 예정일로 잡고, 실제 첫 발표가
+    오기도 전에 overdue가 떴다. 감시가 가짜로 울리면 진짜 지연을 놓친다.
+    """
     nxt = date.fromordinal(last.toordinal() + cadence)
     for _ in range(6):          # 연속 휴간 대비(무한루프 방지 상한)
         rng = in_pause(key, nxt)
         if not rng:
             return nxt
-        nxt = date.fromordinal(date.fromisoformat(rng[1]).toordinal() + 1)
+        nxt = date.fromordinal(date.fromisoformat(rng[1]).toordinal() + cadence)
     return nxt
 
 
