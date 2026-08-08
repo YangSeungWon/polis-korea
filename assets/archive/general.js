@@ -123,6 +123,18 @@
       foot = `<span class="ar-parl-n ar-parl-tot">${grand}</span>`;
       note = '정당별 총 의석만 기록 — 지역구·비례(전국구) 미분리.';
     }
+    // 연합 명부는 본당에 합산하지 않는다 — 여러 정당 몫이 섞여 있어 한 당에 몰면
+    // 다른 당 의석이 사라진다(더불어시민당 17석에 기본소득당·시대전환의 첫 의석이
+    // 하나씩 있었다). 대신 **관계를 지우지도 않는다**: 어느 당의 명부였는지 밝힌다.
+    // 그러지 않으면 '민주당이 163석뿐'으로 읽히는 새 오해가 생긴다.
+    const COAL = (typeof COALITION_TO_MAIN !== 'undefined') ? COALITION_TO_MAIN : {};
+    const coalRows = rows.filter((r) => COAL[r.p]);
+    if (coalRows.length) {
+      note = (note ? note + ' ' : '')
+        + coalRows.map((r) => `${r.p}(${r.pr}석)은 ${COAL[r.p]}이 다른 정당·시민사회와 함께 낸 `
+          + '연합 비례 명부다').join(' · ')
+        + '. 당선자가 각자 자기 당으로 가므로 본당 의석에 더하지 않았다.';
+    }
     const table = document.getElementById('ar-parliament-table');
     table.innerHTML = `<div class="ar-parl-table${mode === 'split' ? '' : ' two-col'}">
       <div class="ar-parl-thead">${head}</div>

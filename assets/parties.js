@@ -533,10 +533,15 @@ const SIDO_HEX_BLANKS = [];
 // === SATELLITE_TO_MAIN auto-generated ===
 // data/parties/satellites.json에서 sync. 손으로 수정하지 말 것 —
 // scripts/build/sync_satellites_js.py 재실행으로 갱신.
+// 순수 위성 — 당선자가 전원 본당으로 복귀했다. 의석을 합산한다.
 const SATELLITE_TO_MAIN = {
   '미래한국당': '미래통합당',
-  '더불어시민당': '더불어민주당',
   '국민의미래': '국민의힘',
+};
+// 연합 명부 — 여러 정당 몫이 섞여 있다. **합산하지 않는다.**
+// 관계만 기록한다: 화면에서 어느 당의 명부였는지 밝히되 의석은 더하지 않는다.
+const COALITION_TO_MAIN = {
+  '더불어시민당': '더불어민주당',
   '더불어민주연합': '더불어민주당',
 };
 const mainParty = (p) => SATELLITE_TO_MAIN[p] || p;

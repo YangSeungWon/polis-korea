@@ -225,7 +225,22 @@ def main() -> int:
                 for c in r["candidates"] if c.get("party") == _n]
         ck(f"{_n}: 총 의석이 원자료와 같다 ({_c['seats']})",
            _got and _got[0] == _c["seats"], str(_got))
-    ck("합산 정책이 아직 열려 있다는 사실이 적혀 있다", bool(_sat.get("_open_decision")))
+    # 합산 정책: 순수 위성만 합산하고 연합 명부는 합산하지 않는다.
+    ck("연합 명부가 순수 위성 매핑에 없다",
+       not (set(_coal) & set(_sat["satellite_to_main"])),
+       str(set(_coal) & set(_sat["satellite_to_main"])))
+    ck("연합 명부의 본당 관계는 남아 있다 (합산만 멈춘 것이지 지운 게 아니다)",
+       set(_coal) == set(_sat.get("coalition_to_main") or {}),
+       str(_sat.get("coalition_to_main")))
+    # JS 쪽 상수도 같은 구분을 가져야 한다 — 여기서 갈리면 화면만 옛 정책으로 돈다
+    _js = (ROOT / "assets/parties.js").read_text(encoding="utf-8")
+    for _n in _coal:
+        ck(f"{_n}: JS 합산 매핑에 없다",
+           f"'{_n}': " not in _js.split("const COALITION_TO_MAIN")[0].split(
+               "const SATELLITE_TO_MAIN")[-1])
+        ck(f"{_n}: JS 관계 매핑에는 있다",
+           f"'{_n}': " in _js.split("const COALITION_TO_MAIN")[-1])
+    ck("합산 정책 결정이 기록돼 있다", bool(_sat.get("_open_decision")))
     # 득표는 어디서도 합치지 않는다 — 이건 이미 정한 정책이고 유지돼야 한다
     for _n in _coal:
         ck(f"{_n}: 비례 득표가 본당과 합쳐지지 않았다",

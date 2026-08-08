@@ -25,12 +25,19 @@ START = "// === SATELLITE_TO_MAIN auto-generated ==="
 END = "// === /SATELLITE_TO_MAIN ==="
 
 
-def render_block(mapping: dict) -> str:
+def render_block(mapping: dict, coalition: dict) -> str:
     lines = [START,
              "// data/parties/satellites.json에서 sync. 손으로 수정하지 말 것 —",
              "// scripts/build/sync_satellites_js.py 재실행으로 갱신.",
+             "// 순수 위성 — 당선자가 전원 본당으로 복귀했다. 의석을 합산한다.",
              "const SATELLITE_TO_MAIN = {"]
     for sat, main in mapping.items():
+        lines.append(f"  '{sat}': '{main}',")
+    lines.append("};")
+    lines.append("// 연합 명부 — 여러 정당 몫이 섞여 있다. **합산하지 않는다.**")
+    lines.append("// 관계만 기록한다: 화면에서 어느 당의 명부였는지 밝히되 의석은 더하지 않는다.")
+    lines.append("const COALITION_TO_MAIN = {")
+    for sat, main in coalition.items():
         lines.append(f"  '{sat}': '{main}',")
     lines.append("};")
     lines.append("const mainParty = (p) => SATELLITE_TO_MAIN[p] || p;")
@@ -41,7 +48,7 @@ def render_block(mapping: dict) -> str:
 def main():
     data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
     mapping = data["satellite_to_main"]
-    block = render_block(mapping)
+    block = render_block(mapping, data.get("coalition_to_main") or {})
 
     js = JS_PATH.read_text(encoding="utf-8")
     pat = re.compile(re.escape(START) + r".*?" + re.escape(END), re.DOTALL)
