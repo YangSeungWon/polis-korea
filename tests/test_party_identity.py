@@ -194,6 +194,45 @@ def main() -> int:
         ck(f"민주당@{dt} → {want}", disambiguate_party("민주당", dt) == want,
            disambiguate_party("민주당", dt))
 
+    # ── 위성정당과 연합 명부는 다른 것이다 ────────────────────────────────
+    # 순수 위성은 당선자가 전원 본당으로 돌아가 의석 합산이 사실과 맞다. 연합 명부는
+    # 여러 정당 몫이 섞여 있어 한 당에 몰면 다른 당 의석이 사라진다 — 더불어시민당
+    # 17석에는 기본소득당·시대전환의 첫 의석이 하나씩 들어 있다.
+    print("\n[연합 명부] 여러 정당 몫을 한 당에 몰지 않는다")
+    _sat = json.loads((ROOT / "data/parties/satellites.json").read_text(encoding="utf-8"))
+    _coal = _sat.get("coalition_lists") or {}
+    ck(f"연합 명부 사례가 기록돼 있다 ({len(_coal)}종)", bool(_coal))
+    for _n, _c in _coal.items():
+        ck(f"{_n}: 구성 정당이 둘 이상이다", len(_c.get("composition") or {}) >= 2,
+           str(_c.get("composition")))
+        ck(f"{_n}: 출처가 있다", bool(_c.get("source")))
+        # 구성에 적힌 의석 합이 총 의석과 맞는가 — 숫자로 확정된 것만 검산한다
+        _known = [v for v in (_c.get("composition") or {}).values() if isinstance(v, int)]
+        if len(_known) == len(_c.get("composition") or {}):
+            ck(f"{_n}: 구성 합 {sum(_known)} = 총 {_c['seats']}석",
+               sum(_known) == _c["seats"])
+        else:
+            # 자료가 갈리는 건은 숫자를 지어내지 않는다. 대신 **확실한 부분**만 본다:
+            # 본당 몫이 총 의석보다 작다(= 전부가 본당 것은 아니다).
+            ck(f"{_n}: 확정된 타 정당 몫이 있다 ({sum(_known)}석)",
+               0 < sum(_known) < _c["seats"], str(_c.get("composition")))
+        # 총 의석이 원자료와 맞는가
+        _res = json.loads((ROOT / "data/results" / f"{_c['election']}.json")
+                          .read_text(encoding="utf-8"))
+        _got = [c.get("proportional_seats") if c.get("proportional_seats") is not None
+                else c.get("seats") for r in _res["races"]
+                if r.get("sg_typecode") == "7" and r.get("scope") == "nation"
+                for c in r["candidates"] if c.get("party") == _n]
+        ck(f"{_n}: 총 의석이 원자료와 같다 ({_c['seats']})",
+           _got and _got[0] == _c["seats"], str(_got))
+    ck("합산 정책이 아직 열려 있다는 사실이 적혀 있다", bool(_sat.get("_open_decision")))
+    # 득표는 어디서도 합치지 않는다 — 이건 이미 정한 정책이고 유지돼야 한다
+    for _n in _coal:
+        ck(f"{_n}: 비례 득표가 본당과 합쳐지지 않았다",
+           identity(_n, "2020-04-15" if "시민" in _n else "2024-04-10")
+           != identity("더불어민주당", "2020-04-15"),
+           identity(_n, "2024-04-10"))
+
     # ── 2016년 두 민주당이 동시에 살아 있는가 ──────────────────────────────
     # 원자료를 정규화로 덮어써서 한 정당이 사라졌던 자리다(f87861d37).
     print("\n[원자료 보존] 2016 비례에 두 실체가 함께 있다")
