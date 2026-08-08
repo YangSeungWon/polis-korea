@@ -211,11 +211,11 @@
     "why": "새정치국민회의이 2000-01에 해산하고 같은 달에 생겼다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "rename",
     "parties": [
-     "열린우리당"
+     "민주당(2005)"
     ],
-    "why": "열린우리당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "민주당(2005)이 같은 달(2005-05)에 생겼고 그 전신이 1곳이다"
    },
    "lineage": [
     {
@@ -315,11 +315,11 @@
     "why": "신한민주당이 존속하는 중에 갈라져 나왔다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "merger",
     "parties": [
-     "평화민주당"
+     "민주자유당"
     ],
-    "why": "평화민주당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "민주자유당이 같은 달(1990-02)에 생겼고 그 전신이 3곳이다"
    },
    "lineage": [
     {
@@ -559,11 +559,11 @@
     "why": "한나라당이 2012-02에 해산하고 같은 달에 생겼다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "rename",
     "parties": [
-     "바른정당"
+     "자유한국당"
     ],
-    "why": "바른정당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "자유한국당이 같은 달(2017-02)에 생겼고 그 전신이 1곳이다"
    },
    "lineage": [
     {
@@ -699,11 +699,11 @@
     "why": "전신 3곳이 모두 1990-02에 해산했다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "rename",
     "parties": [
-     "자유민주연합"
+     "신한국당"
     ],
-    "why": "자유민주연합은 이미 있던 정당이다 — 흡수됐다"
+    "why": "신한국당이 같은 달(1995-12)에 생겼고 그 전신이 1곳이다"
    },
    "lineage": [
     {
@@ -840,11 +840,11 @@
     "why": "전신 2곳이 모두 2011-12에 해산했다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "ambiguous",
     "parties": [
-     "정의당"
+     "민중연합당"
     ],
-    "why": "정의당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "후신 시점이 해산 시점과 맞물리지 않는다"
    },
    "lineage": [
     {
@@ -856,8 +856,8 @@
      "type": "merged_from"
     }
    ],
-   "migration": "derived",
-   "ambiguity_cause": null
+   "migration": "ambiguous",
+   "ambiguity_cause": "successor_timing_mismatch"
   },
   "민중연합당": {
    "founded": "2016-02",
@@ -925,11 +925,11 @@
     "why": "건설국민승리21이 2000-01에 해산하고 같은 달에 생겼다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "merger",
     "parties": [
-     "진보신당"
+     "통합진보당"
     ],
-    "why": "진보신당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "통합진보당이 같은 달(2011-12)에 생겼고 그 전신이 2곳이다"
    },
    "lineage": [
     {
@@ -960,11 +960,6 @@
     {
      "to": "통합진보당",
      "type": "split_from"
-    },
-    {
-     "to": "민주노동당(2025)",
-     "type": "absorbed_into",
-     "note": "계열 전파 없음"
     }
    ],
    "migration": "derived",
@@ -1064,11 +1059,12 @@
     "why": "전신 2곳이 모두 2018-02에 해산했다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "split",
     "parties": [
-     "새로운보수당"
+     "국민의당(2020)",
+     "민생당"
     ],
-    "why": "새로운보수당은 이미 있던 정당이다 — 흡수됐다"
+    "why": "2020-02에 여러 곳으로 갈라졌다"
    },
    "lineage": [
     {
@@ -1590,7 +1586,7 @@
    "ended_by": {
     "type": "dissolution",
     "parties": [],
-    "why": "후신 기록이 없다"
+    "why": "후신 기록이 없다 — 신민당(1960)은 갈라져 나간 것이지 이 당의 후신이 아니다"
    },
    "lineage": [
     {
@@ -1613,11 +1609,11 @@
     "why": "평화민주당이 1991-09에 해산하고 같은 달에 생겼다"
    },
    "ended_by": {
-    "type": "absorption_into",
+    "type": "rename",
     "parties": [
-     "새정치국민회의"
+     "통합민주당(1995)"
     ],
-    "why": "새정치국민회의은 이미 있던 정당이다 — 흡수됐다"
+    "why": "통합민주당(1995)이 같은 달(1995-12)에 생겼고 그 전신이 1곳이다"
    },
    "lineage": [
     {
@@ -1757,22 +1753,20 @@
   "대한국민당": {
    "founded": "1948-11",
    "dissolved": "1958-07",
-   "legacy_relation": "split",
+   "legacy_relation": "new",
    "formed_by": {
-    "type": "ambiguous",
+    "type": "foundation",
     "parties": [],
-    "why": "legacy relation=split는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "why": "relation=new이고 전신이 없다"
    },
    "ended_by": {
-    "type": "absorption_into",
-    "parties": [
-     "자유당"
-    ],
-    "why": "자유당은 이미 있던 정당이다 — 흡수됐다"
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다 — 자유당은 갈라져 나간 것이지 이 당의 후신이 아니다"
    },
    "lineage": [],
-   "migration": "ambiguous",
-   "ambiguity_cause": "missing_predecessor_record"
+   "migration": "derived",
+   "ambiguity_cause": null
   },
   "대동청년단": {
    "founded": "1947-09",
@@ -2130,11 +2124,9 @@
     "why": "legacy relation=split는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
    },
    "ended_by": {
-    "type": "absorption_into",
-    "parties": [
-     "통일민주당"
-    ],
-    "why": "통일민주당은 이미 있던 정당이다 — 흡수됐다"
+    "type": "dissolution",
+    "parties": [],
+    "why": "후신 기록이 없다 — 통일민주당은 갈라져 나간 것이지 이 당의 후신이 아니다"
    },
    "lineage": [],
    "migration": "ambiguous",

@@ -104,7 +104,16 @@ def main() -> int:
     # 진짜 흡수는 그대로 흡수여야 한다 — 이 수정이 다른 관계를 건드리지 않았는가
     _abs = [n for n, v in _L.items()
             if isinstance(v, dict) and (v.get("ended_by") or {}).get("type") == "absorption_into"]
-    ck(f"흡수 사례는 남아 있다 ({len(_abs)}종)", len(_abs) >= 15, str(len(_abs)))
+    ck(f"흡수 사례는 남아 있다 ({len(_abs)}종)", bool(_abs), str(len(_abs)))
+    # 개수 상한·하한을 박아 두면 **데이터가 좋아져도 실패**한다(전에 >=15로 걸어 뒀다가
+    # 분당체 오분류 9건을 고치자 12로 떨어져 터졌다). 세는 대신 성질을 본다:
+    # 흡수로 판정된 건 상대편 registry의 absorbed 목록에 실제로 있어야 한다.
+    _regA = json.loads((ROOT / "data/parties/registry.json")
+                       .read_text(encoding="utf-8"))["parties"]
+    _unbacked = [f"{n}→{t}" for n in _abs
+                 for t in _L[n]["ended_by"]["parties"]
+                 if n not in ((_regA.get(t) or {}).get("absorbed") or [])]
+    ck("흡수 판정은 상대편 absorbed 기록으로 뒷받침된다", not _unbacked, str(_unbacked))
     for n in ("더불어시민당", "미래한국당", "국민의미래"):
         if n in _L:
             ck(f"{n}: 위성정당 흡수는 그대로",
@@ -172,6 +181,22 @@ def main() -> int:
         ck("종료 유형 어휘",
            E <= {"dissolution", "rename", "merger", "absorption_into", "split",
                  "temporary_rename", "unknown", "ambiguous"}, str(E))
+        # **분당체는 모정당의 종료 원인이 아니다.** successors 한 필드가 '개명 후·
+        # 합당체·분당체'를 다 담아서, 시점만 보면 모정당보다 먼저 생긴 분당체가
+        # '이미 있던 정당' 조건에 걸려 absorption_into가 됐다. 민주자유당이
+        # 신한국당으로 개명한 게 아니라 무언가에 흡수된 것으로 나오는 식이었고,
+        # 9개 정당이 그랬다.
+        _reg2 = json.loads((ROOT / "data/parties/registry.json")
+                           .read_text(encoding="utf-8"))["parties"]
+        _bad = []
+        for _n, _v in L.items():
+            if _v["ended_by"]["type"] != "absorption_into":
+                continue
+            for _t in _v["ended_by"]["parties"]:
+                _c = _reg2.get(_t) or {}
+                if _c.get("relation") == "split" and _n in (_c.get("predecessors") or []):
+                    _bad.append(f"{_n}→{_t}")
+        ck("자기한테서 갈라져 나간 당에 흡수됐다고 하지 않는다", not _bad, str(_bad))
         ck("확정 못 한 것은 ambiguous로 남는다 (추정하지 않는다)",
            all(v["ambiguity_cause"] for v in L.values() if v["migration"] == "ambiguous"))
         # 종료 방식이 계보를 끊지 않는다 — 신민당은 1980 해산이지만 1967년 계보가 있다

@@ -92,6 +92,19 @@ def derive(reg: dict) -> dict:
 
         # ── 어떻게 끝났나 ────────────────────────────────────────────────
         ended, ewhy, eparts = None, "", []
+        # 분당체는 **모정당의 종료 원인이 아니다.** registry의 successors 한 필드가
+        # '개명 후·합당체·분당체'를 다 담고 있어서, 시점만 보면 모정당보다 먼저 생긴
+        # 분당체가 '이미 있던 정당' 조건에 걸려 absorption_into가 된다 —
+        # 민주당(1955)이 자기한테서 갈라져 나간 신민당(1960)에 흡수됐다고 나왔다.
+        # 자식 쪽 relation=split이고 이 노드를 전신으로 적었으면 갈라져 나간 것이다.
+        # 판정 신호로 legacy `relation`을 쓰지 않는다 — 그 필드가 생성·종료를 겸해서
+        # 여기까지 온 것이다. 대신 **날짜와 전신 기록**만 본다: 자식이 이 노드를
+        # 전신으로 적었고 이 노드가 살아 있는 동안 생겼으면 갈라져 나간 것이다.
+        # (formed_by가 split을 판정하는 조건과 같다 — 두 곳이 같은 근거를 쓴다.)
+        splits_off = [s for s in succs
+                      if d and name in (reg[s].get("predecessors") or [])
+                      and ym(reg[s].get("founded")) and ym(reg[s].get("founded")) < d]
+        succs = [s for s in succs if s not in splits_off]
         if not d:
             ended, ewhy = None, "현존"
         elif info.get("dissolved_bound") == "last_known_active":
@@ -99,6 +112,10 @@ def derive(reg: dict) -> dict:
             # 이걸 dissolution으로 읽으면 '모른다'가 '없어졌다'로 굳는다.
             ended, ewhy = "unknown", f"{d}까지 활동한 것만 확인됐다 — 소멸 시점 미상"
             cause = cause or "dissolution_date_unknown"
+        elif not succs and splits_off:
+            ended, eparts = "dissolution", []
+            ewhy = (f"후신 기록이 없다 — {'·'.join(splits_off)}은 갈라져 나간 것이지 "
+                    "이 당의 후신이 아니다")
         elif not succs:
             ended, ewhy = "dissolution", "후신 기록이 없다"
         elif roundtrip and set(succs) <= set(roundtrip):
