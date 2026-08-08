@@ -48,18 +48,40 @@ GENERATORS=(
   build_sitemap          # sitemap.xml·robots.txt (마지막 — 위 산출물을 훑는다)
 )
 
+# 커밋된 데이터만으로 결정되는 **파생물**. 위 GENERATORS와 달리 scripts/build 밖에
+# 있거나 인자를 요구해서 그동안 이 검사 밖에 있었다 — 입력만 바뀌고 출력이 안 바뀐
+# 상태를 아무도 못 잡았다. comparisons가 그랬고(204에 멈춰 있었다),
+# validation_21__20도 그랬다(한나라당 오귀속을 품은 채 낡아 있었다).
+# 외부에서 받아오는 fetch 스크립트는 대상이 아니다 — 네트워크가 답을 바꾼다.
+DERIVED=(
+  "scripts/normalize/party_lifecycle.py --write"      # lifecycle.json ← registry
+  "scripts/build/political_axes.py --write"           # political_axes.json ← registry·lifecycle
+  "scripts/build/family_vote_share.py"                # family_vote_share.json ← political_axes·results
+  "scripts/build/sync_satellites_js.py"               # assets/parties.js ← satellites.json
+  "scripts/normalize/validate_reaggregation.py 22 21" # reaggregated/validation_22__21.json
+  "scripts/normalize/validate_reaggregation.py 21 20" # reaggregated/validation_21__20.json
+)
+
 echo "생성기 ${#GENERATORS[@]}개 재실행"
 for g in "${GENERATORS[@]}"; do
   printf '  %-24s' "$g"
   $PY "scripts/build/$g.py" >/dev/null 2>&1 && echo "ok" || { echo "실패"; exit 1; }
 done
 
+echo "파생물 ${#DERIVED[@]}개 재실행"
+for cmd in "${DERIVED[@]}"; do
+  printf '  %-50s' "$cmd"
+  # shellcheck disable=SC2086
+  $PY $cmd >/dev/null 2>&1 && echo "ok" || { echo "실패"; exit 1; }
+done
+
 # 검사 대상은 **생성 산출물**이다. 새 스크립트를 추가하는 중이라 untracked 파일이
 # 있는 것은 정상이므로, 추적 중인 변경 + 생성 경로의 새 파일만 본다.
 OUT_PATHS=(person party region history polls archive share sitemap.xml robots.txt
            index.html elections.html
-           assets/person-index.json data/timeline.json
-           data/comparisons)
+           assets/person-index.json assets/parties.js data/timeline.json
+           data/comparisons data/parties/lifecycle.json data/parties/political_axes.json
+           data/parties/family_vote_share.json data/reaggregated)
 # **stage된 것은 통과**시킨다. 이 검사가 막으려는 것은 "커밋에 안 들어가는 산출물"이지
 # "새로 생긴 산출물"이 아니다. 새 생성기를 추가하는 커밋은 산출물이 HEAD에 없는 게
 # 당연한데, 그걸 실패로 보면 새 산출물을 **영원히** 커밋할 수 없다(add → 여전히 실패).
