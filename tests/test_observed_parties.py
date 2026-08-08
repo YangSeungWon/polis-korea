@@ -163,6 +163,11 @@ def name_votes(date: str, party: str) -> int:
     return total
 
 
+# name_fidelity를 먼저 읽는다 — 큐의 정식명이 그것과 어긋나면 안 된다.
+_fid_by_key = {(c["election_date"], c["stored"]): c["official"]
+               for c in json.loads((ROOT / "data/parties/name_fidelity.json")
+                                   .read_text(encoding="utf-8"))["cases"]}
+
 for _q in hom["unresolved"]:
     for _o in _q.get("occurrences") or []:
         # 해소 층이 이름을 옮긴 회차는 원자료에 다른 문자열이 적혀 있다
@@ -185,6 +190,23 @@ for _q in hom["unresolved"]:
     if _q.get("blocked_by"):
         ck(f'{_q["name"]}: 막힌 건에 확인 가능한 occurrence가 있다',
            bool(_q.get("occurrences")))
+    # ── 판정의 두 축이 섞이지 않는가 ──────────────────────────────────────
+    # resolved_to 하나가 '그 회차 정식명'과 'registry 노드'를 같이 담고 있었다.
+    # 그래서 registry에 없는 이름(한국기독당·기독사랑실천당…)이 노드 키인 척
+    # 네 회차에 들어가 있었다. ended_by·name_fidelity·dissolved에 이은 네 번째다.
+    for _o in _q.get("occurrences") or []:
+        _node = _o.get("resolved_to")
+        ck(f'{_q["name"]} {_o["election"]}: resolved_to는 registry 노드다',
+           _node is None or _node in reg, f"{_node}가 registry에 없다")
+        _off = _o.get("official_name")
+        _k = (_o["election_date"], _o.get("stored_as") or _q["name"])
+        _case = _fid_by_key.get(_k)
+        if _off and _case:
+            ck(f'{_q["name"]} {_o["election"]}: 정식명이 name_fidelity와 같다',
+               _off == _case, f"큐 {_off} vs fidelity {_case}")
+        if _o.get("status") == "confirmed":
+            ck(f'{_q["name"]} {_o["election"]}: confirmed면 둘 중 하나는 채워져 있다',
+               bool(_off or _node))
     _open = [o for o in (_q.get("occurrences") or []) if o.get("status") == "open"]
     if _open:
         ck(f'{_q["name"]}: 미해소 회차는 resolved_to를 비워 둔다',

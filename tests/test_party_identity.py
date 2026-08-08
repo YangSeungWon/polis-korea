@@ -413,6 +413,21 @@ def main() -> int:
     _applied = [c for c in _fid["cases"] if c["status"] == "applied"]
     _defer = [c for c in _fid["cases"] if c["status"] == "deferred"]
     ck(f"적용 대상이 있다 ({len(_applied)}건)", bool(_applied))
+    # 한 회차 안에서 문자열↔정식명은 1:1이어야 한다. 한 문자열이 두 정식명으로
+    # 가면 어느 쪽인지 정할 수 없고, 두 문자열이 한 정식명으로 가면 원자료에서
+    # 별개였던 행이 합쳐진다 — 2016년 민주당이 정확히 뒤쪽이었다.
+    _by_date = collections.defaultdict(list)
+    for c in _applied:
+        _by_date[c["election_date"]].append((c["stored"], c["official"]))
+    for _d, _ps in sorted(_by_date.items()):
+        _st = collections.Counter(s for s, _ in _ps)
+        _of = collections.Counter(o for _, o in _ps)
+        ck(f"{_d}: 한 문자열이 한 정식명으로만 간다",
+           all(v == 1 for v in _st.values()),
+           str([k for k, v in _st.items() if v > 1]))
+        ck(f"{_d}: 두 문자열이 한 정식명으로 합쳐지지 않는다",
+           all(v == 1 for v in _of.values()),
+           str([k for k, v in _of.items() if v > 1]))
     for c in _applied:
         # 이 층이 하는 일은 **문자열 → 그 회차 정식명**까지다. 그 뒤 시기 분기가
         # 정식명을 재사용 이름으로 보고 노드를 고르는 건 다음 층의 일이다.
