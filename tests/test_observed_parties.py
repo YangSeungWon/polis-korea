@@ -13,6 +13,7 @@ observed.json = 결과에 이름이 나온 것. 여기 있다고 계보를 아�
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -167,6 +168,33 @@ def name_votes(date: str, party: str) -> int:
 _fid_by_key = {(c["election_date"], c["stored"]): c["official"]
                for c in json.loads((ROOT / "data/parties/name_fidelity.json")
                                    .read_text(encoding="utf-8"))["cases"]}
+
+# ③-0 권위 문서의 수치가 실제와 맞는가
+#
+# docs/party-identity.md는 이 모델의 정본이다. 거기 적힌 수치가 낡으면 문서가
+# 조용히 거짓말을 한다 — 이 저장소가 반복해서 겪은 '문장으로만 적어 두면 낡는다'
+# 그대로다. 구조를 말하는 수치만 묶어 둔다(표 수치는 문서 안 날짜 기준).
+_DOC = ROOT / "docs/party-identity.md"
+if _DOC.exists():
+    _t = _DOC.read_text(encoding="utf-8")
+    _fid_all = json.loads((ROOT / "data/parties/name_fidelity.json")
+                          .read_text(encoding="utf-8"))["cases"]
+    _live = {
+        "registry": len(reg),
+        "observed": len(rows),
+        "queue": len(hom["unresolved"]),
+        "applied": sum(1 for c in _fid_all if c.get("status") == "applied"),
+        "outside": len([r for r in rows if r.get("outside_registry_interval")]),
+    }
+    for _key, _pat in [("registry", r"\| registry \| 107종 \| \*\*(\d+)종\*\* \|"),
+                       ("observed", r"\| observed \| 321종 \| (\d+)종 \|"),
+                       ("queue", r"\| homonym 큐 \| 10종 \| (\d+)종 \|"),
+                       ("applied", r"applied 11 · deferred 1 \| \*\*applied (\d+)"),
+                       ("outside", r"\| \*\*(\d+)종 · [\d,]+표\*\* \|")]:
+        _m = re.search(_pat, _t)
+        ck(f"docs/party-identity.md의 {_key} 수치가 실제와 같다",
+           _m is not None and int(_m.group(1)) == _live[_key],
+           f"문서 {_m.group(1) if _m else '없음'} vs 실제 {_live[_key]}")
 
 for _q in hom["unresolved"]:
     for _o in _q.get("occurrences") or []:
