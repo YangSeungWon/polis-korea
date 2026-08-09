@@ -324,7 +324,7 @@ init();
 (function () {
   const host = document.getElementById('dash-election-dir');
   if (!host || !window.ElectionTimeline) { if (host) host.remove(); return; }
-  fetch('data/archive_index.json').then((r) => (r.ok ? r.json() : [])).then((list) => {
+  getJson('data/archive_index.json', []).then((list) => {
     if (!Array.isArray(list) || !list.length) { host.remove(); return; }
     window.ElectionTimeline.render(host, list, {
       hrefFn: (e) => `/archive/${e.slug}/`,

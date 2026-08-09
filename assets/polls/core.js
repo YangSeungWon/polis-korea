@@ -97,20 +97,11 @@ function setPhase() {
 }
 
 async function loadData() {
-  try {
-    const r = await fetch(POLL_ELECTION.polls_path);
-    if (!r.ok) throw new Error('데이터 없음');
-    const d = await r.json();
-    // catch는 fetch **거부**만 잡는다. 본문이 `null`이면 r.json()은 null로 정상
-    // resolve해 그대로 통과하고, 아래 `state.data.polls`가 'of null'로 터진다.
-    // climate.js가 같은 자리에서 배운 것인데 여기엔 안 들어와 있었다 —
-    // UI 감사에서 간헐적으로 났고 재현이 어려워 플레이키로 넘길 뻔했다.
-    state.data = (d && typeof d === 'object') ? d : null;
-    if (!state.data) throw new Error('본문이 객체가 아니다');
-    if (!Array.isArray(state.data.polls)) state.data.polls = [];
-  } catch (e) {
-    state.data = { _meta: {}, polls: [] };
-  }
+  // getJson이 상태·본문 모양·거부를 한 자리에서 막는다(utils.js). 예전엔 여기서
+  // `state.data = await r.json()`만 해서, 본문이 null이면 아래 state.data.polls가
+  // 'of null'로 터졌다 — UI 감사에서 두 번 플레이키로 넘어간 오류다.
+  state.data = await getJson(POLL_ELECTION.polls_path, { _meta: {}, polls: [] });
+  if (!Array.isArray(state.data.polls)) state.data.polls = [];
   // NEC 등록 후보 명부 (있으면 산점도에 진한/옅은 구분). 경로 없는 회차는 생략.
   state.roster = null;
   if (POLL_ELECTION.roster_path) {

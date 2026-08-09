@@ -182,51 +182,42 @@ def check_comparison_surfaced():
 
 
 def check_json_shape_guards() -> None:
-    """fetch(...).json()의 **모양 있는 fallback**이 본문 null을 거르는가.
+    """모양 있는 fallback으로 JSON을 읽는 곳이 **getJson을 거치는가**.
 
     catch는 fetch 거부만 잡는다. 본문이 `null`이면 r.json()은 null로 정상
-    resolve해 `r.ok ? r.json() : {폴백}`을 그대로 통과하고, 소비하는 쪽에서
+    resolve해 `r.ok ? r.json() : {폴백}`을 그대로 통과하고, 쓰는 쪽에서
     'Cannot read properties of null'로 터진다.
 
-    이 종류가 세 번 났다: climate.js가 먼저 겪고 주석까지 남겼는데 같은 묶음의
-    core.js엔 안 들어와 있었고, UI 감사에서 두 번은 플레이키로 넘어갔다.
-    한쪽만 배우지 않도록 전수로 건다.
+    이 종류가 세 번 났다 — climate.js가 겪고 주석까지 남겼는데 같은 묶음의
+    core.js는 몰랐고, UI 감사에서 두 번은 플레이키로 넘어갔다. 각자 인라인으로
+    막으면 또 한쪽만 배운다. utils.js의 getJson 한 자리로 모으고, 그걸 우회하는
+    코드가 생기는지 여기서 본다.
+
+    검사 대상은 **모양을 기대하는 호출**뿐이다. null 폴백은 '모르는 채로 둔다'라
+    모양을 따지지 않는다.
     """
-    print("\n[본문 null] 모양 있는 fallback이 본문 null을 거르는가")
+    print("\n[본문 null] 모양 있는 fallback은 getJson을 거친다")
     import re as _r
-    risky = []
+    raw = []
     for p in sorted((ROOT / "assets").rglob("*.js")):
-        lines = p.read_text(encoding="utf-8", errors="replace").split("\n")
-        for i, ln in enumerate(lines, 1):
+        if p.name == "utils.js":
+            continue          # getJson 자신이 사는 곳
+        for i, ln in enumerate(p.read_text(encoding="utf-8", errors="replace")
+                               .split("\n"), 1):
             if ".json()" not in ln:
                 continue
-            # fallback이 배열/객체 리터럴이면 **모양을 기대**하는 코드다
-            fb = (_r.findall(r"json\(\)\s*:\s*(\[\]|\{[^}]*\})", ln)
-                  + _r.findall(r"catch\(\(\)\s*=>\s*\(?(\[\]|\{[^}]*\})", ln))
-            if not fb:
-                continue
-            # **같은 체인만** 본다. 앞뒤 몇 줄을 통째로 보면 이웃 호출의 가드가
-            # 이 줄을 덮어 준다 — 실제로 lens-switcher에서 가드 하나를 지워도
-            # 옆 줄 것 때문에 통과했다.
-            chain = [ln]
-            for nxt in lines[i:i + 4]:
-                if nxt.strip().startswith("."):
-                    chain.append(nxt)
-                    continue
-                # 체인의 마지막이 콜백을 열었으면 그 **본문 첫 줄**까지가 같은
-                # 체인이다 — 가드가 거기 있는 게 정상이다(`.then((list) => {`
-                # 다음 줄의 `if (!Array.isArray(list))`). 안 보면 오탐이 난다.
-                if chain[-1].rstrip().endswith("{"):
-                    chain.append(nxt)
-                    if not nxt.rstrip().endswith("{"):
-                        break
-                    continue
-                break
-            ctx = "\n".join(chain)
-            if ("typeof" in ctx and "object" in ctx) or "Array.isArray" in ctx:
-                continue
-            risky.append(f"{p.relative_to(ROOT)}:{i}")
-    ck(f"모양 가드가 없는 곳이 없다 ({len(risky)}곳)", not risky, str(risky[:6]))
+            if (_r.search(r"json\(\)\s*:\s*(\[\]|\{[^}]*\})", ln)
+                    or _r.search(r"catch\(\(\)\s*=>\s*\(?(\[\]|\{[^}]*\})", ln)):
+                raw.append(f"{p.relative_to(ROOT)}:{i}")
+    ck(f"getJson을 우회하는 곳이 없다 ({len(raw)}곳)", not raw, str(raw[:6]))
+    # 헬퍼가 실제로 쓰이고 있는가 — 0이면 검사가 죽은 것이다
+    used = sum(1 for p in (ROOT / "assets").rglob("*.js") if p.name != "utils.js"
+               and "getJson(" in p.read_text(encoding="utf-8", errors="replace"))
+    ck(f"getJson이 실제로 쓰인다 ({used}개 파일)", used >= 5, str(used))
+    # 헬퍼가 모양을 정말 따지는가 — 폴백 타입별 분기가 있어야 한다
+    _u = (ROOT / "assets/utils.js").read_text(encoding="utf-8")
+    ck("getJson이 fallback 모양으로 검사한다",
+       "Array.isArray(fallback)" in _u and "typeof fallback === 'object'" in _u)
 
 
 def main() -> int:

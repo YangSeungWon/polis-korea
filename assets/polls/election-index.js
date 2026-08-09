@@ -7,8 +7,7 @@
   const sec = host.closest('.poll-index-sec');
   const cur = (window.__INITIAL_STATE__ && window.__INITIAL_STATE__.election
     && window.__INITIAL_STATE__.election.slug) || null;
-  fetch('data/polls/election_index.json')
-    .then((r) => (r.ok ? r.json() : []))
+  getJson('data/polls/election_index.json', [])
     .then((list) => {
       if (!Array.isArray(list) || !list.length || !window.ElectionTimeline) { sec && sec.remove(); return; }
       window.ElectionTimeline.render(host, list, {

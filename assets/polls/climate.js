@@ -10,13 +10,8 @@
   async function loadData() {
     if (_cache) return _cache;
     const APPR = ['gallup', 'realmeter', 'nbs', 'hrc', 'general'].map((s) => `data/polls/approval_${s}.json`);
-    // catch는 fetch **거부**만 잡는다. 본문이 `null`이면 r.json()은 null로 정상 resolve해
-    // 그대로 통과하고, 다음 줄의 `etc.polls`가 터진다 — 전체 UI 감사에서 간헐적으로 났다.
-    // 상태 코드도 봐야 한다: 404가 JSON을 돌려주면 그게 데이터가 된다.
-    const getJson = (f, fallback) => fetch(f)
-      .then((r) => (r.ok ? r.json() : null))
-      .catch(() => null)
-      .then((d) => (d && typeof d === 'object' ? d : fallback));
+    // 상태·본문 모양·거부는 utils.js의 getJson이 한 자리에서 막는다. 여기 있던
+    // 같은 로직을 그리로 옮겼다 — 한 곳만 배우면 다른 곳이 같은 자리에서 터진다.
     const [apprAll, etc] = await Promise.all([
       Promise.all(APPR.map((f) => getJson(f, { records: [] }))),
       getJson('data/polls/aggregated_etc.json', { polls: [] }),

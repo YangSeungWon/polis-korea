@@ -35,8 +35,7 @@
     const files = ['data/polls/aggregated_etc.json', 'data/polls/aggregated_candidates.json'];
     try {
       const parts = await Promise.all(files.map((f) =>
-        fetch(f).then((r) => (r.ok ? r.json() : { polls: [] })).catch(() => ({ polls: [] }))
-      .then((d) => (d && typeof d === 'object' ? d : { polls: [] }))));
+        getJson(f, { polls: [] })));
       all = parts.flatMap((d) => d.polls || [])
         .filter((p) => p.period_end && (p.candidates || []).length)
         .sort((a, b) => (b.period_end || '').localeCompare(a.period_end || ''));

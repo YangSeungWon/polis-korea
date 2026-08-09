@@ -540,3 +540,35 @@ function buildPartyTrendSVG(polls, opts) {
   }
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${grid}${xax}${body}</svg>`;
 }
+
+
+// === JSON 한 번 읽기 — 상태·본문 모양·거부를 한 자리에서 막는다 ===
+//
+// `r.ok ? r.json() : { records: [] }`는 **모양을 기대한다는 선언**인데, catch는
+// fetch 거부만 잡는다. 본문이 `null`이면 r.json()은 null로 정상 resolve해 그대로
+// 통과하고, 쓰는 쪽에서 'Cannot read properties of null'로 터진다.
+//
+// 이 종류가 세 번 났다: climate.js가 겪고 주석까지 남겼는데 같은 묶음의 core.js는
+// 몰랐고, UI 감사에서 두 번은 플레이키로 넘어갔다. 한쪽만 배우지 않도록 한 자리로 모은다.
+//
+// **검사 기준은 fallback의 모양이다.** 배열을 폴백으로 줬으면 배열이어야 하고,
+// 객체를 줬으면 객체여야 한다. null 폴백이면 모양을 안 따진다(모르는 채로 둔다).
+//   getJson('a.json', [])            → 항상 배열
+//   getJson('b.json', { polls: [] }) → 항상 객체
+//   getJson('c.json')                → 그대로 또는 null
+async function getJson(url, fallback = null, init) {
+  const shaped = Array.isArray(fallback)
+    ? (d) => Array.isArray(d)
+    : (fallback && typeof fallback === 'object')
+      ? (d) => !!d && typeof d === 'object'
+      : () => true;
+  try {
+    const r = await fetch(url, init);
+    if (!r.ok) return fallback;
+    const d = await r.json();
+    return shaped(d) ? d : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+if (typeof window !== 'undefined') window.getJson = getJson;

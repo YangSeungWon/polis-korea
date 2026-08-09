@@ -84,8 +84,7 @@
         ? fetch(meta.exitPollPath || `data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null).catch(() => null)
         : Promise.resolve(null)),
       // /polls/{id}/ 페이지 존재 여부 — 그 회차만 폴 CTA 노출(없는 회차 링크 404 방지).
-      fetch('data/polls/election_index.json').then((r) => r.ok ? r.json() : []).catch(() => [])
-        .then((d) => (Array.isArray(d) ? d : [])),
+      getJson('data/polls/election_index.json', []),
     ]);
     ctx.polls = polls;
     ctx.byReasons = byReasons;
