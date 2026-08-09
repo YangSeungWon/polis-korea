@@ -22,7 +22,8 @@ function mdOf(d) {
   const [ev, el, tl] = await Promise.all([
     fetch('data/history_events.json').then((r) => r.json()),
     fetch('data/elections.json').then((r) => r.json()),
-    fetch('data/timeline.json').then((r) => r.json()).catch(() => ({ rounds: [] })),
+    fetch('data/timeline.json').then((r) => r.json()).catch(() => ({ rounds: [] }))
+      .then((d) => (d && typeof d === 'object' ? d : { rounds: [] })),
   ]);
   // 총선=최다의석당, 지선=최다 광역단체장 당 + 결과 바. (대선은 후보 득표율 바)
   // 4대 대선처럼 같은 n에 둘(3·15 무효·윤보선 간선)이면 flag로 구분.

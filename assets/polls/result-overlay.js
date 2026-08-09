@@ -14,7 +14,8 @@
         const paths = [POLL_ELECTION.results_path];
         if (POLL_ELECTION.results_sigungu_path) paths.push(POLL_ELECTION.results_sigungu_path);
         const parts = await Promise.all(paths.map((p) =>
-          fetch(p).then((r) => (r.ok ? r.json() : { races: [] })).catch(() => ({ races: [] }))));
+          fetch(p).then((r) => (r.ok ? r.json() : { races: [] })).catch(() => ({ races: [] }))
+      .then((d) => (d && typeof d === 'object' ? d : { races: [] }))));
         const races = parts.flatMap((d) => d.races || []);
         if (races.length) state.actualMaps = PollAdapter.localActualMaps(races);
       } catch (e) {}

@@ -19,6 +19,7 @@
     if (indexPromise) return indexPromise;
     indexPromise = fetch('/data/elections/index.json', { cache: 'default' })
       .then((r) => r.ok ? r.json() : { active: [], archive: [] })
+    .then((d) => (d && typeof d === 'object' ? d : { active: [], archive: [] }))
       .catch(() => ({ active: [], archive: [] }));
     return indexPromise;
   }

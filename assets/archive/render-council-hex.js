@@ -139,7 +139,8 @@
         .then((r) => r.json()).then((m) => m[String(n)]).catch(() => null);
       if (period && period.length) return period;
     }
-    return await fetch('data/geo/sigungu_hex.json').then((r) => r.json()).catch(() => []);
+    return await fetch('data/geo/sigungu_hex.json').then((r) => r.json()).catch(() => [])
+      .then((d) => (Array.isArray(d) ? d : []));
   }
 
   // 데이터 키 정규화 — 통합특별시·과거 행정명 매핑

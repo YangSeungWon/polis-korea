@@ -181,11 +181,60 @@ def check_comparison_surfaced():
     ck("비교가 있는 회차는 첫 화면에도 요약이 있다", not missing_ui, str(missing_ui[:4]))
 
 
+def check_json_shape_guards() -> None:
+    """fetch(...).json()의 **모양 있는 fallback**이 본문 null을 거르는가.
+
+    catch는 fetch 거부만 잡는다. 본문이 `null`이면 r.json()은 null로 정상
+    resolve해 `r.ok ? r.json() : {폴백}`을 그대로 통과하고, 소비하는 쪽에서
+    'Cannot read properties of null'로 터진다.
+
+    이 종류가 세 번 났다: climate.js가 먼저 겪고 주석까지 남겼는데 같은 묶음의
+    core.js엔 안 들어와 있었고, UI 감사에서 두 번은 플레이키로 넘어갔다.
+    한쪽만 배우지 않도록 전수로 건다.
+    """
+    print("\n[본문 null] 모양 있는 fallback이 본문 null을 거르는가")
+    import re as _r
+    risky = []
+    for p in sorted((ROOT / "assets").rglob("*.js")):
+        lines = p.read_text(encoding="utf-8", errors="replace").split("\n")
+        for i, ln in enumerate(lines, 1):
+            if ".json()" not in ln:
+                continue
+            # fallback이 배열/객체 리터럴이면 **모양을 기대**하는 코드다
+            fb = (_r.findall(r"json\(\)\s*:\s*(\[\]|\{[^}]*\})", ln)
+                  + _r.findall(r"catch\(\(\)\s*=>\s*\(?(\[\]|\{[^}]*\})", ln))
+            if not fb:
+                continue
+            # **같은 체인만** 본다. 앞뒤 몇 줄을 통째로 보면 이웃 호출의 가드가
+            # 이 줄을 덮어 준다 — 실제로 lens-switcher에서 가드 하나를 지워도
+            # 옆 줄 것 때문에 통과했다.
+            chain = [ln]
+            for nxt in lines[i:i + 4]:
+                if nxt.strip().startswith("."):
+                    chain.append(nxt)
+                    continue
+                # 체인의 마지막이 콜백을 열었으면 그 **본문 첫 줄**까지가 같은
+                # 체인이다 — 가드가 거기 있는 게 정상이다(`.then((list) => {`
+                # 다음 줄의 `if (!Array.isArray(list))`). 안 보면 오탐이 난다.
+                if chain[-1].rstrip().endswith("{"):
+                    chain.append(nxt)
+                    if not nxt.rstrip().endswith("{"):
+                        break
+                    continue
+                break
+            ctx = "\n".join(chain)
+            if ("typeof" in ctx and "object" in ctx) or "Array.isArray" in ctx:
+                continue
+            risky.append(f"{p.relative_to(ROOT)}:{i}")
+    ck(f"모양 가드가 없는 곳이 없다 ({len(risky)}곳)", not risky, str(risky[:6]))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
     check_stale_workarounds()
     check_comparison_surfaced()
+    check_json_shape_guards()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

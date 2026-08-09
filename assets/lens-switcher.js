@@ -17,11 +17,14 @@
   async function gates() {
     if (_idx && _man && _routes) return { idx: _idx, man: _man, routes: _routes };
     const [idx, man, routes] = await Promise.all([
-      fetch('data/polls/election_index.json').then((r) => (r.ok ? r.json() : [])).catch(() => []),
-      fetch('data/results/manifest.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      fetch('data/polls/election_index.json').then((r) => (r.ok ? r.json() : [])).catch(() => [])
+      .then((d) => (Array.isArray(d) ? d : [])),
+      fetch('data/results/manifest.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then((d) => (d && typeof d === 'object' ? d : {})),
       // 실제로 생성된 경로. 추측해서 조립하면 404가 난다 — 지선은
       // /history/local/{n}/ 자체가 없고 직위 세그먼트까지 있어야 한다.
-      fetch('data/results/history_routes.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+      fetch('data/results/history_routes.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then((d) => (d && typeof d === 'object' ? d : {})),
     ]);
     _idx = idx; _man = man; _routes = routes;
     return { idx, man, routes };

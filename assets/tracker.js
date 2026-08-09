@@ -474,8 +474,10 @@
     const APPR_FILES = ['gallup', 'realmeter', 'nbs', 'hrc', 'general']
       .map((s) => `data/polls/approval_${s}.json`);
     const all = await Promise.all([
-      ...APPR_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ records: [] }))),
-      ...AGG_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ polls: [] }))),
+      ...APPR_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ records: [] }))
+      .then((d) => (d && typeof d === 'object' ? d : { records: [] }))),
+      ...AGG_FILES.map((f) => fetch(f).then((r) => r.json()).catch(() => ({ polls: [] }))
+      .then((d) => (d && typeof d === 'object' ? d : { polls: [] }))),
     ]);
     const apprData = all.slice(0, APPR_FILES.length);
     const aggs = all.slice(APPR_FILES.length);
