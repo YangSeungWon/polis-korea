@@ -250,10 +250,17 @@ for _q in hom["unresolved"]:
 # 판정 근거는 여기서도 **그 회차 비례 득표수**다 — 숫자가 어긋나면 판정을 다시 봐야 한다.
 _fid = json.loads((ROOT / "data/parties/name_fidelity.json").read_text(encoding="utf-8"))
 for _c in _fid["cases"]:
-    _actual = prop_votes(_c["election_date"], _c["stored"])
+    # 비례에 안 나온 정당은 비례 득표수를 지문으로 못 쓴다 — 2016년 친반국민대통합은
+    # 지역구 1명뿐이다. 큐와 같은 지문 유형을 여기서도 받는다.
+    if "district_votes" in _c:
+        _actual = dist_votes(_c["election_date"], _c["district"].split()[-1],
+                             _c["candidate"])
+        _want = _c["district_votes"]
+    else:
+        _actual = prop_votes(_c["election_date"], _c["stored"])
+        _want = _c["proportional_votes"]
     ck(f'{_c["election"]} {_c["stored"]}→{_c["official"]}: 득표가 원자료와 같다',
-       _actual == _c["proportional_votes"],
-       f'기록 {_c["proportional_votes"]:,} vs 원자료 {_actual:,}')
+       _actual == _want, f'기록 {_want:,} vs 원자료 {_actual:,}')
     ck(f'{_c["election"]} {_c["stored"]}: 저장 문자열과 정식명이 실제로 다르다',
        _c["stored"] != _c["official"])
 ck("충실도 유형 어휘가 정의돼 있다",

@@ -13,7 +13,7 @@
 | registry | `data/parties/registry.json` | **사람이 확인한** 정당의 정식명·시기·계보 | 125종 |
 | observed | `data/parties/observed.json` | 결과에 이름이 나온 것 (생성물) | 341종 |
 | homonym 큐 | `data/parties/known_homonyms.json` | 아직 못 가른 동명 이름 | 10종 |
-| name fidelity | `data/parties/name_fidelity.json` | 저장 문자열 ↔ 그 회차 정식명 | applied 13 |
+| name fidelity | `data/parties/name_fidelity.json` | 저장 문자열 ↔ 그 회차 정식명 | applied 16 |
 
 **observed는 생성물이다. 손으로 고치지 않는다.** registry에 있다는 것과 결과에
 나왔다는 것은 다른 자격이다 — 관측이 registry 등재 자격을 주지 않는다.
@@ -130,7 +130,7 @@ absorbed      흡수한 정당 — 계열을 전파하지 않는다
 | registry | 107종 | **125종** |
 | observed | 321종 | 341종 |
 | 시기 구간 밖 관측 | 18종 · 477,563,623표 | **5종 · 51,332,076표** |
-| name fidelity | applied 11 · deferred 1 | **applied 13 · deferred 0** |
+| name fidelity | applied 11 · deferred 1 | **applied 16 · deferred 0** |
 | homonym 큐 | 10종 | 10종 |
 | `ended_by=absorption_into` | 19종 | **11종** (오분류 9건 정정) |
 | 지선 광역비례 득표 | 0표 | **90,915,117표** (5~8회 수집) |
@@ -163,6 +163,21 @@ viewDetail.do?cbIdx=..&bcIdx=..&fileNo=1   →  src="/viewer/skin_view/doc.html?
 모르므로 `founded_bound`/`dissolved_bound`로 표시한다. 경계가 근사값이면 시점으로
 개명·분당을 못 가르므로 `formed_by`는 `ambiguous(bounded_dates)`가 된다 — 날짜만
 보면 '전신이 존속 중'으로 읽혀 개명이 분당이 된다.
+
+### 스냅샷을 시계열로 모으면 '언제 바뀌었는지'가 보인다
+
+한 장은 그 날짜의 사실만 준다. 여러 장을 겹치면 **변화**가 보인다. 그래서
+`scripts/fetch/fetch_nec_party_snapshots.py`로 모아 둔다
+(`data/raw/nec_party_snapshots.json`, 184장 · 2010-01~2017-01).
+
+    2010-01  기독사랑실천당(기독당)
+    2011-09  기독사랑실천당(기독당) · 기독자유민주당(기민당)
+    2012-03  기독자유민주당(**기독당**)      ← 합당(3-15) 뒤 약칭이 넘어갔다
+    2012-04  (없음)                          ← 총선 뒤 등록취소
+
+**약칭 판정은 그 선거일 직전 스냅샷을 쓴다.** 20대 총선은 2016-04-08 스냅샷,
+19대는 2012-03-21 스냅샷이다. 시리즈는 2010~2012(cbIdx=1188)와
+2016~2017(cbIdx=1086)에만 있다 — 2020년 이후엔 개별 공고만 올라온다.
 
 **스냅샷 날짜를 반드시 본다.** 2012-03-14 문서에는 기독사랑실천당(기독당)과
 기독자유민주당(기민당)이 따로 있는데, 두 당은 **다음 날인 2012-03-15에 합당**했다.
