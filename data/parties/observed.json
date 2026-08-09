@@ -21,7 +21,7 @@
  },
  "_order": "votes desc — 영향이 큰 것부터 확인한다",
  "_outside_registry_interval": "registry 노드의 생존 구간을 벗어난 관측이 섞인 행에 붙는다. 링크를 끊지는 않는다 — 그 이름의 관측 **일부**는 맞기 때문이다(한나라당 1997~2012은 맞고 2016~2026이 다른 정당이다). 행을 시기별로 쪼개려면 registry에 시기 노드가 있어야 하고, 그건 1차 자료로 하나씩 확인할 일이다. 그때까지 사실을 드러내 둔다.",
- "n": 339,
+ "n": 341,
  "parties": [
   {
    "name": "더불어민주당",
@@ -911,17 +911,6 @@
    "status": "registry"
   },
   {
-   "name": "친박연합",
-   "elections": 3,
-   "candidates": 30,
-   "votes": 716049,
-   "wins": 2,
-   "first": "2010-06-02",
-   "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
    "name": "민주국민당(2000)",
    "elections": 2,
    "candidates": 132,
@@ -1153,6 +1142,17 @@
    "status": "needs_disambiguation"
   },
   {
+   "name": "친박연합",
+   "elections": 2,
+   "candidates": 8,
+   "votes": 420951,
+   "wins": 2,
+   "first": "2010-06-02",
+   "last": "2011-10-26",
+   "registry_id": "친박연합",
+   "status": "registry"
+  },
+  {
    "name": "새누리당(2017)",
    "elections": 5,
    "candidates": 74,
@@ -1227,6 +1227,17 @@
    "first": "2004-04-15",
    "last": "2004-04-15",
    "registry_id": "국민통합21",
+   "status": "registry"
+  },
+  {
+   "name": "국가재건친박연합",
+   "elections": 1,
+   "candidates": 22,
+   "votes": 295098,
+   "wins": 0,
+   "first": "2012-04-11",
+   "last": "2012-04-11",
+   "registry_id": "국가재건친박연합",
    "status": "registry"
   },
   {
@@ -1721,24 +1732,6 @@
    "status": "unresolved"
   },
   {
-   "name": "통일당",
-   "elections": 4,
-   "candidates": 18,
-   "votes": 97769,
-   "wins": 3,
-   "first": "1958-05-02",
-   "last": "2010-07-28",
-   "registry_id": "통일당",
-   "status": "registry",
-   "outside_registry_interval": {
-    "node_span": "1958-01~1961-12",
-    "observed_span": "1958-05~2010-07",
-    "months_before": 0,
-    "months_after": 583,
-    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
-   }
-  },
-  {
    "name": "한국경제당",
    "elections": 1,
    "candidates": 18,
@@ -1748,6 +1741,24 @@
    "last": "2020-04-15",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "통일당",
+   "elections": 3,
+   "candidates": 16,
+   "votes": 97577,
+   "wins": 3,
+   "first": "1958-05-02",
+   "last": "2008-04-09",
+   "registry_id": "통일당",
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "1958-01~1961-12",
+    "observed_span": "1958-05~2008-04",
+    "months_before": 0,
+    "months_after": 556,
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "한주의통일한국당",
@@ -3680,6 +3691,17 @@
    "last": "1950-05-30",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "통일당(2008)",
+   "elections": 1,
+   "candidates": 2,
+   "votes": 192,
+   "wins": 0,
+   "first": "2010-07-28",
+   "last": "2010-07-28",
+   "registry_id": "통일당(2008)",
+   "status": "registry"
   },
   {
    "name": "국민의 힘",

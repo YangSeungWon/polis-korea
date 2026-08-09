@@ -76,7 +76,17 @@ def derive(reg: dict) -> dict:
             # 전신이 후신 창당 시점에 해산했는가 — 끊김 없이 이어졌다는 뜻
             cont = [p for p in preds if f and ym(reg[p].get("dissolved")) == f]
             alive = [p for p in preds if p not in cont]
-            if len(preds) == 1 and cont:
+            # **경계가 근사값이면 시점으로 판정할 수 없다.** 선관위 등록현황 스냅샷
+            # 사이에 개명이 일어나면 구간만 알고 날짜는 모른다(founded_bound /
+            # dissolved_bound). 그걸 모르고 날짜만 보면 '전신이 존속 중'으로 읽혀
+            # 개명이 split이 된다 — 통일당(2008)→민주통일당(2008)이 그랬다.
+            bounded = bool(info.get("founded_bound")) or any(
+                reg[p].get("dissolved_bound") for p in preds)
+            if bounded and len(preds) == 1:
+                formed, fparts, cause = "ambiguous", preds, "bounded_dates"
+                fwhy = (f"{preds[0]}과의 시점 관계를 확정할 수 없다 — 한쪽 경계가 "
+                        "'거기까지만 안다'라서 개명인지 분당인지 날짜로 못 가른다")
+            elif len(preds) == 1 and cont:
                 formed, fparts = "rename", preds
                 fwhy = f"{preds[0]}이 {f}에 해산하고 같은 달에 생겼다"
             elif len(preds) == 1 and alive:

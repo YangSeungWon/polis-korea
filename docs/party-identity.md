@@ -10,10 +10,10 @@
 
 | 층 | 파일 | 답하는 질문 | 규모 |
 |---|---|---|---|
-| registry | `data/parties/registry.json` | **사람이 확인한** 정당의 정식명·시기·계보 | 122종 |
-| observed | `data/parties/observed.json` | 결과에 이름이 나온 것 (생성물) | 339종 |
+| registry | `data/parties/registry.json` | **사람이 확인한** 정당의 정식명·시기·계보 | 125종 |
+| observed | `data/parties/observed.json` | 결과에 이름이 나온 것 (생성물) | 341종 |
 | homonym 큐 | `data/parties/known_homonyms.json` | 아직 못 가른 동명 이름 | 10종 |
-| name fidelity | `data/parties/name_fidelity.json` | 저장 문자열 ↔ 그 회차 정식명 | applied 12 |
+| name fidelity | `data/parties/name_fidelity.json` | 저장 문자열 ↔ 그 회차 정식명 | applied 13 |
 
 **observed는 생성물이다. 손으로 고치지 않는다.** registry에 있다는 것과 결과에
 나왔다는 것은 다른 자격이다 — 관측이 registry 등재 자격을 주지 않는다.
@@ -60,6 +60,7 @@ registry 등재는 **1차 자료 최소 하나**를 요구한다. 선관위 정�
 | `relation` | 어떻게 생겼나 ↔ 어떻게 끝났나 | `formed_by` · `ended_by` (lifecycle.json) |
 | `ended_by` | 종료 ↔ 이름 복귀 | `temporary_rename` 추가 |
 | `dissolved` | 소멸했다 ↔ 거기까지만 안다 | `dissolved_bound: last_known_active` |
+| `founded` | 시작했다 ↔ 거기서부터 안다 | `founded_bound: first_known_active` |
 | `resolved_to` | 그 회차 정식명 ↔ registry 노드 | `official_name` · `resolved_to` |
 
 `dissolved_bound`가 필요했던 이유가 전형적이다. 국민회는 1951년에 여당 지위를
@@ -126,10 +127,10 @@ absorbed      흡수한 정당 — 계열을 전파하지 않는다
 
 | | 시작 | 지금 |
 |---|---|---|
-| registry | 107종 | **122종** |
-| observed | 321종 | 339종 |
-| 시기 구간 밖 관측 | 18종 · 477,563,623표 | **5종 · 51,332,268표** |
-| name fidelity | applied 11 · deferred 1 | **applied 12 · deferred 0** |
+| registry | 107종 | **125종** |
+| observed | 321종 | 341종 |
+| 시기 구간 밖 관측 | 18종 · 477,563,623표 | **5종 · 51,332,076표** |
+| name fidelity | applied 11 · deferred 1 | **applied 13 · deferred 0** |
 | homonym 큐 | 10종 | 10종 |
 | `ended_by=absorption_into` | 19종 | **11종** (오분류 9건 정정) |
 | 지선 광역비례 득표 | 0표 | **90,915,117표** (5~8회 수집) |
@@ -137,7 +138,7 @@ absorbed      흡수한 정당 — 계열을 전파하지 않는다
 
 구간 밖 5종 중 셋은 자료가 끊긴 것(사회당 1981·통일당 2008·민중당 1948)이고
 둘은 NEC의 소급 당적(민주정의당 1980·대한청년단 1948)이라 측정만 하고 정본화하지
-않는다. 남은 51,332,268표의 **99.4%(51,013,582)가 그 소급 당적 한 건**이다.
+않는다. 남은 51,332,076표의 **99.4%(51,013,582)가 그 소급 당적 한 건**이다.
 
 큐 종수가 그대로인 것은 정체가 아니다. 해소한 만큼(자유당·한국독립당·대한국민당·
 민주통일당) 빠지고 새로 발견한 만큼(민중당·사회당·통일당·시민당) 들어왔다.
@@ -156,6 +157,12 @@ absorbed      흡수한 정당 — 계열을 전파하지 않는다
 viewDetail.do?cbIdx=..&bcIdx=..&fileNo=1   →  src="/viewer/skin_view/doc.html?fn={파일}&rs={결과경로}"
 {결과경로}/{파일}.files/1.html              →  본문 HTML (태그 제거하면 표 전체가 텍스트로)
 ```
+
+스냅샷이 여럿이면 **개명 시점을 구간으로 좁힐 수 있다.** 통일당은 2011-10-18에
+'통일당', 2012-01-11에 '민주통일당(통일당)'이라 개명이 그 사이다. 정확한 날짜는
+모르므로 `founded_bound`/`dissolved_bound`로 표시한다. 경계가 근사값이면 시점으로
+개명·분당을 못 가르므로 `formed_by`는 `ambiguous(bounded_dates)`가 된다 — 날짜만
+보면 '전신이 존속 중'으로 읽혀 개명이 분당이 된다.
 
 **스냅샷 날짜를 반드시 본다.** 2012-03-14 문서에는 기독사랑실천당(기독당)과
 기독자유민주당(기민당)이 따로 있는데, 두 당은 **다음 날인 2012-03-15에 합당**했다.
