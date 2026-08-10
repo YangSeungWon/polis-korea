@@ -14,9 +14,9 @@
       "sigungu": "",
       "scope": "nation",
       "electors": 0,
-      "voters": 16005315,
-      "valid_votes": 16005315,
-      "invalid_votes": 0,
+      "voters": null,
+      "valid_votes": 18942167,
+      "invalid_votes": null,
       "abstain": 0,
       "candidates": [
         {
@@ -54,7 +54,9 @@
         }
       ],
       "turnout_pct": 57.2,
-      "total_seats": 273
+      "total_seats": 273,
+      "covers": "seat_winning_parties",
+      "_note": "이 표는 **전국구 의석을 배분받은 정당만** 담는다. valid_votes는 지역구 유효표 전체(18,942,167)이므로 후보 행의 합(16,005,315)과 다르다 — 빠진 것은 의석 배분 대상이 아닌 정당·무소속 표다. 전에는 valid_votes에 실린 정당 합만 적혀 있어 pct(공식 정당득표율)와 어긋났다. rank는 득표가 아니라 의석 순이다."
     },
     {
       "sg_typecode": "2",

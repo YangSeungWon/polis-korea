@@ -18,7 +18,20 @@ nation은 sido의 합이어야 한다 — 그건 유도지 추정이 아니다. 
 - turnout_pct·electors처럼 시도 합으로 유도되지 않는 값은 건드리지 않는다.
 - nation이 이미 sido 합과 같으면 아무것도 안 한다(멱등).
 
-사용: python3 scripts/normalize/rebuild_nation_from_sido.py 13th-pres-1987 [--write]
+## 총선 전국구(13~16대)도 같은 병이 있다
+
+13~16대는 전국구를 **지역구 득표로 배분**했다. 그래서 nation tc7의 votes는 지역구
+정당 득표와 같아야 하고, 실제로 13대는 네 정당 모두 **정확히** 일치한다. 그런데
+valid_votes에는 그 네 정당 합만 적혀 있어서, pct(공식 정당득표율)와 어긋났다 —
+민정당 34.0%인데 계산하면 36.66%가 나오는 식이다. 분모가 틀린 것이다.
+
+`--from-district`는 그 분모를 **지역구 유효표 전체**로 바로잡는다. 후보 목록은
+건드리지 않는다(그 표는 의석 배분 대상 정당만 담는 것이 원래 뜻이다) — 대신
+covers·_note로 부분 집합임을 밝힌다.
+
+사용:
+  python3 scripts/normalize/rebuild_nation_from_sido.py 13th-pres-1987 [--write]
+  python3 scripts/normalize/rebuild_nation_from_sido.py 14th-general-1992 --from-district [--write]
 """
 from __future__ import annotations
 
@@ -114,14 +127,61 @@ def rebuild(eid: str, write: bool) -> int:
     return 0
 
 
+def fix_denominator(eid: str, write: bool) -> int:
+    """nation tc7의 valid_votes를 지역구 유효표 전체로 바로잡는다(13~16대)."""
+    fp = RESULTS / f"{eid}.json"
+    d = json.loads(fp.read_text(encoding="utf-8"))
+    races = d.get("races") or []
+    nat = [r for r in races if r.get("scope") == "nation" and r.get("sg_typecode") == "7"]
+    if len(nat) != 1:
+        print(f"  {eid}: nation tc7 1개라야 한다 ({len(nat)})")
+        return 1
+    dvalid = sum(c.get("votes") or 0
+                 for r in races if r.get("scope") == "district" and r.get("sg_typecode") == "2"
+                 for c in r.get("candidates") or [])
+    if not dvalid:
+        print(f"  {eid}: 지역구 데이터가 없다")
+        return 1
+    r = nat[0]
+    old = r.get("valid_votes")
+    listed = sum(c.get("votes") or 0 for c in r.get("candidates") or [])
+    if old == dvalid:
+        print(f"  {eid}: 이미 일치 — 변경 없음")
+        return 0
+    worst_before = max((abs((c.get("pct") or 0) - round((c.get("votes") or 0) / old * 100, 2))
+                        for c in r["candidates"] if old and c.get("pct") is not None), default=0)
+    worst_after = max((abs((c.get("pct") or 0) - round((c.get("votes") or 0) / dvalid * 100, 2))
+                       for c in r["candidates"] if c.get("pct") is not None), default=0)
+    r["valid_votes"] = dvalid
+    # voters·invalid에 유효표를 그대로 베껴 둔 자리 — 투표수를 모르면서 안다고 적으면
+    # 무효표가 0이 된다. 모르는 채로 둔다.
+    r["voters"] = None
+    r["invalid_votes"] = None
+    r["covers"] = "seat_winning_parties"
+    r["_note"] = (f"이 표는 **전국구 의석을 배분받은 정당만** 담는다. valid_votes는 지역구 "
+                  f"유효표 전체({dvalid:,})이므로 후보 행의 합({listed:,})과 다르다 — 빠진 것은 "
+                  "의석 배분 대상이 아닌 정당·무소속 표다. 전에는 valid_votes에 실린 정당 합만 "
+                  "적혀 있어 pct(공식 정당득표율)와 어긋났다. rank는 득표가 아니라 의석 순이다.")
+    print(f"  {eid}: valid_votes {old:,} → {dvalid:,} · pct 최대오차 "
+          f"{worst_before:.2f}%p → {worst_after:.2f}%p")
+    if write:
+        fp.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"  → {fp.relative_to(ROOT)}")
+    else:
+        print("  (--write 없이 실행 — 저장하지 않음)")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("eids", nargs="+")
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--from-district", action="store_true",
+                    help="nation tc7의 분모를 지역구 유효표로 바로잡는다(13~16대 총선)")
     a = ap.parse_args()
     rc = 0
     for eid in a.eids:
-        rc |= rebuild(eid, a.write)
+        rc |= (fix_denominator(eid, a.write) if a.from_district else rebuild(eid, a.write))
     return rc
 
 

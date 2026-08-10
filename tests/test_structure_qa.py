@@ -302,6 +302,56 @@ def check_scope_consistency() -> None:
     ck("전국이 시도 합과 일치한다", not bad, str(bad[:4]))
 
 
+def check_pct_denominator() -> None:
+    """pct가 valid_votes와 맞는가 — 분모가 틀리면 비율이 통째로 어긋난다.
+
+    13~16대 총선의 nation tc7(전국구)은 **의석 배분 대상 정당만** 담는데,
+    valid_votes에 그 정당들의 합만 적혀 있었다. pct는 공식 정당득표율이라
+    분모가 달라 6~7%p씩 어긋났다 — 민정당 34.0%인데 계산하면 36.66%가 나왔다.
+
+    허용오차 0.3%p는 세 가지를 덮는다:
+      · 출처가 소수 첫째 자리까지만 준다(13대 대선 시도 30.0 vs 29.95)
+      · 우리 지역구 합과 공식 유효표가 조금 다르다(15대 0.28%p — 무투표 선거구 등)
+      · 반올림 누적
+    그보다 크게 어긋나면 분모가 틀린 것이다.
+    """
+    print("\n[비율] pct가 분모와 맞는가")
+    # 간선 대선은 pct 분모가 **유효표가 아니라 투표수**다(통일주체국민회의).
+    # 관례가 다른 것이지 오류가 아니라 예외로 적어 둔다 — 숨기지 않고 이름을 남긴다.
+    INDIRECT = {("10th-pres-1979", "최규하"), ("8th-pres-1972", "박정희")}
+    bad = []
+    for p in sorted((ROOT / "data/results").glob("*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        for r in d.get("races") or []:
+            vv = r.get("valid_votes")
+            if not vv:
+                continue
+            for c in r.get("candidates") or []:
+                if c.get("pct") is None or c.get("votes") is None:
+                    continue
+                if (p.stem, c.get("name")) in INDIRECT:
+                    continue
+                exp = round(c["votes"] / vv * 100, 2)
+                if abs(exp - c["pct"]) > 0.3:
+                    bad.append(f"{p.stem} {r.get('scope')} tc{r.get('sg_typecode')} "
+                               f"{c.get('name') or c.get('party')}: 기록 {c['pct']} vs 계산 {exp}")
+    ck("pct가 valid_votes 기준과 맞는다", not bad, str(bad[:4]))
+    # 예외가 실재하는지도 본다 — 목록만 남고 대상이 사라지면 죽은 예외다
+    live = set()
+    for eid, nm in INDIRECT:
+        fp = ROOT / "data/results" / f"{eid}.json"
+        if not fp.exists():
+            continue
+        d = json.loads(fp.read_text(encoding="utf-8"))
+        if any(c.get("name") == nm for r in d.get("races") or []
+               for c in r.get("candidates") or []):
+            live.add((eid, nm))
+    ck(f"간선 예외가 실재한다 ({len(live)}건)", live == INDIRECT, str(INDIRECT - live))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -310,6 +360,7 @@ def main() -> int:
     check_json_shape_guards()
     check_roster_scope()
     check_scope_consistency()
+    check_pct_denominator()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
