@@ -128,6 +128,37 @@ def parse(text: str) -> tuple[str | None, list[dict]]:
     return snap, rows
 
 
+def harvest_current() -> dict | None:
+    """현재 정당등록현황(cbIdx=1239) — 살아 있는 정당만. 공고 시리즈가 2017-01에서
+    끊겨서, 2020년 이후 관측을 덮는 유일한 1차 자료다. 표가 HTML이라 바로 읽는다.
+    명칭 칸은 `명칭<br/>(약칭)` 꼴이고 약칭이 여럿일 수 있다(쉼표 구분)."""
+    import datetime
+    try:
+        s = get(f"{BASE}/site/nec/ex/bbs/List.do?cbIdx=1239", timeout=60)
+    except Exception:                                            # noqa: BLE001
+        return None
+    m = re.search(r"<caption>정당등록현황.*?<tbody>(.*?)</tbody>", s, re.S)
+    if not m:
+        return None
+    rows = []
+    for r in re.findall(r"<tr[^>]*>(.*?)</tr>", m.group(1), re.S):
+        cells = [re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "|", c))).strip()
+                 for c in re.findall(r"<td[^>]*>(.*?)</td>", r, re.S)]
+        if len(cells) < 3:
+            continue
+        nm = cells[0].strip("|").strip()
+        mm = re.match(r"^(.+?)\s*\|\s*\((.+?)\)\s*$", nm)
+        name, abbr = (mm.group(1), mm.group(2)) if mm else (nm.replace("|", ""), None)
+        rows.append({"kind": "registered", "name": name.strip(),
+                     "abbr": abbr.strip() if abbr else None,
+                     "registered": cells[1].replace("|", "").strip(),
+                     "leader": cells[2].replace("|", "").strip()})
+    if not rows:
+        return None
+    return {"cbIdx": 1239, "bcIdx": 0,
+            "snapshot": datetime.date.today().isoformat(), "parties": rows}
+
+
 def harvest(cb: int, bc: int) -> dict | None:
     t = doc_body(cb, bc)
     if not t or "정당등록" not in t:
@@ -144,7 +175,24 @@ def main() -> int:
     ap.add_argument("--to", dest="hi", type=int, default=10400)
     ap.add_argument("--cb", type=int, default=1188)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--current", action="store_true",
+                    help="현재 정당등록현황(cbIdx=1239)만 갱신")
     a = ap.parse_args()
+
+    if a.current:
+        cur = harvest_current()
+        if not cur:
+            print("현재 등록현황을 읽지 못했다", file=sys.stderr)
+            return 1
+        prev = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"snapshots": []}
+        keep = [s for s in prev.get("snapshots", []) if s.get("cbIdx") != 1239]
+        merged = keep + [cur]
+        merged.sort(key=lambda r: (r["snapshot"] or "", r["bcIdx"]))
+        prev["snapshots"] = merged
+        prev.setdefault("_source", "")
+        OUT.write_text(json.dumps(prev, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print(f"현재 등록현황 {len(cur['parties'])}종 ({cur['snapshot']})", file=sys.stderr)
+        return 0
 
     ids = list(range(a.lo, a.hi + 1))
     out = []
