@@ -83,12 +83,29 @@ archive 페이지는 main race만 사용 (300 KB 이하). history 페이지는 c
       "valid_votes": int, "invalid_votes": int, "abstain": int,
       "candidates": [
         { "name", "party", "votes", "pct",
-          "rank": 1..N, "won": true (1위만) }
+          "rank": 1..N,          // **득표 순** 한 뜻이다
+          "seat_rank": 1..N,     // 의석 순 (필요한 표에만 — 아래)
+          "won": true (1위만) }
       ]
     }
   ]
 }
 ```
+
+#### rank와 seat_rank는 다른 축이다
+
+`rank`는 **득표 순**이다. 예외 없이 그렇다 — race 29,761개 전부.
+
+한때 딱 하나가 의석 순이었다(13대 총선 `nation` tc7: 평화민주당 70석이 통일민주당
+59석보다 앞인데 득표는 반대). 하나뿐이라 더 위험했다. 읽는 쪽은 나머지 전부가 득표
+순이니 그렇게 읽는다. 지금은 `rank`를 득표 순으로 통일하고 의석 순은 `seat_rank`로
+따로 둔다 — 정보를 지우는 게 아니라 두 축을 가른다.
+
+`pct`의 분모는 `valid_votes`다. 간선 대선(8대·10대)만 관례가 달라 **투표수**를
+분모로 쓴다 — 그건 예외로 이름을 적어 두었다(`tests/test_structure_qa.py`).
+
+`covers: "seat_winning_parties"`가 붙은 race는 **일부 정당만** 담는다. 13~16대
+총선의 전국구 표가 그렇고, 그래서 후보 행의 합이 `valid_votes`보다 작다.
 
 ### scope × sg_typecode 매트릭스 (회차 종류별 실측)
 

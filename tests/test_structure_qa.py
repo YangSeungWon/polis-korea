@@ -352,6 +352,45 @@ def check_pct_denominator() -> None:
     ck(f"간선 예외가 실재한다 ({len(live)}건)", live == INDIRECT, str(INDIRECT - live))
 
 
+def check_rank_one_meaning() -> None:
+    """rank가 한 뜻인가 — 어떤 회차는 득표 순, 어떤 회차는 의석 순이면 못 읽는다.
+
+    rank 있는 race 29,879개 중 **딱 하나**가 의석 순이었다(13대 총선 nation tc7:
+    평민당 70석이 통일민주당 59석보다 앞인데 득표는 반대다). 하나뿐이라 더 위험하다 —
+    읽는 쪽은 나머지 전부가 득표 순이니 그렇게 읽는다.
+
+    rank = 득표 순으로 통일하고, 의석 순은 seat_rank로 따로 둔다. 정보를 지우는 게
+    아니라 두 축을 가르는 것이다.
+    """
+    print("\n[순위] rank는 득표 순 한 뜻이다")
+    bad, seat_ok, n = [], 0, 0
+    for p in sorted((ROOT / "data/results").glob("*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        for r in d.get("races") or []:
+            cs = [c for c in (r.get("candidates") or []) if c.get("rank") is not None]
+            if len(cs) < 2 or any(c.get("votes") is None for c in cs):
+                continue
+            n += 1
+            order = [c["votes"] for c in sorted(cs, key=lambda c: c["rank"])]
+            if order != sorted(order, reverse=True):
+                bad.append(f"{p.stem} {r.get('scope')} tc{r.get('sg_typecode')}")
+            sr = [c for c in cs if c.get("seat_rank") is not None]
+            if sr:
+                if len(sr) != len(cs):
+                    bad.append(f"{p.stem} {r.get('scope')}: seat_rank가 일부에만 있다")
+                else:
+                    seats = [c.get("seats") for c in sorted(sr, key=lambda c: c["seat_rank"])]
+                    if any(x is None for x in seats) or seats != sorted(seats, reverse=True):
+                        bad.append(f"{p.stem} {r.get('scope')}: seat_rank가 의석 순이 아니다")
+                    else:
+                        seat_ok += 1
+    ck(f"rank가 전부 득표 순이다 ({n:,} race)", not bad, str(bad[:4]))
+    ck(f"의석 순은 seat_rank로 남아 있다 ({seat_ok}건)", seat_ok >= 1, str(seat_ok))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -361,6 +400,7 @@ def main() -> int:
     check_roster_scope()
     check_scope_consistency()
     check_pct_denominator()
+    check_rank_one_meaning()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

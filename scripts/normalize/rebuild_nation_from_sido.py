@@ -29,9 +29,19 @@ valid_votes에는 그 네 정당 합만 적혀 있어서, pct(공식 정당득�
 건드리지 않는다(그 표는 의석 배분 대상 정당만 담는 것이 원래 뜻이다) — 대신
 covers·_note로 부분 집합임을 밝힌다.
 
+## rank는 한 뜻이어야 한다
+
+rank 있는 race 29,879개 중 **딱 하나**가 득표 순이 아니었다 — 13대 총선 nation tc7이
+의석 순이었다(평민당 70석이 통일민주당 59석보다 앞인데 득표는 반대다). 같은 필드가
+회차마다 다른 걸 재면 읽는 쪽이 알 길이 없다.
+
+`--rerank`는 rank를 **득표 순**으로 다시 매기고, 원래 순서가 의석 순이었으면
+`seat_rank`로 보존한다. 정보를 지우는 게 아니라 두 축을 갈라 놓는다.
+
 사용:
   python3 scripts/normalize/rebuild_nation_from_sido.py 13th-pres-1987 [--write]
   python3 scripts/normalize/rebuild_nation_from_sido.py 14th-general-1992 --from-district [--write]
+  python3 scripts/normalize/rebuild_nation_from_sido.py 13th-general-1988 --rerank [--write]
 """
 from __future__ import annotations
 
@@ -172,16 +182,61 @@ def fix_denominator(eid: str, write: bool) -> int:
     return 0
 
 
+def rerank(eid: str, write: bool) -> int:
+    """rank를 득표 순으로 통일하고, 의석 순이던 것은 seat_rank로 보존한다."""
+    fp = RESULTS / f"{eid}.json"
+    d = json.loads(fp.read_text(encoding="utf-8"))
+    changed = []
+    for r in d.get("races") or []:
+        cs = [c for c in (r.get("candidates") or []) if c.get("rank") is not None]
+        if len(cs) < 2 or any(c.get("votes") is None for c in cs):
+            continue
+        by_rank = sorted(cs, key=lambda c: c["rank"])
+        if [c["votes"] for c in by_rank] == sorted((c["votes"] for c in by_rank), reverse=True):
+            continue                      # 이미 득표 순
+        was_seat_order = (all(c.get("seats") is not None for c in by_rank)
+                          and [c["seats"] for c in by_rank]
+                          == sorted((c["seats"] for c in by_rank), reverse=True))
+        for c in by_rank:
+            if was_seat_order:
+                c["seat_rank"] = c["rank"]
+        for i, c in enumerate(sorted(cs, key=lambda c: -c["votes"])):
+            c["rank"] = i + 1
+        changed.append((r.get("scope"), r.get("sg_typecode"), was_seat_order,
+                        [(c.get("party") or c.get("name"), c["rank"], c.get("seat_rank"))
+                         for c in sorted(cs, key=lambda c: c["rank"])]))
+    if not changed:
+        print(f"  {eid}: 이미 득표 순 — 변경 없음")
+        return 0
+    for sc, tc, seat, rows in changed:
+        print(f"  {eid} {sc} tc{tc}: {'의석 순 → seat_rank로 보존' if seat else '순서 불명'}")
+        for nm, rk, sr in rows:
+            print(f"      {nm:14} rank {rk}" + (f" · seat_rank {sr}" if sr else ""))
+    if write:
+        fp.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"  → {fp.relative_to(ROOT)}")
+    else:
+        print("  (--write 없이 실행 — 저장하지 않음)")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("eids", nargs="+")
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--from-district", action="store_true",
                     help="nation tc7의 분모를 지역구 유효표로 바로잡는다(13~16대 총선)")
+    ap.add_argument("--rerank", action="store_true",
+                    help="rank를 득표 순으로 통일하고 의석 순은 seat_rank로 보존")
     a = ap.parse_args()
     rc = 0
     for eid in a.eids:
-        rc |= (fix_denominator(eid, a.write) if a.from_district else rebuild(eid, a.write))
+        if a.rerank:
+            rc |= rerank(eid, a.write)
+        elif a.from_district:
+            rc |= fix_denominator(eid, a.write)
+        else:
+            rc |= rebuild(eid, a.write)
     return rc
 
 
