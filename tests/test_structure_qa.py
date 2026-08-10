@@ -550,6 +550,53 @@ def check_election_meta_paths() -> None:
     ck("archive.results_path가 실재한다", not missing, str(missing[:4]))
 
 
+def check_local_proportional_timeline() -> None:
+    """지선 비례는 회차마다 있고 없고가 다르다 — '없음'과 '결손'을 가른다.
+
+    1·2회 광역비례를 '결손'으로 적어 뒀는데 아니었다. **비례대표 선거 자체가
+    없었다** — 1인 2표제는 2002년(3회)부터고, 그 전 시·도의회 비례 의석은
+    지역구 득표비율로 배분됐다. 없는 것을 못 받은 것으로 적으면, 영영 오지 않을
+    자료를 계속 기다리게 된다.
+
+    1차 근거는 선관위 개표현황(info.nec VCCP09)의 **선거종류 드롭다운**이다:
+
+        1·2회(1995·1998)  3 4 5 6              비례 없음
+        3회(2002)         + 8 광역비례
+        4회(2006)         + 9 기초비례 · 10 교육의원
+        5회(2010)         + 11 교육감
+    """
+    print("\n[지선] 비례 선거 연표 — 없는 것과 못 받은 것")
+    ROUNDS = {1: "1st-local-1995", 2: "2nd-local-1998", 3: "3rd-local-2002",
+              4: "4th-local-2006", 5: "5th-local-2010", 6: "6th-local-2014",
+              7: "7th-local-2018", 8: "8th-local-2022"}
+    seen = 0
+    for n, eid in ROUNDS.items():
+        tcs = set()
+        rd = ROOT / "data/results"
+        for p in [rd / f"{eid}.json"] + sorted(rd.glob(f"{eid}.*.json")):
+            if not p.exists():
+                continue
+            for r in json.loads(p.read_text(encoding="utf-8")).get("races") or []:
+                tcs.add(r.get("sg_typecode"))
+        if not tcs:
+            continue
+        seen += 1
+        ck(f"{n}회: 광역비례(tc8)는 3회부터", ("8" in tcs) == (n >= 3), str(sorted(tcs)))
+        ck(f"{n}회: 기초비례(tc9)는 4회부터", ("9" in tcs) == (n >= 4), str(sorted(tcs)))
+    ck(f"지선 회차를 실제로 읽었다 ({seen})", seen == len(ROUNDS), str(seen))
+
+    # 없는 제도를 '미반영'이라 적지 않는다 — 그 문장이 결손처럼 읽힌다.
+    stale = []
+    for n, eid in ROUNDS.items():
+        f = ROOT / f"data/elections/{eid}.json"
+        if not f.exists():
+            continue
+        cav = json.loads(f.read_text(encoding="utf-8")).get("_data_caveat") or ""
+        if "미반영" in cav:
+            stale.append(eid)
+    ck("비례를 '미반영'이라 말하는 회차가 없다", not stale, str(stale))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -564,6 +611,7 @@ def main() -> int:
     check_data_json_parses()
     check_absence_doc()
     check_election_meta_paths()
+    check_local_proportional_timeline()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
