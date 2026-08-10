@@ -336,8 +336,10 @@
    "legacy_relation": "rename",
    "formed_by": {
     "type": "ambiguous",
-    "parties": [],
-    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "parties": [
+     "친반국민대통합"
+    ],
+    "why": "친반국민대통합과의 시점 관계를 확정할 수 없다 — 한쪽 경계가 '거기까지만 안다'라서 개명인지 분당인지 날짜로 못 가른다"
    },
    "ended_by": {
     "type": "dissolution",
@@ -346,7 +348,7 @@
    },
    "lineage": [],
    "migration": "ambiguous",
-   "ambiguity_cause": "missing_predecessor_record"
+   "ambiguity_cause": "bounded_dates"
   },
   "더불어시민당": {
    "founded": "2020-03",
@@ -1540,8 +1542,10 @@
    "legacy_relation": "rename",
    "formed_by": {
     "type": "ambiguous",
-    "parties": [],
-    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+    "parties": [
+     "국제녹색당"
+    ],
+    "why": "국제녹색당과의 시점 관계를 확정할 수 없다 — 한쪽 경계가 '거기까지만 안다'라서 개명인지 분당인지 날짜로 못 가른다"
    },
    "ended_by": {
     "type": null,
@@ -1550,7 +1554,7 @@
    },
    "lineage": [],
    "migration": "ambiguous",
-   "ambiguity_cause": "missing_predecessor_record"
+   "ambiguity_cause": "bounded_dates"
   },
   "대한독립촉성국민회": {
    "founded": "1946-02",
@@ -2883,6 +2887,366 @@
    "lineage": [],
    "migration": "ambiguous",
    "ambiguity_cause": "bounded_dates"
+  },
+  "가자!대국민중심당": {
+   "founded": "2011-10",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "가자코리아": {
+   "founded": "2012-11",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "개혁국민신당": {
+   "founded": "2012-11",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "고용복지연금선진화연대": {
+   "founded": "2015-03",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국민생각": {
+   "founded": "2012-02",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "국제녹색당": {
+   "founded": "2007-08",
+   "dissolved": "2017-01",
+   "legacy_relation": "new",
+   "formed_by": {
+    "type": "foundation",
+    "parties": [],
+    "why": "relation=new이고 전신이 없다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "derived",
+   "ambiguity_cause": "dissolution_date_unknown"
+  },
+  "그린불교연합당": {
+   "founded": "2012-12",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "기독사랑실천당": {
+   "founded": "2004-03",
+   "dissolved": "2012-03",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-03까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "기독자유민주당": {
+   "founded": "2011-09",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한국당": {
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "대한민국당": {
+   "founded": "2012-07",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "미래연합": {
+   "founded": "2010-04",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "복지국가당": {
+   "founded": "2016-02",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "불교정도화합통일연합당": {
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "정통민주당": {
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2012-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "진리대한당": {
+   "founded": "2016-02",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "친반국민대통합": {
+   "founded": "2015-10",
+   "dissolved": "2016-04",
+   "legacy_relation": "rename",
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=rename는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2016-04까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "친반통일당": {
+   "founded": "2016-03",
+   "dissolved": "2016-11",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2016-11까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "친반평화통일당": {
+   "founded": "2016-02",
+   "dissolved": "2016-05",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2016-05까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
+  },
+  "통일한국당": {
+   "founded": "2015-12",
+   "dissolved": "2017-01",
+   "legacy_relation": null,
+   "formed_by": {
+    "type": "ambiguous",
+    "parties": [],
+    "why": "legacy relation=None는 상대가 있는 관계인데 전신이 기록돼 있지 않다"
+   },
+   "ended_by": {
+    "type": "unknown",
+    "parties": [],
+    "why": "2017-01까지 활동한 것만 확인됐다 — 소멸 시점 미상"
+   },
+   "lineage": [],
+   "migration": "ambiguous",
+   "ambiguity_cause": "missing_predecessor_record"
   }
  }
 }

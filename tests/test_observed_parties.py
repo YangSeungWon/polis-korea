@@ -313,9 +313,11 @@ from party_canon import disambiguate_party as _dp  # noqa: E402
 
 KNOWN_ANACHRONISTIC = {
     ("1948-05-10", "대한청년단"),   # 결성 1948-12 — 제헌 총선보다 뒤
-    ("1948-05-10", "민중당"),       # registry 민중당은 1965-06 (1948 것은 별개 정당)
     ("1980-08-27", "민주정의당"),   # 창당 1981-01 — 11대 대선 당시엔 없던 당
 }
+# 1948 민중당은 여기 있었는데 뺐다. 그건 소급 당적이 아니라 **동음이의**이고
+# (1965년 민중당과 다른 정당), 큐가 이미 들고 있다. 두 축을 한 목록에 담으면
+# 같은 사실을 두 곳이 다르게 말한다.
 _found = set()
 for _fp in sorted(_RES.glob("*.json")):
     if ".sigungu" in _fp.name:
@@ -337,6 +339,13 @@ for _fp in sorted(_RES.glob("*.json")):
             _f = _f if len(_f) >= 7 else (_f + "-01" if _f else "")
             if _f and _dt[:7] < _f:
                 _found.add((_dt, _p))
+# **동음이의와 소급 당적은 다른 축이다.** 창당보다 이른 관측에는 두 원인이 있다:
+#   ① 출처가 나중 당적을 소급 적용했다 (전두환-1980-민주정의당)
+#   ② 그 이름을 쓴 **다른 정당**이 그때 있었다 (1997 통일한국당 ≠ 2015 등록)
+# ②는 큐가 들고 있는 문제라 여기서 또 세면 두 곳이 같은 것을 다르게 말한다.
+# 큐에 있는 이름은 빼고, 남은 것만 소급 당적으로 본다.
+_queued = {q["name"] for q in hom["unresolved"]}
+_found = {(d, n) for d, n in _found if n not in _queued}
 ck(f"소급 당적이 알려진 것뿐이다 ({len(_found)}건)", _found == KNOWN_ANACHRONISTIC,
    f"새로 생김 {sorted(_found - KNOWN_ANACHRONISTIC)} · 사라짐 {sorted(KNOWN_ANACHRONISTIC - _found)}")
 

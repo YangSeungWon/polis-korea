@@ -13,7 +13,8 @@
   "note": "한 줄 설명(대표·맥락)",
   "stream": "**legacy_polis_classification** — 값을 바꾸거나 rename하지 마라. 보수/중도보수/중도/중도진보/진보/기타 값을 갖지만, 이념 위치와 조직 계보가 섞여 있다(lineage.js는 '좌→우 이념 스펙트럼'으로 쓰는데 parties.html meta는 '보수·민주·진보·충청 계열'이라 부른다 — 충청계는 이념 위치가 아니다). 현재 용도는 정당사 그래프의 가로축 열 배치뿐이다. 조직 계보는 political_axes.json의 lineage_family, 시점별 이념 위치는 contemporary_position을 쓴다.",
   "path_compressed": "registry 해상도 때문에 중간 정당을 생략한 edge. 역사 자체가 아니라 표현의 압축임을 밝힌다 — 생략된 entity를 나중에 추가하면 풀어야 한다.",
-  "founded_bound": "dissolved_bound의 대칭. 값이 first_known_active면 founded에 적힌 것은 '그 이름으로 처음 확인된 시점'이고 실제 시작(개명일)은 모른다는 뜻이다. 없으면 founded가 실제 시작이다. 선관위 등록현황 스냅샷 사이에 개명이 일어나면 구간만 알고 날짜는 모르게 된다 — 그때 지어내지 않는다."
+  "founded_bound": "dissolved_bound의 대칭. 값이 first_known_active면 founded에 적힌 것은 '그 이름으로 처음 확인된 시점'이고 실제 시작(개명일)은 모른다는 뜻이다. 없으면 founded가 실제 시작이다. 선관위 등록현황 스냅샷 사이에 개명이 일어나면 구간만 알고 날짜는 모르게 된다 — 그때 지어내지 않는다.",
+  "evidence": "registration_only = 선관위 등록 사실만 확인됐다(계보 미상). 없으면 정식명·창당·계보를 확인한 것이다."
  },
  "_collisions": {
   "민정당": "1963 윤보선 民政黨(5대대선·6대총선) ↔ 민주정의당 약칭 민정당(1981~). 별개 정당 — 병합 금지.",
@@ -205,6 +206,21 @@
     "https://www.nec.go.kr/site/nec/ex/bbs/List.do?cbIdx=1239",
     "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1174&bcIdx=17248&relCbIdx=1147",
     "https://namu.wiki/w/국민대통합당(2021년)"
+   ],
+   "predecessors": [
+    "친반국민대통합"
+   ],
+   "path_compressed": [
+    {
+     "to": "친반국민대통합",
+     "omitted_entities": "국가부패척결당 등 2016~2020 사이 이 등록이 쓴 이름들(노드 없음)",
+     "reason": "등록 2015-10-07·대표 김천식이 친반국민대통합·국민대통합당과 같다. 중간 이름들은 관측이 없어 노드를 만들지 않았다.",
+     "source": [
+      "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+      "data/raw/nec_party_snapshots.json",
+      "https://www.nec.go.kr/site/nec/ex/bbs/List.do?cbIdx=1239"
+     ]
+    }
    ]
   },
   "더불어시민당": {
@@ -799,6 +815,21 @@
    "source": [
     "https://www.nec.go.kr/site/nec/ex/bbs/List.do?cbIdx=1239",
     "https://ko.wikipedia.org/wiki/한국독립당_(2007년)"
+   ],
+   "predecessors": [
+    "국제녹색당"
+   ],
+   "path_compressed": [
+    {
+     "to": "국제녹색당",
+     "omitted_entities": "2017-01 이후 2022-08-18 개명까지 이 등록이 쓴 이름들(확인 못 함)",
+     "reason": "선관위 정당등록현황 스냅샷 시리즈가 2017-01에서 끊겨 그 사이 개명 이력을 못 봤다. 같은 등록이라는 것은 현재 등록현황의 한국독립당 등록연월일 2007-08-08이 국제녹색당의 것과 같다는 데서 온다.",
+     "source": [
+      "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+      "data/raw/nec_party_snapshots.json",
+      "https://www.nec.go.kr/site/nec/ex/bbs/List.do?cbIdx=1239"
+     ]
+    }
    ]
   },
   "대한독립촉성국민회": {
@@ -1458,10 +1489,267 @@
    "source": [
     "https://www.nec.go.kr/cmm/dozen/viewDetail.do?cbIdx=1188&bcIdx=10289&fileNo=1"
    ]
+  },
+  "가자!대국민중심당": {
+   "stream": "기타",
+   "founded": "2011-10",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "국민당",
+   "note": "선관위 정당등록현황 스냅샷에 '가자!대국민중심당(국민당) 등록 2011-10-25·대표 具天書'로 있다(2012-03-08~2012-04-06 스냅샷 11장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "가자코리아": {
+   "stream": "기타",
+   "founded": "2012-11",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "코리아",
+   "note": "선관위 정당등록현황 스냅샷에 '가자코리아(코리아) 등록 2012-11-13·대표 류승구'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "개혁국민신당": {
+   "stream": "기타",
+   "founded": "2012-11",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "개혁신당",
+   "note": "선관위 정당등록현황 스냅샷에 '개혁국민신당(개혁신당) 등록 2012-11-13·대표 이은영'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "고용복지연금선진화연대": {
+   "stream": "기타",
+   "founded": "2015-03",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "고복연",
+   "note": "선관위 정당등록현황 스냅샷에 '고용복지연금선진화연대(고복연) 등록 2015-03-16·대표 주명룡'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "국민생각": {
+   "stream": "기타",
+   "founded": "2012-02",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '국민생각 등록 2012-02-27·대표 朴世逸'로 있다(2012-02-27~2012-04-06 스냅샷 14장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "국제녹색당": {
+   "stream": "기타",
+   "founded": "2007-08",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "note": "2007-08-08 등록(대표 이래원). 선관위 정당등록현황 스냅샷에 2010-01~2017-01 내내 있고, 현재 등록현황의 한국독립당 등록연월일이 같은 2007-08-08(대표 조규면)이다 — 같은 등록이 2022-08-18 한국독립당으로 개명했다. **그 사이 이름은 확인하지 못했다**(path_compressed). 6·7회 지선 광역비례 관측이 이 이름으로 있다. 김구 한국독립당과는 무관하다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ],
+   "relation": "new",
+   "successors": [
+    "한국독립당(2022)"
+   ]
+  },
+  "그린불교연합당": {
+   "stream": "기타",
+   "founded": "2012-12",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "불교당",
+   "note": "선관위 정당등록현황 스냅샷에 '그린불교연합당(불교당) 등록 2012-12-11·대표 이대마'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "기독사랑실천당": {
+   "stream": "기타",
+   "founded": "2004-03",
+   "dissolved": "2012-03",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "기독당",
+   "note": "선관위 정당등록현황 스냅샷에 '기독사랑실천당(기독당) 등록 2004-03-26·대표 崔守桓·閔昇'로 있다(2010-01-29~2012-03-19 스냅샷 101장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "기독자유민주당": {
+   "stream": "기타",
+   "founded": "2011-09",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "기독당",
+   "note": "선관위 정당등록현황 스냅샷에 '기독자유민주당(기독당) 등록 2011-09-26·대표 金忠立'로 있다(2011-09-26~2012-04-06 스냅샷 45장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "대한국당": {
+   "stream": "기타",
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '대한국당 등록 2012-03-13·대표 奉泰弘'로 있다(2012-03-13~2012-04-06 스냅샷 9장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "대한민국당": {
+   "stream": "기타",
+   "founded": "2012-07",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "대민당",
+   "note": "선관위 정당등록현황 스냅샷에 '대한민국당(대민당) 등록 2012-07-16·대표 이동진'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "미래연합": {
+   "stream": "기타",
+   "founded": "2010-04",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '미래연합 등록 2010-04-27·대표 권한대행趙玹槿·金明洙·李揆澤'로 있다(2010-04-27~2012-04-06 스냅샷 93장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "복지국가당": {
+   "stream": "기타",
+   "founded": "2016-02",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '복지국가당 등록 2016-02-15·대표 이상이·이은영'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "불교정도화합통일연합당": {
+   "stream": "기타",
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "불교연합당",
+   "note": "선관위 정당등록현황 스냅샷에 '불교정도화합통일연합당(불교연합당) 등록 2012-03-15·대표 李在烈'로 있다(2012-03-15~2012-04-06 스냅샷 7장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "정통민주당": {
+   "stream": "기타",
+   "founded": "2012-03",
+   "dissolved": "2012-04",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '정통민주당 등록 2012-03-15·대표 韓光玉'로 있다(2012-03-19~2012-04-06 스냅샷 5장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "진리대한당": {
+   "stream": "기타",
+   "founded": "2016-02",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "abbr": "대한당",
+   "note": "선관위 정당등록현황 스냅샷에 '진리대한당(대한당) 등록 2016-02-15·대표 이석인'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "친반국민대통합": {
+   "stream": "기타",
+   "founded": "2015-10",
+   "dissolved": "2016-04",
+   "dissolved_bound": "last_known_active",
+   "abbr": "친반통합",
+   "note": "2015-10-07 등록(대표 김천식·류근찬), 약칭 친반통합. 20대 총선 지역구 1명(충남 당진 전병창 492표)만 냈다. 같은 등록이 국민행복당·국가부패척결당을 거쳐 통일민주당(2020)→국민대통합당으로 이어진다 — 현재 등록현황의 국민대통합당 등록연월일이 같은 2015-10-07·대표 김천식이다. **중간 이름들은 노드가 없어 edge를 압축했다**(path_compressed). ※2011-12-13 등록된 동명의 국민행복당(허평환)은 이 등록과 **다른 정당**이다 — 스냅샷에 '국민행복당'이 두 등록일로 나온다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ],
+   "relation": "rename",
+   "successors": [
+    "통일민주당(2020)"
+   ]
+  },
+  "친반통일당": {
+   "stream": "기타",
+   "founded": "2016-03",
+   "dissolved": "2016-11",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '친반통일당 등록 2016-03-21·대표 김경세·이문용'로 있다(2016-03-24~2016-11-21 스냅샷 41장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "친반평화통일당": {
+   "stream": "기타",
+   "founded": "2016-02",
+   "dissolved": "2016-05",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '친반평화통일당 등록 2016-02-15·대표 김호일'로 있다(2016-03-24~2016-05-09 스냅샷 7장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
+  },
+  "통일한국당": {
+   "stream": "기타",
+   "founded": "2015-12",
+   "dissolved": "2017-01",
+   "dissolved_bound": "last_known_active",
+   "evidence": "registration_only",
+   "note": "선관위 정당등록현황 스냅샷에 '통일한국당 등록 2015-12-02·대표 최인식'로 있다(2016-03-24~2017-01-09 스냅샷 50장). **확인된 것은 등록 사실뿐이다** — 계보(전신·후신)는 모른다. dissolved는 그 이름으로 마지막 확인된 시점이지 소멸이 아니다. **dissolved를 관측으로 늘리지 않았다** — 그 이름의 뒤 회차 관측이 이 등록인지 확인되지 않았기 때문이다. 늘리면 표를 맞추려고 범위를 넓히는 것이 된다. 그런 관측은 구간 밖으로 드러나 큐에 남는다.",
+   "source": [
+    "https://www.nec.go.kr/site/nec/ex/bbs/View.do?cbIdx=1188",
+    "data/raw/nec_party_snapshots.json"
+   ]
   }
  },
  "_meta": {
-  "invariant": "**정식명·창당·계보를 확인한 정당만** 넣는다. 결과 데이터에 이름이 나왔다는 이유만으로 자동 추가하지 않는다 — 그러면 '계보를 안다'는 뜻이 희석된다. 관측된 이름은 observed.json(생성물)에 따로 있다.",
+  "invariant": "**정식명·창당·계보를 확인한 정당만** 넣는다. 결과 데이터에 이름이 나왔다는 이유만으로 자동 추가하지 않는다 — 그러면 '계보를 안다'는 뜻이 희석된다. 관측된 이름은 observed.json(생성물)에 따로 있다. ※registry는 두 단계다. 기본은 **정식명·창당·계보를 확인한 정당**이고, `evidence: registration_only`가 붙은 것은 **선관위 등록 사실만** 확인된 것이다 — 계보를 모르므로 predecessors·successors·absorbed를 비워 둔다. 등록 사실도 1차 자료지만 계보까지 안다는 뜻은 아니다. 이 구분을 안 두면 registry가 '확인한 것'이라는 뜻이 조용히 약해진다.",
   "layers": {
    "registry.json": "확인된 정당 (사람이 자료로 확인)",
    "observed.json": "결과에 관측된 이름 + 유도 가능한 사실만 (생성물)",

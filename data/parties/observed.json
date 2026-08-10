@@ -808,8 +808,8 @@
    "wins": 0,
    "first": "2008-04-09",
    "last": "2008-04-09",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "기독사랑실천당",
+   "status": "registry"
   },
   {
    "name": "통한당",
@@ -1116,8 +1116,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "기독자유민주당",
+   "status": "registry"
   },
   {
    "name": "민중연합당",
@@ -1193,8 +1193,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "국민생각",
+   "status": "registry"
   },
   {
    "name": "기독당",
@@ -1292,8 +1292,15 @@
    "wins": 0,
    "first": "1997-12-18",
    "last": "2024-04-10",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "통일한국당",
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2015-12~2017-01",
+    "observed_span": "1997-12~2024-04",
+    "months_before": 216,
+    "months_after": 87,
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "소나무당",
@@ -1336,8 +1343,8 @@
    "wins": 0,
    "first": "2010-06-02",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "미래연합",
+   "status": "registry"
   },
   {
    "name": "보수당",
@@ -1508,8 +1515,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "정통민주당",
+   "status": "registry"
   },
   {
    "name": "한국사회당",
@@ -1611,17 +1618,6 @@
    "status": "unresolved"
   },
   {
-   "name": "가자코리아",
-   "elections": 2,
-   "candidates": 37,
-   "votes": 122483,
-   "wins": 0,
-   "first": "2016-04-13",
-   "last": "2020-04-15",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
    "name": "공화당",
    "elections": 2,
    "candidates": 267,
@@ -1640,8 +1636,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "가자!대국민중심당",
+   "status": "registry"
   },
   {
    "name": "대한애국당",
@@ -1783,6 +1779,17 @@
    "status": "unresolved"
   },
   {
+   "name": "코리아",
+   "elections": 3,
+   "candidates": 24,
+   "votes": 91908,
+   "wins": 0,
+   "first": "2017-04-12",
+   "last": "2020-04-15",
+   "registry_id": null,
+   "status": "needs_disambiguation"
+  },
+  {
    "name": "국민행복당",
    "elections": 2,
    "candidates": 42,
@@ -1867,8 +1874,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "불교정도화합통일연합당",
+   "status": "registry"
   },
   {
    "name": "농민회",
@@ -1966,8 +1973,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "그린불교연합당",
+   "status": "registry"
   },
   {
    "name": "민주당(2013)",
@@ -2021,8 +2028,15 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2024-04-10",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "대한민국당",
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2012-07~2017-01",
+    "observed_span": "2016-04~2024-04",
+    "months_before": 0,
+    "months_after": 87,
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "신민회",
@@ -2034,6 +2048,17 @@
    "last": "1963-11-26",
    "registry_id": null,
    "status": "unresolved"
+  },
+  {
+   "name": "가자코리아",
+   "elections": 1,
+   "candidates": 19,
+   "votes": 54459,
+   "wins": 0,
+   "first": "2016-04-13",
+   "last": "2016-04-13",
+   "registry_id": "가자코리아",
+   "status": "registry"
   },
   {
    "name": "히시태그국민정책당",
@@ -2120,8 +2145,15 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2017-04-12",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "복지국가당",
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2016-02~2017-01",
+    "observed_span": "2016-04~2017-04",
+    "months_before": 0,
+    "months_after": 3,
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "희망사회당",
@@ -2329,8 +2361,8 @@
    "wins": 0,
    "first": "2012-04-11",
    "last": "2012-04-11",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "대한국당",
+   "status": "registry"
   },
   {
    "name": "한국농어민당",
@@ -2351,8 +2383,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "친반통일당",
+   "status": "registry"
   },
   {
    "name": "깨어있는시민연대당",
@@ -2384,8 +2416,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "고용복지연금선진화연대",
+   "status": "registry"
   },
   {
    "name": "친민당",
@@ -2472,19 +2504,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
-  },
-  {
-   "name": "코리아",
-   "elections": 2,
-   "candidates": 6,
-   "votes": 23884,
-   "wins": 0,
-   "first": "2017-04-12",
-   "last": "2018-06-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "개혁국민신당",
+   "status": "registry"
   },
   {
    "name": "거지당",
@@ -2956,8 +2977,15 @@
    "wins": 0,
    "first": "2014-06-04",
    "last": "2018-06-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "국제녹색당",
+   "status": "registry",
+   "outside_registry_interval": {
+    "node_span": "2007-08~2017-01",
+    "observed_span": "2014-06~2018-06",
+    "months_before": 0,
+    "months_after": 17,
+    "why": "같은 이름의 다른 정당이 섞였거나 노드의 날짜 경계가 틀렸다 — 아직 안 갈랐다"
+   }
   },
   {
    "name": "미상",
@@ -3337,8 +3365,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "진리대한당",
+   "status": "registry"
   },
   {
    "name": "신한반도당",
@@ -3634,8 +3662,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "친반평화통일당",
+   "status": "registry"
   },
   {
    "name": "구국참사람연합",
@@ -3656,8 +3684,8 @@
    "wins": 0,
    "first": "2016-04-13",
    "last": "2016-04-13",
-   "registry_id": null,
-   "status": "unresolved"
+   "registry_id": "친반국민대통합",
+   "status": "registry"
   },
   {
    "name": "우국노인회",

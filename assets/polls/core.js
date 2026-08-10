@@ -28,7 +28,12 @@ const BLACKOUT_END = new Date(POLL_ELECTION.blackout_end);
 const IS_PAST = new Date() >= ELECTION;
 
 const state = {
-  data: null,
+  // **빈 모양으로 시작한다.** null이면 '아직 안 왔다'와 '없다'를 겸하고, 로드 전에
+  // 읽는 코드가 그대로 터진다 — main.js가 LensSwitcher.mount()를 await loadData()
+  // **앞**에서 돌리기 때문에 그 창이 실재한다. 부하가 걸리면 창이 넓어져서
+  // UI 감사에서 간헐적으로 'Cannot read properties of null (reading polls)'가 났고,
+  // 두 번은 플레이키로 넘어갔다. 로드 전엔 빈 것으로 읽히는 게 맞다.
+  data: { _meta: {}, polls: [] },
   view: 'hex',   // 메인이 hex이므로 세부 페이지도 격자 기본 (지도는 토글)
   office: '광역단체장',
   scope: '시도',  // 시도 / 시군구 — 정당지지/국정평가/투표의향에 해당
