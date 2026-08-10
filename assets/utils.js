@@ -592,6 +592,23 @@ async function getJson(url, fallback = null, init) {
   }
 }
 
+// 없을 수 있는 자료. **404는 '없음'이지 '못 받음'이 아니다** — 회차마다 있고
+// 없고가 다른 파일(출구조사·성연령 영향)이 그렇다. 이걸 getJson으로 받으면
+// 멀쩡한 페이지에 실패 경보가 뜬다. 두 뜻을 한 함수에 담지 않는다.
+//
+// 다만 optional이어도 **5xx·네트워크 거부는 못 받은 것**이다. 서버가 '없다'고
+// 답한 것과 답을 못 준 것은 다르다.
+async function getJsonOptional(url, fallback = null, init) {
+  try {
+    const r = await fetch(url, init);
+    if (r.status === 404) return fallback;                  // 없다 — 사실이다
+    if (!r.ok) return _failed(fallback, url, 'http ' + r.status);
+    return await r.json();
+  } catch (e) {
+    return _failed(fallback, url, 'fetch');
+  }
+}
+
 // 못 받았는가. 인자를 주면 그 값들만, 안 주면 페이지 전체.
 // 자리마다 아는 게 다르다 — state.data는 자기 것을 알고, 배너는 전체를 안다.
 function dataLoadFailed(...objs) {
@@ -648,6 +665,7 @@ function failLoading(why) {
 
 if (typeof window !== 'undefined') {
   window.getJson = getJson;
+  window.getJsonOptional = getJsonOptional;
   window.dataLoadFailed = dataLoadFailed;
   window.emptyText = emptyText;
   window.showDataFailBanner = showDataFailBanner;

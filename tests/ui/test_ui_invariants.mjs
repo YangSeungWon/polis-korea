@@ -113,6 +113,17 @@ for (const spec of pages) {
       (document.body.innerText.match(/투표율\s*0\.0+%/g) || []).length);
     ck(`${vp.id} 투표율 0.0% 없음`, zero === 0, `${zero}건`);
 
+    // ── 3.1 정상인데 실패 배너가 뜨지 않는가 ────────────────────────────────
+    // '못 받았다'는 고지도 틀리면 거짓말이다. 회차마다 있고 없고가 다른 파일
+    // (출구조사·성연령)의 404를 실패로 세면 멀쩡한 화면에 경보가 뜬다 —
+    // getJsonOptional이 그 구분을 맡는다. 여기서 그게 지켜지는지 본다.
+    const falseAlarm = await page.evaluate(() => ({
+      banner: !!document.querySelector('.data-fail-banner'),
+      why: (window.__dataLoadFailures || []).map((f) => f.why + ' ' + f.url).slice(0, 3),
+    }));
+    ck(`${vp.id} 정상인데 실패 고지 없음`, !falseAlarm.banner && !falseAlarm.why.length,
+      falseAlarm.why.join(' | '));
+
     // ── 3.5 범례가 실제로 있는 인코딩만 설명하는가 ─────────────────────────
     // '있는지'만 보면 부족하다. 폴 화면은 '실제 결과' 모드에서 gap=99 sentinel이
     // 들어가 모든 칸이 같은 명도인데도 '색 진하기 = 격차' 키가 붙어 있었다 —
@@ -307,8 +318,8 @@ for (const spec of pages) {
 //
 // 규칙: **'없음'을 말해도 되는 건 실제로 받아왔을 때뿐이다.** 못 받았으면 그
 // 사실이 화면에 있어야 한다(.data-fail-banner 또는 '불러오지 못했습니다').
-const OFFLINE = ['home', 'polls', 'poll-round', 'tracker',
-  'history', 'chronology', 'history-local', 'byelection'];
+const OFFLINE = ['home', 'polls', 'poll-round', 'tracker', 'history', 'chronology',
+  'history-local', 'byelection', 'archive-local', 'archive-pres', 'archive-old'];
 console.log('\n[오프라인] 데이터를 못 받았을 때의 진술');
 for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   curPage = id + '/offline';
@@ -336,6 +347,10 @@ for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   ck(`${id}: 못 받았으면 '없음'이라 단언하지 않는다`,
     !seen.claimsEmpty || seen.admits,
     "빈 상태 문구는 있는데 실패 고지가 없다");
+  // 거짓말 안 하기로는 부족하다 — 아무 말도 안 하면 '거짓말 안 함'으로 공짜
+  // 통과한다. 여기 목록은 **자료가 본체인 화면**이라, 못 받았으면 말해야 한다.
+  ck(`${id}: 못 받았다고 화면에서 말한다`, seen.admits,
+    "실패 고지도 배너도 없다 — 조용히 빈 화면");
   ck(`${id}: 로딩이 영원히 돌지 않는다`, !seen.stuck,
     "'불러오는 중…'이 걷히지 않았다 — 실패했는데 기다리라고 한다");
   await ctx.close();

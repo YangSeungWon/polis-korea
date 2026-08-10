@@ -11,7 +11,10 @@
 
   const reg = (typeof Elections !== 'undefined') ? await Elections.loadElectionMeta(stub.id) : null;
   if (!reg) {
+    // 회차 메타 하나가 안 오면 이 아래 전부가 안 돈다 — 지도·격자·여론조사가
+    // 통째로 빠진 채 정적 껍데기만 남는다. console.warn은 개발자만 본다.
     console.warn('[archive] 회차 메타 로드 실패:', stub.id);
+    showDataFailBanner();
     return;
   }
   const ar = reg.archive || {};
@@ -52,10 +55,10 @@
   // === 1단계: 결과(+시군구 chunk) — 이것만 받고 즉시 코어 렌더 ===
   let results = null;
   try {
-    results = await fetch(meta.resultsPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null);
+    results = await getJson(meta.resultsPath, null, { cache: 'no-cache' });
     if (results?._meta?.chunked) {
       const chunkPath = meta.resultsPath.replace(/\.json$/, '.sigungu.json');
-      const chunk = await fetch(chunkPath, { cache: 'no-cache' }).then((r) => r.ok ? r.json() : null).catch(() => null);
+      const chunk = await getJson(chunkPath, null, { cache: 'no-cache' });
       if (chunk?.races) results.races = (results.races || []).concat(chunk.races);
     }
   } catch { results = null; }
@@ -69,19 +72,18 @@
   window.Archive.comparison?.render(ctx);
   window.Archive.pledgeRealms?.render(ctx);
   mountTrust(ctx);
+  showDataFailBanner();
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
     const pollsPath = meta.pollsPath || 'data/polls/aggregated_candidates.json';
     const [polls, byReasons, exitData, pollIndex] = await Promise.all([
-      fetch(pollsPath).then((r) => r.json())
-        .then((all) => (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta)))
-        .catch(() => null),
-      fetch('data/byelection_reasons.json').then((r) => r.json())
-        .then((br) => (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, '')))
-        .catch(() => []),
+      getJson(pollsPath, { polls: [] })
+        .then((all) => (all.polls || []).filter((p) => window.Archive.filterPoll(p, meta))),
+      getJson('data/byelection_reasons.json', { reasons: [] })
+        .then((br) => (br.reasons || []).filter((r) => r.elctYmd === meta.date.replace(/-/g, ''))),
       (meta.exitPollPath !== null
-        ? fetch(meta.exitPollPath || `data/exit_polls/${meta.id}.json`).then((r) => r.ok ? r.json() : null).catch(() => null)
+        ? getJsonOptional(meta.exitPollPath || `data/exit_polls/${meta.id}.json`)
         : Promise.resolve(null)),
       // /polls/{id}/ 페이지 존재 여부 — 그 회차만 폴 CTA 노출(없는 회차 링크 404 방지).
       getJson('data/polls/election_index.json', []),
@@ -92,6 +94,7 @@
     ctx.pollPageExists = (pollIndex || []).some((e) => e.slug === meta.id);
     if (mode && mode.renderDeferred) await mode.renderDeferred(ctx);
     mountTrust(ctx);   // 출구조사·여론조사는 2단계에서 오므로 한 번 더 (mount는 교체 방식)
+    showDataFailBanner();
   })();
 })();
 

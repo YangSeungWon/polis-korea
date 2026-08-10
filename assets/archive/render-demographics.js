@@ -260,16 +260,16 @@
     if (document.getElementById('ar-demographics')) return;   // 1회
     let d;
     try {
-      d = await fetch(`data/polls/demographic_impact_${n}pres.json`).then((r) => (r.ok ? r.json() : null));
+      d = await getJsonOptional(`data/polls/demographic_impact_${n}pres.json`);
     } catch (e) { d = null; }
     if (!d || !(d.cells || []).length) return;
     DATA = d;
-    try { TURN = await fetch(`data/polls/turnout_demographics_${n}pres.json`).then((r) => (r.ok ? r.json() : null)); }
+    try { TURN = await getJsonOptional(`data/polls/turnout_demographics_${n}pres.json`); }
     catch (e) { TURN = null; }
     // 직전 대선(성연령 grid 보유) 로드 → swing 뷰. 같은 민주 후보(이재명) 집단 이동 비교.
     PRIOR = null; priorN = PRIOR_OF[n] || null;
     if (priorN) {
-      try { PRIOR = await fetch(`data/polls/demographic_impact_${priorN}pres.json`).then((r) => (r.ok ? r.json() : null)); }
+      try { PRIOR = await getJsonOptional(`data/polls/demographic_impact_${priorN}pres.json`); }
       catch (e) { PRIOR = null; }
       if (!PRIOR || !(PRIOR.cells || []).length) { PRIOR = null; priorN = null; }
     }
