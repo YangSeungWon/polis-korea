@@ -220,12 +220,57 @@ def check_json_shape_guards() -> None:
        "Array.isArray(fallback)" in _u and "typeof fallback === 'object'" in _u)
 
 
+def check_roster_scope() -> None:
+    """수집 범위(roster_scope)에서 '모름'과 '당선인'을 합치지 않는가.
+
+    공약 분포는 **당선인만 셌는지 전 후보를 셌는지에 따라 완전히 달라진다.**
+    그런데 roster_scope는 나중에 생긴 필드라 옛 회차 파일엔 없다. 없는 것을
+    '당선인'으로 읽으면 화면이 모르는 것을 안다고 말한다 — 실제로
+    render-pledge-realms.js가 그랬다(trust.js는 처음부터 셋으로 갈랐다).
+
+    상태가 셋이면 코드도 셋을 알아야 한다: 두 리터럴을 다 비교하지 않는 소비자는
+    상태를 접고 있는 것이다.
+    """
+    print("\n[수집 범위] '모름'과 '당선인'을 합치지 않는다")
+    users = []
+    for p in sorted((ROOT / "assets").rglob("*.js")):
+        t = p.read_text(encoding="utf-8", errors="replace")
+        if "roster_scope" not in t:
+            continue
+        users.append(p)
+        ck(f"{p.relative_to(ROOT)}: 두 상태를 다 비교한다",
+           "'all_candidates'" in t and "'winners_only'" in t,
+           "한쪽만 비교하면 나머지가 기본값으로 접힌다")
+    ck(f"roster_scope 소비자가 있다 ({len(users)}곳)", bool(users))
+
+    # 데이터 쪽 — 새로 들어온 파일이 이 필드를 빠뜨리면 잡는다. 옛 파일은 필드가
+    # 생기기 전이라 없는 게 정상이고, 그 목록을 고정해 둔다(늘면 실패).
+    LEGACY_NO_SCOPE = {
+        "19th-pres-2017", "20th-pres-2022", "21st-pres-2025",
+        "7th-local-2018", "8th-local-2022",
+        "byelection-2020-04-15", "byelection-2021-04-07", "byelection-2023-04-05",
+        "byelection-2023-10-11", "byelection-2024-04-10", "byelection-2024-10-16",
+        "byelection-2025-04-02",
+    }
+    missing = set()
+    for p in sorted((ROOT / "data/pledges").glob("*.json")):
+        if p.name == "realm-summary.json":
+            continue
+        m = json.loads(p.read_text(encoding="utf-8")).get("_meta") or {}
+        if not m.get("roster_scope"):
+            missing.add(p.stem)
+    ck(f"수집 범위가 빠진 파일이 알려진 것뿐이다 ({len(missing)}개)",
+       missing == LEGACY_NO_SCOPE,
+       f"새로 생김 {sorted(missing - LEGACY_NO_SCOPE)} · 채워짐 {sorted(LEGACY_NO_SCOPE - missing)}")
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
     check_stale_workarounds()
     check_comparison_surfaced()
     check_json_shape_guards()
+    check_roster_scope()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

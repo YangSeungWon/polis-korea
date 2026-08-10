@@ -42,13 +42,18 @@
     const total = d.realms.reduce((s, r) => s + r.n, 0);
     const max = Math.max(...d.realms.map((r) => r.n));
     // 무엇을 세었는지 먼저 밝힌다 — 당선인만인지 전 후보인지에 따라 분포가 달라진다.
-    const who = d.roster_scope === 'all_candidates' ? '등록 후보' : '당선인';
+    // roster_scope가 **없으면 모른다는 뜻**이지 '당선인'이 아니다. 이 필드는 나중에
+    // 생겨서 옛 회차 파일에는 안 들어 있다(7·8회 지선·재보궐·대선). null을 당선인으로
+    // 읽으면 화면이 모르는 것을 안다고 말하게 된다 — trust.js는 이미 셋으로 가른다.
+    const who = d.roster_scope === 'all_candidates' ? '등록 후보'
+      : d.roster_scope === 'winners_only' ? '당선인' : null;
     // 차트 합계가 공약 수와 다른 이유를 먼저 말한다. '미분류 N건 제외'라고 쓰면
     // 사용자는 10건을 분모로 잡고 '왜 2건이 22.2%지?' 하게 된다 — 실제 분모는 9건이다.
     // 알고 싶은 건 처리 로직(제외했다)이 아니라 분모가 얼마인가다.
     // note에 <b>를 쓰므로 값은 숫자로 강제한다 — 문자열이 그대로 들어가면 마크업이 샌다.
     const num = (v) => (Number(v) || 0).toLocaleString();
-    const note = `${who} ${num(d.n_people)}명 · `
+    const note = (who ? `${who} ${num(d.n_people)}명 · `
+      : `${num(d.n_people)}명(수집 범위 미상) · `)
       + (d.n_unclassified
         ? `공약 ${num(d.n_pledges)}건 중 <b>${num(total)}건 분류</b>`
           + ` · 미분류 ${num(d.n_unclassified)}건`
