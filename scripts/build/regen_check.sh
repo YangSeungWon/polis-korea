@@ -80,7 +80,8 @@ done
 OUT_PATHS=(person party region history polls archive share sitemap.xml robots.txt
            index.html elections.html
            assets/person-index.json assets/parties.js data/timeline.json
-           data/comparisons data/parties/lifecycle.json data/parties/political_axes.json
+           data/comparisons data/sitemap_lastmod.json
+           data/parties/lifecycle.json data/parties/political_axes.json
            data/parties/family_vote_share.json data/reaggregated)
 # **stage된 것은 통과**시킨다. 이 검사가 막으려는 것은 "커밋에 안 들어가는 산출물"이지
 # "새로 생긴 산출물"이 아니다. 새 생성기를 추가하는 커밋은 산출물이 HEAD에 없는 게

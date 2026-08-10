@@ -9,6 +9,7 @@ nav 가드가 경로 allowlist라 363개를 놓쳤던 것과 같은 구조의 �
 실행: .venv/bin/python tests/test_sitemap.py
 """
 from __future__ import annotations
+import json
 import re
 import subprocess
 import sys
@@ -46,6 +47,48 @@ def ck(name, cond, detail=""):
         fails.append(name)
 
 
+def check_lastmod_manifest(raw: str) -> None:
+    """lastmod가 **내용 해시**에서 나오는가 — git 커밋일에 기대지 않는다.
+
+    예전엔 git 커밋일을 썼는데 CI의 actions/checkout이 기본 shallow(fetch-depth 1)라
+    git log가 비었다. 그러면 조용히 오늘로 떨어져 **매일 4,980쪽이 '오늘 수정됨'**이
+    됐다 — lastmod를 넣어서 벗어나려던 바로 그 상태다. 로컬은 전체 클론이라 제대로
+    나와서 안 보였고, 매일 sitemap 4,981줄이 왕복했다.
+
+    정당 URL은 퍼센트 인코딩돼 나가서 파일을 못 찾아 145쪽이 늘 오늘이었다.
+    """
+    import hashlib
+    urls = dict(re.findall(r"<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>", raw))
+    man_path = ROOT / "data/sitemap_lastmod.json"
+    ck("lastmod 매니페스트가 있다", man_path.exists())
+    if not man_path.exists():
+        return
+    man = json.loads(man_path.read_text(encoding="utf-8"))["pages"]
+    ck(f"sitemap URL 전부가 매니페스트에 있다 ({len(man)}쪽)", len(man) >= len(urls) - 80,
+       f"매니페스트 {len(man)} vs URL {len(urls)}")
+    stale, missing = [], []
+    for rel, v in man.items():
+        fp = ROOT / rel
+        if not fp.exists():
+            missing.append(rel)
+            continue
+        if hashlib.sha1(fp.read_bytes()).hexdigest()[:12] != v["h"]:
+            stale.append(rel)
+    ck("매니페스트 해시가 실제 파일과 맞는다", not stale, str(stale[:4]))
+    ck("매니페스트가 없는 파일을 가리키지 않는다", not missing, str(missing[:4]))
+    # 날짜가 한 값으로 뭉쳐 있으면 그건 '오늘로 떨어진' 그 상태다
+    days = {v["d"] for v in man.values()}
+    ck(f"lastmod가 한 날짜로 뭉쳐 있지 않다 ({len(days)}종)", len(days) >= 2, str(days))
+    # sitemap에 적힌 값과 매니페스트가 같은가
+    bad = []
+    for loc, lm in urls.items():
+        rel = unquote(loc.replace(SITE, "")).strip("/")
+        rel = rel if rel.endswith(".html") else (rel + "/index.html" if rel else "index.html")
+        if rel in man and man[rel]["d"] != lm:
+            bad.append(f"{rel}: sitemap {lm} vs 매니페스트 {man[rel]['d']}")
+    ck("sitemap의 lastmod가 매니페스트와 같다", not bad, str(bad[:3]))
+
+
 def main():
     sm = ROOT / "sitemap.xml"
     raw = sm.read_text(encoding="utf-8")
@@ -67,6 +110,7 @@ def main():
     ck("전부 절대 URL", not rel, str(rel[:3]))
     ck("전부 lastmod가 있다", raw.count("<lastmod>") == len(locs),
        f"{raw.count('<lastmod>')}/{len(locs)}")
+    check_lastmod_manifest(raw)
 
     # ── 완전성: 실제 페이지가 전부 들어 있는가 ──────────────────────────────
     listed = {unquote(u[len(SITE):]) for u in locs}
