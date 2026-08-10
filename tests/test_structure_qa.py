@@ -430,6 +430,52 @@ def check_uncontested_null() -> None:
     ck(f"무투표 표시 없이 득표가 있는 경우도 있다 ({other}건)", other >= 0)
 
 
+def check_data_json_parses() -> None:
+    """data/의 JSON이 전부 파싱되는가 — 안 되면 **조용히 한 회차가 사라진다**.
+
+    빌드 스크립트 45곳이 `json.load`를 try/except로 감싸고 실패하면 continue한다.
+    방어 자체는 옳다. 문제는 그게 발화하면 그 파일만 통째로 빠진 산출물이 만들어지고
+    **아무도 모른다**는 것이다 — 화면은 멀쩡하고 개수만 조금 준다.
+
+    지금은 1,600여 개가 전부 파싱되므로 그 가드들은 휴면 상태다. 그 사실을 여기서
+    고정한다. 하나라도 깨지면 조용한 유실 대신 이 검사가 실패한다.
+
+    최상위가 null인 것도 잡는다. JS 쪽에서 같은 것에 물렸다 — `r.ok ? r.json() : 폴백`이
+    본문 null을 그대로 통과시켜 'Cannot read properties of null'로 터졌다.
+    """
+    print("\n[원자료] data/ JSON이 전부 읽히는가")
+    # 대용량 raw는 제외한다(PDF·격자·SGIS 등 수 GB). 빌드가 읽는 것만 본다.
+    SKIP = ("raw/pdf", "raw/sgis", "raw/grids", "raw/realmeter_self", "raw/hgis",
+            "raw/admdongkor", "raw/parsed", "raw/results_csv", "raw/turnout")
+    bad, null_top, n = [], [], 0
+    for p in (ROOT / "data").rglob("*.json"):
+        rel = str(p.relative_to(ROOT))
+        if any(s in rel for s in SKIP):
+            continue
+        n += 1
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception as e:                                   # noqa: BLE001
+            bad.append(f"{rel}: {str(e)[:50]}")
+            continue
+        if d is None:
+            null_top.append(rel)
+    ck(f"data/ JSON {n:,}개가 전부 파싱된다", not bad, str(bad[:4]))
+    ck("최상위가 null인 파일이 없다", not null_top, str(null_top[:4]))
+    ck(f"검사 대상이 충분하다 ({n:,}개)", n >= 1000, str(n))
+    # results는 비어 있으면 안 된다 — 빈 결과 파일은 '없음'이 아니라 '못 받음'이다.
+    # 스키마가 셋이다: 현행 races · 옛 offices · 더 옛 national/district/sigungu.
+    # (local_5~8은 offices만 있는 마이그레이션 잔재라 races가 비어 있는 게 정상)
+    PAYLOAD = ("races", "offices", "national", "district", "sigungu",
+               "presidential", "national_assembly", "local")
+    empty = []
+    for p in (ROOT / "data/results").glob("*.json"):
+        d = json.loads(p.read_text(encoding="utf-8"))
+        if not any(d.get(k) for k in PAYLOAD):
+            empty.append(str(p.relative_to(ROOT)))
+    ck("결과 파일이 비어 있지 않다", not empty, str(empty[:4]))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -441,6 +487,7 @@ def main() -> int:
     check_pct_denominator()
     check_rank_one_meaning()
     check_uncontested_null()
+    check_data_json_parses()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
