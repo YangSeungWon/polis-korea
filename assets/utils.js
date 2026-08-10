@@ -621,9 +621,42 @@ function showDataFailBanner() {
   host.insertBefore(d, host.firstChild);
 }
 
+// 로딩 오버레이(#loading)를 정직하게 끝낸다.
+//
+// history·연표 계열은 `Promise.all([loadJson(...)])`로 시작하는데, loadJson은
+// 실패하면 throw한다. 그러면 init 전체가 거부되고 **오버레이를 걷는 줄까지 못 간다.**
+// 실측에서 data/**를 끊으면 '데이터 불러오는 중…'에 영원히 멈춰 있었다.
+// 거짓말은 아니지만 사실도 아니다 — 기다리면 온다고 암시하고, 오지 않는다.
+//
+// 오버레이는 84개 페이지가 공유하므로 한 자리에서 잡는다. 지우지 않고 **내용만**
+// 바꾸므로, 뒤늦게 성공한 로더가 평소대로 걷어도 부딪히지 않는다.
+function failLoading(why) {
+  if (typeof document === 'undefined') return;
+  const el = document.getElementById('loading');
+  if (!el || el.hidden || el.dataset.failed) return;
+  el.dataset.failed = '1';
+  el.classList.add('is-failed');
+  el.textContent = DATA_FAIL_TEXT + ' ';
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'load-retry';
+  b.textContent = '다시 시도';
+  b.addEventListener('click', () => location.reload());
+  el.appendChild(b);
+  if (why) el.title = String(why).slice(0, 200);
+}
+
 if (typeof window !== 'undefined') {
   window.getJson = getJson;
   window.dataLoadFailed = dataLoadFailed;
   window.emptyText = emptyText;
   window.showDataFailBanner = showDataFailBanner;
+  window.failLoading = failLoading;
+  // 로딩 중에 거부가 새어 나왔다 = 그 로드는 끝나지 않는다. 이 조합일 때만 손댄다.
+  window.addEventListener('unhandledrejection', (e) => failLoading(e && e.reason));
+  window.addEventListener('error', (e) => {
+    // 스크립트 자체가 죽어도 오버레이는 남는다. 자원 로드 실패(img 등)는 제외.
+    if (e && e.target && e.target !== window) return;
+    failLoading(e && e.message);
+  });
 }

@@ -34,17 +34,23 @@ async function init() {
   let geo = null;
   try {
     const [bj, gj, rj, results] = await Promise.all([
-      fetch('data/polls/byelection.json').then((r) => r.json()),
-      fetch('data/geo/sido_simple.json').then((r) => r.json()).catch(() => null),
-      fetch('data/raw/nec_roster_9th.json').then((r) => r.ok ? r.json() : null).catch(() => null),
-      fetch('data/results/9th-byelection-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+      getJson('data/polls/byelection.json', { districts: [] }),
+      getJson('data/geo/sido_simple.json'),
+      getJson('data/raw/nec_roster_9th.json'),
+      getJson('data/results/9th-byelection-2026.json'),
     ]);
+    if (dataLoadFailed(bj)) throw new Error('byelection.json');
     state.data = bj;
     geo = gj;
     state.roster = rj;
     state.results = results;
   } catch (e) {
+    // **못 받은 것을 '조사 없음'으로 그리지 않는다.** 여기서 조용히 빈 districts로
+    // 떨어지면 지도는 '점선 = 조사 없음' 범례를 단 채 비어 나오고, 아래에서
+    // 오버레이까지 걷혀서 **다 불러온 것처럼** 보인다. 실측에서 그랬다.
     state.data = { districts: [] };
+    failLoading(e);
+    return;
   }
   // 결과만 있고 여론조사 없던 선거구를 stub districts로 합치기 (n_polls=0).
   mergeResultOnlyDistricts();
@@ -63,6 +69,7 @@ async function init() {
   renderCards();
   // 초기 marker 강조 (페이지 로드 시 자동 scroll은 X)
   if (state.selected) selectDistrict(state.selected, { scroll: false });
+  showDataFailBanner();   // 부수 자료(경계·명부·결과)만 빠진 경우
 }
 
 // 여론조사 없고 결과만 있는 선거구를 districts에 추가 (stub, n_polls=0).

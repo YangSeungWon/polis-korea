@@ -307,7 +307,8 @@ for (const spec of pages) {
 //
 // 규칙: **'없음'을 말해도 되는 건 실제로 받아왔을 때뿐이다.** 못 받았으면 그
 // 사실이 화면에 있어야 한다(.data-fail-banner 또는 '불러오지 못했습니다').
-const OFFLINE = ['home', 'polls', 'poll-round', 'tracker'];
+const OFFLINE = ['home', 'polls', 'poll-round', 'tracker',
+  'history', 'chronology', 'history-local', 'byelection'];
 console.log('\n[오프라인] 데이터를 못 받았을 때의 진술');
 for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   curPage = id + '/offline';
@@ -322,9 +323,12 @@ for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   await page.waitForTimeout(2200);
   const seen = await page.evaluate(() => {
     const t = (document.querySelector('main') || document.body).innerText;
+    const lo = document.getElementById('loading');
     return {
       claimsEmpty: /없습니다|데이터 없음|조사 없음|자료 없음/.test(t),
       admits: !!document.querySelector('.data-fail-banner') || /불러오지 못했습니다/.test(t),
+      // 걷히지 않은 로딩 오버레이 = '기다리면 온다'는 암시. 오지 않는다.
+      stuck: !!(lo && !lo.hidden && !lo.dataset.failed),
     };
   });
   // 차단이 0이면 그 페이지는 data/를 안 쓴 것 — 검사가 공허하게 통과하지 않게 막는다.
@@ -332,6 +336,8 @@ for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   ck(`${id}: 못 받았으면 '없음'이라 단언하지 않는다`,
     !seen.claimsEmpty || seen.admits,
     "빈 상태 문구는 있는데 실패 고지가 없다");
+  ck(`${id}: 로딩이 영원히 돌지 않는다`, !seen.stuck,
+    "'불러오는 중…'이 걷히지 않았다 — 실패했는데 기다리라고 한다");
   await ctx.close();
 }
 
