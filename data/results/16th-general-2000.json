@@ -3,9 +3,10 @@
     "election": "제16대 국회의원선거",
     "election_id": "16th-general-2000",
     "election_date": "2000-04-13",
-    "source": "wikipedia-ko-infobox",
-    "_note": "옛 총선 — 위키백과 infobox에서 정당별 nation 합산 (지역구+비례 의석 합·득표·득표율). 지역구별 break 없음.",
-    "n_rows": 1
+    "source": "nec-lod + wikipedia-ko-infobox",
+    "_note": "선거구별(tc2)은 NEC LOD(data.nec.go.kr SPARQL). 전국구(tc7)만 위키백과 infobox의 정당별 집계다 — 한 파일에 출처가 둘이다.",
+    "n_rows": 1,
+    "_district_source": "data.nec.go.kr SPARQL (fetch_lod_assembly.py)"
   },
   "races": [
     {

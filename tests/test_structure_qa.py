@@ -597,6 +597,84 @@ def check_local_proportional_timeline() -> None:
     ck("비례를 '미반영'이라 말하는 회차가 없다", not stale, str(stale))
 
 
+def check_provenance_not_stale() -> None:
+    """출처 표시가 '없다'고 말한 것이 실제로 없는가.
+
+    `archive.data_source_note`는 **화면에 나가는 출처 표시**다(/about 커버리지).
+    11개가 낡아 있었다 — 13~15대 대선이 '시도/시군구 break 없음'이라 말하면서
+    시군구 238~269개를 담고 있었고, 3·4회 지선이 '비례 미반영'이라 말하면서
+    비례를 담고 있었다. 자료가 늘 때 표시를 안 고친 것이다.
+
+    산문을 통째로 훑는 검사를 먼저 썼다가 오탐이 났다 — '전국구/유정회 미반영
+    (지역구만)' 한 문장에 '지역구'와 '미반영'이 같이 있어서, 지역구가 없다고
+    말하는 것으로 읽혔다. 오탐 나는 검사는 결국 꺼진다. 그래서 **표현별로**
+    적는다. 각 규칙이 실제로 한 번은 발동하는지도 함께 본다 — 문구가 바뀌어
+    아무것도 안 잡으면 그것도 낡은 것이다.
+    """
+    print("\n[출처] '없다'고 말한 것이 실제로 없는가")
+    # must=True  지금 실제로 있는 부재 주장 — 안 잡히면 문구가 바뀐 것이다
+    # must=False 재발 덫 — 고쳐 놓은 표현이라 발동하지 않는 게 정상이다
+    RULES = [
+        ("시도별 직접투표 없음", True, r"시도별 직접투표\s*없음",
+         lambda sc, tc: {"sido", "sigungu"} & sc),
+        ("전국구 제도 없음", True, r"전국구[^.]*(제도가 없다|미반영)",
+         lambda sc, tc: {"7"} & tc),
+        ("비례 선거 없음", True, r"비례대표 선거는 이 회차에 없다",
+         lambda sc, tc: {"8", "9"} & tc),
+        ("기초비례 제도 없음", True, r"기초의원 비례[^.]*없다",
+         lambda sc, tc: {"9"} & tc),
+        ("시군구 break 없음", False, r"시(도/|·)?시?군구[^.]*break 없음",
+         lambda sc, tc: {"sigungu"} & sc),
+        ("지역구 break 없음", False, r"(지역구별|선거구별)[^.]*break 없음",
+         lambda sc, tc: {"district"} & sc),
+    ]
+    fired = {name: 0 for name, _m, _p, _f in RULES}
+    bad = []
+    for f in sorted((ROOT / "data/elections").glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        if not isinstance(d, dict) or "id" not in d:
+            continue
+        ar = d.get("archive") or {}
+        rp = ar.get("results_path")
+        if not rp or not (ROOT / rp).exists():
+            continue
+        text = " ".join(str(v) for k, v in list(d.items()) + list(ar.items())
+                        if isinstance(v, str) and (k.startswith("_") or "note" in k))
+        hits = [(n, present) for n, _m, pat, present in RULES if re.search(pat, text)]
+        if not hits:
+            continue
+        rd = ROOT / "data/results"
+        scopes, tcs = set(), set()
+        for pp in [rd / f"{d['id']}.json"] + sorted(rd.glob(f"{d['id']}.*.json")):
+            for r in json.loads(pp.read_text(encoding="utf-8")).get("races") or []:
+                scopes.add(r.get("scope"))
+                tcs.add(r.get("sg_typecode"))
+        for name, present in hits:
+            fired[name] += 1
+            got = present(scopes, tcs)
+            if got:
+                bad.append(f"{d['id']}: '{name}'이라 말하는데 {sorted(got)}가 있다")
+    ck("'없다'고 말한 자료가 실제로 없다", not bad, str(sorted(set(bad))[:4]))
+    # 잡아야 할 규칙이 안 잡으면 문구가 바뀐 것이다 — 통과가 아니라 실패다.
+    silent = [n for n, must, _p, _f in RULES if must and not fired[n]]
+    ck("부재를 주장하는 회차가 실제로 있다", not silent,
+       f"문구가 바뀌었거나 사라졌다: {silent}")
+    ck(f"재발 덫이 걸리지 않았다 ({sum(1 for n, m, _p, _f in RULES if not m)}개)",
+       all(not fired[n] for n, m, _p, _f in RULES if not m),
+       "고쳐 둔 표현이 되살아났다")
+
+    # 후보 0명인 race = 빈 껍데기. 없는 선거를 '자료를 못 받았다'로 보이게 한다.
+    # 1~5대 총선에 전국구(tc7) 빈 race가 5개 있었다 — 전국구는 1963년 6대부터다.
+    hollow, races = [], 0
+    for pp in sorted((ROOT / "data/results").glob("*.json")):
+        d = json.loads(pp.read_text(encoding="utf-8"))
+        for r in d.get("races") or []:
+            races += 1
+            if not (r.get("candidates") or []):
+                hollow.append(f"{pp.stem} tc{r.get('sg_typecode')} {r.get('scope')}")
+    ck(f"후보 0명인 race가 없다 (race {races:,})", not hollow, str(hollow[:4]))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -612,6 +690,7 @@ def main() -> int:
     check_absence_doc()
     check_election_meta_paths()
     check_local_proportional_timeline()
+    check_provenance_not_stale()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
