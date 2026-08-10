@@ -23,7 +23,7 @@ function renderDetail() {
     <span class="count">${state.office} · ${officePolls.length}건</span>
   </div>`;
   if (!officePolls.length) {
-    html += `<div class="detail-empty">${state.office} 관련 조사가 아직 없습니다.</div>`;
+    html += `<div class="detail-empty">${emptyText(`${state.office} 관련 조사가 아직 없습니다.`, state.data)}</div>`;
     // 조사가 없어도 실제 결과(개표 확정)는 보여준다 — 과거 선거에서 빈 패널 방지.
     const actualNoPoll = (typeof window.actualResultFor === 'function')
       ? window.actualResultFor(state.selectedSido, state.selectedSigungu, state.office) : null;

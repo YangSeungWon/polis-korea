@@ -298,6 +298,43 @@ for (const spec of pages) {
   }
 }
 
+// ── 못 받았을 때 화면이 뭐라고 말하는가 ─────────────────────────────────────
+//
+// data/** 를 전부 끊고 연다. 이때 '조사가 없습니다'라고 **단언하면 거짓말**이다 —
+// 읽는 사람은 여론조사가 없었던 것과 우리가 못 받은 것을 구별할 수 없다.
+// 실제로 polls·tracker·홈이 그렇게 말하고 있었다. 이 저장소가 반복해서 겪은
+// '그럴듯한 기본값이 결손을 덮는' 결함의 UI 판이다.
+//
+// 규칙: **'없음'을 말해도 되는 건 실제로 받아왔을 때뿐이다.** 못 받았으면 그
+// 사실이 화면에 있어야 한다(.data-fail-banner 또는 '불러오지 못했습니다').
+const OFFLINE = ['home', 'polls', 'poll-round', 'tracker'];
+console.log('\n[오프라인] 데이터를 못 받았을 때의 진술');
+for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
+  curPage = id + '/offline';
+  const spec = pages.find((p) => p.id === id);
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  let blocked = 0;
+  await page.route('**/data/**', (r) => { blocked++; r.abort(); });
+  try {
+    await page.goto(srv.url + spec.url, { waitUntil: 'load', timeout: 25000 });
+  } catch { /* 자원이 죽은 채 여는 게 목적이라 load 실패는 무시 */ }
+  await page.waitForTimeout(2200);
+  const seen = await page.evaluate(() => {
+    const t = (document.querySelector('main') || document.body).innerText;
+    return {
+      claimsEmpty: /없습니다|데이터 없음|조사 없음|자료 없음/.test(t),
+      admits: !!document.querySelector('.data-fail-banner') || /불러오지 못했습니다/.test(t),
+    };
+  });
+  // 차단이 0이면 그 페이지는 data/를 안 쓴 것 — 검사가 공허하게 통과하지 않게 막는다.
+  ck(`${id}: 데이터 요청이 실제로 차단됐다`, blocked > 0, `${blocked}건`);
+  ck(`${id}: 못 받았으면 '없음'이라 단언하지 않는다`,
+    !seen.claimsEmpty || seen.admits,
+    "빈 상태 문구는 있는데 실패 고지가 없다");
+  await ctx.close();
+}
+
 await browser.close();
 await srv.close();
 console.log(`\n총 ${pass + fails.length}건: ${pass} pass, ${fails.length} fail`);

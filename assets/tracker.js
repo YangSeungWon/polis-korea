@@ -182,7 +182,7 @@
 
   // ===== ① 국정평가 =====
   function renderApproval(records) {
-    if (!records.length) return '<div class="tk-empty">데이터 없음</div>';
+    if (!records.length) return `<div class="tk-empty">${emptyText('데이터 없음')}</div>`;
     const houseOf = {};   // house effect는 아래 표로만 노출 — 추세선엔 미적용(원자료 그대로).
     const W = 960, H = 360, P = { l: 30, r: 64, t: 28, b: 22 };
     const tMin = Math.min(...records.map((r) => ms(r.period_end)));
@@ -261,7 +261,7 @@
       yMax = Math.max(yMax, peak);
     }
     const parties = Object.keys(series);
-    if (!parties.length) return '<div class="tk-empty">데이터 없음</div>';
+    if (!parties.length) return `<div class="tk-empty">${emptyText('데이터 없음')}</div>`;
     yMax = Math.min(60, Math.ceil(yMax / 10) * 10 + 5);
     const W = 960, H = 380, P = { l: 30, r: 100, t: 16, b: 22 };  // r: 풀네임 라벨 여백
     const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
@@ -338,7 +338,7 @@
       yMax = Math.max(yMax, peak);
     }
     const names = Object.keys(series);
-    if (!names.length) return '<div class="tk-empty">데이터 없음</div>';
+    if (!names.length) return `<div class="tk-empty">${emptyText('데이터 없음')}</div>`;
     yMax = Math.min(60, Math.ceil(yMax / 10) * 10 + 5);
     const W = 960, H = 380, P = { l: 30, r: 96, t: 16, b: 26 };
     const yOf = (v) => P.t + (1 - v / yMax) * (H - P.t - P.b);
@@ -438,7 +438,7 @@
       yMax = Math.max(yMax, ...o.pts.map((p) => p.v));
     }
     const names = Object.keys(series);
-    if (!names.length) { host.innerHTML = '<div class="tk-empty">데이터 없음</div>'; return; }
+    if (!names.length) { host.innerHTML = `<div class="tk-empty">${emptyText('데이터 없음')}</div>`; return; }
     yMax = Math.min(60, Math.ceil(yMax / 10) * 10);
     const W = 960, H = 360, P = { l: 30, r: 84, t: 16, b: 22 };
     const xOf = (t) => P.l + (t - tMin) / (tMax - tMin || 1) * (W - P.l - P.r);
@@ -520,6 +520,7 @@
     renderAll();
     renderLeanTable(recs, polls);
     document.getElementById('tk-loading')?.remove();
+    showDataFailBanner();
   }
 
   // ---- 기관별 lean 표 (538식 투명성) — 민주·국힘·국정긍정 잔차 평균 ----

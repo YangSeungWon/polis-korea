@@ -129,6 +129,8 @@ async function loadData() {
   state.data.polls = state.data.polls.filter((p) => !p.is_self_poll);
   // 셀별로 조사 시점 다르므로 헤더에는 일반 안내만 (init time에 이미 박혀있음)
   $('#loading').hidden = true;
+  // 셀마다 '조사 없음'이라 적히는 화면이라, 못 받았을 땐 위에서 한 번 밝힌다.
+  showDataFailBanner();
 }
 
 // 지선 출처-가공은 PollAdapter로 통일(대선·총선과 동일 패턴). state.data.polls 주입 wrapper.

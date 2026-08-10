@@ -63,9 +63,9 @@ async function init() {
   let polls = [], sgHex = [], boe = null, results = null, byResults = null;
   try {
     const [sg, by, agg] = await Promise.all([
-      fetch('data/geo/sigungu_hex.json').then((r) => r.json()),
-      fetch('data/polls/byelection.json').then((r) => r.ok ? r.json() : null).catch(() => null),
-      fetch('data/polls/aggregated_candidates.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+      getJson('data/geo/sigungu_hex.json', []),
+      getJson('data/polls/byelection.json'),
+      getJson('data/polls/aggregated_candidates.json'),
     ]);
     sgHex = sg; boe = by;
     polls = (agg?.polls || []).filter((p) => !p.is_self_poll);
@@ -74,15 +74,14 @@ async function init() {
     }
     if (meta.source === 'results') {
       const [main, byR] = await Promise.all([
-        fetch('data/results/9th-local-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
-        fetch('data/results/9th-byelection-2026.json').then((r) => r.ok ? r.json() : null).catch(() => null),
+        getJson('data/results/9th-local-2026.json'),
+        getJson('data/results/9th-byelection-2026.json'),
       ]);
       // _meta.chunked → 기초단체장(tc=4) race는 .sigungu.json chunk에 있어 lazy fetch 후 합치기
       if (main) {
         results = main;
         if (main._meta?.chunked) {
-          const sigungu = await fetch('data/results/9th-local-2026.sigungu.json')
-            .then((r) => r.ok ? r.json() : null).catch(() => null);
+          const sigungu = await getJson('data/results/9th-local-2026.sigungu.json');
           if (sigungu?.races) results.races = (results.races || []).concat(sigungu.races);
         }
       }
@@ -103,6 +102,7 @@ async function init() {
   renderByelectionPanel(boe, byResults);
   renderLegend();
   $('#dash-loading')?.setAttribute('hidden', '');
+  showDataFailBanner();
 }
 
 function renderEmpty(meta) {
@@ -288,7 +288,7 @@ function renderByelectionPanel(boe, byResults) {
     });
   }
   if (!items.length) {
-    wrap.innerHTML = '<div class="dash-empty">데이터 없음</div>';
+    wrap.innerHTML = `<div class="dash-empty">${emptyText('데이터 없음')}</div>`;
     return;
   }
   wrap.innerHTML = items.map((d) => {

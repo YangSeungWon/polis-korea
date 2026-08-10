@@ -556,6 +556,26 @@ function buildPartyTrendSVG(polls, opts) {
 //   getJson('a.json', [])            → 항상 배열
 //   getJson('b.json', { polls: [] }) → 항상 객체
 //   getJson('c.json')                → 그대로 또는 null
+//
+// **폴백을 돌려줄 땐 그 사실을 표시한다.** 안 그러면 '정상적으로 비었다'와 '못
+// 받았다'가 똑같은 빈 배열이 되어, 화면이 "조사가 없습니다"라고 **단언**한다.
+// 실측했다: data/** 를 전부 끊으면 polls·tracker·홈이 그렇게 말한다. 읽는 사람은
+// 여론조사가 없었던 것과 우리가 못 받은 것을 구별할 방법이 없다.
+// 이 저장소가 반복해서 겪은 그 결함이다 — 그럴듯한 기본값이 결손을 덮는다.
+function _failed(fallback, url, why) {
+  if (typeof window !== 'undefined') {
+    (window.__dataLoadFailures || (window.__dataLoadFailures = [])).push({ url, why });
+  }
+  // 열거 불가로 붙인다 — JSON 직렬화·Object.keys·순회에 끼어들면 안 된다.
+  if (fallback && typeof fallback === 'object') {
+    try {
+      Object.defineProperty(fallback, '_loadFailed', {
+        value: true, enumerable: false, configurable: true, writable: true });
+    } catch (e) { /* 얼린 객체를 폴백으로 준 경우 — 표시는 못 해도 전역엔 남는다 */ }
+  }
+  return fallback;
+}
+
 async function getJson(url, fallback = null, init) {
   const shaped = Array.isArray(fallback)
     ? (d) => Array.isArray(d)
@@ -564,11 +584,46 @@ async function getJson(url, fallback = null, init) {
       : () => true;
   try {
     const r = await fetch(url, init);
-    if (!r.ok) return fallback;
+    if (!r.ok) return _failed(fallback, url, 'http ' + r.status);
     const d = await r.json();
-    return shaped(d) ? d : fallback;
+    return shaped(d) ? d : _failed(fallback, url, 'shape');
   } catch (e) {
-    return fallback;
+    return _failed(fallback, url, 'fetch');
   }
 }
-if (typeof window !== 'undefined') window.getJson = getJson;
+
+// 못 받았는가. 인자를 주면 그 값들만, 안 주면 페이지 전체.
+// 자리마다 아는 게 다르다 — state.data는 자기 것을 알고, 배너는 전체를 안다.
+function dataLoadFailed(...objs) {
+  if (objs.length) return objs.some((o) => !!(o && o._loadFailed));
+  return !!(typeof window !== 'undefined'
+    && window.__dataLoadFailures && window.__dataLoadFailures.length);
+}
+
+// 빈 상태 문구. '없다'고 단언해도 되는 건 실제로 받아왔을 때뿐이다.
+const DATA_FAIL_TEXT = '데이터를 불러오지 못했습니다 — 없는 것이 아니라 못 받은 것입니다.';
+function emptyText(emptyMsg, ...objs) {
+  return dataLoadFailed(...objs) ? DATA_FAIL_TEXT : emptyMsg;
+}
+
+// 페이지 상단 한 줄. 셀 250개가 저마다 '조사 없음'이라 말하는 걸 일일이 고치는 대신,
+// 화면 전체에 대해 한 번 사실을 밝힌다.
+function showDataFailBanner() {
+  if (typeof document === 'undefined' || !dataLoadFailed()) return;
+  if (document.querySelector('.data-fail-banner')) return;
+  const host = document.querySelector('main') || document.body;
+  if (!host) return;
+  const n = window.__dataLoadFailures.length;
+  const d = document.createElement('p');
+  d.className = 'data-fail-banner';
+  d.setAttribute('role', 'status');
+  d.textContent = `${DATA_FAIL_TEXT} (요청 ${n}건 실패) 아래 '없음'·'0'은 사실이 아닐 수 있습니다.`;
+  host.insertBefore(d, host.firstChild);
+}
+
+if (typeof window !== 'undefined') {
+  window.getJson = getJson;
+  window.dataLoadFailed = dataLoadFailed;
+  window.emptyText = emptyText;
+  window.showDataFailBanner = showDataFailBanner;
+}

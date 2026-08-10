@@ -22,7 +22,7 @@
     const slice = all.filter(pass).slice(0, SHOW);
     h.innerHTML = slice.length
       ? slice.map((p) => renderPollCard(p, p.office_label)).join('')
-      : '<p class="rp-empty">표시할 조사가 없습니다.</p>';
+      : `<p class="rp-empty">${emptyText('표시할 조사가 없습니다.')}</p>`;
   }
 
   async function load() {
