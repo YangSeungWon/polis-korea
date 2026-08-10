@@ -49,24 +49,15 @@ registry 등재는 **1차 자료 최소 하나**를 요구한다. 선관위 정�
 때의 관측이면** `pid:{이름}(미상)`으로 떨어뜨린다. 이 두 번째 문이 없을 때
 1,650,284표가 자기가 없던 시절의 정당 identity를 쓰고 있었다.
 
-## 반복해서 나온 실패: 한 필드가 두 질문에 답한다
+## 한 필드가 두 질문에 답한다
 
-이 저장소에서 다섯 번 같은 모양으로 나왔다. 새 필드를 만들기 전에 **이 필드가
-몇 개의 질문에 답하는지** 먼저 세는 편이 빠르다.
+정당 층에서만 여섯 번 나왔다 — `stream`(계보↔이념), `relation`(생성↔종료),
+`ended_by`(종료↔이름 복귀), `dissolved`(소멸↔거기까지만 안다), `founded`,
+그리고 이름 문자열(그 회차 정식명↔registry 노드).
 
-| 필드 | 겸하던 두 질문 | 가른 방법 |
-|---|---|---|
-| `stream` | 조직 계보 ↔ 이념 위치 | `lineage_family` · `contemporary_position` |
-| `relation` | 어떻게 생겼나 ↔ 어떻게 끝났나 | `formed_by` · `ended_by` (lifecycle.json) |
-| `ended_by` | 종료 ↔ 이름 복귀 | `temporary_rename` 추가 |
-| `dissolved` | 소멸했다 ↔ 거기까지만 안다 | `dissolved_bound: last_known_active` |
-| `founded` | 시작했다 ↔ 거기서부터 안다 | `founded_bound: first_known_active` |
-| `resolved_to` | 그 회차 정식명 ↔ registry 노드 | `official_name` · `resolved_to` |
-
-`dissolved_bound`가 필요했던 이유가 전형적이다. 국민회는 1951년에 여당 지위를
-잃었을 뿐 3·4대 총선에 계속 나왔고, 실제 소멸 시점은 자료가 없다. `dissolved`를
-지우면 '현존'이 되어 뒤 시대 동명 정당을 삼키고, 날짜를 지어내면 없는 사실을
-만든다. 경계는 유지하되 그 값이 **마지막으로 확인된 활동 시점**임을 표시한다.
+같은 모양이 데이터·산출·화면 세 층에서 **열여섯 번** 나왔고, 목록과 판별법은
+**`docs/absence.md`**에 모아 두었다. 새 필드를 만들기 전에 거기 체크리스트를
+먼저 지난다. 아래는 정당 층에만 해당하는 부분이다.
 
 ## 시기 노드
 

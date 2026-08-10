@@ -476,6 +476,55 @@ def check_data_json_parses() -> None:
     ck("결과 파일이 비어 있지 않다", not empty, str(empty[:4]))
 
 
+def check_absence_doc() -> None:
+    """docs/absence.md가 가리키는 것이 실제로 있는가.
+
+    이 문서는 '없다·모른다·0·못 받았다'를 가른 열네 사례의 정본이다. 사례가
+    늘거나 검사가 이름을 바꾸면 문서가 조용히 낡는다 — 이 저장소가 반복해서
+    겪은 '문장으로만 적어 두면 낡는다' 그대로다. 그래서 문서 자체를 검사한다.
+    """
+    print("\n[문서] docs/absence.md가 가리키는 것이 실재하는가")
+    doc = ROOT / "docs/absence.md"
+    ck("docs/absence.md가 있다", doc.exists())
+    if not doc.exists():
+        return
+    t = doc.read_text(encoding="utf-8")
+
+    # 표 행 = 사례. 헤더·구분선을 빼고 '| … | … | … | … |' 4열 행만 센다.
+    rows = [ln for ln in t.splitlines()
+            if ln.startswith("|") and ln.count("|") == 5
+            and "---" not in ln and "겸하던 두 질문" not in ln]
+    KO = {"열둘": 12, "열셋": 13, "열네": 14, "열다섯": 15, "열여섯": 16}
+    said = [v for k, v in KO.items() if f"**{k} 번**" in t]
+    ck("문서가 사례 수를 밝힌다", len(said) == 1, str(said))
+    if said:
+        ck(f"표 행 수가 문서가 말하는 사례 수와 같다 ({len(rows)})",
+           len(rows) == said[0], f"표 {len(rows)} vs 본문 {said[0]}")
+
+    # 다른 문서도 같은 수를 말해야 한다 — 한 곳만 고치면 갈라진다.
+    for rel in ("docs/party-identity.md", "docs/schema.md"):
+        o = (ROOT / rel).read_text(encoding="utf-8")
+        ck(f"{rel}이 같은 사례 수를 말한다",
+           not said or any(f"{k} 번" in o for k, v in KO.items() if v == said[0]),
+           "absence.md와 숫자가 다르다")
+
+    # '검사' 열이 가리키는 것이 실재하는가
+    qa = (ROOT / "tests/test_structure_qa.py").read_text(encoding="utf-8")
+    missing = []
+    for ln in rows:
+        cell = ln.split("|")[4].strip().strip("`")
+        if cell.startswith("tests/") and not (ROOT / cell).exists():
+            missing.append(cell)
+        elif cell.startswith("check_") and f"def {cell}(" not in qa:
+            missing.append(cell)
+        elif cell.startswith("UI 불변식"):
+            ui = ROOT / "tests/ui/test_ui_invariants.mjs"
+            if not ui.exists() or "OFFLINE" not in ui.read_text(encoding="utf-8"):
+                missing.append(cell)
+    ck("문서가 가리키는 검사가 전부 실재한다", not missing, str(missing))
+    ck(f"검사 열이 비어 있지 않다 ({len(rows)}행)", len(rows) >= 12, str(len(rows)))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -488,6 +537,7 @@ def main() -> int:
     check_rank_one_meaning()
     check_uncontested_null()
     check_data_json_parses()
+    check_absence_doc()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
