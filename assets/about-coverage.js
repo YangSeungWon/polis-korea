@@ -12,23 +12,26 @@
   const calendar = await fetch('/data/byelection_calendar.json')
     .then((r) => r.ok ? r.json() : null).catch(() => null);
 
-  // 메타만 보고 source 분류 — result 파일 fetch X (lazy).
+  // 출처는 **적혀 있는 것**에서 읽는다. 예전엔 없으면 연도로 떨어뜨렸다 —
+  // `year >= 2010 ? 'nec' : 'wiki'`. 그래서 13~16대 총선처럼 NEC 개표현황·LOD로
+  // 받아 온 회차가 전부 '위키'로 칠해졌다. 그럴듯한 기본값이 사실을 덮은 것이다.
+  //
+  // 한 회차에 출처가 둘인 경우가 실제로 있다(14~16대 총선: 선거구=LOD·전국구=위키).
+  // 둘 중 하나로 고르면 어느 쪽도 참이 아니라서 'mixed'로 따로 둔다.
+  // 아무 표시도 없으면 'unknown'이다 — 추정하지 않는다.
+  const NEC_MARK = /(NEC|선관위|중앙선거관리|개표현황|당선인명부|OpenAPI|LOD|info\.nec|당선인 API)/;
+  const WIKI_MARK = /위키/;
   function classifySource(meta) {
     if (!meta) return 'none';
-    // 위키 source 명시
-    if ((meta.archive?.data_source_note || '').includes('위키')) return 'wiki';
-    if ((meta._data_caveat || '').includes('위키')) return 'wiki';
-    if ((meta.nec?._note || '').includes('미가용')) return 'wiki';
-    // **선거 생애로 자료 상태를 판정하지 않는다.** 예전엔 status === 'active'면 곧바로
-    // '잠정(live)'이라 했는데, status는 '선거가 진행 중인가'이고 자료가 잠정인지는
-    // 별개다 — 선거가 끝나도 자료는 한동안 잠정이고, 진행 중이어도 확정된 부분이 있다.
-    // 자료 쪽 신호(is_final)가 메타에 있으면 그걸 쓰고, 없으면 연도로만 가른다.
-    const date = meta.date || '';
     if (meta.is_final === false) return 'live';
-    // 2010 이후이면 NEC API, 이전이면 wiki (소수 옛 회차)
-    const year = parseInt(date.slice(0, 4)) || 0;
-    if (year >= 2010) return 'nec';
-    return 'wiki';
+    const note = [meta.archive?.data_source_note, meta._data_caveat, meta.nec?._note]
+      .filter(Boolean).join(' ');
+    if (!note) return 'unknown';
+    const nec = NEC_MARK.test(note), wiki = WIKI_MARK.test(note);
+    if (nec && wiki) return 'mixed';
+    if (nec) return 'nec';
+    if (wiki) return 'wiki';
+    return 'unknown';
   }
 
   // 각 회차 → (kind, year) cell
@@ -59,7 +62,7 @@
 
   function renderSummary() {
     const host = document.getElementById('cov-summary');
-    const counts = { nec: 0, live: 0, wiki: 0, total: 0 };
+    const counts = { nec: 0, live: 0, wiki: 0, mixed: 0, unknown: 0, total: 0 };
     for (const [_, v] of Object.entries(cellMap)) {
       counts.total += 1;
       if (v.source in counts) counts[v.source] += 1;
@@ -74,7 +77,9 @@
       <div class="cov-stat-row">
         <div class="cov-stat"><div class="cov-stat-n">${counts.total}</div><div class="cov-stat-lbl">전체 (회차/연도 셀)</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${counts.nec + counts.live}</div><div class="cov-stat-lbl">NEC API</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${counts.mixed}</div><div class="cov-stat-lbl">출처 둘</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${counts.wiki}</div><div class="cov-stat-lbl">위키</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${counts.unknown}</div><div class="cov-stat-lbl">출처 미기재</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${wikiCycles}</div><div class="cov-stat-lbl">재보궐 (위키 회차)</div></div>
       </div>
       <p class="cov-note">대선 ${byKind.presidential || 0} · 총선 ${byKind.general || 0} · 지선 ${byKind.local || 0} · 재보궐 연도 ${byKind.byelection || 0}.</p>
@@ -103,7 +108,10 @@
         let tooltip = '데이터 없음';
         let link = '';
         if (meta) {
-          tooltip = `${meta.name}\n${meta.date}\nsource: ${status}`;
+          const note = meta.archive?.data_source_note || meta._data_caveat || '';
+          // 라벨은 뭉뚱그린 것이고 사실은 문장에 있다 — 있으면 문장을 보여준다.
+          tooltip = `${meta.name}\n${meta.date}\nsource: ${status}`
+            + (note ? `\n${note}` : '\n출처가 적혀 있지 않다');
           if (meta.archive?.page) link = meta.archive.page;
         } else if (cell?.calendar) {
           const c = cell.calendar;

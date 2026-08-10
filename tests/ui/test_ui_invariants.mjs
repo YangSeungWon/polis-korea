@@ -356,6 +356,43 @@ for (const id of OFFLINE.filter((i) => pages.some((p) => p.id === i))) {
   await ctx.close();
 }
 
+// ── 출처를 연도로 추정하지 않는가 ────────────────────────────────────────────
+//
+// /about 커버리지가 `year >= 2010 ? 'nec' : 'wiki'`로 떨어지고 있었다. 그래서
+// 13~15대 대선처럼 NEC 개표현황(VCCP09)으로 받아 온 회차가 전부 '위키'로 칠해졌다.
+// 그럴듯한 기본값이 사실을 덮은 것이다. 지금은 **적혀 있는 출처**에서만 읽는다.
+//
+// 이 검사는 코드 모양이 아니라 **화면에 칠해진 색**을 본다 — 추정이 되살아나면
+// 1987년 대선 셀이 위키로 돌아간다.
+if (pages.some((p) => p.id === 'coverage')) {
+  curPage = 'coverage';
+  console.log('\n[커버리지] 출처를 연도로 추정하지 않는가');
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(srv.url + '/about/data-coverage/', { waitUntil: 'load', timeout: 25000 });
+  await page.waitForTimeout(2500);
+  const cov = await page.evaluate(() => {
+    const cls = (el) => [...el.classList].find((c) => c.startsWith('cov-mat-') && c !== 'cov-mat-cell');
+    const cells = [...document.querySelectorAll('.cov-mat-cell')];
+    const byTitle = {};
+    for (const e of cells) byTitle[(e.title || '').split('\n')[0]] = cls(e);
+    const n = {};
+    for (const e of cells) { const c = cls(e); n[c] = (n[c] || 0) + 1; }
+    return { byTitle, n };
+  });
+  ck('커버리지 셀이 실제로 그려졌다', (cov.n['cov-mat-nec'] || 0) > 5,
+    JSON.stringify(cov.n));
+  // 1987·1992·1997 대선은 NEC 개표현황이다. 연도로 추정하면 셋 다 wiki가 된다.
+  for (const nm of ['제13대 대통령선거', '제14대 대통령선거', '제15대 대통령선거']) {
+    ck(`${nm}: 연도가 아니라 적힌 출처로 분류한다`,
+      cov.byTitle[nm] === 'cov-mat-nec', `${nm} → ${cov.byTitle[nm]}`);
+  }
+  // 출처가 안 적힌 회차를 '위키'로 떠넘기지 않는다 — 모르면 모른다고 칠한다.
+  ck('출처 미기재 칸이 별도로 존재한다', (cov.n['cov-mat-unknown'] || 0) > 0,
+    JSON.stringify(cov.n));
+  await ctx.close();
+}
+
 await browser.close();
 await srv.close();
 console.log(`\n총 ${pass + fails.length}건: ${pass} pass, ${fails.length} fail`);

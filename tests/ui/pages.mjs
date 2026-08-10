@@ -26,6 +26,7 @@ export const PAGES = [
   { id: 'byelection',    url: '/byelection.html',                 why: '지도(leaflet) + 키' },
   { id: 'tracker',       url: '/tracker.html',                    why: '시계열' },
   { id: 'search',        url: '/search.html',                     why: '검색 진입' },
+  { id: 'coverage',      url: '/about/data-coverage/',            why: '자료 출처 매트릭스 — 추정 금지 자리' },
 ];
 
 // 뷰포트 — 초대형과 모바일 사이가 가장 잘 깨진다.

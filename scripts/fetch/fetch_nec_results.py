@@ -507,6 +507,10 @@ def main():
             "election": meta["name"],
             "election_id": meta["id"],
             "election_date": meta["date"],
+            # **누가 만들었는지 적는다.** 안 적으면 나중에 알 길이 없다 — 실제로
+            # 이 스크립트가 만든 파일 셋이 출처 미기재로 남아, 커버리지 화면이
+            # 연도로 추정하는 빌미가 됐다.
+            "source": "nec-openapi",
             "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
             "is_final": is_final,
             "n_calls": n_call,
