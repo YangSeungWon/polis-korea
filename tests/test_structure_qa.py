@@ -264,6 +264,44 @@ def check_roster_scope() -> None:
        f"새로 생김 {sorted(missing - LEGACY_NO_SCOPE)} · 채워짐 {sorted(LEGACY_NO_SCOPE - missing)}")
 
 
+def check_scope_consistency() -> None:
+    """전국(nation)이 시도(sido) 합과 같은가 — 층이 서로를 검산한다.
+
+    같은 회차에 전국·시도가 **다른 출처에서** 오는 일이 있다. 옛 대선은 nation이
+    위키백과 infobox(주요 후보만 싣는다), sido가 선관위 개표현황이었다. 그래서
+    13대 대선에서 **신정일 46,650표가 전국 집계에서만 사라져** 있었다 — 시도
+    14곳에는 다 있는데.
+
+    한 층만 보면 절대 안 보인다. 두 층이 다 있을 때는 서로를 검산하게 한다.
+    """
+    print("\n[층 정합] 전국이 시도 합과 같은가")
+    import collections
+    pairs, bad = 0, []
+    for p in sorted((ROOT / "data/results").glob("*.json")):
+        if ".sigungu." in p.name:
+            continue
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        by = collections.defaultdict(lambda: collections.defaultdict(int))
+        for r in d.get("races") or []:
+            sc = r.get("scope")
+            if sc not in ("nation", "sido"):
+                continue
+            for c in r.get("candidates") or []:
+                by[r.get("sg_typecode")][sc] += c.get("votes") or 0
+        for tc, m in by.items():
+            if not (m.get("nation") and m.get("sido")):
+                continue
+            pairs += 1
+            if m["nation"] != m["sido"]:
+                bad.append(f"{p.stem} tc{tc}: 전국 {m['nation']:,} vs 시도합 {m['sido']:,}"
+                           f" (차 {abs(m['nation'] - m['sido']):,})")
+    ck(f"검산 가능한 (회차,선거종류) 쌍이 있다 ({pairs}쌍)", pairs >= 15, str(pairs))
+    ck("전국이 시도 합과 일치한다", not bad, str(bad[:4]))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -271,6 +309,7 @@ def main() -> int:
     check_comparison_surfaced()
     check_json_shape_guards()
     check_roster_scope()
+    check_scope_consistency()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 
