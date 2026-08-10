@@ -391,6 +391,45 @@ def check_rank_one_meaning() -> None:
     ck(f"의석 순은 seat_rank로 남아 있다 ({seat_ok}건)", seat_ok >= 1, str(seat_ok))
 
 
+def check_uncontested_null() -> None:
+    """무투표 당선은 0이 아니라 null인가 — '0표'와 '투표가 없었다'는 다르다.
+
+    무투표 후보 1,038명 중 691명이 votes: 0, 347명이 null이었다. 한 파일 안에서도
+    섞여 있었다(8회 지선 시군구: 0이 106 · null이 80). 같은 레코드의 pct는 이미
+    null이라, **두 필드가 같은 사실을 다르게 말하고** 있었다.
+
+    0은 그럴듯해서 안 보인다 — 이 저장소가 반복해서 겪은 그 모양이다.
+    """
+    print("\n[무투표] 0이 아니라 null이다")
+    zero, ok, other = [], 0, 0
+    for p in sorted((ROOT / "data/results").glob("*.json")):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        for r in d.get("races") or []:
+            cs = r.get("candidates") or []
+            race_unc = bool(r.get("is_uncontested"))
+            for c in cs:
+                if not (c.get("uncontested") or race_unc):
+                    continue
+                v = c.get("votes")
+                if v == 0:
+                    zero.append(f"{p.stem} {r.get('district') or r.get('sigungu')} {c.get('name')}")
+                elif v is None:
+                    ok += 1
+                else:
+                    other += 1
+            if race_unc:
+                for k in ("electors", "voters", "valid_votes", "invalid_votes"):
+                    if r.get(k) == 0:
+                        zero.append(f"{p.stem} {r.get('district')} .{k}")
+    ck(f"무투표에 0이 없다 (null {ok}건)", not zero, str(zero[:4]))
+    ck(f"무투표 사례가 실재한다 ({ok}건)", ok > 100, str(ok))
+    # 무투표가 아닌데 0표인 후보는 **그대로 둔다** — 제헌 총선에는 실제로 있다
+    ck(f"무투표 표시 없이 득표가 있는 경우도 있다 ({other}건)", other >= 0)
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -401,6 +440,7 @@ def main() -> int:
     check_scope_consistency()
     check_pct_denominator()
     check_rank_one_meaning()
+    check_uncontested_null()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

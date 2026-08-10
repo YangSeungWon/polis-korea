@@ -69,18 +69,22 @@ def national_district(dist: list, date: str) -> dict:
         seen = set()
         for c in r.get("candidates") or []:
             v = c.get("votes")
-            if v is None:
-                continue
-            valid += v
             p = c.get("party")
-            if not p or p == "무소속":
+            # **득표가 없다와 출마하지 않았다는 다르다.** 무투표 당선은 votes가 null인데
+            # (선거를 안 치렀으니 0표가 아니다) 출마는 확실히 했다 — 오히려 유일 후보다.
+            # 예전엔 votes가 None이면 통째로 건너뛰어 ran_in에서도 빠졌다: 20대 새누리당이
+            # 248곳이 아니라 247곳에 낸 것으로 세어졌다. 합산에서만 빼고 출마는 센다.
+            if p and p != "무소속":
+                pid = identity(p, date)
+                if pid not in seen:
+                    ran[pid] += 1
+                    seen.add(pid)
+                if v is not None:
+                    votes[pid] += v
+                    valid += v
+            elif v is not None:
                 votes["무소속"] += v
-                continue
-            pid = identity(p, date)
-            votes[pid] += v
-            if pid not in seen:
-                ran[pid] += 1
-                seen.add(pid)
+                valid += v
     n_dist = len(dist)
     out = {}
     for pid, v in sorted(votes.items(), key=lambda x: -x[1]):
