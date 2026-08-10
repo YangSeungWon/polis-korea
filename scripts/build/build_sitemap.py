@@ -51,7 +51,6 @@ TODAY = date.today().isoformat()
 MANIFEST = ROOT / "data/sitemap_lastmod.json"
 
 _LASTMOD_CACHE: dict | None = None
-_DIRTY: set | None = None
 _MAN: dict | None = None
 _SEEDED = 0            # 매니페스트에 없어서 새로 심은 수
 _SEED_FROM_GIT = 0     # 그중 git 커밋일로 심은 수
@@ -93,20 +92,6 @@ def lastmod_map() -> dict:
     return out
 
 
-def dirty_paths() -> set:
-    """아직 커밋되지 않은 변경 파일 — 지금 바뀌는 중이므로 lastmod는 빌드일이 맞다.
-    (커밋 전에 sitemap을 만들면 git log는 옛 날짜를 주므로 그대로 쓰면 거짓이 된다.)"""
-    global _DIRTY
-    if _DIRTY is None:
-        try:
-            r = subprocess.run(["git", "-c", "core.quotepath=false", "status", "--porcelain",
-                                "--", "person/", "party/", "archive/", "history/",
-                                "polls/", "region/"],
-                               cwd=ROOT, capture_output=True, text=True, timeout=60)
-            _DIRTY = {ln[3:].strip().strip('"') for ln in r.stdout.splitlines() if len(ln) > 3}
-        except Exception:
-            _DIRTY = set()
-    return _DIRTY
 
 
 def manifest() -> dict:
@@ -163,19 +148,6 @@ def lastmod_for(url: str) -> str:
     return d
 
 
-def git_lastmod(rel_path: str) -> str:
-    """index.html의 git 마지막 커밋일(YYYY-MM-DD) = 페이지 실제 수정일.
-    lastmod에 선거일(1948 등 웹 이전) 쓰면 Search Console이 '잘못된 날짜'로 거부 → 커밋일로."""
-    try:
-        out = subprocess.run(["git", "-c", "core.quotepath=false", "log", "-1",
-                              "--format=%cs", "--", rel_path],
-                             cwd=ROOT, capture_output=True, text=True, timeout=10)
-        d = out.stdout.strip()
-        if d and d[:4] >= "2024":   # 사이트 개설(2024+) 이후만 유효 — 이전이면 커밋이력 없음
-            return d
-    except Exception:
-        pass
-    return TODAY
 
 # 정적 메인 페이지
 STATIC = [

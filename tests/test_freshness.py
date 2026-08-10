@@ -77,6 +77,13 @@ def main() -> int:
     for k, v in states.items():
         print(f"    {k:18} {v}")
     ck("모든 대상이 판정된다", len(fresh) == len(REFRESH_TARGETS))
+    # **게이트가 살아 있는가.** 전부 fetch_failed면 이 검사는 통과하면서 아무것도
+    # 지키지 않는다 — fetch_failed는 정의된 다섯 중 하나고 overdue도 아니라서
+    # 아래 검사들이 전부 무의미하게 통과한다. 실제로 CI(shallow clone)에서 git log가
+    # 비어 그 상태였다. 판정 근거가 사라지면 통과가 아니라 실패여야 한다.
+    dead = [f["label"] for f in fresh if f["state"] == "fetch_failed"]
+    ck(f"판정 근거가 살아 있다 (fetch_failed {len(dead)}/{len(fresh)})",
+       len(dead) < len(fresh), str(dead))
     ck("상태가 정의된 다섯 중 하나",
        all(f["state"] in {"fresh", "expected_pause", "manual_refresh",
                           "overdue", "fetch_failed"} for f in fresh),

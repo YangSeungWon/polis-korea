@@ -70,8 +70,7 @@ def broken_links(ps: list[Path]) -> tuple[int, dict]:
 
 
 def git_date(rel: str) -> str | None:
-    """파일이 마지막으로 **실제로 바뀐** 날. _meta.generated_at은 파일마다 있기도
-    없기도 해서 스키마에 기대면 부정확하다 — git은 모든 파일에 같은 기준을 준다."""
+    """파일이 마지막으로 **실제로 바뀐** 날 (git 기준)."""
     try:
         r = subprocess.run(["git", "-c", "core.quotepath=false", "log", "-1",
                             "--format=%cs", "--", rel],
@@ -79,6 +78,36 @@ def git_date(rel: str) -> str | None:
         return r.stdout.strip() or None
     except Exception:
         return None
+
+
+def data_date(rel: str) -> str | None:
+    """파일 **안의** 가장 최근 조사일. records[].period_end 또는 records[].date.
+
+    git 커밋일보다 이걸 먼저 쓴다. 이유는 둘이다.
+
+    ① CI의 actions/checkout은 기본 shallow(fetch-depth 1)라 git log가 빈다. 그러면
+       모든 대상이 fetch_failed가 되는데, **test_freshness는 그대로 통과한다**
+       (fetch_failed도 정의된 다섯 중 하나고, overdue도 아니다). 즉 신선도 게이트가
+       정작 CI에서만 죽어 있었다 — sitemap lastmod가 같은 자리에서 죽어 있던 것과
+       같은 구조다.
+    ② 주기 판정이 묻는 건 '원출처가 언제 발표했나'다. 파일이 언제 커밋됐나는 그
+       대리 지표일 뿐이고, 조사일이 바로 그 답이다.
+    """
+    fp = ROOT / rel
+    try:
+        recs = json.loads(fp.read_text(encoding="utf-8")).get("records") or []
+    except Exception:
+        return None
+    best = ""
+    for r in recs:
+        if not isinstance(r, dict):
+            continue
+        for k in ("period_end", "date"):
+            v = r.get(k)
+            if isinstance(v, str) and len(v) >= 10 and v[4] == "-":
+                best = max(best, v[:10])
+                break
+    return best or None
 
 
 # **정기적으로 갱신되어야 하는 것만** 본다. 확정된 회차 결과나 캡처가 끝난 공약은
@@ -152,7 +181,7 @@ def data_freshness() -> list[dict]:
             out.append({"label": label, "state": "fetch_failed", "last": None,
                         "next": None, "note": "파일 없음"})
             continue
-        d = git_date(rel)
+        d = data_date(rel) or git_date(rel)
         last = None
         if d:
             try:
