@@ -92,7 +92,6 @@ def build(n: int):
         "n": n, "date": date, "status": "archive",
         "nec": {"_note": "NEC 역대 당선인명부(info.nec report.xhtml)에서 지역구 당선인 회수"},
         "offices": [{"level": "국회의원", "sg_typecode": "2", "scope": "district"}],
-        "results_file": f"data/results/{slug}.json",
         "_source_note": note,
         "archive": {
             "page": f"/archive/{slug}/", "results_path": f"data/results/{slug}.json",

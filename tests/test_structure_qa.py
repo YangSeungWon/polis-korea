@@ -465,7 +465,6 @@ def check_data_json_parses() -> None:
     ck(f"검사 대상이 충분하다 ({n:,}개)", n >= 1000, str(n))
     # results는 비어 있으면 안 된다 — 빈 결과 파일은 '없음'이 아니라 '못 받음'이다.
     # 스키마가 셋이다: 현행 races · 옛 offices · 더 옛 national/district/sigungu.
-    # (local_5~8은 offices만 있는 마이그레이션 잔재라 races가 비어 있는 게 정상)
     PAYLOAD = ("races", "offices", "national", "district", "sigungu",
                "presidential", "national_assembly", "local")
     empty = []
@@ -525,6 +524,32 @@ def check_absence_doc() -> None:
     ck(f"검사 열이 비어 있지 않다 ({len(rows)}행)", len(rows) >= 12, str(len(rows)))
 
 
+def check_election_meta_paths() -> None:
+    """회차 메타가 가리키는 결과 파일이 실재하는가.
+
+    `results_file`이라는 죽은 필드가 있었다. 아무도 안 읽는데 13개 회차에서
+    살아 있는 `archive.results_path`와 **다른 파일**을 가리켰다 — 두 필드가 같은
+    질문에 서로 다르게 답한 것이다. 지우고 나서, 다시 갈라지지 않게 검사한다.
+    """
+    print("\n[회차 메타] 가리키는 결과 파일이 실재하는가")
+    metas = sorted((ROOT / "data/elections").glob("*.json"))
+    dead, missing = [], []
+    for f in metas:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        if not isinstance(d, dict):
+            continue
+        if "results_file" in d:
+            dead.append(f.name)
+        ar = d.get("archive")
+        rp = ar.get("results_path") if isinstance(ar, dict) else None
+        if rp and not (ROOT / rp).exists():
+            missing.append(f"{f.name} → {rp}")
+    ck(f"회차 메타를 읽었다 ({len(metas)}개)", len(metas) >= 40, str(len(metas)))
+    ck("결과 파일 위치를 말하는 필드가 하나다", not dead,
+       f"results_file이 남아 있다: {dead[:4]}")
+    ck("archive.results_path가 실재한다", not missing, str(missing[:4]))
+
+
 def main() -> int:
     check_missing_not_zero()
     check_identity()
@@ -538,6 +563,7 @@ def main() -> int:
     check_uncontested_null()
     check_data_json_parses()
     check_absence_doc()
+    check_election_meta_paths()
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

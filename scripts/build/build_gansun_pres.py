@@ -61,7 +61,6 @@ def build(n):
         "n": n, "date": date, "status": "archive",
         "nec": {"_note": "NEC 당선인명부 — 간선 당선자"},
         "offices": [{"level": "대통령", "sg_typecode": "1", "scope": "nation"}],
-        "results_file": f"data/results/{slug}.json",
         "_source_note": f"[간선] {method} — {desc}",
         "archive": {
             "page": f"/archive/{slug}/", "results_path": f"data/results/{slug}.json",

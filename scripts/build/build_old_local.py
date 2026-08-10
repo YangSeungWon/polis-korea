@@ -116,7 +116,6 @@ def build(n):
                     {"level": "기초단체장", "sg_typecode": "4", "scope": "sigungu"},
                     {"level": "광역의원", "sg_typecode": "5", "scope": "district"},
                     {"level": "기초의원", "sg_typecode": "6", "scope": "district"}],
-        "results_file": f"data/results/{slug}.json",
         "_source_note": note,
         "_data_caveat": "비례대표(광역·기초) 미반영 — 단체장·지역구의원만(당선자 기준).",
         "archive": {

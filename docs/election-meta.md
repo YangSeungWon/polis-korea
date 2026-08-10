@@ -50,7 +50,6 @@
 | `offices` | 선거 office 정의 | `[{"level":"광역단체장","sg_typecode":"3","scope":"sido"}, ...]` |
 | `sido_merge` | 통합 시도 (전남광주 등) | `[{"canonical":"전남광주특별시","merge_from":["광주광역시","전라남도"]}]` |
 | `candidates_overrides` | 자체조사 후보 정당 매핑 파일 | `"data/elections/9th-local-2026-candidates.json"` |
-| `results_file` | 옛 선거 — 기존 결과 파일 위치 | `"data/results/local_8.json"` |
 | `districts` | byelection — 지역구별 후보·좌표 | `{"평택을": {...}}` |
 
 ### offices 정의

@@ -111,7 +111,6 @@ def build(n):
         "n": n, "date": date, "status": "archive",
         "nec": {"_note": "NEC 역대 개표현황(info.nec)에서 시도별 후보 득표 회수"},
         "offices": [{"level": "대통령", "sg_typecode": "1", "scope": "nation"}],
-        "results_file": f"data/results/{slug}.json",
         "_source_note": note,
         "archive": {
             "page": f"/archive/{slug}/", "results_path": f"data/results/{slug}.json",
