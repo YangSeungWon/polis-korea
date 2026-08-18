@@ -34,6 +34,8 @@ FAVICON = ROOT / "favicon.svg"
 VIEW_DEFS = [
     # 선거구 투표율은 'district-hex-svg district-turnout' — district-hex보다, 그리고
     # 'turnout-map'을 substring으로 품지 않도록 이름을 지었지만 순서로도 못박는다.
+    # sido-map보다 위 — 클래스가 "sido-map-svg sido-turnout-geo"라 sido-map에 먼저 걸린다.
+    ("sido-turnout-geo", "turnout-geo", "투표율 지도", "시·도 경계·투표율(짙을수록 높음)"),
     # district-turnout은 district-turnout-geo의 substring — 반드시 geo를 위에 둔다.
     ("district-turnout-geo", "district-turnout-geo", "선거구 투표율 지도", "선거구 경계·투표율(짙을수록 높음)"),
     ("district-turnout", "district-turnout", "선거구 투표율", "선거구별 투표율(짙을수록 높음)"),

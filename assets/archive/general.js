@@ -382,7 +382,11 @@
         a.electors += r.electors || 0; a.voters += r.voters || r.voted || 0;
       }
       const pseudo = Object.values(agg).filter((a) => a.electors > 0 && a.voters > 0);
-      if (pseudo.length) modes.push({ key: 'turnout', label: '투표율', draw: (el) => SV.drawTurnout(el, pseudo) });
+      if (pseudo.length) {
+        const geo = { n: ctx?.meta?.electionN, kind: ctx?.meta?.electionKind };   // 회차별 시도 경계
+        modes.push({ key: 'turnout', label: '투표율', draw: (el) => SV.drawTurnout(el, pseudo) });
+        if (SV.drawTurnoutGeo) modes.push({ key: 'turnout-map', label: '투표율 지도', draw: (el) => SV.drawTurnoutGeo(el, pseudo, geo) });
+      }
     }
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') {
       window.Archive.sidoView.mount(toggleHost, modes, null, { turnoutTitle: '투표율 — 시도별' });

@@ -57,6 +57,34 @@
     el.appendChild(leg);
   }
 
+  // 시도 투표율 **지도** — 같은 값을 실제 시도 경계로. 색의 자(lo·hi)는 균등 hex와 같은 것을
+  // 넘긴다: 두 방식에서 같은 색이 다른 뜻이면 탭을 오가는 순간 지도가 거짓말을 한다.
+  function drawTurnoutGeo(el, races, A, geo) {
+    geo = geo || {};
+    const tb = turnoutBySido(races);
+    if (tb['전남광주통합특별시'] != null && tb['전남광주특별시'] == null) tb['전남광주특별시'] = tb['전남광주통합특별시'];
+    const vals = Object.values(tb);
+    if (!vals.length || !A.sidoMap?.draw) { el.innerHTML = '<p class="ar-empty">투표율 데이터 없음</p>'; return; }
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    const hostDiv = document.createElement('div');
+    el.innerHTML = ''; el.appendChild(hostDiv);
+    const pctOf = (r) => {
+      const e = r.electors || 0, v = r.voters ?? r.voted ?? 0;
+      return e > 0 && v > 0 ? (v / e) * 100 : null;
+    };
+    Promise.resolve(A.sidoMap.draw(hostDiv, races, {
+      n: geo.n, kind: geo.kind, range: [lo, hi],
+      valueFn: pctOf, valueLabel: (v) => `투표율 ${v.toFixed(1)}%`,
+    })).then((r) => {
+      const ramp = `rgb(${TURNOUT_STOPS[0]}), rgb(${TURNOUT_STOPS[1]}), rgb(${TURNOUT_STOPS[2]})`;
+      const leg = document.createElement('div');
+      leg.className = 'ar-turnout-legend';
+      leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
+        + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고${r && r.shown ? ` · ${r.shown}개 시도` : ''}</span>`;
+      el.appendChild(leg);
+    });
+  }
+
   // 시도 1위 hex (격차명도) — 대선 1위·총선 비례 선두. governorHex 재사용(winnerOf+opacityOf).
   //   마커 클래스 sido-winner-hex → OG/공유 키 'sido1'(지선 governor와 구분, 라벨 '시도 1위').
   function drawSidoWinnerHex(el, races) {
@@ -89,6 +117,7 @@
         { key: 'hex', label: '균등', draw: (el, rs) => drawSidoWinnerHex(el, rs) },
         { key: 'map', label: '지도', draw: (el, rs) => A.sidoMap?.draw?.(el, rs, { margin: true, n: geo.n, kind: geo.kind }) },
         { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
+        { key: 'turnout-map', label: '투표율 지도', draw: (el, rs) => drawTurnoutGeo(el, rs, A, geo) },
       ];
     }
     // 광역단체장(tc=3) — 시도별 단일승자라 1위(균등·지도)가 primary. 표비례(격자·원형)는 득표 구성·박빙
@@ -99,6 +128,7 @@
       { key: 'grid', label: '격자', draw: (el, rs) => A.sidoProp?.drawGrid?.(el, rs) },
       { key: 'dorling', label: '원형', draw: (el, rs) => A.sidoProp?.drawDorling?.(el, rs) },
       { key: 'turnout', label: '투표율', draw: (el, rs) => drawTurnout(el, rs, A) },
+      { key: 'turnout-map', label: '투표율 지도', draw: (el, rs) => drawTurnoutGeo(el, rs, A, geo) },
     ];
   }
 
@@ -200,13 +230,17 @@
     const geo = { n: ctx?.meta?.electionN, kind: ctx?.meta?.electionKind };   // 회차별 시도 경계용
     const modes = modesFor(tc, A, geo)
       .filter((m) => typeof m.draw === 'function')
-      .filter((m) => m.key !== 'turnout' || hasTurnout);
+      .filter((m) => !/^turnout/.test(m.key) || hasTurnout);
     mount(host, modes, races, { turnoutTitle: '시도별 투표율' });
   }
 
   window.Archive = window.Archive || {};
   // drawTurnout 노출 — 총선(general.js)은 선거구를 시도로 합산한 pseudo-race[{sido,electors,voters}]로 호출.
-  window.Archive.sidoView = { init, mount, drawTurnout: (el, races) => drawTurnout(el, races, window.Archive), drawSidoWinnerHex };
+  window.Archive.sidoView = {
+    init, mount, drawSidoWinnerHex,
+    drawTurnout: (el, races) => drawTurnout(el, races, window.Archive),
+    drawTurnoutGeo: (el, races, geo) => drawTurnoutGeo(el, races, window.Archive, geo),
+  };
   // 투표율 색 스케일 공유 — 시군구 투표율 맵(render-council-hex)도 동일 절대 스케일 사용.
   window.Archive.turnout = { color: turnoutColor, stops: TURNOUT_STOPS };
 })();

@@ -48,6 +48,7 @@
   // 지도 종류 → [클래스, 공유키(build_share_pages와 일치), 파일명 꼬리표]. 더 구체적인 클래스를 먼저 —
   // council-hex-svg는 result-map(대선 시군구 단색)·cartogram-map(시군구 비례)과 공존하므로 그 뒤에 둬야 오분류 안 됨.
   const VIEW_DEFS = [
+    ['sido-turnout-geo', 'turnout-geo', '투표율지도'],   // sido-map-svg 공유 → 먼저
     ['district-turnout-geo', 'district-turnout-geo', '선거구투표율지도'],   // district-map-svg 공유 → 먼저
     ['district-turnout', 'district-turnout', '선거구투표율'],   // district-hex-svg 공유 → 먼저
     ['turnout-map', 'turnout', '투표율'],
@@ -131,6 +132,7 @@
     result: 'result-map', 'sgg-prop': 'cartogram-map', 'sgg-geo': 'sigungu-map-svg',
     sido1: 'sido-winner-hex', district: 'district-hex-svg', 'district-geo': 'district-map-svg',
     'district-turnout': 'district-turnout', 'district-turnout-geo': 'district-turnout-geo',
+    'turnout-geo': 'sido-turnout-geo',
   };
   function applyHashView() {
     const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');

@@ -94,6 +94,10 @@
 
   // opts.margin: 승자색에 격차명도(gapOpacity) 적용 — 대선 시도(승자독식 단색 거부, [[no_winner_take_all_pres]]).
   //   flat 단색은 광역장(실제 1명 당선)만; 대선은 명도로 박빙/압승 구분해 영토적 오독 완화.
+  // opts.valueFn(race)→숫자: **값 코로플레스**(정당색 대신 teal 그라데이션 — 투표율 등 연속값).
+  //   opts.range=[lo,hi]로 색의 자를 고정(같은 자료의 균등 hex와 색이 같은 뜻이어야 한다),
+  //   opts.valueLabel(v)로 툴팁 문구. 반환 {lo,hi,shown}으로 호출부가 범례를 단다.
+  //   이름을 valueOf로 지으면 안 된다 — Object.prototype.valueOf 상속으로 항상 truthy.
   async function draw(host, races, opts) {
     if (!host) return;
     const margin = !!(opts && opts.margin);
@@ -111,6 +115,25 @@
     const mergedHonam = bySido['전남광주특별시'] || bySido['전남광주통합특별시'];
     if (mergedHonam) { bySido['광주광역시'] = bySido['광주광역시'] || mergedHonam; bySido['전라남도'] = bySido['전라남도'] || mergedHonam; }
 
+    // 값 모드 — 정당색 경로 대신 시도별 숫자를 그라데이션으로.
+    const valBySido = {};
+    if (opts && opts.valueFn) {
+      for (const r of races) {
+        const v = opts.valueFn(r);
+        if (v != null) valBySido[norm(r.sido)] = v;
+      }
+      const mh = valBySido['전남광주특별시'] != null ? valBySido['전남광주특별시'] : valBySido['전남광주통합특별시'];
+      if (mh != null) {
+        if (valBySido['광주광역시'] == null) valBySido['광주광역시'] = mh;
+        if (valBySido['전라남도'] == null) valBySido['전라남도'] = mh;
+      }
+    }
+    const vvals = Object.values(valBySido);
+    const vlo = (opts && opts.range) ? opts.range[0] : (vvals.length ? Math.min(...vvals) : 0);
+    const vhi = (opts && opts.range) ? opts.range[1] : (vvals.length ? Math.max(...vvals) : 1);
+    const vcol = (window.Archive && window.Archive.turnout && window.Archive.turnout.color) || (() => '#88a');
+    const vlabel = (opts && opts.valueLabel) || ((v) => v.toFixed(1));
+
     const feats = geo.features;
     const { mnX, mnY, mxX, mxY } = bbox(feats);
     const kx = Math.cos(((mnY + mxY) / 2) * Math.PI / 180);
@@ -127,16 +150,21 @@
     svg.setAttribute('xmlns', NS);
     const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;  // 좌우 외곽 라벨 여백
     svg.setAttribute('viewBox', `${-EM} 0 ${(W + 2 * EM).toFixed(1)} ${H.toFixed(1)}`);
-    svg.setAttribute('class', 'sido-map-svg');
+    // 값 모드는 1위 지도와 og·공유 키가 달라야 한다(같은 키면 서로를 덮어쓴다).
+    svg.setAttribute('class', 'sido-map-svg' + ((opts && opts.valueFn) ? ' sido-turnout-geo' : ''));
 
     const labels = [];
     for (const f of feats) {
       const name = sidoName(f.properties);   // name·SIDO·code2 어느 키든 흡수(period geojson은 code2만일 수 있음)
       const win = bySido[name];
+      const val = (opts && opts.valueFn) ? valBySido[name] : undefined;
       const path = document.createElementNS(NS, 'path');
       path.setAttribute('d', featPath(f.geometry));
       path.setAttribute('fill-rule', 'evenodd');
-      if (win) {
+      if (val != null) {
+        path.setAttribute('fill', vcol(val, vlo, vhi));
+        path.setAttribute('class', 'sido-map-region has-data');
+      } else if (win) {
         path.setAttribute('fill', (typeof partyFill === 'function') ? partyFill(win.party) : '#888');
         // 대선: 격차명도 (gapOpacity = 박빙 0.55 ~ 압도 0.95). 광역장: flat(명도 없음).
         if (margin) path.setAttribute('fill-opacity', ((typeof gapOpacity === 'function') ? gapOpacity(win.gap) : 1).toFixed(3));
@@ -145,9 +173,9 @@
         path.setAttribute('class', 'sido-map-region no-data');
       }
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = win
-        ? `${name} · ${win.name}(${win.party}) ${fmtPct(win.pct, { digits: 1 })}`
-        : `${name} · 데이터 없음`;
+      tt.textContent = val != null ? `${name} · ${vlabel(val)}`
+        : win ? `${name} · ${win.name}(${win.party}) ${fmtPct(win.pct, { digits: 1 })}`
+          : `${name} · 데이터 없음`;
       path.appendChild(tt);
       svg.appendChild(path);
       const c = centroid(f.geometry);
@@ -158,7 +186,9 @@
     host.innerHTML = '';
     host.appendChild(svg);
     // margin 모드일 때만 명도가 값을 나른다 — 광역장은 flat이라 키가 붙으면 거짓말이 된다.
-    if (margin && typeof mountGapLegend === 'function') mountGapLegend(svg);
+    //   값 모드엔 명도가 없다(색 자체가 값) → 격차 키를 달지 않는다.
+    if (margin && !(opts && opts.valueFn) && typeof mountGapLegend === 'function') mountGapLegend(svg);
+    return { lo: vlo, hi: vhi, shown: vvals.length };
   }
 
   // 단독 호출용 (sidoView 없이도 동작)
