@@ -447,8 +447,11 @@
     if (hasGeo) modes.push({ key: 'map', label: '지도', draw: (el) => window.Archive.districtMap.draw(el, { n, races }) });
     // 투표율 — 같은 선거구 hex를 정당색 대신 teal 그라데이션으로(자료 축이 다른 별 탭).
     // 근사하지 않는다: electors·voters가 둘 다 실측인 선거구만 칠하고, 나머지는 no-data로 둔다.
-    const turnoutMode = hasHex ? buildDistrictTurnout(layout, byKey) : null;
-    if (turnoutMode) modes.push(turnoutMode);
+    const turnout = buildDistrictTurnout(layout, byKey);
+    if (turnout) {
+      if (hasHex) modes.push(turnout.hexMode);
+      if (hasGeo) modes.push(turnout.geoMode(n, races));
+    }
     if (modes.length) {
       window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes, null, {
         turnoutTitle: '지역구 선거구별 투표율',
@@ -494,7 +497,20 @@
     const A = window.Archive;
     const color = A.turnout?.color || (() => '#88a');
     const stops = A.turnout?.stops || [[196, 224, 216], [78, 163, 145], [10, 74, 66]];
-    return {
+    // 범례는 균등·지도가 같은 문장을 쓴다 — 두 방식이 같은 스케일임을 화면이 말해야 한다.
+    const legendEl = (n) => {
+      const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
+      const leg = document.createElement('div');
+      leg.className = 'ar-turnout-legend';
+      leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
+        + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${n}개 선거구</span>`;
+      return leg;
+    };
+    const raceTurnout = (r) => {
+      const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
+      return el > 0 && vt > 0 ? (vt / el) * 100 : null;
+    };
+    const hexMode = {
       key: 'turnout',
       label: '투표율',
       draw: (el) => {
@@ -512,14 +528,19 @@
           },
         });
         svg.removeAttribute('height');   // 결과 탭과 동일 — 인라인 height:100%가 auto-height서 0 붕괴
-        const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
-        const leg = document.createElement('div');
-        leg.className = 'ar-turnout-legend';
-        leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
-          + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${vals.length}개 선거구</span>`;
-        el.appendChild(leg);
+        el.appendChild(legendEl(vals.length));
       },
     };
+    // 같은 값을 실제 선거구 경계로. 그라데이션이라 승자독식 단색 금지에 걸리지 않는다.
+    const geoMode = (n, races) => ({
+      key: 'turnout-map',
+      label: '투표율 지도',
+      draw: (el) => window.Archive.districtMap.draw(el, {
+        n, races, range: [lo, hi],   // 균등 hex와 같은 자 — 탭을 오가도 색이 같은 뜻
+        valueFn: raceTurnout, valueLabel: (v) => `투표율 ${v.toFixed(1)}%`,
+      }).then((geom) => { if (geom) el.appendChild(legendEl(geom.shown)); }),
+    });
+    return { hexMode, geoMode };
   }
 
   window.Archive.general = {

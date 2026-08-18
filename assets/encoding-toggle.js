@@ -10,6 +10,8 @@
     '균등': { fam: '1위', svg: '<path fill="currentColor" d="M10 1l7.79 4.5v9L10 19l-7.79-4.5v-9L10 1zm0 2.31L4.21 6.69v6.62L10 16.69l5.79-3.38V6.69L10 3.31z"/>' },
     '단색': { fam: '1위', svg: '<path fill="currentColor" opacity="0.85" d="M10 1l7.79 4.5v9L10 19l-7.79-4.5v-9z"/><path fill="var(--bg,#fff)" opacity="0.35" d="M10 1l7.79 4.5v9L10 19z"/>' },
     '투표율': { fam: '자료', svg: '<path fill="currentColor" opacity="0.85" d="M10 1l7.79 4.5v9L10 19l-7.79-4.5v-9z"/><path fill="var(--bg,#fff)" opacity="0.5" d="M10 1L2.21 5.5v9L10 19z"/>' },
+    // 투표율의 두 방식 — 균등 hex(위)와 실제 경계 지도. 자료 가족 안에서 방식을 고른다.
+    '투표율 지도': { fam: '자료', svg: '<path fill="currentColor" opacity="0.85" d="M2 4l5-2 6 2 5-2v14l-5 2-6-2-5 2V4z"/><path fill="var(--bg,#fff)" opacity="0.5" d="M7 4v12l6 2V6L7 4z"/>' },
     '격자': { fam: '비례', svg: '<g fill="currentColor"><rect x="2.5" y="2.5" width="6" height="6" rx="1"/><rect x="11.5" y="2.5" width="6" height="6" rx="1" opacity="0.55"/><rect x="2.5" y="11.5" width="6" height="6" rx="1" opacity="0.55"/><rect x="11.5" y="11.5" width="6" height="6" rx="1"/></g>' },
     '원형': { fam: '비례', svg: '<circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><path fill="currentColor" d="M10 10V2a8 8 0 0 1 8 8z"/>' },
   };

@@ -141,10 +141,12 @@
         const next = host.querySelector(`.ar-sido-view[data-view="${v}"] svg`);
         if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);
       }
-      if (cap) cap.textContent = (v === 'turnout')
+      // 'turnout'·'turnout-map' — 자료가 투표율이면 방식이 무엇이든 제목·캡션은 투표율의 것.
+      const isTurnout = /^turnout/.test(v);
+      if (cap) cap.textContent = isTurnout
         ? ((opts && opts.turnoutCaption) || '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).')
         : resultCaption;
-      if (titleNode) titleNode.nodeValue = (v === 'turnout' && opts && opts.turnoutTitle)
+      if (titleNode) titleNode.nodeValue = (isTurnout && opts && opts.turnoutTitle)
         ? opts.turnoutTitle : resultTitle;
     }
 
