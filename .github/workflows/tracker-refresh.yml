@@ -88,6 +88,13 @@ jobs:
           python scripts/parse/extract_party_support.py --incremental
           echo "=== canon_agency (조사기관 표기 통일 — house-effect 정확도) ==="
           python scripts/build/canon_agency.py
+          # 이 잡이 갱신하는 건 정확히 tracker.html·홈 capability가 본문에 인용하는 값이다.
+          # 데이터만 올리고 페이지를 안 만들면, 다음 daily가 돌 때까지 화면이 옛 숫자를
+          # 사실처럼 말한다. sitemap은 내용 해시라 마지막.
+          echo "=== 정적 요약 재생성 (tracker 요약 · 홈 capability · sitemap) ==="
+          python scripts/build/build_tracker_static.py
+          python scripts/build/build_home_capabilities.py
+          python scripts/build/build_sitemap.py
 
       # 갱신된 목록 CSV + 추출 JSON을 함께 커밋(CSV가 stale하면 다음 run이 재스크랩하므로 필수).
       - name: Commit & push if changed
@@ -99,6 +106,7 @@ jobs:
                   data/polls/approval_nbs.json data/polls/approval_hrc.json \
                   data/polls/approval_general.json data/polls/aggregated_etc.json \
                   data/polls/approval_general.scancache.json
+          git add tracker.html index.html sitemap.xml data/sitemap_lastmod.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "tracker 변경 없음 — push skip"
           else

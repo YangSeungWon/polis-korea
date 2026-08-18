@@ -97,6 +97,14 @@ jobs:
           python scripts/build/build_static.py
           echo "=== 8.5 canon_agency (조사기관 표기 통일 — (주)/주식회사 제거, house-effect 정확도) ==="
           python scripts/build/canon_agency.py
+          # 데이터를 갱신했으면 그 데이터를 본문에 박아둔 페이지도 다시 만들어야 한다.
+          # 안 돌리면 tracker.html·index.html이 옛 숫자를 사실처럼 계속 말한다(실제로
+          # 열흘치가 어긋나 있었다: 데이터는 08-14, 요약은 08-04). sitemap은 내용 해시
+          # 기반이라 반드시 마지막 — 위 산출물이 바뀐 뒤 lastmod가 정해진다.
+          echo "=== 9. 정적 요약 재생성 (홈 capability · tracker 요약 · sitemap) ==="
+          python scripts/build/build_home_capabilities.py
+          python scripts/build/build_tracker_static.py
+          python scripts/build/build_sitemap.py
           # optimize_data(data/*.json in-place minify) 제거: 서빙=커밋(master 루트)이고
           # 레포 컨벤션은 pretty(indent=2). minify를 커밋하면 39k줄 diff로 컨벤션 붕괴.
           # Pages는 gzip 서빙이라 공백 minify의 전송 이득은 사실상 0. geo 좌표절삭이
@@ -131,6 +139,10 @@ jobs:
           # 생성기를 돌리고 결과를 버리면 안 돌린 것만 못하다(틀린 걸 모르게 된다).
           git add data/polls/ data/audits/ sitemap.xml data/results/9th-local-2026.json data/timeline.json
           git add history/ polls/ governor/ mayor/ superintendent/ 2>/dev/null || true
+          # 같은 이유로 정적 요약도 add 범위에 있어야 한다 — 매일 만들고 매일 버리면
+          # 안 돌린 것만 못하다. sitemap_lastmod는 sitemap.xml의 짝(내용 해시 캐시)이라
+          # 함께 넣지 않으면 다음 run이 매번 같은 diff를 다시 만든다.
+          git add index.html tracker.html data/sitemap_lastmod.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경 없음 — push skip"
           else
