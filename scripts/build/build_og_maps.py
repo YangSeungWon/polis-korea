@@ -32,6 +32,9 @@ FAVICON = ROOT / "favicon.svg"
 #   시군구 결과 svg는 'council-hex-svg result-map'·'council-hex-svg cartogram-map'라 'council-hex'(광역의원
 #   의석)보다 result-map·cartogram-map을 먼저 매칭해야 오분류 안 됨. turnout-map도 governor/council 공유라 맨 위.
 VIEW_DEFS = [
+    # 선거구 투표율은 'district-hex-svg district-turnout' — district-hex보다, 그리고
+    # 'turnout-map'을 substring으로 품지 않도록 이름을 지었지만 순서로도 못박는다.
+    ("district-turnout", "district-turnout", "선거구 투표율", "선거구별 투표율(짙을수록 높음)"),
     ("turnout-map", "turnout", "투표율", "지역별 투표율(짙을수록 높음)"),
     ("result-map", "result", "시군구 결과", "1위 후보·격차 명도"),
     ("cartogram-map", "sgg-prop", "시군구 비례", "표(인구) 비례 격자·원형"),

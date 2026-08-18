@@ -384,7 +384,9 @@
       const pseudo = Object.values(agg).filter((a) => a.electors > 0 && a.voters > 0);
       if (pseudo.length) modes.push({ key: 'turnout', label: '투표율', draw: (el) => SV.drawTurnout(el, pseudo) });
     }
-    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(toggleHost, modes);
+    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') {
+      window.Archive.sidoView.mount(toggleHost, modes, null, { turnoutTitle: '투표율 — 시도별' });
+    }
     else SC.drawHex(toggleHost, bySido);
     const partyTotal = {};
     for (const sd of Object.keys(bySido)) for (const [p, c] of Object.entries(bySido[sd])) partyTotal[p] = (partyTotal[p] || 0) + c;
@@ -443,7 +445,81 @@
       svg.removeAttribute('height');   // drawDistrictHex의 인라인 height:100%가 auto-height 컨테이너서 0 붕괴 → viewBox 비율로
     } });
     if (hasGeo) modes.push({ key: 'map', label: '지도', draw: (el) => window.Archive.districtMap.draw(el, { n, races }) });
-    if (modes.length) window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes);
+    // 투표율 — 같은 선거구 hex를 정당색 대신 teal 그라데이션으로(자료 축이 다른 별 탭).
+    // 근사하지 않는다: electors·voters가 둘 다 실측인 선거구만 칠하고, 나머지는 no-data로 둔다.
+    const turnoutMode = hasHex ? buildDistrictTurnout(layout, byKey) : null;
+    if (turnoutMode) modes.push(turnoutMode);
+    if (modes.length) {
+      window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes, null, {
+        turnoutTitle: '지역구 선거구별 투표율',
+        turnoutCaption: '선거구별 투표율 — 짙을수록 높음(투표수/선거인수).',
+      });
+    }
+  }
+
+  // 9~12대 중선거구 이름은 '제1선거구(춘천시·춘성군·화천군·양구군·철원군)' 꼴 — hex 한 칸에
+  // 들어가지 않는다. 1위 탭은 이 칸에 당선인 이름을 쓰지만 투표율 탭엔 후보가 없으므로,
+  // 레이아웃이 가진 시군구 목록에서 대표 하나(+ 더 있으면 '+')로 줄인다.
+  function districtCellLabel(cell) {
+    // '제1선거구(춘천시·춘성군…)'·'제주도선거구(제주시·…)' 둘 다 — 괄호 안이 실제 지역명이다.
+    const m = /선거구\((.+)\)$/.exec(cell.name || '');
+    if (!m) return null;
+    const sgg = (cell.sigungus && cell.sigungus.length) ? cell.sigungus : m[1].split(/[·,]/);
+    if (!sgg.length) return null;
+    const head = sgg[0].trim().replace(/[갑을병정무]$/, '').replace(/(시|군|구)$/, '');
+    return head + (sgg.length > 1 ? '+' : '');
+  }
+
+  // 선거구 투표율 탭 — 데이터가 부족하면 null(탭 자체를 안 만든다).
+  function buildDistrictTurnout(layout, byKey) {
+    const canon = (typeof canonSido === 'function') ? canonSido : (x) => x;
+    const pctOf = (cell) => {
+      const r = byKey[`${canon(cell.sido)}|${cell.name}`];
+      if (!r) return null;
+      const el = r.electors || 0, vt = r.voters ?? r.voted ?? 0;
+      // 후보 득표합으로 투표수를 추정하지 않는다 — 무효표가 빠져 투표율이 낮게 나오고,
+      // 실측 선거구와 한 스케일에 섞이면 지역차가 아니라 자료 출처 차이가 색이 된다.
+      return el > 0 && vt > 0 ? (vt / el) * 100 : null;
+    };
+    // 조랭이떡(중선거구)은 한 선거구가 두 칸 — 값은 같으니 lo/hi 계산에선 선거구 단위로 센다.
+    const seen = new Set(), vals = [];
+    for (const cell of layout) {
+      const key = `${canon(cell.sido)}|${cell.name}`;
+      if (seen.has(key)) continue;
+      const v = pctOf(cell);
+      if (v != null) { seen.add(key); vals.push(v); }
+    }
+    if (vals.length < 10) return null;
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    const A = window.Archive;
+    const color = A.turnout?.color || (() => '#88a');
+    const stops = A.turnout?.stops || [[196, 224, 216], [78, 163, 145], [10, 74, 66]];
+    return {
+      key: 'turnout',
+      label: '투표율',
+      draw: (el) => {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        // 클래스는 turnout-map이 아니라 district-turnout — 총선 페이지엔 시도 투표율 hex도 있어
+        // 같은 키가 되면 og/공유가 서로를 덮어쓴다(둘은 입도가 다른 별개 지도다).
+        svg.setAttribute('class', 'district-hex-svg district-turnout');
+        el.innerHTML = ''; el.appendChild(svg);
+        drawDistrictHex(svg, layout, () => null, {
+          fillOf: (_res, cell) => { const v = pctOf(cell); return v == null ? null : color(v, lo, hi); },
+          labelOf: districtCellLabel,
+          titleOf: (cell) => {
+            const v = pctOf(cell);
+            return `${cell.sido} ${cell.name} · ${v != null ? '투표율 ' + v.toFixed(1) + '%' : '데이터 없음'}`;
+          },
+        });
+        svg.removeAttribute('height');   // 결과 탭과 동일 — 인라인 height:100%가 auto-height서 0 붕괴
+        const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
+        const leg = document.createElement('div');
+        leg.className = 'ar-turnout-legend';
+        leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
+          + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${vals.length}개 선거구</span>`;
+        el.appendChild(leg);
+      },
+    };
   }
 
   window.Archive.general = {

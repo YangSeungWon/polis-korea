@@ -103,7 +103,8 @@
   }
 
   // 토글 UI를 host에 깔고 각 모드를 hidden view에 렌더. drawArg = 각 모드 draw(el)에 넘길 인자.
-  function mount(host, modes, drawArg) {
+  //   opts.turnoutCaption = 투표율 탭 캡션(기본은 시·도 문구 — 선거구 단위 등 다른 입도는 넘겨야 함).
+  function mount(host, modes, drawArg, opts) {
     modes = modes.filter((m) => typeof m.draw === 'function');
     if (!modes.length) return;
     // 인코딩 토글(공용) — 아이콘+가족 한 바. 가족 게이팅은 ENC의 fam이 자동 분류:
@@ -119,6 +120,11 @@
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.info-pop, .ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
+    // 제목도 전환 — '…결과'·'…1위'라 써 두고 투표율을 보여주면 화면이 제 이름을 속인다.
+    // 제목은 텍스트 노드 + info-i 뱃지라 첫 텍스트 노드만 바꾼다(뱃지 보존).
+    const titleEl = host.closest && host.closest('.ar-section')?.querySelector('.ar-section-title');
+    const titleNode = titleEl && titleEl.firstChild && titleEl.firstChild.nodeType === 3 ? titleEl.firstChild : null;
+    const resultTitle = titleNode ? titleNode.nodeValue : '';
 
     // 모드 전환 — 떠나는 뷰의 줌을 capture해 새 뷰에 apply(탭 교차 포커스 전이). region=시도라
     // 렌더러(균등 governorHex·격자/원형 sidoCluster·투표율) 무관하게 같은 키. svg 없는 뷰(leaflet)는 자연 스킵.
@@ -136,7 +142,10 @@
         if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);
       }
       if (cap) cap.textContent = (v === 'turnout')
-        ? '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).' : resultCaption;
+        ? ((opts && opts.turnoutCaption) || '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).')
+        : resultCaption;
+      if (titleNode) titleNode.nodeValue = (v === 'turnout' && opts && opts.turnoutTitle)
+        ? opts.turnoutTitle : resultTitle;
     }
 
     const tog = host.querySelector('.ar-sido-toggle');
@@ -190,7 +199,7 @@
     const modes = modesFor(tc, A, geo)
       .filter((m) => typeof m.draw === 'function')
       .filter((m) => m.key !== 'turnout' || hasTurnout);
-    mount(host, modes, races);
+    mount(host, modes, races, { turnoutTitle: '시도별 투표율' });
   }
 
   window.Archive = window.Archive || {};

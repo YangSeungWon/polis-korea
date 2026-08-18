@@ -3,7 +3,10 @@
 //     layout   = data/geo/district_hex_{n}.json 셀 [{sido,name,c,r,(wi)}]
 //     resultFn = (sido,name) → result | null  (result.candidates / result.winners / result.uncontested)
 //     opts = { selected:{sido,name}, onSelect(sido,name,result), r,
-//              topFn(result)→top후보, textColor(fill,opacity,party)→글자색, emptyOpacity, emptyFill }
+//              topFn(result)→top후보, textColor(fill,opacity,party)→글자색, emptyOpacity, emptyFill,
+//              fillOf(result,cell)→색|null, titleOf(cell,result)→툴팁, labelOf(cell)→셀글자|null }
+//     fillOf/titleOf = 정당색이 아닌 값(투표율 등)으로 칠하는 훅. fillOf가 색을 주면 그 셀은
+//     '데이터 있음'으로 취급하고 중선거구 줄무늬·정당 글자색 경로를 건너뛴다.
 //   254 셀(소선거구) + 중선거구(9~12대 조랭이떡) + 시도경계 + 시도라벨까지. 비례 컬럼은
 //   호출부(history geomap)가 반환된 geom으로 우측에 직접 덧그림(페이지별이라 공유 안 함).
 //   의존: hexgrid.js · parties.js(partyColor/partyTextColor/SIDO_HEX_LAYOUT) · utils.js(drawSidoEdgeLabels/SIDO_EDGE_MARGIN)
@@ -78,11 +81,14 @@
       const [cx, cy] = hexCenter(d.c, d.r, colW, rowH, offX, offY);
       const result = resultFn(d.sido, d.name);
       const top = topFn(result);
-      let fill = top ? partyColor(top.party) : emptyFill;
-      const ws = result && result.winners;            // 중선거구(1구 2인)
+      // 값 채움(투표율 등) — 정당색 경로 전체를 대체한다. null이면 평소대로 정당색.
+      const valFill = opts.fillOf ? opts.fillOf(result, d) : null;
+      let fill = valFill || (top ? partyColor(top.party) : emptyFill);
+      const ws = !valFill && result && result.winners;   // 중선거구(1구 2인)
       const cellWin = (d.wi !== undefined && ws && ws[d.wi]) ? ws[d.wi] : null;
       if (cellWin) fill = partyColor(cellWin.party);
       else if (ws && ws.length >= 2 && ws[0].party !== ws[1].party) fill = jungPattern([ws[0].party, ws[1].party]);
+      const filled = !!(valFill || top);                 // 채워진 셀인가 — 투명도·글자색 판정
       const isPattern = fill.charAt(0) !== '#';
       const isZorangi = d.wi !== undefined;
       const isSel = sel && sel.sido === d.sido && sel.name === d.name;
@@ -95,7 +101,7 @@
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('points', hexPoints(cx, cy, isZorangi ? r : r - 0.7));
       poly.setAttribute('fill', fill);
-      poly.setAttribute('fill-opacity', String(top ? 1 : emptyOpacity));
+      poly.setAttribute('fill-opacity', String(filled ? 1 : emptyOpacity));
       if (isZorangi) { poly.setAttribute('stroke', 'none'); }
       else { poly.setAttribute('stroke', 'var(--ink, #0a0e1a)'); poly.setAttribute('stroke-width', isSel ? '1.6' : '0.7'); }
       // 여론조사 빗나감 — 점선 테두리색 = 여론조사가 예측한 정당색(missOf 반환).
@@ -115,19 +121,21 @@
 
       const title = document.createElementNS(NS, 'title');
       const unc = result && (result.uncontested || result.is_uncontested);
-      title.textContent = cellWin
+      title.textContent = opts.titleOf ? opts.titleOf(d, result) : cellWin
         ? `${d.sido} ${d.name} · ${cellWin.name} (${cellWin.party}) 당선`
         : top
           ? `${d.sido} ${d.name} · ${top.name || ''} (${top.party}) ${unc ? '무투표 당선' : (top.pct != null ? top.pct.toFixed(1) + '%' : '')}`
           : `${d.sido} ${d.name} · 데이터 없음`;
       g.appendChild(title);
 
-      const lbl = cellWin ? { prefix: '', short: cellWin.name } : shortLabel(d.name, d.sido);
+      const custom = opts.labelOf ? opts.labelOf(d) : null;
+      const lbl = custom ? { prefix: shortLabel(d.name, d.sido).prefix, short: custom }
+        : cellWin ? { prefix: '', short: cellWin.name } : shortLabel(d.name, d.sido);
       const txt = document.createElementNS(NS, 'text');
       txt.setAttribute('x', String(cx)); txt.setAttribute('text-anchor', 'middle');
       txt.setAttribute('font-weight', '600'); txt.setAttribute('pointer-events', 'none');
       txt.setAttribute('font-family', 'Pretendard, system-ui, sans-serif');
-      txt.setAttribute('fill', top ? (isPattern ? '#fff' : tColor(fill, 1, top.party)) : 'var(--ink, #0a0e1a)');
+      txt.setAttribute('fill', filled ? (isPattern ? '#fff' : tColor(fill, 1, top && top.party)) : 'var(--ink, #0a0e1a)');
       if (lbl.prefix) {
         const a = document.createElementNS(NS, 'tspan');
         a.setAttribute('x', String(cx)); a.setAttribute('y', String(cy - 2));
