@@ -24,6 +24,7 @@ VIEW_LABEL = {
     "sido1": "시도 1위", "district": "선거구 1위", "district-geo": "선거구 지도",
     "district-turnout": "선거구 투표율", "district-turnout-geo": "선거구 투표율 지도",
     "turnout-geo": "투표율 지도",
+    "sgg-turnout": "시군구 투표율", "sgg-turnout-geo": "시군구 투표율 지도",
 }
 
 TEMPLATE = """<!DOCTYPE html>

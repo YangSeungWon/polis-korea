@@ -350,7 +350,7 @@
     return new Map();
   }
 
-  function renderTurnout(svg, hexCells, tmap, sidoMap) {
+  function renderTurnout(svg, hexCells, tmap, sidoMap, range) {
     const maxC = Math.max(...hexCells.map((c) => c.c));
     const maxR = Math.max(...hexCells.map((c) => c.r));
     const w = OFF_X * 2 + (maxC + 1) * COL_W;
@@ -372,8 +372,8 @@
     };
     // 상대 스케일 — 표시될 셀들의 최저~최고로 정규화(절대 스케일은 대선처럼 고투표율대에서 뭉침).
     const shownVals = hexCells.map(valueOf).filter((v) => v != null);
-    const lo = shownVals.length ? Math.min(...shownVals) : 0;
-    const hi = shownVals.length ? Math.max(...shownVals) : 1;
+    const lo = range ? range[0] : (shownVals.length ? Math.min(...shownVals) : 0);
+    const hi = range ? range[1] : (shownVals.length ? Math.max(...shownVals) : 1);
     let shown = 0;
     for (const cell of hexCells) {
       const [cx, cy] = hexCenter(cell.c, cell.r);
@@ -421,20 +421,54 @@
       sec = document.createElement('section');
       sec.className = 'ar-section'; sec.id = 'ar-sgg-turnout';
       sec.innerHTML = '<h2 class="ar-section-title">시군구 투표율'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음.</span></span></h2>'
-        + '<div class="ar-sgg-turnout-host"></div><div class="ar-turnout-legend"></div>';
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. <b>균등</b>=등면적 hex · <b>지도</b>=실제 경계.</span></span></h2>'
+        + '<div class="ar-sgg-turnout-host"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg turnout-map');
-    const { lo, hi, shown } = renderTurnout(svg, hexCells, tmap, turnoutBySido(races));
     const host = sec.querySelector('.ar-sgg-turnout-host');
-    host.innerHTML = ''; host.appendChild(svg);
-    const stops = window.Archive?.turnout?.stops || [[238, 243, 241], [78, 163, 145], [10, 74, 66]];
-    const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
-    const leg = sec.querySelector('.ar-turnout-legend');
-    leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
-      + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${shown}개 시군구</span>`;
+    const sidoMap = turnoutBySido(races);
+    const stops = window.Archive?.turnout?.stops || [[196, 224, 216], [78, 163, 145], [10, 74, 66]];
+    const legendEl = (lo, hi, n) => {
+      const ramp = `rgb(${stops[0]}), rgb(${stops[1]}), rgb(${stops[2]})`;
+      const leg = document.createElement('div');
+      leg.className = 'ar-turnout-legend';
+      leg.innerHTML = `<span>${lo.toFixed(1)}%</span><span class="ar-turnout-bar" style="background:linear-gradient(90deg,${ramp})"></span>`
+        + `<span>${hi.toFixed(1)}%</span><span class="ar-turnout-range">이 선거 최저–최고 · ${n}개 시군구</span>`;
+      return leg;
+    };
+    // 색의 자는 **균등 hex가 정한다** — 지도는 그 range를 그대로 받는다. 지도가 자기 최저~최고로
+    // 다시 정규화하면 같은 색이 두 탭에서 다른 뜻이 된다(hex엔 있고 경계엔 없는 시군구가 있다).
+    let scale = null;
+    const drawHex = (el) => {
+      const svg = document.createElementNS(NS, 'svg');
+      // 클래스 sgg-turnout — 시도 투표율(turnout-map)과 같은 키면 og/공유가 서로를 덮어쓴다.
+      svg.setAttribute('xmlns', NS); svg.setAttribute('class', 'council-hex-svg sgg-turnout');
+      el.innerHTML = ''; el.appendChild(svg);
+      const r = renderTurnout(svg, hexCells, tmap, sidoMap);
+      scale = [r.lo, r.hi];
+      el.appendChild(legendEl(r.lo, r.hi, r.shown));
+    };
+    const year = window.Archive?.sigunguMap?.geoYear?.(ctx?.meta?.electionN, ctx?.meta?.electionKind);
+    const drawGeo = (el) => {
+      const holder = document.createElement('div');
+      el.innerHTML = ''; el.appendChild(holder);
+      Promise.resolve(window.Archive.sigunguMap.draw(holder, {
+        year,
+        range: scale || undefined,
+        valueLookup: (sido, name) => {
+          const v = lookupKey(tmap, sido, name);
+          if (v != null) return v;
+          const sd = _canonSido(sido);
+          return sd.endsWith('특별자치시') ? sidoMap.get(sd) : null;   // 세종=기초 시군구 없음
+        },
+        valueLabel: (v) => `투표율 ${v.toFixed(1)}%`,
+      })).then((r) => { if (r) el.appendChild(legendEl(r.lo, r.hi, r.shown)); });
+    };
+    const SV = window.Archive?.sidoView;
+    const modes = [{ key: 'hex', label: '균등', draw: drawHex }];
+    if (year && window.Archive?.sigunguMap?.draw) modes.push({ key: 'map', label: '지도', draw: drawGeo });
+    if (SV?.mount && modes.length > 1) SV.mount(host, modes);
+    else drawHex(host);
   }
 
   // ── 시군구 1위 후보 결과 맵 (대선) ──────────────────────────────

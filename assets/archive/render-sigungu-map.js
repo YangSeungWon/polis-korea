@@ -1,7 +1,11 @@
 // 시·군·구 지리 지도 — 회차별 sigungu_{year} 경계로 코로플레스. 1위 정당색 + 격차 명도.
 //   sidoMap(시도)의 시군구판. 대선 시군구 1위(council initResult)에서 호출 — flat 단색 아니라
 //   격차명도(승자독식 거부, [[no_winner_take_all_pres]]). leaflet 없이 SVG choropleth.
-//   draw(host, { year, lookup(sido,name)->{party,margin,pct,name}|null, onSelect, selected }).
+//   draw(host, { year, lookup(sido,name)->{party,margin,pct,name}|null, onSelect, selected,
+//                valueLookup(sido,name)->숫자|null, valueLabel(v), range:[lo,hi] }).
+//   valueLookup을 주면 **값 코로플레스**(정당색 대신 teal 그라데이션 — 투표율 등 연속값).
+//   range로 색의 자를 고정한다: 같은 자료의 균등 hex와 색이 같은 뜻이어야 탭을 오가며 읽힌다.
+//   반환 {cells, lo, hi, shown}.
 
 (function () {
   const NS = 'http://www.w3.org/2000/svg';
@@ -73,6 +77,11 @@
     }
     const lookup = opts.lookup || (() => null);
     const pcol = (typeof partyFill === 'function') ? partyFill : () => '#888';
+    // 값 모드 — 정당색·격차명도 경로를 통째로 대체.
+    const vlookup = opts.valueLookup || null;
+    const vcol = (window.Archive && window.Archive.turnout && window.Archive.turnout.color) || (() => '#88a');
+    const vlabel = opts.valueLabel || ((v) => v.toFixed(1));
+    const vseen = [];
 
     const feats = geo.features;
     const { mnX, mnY, mxX, mxY } = bbox(feats);
@@ -91,7 +100,26 @@
     const EM = (typeof SIDO_EDGE_MARGIN !== 'undefined') ? SIDO_EDGE_MARGIN : 78;  // 좌우 외곽 라벨 여백
     svg.setAttribute('viewBox', `${-EM} 0 ${(W + 2 * EM).toFixed(1)} ${H.toFixed(1)}`);
     svg.setAttribute('width', (W + 2 * EM).toFixed(1)); svg.setAttribute('height', H.toFixed(1));
-    svg.setAttribute('class', 'sigungu-map-svg');
+    // 값 모드는 1위 지도와 og·공유 키가 달라야 한다(같은 키면 서로를 덮어쓴다).
+    svg.setAttribute('class', 'sigungu-map-svg' + (vlookup ? ' sigungu-turnout-geo' : ''));
+
+    // 색의 자 — range를 주면 그대로, 없으면 이 지도에 그려질 값의 최저~최고를 미리 훑는다
+    // (칠하면서 정할 수는 없다 — 첫 칸이 마지막 칸의 값을 알아야 하므로).
+    let vlo = 0, vhi = 1;
+    if (vlookup) {
+      if (opts.range) { vlo = opts.range[0]; vhi = opts.range[1]; }
+      else {
+        const pre = [];
+        for (const f of feats) {
+          const cd = String(f.properties.code || f.properties.SIG_CD || '');
+          const sd = SIDO_CODE2[cd.slice(0, 2)];
+          if (!sd) continue;
+          const v = vlookup(sd, f.properties.name || f.properties.SIG_KOR_NM || '');
+          if (v != null) pre.push(v);
+        }
+        if (pre.length) { vlo = Math.min(...pre); vhi = Math.max(...pre); }
+      }
+    }
 
     const sel = opts.selected || null;
     const labels = [];
@@ -101,11 +129,16 @@
       const sido = SIDO_CODE2[code.slice(0, 2)];
       const name = f.properties.name || f.properties.SIG_KOR_NM || '';
       if (!sido) continue;
-      const win = lookup(sido, name);
+      const win = vlookup ? null : lookup(sido, name);
+      const val = vlookup ? vlookup(sido, name) : null;
+      if (val != null) vseen.push(val);
       const path = document.createElementNS(NS, 'path');
       path.setAttribute('d', featPath(f.geometry));
       path.setAttribute('fill-rule', 'evenodd');
-      if (win) {
+      if (val != null) {
+        path.setAttribute('fill', vcol(val, vlo, vhi));
+        path.setAttribute('class', 'sigungu-map-region has-data');
+      } else if (win) {
         path.setAttribute('fill', pcol(win.party));
         path.setAttribute('fill-opacity', marginOpacity(win.margin).toFixed(2));
         path.setAttribute('class', 'sigungu-map-region has-data');
@@ -114,9 +147,9 @@
       }
       if (sel && sel.sido === sido && sel.name === name) path.classList.add('is-selected');
       const tt = document.createElementNS(NS, 'title');
-      tt.textContent = win
-        ? `${sido} ${name} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })} · 격차 ${fmtPp(win.margin)}`
-        : `${sido} ${name} · 데이터 없음`;
+      tt.textContent = val != null ? `${sido} ${name} · ${vlabel(val)}`
+        : win ? `${sido} ${name} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })} · 격차 ${fmtPp(win.margin)}`
+          : `${sido} ${name} · 데이터 없음`;
       path.appendChild(tt);
       if (opts.onSelect) { path.style.cursor = 'pointer'; path.addEventListener('click', () => opts.onSelect(sido, name)); }
       svg.appendChild(path);
@@ -127,7 +160,7 @@
     if (typeof drawSidoEdgeLabels === 'function') drawSidoEdgeLabels(svg, labels);
     host.innerHTML = '';
     host.appendChild(svg);
-    return { cells };
+    return { cells, lo: vlo, hi: vhi, shown: vseen.length };
   }
 
   // 시군구 geo 경계 연도 — geomap.ts와 동기. 대선 PRES_SGG_GEO_YEAR(16~21 SGIS 연도, 13·14대는 도농통합
