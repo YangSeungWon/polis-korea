@@ -111,8 +111,13 @@ def main():
         labs = _re2.findall(r'class="hdr-link[^"]*">([^<]+)<', m.group(0)) if m else []
         ck(f"{label} nav 4축", labs == AXES, f"{rel} → {'/'.join(labs) or '(마커 없음)'}")
 
-    # sitemap에 허브가 있다
-    sm = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    # sitemap에 허브가 있다 — sitemap.xml은 층별 파일을 가리키는 index이므로
+    # index만 읽으면 URL이 하나도 안 보이고 아래 세 검사가 전부 거짓으로 떨어진다.
+    _idx = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    sm = "\n".join(
+        (ROOT / u.rsplit("/", 1)[-1]).read_text(encoding="utf-8")
+        for u in re.findall(r"<loc>([^<]+)</loc>", _idx)
+        if (ROOT / u.rsplit("/", 1)[-1]).exists())
     ck("sitemap에 허브 등록", "/elections.html" in sm)
     ck("sitemap에 archive 전부", all(f"/archive/{a}/" in sm for a in archives))
     ck("sitemap에 지역 허브 등록", "/region/</loc>" in sm or "/region/<" in sm)

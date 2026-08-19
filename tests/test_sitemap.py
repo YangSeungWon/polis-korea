@@ -90,21 +90,37 @@ def check_lastmod_manifest(raw: str) -> None:
 
 
 def main():
+    # sitemap.xml은 층별 sitemap을 가리키는 index다. 검사는 index를 따라가 층
+    # 파일을 전부 읽는다 — index만 보면 URL이 0개로 보여 아래 검사가 전부 공허하게
+    # 통과한다.
     sm = ROOT / "sitemap.xml"
-    raw = sm.read_text(encoding="utf-8")
+    index_raw = sm.read_text(encoding="utf-8")
+    children = [u for u in re.findall(r"<loc>([^<]+)</loc>", index_raw)]
+    ck("sitemap.xml이 index다", "<sitemapindex" in index_raw)
+    ck(f"층 {len(children)}개를 가리킨다", bool(children), str(children[:3]))
+
+    parts = []
+    for u in children:
+        f = ROOT / u.rsplit("/", 1)[-1]
+        if not f.exists():
+            ck(f"{f.name}이 실재한다", False)
+            continue
+        parts.append(f)
+    raw = "\n".join(f.read_text(encoding="utf-8") for f in parts)
 
     # ── 형식 ────────────────────────────────────────────────────────────────
-    try:
-        ET.fromstring(raw)
-        ok_xml = True
-    except Exception as e:
-        ok_xml, err = False, str(e)
-    ck("XML이 유효하다", ok_xml, "" if ok_xml else err)
+    bad = []
+    for f in [sm] + parts:
+        try:
+            ET.fromstring(f.read_text(encoding="utf-8"))
+        except Exception as e:
+            bad.append(f"{f.name}: {e}")
+    ck("XML이 유효하다", not bad, "; ".join(bad[:2]))
 
     locs = re.findall(r"<loc>([^<]+)</loc>", raw)
     ck(f"URL {len(locs):,}개 · 5만 한도 이내", len(locs) <= 50000, str(len(locs)))
-    ck("파일 50MB 이내", sm.stat().st_size <= 50 * 1024 * 1024,
-       f"{sm.stat().st_size / 1024 / 1024:.1f}MB")
+    big = [f.name for f in parts if f.stat().st_size > 50 * 1024 * 1024]
+    ck("층마다 50MB 이내", not big, str(big))
     ck("중복 URL 없음", len(locs) == len(set(locs)), str(len(locs) - len(set(locs))))
     rel = [u for u in locs if not u.startswith(SITE + "/")]
     ck("전부 절대 URL", not rel, str(rel[:3]))

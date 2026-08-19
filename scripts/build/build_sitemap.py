@@ -1,4 +1,4 @@
-"""sitemap.xml 자동 생성.
+"""sitemap 자동 생성 — sitemap.xml(index) + 층별 sitemap-{층}.xml.
 
 소스:
   - 정적 메인 페이지 (수동 list)
@@ -271,28 +271,53 @@ def main():
                     help="매니페스트도 git 이력도 없을 때 전부 오늘로 심는다(최초 1회)")
     args = ap.parse_args()
     fresh = not MANIFEST.exists()
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for loc, freq, priority in STATIC:
-        lines.append(url_block(loc, freq, priority, lastmod_for(loc)))
-    for loc, freq, priority, lastmod in archive_urls():
-        lines.append(url_block(loc, freq, priority, lastmod))
-    for loc, freq, priority, lastmod in history_urls():
-        lines.append(url_block(loc, freq, priority, lastmod))
-    for loc, freq, priority, lastmod in poll_election_urls():
-        lines.append(url_block(loc, freq, priority, lastmod))
+
+    # 층별로 나눠 낸다. 한 파일에 5,005개를 넣으면 Search Console이 '색인 생성됨
+    # 3,100'처럼 사이트 전체 숫자 하나만 돌려준다 — 어느 층이 안 들어가는지 알 수
+    # 없다. 인물 4,326개가 86%를 차지해 나머지 층의 상태를 통째로 가린다.
+    # sitemap마다 따로 보고되므로, 나누는 것만으로 '어디가 막혔나'를 물을 수 있다.
     parties = party_urls()
-    for loc, freq, priority, lastmod in parties:
-        lines.append(url_block(loc, freq, priority, lastmod))
     regions = region_urls()
-    for loc, freq, priority, lastmod in regions:
-        lines.append(url_block(loc, freq, priority, lastmod))
     persons = person_urls()
-    for loc, freq, priority, lastmod in persons:
-        lines.append(url_block(loc, freq, priority, lastmod))
-    lines.append('</urlset>')
-    out = "\n".join(lines) + "\n"
-    (ROOT / "sitemap.xml").write_text(out, encoding="utf-8")
+    sections = [
+        ("main",    [(loc, freq, pr, lastmod_for(loc)) for loc, freq, pr in STATIC]),
+        ("archive", archive_urls()),
+        ("history", history_urls()),
+        ("polls",   poll_election_urls()),
+        ("party",   parties),
+        ("region",  regions),
+        ("person",  persons),
+    ]
+
+    written = []
+    for name, urls in sections:
+        if not urls:
+            continue
+        body = "\n".join(url_block(loc, freq, pr, lm) for loc, freq, pr, lm in urls)
+        (ROOT / f"sitemap-{name}.xml").write_text(
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + body + "\n</urlset>\n", encoding="utf-8")
+        # 이 층의 lastmod 중 가장 최근 — 색인이 이 파일을 다시 읽을지 판단하는 값이다.
+        written.append((name, len(urls), max(lm for *_, lm in urls)))
+
+    (ROOT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(f"  <sitemap>\n    <loc>{BASE}/sitemap-{n}.xml</loc>\n"
+                    f"    <lastmod>{lm}</lastmod>\n  </sitemap>"
+                    for n, _, lm in written)
+        + "\n</sitemapindex>\n", encoding="utf-8")
+
+    # 낡은 층 파일 청소 — 층이 비어 안 쓰게 됐는데 파일이 남으면 유령 URL을 계속
+    # 제출하게 된다.
+    live = {f"sitemap-{n}.xml" for n, _, _ in written}
+    for f in ROOT.glob("sitemap-*.xml"):
+        if f.name not in live:
+            f.unlink()
+
+    out = "\n".join((ROOT / f"sitemap-{n}.xml").read_text(encoding="utf-8")
+                    for n, _, _ in written)
     (ROOT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n", encoding="utf-8")
     # 개수는 **쓴 것**을 센다. 손으로 더한 합계는 항목이 늘 때마다 어긋난다 —
@@ -318,11 +343,9 @@ def main():
     }, ensure_ascii=False, indent=0) + "\n", encoding="utf-8")
 
     total = out.count("<loc>")
-    n_arch, n_hist = len(archive_urls()), len(history_urls())
-    n_poll = len(poll_election_urls())
-    print(f"→ sitemap.xml: {total} URLs ({len(STATIC)} static + {n_arch} archive + "
-          f"{n_hist} history + {n_poll} poll + {len(parties)} party + "
-          f"{len(regions)} region + {len(persons)} person) · robots.txt")
+    detail = " + ".join(f"{n} {name}" for name, n, _ in written)
+    print(f"→ sitemap.xml: sitemapindex {len(written)}층 · {total} URLs "
+          f"({detail}) · robots.txt")
     if _SEEDED:
         print(f"   lastmod 새로 심음 {_SEEDED} (git 이력 {_SEED_FROM_GIT} · 오늘 "
               f"{_SEEDED - _SEED_FROM_GIT}){' · 매니페스트 최초 생성' if fresh else ''}")
