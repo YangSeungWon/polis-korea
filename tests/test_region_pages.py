@@ -10,6 +10,7 @@
 실행: .venv/bin/python tests/test_region_pages.py
 """
 from __future__ import annotations
+import collections
 import re
 import sys
 from pathlib import Path
@@ -70,6 +71,59 @@ def main():
     dup = [p.parent.name for p in pages
            if p.parent.name.startswith(("강원도-", "전라북도-"))]
     ck("개명 전 시도로 만든 페이지가 없다", not dup, str(dup[:3]))
+
+    # ── 4. 원천 집계 단위를 지역으로 만들지 않았는가 ────────────────────────
+    # 검사는 fold_target을 쓰지 않는다. 그걸 쓰면 fold_target을 통째로 꺼도 검사가
+    # 같이 꺼져 통과한다(변이 시험에서 실제로 그랬다). 지역 이름만 보고 판정한다.
+    keys = {(sd, sg) for (sd, sg) in by}
+    names = collections.defaultdict(set)
+    for sd, sg in keys:
+        names[sd].add(sg)
+
+    # 5·6·7대 대선은 서울 5개 구·광주시를 국회의원 선거구 갑/을/병/정으로 나눠
+    # 집계한다. 그걸 지역으로 만들어 실재하지 않는 페이지 12개가 생겼고, 실재하는
+    # 동대문구에서는 1963·1967·1971 대선이 통째로 비어 있었다.
+    fake = []
+    for sd, sg in sorted(keys):
+        m2 = re.match(r"^(.+?)([갑을병정무])구$", sg)
+        if not m2:
+            continue
+        base = m2.group(1)
+        t = base if base[-1:] in "시구군" else base + "구"
+        if t != sg and t in names[sd]:
+            fake.append(f"{sd}-{sg} (→{t})")
+    ck("선거구를 지역 페이지로 만들지 않는다", not fake, str(fake[:4]))
+
+    # 일반구를 모시에 접지 않으면 모시에서 그 직위가 통째로 사라진다(성남시
+    # 광역단체장 0건 · 교육감 0건 · 대선 2건).
+    parents = collections.defaultdict(list)
+    for sd, sg in sorted(keys):
+        m2 = re.match(r"^(.+?시)(.+구)$", sg)
+        if m2 and m2.group(1) in names[sd]:
+            parents[(sd, m2.group(1))].append(sg)
+    empty = []
+    for (sd, pc), kids in sorted(parents.items()):
+        rows = by.get((sd, pc)) or []
+        if len(rows) < MIN_ROUNDS:
+            continue
+        # 광역단체장이 **시군구로 분해돼 오는 것은 5회 지선(2010)부터**다. 1~4회는
+        # 시도 단위 한 행뿐이라 접을 하위 행이 아예 없다. 그래서 기준은 선거가
+        # 있었던 해(1995)가 아니라 분해가 시작된 해다 — 1997년에 없어진 경남
+        # 울산시를 이 검사로 잡으면 자료에 없는 것을 있으라고 요구하게 된다.
+        if any(r["date"] >= "2010" for r in rows) and \
+                "광역단체장" not in {r["office"] for r in rows}:
+            empty.append(f"{sd}-{pc}(구 {len(kids)})")
+    ck("하위 구를 가진 시에 광역단체장이 있다", not empty, str(empty[:4]))
+
+    # 합산본과 직접 행이 겹치면 같은 표를 두 번 센다. **지금 자료에는 겹치는 것이
+    # 없어 이 검사는 한 번도 발화하지 않는다** — 검증된 가드가 아니라 방어용이다.
+    # 새 회차가 시 단위와 구 단위를 같이 내보내면 그때 걸린다.
+    dupes = []
+    for (sd, sg), rows in by.items():
+        for k, cnt in collections.Counter((r["eid"], r["tc"]) for r in rows).items():
+            if cnt > 1:
+                dupes.append(f"{sd}-{sg} {k} x{cnt}")
+    ck("같은 (회차, 직위) 행이 둘 이상이 아니다", not dupes, str(dupes[:4]))
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
