@@ -40,11 +40,14 @@ from sync_nav_html import render_nav, menu_for_path  # noqa: E402
 DOW = ["월", "화", "수", "목", "금", "토", "일"]
 
 # kind → 짧은 라벨·history.html type slug·n 단위
+# query: 사람이 실제로 검색창에 치는 이름. short('지선')는 우리 내부 약어라 검색어가
+# 아니다 — 상위 검색어는 '지방 선거 결과'지 '지선 결과'가 아니다. 제목 앞머리에는
+# query를, 본문 라벨에는 short를 쓴다.
 KIND_META = {
-    "local":              {"short": "지선",  "history_type": "local",              "n_unit": "회"},
-    "presidential":       {"short": "대선",  "history_type": "presidential",       "n_unit": "대"},
-    "general_election":   {"short": "총선",  "history_type": "national_assembly",  "n_unit": "대"},
-    "byelection":         {"short": "재보궐", "history_type": "byelection",         "n_unit": "년"},
+    "local":              {"short": "지선",  "query": "지방선거",   "history_type": "local",              "n_unit": "회"},
+    "presidential":       {"short": "대선",  "query": "대통령선거", "history_type": "presidential",       "n_unit": "대"},
+    "general_election":   {"short": "총선",  "query": "총선",       "history_type": "national_assembly",  "n_unit": "대"},
+    "byelection":         {"short": "재보궐", "query": "재보궐선거", "history_type": "byelection",         "n_unit": "년"},
 }
 
 
@@ -186,6 +189,12 @@ def derive(meta: dict) -> dict:
         "n_unit": km["n_unit"],
         "kind": kind,
         "kind_short": km["short"],
+        "kind_query": km["query"],
+        # 제목이 '2025 대통령선거 결과 — 제21대 대통령선거'처럼 같은 말을 두 번 하지
+        # 않도록, 정식명이 검색어로 끝나면 그 꼬리만 내부 약어로 줄인다.
+        # ('제21대 대통령선거' → '제21대 대선'). 총선·재보궐은 정식명이 검색어로
+        # 끝나지 않아 그대로 남는다.
+        "name_short": _name_short(meta["name"], km),
         "history_type": km["history_type"],
         "is_active": meta.get("status") == "active",
         "election_id_full": f"002{sg_id}" if sg_id else "",
@@ -193,6 +202,22 @@ def derive(meta: dict) -> dict:
         "wiki_url": ar.get("wiki_url", ""),
         "year": meta["date"][:4],
     }
+
+
+
+def _name_short(name: str, km: dict) -> str:
+    """제목에서 같은 말을 두 번 하지 않도록 정식명을 줄인다.
+
+    '2025 대통령선거 결과 — 제21대 대통령선거'처럼 앞머리 검색어와 정식명이 겹치면
+    정식명을 '제21대 대선'으로 줄인다. 꼬리만 잘라내면 '제9회 전국동시지방선거'가
+    '제9회 전국동시지선'이 되므로, 회차 표기(제N회·제N대)만 남기고 약어를 붙인다.
+    회차 표기가 없거나 겹치지 않는 이름(재보궐의 '2025년 4·2 재·보궐선거',
+    총선의 '제22대 국회의원선거')은 그대로 둔다.
+    """
+    if not name.endswith(km["query"]):
+        return name
+    m = re.match(r"^(제\d+[회대])", name)
+    return f'{m.group(1)} {km["short"]}' if m else name
 
 
 # --- 공통 chrome ---
@@ -209,10 +234,10 @@ HEAD = """<!DOCTYPE html>
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#5b54d6">
 <base href="/">
-<title>polis · {name} ({date})</title>
-<meta name="description" content="{name}({date}) 결과·여론조사·출구조사 비교 아카이브.">
-<meta property="og:title" content="polis · {n}{n_unit} {kind_short} 아카이브">
-<meta property="og:description" content="{n}{n_unit} {kind_short} 결과·여론조사·출구조사 비교.">
+<title>{year} {kind_query} 결과 — {name_short} 개표·득표율 | polis</title>
+<meta name="description" content="{year}년 {kind_query}({date}) 결과. {name} 시도·시군구별 개표와 득표율, 여론조사·출구조사 비교까지 한 화면에서.">
+<meta property="og:title" content="{year} {kind_query} 결과 — {name_short}">
+<meta property="og:description" content="{n}{n_unit} {kind_short} 시도·시군구별 개표와 득표율, 여론조사·출구조사 비교.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="{og_image}">
 <meta property="og:image:width" content="1200">
