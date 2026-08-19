@@ -125,9 +125,108 @@ def election_meta(eid: str) -> dict:
     return {}
 
 
+def known_units() -> dict:
+    """시도 → 그 시도에서 자료에 나온 시군구 이름 전부.
+
+    일반구(성남시수정구)를 모시(성남시)로 접으려면 **모시가 실재하는지**부터
+    알아야 한다. 이름 모양만 보고 접으면 '오정구'의 오를 떼는 식의 사고가 난다.
+    """
+    seen: dict = defaultdict(set)
+    for _eid, _meta, races in load_all():
+        for r in races:
+            sd, sg = sido_canon(r.get("sido")), r.get("sigungu")
+            if sd and sg:
+                seen[sd].add(sg)
+    return seen
+
+
+_UNITS: dict | None = None
+
+
+def fold_target(sd: str, sg: str) -> tuple:
+    """(합칠 상위 단위, 이 키 자체를 지역 페이지로 둘 것인가).
+
+    원천 자료가 우리 '지역'과 다른 단위로 집계될 때가 두 가지 있다.
+
+    **선거구 집계** — 5·6·7대 대선(과 2대)은 서울 5개 구·광주시·부산진구를
+    국회의원 선거구 갑/을/병/정으로 나눠 집계한다. '동대문갑구'는 장소가 아니다.
+    그런데 우리는 그걸 지역으로 만들어, 실재하지 않는 페이지 12개가 생기고 실재하는
+    동대문구에서는 1963·1967·1971 대선이 통째로 비었다.
+
+    **일반구** — 성남시수정구·중원구·분당구는 성남시의 일반구다. NEC는 대선·
+    광역단체장·교육감을 구 단위로 개표하고 기초단체장만 시 단위로 낸다. 접지 않아
+    성남시 페이지에 광역 0·교육감 0·대선 2건만 남았다(정상은 5~7·5~6·18~30).
+
+    둘을 한 함수로 두는 이유: '광주시갑구'는 두 규칙에 다 걸린다. 따로 두면 같은
+    표가 두 번 합산된다.
+
+    접는 조건은 모양이 아니라 **상위 단위가 자료에 실재하는가**다. 모양만 보면
+    '부천시오정구'의 정을 선거구 정으로 읽어 '부천시오구'를 만든다(실제로 그랬다).
+    """
+    global _UNITS
+    if _UNITS is None:
+        _UNITS = known_units()
+    units = _UNITS.get(sd, ())
+    sg = sg or ""
+
+    # 1) 선거구 꼬리(갑·을·병·정·무) — 떼어낸 것이 실재 단위일 때만.
+    m = re.match(r"^(.+?)([갑을병정무])구$", sg)
+    if m:
+        base = m.group(1)
+        t = base if base[-1:] in "시구군" else base + "구"
+        if t != sg and t in units:
+            return t, False        # 선거구는 장소가 아니다 — 페이지를 만들지 않는다
+
+    # 2) 일반구 → 모시.
+    m = re.match(r"^(.+?시)(.+구)$", sg)
+    if m and m.group(1) in units:
+        return m.group(1), True    # 구는 실재하므로 제 페이지도 남는다
+
+    return None, True
+
+
+def merge_rows(rows: list) -> dict:
+    """여러 하위 단위 row를 하나로 — 표를 합치고 1위·투표율을 **다시 계산**한다.
+
+    행을 옮기는 것으로는 안 된다. 구별 1위가 시 전체 1위와 다를 수 있다(2022
+    경기지사: 도 전체는 김동연이 이겼지만 성남시 합산은 김은혜 51.8% vs 46.2%).
+    """
+    votes: dict = defaultdict(int)
+    party: dict = {}
+    el = vo = 0
+    el_known = vo_known = False
+    for r in rows:
+        if r.get("electors"):
+            el += r["electors"]
+            el_known = True
+        if r.get("voters") is not None:
+            vo += r["voters"]
+            vo_known = True
+        for c in (r.get("candidates") or []):
+            nm = (c.get("name") or "").strip()
+            if not nm:
+                continue
+            votes[nm] += c.get("votes") or 0
+            party.setdefault(nm, c.get("party"))
+    if not votes:
+        return {}
+    total = sum(votes.values())
+    top = max(votes.items(), key=lambda kv: kv[1])
+    return {
+        "candidates": [{"name": top[0], "party": party.get(top[0]),
+                        "votes": top[1],
+                        "pct": round(top[1] / total * 100, 2) if total else None}],
+        "electors": el if el_known else None,
+        "voters": vo if vo_known else None,
+    }
+
+
 def collect() -> dict:
     """(시도, 시군구) → [{eid, date, kind, label, party, name, pct, turnout}]"""
     by_region = defaultdict(list)
+    direct: dict = {}                       # (시도, 시군구, 회차, 직위) → 원천 row
+    rolled: dict = defaultdict(list)        #   └ 모시로 접을 하위 구 row들
+    ctx: dict = {}                          # (회차, 직위) → (날짜, 종류, 이름)
     for eid, meta, races in load_all():
         em = election_meta(eid)
         kind = em.get("kind") or ""
@@ -144,29 +243,56 @@ def collect() -> dict:
                     or (tc == "1" and scope == "sigungu")
                     or (tc in ("3", "11") and scope == "sigungu")):
                 continue
-            cs = sorted((r.get("candidates") or []),
-                        key=lambda c: -(c.get("votes") or 0))
-            if not cs:
-                continue
-            top = cs[0]
-            # 없는 값은 0이 아니다. 1~4회 지선은 electors만 있고 voters가 없어서,
-            # None을 0으로 강제하면 0/134603 = '투표율 0.0%'라는 있지도 않은 사실이 생긴다.
-            el, vo = r.get("electors"), r.get("voters")
-            by_region[(sd, sg)].append({
-                "eid": eid, "date": date, "kind": kind,
-                "election": name,
-                "office": {"1": "대통령", "3": "광역단체장", "4": "기초단체장",
-                           "11": "교육감"}.get(tc, tc),
-                "party": top.get("party") or "무소속", "name": top.get("name"),
-                "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
-                # 인물 링크용 — person-links 색인의 (직|지역) 키를 그대로 보존한다.
-                # 기초 단위(4·6)는 시군구명이, 광역 단위(1·3·11)는 시도명이 키다.
-                "tc": tc,
-                "place": sg if tc in ("4", "6") else (r.get("sido") or sd),
-                "pct": top.get("pct"),
-                "turnout": (round(vo / el * 100, 1)
-                            if (el and vo is not None) else None),
-            })
+            direct[(sd, sg, eid, tc)] = r
+            ctx[(eid, tc)] = (date, kind, name)
+            # 일반구는 모시에도 담는다. 대선·광역단체장·교육감은 구 단위로만 오므로
+            # 접지 않으면 모시 페이지에서 그 직위가 통째로 사라진다.
+            pc, _keep = fold_target(sd, sg)
+            if pc:
+                rolled[(sd, pc, eid, tc)].append(r)
+
+    OFFICE = {"1": "대통령", "3": "광역단체장", "4": "기초단체장", "11": "교육감"}
+
+    def emit(sd, sg, eid, tc, r, merged):
+        cs = sorted((r.get("candidates") or []), key=lambda c: -(c.get("votes") or 0))
+        if not cs:
+            return
+        top = cs[0]
+        # 없는 값은 0이 아니다. 1~4회 지선은 electors만 있고 voters가 없어서,
+        # None을 0으로 강제하면 0/134603 = '투표율 0.0%'라는 있지도 않은 사실이 생긴다.
+        el, vo = r.get("electors"), r.get("voters")
+        date, kind, name = ctx[(eid, tc)]
+        by_region[(sd, sg)].append({
+            "eid": eid, "date": date, "kind": kind,
+            "election": name,
+            "office": OFFICE.get(tc, tc),
+            "party": top.get("party") or "무소속", "name": top.get("name"),
+            "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
+            # 인물 링크용 — person-links 색인의 (직|지역) 키를 그대로 보존한다.
+            # 기초 단위(4·6)는 시군구명이, 광역 단위(1·3·11)는 시도명이 키다.
+            "tc": tc,
+            "place": sg if tc in ("4", "6") else sd,
+            "pct": top.get("pct"),
+            "turnout": (round(vo / el * 100, 1) if (el and vo is not None) else None),
+            "merged": merged,
+        })
+
+    for (sd, sg, eid, tc), r in direct.items():
+        # 선거구는 장소가 아니다. 표는 위에서 실재 단위로 접었으니, 여기서 제 이름의
+        # 지역을 또 만들면 같은 표가 두 페이지에 실린다.
+        if not fold_target(sd, sg)[1]:
+            continue
+        emit(sd, sg, eid, tc, r, False)
+
+    # 합산본은 **직접 행이 없는 (회차, 직위)에만** 넣는다. 있는데도 덮으면 이중
+    # 집계다 — 청주 2014는 기초단체장이 통합 기준(상당+흥덕+청원군) 한 행으로
+    # 이미 와 있고, 그 위에 구 합산을 얹으면 같은 표를 두 번 세게 된다.
+    for (sd, pc, eid, tc), rows in rolled.items():
+        if (sd, pc, eid, tc) in direct:
+            continue
+        m = merge_rows(rows)
+        if m:
+            emit(sd, pc, eid, tc, m, True)
     return by_region
 
 

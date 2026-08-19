@@ -333,6 +333,16 @@ def main():
             "  CI라면 actions/checkout이 shallow(fetch-depth 1)여서일 수 있다.\n"
             "  data/sitemap_lastmod.json이 커밋돼 있으면 git 이력 없이도 동작한다.\n"
             "  정말 처음 만드는 거라면 --seed-today")
+    # 사라진 페이지를 매니페스트에서 뺀다. 안 빼면 유령이 계속 쌓인다 — 선거구
+    # 지역 12쪽을 없앤 날, 매니페스트는 그 12쪽을 계속 가리키고 있었다(검사가
+    # 잡았다). 이 파일은 '지금 내는 sitemap의 짝'이지 기록 보관소가 아니다.
+    _live = {str(page_file(u).relative_to(ROOT))
+             for _n, urls in sections for u, *_r in urls}
+    _man = manifest()
+    _gone = [k for k in _man if k not in _live]
+    for k in _gone:
+        del _man[k]
+
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps({
         "_note": ("페이지 내용 해시 → 그 내용이 처음 나타난 날. sitemap의 lastmod가 여기서 "
@@ -344,6 +354,8 @@ def main():
 
     total = out.count("<loc>")
     detail = " + ".join(f"{n} {name}" for name, n, _ in written)
+    if _gone:
+        print(f"   매니페스트에서 사라진 페이지 {len(_gone)}개 제거")
     print(f"→ sitemap.xml: sitemapindex {len(written)}층 · {total} URLs "
           f"({detail}) · robots.txt")
     if _SEEDED:
