@@ -236,3 +236,31 @@ a.pp-party:hover { background: var(--bg2); }
 .rg-past { margin-top: 8px; }
 .rg-past > summary { font-size: 13px; color: var(--ink-soft); cursor: pointer; padding: 2px 0; }
 .rg-item.is-past { opacity: 0.72; }
+
+/* ── 인물 허브 (/person/, /person/초성-ㄱ/) ─────────────────────────────
+   4,326개 중 1,820개가 어느 정적 페이지에서도 링크되지 않아 sitemap에만 있었다.
+   초성 갈래로 나눠 잇는 목록. */
+.ph-sec { margin-top: 26px; }
+.ph-sec h2 { font-size: 15px; font-weight: 800; margin: 0 0 10px; }
+.ph-groups {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px;
+}
+.ph-groups a {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border: 1px solid var(--rule); border-radius: 3px;
+  text-decoration: none; color: inherit;
+}
+.ph-groups a:hover { background: var(--bg2); }
+.ph-cho { font-size: 18px; font-weight: 800; color: var(--ink); }
+.ph-list { list-style: none; margin: 0; padding: 0; max-width: 800px; }
+.ph-list li {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  padding: 7px 2px; border-bottom: 1px solid var(--rule); font-size: 13px;
+}
+.ph-list a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.ph-list a:hover { text-decoration: underline; }
+.ph-meta { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.ph-pager { display: flex; gap: 16px; margin-top: 20px; font-size: 13px; }
+.ph-pager a { color: var(--ink-soft); text-decoration: none; }
+.ph-pager a:hover { color: var(--ink); text-decoration: underline; }

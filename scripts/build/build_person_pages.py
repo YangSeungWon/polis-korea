@@ -104,6 +104,21 @@ SIDO_SHORT = {
 }
 
 
+def _short_sidos(p: dict) -> list:
+    """시도 약칭 목록 — 개명 전후를 겹쳐 적지 않는다.
+
+    전라북도와 전북특별자치도는 둘 다 '전북'이라, 두 이름 시절에 다 나온 사람은
+    '전북 · 전북'으로 찍혔다(박경철). 줄인 **뒤에** 중복을 걷어낸다. 순서는
+    원본 순서를 지킨다.
+    """
+    out = []
+    for x in (p.get("sidos") or []):
+        v = SIDO_SHORT.get(x, x)
+        if v not in out:
+            out.append(v)
+    return out[:2]
+
+
 def page_title(p: dict) -> str:
     """이름만으로는 4,326개가 서로 구별되지 않는다.
 
@@ -115,7 +130,7 @@ def page_title(p: dict) -> str:
     """
     name = p["name"]
     bits = []
-    sidos = [SIDO_SHORT.get(x, x) for x in (p.get("sidos") or [])][:2]
+    sidos = _short_sidos(p)
     if sidos:
         bits.append(" · ".join(sidos))
     elif p.get("parties"):
@@ -333,6 +348,196 @@ def static_body(p: dict) -> tuple[str, str]:
     return lede, table + pledge_block(p["id"])
 
 
+HUB_TEMPLATE = '''<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script>try{{var _m=localStorage.getItem('vote-ysw-theme');if(_m==='dark')document.documentElement.setAttribute('data-theme','dark');else if(_m==='light')document.documentElement.setAttribute('data-theme','light');}}catch(_e){{}}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#5b54d6">
+<base href="/">
+<title>{title}</title>
+<meta name="description" content="{desc}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://polis.ysw.kr/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://polis.ysw.kr/og.png">
+<link rel="canonical" href="{canon}">
+{jsonld}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/person.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+{nav}
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+<main class="page">
+  <section class="intro">
+    <h1>{h1}</h1>
+    <p class="lede">{lede}</p>
+  </section>
+{body}
+</main>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>
+'''
+
+# 초성 14갈래. 쌍자음은 홑자음에 합친다(ㄲ→ㄱ) — 사람이 이름을 찾을 때 'ㄲ' 칸을
+# 따로 뒤지지 않는다. 한글로 시작하지 않는 이름은 '기타'.
+_CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
+_FOLD = {"ㄲ": "ㄱ", "ㄸ": "ㄷ", "ㅃ": "ㅂ", "ㅆ": "ㅅ", "ㅉ": "ㅈ"}
+GROUPS = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ", "기타"]
+
+
+def chosung(name: str) -> str:
+    """이름 첫 글자의 초성. 한글이 아니면 '기타'."""
+    if not name:
+        return "기타"
+    c = ord(name[0])
+    if not (0xAC00 <= c <= 0xD7A3):
+        return "기타"
+    return _FOLD.get(_CHO[(c - 0xAC00) // 588], _CHO[(c - 0xAC00) // 588])
+
+
+def group_slug(g: str) -> str:
+    return f"초성-{g}"
+
+def hub_jsonld(items: list, canon: str) -> str:
+    """ItemList — 이 페이지가 목록이라는 것을 밝힌다. 실제 링크 순서와 같게 싣는다."""
+    ld = {"@context": "https://schema.org", "@type": "ItemList",
+          "url": f"{SITE}{canon}", "numberOfItems": len(items)}
+    return ('<script type="application/ld+json">'
+            + json.dumps(ld, ensure_ascii=False) + '</script>')
+
+
+def person_line(p: dict) -> str:
+    """목록 한 줄 — 이름만 늘어놓으면 4,326줄이 서로 구별되지 않는다.
+    전적·지역·기간을 함께 적어 고르는 데 쓸 수 있게 한다."""
+    slug = slugify(p["name"], p["dob"])
+    bits = []
+    sidos = _short_sidos(p)
+    if sidos:
+        bits.append(" · ".join(sidos))
+    years = [r.get("year") for r in (p.get("races") or []) if r.get("year")]
+    if years:
+        lo, hi = min(years), max(years)
+        bits.append(f"{lo}~{hi}" if lo != hi else str(lo))
+    bits.append(f'{len(p.get("races") or [])}회 출마·{p.get("wins", 0)}회 당선')
+    return (f'<li><a href="/person/{quote(slug)}/">{esc(p["name"])}</a>'
+            f'<span class="ph-meta">{esc(" · ".join(bits))}</span></li>')
+
+
+def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
+    """인물 허브 + 초성별 목록.
+
+    4,326개 중 1,820개(42%)가 **어느 정적 페이지에서도 링크되지 않았다**. 지역
+    페이지는 회차별 1위만, 정당 페이지는 소속 인물 일부만 잇는다. 나머지는
+    sitemap에만 있었다 — 지난 7월 미색인 사고의 '고아 + 얇음' 조합 그대로다.
+
+    한 페이지에 4,326줄을 넣지 않는다. 초성 14갈래로 나눠 갈래마다 수백 줄로 두고,
+    허브가 갈래를 잇는다. 사람도 그렇게 찾는다.
+    """
+    by_group: dict = {g: [] for g in GROUPS}
+    for p in persons:
+        by_group[chosung(p["name"])].append(p)
+    for g in by_group:
+        by_group[g].sort(key=lambda p: (p["name"], p.get("dob") or ""))
+
+    live = [g for g in GROUPS if by_group[g]]
+    n_made = 0
+
+    for i, g in enumerate(live):
+        group = by_group[g]
+        slug = group_slug(g)
+        valid_slugs.add(slug)
+        canon = f"/person/{quote(slug)}/"
+        nav_bits = []
+        if i:
+            nav_bits.append(f'<a href="/person/{quote(group_slug(live[i-1]))}/">'
+                            f'← {esc(live[i-1])}</a>')
+        nav_bits.append('<a href="/person/">인물 전체</a>')
+        if i < len(live) - 1:
+            nav_bits.append(f'<a href="/person/{quote(group_slug(live[i+1]))}/">'
+                            f'{esc(live[i+1])} →</a>')
+        body = (f'<section class="ph-sec"><ul class="ph-list">'
+                + "".join(person_line(p) for p in group)
+                + '</ul></section>'
+                f'<nav class="ph-pager">{" ".join(nav_bits)}</nav>')
+        label = f"{g}으로" if g != "기타" else "그 밖의 이름으로"
+        title = f'{g} 인물 — 역대 선거 출마·당선 {len(group)}명 | polis' if g != "기타" \
+            else f'그 밖의 인물 — 역대 선거 출마·당선 {len(group)}명 | polis'
+        desc = (f'이름이 {label} 시작하는 역대 선거 출마자 {len(group)}명. '
+                f'사람마다 출마 회차·지역·정당과 득표율을 볼 수 있습니다.')
+        html = HUB_TEMPLATE.format(
+            nav=render_nav(menu_for_path(f"person/{slug}/index.html")),
+            title=esc(title), desc=esc(desc), canon=canon,
+            jsonld=hub_jsonld(group, canon),
+            h1=esc(f'{g} — 인물 {len(group)}명'),
+            lede=esc(f'이름이 {label} 시작하는 역대 선거 출마자입니다. '
+                     f'전체 {len(persons):,}명 중 {len(group):,}명.'),
+            body=body)
+        d = OUT_DIR / slug
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(html, encoding="utf-8")
+        sitemap_urls.append(canon)
+        n_made += 1
+
+    # 허브 — 갈래로 가는 길 + 많이 출마한 사람. 갈래 링크만 있으면 허브 자체가
+    # 얇은 페이지가 된다.
+    cards = "".join(
+        f'<li><a href="/person/{quote(group_slug(g))}/">'
+        f'<b class="ph-cho">{esc(g)}</b>'
+        f'<span class="ph-meta">{len(by_group[g]):,}명</span></a></li>'
+        for g in live)
+    most = sorted(persons, key=lambda p: (-len(p.get("races") or []),
+                                          -p.get("wins", 0), p["name"]))[:30]
+    body = (
+        f'<section class="ph-sec"><h2>이름으로 찾기</h2>'
+        f'<ul class="ph-groups">{cards}</ul></section>'
+        f'<section class="ph-sec"><h2>가장 많이 출마한 인물</h2>'
+        f'<ul class="ph-list">{"".join(person_line(p) for p in most)}</ul></section>'
+        f'<section class="ph-sec"><h2>다른 길로 찾기</h2><ul class="ph-list">'
+        f'<li><a href="/region/">지역별 선거 기록</a>'
+        f'<span class="ph-meta">시군구에서 그 지역 당선인으로</span></li>'
+        f'<li><a href="/parties.html">정당 계보</a>'
+        f'<span class="ph-meta">정당에서 소속 인물로</span></li>'
+        f'<li><a href="/search.html">통합 검색</a>'
+        f'<span class="ph-meta">이름·지역·정당을 한 번에</span></li>'
+        f'</ul></section>')
+    title = f'역대 선거 인물 {len(persons):,}명 — 출마·당선 기록 | polis'
+    desc = (f'역대 대선·총선·지방선거에 나온 인물 {len(persons):,}명의 출마·당선 기록. '
+            f'이름 초성으로 찾거나 지역·정당에서 따라갈 수 있습니다.')
+    html = HUB_TEMPLATE.format(
+        nav=render_nav(menu_for_path("person/index.html")),
+        title=esc(title), desc=esc(desc), canon="/person/",
+        jsonld=hub_jsonld(persons, "/person/"),
+        h1="역대 선거 인물",
+        lede=esc(f'대선·총선·지방선거에 나온 {len(persons):,}명. '
+                 f'사람마다 언제 어디서 누구와 붙어 몇 표 차로 갈렸는지.'),
+        body=body)
+    (OUT_DIR / "index.html").write_text(html, encoding="utf-8")
+    sitemap_urls.append("/person/")
+    return n_made + 1
+
+
 def main():
     pi = json.loads(INDEX.read_text(encoding="utf-8"))
     # 당선 선출직(국회의원·단체장·교육감·대통령 등) — dob 있고 + 의원이거나 무언가 당선.
@@ -386,6 +591,8 @@ def main():
         sitemap_urls.append(f"/person/{slug}/")
         n_written += 1
 
+    n_hub = build_hub(persons, valid_slugs, sitemap_urls)
+
     # stale 디렉터리 제거 — 옛 빌드(생년월일 보정·동명이인 분리 등)로 슬러그가 바뀐 잔존분.
     import shutil
     n_stale = 0
@@ -394,9 +601,11 @@ def main():
             shutil.rmtree(dch)
             n_stale += 1
 
-    SITEMAP_OUT.write_text("\n".join(sitemap_urls), encoding="utf-8")
-    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {n_written} pages (stale 제거 {n_stale})")
-    print(f"→ {SITEMAP_OUT.relative_to(ROOT)} : {n_written} URLs (sitemap 통합용)")
+    SITEMAP_OUT.write_text("\n".join(sitemap_urls) + "\n", encoding="utf-8")
+    print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {n_written} pages "
+          f"+ 허브 {n_hub} (stale 제거 {n_stale})")
+    print(f"→ {SITEMAP_OUT.relative_to(ROOT)} : {len(sitemap_urls)} URLs "
+          f"(인물 {n_written} + 허브 {n_hub}, sitemap 통합용)")
 
 
 if __name__ == "__main__":
