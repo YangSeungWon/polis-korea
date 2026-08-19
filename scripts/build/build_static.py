@@ -24,6 +24,7 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import quote
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_sitemap as _sitemap   # noqa: E402  포괄 sitemap(+robots) 단일 출처
@@ -115,6 +116,96 @@ def write_page(path: Path, html: str):
     path.write_text(html, encoding='utf-8')
 
 
+
+
+def _eul(word: str) -> str:
+    """받침 유무로 을/를. '광역단체장을(를)'처럼 두 개를 다 적으면 기계가 쓴 티가 난다."""
+    if not word:
+        return '를'
+    c = ord(word[-1])
+    if not (0xAC00 <= c <= 0xD7A3):     # 한글 음절이 아니면 판단하지 않는다
+        return '를'
+    return '을' if (c - 0xAC00) % 28 else '를'
+
+
+# 시군구명 → /region/ slug. 모호하지 않은 것만 — '중구'는 여러 시도에 있어
+# sido 없이는 어디인지 정할 수 없다(build_person_pages와 같은 규칙).
+_REGION_SLUG: dict | None = None
+
+
+def _region_slug(sido: str, sigungu: str) -> str:
+    global _REGION_SLUG
+    if _REGION_SLUG is None:
+        _REGION_SLUG = {d.name for d in sorted((ROOT / 'region').iterdir())
+                        if d.is_dir()} if (ROOT / 'region').exists() else set()
+    cand = f'{sido}-{sigungu}'
+    return cand if cand in _REGION_SLUG else ''
+
+
+def office_static_block(office_ko: str) -> str:
+    """직위 페이지(/governor/ 등)의 그 직위만의 정적 내용.
+
+    네 페이지가 polls.html 한 틀에서 나오면서 렌더 전 본문이 1,228자로 **완전히
+    같았다**(감사: top 중복 4). 화면에서는 JS가 직위별로 다른 것을 그리지만,
+    크롤러가 보는 문서는 넷 다 같은 문서다 — 그중 셋은 sitemap priority 0.9다.
+    /polls/{slug}/에서 쓴 방법(PE_STATIC)을 그대로 직위에도 적용한다.
+
+    없는 것은 적지 않는다 — 조사가 0건이면 빈 문자열을 돌려주고 마커만 지워진다.
+    """
+    path = ROOT / 'data' / 'polls' / 'aggregated.json'
+    if not path.exists():
+        return ''
+    try:
+        polls = json.loads(path.read_text(encoding='utf-8')).get('polls') or []
+    except Exception:                                            # noqa: BLE001
+        return ''
+    sel = [p for p in polls
+           if p.get('office_level') == office_ko and not p.get('is_self_poll')]
+    if not sel:
+        return ''
+    ends = sorted(p['period_end'] for p in sel if p.get('period_end'))
+    agencies = sorted({p.get('agency', '') for p in sel if p.get('agency')})
+    span = (f'조사 기간 {_esc(ends[0])} ~ {_esc(ends[-1])} · ' if ends else '')
+
+    # 지역 분포 — 조사가 많이 몰린 곳부터. 지역 페이지로 나가는 길이기도 하다.
+    counts: dict = {}
+    for p in sel:
+        sido, sigungu = p.get('sido') or '', p.get('sigungu') or ''
+        key = (sido, sigungu) if office_ko == '기초단체장' else (sido, '')
+        if key[0]:
+            counts[key] = counts.get(key, 0) + 1
+    top = sorted(counts.items(), key=lambda x: (-x[1], x[0]))[:12]
+    items = []
+    for (sido, sigungu), c in top:
+        label = f'{sido} {sigungu}'.strip()
+        slug = _region_slug(sido, sigungu) if sigungu else ''
+        inner = (f'<a href="/region/{quote(slug)}/">{_esc(label)}</a>'
+                 if slug else _esc(label))
+        items.append(f'<li>{inner} <span class="pe-n">{c}건</span></li>')
+    region_html = (f'<details class="pe-static-more"><summary>조사가 많은 지역 '
+                   f'{len(counts)}곳 중 {len(top)}곳</summary>'
+                   f'<ul class="pe-agency-list">{"".join(items)}</ul></details>'
+                   ) if items else ''
+
+    li = ''.join(f'<li>{_esc(a)}</li>' for a in agencies[:8])
+    more = f'<li>외 {len(agencies) - 8}곳</li>' if len(agencies) > 8 else ''
+    return (
+        f'<section class="pe-static"><h2 class="pe-static-title">'
+        f'2026 지방선거 {_esc(office_ko)} 여론조사</h2>'
+        f'<p class="pe-static-lede">2026년 6월 3일 제9회 전국동시지방선거 '
+        f'{_esc(office_ko)}{_eul(office_ko)} 대상으로 중앙선거여론조사심의위원회(NESDC)에 '
+        f'등록·공표된 조사 <b>{len(sel):,}건</b>입니다. {span}'
+        f'조사기관 {len(agencies)}곳.</p>'
+        f'<p class="pe-static-lede">기관마다 표본·방법이 달라 같은 지역에서도 값이 '
+        f'갈립니다. 아래에서 조사별 표본수·응답률·표본오차를 함께 봅니다.</p>'
+        f'{region_html}'
+        f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
+        f'<ul class="pe-agency-list">{li}{more}</ul></details>'
+        f'<p class="pe-static-links"><a href="/archive/9th-local-2026/">'
+        f'제9회 지방선거 아카이브 — 결과·여론조사·출구조사</a></p></section>'
+    )
+
+
 def build_polls(urls: list):
     template = INDEX_TEMPLATE.read_text(encoding='utf-8')
     n_made = 0
@@ -128,6 +219,11 @@ def build_polls(urls: list):
                 f'후보별 지지율과 판세를 NESDC 등록 조사만 인용해.')
         canon = f'/{slug}/'
         html = replace_meta(template, title, desc, canon, {'office': office_ko})
+        blk = office_static_block(office_ko)
+        if not blk:
+            raise SystemExit(f'office_static_block 비었음: {office_ko} — '
+                             '네 직위 페이지가 다시 같은 문서가 된다')
+        html = html.replace('<!-- PE_STATIC --><!-- /PE_STATIC -->', blk, 1)
         write_page(ROOT / slug / 'index.html', html)
         urls.append((canon, '0.9', 'daily'))
         n_made += 1
