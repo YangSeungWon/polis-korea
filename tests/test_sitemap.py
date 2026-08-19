@@ -155,6 +155,21 @@ def main():
             ghost.append(u)
     ck("sitemap의 모든 URL이 실재한다", not ghost, f"{len(ghost)}개: {ghost[:4]}")
 
+    # ── 자동 잡이 층 파일을 매일 버리지 않는가 ──────────────────────────────
+    # 이 저장소에서 두 번 재발한 사고다: 생성기는 돌았는데 git add 범위에 없어
+    # 결과가 매일 버려졌다(history/·polls/ 363쪽이 옛 nav로 굳었다). sitemap을
+    # 층으로 나누면서 sitemap-{층}.xml이 정확히 그 자리에 놓였다 — index만 add하면
+    # lastmod는 갱신되는데 층 내용은 옛것으로 남아, 어긋난 걸 아무도 모른다.
+    wf = ROOT / ".github/workflows"
+    for name in ("daily-refresh.yml", "tracker-refresh.yml"):
+        f = wf / name
+        if not f.exists():
+            continue
+        t = f.read_text(encoding="utf-8")
+        adds = " ".join(re.findall(r"git add ([^\n]*)", t))
+        ck(f"{name}이 sitemap 층 파일을 add한다", "sitemap-*.xml" in adds,
+           "sitemap.xml만 add하면 층 파일이 매일 버려진다")
+
     # ── robots ──────────────────────────────────────────────────────────────
     rb = (ROOT / "robots.txt").read_text(encoding="utf-8")
     ck("robots.txt가 sitemap을 가리킨다", "sitemap.xml" in rb.lower())
