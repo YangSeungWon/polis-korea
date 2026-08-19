@@ -273,6 +273,25 @@ def pledge_block(pid: str) -> str:
             + '</section>')
 
 
+def rival_cell(r: dict) -> str:
+    """이 판에서 맞붙은 상대와 표차 — 이 페이지에만 있는 사실.
+
+    1위면 2위가, 아니면 1위가 상대다(build_person_index가 정한다). 이겼으면 +,
+    졌으면 −. 표차를 모르는 옛 회차(득표수 없음)는 이름만 적는다. 상대가 없는
+    무투표당선은 그렇게 적는다 — 빈칸은 자료가 없는 것처럼 보인다.
+    """
+    opp = r.get("opp")
+    if not opp:
+        return "무투표" if r.get("n_cand") == 1 else "—"
+    who = party_cell(opp.get("party"), r.get("date") or "") or ""
+    who = f'{esc(opp.get("name") or "")}' + (f' ({who})' if who else "")
+    m = opp.get("margin")
+    if not m:
+        return who
+    sign = "+" if r.get("won") or r.get("rank") == 1 else "−"
+    return f'{who} <span class="pp-margin">{sign}{m:,}표</span>'
+
+
 def static_body(p: dict) -> tuple[str, str]:
     """(lede, 본문 HTML) — 렌더 전에도 읽히는 실제 내용.
 
@@ -297,16 +316,19 @@ def static_body(p: dict) -> tuple[str, str]:
         tag = "당선" if r.get("won") else "낙선"
         pct = f"{float(r['pct']):.1f}%" if r.get("pct") is not None else "—"
         rank = f"{r['rank']}위" if r.get("rank") and r["rank"] < 99 else ""
+        votes = f"{r['votes']:,}" if r.get("votes") else "—"
         rows.append(
             f'<tr><td>{esc(r.get("year") or "")}</td>'
             f'<td>{archive_cell(r)}</td>'
             f'<td>{place_cell(r)}</td>'
             f'<td>{party_cell(r.get("party"), r.get("date") or "")}</td>'
-            f'<td>{pct}</td><td>{esc(rank)}</td><td>{tag}</td></tr>')
+            f'<td>{votes}</td><td>{pct}</td><td>{esc(rank)}</td><td>{tag}</td>'
+            f'<td>{rival_cell(r)}</td></tr>')
     table = (
         '<table class="pp-static"><caption>출마 이력</caption><thead><tr>'
-        '<th>연도</th><th>선거</th><th>지역</th><th>정당</th><th>득표율</th>'
-        '<th>순위</th><th>결과</th></tr></thead><tbody>'
+        '<th>연도</th><th>선거</th><th>지역</th><th>정당</th><th>득표</th>'
+        '<th>득표율</th><th>순위</th><th>결과</th><th>상대·표차</th>'
+        '</tr></thead><tbody>'
         + "".join(rows) + "</tbody></table>")
     return lede, table + pledge_block(p["id"])
 

@@ -7,7 +7,8 @@ Output: assets/person-index.json
       { "name": "이재명", "id": "이재명",
         "wins": N, "losses": M,
         "parties": [...], "sidos": [...],
-        "races": [{"eid","year","round","place","party","pct","rank","won"}, ...] }
+        "races": [{"eid","year","round","place","party","pct","rank","won",
+                   "votes","n_cand","opp":{"name","party","pct","margin"}}, ...] }
     ] }
 
 휴리스틱: 같은 election 안 (name, party) 다중 row(시도별 분해)는 시도 set
@@ -215,6 +216,14 @@ def main():
             sigungu = race.get("sigungu", "") or ""
             district = race.get("district", "") or ""
             place = sigungu or district or sido or "전국"
+            # 상대 후보 — 이 페이지에만 있는 사실이다.
+            # 인물 페이지 4,326개 중 76%가 본문 300자 미만이었다(감사). 표에 든 것이
+            # '언제·어디서·몇 %'뿐이라 사람마다 숫자만 다른 같은 문서로 보였다.
+            # 누구를 몇 표 차로 이겼는지는 이미 results에 있는데 쓰지 않고 있었다.
+            cands = [c for c in (race.get("candidates") or []) if (c.get("name") or "").strip()]
+            ranked = sorted(cands, key=lambda c: -(c.get("votes") or 0))
+            top1 = ranked[0] if ranked else None
+            top2 = ranked[1] if len(ranked) > 1 else None
             for c in race.get("candidates", []):
                 nm = (c.get("name") or "").strip()
                 if not nm:
@@ -235,11 +244,25 @@ def main():
                 # 키에 sido+place(지역구) 포함 — 같은 선거·같은 정당이라도 다른 지역구면 다른 사람.
                 #   (옛 총선 동명이인이 한 행으로 뭉쳐 도(道)를 가로질러 잘못 병합되던 것 차단.
                 #    sido까지 넣어 '중구(서울) vs 중구(부산)' 동음 지역구 교차병합도 방지)
+                # 1위면 2위가, 아니면 1위가 상대다. 후보가 하나뿐인 무투표당선은
+                # 상대가 없다 — 없는 것을 지어내지 않고 비워 둔다.
+                rival = top2 if (top1 is not None and c is top1) else top1
+                opp = None
+                if rival is not None and rival is not c:
+                    opp = {
+                        "name": (rival.get("name") or "").strip(),
+                        "party": disambiguate_party((rival.get("party") or "").strip(), date),
+                        "pct": rival.get("pct"),
+                        # 표차는 양쪽 표수가 다 있을 때만. 옛 회차엔 득표수가 없다.
+                        "margin": (abs(votes - (rival.get("votes") or 0))
+                                   if votes and rival.get("votes") else None),
+                    }
                 per_eid[eid][(nm, party, sido, place)].append({
                     "sido": sido, "place": place, "tc": tc,
                     "rank": rank, "won": won,
                     "pct": c.get("pct"), "votes": votes,
                     "dob": dob, "hanja": hanja,
+                    "n_cand": len(cands), "opp": opp,
                 })
 
     # 2단계: per (eid, name, party, sido, place) → 1건으로 통합 (최다득표 row 기준)
@@ -257,6 +280,9 @@ def main():
                 "pct": best.get("pct"), "rank": best["rank"],
                 "won": won_any,
                 "tc": best.get("tc"),
+                "votes": best.get("votes") or None,
+                "n_cand": best.get("n_cand"),
+                "opp": best.get("opp"),
                 "dob": next((r["dob"] for r in rows if r.get("dob")), None),
                 "hanja": next((r["hanja"] for r in rows if r.get("hanja")), None),
             })
@@ -370,6 +396,10 @@ def main():
                     "place": r["place"], "party": r["party"],
                     "pct": r["pct"], "rank": r["rank"], "won": r["won"],
                     "tc": r["tc"],
+                    # 없으면 키 자체를 빼 8MB짜리 인덱스에 null을 3만 개 싣지 않는다.
+                    **({"votes": r["votes"]} if r.get("votes") else {}),
+                    **({"n_cand": r["n_cand"]} if r.get("n_cand") else {}),
+                    **({"opp": r["opp"]} if r.get("opp") else {}),
                 } for r in grp],
             })
 

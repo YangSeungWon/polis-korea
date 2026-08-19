@@ -152,6 +152,19 @@
     }
   }
 
+  // 맞붙은 상대와 표차 — 정적 HTML(build_person_pages.rival_cell)이 표에 싣는 것과
+  // 같은 사실을 렌더 후에도 보여준다. 둘이 갈리면 크롤러가 보는 문서와 사람이 보는
+  // 화면이 다른 페이지가 된다.
+  function rivalLine(r) {
+    const o = r.opp;
+    if (!o) return r.n_cand === 1 ? '<div class="pp-rival">무투표 당선</div>' : '';
+    const who = escapeHtml(o.name || '') + (o.party ? `(${escapeHtml(o.party)})` : '');
+    if (!o.margin) return `<div class="pp-rival">상대 ${who}</div>`;
+    const win = r.won || r.rank === 1;
+    const n = o.margin.toLocaleString('ko-KR');
+    return `<div class="pp-rival">${who}${win ? ' 앞섬 +' : ' 뒤짐 −'}${n}표</div>`;
+  }
+
   function renderTimelineCard(races, label) {
     // 실제 선거일순 — 같은 해 대선(3월)·재보궐(6월) 등 월까지 구분. date 없으면 year fallback.
     const dkey = (r) => r.date || (r.year ? String(r.year) : '');
@@ -181,6 +194,7 @@
         <div class="pp-pct">${pct}</div>
         <div class="pp-tag-cell">${tag}</div>
         <div class="pp-link">→</div>
+        ${rivalLine(r)}
       </a>`;
     }).join('');
 
