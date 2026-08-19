@@ -42,9 +42,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#5b54d6">
 <base href="/">
-<title>polis · {name}</title>
+<title>{title}</title>
 <meta name="description" content="{desc}">
-<meta property="og:title" content="polis · {name}">
+<meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://polis.ysw.kr/person/{slug}/">
@@ -52,7 +52,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="polis · {name}">
+<meta name="twitter:title" content="{title}">
 <meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="/person/{slug}/">
 {jsonld}
@@ -92,6 +92,45 @@ TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+
+SIDO_SHORT = {
+    "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구", "인천광역시": "인천",
+    "광주광역시": "광주", "대전광역시": "대전", "울산광역시": "울산", "세종특별자치시": "세종",
+    "경기도": "경기", "강원특별자치도": "강원", "강원도": "강원",
+    "충청북도": "충북", "충청남도": "충남",
+    "전북특별자치도": "전북", "전라북도": "전북", "전라남도": "전남",
+    "경상북도": "경북", "경상남도": "경남", "제주특별자치도": "제주", "제주도": "제주",
+}
+
+
+def page_title(p: dict) -> str:
+    """이름만으로는 4,326개가 서로 구별되지 않는다.
+
+    'polis · 가기산'은 위키와 같은 말을 걸고 이기지 못할뿐더러, 이 사람이 어디서
+    무엇에 나왔는지 한 글자도 말하지 않는다. 지역·기간·전적을 붙이면 제목이 서로
+    달라지고(동명이인 포함) 검색어와도 맞는다.
+
+    데이터에 없는 것은 붙이지 않는다 — 지역이 비면 지역 없이, 연도가 비면 연도 없이.
+    """
+    name = p["name"]
+    bits = []
+    sidos = [SIDO_SHORT.get(x, x) for x in (p.get("sidos") or [])][:2]
+    if sidos:
+        bits.append(" · ".join(sidos))
+    elif p.get("parties"):
+        # 비례대표는 지역이 없다. 그 자리를 정당으로 채우지 않으면 같은 해 한 번
+        # 당선된 동명이인 둘이 글자 하나 다르지 않은 제목을 갖는다(이영애 2008).
+        bits.append(" · ".join(p["parties"][:2]))
+    years = [r.get("year") for r in (p.get("races") or []) if r.get("year")]
+    if years:
+        lo, hi = min(years), max(years)
+        bits.append(f"{lo}~{hi}년" if lo != hi else f"{lo}년")
+    n, wins = len(p.get("races") or []), p.get("wins", 0)
+    if n:
+        bits.append(f"{n}회 출마·{wins}회 당선")
+    tail = " ".join(bits)
+    return f"{name} 선거 이력 — {tail} | polis" if tail else f"{name} 선거 이력 | polis"
 
 
 def slugify(name: str, dob: str) -> str:
@@ -303,14 +342,16 @@ def main():
         rounds = sorted({r.get("round", "") for r in p["races"] if r.get("round")})
         parties = p.get("parties", [])[:3]
         desc = (
-            f"{p['name']} 출마·당선 이력. {p['wins']}당선·{p['losses']}낙선 "
-            f"· {' · '.join(parties)} · {len(p['races'])}회"
+            f"{p['name']} 선거 이력. {len(p['races'])}회 출마해 {p['wins']}회 당선"
+            f"·{p['losses']}회 낙선 — 회차별 지역·정당·득표율·순위까지."
+            + (f" 소속: {' · '.join(parties)}." if parties else "")
         )
         lede, body = static_body(p)
         ld = jsonld(p, slug, desc)
         html = TEMPLATE.format(
             nav=render_nav(menu_for_path(f"person/{slug}/index.html")),
             name=p["name"],
+            title=esc(page_title(p)),
             desc=desc,
             slug=slug,
             data_json=data_json,

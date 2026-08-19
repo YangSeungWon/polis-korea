@@ -180,9 +180,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#5b54d6">
 <base href="/">
-<title>polis · {sido} {sigungu} 선거 기록</title>
+<title>{sigungu} 선거 결과 — {sido} 역대 대선·총선·지선 1위와 투표율 | polis</title>
 <meta name="description" content="{desc}">
-<meta property="og:title" content="polis · {sido} {sigungu}">
+<meta property="og:title" content="{sigungu} 선거 결과 — {sido}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="/region/{slug}/">
@@ -232,7 +232,10 @@ def build_page(sd: str, sg: str, rows: list) -> str:
         parties[r["party"]] = parties.get(r["party"], 0) + 1
     top_parties = " · ".join(p for p, _ in sorted(parties.items(), key=lambda x: -x[1])[:3])
     lede = esc(f"{span}선거 {len(rows)}건 — 1위 정당 {top_parties}")
-    desc = esc(f"{sd} {sigungu_short(sg)} 역대 선거 기록. {span}{len(rows)}건 · {top_parties}")
+    # 설명도 '선거 기록'이 아니라 사람이 치는 '선거 결과'로 연다. 뒤에는 이 페이지에
+    # 실제로 있는 것(1위 정당·후보·득표율·투표율)을 적어 무엇을 보러 오는지 맞춘다.
+    desc = esc(f"{sd} {sigungu_short(sg)} 선거 결과. {span}대선·총선·지선 {len(rows)}건의 "
+               f"1위 정당·후보와 득표율·투표율. 최다 1위 {top_parties}.")
 
     def name_cell(r):
         """1위 후보 — 인물 페이지가 있으면 링크. 지역에서 사람으로 넘어가는 길이다.
@@ -291,8 +294,8 @@ HUB = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <base href="/">
-<title>polis · 지역별 선거 기록</title>
-<meta name="description" content="시군구별 역대 대선·총선·지선 1위와 투표율. {n}개 지역.">
+<title>지역별 선거 결과 — 전국 시군구 {n}곳의 대선·총선·지선 기록 | polis</title>
+<meta name="description" content="전국 시군구 {n}곳의 선거 결과. 지역마다 역대 대선·총선·지선 1위 정당과 후보, 득표율·투표율을 한 표로.">
 <link rel="canonical" href="/region/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">

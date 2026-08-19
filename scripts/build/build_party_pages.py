@@ -140,9 +140,9 @@ PAGE = """<!DOCTYPE html>
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#5b54d6">
 <base href="/">
-<title>polis · {name}</title>
+<title>{name} 선거 기록 — {life_span} 역대 득표와 소속 인물 | polis</title>
 <meta name="description" content="{desc}">
-<meta property="og:title" content="polis · {name}">
+<meta property="og:title" content="{name} 선거 기록 — {life_span}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://polis.ysw.kr/og.png">
@@ -373,6 +373,10 @@ def render(name, info, known, appearances, members, regions=""):
     founded = info.get("founded", "")
     dissolved = info.get("dissolved")
     life = esc(founded) + (f" ~ {esc(dissolved)}" if dissolved else " ~ 현재" if founded else "")
+    # 제목에 쓸 짧은 존속기간 — life는 뒤에 관계(개명·분당)가 붙는 화면용 문자열이라
+    # 제목에 그대로 넣으면 '2020-09 ~ 현재 · 개명 역대 득표와'로 읽힌다. 연도만 쓴다.
+    life_span = (f"{founded[:4]}~{dissolved[:4]}" if founded and dissolved
+                 else f"{founded[:4]}~현재" if founded else "")
     REL = {"new": "신설", "rename": "개명", "merge": "합당", "split": "분당", "dissolve": "해산/소멸"}
     rel = REL.get(info.get("relation"), "")
     if rel:
@@ -426,10 +430,12 @@ def render(name, info, known, appearances, members, regions=""):
         members_html = (f'<section class="pty-sec"><h2>소속 인물 <span class="pty-cnt">{len(mem)}</span></h2>'
                         f'<ul class="pty-members">{"".join(items)}</ul>{more}</section>')
 
-    desc = f'{name}' + (f'({abbr})' if abbr else '') + f' — {life}. ' + (info.get("note") or "")
+    desc = (f'{name}' + (f'({abbr})' if abbr else '')
+            + f' 선거 기록 — {life_span}. 역대 대선·총선·지선 득표와 소속 인물. '
+            + (info.get("note") or ""))
     return PAGE.format(
         nav=render_nav(menu_for_path("party/x/index.html")),
-        name=esc(name), abbr_badge=abbr_badge, life=life, note=note_html,
+        name=esc(name), abbr_badge=abbr_badge, life=life, life_span=esc(life_span), note=note_html,
         lineage=lineage, elections=elections, runs=render_runs(name),
         members=members_html,
         regions=regions,

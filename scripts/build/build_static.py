@@ -56,6 +56,13 @@ TYPE_LABEL = {
     'national_assembly': '총선',
     'local':             '지선',
 }
+# 제목 앞머리용 — 사람이 검색창에 치는 이름. TYPE_LABEL은 화면 라벨용 내부 약어라
+# 제목에 쓰면 아무도 찾지 않는 말이 제일 좋은 자리를 차지한다('지선 결과' 0회 검색).
+TYPE_QUERY = {
+    'presidential':      '대통령선거',
+    'national_assembly': '총선',
+    'local':             '지방선거',
+}
 # 회차 단위 — 대선·총선은 '대'(사람·기관 연속), 지선은 '회'(반복 행사).
 TYPE_UNIT = {'presidential': '대', 'national_assembly': '대', 'local': '회'}
 TYPE_SLUG = {
@@ -114,8 +121,11 @@ def build_polls(urls: list):
     # 루트 / 도 sitemap에 포함 (가장 높은 priority)
     urls.append(('/', '1.0', 'daily'))
     for office_ko, slug in OFFICE_SLUG.items():
-        title = f'polis · 9회 지선 {office_ko} 여론조사'
-        desc = f'2026 제9회 전국동시지방선거 {office_ko} 여론조사를 시도·시군구 단위로. NESDC 등록 조사 인용.'
+        # 정당지지는 후보를 묻는 조사가 아니다 — 꼬리말을 직위에 맞춘다.
+        tail = '정당 지지율' if office_ko == '정당지지' else '후보 지지율'
+        title = f'2026 지방선거 {office_ko} 여론조사 — 제9회 지선 {tail} | polis'
+        desc = (f'2026 제9회 전국동시지방선거 {office_ko} 여론조사를 시도·시군구 단위로. '
+                f'후보별 지지율과 판세를 NESDC 등록 조사만 인용해.')
         canon = f'/{slug}/'
         html = replace_meta(template, title, desc, canon, {'office': office_ko})
         write_page(ROOT / slug / 'index.html', html)
@@ -224,8 +234,11 @@ def build_poll_elections(urls: list):
         n, date_s = meta['n'], meta['date']
         unit = '회' if meta['kind'] == 'local' else '대'
         short = {'presidential': '대선', 'general_election': '총선'}.get(meta['kind'], '지선')
-        title = f'polis · {n}{unit} {short} 여론조사 vs 실제 ({date_s})'
-        desc = f'{meta["name"]} 여론조사 — NESDC 등록 조사 vs 실제 결과를 시도 비례로 비교.'
+        query = {'presidential': '대통령선거', 'general_election': '총선'}.get(meta['kind'], '지방선거')
+        title = (f'{date_s[:4]} {query} 여론조사 vs 실제 결과 — '
+                 f'{n}{unit} {short} 조사 적중률 | polis')
+        desc = (f'{meta["name"]} 여론조사와 실제 개표 결과 비교. NESDC 등록 조사가 '
+                f'시도별로 얼마나 맞았는지 비례로.')
         canon = f'/polls/{slug}/'
         # 선거별 결과지도 카드(build_og_maps.py). 없으면 일반 카드(템플릿 기본값 유지).
         _og = ROOT / 'og' / f'{slug}.png'
@@ -340,8 +353,10 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     # 교육감 전국 직선 동시선거는 5회(2010)부터 — 1~4회 교육감 페이지는 생성 안 함.
                     if off_slug == 'superintendent' and n < 5:
                         continue
-                    title = f'polis · {n}회 {type_short} {office_ko} ({el_date})'
-                    desc = f'{n}회 전국동시지방선거 {office_ko} 결과 ({el_date}) — 시군구 hex 격자 시각화.'
+                    title = (f'{el_date[:4]} 지방선거 {office_ko} 결과 지도 — '
+                             f'제{n}회 시군구별 개표 | polis')
+                    desc = (f'{el_date[:4]}년 제{n}회 전국동시지방선거 {office_ko} 결과. '
+                            f'시군구 hex 격자로 지역별 1위 정당과 득표율을 한눈에.')
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
                     init_state = {'type': type_key, 'n': n, 'office': office_ko}
                     turnout = meta.get('turnout')
@@ -371,8 +386,11 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 winner = meta.get('winner', '')
                 winner_str = f' · {winner} 당선' if winner else ''
                 unit = TYPE_UNIT.get(type_key, '대')
-                title = f'polis · {n}{unit} {type_short} ({el_date}){winner_str}'
-                desc = f'{n}{unit} {type_short} 결과 ({el_date}) — hex 격자로 지역별 1위 정당·격차 시각화.'
+                type_query = TYPE_QUERY.get(type_key, type_short)
+                title = (f'{el_date[:4]} {type_query} 결과 지도 — '
+                         f'제{n}{unit} 지역별 1위 정당{winner_str} | polis')
+                desc = (f'{el_date[:4]}년 제{n}{unit} {type_short} 결과. hex 격자로 '
+                        f'지역별 1위 정당과 득표 격차를 한눈에.')
                 canon = f'/history/{type_slug}/{n}/'
                 ROUTES.setdefault(type_key, {}).setdefault(str(n), [])
                 init_state = {'type': type_key, 'n': n}
