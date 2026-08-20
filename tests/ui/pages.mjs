@@ -23,6 +23,10 @@ export const PAGES = [
   { id: 'region-long',   url: '/region/경상북도-김천시/',         why: '긴 지역 기록(결손 표기 포함)' },
   { id: 'region-short',  url: '/region/경상북도-경주군/',         why: '데이터 3건 — 빈약한 entity' },
   { id: 'region-hub',    url: '/region/',                         why: '366개 칩 밀도' },
+  // 모시↔구 관계 블록과 '합산' 표시는 이 두 쪽에만 나온다 — 나머지 화면으로는
+  // 깨져도 안 보인다.
+  { id: 'region-parent', url: '/region/경기도-성남시/',            why: '모시 — 구 합산 행 + 하위 구 링크' },
+  { id: 'region-child',  url: '/region/경기도-성남시분당구/',      why: '일반구 — 기초단체장 없는 이유 안내' },
   { id: 'byelection',    url: '/byelection.html',                 why: '지도(leaflet) + 키' },
   { id: 'tracker',       url: '/tracker.html',                    why: '시계열' },
   { id: 'search',        url: '/search.html',                     why: '검색 진입' },

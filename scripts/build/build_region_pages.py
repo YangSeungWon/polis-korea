@@ -369,7 +369,11 @@ def kin_block(sd: str, sg: str, by_region: dict) -> str:
     구에서 뽑지 않는다. 그런데 페이지는 그 사실을 말하지 않아서, 보는 사람에게는
     자료가 빠진 것과 구별되지 않는다. 없는 이유를 적고 있는 곳으로 보낸다.
     """
-    names = {k[1] for k in by_region if k[0] == sd}
+    # **페이지가 실제로 만들어지는 곳만** 센다. by_region에는 MIN_ROUNDS 미달로
+    # 페이지가 안 생기는 지역도 들어 있어서, 그대로 링크하면 404가 된다
+    # (대전시중구·인천시남구 등 18개를 이렇게 만들었다).
+    names = {k[1] for k, rows in by_region.items()
+             if k[0] == sd and len(rows) >= MIN_ROUNDS}
     m = re.match(r"^(.+?시)(.+구)$", sg)
     parent = m.group(1) if (m and m.group(1) in names) else None
     kids = sorted(x for x in names

@@ -134,14 +134,24 @@ def main() -> int:
     print(f"    정당  linked {k['party_linked']:,} · 의도적 미연결 {k['party_intentionally_unlinked']:,}"
           f" · unresolved {k['party_unresolved']:,}")
 
-    # 링크가 있다면 반드시 실재해야 한다 — false link 0이 목표다
+    # 링크가 있다면 반드시 실재해야 한다 — false link 0이 목표다.
+    #
+    # /region/을 함께 본다. 모시↔구를 잇는 링크가 생기면서 by_region에는 있지만
+    # MIN_ROUNDS 미달로 페이지가 없는 구까지 링크해 404 18개를 만들었는데, 이
+    # 검사가 /person/·/party/만 보고 있어 게이트를 그냥 통과했다.
+    #
+    # 앞 200쪽만 보던 것도 걷어낸다. 356쪽을 다 읽어도 순식간이고, 잘라 놓으면
+    # 뒤쪽 시도(충청·전라·경상)의 링크는 아무도 안 본다 — 실제로 죽은 링크가
+    # 대전시·마산시처럼 정렬 뒤쪽에 몰려 있었다.
     dead = []
-    for p in sorted(ROOT.glob("region/*/index.html"))[:200]:
-        for u in links_of(p, "/person/") | links_of(p, "/party/"):
+    for p in sorted(ROOT.glob("region/*/index.html")):
+        for u in (links_of(p, "/person/") | links_of(p, "/party/")
+                  | links_of(p, "/region/")):
             rel = unquote(u).lstrip("/")
             if not (ROOT / (rel + "index.html" if rel.endswith("/") else rel)).exists():
                 dead.append(f"{p.parent.name}: {u}")
-    ck("지역 페이지의 인물·정당 링크가 전부 실재 (false link 0)", not dead, str(dead[:3]))
+    ck("지역 페이지의 인물·정당·지역 링크가 전부 실재 (false link 0)",
+       not dead, f"{len(dead)}개 — {dead[:3]}")
 
     # 동명 시군구는 잇지 않는다 — 이었다면 틀린 지역으로 보내는 링크다
     from build_person_pages import region_slug_index
