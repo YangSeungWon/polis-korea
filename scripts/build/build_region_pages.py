@@ -335,6 +335,7 @@ TEMPLATE = """<!DOCTYPE html>
     <h1>{sido} {sigungu}</h1>
     <p class="lede">{lede}</p>
   </section>
+{kin}
   <section>{table}</section>
   <footer class="foot">
     <p class="fine">시군구 단위로 1위를 집계한 기록입니다. 회차별 상세는 각 아카이브에서 볼 수 있습니다. 투표율의 <span class="rg-nd">—</span>는 원자료에 투표수가 없는 회차입니다(1~4회 지방선거).</p>
@@ -348,7 +349,49 @@ TEMPLATE = """<!DOCTYPE html>
 """
 
 
-def build_page(sd: str, sg: str, rows: list) -> str:
+
+
+# 합산한 행에 붙이는 표시. 모시 페이지에 '이 표는 합산이다'라고 통째로 적으면
+# 거짓이 된다 — 기초단체장은 시 단위 원본이고, 대선도 회차에 따라 원본이 있다
+# (성남시 1987). 합산한 행만 그렇다고 말한다.
+MERGED = ('<sup class="rg-mg" title="구 단위 개표를 합산한 값입니다">'
+          '합산</sup>')
+
+
+def merged_mark(r: dict) -> str:
+    return MERGED if r.get("merged") else ""
+
+
+def kin_block(sd: str, sg: str, by_region: dict) -> str:
+    """모시↔구를 잇는다. 지금은 양쪽 다 링크가 **하나도** 없다.
+
+    구 페이지에 기초단체장이 0건인 것은 결손이 아니다 — 성남시장은 시 단위 선거라
+    구에서 뽑지 않는다. 그런데 페이지는 그 사실을 말하지 않아서, 보는 사람에게는
+    자료가 빠진 것과 구별되지 않는다. 없는 이유를 적고 있는 곳으로 보낸다.
+    """
+    names = {k[1] for k in by_region if k[0] == sd}
+    m = re.match(r"^(.+?시)(.+구)$", sg)
+    parent = m.group(1) if (m and m.group(1) in names) else None
+    kids = sorted(x for x in names
+                  if x != sg and x.startswith(sg)
+                  and re.match(r"^" + re.escape(sg) + r".+구$", x))
+
+    if parent:
+        return (f'<section class="rg-kin"><p>{esc(sg)}는 {esc(parent)}의 일반구입니다. '
+                f'기초단체장({esc(parent)}장)은 시 전체가 한 선거구라 구별로 뽑지 '
+                f'않습니다 — <a href="/region/{quote(f"{sd}-{parent}")}/">'
+                f'{esc(parent)}</a>에서 볼 수 있습니다.</p></section>')
+    if kids:
+        li = " · ".join(
+            f'<a href="/region/{quote(f"{sd}-{k}")}/">{esc(k[len(sg):])}</a>'
+            for k in kids)
+        return (f'<section class="rg-kin"><p>{esc(sg)}의 일반구 {len(kids)}곳: {li}. '
+                f'대선·광역단체장·교육감은 구 단위로 개표되므로, 그런 회차는 구별 '
+                f'득표를 합산해 1위와 투표율을 다시 계산했습니다'
+                f'(표에서 <span class="rg-mg">합산</span>으로 표시).</p></section>')
+    return ""
+
+def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     slug = f"{sd}-{sg}"
     years = [r["date"][:4] for r in rows if r.get("date")]
@@ -386,7 +429,7 @@ def build_page(sd: str, sg: str, rows: list) -> str:
         trs.append(
             f'<tr><td>{esc((r.get("date") or "")[:4])}</td>'
             f'<td><a href="/archive/{esc(r["eid"])}/">{esc(r["election"])}</a></td>'
-            f'<td>{esc(r["office"])}</td>'
+            f'<td>{esc(r["office"])}{merged_mark(r)}</td>'
             f'<td>{party_cell(r["party"], r.get("date"))}</td>'
             f'<td>{name_cell(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
@@ -403,6 +446,7 @@ def build_page(sd: str, sg: str, rows: list) -> str:
               {"@type": "ListItem", "position": 2, "name": f"{sd} {sg}"}]}
     return TEMPLATE.format(
         sido=esc(sd), sigungu=esc(sg), slug=esc(slug), desc=desc, lede=lede, table=table,
+        kin=kin_block(sd, sg, by_region),
         nav=render_nav(menu_for_path(f"region/{slug}/index.html")),
         jsonld='<script type="application/ld+json">'
                + json.dumps(ld, ensure_ascii=False) + "</script>")
@@ -526,7 +570,7 @@ def main():
         slug = f"{sd}-{sg}"
         d = OUT_DIR / slug
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(build_page(sd, sg, rows), encoding="utf-8")
+        (d / "index.html").write_text(build_page(sd, sg, rows, by_region), encoding="utf-8")
         urls.append(f"/region/{slug}/")
         n += 1
     entries = [(u.split("/")[2].split("-", 1)[0], u.split("/")[2].split("-", 1)[1],

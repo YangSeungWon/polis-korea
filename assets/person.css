@@ -264,3 +264,22 @@ a.pp-party:hover { background: var(--bg2); }
 .ph-pager { display: flex; gap: 16px; margin-top: 20px; font-size: 13px; }
 .ph-pager a { color: var(--ink-soft); text-decoration: none; }
 .ph-pager a:hover { color: var(--ink); text-decoration: underline; }
+
+/* 모시↔구 관계 — 분당구에 기초단체장이 0건인 것은 결손이 아니라 성남시장이
+   시 단위 선거라서다. 페이지가 그 말을 안 하면 빠진 자료와 구별되지 않는다. */
+.rg-kin {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-left: 2px solid var(--rule-strong, var(--rule));
+  background: var(--bg2);
+  border-radius: 0 3px 3px 0;
+}
+.rg-kin p { margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.rg-kin a { color: var(--ink); font-weight: 600; }
+/* 합산 표시 — 원본 행과 합산 행을 눈으로 갈라야 한다. */
+.rg-mg {
+  margin-left: 4px; padding: 1px 4px;
+  font-size: 10px; font-weight: 700;
+  color: var(--ink-soft); background: var(--bg3, var(--bg2));
+  border-radius: 2px; vertical-align: middle;
+}
