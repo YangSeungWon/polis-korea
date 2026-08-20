@@ -2,7 +2,10 @@
  "_meta": {
   "note": "행정구역 **포함관계**. events.json의 승계와 다른 ontology다 — 포항시남구·북구는 포항시의 후신이 아니라 하위 일반구다. from/to로 적으면 entity 파생기가 포항시를 1995년에 소멸시킨다.",
   "why": "결과 집계 단위가 지도 단위보다 잘게 나올 때(1997 대선은 포항시남구·북구로 집계됨) 합산을 허용할 근거가 필요하다. 근거는 '두 구가 관할구역을 남김없이 나눈다'는 사실이지 renderer의 추정이 아니다.",
-  "exhaustive": "true일 때만 children의 합을 parent로 쓸 수 있다. 일부만 아는 포함관계는 false로 두고 합산하지 않는다."
+  "exhaustive": "true일 때만 children의 합을 parent로 쓸 수 있다. 일부만 아는 포함관계는 false로 두고 합산하지 않는다.",
+  "date_basis": "statutory = 법령 시행일(사람이 확인). observed = 우리 자료에서 그 구성이 처음 관측된 선거일 — **법령 시행일이 아니다.** 모르는 날짜를 지어내지 않으려고 구분해 둔다. 합산은 날짜가 아니라 그 회차에 그 키가 실제로 나왔는지로 정한다.",
+  "children_kind": "하위 단위의 성격. admin_unit = 일반구(성남시분당구). electoral_district = 개표만 국회의원 선거구로 나온 것(동대문갑구) — 장소가 아니므로 지역 페이지를 만들지 않는다. 이름 모양이 아니라 어떤 scope로 등장하는가로 가른다.",
+  "verification": "observed 기록의 exhaustive는 두 산술로 확인했다. ① 시도 총합 무모순: 그 회차의 Σ(시군구 electors) == 시도 electors (350건 오차 0, 불일치 0). ② 상위 앵커 일치: 같은 회차에 상위 단위 직접 행이 있을 때 Σ(children) == 상위 (오차 0). scripts/audit/verify_containment.py가 매번 다시 확인한다."
  },
  "containments": [
   {
@@ -29,7 +32,825 @@
      "source": "https://encykorea.aks.ac.kr/Article/E0068765",
      "note": "1995 도농통합과 같은 해 남구·북구 분구"
     }
+   ],
+   "children_kind": "admin_unit",
+   "date_basis": "statutory"
+  },
+  {
+   "id": "contain:observed:경기도:고양시:admin_unit",
+   "parent": "admin_unit:경기도:고양시",
+   "children": [
+    "admin_unit:경기도:고양시덕양구",
+    "admin_unit:경기도:고양시일산구",
+    "admin_unit:경기도:고양시일산동구",
+    "admin_unit:경기도:고양시일산서구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1997-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "고양시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 고양시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 17건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 고양시 직접 행이 있을 때 Σ(children electors) == 고양시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
    ]
+  },
+  {
+   "id": "contain:observed:경기도:부천시:admin_unit",
+   "parent": "admin_unit:경기도:부천시",
+   "children": [
+    "admin_unit:경기도:부천시남구",
+    "admin_unit:경기도:부천시소사구",
+    "admin_unit:경기도:부천시오정구",
+    "admin_unit:경기도:부천시원미구",
+    "admin_unit:경기도:부천시중구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "부천시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 부천시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 12건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11",
+      "5th-local-2010:3"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 부천시 직접 행이 있을 때 Σ(children electors) == 부천시 electors가 3건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:성남시:admin_unit",
+   "parent": "admin_unit:경기도:성남시",
+   "children": [
+    "admin_unit:경기도:성남시분당구",
+    "admin_unit:경기도:성남시수정구",
+    "admin_unit:경기도:성남시중원구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "성남시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 성남시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 18건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 성남시 직접 행이 있을 때 Σ(children electors) == 성남시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:수원시:admin_unit",
+   "parent": "admin_unit:경기도:수원시",
+   "children": [
+    "admin_unit:경기도:수원시권선구",
+    "admin_unit:경기도:수원시영통구",
+    "admin_unit:경기도:수원시장안구",
+    "admin_unit:경기도:수원시팔달구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "수원시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 수원시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 18건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 수원시 직접 행이 있을 때 Σ(children electors) == 수원시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:안산시:admin_unit",
+   "parent": "admin_unit:경기도:안산시",
+   "children": [
+    "admin_unit:경기도:안산시단원구",
+    "admin_unit:경기도:안산시상록구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "2002-12-19",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "안산시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 안산시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 16건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11",
+      "5th-local-2010:3"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 안산시 직접 행이 있을 때 Σ(children electors) == 안산시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:안양시:admin_unit",
+   "parent": "admin_unit:경기도:안양시",
+   "children": [
+    "admin_unit:경기도:안양시동안구",
+    "admin_unit:경기도:안양시만안구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "안양시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 안양시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 18건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 안양시 직접 행이 있을 때 Σ(children electors) == 안양시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:용인시:admin_unit",
+   "parent": "admin_unit:경기도:용인시",
+   "children": [
+    "admin_unit:경기도:용인시기흥구",
+    "admin_unit:경기도:용인시수지구",
+    "admin_unit:경기도:용인시처인구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "2007-12-19",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "용인시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 용인시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 15건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11",
+      "5th-local-2010:3",
+      "6th-local-2014:11"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 용인시 직접 행이 있을 때 Σ(children electors) == 용인시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:인천시:admin_unit",
+   "parent": "admin_unit:경기도:인천시",
+   "children": [
+    "admin_unit:경기도:인천시남구",
+    "admin_unit:경기도:인천시동구",
+    "admin_unit:경기도:인천시북구",
+    "admin_unit:경기도:인천시중구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1971-04-27",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "인천시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 인천시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 1건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:인천시:electoral_district",
+   "parent": "admin_unit:경기도:인천시",
+   "children": [
+    "electoral_district:경기도:인천시갑구",
+    "electoral_district:경기도:인천시을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "경기도 인천시는 이 회차들에서 국회의원 선거구 단위(인천시갑구 · 인천시을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 인천시로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 1건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경기도:화성시:admin_unit",
+   "parent": "admin_unit:경기도:화성시",
+   "children": [
+    "admin_unit:경기도:화성시동탄구",
+    "admin_unit:경기도:화성시만세구",
+    "admin_unit:경기도:화성시병점구",
+    "admin_unit:경기도:화성시효행구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "2026-06-03",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "화성시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 화성시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "9th-local-2026:11",
+      "9th-local-2026:3"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 화성시 직접 행이 있을 때 Σ(children electors) == 화성시 electors가 1건 오차 0으로 성립한다.",
+     "checked": [
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경상남도:마산시:admin_unit",
+   "parent": "admin_unit:경상남도:마산시",
+   "children": [
+    "admin_unit:경상남도:마산시합포구",
+    "admin_unit:경상남도:마산시회원구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "마산시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 마산시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경상남도:울산시:admin_unit",
+   "parent": "admin_unit:경상남도:울산시",
+   "children": [
+    "admin_unit:경상남도:울산시남구",
+    "admin_unit:경상남도:울산시동구",
+    "admin_unit:경상남도:울산시중구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1987-12-16",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "울산시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 울산시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "13th-pres-1987:1",
+      "14th-pres-1992:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경상남도:창원시:admin_unit",
+   "parent": "admin_unit:경상남도:창원시",
+   "children": [
+    "admin_unit:경상남도:창원시마산합포구",
+    "admin_unit:경상남도:창원시마산회원구",
+    "admin_unit:경상남도:창원시성산구",
+    "admin_unit:경상남도:창원시의창구",
+    "admin_unit:경상남도:창원시진해구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "2012-12-19",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "창원시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 창원시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 12건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "6th-local-2014:11",
+      "6th-local-2014:3",
+      "7th-local-2018:11",
+      "7th-local-2018:3"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 창원시 직접 행이 있을 때 Σ(children electors) == 창원시 electors가 4건 오차 0으로 성립한다.",
+     "checked": [
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:경상북도:대구시:admin_unit",
+   "parent": "admin_unit:경상북도:대구시",
+   "children": [
+    "admin_unit:경상북도:대구시남구",
+    "admin_unit:경상북도:대구시동구",
+    "admin_unit:경상북도:대구시북구",
+    "admin_unit:경상북도:대구시서구",
+    "admin_unit:경상북도:대구시중구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "대구시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 대구시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:부산광역시:부산진구:electoral_district",
+   "parent": "admin_unit:부산광역시:부산진구",
+   "children": [
+    "electoral_district:부산광역시:부산진갑구",
+    "electoral_district:부산광역시:부산진구갑구",
+    "electoral_district:부산광역시:부산진구을구",
+    "electoral_district:부산광역시:부산진을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "부산광역시 부산진구는 이 회차들에서 국회의원 선거구 단위(부산진갑구 · 부산진구갑구 · 부산진구을구 · 부산진을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 부산진구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 1건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:서울특별시:동대문구:electoral_district",
+   "parent": "admin_unit:서울특별시:동대문구",
+   "children": [
+    "electoral_district:서울특별시:동대문갑구",
+    "electoral_district:서울특별시:동대문을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "서울특별시 동대문구는 이 회차들에서 국회의원 선거구 단위(동대문갑구 · 동대문을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 동대문구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:서울특별시:서대문구:electoral_district",
+   "parent": "admin_unit:서울특별시:서대문구",
+   "children": [
+    "electoral_district:서울특별시:서대문갑구",
+    "electoral_district:서울특별시:서대문병구",
+    "electoral_district:서울특별시:서대문을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "서울특별시 서대문구는 이 회차들에서 국회의원 선거구 단위(서대문갑구 · 서대문병구 · 서대문을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 서대문구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:서울특별시:성동구:electoral_district",
+   "parent": "admin_unit:서울특별시:성동구",
+   "children": [
+    "electoral_district:서울특별시:성동갑구",
+    "electoral_district:서울특별시:성동병구",
+    "electoral_district:서울특별시:성동을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "서울특별시 성동구는 이 회차들에서 국회의원 선거구 단위(성동갑구 · 성동병구 · 성동을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 성동구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:서울특별시:성북구:electoral_district",
+   "parent": "admin_unit:서울특별시:성북구",
+   "children": [
+    "electoral_district:서울특별시:성북갑구",
+    "electoral_district:서울특별시:성북병구",
+    "electoral_district:서울특별시:성북을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "서울특별시 성북구는 이 회차들에서 국회의원 선거구 단위(성북갑구 · 성북병구 · 성북을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 성북구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:서울특별시:영등포구:electoral_district",
+   "parent": "admin_unit:서울특별시:영등포구",
+   "children": [
+    "electoral_district:서울특별시:영등포갑구",
+    "electoral_district:서울특별시:영등포병구",
+    "electoral_district:서울특별시:영등포을구",
+    "electoral_district:서울특별시:영등포정구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "서울특별시 영등포구는 이 회차들에서 국회의원 선거구 단위(영등포갑구 · 영등포병구 · 영등포을구 · 영등포정구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 영등포구로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:전라남도:광주시:electoral_district",
+   "parent": "admin_unit:전라남도:광주시",
+   "children": [
+    "electoral_district:전라남도:광주시갑구",
+    "electoral_district:전라남도:광주시을구"
+   ],
+   "children_kind": "electoral_district",
+   "effective_date": "1963-10-15",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "전라남도 광주시는 이 회차들에서 국회의원 선거구 단위(광주시갑구 · 광주시을구)로만 개표됐다. 선거구는 장소가 아니므로 지역으로 두지 않고 광주시로 합산한다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 2건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "6th-pres-1967:1",
+      "7th-pres-1971:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:전북특별자치도:전주시:admin_unit",
+   "parent": "admin_unit:전북특별자치도:전주시",
+   "children": [
+    "admin_unit:전북특별자치도:전주시덕진구",
+    "admin_unit:전북특별자치도:전주시완산구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1992-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "전주시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 전주시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 18건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "14th-pres-1992:1",
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 전주시 직접 행이 있을 때 Σ(children electors) == 전주시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:충청남도:대전시:admin_unit",
+   "parent": "admin_unit:충청남도:대전시",
+   "children": [
+    "admin_unit:충청남도:대전시동구",
+    "admin_unit:충청남도:대전시중구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1987-12-16",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "대전시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 대전시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 1건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "13th-pres-1987:1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:충청남도:천안시:admin_unit",
+   "parent": "admin_unit:충청남도:천안시",
+   "children": [
+    "admin_unit:충청남도:천안시동남구",
+    "admin_unit:충청남도:천안시서북구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "2010-06-02",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "천안시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 천안시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 14건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11",
+      "5th-local-2010:3",
+      "6th-local-2014:11",
+      "6th-local-2014:3"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 천안시 직접 행이 있을 때 Σ(children electors) == 천안시 electors가 5건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "6th-local-2014:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "contain:observed:충청북도:청주시:admin_unit",
+   "parent": "admin_unit:충청북도:청주시",
+   "children": [
+    "admin_unit:충청북도:청주시상당구",
+    "admin_unit:충청북도:청주시서원구",
+    "admin_unit:충청북도:청주시청원구",
+    "admin_unit:충청북도:청주시흥덕구"
+   ],
+   "children_kind": "admin_unit",
+   "effective_date": "1997-12-18",
+   "date_basis": "observed",
+   "exhaustive": true,
+   "aggregation": "sum",
+   "reason": "청주시의 일반구다. 대통령·광역단체장·교육감은 구 단위로 개표되고 기초단체장만 시 단위로 나오므로, 구를 합쳐야 청주시의 값이 된다.",
+   "evidence": [
+    {
+     "source": "polis 데이터 — 시도 총합 무모순",
+     "note": "이 하위 키들이 등장한 회차에서 Σ(시도의 시군구 electors) == 시도 electors가 17건 오차 0으로 성립한다. 겹침도 빈틈도 없다는 뜻이다.",
+     "checked": [
+      "15th-pres-1997:1",
+      "16th-pres-2002:1",
+      "17th-pres-2007:1",
+      "18th-pres-2012:1",
+      "19th-pres-2017:1",
+      "20th-pres-2022:1",
+      "21st-pres-2025:1",
+      "5th-local-2010:11"
+     ]
+    },
+    {
+     "source": "polis 데이터 — 상위 단위 앵커 일치",
+     "note": "같은 회차에 청주시 직접 행이 있을 때 Σ(children electors) == 청주시 electors가 4건 오차 0으로 성립한다.",
+     "checked": [
+      "5th-local-2010:4vs3",
+      "7th-local-2018:4vs3",
+      "8th-local-2022:4vs3",
+      "9th-local-2026:4vs3"
+     ]
+    }
+   ],
+   "caveat": "앵커가 어긋난 회차: 6th-local-2014:4vs3(646106≠522649). 그 회차는 청주시 직접 행이 있어 합산하지 않으므로 접기에 영향이 없다."
   }
  ]
 }

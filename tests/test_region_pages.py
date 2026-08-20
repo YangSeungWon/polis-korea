@@ -18,7 +18,8 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/build"))
-from build_region_pages import collect, collect_sido, MIN_ROUNDS  # noqa: E402
+from build_region_pages import (collect, collect_sido, fold_index,  # noqa: E402
+                                MIN_ROUNDS)
 
 fails = []
 
@@ -130,6 +131,15 @@ def main():
     # 이 지역 1위가 실제 당선자와 달랐는지를 표에 적는다. 실제 당선자를 모르는
     # 회차(전국 집계 행이 없는 옛 대선)는 아무 말도 하지 않아야 한다 — 시도별
     # 1위를 모아 전국 1위를 지어내면 그건 우리 계산이지 당선 사실이 아니다.
+    # 접기 규칙은 containment.json에서 온다. 그 파일을 못 읽으면 fold_index가 조용히
+    # 비어 모든 합산이 사라진다 — 페이지가 없어지는 게 아니라 행이 비는 방식이라
+    # 눈에 안 띈다. 규칙 수를 직접 센다.
+    fi = fold_index()
+    ck(f"containment.json에서 접기 규칙을 읽었다 ({len(fi)}개)", len(fi) > 50, str(len(fi)))
+    ck("선거구 하위 단위는 페이지를 만들지 않는다",
+       any(not keep for _p, keep in fi.values()),
+       "electoral_district 기록이 하나도 안 읽혔다")
+
     cmp_tc = {"1", "3", "11"}
     bad_scope = [f'{sd}-{sg} {r["eid"]} tc={r["tc"]}'
                  for (sd, sg), rows in by.items() for r in rows

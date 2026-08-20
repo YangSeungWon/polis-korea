@@ -16,6 +16,11 @@ step() { printf '  %-34s' "$1"; shift; if "$@" >/tmp/gate.log 2>&1; then echo ok
 echo "[1/4] python 테스트"
 for f in tests/test_*.py; do step "$(basename "$f")" "$PY" "$f"; done
 
+# containment.json의 exhaustive=true는 "하위가 상위를 남김없이 나눈다"는 사실
+# 주장이고, 지역 페이지가 그 위에서 득표를 합산한다. 틀리면 없던 숫자가 만들어지므로
+# 주장을 적어두는 것으로 끝내지 않고 매번 센다.
+step "verify_containment" "$PY" scripts/audit/verify_containment.py
+
 echo "[2/4] 생성물 정합 (regen_check)"
 step "regen_check" env PYTHON="$PY" bash scripts/build/regen_check.sh
 

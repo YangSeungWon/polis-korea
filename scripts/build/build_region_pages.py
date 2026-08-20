@@ -128,22 +128,43 @@ def election_meta(eid: str) -> dict:
     return {}
 
 
-def known_units() -> dict:
-    """시도 → 그 시도에서 자료에 나온 시군구 이름 전부.
+CONTAINMENT = ROOT / "data/geography/containment.json"
+_FOLD: dict | None = None
 
-    일반구(성남시수정구)를 모시(성남시)로 접으려면 **모시가 실재하는지**부터
-    알아야 한다. 이름 모양만 보고 접으면 '오정구'의 오를 떼는 식의 사고가 난다.
+
+def fold_index() -> dict:
+    """(시도, 하위 이름) → (상위 이름, 그 이름을 지역 페이지로 둘 것인가).
+
+    **근거는 data/geography/containment.json이지 이름 모양이 아니다.** 예전에는
+    '{X}시{Y}구'·'{Z}갑구' 같은 꼴로 추측했는데, 모양은 사실을 모른다 —
+    '부천시오정구'의 정을 선거구 정으로 읽어 '부천시오구'를 만든 적이 있고,
+    '성남시중원구·분당구'(국회의원 선거구)를 일반구로 셌다.
+
+    containment.json은 exhaustive=true일 때만 합산을 허락한다. 그 판정은
+    scripts/audit/verify_containment.py가 매 게이트마다 산술로 다시 확인한다.
+
+    children_kind=electoral_district는 개표만 선거구 단위로 나온 것이다. 장소가
+    아니므로 그 이름의 지역 페이지는 만들지 않는다(동대문갑구). 일반구는 실재하는
+    행정단위라 제 페이지를 유지한다(성남시분당구).
     """
-    seen: dict = defaultdict(set)
-    for _eid, _meta, races in load_all():
-        for r in races:
-            sd, sg = sido_canon(r.get("sido")), r.get("sigungu")
-            if sd and sg:
-                seen[sd].add(sg)
-    return seen
-
-
-_UNITS: dict | None = None
+    global _FOLD
+    if _FOLD is None:
+        idx: dict = {}
+        try:
+            recs = json.loads(CONTAINMENT.read_text(encoding="utf-8"))["containments"]
+        except Exception:                                        # noqa: BLE001
+            recs = []
+        for c in recs:
+            if not c.get("exhaustive") or c.get("aggregation") != "sum":
+                continue
+            _k, sd, parent = c["parent"].split(":", 2)
+            keep = c.get("children_kind", "admin_unit") != "electoral_district"
+            for child in c["children"]:
+                _ck, csd, cname = child.split(":", 2)
+                if csd == sd:
+                    idx[(sd, cname)] = (parent, keep)
+        _FOLD = idx
+    return _FOLD
 
 
 def fold_target(sd: str, sg: str) -> tuple:
@@ -160,32 +181,9 @@ def fold_target(sd: str, sg: str) -> tuple:
     광역단체장·교육감을 구 단위로 개표하고 기초단체장만 시 단위로 낸다. 접지 않아
     성남시 페이지에 광역 0·교육감 0·대선 2건만 남았다(정상은 5~7·5~6·18~30).
 
-    둘을 한 함수로 두는 이유: '광주시갑구'는 두 규칙에 다 걸린다. 따로 두면 같은
-    표가 두 번 합산된다.
-
-    접는 조건은 모양이 아니라 **상위 단위가 자료에 실재하는가**다. 모양만 보면
-    '부천시오정구'의 정을 선거구 정으로 읽어 '부천시오구'를 만든다(실제로 그랬다).
+    어느 쪽인지, 접어도 되는지는 containment.json이 정한다.
     """
-    global _UNITS
-    if _UNITS is None:
-        _UNITS = known_units()
-    units = _UNITS.get(sd, ())
-    sg = sg or ""
-
-    # 1) 선거구 꼬리(갑·을·병·정·무) — 떼어낸 것이 실재 단위일 때만.
-    m = re.match(r"^(.+?)([갑을병정무])구$", sg)
-    if m:
-        base = m.group(1)
-        t = base if base[-1:] in "시구군" else base + "구"
-        if t != sg and t in units:
-            return t, False        # 선거구는 장소가 아니다 — 페이지를 만들지 않는다
-
-    # 2) 일반구 → 모시.
-    m = re.match(r"^(.+?시)(.+구)$", sg)
-    if m and m.group(1) in units:
-        return m.group(1), True    # 구는 실재하므로 제 페이지도 남는다
-
-    return None, True
+    return fold_index().get((sd, sg or ""), (None, True))
 
 
 def merge_rows(rows: list) -> dict:
