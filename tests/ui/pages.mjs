@@ -27,6 +27,8 @@ export const PAGES = [
   // 깨져도 안 보인다.
   { id: 'region-parent', url: '/region/경기도-성남시/',            why: '모시 — 구 합산 행 + 하위 구 링크' },
   { id: 'region-child',  url: '/region/경기도-성남시분당구/',      why: '일반구 — 기초단체장 없는 이유 안내' },
+  { id: 'sido',          url: '/region/경기도/',                    why: '시도 — 광역단체장 이력 + 시군구 목록' },
+  { id: 'sido-merged',   url: '/region/전남광주특별시/',            why: '2026 통합 시도 — 회차 1건, 시군구는 옛 두 시도에서' },
   { id: 'byelection',    url: '/byelection.html',                 why: '지도(leaflet) + 키' },
   { id: 'tracker',       url: '/tracker.html',                    why: '시계열' },
   { id: 'search',        url: '/search.html',                     why: '검색 진입' },

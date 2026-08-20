@@ -296,3 +296,18 @@ a.pp-party:hover { background: var(--bg2); }
   border: 1px solid var(--rule); border-radius: 2px;
   white-space: nowrap;
 }
+
+/* 시도 페이지의 시군구 목록 — 아래 층으로 내려가는 길. */
+.rg-sec { margin-top: 26px; }
+.rg-sec h2 { font-size: 15px; font-weight: 800; margin: 0 0 10px; }
+.rg-units { display: flex; flex-wrap: wrap; gap: 6px; }
+.rg-units a {
+  display: inline-block; padding: 4px 9px;
+  border: 1px solid var(--rule); border-radius: 3px;
+  font-size: 13px; color: var(--ink); text-decoration: none;
+}
+.rg-units a:hover { border-color: var(--rule-strong, var(--rule)); background: var(--bg2); }
+.rg-past { margin-top: 12px; }
+.rg-past summary { font-size: 12px; color: var(--ink-soft); cursor: pointer; }
+.rg-past .rg-units { margin-top: 8px; }
+.rg-past .rg-units a { color: var(--ink-soft); }

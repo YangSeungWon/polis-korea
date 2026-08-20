@@ -14,10 +14,11 @@ import collections
 import re
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/build"))
-from build_region_pages import collect, MIN_ROUNDS  # noqa: E402
+from build_region_pages import collect, collect_sido, MIN_ROUNDS  # noqa: E402
 
 fails = []
 
@@ -150,6 +151,41 @@ def main():
     ck("성남시 2022 광역단체장: 지역 1위 김은혜 · 도 당선 김동연",
        len(sn) == 1 and sn[0]["name"] == "김은혜" and sn[0].get("won_by") == "김동연",
        str([(r["name"], r.get("won_by")) for r in sn]))
+
+    # ── 6. 시도 층 ──────────────────────────────────────────────────────────
+    bs = collect_sido(collect.won)
+    ck(f"시도 페이지가 있다 ({len(bs)}곳)", len(bs) >= 17, str(len(bs)))
+
+    # 광역단체장·교육감은 시도가 선거구 자체라 이 행이 곧 당선 결과다. 견줄 상대가
+    # 없는데 won_by를 채우면 '당선자와 다르다'는 없는 사실이 생긴다.
+    bad = [f'{sd} {r["eid"]} {r["office"]}' for sd, rows in bs.items() for r in rows
+           if r["tc"] in ("3", "11") and r.get("won_by")]
+    ck("시도의 광역단체장·교육감은 견줄 상대를 갖지 않는다", not bad, str(bad[:3]))
+
+    # 대통령은 견준다 — 0이면 기능이 아니라 검사가 죽은 것이다.
+    pres = [r for rows in bs.values() for r in rows if r["tc"] == "1"]
+    diff = [r for r in pres if r.get("won_by") and r["won_by"] != r["name"]]
+    ck(f"시도 대선이 전국 당선자와 견줘진다 ({len(diff)}/{len(pres)}건 갈림)",
+       0 < len(diff) < len(pres), f"{len(diff)}/{len(pres)}")
+
+    # 손으로 확인한 사실: 2022 대선에서 경기도 1위는 이재명, 전국 당선은 윤석열.
+    gg = [r for r in (bs.get("경기도") or [])
+          if r["eid"] == "20th-pres-2022" and r["tc"] == "1"]
+    ck("경기도 2022 대선: 도 1위 이재명 · 전국 당선 윤석열",
+       len(gg) == 1 and gg[0]["name"] == "이재명" and gg[0].get("won_by") == "윤석열",
+       str([(r["name"], r.get("won_by")) for r in gg]))
+
+    # 시도 페이지가 실재하고 시군구가 자기 시도로 올라갈 수 있어야 한다.
+    made = {d.name for d in (ROOT / "region").iterdir()
+            if d.is_dir() and "-" not in d.name}
+    ck(f"시도 디렉터리가 만들어졌다 ({len(made)}곳)", len(made) >= 17, str(len(made)))
+    no_up = [d.name for d in sorted((ROOT / "region").iterdir())
+             if d.is_dir() and "-" in d.name
+             and d.name.split("-", 1)[0] in made
+             and f'/region/{quote(d.name.split("-", 1)[0])}/'
+             not in (d / "index.html").read_text(encoding="utf-8")]
+    ck("시군구가 자기 시도로 올라가는 링크를 갖는다", not no_up,
+       f"{len(no_up)}개 — {no_up[:3]}")
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0

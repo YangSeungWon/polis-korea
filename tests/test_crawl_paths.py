@@ -10,6 +10,7 @@ import glob
 import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 fails = []
@@ -81,7 +82,9 @@ def main():
     ck("지역 허브가 있다", rg_hub.exists())
     if rg_hub.exists():
         rg_pages = {p.parent.name for p in ROOT.glob("region/*/index.html")}
-        rg_linked = links(rg_hub, r'href="/region/([^/"]+)/')
+        # 링크는 퍼센트 인코딩으로 나갈 수 있다(시도 링크가 그렇다). 원문자와
+        # 비교하려면 풀어야 한다 — 안 풀면 실재하는 링크를 '없다'고 읽는다.
+        rg_linked = {unquote(u) for u in links(rg_hub, r'href="/region/([^/"]+)/')}
         ck(f"허브가 지역 {len(rg_pages)}개 전부 링크",
            not (rg_pages - rg_linked), sorted(rg_pages - rg_linked)[:5])
 
