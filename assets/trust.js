@@ -63,8 +63,11 @@
     if (lifecycle === 'provisional' && typeof opts.countPct === 'number' && opts.countPct < 100) {
       progress = `개표 ${opts.countPct.toFixed(1)}%`;
     }
+    // 개표율과 같은 이유로 확정본에는 붙이지 않는다. '확정 · 58곳 일부 집계 중'은
+    // 그 자체로 모순이다 — 확정은 개표가 끝났다는 뜻이다. 개표율 쪽만 막혀 있어
+    // 이쪽으로 같은 모순이 샜다.
     let incomplete = null;
-    if (opts.pendingCount) {
+    if (lifecycle !== 'final' && opts.pendingCount) {
       incomplete = `${opts.pendingCount.toLocaleString()}곳 일부 집계 중`;
     }
     return {

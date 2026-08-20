@@ -41,12 +41,29 @@ check('2 잠정: 갱신 시각 노출', !!m2.publishedAt, m2.publishedAt);
 check('2 잠정: 확정이면 개표율 무시',
   T.deriveDataset({ is_final: true, source: 'nec-openapi' }, { countPct: 87.4 }).progress === null);
 
-// ── 3. 일부 집계 중 (tc9 비례 votes_pending) ────────────────────────────────
-const pending = res.races.filter((r) => r.sg_typecode === '9'
-  && r.scope === 'proportional_sigungu' && r.votes_pending).length;
-const m3 = T.deriveDataset(res._meta, { pendingCount: pending });
-check('3 일부 집계 중: 실데이터 58곳', pending === 58, String(pending));
-check('3 일부 집계 중: 문구', /58곳 일부 집계 중/.test(T.renderDataset(m3)), T.renderDataset(m3));
+// ── 3. 일부 집계 중 (합성 — 2번과 같은 이유) ─────────────────────────────────
+//
+// 원래 9회 지선의 tc9 비례에서 votes_pending을 세어 58곳을 기대했다. 그 58곳은
+// **일부 집계 중이 아니었다** — 무투표 당선이라 애초에 표가 없었던 것이고,
+// 3ea6a0f6a('결손의 정체는 무투표 당선')가 정확히 그 58개 플래그를 걷어냈다.
+// 그 뒤로 이 검사는 2주 넘게 빨간 채로 있었다.
+//
+// 고정된 숫자를 실데이터에서 세면 검사는 **스냅샷**이 된다. 개표가 끝나면 0이 되고
+// 새 선거가 오면 또 달라진다. 렌더러가 옳은가와 지금 자료에 몇 곳이 있는가는
+// 다른 질문이다. 2번(잠정+개표율)에서 이미 쓴 방법대로 합성 fixture로 가른다.
+const m3 = T.deriveDataset(
+  { is_final: false, source: 'nec-live-portal', fetched_at: '2026-06-03T22:40:00+09:00' },
+  { pendingCount: 58 });
+const h3 = T.renderDataset(m3);
+check('3 일부 집계 중: 문구', /58곳 일부 집계 중/.test(h3), h3);
+check('3 일부 집계 중: 확정본에는 붙지 않는다',
+  !/일부 집계 중/.test(T.renderDataset(T.deriveDataset(res._meta, { pendingCount: 58 }))),
+  T.renderDataset(T.deriveDataset(res._meta, { pendingCount: 58 })));
+
+// 실데이터 쪽은 '지금 몇 곳인가'가 아니라 **모순이 없는가**를 본다. 확정된 회차에
+// 집계 대기가 남아 있으면 둘 중 하나가 틀린 것이다.
+const stillPending = res.races.filter((r) => r.votes_pending).length;
+check('3 일부 집계 중: 확정 회차에 집계 대기가 없다', stillPending === 0, String(stillPending));
 
 // ── 4. 무투표 — 신뢰가 아니라 도메인 사실 ───────────────────────────────────
 const unc = res.races.filter((r) => r.is_uncontested
@@ -91,15 +108,21 @@ check('방어: 알 수 없는 긴 source는 버린다',
 check('방어: 빈 meta는 빈 문자열', T.renderDataset(T.deriveDataset({})) === '');
 
 // ── 9. 부모 상속 — 자식은 다른 것만 남긴다 ──────────────────────────────────
-const parent = T.deriveDataset(res._meta);
-const same = T.deriveDataset(res._meta);
+//
+// 부모를 **잠정**으로 둔다. 예전엔 확정본에 pendingCount를 얹어 자식을 만들었는데,
+// 확정본은 집계 대기를 갖지 않으므로(위 3번) 그 조합은 이제 성립하지 않는다.
+// 상속 규칙을 확인하려면 부모와 자식이 실제로 있을 수 있는 짝이어야 한다.
+const pmeta = { is_final: false, source: 'nec-live-portal',
+                fetched_at: '2026-06-03T22:40:00+09:00' };
+const parent = T.deriveDataset(pmeta);
+const same = T.deriveDataset(pmeta);
 check('9 상속: 부모와 같으면 자식 줄 없음', T.onlyDifferent(parent, same) === null);
-const child = T.deriveDataset(res._meta, { pendingCount: 58 });
+const child = T.deriveDataset(pmeta, { pendingCount: 58 });
 const diff = T.onlyDifferent(parent, child);
 check('9 상속: 다른 항목만 남는다',
   diff && diff.incomplete && !diff.lifecycle && !diff.sourceLabel, JSON.stringify(diff));
 check('9 상속: 자식 줄에 확정/출처 반복 없음',
-  !/확정|NEC OpenAPI/.test(T.renderDataset(diff)), T.renderDataset(diff));
+  !/잠정|NEC 실시간/.test(T.renderDataset(diff)), T.renderDataset(diff));
 
 // ── 10. 출구조사 시리즈별 provenance ────────────────────────────────────────
 const s0 = ex.sources[0];

@@ -16,6 +16,15 @@ step() { printf '  %-34s' "$1"; shift; if "$@" >/tmp/gate.log 2>&1; then echo ok
 echo "[1/4] python 테스트"
 for f in tests/test_*.py; do step "$(basename "$f")" "$PY" "$f"; done
 
+# tests/ 루트의 node 테스트. 이게 빠져 있어서 신뢰 상태 검사가 **2주 넘게 빨간 채로**
+# 지나갔다 — checks.yml은 돌리는데 여기서는 안 돌아, 로컬은 늘 초록이었다.
+# '전체 검증'이라고 적어둔 파일이 전체가 아니면 그 초록은 아무 뜻이 없다.
+if command -v node >/dev/null; then
+  for f in tests/test_*.mjs; do step "$(basename "$f")" node "$f"; done
+else
+  echo "  · node 없음 — tests/*.mjs 건너뜀 (커밋 전 반드시 확인할 것)"
+fi
+
 # containment.json의 exhaustive=true는 "하위가 상위를 남김없이 나눈다"는 사실
 # 주장이고, 지역 페이지가 그 위에서 득표를 합산한다. 틀리면 없던 숫자가 만들어지므로
 # 주장을 적어두는 것으로 끝내지 않고 매번 센다.
