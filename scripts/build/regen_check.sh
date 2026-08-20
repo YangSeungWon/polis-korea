@@ -62,18 +62,26 @@ DERIVED=(
   "scripts/normalize/validate_reaggregation.py 21 20" # reaggregated/validation_21__20.json
 )
 
+# 실패한 생성기의 출력을 보여준다. 버리면 CI 로그에 '실패' 한 줄만 남아 왜 죽었는지
+# 알 수 없다 — build_sitemap이 CI에서만 죽었을 때 로그로는 아무것도 알 수 없어
+# shallow clone을 손으로 재현해야 했다.
+LOG=$(mktemp)
+run() {  # run <표시명> <명령...>
+  printf '  %-50s' "$1"; shift
+  if "$@" >"$LOG" 2>&1; then echo "ok"; else
+    echo "실패"; echo; sed 's/^/      /' "$LOG" | tail -15; echo; rm -f "$LOG"; exit 1
+  fi
+}
+
 echo "생성기 ${#GENERATORS[@]}개 재실행"
-for g in "${GENERATORS[@]}"; do
-  printf '  %-24s' "$g"
-  $PY "scripts/build/$g.py" >/dev/null 2>&1 && echo "ok" || { echo "실패"; exit 1; }
-done
+for g in "${GENERATORS[@]}"; do run "$g" $PY "scripts/build/$g.py"; done
 
 echo "파생물 ${#DERIVED[@]}개 재실행"
 for cmd in "${DERIVED[@]}"; do
-  printf '  %-50s' "$cmd"
   # shellcheck disable=SC2086
-  $PY $cmd >/dev/null 2>&1 && echo "ok" || { echo "실패"; exit 1; }
+  run "$cmd" $PY $cmd
 done
+rm -f "$LOG"
 
 # 검사 대상은 **생성 산출물**이다. 새 스크립트를 추가하는 중이라 untracked 파일이
 # 있는 것은 정상이므로, 추적 중인 변경 + 생성 경로의 새 파일만 본다.
