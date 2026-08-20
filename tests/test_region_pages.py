@@ -125,6 +125,32 @@ def main():
                 dupes.append(f"{sd}-{sg} {k} x{cnt}")
     ck("같은 (회차, 직위) 행이 둘 이상이 아니다", not dupes, str(dupes[:4]))
 
+    # ── 5. '표심' 대비 — 모르면 다르다고 하지 않는다 ────────────────────────
+    # 이 지역 1위가 실제 당선자와 달랐는지를 표에 적는다. 실제 당선자를 모르는
+    # 회차(전국 집계 행이 없는 옛 대선)는 아무 말도 하지 않아야 한다 — 시도별
+    # 1위를 모아 전국 1위를 지어내면 그건 우리 계산이지 당선 사실이 아니다.
+    cmp_tc = {"1", "3", "11"}
+    bad_scope = [f'{sd}-{sg} {r["eid"]} tc={r["tc"]}'
+                 for (sd, sg), rows in by.items() for r in rows
+                 if r.get("won_by") and r["tc"] not in cmp_tc]
+    ck("기초단체장은 실제 당선자와 견주지 않는다", not bad_scope, str(bad_scope[:3]))
+
+    # 견줄 수 있는 것이 실제로 있어야 검사가 산 검사다.
+    cmp_rows = [r for _k, rows in by.items() for r in rows if r.get("won_by")]
+    diff = [r for r in cmp_rows if r["won_by"] != r["name"]]
+    ck(f"견줄 수 있는 행이 있다 ({len(cmp_rows):,}건)", len(cmp_rows) > 1000,
+       str(len(cmp_rows)))
+    ck(f"갈린 행이 있다 ({len(diff):,}건) — 0이면 검사가 죽은 것이다",
+       0 < len(diff) < len(cmp_rows), str(len(diff)))
+
+    # 손으로 확인한 사실 하나를 못 박는다. 2022 경기지사는 도 전체로 김동연이
+    # 이겼지만 성남시 합산은 김은혜다 — 이 대비가 이 기능의 존재 이유다.
+    sn = [r for r in (by.get(("경기도", "성남시")) or [])
+          if r["eid"] == "8th-local-2022" and r["office"] == "광역단체장"]
+    ck("성남시 2022 광역단체장: 지역 1위 김은혜 · 도 당선 김동연",
+       len(sn) == 1 and sn[0]["name"] == "김은혜" and sn[0].get("won_by") == "김동연",
+       str([(r["name"], r.get("won_by")) for r in sn]))
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
 

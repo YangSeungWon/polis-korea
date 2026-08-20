@@ -283,3 +283,16 @@ a.pp-party:hover { background: var(--bg2); }
   color: var(--ink-soft); background: var(--bg3, var(--bg2));
   border-radius: 2px; vertical-align: middle;
 }
+
+/* 이 지역 1위 ≠ 실제 당선자 — 기사에서 '표심'이라 부르는 그 대비.
+   같은 회차엔 아무것도 붙이지 않는다. 다 붙이면 갈린 회차가 안 보인다. */
+.rg-swing {
+  margin: 6px 0 0; font-size: 13px; color: var(--ink-soft); line-height: 1.6;
+}
+.rg-swing b { color: var(--ink); }
+.rg-vs {
+  display: inline-block; margin-left: 6px; padding: 1px 5px;
+  font-size: 11px; color: var(--ink-soft);
+  border: 1px solid var(--rule); border-radius: 2px;
+  white-space: nowrap;
+}

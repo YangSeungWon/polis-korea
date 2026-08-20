@@ -221,13 +221,45 @@ def merge_rows(rows: list) -> dict:
     }
 
 
+# 이 지역 1위가 실제 당선자와 같았나 — 기사에서 '표심'이라 부르는 그것.
+# 대통령은 전국 당선자와, 광역단체장·교육감은 그 시도 당선자와 견준다.
+# 기초단체장은 지역 자체가 선거구라 늘 같으므로 견주지 않는다.
+COMPARE_TC = {"1": "전국", "3": "sido", "11": "sido"}
+
+
+def winners(races_by_eid: dict) -> dict:
+    """(회차, 직위, 시도) → 실제 당선자 이름. 시도가 없으면(대통령) ''.
+
+    없는 회차는 넣지 않는다 — 모르면 견주지 않는다. 옛 대선 일부는 전국 집계
+    행이 아예 없어서, 억지로 시도별 1위를 모아 전국 1위를 만들면 그건 우리가
+    계산한 값이지 당선 사실이 아니다.
+    """
+    out: dict = {}
+    for eid, races in races_by_eid.items():
+        for r in races:
+            tc, scope = r.get("sg_typecode"), r.get("scope")
+            cs = sorted((r.get("candidates") or []),
+                        key=lambda c: -(c.get("votes") or 0))
+            if not cs:
+                continue
+            if tc == "1" and scope == "nation":
+                out[(eid, tc, "")] = cs[0].get("name")
+            elif tc in ("3", "11") and scope == "sido":
+                sd = sido_canon(r.get("sido"))
+                if sd:
+                    out[(eid, tc, sd)] = cs[0].get("name")
+    return out
+
+
 def collect() -> dict:
     """(시도, 시군구) → [{eid, date, kind, label, party, name, pct, turnout}]"""
     by_region = defaultdict(list)
     direct: dict = {}                       # (시도, 시군구, 회차, 직위) → 원천 row
     rolled: dict = defaultdict(list)        #   └ 모시로 접을 하위 구 row들
     ctx: dict = {}                          # (회차, 직위) → (날짜, 종류, 이름)
-    for eid, meta, races in load_all():
+    all_rounds = list(load_all())
+    won = winners({eid: races for eid, _meta, races in all_rounds})
+    for eid, meta, races in all_rounds:
         em = election_meta(eid)
         kind = em.get("kind") or ""
         date = em.get("date") or meta.get("election_date") or ""
@@ -275,6 +307,9 @@ def collect() -> dict:
             "pct": top.get("pct"),
             "turnout": (round(vo / el * 100, 1) if (el and vo is not None) else None),
             "merged": merged,
+            # 실제 당선자 — 모르는 회차는 None으로 두고 아무 말도 하지 않는다.
+            "won_by": won.get((eid, tc, "" if tc == "1" else sd)),
+            "won_scope": ("전국" if tc == "1" else sido_short(sd)) if tc in COMPARE_TC else None,
         })
 
     for (sd, sg, eid, tc), r in direct.items():
@@ -334,6 +369,7 @@ TEMPLATE = """<!DOCTYPE html>
   <section class="intro">
     <h1>{sido} {sigungu}</h1>
     <p class="lede">{lede}</p>
+{swing}
   </section>
 {kin}
   <section>{table}</section>
@@ -395,6 +431,43 @@ def kin_block(sd: str, sg: str, by_region: dict) -> str:
                 f'(표에서 <span class="rg-mg">합산</span>으로 표시).</p></section>')
     return ""
 
+def diverged(r: dict) -> bool:
+    """이 지역 1위가 실제 당선자와 달랐는가. 모르면 False — 모름은 다름이 아니다."""
+    w, n = r.get("won_by"), r.get("name")
+    return bool(w and n and w != n)
+
+
+def winner_note(r: dict) -> str:
+    """다른 회차에만 실제 당선자를 덧붙인다. 같은 회차까지 적으면 표가 같은 이름으로
+    가득 차서, 정작 갈린 회차가 눈에 안 띈다."""
+    if not diverged(r):
+        return ""
+    return (f'<span class="rg-vs" title="이 지역 1위와 실제 당선자가 다릅니다">'
+            f'{esc(r["won_scope"])} 당선 {esc(r["won_by"])}</span>')
+
+
+def swing_line(rows: list) -> str:
+    """'여기 표심은 전체와 달랐다' — 기사들이 하는 그 말을 숫자로.
+
+    견줄 수 있는 것만 센다(대통령·광역단체장·교육감). 기초단체장은 지역 자체가
+    선거구라 늘 같고, 실제 당선자를 모르는 옛 회차는 분모에서도 뺀다.
+    """
+    cmp_rows = [r for r in rows if r.get("won_by") and r.get("name")]
+    if not cmp_rows:
+        return ""
+    diff = [r for r in cmp_rows if diverged(r)]
+    if not diff:
+        return (f'<p class="rg-swing">견줄 수 있는 {len(cmp_rows)}건 모두에서 이 지역 '
+                f'1위가 실제 당선자와 같았습니다.</p>')
+    years = " · ".join(f'{esc((r.get("date") or "")[:4])} {esc(r["office"])}'
+                       for r in sorted(diff, key=lambda r: r.get("date") or "",
+                                       reverse=True)[:4])
+    more = f' 외 {len(diff) - 4}건' if len(diff) > 4 else ""
+    return (f'<p class="rg-swing">대통령·광역단체장·교육감 {len(cmp_rows)}건 중 '
+            f'<b>{len(diff)}건</b>에서 이 지역 1위가 실제 당선자와 달랐습니다 — '
+            f'{years}{more}.</p>')
+
+
 def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     slug = f"{sd}-{sg}"
@@ -435,7 +508,7 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
             f'<td><a href="/archive/{esc(r["eid"])}/">{esc(r["election"])}</a></td>'
             f'<td>{esc(r["office"])}{merged_mark(r)}</td>'
             f'<td>{party_cell(r["party"], r.get("date"))}</td>'
-            f'<td>{name_cell(r)}</td>'
+            f'<td>{name_cell(r)}{winner_note(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
     table = ('<table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
@@ -451,6 +524,7 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     return TEMPLATE.format(
         sido=esc(sd), sigungu=esc(sg), slug=esc(slug), desc=desc, lede=lede, table=table,
         kin=kin_block(sd, sg, by_region),
+        swing=swing_line(rows),
         nav=render_nav(menu_for_path(f"region/{slug}/index.html")),
         jsonld='<script type="application/ld+json">'
                + json.dumps(ld, ensure_ascii=False) + "</script>")
