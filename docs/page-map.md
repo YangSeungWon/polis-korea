@@ -148,10 +148,13 @@ hex 탐색기에서 보던 회차의 심층 자료로 갈 수 없었다. `histor
 데이터(Person·Organization·BreadcrumbList)를 넣었다. 남은 것:
   · `/party/` 100개는 중앙값 228자 — 군소·역사 정당은 데이터 자체가 적어 한계가 있다.
   · og:image가 인물·정당·history에서 공용 이미지다(archive만 회차별).
-  · 효과 확인은 색인 재평가까지 몇 주 걸린다.
+  · 효과 확인은 색인 재평가까지 몇 주 걸린다. **2026-08 그 확인 경로가 생겼다** —
+    GSC Search Analytics를 주간으로 쌓아 층별 '노출된 페이지 수'를 보고, 되돌아가면
+    검사가 빨개진다(`docs/seo-coverage.md`). 구조화 데이터 채택 여부도 여기서 갈린다.
 
 ## 관련 문서
 
+- `docs/seo-coverage.md` — 색인 수집(GSC)·회귀 검사·결손 모델
 - `docs/architecture.md` — 운영 모델·디렉터리
 - `docs/archive-content.md` — archive 회차 종류별 섹션 구성
 - `docs/cycle-workflow.md` — 선거 생애주기(0~3단계)·active/archive 전환

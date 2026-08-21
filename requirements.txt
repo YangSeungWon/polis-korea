@@ -6,6 +6,7 @@ beautifulsoup4>=4.12
 lxml>=5.0
 tqdm>=4.66          # parse_pdf.py 진행바
 fonttools>=4.50     # cid_decode.py 한글 cid 복구 (fontTools.ttLib)
+google-auth>=2.30   # fetch_gsc.py Search Console 서비스 계정 인증
 
 # 분석·계산
 scipy>=1.13

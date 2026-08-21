@@ -11,7 +11,8 @@ data/
 ├── raw/                    # 원본 다운로드 (수집 스크립트 입력)
 ├── parsed/                 # 중간 산출물 (raw → 정제)
 ├── results/                # 최종 결과 JSON (UI fetch 대상)
-└── polls/                  # 9회 지선 여론조사 (NESDC)
+├── polls/                  # 9회 지선 여론조사 (NESDC)
+└── seo/                    # 색인·노출 수집 (GSC Search Analytics) - docs/seo-coverage.md
 ```
 
 ## results/ — 역대 선거 결과 (UI fetch)
