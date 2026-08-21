@@ -26,6 +26,35 @@ def links(fp: Path, pat: str) -> set:
     return set(re.findall(pat, fp.read_text(encoding="utf-8")))
 
 
+def check_logo_home() -> None:
+    """로고가 **홈**을 가리키는가 — 상대 경로면 자기 자신을 가리킨다.
+
+    2026-08 GSC로 확인한 실제 사고다. 로고가 `href="index.html"`(상대)이었고,
+    프리렌더 템플릿이 손작성 루트 페이지(polls.html·history.html)라 그 상대 경로가
+    88쪽에 복사됐다. 결과가 위치마다 달랐다:
+
+      /history/presidential/6/index.html  →  자기 자신. 홈으로 가는 링크가 아니다
+      /index.html                          →  홈이지만 `/`의 중복 URL
+
+    그래서 Google이 아는 홈은 `/`가 아니라 `/index.html`이었고(googleCanonical),
+    `/`는 '알려지지 않은 URL'이었다. sitemap은 `/`를 냈는데 링크는 아무도 그리로
+    가지 않은 것이다.
+
+    눈으로는 안 보인다 — 로고를 누르면 페이지가 다시 뜨니 '동작'한다. 링크 그래프
+    검사도 통과한다: 자기 링크는 깨진 링크가 아니다. 그래서 절대 경로만 허용한다.
+    """
+    bad = []
+    for f in ROOT.rglob("*.html"):
+        rel = str(f.relative_to(ROOT))
+        if rel.split("/")[0] in {"node_modules", ".venv", "share", "og"}:
+            continue
+        m = re.search(r'<a href="([^"]*)" class="logo-link"', f.read_text(encoding="utf-8"))
+        if m and m.group(1) != "/":
+            bad.append(f"{rel} → {m.group(1)}")
+    ck("로고가 전부 홈(/)을 가리킨다", not bad,
+       f"{len(bad)}쪽 상대 경로 — {bad[:3]}")
+
+
 def main():
     home = ROOT / "index.html"
     hub = ROOT / "elections.html"
@@ -124,6 +153,8 @@ def main():
     ck("sitemap에 허브 등록", "/elections.html" in sm)
     ck("sitemap에 archive 전부", all(f"/archive/{a}/" in sm for a in archives))
     ck("sitemap에 지역 허브 등록", "/region/</loc>" in sm or "/region/<" in sm)
+
+    check_logo_home()
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
