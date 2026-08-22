@@ -35,6 +35,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from collections import Counter
+from datetime import date
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
 
@@ -48,6 +49,7 @@ SITE = "https://polis.ysw.kr"
 # 600/분 = 0.1초에 하나. 여유를 둬서 0.15 — 어차피 하루 상한(2,000)이 먼저 걸린다.
 PACE = 0.15
 DAILY = 2000
+TODAY = date.today().isoformat()
 
 # 작은 층부터 전부 채우고 person은 표본. person 86%가 나머지 전부를 가린다.
 SMALL = ("main", "polls", "history", "archive", "party", "region")
@@ -84,6 +86,26 @@ def pick(queue: list[str], store: dict, layers: dict[str, str], limit: int) -> l
         # 앞에서부터 자르면 가나다순 앞쪽만 본다 — 고르게 뽑아야 층 대표성이 생긴다.
         step = max(1, len(person) // room)
         out += person[::step][:room]
+    return out
+
+
+def refresh_targets(store: dict, layers: dict[str, str], n: int) -> list[str]:
+    """가장 오래전에 물어본 것부터, 층을 고르게 섞어 n쪽.
+
+    한 층만 다시 물으면 '이 층이 움직였다'는 알아도 '다른 층은 안 움직였다'는 못
+    말한다. 움직임 없음도 결과이므로 층마다 표본이 있어야 한다.
+    """
+    by: dict[str, list[str]] = {}
+    for p in sorted(store, key=lambda x: store[x].get("asked") or ""):
+        by.setdefault(layers.get(p, "?"), []).append(p)
+    out, i = [], 0
+    while len(out) < n and any(by.values()):
+        for layer in sorted(by):
+            if by[layer] and len(out) < n:
+                out.append(by[layer].pop(0))
+        i += 1
+        if i > n:
+            break
     return out
 
 
@@ -129,12 +151,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=DAILY,
                     help=f"이번 실행에서 물어볼 수. 속성당 하루 {DAILY}")
+    ap.add_argument("--refresh", type=int, default=0, metavar="N",
+                    help="이미 물어본 것 중 N쪽을 다시 묻는다(움직였는지 확인). "
+                         "--limit과 별도 예산이며 같은 하루 쿼터를 쓴다")
     ap.add_argument("--report", action="store_true", help="묻지 않고 저장된 것만 집계")
     ap.add_argument("--site", help="siteUrl 강제")
     args = ap.parse_args()
 
     layers = layer_map()
     store = load()
+    moved: list = []
 
     if args.report:
         report(store, layers)
@@ -153,21 +179,31 @@ def main() -> int:
     site = g.resolve_site(sess, args.site)
 
     targets = pick(queue, store, layers, args.limit)
+    # 재조회는 **이전 답을 지우지 않고** 옆에 적는다 — 움직임은 두 시점이 다 있어야
+    # 보인다. 덮어쓰면 '어제 뭐였더라'가 사라지고 다음 측정이 또 기준선이 된다.
+    again = refresh_targets(store, layers, args.refresh) if args.refresh else []
     print(f"속성 {site} · 대기열 {len(queue)} · 이미 물어본 {len(store)} · "
-          f"이번에 {len(targets)}")
+          f"이번에 신규 {len(targets)} + 재조회 {len(again)}")
 
     done = quota = 0
     try:
-        for i, p in enumerate(targets, 1):
+        for i, p in enumerate(again + targets, 1):
             res = inspect(sess, site, p)
             if res is None:
                 quota = 1
                 print(f"\n429 — 하루 쿼터({DAILY}) 소진. {done}쪽 저장하고 멈춘다.")
                 break
+            if p in store:
+                prev = {k: v for k, v in store[p].items() if k != "prev"}
+                if prev.get("coverageState") != res.get("coverageState"):
+                    moved.append((p, prev.get("coverageState"), res.get("coverageState")))
+                res["prev"] = {"asked": store[p].get("asked"),
+                               "coverageState": prev.get("coverageState")}
+            res["asked"] = TODAY
             store[p] = res
             done += 1
             if i % 100 == 0:
-                print(f"  {i}/{len(targets)} …")
+                print(f"  {i}/{len(again) + len(targets)} …")
                 save(store)          # 중간 저장 — 죽어도 여기까지는 남는다
             time.sleep(PACE)
     except KeyboardInterrupt:
@@ -176,7 +212,11 @@ def main() -> int:
         save(store)
 
     print(f"\n→ {STORE.relative_to(ROOT)} · 이번에 {done}쪽 · 누적 {len(store)}쪽 "
-          f"· 남은 대기열 {len(queue) - len(store)}")
+          f"· 남은 대기열 {len([p for p in queue if p not in store])}")
+    if again:
+        print(f"\n재조회 {len(again)}쪽 중 상태가 바뀐 것: {len(moved)}")
+        for p, a, b in moved[:15]:
+            print(f"  {p}\n    {a}  →  {b}")
     report(store, layers)
     return 2 if quota else 0
 
