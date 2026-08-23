@@ -4,10 +4,26 @@ Search Console의 `크롤링됨 - 현재 색인이 생성되지 않음`을 유�
 접근이 필요하지만, **어느 템플릿이 위험한가**는 저장소에서 먼저 잴 수 있다.
 Google이 별도 색인할 가치를 판단하는 실질 근거가 본문의 양과 고유성이기 때문이다.
 
-재는 것은 둘뿐이다:
+재는 것은 셋이다:
 
-    본문 길이   JS를 뺀 정적 <main> 텍스트 (크롤러가 처음 보는 것)
+    본문 길이   JS를 뺀 정적 <main> 텍스트
+    자료 길이   <script type="application/json"> 등에 실려 렌더해야 보이는 내용
     본문 중복   같은 텍스트를 가진 페이지 수 (이름만 바뀐 껍데기)
+
+**'자료 길이'를 따로 세는 이유** — 2026-08 이걸 안 세다가 결론을 틀리게 냈다.
+인물 페이지의 6월 버전을 재니 정적 본문이 68자라 "빈 껍데기라서 색인이 안 됐다"고
+읽었는데, 실제로는 내용이 `<script id="person-data">`에 다 있었고 Google은 그걸
+**렌더해서 색인**했다(색인된 페이지의 검색 스니펫에 그 JSON에만 있던 득표율이
+찍혀 있었다). 같은 시점 색인된 페이지와 안 된 페이지의 정적 본문이 똑같이 68자라,
+정적 길이는 그 둘을 가르지 못한다.
+
+그러니 정적 본문 68자는 두 가지를 뜻할 수 있고 대응이 다르다:
+
+    68자 + 자료 0      진짜 빈 껍데기 — 실을 내용이 없다
+    68자 + 자료 2KB    내용은 있고 렌더가 필요하다 — 정적화의 후보
+
+정적 렌더가 유리한 건 여전히 맞다(렌더 비용 없이 읽힌다). 다만 **미색인의 원인으로
+정적 길이를 지목하려면 자료 길이가 0인지 먼저 봐야 한다.**
 
 **목표는 5천 페이지를 전부 색인시키는 게 아니다.** 얇은 템플릿이 나오면 선택지는
 셋이다 — 실제 내용을 더 싣거나, 상위 문서로 canonical하거나, noindex한다.
@@ -39,10 +55,28 @@ def template_of(p: Path) -> str:
 
 
 def body_text(html: str) -> str:
+    """렌더 없이 읽히는 텍스트. <script>는 뺀다 — 그건 data_len이 따로 센다."""
     m = re.search(r"<main.*?</main>", html, re.S)
     b = m.group(0) if m else html
     t = re.sub(r"<script.*?</script>", "", b, flags=re.S)
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t)).strip()
+
+
+def data_len(html: str) -> int:
+    """렌더해야 보이는 내용의 양 — data script의 페이로드 길이.
+
+    JSON-LD(구조화 데이터)는 뺀다. 그건 본문이 아니라 메타데이터라 '실을 내용이
+    있느냐'는 질문에 답하지 않는다.
+    """
+    total = 0
+    for m in re.finditer(r'<script([^>]*)>(.*?)</script>', html, re.S):
+        attrs, payload = m.group(1), m.group(2)
+        if "application/json" not in attrs:
+            continue
+        if "ld+json" in attrs:
+            continue
+        total += len(payload.strip())
+    return total
 
 
 def scan() -> dict:
@@ -57,7 +91,7 @@ def scan() -> dict:
             continue
         t = body_text(html)
         rows[template_of(rel)].append({
-            "path": str(rel), "chars": len(t),
+            "path": str(rel), "chars": len(t), "data": data_len(html),
             "links": len(re.findall(r"<a [^>]*href", html)),
             "hash": hashlib.md5(t.encode()).hexdigest()[:10],
         })
@@ -68,25 +102,31 @@ def main(argv: list) -> int:
     rows = scan()
     want = argv[argv.index("--list") + 1] if "--list" in argv else None
     print(f"{'template':10}{'n':>6}{'중앙':>7}{'하위25%':>8}"
-          f"{'<'+str(THIN)+'자':>8}{'중복':>6}  판단")
+          f"{'<'+str(THIN)+'자':>8}{'그중 자료0':>10}{'중복':>6}  판단")
     for k, v in sorted(rows.items(), key=lambda kv: -len(kv[1])):
         lens = sorted(x["chars"] for x in v)
         med, q1 = lens[len(lens) // 2], lens[len(lens) // 4]
-        thin = sum(1 for x in lens if x < THIN)
+        thin = [x for x in v if x["chars"] < THIN]
+        # 얇은 것 중 자료도 없는 것 — 진짜 빈 껍데기. 렌더하면 보이는 것과 다르다.
+        empty = sum(1 for x in thin if x["data"] == 0)
         dup = len(v) - len({x["hash"] for x in v})
         note = []
-        if thin > len(v) * 0.4:
-            note.append(f"얇음 {thin / len(v):.0%}")
+        if len(thin) > len(v) * 0.4:
+            note.append(f"얇음 {len(thin) / len(v):.0%}")
+        if empty:
+            note.append(f"빈 껍데기 {empty}")
         if dup > len(v) * 0.3:
             note.append(f"본문 중복 {dup}")
-        print(f"{k:10}{len(v):6}{med:7}{q1:8}{thin:8}{dup:6}  "
+        print(f"{k:10}{len(v):6}{med:7}{q1:8}{len(thin):8}{empty:10}{dup:6}  "
               + (" · ".join(note) or "—"))
     if want and want in rows:
         print(f"\n[{want}] 가장 얇은 20개")
         for x in sorted(rows[want], key=lambda r: r["chars"])[:20]:
-            print(f"  {x['chars']:5}자 링크{x['links']:3}  {x['path']}")
+            print(f"  {x['chars']:5}자 자료{x['data']:6} 링크{x['links']:3}  {x['path']}")
     print("\n얇거나 중복인 템플릿은 셋 중 하나를 골라야 한다 — "
           "내용을 더 싣기 / 상위로 canonical / noindex.")
+    print("'그중 자료0'이 진짜 빈 껍데기다. 자료가 있는 얇은 페이지는 "
+          "'실을 게 없다'가 아니라 '렌더가 필요하다'는 뜻이다.")
     return 0
 
 
