@@ -55,6 +55,34 @@ def check_logo_home() -> None:
        f"{len(bad)}쪽 상대 경로 — {bad[:3]}")
 
 
+def check_history_island() -> None:
+    """/history/ 프리렌더가 **바깥에서** 링크되는가.
+
+    2026-08 URL Inspection에서 65쪽 중 41쪽이 'Google에 알려지지 않은 URL'로 나왔다.
+    원인은 이 66쪽을 정적으로 가리키는 페이지가 저장소에 하나도 없었다는 것이다 —
+    서로만 링크하는 섬이라 크롤러 입구가 sitemap뿐이었다. 인물 1,820쪽이 겪은 것과
+    같은 구조다(4b10a4c0c).
+
+    JS 타임라인이 같은 링크를 만들지만 렌더 후에만 존재한다. 사용자 도달 가능성과
+    크롤러 가시성은 다른 질문이다 — 그래서 **정적 HTML만** 본다.
+
+    자기들끼리의 링크는 세지 않는다. 섬 안에서 아무리 촘촘해도 입구가 아니다.
+    """
+    pages = {f"/{p.relative_to(ROOT).parent}/" for p in ROOT.glob("history/*/*/**/index.html")}
+    pages |= {f"/{p.relative_to(ROOT).parent}/" for p in ROOT.glob("history/*/*/index.html")}
+    outside = set()
+    for f in ROOT.rglob("*.html"):
+        rel = f.relative_to(ROOT)
+        if rel.parts[0] in {"node_modules", ".venv", "history", "share", "og"}:
+            continue
+        html = re.sub(r"<script.*?</script>", "", f.read_text(encoding="utf-8", errors="replace"),
+                      flags=re.S)
+        outside |= {unquote(h) for h in re.findall(r'href="(/history/[^"]+)"', html)}
+    missing = sorted(p for p in pages if p not in outside)
+    ck(f"history 프리렌더 {len(pages)}쪽이 바깥에서 링크됨", not missing,
+       f"{len(missing)}쪽이 섬 — {missing[:3]}")
+
+
 def main():
     home = ROOT / "index.html"
     hub = ROOT / "elections.html"
@@ -155,6 +183,7 @@ def main():
     ck("sitemap에 지역 허브 등록", "/region/</loc>" in sm or "/region/<" in sm)
 
     check_logo_home()
+    check_history_island()
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
