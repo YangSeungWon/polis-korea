@@ -30,7 +30,7 @@ concurrency:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
@@ -66,6 +66,10 @@ jobs:
         run: python scripts/fetch/fetch_gsc.py --window 7 --roster-window 90
 
       # 대기열을 조금씩 갉아먹는다. 속당 하루 2,000이 상한이라 4,870쪽이면 3주다.
+      # ⚠️ 시간 예산(--max-seconds)이 잡 타임아웃보다 짧아야 한다. 요청 하나에
+      # 0.5초쯤이라 1,900이면 16분 넘고, 밖에서 죽으면 아래 커밋 단계가 건너뛰어져
+      # 그때까지 물어본 게 통째로 버려진다(2026-08-23에 실제로 그랬다). 스스로
+      # 멈추면 exit 2로 나오고, 저장된 건 커밋되고, 남은 건 다음 실행이 잇는다.
       # 주간 잡이 매주 1,900씩 물어 3주면 전수가 찬다 — 이미 물어본 URL은 건너뛰므로
       # 그 뒤로는 신규(새 페이지)만 소비한다. 429가 와도 실패가 아니라 '오늘 몫 끝'이라
       # exit 2를 통과시킨다 — 지금까지 물어본 건 이미 저장돼 있다.
@@ -74,7 +78,7 @@ jobs:
         env:
           GSC_SA_JSON: ${{ secrets.GSC_SA_JSON }}
         run: |
-          python scripts/fetch/fetch_gsc_inspect.py --limit 1900 || {
+          python scripts/fetch/fetch_gsc_inspect.py --limit 1900 --max-seconds 900 || {
             code=$?
             [ "$code" = 2 ] && echo "쿼터 소진 — 다음 주 이어서" || exit $code
           }

@@ -31,6 +31,8 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import threading
+from concurrent.futures import ThreadPoolExecutor
 import sys
 import time
 import xml.etree.ElementTree as ET
@@ -46,8 +48,14 @@ QUEUE = OUT / "inspect_queue.txt"
 ENDPOINT = "https://searchconsole.googleapis.com/v1/urlInspection/index:inspect"
 SITE = "https://polis.ysw.kr"
 
-# 600/분 = 0.1초에 하나. 여유를 둬서 0.15 — 어차피 하루 상한(2,000)이 먼저 걸린다.
-PACE = 0.15
+# 병목은 처리율이 아니라 **지연**이다. 요청 하나가 일관되게 7초 남짓 걸린다(측정값,
+# 우리 쪽 sleep이 아니다). 순차로 돌리면 1,900쪽에 228분이라 어떤 잡 타임아웃으로도
+# 못 끝낸다. 반면 쿼터는 분당 600인데 순차로는 분당 8밖에 안 쓴다 — 놀고 있는 건
+# 우리가 아니라 대역이다.
+#
+# WORKERS 12면 분당 100요청(허용의 1/6)으로 1,900쪽을 20분 안쪽에 끝낸다. 더 올릴
+# 수도 있지만 하루 상한 2,000이 어차피 먼저 걸리므로 여기서 욕심낼 이유가 없다.
+WORKERS = 12
 DAILY = 2000
 TODAY = date.today().isoformat()
 
@@ -109,6 +117,19 @@ def refresh_targets(store: dict, layers: dict[str, str], n: int) -> list[str]:
     return out
 
 
+_TL = threading.local()
+
+
+def thread_session(make):
+    """스레드마다 세션 하나 — requests.Session을 여러 스레드가 공유하면 커넥션 풀에서
+    드물게 어긋난다. 토큰은 자격증명이 들고 있어 세션을 새로 만들어도 재인증은 없다.
+    """
+    s = getattr(_TL, "sess", None)
+    if s is None:
+        s = _TL.sess = make()
+    return s
+
+
 def inspect(sess, site: str, path: str) -> dict | None:
     url = SITE + quote(path)
     for attempt in range(4):
@@ -150,7 +171,11 @@ def report(store: dict, layers: dict[str, str]) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=DAILY,
-                    help=f"이번 실행에서 물어볼 수. 속성당 하루 {DAILY}")
+                    help=f"이번 실행에서 물어볼 수. 속성당 하루 {DAILY}. "
+                         f"요청 하나에 0.5초쯤 걸리니 1,900이면 16분 넘는다")
+    ap.add_argument("--max-seconds", type=int, default=0, metavar="S",
+                    help="이 시간을 넘기면 스스로 멈추고 저장한다. CI 잡 타임아웃보다 "
+                         "짧게 줄 것 — 밖에서 죽으면 커밋 단계가 통째로 건너뛰어진다")
     ap.add_argument("--refresh", type=int, default=0, metavar="N",
                     help="이미 물어본 것 중 N쪽을 다시 묻는다(움직였는지 확인). "
                          "--limit과 별도 예산이며 같은 하루 쿼터를 쓴다")
@@ -175,7 +200,7 @@ def main() -> int:
         "gsc", ROOT / "scripts/fetch/fetch_gsc.py")
     g = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(g)
-    sess = g.session()
+    sess = g.session()      # 속성 해석용 — 조회는 스레드마다 세션을 따로 쓴다
     site = g.resolve_site(sess, args.site)
 
     targets = pick(queue, store, layers, args.limit)
@@ -183,31 +208,55 @@ def main() -> int:
     # 보인다. 덮어쓰면 '어제 뭐였더라'가 사라지고 다음 측정이 또 기준선이 된다.
     again = refresh_targets(store, layers, args.refresh) if args.refresh else []
     print(f"속성 {site} · 대기열 {len(queue)} · 이미 물어본 {len(store)} · "
-          f"이번에 신규 {len(targets)} + 재조회 {len(again)}")
+          f"이번에 신규 {len(targets)} + 재조회 {len(again)}", flush=True)
 
-    done = quota = 0
-    try:
-        for i, p in enumerate(again + targets, 1):
-            res = inspect(sess, site, p)
-            if res is None:
-                quota = 1
-                print(f"\n429 — 하루 쿼터({DAILY}) 소진. {done}쪽 저장하고 멈춘다.")
-                break
-            if p in store:
-                prev = {k: v for k, v in store[p].items() if k != "prev"}
+    done = quota = stopped = 0
+    t0 = time.monotonic()
+    work = again + targets
+    lock = threading.Lock()
+    halt = threading.Event()
+
+    def run(path: str):
+        nonlocal done, quota, stopped
+        if halt.is_set():
+            return
+        # 밖에서 죽으면(잡 타임아웃) 커밋 단계가 건너뛰어져 여기까지 물어본 게 통째로
+        # 버려진다. 그래서 **스스로** 멈춘다 — 남은 건 다음 실행이 잇는다.
+        if args.max_seconds and time.monotonic() - t0 > args.max_seconds:
+            if not halt.is_set():
+                halt.set(); stopped = 1
+                print(f"\n{args.max_seconds}초 예산 소진 — 지금까지 것을 저장하고 멈춘다 "
+                      f"(남은 건 다음 실행이 잇는다)", flush=True)
+            return
+        res = inspect(thread_session(g.session), site, path)
+        if res is None:
+            if not halt.is_set():
+                halt.set(); quota = 1
+                print(f"\n429 — 하루 쿼터({DAILY}) 소진. 지금까지 것을 저장하고 멈춘다.",
+                      flush=True)
+            return
+        with lock:
+            if path in store:
+                prev = {k: v for k, v in store[path].items() if k != "prev"}
                 if prev.get("coverageState") != res.get("coverageState"):
-                    moved.append((p, prev.get("coverageState"), res.get("coverageState")))
-                res["prev"] = {"asked": store[p].get("asked"),
+                    moved.append((path, prev.get("coverageState"), res.get("coverageState")))
+                res["prev"] = {"asked": store[path].get("asked"),
                                "coverageState": prev.get("coverageState")}
             res["asked"] = TODAY
-            store[p] = res
+            store[path] = res
             done += 1
-            if i % 100 == 0:
-                print(f"  {i}/{len(again) + len(targets)} …")
+            if done % 100 == 0:
+                # flush 필수 — 파이프에서는 버퍼링돼서, CI 로그만 보면 느린 실행과
+                # 죽은 실행이 똑같이 '아무것도 안 나옴'으로 보인다.
+                print(f"  {done}/{len(work)} … ({time.monotonic() - t0:.0f}초)", flush=True)
                 save(store)          # 중간 저장 — 죽어도 여기까지는 남는다
-            time.sleep(PACE)
+
+    try:
+        with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            list(ex.map(run, work))
     except KeyboardInterrupt:
-        print("\n중단 — 지금까지 것을 저장한다.")
+        halt.set()
+        print("\n중단 — 지금까지 것을 저장한다.", flush=True)
     finally:
         save(store)
 
@@ -218,7 +267,7 @@ def main() -> int:
         for p, a, b in moved[:15]:
             print(f"  {p}\n    {a}  →  {b}")
     report(store, layers)
-    return 2 if quota else 0
+    return 2 if (quota or stopped) else 0
 
 
 if __name__ == "__main__":
