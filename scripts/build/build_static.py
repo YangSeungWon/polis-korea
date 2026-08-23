@@ -428,6 +428,16 @@ HISTORY_ROUTES = ROOT / 'data/results/history_routes.json'
 
 def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
+    # 회차별 색인(HS_ROUNDS)은 **허브에만** 둔다. 템플릿이 history.html이라 그냥 두면
+    # 66쪽 전부에 같은 66개 링크가 복사되는데, 이 프리렌더들은 원래 서로 <body>가
+    # 완전히 같아서 대거 '크롤링됨-미색인'으로 보류됐던 자리다(eedd49da6). 회차별
+    # 사실을 넣어 겨우 갈라놨는데 85줄짜리 동일 블록을 얹으면 그 비율이 다시 나빠진다.
+    # 프리렌더끼리는 이미 서로 링크하므로 크롤 이득도 없다 — 필요한 건 바깥 입구였다.
+    # build_history_static.py가 이 블록을 언제 넣든 여기서 걷어내므로 순서에 안 걸린다.
+    # 앞의 빈 줄까지 함께 걷는다 — 안 그러면 프리렌더에 빈 줄 하나가 남아 66쪽이
+    # 매번 diff에 뜬다(멱등성 검사가 그걸 '생성물 드리프트'로 읽는다).
+    template = re.sub(r'\n?[ \t]*<!-- HS_ROUNDS_START[\s\S]*?HS_ROUNDS_END -->[ \t]*\n?',
+                      '', template, count=1)
     slugs = archive_slug_map()
     n_made = 0
     urls.append(('/history.html', '0.7', 'monthly'))
