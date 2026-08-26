@@ -614,7 +614,7 @@ SECTIONS_GENERAL = """
   </section>
 """
 
-FOOT = """
+FOOT_CHROME = """
   <footer class="foot">
     <div class="foot-row">
       <span class="ar-foot-src"><a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>{nec_source_suffix}</span>
@@ -624,7 +624,12 @@ FOOT = """
   </footer>
 </main>
 
-<script src="assets/regions.js"></script>
+"""
+
+# ⚠️ 스크립트 목록은 **여기 한 곳**이다. 하네스(render_only)가 같은 상수를 쓴다 —
+# 두 벌이 되면 하네스와 공개 페이지가 다른 걸 렌더하고, 그러면 캡처한 사진은
+# 재현이 아니라 근사가 된다.
+FOOT_SCRIPTS = """<script src="assets/regions.js"></script>
 <script src="assets/parties.js"></script>
 <script src="assets/utils.js"></script>
 <script src="assets/lens-switcher.js"></script>
@@ -662,6 +667,9 @@ FOOT = """
 </body>
 </html>
 """
+
+FOOT = FOOT_CHROME + FOOT_SCRIPTS
+
 
 KIND_TO_HERO = {"local": HERO_LOCAL, "presidential": HERO_PRES, "general_election": HERO_GENERAL, "byelection": HERO_BYELECTION}
 
@@ -1251,6 +1259,99 @@ def hero_status(d: dict) -> str:
 def counting_title(d: dict) -> str:
     return "개표 진행 · 시도별" if d["is_active"] else "광역단체장 결과 · 시도별"
 
+
+
+# ── 캡처 전용 변종 (하네스) ──────────────────────────────────────────────────
+# 지도 그림은 살아있는 archive 페이지를 헤드리스로 열어 찍는다. 공개 페이지에서
+# 렌더를 걷어내면 그 원본이 사라지므로, 같은 것을 **빌드 시점에만** 만든다.
+#
+# ⚠️ 섹션을 골라 담지 않는다. assets/archive/*.js에 getElementById(...).hidden = false가
+#    **가드 없이 24곳** 있다(local.js:175 등). 지도와 무관한 섹션 하나만 빠져도
+#    mode.render()가 예외로 죽고 지도가 통째로 안 그려지는데, 캡처는 그걸 "지도 없음"으로
+#    조용히 넘어간다 — 매니페스트가 재보궐과 구분 못 하는 absent를 적게 된다.
+#    그래서 KIND_TO_SECTIONS를 공개 페이지와 **같은 상수에서 통째로** 쓴다.
+#
+# 버리는 것: nav·hero·breadcrumb·표·figure·footer·테마 토글 버튼. 화면에 안 보이는
+# 것들이고 캡처에 영향이 없다.
+HEAD_RENDER = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<!-- 캡처 전용. .render/ 는 gitignore되고 캡처 후 지워진다. -->
+<base href="/">
+<script>try{{var _m=localStorage.getItem('vote-ysw-theme');if(_m==='dark')document.documentElement.setAttribute('data-theme','dark');else if(_m==='light')document.documentElement.setAttribute('data-theme','light');}}catch(_e){{}}</script>
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/archive.css">
+<script id="archive-meta">window.__ARCHIVE__ = {{ id: '{id}' }};</script>
+</head>
+<body>
+<main class="ar-main">
+"""
+
+
+def render_only(meta: dict) -> str:
+    """캡처용 HTML. 공개 페이지와 같은 KIND_TO_SECTIONS·같은 FOOT_SCRIPTS를 쓴다."""
+    d = derive(meta)
+    d["hero_status"] = hero_status(d)
+    d["counting_title"] = counting_title(d)
+    d["nec_url"] = (NEC_RESULTS_URL.format(election_id_full=d["election_id_full"])
+                    if d["election_id_full"] else "https://info.nec.go.kr")
+    d["wiki_link"] = ""
+    d["extra_scripts"] = ('<script src="assets/parliament.js"></script>\n'
+                          if d["kind"] == "general_election" else "")
+    d["nec_source_suffix"] = nec_source_suffix(meta)
+    # 히어로·요약도 넣는다. 벗기는 게 목적이 아니라 **캡처가 재현되는 것**이 목적이고,
+    # 앞 내용이 빠지면 레이아웃이 달라져 일부 뷰가 다르게(또는 아예 안) 그려진다.
+    # 실제로 총선 parliament-chart가 하네스에서 안 그려졌다.
+    hero = KIND_TO_HERO[d["kind"]].format(**d)
+    return (HEAD_RENDER.format(**d)
+            + render_tophead({}, hero)
+            + results_summary(d["id"], d["kind"])
+            + KIND_TO_SECTIONS[d["kind"]].format(**d)
+            + FOOT_SCRIPTS.format(**d))
+
+
+def write_render_only(metas: list, out: Path, only: set | None = None) -> int:
+    """.render/{slug}/index.html 생성. 커밋되는 파일은 하나도 건드리지 않는다.
+
+    ⚠️ **미완이다. 캡처 원본으로 쓰지 말 것** (build_og_maps 기본값이 --source archive인 이유).
+
+    공개 페이지에서 지도 렌더를 걷어내려면 캡처 원본이 따로 있어야 해서 만들었다.
+    2026-08-26 A/B 검증 결과:
+
+        archive 1회 vs 2회    최대 평균차  0.01   ← 공개 페이지는 재현된다
+        harness 1회 vs 2회    최대 평균차 13.56   ← 하네스는 실행마다 다르다
+        archive vs harness    최대 평균차 13.86
+
+    하네스는 뷰 크기까지 1px씩 오락가락한다(600×486 ↔ 600×487, 11개 중 7개).
+    공개 페이지엔 그런 게 없다. 원인 추정: 하네스가 표·본문·이미지가 없어 가벼운 탓에
+    렌더러들이 서로의 완료를 기다리는 순서가 실행마다 달라진다. _settle()이 'SVG 수·크기가
+    멎었다'를 보지만, 멎은 뒤 재배치가 한 번 더 일어나면 못 잡는다.
+
+    좁혀 가며 실제로 고친 것(같은 문제의 다른 층):
+      · 메타를 type="application/json"으로 썼다 → 실제로는 window.__ARCHIVE__ 대입.
+        core.js가 아무것도 안 했는데 오류도 안 났다.
+      · 히어로·요약을 뺐더니 총선 parliament-chart가 통째로 안 그려졌다. 앞 내용이
+        빠지면 레이아웃이 달라지고 일부 렌더러가 거기 의존한다.
+      셋 다 고쳤는데도 비결정성은 남았다.
+
+    다시 붙을 때: 원인을 추측으로 좁히지 말고, 먼저 '무엇이 실행마다 달라지는지'를
+    (DOM 크기 타임라인 등으로) 관측할 것. 나는 세 번 잘못 짚었다.
+    """
+    n = 0
+    for m in metas:
+        if m.get("kind") not in KIND_TO_SECTIONS:
+            continue
+        if only and m["id"] not in only:
+            continue
+        d = out / m["id"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(render_only(m), encoding="utf-8")
+        n += 1
+    return n
 
 def render(meta: dict, neighbors: dict | None = None) -> str:
     d = derive(meta)

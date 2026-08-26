@@ -57,6 +57,53 @@ def shrink(path: Path) -> tuple[int, int]:
                                dither=Image.Dither.NONE).save(path, "PNG", optimize=True)
     return before, path.stat().st_size
 
+
+
+def _settle(pg, quiet_ms: int = 900, cap_ms: int = 12000) -> None:
+    """SVG 수·크기가 멎을 때까지 기다린다. 고정 대기(2200ms)를 대신한다.
+
+    하네스는 nav·hero·표가 없어 콘텐츠가 가볍다. 그래서 networkidle이 공개 페이지보다
+    **일찍** 뜨고, 그 뒤 고정 대기 2,200ms가 렌더 완료 전에 끝났다. 결과가 조용히
+    달라진다 — 시군구 비례(sgg-prop)의 헥스 안 점 배치가 매번 다르게 찍혔다.
+    같은 하네스를 두 번 찍으면 완전히 동일하므로(평균차 0.00) 렌더러는 결정적이다.
+    문제는 '언제 다 그려졌나'를 시간으로 짐작한 것이었다.
+    """
+    import time
+    prev, stable_since, t0 = None, None, time.monotonic()
+    while (time.monotonic() - t0) * 1000 < cap_ms:
+        sig = pg.evaluate("""()=>{
+            const s=[...document.querySelectorAll('svg')].map(n=>{
+                const b=n.getBoundingClientRect();
+                return Math.round(b.width)+'x'+Math.round(b.height);});
+            return s.length+':'+s.join(',')+':'+document.documentElement.scrollHeight;}""")
+        now = time.monotonic()
+        if sig == prev:
+            if stable_since and (now - stable_since) * 1000 >= quiet_ms:
+                return
+            stable_since = stable_since or now
+        else:
+            prev, stable_since = sig, None
+        pg.wait_for_timeout(150)
+
+def _meta_of(slug: str) -> dict:
+    """회차 제목·날짜. **archive_index.json이 정본이다.**
+
+    예전엔 main()이 살아있는 페이지의 #ar-title·#ar-date를 긁고, recompose()는 같은
+    값을 archive_index.json에서 읽었다 — 한 파일 안에 사본이 둘이었다. 하네스는 hero를
+    안 그리므로 긁을 것도 없고, 애초에 DOM에서 읽을 이유가 없었다.
+    """
+    global _META_CACHE
+    if _META_CACHE is None:
+        try:
+            _META_CACHE = {e["slug"]: e for e in json.loads(
+                (ROOT / "data/archive_index.json").read_text(encoding="utf-8"))}
+        except Exception:
+            _META_CACHE = {}
+    return _META_CACHE.get(slug, {})
+
+
+_META_CACHE = None
+
 def list_slugs() -> list[str]:
     """캡처 대상 회차. **매니페스트가 정본**이다(data/map_manifest.json).
 
@@ -194,6 +241,11 @@ def main():
                     help="대상 회차만 출력하고 끝낸다(브라우저 안 띄움)")
     ap.add_argument("--shrink-only", action="store_true",
                     help="캡처 없이 og/ PNG 재압축만")
+    # ⚠️ 기본은 archive다. 하네스(render)는 **미완이다** — 아래 write_render_only 주석 참조.
+    ap.add_argument("--source", choices=("render", "archive"), default="archive",
+                    help="캡처 원본. archive=공개 페이지(현재 정본), "
+                         "render=빌드 시점 하네스(.render/ — 미완, 비결정적)")
+    ap.add_argument("--keep-render", action="store_true", help=".render/를 지우지 않는다(디버깅)")
     args = ap.parse_args()
     if args.recompose:
         recompose(); return
@@ -215,7 +267,23 @@ def main():
         return 0
     if args.limit:
         slugs = slugs[:args.limit]
-    base = f"http://localhost:{args.port}/archive"
+
+    # 하네스 생성은 순수 파이썬이라 playwright import보다 **위**에 둔다 —
+    # --list가 브라우저 없이 도는 성질을 지키기 위해서다(3e4603c44에서 그걸 놓쳤다).
+    render_root = ROOT / ".render"
+    if args.source == "render":
+        import importlib.util as _il
+        _s = _il.spec_from_file_location("sync_archive_html",
+                                         ROOT / "scripts/build/sync_archive_html.py")
+        _sa = _il.module_from_spec(_s)
+        _s.loader.exec_module(_sa)
+        metas = [json.loads(f.read_text(encoding="utf-8"))
+                 for f in sorted((ROOT / "data/elections").glob("*.json"))
+                 if f.name != "index.json"]
+        n = _sa.write_render_only(metas, render_root, only=set(slugs))
+        print(f"하네스 {n}회차 생성 → .render/", flush=True)
+    base = (f"http://localhost:{args.port}/.render" if args.source == "render"
+            else f"http://localhost:{args.port}/archive")
     MAPS.mkdir(parents=True, exist_ok=True)
 
     made = []
@@ -229,7 +297,7 @@ def main():
             pg = b.new_page(viewport={"width": 1320, "height": 1700})
             try:
                 pg.goto(f"{base}/{slug}/", wait_until="networkidle", timeout=20000)
-                pg.wait_for_timeout(2200)
+                _settle(pg)
                 # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
                 #   저장버튼은 display:none. 인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
                 #   지도·차트 내 모든 텍스트 라벨(시도·시군구명·후보명·득표율)은 썸네일·카드서 안 읽히는
@@ -245,8 +313,9 @@ def main():
                     # 글씨를 살리고, 잡음이 되는 건 썸네일 크기(48px)뿐이라 감수한다.
                     ""
                 ))
-                title = (pg.text_content("#ar-title") or "").strip() if pg.query_selector("#ar-title") else ""
-                date_s = (pg.text_content("#ar-date") or "").strip() if pg.query_selector("#ar-date") else ""
+                _m = _meta_of(slug)
+                title = (_m.get("name") or "").strip()
+                date_s = (_m.get("date") or "").strip()
                 views = _capture_views(pg)
                 if not views:
                     print(f"  {slug}: 지도 없음 — skip"); pg.close(); continue
@@ -259,6 +328,10 @@ def main():
                 card_dir.mkdir(parents=True, exist_ok=True)
                 for key, png in views.items():
                     (raw_dir / f"{key}.png").write_bytes(png)   # 원본(투명)
+                    # 재압축을 캡처 경로에 둔다. --shrink-only에만 두면 파이프라인
+                    # 산출물이 '찍은 것'과 '커밋된 것' 두 형태로 갈리고, 하네스가
+                    # 같은 픽셀을 내놓는지 바이트로 확인할 수가 없다.
+                    shrink(raw_dir / f"{key}.png")
                     label, desc = view_meta(key)
                     html = _card_html(mark_svg, kicker, headline, f"{label} · {desc}", png)
                     pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(350)
@@ -274,7 +347,16 @@ def main():
             finally:
                 pg.close()
         b.close()
+    if args.source == "render" and not args.keep_render:
+        shutil.rmtree(render_root, ignore_errors=True)
+
+    # 전멸에 exit 0을 주지 않는다. 사진은 렌더 능력의 유일한 사본이라, 캡처가 조용히
+    # 실패하면 매니페스트가 빈 디렉터리를 관측하고 52쪽이 그림을 잃는다.
     print(f"완료: {len(made)} 선거 카드 생성")
+    if len(made) < len(slugs):
+        print(f"✗ {len(slugs)}회차 중 {len(made)}개만 만들어졌다 — 하네스를 의심할 것",
+              flush=True)
+        return 1
 
 
 if __name__ == "__main__":
