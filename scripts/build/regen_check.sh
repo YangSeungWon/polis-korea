@@ -58,6 +58,7 @@ DERIVED=(
   "scripts/build/political_axes.py --write"           # political_axes.json ← registry·lifecycle
   "scripts/build/family_vote_share.py"                # family_vote_share.json ← political_axes·results
   "scripts/build/sync_satellites_js.py"               # assets/parties.js ← satellites.json
+  "scripts/build/sync_view_registry_js.py"            # assets/view-registry.js ← view_registry.json
   "scripts/normalize/validate_reaggregation.py 22 21" # reaggregated/validation_22__21.json
   "scripts/normalize/validate_reaggregation.py 21 20" # reaggregated/validation_21__20.json
 )

@@ -21,6 +21,8 @@ from pathlib import Path
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from view_registry import THUMB_PRIORITY, PRIMARY_ORDER  # noqa: E402
 ELECTIONS_DIR = ROOT / "data" / "elections"
 ARCHIVE_DIR = ROOT / "archive"
 RESULTS_DIR = ROOT / "data" / "results"
@@ -652,6 +654,7 @@ FOOT = """
 <script src="assets/archive/general.js"></script>
 <script src="assets/archive/byelection.js"></script>
 <script src="assets/archive/core.js"></script>
+<script src="assets/view-registry.js"></script>
 <script src="assets/svg-export.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>
@@ -1040,13 +1043,10 @@ def render_ar_list(metas: list[dict]) -> str:
         label = ar.get("list_label") or ("진행" if m.get("status") == "active" else "확정")
         # 결과지도 미니 썸네일 — 타입별 대표 뷰 우선순위(라벨은 캡처서 숨김 → 모양만으로 식별).
         #   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백.
-        THUMB_PRIORITY = {
-            "local": ("governor", "dorling"),
-            "presidential": ("sido1", "geo", "dorling"),   # 시도 1위 hex(시군구 result는 너무 자잘)
-            "general_election": ("seats", "dorling"),
-        }
+        # 우선순위는 data/view_registry.json이 정본 — 목록 썸네일·og 카드·본문 그림이
+        # 같은 뷰를 고르게 하려고 한자리에 뒀다. 여기 사본을 두면 셋이 어긋난다.
         thumb = '<span class="ar-list-thumb is-empty" aria-hidden="true"></span>'
-        for v in THUMB_PRIORITY.get(m.get("kind"), ("governor", "dorling", "seats", "council", "geo")):
+        for v in (THUMB_PRIORITY.get(m.get("kind")) or PRIMARY_ORDER):
             if (ROOT / "og" / "maps" / m["id"] / f"{v}.png").exists():
                 thumb = (f'<img class="ar-list-thumb" src="/og/maps/{m["id"]}/{v}.png" '
                          f'alt="" loading="lazy" decoding="async">')

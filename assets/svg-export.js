@@ -45,31 +45,17 @@
     'svg.parliament-chart', 'svg.hex-pane',
   ].join(',');
 
-  // 지도 종류 → [클래스, 공유키(build_share_pages와 일치), 파일명 꼬리표]. 더 구체적인 클래스를 먼저 —
-  // council-hex-svg는 result-map(대선 시군구 단색)·cartogram-map(시군구 비례)과 공존하므로 그 뒤에 둬야 오분류 안 됨.
-  const VIEW_DEFS = [
-    ['sgg-turnout', 'sgg-turnout', '시군구투표율'],   // council-hex-svg 공유 → 먼저
-    ['sigungu-turnout-geo', 'sgg-turnout-geo', '시군구투표율지도'],   // sigungu-map-svg 공유 → 먼저
-    ['sido-turnout-geo', 'turnout-geo', '투표율지도'],   // sido-map-svg 공유 → 먼저
-    ['district-turnout-geo', 'district-turnout-geo', '선거구투표율지도'],   // district-map-svg 공유 → 먼저
-    ['district-turnout', 'district-turnout', '선거구투표율'],   // district-hex-svg 공유 → 먼저
-    ['turnout-map', 'turnout', '투표율'],
-    ['result-map', 'result', '시군구결과'],
-    ['cartogram-map', 'sgg-prop', '시군구비례'],
-    ['sigungu-map-svg', 'sgg-geo', '시군구지도'],
-    ['sido-winner-hex', 'sido1', '시도1위'],        // governor-hex-svg와 공존 → 먼저
-    ['district-hex-svg', 'district', '선거구1위'],
-    ['district-map-svg', 'district-geo', '선거구지도'],
-    ['governor-hex-svg', 'governor', '광역단체장'],
-    ['ar-sidocluster-svg', 'dorling', 'dorling'],
-    ['sido-map-svg', 'geo', '지도'],
-    ['parliament-chart', 'seats', '의석'],
-    ['council-hex-svg', 'council', '의원'],
-    ['hex-pane', '', 'hex'],   // 폴 hex — 저장만(아카이브 아님 → 공유키 없음)
-  ];
+  // 뷰 표는 data/view_registry.json이 정본 — assets/view-registry.js가 sync한다.
+  // 사본을 여기 두던 시절 build_share_pages와 라벨이 어긋나 있었다.
+  // ⚠️ 옛 코드는 classList.contains(정확 토큰), 레지스트리는 substring이다.
+  //    실제 쓰이는 조합 19종으로 결과가 동일함을 확인하고 갈아끼웠다.
   function classify(svg) {
-    for (let i = 0; i < VIEW_DEFS.length; i++) if (svg.classList.contains(VIEW_DEFS[i][0])) return VIEW_DEFS[i];
-    return null;
+    const reg = window.VIEW_REGISTRY;
+    if (!reg) return null;              // view-registry.js 미로드 — 저장 버튼만 죽는다
+    const key = window.viewKeyOf(svg.getAttribute('class') || '');
+    if (key === null) return null;
+    const v = window.viewMetaOf(key);
+    return v ? [v.classes[0], v.key, v.fname] : null;
   }
   function viewLabel(svg) { const d = classify(svg); return d ? d[2] : ''; }
   function shareKey(svg) { const d = classify(svg); return d ? d[1] : ''; }

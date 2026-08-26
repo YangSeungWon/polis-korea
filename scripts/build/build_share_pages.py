@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -17,15 +18,10 @@ OG = ROOT / "og"
 SHARE = ROOT / "share"
 SITE = "https://polis.ysw.kr"
 
-VIEW_LABEL = {
-    "governor": "광역단체장", "council": "광역의원", "dorling": "의석 비례",
-    "geo": "지리 지도", "seats": "의석수", "turnout": "투표율",
-    "result": "시군구 1위", "sgg-geo": "시군구 지도", "sgg-prop": "시군구 비례",
-    "sido1": "시도 1위", "district": "선거구 1위", "district-geo": "선거구 지도",
-    "district-turnout": "선거구 투표율", "district-turnout-geo": "선거구 투표율 지도",
-    "turnout-geo": "투표율 지도",
-    "sgg-turnout": "시군구 투표율", "sgg-turnout-geo": "시군구 투표율 지도",
-}
+# 라벨은 data/view_registry.json이 정본. 사본을 들고 있다가 어긋나 있었다 —
+# key 'result'를 여기선 "시군구 1위", build_og_maps에선 "시군구 결과"라 불렀다.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from view_registry import label_of  # noqa: E402
 
 TEMPLATE = """<!DOCTYPE html>
 <html lang="ko">
@@ -72,7 +68,7 @@ def main():
         any_view = False
         for card in sorted(slug_dir.glob("*.png")):
             view = card.stem
-            label = VIEW_LABEL.get(view, view)
+            label = label_of(view)
             share_url = f"{SITE}/share/{slug}/{view}/"
             html = TEMPLATE.format(
                 title=f"{name} · {label} — polis",

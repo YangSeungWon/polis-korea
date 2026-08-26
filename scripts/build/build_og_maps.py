@@ -27,56 +27,11 @@ MAPS = OG / "maps"
 FAVICON = ROOT / "favicon.svg"
 
 # SVG 클래스 substring → 깔끔한 뷰 키·라벨·설명. 토글 캡처분도 같은 클래스라 일관 분류.
-# turnout-map은 governor-hex/council-hex 클래스를 공유(투표율 채색)하므로 반드시 먼저 매칭.
-# 순서 주의 — _classify는 첫 substring 매칭이 이김. 더 구체적인 클래스를 위로.
-#   시군구 결과 svg는 'council-hex-svg result-map'·'council-hex-svg cartogram-map'라 'council-hex'(광역의원
-#   의석)보다 result-map·cartogram-map을 먼저 매칭해야 오분류 안 됨. turnout-map도 governor/council 공유라 맨 위.
-VIEW_DEFS = [
-    # 선거구 투표율은 'district-hex-svg district-turnout' — district-hex보다, 그리고
-    # 'turnout-map'을 substring으로 품지 않도록 이름을 지었지만 순서로도 못박는다.
-    # 시군구 투표율 — hex는 council-hex, 지도는 sigungu-map 클래스를 공유하므로 둘 다 위에.
-    ("sgg-turnout", "sgg-turnout", "시군구 투표율", "시·군·구별 투표율(짙을수록 높음)"),
-    ("sigungu-turnout-geo", "sgg-turnout-geo", "시군구 투표율 지도", "시·군·구 경계·투표율(짙을수록 높음)"),
-    # sido-map보다 위 — 클래스가 "sido-map-svg sido-turnout-geo"라 sido-map에 먼저 걸린다.
-    ("sido-turnout-geo", "turnout-geo", "투표율 지도", "시·도 경계·투표율(짙을수록 높음)"),
-    # district-turnout은 district-turnout-geo의 substring — 반드시 geo를 위에 둔다.
-    ("district-turnout-geo", "district-turnout-geo", "선거구 투표율 지도", "선거구 경계·투표율(짙을수록 높음)"),
-    ("district-turnout", "district-turnout", "선거구 투표율", "선거구별 투표율(짙을수록 높음)"),
-    ("turnout-map", "turnout", "투표율", "지역별 투표율(짙을수록 높음)"),
-    ("result-map", "result", "시군구 결과", "1위 후보·격차 명도"),
-    ("cartogram-map", "sgg-prop", "시군구 비례", "표(인구) 비례 격자·원형"),
-    ("sigungu-map", "sgg-geo", "시군구 지도", "시군구 경계·격차 명도"),
-    ("sido-winner-hex", "sido1", "시도 1위", "시도별 1위·격차 명도"),  # governor-hex 클래스 공유 → 먼저
-    ("district-hex", "district", "선거구 1위", "선거구별 당선 정당"),
-    ("district-map", "district-geo", "선거구 지도", "선거구 경계·당선 정당"),
-    ("governor-hex", "governor", "광역단체장", "시도별 당선 정당"),
-    ("council-hex", "council", "광역의원", "시도별 의석"),
-    ("ar-sidocluster", "dorling", "의석 비례", "면적·점=의석수·색=정당"),
-    ("sido-map", "geo", "지리 지도", "실제 시도 경계"),
-    ("parliament-chart", "seats", "의석수", "정당별 총 의석"),
-]
-# 대표(overview) 카드로 쓸 뷰 우선순위 — 썸네일과 일치(지선 governor·대선 sido1·총선 seats).
-#   seats를 sido1보다 위에 둬야 총선(sido1·seats 둘 다 보유)이 seats로 잡힘.
-PRIMARY_ORDER = ["governor", "seats", "sido1", "dorling", "council", "geo"]
-
-
-def list_slugs() -> list[str]:
-    return sorted(p.name for p in (ROOT / "archive").iterdir()
-                  if p.is_dir() and (p / "index.html").exists())
-
-
-def _classify(cls_full: str):
-    for sub, key, _label, _desc in VIEW_DEFS:
-        if sub in cls_full:
-            return key
-    return None
-
-
-def view_meta(key: str):
-    for _sub, k, label, desc in VIEW_DEFS:
-        if k == key:
-            return label, desc
-    return key, ""
+# 뷰 표는 data/view_registry.json이 정본이다. 여기 두면 svg-export.js·
+# build_share_pages.py의 사본과 어긋난다 — 실제로 어긋나 있었다(key 'result'가
+# 한쪽은 '시군구 결과', 다른 쪽은 '시군구 1위'였다).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from view_registry import VIEW_DEFS, PRIMARY_ORDER, classify as _classify, view_meta  # noqa: E402
 
 
 def _capture_views(page):
