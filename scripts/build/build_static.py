@@ -446,17 +446,16 @@ def round_figures(slug: str, off_slug: str, title: str) -> str:
         views = [v for v in prefer if v in views]
     if not views:
         return ''
-    from PIL import Image
     figs = []
     for v in views:
         f = ROOT / 'og' / 'maps' / slug / f'{v}.png'
         if not f.is_file():
             continue
         label, desc = _vr.view_meta(v)
-        try:
-            w, h = Image.open(f).size
-        except Exception:
+        wh = _rt.png_size(f)
+        if not wh:
             continue
+        w, h = wh
         figs.append(
             f'<figure class="map-fig" id="{v}">'
             f'<img src="/og/maps/{slug}/{v}.png" alt="{_esc(title)} {_esc(label)} — {_esc(desc)}" '

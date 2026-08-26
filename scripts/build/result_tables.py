@@ -83,3 +83,23 @@ def table_html(sec_id: str, cap: str, head: list[str], rows: list[list[str]]) ->
             f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
             f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
             f'  </section>\n')
+
+
+def png_size(path: Path) -> tuple[int, int] | None:
+    """PNG 폭·높이를 헤더에서 직접 읽는다. 의존성 없음.
+
+    처음엔 Pillow를 썼다가 CI에서 ModuleNotFoundError로 죽었다 — 로컬엔 다른 패키지의
+    의존성으로 깔려 있었고 requirements.txt엔 없었다. 폭·높이 두 값 때문에 이미지
+    라이브러리를 빌드 의존성으로 만드는 건 과하다.
+
+    PNG는 시그니처 8바이트 + IHDR 길이 4 + 타입 4 다음에 폭·높이가 big-endian
+    4바이트씩이다(고정 오프셋 16·20). 스펙이 바뀔 일이 없다.
+    """
+    try:
+        with path.open("rb") as f:
+            head = f.read(24)
+    except OSError:
+        return None
+    if len(head) < 24 or head[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    return (int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big"))

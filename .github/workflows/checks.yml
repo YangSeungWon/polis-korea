@@ -93,6 +93,11 @@ jobs:
       - name: 정적 본문 (렌더 없이 읽히는 내용이 있는지)
         run: python tests/test_static_content.py
 
+      # regen_check가 못 닿는 스크립트(playwright·로컬 서버가 필요한 것들)의 진입 경로와,
+      # '로컬엔 있고 CI엔 없는 모듈' 의존을 잡는다. 둘 다 실제로 CI에서만 죽었던 자리다.
+      - name: 빌드 연기 시험 (브라우저·PIL 없이 도는지)
+        run: python tests/test_build_smoke.py
+
       # 화면을 보기 전에 데이터만으로 잡는다. 2026-08 시군구의회 사건은 race 수가
       # 그대로여서 개수 검사로는 안 잡히고 sigungu 결측률로만 드러난다.
       - name: 회차 간 구조 이상치 (직위 소실·지역 필드 결측)

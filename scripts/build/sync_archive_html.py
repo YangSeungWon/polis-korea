@@ -1142,17 +1142,16 @@ def map_figures(eid: str, title: str) -> str:
             seen.add(v)
             order.append(v)
 
-    from PIL import Image
     figs = []
     for v in order:
         f = ROOT / "og" / "maps" / eid / f"{v}.png"
         if not f.is_file():
             continue
         label, desc = view_meta(v)
-        try:
-            w, h = Image.open(f).size
-        except Exception:
+        wh = _rt.png_size(f)
+        if not wh:
             continue
+        w, h = wh
         alt = _esc(f"{title} {label} — {desc}")
         figs.append(
             f'<figure class="map-fig" id="{_esc(v)}">'
