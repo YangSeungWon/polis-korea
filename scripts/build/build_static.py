@@ -29,6 +29,7 @@ from urllib.parse import quote
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_sitemap as _sitemap   # noqa: E402  포괄 sitemap(+robots) 단일 출처
 import result_tables as _rt        # noqa: E402  결과 표 — archive와 같은 것을 쓴다
+import view_registry as _vr        # noqa: E402  뷰 라벨 — 네 번째 표를 만들지 않는다
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_TEMPLATE = ROOT / 'polls.html'   # 지선 직위 페이지(/governor/ 등) 템플릿. 루트 index.html은 대시보드(별도, 프리렌더 안 함)
@@ -412,6 +413,62 @@ def intro_block(h1: str, lede: str, extra: str = '') -> str:
 # 표의 단위는 **그 화면이 보여주는 단위**와 맞춘다. 대선 회차 페이지는 시군구 hex를
 # 그리므로 표도 시군구다(시도 17행만 적으면 화면과 글이 다른 걸 말한다).
 #   (type, office) → (tc, scope, 지역 열 키, 지역 열 이름, 표 제목)
+
+# history 회차 페이지의 그림은 **새로 만들지 않는다.** {type,n}은 archive slug 하나로
+# 정확히 대응하므로(archive_slug_map) 같은 PNG를 가리키면 된다. 회차는 같은 선거를
+# 다른 축으로 보는 화면이지 다른 선거가 아니다.
+#
+# 직위가 있으면 그 직위의 뷰만 고른다 — 지선 기초단체장 페이지에 광역단체장 지도를
+# 걸면 화면과 그림이 다른 걸 말한다.
+HIST_VIEW_PREFER = {
+    'governor': ['governor', 'geo', 'turnout', 'turnout-geo'],
+    'mayor': ['result', 'sgg-geo', 'sgg-prop', 'sgg-turnout', 'sgg-turnout-geo'],
+    'superintendent': ['result', 'sgg-geo'],
+    '': None,      # 대선·총선 — 전부
+}
+
+
+def round_figures(slug: str, off_slug: str, title: str) -> str:
+    if not slug:
+        return ''
+    mf = ROOT / 'data' / 'map_manifest.json'
+    if not mf.is_file():
+        return ''
+    try:
+        e = (json.loads(mf.read_text(encoding='utf-8')).get('elections') or {}).get(slug) or {}
+    except Exception:
+        return ''
+    views = e.get('views') or []
+    if not views:
+        return ''
+    prefer = HIST_VIEW_PREFER.get(off_slug, None)
+    if prefer is not None:
+        views = [v for v in prefer if v in views]
+    if not views:
+        return ''
+    from PIL import Image
+    figs = []
+    for v in views:
+        f = ROOT / 'og' / 'maps' / slug / f'{v}.png'
+        if not f.is_file():
+            continue
+        label, desc = _vr.view_meta(v)
+        try:
+            w, h = Image.open(f).size
+        except Exception:
+            continue
+        figs.append(
+            f'<figure class="map-fig" id="{v}">'
+            f'<img src="/og/maps/{slug}/{v}.png" alt="{_esc(title)} {_esc(label)} — {_esc(desc)}" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async">'
+            f'<figcaption>{_esc(label)} — {_esc(desc)}</figcaption></figure>')
+    if not figs:
+        return ''
+    return ('\n  <section class="ar-section" id="hx-map-figures">\n'
+            '    <h2 class="ar-section-title">결과 지도</h2>\n'
+            f'    <div class="map-fig-grid">{"".join(figs)}</div>\n'
+            '  </section>\n')
+
 HIST_TC = {
     ('presidential', ''):        ('1', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '시군구별 1위'),
     ('national_assembly', ''):   ('2', 'district', ['sido', 'district'], ['시도', '선거구'], '지역구 당선인'),
@@ -512,6 +569,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                              f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
                     intro = (intro_block(f'{n}회 {type_short} {office_ko}',
                                          _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
+                             + round_figures(slug, off_slug, f'{n}회 {type_short} {office_ko}')
                              + round_table(slug, type_key, off_slug))
                     ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                         (f'{n}회 {type_short}', None),
@@ -556,6 +614,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                          f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
                 intro = (intro_block(f'{n}{unit} {type_short}',
                                      _esc(' · '.join(bits)), extra)
+                         + round_figures(slug, '', f'{n}{unit} {type_short}')
                          + round_table(slug, type_key))
                 ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                     (f'{n}{unit} {type_short}', None)])

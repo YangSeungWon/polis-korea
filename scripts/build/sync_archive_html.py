@@ -22,7 +22,7 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from view_registry import THUMB_PRIORITY, PRIMARY_ORDER  # noqa: E402
+from view_registry import THUMB_PRIORITY, PRIMARY_ORDER, view_meta  # noqa: E402
 import result_tables as _rt  # noqa: E402  history와 같은 표 유틸
 ELECTIONS_DIR = ROOT / "data" / "elections"
 ARCHIVE_DIR = ROOT / "archive"
@@ -1105,6 +1105,67 @@ def office_summary(eid: str, kind: str, n) -> str:
 
 
 
+
+def map_figures(eid: str, title: str) -> str:
+    """결과 지도 그림 — 매니페스트가 가리키는 뷰를 <figure>로.
+
+    2026-08까지 이 페이지들은 지도를 **렌더 후에만** 갖고 있었다. 정적 HTML에 <svg>가
+    0개였고, 크롤러가 렌더하기 전에는 지도가 존재하지 않았다. 그림은 이미 414장
+    만들어 두고 정작 페이지에 안 걸고 있었던 것이다(elections.html 썸네일로만 썼다).
+
+    alt는 비우지 않는다. 이 저장소의 <img> 58개는 전부 alt=""인데, 그건 옆에 같은
+    내용의 글자가 있는 장식 썸네일이라 옳았다. 본문 그림은 다르다 — 여기서 관례를
+    의도적으로 깬다. 문구는 view_registry의 label·desc에서 온다(네 번째 표를 만들지
+    않는다).
+
+    ⚠️ width/height를 반드시 박는다. 뷰마다 종횡비가 440×202~820×930으로 제각각이라
+    없으면 로드 때마다 레이아웃이 튄다.
+    """
+    mf = ROOT / "data" / "map_manifest.json"
+    if not mf.is_file():
+        return ""
+    try:
+        e = (json.loads(mf.read_text(encoding="utf-8")).get("elections") or {}).get(eid) or {}
+    except Exception:
+        return ""
+    views = e.get("views") or []
+    if not views:
+        return ""
+    # archive는 **개요**만. 표를 시도 집계로 접었듯 그림도 접는다 — 전체 뷰는
+    # /history/{종류}/{n}/{직위}/가 갖는다. 안 그러면 두 URL이 같은 10장을 나란히
+    # 걸고, 표에서 막 끊어낸 중복이 그림에서 되살아난다.
+    primary = e.get("primary") or views[0]
+    overview = [v for v in ([primary] + PRIMARY_ORDER) if v in views]
+    seen, order = set(), []
+    for v in overview:
+        if v not in seen:
+            seen.add(v)
+            order.append(v)
+
+    from PIL import Image
+    figs = []
+    for v in order:
+        f = ROOT / "og" / "maps" / eid / f"{v}.png"
+        if not f.is_file():
+            continue
+        label, desc = view_meta(v)
+        try:
+            w, h = Image.open(f).size
+        except Exception:
+            continue
+        alt = _esc(f"{title} {label} — {desc}")
+        figs.append(
+            f'<figure class="map-fig" id="{_esc(v)}">'
+            f'<img src="/og/maps/{_esc(eid)}/{_esc(v)}.png" alt="{alt}" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async">'
+            f'<figcaption>{_esc(label)} — {_esc(desc)}</figcaption></figure>')
+    if not figs:
+        return ""
+    return ('\n  <section class="ar-section" id="ar-map-figures">\n'
+            '    <h2 class="ar-section-title">결과 지도</h2>\n'
+            f'    <div class="map-fig-grid">{"".join(figs)}</div>\n'
+            '  </section>\n')
+
 def office_by_sido(eid: str, kind: str, n) -> str:
     """직위별 **시도 집계** — archive의 입도.
 
@@ -1210,6 +1271,7 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         HEAD.format(**d, nav=render_nav(menu_for_path(f'archive/{d["id"]}/index.html')))
         + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
         + results_summary(d["id"], d["kind"])       # 빌드 시점 정적 요약(검색엔진용)
+        + map_figures(d["id"], d.get("name") or d["id"])   # 결과 지도 — 렌더 없이 보이는 그림
         + nation_table(d["id"], d["kind"])         # 대선 전국 후보 전원
         + region_table(d["id"], d["kind"])         # 지역별 결과 정적 표 — 렌더 없이 읽히는 본문
         + office_summary(d["id"], d["kind"], d.get("n"))  # 직위별 집계 — 상세는 history가 갖는다

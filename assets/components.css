@@ -594,3 +594,32 @@
    페이지 자체가 가로 스크롤되면 UI 검사(넘침)가 잡는다. */
 .pp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .pp-scroll .pp-static { min-width: 34rem; }
+
+/* ── 결과 지도 그림 ────────────────────────────────────────────────────────
+   PNG에 밝은 바탕(#fafbfc)이 구워져 있다. 캡처가 투명 배경을 요청하지만
+   (omit_background=True) SVG가 칠해진 조상 위에 있어 먹지 않는다 — 414장 전부
+   RGB다. 게다가 .gov-hex-cell의 stroke가 var(--bg)라 헥스 사이 틈까지 밝은 색으로
+   구워졌다. 다크 테마에서 그냥 얹으면 흰 격자가 뜬다.
+
+   <picture media="(prefers-color-scheme: dark)">로는 못 푼다. 이 사이트 테마는
+   localStorage → data-theme이라, 손으로 다크로 바꾼 사용자는 prefers-color-scheme이
+   여전히 light다 — 두 신호가 설계상 어긋난다.
+
+   그래서 **액자를 고정색으로** 둔다. 그림이 놓인 종이와 액자가 같은 색이면 다크에서도
+   '밝은 종이에 인쇄된 차트'로 읽힌다. 페이지와 함께 반전하는 차트가 오히려 드물다. */
+:root { --surface-fixed: #fafbfc; --rule-fixed: rgba(10, 14, 26, 0.14); }
+
+.map-fig-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 10px;
+}
+.map-fig { margin: 0; }
+.map-fig img {
+  display: block; width: 100%; height: auto;
+  background: var(--surface-fixed);
+  border: 1px solid var(--rule-fixed); border-radius: 6px;
+}
+.map-fig figcaption {
+  font-size: 12px; color: var(--ink-soft); padding-top: 6px; line-height: 1.5;
+}
