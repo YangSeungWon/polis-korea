@@ -11,6 +11,7 @@
 from __future__ import annotations
 import html
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -444,6 +445,83 @@ def render(name, info, known, appearances, members, regions=""):
     )
 
 
+
+# ── parties.html 정당 색인 ─────────────────────────────────────────────────
+# 정당 허브가 /party/ 145쪽을 **정적으로 하나도 링크하지 않았다.** 계보도는
+# assets/lineage.js가 registry.json을 읽어 렌더 후에 그리므로, 크롤러가 렌더하기
+# 전에는 허브에서 정당으로 가는 길이 없다. /history/ 66쪽이 섬이었던 것과 같은
+# 부류인데, 이쪽은 섬은 아니다 — 인물 20,254곳·지역 6,775곳에서 링크가 들어온다.
+# 문제는 **아무도 열거하지 않는다**는 것이고, 그래서 깊이가 3~7홉으로 흩어진다.
+#
+# region/index.html이 374곳을 그렇게 다룬다(정적 칩 + 접기). 그 패턴을 그대로 쓴다.
+PARTY_INDEX_START = "<!-- PARTY_INDEX_START"
+PARTY_INDEX_END = "<!-- PARTY_INDEX_END -->"
+
+# 계열 표시 순서 — registry의 stream 값. '기타'가 51개로 가장 크지만 맨 뒤에 둔다.
+STREAM_ORDER = ["보수", "중도보수", "중도", "중도진보", "진보", "기타"]
+
+
+def party_index_block(ps: dict) -> str:
+    ps = dict(ps)
+    if not ps:
+        return PARTY_INDEX_START + " — 정당이 없다 -->\n" + PARTY_INDEX_END
+    by: dict = {}
+    for name, v in ps.items():
+        by.setdefault(v.get("stream") or "기타", []).append((name, v))
+    out = [PARTY_INDEX_START + " — scripts/build/build_party_pages.py 자동 갱신. 손수정 X.",
+           "     계보도(lineage.js)가 같은 링크를 렌더 후에 만들지만, 그건 렌더 후에만 존재한다. -->",
+           '  <section class="ph-sec" aria-label="정당 목록">',
+           f'    <h2>정당 목록 <span class="ph-meta">{len(ps)}개</span></h2>']
+    for stream in STREAM_ORDER + [s for s in by if s not in STREAM_ORDER]:
+        items = by.get(stream)
+        if not items:
+            continue
+        # 현존은 펼치고 소멸은 접는다 — 51개짜리 '기타'가 화면을 덮지 않게.
+        live = sorted((n for n, v in items if not v.get("dissolved")),
+                      key=lambda n: -(ps[n].get("order") or 0))
+        gone = sorted((n for n, v in items if v.get("dissolved")),
+                      key=lambda n: (ps[n].get("dissolved") or ""), reverse=True)
+        out.append(f'    <div class="pi-group"><h3 class="pi-stream">{esc(stream)}'
+                   f'<span class="ph-meta">{len(items)}</span></h3>')
+        if live:
+            out.append('      <ul class="pi-list">' + "".join(_chip(n, ps[n]) for n in live) + "</ul>")
+        if gone:
+            out.append(f'      <details class="pi-past"><summary>사라진 정당 {len(gone)}개</summary>')
+            out.append('        <ul class="pi-list">' + "".join(_chip(n, ps[n]) for n in gone) + "</ul>")
+            out.append("      </details>")
+        out.append("    </div>")
+    out += ["  </section>", "  " + PARTY_INDEX_END]
+    return "\n".join(out)
+
+
+def _chip(name: str, v: dict) -> str:
+    span = (v.get("founded") or "")[:4]
+    if v.get("dissolved"):
+        span += "~" + (v["dissolved"] or "")[:4]
+    return (f'<li><a href="/party/{quote(name)}/">{esc(name)}</a>'
+            + (f'<span class="pi-span">{esc(span)}</span>' if span else "") + "</li>")
+
+
+def sync_parties_html(ps: dict) -> bool:
+    page = ROOT / "parties.html"
+    if not page.exists():
+        return False
+    html = page.read_text(encoding="utf-8")
+    blk = party_index_block(ps)
+    pat = re.compile(re.escape(PARTY_INDEX_START) + r"[\s\S]*?" + re.escape(PARTY_INDEX_END))
+    if pat.search(html):
+        new = pat.sub(blk, html)
+    else:
+        anchor = '  <section class="ph-sec">'
+        if anchor not in html:
+            print("  ! parties.html에 삽입 지점이 없다", file=sys.stderr)
+            return False
+        new = html.replace(anchor, blk + "\n\n" + anchor, 1)
+    if new != html:
+        page.write_text(new, encoding="utf-8")
+        return True
+    return False
+
 def main():
     reg = json.loads(REGISTRY.read_text(encoding="utf-8"))["parties"]
     timeline = json.loads(TIMELINE.read_text(encoding="utf-8"))
@@ -472,6 +550,10 @@ def main():
             n_stale += 1
     SITEMAP_OUT.write_text("\n".join(urls), encoding="utf-8")
     print(f"→ {OUT_DIR.relative_to(ROOT)}/ : {len(urls)} 정당 페이지 (stale 제거 {n_stale})")
+
+    # 허브가 정당을 열거하게 한다. 계보도는 렌더 후에만 존재한다.
+    if sync_parties_html(reg):
+        print(f"→ parties.html 정당 색인 갱신 ({len(reg)}개)")
     # 커버리지 경고 — timeline 등장하나 registry에 없어 페이지 없는 정당
     missing = sorted(set(appearances) - known)
     if missing:

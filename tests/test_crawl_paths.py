@@ -9,6 +9,7 @@ from __future__ import annotations
 import glob
 import re
 import sys
+import pathlib
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -53,6 +54,41 @@ def check_logo_home() -> None:
             bad.append(f"{rel} → {m.group(1)}")
     ck("로고가 전부 홈(/)을 가리킨다", not bad,
        f"{len(bad)}쪽 상대 경로 — {bad[:3]}")
+
+
+# (계열, 자식 glob, 허브 파일). 허브가 자식을 **정적 HTML로** 열거하는가.
+#
+# history는 섬이었다(바깥에서 링크가 0). party는 섬은 아니었지만 — 인물 20,254곳,
+# 지역 6,775곳에서 링크가 들어온다 — **아무도 열거하지 않아** 깊이가 3~7홉으로
+# 흩어져 있었다. 둘 다 "허브가 자기 자식을 안 센다"는 같은 결함의 두 얼굴이다.
+#
+# 검사가 history 하나에만 하드코딩돼 있어서 party는 모든 검사를 통과했다.
+HUBS = [
+    ("history", "history/*/*/**/index.html", "history.html"),
+    ("party", "party/*/index.html", "parties.html"),
+    ("region", "region/*/index.html", "region/index.html"),
+]
+
+
+def check_hub_enumerates() -> None:
+    """허브가 자식 전부를 정적 HTML로 링크하는가.
+
+    JS가 렌더 후에 같은 링크를 만드는 것으로는 부족하다 — 사용자 도달 가능성과
+    크롤러 가시성은 다른 질문이다(docs/page-map.md gap-2의 교훈). 그래서 <script>를
+    걷어내고 센다.
+    """
+    for label, child_glob, hub in HUBS:
+        hub_f = ROOT / hub
+        if not hub_f.exists():
+            ck(f"{label} 허브가 있다", False, hub)
+            continue
+        html = re.sub(r"<script.*?</script>", "", hub_f.read_text(encoding="utf-8"), flags=re.S)
+        linked = {unquote(h) for h in re.findall(r'href="(/[^"]+/)"', html)}
+        children = {f"/{f.parent.relative_to(ROOT)}/" for f in ROOT.glob(child_glob)}
+        children = {c for c in children if c != f"/{pathlib.PurePath(hub).parent}/"}
+        missing = sorted(children - linked)
+        ck(f"{hub}이 {label} {len(children)}쪽을 열거한다", not missing,
+           f"{len(missing)}쪽 누락 — {missing[:3]}")
 
 
 def check_history_island() -> None:
@@ -184,6 +220,7 @@ def main():
 
     check_logo_home()
     check_history_island()
+    check_hub_enumerates()
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0

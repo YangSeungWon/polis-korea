@@ -623,3 +623,24 @@
 .map-fig figcaption {
   font-size: 12px; color: var(--ink-soft); padding-top: 6px; line-height: 1.5;
 }
+
+/* ── 정당 색인 (parties.html) ──────────────────────────────────────────────
+   계보도는 lineage.js가 렌더 후에 그린다. 허브가 정당을 열거하지 않으면 크롤러가
+   렌더 전에는 정당으로 갈 길이 없고, 사람도 "전체 목록"을 볼 데가 없다.
+   145개를 계열로 묶고 사라진 정당은 접어, 처음 보이는 건 현존 40여 개다. */
+.pi-group { margin: 14px 0 0; }
+.pi-stream {
+  font-size: 13px; font-weight: 800; margin: 0 0 6px;
+  display: flex; align-items: baseline; gap: 6px;
+}
+.pi-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 6px 10px;
+}
+.pi-list li { display: inline-flex; align-items: baseline; gap: 4px; font-size: 13.5px; }
+.pi-span { color: var(--ink-mute); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.pi-past { margin-top: 6px; }
+.pi-past > summary {
+  cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 2px 0;
+}
+.pi-past[open] > summary { margin-bottom: 6px; }
