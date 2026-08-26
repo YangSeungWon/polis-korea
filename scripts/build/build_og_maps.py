@@ -197,7 +197,6 @@ def main():
     args = ap.parse_args()
     if args.recompose:
         recompose(); return
-    from playwright.sync_api import sync_playwright
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
     slugs = [args.slug] if args.slug else list_slugs()
@@ -220,6 +219,10 @@ def main():
     MAPS.mkdir(parents=True, exist_ok=True)
 
     made = []
+    # playwright import는 **여기**여야 한다. 위로 올리면 --list·--shrink-only가
+    # 브라우저 없이 도는 경로가 아니게 된다 — 연기 시험이 그걸 잡았다(CI엔
+    # playwright가 없다).
+    from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = p.chromium.launch()
         for slug in slugs:

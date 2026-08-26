@@ -23,7 +23,6 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # (라벨, 명령) — 브라우저·네트워크 없이 끝나야 하고, 종료코드 0이어야 한다.
 SMOKE = [
-    ("build_og_maps 대상 산정", [sys.executable, "scripts/build/build_og_maps.py", "--list"]),
     ("build_map_manifest", [sys.executable, "scripts/build/build_map_manifest.py"]),
     ("build_share_pages", [sys.executable, "scripts/build/build_share_pages.py"]),
     ("sync_view_registry_js", [sys.executable, "scripts/build/sync_view_registry_js.py"]),
@@ -34,7 +33,7 @@ SMOKE = [
 # 다른 패키지의 의존성으로 깔려 있고 requirements.txt엔 없어서 CI에서 ModuleNotFound로
 # 죽었다. 폭·높이 두 값 때문에 이미지 라이브러리를 빌드 의존성으로 만들 이유가 없어
 # PNG 헤더에서 직접 읽는 쪽으로 바꿨고(result_tables.png_size), 여기서 그걸 지킨다.
-BLOCK = ["PIL"]
+BLOCK = ["PIL", "playwright"]
 
 BLOCKER = (
     "import builtins\n"
@@ -49,6 +48,9 @@ BLOCKER = (
 
 # 브라우저 없이 끝나야 하고, 위 모듈 없이도 끝나야 한다.
 NO_PIL = [
+    # --list는 브라우저 없이 대상만 산정한다. playwright import가 그 위에 있으면
+    # 이 경로가 브라우저 없이 도는 게 아니게 된다 — 실제로 그랬고 이 검사가 잡았다.
+    ("build_og_maps --list", "scripts/build/build_og_maps.py", ["--list"]),
     ("sync_archive_html", "scripts/build/sync_archive_html.py"),
     ("build_static", "scripts/build/build_static.py"),
     ("build_map_manifest", "scripts/build/build_map_manifest.py"),
@@ -58,13 +60,13 @@ NO_PIL = [
 fails = []
 
 
-def run_without(label: str, script: str) -> None:
+def run_without(label: str, script: str, argv: list | None = None) -> None:
     code = BLOCKER + (f"exec(open({script!r}, encoding='utf-8').read(), "
                       f"{{'__name__': '__main__', '__file__': {script!r}}})")
-    r = subprocess.run([sys.executable, "-c", code], cwd=ROOT,
+    r = subprocess.run([sys.executable, "-c", code] + (argv or []), cwd=ROOT,
                        capture_output=True, text=True, timeout=300)
     ok = r.returncode == 0
-    print(f"  {'✓' if ok else '✗'} {label} (PIL 없이)"
+    print(f"  {'✓' if ok else '✗'} {label}"
           + ("" if ok else f" — {r.stderr.strip()[-260:]}"))
     if not ok:
         fails.append(label)
@@ -80,9 +82,9 @@ def main() -> int:
         if not ok:
             fails.append(label)
 
-    print("\n[의존성] CI에 없는 모듈 없이도 도는가")
-    for label, script in NO_PIL:
-        run_without(label, script)
+    print(f"\n[의존성] {'·'.join(BLOCK)} 없이도 도는가 (CI엔 없다)")
+    for row in NO_PIL:
+        run_without(*row)
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
