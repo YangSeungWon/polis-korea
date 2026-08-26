@@ -278,7 +278,23 @@ def main():
     # sitemap마다 따로 보고되므로, 나누는 것만으로 '어디가 막혔나'를 물을 수 있다.
     parties = party_urls()
     regions = region_urls()
-    persons = person_urls()
+
+    # ── person 4,340쪽은 sitemap에 내지 않는다 ────────────────────────────────
+    # 페이지도 링크도 그대로다. **크롤러에게 내미는 목록**에서만 뺀다.
+    #
+    # 근거(2026-08-26 전수 측정): sitemap 5,027쪽 중 86%가 person인데 중앙값 305자에
+    # 서로 비슷하다. 그 결과 Google에게 이 사이트는 '얇은 인물 페이지 4,300개짜리
+    # 사이트'로 보인다. 정작 내보이려는 건 선거 시각화 160쪽 남짓인데, 그쪽은
+    # 홈조차 크롤 이력이 없다(/ = '발견됨 - 색인 생성되지 않음', 크롤 없음).
+    #
+    # 빼는 게 아니라 **모으는** 것이다 — 687쪽짜리 목록이면 '이 사이트가 내미는 것'이
+    # 시각화 쪽으로 바뀐다. 사람은 영향이 없고(링크·페이지 그대로), 이미 색인된
+    # 인물 18쪽도 sitemap에서 빠진다고 즉시 사라지진 않는다.
+    #
+    # 되돌리려면 이 블록을 지우고 sections에 person 줄을 되살리면 된다. 되돌릴
+    # 상황: 크롤이 돌아왔는데도 시각화 층이 안 실리는 게 확인될 때 — 그러면 person이
+    # 원인이 아니었다는 뜻이다.
+    persons: list = []
     sections = [
         ("main",    [(loc, freq, pr, lastmod_for(loc)) for loc, freq, pr in STATIC]),
         ("archive", archive_urls()),
@@ -286,7 +302,7 @@ def main():
         ("polls",   poll_election_urls()),
         ("party",   parties),
         ("region",  regions),
-        ("person",  persons),
+        # ("person", person_urls()),   # ← 위 블록 참조. 되살리려면 이 줄을 열 것.
     ]
 
     written = []
@@ -339,7 +355,11 @@ def main():
     _live = {str(page_file(u).relative_to(ROOT))
              for _n, urls in sections for u, *_r in urls}
     _man = manifest()
-    _gone = [k for k in _man if k not in _live]
+    # 예외: **파일이 아직 있는데 sitemap에만 안 내는 것**은 유령이 아니다.
+    # person 4,340쪽이 그렇다(위 블록 참조). 여기서 지워버리면 나중에 되살릴 때
+    # 해시 기록이 없어 lastmod가 전부 '오늘'로 심어진다 — 이 매니페스트가 없애려던
+    # 바로 그 상태다. '없어진 페이지'와 '내지 않기로 한 페이지'는 다른 사건이다.
+    _gone = [k for k in _man if k not in _live and not (ROOT / k).exists()]
     for k in _gone:
         del _man[k]
 

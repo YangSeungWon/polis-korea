@@ -132,11 +132,15 @@ def check_queue(sm: dict[str, int]) -> None:
         return
     queue = [l for l in q_p.read_text(encoding="utf-8").splitlines() if l.strip()]
     seen = json.loads(s_p.read_text(encoding="utf-8"))["pages"]
-    total = sum(sm.values())
-    in_sitemap_seen = len(set(seen) & set(_sitemap_paths()))
-    ck(f"대기열 {len(queue)} + 본 것 {in_sitemap_seen} = sitemap {total}",
-       len(queue) + in_sitemap_seen == total,
-       "산출이 깨졌다 — 경로 정규화(퍼센트 인코딩)를 의심할 것")
+    paths = _sitemap_paths()
+    # 산출물은 **만들어질 당시의 sitemap**을 기준으로 한다. 그 뒤 sitemap이 줄면
+    # (person 4,340쪽을 뺀 2026-08-26처럼) 대기열에 지금 sitemap 밖 URL이 남는다.
+    # 그건 깨진 게 아니라 낡은 것이다 — 다음 수집이 갱신한다. 그래서 '합이 같은가'가
+    # 아니라 '지금 sitemap이 산출물에 다 들어 있는가'를 본다.
+    covered = (set(queue) | set(seen)) & paths
+    missing = paths - covered
+    ck(f"지금 sitemap {len(paths)}쪽이 전부 산출물에 있다", not missing,
+       f"{len(missing)}쪽 빠짐 — {sorted(missing)[:3]}")
     ck("대기열과 본 것이 겹치지 않는다", not (set(queue) & set(seen)))
 
 

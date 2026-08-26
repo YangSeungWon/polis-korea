@@ -187,7 +187,10 @@ def summarize(rows: list[dict], layers: dict[str, str]) -> dict:
     tot["_unlisted"] = {"pages": 0, "impressions": 0, "clicks": 0}
     for r in rows:
         p = norm_path(r["keys"][0])
-        # sitemap에 없는데 노출되는 페이지 = 유령(옛 URL·파라미터 변형). 세어만 둔다.
+        # sitemap 밖인데 노출되는 페이지. 두 종류가 섞이므로 원인을 단정하지 않는다:
+        #   · 유령 — 옛 URL·파라미터 변형 (실제로 죽은 슬러그 18쪽이 여기 있었다)
+        #   · 의도 — 2026-08-26부터 person 4,340쪽이 sitemap에서 빠졌다. 노출되면
+        #            여기로 온다. 색인에서 사라지는지 지켜보는 자리이기도 하다.
         b = tot[layers.get(p, "_unlisted")]
         b["pages"] += 1
         b["impressions"] += int(r.get("impressions", 0))
