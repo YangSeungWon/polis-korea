@@ -227,14 +227,50 @@ def poll_election_urls() -> list[tuple[str, str, str, str]]:
     return out
 
 
+
+# ── 이미지 sitemap ────────────────────────────────────────────────────────────
+# <image:image>은 "이 URL에 이 그림이 있다"를 명시한다. 페이지에 <img>가 있으면
+# 크롤러가 결국 찾긴 하지만, 그러려면 **그 페이지를 크롤해야 한다** — 지금 이 사이트의
+# 문제가 정확히 크롤이 안 온다는 것이다. 목록으로 내미는 편이 한 수 빠르다.
+#
+# 그림은 페이지 안에 있을 때만 의미가 있다. 파일만 서버에 있으면 색인 대상이 아니다.
+# 그래서 매니페스트가 아니라 **실제 페이지가 건 <img>**를 읽는다 — 페이지와 목록이
+# 어긋날 자리를 없앤다.
+_IMG_RE = None
+
+
+def images_for(loc: str) -> list[str]:
+    """그 URL의 페이지가 본문에 건 지도 그림. 없으면 빈 리스트."""
+    global _IMG_RE
+    if _IMG_RE is None:
+        import re as _re
+        _IMG_RE = _re.compile(r'<figure class="map-fig"[^>]*>\s*<img src="([^"]+)"[^>]*alt="([^"]*)"')
+    f = page_file(loc)
+    if not f or not f.is_file():
+        return []
+    return [(src, alt) for src, alt in _IMG_RE.findall(f.read_text(encoding="utf-8"))]
+
+
+def image_block(loc: str) -> str:
+    imgs = images_for(loc)
+    if not imgs:
+        return ""
+    out = []
+    for src, alt in imgs:
+        a = alt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        out.append(f"    <image:image>\n      <image:loc>{BASE}{src}</image:loc>\n"
+                   f"      <image:title>{a}</image:title>\n    </image:image>")
+    return "\n" + "\n".join(out)
+
 def url_block(loc: str, freq: str, priority: str, lastmod: str) -> str:
     return (
         f"  <url>\n"
         f"    <loc>{BASE}{loc}</loc>\n"
         f"    <lastmod>{lastmod}</lastmod>\n"
         f"    <changefreq>{freq}</changefreq>\n"
-        f"    <priority>{priority}</priority>\n"
-        f"  </url>"
+        f"    <priority>{priority}</priority>"
+        + image_block(loc) +
+        f"\n  </url>"
     )
 
 
@@ -312,7 +348,8 @@ def main():
         body = "\n".join(url_block(loc, freq, pr, lm) for loc, freq, pr, lm in urls)
         (ROOT / f"sitemap-{name}.xml").write_text(
             '<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+            '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
             + body + "\n</urlset>\n", encoding="utf-8")
         # 이 층의 lastmod 중 가장 최근 — 색인이 이 파일을 다시 읽을지 판단하는 값이다.
         written.append((name, len(urls), max(lm for *_, lm in urls)))

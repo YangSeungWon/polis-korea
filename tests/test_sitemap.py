@@ -95,6 +95,55 @@ def check_lastmod_manifest(raw: str) -> None:
     ck("sitemap의 lastmod가 매니페스트와 같다", not bad, str(bad[:3]))
 
 
+def check_images() -> None:
+    """<image:image>이 실재하는 파일을 가리키는가.
+
+    그림은 **페이지 안에 있을 때만** 색인 대상이다. 목록에만 있고 페이지가 안 걸면
+    아무 의미가 없고, 반대로 목록이 없는 파일을 가리키면 크롤러에게 404를 준다.
+    그래서 build_sitemap은 매니페스트가 아니라 실제 페이지의 <img>를 읽는다 —
+    이 검사는 그 결과가 디스크와 맞는지 본다.
+    """
+    import xml.etree.ElementTree as ET
+    NS = "{http://www.google.com/schemas/sitemap-image/1.1}"
+    total, missing, unlisted = 0, [], []
+    for f in sorted(ROOT.glob("sitemap-*.xml")):
+        raw = f.read_text(encoding="utf-8")
+        if "sitemap-image" not in raw:
+            continue
+        for loc in ET.fromstring(raw).iter(f"{NS}loc"):
+            total += 1
+            rel = (loc.text or "").replace(SITE, "").lstrip("/")
+            if not (ROOT / unquote(rel)).is_file():
+                missing.append(rel)
+    ck(f"이미지 {total}장이 전부 실재한다", not missing, str(missing[:3]))
+
+    # 페이지가 건 그림이 **그 URL 아래** 있는가.
+    #
+    # 처음엔 전체 합집합으로 비교했다가 변이 시험에서 안 잡혔다 — archive와 history가
+    # 같은 PNG를 쓰기 때문에, 한쪽 sitemap에서 한 장을 지워도 다른 쪽에 남아 합집합은
+    # 그대로였다. 이미지 sitemap의 요점은 '어느 URL에 걸렸나'라서 URL 단위로 봐야 한다.
+    import re as _re
+    listed: dict = {}
+    for f in sorted(ROOT.glob("sitemap-*.xml")):
+        raw = f.read_text(encoding="utf-8")
+        if "sitemap-image" not in raw:
+            continue
+        for url in ET.fromstring(raw).iter("{http://www.sitemaps.org/schemas/sitemap/0.9}url"):
+            u = (url.findtext("{http://www.sitemaps.org/schemas/sitemap/0.9}loc") or "")
+            listed[unquote(u.replace(SITE, ""))] = {
+                (loc.text or "").replace(SITE, "") for loc in url.iter(f"{NS}loc")}
+    bad = []
+    for d in ("archive", "history"):
+        for pf in sorted((ROOT / d).rglob("index.html")):
+            u = "/" + str(pf.parent.relative_to(ROOT)) + "/"
+            on = set(_re.findall(r'<figure class="map-fig"[^>]*>\s*<img src="([^"]+)"',
+                                 pf.read_text(encoding="utf-8")))
+            miss = on - listed.get(u, set())
+            if miss:
+                bad.append(f"{u} → {sorted(miss)[:2]}")
+    ck(f"각 URL이 건 그림이 그 URL 아래 목록에 있다 ({len(listed)}쪽)", not bad, str(bad[:3]))
+
+
 def main():
     # sitemap.xml은 층별 sitemap을 가리키는 index다. 검사는 index를 따라가 층
     # 파일을 전부 읽는다 — index만 보면 URL이 0개로 보여 아래 검사가 전부 공허하게
@@ -179,6 +228,8 @@ def main():
     # ── robots ──────────────────────────────────────────────────────────────
     rb = (ROOT / "robots.txt").read_text(encoding="utf-8")
     ck("robots.txt가 sitemap을 가리킨다", "sitemap.xml" in rb.lower())
+    check_images()
+
     ck("robots.txt가 사이트를 막고 있지 않다",
        not re.search(r"^\s*Disallow:\s*/\s*$", rb, re.M | re.I))
 
