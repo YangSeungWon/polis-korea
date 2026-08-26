@@ -16,6 +16,7 @@
 from __future__ import annotations
 import argparse
 import base64
+import json
 import re
 import shutil
 import sys
@@ -32,6 +33,54 @@ FAVICON = ROOT / "favicon.svg"
 # 한쪽은 '시군구 결과', 다른 쪽은 '시군구 1위'였다).
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from view_registry import VIEW_DEFS, PRIMARY_ORDER, classify as _classify, view_meta  # noqa: E402
+
+
+
+def shrink(path: Path) -> tuple[int, int]:
+    """PNG를 256색 팔레트로 다시 저장. (전, 후) 바이트.
+
+    지도는 정당색 몇 가지 + 격차 명도 + 글씨가 전부라 원래 색이 6,449개쯤 나오는데,
+    256색으로 줄여도 눈으로 구분이 안 된다(글씨 선명도·명도 단계 유지 확인). 대신
+    57KB → 21KB로 3분의 1이 된다.
+
+    글씨를 살리면서 og/가 78MB → 106MB로 늘었다 — 저장소가 GitHub Pages로 서빙되고
+    커밋마다 새 blob이 쌓이는 구조라, 재압축은 선택이 아니라 필요다.
+    """
+    from PIL import Image
+    before = path.stat().st_size
+    im = Image.open(path)
+    if im.mode == "RGBA":
+        # 알파가 있으면 팔레트로 못 줄인다(투명이 깨진다). 지금 캡처는 전부 RGB지만
+        # omit_background=True가 언젠가 실제로 먹으면 여기로 온다.
+        return before, before
+    im.convert("RGB").quantize(colors=256, method=Image.Quantize.MEDIANCUT,
+                               dither=Image.Dither.NONE).save(path, "PNG", optimize=True)
+    return before, path.stat().st_size
+
+def list_slugs() -> list[str]:
+    """캡처 대상 회차. **매니페스트가 정본**이다(data/map_manifest.json).
+
+    2026-08 S0에서 VIEW_DEFS를 걷어낼 때 이 함수가 같은 범위에 있어 함께 지워졌다.
+    --slug 단일 실행은 이 함수를 안 타서 못 봤고, 전량 실행에서 NameError로 죽었다.
+    build_og_maps는 playwright+로컬 서버가 필요해 regen_check에 없다 — 그래서
+    아래 --list가 있다. 브라우저 없이 이 경로만 태워 보는 연기 시험용이다.
+
+    '없는 게 맞는' 회차(재보궐·간선)는 건너뛴다. 매니페스트가 이유를 들고 있으므로
+    여기서 다시 판단하지 않는다.
+    """
+    mf = ROOT / "data" / "map_manifest.json"
+    if mf.is_file():
+        try:
+            els = json.loads(mf.read_text(encoding="utf-8"))["elections"]
+        except Exception:
+            els = {}
+        if els:
+            skip = ("재보궐", "간선")
+            return sorted(k for k, v in els.items()
+                          if not (v.get("absent") or "").startswith(skip))
+    # 매니페스트가 아직 없으면(최초 1회) 디렉터리를 본다.
+    return sorted(p.name for p in (ROOT / "archive").iterdir()
+                  if p.is_dir() and (p / "index.html").exists())
 
 
 def _capture_views(page):
@@ -141,6 +190,10 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--port", type=int, default=8911)
     ap.add_argument("--recompose", action="store_true", help="캐시 지도로 카드만 재합성(favicon 동기화)")
+    ap.add_argument("--list", action="store_true",
+                    help="대상 회차만 출력하고 끝낸다(브라우저 안 띄움)")
+    ap.add_argument("--shrink-only", action="store_true",
+                    help="캡처 없이 og/ PNG 재압축만")
     args = ap.parse_args()
     if args.recompose:
         recompose(); return
@@ -148,6 +201,19 @@ def main():
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
     slugs = [args.slug] if args.slug else list_slugs()
+    if args.shrink_only:
+        tot_b = tot_a = 0
+        for f in sorted((ROOT / "og").rglob("*.png")):
+            b, a = shrink(f)
+            tot_b += b
+            tot_a += a
+        print(f"재압축 {tot_b/1024/1024:.0f}MB → {tot_a/1024/1024:.0f}MB "
+              f"({tot_a/tot_b:.0%})")
+        return 0
+    if args.list:
+        # 브라우저 없이 대상 산정까지만 — 연기 시험(tests/test_build_smoke.py)이 쓴다.
+        print(f"대상 {len(slugs)}회차: {', '.join(slugs[:5])}…")
+        return 0
     if args.limit:
         slugs = slugs[:args.limit]
     base = f"http://localhost:{args.port}/archive"
@@ -169,7 +235,12 @@ def main():
                 pg.add_style_tag(content=(
                     ".svg-save-btn{display:none!important}"
                     ".ar-sido-toggle,.sgg-mode-toggle{opacity:0!important}"
-                    "svg text{display:none!important}"
+                    # 2026-08까지는 여기서 svg text를 전부 숨겼다. 근거는 "썸네일·카드서
+                    # 안 읽히는 잡음"이었고 48px 썸네일 기준으론 맞다. 그런데 같은 PNG를
+                    # 본문 그림으로 쓰기 시작하면 반대가 된다 — 지역명·후보명·득표율이
+                    # 빠진 색지도는 혼자서는 아무 말도 못 한다. 공유될 때도 마찬가지다.
+                    # 글씨를 살리고, 잡음이 되는 건 썸네일 크기(48px)뿐이라 감수한다.
+                    ""
                 ))
                 title = (pg.text_content("#ar-title") or "").strip() if pg.query_selector("#ar-title") else ""
                 date_s = (pg.text_content("#ar-date") or "").strip() if pg.query_selector("#ar-date") else ""

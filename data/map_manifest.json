@@ -1,0 +1,856 @@
+{
+ "_note": "빌드 생성물 — scripts/build/build_map_manifest.py. views는 디스크 관측이다. absent에 이유가 적혀 있으면 '없는 게 맞다'는 뜻이고, '캡처를 아직'이면 만들 수 있는데 안 만든 것이다.",
+ "elections": {
+  "10th-general-1978": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "10th-pres-1979": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "11th-general-1981": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "11th-pres-1980": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "12th-general-1985": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "12th-pres-1981": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "13th-general-1988": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "13th-pres-1987": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "14th-general-1992": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "14th-pres-1992": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "15th-general-1996": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "15th-pres-1997": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "16th-general-2000": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "16th-pres-2002": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "17th-general-2004": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "17th-pres-2007": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "18th-general-2008": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "18th-pres-2012": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "19th-general-2012": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "19th-pres-2017": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "1st-general-1948": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "dorling",
+    "seats"
+   ],
+   "primary": "seats"
+  },
+  "1st-local-1995": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "1st-pres-1948": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "20th-general-2016": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "20th-pres-2022": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "21st-general-2020": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "21st-pres-2025": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "22nd-general-2024": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "geo",
+    "seats",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "2nd-general-1950": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "2nd-local-1998": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "2nd-pres-1952": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout"
+   ],
+   "primary": "sido1"
+  },
+  "3rd-general-1954": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "dorling",
+    "seats"
+   ],
+   "primary": "seats"
+  },
+  "3rd-local-2002": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "3rd-pres-1956": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout"
+   ],
+   "primary": "sido1"
+  },
+  "4th-general-1958": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "dorling",
+    "seats"
+   ],
+   "primary": "seats"
+  },
+  "4th-local-2006": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "4th-pres-1960": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "4th-pres-1960-08": {
+   "kind": "presidential",
+   "views": [],
+   "absent": "간선 — 선거인단이 뽑았다. 지역별 결과가 존재하지 않는다."
+  },
+  "5th-general-1960": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "5th-local-2010": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "5th-pres-1963": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout"
+   ],
+   "primary": "sido1"
+  },
+  "6th-general-1963": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "6th-local-2014": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "6th-pres-1967": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "7th-general-1967": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "7th-local-2018": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "7th-pres-1971": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "geo",
+    "result",
+    "sgg-prop",
+    "sgg-turnout",
+    "sido1",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "sido1"
+  },
+  "8th-general-1971": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "8th-local-2022": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "8th-pres-1972": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "9th-general-1973": {
+   "kind": "general_election",
+   "views": [
+    "district",
+    "district-geo",
+    "district-turnout",
+    "district-turnout-geo",
+    "dorling",
+    "seats",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "seats"
+  },
+  "9th-local-2026": {
+   "kind": "local",
+   "views": [
+    "council",
+    "dorling",
+    "geo",
+    "governor",
+    "result",
+    "sgg-geo",
+    "sgg-prop",
+    "sgg-turnout",
+    "sgg-turnout-geo",
+    "turnout",
+    "turnout-geo"
+   ],
+   "primary": "governor"
+  },
+  "9th-pres-1978": {
+   "kind": "presidential",
+   "views": [
+    "dorling",
+    "sido1"
+   ],
+   "primary": "sido1"
+  },
+  "byelection-2010-07-28": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2010-10-27": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2011-04-27": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2011-10-26": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2012-04-11": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2013-04-24": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2013-10-30": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2014-07-30": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2014-10-29": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2015-04-29": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2015-10-28": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2016-04-13": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2017-04-12": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2018-06-13": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2019-04-03": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2020-04-15": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2021-04-07": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2022-03-09": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2022-06-01": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2023-04-05": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2023-10-11": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2024-04-10": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2024-10-16": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  },
+  "byelection-2025-04-02": {
+   "kind": "byelection",
+   "views": [],
+   "absent": "재보궐 — 일부 선거구에서만 치렀다. 전국 지도가 없는 게 맞다."
+  }
+ }
+}
