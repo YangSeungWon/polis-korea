@@ -938,6 +938,191 @@ KIND_TO_SECTIONS = {
     }.items()}
 
 
+
+def region_table(eid: str, kind: str) -> str:
+    """지역별 결과를 **정적 표**로 — 크롤러가 렌더 없이 읽는 유일한 본문.
+
+    2026-08 측정: archive 페이지의 정적 텍스트가 1,120자였다. 결과 섹션이 전부
+    `<section hidden>` 빈 껍데기고 JS가 채우기 때문이다(제목까지 숨어 있었다).
+    같은 시점 region 페이지는 1,953자였는데 — 지도가 없는 대신 표를 정적으로 낸다.
+    그게 이 저장소가 이미 갖고 있던 정답이라, archive를 region처럼 만든다.
+
+    지도를 이미지로 바꾸는 것으로는 이걸 못 고친다. `<polygon><title>부산 · 이재명
+    48.1%</title>`는 적어도 글자인데 `<img alt="">`는 아무것도 아니다.
+
+    계열마다 자연스러운 단위가 다르다(scope 인벤토리로 확인):
+        대선   tc=1 scope=sido        시도별 1위
+        지선   tc=3 scope=sido        광역단체장
+        총선   tc=2 scope=district    선거구를 시도로 집계(시도 단위 race가 없다)
+        재보궐 그 회차에 치러진 race 그대로 (직·지역이 회차마다 다르다)
+    """
+    rp = RESULTS_DIR / f"{eid}.json"
+    if not rp.is_file():
+        return ""
+    try:
+        races = (json.loads(rp.read_text(encoding="utf-8")) or {}).get("races") or []
+    except Exception:
+        return ""
+
+    def pick(tc, scope):
+        return [r for r in races if r.get("sg_typecode") == tc and r.get("scope") == scope]
+
+    def turnout(r):
+        el, vo = r.get("electors"), r.get("voters")
+        return _fmt_pct(round(vo / el * 100, 1)) if el and vo else "—"
+
+    def name_cell(r, tc, place, c):
+        nm = c.get("name") or ""
+        h = person_href(eid, tc, place, nm)
+        return f'<a href="{h}">{_esc(nm)}</a>' if h else _esc(nm)
+
+    def party_cell(name):
+        h = party_href(name or "")
+        return f'<a href="{h}">{_esc(name)}</a>' if h else _esc(name or "무소속")
+
+    head, rows, cap = [], [], ""
+
+    if kind in ("presidential", "local"):
+        tc = "1" if kind == "presidential" else "3"
+        rs = pick(tc, "sido")
+        if not rs:
+            return ""
+        cap = "시도별 1위" if kind == "presidential" else "시도별 광역단체장"
+        head = ["시도", "1위 후보", "정당", "득표율", "투표율"]
+        for r in rs:
+            cs = sorted(r.get("candidates") or [], key=lambda c: -(c.get("votes") or 0))
+            if not cs:
+                continue
+            c = cs[0]
+            rows.append([_esc(r.get("sido") or ""), name_cell(r, tc, r.get("sido") or "", c),
+                         party_cell(c.get("party")), _fmt_pct(c.get("pct")), turnout(r)])
+
+    elif kind == "general_election":
+        rs = pick("2", "district")
+        if not rs:
+            return ""
+        cap = "시도별 지역구 의석"
+        head = ["시도", "지역구", "1당", "의석"]
+        agg: dict = {}
+        for r in rs:
+            sido = r.get("sido") or ""
+            a = agg.setdefault(sido, {"n": 0, "by": {}})
+            a["n"] += 1
+            for c in (r.get("candidates") or []):
+                if c.get("won"):
+                    pty = c.get("party") or "무소속"
+                    a["by"][pty] = a["by"].get(pty, 0) + 1
+        for sido, a in agg.items():
+            if not a["by"]:
+                continue
+            top, n = max(a["by"].items(), key=lambda x: x[1])
+            rows.append([_esc(sido), str(a["n"]), party_cell(top), f"{n}석"])
+
+    else:   # byelection — 회차마다 치러진 직·지역이 다르다. 있는 그대로 적는다.
+        cap = "치러진 선거"
+        head = ["지역", "직", "당선", "정당", "득표율"]
+        for r in races:
+            if (r.get("scope") or "").endswith(("_sigungu", "_part")):
+                continue        # 같은 race의 시군구 분해 — 중복이다
+            cs = [c for c in (r.get("candidates") or []) if c.get("won")]
+            if not cs:
+                continue
+            c = cs[0]
+            tc = r.get("sg_typecode") or ""
+            place = r.get("sigungu") or r.get("sido") or ""
+            rows.append([_esc(place), _esc(TC_LABEL.get(tc, tc)),
+                         name_cell(r, tc, place, c), party_cell(c.get("party")),
+                         _fmt_pct(c.get("pct"))])
+
+    if not rows:
+        return ""
+    th = "".join(f"<th>{h}</th>" for h in head)
+    tr = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
+    return (f'\n  <section class="ar-section" id="ar-region-table">\n'
+            f'    <h2 class="ar-section-title">{cap}</h2>\n'
+            f'    <div class="pp-scroll">'
+            f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
+            f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
+            f'  </section>\n')
+
+
+
+def detail_table(eid: str, kind: str) -> str:
+    """당선인/선거구 단위 표 — 이 페이지에서 가장 두꺼운 본문.
+
+    region_table이 시도 17행이라면 이건 수백 행이다. archive 페이지가 원래
+    '당선인 3,967명은 필터 UI라 상호작용 전엔 크롤러도 못 본다'(results_summary
+    주석)던 그 데이터를, 필터 없이 그대로 한 번 적는다.
+
+    ⚠️ 시군구 결과는 큰 회차에서 **별도 청크 파일**에 있다(_meta.chunked). 본 파일만
+    읽으면 최근 대선이 전부 빈 표가 된다 — 실제로 21대 대선 races는 18개(전국+시도)뿐이고
+    시군구 253개는 {eid}.sigungu.json에 있다.
+    """
+    rp = RESULTS_DIR / f"{eid}.json"
+    if not rp.is_file():
+        return ""
+    try:
+        doc = json.loads(rp.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return ""
+    races = list(doc.get("races") or [])
+    if (doc.get("_meta") or {}).get("chunked"):
+        cp = RESULTS_DIR / f"{eid}.sigungu.json"
+        if cp.is_file():
+            try:
+                races += (json.loads(cp.read_text(encoding="utf-8")) or {}).get("races") or []
+            except Exception:
+                pass
+
+    def party_cell(name):
+        h = party_href(name or "")
+        return f'<a href="{h}">{_esc(name)}</a>' if h else _esc(name or "무소속")
+
+    def name_cell(tc, place, nm):
+        h = person_href(eid, tc, place, nm or "")
+        return f'<a href="{h}">{_esc(nm)}</a>' if h else _esc(nm or "")
+
+    def turnout(r):
+        el, vo = r.get("electors"), r.get("voters")
+        return _fmt_pct(round(vo / el * 100, 1)) if el and vo else "—"
+
+    if kind == "presidential":
+        tc, scope, cap = "1", "sigungu", "시군구별 1위"
+        head = ["시도", "시군구", "1위 후보", "정당", "득표율", "투표율"]
+    elif kind == "local":
+        tc, scope, cap = "4", "sigungu", "기초단체장 당선인"
+        head = ["시도", "시군구", "당선인", "정당", "득표율", "투표율"]
+    elif kind == "general_election":
+        tc, scope, cap = "2", "district", "지역구 당선인"
+        head = ["시도", "선거구", "당선인", "정당", "득표율", "투표율"]
+    else:
+        return ""       # 재보궐은 region_table이 이미 전부 적었다
+
+    rs = [r for r in races if r.get("sg_typecode") == tc and r.get("scope") == scope]
+    rows = []
+    for r in rs:
+        cs = sorted(r.get("candidates") or [], key=lambda c: -(c.get("votes") or 0))
+        if not cs:
+            continue
+        c = next((x for x in cs if x.get("won")), cs[0])
+        place = r.get("sigungu") or r.get("district") or ""
+        rows.append([_esc(r.get("sido") or ""), _esc(place),
+                     name_cell(tc, place or r.get("sido") or "", c.get("name")),
+                     party_cell(c.get("party")), _fmt_pct(c.get("pct")), turnout(r)])
+    if not rows:
+        return ""
+    th = "".join(f"<th>{h}</th>" for h in head)
+    tr = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
+    return (f'\n  <section class="ar-section" id="ar-detail-table">\n'
+            f'    <h2 class="ar-section-title">{cap}</h2>\n'
+            f'    <div class="pp-scroll">'
+            f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
+            f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
+            f'  </section>\n')
+
+TC_LABEL = {"1": "대통령", "2": "국회의원", "3": "광역단체장", "4": "기초단체장",
+            "5": "광역의원", "6": "기초의원", "7": "비례대표", "11": "교육감"}
+
 def nec_source_suffix(meta: dict) -> str:
     """data_source_note(예 '중앙선거관리위원회 OpenAPI')를 푸터 NEC 링크 옆 인라인 접미로.
     '중앙선거관리위원회'는 링크 텍스트에 이미 있으니 떼고 방식만(예 'OpenAPI') ' · '로 붙임."""
@@ -972,6 +1157,8 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         HEAD.format(**d, nav=render_nav(menu_for_path(f'archive/{d["id"]}/index.html')))
         + render_tophead(nbrs, hero_html)           # 히어로 제목 좌우에 이전·다음
         + results_summary(d["id"], d["kind"])       # 빌드 시점 정적 요약(검색엔진용)
+        + region_table(d["id"], d["kind"])         # 지역별 결과 정적 표 — 렌더 없이 읽히는 본문
+        + detail_table(d["id"], d["kind"])         # 당선인·선거구 단위 — 가장 두꺼운 본문
         + KIND_TO_SECTIONS[d["kind"]].format(**d)
         + render_bottom_nav(nbrs, d)                # 이전 · [더 자세히] · 다음
         + FOOT.format(**d)

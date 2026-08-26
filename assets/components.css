@@ -566,3 +566,31 @@
 .sgg-result-legend .ch-leg,
 .ar-sgg-result-legend .ch-leg,
 .pres-sgg-legend .ch-leg { font-weight: 700; }
+
+/* ── 정적 결과 표 ──────────────────────────────────────────────────────
+   person.css에 있던 것을 옮겼다. archive도 같은 표를 쓰는데 archive는
+   person.css를 싣지 않아서, 표가 스타일 없이 나오고 있었다.
+   세 계열(person·region·archive) 모두 components.css를 싣는다. */
+/* 빌드 시점에 찍는 정적 출마 이력 표 — person.js가 로드되면 같은 자리를 자기 렌더로
+   덮어쓴다. 검색엔진과 JS 비활성 환경에서 실제 내용이 읽히게 하는 것이 목적이라,
+   화면에 잠깐 보여도 어색하지 않을 만큼만 꾸민다. */
+.pp-static { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.pp-static caption {
+  text-align: left; font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  padding-bottom: 6px;
+}
+.pp-static th {
+  text-align: left; font-size: 11px; font-weight: 700; color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule); padding: 5px 8px 5px 0; white-space: nowrap;
+}
+.pp-static td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--rule); }
+/* 득표·득표율·순위 — 자릿수 정렬. 컬럼이 늘어(득표·상대·표차) 5~7번째로 밀렸다. */
+.pp-static td:nth-child(5), .pp-static td:nth-child(6),
+.pp-static td:nth-child(7) { font-variant-numeric: tabular-nums; }
+.pp-margin { color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pp-static a { color: inherit; text-decoration: none; }
+.pp-static a:hover { text-decoration: underline; }
+/* 수백 행 × 6열 — 좁은 화면에서 본문을 밀어내지 않게 표만 가로로 스크롤한다.
+   페이지 자체가 가로 스크롤되면 UI 검사(넘침)가 잡는다. */
+.pp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.pp-scroll .pp-static { min-width: 34rem; }
