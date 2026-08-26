@@ -28,6 +28,7 @@ from urllib.parse import quote
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_sitemap as _sitemap   # noqa: E402  포괄 sitemap(+robots) 단일 출처
+import result_tables as _rt        # noqa: E402  결과 표 — archive와 같은 것을 쓴다
 
 ROOT = Path(__file__).resolve().parents[2]
 INDEX_TEMPLATE = ROOT / 'polls.html'   # 지선 직위 페이지(/governor/ 등) 템플릿. 루트 index.html은 대시보드(별도, 프리렌더 안 함)
@@ -402,6 +403,41 @@ def intro_block(h1: str, lede: str, extra: str = '') -> str:
             f'    <p class="lede">{lede}</p>\n{extra}  </section>')
 
 
+
+# history 회차 페이지는 archive와 **같은 선거를 다른 축으로** 보는 화면이다. 그래서
+# 표도 같은 것을 쓴다(scripts/build/result_tables.py). 직위 축이 하나 더 있을 뿐이다.
+#
+# 이 페이지들은 원래 본문이 "데이터 불러오는 중…" 648자가 전부였다 — 66쪽이 서로
+# 거의 같은 문서였고, 2026-07에 대거 '크롤링됨-미색인'으로 묶인 자리다.
+# 표의 단위는 **그 화면이 보여주는 단위**와 맞춘다. 대선 회차 페이지는 시군구 hex를
+# 그리므로 표도 시군구다(시도 17행만 적으면 화면과 글이 다른 걸 말한다).
+#   (type, office) → (tc, scope, 지역 열 키, 지역 열 이름, 표 제목)
+HIST_TC = {
+    ('presidential', ''):        ('1', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '시군구별 1위'),
+    ('national_assembly', ''):   ('2', 'district', ['sido', 'district'], ['시도', '선거구'], '지역구 당선인'),
+    ('local', 'governor'):       ('3', 'sido', ['sido'], ['시도'], '광역단체장 당선인'),
+    ('local', 'mayor'):          ('4', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '기초단체장 당선인'),
+    ('local', 'superintendent'): ('11', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '교육감 당선인'),
+}
+
+
+def round_table(slug: str, type_key: str, off_slug: str = '') -> str:
+    """회차 × 직위 → 정적 결과 표. archive slug가 없으면 표도 없다."""
+    spec = HIST_TC.get((type_key, off_slug))
+    if not slug or not spec:
+        return ''
+    tc, scope, place_cols, head_pre, cap = spec
+    races = _rt.load_races(slug)
+    if not races:
+        return ''
+    # 링크는 걸지 않는다 — person-links 색인은 archive 쪽 규칙(동명이인 배제)을 따르는데
+    # 여기서 같은 판단을 두 벌 두면 어긋난다. 이 페이지의 목적은 내용이 읽히는 것이고,
+    # 인물·정당으로 나가는 길은 바로 위 '이 회차 아카이브' 링크가 잇는다.
+    rows = _rt.winner_rows(races, tc, scope, place_cols=place_cols,
+                           link=lambda kind, place, name: _rt._esc(name or ''))
+    head = head_pre + ['당선인', '정당', '득표율', '투표율']
+    return _rt.table_html('hx-round-table', cap, head, rows)
+
 def breadcrumb_ld(trail: list) -> str:
     """BreadcrumbList — 검색 결과에 URL 대신 경로가 표시되게 한다."""
     items = [{'@type': 'ListItem', 'position': i + 1, 'name': name,
@@ -474,8 +510,9 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
                              '<a href="/archive/' + slug + '/">'
                              f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
-                    intro = intro_block(f'{n}회 {type_short} {office_ko}',
-                                        _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
+                    intro = (intro_block(f'{n}회 {type_short} {office_ko}',
+                                         _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
+                             + round_table(slug, type_key, off_slug))
                     ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                         (f'{n}회 {type_short}', None),
                                         (office_ko, None)])
@@ -517,8 +554,9 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
                          '<a href="/archive/' + slug + '/">'
                          f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
-                intro = intro_block(f'{n}{unit} {type_short}',
-                                    _esc(' · '.join(bits)), extra)
+                intro = (intro_block(f'{n}{unit} {type_short}',
+                                     _esc(' · '.join(bits)), extra)
+                         + round_table(slug, type_key))
                 ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                     (f'{n}{unit} {type_short}', None)])
                 html = inject_body(replace_meta(template, title, desc, canon, init_state),
