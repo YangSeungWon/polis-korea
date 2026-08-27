@@ -8,18 +8,14 @@
 function renderHex() {
   const host = $('#hex');
   if (!host || !window.Archive || !window.Archive.governorHex) return;
-  const merge = (typeof SIDO_MERGE !== 'undefined') ? SIDO_MERGE : null;
   const meta = window.Archive.governorHex.draw(host, [], {
     winnerOf: (sido) => regionSidoWinner(sido, state.office),
     opacityOf: (w) => (w ? (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)) : 1),
     dashOf: (w) => ((w && (w.n_polls <= 2 || w.low_recent)) ? '3,2' : null),
     // 실제 모드: 막판 여론조사 1위 ≠ 실제 당선이면 '여론조사 1위 정당색' 반환 → 점선 테두리색.
     missOf: state.mode === 'result' ? (sido) => {
-      const poll = PollAdapter.localSidoWinner(state.data.polls, sido, state.office, merge);
-      const actual = regionSidoWinner(sido, state.office);
-      // 같은 정당이면 약칭/정식명 표기차('민주당' vs '더불어민주당')라도 빗나감 아님.
-      return (poll && actual && poll.party && actual.party && !samePartyName(poll.party, actual.party))
-        ? partyColor(poll.party) : null;
+      const p = PollAdapter.missPartyOf(state.office, sido);
+      return p ? partyColor(p) : null;
     } : null,
     onSelect: (sido) => { state.selectedSido = sido; state.selectedSigungu = null; renderHex(); renderDetail(); },
     selected: state.selectedSido,
@@ -91,11 +87,8 @@ async function renderSigunguHex() {
       dashOf: (w) => ((w.n_polls <= 2 || w.low_recent) ? '2,1.5' : null),
       // 실제 모드: 막판 조사 1위 ≠ 실제 당선이면 조사 1위 정당색 반환 → 점선 테두리색.
       missOf: (state.mode === 'result' && isSigunguMode()) ? (sido, name) => {
-        const poll = PollAdapter.localSigunguWinner(state.data.polls, sido, name, state.office);
-        const actual = regionSigunguWinner(sido, name, state.office);
-        // 같은 정당이면 약칭/정식명 표기차('민주당' vs '더불어민주당')라도 빗나감 아님(예: 당진 김기재).
-        return (poll && actual && poll.party && actual.party && !samePartyName(poll.party, actual.party))
-          ? partyColor(poll.party) : null;
+        const p = PollAdapter.missPartyOf(state.office, sido, name);
+        return p ? partyColor(p) : null;
       } : null,
       tooltipOf: (sido, name, w) => (w
         ? `${sido} ${name} · ${w.name || w.party || ''}${w.name && w.party ? ' (' + w.party + ')' : ''} ${w.pct}% · ${fmtDate(w.period)}`

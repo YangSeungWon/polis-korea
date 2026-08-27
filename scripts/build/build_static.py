@@ -239,6 +239,37 @@ ELECTIONS_DIR = ROOT / 'data' / 'elections'
 POLL_VIZ_KINDS = ('local', 'presidential', 'general_election')
 
 
+_ACC_CACHE: dict | None = None
+
+
+def _accuracy_summary(slug: str) -> dict | None:
+    """회차 → {직위: {unit, match, total, miss}}. miss는 빗나간 지역만."""
+    global _ACC_CACHE
+    if _ACC_CACHE is None:
+        f = ROOT / 'data' / 'polls' / 'accuracy.json'
+        try:
+            _ACC_CACHE = json.loads(f.read_text(encoding='utf-8'))['elections']
+        except Exception:
+            _ACC_CACHE = {}
+    e = _ACC_CACHE.get(slug)
+    if not e:
+        return None
+    out = {}
+    for off, o in (e.get('offices') or {}).items():
+        out[off] = {
+            'unit': o.get('unit'),
+            'match': o.get('match'),
+            'total': o.get('total'),
+            # judged — **비교한 지역 전부**. 값이 있으면 빗나감(그 값이 여론조사
+            # 1위 정당 = 점선 테두리색), null이면 적중. 키에 없으면 비교 못 함.
+            # 빗나간 것만 주면 '적중'과 '조사 없음'을 화면이 구분 못 해서,
+            # 상세 패널이 제 나름대로 다시 세게 된다(그게 어긋남의 씨앗이다).
+            'judged': {r['region']: (r.get('poll') or {}).get('party') if r['hit'] is False else None
+                       for r in (o.get('rows') or []) if r.get('hit') is not None},
+        }
+    return out or None
+
+
 def _poll_election_meta(el: dict) -> dict | None:
     """elections/{id}.json → per-election 폴 페이지 __INITIAL_STATE__.election.
     aggregated 폴 데이터가 실재하고 viz 지원 종류인 회차만."""
@@ -262,6 +293,16 @@ def _poll_election_meta(el: dict) -> dict | None:
         'slug': el['id'],
         'name': el['name'],
         'date': date_s,
+        # 여론조사 1위 vs 실제 1위 — **계산은 빌드가 한다**(build_poll_accuracy.py).
+        # 런타임은 읽기만 한다. 예전엔 JS가 직접 셌고, 그래서 페이지 제목이 '적중률'인데
+        # 본문엔 그 숫자가 없었다(색인이 못 본다). 옮기며 JS 결함 둘이 드러났다 —
+        # 대선이 candidates[0]을 정렬 없이 1위로 쓰던 것, 9회 지선이 전남광주 통합
+        # 선거를 통째로 빠뜨리던 것. accuracy.json의 _runtime_diff에 적혀 있다.
+        #
+        # 전체 파일은 784KB라 통째로 보내지 않는다. 화면이 실제로 쓰는 것만 —
+        # 직위별 match/total/unit과 **빗나간 지역의 조사 1위 정당**(점선 테두리색).
+        # 회차당 최대 2.3KB라 새 fetch 없이 __INITIAL_STATE__에 인라인된다.
+        'accuracy': _accuracy_summary(el['id']),
         'n': el.get('n'),
         'blackout_start': bstart,
         'blackout_end': bend,

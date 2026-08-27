@@ -246,7 +246,45 @@
     return { candidates: cands };
   }
 
+  // ── 적중률 — **계산하지 않는다. 읽는다.** ──────────────────────────────
+  // 여론조사 1위 vs 실제 1위는 빌드가 센다(scripts/build/poll_accuracy.py). 결과는
+  // 회차마다 __INITIAL_STATE__.election.accuracy에 인라인돼 온다(회차당 최대 2.3KB).
+  //
+  // 왜 옮겼나: 페이지 제목이 '조사 적중률'인데 **본문에 그 숫자가 없었다** — JS가
+  // 돌아야 나오니 검색엔진도 공유 카드도 못 본다. 옮기면서 결함 둘이 드러났다.
+  //   · 대선은 candidates[0]을 pct 정렬 **없이** 1위로 썼다 — 20대 대선 조사의 49%가
+  //     후보순≠득표순이라 헤드라인이 7/17로 나왔다(실제 13/17).
+  //   · 9회 지선은 SIDO_HEX_LAYOUT 17개를 도는데 신설 전남광주가 그 표에 없어
+  //     통합 1선거가 통째로 빠졌다(13/15 → 14/16).
+  // 여기서 다시 세면 그 둘이 되살아난다. 세지 말 것.
+  function _acc() {
+    const el = (window.__INITIAL_STATE__ || {}).election || {};
+    return el.accuracy || null;
+  }
+  function accuracyOf(office) {
+    const o = (_acc() || {})[office];
+    return (o && o.total) ? { match: o.match, total: o.total, unit: o.unit } : null;
+  }
+  function _judged(office, sido, name) {
+    const o = (_acc() || {})[office];
+    if (!o || !o.judged) return undefined;
+    const cs = norm();
+    const k = name ? (cs(sido) + '|' + name) : cs(sido);
+    return (k in o.judged) ? o.judged[k] : undefined;
+  }
+  // 빗나간 지역의 **여론조사 1위 정당**(점선 테두리색). 적중이거나 비교 못 했으면 null.
+  function missPartyOf(office, sido, name) {
+    return _judged(office, sido, name) || null;
+  }
+  // 한 지역의 판정 — true 적중 · false 빗나감 · null 비교 못 함(조사 없음 등).
+  // 상세 패널이 여기서 읽는다. 제 나름대로 다시 세면 합계와 어긋난다.
+  function hitOf(office, sido, name) {
+    const v = _judged(office, sido, name);
+    return v === undefined ? null : !v;
+  }
+
   window.PollAdapter = {
+    accuracyOf, missPartyOf, hitOf,
     cellsFromResults, cellsFromPolls, weightsFromResults, presTrend, genTrend,
     districtResultFromResults, districtResultFromPolls,
     localPollsByOffice, localPollsByRegion, parentSigungu, localSidoWinner, localSigunguWinner,

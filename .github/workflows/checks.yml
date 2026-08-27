@@ -214,6 +214,11 @@ jobs:
       - name: UI 불변식 (넘침·예외·범례·토글 잔존)
         run: node tests/ui/test_ui_invariants.mjs
 
+      # 적중률 계산은 빌드가 하고 화면은 읽기만 한다. 두 벌이 되면 조용히 갈라지는데
+      # 눈으로는 안 보인다 — 옮기기 전 20대 대선 헤드라인이 7/17이었고 실제는 13/17이었다.
+      - name: 여론조사 적중률 (화면 == 빌드 산출물)
+        run: node tests/ui/test_poll_accuracy_runtime.mjs
+
       # 정적 href 감사와 **별개**다. /history/local/9/는 정적 링크 0 broken 상태에서
       # 404였다 — 런타임 조립·pushState는 파일을 훑어서는 안 보인다.
       - name: route 무결성 (렌더·토글 후·주소창)

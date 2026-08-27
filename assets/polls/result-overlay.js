@@ -30,34 +30,12 @@
       : PollAdapter.localActualSido(state.actualMaps, sido, office, m);
   };
 
-  // 적중률 계산 (시도 단위 — 광역단체장·기초단체장·교육감)
+  // 적중률 — **읽는다.** 계산은 빌드가 한다(PollAdapter.accuracyOf 주석 참조).
+  // 여기서 세던 옛 코드는 SIDO_HEX_LAYOUT 17개를 돌았는데, 2026-06-03 신설
+  // 전남광주특별시가 그 표에 없어서 광주·전남 둘 다 실제 결과를 못 찾고 제외됐다 —
+  // **통합 1선거가 통째로 빠져** 13/15로 나왔다(실제 14/16).
   function accuracyForOffice(office) {
-    const maps = state.actualMaps;
-    if (!maps) return null;
-    const merge = (typeof SIDO_MERGE !== 'undefined') ? SIDO_MERGE : null;
-    let match = 0, total = 0;
-    if (office === '기초단체장') {
-      // sigungu 단위 — 폴 있는 시군구만 비교
-      for (const key of Object.keys(maps.bySigungu)) {
-        if (!key.endsWith('|기초단체장')) continue;
-        const [sd, sgg] = key.split('|');
-        const polls = PollAdapter.localSigunguWinner(state.data.polls, sd, sgg, '기초단체장');
-        const actual = maps.bySigungu[key];
-        if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
-        total++;
-        if (samePartyName(polls.party, actual.party)) match++;   // 약칭/정식명 차('민주당'='더불어민주당')는 적중
-      }
-    } else {
-      if (!Object.keys(maps.bySido).length) return null;
-      for (const [sido] of Object.entries(SIDO_HEX_LAYOUT)) {
-        const polls = PollAdapter.localSidoWinner(state.data.polls, sido, office, merge);
-        const actual = maps.bySido[`${sido}|${office}`];
-        if (!polls || !actual || !polls.party || !actual.party) continue;   // 정당 불명 폴은 비교 제외(맵 표시와 일치)
-        total++;
-        if (samePartyName(polls.party, actual.party)) match++;   // 약칭/정식명 차('민주당'='더불어민주당')는 적중
-      }
-    }
-    return total ? { match, total } : null;
+    return PollAdapter.accuracyOf(office);
   }
 
   async function setMode(m) {

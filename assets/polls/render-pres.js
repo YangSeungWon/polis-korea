@@ -157,15 +157,15 @@
       ? (ps.viewmode === 'grid' ? '■ 면적=유권자 규모 · 색=조사 지지' : '● 크기=유권자 규모 · 파이=조사 지지 구성')
       : undefined;
     // 실제 모드: 막판 여론조사 시도 1위 vs 실제 — 빗나간 시도 점선 마커(조사 1위 정당색) + 적중 헤드라인.
-    let missOf = null, m = 0, t = 0;
-    const csn = (typeof canonSido === 'function') ? canonSido : (s) => s;
+    //
+    // **여기서 세지 않는다.** 옛 코드는 cellsFromPolls의 candidates[0]을 pct 정렬 **없이**
+    // 1위로 썼다 — 조사표에 처음 적힌 후보가 곧 1위가 됐다. 20대 대선 조사의 49%가
+    // 후보순≠득표순이라 헤드라인이 7/17로 나왔다(실제 13/17). 19대 14→16, 21대 11→13.
+    // 지도 색은 멀쩡했다(shared.js가 그리기 전에 정렬한다) — 숫자와 점선만 틀렸다.
+    let missOf = null;
+    const acc = ps.mode === 'result' ? PollAdapter.accuracyOf('대통령') : null;
     if (ps.mode === 'result') {
-      const pm = {}, am = {};
-      PollAdapter.cellsFromPolls(state.data.polls || [], { office: '대통령' })
-        .forEach((c) => { pm[csn(c.sido)] = (c.candidates[0] || {}).party; });
-      cs.forEach((c) => { am[csn(c.sido)] = (c.candidates[0] || {}).party; });
-      for (const k in am) { if (pm[k] && am[k]) { t++; if (samePartyName(pm[k], am[k])) m++; } }   // 약칭/정식명 차 흡수
-      missOf = (sido) => { const k = csn(sido), pp = pm[k], ap = am[k]; return (pp && ap && !samePartyName(pp, ap)) ? partyColor(pp) : null; };
+      missOf = (sido) => { const pp = PollAdapter.missPartyOf('대통령', sido); return pp ? partyColor(pp) : null; };
     }
     // 시도 클릭 → 지선 detail 패널 재사용(그 시도 실제 결과). 대선 폴은 전국이라 실제 위주.
     const pickSido = (sido) => {
@@ -180,7 +180,7 @@
     } else {
       sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: pickSido, missOf });
     }
-    if (t) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${m}/${t}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
+    if (acc) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${acc.match}/${acc.total}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
     renderDetail();
   }
 

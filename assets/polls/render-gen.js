@@ -95,22 +95,18 @@
     if (!host) return;
     if (typeof drawDistrictHex !== 'function' || !gs.layout) { host.hidden = true; return; }
     const fn = gs.dmode === 'result' ? gs.resultFn : gs.pollFn;
-    // 조사된 지역구 수 + 여론조사 적중(조사된 지역구만 폴 1위 vs 실제 1위 비교)
-    let polled = 0, match = 0;
-    const missed = (sido, name) => {   // 빗나가면 '여론조사 1위 정당색' 반환 → 점선 테두리색
-      const p = gs.pollFn(sido, name), r = gs.resultFn(sido, name);
-      const pt = p && p.candidates[0], rt = r && r.candidates[0];
-      return (pt && rt && !samePartyName(pt.party, rt.party)) ? pc(pt.party) : null;  // 약칭/정식명 차는 빗나감 아님
+    // 적중은 **읽는다** — 계산은 빌드가 한다(PollAdapter.accuracyOf 주석 참조).
+    // 조사된 지역구 수도 같은 데서 온다(자체 의뢰 조사 제외가 이미 반영돼 있다 —
+    // core.js:129가 하는 일이고, 그걸 빠뜨리면 20대 총선이 119가 아니라 125가 된다).
+    const missed = (sido, name) => {
+      const pp = PollAdapter.missPartyOf('국회의원', sido, name);
+      return pp ? pc(pp) : null;
     };
-    for (const d of gs.layout) {
-      const p = gs.pollFn(d.sido, d.name); if (!p) continue;
-      polled++;
-      const r = gs.resultFn(d.sido, d.name);
-      if (r && p.candidates[0] && r.candidates[0] && samePartyName(p.candidates[0].party, r.candidates[0].party)) match++;
-    }
+    const acc = PollAdapter.accuracyOf('국회의원');
+    const polled = acc ? acc.total : 0;
     const note = gs.dmode === 'polls'
       ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
-      : (polled ? `확정 결과 · 여론조사 적중 <b>${match}/${polled}</b>` : '확정 결과');
+      : (acc ? `확정 결과 · 여론조사 적중 <b>${acc.match}/${acc.total}</b>` : '확정 결과');
     host.innerHTML = `
       <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span> <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">칸=선거구, 색=1위 정당. <b>여론조사 1위</b>/<b>실제 1위</b> 토글. 점선 테두리=여론조사가 예측한 1위(실제와 다른 곳).</span></span></h3>
       <div class="gen-dist-bar">
@@ -150,7 +146,8 @@
     const chip = (c, lab) => c
       ? `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> <b style="color:${tc(c.party)};background:${pc(c.party)};padding:1px 6px;border-radius:3px">${c.name || c.party}</b> ${c.pct != null ? c.pct.toFixed(1) + '%' : ''}</span>`
       : `<span class="gdr-chip"><span class="gdr-lab">${lab}</span> —</span>`;
-    const hit = pTop && rTop ? samePartyName(pTop.party, rTop.party) : null;
+    // 판정도 **읽는다** — 여기서 따로 세면 헤드라인 합계와 어긋날 수 있다.
+    const hit = PollAdapter.hitOf('국회의원', sido, name);
     el.innerHTML = `<div class="gdr-head">${sido} ${name}${hit === false ? ' <span class="gdr-miss">여론조사 빗나감</span>' : (hit ? ' <span class="gdr-ok">적중</span>' : '')}</div>`
       + chip(pTop, '여론조사') + chip(rTop, '실제');
   }
