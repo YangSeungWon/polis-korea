@@ -109,7 +109,7 @@
     const etc = colMembers["기타"] || [];   // 그래프 밖(분류불가) — 아래 텍스트로.
     const H = PAD_T + plotH + PAD_B;
 
-    const out = [`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" class="lin-svg" xmlns="http://www.w3.org/2000/svg">`];
+    const out = [`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" class="lin-svg" data-map-host="lineage" xmlns="http://www.w3.org/2000/svg">`];
 
     // 연도 가로 그리드
     for (let yr = Math.ceil(minY / 10) * 10; yr <= maxY; yr += 10) {

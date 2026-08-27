@@ -31,6 +31,9 @@ SMOKE = [
     # 여론조사 지도도 브라우저 없이 대상 산정까지는 돌아야 한다(archive와 같은 이유).
     ("build_og_maps --pages polls",
      [sys.executable, "scripts/build/build_og_maps.py", "--pages", "polls", "--list"]),
+    ("build_og_maps --pages static",
+     [sys.executable, "scripts/build/build_og_maps.py", "--pages", "static", "--list"]),
+    ("sync_static_figures", [sys.executable, "scripts/build/sync_static_figures.py"]),
 ]
 
 # CI에 없는데 로컬엔 있는 모듈. requirements.txt에 없으면서 import되면 CI에서만 죽는다.

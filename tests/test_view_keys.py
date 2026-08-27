@@ -49,7 +49,8 @@ def check_tables() -> None:
             bad(f"host 토큰이 파일명으로 못 쓸 모양: {tok!r} (소문자·숫자·하이픈만)")
         if not h.get("label"):
             bad(f"host {tok}: 한글 라벨 없음")
-        if not h.get("kinds"):
+        # 회차가 아닌 화면(지지율 추이·계보도·홈)은 선거 계열에 안 매인다.
+        if not h.get("kinds") and "static" not in (h.get("pages") or []):
             bad(f"host {tok}: 어느 선거 계열인지 없음")
         for m in h.get("page") or []:
             if m is not None and m not in {x["mode"] for x in V.MODES}:
@@ -103,7 +104,7 @@ def check_keys_in_use() -> None:
             bad_keys.setdefault(key, []).append(where)
 
     n_png = 0
-    for d in ("maps", "polls"):        # 결과 지도 · 여론조사 지도
+    for d in ("maps", "polls", "static"):   # 결과 지도 · 여론조사 지도 · 회차 아닌 화면
         root = ROOT / "og" / d
         if not root.is_dir():
             continue
@@ -195,7 +196,8 @@ def check_capture_health() -> None:
     import json
     d = {}
     for name, tag in (("capture_ambiguity.json", "결과"),
-                      ("poll_capture_ambiguity.json", "여론조사")):
+                      ("poll_capture_ambiguity.json", "여론조사"),
+                      ("static_capture_ambiguity.json", "정적화면")):
         f = ROOT / "data" / name
         if not f.is_file():
             bad(f"{tag} 캡처 기록이 없다 — build_og_maps를 안 돌렸다")

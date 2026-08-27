@@ -1,0 +1,21 @@
+{
+ "_note": "빌드 생성물. **옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 불가능해졌다** — 키가 (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. 대신 반대를 잰다: same_image는 서로 다른 키가 **같은 그림**이 된 경우로, 토글 클릭이 조용히 안 먹었다는 뜻이다. problems는 캡처가 건너뛴 뷰다. 둘 다 0이어야 한다.",
+ "slugs": {
+  "byelection": {
+   "same_image": {},
+   "problems": []
+  },
+  "home": {
+   "same_image": {},
+   "problems": []
+  },
+  "parties": {
+   "same_image": {},
+   "problems": []
+  },
+  "tracker": {
+   "same_image": {},
+   "problems": []
+  }
+ }
+}

@@ -115,6 +115,12 @@
   }
 
   // 차트 래핑: 본문 svg를 가로 스크롤 컨테이너에 + 모바일용 Y축 고정 오버레이.
+  // 그리는 쪽이 자기 이름을 말한다. 차트 컨테이너에 붙이면 그 안의 svg.tk-body가 잡힌다.
+  function declareHost(id, token) {
+    const el = document.getElementById(id);
+    if (el) el.dataset.mapHost = token;
+  }
+
   // 데스크톱은 CSS에서 오버레이 숨김 → 본문 svg 자체 Y축 사용(현행과 동일).
   function wrapChart(W, H, P, yMax, yStep, yOf, inner, aria) {
     let ax = `<rect x="0" y="0" width="${P.l}" height="${H}" fill="var(--bg,#fff)"/>`;
@@ -463,6 +469,7 @@
     for (const L of lab) { let yy = L.y + 3; if (yy - ly < 13) yy = ly + 13; ly = yy; labels += `<text x="${(W - P.r + 5).toFixed(1)}" y="${yy.toFixed(1)}" font-size="11.5" fill="${L.color}" font-weight="700">${L.name}</text>`; }
     host.innerHTML = `<div class="tk-scroll"><svg class="tk-body" viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="장래 정치 지도자 자유응답 추이">${grid}${dots}${lines}${labels}</svg></div>`;
     attachHover('tk-glead');
+    declareHost('tk-glead', 'tkglead');
     const meta = document.getElementById('tk-glead-meta');
     const months = new Set(GLEAD.records.map((r) => r.date));
     if (meta) meta.textContent = `한국갤럽 자유응답 · ${months.size}개월`;
@@ -501,6 +508,12 @@
       document.getElementById('tk-approval').innerHTML = renderApproval(recs);
       document.getElementById('tk-party').innerHTML = renderPartySupport(polls);
       document.getElementById('tk-cand').innerHTML = renderCandidatePref(candPolls);
+      // 이 차트들이 무엇인지 선언한다 — 캡처(build_og_maps --pages static)가 읽는다.
+      // 지지율 추이는 이 사이트에서만 볼 수 있는 시계열인데, 2026-08까지 JS 안에만
+      // 있어서 검색엔진도 공유 카드도 못 봤다(tracker.html 정적 그림 0장).
+      declareHost('tk-approval', 'tkapproval');
+      declareHost('tk-party', 'tkparty');
+      declareHost('tk-cand', 'tkcand');
       if (GLEAD) renderGallupLeaders();
       const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
       document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;

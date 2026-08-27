@@ -256,6 +256,94 @@
    "pages": [
     "polls"
    ]
+  },
+  {
+   "token": "tkapproval",
+   "label": "대통령 국정수행 평가",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "tkparty",
+   "label": "정당 지지도",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "tkcand",
+   "label": "차기 대선주자 선호",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "tkglead",
+   "label": "장래 정치 지도자",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "lineage",
+   "label": "정당 계보",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "dashgov",
+   "label": "광역단체장 판세",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "dashmayor",
+   "label": "기초단체장 판세",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
+  },
+  {
+   "token": "byemap",
+   "label": "재보궐 지역",
+   "kinds": [],
+   "page": [
+    null
+   ],
+   "pages": [
+    "static"
+   ]
   }
  ],
  "_hosts_note": "token은 렌더러의 data-map-host와 같아야 한다(assets/archive/render-sido-view.js mount·render-council-hex.js·general.js). page는 본문 <figure>로 낼 모드 — 전부 내면 총선 history가 8→13장이 된다. None은 토글 없는 단일 뷰.",
@@ -329,5 +417,6 @@
  "_modes_note": "map·geo가 둘 다 geo로, grid·격자가 둘 다 grid로 접힌다 — 두 토글 빌더가 다른 어휘를 쓰기 때문이다. 한글 enc(단색·격자)는 여기서 라틴으로 바뀌어 파일명·figure id에 절대 닿지 않는다(퍼센트 인코딩 사고 재발 방지).",
  "_offices_note": "offices는 history의 직위별 페이지(/history/local/9/governor/ 등 실재하는 셋: governor·mayor·superintendent)가 어느 지도를 걸지 정한다. 지선 기초단체장 쪽에 광역단체장 지도를 걸면 화면과 그림이 다른 걸 말한다. 직위 없는 페이지(대선·총선)는 전부 건다. 옛 build_static.HIST_VIEW_PREFER를 여기로 옮긴 것 — 네 번째 표를 만들지 않으려고.",
  "_electors_note": "electors는 캡처가 아니라 build_indirect_cards.py가 그린다(8~12대 간선 대선은 득표 지도가 없다). data-map-host를 찍을 DOM이 없지만, 그림을 만드는 쪽이 자기 정체를 map_captures.json에 적는 규칙은 똑같이 지킨다. 예전엔 sido1.png와 dorling.png 두 이름으로 **같은 그림**을 저장했다 — 타임라인 폴백을 맞추려는 우회였고, hex도 dorling도 아닌 점그리드에 그 이름을 붙인 것이었다.",
- "_polls_note": "pages: ['polls']인 host는 **여론조사 페이지**의 지도다(og/polls/{회차}/). archive의 og/maps/와 디렉터리를 나눈다 — 한 디렉터리에 섞으면 archive 캡처가 '내가 안 찍은 키'라며 지워 버린다. 모드가 방식(hex·geo)이 아니라 **자료**(여론조사 1위·실제 1위)인 것도 다르다. polls 지도는 한 컨테이너에 직위×자료×방식이 겹쳐 있어 전부 찍으면 회차당 12장이라, 기본 직위·기본 방식으로 두고 자료만 돈다 — 그게 이 페이지의 요점이다. 라벨에 '여론조사'를 붙이지 않는다 — 모드 라벨이 이미 '여론조사 1위'라서 캡션이 '여론조사 … 여론조사 1위'가 된다."
+ "_polls_note": "pages: ['polls']인 host는 **여론조사 페이지**의 지도다(og/polls/{회차}/). archive의 og/maps/와 디렉터리를 나눈다 — 한 디렉터리에 섞으면 archive 캡처가 '내가 안 찍은 키'라며 지워 버린다. 모드가 방식(hex·geo)이 아니라 **자료**(여론조사 1위·실제 1위)인 것도 다르다. polls 지도는 한 컨테이너에 직위×자료×방식이 겹쳐 있어 전부 찍으면 회차당 12장이라, 기본 직위·기본 방식으로 두고 자료만 돈다 — 그게 이 페이지의 요점이다. 라벨에 '여론조사'를 붙이지 않는다 — 모드 라벨이 이미 '여론조사 1위'라서 캡션이 '여론조사 … 여론조사 1위'가 된다.",
+ "_static_note": "pages: ['static']인 host는 **회차가 아닌 화면**의 그림이다(og/static/). 지지율 추이·정당 계보도·홈 대시보드처럼 한 장뿐이라 회차 디렉터리에 못 넣는다. kinds가 빈 것은 선거 계열에 매이지 않는다는 뜻이다. 토글이 없어 모드도 없다 — 키가 host 토큰 그대로다."
 }

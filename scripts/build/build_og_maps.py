@@ -28,6 +28,18 @@ MAPS = OG / "maps"
 # 여론조사 페이지 지도는 **다른 디렉터리**다. 한 곳에 섞으면 archive 캡처가 자기가 안
 # 찍은 키를 '옛 이름'으로 보고 지운다(stale 정리 루프). 키 문법은 같다(host-mode).
 POLLMAPS = OG / "polls"
+# 회차가 아닌 화면 — 지지율 추이·정당 계보도·홈 대시보드처럼 **한 장뿐인** 그림.
+# 회차 디렉터리에 못 넣으므로 따로 둔다. 이름은 화면 이름이 슬러그를 대신한다.
+STATICMAPS = OG / "static"
+STATIC_PAGES = {          # 출력 이름 → 열 주소
+    "tracker": "/tracker.html",
+    "parties": "/parties.html",
+    "home": "/",
+    # history.html은 안 찍는다 — 허브의 본체는 **목록**이고, 그 지도는 회차 페이지
+    # 66쪽이 이미 같은 것을 갖고 있다. 게다가 허브의 '지도' 모드는 leaflet이 그려
+    # #hex2가 숨으므로, 모드를 다 돌면 '200px 넘는 SVG가 없다'가 정상 상태로 남는다.
+    "byelection": "/byelection.html",
+}
 FAVICON = ROOT / "favicon.svg"
 
 # 뷰 표는 data/view_registry.json이 정본이다. 사본을 두면 어긋난다 — 실제로 어긋났었다
@@ -160,6 +172,12 @@ window.__cap = (() => {
   const encOf = (h, b) => (h.dataset.mapToggle ? b.dataset[h.dataset.mapToggle]
                                                : b.dataset.enc) || null;
   function biggest(h) {
+    // data-map-self는 '내 안의 svg가 아니라 나를 찍어라'다. leaflet처럼 base가 svg
+    // 하나가 아닌 여러 레이어일 때 쓴다 — 안쪽 svg만 찍으면 지도가 빠지고 마커만 남는다.
+    if (h.dataset.mapSelf) {
+      const r = h.getBoundingClientRect();
+      return {s: h, w: Math.round(r.width), h: Math.round(r.height)};
+    }
     // 호스트가 <svg> **자신**인 경우가 있다(polls의 #hex). querySelectorAll('svg')는
     // 자기 자신을 안 담으므로 따로 넣어 준다 — 안 그러면 그 지도가 통째로 안 잡힌다.
     const pool = h.tagName === 'svg' || h.tagName === 'SVG' ? [h] : [...h.querySelectorAll('svg')];
@@ -174,12 +192,18 @@ window.__cap = (() => {
       return [...document.querySelectorAll('[data-map-host]')].map(h => {
         const sec = h.closest('section');
         const h2 = sec && sec.querySelector('h2');
-        let title = null, desc = null;
-        if (h2) {
+        // 호스트 **자신의** aria-label이 있으면 그게 가장 정확하다. 섹션 제목은 여러
+        // 그림이 공유할 수 있어서, 홈의 광역/기초 판세 두 장이 같은 캡션을 갖고
+        // 재보궐 지도가 상세 패널 제목('경기 평택시을')을 가져왔다.
+        let title = (h.getAttribute('aria-label') || '').trim() || null;
+        let desc = null;
+        if (!title && h2) {
           // h2의 **자기 텍스트**만. 안에 물음표 툴팁(.info-pop)이 들어 있어
           // textContent를 쓰면 제목에 설명이 들러붙는다.
           title = [...h2.childNodes].filter(n => n.nodeType === 3)
                     .map(n => n.textContent).join('').trim() || null;
+        }
+        if (h2) {
           const pop = h2.querySelector('.info-pop');
           if (pop) desc = pop.textContent.trim();
         }
@@ -416,9 +440,10 @@ def recompose():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", help="한 선거만")
-    ap.add_argument("--pages", choices=("archive", "polls"), default="archive",
+    ap.add_argument("--pages", choices=("archive", "polls", "static"), default="archive",
                     help="무엇을 찍을지. archive=결과 지도(og/maps/), "
-                         "polls=여론조사 vs 실제 지도(og/polls/)")
+                         "polls=여론조사 vs 실제 지도(og/polls/), "
+                         "static=회차가 아닌 화면(tracker·계보도·홈 등 → og/static/)")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--port", type=int, default=8911)
     ap.add_argument("--recompose", action="store_true", help="캐시 지도로 카드만 재합성(favicon 동기화)")
@@ -436,7 +461,10 @@ def main():
         recompose(); return
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
-    slugs = [args.slug] if args.slug else (
+    if args.pages == "static":
+        slugs = [args.slug] if args.slug else sorted(STATIC_PAGES)
+    else:
+        slugs = [args.slug] if args.slug else (
             [e["slug"] for e in json.loads(
                 (ROOT / "data/polls/election_index.json").read_text(encoding="utf-8"))]
             if args.pages == "polls" else list_slugs())
@@ -473,12 +501,14 @@ def main():
         n = _sa.write_render_only(metas, render_root, only=set(slugs))
         print(f"하네스 {n}회차 생성 → .render/", flush=True)
     polls_mode = args.pages == "polls"
+    static_mode = args.pages == "static"
     base = (f"http://localhost:{args.port}/.render" if args.source == "render"
             else f"http://localhost:{args.port}/{'polls' if polls_mode else 'archive'}")
-    out_root = POLLMAPS if polls_mode else MAPS
+    root = f"http://localhost:{args.port}"
+    out_root = STATICMAPS if static_mode else (POLLMAPS if polls_mode else MAPS)
     # 이 페이지 계열의 host만 찍는다(레지스트리 hosts[].pages). archive는 pages가
     # 없는 것들 = 결과 지도.
-    allow = ({h["token"] for h in HOSTS if "polls" in (h.get("pages") or [])} if polls_mode
+    allow = ({h["token"] for h in HOSTS if args.pages in (h.get("pages") or [])} if (polls_mode or static_mode)
              else {h["token"] for h in HOSTS if not h.get("pages")})
     out_root.mkdir(parents=True, exist_ok=True)
 
@@ -489,11 +519,13 @@ def main():
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = p.chromium.launch()
-        targets = [(f"{base}/{s}", s) for s in slugs]
+        targets = ([(root + STATIC_PAGES[s].rstrip("/"), s) for s in slugs] if static_mode
+                   else [(f"{base}/{s}", s) for s in slugs])
         for url, slug in targets:
             pg = b.new_page(viewport={"width": 1320, "height": 1700})
             try:
-                pg.goto(f"{url}/", wait_until="networkidle", timeout=20000)
+                pg.goto(url if static_mode else f"{url}/",
+                        wait_until="networkidle", timeout=25000)
                 _settle(pg)
                 # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
                 #   인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
@@ -551,6 +583,10 @@ def main():
                 # 여론조사 페이지가 결과 지도 카드를 빌려 쓰던 것을 대신한다.
                 # 뷰별 카드는 안 만든다 — share/가 사라져 소비자가 없다.
                 primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
+                if static_mode:      # 화면 카드는 아직 안 만든다 — 그림만
+                    made.append((slug, list(views)))
+                    print(f"  {slug}: {len(views)} views {sorted(views)} ✓", flush=True)
+                    continue
                 card = OG / (f"polls-{slug}.png" if polls_mode else f"{slug}.png")
                 _make_card(pg, mark_svg, kicker, headline,
                            " · ".join(x for x in (views[primary].get("title"),
@@ -590,12 +626,13 @@ def main():
                                    ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     if cap_all:
-        _merge(ROOT / "data" / ("poll_map_captures.json" if polls_mode
-                                else "map_captures.json"), "slugs", cap_all,
+        _merge(ROOT / "data" / ("static_map_captures.json" if static_mode else
+                                ("poll_map_captures.json" if polls_mode
+                                 else "map_captures.json")), "slugs", cap_all,
                "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. "
                "눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 "
                "페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.",
-               deep=polls_mode)
+               deep=polls_mode or static_mode)
     if dup_all:
         worst = max((len(ks) for d in dup_all.values()
                      for ks in d["same_image"].values()), default=0)
@@ -603,8 +640,9 @@ def main():
         # ⚠️ 파일을 나눈다. 한 파일에 쓰면 같은 회차를 archive 실행과 polls 실행이
         # 번갈아 덮어써서, 마지막에 돌린 쪽 기록만 남는다 — '문제 없음'이 다른 쪽의
         # 문제를 가리게 된다.
-        _merge(ROOT / "data" / ("poll_capture_ambiguity.json" if polls_mode
-                                else "capture_ambiguity.json"), "slugs", dup_all,
+        _merge(ROOT / "data" / ("static_capture_ambiguity.json" if static_mode else
+                                ("poll_capture_ambiguity.json" if polls_mode
+                                 else "capture_ambiguity.json")), "slugs", dup_all,
                "빌드 생성물. **옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 "
                "불가능해졌다** — 키가 (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. "
                "대신 반대를 잰다: same_image는 서로 다른 키가 **같은 그림**이 된 경우로, "

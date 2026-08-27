@@ -1,0 +1,117 @@
+{
+ "_note": "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. 눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.",
+ "slugs": {
+  "byelection": {
+   "byemap": {
+    "host": "byemap",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "재보궐선거가 치러진 지역",
+    "title_src": "h2",
+    "desc": null,
+    "w": 628,
+    "h": 600,
+    "page": true
+   }
+  },
+  "home": {
+   "dashgov": {
+    "host": "dashgov",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "광역단체장 판세",
+    "title_src": "h2",
+    "desc": null,
+    "w": 383,
+    "h": 300,
+    "page": true
+   },
+   "dashmayor": {
+    "host": "dashmayor",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "기초단체장 판세",
+    "title_src": "h2",
+    "desc": null,
+    "w": 445,
+    "h": 300,
+    "page": true
+   }
+  },
+  "parties": {
+   "lineage": {
+    "host": "lineage",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "정당 계보",
+    "title_src": "registry",
+    "desc": null,
+    "w": 1246,
+    "h": 1116,
+    "page": true
+   }
+  },
+  "tracker": {
+   "tkapproval": {
+    "host": "tkapproval",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "대통령 국정수행 평가",
+    "title_src": "h2",
+    "desc": "“대통령이 직무를 잘 수행하고 있다고 보십니까?” 한국갤럽·리얼미터·NBS·한길리서치 등 다기관 조사. 점 = 개별 조사(기관별 차이·house effect 산포), 선 = 평활 추세(시간창 가중평균). 임기별로 구간을 나눠 표시(직무정지 기간 제외).",
+    "w": 1272,
+    "h": 477,
+    "page": true
+   },
+   "tkparty": {
+    "host": "tkparty",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "정당 지지도",
+    "title_src": "h2",
+    "desc": "전국 단위 다기관 조사의 정당 지지도. 점 = 개별 조사(house effect 산포), 선 = 평활 추세. NESDC 등록 공표 조사를 통합해 연속 시계열로.",
+    "w": 1272,
+    "h": 504,
+    "page": true
+   },
+   "tkcand": {
+    "host": "tkcand",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "차기 대선주자 선호",
+    "title_src": "h2",
+    "desc": "“다음 대통령으로 누구를 선호하십니까?” 다자대결(후보 4명 이상) 기준 — 양자대결·단독 적합도는 제외. 색은 소속 정당. 대선 국면(2016–17·2021–22·2024–25)별로 후보 동학이 보인다. 점에 마우스를 올리면 개별 조사.",
+    "w": 1272,
+    "h": 504,
+    "page": true
+   },
+   "tkglead": {
+    "host": "tkglead",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "tk-glead-section",
+    "title": "장래 정치 지도자 — 자유응답",
+    "title_src": "h2",
+    "desc": "한국갤럽 월간 ‘장래 정치 지도자 선호도’ — 보기 없이 자유응답으로 떠오르는 인물을 답한 결과(자발적 top-of-mind). 위 ‘차기 대선주자(다자대결)’와는 척도가 다르다: 자유응답은 합이 100이 안 되고 의견 유보가 ~50%라 같은 인물도 수치가 훨씬 낮다(예 오세훈 자유응답 2% vs 다자대결 12%). 그래서 별도. 단일 기관(갤럽)·대표본 월간 연속 시계열.",
+    "w": 1272,
+    "h": 477,
+    "page": true
+   }
+  }
+ }
+}

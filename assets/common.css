@@ -387,3 +387,38 @@ h2[id], h3[id] { scroll-margin-top: 72px; }
   background: repeating-linear-gradient(135deg,
     var(--bg3, #e6e9ef) 0 3px, transparent 3px 6px);
 }
+
+/* ── 본문 그림 (map-fig) ──────────────────────────────────────────────────
+   assets/components.css에 있었는데 index.html이 그 시트를 안 부른다 — 홈에 그림을
+   넣자 모바일에서 500px 그림이 390px 화면을 뚫었다(UI 불변식이 잡았다). 이제
+   archive·history·polls·직위·tracker·계보도·홈·재보궐이 다 쓰는 컴포넌트라
+   **모두가 부르는 시트**로 옮긴다.
+
+   액자가 왜 고정색인가: PNG에 밝은 바탕(#fafbfc)이 구워져 있다. 캡처가 투명 배경을 요청하지만
+   (omit_background=True) SVG가 칠해진 조상 위에 있어 먹지 않는다 — 414장 전부
+   RGB다. 게다가 .gov-hex-cell의 stroke가 var(--bg)라 헥스 사이 틈까지 밝은 색으로
+   구워졌다. 다크 테마에서 그냥 얹으면 흰 격자가 뜬다.
+
+   <picture media="(prefers-color-scheme: dark)">로는 못 푼다. 이 사이트 테마는
+   localStorage → data-theme이라, 손으로 다크로 바꾼 사용자는 prefers-color-scheme이
+   여전히 light다 — 두 신호가 설계상 어긋난다.
+
+   그래서 **액자를 고정색으로** 둔다. 그림이 놓인 종이와 액자가 같은 색이면 다크에서도
+   '밝은 종이에 인쇄된 차트'로 읽힌다. 페이지와 함께 반전하는 차트가 오히려 드물다. */
+
+:root { --surface-fixed: #fafbfc; --rule-fixed: rgba(10, 14, 26, 0.14); }
+
+.map-fig-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 10px;
+}
+.map-fig { margin: 0; }
+.map-fig img {
+  display: block; width: 100%; height: auto;
+  background: var(--surface-fixed);
+  border: 1px solid var(--rule-fixed); border-radius: 6px;
+}
+.map-fig figcaption {
+  font-size: 12px; color: var(--ink-soft); padding-top: 6px; line-height: 1.5;
+}

@@ -137,6 +137,16 @@ function cssId(s) { return s.replace(/\s/g, '-'); }
 const KOREA_BOUNDS = [[32.5, 123.5], [39.5, 132.5]];
 
 function renderMap(geo) {
+  // 컨테이너 자체를 찍는다(data-map-self). leaflet은 base가 svg 하나가 아니라
+  // 여러 레이어라, 안쪽 svg만 찍으면 한국 모양이 빠지고 마커만 남는다.
+  // 타일은 안 쓴다 — 시도 GeoJSON 외곽뿐이라 우리 데이터다(아래 주석 참조).
+  const _bm = document.getElementById('boe-map');
+  if (_bm) {
+    _bm.dataset.mapHost = 'byemap';
+    _bm.dataset.mapSelf = '1';
+    // 캡션이 될 이름. 없으면 옆 상세 패널의 제목('경기 평택시을')을 가져가 버린다.
+    _bm.setAttribute('aria-label', '재보궐선거가 치러진 지역');
+  }
   const map = L.map('boe-map', {
     zoomControl: true, attributionControl: false, maxZoom: 11,
     maxBounds: KOREA_BOUNDS, maxBoundsViscosity: 1.0,

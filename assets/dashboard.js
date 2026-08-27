@@ -156,6 +156,7 @@ function drawHexPanel(svg, cells, r, drawBorders) {
 // 광역단체장 — 17 시도 hex (라벨 포함). 폴 vs 결과 source 자동 전환.
 function renderGovernor(polls, results) {
   const svg = $('#dash-governor');
+  if (svg) svg.dataset.mapHost = 'dashgov';
   if (!svg) return;
   // source: results 우선 (결과 데이터 있으면), 아니면 폴
   const useResults = !!results;
@@ -202,6 +203,7 @@ function renderGovernor(polls, results) {
 // 기초단체장 — 250 시군구 hex
 function renderMayor(polls, sgHex, results) {
   const svg = $('#dash-mayor');
+  if (svg) svg.dataset.mapHost = 'dashmayor';
   if (!svg || !sgHex.length) return;
   const useResults = !!results;
   let byKey = {};  // 'sido|name' → { party, pct }
