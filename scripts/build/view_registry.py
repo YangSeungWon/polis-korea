@@ -76,3 +76,61 @@ def primary_for(kind: str, available: list[str]) -> str | None:
         if k in available:
             return k
     return available[0] if available else None
+
+
+# ── v2: (host × mode) ────────────────────────────────────────────────────────
+# v1(classify·view_meta)은 옛 키가 아직 디스크·페이지에 있어 남겨 둔다. 대개명이
+# 끝나면 지운다. 두 벌이 공존하는 동안 **v1은 읽기 전용**이다 — 새 코드는 v2만 쓴다.
+HOSTS: list[dict] = _D.get("hosts") or []
+MODES: list[dict] = _D.get("modes") or []
+
+_ENC2MODE = {e: m["mode"] for m in MODES for e in m["enc"]}
+_MODE_LABEL = {m["mode"]: m["label"] for m in MODES}
+_HOST = {h["token"]: h for h in HOSTS}
+
+KEY_RE = __import__("re").compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+
+def mode_of(enc: str) -> str | None:
+    """토글 버튼의 data-enc → 정규화 모드. 모르는 enc는 None(호출부가 시끄럽게 굴 것)."""
+    return _ENC2MODE.get((enc or "").strip())
+
+
+def mode_label(mode: str) -> str:
+    return _MODE_LABEL.get(mode, mode)
+
+
+def host_label(token: str) -> str:
+    h = _HOST.get(token)
+    return h["label"] if h else token
+
+
+def key_for(host: str, mode: str | None) -> str:
+    """(host, mode) → 뷰 키. 토글 없는 단일 뷰는 host 그대로."""
+    return f"{host}-{mode}" if mode else host
+
+
+def parse_key(key: str) -> tuple[str, str | None] | None:
+    """뷰 키 → (host, mode). 레지스트리에 없는 조합이면 None.
+
+    ⚠️ 접두사 모호성을 막는다. host 'sgg'와 'sggturn'이 같이 있으므로 'sgg-turnout-geo'가
+    (sgg, turnout-geo)인지 (sggturn, ...)인지 헷갈릴 수 있다 — **긴 토큰을 먼저** 맞춰
+    한 가지로만 읽히게 한다. 검사(C1)가 이 성질을 따로 확인한다.
+    """
+    if key in _HOST:
+        return key, None
+    for token in sorted(_HOST, key=len, reverse=True):
+        if key.startswith(token + "-"):
+            mode = key[len(token) + 1:]
+            return (token, mode) if mode in _MODE_LABEL else None
+    return None
+
+
+def hosts_for(kind: str) -> list[str]:
+    return [h["token"] for h in HOSTS if kind in (h.get("kinds") or [])]
+
+
+def is_page_view(host: str, mode: str | None) -> bool:
+    """본문 <figure>로 낼 뷰인가. 전부 내면 총선 history가 8→13장이 된다."""
+    h = _HOST.get(host)
+    return bool(h) and mode in (h.get("page") or [])
