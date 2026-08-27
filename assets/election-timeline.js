@@ -12,10 +12,26 @@
   };
   const typeOf = (e) => { const t = e.type || e.slug || ''; return /pres/.test(t) ? 'pres' : (/general|national/.test(t) ? 'general' : 'local'); };
   const shortLabel = (e) => (typeOf(e) === 'local' ? `${e.n}회` : `${e.n}대`);
-  // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 동일 뷰, 라벨은 캡처서 숨김).
-  //   지선=광역장 hex · 대선=시군구 격차명도 hex(result) · 총선=의석 반원(seats). 없으면 dorling 폴백(onerror).
-  const TL_VIEW = { local: 'governor', pres: 'sido1', general: 'seats' };
-  const mapUrl = (e) => `/og/maps/${e.slug}/${TL_VIEW[typeOf(e)] || 'dorling'}.png`;
+  // 호버 미니맵 — 그 선거 대표 결과지도(아카이브 목록 썸네일과 같은 뷰).
+  // 우선순위 표는 아래 생성 블록이다 — data/view_registry.json에서 sync된다.
+  // 2026-08까지 여기 'dorling' 폴백이 손으로 적혀 있었고, 뷰 이름이 바뀌면 실패
+  // 경로가 스스로를 display:none으로 숨겨 **조용히** 사라지는 자리였다.
+  const KIND = { local: 'local', pres: 'presidential', general: 'general_election' };
+// === VIEW_THUMBS auto-generated ===
+  // data/view_registry.json thumb_priority에서 sync. 손으로 고치지 말 것 —
+  // scripts/build/sync_view_registry_js.py 재실행으로 갱신.
+  // 목록 썸네일·og 카드·타임라인 호버가 같은 그림을 고르게 하는 표다.
+  const VIEW_THUMBS = {
+    local: ['gov-hex', 'sgg-flat', 'council'],
+    presidential: ['sido-hex', 'sido-grid', 'sgg-flat', 'sggturn-hex', 'electors'],
+    general_election: ['seats', 'sidoseat-hex', 'district-hex', 'prop-grid'],
+  };
+// === /VIEW_THUMBS ===
+  const chainOf = (e) => (VIEW_THUMBS[KIND[typeOf(e)]] || []);
+  const mapUrl = (e) => {
+    const c = chainOf(e);
+    return c.length ? `/og/maps/${e.slug}/${c[0]}.png` : '';
+  };
 
   function attachMiniMap(host) {
     let tip = document.getElementById('poll-tl-map-tip');
@@ -24,14 +40,20 @@
       tip.innerHTML = '<img alt="">'; document.body.appendChild(tip);
     }
     const img = tip.querySelector('img');
-    // result/seats 미생성(옛 회차·재캡처 전)이면 dorling으로 1회 폴백, 그래도 없으면 숨김.
+    // 대표 뷰가 없는 회차(옛 선거·재캡처 전)면 우선순위를 따라 내려가고, 다 없으면 숨김.
     img.addEventListener('error', () => {
-      if (!/\/dorling\.png$/.test(img.src)) { img.src = img.src.replace(/\/[^/]+\.png$/, '/dorling.png'); return; }
+      const chain = img.dataset.chain ? img.dataset.chain.split(',') : [];
+      const next = chain.shift();
+      img.dataset.chain = chain.join(',');
+      if (next) { img.src = img.src.replace(/\/[^/]+\.png$/, `/${next}.png`); return; }
       tip.style.display = 'none';
     });
     host.querySelectorAll('.poll-tl-node[data-map]').forEach((node) => {
       const url = node.getAttribute('data-map');
-      node.addEventListener('mouseenter', () => { img.src = url; tip.style.display = 'block'; });
+      node.addEventListener('mouseenter', () => {
+        img.dataset.chain = (node.getAttribute('data-map-alt') || '');
+        img.src = url; tip.style.display = 'block';
+      });
       node.addEventListener('mousemove', (ev) => {
         const left = ev.clientX > window.innerWidth - 230 ? ev.clientX - 206 : ev.clientX + 16;
         tip.style.left = left + 'px';
@@ -84,7 +106,7 @@
         const isCur = e.slug === curSlug;
         const fill = colorOf(e, L.color, isCur);   // 노드 색(폴 허브=레인색 / 대시보드=중립+최신만 포인트)
         const cx = x.toFixed(1);
-        nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}" data-map="${mapUrl(e)}">`
+        nodes += `<a href="${href(e)}" class="poll-tl-node${isCur ? ' is-current' : ''}" aria-label="${aria(e)}" data-map="${mapUrl(e)}" data-map-alt="${chainOf(e).slice(1).join(',')}">`
           + `<title>${e.name} · ${e.date}${e.party ? ' · ' + e.party : ''}${isCur && opts.curSuffix ? ' ' + opts.curSuffix : ''}</title>`
           + (isCur ? `<circle cx="${cx}" cy="${L.y}" r="${r + 3.5}" fill="none" stroke="${L.color}" stroke-width="1.6" opacity="0.55"/>` : '')
           + `<circle cx="${cx}" cy="${L.y}" r="${r}" fill="${fill}"/>`

@@ -130,6 +130,32 @@ def hosts_for(kind: str) -> list[str]:
     return [h["token"] for h in HOSTS if kind in (h.get("kinds") or [])]
 
 
+def hosts_for_office(office: str) -> set[str] | None:
+    """직위 슬러그 → 그 직위 페이지가 걸 host 토큰들. 직위가 없으면 None(=전부).
+
+    실재하는 직위 페이지는 셋뿐이다(governor·mayor·superintendent). 모르는 직위는
+    None을 준다 — 옛 HIST_VIEW_PREFER의 .get(off, None)과 같은 뜻으로, 새 직위
+    페이지가 생겼을 때 그림이 통째로 사라지는 것보다 전부 거는 쪽이 덜 나쁘다.
+    """
+    if not office:
+        return None
+    got = {h["token"] for h in HOSTS if office in (h.get("offices") or [])}
+    return got or None
+
+
+def page_rank(host: str, mode: str | None) -> tuple[int, int]:
+    """본문 그림의 읽기 순서. 레지스트리에 적힌 순서 그대로다.
+
+    파일명 알파벳 순으로 두면 district-geo가 district-hex보다 먼저 나오는 식으로,
+    '지도'가 '균등'보다 앞서는 뒤집힌 차례가 된다. 순서도 표가 정한다.
+    """
+    toks = [h["token"] for h in HOSTS]
+    hi = toks.index(host) if host in toks else len(toks)
+    modes = (_HOST.get(host, {}).get("page") or [])
+    mi = modes.index(mode) if mode in modes else len(modes)
+    return hi, mi
+
+
 def is_page_view(host: str, mode: str | None) -> bool:
     """본문 <figure>로 낼 뷰인가. 전부 내면 총선 history가 8→13장이 된다."""
     h = _HOST.get(host)

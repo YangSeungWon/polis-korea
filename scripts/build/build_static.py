@@ -418,14 +418,13 @@ def intro_block(h1: str, lede: str, extra: str = '') -> str:
 # 정확히 대응하므로(archive_slug_map) 같은 PNG를 가리키면 된다. 회차는 같은 선거를
 # 다른 축으로 보는 화면이지 다른 선거가 아니다.
 #
-# 직위가 있으면 그 직위의 뷰만 고른다 — 지선 기초단체장 페이지에 광역단체장 지도를
-# 걸면 화면과 그림이 다른 걸 말한다.
-HIST_VIEW_PREFER = {
-    'governor': ['governor', 'geo', 'turnout', 'turnout-geo'],
-    'mayor': ['result', 'sgg-geo', 'sgg-prop', 'sgg-turnout', 'sgg-turnout-geo'],
-    'superintendent': ['result', 'sgg-geo'],
-    '': None,      # 대선·총선 — 전부
-}
+# 어느 그림을 걸지는 **레지스트리가 정한다**(data/view_registry.json):
+#   hosts[].offices  직위별 페이지가 어느 지도를 걸지. 지선 기초단체장 쪽에
+#                    광역단체장 지도를 걸면 화면과 그림이 다른 걸 말한다.
+#   hosts[].page     그 host의 어느 모드를 본문에 낼지. 캡처는 모든 모드를 찍지만
+#                    전부 걸면 총선 회차 페이지가 8장에서 13장이 된다.
+# 옛 HIST_VIEW_PREFER(여기 손으로 적힌 11개 키)를 레지스트리로 옮긴 것 —
+# 네 번째 표를 만들지 않으려고.
 
 
 def round_figures(slug: str, off_slug: str, title: str) -> str:
@@ -438,29 +437,27 @@ def round_figures(slug: str, off_slug: str, title: str) -> str:
         e = (json.loads(mf.read_text(encoding='utf-8')).get('elections') or {}).get(slug) or {}
     except Exception:
         return ''
-    views = e.get('views') or []
-    if not views:
+    meta = e.get('meta') or {}
+    if not meta:
         return ''
-    prefer = HIST_VIEW_PREFER.get(off_slug, None)
-    if prefer is not None:
-        views = [v for v in prefer if v in views]
-    if not views:
-        return ''
+    want = _vr.hosts_for_office(off_slug)
     figs = []
-    for v in views:
+    order = sorted((e.get('views') or []),
+                   key=lambda v: _vr.page_rank((meta.get(v) or {}).get('host') or '',
+                                               (meta.get(v) or {}).get('mode')))
+    for v in order:
+        m = meta.get(v)
+        if not m or not m.get('page'):
+            continue
+        if want is not None and m.get('host') not in want:
+            continue
         f = ROOT / 'og' / 'maps' / slug / f'{v}.png'
         if not f.is_file():
             continue
-        label, desc = _vr.view_meta(v)
         wh = _rt.png_size(f)
         if not wh:
             continue
-        w, h = wh
-        figs.append(
-            f'<figure class="map-fig" id="{v}">'
-            f'<img src="/og/maps/{slug}/{v}.png" alt="{_esc(title)} {_esc(label)} — {_esc(desc)}" '
-            f'width="{w}" height="{h}" loading="lazy" decoding="async">'
-            f'<figcaption>{_esc(label)} — {_esc(desc)}</figcaption></figure>')
+        figs.append(_rt.fig(slug, v, m, wh[0], wh[1], title))
     if not figs:
         return ''
     return ('\n  <section class="ar-section" id="hx-map-figures">\n'

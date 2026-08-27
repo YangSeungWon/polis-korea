@@ -34,6 +34,20 @@ import result_tables as rt  # noqa: E402
 
 OUT = ROOT / "data" / "map_manifest.json"
 MAPS = ROOT / "og" / "maps"
+CAPS = ROOT / "data" / "map_captures.json"
+
+
+def captures() -> dict:
+    """캡처가 적어 둔 라벨(회차 → 키 → {label,title,desc,w,h,page}).
+
+    **디스크가 존재의 정본이고, 여기는 그 그림이 무엇인지의 정본이다.** 캡처가 누른
+    버튼의 글씨와 섹션 제목을 그대로 들고 있어서, 페이지의 figcaption·alt가 여기서
+    나온다 — 레지스트리에 한글 라벨을 손으로 적으면 그림과 어긋날 자리가 생긴다.
+    """
+    try:
+        return json.loads(CAPS.read_text(encoding="utf-8"))["slugs"]
+    except Exception:
+        return {}
 
 
 def absent_reason(kind: str, races: list) -> str | None:
@@ -59,6 +73,7 @@ def main() -> int:
         if m.get("id"):
             kinds[m["id"]] = m.get("kind") or ""
 
+    caps = captures()
     out: dict = {}
     for d in sorted((ROOT / "archive").iterdir()):
         if not (d / "index.html").is_file():
@@ -67,6 +82,10 @@ def main() -> int:
         reason = absent_reason(kind, rt.load_races(eid))
         views = sorted(f.stem for f in (MAPS / eid).glob("*.png")) \
             if (MAPS / eid).is_dir() else []
+        meta = {k: v for k, v in (caps.get(eid) or {}).items() if k in views}
+        # 디스크에 있는데 캡처 기록이 없는 그림은 **적어 둔다.** 조용히 넘기면
+        # 라벨 없는 그림이 캡션 자리에 키 슬러그를 찍는다(옛 view_meta가 그랬다).
+        unlabeled = [v for v in views if v not in meta]
         if reason and not views:
             out[eid] = {"kind": kind, "views": [], "absent": reason}
         elif not views:
@@ -74,20 +93,27 @@ def main() -> int:
                         "absent": "캡처를 아직 안 돌렸다 — 없는 게 맞는 것과 다르다."}
         else:
             out[eid] = {"kind": kind, "views": views,
-                        "primary": primary_for(kind, views)}
+                        "primary": primary_for(kind, views), "meta": meta}
+            if unlabeled:
+                out[eid]["unlabeled"] = unlabeled
 
     OUT.write_text(json.dumps({
         "_note": "빌드 생성물 — scripts/build/build_map_manifest.py. "
                  "views는 디스크 관측이다. absent에 이유가 적혀 있으면 '없는 게 맞다'는 "
-                 "뜻이고, '캡처를 아직'이면 만들 수 있는데 안 만든 것이다.",
+                 "뜻이고, '캡처를 아직'이면 만들 수 있는데 안 만든 것이다. "
+                 "meta는 캡처가 적어 둔 라벨(data/map_captures.json)로, 페이지의 "
+                 "figcaption·alt가 여기서 나온다. unlabeled는 그림은 있는데 그게 "
+                 "무엇인지 아무도 모르는 경우다 — 있으면 안 된다.",
         "elections": dict(sorted(out.items())),
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     have = sum(1 for v in out.values() if v["views"])
     right = sum(1 for v in out.values() if v.get("absent", "").startswith(("재보궐", "간선")))
     todo = sum(1 for v in out.values() if v.get("absent", "").startswith("캡처"))
+    nolabel = sum(len(v.get("unlabeled") or []) for v in out.values())
     print(f"→ {OUT.relative_to(ROOT)}: {len(out)}회차 · 뷰 있음 {have} · "
-          f"없는 게 맞음 {right} · 아직 안 만듦 {todo}")
+          f"없는 게 맞음 {right} · 아직 안 만듦 {todo}"
+          + (f" · ⚠️ 라벨 없는 그림 {nolabel}장" if nolabel else ""))
     return 0
 
 

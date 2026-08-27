@@ -146,6 +146,11 @@
     // #ar-prop-map은 section#ar-proportional 안이고 히어로엔 id가 없다.
     // 그리는 쪽이 자기 이름을 말하는 게 유일하게 안 어긋나는 방법이다.
     if (opts && opts.hostKey) host.dataset.mapHost = opts.hostKey;
+    // 모드도 함께 선언한다. **토글이 있느냐와 정체는 별개다** — 모드가 하나뿐이면
+    // 토글이 안 그려지는데, 그때 캡처가 버튼이 없다는 이유로 모드를 모르면 같은
+    // 그림이 어느 회차에선 sggturn-hex, 어느 회차에선 sggturn이 된다(2026-08-27:
+    // 옛 대선 8회차가 그랬다). 이름이 회차마다 달라지면 이름의 뜻이 없어진다.
+    host.dataset.mode = modes[0].key;
     // 인코딩 토글(공용) — 아이콘+가족 한 바. 가족 게이팅은 ENC의 fam이 자동 분류:
     //   1위(균등·지도) / 표 비례(격자·원형) / 자료(투표율). 흩어진 .seg 토글과 단일 컴포넌트로 통일.
     const views = modes.map((m, i) =>
@@ -176,6 +181,7 @@
       host.querySelectorAll('.ar-sido-view').forEach((el) => {
         el.toggleAttribute('hidden', el.dataset.view !== v);
       });
+      host.dataset.mode = v;          // 캡처가 읽는다 — 지금 보이는 게 무슨 모드인지
       if (keep) {
         const next = host.querySelector(`.ar-sido-view[data-view="${v}"] svg`);
         if (next && next.__svgViewport) next.__svgViewport.focusOn(keep.region, keep.scale);

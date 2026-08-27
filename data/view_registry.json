@@ -185,27 +185,34 @@
   }
  ],
  "primary_order": [
-  "governor",
+  "gov-hex",
   "seats",
-  "sido1",
-  "dorling",
+  "sido-hex",
+  "sido-grid",
+  "sgg-flat",
   "council",
-  "geo"
+  "district-hex",
+  "electors"
  ],
  "_primary_note": "대표(overview) 카드·목록 썸네일로 쓸 우선순위. seats가 sido1보다 위여야 총선(둘 다 보유)이 seats로 잡힌다.",
  "thumb_priority": {
   "local": [
-   "governor",
-   "dorling"
+   "gov-hex",
+   "sgg-flat",
+   "council"
   ],
   "presidential": [
-   "sido1",
-   "geo",
-   "dorling"
+   "sido-hex",
+   "sido-grid",
+   "sgg-flat",
+   "sggturn-hex",
+   "electors"
   ],
   "general_election": [
    "seats",
-   "dorling"
+   "sidoseat-hex",
+   "district-hex",
+   "prop-grid"
   ]
  },
  "_thumb_note": "elections.html·index.html 목록 썸네일. sync_archive_html.THUMB_PRIORITY가 여기서 온다 — 목록·og 카드·본문 그림이 같은 뷰를 고르게 하려고 한자리에 뒀다.",
@@ -220,6 +227,9 @@
    "page": [
     "hex",
     "geo"
+   ],
+   "offices": [
+    "governor"
    ]
   },
   {
@@ -261,6 +271,9 @@
    ],
    "page": [
     "hex"
+   ],
+   "offices": [
+    "mayor"
    ]
   },
   {
@@ -273,6 +286,10 @@
    "page": [
     "flat",
     "geo"
+   ],
+   "offices": [
+    "mayor",
+    "superintendent"
    ]
   },
   {
@@ -283,6 +300,9 @@
    ],
    "page": [
     "grid"
+   ],
+   "offices": [
+    "mayor"
    ]
   },
   {
@@ -338,6 +358,16 @@
    "page": [
     "hex",
     "geo"
+   ]
+  },
+  {
+   "token": "electors",
+   "label": "선거인단",
+   "kinds": [
+    "presidential"
+   ],
+   "page": [
+    null
    ]
   }
  ],
@@ -395,5 +425,8 @@
    "label": "단색"
   }
  ],
- "_modes_note": "map·geo가 둘 다 geo로, grid·격자가 둘 다 grid로 접힌다 — 두 토글 빌더가 다른 어휘를 쓰기 때문이다. 한글 enc(단색·격자)는 여기서 라틴으로 바뀌어 파일명·figure id에 절대 닿지 않는다(퍼센트 인코딩 사고 재발 방지)."
+ "_modes_note": "map·geo가 둘 다 geo로, grid·격자가 둘 다 grid로 접힌다 — 두 토글 빌더가 다른 어휘를 쓰기 때문이다. 한글 enc(단색·격자)는 여기서 라틴으로 바뀌어 파일명·figure id에 절대 닿지 않는다(퍼센트 인코딩 사고 재발 방지).",
+ "_offices_note": "offices는 history의 직위별 페이지(/history/local/9/governor/ 등 실재하는 셋: governor·mayor·superintendent)가 어느 지도를 걸지 정한다. 지선 기초단체장 쪽에 광역단체장 지도를 걸면 화면과 그림이 다른 걸 말한다. 직위 없는 페이지(대선·총선)는 전부 건다. 옛 build_static.HIST_VIEW_PREFER를 여기로 옮긴 것 — 네 번째 표를 만들지 않으려고.",
+ "_v1_note": "⚠️ views·classes(v1)는 이제 **assets/view-registry.js → polls의 svg-export.js**만 쓴다. archive·history는 v2(hosts×modes)로 넘어갔다. polls 계열 91쪽 정리가 끝나면 이 배열과 classify()를 지운다. 여기 적힌 옛 키(dorling·sgg-prop·sido1…)는 더 이상 og/maps 파일명이 아니다.",
+ "_electors_note": "electors는 캡처가 아니라 build_indirect_cards.py가 그린다(8~12대 간선 대선은 득표 지도가 없다). data-map-host를 찍을 DOM이 없지만, 그림을 만드는 쪽이 자기 정체를 map_captures.json에 적는 규칙은 똑같이 지킨다. 예전엔 sido1.png와 dorling.png 두 이름으로 **같은 그림**을 저장했다 — 타임라인 폴백을 맞추려는 우회였고, hex도 dorling도 아닌 점그리드에 그 이름을 붙인 것이었다."
 }

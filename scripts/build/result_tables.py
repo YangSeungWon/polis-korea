@@ -103,3 +103,35 @@ def png_size(path: Path) -> tuple[int, int] | None:
     if len(head) < 24 or head[:8] != b"\x89PNG\r\n\x1a\n":
         return None
     return (int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big"))
+
+
+def caption(key: str, m: dict) -> str:
+    """그림 한 장의 캡션. **여기가 유일한 조립 자리다.**
+
+    구분자는 ' · '다. 섹션 제목에 이미 em대시가 든 것이 있어('기초의원 비례 —
+    시·군·구별 표심') 같은 기호로 모드를 이으면 '— … —'가 되어 어디까지가 제목인지
+    안 보인다.
+
+    검사(tests/test_view_keys.py)도 이 함수를 부른다. 검사가 제 나름대로 다시
+    조립하면 그것도 사본이라, 형식을 바꿀 때 검사만 빨개진다 — 실제로 그랬다.
+    검사가 볼 것은 '페이지의 글이 매니페스트에서 나왔는가'지 '형식이 내 취향인가'가
+    아니다.
+    """
+    return " · ".join(x for x in (m.get("title"), m.get("label")) if x) or key
+
+
+def fig(eid: str, key: str, m: dict, w: int, h: int, title: str) -> str:
+    """<figure> 한 장. **글이 그림과 같은 출처에서 나온다.**
+
+    label은 캡처가 실제로 누른 토글 버튼의 글씨고, title·desc는 그 지도가 놓인
+    섹션의 제목과 설명이다(data/map_captures.json). 손으로 쓴 문구를 섞으면
+    다시 어긋난다 — 옛 view_meta()는 모르는 키에 키 자신을 라벨로 돌려줘서
+    'sgg-prop' 같은 슬러그가 한글 캡션 자리에 찍혀도 아무도 몰랐다.
+    """
+    cap = caption(key, m)
+    desc = (m.get("desc") or "").strip()
+    alt = _esc(" — ".join(x for x in (" ".join(y for y in (title, cap) if y), desc) if x))
+    return (f'<figure class="map-fig" id="{_esc(key)}">'
+            f'<img src="/og/maps/{_esc(eid)}/{_esc(key)}.png" alt="{alt}" '
+            f'width="{w}" height="{h}" loading="lazy" decoding="async">'
+            f'<figcaption>{_esc(cap)}</figcaption></figure>')

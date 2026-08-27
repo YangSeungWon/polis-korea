@@ -22,7 +22,7 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from view_registry import THUMB_PRIORITY, PRIMARY_ORDER, view_meta  # noqa: E402
+from view_registry import THUMB_PRIORITY, PRIMARY_ORDER  # noqa: E402
 import result_tables as _rt  # noqa: E402  history와 같은 표 유틸
 ELECTIONS_DIR = ROOT / "data" / "elections"
 ARCHIVE_DIR = ROOT / "archive"
@@ -1137,6 +1137,7 @@ def map_figures(eid: str, title: str) -> str:
     except Exception:
         return ""
     views = e.get("views") or []
+    meta = e.get("meta") or {}
     if not views:
         return ""
     # archive는 **개요**만. 표를 시도 집계로 접었듯 그림도 접는다 — 전체 뷰는
@@ -1155,17 +1156,14 @@ def map_figures(eid: str, title: str) -> str:
         f = ROOT / "og" / "maps" / eid / f"{v}.png"
         if not f.is_file():
             continue
-        label, desc = view_meta(v)
+        m = meta.get(v)
+        if not m:
+            continue        # 무엇인지 모르는 그림은 걸지 않는다(매니페스트 unlabeled)
         wh = _rt.png_size(f)
         if not wh:
             continue
         w, h = wh
-        alt = _esc(f"{title} {label} — {desc}")
-        figs.append(
-            f'<figure class="map-fig" id="{_esc(v)}">'
-            f'<img src="/og/maps/{_esc(eid)}/{_esc(v)}.png" alt="{alt}" '
-            f'width="{w}" height="{h}" loading="lazy" decoding="async">'
-            f'<figcaption>{_esc(label)} — {_esc(desc)}</figcaption></figure>')
+        figs.append(_rt.fig(eid, v, m, w, h, title))
     if not figs:
         return ""
     return ('\n  <section class="ar-section" id="ar-map-figures">\n'

@@ -27,12 +27,14 @@ OG = ROOT / "og"
 MAPS = OG / "maps"
 FAVICON = ROOT / "favicon.svg"
 
-# SVG 클래스 substring → 깔끔한 뷰 키·라벨·설명. 토글 캡처분도 같은 클래스라 일관 분류.
-# 뷰 표는 data/view_registry.json이 정본이다. 여기 두면 svg-export.js·
-# build_share_pages.py의 사본과 어긋난다 — 실제로 어긋나 있었다(key 'result'가
-# 한쪽은 '시군구 결과', 다른 쪽은 '시군구 1위'였다).
+# 뷰 표는 data/view_registry.json이 정본이다. 사본을 두면 어긋난다 — 실제로 어긋났었다
+# (key 'result'가 한쪽은 '시군구 결과', 다른 쪽은 '시군구 1위'였다).
+#
+# ⚠️ classify()는 **더 이상 캡처 경로에 없다.** 그리는 쪽이 data-map-host로 자기 정체를
+# 밝히므로, 다 그려진 SVG를 클래스로 되짚어 추측할 이유가 없다. 아래 _capture_views 참조.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from view_registry import VIEW_DEFS, PRIMARY_ORDER, classify as _classify, view_meta  # noqa: E402
+from view_registry import (PRIMARY_ORDER, key_for, mode_of, host_label,  # noqa: E402
+                           is_page_view)
 
 
 
@@ -130,83 +132,155 @@ def list_slugs() -> list[str]:
                   if p.is_dir() and (p / "index.html").exists())
 
 
-def _capture_views(page):
-    """{view_key: png_bytes} — 지도 SVG를 깔끔한 키로 분류해 캡처.
+# 브라우저 쪽 규칙은 **한 군데**에 둔다. 파이썬에서 셀렉터를 조립하면 여기와 어긋난다.
+CAP_JS = r"""
+window.__cap = (() => {
+  const MIN = 200;                    // 범례·아이콘 SVG를 거른다(토글 안 enc-ic는 15x15)
+  const info = b => ({enc: b.dataset.enc || null, label: (b.textContent || '').trim()});
 
-    ⚠️ **한 키를 여러 그림이 다툰다.** 2026-08-27 관측(4개 회차, 픽셀 해시로 셈):
+  function toggles(h) {
+    const inner = [...h.querySelectorAll('.seg-btn')];
+    if (inner.length) return inner;
+    // 없으면 **직계 부모까지만** 본다. sgg·sggprop은 토글이 host의 형제다.
+    // 한 단계만 더 올라가면 페이지 전체를 긁는다 — 토글이 정말 없는 기초의회에서
+    // 18개가 잡혔다(2026-08-27 관측). 그래서 depth 0에서 멈춘다.
+    return h.parentElement ? [...h.parentElement.querySelectorAll('.seg-btn')] : [];
+  }
+  function biggest(h) {
+    return [...h.querySelectorAll('svg')]
+      .map(s => { const r = s.getBoundingClientRect();
+                  return {s, w: Math.round(r.width), h: Math.round(r.height)}; })
+      .filter(o => o.w >= MIN && o.h >= MIN)
+      .sort((a, b) => b.w * b.h - a.w * a.h)[0] || null;
+  }
+  return {
+    hosts() {
+      return [...document.querySelectorAll('[data-map-host]')].map(h => {
+        const sec = h.closest('section');
+        const h2 = sec && sec.querySelector('h2');
+        let title = null, desc = null;
+        if (h2) {
+          // h2의 **자기 텍스트**만. 안에 물음표 툴팁(.info-pop)이 들어 있어
+          // textContent를 쓰면 제목에 설명이 들러붙는다.
+          title = [...h2.childNodes].filter(n => n.nodeType === 3)
+                    .map(n => n.textContent).join('').trim() || null;
+          const pop = h2.querySelector('.info-pop');
+          if (pop) desc = pop.textContent.trim();
+        }
+        return {token: h.dataset.mapHost, section: (sec && sec.id) || null,
+                title, desc, toggles: toggles(h).map(info)};
+      });
+    },
+    click(token, enc) {
+      const h = document.querySelector('[data-map-host="' + token + '"]');
+      if (!h) return 'no-host';
+      const b = toggles(h).find(x => (x.dataset.enc || null) === enc);
+      if (!b) return 'no-btn';
+      b.click();
+      return 'ok';
+    },
+    pick(token) {
+      document.querySelectorAll('[data-cap]').forEach(n => n.removeAttribute('data-cap'));
+      const h = document.querySelector('[data-map-host="' + token + '"]');
+      if (!h) return null;
+      const o = biggest(h);
+      if (!o) return null;
+      o.s.setAttribute('data-cap', '1');
+      return {w: o.w, h: o.h, mode: h.dataset.mode || null};
+    }
+  };
+})();
+"""
 
-        dorling      서로 다른 내용 최대 14가지
-        sgg-prop                       13가지
-        sgg-turnout                     6가지
-        result·council                  5가지
-        district                        4가지
 
-    이유가 둘이다. (1) _classify는 SVG **클래스만** 보는데 한 클래스가 여러 섹션의
-    서로 다른 SVG에 붙어 있다 — 9회 지선은 토글을 누르기도 전에(init) 이미 dorling이
-    두 가지다(시도 dorling·시군구 dorling이 같은 ar-sidocluster를 쓴다).
-    (2) 거기에 토글 상태가 곱해진다.
+def _capture_views(page, slug: str = ""):
+    """{키: {png, ...}} — **발견이 아니라 열거로** 캡처한다.
 
-    그런데 승자를 **바이트 크기**로 뽑는다. 즉 og/maps/{회차}/dorling.png가 무엇인지를
-    지금까지 PNG 압축률이 정해 왔다. 15대 총선 district는 후보들이 18~37바이트 차이라
-    조건이 조금만 달라도 승자가 뒤집혔다.
+    옛 방식은 다 그려진 SVG를 클래스로 되짚어 분류했다. 그런데 한 클래스가 여러
+    (섹션, 모드)에 붙어 있어서, 같은 키를 여러 그림이 다투고 **바이트 큰 쪽이**
+    이겼다 — og/maps/{회차}/dorling.png가 무엇인지를 PNG 압축률이 정했다
+    (2026-08-27 관측: 한 키에 최대 14가지, 15대 총선 district는 후보들이
+    18~37바이트 차이라 조건이 조금만 달라도 승자가 뒤집혔다).
 
-    이건 결정성 문제 이전에 **정확성 문제**다. 페이지의 <figure alt="의석 비례 —
-    면적·점=의석수·색=정당">이 실제로 그 그림인지 보증되지 않는다.
+    이제 캡처는 **자기가 무엇을 눌렀는지 안다.** 지도가 data-map-host로 정체를
+    밝히고, 토글 버튼의 data-enc가 모드를 말한다. 키는 그 둘의 곱이다.
 
-    제대로 고치려면 뷰 키를 (섹션 id, 토글 상태)로 식별해야 하는데, 지금 레지스트리는
-    그걸 표현하지 못한다 — 클래스 하나가 전부다. 재설계 전까지는 **모호함을 적어 두고
-    새로 생기면 잡는다**(아래 ambiguity, tests/test_capture_ambiguity.py).
+    라벨도 여기서 기록한다. 눌린 버튼의 글씨와 섹션 제목·설명을 그대로 적어 두면
+    페이지의 캡션이 거기서 나온다 — 글과 그림이 한 출처에서 나오면 어긋날 자리가
+    없다. 레지스트리에 한글 라벨을 손으로 적지 않는 이유다.
     """
-    views = {}
-    seen: dict = {}          # key -> {sha1: 처음 잡힌 태그}
+    import hashlib
+    page.evaluate(CAP_JS)
+    out: dict[str, dict] = {}
+    by_img: dict[str, list[str]] = {}     # 픽셀 해시 → 키들
+    problems: list[str] = []
 
-    def grab():
-        for el in page.query_selector_all("svg"):
-            key = _classify(el.get_attribute("class") or "")
-            if not key:
+    for h in page.evaluate("() => __cap.hosts()"):
+        token = h["token"]
+        # 토글이 있으면 각 enc를, 없으면 단일 뷰 하나를. 다만 **토글이 없는 것과
+        # 모드를 모르는 것은 다르다** — 모드가 하나뿐이면 토글이 안 그려지는데,
+        # 그때도 렌더러는 data-mode로 무엇을 그렸는지 말한다. 그걸 안 읽으면 같은
+        # 그림이 어느 회차에선 sggturn-hex, 어느 회차에선 sggturn이 된다.
+        # (enc, label, 눌러야 하나) — 선언으로 안 모드는 이미 화면에 떠 있으므로
+        # 누를 버튼이 없다. 그걸 구분 안 하면 '버튼을 못 눌렀다'며 그 뷰를 버린다.
+        plan = [(b["enc"], b["label"], True) for b in h["toggles"] if b["enc"]]
+        if not plan:
+            declared = (page.evaluate("(t) => __cap.pick(t)", token) or {}).get("mode")
+            plan = [(declared, None, False)] if declared else [(None, None, False)]
+        for enc, label, press in plan:
+            mode = None
+            if enc is not None:
+                mode = mode_of(enc)
+                if mode is None:
+                    # 레지스트리가 모르는 토글 값. 조용히 넘기면 그 뷰가 통째로
+                    # 사라지므로 시끄럽게 군다.
+                    problems.append(f"{token}: 모르는 enc {enc!r} — 레지스트리 modes에 없다")
+                    continue
+                if press:
+                    if page.evaluate("([t,e]) => __cap.click(t,e)", [token, enc]) != "ok":
+                        problems.append(f"{token}/{enc}: 버튼을 못 눌렀다")
+                        continue
+                    _settle(page)
+            got = page.evaluate("(t) => __cap.pick(t)", token)
+            if not got:
+                problems.append(f"{token}/{enc}: 200px 넘는 SVG가 없다")
                 continue
-            try:
-                bb = el.bounding_box()
-            except Exception:
-                bb = None
-            if not bb or bb["width"] < 200 or bb["height"] < 200:
+            # 렌더러가 data-mode를 찍는 곳(기초의회 계열)에선 **클릭이 먹었는지**를
+            # 공짜로 확인할 수 있다. 안 먹으면 앞 모드의 그림이 다음 키로 저장된다.
+            if got.get("mode") and enc and got["mode"] != enc:
+                problems.append(f"{token}/{enc}: 클릭 후에도 data-mode={got['mode']!r}")
+                continue
+            el = page.query_selector('[data-cap="1"]')
+            if el is None:
+                problems.append(f"{token}/{enc}: 캡처 대상을 못 잡았다")
                 continue
             try:
                 png = el.screenshot(omit_background=True)
-            except Exception:
+            except Exception as e:
+                problems.append(f"{token}/{enc}: screenshot 실패 {e}")
                 continue
-            import hashlib
-            seen.setdefault(key, {}).setdefault(hashlib.sha1(png).hexdigest()[:8], len(png))
-            if key not in views or len(png) > len(views[key]):
-                views[key] = png
+            key = key_for(token, mode)
+            if key in out:
+                problems.append(f"{key}: 키가 두 번 나왔다 — host 토큰이 중복이다")
+                continue
+            out[key] = {
+                "png": png, "host": token, "mode": mode, "enc": enc,
+                "label": label, "section": h["section"],
+                "title": h["title"] or host_label(token),
+                "title_src": "h2" if h["title"] else "registry",
+                "desc": h["desc"], "w": got["w"], "h": got["h"],
+                "page": is_page_view(token, mode),
+            }
+            by_img.setdefault(hashlib.sha1(png).hexdigest()[:12], []).append(key)
 
-    grab()
-    # 인맵 방식 토글을 눌러가며 대체 뷰도 캡처(EncodingToggle/.seg 통일 후 버튼=.seg-btn).
-    #   .ar-sido-toggle = 시도뷰·비례·광역의원, .sgg-mode-toggle = 시군구 결과(단색/지도/격자/원형).
-    #   지도(geo)는 sigungu_{year} geojson 로드라 대기 넉넉히.
-    for sel in (".ar-sido-toggle", ".sgg-mode-toggle"):
-        groups = page.query_selector_all(sel)
-        for gi in range(len(groups)):
-            groups = page.query_selector_all(sel)
-            if gi >= len(groups):
-                break
-            for tab in groups[gi].query_selector_all(".seg-btn"):
-                try:
-                    if "is-active" in (tab.get_attribute("class") or ""):
-                        continue
-                    tab.click()
-                    # 고정 대기가 아니라 **멎을 때까지** 기다린다. 1500ms는 큰 geojson을
-                    # 노린 매직 넘버였는데, 뷰마다 완료 시점이 달라 그 시점의 중간 상태가
-                    # 찍혔다. 그래서 같은 페이지를 두 번 캡처해도 결과가 달랐다 —
-                    # 하네스가 비결정적이라고 판단했던 것의 실제 정체다(2026-08-27 관측:
-                    # DOM 마크업은 4회 전부 동일했는데 픽셀만 달랐다).
-                    _settle(page)
-                    grab()
-                except Exception:
-                    pass
-    _capture_views.ambiguity = {k: len(v) for k, v in seen.items() if len(v) > 1}
-
-    return views
+    # 옛 모호함(한 키에 여러 그림)은 열거식에선 구조적으로 불가능하다. 대신 **반대**를
+    # 잰다 — 서로 다른 키가 같은 그림이면 토글 클릭이 조용히 안 먹은 것이다.
+    _capture_views.same_image = {k: v for k, v in
+                                 ((h, ks) for h, ks in by_img.items() if len(ks) > 1)}
+    _capture_views.problems = problems
+    for msg in problems:
+        print(f"    ⚠️ {slug} {msg}", flush=True)
+    return out
 
 
 def _card_html(mark_svg, kicker, headline, subline, map_png):
@@ -232,12 +306,46 @@ body{{width:1200px;height:630px;font-family:Pretendard,sans-serif;background:#f6
 <div class="right"><img src="data:image/png;base64,{b64}"></div><div class="accent"></div></body></html>"""
 
 
+def _make_card(pg, mark_svg, kicker, headline, subline, map_png, out: Path):
+    """지도 PNG 하나로 1200×630 공유 카드를 만든다."""
+    pg.set_content(_card_html(mark_svg, kicker, headline, subline, map_png),
+                   wait_until="networkidle")
+    pg.wait_for_timeout(350)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    pg.screenshot(path=str(out), clip={"x": 0, "y": 0, "width": 1200, "height": 630})
+
+
+def _card_sub(slug: str, key: str) -> str:
+    """카드 부제. 캡처가 적어 둔 라벨에서 나온다(data/map_captures.json)."""
+    v = (_captures().get(slug) or {}).get(key) or {}
+    ttl, lbl = v.get("title"), v.get("label")
+    return " · ".join(x for x in (ttl, lbl) if x) or key
+
+
+_CAP_CACHE = None
+
+
+def _captures() -> dict:
+    global _CAP_CACHE
+    if _CAP_CACHE is None:
+        f = ROOT / "data" / "map_captures.json"
+        try:
+            _CAP_CACHE = json.loads(f.read_text(encoding="utf-8"))["slugs"]
+        except Exception:
+            _CAP_CACHE = {}
+    return _CAP_CACHE
+
+
 def recompose():
-    """캐시된 원본 지도(og/maps/{slug}/*.png)로 카드만 재합성 — favicon 마크 바뀔 때 빠른 동기화
-    (아카이브 페이지 재렌더·지도 재캡처 없이 카드 chrome만 다시). 제목·날짜는 archive_index.json."""
-    import json
+    """캐시된 지도(og/maps/{slug}/*.png)로 **대표 카드만** 다시 만든다 — favicon이
+    바뀔 때 페이지 재렌더·지도 재캡처 없이 chrome만 동기화.
+
+    2026-08까지는 뷰마다 카드를 하나씩(og/{slug}/{key}.png, 402장) 만들었다. 그걸
+    쓰던 share/ 402쪽이 사라지면서 소비자가 없어졌다 — 아무도 안 보는 그림을
+    회차당 8장씩 굽고 있었다. 페이지 og:image로 쓰는 og/{slug}.png만 남긴다."""
     from playwright.sync_api import sync_playwright
-    meta = {e["slug"]: e for e in json.loads((ROOT / "data/archive_index.json").read_text(encoding="utf-8"))}
+    meta = {e["slug"]: e for e in json.loads(
+        (ROOT / "data/archive_index.json").read_text(encoding="utf-8"))}
     mark_svg = FAVICON.read_text(encoding="utf-8")
     made = 0
     with sync_playwright() as p:
@@ -245,24 +353,17 @@ def recompose():
         pg = b.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=1)
         for slug_dir in sorted(d for d in MAPS.iterdir() if d.is_dir()):
             slug = slug_dir.name
+            keys = sorted(f.stem for f in slug_dir.glob("*.png"))
+            if not keys:
+                continue
             m = meta.get(slug, {})
-            kicker = (m.get("date") or "")[:10]
-            headline = m.get("name") or slug
-            views = {}
-            for png_path in sorted(slug_dir.glob("*.png")):
-                key = png_path.stem
-                label, desc = view_meta(key)
-                html = _card_html(mark_svg, kicker, headline, f"{label} · {desc}", png_path.read_bytes())
-                pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(300)
-                out = OG / slug / f"{key}.png"
-                out.parent.mkdir(parents=True, exist_ok=True)
-                pg.screenshot(path=str(out), clip={"x": 0, "y": 0, "width": 1200, "height": 630})
-                views[key] = out; made += 1
-            if views:
-                primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
-                shutil.copyfile(OG / slug / f"{primary}.png", OG / f"{slug}.png")
+            primary = next((k for k in PRIMARY_ORDER if k in keys), keys[0])
+            _make_card(pg, mark_svg, (m.get("date") or "")[:10], m.get("name") or slug,
+                       _card_sub(slug, primary), (slug_dir / f"{primary}.png").read_bytes(),
+                       OG / f"{slug}.png")
+            made += 1
         b.close()
-    print(f"recompose: {made} cards (캐시 지도 재사용)")
+    print(f"recompose: 대표 카드 {made}장 (캐시 지도 재사용)")
 
 
 def main():
@@ -286,7 +387,8 @@ def main():
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
     slugs = [args.slug] if args.slug else list_slugs()
-    amb_all: dict = {}   # 회차 → {뷰 키: 서로 다른 그림 수}
+    cap_all: dict = {}   # 회차 → {뷰 키: 캡처가 기록한 라벨·크기}
+    dup_all: dict = {}   # 회차 → 같은 그림이 된 키들·문제 목록
     if args.shrink_only:
         tot_b = tot_a = 0
         for f in sorted((ROOT / "og").rglob("*.png")):
@@ -351,58 +453,81 @@ def main():
                 _m = _meta_of(slug)
                 title = (_m.get("name") or "").strip()
                 date_s = (_m.get("date") or "").strip()
-                views = _capture_views(pg)
-                amb_all[slug] = getattr(_capture_views, 'ambiguity', {}) or {}
+                views = _capture_views(pg, slug)
+                dup_all[slug] = {
+                    "same_image": getattr(_capture_views, 'same_image', {}) or {},
+                    "problems": getattr(_capture_views, 'problems', []) or [],
+                }
                 if not views:
                     print(f"  {slug}: 지도 없음 — skip"); pg.close(); continue
                 mdate = re.search(r"\d{4}-\d{2}-\d{2}", date_s)
                 kicker = mdate.group(0) if mdate else date_s[:10]
                 headline = title or slug
                 raw_dir = MAPS / slug
-                card_dir = OG / slug
                 raw_dir.mkdir(parents=True, exist_ok=True)
-                card_dir.mkdir(parents=True, exist_ok=True)
-                for key, png in views.items():
-                    (raw_dir / f"{key}.png").write_bytes(png)   # 원본(투명)
+                # 옛 키의 PNG를 남겨 두면 매니페스트가 디스크를 관측해서 그것까지
+                # 뷰로 적는다 — 페이지가 사라진 이름의 그림을 걸게 된다.
+                for stale in raw_dir.glob("*.png"):
+                    if stale.stem not in views:
+                        stale.unlink()
+                rec = {}
+                for key, v in views.items():
+                    f = raw_dir / f"{key}.png"
+                    f.write_bytes(v["png"])              # 원본(투명)
                     # 재압축을 캡처 경로에 둔다. --shrink-only에만 두면 파이프라인
-                    # 산출물이 '찍은 것'과 '커밋된 것' 두 형태로 갈리고, 하네스가
-                    # 같은 픽셀을 내놓는지 바이트로 확인할 수가 없다.
-                    shrink(raw_dir / f"{key}.png")
-                    label, desc = view_meta(key)
-                    html = _card_html(mark_svg, kicker, headline, f"{label} · {desc}", png)
-                    pg.set_content(html, wait_until="networkidle"); pg.wait_for_timeout(350)
-                    pg.screenshot(path=str(card_dir / f"{key}.png"),
-                                  clip={"x": 0, "y": 0, "width": 1200, "height": 630})
-                # 대표 카드 og/{slug}.png (archive·poll 페이지 기본 og:image)
+                    # 산출물이 '찍은 것'과 '커밋된 것' 두 형태로 갈린다.
+                    shrink(f)
+                    rec[key] = {k: v[k] for k in
+                                ("host", "mode", "enc", "label", "section",
+                                 "title", "title_src", "desc", "w", "h", "page")}
+                cap_all[slug] = dict(sorted(rec.items()))
+                # 대표 카드 og/{slug}.png (archive·poll 페이지 기본 og:image).
+                # 뷰별 카드는 안 만든다 — share/가 사라져 소비자가 없다.
                 primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
-                shutil.copyfile(card_dir / f"{primary}.png", OG / f"{slug}.png")
+                _make_card(pg, mark_svg, kicker, headline,
+                           " · ".join(x for x in (views[primary].get("title"),
+                                                  views[primary].get("label")) if x) or primary,
+                           views[primary]["png"], OG / f"{slug}.png")
                 made.append((slug, list(views)))
-                print(f"  {slug}: {len(views)} views {list(views)} ✓")
+                print(f"  {slug}: {len(views)} views {sorted(views)} ✓", flush=True)
             except Exception as e:
                 print(f"  {slug}: ERROR {e}")
             finally:
                 pg.close()
         b.close()
-    # 모호함을 파일로 남긴다. 지금은 고칠 수 없지만(재설계 필요) **새로 생기는 것은
-    # 잡을 수 있다** — tests/test_capture_ambiguity.py가 이 파일을 읽는다.
-    if amb_all:
-        amb_p = ROOT / "data" / "capture_ambiguity.json"
+    # 캡처가 기록한 것을 파일로 남긴다. 페이지의 alt·figcaption이 여기서 나온다 —
+    # 레지스트리에 한글 라벨을 손으로 적지 않는 이유다(build_map_manifest가 읽는다).
+    def _merge(path: Path, key: str, add: dict, note: str) -> None:
         prev = {}
-        if amb_p.is_file():
+        if path.is_file():
             try:
-                prev = json.loads(amb_p.read_text(encoding="utf-8")).get("slugs") or {}
+                prev = json.loads(path.read_text(encoding="utf-8")).get(key) or {}
             except Exception:
                 prev = {}
-        prev.update(amb_all)
-        amb_p.write_text(json.dumps(
-            {"_note": "한 뷰 키를 여러 그림이 다툰 횟수(회차별). _capture_views 주석 참조. "
-                      "숫자가 2 이상이면 og/maps/{회차}/{키}.png가 무엇인지 PNG 압축률이 "
-                      "정하고 있다는 뜻이다. 재설계 전까지 기록만 하고, 새로 생기면 검사가 잡는다.",
-             "slugs": dict(sorted(prev.items()))}, ensure_ascii=False, indent=1) + "\n",
-            encoding="utf-8")
-        worst = max((max(v.values()) for v in amb_all.values() if v), default=0)
-        print(f"⚠️ 모호한 뷰 키가 있는 회차 {len(amb_all)} · 한 키 최대 {worst}가지 "
-              f"→ data/capture_ambiguity.json", flush=True)
+        prev.update(add)
+        path.write_text(json.dumps({"_note": note, key: dict(sorted(prev.items()))},
+                                   ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+    if cap_all:
+        _merge(ROOT / "data" / "map_captures.json", "slugs", cap_all,
+               "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. "
+               "눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 "
+               "페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.")
+    if dup_all:
+        worst = max((len(ks) for d in dup_all.values()
+                     for ks in d["same_image"].values()), default=0)
+        nprob = sum(len(d["problems"]) for d in dup_all.values())
+        _merge(ROOT / "data" / "capture_ambiguity.json", "slugs", dup_all,
+               "빌드 생성물. **옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 "
+               "불가능해졌다** — 키가 (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. "
+               "대신 반대를 잰다: same_image는 서로 다른 키가 **같은 그림**이 된 경우로, "
+               "토글 클릭이 조용히 안 먹었다는 뜻이다. problems는 캡처가 건너뛴 뷰다. "
+               "둘 다 0이어야 한다.")
+        if worst or nprob:
+            print(f"⚠️ 같은 그림이 된 키 최대 {worst}개 · 건너뛴 뷰 {nprob}개 "
+                  f"→ data/capture_ambiguity.json", flush=True)
+        else:
+            print("모호함 0 · 건너뛴 뷰 0", flush=True)
 
     if args.source == "render" and not args.keep_render:
         shutil.rmtree(render_root, ignore_errors=True)

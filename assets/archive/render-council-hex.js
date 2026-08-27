@@ -469,7 +469,10 @@
     const modes = [{ key: 'hex', label: '균등', draw: drawHex }];
     if (year && window.Archive?.sigunguMap?.draw) modes.push({ key: 'map', label: '지도', draw: drawGeo });
     if (SV?.mount && modes.length > 1) SV.mount(host, modes, null, { hostKey: 'sggturn' });
-    else { host.dataset.mapHost = 'sggturn'; drawHex(host); }
+    // 지도 모드가 없으면(경계 geojson이 없는 옛 회차) 토글도 없다. 그래도 **무엇을
+    // 그렸는지는 안다** — 선언해 두지 않으면 캡처가 sggturn-hex 대신 sggturn으로
+    // 이름 붙여, 같은 그림이 회차마다 다른 이름이 된다.
+    else { host.dataset.mapHost = 'sggturn'; host.dataset.mode = 'hex'; drawHex(host); }
   }
 
   // ── 시군구 1위 후보 결과 맵 (대선) ──────────────────────────────

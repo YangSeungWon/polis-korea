@@ -98,15 +98,13 @@ jobs:
       - name: 빌드 연기 시험 (브라우저·PIL 없이 도는지)
         run: python tests/test_build_smoke.py
 
-      # 지도 그림이 무엇인지 PNG 압축률이 정하고 있다(docs/seo-coverage.md). 아직 못
-      # 고쳤지만 기록이 끊기면 그 사실조차 잊힌다.
-      - name: 캡처 모호함 기록 (그림의 정체가 보증되는지)
-        run: python tests/test_capture_ambiguity.py
-
       # 뷰 키는 PNG 파일명이자 <figure id>이자 이미지 sitemap 항목이다. 규칙이 흔들리면
       # 그림·글·색인이 서로 다른 것을 가리킨다. 위험한 건 하이픈 경계 —
       # (metro-prop, grid)와 (metro, prop-grid)가 같은 파일명이 된다.
-      - name: 뷰 키 규칙 (레지스트리 v2가 스스로 성립하는지)
+      # 캡처 건전성(같은 그림이 된 키·건너뛴 뷰)도 여기서 본다 — 옛
+      # test_capture_ambiguity.py가 하던 일이고, 그건 '모호함이 있다'를 기준선으로
+      # 삼는 검사였다. 이제 0이 정상이라 같은 파일에서 0을 요구한다.
+      - name: 뷰 키 규칙·캡처 건전성
         run: python tests/test_view_keys.py
 
       # 화면을 보기 전에 데이터만으로 잡는다. 2026-08 시군구의회 사건은 race 수가

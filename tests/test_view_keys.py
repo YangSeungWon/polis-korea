@@ -3,8 +3,9 @@
 **막는 사고.** 뷰 키는 og/maps/{회차}/{키}.png 파일명이자 <figure id>이자 이미지
 sitemap 항목이다. 규칙이 흔들리면 그림·글·색인이 서로 다른 것을 가리킨다.
 
-지금 검사하는 것은 **표 자체의 성질**이다 — 사용 중인 키가 규칙에 맞는가(C1)는
-대개명이 끝난 뒤에 붙는다. 그때까지 디스크엔 옛 키(dorling·sgg-prop…)가 있다.
+두 가지를 본다. (1) 표 자체의 성질 — 유일한가, 파일명으로 쓸 수 있는가, 왕복하는가.
+(2) **실제로 쓰이는 키가 전부 규칙에 맞는가** — 디스크의 PNG, 매니페스트, 페이지의
+<figure id>, 대표 뷰 우선순위까지.
 
 가장 조용한 함정은 **키 충돌**이다. host에도 mode에도 하이픈이 있어서
 (metro-prop, grid)와 (metro, prop-grid)가 둘 다 'metro-prop-grid'가 된다 —
@@ -22,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts" / "build"))
+import result_tables as _rt  # noqa: E402
 import view_registry as V  # noqa: E402
 
 fails: list[str] = []
@@ -86,6 +88,119 @@ def check_roundtrip() -> None:
     print(f"  키 {len(keys)}가지 왕복 확인 (host {len(V.HOSTS)} × mode {len(V.MODES)}+단일)")
 
 
+def check_keys_in_use() -> None:
+    """디스크·매니페스트·페이지가 쓰는 키가 전부 레지스트리 규칙으로 읽히는가.
+
+    옛 view_meta()는 모르는 키를 **그대로 라벨로 돌려줬다** — 'sgg-prop' 같은 슬러그가
+    한글 캡션 자리에 찍혀도 아무 검사도 안 잡았다. 여기서 잡는다.
+    """
+    import json
+    import re
+    bad_keys: dict[str, list[str]] = {}
+
+    def note(where: str, key: str) -> None:
+        if V.parse_key(key) is None:
+            bad_keys.setdefault(key, []).append(where)
+
+    maps = ROOT / "og" / "maps"
+    n_png = 0
+    if maps.is_dir():
+        for f in maps.rglob("*.png"):
+            n_png += 1
+            note(f"디스크 {f.parent.name}", f.stem)
+    mf = ROOT / "data" / "map_manifest.json"
+    n_view = 0
+    if mf.is_file():
+        els = json.loads(mf.read_text(encoding="utf-8")).get("elections") or {}
+        for eid, e in els.items():
+            for v in e.get("views") or []:
+                n_view += 1
+                note(f"매니페스트 {eid}", v)
+            if e.get("unlabeled"):
+                bad("매니페스트 %s: 무엇인지 모르는 그림 %s장 — 캡처 기록이 없다"
+                    % (eid, len(e["unlabeled"])))
+    for k in V.PRIMARY_ORDER:
+        note("primary_order", k)
+    for kind, ks in V.THUMB_PRIORITY.items():
+        for k in ks:
+            note(f"thumb_priority[{kind}]", k)
+    n_fig = 0
+    pat = re.compile(r'<figure class="map-fig" id="([^"]+)"')
+    for d in ("archive", "history"):
+        for f in (ROOT / d).rglob("index.html"):
+            for m in pat.finditer(f.read_text(encoding="utf-8")):
+                n_fig += 1
+                note(f"{d}/{f.parent.name}", m.group(1))
+    for key, wheres in sorted(bad_keys.items()):
+        bad(f"규칙에 없는 키 {key!r} — {wheres[0]}{' 외 %d곳' % (len(wheres) - 1) if len(wheres) > 1 else ''}")
+    print(f"  쓰이는 키 확인: PNG {n_png}장 · 매니페스트 뷰 {n_view} · <figure> {n_fig}")
+
+
+def check_captions() -> None:
+    """페이지의 figcaption이 **캡처가 적어 둔 글**에서 나왔는가.
+
+    막는 사고: 캡션을 손으로 쓰기 시작하면 그림과 어긋난다. 옛 view_meta()는 모르는
+    키에 키 자신을 라벨로 돌려줘서 'sgg-prop' 같은 슬러그가 한글 캡션 자리에 찍혀도
+    아무 검사도 안 잡았다. 여기서는 매니페스트의 title·label로 캡션을 **다시 만들어**
+    페이지의 것과 글자 그대로 맞는지 본다 — 한쪽만 고치면 실패한다.
+    """
+    import html
+    import json
+    import re
+    mf = ROOT / "data" / "map_manifest.json"
+    if not mf.is_file():
+        bad("매니페스트가 없다")
+        return
+    els = json.loads(mf.read_text(encoding="utf-8")).get("elections") or {}
+    # history는 archive slug 하나에 대응한다 — 어느 회차의 그림인지는 <img src>가 말한다.
+    pat = re.compile(r'<figure class="map-fig" id="([^"]+)">'
+                     r'<img src="/og/maps/([^/]+)/[^"]+"[^>]*>'
+                     r'<figcaption>([^<]*)</figcaption>')
+    n = 0
+    seen_bad = 0
+    for d in ("archive", "history"):
+        for f in sorted((ROOT / d).rglob("index.html")):
+            for key, eid, cap in pat.findall(f.read_text(encoding="utf-8")):
+                n += 1
+                m = ((els.get(eid) or {}).get("meta") or {}).get(key)
+                if not m:
+                    bad(f"{f.parent.name}: {key}의 캡처 기록이 없는데 그림을 걸었다")
+                    seen_bad += 1
+                    continue
+                want = _rt.caption(key, m)
+                if html.unescape(cap) != want:
+                    bad(f"{f.parent.name}/{key}: 캡션 {cap!r} ≠ 기록 {want!r}")
+                    seen_bad += 1
+                if seen_bad > 5:
+                    return
+    print(f"  캡션 {n}개가 캡처 기록과 일치")
+
+
+def check_capture_health() -> None:
+    """캡처가 건너뛴 뷰가 있거나, 서로 다른 키가 같은 그림이 되지 않았는가.
+
+    옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 불가능하다 — 키가
+    (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. 그래서 **반대**를 잰다:
+    두 키가 같은 픽셀이면 토글 클릭이 조용히 안 먹어 앞 모드의 그림이 다음 키로
+    저장된 것이다. 이름만 바꾸고 그림은 안 바뀌는 실패라 눈으로는 거의 안 보인다.
+    """
+    import json
+    f = ROOT / "data" / "capture_ambiguity.json"
+    if not f.is_file():
+        bad("캡처 기록이 없다 — build_og_maps를 안 돌렸다")
+        return
+    d = json.loads(f.read_text(encoding="utf-8")).get("slugs") or {}
+    dup = {s: v["same_image"] for s, v in d.items() if v.get("same_image")}
+    prob = {s: v["problems"] for s, v in d.items() if v.get("problems")}
+    for s, v in sorted(dup.items()):
+        for ks in v.values():
+            bad(f"{s}: 서로 다른 키가 같은 그림이다 — {', '.join(ks)}")
+    for s, v in sorted(prob.items()):
+        for m in v:
+            bad(f"{s}: 캡처가 건너뛴 뷰 — {m}")
+    print(f"  캡처 {len(d)}회차 · 같은 그림 {len(dup)} · 건너뜀 {len(prob)}")
+
+
 def check_labels() -> None:
     """라벨을 물었을 때 슬러그가 되돌아오지 않는가.
 
@@ -109,6 +224,9 @@ def main() -> int:
     check_tables()
     check_roundtrip()
     check_labels()
+    check_keys_in_use()
+    check_captions()
+    check_capture_health()
     if fails:
         print(f"\n실패 {len(fails)}건")
         return 1

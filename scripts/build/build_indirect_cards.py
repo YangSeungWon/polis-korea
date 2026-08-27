@@ -6,7 +6,12 @@ build_og_maps가 스킵 → 타임라인 호버가 블랭크. 대신 **선거인
 당색 비례)로 만장일치에 가까운 간선의 성격을 정직히 드러내는 카드를 생성한다.
 
 data/results/*.json의 _meta.indirect_election 플래그로 간선 판별. 출력:
-  og/maps/{slug}/sido1.png (대선 호버 view) + dorling.png (폴백) — 동일 카드.
+  og/maps/{slug}/electors.png  +  data/map_captures.json에 그게 무엇인지.
+
+⚠️ 2026-08까지 같은 그림을 sido1.png와 dorling.png 두 이름으로 저장했다. 타임라인
+호버 폴백을 맞추려는 우회였는데, 점그리드에 'hex'와 'dorling'이라는 이름을 붙인
+것이었다 — 이름이 그림을 설명하지 않는 바로 그 문제다. 이제 제 이름을 쓰고,
+**그리는 쪽이 그게 무엇인지 적는다**(캡처가 data-map-host로 하는 일과 같다).
 
 의존: pillow + 한글 TTF(나눔). 사용: python scripts/build/build_indirect_cards.py
 """
@@ -112,6 +117,7 @@ def render_card(slug: str, meta: dict, cands: list) -> Image.Image:
 
 def main():
     made = 0
+    caps: dict = {}
     for fp in sorted(glob.glob(str(RESULTS / "*.json"))):
         try:
             d = json.load(open(fp, encoding="utf-8"))
@@ -129,11 +135,26 @@ def main():
         img = render_card(slug, meta, cands)
         outdir = MAPS / slug
         outdir.mkdir(parents=True, exist_ok=True)
-        for view in ("sido1", "dorling"):
-            img.save(outdir / f"{view}.png")
+        img.save(outdir / "electors.png")
+        caps[slug] = {"electors": {
+            "host": "electors", "mode": None, "enc": None, "label": None,
+            "section": None, "title": "선거인단",
+            "title_src": "build_indirect_cards",
+            "desc": f"{meta['indirect_election']} — 점 1개 = 선거인 1명, 색 = 정당. "
+                    "지역별 득표가 존재하지 않는 간선이다.",
+            "w": img.width, "h": img.height, "page": True}}
         made += 1
         print(f"  ✓ {slug}: {cands[0]['name']} {cands[0]['pct']}% ({meta['indirect_election']})")
-    print(f"간접선거 카드 {made}개 생성 → og/maps/*/{{sido1,dorling}}.png")
+    if caps:
+        cp = ROOT / "data" / "map_captures.json"
+        try:
+            doc = json.loads(cp.read_text(encoding="utf-8"))
+        except Exception:
+            doc = {"_note": "", "slugs": {}}
+        doc.setdefault("slugs", {}).update(caps)
+        doc["slugs"] = dict(sorted(doc["slugs"].items()))
+        cp.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(f"간접선거 카드 {made}개 생성 → og/maps/*/electors.png")
 
 
 if __name__ == "__main__":

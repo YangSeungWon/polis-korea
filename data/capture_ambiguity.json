@@ -1,37 +1,213 @@
 {
- "_note": "한 뷰 키를 여러 그림이 다툰 횟수(회차별). _capture_views 주석 참조. 숫자가 2 이상이면 og/maps/{회차}/{키}.png가 무엇인지 PNG 압축률이 정하고 있다는 뜻이다. 재설계 전까지 기록만 하고, 새로 생기면 검사가 잡는다.",
+ "_note": "빌드 생성물. **옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 불가능해졌다** — 키가 (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. 대신 반대를 잰다: same_image는 서로 다른 키가 **같은 그림**이 된 경우로, 토글 클릭이 조용히 안 먹었다는 뜻이다. problems는 캡처가 건너뛴 뷰다. 둘 다 0이어야 한다.",
  "slugs": {
+  "10th-general-1978": {
+   "same_image": {},
+   "problems": []
+  },
+  "10th-pres-1979": {
+   "same_image": {},
+   "problems": []
+  },
+  "11th-general-1981": {
+   "same_image": {},
+   "problems": []
+  },
+  "11th-pres-1980": {
+   "same_image": {},
+   "problems": []
+  },
+  "12th-general-1985": {
+   "same_image": {},
+   "problems": []
+  },
+  "12th-pres-1981": {
+   "same_image": {},
+   "problems": []
+  },
+  "13th-general-1988": {
+   "same_image": {},
+   "problems": []
+  },
   "13th-pres-1987": {
-   "dorling": 2,
-   "result": 5,
-   "sgg-turnout": 7,
-   "turnout-geo": 2,
-   "sgg-prop": 2
+   "same_image": {},
+   "problems": []
+  },
+  "14th-general-1992": {
+   "same_image": {},
+   "problems": []
+  },
+  "14th-pres-1992": {
+   "same_image": {},
+   "problems": []
   },
   "15th-general-1996": {
-   "dorling": 2,
-   "district": 3
+   "same_image": {},
+   "problems": []
+  },
+  "15th-pres-1997": {
+   "same_image": {},
+   "problems": []
+  },
+  "16th-general-2000": {
+   "same_image": {},
+   "problems": []
+  },
+  "16th-pres-2002": {
+   "same_image": {},
+   "problems": []
+  },
+  "17th-general-2004": {
+   "same_image": {},
+   "problems": []
+  },
+  "17th-pres-2007": {
+   "same_image": {},
+   "problems": []
+  },
+  "18th-general-2008": {
+   "same_image": {},
+   "problems": []
+  },
+  "18th-pres-2012": {
+   "same_image": {},
+   "problems": []
+  },
+  "19th-general-2012": {
+   "same_image": {},
+   "problems": []
+  },
+  "19th-pres-2017": {
+   "same_image": {},
+   "problems": []
+  },
+  "1st-general-1948": {
+   "same_image": {},
+   "problems": []
+  },
+  "1st-local-1995": {
+   "same_image": {},
+   "problems": []
+  },
+  "1st-pres-1948": {
+   "same_image": {},
+   "problems": []
+  },
+  "20th-general-2016": {
+   "same_image": {},
+   "problems": []
+  },
+  "20th-pres-2022": {
+   "same_image": {},
+   "problems": []
+  },
+  "21st-general-2020": {
+   "same_image": {},
+   "problems": []
   },
   "21st-pres-2025": {
-   "dorling": 2,
-   "result": 4,
-   "sgg-turnout": 6,
-   "turnout-geo": 2,
-   "sgg-turnout-geo": 3,
-   "sgg-prop": 2
+   "same_image": {},
+   "problems": []
   },
   "22nd-general-2024": {
-   "dorling": 9,
-   "district": 4
+   "same_image": {},
+   "problems": []
+  },
+  "2nd-general-1950": {
+   "same_image": {},
+   "problems": []
+  },
+  "2nd-local-1998": {
+   "same_image": {},
+   "problems": []
+  },
+  "2nd-pres-1952": {
+   "same_image": {},
+   "problems": []
+  },
+  "3rd-general-1954": {
+   "same_image": {},
+   "problems": []
+  },
+  "3rd-local-2002": {
+   "same_image": {},
+   "problems": []
+  },
+  "3rd-pres-1956": {
+   "same_image": {},
+   "problems": []
+  },
+  "4th-general-1958": {
+   "same_image": {},
+   "problems": []
+  },
+  "4th-local-2006": {
+   "same_image": {},
+   "problems": []
+  },
+  "4th-pres-1960": {
+   "same_image": {},
+   "problems": []
+  },
+  "5th-general-1960": {
+   "same_image": {},
+   "problems": []
+  },
+  "5th-local-2010": {
+   "same_image": {},
+   "problems": []
+  },
+  "5th-pres-1963": {
+   "same_image": {},
+   "problems": []
+  },
+  "6th-general-1963": {
+   "same_image": {},
+   "problems": []
+  },
+  "6th-local-2014": {
+   "same_image": {},
+   "problems": []
+  },
+  "6th-pres-1967": {
+   "same_image": {},
+   "problems": []
+  },
+  "7th-general-1967": {
+   "same_image": {},
+   "problems": []
+  },
+  "7th-local-2018": {
+   "same_image": {},
+   "problems": []
+  },
+  "7th-pres-1971": {
+   "same_image": {},
+   "problems": []
+  },
+  "8th-general-1971": {
+   "same_image": {},
+   "problems": []
+  },
+  "8th-local-2022": {
+   "same_image": {},
+   "problems": []
+  },
+  "8th-pres-1972": {
+   "same_image": {},
+   "problems": []
+  },
+  "9th-general-1973": {
+   "same_image": {},
+   "problems": []
   },
   "9th-local-2026": {
-   "dorling": 14,
-   "council": 5,
-   "result": 5,
-   "sgg-turnout": 5,
-   "sgg-prop": 13,
-   "turnout-geo": 2,
-   "sgg-turnout-geo": 3
+   "same_image": {},
+   "problems": []
+  },
+  "9th-pres-1978": {
+   "same_image": {},
+   "problems": []
   }
  }
 }
