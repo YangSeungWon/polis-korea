@@ -427,6 +427,6 @@
  ],
  "_modes_note": "map·geo가 둘 다 geo로, grid·격자가 둘 다 grid로 접힌다 — 두 토글 빌더가 다른 어휘를 쓰기 때문이다. 한글 enc(단색·격자)는 여기서 라틴으로 바뀌어 파일명·figure id에 절대 닿지 않는다(퍼센트 인코딩 사고 재발 방지).",
  "_offices_note": "offices는 history의 직위별 페이지(/history/local/9/governor/ 등 실재하는 셋: governor·mayor·superintendent)가 어느 지도를 걸지 정한다. 지선 기초단체장 쪽에 광역단체장 지도를 걸면 화면과 그림이 다른 걸 말한다. 직위 없는 페이지(대선·총선)는 전부 건다. 옛 build_static.HIST_VIEW_PREFER를 여기로 옮긴 것 — 네 번째 표를 만들지 않으려고.",
- "_v1_note": "⚠️ views·classes(v1)는 이제 **assets/view-registry.js → polls의 svg-export.js**만 쓴다. archive·history는 v2(hosts×modes)로 넘어갔다. polls 계열 91쪽 정리가 끝나면 이 배열과 classify()를 지운다. 여기 적힌 옛 키(dorling·sgg-prop·sido1…)는 더 이상 og/maps 파일명이 아니다.",
+ "_v1_note": "⚠️ views·classes(v1)는 **SVG 내려받기 버튼**(assets/svg-export.js, view-registry.js를 거쳐)만 쓴다 — archive 77쪽 + polls 9쪽. 파일 이름을 짓는 데만 쓰이고, og/maps 키와는 이제 무관하다. 그래서 같은 그림을 내려받으면 'dorling.svg', 페이지에 걸리면 'sido-dorling.png'라는 어긋남이 남아 있다 — svg-export 정리 때 v2로 옮기고 이 배열과 classify()를 지운다. 여기 적힌 옛 키는 더 이상 og/maps 파일명이 아니다.",
  "_electors_note": "electors는 캡처가 아니라 build_indirect_cards.py가 그린다(8~12대 간선 대선은 득표 지도가 없다). data-map-host를 찍을 DOM이 없지만, 그림을 만드는 쪽이 자기 정체를 map_captures.json에 적는 규칙은 똑같이 지킨다. 예전엔 sido1.png와 dorling.png 두 이름으로 **같은 그림**을 저장했다 — 타임라인 폴백을 맞추려는 우회였고, hex도 dorling도 아닌 점그리드에 그 이름을 붙인 것이었다."
 }
