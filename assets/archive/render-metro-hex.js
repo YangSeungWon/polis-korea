@@ -58,7 +58,7 @@
       { key: 'hex', label: '균등', draw: (el) => { agg = SC.drawHex(el, bySidoObj, { onSelect }); } },
       { key: 'dorling', label: '원형', draw: (el) => { agg = SC.drawDorling(el, bySidoObj, { onSelect }); } },
     ];
-    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes);
+    if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') window.Archive.sidoView.mount(host, modes, null, { hostKey: 'metro' });
     else { agg = SC.drawHex(host, bySidoObj, { onSelect }); }
     const { totalSeats, partyTotal } = agg || { totalSeats: 0, partyTotal: new Map() };
     const legend = document.getElementById('ar-metro-hex-legend');
@@ -99,7 +99,7 @@
       { key: 'grid', label: '격자', draw: (el) => SP.drawGrid(el, races, { onSelect }) },
       { key: 'dorling', label: '원형', draw: (el) => SP.drawDorling(el, races, { onSelect }) },
     ];
-    SV.mount(host, modes, null);
+    SV.mount(host, modes, null, { hostKey: 'metro-prop' });
   }
 
   window.Archive = window.Archive || {};

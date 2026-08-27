@@ -269,6 +269,26 @@ for (const spec of pages) {
       // (상태가 쌓이는 사고는 같은 호스트를 다시 그릴 때 난다.)
       const MODE_LABELS = ['균등', '지도', '격자', '원형', '단색', '투표율',
         '여론조사 1위', '실제 1위', '연령 순', '변화 순', '집단 → 후보', '후보 → 지지층'];
+      // 지도가 자기 정체를 밝히는가 — 캡처(build_og_maps)가 [data-map-host]로 이름을 정한다.
+      //
+      // 막는 사고: 새 렌더러가 선언 없이 들어오고, 그 그림이 조용히 캡처에서 빠진다.
+      // 예전엔 캡처가 SVG 클래스로 되짚어 추측했는데 한 클래스가 여러 (섹션,모드)에
+      // 붙어 있어서 og/maps/{회차}/dorling.png가 무엇인지를 PNG 압축률이 정했다
+      // (2026-08-27 측정: 한 키에 최대 14가지). 선언으로 바꾼 대신 선언 누락을 여기서 잡는다.
+      if (/^archive-(local|pres|gen)$/.test(spec.id)) {
+        const MAP_SEL = 'svg.governor-hex-svg,svg.council-hex-svg,svg.ar-sidocluster-svg,'
+          + 'svg.sido-map-svg,svg.sigungu-map-svg,svg.district-hex-svg,svg.district-map-svg,svg.parliament-chart';
+        const mh = await page.evaluate((sel) => ({
+          tokens: [...document.querySelectorAll('[data-map-host]')].map((h) => h.dataset.mapHost),
+          orphan: [...document.querySelectorAll(sel)].filter((n) => !n.closest('[data-map-host]'))
+            .map((n) => (n.getAttribute('class') || '').slice(0, 40)),
+        }), MAP_SEL);
+        ck('지도 SVG가 전부 host를 밝힌다', mh.orphan.length === 0, JSON.stringify(mh.orphan.slice(0, 3)));
+        ck('host 토큰이 페이지 안에서 유일하다',
+          new Set(mh.tokens).size === mh.tokens.length, mh.tokens.join(','));
+        ck('host가 하나 이상 있다', mh.tokens.length > 0, `${mh.tokens.length}개`);
+      }
+
       const toggles = [];
       for (const el of await page.$$('[data-view],[data-sgmode],.seg-btn,.enc-btn,[data-swsort],[data-swm]')) {
         const txt = (await el.textContent() || '').trim();

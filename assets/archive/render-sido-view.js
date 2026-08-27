@@ -137,6 +137,15 @@
   function mount(host, modes, drawArg, opts) {
     modes = modes.filter((m) => typeof m.draw === 'function');
     if (!modes.length) return;
+    // 이 지도가 무엇인지 **여기서 선언한다.** 캡처(build_og_maps)가 [data-map-host]를
+    // 훑어 {토큰}-{모드}로 이름을 붙인다.
+    //
+    // 예전엔 캡처가 SVG 클래스로 되짚어 추측했는데, 한 클래스가 여러 (섹션,모드)에
+    // 붙어 있어서 og/maps/{회차}/dorling.png가 6가지 중 무엇인지를 **PNG 압축률이**
+    // 정했다(2026-08-27 측정: 최대 14가지). 조상 id로 유추하는 것도 답이 아니다 —
+    // #ar-prop-map은 section#ar-proportional 안이고 히어로엔 id가 없다.
+    // 그리는 쪽이 자기 이름을 말하는 게 유일하게 안 어긋나는 방법이다.
+    if (opts && opts.hostKey) host.dataset.mapHost = opts.hostKey;
     // 인코딩 토글(공용) — 아이콘+가족 한 바. 가족 게이팅은 ENC의 fam이 자동 분류:
     //   1위(균등·지도) / 표 비례(격자·원형) / 자료(투표율). 흩어진 .seg 토글과 단일 컴포넌트로 통일.
     const views = modes.map((m, i) =>
@@ -213,7 +222,10 @@
   function init(ctx, opts) {
     opts = opts || {};
     // 신규: opts.modes 직접 제공 → race-filter 없이 토글만 (총선·광역의회용). draw(el) 시그니처.
-    if (opts.modes && opts.host) { mount(opts.host, opts.modes, null); return; }
+    if (opts.modes && opts.host) {
+      mount(opts.host, opts.modes, null, { hostKey: opts.hostKey });
+      return;
+    }
     const tc = opts.tc || '3';
     const hostId = opts.hostId || 'ar-governor-hex';
     const host = document.getElementById(hostId);
@@ -231,7 +243,10 @@
     const modes = modesFor(tc, A, geo)
       .filter((m) => typeof m.draw === 'function')
       .filter((m) => !/^turnout/.test(m.key) || hasTurnout);
-    mount(host, modes, races, { turnoutTitle: '시도별 투표율' });
+    // hostId → 토큰. 지선 광역단체장은 gov, 대선 시도는 sido.
+    const HOST_KEY = { 'ar-governor-hex': 'gov', 'ar-pres-sido-hex': 'sido' };
+    mount(host, modes, races,
+          { turnoutTitle: '시도별 투표율', hostKey: opts.hostKey || HOST_KEY[hostId] || hostId });
   }
 
   window.Archive = window.Archive || {};

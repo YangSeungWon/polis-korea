@@ -53,6 +53,8 @@
         const pp = sorted.map(([party, seats]) => ({ party, seats, color: pcol(party) }));
         const legend = sorted.filter(([, n]) => n >= 1).slice(0, 8)
           .map(([party, seats]) => `<span class="ar-pl-leg"><span class="ar-pl-dot" style="background:${pcol(party)}" aria-hidden="true"></span><b>${seats}</b> ${party}</span>`).join('');
+        // 히어로 섹션엔 id가 없고 4계열이 공용이라, 섹션이 아니라 **차트 host**를 찍는다.
+        sc.dataset.mapHost = 'seats';
         sc.insertAdjacentHTML('afterbegin', `<div class="ar-parliament">`
           + renderParliamentChart(pp, totalSeats, 460, 210, { mode: 'dots' })  // 의석=점 하나(반원). 460폭이라 점이 또렷이 읽힘.
           + `<div class="ar-pl-total">${totalSeats}석</div>`
@@ -209,7 +211,7 @@
     // 균등(시도 1위 hex 격차명도)·지도(geo) — 선두 정당. 대선 시도와 동형(1위 가족). 격자 default 유지차 뒤에.
     if (SV?.drawSidoWinnerHex) modes.push({ key: 'hex', label: '균등', draw: (el) => SV.drawSidoWinnerHex(el, sidoRaces) });
     if (SM?.draw) modes.push({ key: 'map', label: '지도', draw: (el) => SM.draw(el, sidoRaces, { margin: true, n: ctx?.meta?.electionN, kind: ctx?.meta?.electionKind }) });
-    if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes);
+    if (SV?.mount) SV.mount(host.querySelector('.ar-prop-map-toggle'), modes, null, { hostKey: 'prop' });
     else SP.drawGrid(host.querySelector('.ar-prop-map-toggle'), sidoRaces, {});
   }
 
@@ -389,7 +391,7 @@
       }
     }
     if (window.Archive.sidoView && typeof window.Archive.sidoView.mount === 'function') {
-      window.Archive.sidoView.mount(toggleHost, modes, null, { turnoutTitle: '투표율 — 시도별' });
+      window.Archive.sidoView.mount(toggleHost, modes, null, { turnoutTitle: '투표율 — 시도별', hostKey: 'sidoseat' });
     }
     else SC.drawHex(toggleHost, bySido);
     const partyTotal = {};
@@ -458,6 +460,7 @@
     }
     if (modes.length) {
       window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes, null, {
+        hostKey: 'district',
         turnoutTitle: '지역구 선거구별 투표율',
         turnoutCaption: '선거구별 투표율 — 짙을수록 높음(투표수/선거인수).',
       });

@@ -276,6 +276,7 @@
 
   async function init(ctx) {
     const host = document.getElementById('ar-council-hex');
+    if (host) host.dataset.mapHost = 'council';   // 토글 없는 단일 뷰
     if (!host) return;
     const races = ctx?.results?.races || [];
     const hexCells = await loadHexLayout(ctx?.meta?.electionN);
@@ -467,8 +468,8 @@
     const SV = window.Archive?.sidoView;
     const modes = [{ key: 'hex', label: '균등', draw: drawHex }];
     if (year && window.Archive?.sigunguMap?.draw) modes.push({ key: 'map', label: '지도', draw: drawGeo });
-    if (SV?.mount && modes.length > 1) SV.mount(host, modes);
-    else drawHex(host);
+    if (SV?.mount && modes.length > 1) SV.mount(host, modes, null, { hostKey: 'sggturn' });
+    else { host.dataset.mapHost = 'sggturn'; drawHex(host); }
   }
 
   // ── 시군구 1위 후보 결과 맵 (대선) ──────────────────────────────
@@ -578,6 +579,9 @@
     mapHost.innerHTML = '<div class="sgg-mode-toggle seg" role="tablist" aria-label="표현 방식"></div><div class="sgg-map-area"></div><div class="sgg-result-legend ch-leg-row"></div>';
     const tog = mapHost.querySelector('.sgg-mode-toggle');
     const area = mapHost.querySelector('.sgg-map-area');
+    // 이 지도가 무엇인지 선언한다. .ar-sido-toggle 계열과 달리 모드별 래퍼가 없고
+    // redraw()가 한 영역을 다시 그리므로, 모드는 redraw에서 갱신한다.
+    area.dataset.mapHost = 'sgg';
     const leg = mapHost.querySelector('.sgg-result-legend');
     const CART = window.Archive && window.Archive.drawSigunguCartogram;
     // 지도(geo 코로플레스) — 대선 시군구만(격차명도, flat 단색 아님). 회차별 경계 연도 있을 때.
@@ -593,6 +597,7 @@
     ];
     let mode = '단색';
     async function redraw() {
+      area.dataset.mode = mode;   // 캡처가 읽는다 — 어느 모드의 그림인지
       // 호스트 단위 줌 보존 — 단색↔지도↔격자↔원형 교차에 region(시도|시군구) 앵커(좌표계 달라도 같은 키).
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       if (mode === 'geo') {
@@ -720,6 +725,7 @@
     }
     const tog = sec.querySelector('.sgg-mode-toggle');
     const area = sec.querySelector('.ar-sgg-prop-host');
+    area.dataset.mapHost = 'sggprop';
     const leg = sec.querySelector('.ar-sgg-prop-legend');
     const onSelect = (sido, name) => window.Archive?.winners?.focus?.({ sido, q: name, level: '기초의원' });
     const parties = [...new Set([...pmap.values()].flatMap((v) => v.candidates.map((c) => c.party)))];
@@ -732,6 +738,7 @@
     const nPending = nUncon + nUnknown;
     let mode = '격자';
     function redraw() {
+      area.dataset.mode = mode;   // 캡처가 읽는다 — 어느 모드의 그림인지
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
       svg.setAttribute('class', 'council-hex-svg cartogram-map');
