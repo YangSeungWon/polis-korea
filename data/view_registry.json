@@ -1,189 +1,21 @@
 {
+ "_note": "지도 뷰 표. 키는 (host × mode)다 — og/maps/{회차}/{키}.png 파일명이자 <figure id>이자 이미지 sitemap 항목. 렌더러가 data-map-host·data-mode로 선언하고 캡처(build_og_maps)가 열거한다. 한글 라벨은 여기 안 적는다 — 캡처가 누른 버튼 글씨를 data/map_captures.json에 적고 캡션이 거기서 나온다.",
  "_schema": {
   "purpose": "지도 뷰의 단일 출처. 같은 표가 세 벌(build_og_maps·build_share_pages·svg-export.js) 있었고 이미 어긋나 있었다 — key 'result'가 한쪽은 '시군구 결과', 다른 쪽은 '시군구 1위'였다.",
-  "order": "⚠️ views 배열의 순서가 load-bearing이다. 분류는 **첫 substring 매칭이 이긴다**. 한 SVG가 여러 클래스를 함께 갖기 때문이다 — 예: 시군구 결과는 'council-hex-svg result-map'이라 result-map이 council-hex보다 위에 있어야 광역의원으로 오분류되지 않는다. 줄을 옮기기 전에 각 항목의 note를 읽을 것.",
-  "fields": {
-   "key": "파일명·공유 URL·og 카드에 쓰는 뷰 식별자 (og/maps/{slug}/{key}.png)",
-   "classes": "이 뷰로 분류할 SVG class substring. 위에서부터 첫 일치가 이긴다",
-   "label": "사람이 읽는 이름 (토글·캡션·공유 페이지 제목)",
-   "desc": "한 줄 설명 (og 카드 subline·alt 텍스트 재료)",
-   "fname": "내려받기 파일명 꼬리표 (공백 없는 짧은 한글)"
+  "key": "뷰 키 = {host} 또는 {host}-{mode}. og/maps/{회차}/{키}.png 파일명이자 <figure id>이자 이미지 sitemap 항목이다. ⚠️ 위험은 접두사가 아니라 **하이픈 경계**다 — (metro-prop, grid)와 (metro, prop-grid)가 같은 파일명이 되고 나중 것이 앞의 것을 조용히 덮는다. tests/test_view_keys.py가 막는다.",
+  "hosts": {
+   "token": "렌더러가 찍는 data-map-host와 **같은 문자열**",
+   "label": "섹션 제목이 없는 host(히어로의 의석 차트 등)의 이름으로만 쓴다",
+   "kinds": "어느 선거 계열에 나타나는가",
+   "page": "본문 <figure>로 낼 모드. null=토글 없는 단일 뷰. 전부 내면 총선 회차가 8→13장",
+   "offices": "history 직위별 페이지가 이 host를 걸지 (governor·mayor·superintendent)"
+  },
+  "modes": {
+   "mode": "정규화 모드 — 파일명에 쓰는 라틴 이름",
+   "enc": "토글 버튼의 data-enc 값들. 한글(단색·격자)이 여기서 라틴으로 접힌다",
+   "label": "이 표의 label은 캡션에 **안 쓴다** — 캡션은 캡처가 실제로 누른 버튼의 글씨에서 나온다(data/map_captures.json). 여기 것은 사람이 표를 읽을 때의 이름이다"
   }
  },
- "views": [
-  {
-   "key": "sgg-turnout",
-   "classes": [
-    "sgg-turnout"
-   ],
-   "label": "시군구 투표율",
-   "desc": "시·군·구별 투표율(짙을수록 높음)",
-   "fname": "시군구투표율",
-   "note": "council-hex 클래스를 공유한다 → council보다 위"
-  },
-  {
-   "key": "sgg-turnout-geo",
-   "classes": [
-    "sigungu-turnout-geo"
-   ],
-   "label": "시군구 투표율 지도",
-   "desc": "시·군·구 경계·투표율(짙을수록 높음)",
-   "fname": "시군구투표율지도",
-   "note": "sigungu-map 클래스를 공유한다 → sgg-geo보다 위"
-  },
-  {
-   "key": "turnout-geo",
-   "classes": [
-    "sido-turnout-geo"
-   ],
-   "label": "투표율 지도",
-   "desc": "시·도 경계·투표율(짙을수록 높음)",
-   "fname": "투표율지도",
-   "note": "클래스가 'sido-map-svg sido-turnout-geo'라 sido-map보다 위여야 한다"
-  },
-  {
-   "key": "district-turnout-geo",
-   "classes": [
-    "district-turnout-geo"
-   ],
-   "label": "선거구 투표율 지도",
-   "desc": "선거구 경계·투표율(짙을수록 높음)",
-   "fname": "선거구투표율지도",
-   "note": "district-turnout은 이 문자열의 substring이다 → geo를 반드시 위에"
-  },
-  {
-   "key": "district-turnout",
-   "classes": [
-    "district-turnout"
-   ],
-   "label": "선거구 투표율",
-   "desc": "선거구별 투표율(짙을수록 높음)",
-   "fname": "선거구투표율",
-   "note": "district-hex 클래스를 공유한다 → district보다 위"
-  },
-  {
-   "key": "turnout",
-   "classes": [
-    "turnout-map"
-   ],
-   "label": "투표율",
-   "desc": "지역별 투표율(짙을수록 높음)",
-   "fname": "투표율",
-   "note": "governor-hex·council-hex를 공유한다(투표율 채색) → 둘보다 위"
-  },
-  {
-   "key": "result",
-   "classes": [
-    "result-map"
-   ],
-   "label": "시군구 결과",
-   "desc": "1위 후보·격차 명도",
-   "fname": "시군구결과",
-   "note": "share 쪽이 '시군구 1위'로 어긋나 있었다. 여기가 정본"
-  },
-  {
-   "key": "sgg-prop",
-   "classes": [
-    "cartogram-map"
-   ],
-   "label": "시군구 비례",
-   "desc": "표(인구) 비례 격자·원형",
-   "fname": "시군구비례",
-   "note": "council-hex-svg와 공존한다 → council보다 위"
-  },
-  {
-   "key": "sgg-geo",
-   "classes": [
-    "sigungu-map"
-   ],
-   "label": "시군구 지도",
-   "desc": "시군구 경계·격차 명도",
-   "fname": "시군구지도"
-  },
-  {
-   "key": "sido1",
-   "classes": [
-    "sido-winner-hex"
-   ],
-   "label": "시도 1위",
-   "desc": "시도별 1위·격차 명도",
-   "fname": "시도1위",
-   "note": "governor-hex 클래스를 공유한다 → governor보다 위"
-  },
-  {
-   "key": "district",
-   "classes": [
-    "district-hex"
-   ],
-   "label": "선거구 1위",
-   "desc": "선거구별 당선 정당",
-   "fname": "선거구1위"
-  },
-  {
-   "key": "district-geo",
-   "classes": [
-    "district-map"
-   ],
-   "label": "선거구 지도",
-   "desc": "선거구 경계·당선 정당",
-   "fname": "선거구지도"
-  },
-  {
-   "key": "governor",
-   "classes": [
-    "governor-hex"
-   ],
-   "label": "광역단체장",
-   "desc": "시도별 당선 정당",
-   "fname": "광역단체장"
-  },
-  {
-   "key": "council",
-   "classes": [
-    "council-hex"
-   ],
-   "label": "광역의원",
-   "desc": "시도별 의석",
-   "fname": "의원"
-  },
-  {
-   "key": "dorling",
-   "classes": [
-    "ar-sidocluster"
-   ],
-   "label": "의석 비례",
-   "desc": "면적·점=의석수·색=정당",
-   "fname": "dorling"
-  },
-  {
-   "key": "geo",
-   "classes": [
-    "sido-map"
-   ],
-   "label": "지리 지도",
-   "desc": "실제 시도 경계",
-   "fname": "지도"
-  },
-  {
-   "key": "seats",
-   "classes": [
-    "parliament-chart"
-   ],
-   "label": "의석수",
-   "desc": "정당별 총 의석",
-   "fname": "의석"
-  },
-  {
-   "key": "",
-   "classes": [
-    "hex-pane"
-   ],
-   "label": "hex",
-   "desc": "",
-   "fname": "hex",
-   "note": "폴 hex — 내려받기만. archive 뷰가 아니라 공유 키가 없다(key 빈 문자열)"
-  }
- ],
  "primary_order": [
   "gov-hex",
   "seats",
@@ -194,7 +26,7 @@
   "district-hex",
   "electors"
  ],
- "_primary_note": "대표(overview) 카드·목록 썸네일로 쓸 우선순위. seats가 sido1보다 위여야 총선(둘 다 보유)이 seats로 잡힌다.",
+ "_primary_note": "대표(overview) 카드·목록 썸네일로 쓸 우선순위. seats가 sido-hex보다 위여야 총선(둘 다 보유)이 seats로 잡힌다.",
  "thumb_priority": {
   "local": [
    "gov-hex",
@@ -216,7 +48,6 @@
   ]
  },
  "_thumb_note": "elections.html·index.html 목록 썸네일. sync_archive_html.THUMB_PRIORITY가 여기서 온다 — 목록·og 카드·본문 그림이 같은 뷰를 고르게 하려고 한자리에 뒀다.",
- "_v2_note": "v2 — 뷰 키를 (host × mode)로 확정한다. v1(views·classes)은 아직 쓰이는 옛 키를 위해 남아 있고, 대개명이 끝나면 지운다. 왜 바꾸나: v1은 SVG 클래스로 뷰를 되짚어 추측했는데 한 클래스가 여러 (섹션,모드)에 붙어 있어 og/maps/{회차}/dorling.png가 무엇인지를 PNG 압축률이 정했다(2026-08-27 측정: 한 키에 최대 14가지). 이제 그리는 쪽이 data-map-host로 선언한다.",
  "hosts": [
   {
    "token": "gov",
@@ -427,6 +258,5 @@
  ],
  "_modes_note": "map·geo가 둘 다 geo로, grid·격자가 둘 다 grid로 접힌다 — 두 토글 빌더가 다른 어휘를 쓰기 때문이다. 한글 enc(단색·격자)는 여기서 라틴으로 바뀌어 파일명·figure id에 절대 닿지 않는다(퍼센트 인코딩 사고 재발 방지).",
  "_offices_note": "offices는 history의 직위별 페이지(/history/local/9/governor/ 등 실재하는 셋: governor·mayor·superintendent)가 어느 지도를 걸지 정한다. 지선 기초단체장 쪽에 광역단체장 지도를 걸면 화면과 그림이 다른 걸 말한다. 직위 없는 페이지(대선·총선)는 전부 건다. 옛 build_static.HIST_VIEW_PREFER를 여기로 옮긴 것 — 네 번째 표를 만들지 않으려고.",
- "_v1_note": "⚠️ views·classes(v1)는 **SVG 내려받기 버튼**(assets/svg-export.js, view-registry.js를 거쳐)만 쓴다 — archive 77쪽 + polls 9쪽. 파일 이름을 짓는 데만 쓰이고, og/maps 키와는 이제 무관하다. 그래서 같은 그림을 내려받으면 'dorling.svg', 페이지에 걸리면 'sido-dorling.png'라는 어긋남이 남아 있다 — svg-export 정리 때 v2로 옮기고 이 배열과 classify()를 지운다. 여기 적힌 옛 키는 더 이상 og/maps 파일명이 아니다.",
  "_electors_note": "electors는 캡처가 아니라 build_indirect_cards.py가 그린다(8~12대 간선 대선은 득표 지도가 없다). data-map-host를 찍을 DOM이 없지만, 그림을 만드는 쪽이 자기 정체를 map_captures.json에 적는 규칙은 똑같이 지킨다. 예전엔 sido1.png와 dorling.png 두 이름으로 **같은 그림**을 저장했다 — 타임라인 폴백을 맞추려는 우회였고, hex도 dorling도 아닌 점그리드에 그 이름을 붙인 것이었다."
 }

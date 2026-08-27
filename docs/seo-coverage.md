@@ -301,6 +301,22 @@ site: 결과      그중 내보일 만한가       3쪽
 요구하고, 쓰이는 모든 키(디스크·매니페스트·`<figure id>`·우선순위)가 규칙으로 읽히는지
 함께 본다.
 
+### 곁가지로 드러난 것 — 죽은 채로 91쪽에 실려 있던 스크립트
+
+v1 표(SVG 클래스 → 뷰 키)를 마지막까지 쓰던 곳은 `svg-export.js`의 ↓이미지 저장
+버튼이었다. 그런데 그 버튼은 **이미 죽어 있었다** — `share/` 402쪽을 지운 커밋
+(`d7b14168e`)이 `applyHashView`와 함께 부트스트랩(`MutationObserver` +
+`DOMContentLoaded`)을 걷어냈고, 그게 `scan()`의 유일한 호출자였다. 라이브에서
+`.svg-save-btn` 0개를 확인했다.
+
+그래서 `svg-export.js`·`view-registry.js`를 91쪽에서 떼고 파일도 지웠다. 함께 사라진
+것: 레지스트리의 `views` 배열·`classify()`·`view_meta()`, `.svg-save-bar` CSS,
+캡처가 그 버튼을 숨기려 넣던 스타일. archive는 이제 `<figure>`로 PNG를 직접 가지므로
+우클릭 저장이 그 자리를 대신한다.
+
+`sync_view_registry_js.py`는 하는 일이 썸네일 우선순위 sync 하나만 남아
+`sync_view_thumbs_js.py`가 됐다.
+
 ### 남은 것
 
 이름이 맞다는 것과 **그림이 맞다는 것은 다르다.** 기계가 보증하는 것은 "캡처가 누른

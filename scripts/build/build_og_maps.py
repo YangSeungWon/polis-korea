@@ -436,12 +436,12 @@ def main():
                 pg.goto(f"{base}/{slug}/", wait_until="networkidle", timeout=20000)
                 _settle(pg)
                 # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
-                #   저장버튼은 display:none. 인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
+                #   인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
+                #   (저장버튼 숨김은 2026-08-27에 뺐다 — svg-export.js가 사라져 그 버튼이 없다.)
                 #   지도·차트 내 모든 텍스트 라벨(시도·시군구명·후보명·득표율)은 썸네일·카드서 안 읽히는
                 #   잡음 → 캡처서 전부 숨김. 캡처 대상은 전부 색지도/반원이라 텍스트 불필요(추이 라인차트는
                 #   캡처 안 됨). 제목·날짜는 카드 헤드라인(HTML)이 따로 표시.
                 pg.add_style_tag(content=(
-                    ".svg-save-btn{display:none!important}"
                     ".ar-sido-toggle,.sgg-mode-toggle{opacity:0!important}"
                     # 2026-08까지는 여기서 svg text를 전부 숨겼다. 근거는 "썸네일·카드서
                     # 안 읽히는 잡음"이었고 48px 썸네일 기준으론 맞다. 그런데 같은 PNG를

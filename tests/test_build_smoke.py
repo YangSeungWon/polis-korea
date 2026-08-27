@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # (라벨, 명령) — 브라우저·네트워크 없이 끝나야 하고, 종료코드 0이어야 한다.
 SMOKE = [
     ("build_map_manifest", [sys.executable, "scripts/build/build_map_manifest.py"]),
-    ("sync_view_registry_js", [sys.executable, "scripts/build/sync_view_registry_js.py"]),
+    ("sync_view_thumbs_js", [sys.executable, "scripts/build/sync_view_thumbs_js.py"]),
 ]
 
 # CI에 없는데 로컬엔 있는 모듈. requirements.txt에 없으면서 import되면 CI에서만 죽는다.

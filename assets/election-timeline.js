@@ -19,7 +19,7 @@
   const KIND = { local: 'local', pres: 'presidential', general: 'general_election' };
 // === VIEW_THUMBS auto-generated ===
   // data/view_registry.json thumb_priority에서 sync. 손으로 고치지 말 것 —
-  // scripts/build/sync_view_registry_js.py 재실행으로 갱신.
+  // scripts/build/sync_view_thumbs_js.py 재실행으로 갱신.
   // 목록 썸네일·og 카드·타임라인 호버가 같은 그림을 고르게 하는 표다.
   const VIEW_THUMBS = {
     local: ['gov-hex', 'sgg-flat', 'council'],

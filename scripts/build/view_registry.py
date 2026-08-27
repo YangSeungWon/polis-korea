@@ -1,21 +1,20 @@
 """지도 뷰 레지스트리 — data/view_registry.json의 단일 진입점.
 
-같은 표가 세 벌 있었다:
+뷰 키는 **(host × mode)**다. host는 렌더러가 찍는 data-map-host와 같은 문자열이고,
+mode는 토글의 data-enc를 정규화한 것이다(map·geo → geo, grid·격자 → grid).
 
-    scripts/build/build_og_maps.py     VIEW_DEFS      (class, key, label, desc)
-    scripts/build/build_share_pages.py VIEW_LABEL     (key → label)
-    assets/svg-export.js               VIEW_DEFS      (class, key, fname)
+2026-08-27까지 여기엔 SVG 클래스 → 키 표(v1)가 함께 있었다. 캡처가 다 그려진 SVG를
+클래스로 되짚어 분류했기 때문인데, 한 클래스가 여러 (섹션,모드)에 붙어 있어서
+og/maps/{회차}/dorling.png가 무엇인지를 **PNG 압축률이** 정했다(한 키에 최대 14가지).
+그 표를 마지막까지 쓰던 곳은 svg-export.js의 내려받기 버튼이었는데, 그 버튼은
+d7b14168e에서 부트스트랩이 함께 지워져 **이미 죽어 있었다** — 91쪽이 죽은 스크립트
+둘을 싣고 있었다. 그래서 v1을 통째로 걷었다.
 
-그리고 이미 어긋나 있었다 — key `result`가 og_maps에선 "시군구 결과", share에선
-"시군구 1위"였다. 같은 뷰를 두 이름으로 부르고 있었고 아무도 몰랐다. 표가 하나면
-어긋날 자리가 없다.
-
-⚠️ **순서가 load-bearing이다.** 분류는 첫 substring 매칭이 이긴다. 한 SVG가 여러
-클래스를 함께 갖기 때문이다(시군구 결과 = "council-hex-svg result-map"). 근거는
-JSON 각 항목의 note에 적혀 있다 — 줄을 옮기기 전에 읽을 것.
+한글 라벨은 여기 없다. 캡처가 누른 버튼의 글씨를 data/map_captures.json에 적고
+result_tables.caption()이 조립한다 — 글과 그림이 한 출처에서 나오게.
 
 사용:
-    from view_registry import classify, view_meta, VIEW_DEFS, PRIMARY_ORDER
+    from view_registry import key_for, mode_of, parse_key, is_page_view
 """
 from __future__ import annotations
 
@@ -27,47 +26,8 @@ REGISTRY = ROOT / "data" / "view_registry.json"
 
 _D = json.loads(REGISTRY.read_text(encoding="utf-8"))
 
-VIEWS: list[dict] = _D["views"]
 PRIMARY_ORDER: list[str] = _D["primary_order"]
 THUMB_PRIORITY: dict[str, list[str]] = _D["thumb_priority"]
-
-# 옛 build_og_maps.VIEW_DEFS 모양 — (class, key, label, desc). 호출부를 안 고치고
-# 갈아끼우기 위한 어댑터다. 빈 키(hex-pane)는 archive 뷰가 아니라 뺀다.
-VIEW_DEFS: list[tuple[str, str, str, str]] = [
-    (v["classes"][0], v["key"], v["label"], v["desc"]) for v in VIEWS if v["key"]
-]
-
-
-def classify(class_attr: str) -> str | None:
-    """SVG class 문자열 → 뷰 키. 못 찾으면 None.
-
-    빈 키(hex-pane)는 None을 준다 — '분류는 됐지만 archive 뷰가 아니다'와
-    '아예 모르는 svg'를 호출부가 구분할 이유가 지금은 없다.
-    """
-    cls = class_attr or ""
-    for v in VIEWS:
-        if any(c in cls for c in v["classes"]):
-            return v["key"] or None
-    return None
-
-
-def view_meta(key: str) -> tuple[str, str]:
-    """뷰 키 → (label, desc). 모르는 키는 키 자신을 라벨로 돌려준다."""
-    for v in VIEWS:
-        if v["key"] == key:
-            return v["label"], v["desc"]
-    return key, ""
-
-
-def label_of(key: str) -> str:
-    return view_meta(key)[0]
-
-
-def fname_of(key: str) -> str:
-    for v in VIEWS:
-        if v["key"] == key:
-            return v["fname"]
-    return key
 
 
 def primary_for(kind: str, available: list[str]) -> str | None:
