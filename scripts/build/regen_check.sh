@@ -33,7 +33,8 @@ GENERATORS=(
   enrich_person_index    #   └ assembly_id·비례 보강 (반드시 뒤에)
   sync_nav_html          # nav 정본 → 모든 HTML
   sync_archive_html      # archive 목록·그룹 구조
-  build_static           # history/·polls/ 프리렌더
+  build_poll_accuracy    # data/polls/accuracy.json (여론조사 1위 vs 실제 — 계산 정본)
+  build_static           # history/·polls/ 프리렌더 (accuracy 뒤 — 표를 읽는다)
   build_person_pages     # /person/{slug}/
   build_party_pages
   build_observed_parties # data/parties/observed.json (관측 층 — registry와 분리)      # /party/{name}/

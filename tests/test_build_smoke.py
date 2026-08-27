@@ -25,6 +25,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SMOKE = [
     ("build_map_manifest", [sys.executable, "scripts/build/build_map_manifest.py"]),
     ("sync_view_thumbs_js", [sys.executable, "scripts/build/sync_view_thumbs_js.py"]),
+    # 폴 적중률은 계산 정본이 파이썬으로 옮겨온 것이라, 브라우저 없이 도는지가
+    # 중요하다 — 옛 계산은 JS에만 있어서 CI가 아무것도 못 봤다.
+    ("build_poll_accuracy", [sys.executable, "scripts/build/build_poll_accuracy.py"]),
 ]
 
 # CI에 없는데 로컬엔 있는 모듈. requirements.txt에 없으면서 import되면 CI에서만 죽는다.
