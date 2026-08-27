@@ -56,6 +56,11 @@ def main() -> int:
         if not offices:
             bad(f"{slug}: 직위가 하나도 없다")
         for off, o in offices.items():
+            if off == "_national":
+                # 적중이 아니라 **오차**를 재는 표다(막판 조사 평균 vs 실제 득표).
+                # 같은 자로 재려 들면 total이 없다고 실패한다 — 실제로 그랬다.
+                check_national(slug, o)
+                continue
             if not o.get("unit"):
                 bad(f"{slug}/{off}: unit이 없다 — 계열마다 세는 단위가 다르다")
             rows = o.get("rows") or []
@@ -96,11 +101,83 @@ def main() -> int:
         if P.canon("민주당", "1956-05-15") == "더불어민주당":
             bad("동음이의를 시점 무시하고 합쳤다 — '민주당'@1956")
 
+    check_pages()
+
     if fails:
         print(f"\n실패 {len(fails)}건")
         return 1
     print("통과")
     return 0
+
+
+def check_national(slug: str, o: dict) -> None:
+    """전국 후보별 표 — 오차를 재는 표라 규칙이 다르다."""
+    if not o.get("rows"):
+        bad(f"{slug}/_national: 행이 없다")
+    if not o.get("n_polls") or not o.get("window_days"):
+        bad(f"{slug}/_national: 몇 건을 며칠 창으로 평균했는지 안 적혀 있다 — "
+            "글이 계산을 설명해야 한다")
+    if not o.get("cited"):
+        bad(f"{slug}/_national: 조사 평균을 인용하는데 인용 목록이 없다")
+    for r in o.get("rows") or []:
+        if r.get("poll_pct") is not None and r.get("actual_pct") is not None \
+                and r.get("err") is None:
+            bad(f"{slug}/_national/{r.get('name')}: 조사·실제가 있는데 차이가 비었다")
+
+
+def check_pages() -> None:
+    """페이지가 그 숫자를 **글로** 갖는가, 그리고 인용을 함께 싣는가.
+
+    막는 사고 셋.
+
+    1. **본문에 숫자가 없다.** 이 릴리즈 이전의 상태다 — 제목이 '조사 적중률'인데
+       본문은 도입부 300단어, 표 0개였다. 화면에는 JS가 그렸지만 검색엔진도 공유
+       카드도 못 봤다.
+    2. **인용 없이 조사를 인용한다.** 표가 '서울 정원오 46.0%'라고 적으면 그 근거
+       조사의 의뢰자·기관·기간·표본수·응답률·오차가 같은 문서에 있어야 한다
+       (공직선거법·NESDC). 접혀 있어도 문서에 있으면 된다.
+    3. **허브 표가 14쪽에 복사된다.** polls.html은 허브이자 직위·회차 페이지의
+       틀이다. 2026-07에 history 프리렌더 66쪽이 서로 완전히 같아 대거 색인 보류된
+       사고가 있었다 — 같은 모양의 사고다.
+    """
+    import re
+    els = json.loads(SRC.read_text(encoding="utf-8")).get("elections") or {}
+    for slug, e in sorted(els.items()):
+        f = ROOT / "polls" / slug / "index.html"
+        if not f.is_file():
+            bad(f"{slug}: 페이지가 없다")
+            continue
+        html = f.read_text(encoding="utf-8")
+        for off, o in (e.get("offices") or {}).items():
+            if off == "_national":
+                if o.get("rows") and "pe-acc-national" not in html:
+                    bad(f"{slug}: 전국 후보별 표가 본문에 없다")
+                continue
+            if not o.get("total"):
+                continue
+            want = f"{o['match']}곳</b>"
+            if want not in html:
+                bad(f"{slug}/{off}: 적중 {o['match']}/{o['total']}이 본문에 없다")
+            n_rows = sum(1 for r in o["rows"] if r["hit"] is not None)
+            cited = o.get("cited") or []
+            if n_rows and not cited:
+                bad(f"{slug}/{off}: 표는 {n_rows}행인데 인용 목록이 비었다")
+            for c in cited[:3]:
+                if c.get("agency") and c["agency"] not in html:
+                    bad(f"{slug}/{off}: 인용한 조사기관 {c['agency']}이 페이지에 없다")
+                    break
+        # 인용 블록이 여섯 항목을 실제로 적는가 — 하나라도 빠지면 표시 의무 미준수다.
+        if "pe-cite-list" in html:
+            for token in ("응답률", "의뢰"):
+                if token not in html:
+                    bad(f"{slug}: 인용에 '{token}'이 없다")
+
+    hub = [p for p in ROOT.rglob("*.html")
+           if "poll-acc-hub" in p.read_text(encoding="utf-8")]
+    names = sorted(str(x.relative_to(ROOT)) for x in hub)
+    if names != ["polls.html"]:
+        bad(f"허브 표가 있어야 할 곳은 polls.html 하나인데 {names}")
+    print(f"  페이지 {len(els)}쪽에 숫자·인용 확인 · 허브 표 {len(names)}쪽")
 
 
 if __name__ == "__main__":

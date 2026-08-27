@@ -71,8 +71,12 @@ def winner_rows(races: list, tc: str, scope: str, *, place_cols, link) -> list[l
     return rows
 
 
-def table_html(sec_id: str, cap: str, head: list[str], rows: list[list[str]]) -> str:
-    """표 한 장. 행이 없으면 빈 문자열 — 빈 표를 만들지 않는다."""
+def table_html(sec_id: str, cap: str, head: list[str], rows: list[list[str]],
+               unit: str = "곳") -> str:
+    """표 한 장. 행이 없으면 빈 문자열 — 빈 표를 만들지 않는다.
+
+    unit은 캡션의 세는 말이다. 대부분 지역을 세지만(곳), 선거를 세는 표도 있다(번).
+    """
     if not rows:
         return ""
     th = "".join(f"<th>{h}</th>" for h in head)
@@ -80,7 +84,7 @@ def table_html(sec_id: str, cap: str, head: list[str], rows: list[list[str]]) ->
     return (f'\n  <section class="ar-section" id="{sec_id}">\n'
             f'    <h2 class="ar-section-title">{cap}</h2>\n'
             f'    <div class="pp-scroll">'
-            f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
+            f'<table class="pp-static"><caption>{cap} — {len(rows)}{unit}</caption>'
             f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
             f'  </section>\n')
 

@@ -295,3 +295,19 @@
 .pe-agency-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex;
   flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--ink-soft); }
 .pe-static-links { margin: 8px 0 0; font-size: 14px; }
+
+/* 적중률 요약·표·인용 — 화면과 같은 숫자를 글로 낸다(build_static.poll_accuracy_block).
+   페이지 제목이 '조사 적중률'인데 본문엔 그 숫자가 없었다. */
+.pe-acc { color: var(--ink); }
+.pe-miss { color: var(--warn, #c0392b); font-weight: 700; }
+/* 인용 의무(의뢰자·기관·기간·표본수·응답률·오차) — 접어 두되 문서에는 있다.
+   접힘은 표시 의무를 면제하지 않지만, 표 옆에 늘 펼쳐 두면 본문이 인용에 묻힌다. */
+.pe-cites { margin: 6px 0 14px; }
+.pe-cites > summary { font-size: 13px; color: var(--ink-soft); cursor: pointer; }
+.pe-cite-list { margin: 8px 0 0; padding-left: 22px; font-size: 12px;
+  line-height: 1.75; color: var(--ink-soft); }
+.pe-cite-list li { margin-bottom: 2px; }
+.pe-cite-note { margin: 8px 0 0; font-size: 11px; color: var(--ink-mute); }
+/* 접힘 바로 뒤에 오는 설명 문단이 붙어 보인다 — 인용/표 접힘과 다음 이야기를 뗀다. */
+.pe-static-more + .pe-static-lede, .pe-cites + .pe-static-lede { margin-top: 16px; }
+#poll-acc-hub { margin-top: 20px; }

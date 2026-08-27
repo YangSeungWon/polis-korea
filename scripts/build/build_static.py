@@ -209,7 +209,7 @@ def office_static_block(office_ko: str) -> str:
 
 
 def build_polls(urls: list):
-    template = INDEX_TEMPLATE.read_text(encoding='utf-8')
+    template = _strip_hub(INDEX_TEMPLATE.read_text(encoding='utf-8'))
     n_made = 0
     # 루트 / 도 sitemap에 포함 (가장 높은 priority)
     urls.append(('/', '1.0', 'daily'))
@@ -314,6 +314,190 @@ def _poll_election_meta(el: dict) -> dict | None:
     }
 
 
+_ACC_FULL: dict | None = None
+
+
+def _acc_full() -> dict:
+    global _ACC_FULL
+    if _ACC_FULL is None:
+        f = ROOT / 'data' / 'polls' / 'accuracy.json'
+        try:
+            _ACC_FULL = json.loads(f.read_text(encoding='utf-8'))['elections']
+        except Exception:                                        # noqa: BLE001
+            _ACC_FULL = {}
+    return _ACC_FULL
+
+
+_PARTIES = None
+
+
+def _canon_party(name: str | None, date_s: str) -> str:
+    """표시용 정당명 — 약칭을 정식명으로. 같은 열에 '민주당'과 '더불어민주당'이
+    섞이면 읽는 사람에겐 데이터 오류로 보인다. 정본은 data/parties/registry.json이고,
+    '민주당'처럼 시점별로 다른 당인 이름은 선거일 맥락으로 가른다."""
+    global _PARTIES
+    if not name:
+        return ''
+    if _PARTIES is None:
+        sys.path.insert(0, str(ROOT / 'scripts' / 'build'))
+        import poll_accuracy as _pa
+        _PARTIES = _pa.Parties()
+    return _PARTIES.canon(name, date_s) or name
+
+
+def _cand(c: dict | None, date_s: str = '') -> str:
+    """후보 한 명 — '이재명 46.0% (더불어민주당)'. 정당지지 조사는 이름이 없다."""
+    if not c:
+        return '—'
+    party = _canon_party(c.get('party'), date_s)
+    who = c.get('name') or party or '—'
+    pct = f" {c['pct']:.1f}%" if c.get('pct') is not None else ''
+    tail = f" ({_esc(party)})" if party and c.get('name') else ''
+    return f'{_esc(who)}{pct}{tail}'
+
+
+def _cite_li(c: dict) -> str:
+    """인용 한 줄. **여섯 항목이 다 들어간다** — 공직선거법·NESDC 표시 의무다.
+    빠뜨리면 tests/test_poll_accuracy.py가 데이터 단계에서 이미 잡는다."""
+    bits = [f'<b>{_esc(c.get("agency") or "—")}</b>']
+    if c.get('requester'):
+        bits.append(f'의뢰 {_esc(c["requester"])}')
+    if c.get('method'):
+        bits.append(_esc(c['method']))
+    if c.get('period_start') or c.get('period_end'):
+        bits.append(f'{_esc(c.get("period_start") or "")}~{_esc(c.get("period_end") or "")}')
+    if c.get('sample_size'):
+        bits.append(f'{int(c["sample_size"]):,}명')
+    if c.get('response_rate') is not None:
+        bits.append(f'응답률 {c["response_rate"]}%')
+    if c.get('sample_error'):
+        bits.append(_esc(str(c['sample_error'])))
+    li = ' · '.join(bits)
+    if c.get('source_url'):
+        li += f' <a href="{_esc(c["source_url"])}" rel="nofollow">NESDC</a>'
+    return f'<li>{li}</li>'
+
+
+def _region_label(r: str) -> str:
+    return _esc(r.replace('|', ' '))
+
+
+def poll_accuracy_block(slug: str) -> str:
+    """여론조사 1위 vs 실제 1위 — **글과 표로**.
+
+    페이지 제목이 '조사 적중률'인데 본문에 그 숫자가 없었다. 화면에는 JS가 그렸지만
+    검색엔진도 공유 카드도 못 보는 자리였다(2026-08 관측: 본문 300단어, 표 0개).
+
+    숫자는 빌드가 센 것을 그대로 쓴다(data/polls/accuracy.json). 화면도 같은 파일을
+    읽으므로 글과 그림이 어긋날 자리가 없다 — tests/ui/test_poll_accuracy_runtime.mjs가
+    그 계약을 고정한다.
+    """
+    e = _acc_full().get(slug)
+    if not e:
+        return ''
+    parts, lede = [], []
+    for off, o in e['offices'].items():
+        if off == '_national' or not o.get('total'):
+            continue
+        pct = round(o['match'] / o['total'] * 100)
+        miss = [r['region'] for r in o['rows'] if r['hit'] is False]
+        s = (f'<b>{_esc(off)}</b>은 조사가 있던 {o["unit"]} {o["total"]}곳 중 '
+             f'<b>{o["match"]}곳</b>({pct}%)에서 여론조사 1위가 실제 1위와 같았습니다')
+        if 0 < len(miss) <= 4:
+            s += f' — 빗나간 곳은 {", ".join(_region_label(m) for m in miss)}'
+        elif miss:
+            s += f' — 빗나간 곳 {len(miss)}곳'
+        lede.append(s + '.')
+    if not lede:
+        return ''
+    parts.append('<p class="pe-static-lede pe-acc">' + ' '.join(lede) + '</p>')
+
+    nat = e['offices'].get('_national')
+    if nat and nat.get('rows'):
+        rows = [[
+            _esc(r['name'] or ''), _esc(_canon_party(r.get('party'), e['date'])),
+            (f"{r['poll_pct']:.1f}%" if r.get('poll_pct') is not None else '—'),
+            (f"{r['actual_pct']:.1f}%" if r.get('actual_pct') is not None else '—'),
+            (f"{r['err']:+.1f}%P" if r.get('err') is not None else '—'),
+        ] for r in nat['rows']]
+        parts.append(
+            f'<p class="pe-static-lede">대선 조사는 대부분 전국 단위입니다. '
+            f'선거일 이전 <b>{nat["window_days"]}일</b> 안의 전국 조사 '
+            f'<b>{nat["n_polls"]}건</b>을 후보별로 단순평균해 실제 득표와 견줍니다'
+            f'(가중치 없음 — 글이 계산을 설명해야 하므로). 선거일 뒤에 끝난 조사는 '
+            f'뺐습니다.</p>'
+            + _rt.table_html('pe-acc-national', '전국 — 막판 조사 평균 vs 실제 득표',
+                             ['후보', '정당', '막판 조사', '실제 득표', '차이'], rows, unit='명'))
+        cited = nat.get('cited') or []
+        if cited:
+            parts.append(
+                f'<details class="pe-cites"><summary>이 표가 인용한 조사 {len(cited)}건 — '
+                f'의뢰자·기관·조사기간·표본수·응답률·표본오차</summary>'
+                f'<ol class="pe-cite-list">{"".join(_cite_li(c) for c in cited)}</ol>'
+                f'<p class="pe-cite-note">그 밖의 사항은 중앙선거여론조사심의위원회 '
+                f'홈페이지를 참조하십시오.</p></details>')
+
+    for off, o in e['offices'].items():
+        if off == '_national' or not o.get('total'):
+            continue
+        rows = []
+        for r in o['rows']:
+            if r['hit'] is None:
+                continue                      # 조사가 없어 비교 못 한 지역은 빼둔다
+            rows.append([
+                _region_label(r['region']),
+                _cand(r.get('poll'), e['date']),
+                _cand(r.get('actual'), e['date']),
+                '적중' if r['hit'] else '<b class="pe-miss">빗나감</b>',
+                str((r.get('poll') or {}).get('n_polls') or ''),
+            ])
+        tbl = _rt.table_html(f'pe-acc-{_slugify(off)}',
+                             f'{_esc(off)} — 여론조사 1위 vs 실제 1위',
+                             ['지역', '여론조사 1위', '실제 1위', '판정', '조사'], rows)
+        cited = o.get('cited') or []
+        cite_html = ''
+        if cited:
+            cite_html = (
+                f'<details class="pe-cites"><summary>이 표가 인용한 조사 {len(cited)}건 — '
+                f'의뢰자·기관·조사기간·표본수·응답률·표본오차</summary>'
+                f'<ol class="pe-cite-list">{"".join(_cite_li(c) for c in cited)}</ol>'
+                f'<p class="pe-cite-note">그 밖의 사항은 중앙선거여론조사심의위원회 '
+                f'홈페이지를 참조하십시오.</p></details>')
+        body = tbl + cite_html
+        # 20행이 넘으면 접는다. 접혀도 HTML에는 있으므로 색인·표시 의무 둘 다 충족한다.
+        if len(rows) > 20:
+            body = (f'<details class="pe-static-more"><summary>{_esc(off)} '
+                    f'{len(rows)}곳 표로 보기</summary>{body}</details>')
+        parts.append(body)
+
+    ag = e.get('agencies') or {}
+    ag_rows = ag.get('rows') or []
+    if ag_rows:
+        rows = [[_esc(r['agency']), f'{r["n"]}건', f'{r["hit"]}/{r["n"]}',
+                 (f'{r["err"]:.1f}%P' if r.get('err') is not None else '—')]
+                for r in ag_rows]
+        oth = ag.get('other') or {}
+        parts.append(
+            f'<p class="pe-static-lede">조사기관별로 봅니다. 선거일 기준 '
+            f'<b>{ag.get("window_days", 30)}일 안</b>의 조사만, {ag.get("min_polls", 3)}건 '
+            f'이상인 기관만 싣습니다'
+            + (f'(그 외 {oth.get("agencies", 0)}곳 {oth.get("polls", 0)}건은 뺐습니다)'
+               if oth.get('agencies') else '')
+            + '. <b>순위표가 아닙니다</b> — 기관마다 조사한 지역이 다르고, 박빙 지역을 '
+            f'많이 조사한 기관은 1위를 더 자주 놓칩니다. 그래서 적중률이 아니라 '
+            f'<b>조사 수 순</b>으로 싣습니다. 오차는 조사 1위 후보의 지지율과 그 정당의 '
+            f'실제 득표율 차이입니다.</p>'
+            + _rt.table_html('pe-acc-agency', '조사기관별',
+                             ['조사기관', '조사', '1위 적중', '평균 오차'], rows))
+    return ''.join(parts)
+
+
+def _slugify(s: str) -> str:
+    """한글 직위명 → 안전한 id. 한글이 id에 들어가면 앵커 링크가 퍼센트 인코딩된다."""
+    return {'광역단체장': 'gov', '기초단체장': 'mayor', '교육감': 'edu',
+            '대통령': 'pres', '국회의원': 'district'}.get(s, 'off')
+
+
 def poll_election_block(meta: dict, el: dict) -> str:
     """그 회차 여론조사의 실측 요약 — 건수·기간·기관.
 
@@ -351,13 +535,14 @@ def poll_election_block(meta: dict, el: dict) -> str:
         f'effect). 아래에서 조사별 표본수·응답률·표본오차를 실제 득표와 나란히 봅니다.</p>'
         f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
         f'<ul class="pe-agency-list">{li}{more}</ul></details>'
-        f'<p class="pe-static-links"><a href="/archive/{_esc(meta["slug"])}/">'
+        + poll_accuracy_block(meta['slug'])
+        + f'<p class="pe-static-links"><a href="/archive/{_esc(meta["slug"])}/">'
         f'{name} 결과 아카이브 →</a></p></section>')
 
 
 def build_poll_elections(urls: list):
     """선거별 여론조사 vs 실제 페이지 /polls/{id}/ + 디렉터리 index.json 생성."""
-    template = INDEX_TEMPLATE.read_text(encoding='utf-8')
+    template = _strip_hub(INDEX_TEMPLATE.read_text(encoding='utf-8'))
     made = []
     for fp in sorted(ELECTIONS_DIR.glob('*.json')):
         if fp.name in ('index.json',):
@@ -397,7 +582,83 @@ def build_poll_elections(urls: list):
     idx_path = ROOT / 'data' / 'polls' / 'election_index.json'
     idx_path.write_text(json.dumps(made_sorted, ensure_ascii=False), encoding='utf-8')
     _write_poll_index_block(made_sorted)
+    _write_poll_acc_hub(made_sorted)
     print(f'poll-elections: {len(made)} ({", ".join(m["slug"] for m in made_sorted)})')
+
+
+# ⚠️ 여는 마커 뒤에 주석이 붙는다(<!-- POLL_ACC_HUB — build_static.py … -->).
+# '-->'까지 딱 맞춰 쓰면 채워진 블록을 못 잡아 파생 페이지에 새어 나간다 — 실제로
+# governor/index.html에 허브 표가 복사됐다.
+HUB_RE = re.compile(r'<!-- POLL_ACC_HUB[\s\S]*?<!-- /POLL_ACC_HUB -->')
+
+
+def _strip_hub(template: str) -> str:
+    """파생 페이지에서 허브 전용 블록을 비운다.
+
+    ⚠️ polls.html은 **허브이자 14쪽의 틀**이다. 허브 표를 그냥 넣으면 직위 페이지
+    4쪽과 회차 페이지 9쪽에 같은 표가 복사된다 — 중복 본문은 이 저장소가 2026-07에
+    이미 크게 물린 사고다(history 프리렌더 66쪽이 서로 완전히 같아 대거 보류됐다).
+    """
+    return HUB_RE.sub('<!-- POLL_ACC_HUB --><!-- /POLL_ACC_HUB -->', template, count=1)
+
+
+def _write_poll_acc_hub(made_sorted: list) -> None:
+    """허브에 **회차 간** 적중률 표. 다른 데 없는 것이다 — 2016년 이후 아홉 번의
+    선거에서 여론조사가 얼마나 맞았는지를 한 표로 본다.
+
+    ⚠️ 계열마다 **세는 단위가 다르다**. 총선은 지역구, 대선은 시도 1위, 지선은
+    광역단체장이다. 그냥 줄세우면 20대 대선 13/17이 '여론조사가 틀렸다'로 읽히는데,
+    실제로는 **박빙 시도가 많았다**는 뜻이다. 그래서 계열별로 나누고 단위를 칼럼에
+    적고, 그 문장을 표 옆에 둔다.
+    """
+    src = ROOT / 'polls.html'
+    if not src.exists():
+        return
+    acc = _acc_full()
+    GROUP = [('presidential', '대통령선거'), ('general_election', '국회의원선거'),
+             ('local', '전국동시지방선거')]
+    HEAD = {'presidential': '대통령', 'general_election': '국회의원',
+            'local': '광역단체장'}
+    sections = []
+    for kind, ko in GROUP:
+        rows = []
+        for m in sorted(made_sorted, key=lambda x: x['date'], reverse=True):
+            e = acc.get(m['slug'])
+            if not e or e['kind'] != kind:
+                continue
+            o = (e.get('offices') or {}).get(HEAD[kind])
+            if not o or not o.get('total'):
+                continue
+            pct = round(o['match'] / o['total'] * 100)
+            rows.append([
+                f'<a href="/polls/{m["slug"]}/">{_esc(m["name"])}</a>',
+                # 무엇을 세는지를 직위까지 밝힌다 — '시도'만 적으면 지선 행이
+                # 광역단체장인지 교육감인지 알 수 없다.
+                _esc(m['date']), _esc(f"{HEAD[kind]} · {o['unit']}"),
+                f'{o["match"]}/{o["total"]}', f'{pct}%',
+            ])
+        sections.append(_rt.table_html(
+            f'poll-acc-{kind}', f'{ko} — 여론조사 1위가 실제와 같았던 비율',
+            ['선거', '선거일', '세는 대상', '적중', ''], rows, unit='번'))
+    body = ''.join(s for s in sections if s)
+    if not body:
+        return
+    note = ('<p class="pe-static-lede">2016년 이후 NESDC에 등록된 조사만 다룹니다'
+            '(그 이전은 <a href="/history.html">역대 결과</a>). '
+            '<b>계열끼리 견주지 마십시오</b> — 총선은 지역구 254곳, 대선은 시도 17곳, '
+            '지선은 광역단체장 17곳을 셉니다. 대선이 낮게 나오는 것은 조사가 틀렸다기보다 '
+            '<b>박빙 시도가 많았다</b>는 뜻입니다. 시도 1위는 몇천 표로 뒤집힙니다.</p>')
+    block = ('<!-- POLL_ACC_HUB — build_static.py 자동 갱신. 손수정 X.\n'
+             '         ⚠️ polls.html은 14쪽의 틀이기도 하다 — 파생 페이지는 _strip_hub가 비운다. -->\n'
+             '    <section class="pe-static" id="poll-acc-hub">\n'
+             '    <h2 class="pe-static-title">여론조사는 얼마나 맞았나</h2>\n'
+             f'    {note}{body}\n'
+             '    </section>\n'
+             '    <!-- /POLL_ACC_HUB -->')
+    html = src.read_text(encoding='utf-8')
+    new = HUB_RE.sub(lambda _: block, html, count=1)
+    if new != html:
+        src.write_text(new, encoding='utf-8')
 
 
 def _write_poll_index_block(made_sorted: list):
