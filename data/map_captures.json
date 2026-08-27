@@ -2,58 +2,6 @@
  "_note": "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. 눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.",
  "slugs": {
   "10th-general-1978": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 745,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 745,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -67,11 +15,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -80,11 +28,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -117,6 +65,58 @@
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
     "w": 820,
     "h": 591,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 745,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 745,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
     "page": false
    }
   },
@@ -136,58 +136,6 @@
    }
   },
   "11th-general-1981": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1038,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1038,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -201,11 +149,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -214,11 +162,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -252,6 +200,58 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1038,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1038,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": false
    }
   },
   "11th-pres-1980": {
@@ -270,58 +270,6 @@
    }
   },
   "12th-general-1985": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 742,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 742,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -335,11 +283,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -348,11 +296,11 @@
     "h": 613,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -386,6 +334,58 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 742,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 742,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": false
    }
   },
   "12th-pres-1981": {
@@ -404,58 +404,6 @@
    }
   },
   "13th-general-1988": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1079,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1079,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -469,11 +417,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -482,11 +430,11 @@
     "h": 614,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -519,21 +467,138 @@
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
     "w": 820,
     "h": 671,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1079,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1079,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
     "page": false
    }
   },
   "13th-pres-1987": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 615,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 707,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 615,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 535,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 535,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -562,6 +627,19 @@
     "h": 707,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 707,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -574,139 +652,9 @@
     "w": 820,
     "h": 658,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 615,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 615,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 535,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 535,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": false
    }
   },
   "14th-general-1992": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1162,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1162,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -720,11 +668,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -733,11 +681,11 @@
     "h": 614,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -771,20 +719,137 @@
     "w": 820,
     "h": 671,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1162,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1162,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": false
    }
   },
   "14th-pres-1992": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 615,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 738,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 615,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 535,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 535,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -813,6 +878,19 @@
     "h": 738,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 738,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -825,139 +903,9 @@
     "w": 820,
     "h": 687,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 615,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 615,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 535,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 535,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": false
    }
   },
   "15th-general-1996": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 707,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 707,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -971,11 +919,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -984,11 +932,11 @@
     "h": 614,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -1022,20 +970,137 @@
     "w": 820,
     "h": 669,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 707,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 707,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": false
    }
   },
   "15th-pres-1997": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 572,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 740,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 572,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -1077,17 +1142,17 @@
     "h": 740,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 679,
+    "h": 740,
     "page": false
    },
    "sggturn-hex": {
@@ -1103,138 +1168,21 @@
     "h": 685,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 572,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 572,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
     "page": false
    }
   },
   "16th-general-2000": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 682,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1020,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1020,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 682,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -1248,11 +1196,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -1261,11 +1209,11 @@
     "h": 563,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -1299,20 +1247,137 @@
     "w": 820,
     "h": 671,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1020,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 682,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1020,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 682,
+    "page": false
    }
   },
   "16th-pres-2002": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 774,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -1354,17 +1419,17 @@
     "h": 774,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 679,
+    "h": 774,
     "page": false
    },
    "sggturn-hex": {
@@ -1380,98 +1445,85 @@
     "h": 713,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
     "page": false
    }
   },
   "17th-general-2004": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 682,
+   "seats": {
+    "host": "seats",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "의석수",
+    "title_src": "registry",
+    "desc": null,
+    "w": 440,
+    "h": 201,
     "page": true
+   },
+   "sidoseat-hex": {
+    "host": "sidoseat",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 563,
+    "page": true
+   },
+   "sidoseat-dorling": {
+    "host": "sidoseat",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 563,
+    "page": true
+   },
+   "sidoseat-turnout": {
+    "host": "sidoseat",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 820,
+    "h": 664,
+    "page": false
+   },
+   "sidoseat-turnout-geo": {
+    "host": "sidoseat",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 820,
+    "h": 671,
+    "page": false
    },
    "district-hex": {
     "host": "district",
@@ -1484,6 +1536,19 @@
     "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
     "h": 980,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 682,
     "page": true
    },
    "district-turnout": {
@@ -1510,32 +1575,6 @@
     "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
     "h": 682,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 580,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 671,
     "page": false
    },
    "prop-grid": {
@@ -1551,6 +1590,19 @@
     "h": 580,
     "page": true
    },
+   "prop-dorling": {
+    "host": "prop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 580,
+    "page": false
+   },
    "prop-hex": {
     "host": "prop",
     "mode": "hex",
@@ -1564,84 +1616,97 @@
     "h": 664,
     "page": true
    },
-   "seats": {
-    "host": "seats",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": null,
-    "title": "의석수",
-    "title_src": "registry",
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
     "desc": null,
-    "w": 440,
-    "h": 201,
-    "page": true
-   },
-   "sidoseat-dorling": {
-    "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 563,
-    "page": true
-   },
-   "sidoseat-hex": {
-    "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 563,
-    "page": true
-   },
-   "sidoseat-turnout": {
-    "host": "sidoseat",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 820,
-    "h": 664,
-    "page": false
-   },
-   "sidoseat-turnout-geo": {
-    "host": "sidoseat",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
     "w": 820,
     "h": 671,
     "page": false
    }
   },
   "17th-pres-2007": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 771,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -1683,17 +1748,17 @@
     "h": 771,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 679,
+    "h": 771,
     "page": false
    },
    "sggturn-hex": {
@@ -1709,190 +1774,21 @@
     "h": 714,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
     "page": false
    }
   },
   "18th-general-2008": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1020,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1020,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 683,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 578,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 671,
-    "page": false
-   },
-   "prop-grid": {
-    "host": "prop",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 578,
-    "page": true
-   },
-   "prop-hex": {
-    "host": "prop",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 664,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -1906,11 +1802,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -1919,11 +1815,11 @@
     "h": 571,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -1954,23 +1850,192 @@
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 820,
+    "h": 671,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1020,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 683,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1020,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 683,
+    "page": false
+   },
+   "prop-grid": {
+    "host": "prop",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 578,
+    "page": true
+   },
+   "prop-dorling": {
+    "host": "prop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 578,
+    "page": false
+   },
+   "prop-hex": {
+    "host": "prop",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 664,
+    "page": true
+   },
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
     "w": 820,
     "h": 671,
     "page": false
    }
   },
   "18th-pres-2012": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 771,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 569,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 491,
     "page": false
    },
    "sgg-flat": {
@@ -2012,17 +2077,17 @@
     "h": 771,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 678,
+    "h": 771,
     "page": false
    },
    "sggturn-hex": {
@@ -2038,190 +2103,21 @@
     "h": 714,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 569,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 491,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 678,
     "page": false
    }
   },
   "19th-general-2012": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1004,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 1004,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 683,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 580,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 671,
-    "page": false
-   },
-   "prop-grid": {
-    "host": "prop",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 580,
-    "page": true
-   },
-   "prop-hex": {
-    "host": "prop",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 664,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -2235,11 +2131,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -2248,11 +2144,11 @@
     "h": 571,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -2286,20 +2182,189 @@
     "w": 820,
     "h": 671,
     "page": false
-   }
-  },
-  "19th-pres-2017": {
-   "sgg-dorling": {
-    "host": "sgg",
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1004,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 683,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 1004,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 683,
+    "page": false
+   },
+   "prop-grid": {
+    "host": "prop",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 580,
+    "page": true
+   },
+   "prop-dorling": {
+    "host": "prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "desc": null,
+    "w": 600,
+    "h": 580,
+    "page": false
+   },
+   "prop-hex": {
+    "host": "prop",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
     "w": 820,
-    "h": 739,
+    "h": 664,
+    "page": true
+   },
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 671,
+    "page": false
+   }
+  },
+  "19th-pres-2017": {
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": false
    },
    "sgg-flat": {
@@ -2341,17 +2406,17 @@
     "h": 739,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 680,
+    "h": 739,
     "page": false
    },
    "sggturn-hex": {
@@ -2367,97 +2432,58 @@
     "h": 686,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
     "page": false
    }
   },
   "1st-general-1948": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
+   "seats": {
+    "host": "seats",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "의석수",
+    "title_src": "registry",
+    "desc": null,
+    "w": 440,
+    "h": 201,
+    "page": true
+   },
+   "sidoseat-hex": {
+    "host": "sidoseat",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
     "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 637,
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 561,
+    "page": true
+   },
+   "sidoseat-dorling": {
+    "host": "sidoseat",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 561,
     "page": true
    },
    "district-hex": {
@@ -2473,72 +2499,33 @@
     "h": 841,
     "page": true
    },
-   "seats": {
-    "host": "seats",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": null,
-    "title": "의석수",
-    "title_src": "registry",
-    "desc": null,
-    "w": 440,
-    "h": 201,
-    "page": true
-   },
-   "sidoseat-dorling": {
-    "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
     "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 561,
-    "page": true
-   },
-   "sidoseat-hex": {
-    "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 561,
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 637,
     "page": true
    }
   },
   "1st-local-1995": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 713,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "15개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 623,
-    "page": false
+    "h": 535,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -2566,18 +2553,18 @@
     "h": 623,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "15개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 535,
-    "page": true
+    "h": 623,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -2605,19 +2592,6 @@
     "h": 490,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 613,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -2631,18 +2605,31 @@
     "h": 613,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 777,
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 600,
+    "h": 613,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 713,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -2683,17 +2670,17 @@
     "h": 777,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 680,
+    "h": 777,
     "page": false
    },
    "sggturn-hex": {
@@ -2708,6 +2695,19 @@
     "w": 820,
     "h": 713,
     "page": true
+   },
+   "sggturn-geo": {
+    "host": "sggturn",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
+    "title_src": "h2",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
+    "page": false
    }
   },
   "1st-pres-1948": {
@@ -2726,110 +2726,6 @@
    }
   },
   "20th-general-2016": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 892,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 892,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 580,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 591,
-    "page": false
-   },
-   "prop-grid": {
-    "host": "prop",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 580,
-    "page": true
-   },
-   "prop-hex": {
-    "host": "prop",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 664,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -2843,11 +2739,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -2856,11 +2752,11 @@
     "h": 571,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -2891,23 +2787,192 @@
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 820,
+    "h": 591,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 892,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 892,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": false
+   },
+   "prop-grid": {
+    "host": "prop",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 580,
+    "page": true
+   },
+   "prop-dorling": {
+    "host": "prop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 580,
+    "page": false
+   },
+   "prop-hex": {
+    "host": "prop",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 664,
+    "page": true
+   },
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
     "w": 820,
     "h": 591,
     "page": false
    }
   },
   "20th-pres-2022": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 739,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": false
    },
    "sgg-flat": {
@@ -2949,17 +3014,17 @@
     "h": 739,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 680,
+    "h": 739,
     "page": false
    },
    "sggturn-hex": {
@@ -2975,190 +3040,21 @@
     "h": 686,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
     "page": false
    }
   },
   "21st-general-2020": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 892,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 892,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 576,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 591,
-    "page": false
-   },
-   "prop-grid": {
-    "host": "prop",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 576,
-    "page": true
-   },
-   "prop-hex": {
-    "host": "prop",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 664,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -3172,11 +3068,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3185,11 +3081,11 @@
     "h": 571,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3220,23 +3116,192 @@
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 820,
+    "h": 591,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 892,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 892,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": false
+   },
+   "prop-grid": {
+    "host": "prop",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "prop-dorling": {
+    "host": "prop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": false
+   },
+   "prop-hex": {
+    "host": "prop",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 664,
+    "page": true
+   },
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
     "w": 820,
     "h": 591,
     "page": false
    }
   },
   "21st-pres-2025": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 771,
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 486,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": false
    },
    "sgg-flat": {
@@ -3278,17 +3343,17 @@
     "h": 771,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 680,
+    "h": 771,
     "page": false
    },
    "sggturn-hex": {
@@ -3304,190 +3369,21 @@
     "h": 714,
     "page": true
    },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
+   "sggturn-geo": {
+    "host": "sggturn",
     "mode": "geo",
     "enc": "map",
     "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 576,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 486,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
     "page": false
    }
   },
   "22nd-general-2024": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 929,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 929,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 686,
-    "page": false
-   },
-   "prop-dorling": {
-    "host": "prop",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 576,
-    "page": false
-   },
-   "prop-geo": {
-    "host": "prop",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 591,
-    "page": false
-   },
-   "prop-grid": {
-    "host": "prop",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 600,
-    "h": 576,
-    "page": true
-   },
-   "prop-hex": {
-    "host": "prop",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-proportional",
-    "title": "비례대표 정당 득표",
-    "title_src": "h2",
-    "desc": null,
-    "w": 820,
-    "h": 664,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -3501,11 +3397,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3514,11 +3410,11 @@
     "h": 560,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3552,21 +3448,6 @@
     "w": 820,
     "h": 591,
     "page": false
-   }
-  },
-  "2nd-general-1950": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 507,
-    "page": true
    },
    "district-hex": {
     "host": "district",
@@ -3578,9 +3459,102 @@
     "title_src": "h2",
     "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 707,
+    "h": 929,
     "page": true
    },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 929,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 686,
+    "page": false
+   },
+   "prop-grid": {
+    "host": "prop",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "prop-dorling": {
+    "host": "prop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": false
+   },
+   "prop-hex": {
+    "host": "prop",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 664,
+    "page": true
+   },
+   "prop-geo": {
+    "host": "prop",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-proportional",
+    "title": "비례대표 정당 득표",
+    "title_src": "h2",
+    "desc": null,
+    "w": 820,
+    "h": 591,
+    "page": false
+   }
+  },
+  "2nd-general-1950": {
    "seats": {
     "host": "seats",
     "mode": null,
@@ -3594,11 +3568,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3607,11 +3581,11 @@
     "h": 561,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -3645,34 +3619,47 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 707,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 507,
+    "page": true
    }
   },
   "2nd-local-1998": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 656,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 583,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -3700,18 +3687,18 @@
     "h": 583,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 583,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -3739,19 +3726,6 @@
     "h": 491,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 578,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -3765,18 +3739,31 @@
     "h": 578,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 707,
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 600,
+    "h": 578,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 656,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -3817,17 +3804,17 @@
     "h": 707,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 679,
+    "h": 707,
     "page": false
    },
    "sggturn-hex": {
@@ -3842,21 +3829,73 @@
     "w": 820,
     "h": 656,
     "page": true
+   },
+   "sggturn-geo": {
+    "host": "sggturn",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
+    "title_src": "h2",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
+    "page": false
    }
   },
   "2nd-pres-1952": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 637,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 824,
-    "page": false
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 637,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -3884,6 +3923,19 @@
     "h": 824,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 824,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -3896,72 +3948,46 @@
     "w": 820,
     "h": 745,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 637,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 637,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": true
    }
   },
   "3rd-general-1954": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
+   "seats": {
+    "host": "seats",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "의석수",
+    "title_src": "registry",
+    "desc": null,
+    "w": 440,
+    "h": 201,
+    "page": true
+   },
+   "sidoseat-hex": {
+    "host": "sidoseat",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
     "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 672,
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 624,
+    "page": true
+   },
+   "sidoseat-dorling": {
+    "host": "sidoseat",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 624,
     "page": true
    },
    "district-hex": {
@@ -3977,72 +4003,33 @@
     "h": 740,
     "page": true
    },
-   "seats": {
-    "host": "seats",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": null,
-    "title": "의석수",
-    "title_src": "registry",
-    "desc": null,
-    "w": 440,
-    "h": 201,
-    "page": true
-   },
-   "sidoseat-dorling": {
-    "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
     "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 624,
-    "page": true
-   },
-   "sidoseat-hex": {
-    "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 624,
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 672,
     "page": true
    }
   },
   "3rd-local-2002": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 656,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 583,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -4070,18 +4057,18 @@
     "h": 583,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 583,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -4109,19 +4096,6 @@
     "h": 491,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 568,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -4135,17 +4109,17 @@
     "h": 568,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 498,
+    "h": 568,
     "page": false
    },
    "metro-prop-grid": {
@@ -4161,18 +4135,31 @@
     "h": 498,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 707,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 498,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 656,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -4213,17 +4200,17 @@
     "h": 707,
     "page": false
    },
-   "sggturn-geo": {
-    "host": "sggturn",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
-    "h": 679,
+    "h": 707,
     "page": false
    },
    "sggturn-hex": {
@@ -4238,21 +4225,73 @@
     "w": 820,
     "h": 656,
     "page": true
+   },
+   "sggturn-geo": {
+    "host": "sggturn",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
+    "title_src": "h2",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
+    "page": false
    }
   },
   "3rd-pres-1956": {
-   "sgg-dorling": {
-    "host": "sgg",
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 637,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 863,
-    "page": false
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 637,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -4280,6 +4319,19 @@
     "h": 863,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 863,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -4292,72 +4344,46 @@
     "w": 820,
     "h": 778,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 637,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 637,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": true
    }
   },
   "4th-general-1958": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
+   "seats": {
+    "host": "seats",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": null,
+    "title": "의석수",
+    "title_src": "registry",
+    "desc": null,
+    "w": 440,
+    "h": 201,
+    "page": true
+   },
+   "sidoseat-hex": {
+    "host": "sidoseat",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
     "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 679,
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 624,
+    "page": true
+   },
+   "sidoseat-dorling": {
+    "host": "sidoseat",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-general-hex",
+    "title": "지역구 의석 — 시도별",
+    "title_src": "h2",
+    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
+    "w": 600,
+    "h": 624,
     "page": true
    },
    "district-hex": {
@@ -4373,72 +4399,33 @@
     "h": 918,
     "page": true
    },
-   "seats": {
-    "host": "seats",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": null,
-    "title": "의석수",
-    "title_src": "registry",
-    "desc": null,
-    "w": 440,
-    "h": 201,
-    "page": true
-   },
-   "sidoseat-dorling": {
-    "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
     "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 624,
-    "page": true
-   },
-   "sidoseat-hex": {
-    "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-general-hex",
-    "title": "지역구 의석 — 시도별",
-    "title_src": "h2",
-    "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
-    "w": 600,
-    "h": 624,
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
     "page": true
    }
   },
   "4th-local-2006": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 631,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 578,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -4466,18 +4453,18 @@
     "h": 578,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 578,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -4505,19 +4492,6 @@
     "h": 491,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 582,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -4531,17 +4505,17 @@
     "h": 582,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 494,
+    "h": 582,
     "page": false
    },
    "metro-prop-grid": {
@@ -4557,18 +4531,31 @@
     "h": 494,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 675,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 494,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 631,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -4609,30 +4596,30 @@
     "h": 675,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 675,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 675,
+    "h": 631,
     "page": true
    },
    "sggturn-geo": {
@@ -4648,72 +4635,46 @@
     "h": 679,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
-    "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 631,
-    "page": true
-   }
-  },
-  "4th-pres-1960": {
-   "sgg-dorling": {
-    "host": "sgg",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
-    "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 863,
-    "page": false
-   },
-   "sgg-flat": {
-    "host": "sgg",
-    "mode": "flat",
-    "enc": "단색",
-    "label": "단색",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
-    "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 778,
-    "page": true
-   },
-   "sgg-grid": {
-    "host": "sgg",
+   "sggprop-grid": {
+    "host": "sggprop",
     "mode": "grid",
     "enc": "격자",
     "label": "격자",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 863,
-    "page": false
-   },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": null,
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
-    "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 778,
+    "h": 675,
     "page": true
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
+    "title_src": "h2",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "w": 820,
+    "h": 675,
+    "page": false
+   }
+  },
+  "4th-pres-1960": {
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 649,
+    "page": false
    },
    "sido-dorling": {
     "host": "sido",
@@ -4728,32 +4689,6 @@
     "h": 649,
     "page": true
    },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 649,
-    "page": false
-   },
    "sido-hex": {
     "host": "sido",
     "mode": "hex",
@@ -4765,6 +4700,19 @@
     "desc": "각 시·도 1위 후보 — 정당색·득표율.",
     "w": 600,
     "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": true
    },
    "sido-turnout": {
@@ -4792,35 +4740,61 @@
     "w": 600,
     "h": 433,
     "page": false
+   },
+   "sgg-flat": {
+    "host": "sgg",
+    "mode": "flat",
+    "enc": "단색",
+    "label": "단색",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 778,
+    "page": true
+   },
+   "sgg-grid": {
+    "host": "sgg",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 863,
+    "page": false
+   },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 863,
+    "page": false
+   },
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": null,
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
+    "title_src": "h2",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 778,
+    "page": true
    }
   },
   "5th-general-1960": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 679,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 966,
-    "page": true
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -4834,11 +4808,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -4847,11 +4821,11 @@
     "h": 624,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -4885,34 +4859,47 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 966,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 679,
+    "page": true
    }
   },
   "5th-local-2010": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 656,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 578,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -4940,18 +4927,18 @@
     "h": 578,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 578,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -4979,19 +4966,6 @@
     "h": 491,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 582,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -5005,17 +4979,17 @@
     "h": 582,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 578,
+    "h": 582,
     "page": false
    },
    "metro-prop-grid": {
@@ -5031,18 +5005,31 @@
     "h": 578,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 707,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 578,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 656,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -5083,30 +5070,30 @@
     "h": 707,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 707,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 707,
+    "h": 656,
     "page": true
    },
    "sggturn-geo": {
@@ -5122,33 +5109,85 @@
     "h": 679,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sggprop-grid": {
+    "host": "sggprop",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 656,
+    "h": 707,
     "page": true
-   }
-  },
-  "5th-pres-1963": {
-   "sgg-dorling": {
-    "host": "sgg",
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
     "h": 707,
     "page": false
+   }
+  },
+  "5th-pres-1963": {
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 652,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 652,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -5176,6 +5215,19 @@
     "h": 707,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 707,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -5187,114 +5239,10 @@
     "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
     "h": 656,
-    "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 652,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 652,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
     "page": true
    }
   },
   "6th-general-1963": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 677,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 706,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 706,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 677,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -5308,11 +5256,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -5321,11 +5269,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -5358,35 +5306,74 @@
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
     "w": 820,
     "h": 591,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 706,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 677,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 706,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 677,
     "page": false
    }
   },
   "6th-local-2014": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 580,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -5414,18 +5401,18 @@
     "h": 580,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 580,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -5453,19 +5440,6 @@
     "h": 433,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 582,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -5479,17 +5453,17 @@
     "h": 582,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 580,
+    "h": 582,
     "page": false
    },
    "metro-prop-grid": {
@@ -5505,18 +5479,31 @@
     "h": 580,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 742,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 580,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 683,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -5557,30 +5544,30 @@
     "h": 742,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 742,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 742,
+    "h": 683,
     "page": true
    },
    "sggturn-geo": {
@@ -5596,32 +5583,110 @@
     "h": 680,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sggprop-grid": {
+    "host": "sggprop",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 683,
+    "h": 742,
     "page": true
-   }
-  },
-  "6th-pres-1967": {
-   "sgg-dorling": {
-    "host": "sgg",
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 707,
+    "h": 742,
+    "page": false
+   }
+  },
+  "6th-pres-1967": {
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 630,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 630,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": false
    },
    "sgg-flat": {
@@ -5650,6 +5715,19 @@
     "h": 707,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 707,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -5662,139 +5740,9 @@
     "w": 820,
     "h": 656,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 630,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 630,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": false
    }
   },
   "7th-general-1967": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 677,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 706,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 706,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 677,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -5808,11 +5756,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -5821,11 +5769,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -5858,35 +5806,74 @@
     "desc": "각 시도의 지역구 의석을 hex로. 균등=1석 1칸 · 원형=원 크기 의석·파이 정당.",
     "w": 820,
     "h": 591,
+    "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 706,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 677,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 706,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 677,
     "page": false
    }
   },
   "7th-local-2018": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 587,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -5914,18 +5901,18 @@
     "h": 587,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 587,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -5953,19 +5940,6 @@
     "h": 433,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 585,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -5979,17 +5953,17 @@
     "h": 585,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 587,
+    "h": 585,
     "page": false
    },
    "metro-prop-grid": {
@@ -6005,18 +5979,31 @@
     "h": 587,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 742,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 587,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 683,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -6057,30 +6044,30 @@
     "h": 742,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 742,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 742,
+    "h": 683,
     "page": true
    },
    "sggturn-geo": {
@@ -6096,32 +6083,110 @@
     "h": 680,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sggprop-grid": {
+    "host": "sggprop",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 683,
+    "h": 742,
     "page": true
-   }
-  },
-  "7th-pres-1971": {
-   "sgg-dorling": {
-    "host": "sgg",
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 1위 후보",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 740,
+    "h": 742,
+    "page": false
+   }
+  },
+  "7th-pres-1971": {
+   "sido-grid": {
+    "host": "sido",
+    "mode": "grid",
+    "enc": "grid",
+    "label": "격자",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 653,
+    "page": false
+   },
+   "sido-dorling": {
+    "host": "sido",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 653,
+    "page": true
+   },
+   "sido-hex": {
+    "host": "sido",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": true
+   },
+   "sido-geo": {
+    "host": "sido",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
+    "page": true
+   },
+   "sido-turnout": {
+    "host": "sido",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 596,
+    "page": false
+   },
+   "sido-turnout-geo": {
+    "host": "sido",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-pres-sido-hex-section",
+    "title": "시도별 결과",
+    "title_src": "h2",
+    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
+    "w": 600,
+    "h": 433,
     "page": false
    },
    "sgg-flat": {
@@ -6150,6 +6215,19 @@
     "h": 740,
     "page": false
    },
+   "sgg-dorling": {
+    "host": "sgg",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 1위 후보",
+    "title_src": "h2",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
+    "w": 820,
+    "h": 740,
+    "page": false
+   },
    "sggturn-hex": {
     "host": "sggturn",
     "mode": "hex",
@@ -6162,139 +6240,9 @@
     "w": 820,
     "h": 685,
     "page": true
-   },
-   "sido-dorling": {
-    "host": "sido",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 653,
-    "page": true
-   },
-   "sido-geo": {
-    "host": "sido",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": true
-   },
-   "sido-grid": {
-    "host": "sido",
-    "mode": "grid",
-    "enc": "grid",
-    "label": "격자",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 653,
-    "page": false
-   },
-   "sido-hex": {
-    "host": "sido",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": true
-   },
-   "sido-turnout": {
-    "host": "sido",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 596,
-    "page": false
-   },
-   "sido-turnout-geo": {
-    "host": "sido",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-pres-sido-hex-section",
-    "title": "시도별 결과",
-    "title_src": "h2",
-    "desc": "각 시·도 1위 후보 — 정당색·득표율.",
-    "w": 600,
-    "h": 433,
-    "page": false
    }
   },
   "8th-general-1971": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 680,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 837,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 837,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 680,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -6308,11 +6256,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -6321,11 +6269,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -6359,34 +6307,73 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 837,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 837,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 680,
+    "page": false
    }
   },
   "8th-local-2022": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 587,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -6414,18 +6401,18 @@
     "h": 587,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "17개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 587,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -6453,19 +6440,6 @@
     "h": 433,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 585,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -6479,17 +6453,17 @@
     "h": 585,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 587,
+    "h": 585,
     "page": false
    },
    "metro-prop-grid": {
@@ -6505,18 +6479,31 @@
     "h": 587,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 742,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 587,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 683,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -6557,30 +6544,30 @@
     "h": 742,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 742,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 742,
+    "h": 683,
     "page": true
    },
    "sggturn-geo": {
@@ -6596,18 +6583,31 @@
     "h": 680,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sggprop-grid": {
+    "host": "sggprop",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 683,
+    "h": 742,
     "page": true
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
+    "title_src": "h2",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "w": 820,
+    "h": 742,
+    "page": false
    }
   },
   "8th-pres-1972": {
@@ -6626,58 +6626,6 @@
    }
   },
   "9th-general-1973": {
-   "district-geo": {
-    "host": "district",
-    "mode": "geo",
-    "enc": "map",
-    "label": "지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": true
-   },
-   "district-hex": {
-    "host": "district",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 745,
-    "page": true
-   },
-   "district-turnout": {
-    "host": "district",
-    "mode": "turnout",
-    "enc": "turnout",
-    "label": "투표율",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 745,
-    "page": false
-   },
-   "district-turnout-geo": {
-    "host": "district",
-    "mode": "turnout-geo",
-    "enc": "turnout-map",
-    "label": "투표율 지도",
-    "section": "ar-district-map",
-    "title": "지역구 선거구별 1위",
-    "title_src": "h2",
-    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
-    "w": 820,
-    "h": 681,
-    "page": false
-   },
    "seats": {
     "host": "seats",
     "mode": null,
@@ -6691,11 +6639,11 @@
     "h": 201,
     "page": true
    },
-   "sidoseat-dorling": {
+   "sidoseat-hex": {
     "host": "sidoseat",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -6704,11 +6652,11 @@
     "h": 646,
     "page": true
    },
-   "sidoseat-hex": {
+   "sidoseat-dorling": {
     "host": "sidoseat",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-general-hex",
     "title": "지역구 의석 — 시도별",
     "title_src": "h2",
@@ -6742,34 +6690,73 @@
     "w": 820,
     "h": 591,
     "page": false
+   },
+   "district-hex": {
+    "host": "district",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 745,
+    "page": true
+   },
+   "district-geo": {
+    "host": "district",
+    "mode": "geo",
+    "enc": "map",
+    "label": "지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": true
+   },
+   "district-turnout": {
+    "host": "district",
+    "mode": "turnout",
+    "enc": "turnout",
+    "label": "투표율",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 745,
+    "page": false
+   },
+   "district-turnout-geo": {
+    "host": "district",
+    "mode": "turnout-geo",
+    "enc": "turnout-map",
+    "label": "투표율 지도",
+    "section": "ar-district-map",
+    "title": "지역구 선거구별 1위",
+    "title_src": "h2",
+    "desc": "선거구마다 당선자 정당색(승자독식). 균등=등면적 hex · 지도=실제 경계.",
+    "w": 820,
+    "h": 681,
+    "page": false
    }
   },
   "9th-local-2026": {
-   "council": {
-    "host": "council",
-    "mode": null,
-    "enc": null,
-    "label": null,
-    "section": "ar-council-hex-section",
-    "title": "시군구의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 820,
-    "h": 683,
-    "page": true
-   },
-   "gov-dorling": {
+   "gov-hex": {
     "host": "gov",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 576,
-    "page": false
+    "h": 486,
+    "page": true
    },
    "gov-geo": {
     "host": "gov",
@@ -6797,18 +6784,18 @@
     "h": 576,
     "page": false
    },
-   "gov-hex": {
+   "gov-dorling": {
     "host": "gov",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
     "section": "ar-governor-hex-section",
     "title": "광역단체장 결과",
     "title_src": "h2",
     "desc": "16개 시·도 — 1위 후보(정당색·득표율).",
     "w": 600,
-    "h": 486,
-    "page": true
+    "h": 576,
+    "page": false
    },
    "gov-turnout": {
     "host": "gov",
@@ -6836,19 +6823,6 @@
     "h": 433,
     "page": false
    },
-   "metro-dorling": {
-    "host": "metro",
-    "mode": "dorling",
-    "enc": "dorling",
-    "label": "원형",
-    "section": "ar-metro-hex-section",
-    "title": "시·도의회 의석 분포",
-    "title_src": "h2",
-    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
-    "w": 600,
-    "h": 585,
-    "page": false
-   },
    "metro-hex": {
     "host": "metro",
     "mode": "hex",
@@ -6862,17 +6836,17 @@
     "h": 585,
     "page": true
    },
-   "metro-prop-dorling": {
-    "host": "metro-prop",
+   "metro-dorling": {
+    "host": "metro",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-metro-prop",
-    "title": "광역의원 비례 — 시·도별 표심",
+    "section": "ar-metro-hex-section",
+    "title": "시·도의회 의석 분포",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "desc": "시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
     "w": 600,
-    "h": 576,
+    "h": 585,
     "page": false
    },
    "metro-prop-grid": {
@@ -6888,18 +6862,31 @@
     "h": 576,
     "page": true
    },
-   "sgg-dorling": {
-    "host": "sgg",
+   "metro-prop-dorling": {
+    "host": "metro-prop",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-result",
-    "title": "시·군·구 기초단체장",
+    "section": "ar-metro-prop",
+    "title": "광역의원 비례 — 시·도별 표심",
     "title_src": "h2",
-    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
-    "w": 820,
-    "h": 742,
+    "desc": "비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.",
+    "w": 600,
+    "h": 576,
     "page": false
+   },
+   "council": {
+    "host": "council",
+    "mode": null,
+    "enc": null,
+    "label": null,
+    "section": "ar-council-hex-section",
+    "title": "시군구의회 의석 분포",
+    "title_src": "h2",
+    "desc": "시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.",
+    "w": 820,
+    "h": 683,
+    "page": true
    },
    "sgg-flat": {
     "host": "sgg",
@@ -6940,30 +6927,30 @@
     "h": 742,
     "page": false
    },
-   "sggprop-dorling": {
-    "host": "sggprop",
+   "sgg-dorling": {
+    "host": "sgg",
     "mode": "dorling",
     "enc": "dorling",
     "label": "원형",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+    "section": "ar-sgg-result",
+    "title": "시·군·구 기초단체장",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.",
     "w": 820,
     "h": 742,
     "page": false
    },
-   "sggprop-grid": {
-    "host": "sggprop",
-    "mode": "grid",
-    "enc": "격자",
-    "label": "격자",
-    "section": "ar-sgg-prop",
-    "title": "기초의원 비례 — 시·군·구별 표심",
+   "sggturn-hex": {
+    "host": "sggturn",
+    "mode": "hex",
+    "enc": "hex",
+    "label": "균등",
+    "section": "ar-sgg-turnout",
+    "title": "시군구 투표율",
     "title_src": "h2",
-    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
     "w": 820,
-    "h": 742,
+    "h": 683,
     "page": true
    },
    "sggturn-geo": {
@@ -6979,18 +6966,31 @@
     "h": 680,
     "page": false
    },
-   "sggturn-hex": {
-    "host": "sggturn",
-    "mode": "hex",
-    "enc": "hex",
-    "label": "균등",
-    "section": "ar-sgg-turnout",
-    "title": "시군구 투표율",
+   "sggprop-grid": {
+    "host": "sggprop",
+    "mode": "grid",
+    "enc": "격자",
+    "label": "격자",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
     "title_src": "h2",
-    "desc": "시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. 균등=등면적 hex · 지도=실제 경계.",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
     "w": 820,
-    "h": 683,
+    "h": 742,
     "page": true
+   },
+   "sggprop-dorling": {
+    "host": "sggprop",
+    "mode": "dorling",
+    "enc": "dorling",
+    "label": "원형",
+    "section": "ar-sgg-prop",
+    "title": "기초의원 비례 — 시·군·구별 표심",
+    "title_src": "h2",
+    "desc": "비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.",
+    "w": 820,
+    "h": 742,
+    "page": false
    }
   },
   "9th-pres-1978": {

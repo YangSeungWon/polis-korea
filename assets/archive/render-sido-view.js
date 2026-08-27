@@ -157,10 +157,20 @@
       `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
     ).join('');
     host.innerHTML = `<div class="ar-sido-toggle"></div>${views}`;
-    for (const m of modes) {
-      const el = host.querySelector(`.ar-sido-view[data-view="${m.key}"]`);
-      if (el) m.draw(el, drawArg);
+    // **보이는 모드만 그린다.** 예전엔 숨겨진 모드까지 전부 mount에서 그렸다 —
+    // 아무도 안 누른 '지도' 모드 때문에 경계 geojson을 받았고, 22대 총선 archive는
+    // 그 한 파일이 368KB였다(전체 1.1MB·FCP 1.34초 중 최대 항목). 기능을 없애는 게
+    // 아니라 **안 쓴 비용**을 없앤다 — 누르면 그때 그린다.
+    const drawn = new Set();
+    function drawOnce(key) {
+      if (drawn.has(key)) return;
+      const m = modes.find((x) => x.key === key);
+      const el = host.querySelector(`.ar-sido-view[data-view="${key}"]`);
+      if (!m || !el) return;
+      drawn.add(key);
+      m.draw(el, drawArg);
     }
+    drawOnce(modes[0].key);
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.info-pop, .ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
@@ -178,6 +188,7 @@
         const cur = host.querySelector('.ar-sido-view:not([hidden]) svg');
         if (cur && cur.__svgViewport) { const r = cur.__svgViewport.report(); if (r && (r.scale || 1) > 1.05) keep = r; }
       }
+      drawOnce(v);                    // 처음 눌렀을 때 그린다(지연 렌더)
       host.querySelectorAll('.ar-sido-view').forEach((el) => {
         el.toggleAttribute('hidden', el.dataset.view !== v);
       });
