@@ -37,7 +37,7 @@ FAVICON = ROOT / "favicon.svg"
 # 밝히므로, 다 그려진 SVG를 클래스로 되짚어 추측할 이유가 없다. 아래 _capture_views 참조.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from view_registry import (PRIMARY_ORDER, HOSTS, key_for, mode_of,  # noqa: E402
-                           host_label, is_page_view)
+                           host_label, is_page_view, parse_key as _vr_parse)
 
 
 
@@ -187,6 +187,19 @@ window.__cap = (() => {
                 title, desc, toggles: toggles(h).map(info(h))};
       });
     },
+    // 바깥 토글 — 지도를 통째로 갈아치우는 선택(여론조사 페이지의 직위 탭).
+    // 모드(자료·방식)는 같은 지도의 다른 얼굴이지만, 직위는 **다른 지도**다.
+    // 그래서 host 토큰 자체가 바뀐다(pollgov ↔ pollmayor).
+    outers() {
+      const b = [...document.querySelectorAll('button[data-office]')];
+      return [...new Set(b.map(x => x.dataset.office))];
+    },
+    clickOuter(v) {
+      const b = document.querySelector('button[data-office="' + v + '"]');
+      if (!b) return 'no-btn';
+      b.click();
+      return 'ok';
+    },
     click(token, enc) {
       const h = document.querySelector('[data-map-host="' + token + '"]');
       if (!h) return 'no-host';
@@ -225,12 +238,25 @@ def _capture_views(page, slug: str = "", only: set | None = None):
     페이지의 캡션이 거기서 나온다 — 글과 그림이 한 출처에서 나오면 어긋날 자리가
     없다. 레지스트리에 한글 라벨을 손으로 적지 않는 이유다.
     """
-    import hashlib
     page.evaluate(CAP_JS)
     out: dict[str, dict] = {}
     by_img: dict[str, list[str]] = {}     # 픽셀 해시 → 키들
     problems: list[str] = []
 
+    outers = page.evaluate("() => __cap.outers()") or []
+    for outer in [None] + list(outers):
+        if outer is not None:
+            if page.evaluate("(v) => __cap.clickOuter(v)", outer) != "ok":
+                problems.append(f"바깥 토글 {outer!r}을 못 눌렀다")
+                continue
+            _settle(page)
+        _one_pass(page, out, by_img, problems, only, slug)
+    return _finish(out, by_img, problems, slug)
+
+
+def _one_pass(page, out, by_img, problems, only, slug):
+    """지금 화면에 있는 host들을 한 바퀴 찍는다. 바깥 토글마다 한 번씩 불린다."""
+    import hashlib
     for h in page.evaluate("() => __cap.hosts()"):
         token = h["token"]
         # 여론조사 페이지엔 archive 지도가 재사용돼 붙어 있다(대선 시군구 결과 등).
@@ -282,8 +308,7 @@ def _capture_views(page, slug: str = "", only: set | None = None):
                 continue
             key = key_for(token, mode)
             if key in out:
-                problems.append(f"{key}: 키가 두 번 나왔다 — host 토큰이 중복이다")
-                continue
+                continue          # 앞선 바깥 패스에서 이미 찍었다
             out[key] = {
                 "png": png, "host": token, "mode": mode, "enc": enc,
                 "label": label, "section": h["section"],
@@ -294,6 +319,7 @@ def _capture_views(page, slug: str = "", only: set | None = None):
             }
             by_img.setdefault(hashlib.sha1(png).hexdigest()[:12], []).append(key)
 
+def _finish(out, by_img, problems, slug):
     # 옛 모호함(한 키에 여러 그림)은 열거식에선 구조적으로 불가능하다. 대신 **반대**를
     # 잰다 — 서로 다른 키가 같은 그림이면 토글 클릭이 조용히 안 먹은 것이다.
     _capture_views.same_image = {k: v for k, v in
@@ -411,9 +437,9 @@ def main():
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
     slugs = [args.slug] if args.slug else (
-        [e["slug"] for e in json.loads(
-            (ROOT / "data/polls/election_index.json").read_text(encoding="utf-8"))]
-        if args.pages == "polls" else list_slugs())
+            [e["slug"] for e in json.loads(
+                (ROOT / "data/polls/election_index.json").read_text(encoding="utf-8"))]
+            if args.pages == "polls" else list_slugs())
     cap_all: dict = {}   # 회차 → {뷰 키: 캡처가 기록한 라벨·크기}
     dup_all: dict = {}   # 회차 → 같은 그림이 된 키들·문제 목록
     if args.shrink_only:
@@ -463,10 +489,11 @@ def main():
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = p.chromium.launch()
-        for slug in slugs:
+        targets = [(f"{base}/{s}", s) for s in slugs]
+        for url, slug in targets:
             pg = b.new_page(viewport={"width": 1320, "height": 1700})
             try:
-                pg.goto(f"{base}/{slug}/", wait_until="networkidle", timeout=20000)
+                pg.goto(f"{url}/", wait_until="networkidle", timeout=20000)
                 _settle(pg)
                 # 지도 위 오버레이가 캡처에 찍히지 않게 숨김(element.screenshot은 겹친 요소 포함).
                 #   인맵 방식 토글은 opacity:0 — 뷰 전환 클릭은 유지하되 화면엔 안 찍힘.
@@ -500,8 +527,14 @@ def main():
                 raw_dir.mkdir(parents=True, exist_ok=True)
                 # 옛 키의 PNG를 남겨 두면 매니페스트가 디스크를 관측해서 그것까지
                 # 뷰로 적는다 — 페이지가 사라진 이름의 그림을 걸게 된다.
+                #
+                # ⚠️ **이번에 실제로 본 host의 키만** 지운다. 같은 디렉터리에 여러
+                # 실행이 쓴다(polls는 pollgov, office는 pollmayor) — '찍을 수 있었던
+                # 키'로 판단하면 서로의 그림을 지운다. 실제로 지웠다.
+                seen_hosts = {v["host"] for v in views.values()}
                 for stale in raw_dir.glob("*.png"):
-                    if stale.stem not in views:
+                    hm = _vr_parse(stale.stem)
+                    if hm and hm[0] in seen_hosts and stale.stem not in views:
                         stale.unlink()
                 rec = {}
                 for key, v in views.items():
@@ -513,7 +546,7 @@ def main():
                     rec[key] = {k: v[k] for k in
                                 ("host", "mode", "enc", "label", "section",
                                  "title", "title_src", "desc", "w", "h", "page")}
-                cap_all[slug] = dict(sorted(rec.items()))
+                cap_all.setdefault(slug, {}).update(rec)
                 # 대표 카드. archive는 og/{slug}.png, polls는 og/polls-{slug}.png —
                 # 여론조사 페이지가 결과 지도 카드를 빌려 쓰던 것을 대신한다.
                 # 뷰별 카드는 안 만든다 — share/가 사라져 소비자가 없다.
@@ -532,14 +565,27 @@ def main():
         b.close()
     # 캡처가 기록한 것을 파일로 남긴다. 페이지의 alt·figcaption이 여기서 나온다 —
     # 레지스트리에 한글 라벨을 손으로 적지 않는 이유다(build_map_manifest가 읽는다).
-    def _merge(path: Path, key: str, add: dict, note: str) -> None:
+    def _merge(path: Path, key: str, add: dict, note: str, deep: bool = False) -> None:
+        """deep=True면 회차 **안에서 키 단위로** 병합한다.
+
+        한 회차의 그림을 여러 실행이 나눠 만든다(polls는 pollgov, office는
+        pollmayor). 회차째 덮으면 나중 실행이 앞 실행의 기록을 지운다 — 그러면
+        페이지가 '무엇인지 모르는 그림'을 걸게 된다.
+        """
         prev = {}
         if path.is_file():
             try:
                 prev = json.loads(path.read_text(encoding="utf-8")).get(key) or {}
             except Exception:
                 prev = {}
-        prev.update(add)
+        if deep:
+            for k, v in add.items():
+                if isinstance(prev.get(k), dict) and isinstance(v, dict):
+                    prev[k].update(v)
+                else:
+                    prev[k] = v
+        else:
+            prev.update(add)
         path.write_text(json.dumps({"_note": note, key: dict(sorted(prev.items()))},
                                    ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
@@ -548,7 +594,8 @@ def main():
                                 else "map_captures.json"), "slugs", cap_all,
                "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. "
                "눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 "
-               "페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.")
+               "페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.",
+               deep=polls_mode)
     if dup_all:
         worst = max((len(ks) for d in dup_all.values()
                      for ks in d["same_image"].values()), default=0)
@@ -575,7 +622,7 @@ def main():
     # 전멸에 exit 0을 주지 않는다. 사진은 렌더 능력의 유일한 사본이라, 캡처가 조용히
     # 실패하면 매니페스트가 빈 디렉터리를 관측하고 52쪽이 그림을 잃는다.
     print(f"완료: {len(made)} 선거 카드 생성")
-    if len(made) < len(slugs):
+    if len(made) < len(targets):
         print(f"✗ {len(slugs)}회차 중 {len(made)}개만 만들어졌다 — 하네스를 의심할 것",
               flush=True)
         return 1

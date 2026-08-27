@@ -144,6 +144,41 @@ def _region_slug(sido: str, sigungu: str) -> str:
     return cand if cand in _REGION_SLUG else ''
 
 
+# 직위 페이지가 쓸 지도 host. 여론조사 페이지와 **같은 그림을 가리킨다** — 같은 회차의
+# 같은 지도이므로 두 번 찍을 이유가 없다. 교육감은 정당을 표방하지 않아 '조사 1위 vs
+# 실제 1위'를 비교할 것이 없다(그림도 없는 게 맞다). 정당지지는 지도가 아니다.
+OFFICE_MAP_HOST = {'광역단체장': 'pollgov', '기초단체장': 'pollmayor'}
+
+
+def office_figures(office_ko: str) -> str:
+    """직위 페이지의 지도 그림.
+
+    네 페이지가 polls.html 한 틀에서 나와 렌더 전 본문이 완전히 같았던 자리다.
+    글은 office_static_block이 갈랐고, 그림도 직위마다 다른 것을 건다.
+    """
+    host = OFFICE_MAP_HOST.get(office_ko)
+    if not host:
+        return ''
+    idx = ROOT / 'data' / 'polls' / 'election_index.json'
+    try:
+        cur = next(e['slug'] for e in json.loads(idx.read_text(encoding='utf-8'))
+                   if 'local' in e['slug'])
+    except Exception:                                            # noqa: BLE001
+        return ''
+    caps = _poll_captures().get(cur) or {}
+    figs = []
+    for key, m in sorted(caps.items(), key=lambda kv: _vr.page_rank(
+            kv[1].get('host') or '', kv[1].get('mode'))):
+        if m.get('host') != host or not m.get('page'):
+            continue
+        f = ROOT / 'og' / 'polls' / cur / f'{key}.png'
+        wh = _rt.png_size(f) if f.is_file() else None
+        if wh:
+            figs.append(_rt.fig(cur, key, m, wh[0], wh[1],
+                                f'2026 지방선거 {office_ko}', base='/og/polls'))
+    return ('<div class="map-fig-grid pe-figs">' + ''.join(figs) + '</div>') if figs else ''
+
+
 def office_static_block(office_ko: str) -> str:
     """직위 페이지(/governor/ 등)의 그 직위만의 정적 내용.
 
@@ -203,7 +238,8 @@ def office_static_block(office_ko: str) -> str:
         f'{region_html}'
         f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
         f'<ul class="pe-agency-list">{li}{more}</ul></details>'
-        f'<p class="pe-static-links"><a href="/archive/9th-local-2026/">'
+        + office_figures(office_ko)
+        + f'<p class="pe-static-links"><a href="/archive/9th-local-2026/">'
         f'제9회 지방선거 아카이브 — 결과·여론조사·출구조사</a></p></section>'
     )
 
@@ -863,6 +899,23 @@ ROUTES: dict = {}
 HISTORY_ROUTES = ROOT / 'data/results/history_routes.json'
 
 
+def _round_card(slug: str | None) -> str | None:
+    """회차 페이지의 공유 카드 — 그 회차의 결과 지도 카드를 쓴다.
+
+    2026-08까지 history 66쪽이 전부 일반 og.png였다. 본문엔 그 회차의 지도가
+    <figure>로 걸려 있는데 공유하면 사이트 기본 카드가 떴다 — 페이지가 말하는 것과
+    카드가 보여주는 것이 달랐다. {type,n}은 archive slug 하나에 정확히 대응하므로
+    (archive_slug_map) 같은 카드를 가리키면 된다.
+
+    간선 회차(1·4·8~12대 대선)는 카드가 없다. 없는 것을 만들지 않는다 — 템플릿
+    기본값이 그대로 남는다(docs/absence.md).
+    """
+    if not slug:
+        return None
+    f = ROOT / 'og' / f'{slug}.png'
+    return f'{SITE}/og/{slug}.png' if f.is_file() else None
+
+
 def build_history(manifest: dict, elections: dict, urls: list):
     template = HISTORY_TEMPLATE.read_text(encoding='utf-8')
     # 회차별 색인(HS_ROUNDS)은 **허브에만** 둔다. 템플릿이 history.html이라 그냥 두면
@@ -918,7 +971,8 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                         (f'{n}회 {type_short}', None),
                                         (office_ko, None)])
-                    html = inject_body(replace_meta(template, title, desc, canon, init_state),
+                    html = inject_body(replace_meta(template, title, desc, canon, init_state,
+                                                    og_image=_round_card(slug)),
                                        intro, ld)
                     write_page(ROOT / 'history' / type_slug / str(n) / off_slug / 'index.html', html)
                     urls.append((canon, '0.6', 'yearly'))
@@ -962,7 +1016,8 @@ def build_history(manifest: dict, elections: dict, urls: list):
                          + round_table(slug, type_key))
                 ld = breadcrumb_ld([('역대 결과', '/history.html'),
                                     (f'{n}{unit} {type_short}', None)])
-                html = inject_body(replace_meta(template, title, desc, canon, init_state),
+                html = inject_body(replace_meta(template, title, desc, canon, init_state,
+                                                og_image=_round_card(slug)),
                                    intro, ld)
                 write_page(ROOT / 'history' / type_slug / str(n) / 'index.html', html)
                 urls.append((canon, '0.6', 'yearly'))

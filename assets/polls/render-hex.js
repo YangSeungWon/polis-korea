@@ -18,9 +18,18 @@ function renderHex() {
   // 겹쳐 있다. 전부 찍으면 회차당 12장이 되므로 **기본 직위·기본 방식**만 찍고,
   // 자료 토글만 돈다(그게 이 페이지의 요점 — 조사가 실제와 얼마나 같았나).
   // data-map-toggle은 '모드를 바꾸는 버튼이 data-mode를 쓴다'는 선언이다.
-  host.dataset.mapHost = POLL_HOST[state.office] || '';
-  host.dataset.mapToggle = 'mode';
-  host.dataset.mode = state.mode || 'polls';
+  // 매핑이 없는 직위(교육감 — 정당을 표방하지 않아 비교할 것이 없다)는 **선언하지
+  // 않는다**. 빈 문자열을 찍으면 '정체를 밝혔는데 이름이 없는' 호스트가 생겨 캡처와
+  // 검사가 헷갈린다(2026-08-27 /superintendent/에서 실제로 그랬다).
+  const _tok = POLL_HOST[state.office];
+  if (_tok) {
+    host.dataset.mapHost = _tok;
+    host.dataset.mapToggle = 'mode';
+    host.dataset.mode = state.mode || 'polls';
+  } else {
+    delete host.dataset.mapHost;
+    delete host.dataset.mapToggle;
+  }
   // 전남광주 통합(2026-06-03 신설)은 **한 선거**다. 두 칸으로 그리면 같은 값이 두 번
   // 찍혀 유권자 규모가 두 배로 보인다. archive는 데이터에 통합 race가 있으면 병합
   // 레이아웃을 쓰는데, 여기선 draw에 빈 배열을 넘기고 winnerOf 콜백을 쓰므로 그 판단이
@@ -93,6 +102,16 @@ async function loadSigunguHex() {
 // 시군구 1위색 hex — 공용 캐논 drawSigunguHex로 위임. 폴 신뢰도·툴팁·선택은 opts로 주입.
 async function renderSigunguHex() {
   const svg = $('#hex2');
+  // 기초단체장 지도. #hex(시도)와 다른 svg라 따로 선언한다 — 안 하면 /mayor/ 페이지가
+  // 지도를 그리는데 캡처에는 아무것도 안 잡힌다.
+  if (svg && state.office === '기초단체장') {
+    svg.dataset.mapHost = 'pollmayor';
+    svg.dataset.mapToggle = 'mode';
+    svg.dataset.mode = state.mode || 'polls';
+  } else if (svg) {
+    delete svg.dataset.mapHost;
+    delete svg.dataset.mapToggle;
+  }
   const data = await loadSigunguHex();
   // 지도가 비면 키도 걷는다 — svg.innerHTML만 비우면 형제인 범례가 남는다.
   if (!data.length) {
