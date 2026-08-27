@@ -24,7 +24,6 @@ ROOT = Path(__file__).resolve().parents[1]
 # (라벨, 명령) — 브라우저·네트워크 없이 끝나야 하고, 종료코드 0이어야 한다.
 SMOKE = [
     ("build_map_manifest", [sys.executable, "scripts/build/build_map_manifest.py"]),
-    ("build_share_pages", [sys.executable, "scripts/build/build_share_pages.py"]),
     ("sync_view_registry_js", [sys.executable, "scripts/build/sync_view_registry_js.py"]),
 ]
 

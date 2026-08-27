@@ -1,3 +1,7 @@
+// ⚠️ 2026-08-27: archive 전용 부분을 걷어냈다 — ↗공유 버튼·KEY2CLASS·#해시 딥링크.
+// share/ 402쪽을 지웠고(뷰 키 재설계로 어차피 전부 다시 만들어야 했다), archive 페이지는
+// 이제 그림을 <figure>로 직접 갖는다. 남은 것은 polls 계열 14쪽이 쓰는 ↓이미지 저장뿐이다.
+// KEY2CLASS는 view_registry.json의 손수 만든 역표였다 — 그 사본이 사라졌다.
 // 지도 SVG → PNG 즉석 저장. 보는 뷰(직위·표현 토글한 그 상태)를 그대로 내려받는다.
 // 정적 사전생성(직위×표현 수백 장) 대신 클라이언트에서 현재 SVG를 직렬화→캔버스→PNG.
 //   - 모든 변종 커버, 저장 0, 항상 최신.
@@ -58,12 +62,6 @@
     return v ? [v.classes[0], v.key, v.fname] : null;
   }
   function viewLabel(svg) { const d = classify(svg); return d ? d[2] : ''; }
-  function shareKey(svg) { const d = classify(svg); return d ? d[1] : ''; }
-  // archive 페이지 slug (/archive/{slug}/). 공유페이지는 결과 아카이브 뷰에만 존재.
-  function archiveSlug() {
-    const m = location.pathname.match(/\/archive\/([^/]+)\//);
-    return m ? m[1] : '';
-  }
   function fnameBase() {
     // document.title 'polis · …'의 앞 브랜드를 풀 도메인 'polis-ysw-kr'로 (파일명에 사이트 표시).
     return (document.title || 'polis-map')
@@ -92,60 +90,9 @@
       const v = viewLabel(cur);
       svgToPng(cur, { filename: fnameBase() + (v ? '_' + v : '') });
     }));
-    // 공유 — 그 뷰 미리보기가 뜨는 링크 복사(archive 결과뷰만)
-    const slug = archiveSlug();
-    if (slug) {
-      bar.appendChild(mkBtn('↗ 공유', '이 뷰 미리보기 링크 복사', function (e) {
-        const cur = wrap.querySelector('svg'); if (!cur) return;
-        const k = shareKey(cur); if (!k) return;
-        const url = location.origin + '/share/' + slug + '/' + k + '/';
-        const done = function () {
-          const btn = e.currentTarget; const old = btn.textContent;
-          btn.textContent = '✓ 복사됨'; setTimeout(function () { btn.textContent = old; }, 1400);
-        };
-        if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
-        else { prompt('공유 링크', url); }
-      }));
-    }
     wrap.appendChild(bar);
   }
 
   function scan() { document.querySelectorAll(MAP_SEL).forEach(attach); }
 
-  // 공유 링크 딥링크 — /archive/{slug}/#geo 로 들어오면 그 뷰 토글을 활성화하고 스크롤.
-  // 미리보기(og:image)와 착지 뷰를 일치시킨다. 뷰 키→SVG 클래스로 섹션 역추적(키 중복 회피).
-  const KEY2CLASS = {
-    governor: 'governor-hex-svg', council: 'council-hex-svg', dorling: 'ar-sidocluster-svg',
-    geo: 'sido-map-svg', seats: 'parliament-chart', turnout: 'turnout-map',
-    result: 'result-map', 'sgg-prop': 'cartogram-map', 'sgg-geo': 'sigungu-map-svg',
-    sido1: 'sido-winner-hex', district: 'district-hex-svg', 'district-geo': 'district-map-svg',
-    'district-turnout': 'district-turnout', 'district-turnout-geo': 'district-turnout-geo',
-    'turnout-geo': 'sido-turnout-geo', 'sgg-turnout': 'sgg-turnout', 'sgg-turnout-geo': 'sigungu-turnout-geo',
-  };
-  function applyHashView() {
-    const key = (location.hash || '').replace(/^#/, '').replace(/^view=/, '');
-    const cls = KEY2CLASS[key];
-    if (!cls) return false;
-    const svg = document.querySelector('.ar-sido-view svg.' + cls) || document.querySelector('svg.' + cls);
-    if (!svg) return false;
-    const view = svg.closest('.ar-sido-view');
-    if (view) {
-      const host = view.parentElement;
-      const tab = host && host.querySelector('.ar-sido-toggle .seg-btn[data-enc="' + view.dataset.view + '"]');
-      if (tab && !tab.classList.contains('is-active')) tab.click();
-      (view.closest('.ar-section') || view).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      svg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    return true;
-  }
-
-  const obs = new MutationObserver(scan);
-  if (document.body) obs.observe(document.body, { childList: true, subtree: true });
-  document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(scan, 1500);
-    // 지도는 비동기 렌더 — 뜰 때까지 몇 번 재시도
-    if (location.hash) [1600, 2600, 3600].forEach(function (t) { setTimeout(applyHashView, t); });
-  });
-  window.addEventListener('hashchange', applyHashView);
 })();

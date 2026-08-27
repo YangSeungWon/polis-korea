@@ -47,7 +47,7 @@ def check_logo_home() -> None:
     bad = []
     for f in ROOT.rglob("*.html"):
         rel = str(f.relative_to(ROOT))
-        if rel.split("/")[0] in {"node_modules", ".venv", "share", "og"}:
+        if rel.split("/")[0] in {"node_modules", ".venv", "og"}:
             continue
         m = re.search(r'<a href="([^"]*)" class="logo-link"', f.read_text(encoding="utf-8"))
         if m and m.group(1) != "/":
@@ -109,7 +109,7 @@ def check_history_island() -> None:
     outside = set()
     for f in ROOT.rglob("*.html"):
         rel = f.relative_to(ROOT)
-        if rel.parts[0] in {"node_modules", ".venv", "history", "share", "og"}:
+        if rel.parts[0] in {"node_modules", ".venv", "history", "og"}:
             continue
         html = re.sub(r"<script.*?</script>", "", f.read_text(encoding="utf-8", errors="replace"),
                       flags=re.S)
