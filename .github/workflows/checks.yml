@@ -98,6 +98,11 @@ jobs:
       - name: 빌드 연기 시험 (브라우저·PIL 없이 도는지)
         run: python tests/test_build_smoke.py
 
+      # 지도 그림이 무엇인지 PNG 압축률이 정하고 있다(docs/seo-coverage.md). 아직 못
+      # 고쳤지만 기록이 끊기면 그 사실조차 잊힌다.
+      - name: 캡처 모호함 기록 (그림의 정체가 보증되는지)
+        run: python tests/test_capture_ambiguity.py
+
       # 화면을 보기 전에 데이터만으로 잡는다. 2026-08 시군구의회 사건은 race 수가
       # 그대로여서 개수 검사로는 안 잡히고 sigungu 결측률로만 드러난다.
       - name: 회차 간 구조 이상치 (직위 소실·지역 필드 결측)

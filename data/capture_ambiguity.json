@@ -1,0 +1,37 @@
+{
+ "_note": "한 뷰 키를 여러 그림이 다툰 횟수(회차별). _capture_views 주석 참조. 숫자가 2 이상이면 og/maps/{회차}/{키}.png가 무엇인지 PNG 압축률이 정하고 있다는 뜻이다. 재설계 전까지 기록만 하고, 새로 생기면 검사가 잡는다.",
+ "slugs": {
+  "13th-pres-1987": {
+   "dorling": 2,
+   "result": 5,
+   "sgg-turnout": 7,
+   "turnout-geo": 2,
+   "sgg-prop": 2
+  },
+  "15th-general-1996": {
+   "dorling": 2,
+   "district": 3
+  },
+  "21st-pres-2025": {
+   "dorling": 2,
+   "result": 4,
+   "sgg-turnout": 6,
+   "turnout-geo": 2,
+   "sgg-turnout-geo": 3,
+   "sgg-prop": 2
+  },
+  "22nd-general-2024": {
+   "dorling": 9,
+   "district": 4
+  },
+  "9th-local-2026": {
+   "dorling": 14,
+   "council": 5,
+   "result": 5,
+   "sgg-turnout": 5,
+   "sgg-prop": 13,
+   "turnout-geo": 2,
+   "sgg-turnout-geo": 3
+  }
+ }
+}

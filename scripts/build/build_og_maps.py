@@ -131,9 +131,34 @@ def list_slugs() -> list[str]:
 
 
 def _capture_views(page):
-    """{view_key: png_bytes} — 지도 SVG를 깔끔한 키로 분류해 캡처. 토글로 대체 뷰도.
-    같은 키 여러 번 잡히면 가장 큰(바이트) 것 유지."""
+    """{view_key: png_bytes} — 지도 SVG를 깔끔한 키로 분류해 캡처.
+
+    ⚠️ **한 키를 여러 그림이 다툰다.** 2026-08-27 관측(4개 회차, 픽셀 해시로 셈):
+
+        dorling      서로 다른 내용 최대 14가지
+        sgg-prop                       13가지
+        sgg-turnout                     6가지
+        result·council                  5가지
+        district                        4가지
+
+    이유가 둘이다. (1) _classify는 SVG **클래스만** 보는데 한 클래스가 여러 섹션의
+    서로 다른 SVG에 붙어 있다 — 9회 지선은 토글을 누르기도 전에(init) 이미 dorling이
+    두 가지다(시도 dorling·시군구 dorling이 같은 ar-sidocluster를 쓴다).
+    (2) 거기에 토글 상태가 곱해진다.
+
+    그런데 승자를 **바이트 크기**로 뽑는다. 즉 og/maps/{회차}/dorling.png가 무엇인지를
+    지금까지 PNG 압축률이 정해 왔다. 15대 총선 district는 후보들이 18~37바이트 차이라
+    조건이 조금만 달라도 승자가 뒤집혔다.
+
+    이건 결정성 문제 이전에 **정확성 문제**다. 페이지의 <figure alt="의석 비례 —
+    면적·점=의석수·색=정당">이 실제로 그 그림인지 보증되지 않는다.
+
+    제대로 고치려면 뷰 키를 (섹션 id, 토글 상태)로 식별해야 하는데, 지금 레지스트리는
+    그걸 표현하지 못한다 — 클래스 하나가 전부다. 재설계 전까지는 **모호함을 적어 두고
+    새로 생기면 잡는다**(아래 ambiguity, tests/test_capture_ambiguity.py).
+    """
     views = {}
+    seen: dict = {}          # key -> {sha1: 처음 잡힌 태그}
 
     def grab():
         for el in page.query_selector_all("svg"):
@@ -150,6 +175,8 @@ def _capture_views(page):
                 png = el.screenshot(omit_background=True)
             except Exception:
                 continue
+            import hashlib
+            seen.setdefault(key, {}).setdefault(hashlib.sha1(png).hexdigest()[:8], len(png))
             if key not in views or len(png) > len(views[key]):
                 views[key] = png
 
@@ -177,6 +204,8 @@ def _capture_views(page):
                     grab()
                 except Exception:
                     pass
+    _capture_views.ambiguity = {k: len(v) for k, v in seen.items() if len(v) > 1}
+
     return views
 
 
@@ -257,6 +286,7 @@ def main():
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
     slugs = [args.slug] if args.slug else list_slugs()
+    amb_all: dict = {}   # 회차 → {뷰 키: 서로 다른 그림 수}
     if args.shrink_only:
         tot_b = tot_a = 0
         for f in sorted((ROOT / "og").rglob("*.png")):
@@ -322,6 +352,7 @@ def main():
                 title = (_m.get("name") or "").strip()
                 date_s = (_m.get("date") or "").strip()
                 views = _capture_views(pg)
+                amb_all[slug] = getattr(_capture_views, 'ambiguity', {}) or {}
                 if not views:
                     print(f"  {slug}: 지도 없음 — skip"); pg.close(); continue
                 mdate = re.search(r"\d{4}-\d{2}-\d{2}", date_s)
@@ -352,6 +383,27 @@ def main():
             finally:
                 pg.close()
         b.close()
+    # 모호함을 파일로 남긴다. 지금은 고칠 수 없지만(재설계 필요) **새로 생기는 것은
+    # 잡을 수 있다** — tests/test_capture_ambiguity.py가 이 파일을 읽는다.
+    if amb_all:
+        amb_p = ROOT / "data" / "capture_ambiguity.json"
+        prev = {}
+        if amb_p.is_file():
+            try:
+                prev = json.loads(amb_p.read_text(encoding="utf-8")).get("slugs") or {}
+            except Exception:
+                prev = {}
+        prev.update(amb_all)
+        amb_p.write_text(json.dumps(
+            {"_note": "한 뷰 키를 여러 그림이 다툰 횟수(회차별). _capture_views 주석 참조. "
+                      "숫자가 2 이상이면 og/maps/{회차}/{키}.png가 무엇인지 PNG 압축률이 "
+                      "정하고 있다는 뜻이다. 재설계 전까지 기록만 하고, 새로 생기면 검사가 잡는다.",
+             "slugs": dict(sorted(prev.items()))}, ensure_ascii=False, indent=1) + "\n",
+            encoding="utf-8")
+        worst = max((max(v.values()) for v in amb_all.values() if v), default=0)
+        print(f"⚠️ 모호한 뷰 키가 있는 회차 {len(amb_all)} · 한 키 최대 {worst}가지 "
+              f"→ data/capture_ambiguity.json", flush=True)
+
     if args.source == "render" and not args.keep_render:
         shutil.rmtree(render_root, ignore_errors=True)
 
