@@ -168,7 +168,12 @@ def _capture_views(page):
                     if "is-active" in (tab.get_attribute("class") or ""):
                         continue
                     tab.click()
-                    page.wait_for_timeout(1500)   # 큰 geojson(선거구·시군구 geo) 로드 여유
+                    # 고정 대기가 아니라 **멎을 때까지** 기다린다. 1500ms는 큰 geojson을
+                    # 노린 매직 넘버였는데, 뷰마다 완료 시점이 달라 그 시점의 중간 상태가
+                    # 찍혔다. 그래서 같은 페이지를 두 번 캡처해도 결과가 달랐다 —
+                    # 하네스가 비결정적이라고 판단했던 것의 실제 정체다(2026-08-27 관측:
+                    # DOM 마크업은 4회 전부 동일했는데 픽셀만 달랐다).
+                    _settle(page)
                     grab()
                 except Exception:
                     pass
