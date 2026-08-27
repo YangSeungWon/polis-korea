@@ -382,6 +382,45 @@ def _region_label(r: str) -> str:
     return _esc(r.replace('|', ' '))
 
 
+_POLL_CAP: dict | None = None
+
+
+def _poll_captures() -> dict:
+    global _POLL_CAP
+    if _POLL_CAP is None:
+        f = ROOT / 'data' / 'poll_map_captures.json'
+        try:
+            _POLL_CAP = json.loads(f.read_text(encoding='utf-8'))['slugs']
+        except Exception:                                        # noqa: BLE001
+            _POLL_CAP = {}
+    return _POLL_CAP
+
+
+def poll_map_figures(slug: str, title: str) -> str:
+    """여론조사 지도 그림 — og/polls/{slug}/{키}.png.
+
+    archive와 **디렉터리를 나눈다**(og/maps/ vs og/polls/). 한 곳에 섞으면 archive
+    캡처가 자기가 안 찍은 키를 '옛 이름'으로 보고 지운다. 라벨은 여기서도 캡처가
+    적어 둔 것을 쓴다 — 누른 버튼의 글씨가 곧 캡션이다.
+    """
+    caps = _poll_captures().get(slug) or {}
+    figs = []
+    for key, m in sorted(caps.items(), key=lambda kv: _vr.page_rank(
+            kv[1].get('host') or '', kv[1].get('mode'))):
+        if not m.get('page'):
+            continue
+        f = ROOT / 'og' / 'polls' / slug / f'{key}.png'
+        if not f.is_file():
+            continue
+        wh = _rt.png_size(f)
+        if not wh:
+            continue
+        figs.append(_rt.fig(slug, key, m, wh[0], wh[1], title, base='/og/polls'))
+    if not figs:
+        return ''
+    return ('<div class="map-fig-grid pe-figs">' + ''.join(figs) + '</div>')
+
+
 def poll_accuracy_block(slug: str) -> str:
     """여론조사 1위 vs 실제 1위 — **글과 표로**.
 
@@ -469,6 +508,8 @@ def poll_accuracy_block(slug: str) -> str:
             body = (f'<details class="pe-static-more"><summary>{_esc(off)} '
                     f'{len(rows)}곳 표로 보기</summary>{body}</details>')
         parts.append(body)
+
+    parts.append(poll_map_figures(slug, e['name']))
 
     ag = e.get('agencies') or {}
     ag_rows = ag.get('rows') or []
@@ -564,9 +605,14 @@ def build_poll_elections(urls: list):
         desc = (f'{meta["name"]} 여론조사와 실제 개표 결과 비교. NESDC 등록 조사가 '
                 f'시도별로 얼마나 맞았는지 비례로.')
         canon = f'/polls/{slug}/'
-        # 선거별 결과지도 카드(build_og_maps.py). 없으면 일반 카드(템플릿 기본값 유지).
+        # 공유 카드. **여론조사 페이지는 제 카드를 쓴다**(og/polls-{slug}.png,
+        # build_og_maps --pages polls). 2026-08까지 결과 지도 카드를 빌려 써서,
+        # '여론조사 vs 실제'를 공유하면 결과 지도가 떴다 — 페이지가 무엇을 말하는지와
+        # 카드가 보여주는 것이 달랐다. 없으면 결과 카드로, 그것도 없으면 템플릿 기본값.
+        _pc = ROOT / 'og' / f'polls-{slug}.png'
         _og = ROOT / 'og' / f'{slug}.png'
-        og_image = f'{SITE}/og/{slug}.png' if _og.exists() else None
+        og_image = (f'{SITE}/og/polls-{slug}.png' if _pc.exists()
+                    else (f'{SITE}/og/{slug}.png' if _og.exists() else None))
         # __INITIAL_STATE__.election 주입 — core.js POLL_ELECTION 기본값을 덮어씀.
         html = replace_meta(template, title, desc, canon, {'election': meta}, og_image=og_image)
         # **회차 고유 내용을 정적으로.** 없으면 9개 페이지의 정적 본문이 전부 같다

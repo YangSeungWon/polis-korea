@@ -317,6 +317,30 @@ v1 표(SVG 클래스 → 뷰 키)를 마지막까지 쓰던 곳은 `svg-export.j
 `sync_view_registry_js.py`는 하는 일이 썸네일 우선순위 sync 하나만 남아
 `sync_view_thumbs_js.py`가 됐다.
 
+### 여론조사 페이지 지도 (2026-08-27)
+
+`polls/{회차}/`도 제 그림을 갖는다 — `og/polls/{회차}/{host}-{mode}.png`.
+**디렉터리를 나눈 이유**: 한 곳에 섞으면 archive 캡처가 자기가 안 찍은 키를 '옛
+이름'으로 보고 지운다(stale 정리 루프).
+
+archive와 모양이 다르다. polls 지도는 한 컨테이너에 직위 × 자료(여론조사 1위·실제
+1위) × 방식(균등·지도)이 겹쳐 있어 전부 찍으면 회차당 12장이다. 그래서 기본 직위·기본
+방식으로 두고 **자료만** 돈다 — 그게 이 페이지의 요점이다. 모드가 방식이 아니라
+자료인 것도 archive와 다르다.
+
+토글이 지도 옆이 아니라 페이지 머리에 있어서, 호스트가 `data-map-toggle="mode"`로
+**어느 속성이 모드를 바꾸는지 선언한다**(대선은 `pmode`, 총선은 `dmode`). 추측이
+아니라 선언이라 문서 전체를 훑어도 안전하다.
+
+```bash
+python -m http.server 8911 &
+python scripts/build/build_og_maps.py --pages polls   # og/polls/ + og/polls-{회차}.png
+python scripts/build/build_static.py && python scripts/build/build_sitemap.py
+```
+
+공유 카드도 제 것을 쓴다(`og/polls-{회차}.png`). 2026-08까지 결과 지도 카드를 빌려
+써서, '여론조사 vs 실제'를 공유하면 결과 지도가 떴다.
+
 ### 남은 것
 
 이름이 맞다는 것과 **그림이 맞다는 것은 다르다.** 기계가 보증하는 것은 "캡처가 누른

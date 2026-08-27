@@ -25,6 +25,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OG = ROOT / "og"
 MAPS = OG / "maps"
+# 여론조사 페이지 지도는 **다른 디렉터리**다. 한 곳에 섞으면 archive 캡처가 자기가 안
+# 찍은 키를 '옛 이름'으로 보고 지운다(stale 정리 루프). 키 문법은 같다(host-mode).
+POLLMAPS = OG / "polls"
 FAVICON = ROOT / "favicon.svg"
 
 # 뷰 표는 data/view_registry.json이 정본이다. 사본을 두면 어긋난다 — 실제로 어긋났었다
@@ -33,8 +36,8 @@ FAVICON = ROOT / "favicon.svg"
 # ⚠️ classify()는 **더 이상 캡처 경로에 없다.** 그리는 쪽이 data-map-host로 자기 정체를
 # 밝히므로, 다 그려진 SVG를 클래스로 되짚어 추측할 이유가 없다. 아래 _capture_views 참조.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from view_registry import (PRIMARY_ORDER, key_for, mode_of, host_label,  # noqa: E402
-                           is_page_view)
+from view_registry import (PRIMARY_ORDER, HOSTS, key_for, mode_of,  # noqa: E402
+                           host_label, is_page_view)
 
 
 
@@ -136,9 +139,16 @@ def list_slugs() -> list[str]:
 CAP_JS = r"""
 window.__cap = (() => {
   const MIN = 200;                    // 범례·아이콘 SVG를 거른다(토글 안 enc-ic는 15x15)
-  const info = b => ({enc: b.dataset.enc || null, label: (b.textContent || '').trim()});
+  const info = (h) => (b) => ({enc: encOf(h, b), label: (b.textContent || '').trim()});
 
   function toggles(h) {
+    // 호스트가 어느 속성이 모드를 바꾸는지 **선언한 경우**(data-map-toggle="mode")는
+    // 문서 전체에서 그 속성을 가진 버튼을 찾는다. polls 페이지는 자료 토글이
+    // 지도 옆이 아니라 페이지 머리에 있어서 근처만 봐서는 못 찾는다.
+    // 추측이 아니라 선언이라 문서 전체를 훑어도 안전하다 — 아래 형제 탐색과 다르다.
+    const attr = h.dataset.mapToggle;
+    if (attr) return [...document.querySelectorAll('[data-' + attr + ']')]
+                       .filter(b => b.tagName === 'BUTTON');
     const inner = [...h.querySelectorAll('.seg-btn')];
     if (inner.length) return inner;
     // 없으면 **직계 부모까지만** 본다. sgg·sggprop은 토글이 host의 형제다.
@@ -146,8 +156,14 @@ window.__cap = (() => {
     // 18개가 잡혔다(2026-08-27 관측). 그래서 depth 0에서 멈춘다.
     return h.parentElement ? [...h.parentElement.querySelectorAll('.seg-btn')] : [];
   }
+  // 버튼이 말하는 모드 값. 선언이 있으면 그 속성, 없으면 data-enc.
+  const encOf = (h, b) => (h.dataset.mapToggle ? b.dataset[h.dataset.mapToggle]
+                                               : b.dataset.enc) || null;
   function biggest(h) {
-    return [...h.querySelectorAll('svg')]
+    // 호스트가 <svg> **자신**인 경우가 있다(polls의 #hex). querySelectorAll('svg')는
+    // 자기 자신을 안 담으므로 따로 넣어 준다 — 안 그러면 그 지도가 통째로 안 잡힌다.
+    const pool = h.tagName === 'svg' || h.tagName === 'SVG' ? [h] : [...h.querySelectorAll('svg')];
+    return pool
       .map(s => { const r = s.getBoundingClientRect();
                   return {s, w: Math.round(r.width), h: Math.round(r.height)}; })
       .filter(o => o.w >= MIN && o.h >= MIN)
@@ -168,13 +184,13 @@ window.__cap = (() => {
           if (pop) desc = pop.textContent.trim();
         }
         return {token: h.dataset.mapHost, section: (sec && sec.id) || null,
-                title, desc, toggles: toggles(h).map(info)};
+                title, desc, toggles: toggles(h).map(info(h))};
       });
     },
     click(token, enc) {
       const h = document.querySelector('[data-map-host="' + token + '"]');
       if (!h) return 'no-host';
-      const b = toggles(h).find(x => (x.dataset.enc || null) === enc);
+      const b = toggles(h).find(x => encOf(h, x) === enc);
       if (!b) return 'no-btn';
       b.click();
       return 'ok';
@@ -193,7 +209,7 @@ window.__cap = (() => {
 """
 
 
-def _capture_views(page, slug: str = ""):
+def _capture_views(page, slug: str = "", only: set | None = None):
     """{키: {png, ...}} — **발견이 아니라 열거로** 캡처한다.
 
     옛 방식은 다 그려진 SVG를 클래스로 되짚어 분류했다. 그런데 한 클래스가 여러
@@ -217,6 +233,11 @@ def _capture_views(page, slug: str = ""):
 
     for h in page.evaluate("() => __cap.hosts()"):
         token = h["token"]
+        # 여론조사 페이지엔 archive 지도가 재사용돼 붙어 있다(대선 시군구 결과 등).
+        # 그건 여론조사가 아니라 실제 결과고 og/maps/에 이미 있다 — 두 번 찍지 않는다.
+        # 무엇이 어느 페이지 것인지는 레지스트리 hosts[].pages가 정한다.
+        if only is not None and token not in only:
+            continue
         # 토글이 있으면 각 enc를, 없으면 단일 뷰 하나를. 다만 **토글이 없는 것과
         # 모드를 모르는 것은 다르다** — 모드가 하나뿐이면 토글이 안 그려지는데,
         # 그때도 렌더러는 data-mode로 무엇을 그렸는지 말한다. 그걸 안 읽으면 같은
@@ -369,6 +390,9 @@ def recompose():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", help="한 선거만")
+    ap.add_argument("--pages", choices=("archive", "polls"), default="archive",
+                    help="무엇을 찍을지. archive=결과 지도(og/maps/), "
+                         "polls=여론조사 vs 실제 지도(og/polls/)")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--port", type=int, default=8911)
     ap.add_argument("--recompose", action="store_true", help="캐시 지도로 카드만 재합성(favicon 동기화)")
@@ -386,7 +410,10 @@ def main():
         recompose(); return
 
     mark_svg = FAVICON.read_text(encoding="utf-8")
-    slugs = [args.slug] if args.slug else list_slugs()
+    slugs = [args.slug] if args.slug else (
+        [e["slug"] for e in json.loads(
+            (ROOT / "data/polls/election_index.json").read_text(encoding="utf-8"))]
+        if args.pages == "polls" else list_slugs())
     cap_all: dict = {}   # 회차 → {뷰 키: 캡처가 기록한 라벨·크기}
     dup_all: dict = {}   # 회차 → 같은 그림이 된 키들·문제 목록
     if args.shrink_only:
@@ -419,9 +446,15 @@ def main():
                  if f.name != "index.json"]
         n = _sa.write_render_only(metas, render_root, only=set(slugs))
         print(f"하네스 {n}회차 생성 → .render/", flush=True)
+    polls_mode = args.pages == "polls"
     base = (f"http://localhost:{args.port}/.render" if args.source == "render"
-            else f"http://localhost:{args.port}/archive")
-    MAPS.mkdir(parents=True, exist_ok=True)
+            else f"http://localhost:{args.port}/{'polls' if polls_mode else 'archive'}")
+    out_root = POLLMAPS if polls_mode else MAPS
+    # 이 페이지 계열의 host만 찍는다(레지스트리 hosts[].pages). archive는 pages가
+    # 없는 것들 = 결과 지도.
+    allow = ({h["token"] for h in HOSTS if "polls" in (h.get("pages") or [])} if polls_mode
+             else {h["token"] for h in HOSTS if not h.get("pages")})
+    out_root.mkdir(parents=True, exist_ok=True)
 
     made = []
     # playwright import는 **여기**여야 한다. 위로 올리면 --list·--shrink-only가
@@ -442,7 +475,7 @@ def main():
                 #   잡음 → 캡처서 전부 숨김. 캡처 대상은 전부 색지도/반원이라 텍스트 불필요(추이 라인차트는
                 #   캡처 안 됨). 제목·날짜는 카드 헤드라인(HTML)이 따로 표시.
                 pg.add_style_tag(content=(
-                    ".ar-sido-toggle,.sgg-mode-toggle{opacity:0!important}"
+                    ".ar-sido-toggle,.sgg-mode-toggle,.view-toggle{opacity:0!important}"
                     # 2026-08까지는 여기서 svg text를 전부 숨겼다. 근거는 "썸네일·카드서
                     # 안 읽히는 잡음"이었고 48px 썸네일 기준으론 맞다. 그런데 같은 PNG를
                     # 본문 그림으로 쓰기 시작하면 반대가 된다 — 지역명·후보명·득표율이
@@ -453,7 +486,7 @@ def main():
                 _m = _meta_of(slug)
                 title = (_m.get("name") or "").strip()
                 date_s = (_m.get("date") or "").strip()
-                views = _capture_views(pg, slug)
+                views = _capture_views(pg, slug, only=allow)
                 dup_all[slug] = {
                     "same_image": getattr(_capture_views, 'same_image', {}) or {},
                     "problems": getattr(_capture_views, 'problems', []) or [],
@@ -463,7 +496,7 @@ def main():
                 mdate = re.search(r"\d{4}-\d{2}-\d{2}", date_s)
                 kicker = mdate.group(0) if mdate else date_s[:10]
                 headline = title or slug
-                raw_dir = MAPS / slug
+                raw_dir = out_root / slug
                 raw_dir.mkdir(parents=True, exist_ok=True)
                 # 옛 키의 PNG를 남겨 두면 매니페스트가 디스크를 관측해서 그것까지
                 # 뷰로 적는다 — 페이지가 사라진 이름의 그림을 걸게 된다.
@@ -481,13 +514,15 @@ def main():
                                 ("host", "mode", "enc", "label", "section",
                                  "title", "title_src", "desc", "w", "h", "page")}
                 cap_all[slug] = dict(sorted(rec.items()))
-                # 대표 카드 og/{slug}.png (archive·poll 페이지 기본 og:image).
+                # 대표 카드. archive는 og/{slug}.png, polls는 og/polls-{slug}.png —
+                # 여론조사 페이지가 결과 지도 카드를 빌려 쓰던 것을 대신한다.
                 # 뷰별 카드는 안 만든다 — share/가 사라져 소비자가 없다.
                 primary = next((k for k in PRIMARY_ORDER if k in views), next(iter(views)))
+                card = OG / (f"polls-{slug}.png" if polls_mode else f"{slug}.png")
                 _make_card(pg, mark_svg, kicker, headline,
                            " · ".join(x for x in (views[primary].get("title"),
                                                   views[primary].get("label")) if x) or primary,
-                           views[primary]["png"], OG / f"{slug}.png")
+                           views[primary]["png"], card)
                 made.append((slug, list(views)))
                 print(f"  {slug}: {len(views)} views {sorted(views)} ✓", flush=True)
             except Exception as e:
@@ -509,7 +544,8 @@ def main():
                                    ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
     if cap_all:
-        _merge(ROOT / "data" / "map_captures.json", "slugs", cap_all,
+        _merge(ROOT / "data" / ("poll_map_captures.json" if polls_mode
+                                else "map_captures.json"), "slugs", cap_all,
                "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. "
                "눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 "
                "페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.")
@@ -517,7 +553,11 @@ def main():
         worst = max((len(ks) for d in dup_all.values()
                      for ks in d["same_image"].values()), default=0)
         nprob = sum(len(d["problems"]) for d in dup_all.values())
-        _merge(ROOT / "data" / "capture_ambiguity.json", "slugs", dup_all,
+        # ⚠️ 파일을 나눈다. 한 파일에 쓰면 같은 회차를 archive 실행과 polls 실행이
+        # 번갈아 덮어써서, 마지막에 돌린 쪽 기록만 남는다 — '문제 없음'이 다른 쪽의
+        # 문제를 가리게 된다.
+        _merge(ROOT / "data" / ("poll_capture_ambiguity.json" if polls_mode
+                                else "capture_ambiguity.json"), "slugs", dup_all,
                "빌드 생성물. **옛 모호함(한 키에 여러 그림)은 열거식 캡처에서 구조적으로 "
                "불가능해졌다** — 키가 (host, mode)로 확정되고 각 조합을 정확히 한 번 찍는다. "
                "대신 반대를 잰다: same_image는 서로 다른 키가 **같은 그림**이 된 경우로, "

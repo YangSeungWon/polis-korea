@@ -119,7 +119,13 @@
       <svg class="gen-dist-svg" id="gen-dist-svg"></svg>
       <div class="gen-dist-readout" id="gen-dist-readout"></div>`;
     host.hidden = false;
-    drawDistrictHex(document.getElementById('gen-dist-svg'), gs.layout, fn, {
+    const _dsvg = document.getElementById('gen-dist-svg');
+    if (_dsvg) {                       // 캡처가 읽는다 — 어느 자료의 그림인지
+      _dsvg.dataset.mapHost = 'polldistrict';
+      _dsvg.dataset.mapToggle = 'dmode';
+      _dsvg.dataset.mode = gs.dmode || 'polls';
+    }
+    drawDistrictHex(_dsvg, gs.layout, fn, {
       selected: gs.selected,
       missOf: gs.dmode === 'result' ? missed : null,
       onSelect: (sido, name) => {

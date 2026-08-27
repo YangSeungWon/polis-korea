@@ -162,6 +162,11 @@
     // 1위로 썼다 — 조사표에 처음 적힌 후보가 곧 1위가 됐다. 20대 대선 조사의 49%가
     // 후보순≠득표순이라 헤드라인이 7/17로 나왔다(실제 13/17). 19대 14→16, 21대 11→13.
     // 지도 색은 멀쩡했다(shared.js가 그리기 전에 정렬한다) — 숫자와 점선만 틀렸다.
+    // 캡처가 읽는다 — 이 지도가 무엇인지. archive와 달리 자료 토글(여론조사↔실제)이
+    // 페이지 수준 버튼(data-mode)이라 host가 그걸 가리킨다.
+    h.dataset.mapHost = 'pollsido';
+    h.dataset.mapToggle = 'pmode';
+    h.dataset.mode = ps.mode || 'polls';
     let missOf = null;
     const acc = ps.mode === 'result' ? PollAdapter.accuracyOf('대통령') : null;
     if (ps.mode === 'result') {

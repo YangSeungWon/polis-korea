@@ -1,0 +1,257 @@
+{
+ "_note": "빌드 생성물 — scripts/build/build_og_maps.py가 캡처하며 적는다. 눌린 토글 버튼의 글씨(label)와 섹션 제목·설명(title·desc)이 그대로 페이지의 figcaption·alt가 된다. 손으로 고치지 말 것 — 다음 캡처가 덮는다.",
+ "slugs": {
+  "19th-pres-2017": {
+   "pollsido-polls": {
+    "host": "pollsido",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "pollsido-result": {
+    "host": "pollsido",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 결과",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   }
+  },
+  "20th-general-2016": {
+   "polldistrict-polls": {
+    "host": "polldistrict",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 827,
+    "page": true
+   },
+   "polldistrict-result": {
+    "host": "polldistrict",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 827,
+    "page": true
+   }
+  },
+  "20th-pres-2022": {
+   "pollsido-polls": {
+    "host": "pollsido",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "pollsido-result": {
+    "host": "pollsido",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 결과",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   }
+  },
+  "21st-general-2020": {
+   "polldistrict-polls": {
+    "host": "polldistrict",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 827,
+    "page": true
+   },
+   "polldistrict-result": {
+    "host": "polldistrict",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 827,
+    "page": true
+   }
+  },
+  "21st-pres-2025": {
+   "pollsido-polls": {
+    "host": "pollsido",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   },
+   "pollsido-result": {
+    "host": "pollsido",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 결과",
+    "section": null,
+    "title": "시도별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 600,
+    "h": 576,
+    "page": true
+   }
+  },
+  "22nd-general-2024": {
+   "polldistrict-polls": {
+    "host": "polldistrict",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 861,
+    "page": true
+   },
+   "polldistrict-result": {
+    "host": "polldistrict",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": "gen-district",
+    "title": "선거구별",
+    "title_src": "registry",
+    "desc": null,
+    "w": 760,
+    "h": 861,
+    "page": true
+   }
+  },
+  "7th-local-2018": {
+   "pollgov-polls": {
+    "host": "pollgov",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   },
+   "pollgov-result": {
+    "host": "pollgov",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   }
+  },
+  "8th-local-2022": {
+   "pollgov-polls": {
+    "host": "pollgov",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   },
+   "pollgov-result": {
+    "host": "pollgov",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   }
+  },
+  "9th-local-2026": {
+   "pollgov-polls": {
+    "host": "pollgov",
+    "mode": "polls",
+    "enc": "polls",
+    "label": "여론조사 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   },
+   "pollgov-result": {
+    "host": "pollgov",
+    "mode": "result",
+    "enc": "result",
+    "label": "실제 1위",
+    "section": null,
+    "title": "광역단체장",
+    "title_src": "registry",
+    "desc": null,
+    "w": 834,
+    "h": 680,
+    "page": true
+   }
+  }
+ }
+}

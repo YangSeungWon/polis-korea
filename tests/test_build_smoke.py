@@ -28,6 +28,9 @@ SMOKE = [
     # 폴 적중률은 계산 정본이 파이썬으로 옮겨온 것이라, 브라우저 없이 도는지가
     # 중요하다 — 옛 계산은 JS에만 있어서 CI가 아무것도 못 봤다.
     ("build_poll_accuracy", [sys.executable, "scripts/build/build_poll_accuracy.py"]),
+    # 여론조사 지도도 브라우저 없이 대상 산정까지는 돌아야 한다(archive와 같은 이유).
+    ("build_og_maps --pages polls",
+     [sys.executable, "scripts/build/build_og_maps.py", "--pages", "polls", "--list"]),
 ]
 
 # CI에 없는데 로컬엔 있는 모듈. requirements.txt에 없으면서 import되면 CI에서만 죽는다.

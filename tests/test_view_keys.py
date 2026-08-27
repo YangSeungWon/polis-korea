@@ -102,12 +102,14 @@ def check_keys_in_use() -> None:
         if V.parse_key(key) is None:
             bad_keys.setdefault(key, []).append(where)
 
-    maps = ROOT / "og" / "maps"
     n_png = 0
-    if maps.is_dir():
-        for f in maps.rglob("*.png"):
+    for d in ("maps", "polls"):        # 결과 지도 · 여론조사 지도
+        root = ROOT / "og" / d
+        if not root.is_dir():
+            continue
+        for f in root.rglob("*.png"):
             n_png += 1
-            note(f"디스크 {f.parent.name}", f.stem)
+            note(f"디스크 og/{d}/{f.parent.name}", f.stem)
     mf = ROOT / "data" / "map_manifest.json"
     n_view = 0
     if mf.is_file():
@@ -126,7 +128,7 @@ def check_keys_in_use() -> None:
             note(f"thumb_priority[{kind}]", k)
     n_fig = 0
     pat = re.compile(r'<figure class="map-fig" id="([^"]+)"')
-    for d in ("archive", "history"):
+    for d in ("archive", "history", "polls"):
         for f in (ROOT / d).rglob("index.html"):
             for m in pat.finditer(f.read_text(encoding="utf-8")):
                 n_fig += 1
@@ -152,17 +154,23 @@ def check_captions() -> None:
         bad("매니페스트가 없다")
         return
     els = json.loads(mf.read_text(encoding="utf-8")).get("elections") or {}
+    # 여론조사 지도는 다른 디렉터리·다른 기록이다(og/polls/, poll_map_captures.json).
+    pc = ROOT / "data" / "poll_map_captures.json"
+    polls_caps = {}
+    if pc.is_file():
+        polls_caps = json.loads(pc.read_text(encoding="utf-8")).get("slugs") or {}
     # history는 archive slug 하나에 대응한다 — 어느 회차의 그림인지는 <img src>가 말한다.
     pat = re.compile(r'<figure class="map-fig" id="([^"]+)">'
-                     r'<img src="/og/maps/([^/]+)/[^"]+"[^>]*>'
+                     r'<img src="/og/(maps|polls)/([^/]+)/[^"]+"[^>]*>'
                      r'<figcaption>([^<]*)</figcaption>')
     n = 0
     seen_bad = 0
-    for d in ("archive", "history"):
+    for d in ("archive", "history", "polls"):
         for f in sorted((ROOT / d).rglob("index.html")):
-            for key, eid, cap in pat.findall(f.read_text(encoding="utf-8")):
+            for key, kind, eid, cap in pat.findall(f.read_text(encoding="utf-8")):
                 n += 1
-                m = ((els.get(eid) or {}).get("meta") or {}).get(key)
+                m = (polls_caps.get(eid, {}).get(key) if kind == "polls"
+                     else ((els.get(eid) or {}).get("meta") or {}).get(key))
                 if not m:
                     bad(f"{f.parent.name}: {key}의 캡처 기록이 없는데 그림을 걸었다")
                     seen_bad += 1
@@ -185,11 +193,15 @@ def check_capture_health() -> None:
     저장된 것이다. 이름만 바꾸고 그림은 안 바뀌는 실패라 눈으로는 거의 안 보인다.
     """
     import json
-    f = ROOT / "data" / "capture_ambiguity.json"
-    if not f.is_file():
-        bad("캡처 기록이 없다 — build_og_maps를 안 돌렸다")
-        return
-    d = json.loads(f.read_text(encoding="utf-8")).get("slugs") or {}
+    d = {}
+    for name, tag in (("capture_ambiguity.json", "결과"),
+                      ("poll_capture_ambiguity.json", "여론조사")):
+        f = ROOT / "data" / name
+        if not f.is_file():
+            bad(f"{tag} 캡처 기록이 없다 — build_og_maps를 안 돌렸다")
+            continue
+        for k, v in (json.loads(f.read_text(encoding="utf-8")).get("slugs") or {}).items():
+            d[f"{tag}/{k}"] = v
     dup = {s: v["same_image"] for s, v in d.items() if v.get("same_image")}
     prob = {s: v["problems"] for s, v in d.items() if v.get("problems")}
     for s, v in sorted(dup.items()):

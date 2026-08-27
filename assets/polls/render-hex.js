@@ -3,12 +3,33 @@
 // === HEX 격자 ===
 // hexPoints·nbrs·NBR_TO_EDGE·corner → assets/hexgrid.js (공용)
 
+// 직위 → 캡처 키의 host 토큰(build_og_maps --pages polls). 교육감은 정당을 표방하지
+// 않아 '조사 1위 vs 실제 1위'를 비교할 것이 없으므로 안 찍는다.
+const POLL_HOST = { '광역단체장': 'pollgov', '기초단체장': 'pollmayor' };
+
 // 시도 1위색 hex — 공용 캐논 Archive.governorHex로 위임(아카이브 광역장 hex와 동일 렌더러).
 //   폴 전용 신뢰도 시각화(불투명도=격차·저신뢰 0.4, 점선=n≤2·저신뢰)는 opts 콜백으로 보존.
 function renderHex() {
   const host = $('#hex');
   if (!host || !window.Archive || !window.Archive.governorHex) return;
+  // 이 지도가 무엇인지 **여기서 선언한다** — 캡처(build_og_maps --pages polls)가 읽는다.
+  // ⚠️ #hex는 <div>가 아니라 <svg> 자체다. 그리고 archive와 달리 한 컨테이너에
+  // 직위(광역단체장·교육감·기초단체장) × 자료(여론조사 1위·실제 1위) × 방식(균등·지도)이
+  // 겹쳐 있다. 전부 찍으면 회차당 12장이 되므로 **기본 직위·기본 방식**만 찍고,
+  // 자료 토글만 돈다(그게 이 페이지의 요점 — 조사가 실제와 얼마나 같았나).
+  // data-map-toggle은 '모드를 바꾸는 버튼이 data-mode를 쓴다'는 선언이다.
+  host.dataset.mapHost = POLL_HOST[state.office] || '';
+  host.dataset.mapToggle = 'mode';
+  host.dataset.mode = state.mode || 'polls';
+  // 전남광주 통합(2026-06-03 신설)은 **한 선거**다. 두 칸으로 그리면 같은 값이 두 번
+  // 찍혀 유권자 규모가 두 배로 보인다. archive는 데이터에 통합 race가 있으면 병합
+  // 레이아웃을 쓰는데, 여기선 draw에 빈 배열을 넘기고 winnerOf 콜백을 쓰므로 그 판단이
+  // 안 된다 — 그래서 **적중률 데이터가 통합 셀을 판정했는지**로 정한다(날짜·직위를
+  // 손으로 적으면 다음 통합 때 또 어긋난다).
+  const _merged = (typeof honamMergedLayout === 'function'
+    && PollAdapter.hitOf(state.office, '전남광주특별시') !== null);
   const meta = window.Archive.governorHex.draw(host, [], {
+    layout: _merged ? honamMergedLayout(SIDO_HEX_LAYOUT) : undefined,
     winnerOf: (sido) => regionSidoWinner(sido, state.office),
     opacityOf: (w) => (w ? (w.low_recent ? 0.4 : gapOpacity(w.effective_gap != null ? w.effective_gap : w.gap)) : 1),
     dashOf: (w) => ((w && (w.n_polls <= 2 || w.low_recent)) ? '3,2' : null),

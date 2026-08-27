@@ -124,7 +124,8 @@ def caption(key: str, m: dict) -> str:
     return " · ".join(x for x in (m.get("title"), m.get("label")) if x) or key
 
 
-def fig(eid: str, key: str, m: dict, w: int, h: int, title: str) -> str:
+def fig(eid: str, key: str, m: dict, w: int, h: int, title: str,
+        base: str = "/og/maps") -> str:
     """<figure> 한 장. **글이 그림과 같은 출처에서 나온다.**
 
     label은 캡처가 실제로 누른 토글 버튼의 글씨고, title·desc는 그 지도가 놓인
@@ -136,6 +137,6 @@ def fig(eid: str, key: str, m: dict, w: int, h: int, title: str) -> str:
     desc = (m.get("desc") or "").strip()
     alt = _esc(" — ".join(x for x in (" ".join(y for y in (title, cap) if y), desc) if x))
     return (f'<figure class="map-fig" id="{_esc(key)}">'
-            f'<img src="/og/maps/{_esc(eid)}/{_esc(key)}.png" alt="{alt}" '
+            f'<img src="{base}/{_esc(eid)}/{_esc(key)}.png" alt="{alt}" '
             f'width="{w}" height="{h}" loading="lazy" decoding="async">'
             f'<figcaption>{_esc(cap)}</figcaption></figure>')
