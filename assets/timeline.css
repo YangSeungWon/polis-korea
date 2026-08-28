@@ -182,3 +182,32 @@
 .tld-ototal { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
 .tld-ostack { display: flex; height: 6px; border-radius: 2px; overflow: hidden; background: var(--bg2); }
 .tld-oseg { display: block; min-width: 1px; }
+
+/* ── 세 레인 동시 재생 (assets/timelapse.js) ──────────────────────────────
+   프레임은 og/maps/의 기존 PNG다. 높이가 회차마다 486~647px로 다르므로
+   (옛 회차는 시도가 적다) 틀 높이를 고정하고 안에서 맞춘다 — 안 그러면 재생 중
+   레이아웃이 위아래로 뛴다. */
+.tl-play { margin: 18px 0 24px; }
+.tl-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.tl-play-btn {
+  font: inherit; font-weight: 700; padding: 6px 14px; border-radius: 6px;
+  border: 1px solid var(--rule-strong); background: var(--bg); color: var(--ink);
+  cursor: pointer; white-space: nowrap;
+}
+.tl-play-btn:hover { border-color: var(--ink); }
+.tl-slider { flex: 1; min-width: 120px; }
+.tl-year { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; min-width: 4.5ch; }
+.tl-lanes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tl-lane { margin: 0; }
+.tl-lane-name { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+.tl-lane-means { font-weight: 500; color: var(--ink-mute); margin-left: 6px; font-size: 11px; }
+.tl-lane img {
+  display: block; width: 100%; height: 300px; object-fit: contain;
+  background: var(--surface-fixed); border: 1px solid var(--rule-fixed); border-radius: 6px;
+}
+.tl-cap { font-size: 12px; color: var(--ink-soft); padding-top: 6px; line-height: 1.5; min-height: 2.6em; }
+.tl-none {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  height: 300px; padding: 0 16px; font-size: 13px; color: var(--ink-mute);
+  background: var(--surface-fixed); border: 1px dashed var(--rule-fixed); border-radius: 6px;
+}

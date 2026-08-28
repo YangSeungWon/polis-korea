@@ -34,6 +34,7 @@ SMOKE = [
     ("build_og_maps --pages static",
      [sys.executable, "scripts/build/build_og_maps.py", "--pages", "static", "--list"]),
     ("sync_static_figures", [sys.executable, "scripts/build/sync_static_figures.py"]),
+    ("build_timelapse_index", [sys.executable, "scripts/build/build_timelapse_index.py"]),
     ("sync_home_status", [sys.executable, "scripts/build/sync_home_status.py"]),
     ("sync_page_seeds", [sys.executable, "scripts/build/sync_page_seeds.py"]),
 ]

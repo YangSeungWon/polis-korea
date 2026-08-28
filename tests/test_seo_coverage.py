@@ -139,8 +139,30 @@ def check_queue(sm: dict[str, int]) -> None:
     # 아니라 '지금 sitemap이 산출물에 다 들어 있는가'를 본다.
     covered = (set(queue) | set(seen)) & paths
     missing = paths - covered
-    ck(f"지금 sitemap {len(paths)}쪽이 전부 산출물에 있다", not missing,
-       f"{len(missing)}쪽 빠짐 — {sorted(missing)[:3]}")
+    # 수집 **뒤에** 생긴 페이지는 빠져 있는 게 맞다. 2026 재보궐 archive를 새로
+    # 만들자 이 검사가 CI에서 빨개졌는데, 깨진 게 아니라 아직 안 물어본 것이었다.
+    # 위 주석이 'sitemap이 줄면'만 다뤘고 '늘면'을 안 다뤘다.
+    # ⚠️ 파일 mtime을 쓰면 안 된다 — CI는 새로 체크아웃해서 전부 오늘이 되고,
+    # 그러면 이 검사가 영영 안 걸린다. sitemap 매니페스트의 d(그 내용이 처음
+    # 나타난 날)는 커밋된 값이라 체크아웃에 안 흔들린다.
+    gen = json.loads(s_p.read_text(encoding="utf-8")).get("generated") or ""
+    man = {}
+    mp = ROOT / "data/sitemap_lastmod.json"
+    if mp.is_file():
+        man = json.loads(mp.read_text(encoding="utf-8")).get("pages") or {}
+    def born_of(u: str) -> str:
+        rel = u.strip("/")
+        for k in (f"{rel}/index.html", rel):
+            if k in man:
+                return man[k].get("d") or ""
+        return ""
+    fresh = {m for m in missing if gen and born_of(m) > gen}
+    stale_missing = missing - fresh
+    if fresh:
+        print(f"  · 수집({gen[:10]}) 뒤에 생긴 {len(fresh)}쪽은 셈에서 뺀다 "
+              f"— {sorted(fresh)[:2]}")
+    ck(f"지금 sitemap {len(paths)}쪽이 전부 산출물에 있다", not stale_missing,
+       f"{len(stale_missing)}쪽 빠짐 — {sorted(stale_missing)[:3]}")
     ck("대기열과 본 것이 겹치지 않는다", not (set(queue) & set(seen)))
 
 

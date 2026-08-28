@@ -111,11 +111,53 @@ def byelection_body() -> str:
             '    <ul class="bx-seed">\n      ' + "\n      ".join(rows) + "\n    </ul>\n")
 
 
+# ── 타임라인 재생 ──────────────────────────────────────────────────────────
+def timelapse_body() -> str:
+    """재생의 정적 시드 — 지금 프레임 3장 + 회차 53건.
+
+    timeline.html의 정적 본문이 375자였다. 세 종류 선거의 흐름을 보여주는 페이지인데
+    크롤러에겐 빈 껍데기였다. 재생은 JS가 하지만, **무엇을 재생하는지**는 HTML에
+    남는다 — 지금 상태 3장과 회차 목록.
+    """
+    d = load("data/election_timelapse.json", {}) or {}
+    lanes = d.get("lanes") or []
+    if not lanes:
+        return ""
+    figs, lists = [], []
+    for L in lanes:
+        frames = L.get("frames") or []
+        if not frames:
+            continue
+        last = next((f for f in reversed(frames) if f.get("img")), None)
+        if last:
+            wh = f' width="{last["w"]}" height="{last["h"]}"' if last.get("w") else ""
+            figs.append(
+                f'<figure class="tl-seed-fig"><img src="{esc(last["img"])}"{wh} loading="lazy" '
+                f'decoding="async" alt="{esc(L["name"])} {esc(last["name"])} — {esc(L["means"])}">'
+                f'<figcaption>{esc(L["name"])} · {esc(last["name"])} '
+                f'{esc(last["date"])} — {esc(L["means"])}</figcaption></figure>')
+        items = "".join(
+            f'<li><a href="/archive/{esc(f["slug"])}/">{esc(f["name"])}</a> '
+            f'<span>{esc(f["date"])}</span>'
+            + (f' <span class="tl-seed-note">{esc(f["note"])}</span>' if f.get("note") else "")
+            + "</li>" for f in reversed(frames))
+        lists.append(f'<details class="tl-seed-more"><summary>{esc(L["name"])} '
+                     f'{len(frames)}회차</summary><ul>{items}</ul></details>')
+    if not figs:
+        return ""
+    return ('    <div class="tl-seed">\n      <div class="tl-seed-figs">'
+            + "".join(figs) + "</div>\n      " + "".join(lists) + "\n    </div>\n")
+
+
 def main() -> int:
     n = 0
     if write_block(ROOT / "chronology.html", "CHRONO_SEED", chrono_body(),
                    "chronology.js가 로드되면 같은 자리를 연표로 갈아끼운다. JS 없이도 "
                    "선거·사건이 HTML에 남게 하는 것이 목적."):
+        n += 1
+    if write_block(ROOT / "timeline.html", "TL_PLAY", timelapse_body(),
+                   "timelapse.js가 로드되면 같은 자리 아래에서 재생한다. JS 없이도 "
+                   "지금 세 자리와 53회차가 HTML에 남게 하는 것이 목적."):
         n += 1
     if write_block(ROOT / "byelection.html", "BOE_SEED", byelection_body(),
                    "byelection.js가 로드되면 지도·상세로 갈아끼운다. JS 없이도 "

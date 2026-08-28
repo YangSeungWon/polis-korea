@@ -1,0 +1,512 @@
+{
+ "_note": "빌드 생성물 — scripts/build/build_timelapse_index.py. timeline.html의 세 레인 재생이 읽는다. 그림은 새로 안 만든다 — og/maps/에 이미 있는 것을 연도순으로 엮을 뿐이다. img가 null이면 그림이 없는 회차이고, note가 그 이유를 적는다(간선 등).",
+ "years": [
+  "1948",
+  "2026"
+ ],
+ "lanes": [
+  {
+   "kind": "presidential",
+   "name": "대선",
+   "means": "시도별 1위 후보",
+   "frames": [
+    {
+     "slug": "1st-pres-1948",
+     "date": "1948-07-20",
+     "name": "제1대 대통령선거",
+     "img": "/og/maps/1st-pres-1948/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "2nd-pres-1952",
+     "date": "1952-08-05",
+     "name": "제2대 대통령선거",
+     "img": "/og/maps/2nd-pres-1952/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 597
+    },
+    {
+     "slug": "3rd-pres-1956",
+     "date": "1956-05-15",
+     "name": "제3대 대통령선거",
+     "img": "/og/maps/3rd-pres-1956/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 597
+    },
+    {
+     "slug": "4th-pres-1960",
+     "date": "1960-03-15",
+     "name": "제4대 대통령선거 (3·15)",
+     "img": "/og/maps/4th-pres-1960/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 597
+    },
+    {
+     "slug": "4th-pres-1960-08",
+     "date": "1960-08-12",
+     "name": "제4대 대통령선거",
+     "img": null,
+     "key": null,
+     "note": "간선 — 그림 없음"
+    },
+    {
+     "slug": "5th-pres-1963",
+     "date": "1963-10-15",
+     "name": "제5대 대통령선거",
+     "img": "/og/maps/5th-pres-1963/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 597
+    },
+    {
+     "slug": "6th-pres-1967",
+     "date": "1967-05-03",
+     "name": "제6대 대통령선거",
+     "img": "/og/maps/6th-pres-1967/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 597
+    },
+    {
+     "slug": "7th-pres-1971",
+     "date": "1971-04-27",
+     "name": "제7대 대통령선거",
+     "img": "/og/maps/7th-pres-1971/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 596
+    },
+    {
+     "slug": "8th-pres-1972",
+     "date": "1972-12-23",
+     "name": "제8대 대통령선거",
+     "img": "/og/maps/8th-pres-1972/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "9th-pres-1978",
+     "date": "1978-07-06",
+     "name": "제9대 대통령선거",
+     "img": "/og/maps/9th-pres-1978/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "10th-pres-1979",
+     "date": "1979-12-06",
+     "name": "제10대 대통령선거",
+     "img": "/og/maps/10th-pres-1979/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "11th-pres-1980",
+     "date": "1980-08-27",
+     "name": "제11대 대통령선거",
+     "img": "/og/maps/11th-pres-1980/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "12th-pres-1981",
+     "date": "1981-02-25",
+     "name": "제12대 대통령선거",
+     "img": "/og/maps/12th-pres-1981/electors.png",
+     "key": "electors",
+     "w": 600,
+     "h": 500,
+     "note": "간선 — 지역별 결과 없음(선거인단)"
+    },
+    {
+     "slug": "13th-pres-1987",
+     "date": "1987-12-16",
+     "name": "제13대 대통령선거",
+     "img": "/og/maps/13th-pres-1987/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 536
+    },
+    {
+     "slug": "14th-pres-1992",
+     "date": "1992-12-18",
+     "name": "제14대 대통령선거",
+     "img": "/og/maps/14th-pres-1992/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 536
+    },
+    {
+     "slug": "15th-pres-1997",
+     "date": "1997-12-18",
+     "name": "제15대 대통령선거",
+     "img": "/og/maps/15th-pres-1997/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 486
+    },
+    {
+     "slug": "16th-pres-2002",
+     "date": "2002-12-19",
+     "name": "제16대 대통령선거",
+     "img": "/og/maps/16th-pres-2002/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "17th-pres-2007",
+     "date": "2007-12-19",
+     "name": "제17대 대통령선거",
+     "img": "/og/maps/17th-pres-2007/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "18th-pres-2012",
+     "date": "2012-12-19",
+     "name": "제18대 대통령선거",
+     "img": "/og/maps/18th-pres-2012/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "19th-pres-2017",
+     "date": "2017-05-09",
+     "name": "제19대 대통령선거",
+     "img": "/og/maps/19th-pres-2017/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 486
+    },
+    {
+     "slug": "20th-pres-2022",
+     "date": "2022-03-09",
+     "name": "제20대 대통령선거",
+     "img": "/og/maps/20th-pres-2022/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "21st-pres-2025",
+     "date": "2025-06-03",
+     "name": "제21대 대통령선거",
+     "img": "/og/maps/21st-pres-2025/sido-hex.png",
+     "key": "sido-hex",
+     "w": 600,
+     "h": 487
+    }
+   ]
+  },
+  {
+   "kind": "general_election",
+   "name": "총선",
+   "means": "시도별 지역구 의석",
+   "frames": [
+    {
+     "slug": "1st-general-1948",
+     "date": "1948-05-10",
+     "name": "제1대 국회의원선거",
+     "img": "/og/maps/1st-general-1948/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 562
+    },
+    {
+     "slug": "2nd-general-1950",
+     "date": "1950-05-30",
+     "name": "제2대 국회의원선거",
+     "img": "/og/maps/2nd-general-1950/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 562
+    },
+    {
+     "slug": "3rd-general-1954",
+     "date": "1954-05-20",
+     "name": "제3대 국회의원선거",
+     "img": "/og/maps/3rd-general-1954/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 624
+    },
+    {
+     "slug": "4th-general-1958",
+     "date": "1958-05-02",
+     "name": "제4대 국회의원선거",
+     "img": "/og/maps/4th-general-1958/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 625
+    },
+    {
+     "slug": "5th-general-1960",
+     "date": "1960-07-29",
+     "name": "제5대 국회의원선거",
+     "img": "/og/maps/5th-general-1960/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 625
+    },
+    {
+     "slug": "6th-general-1963",
+     "date": "1963-11-26",
+     "name": "제6대 국회의원선거",
+     "img": "/og/maps/6th-general-1963/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "7th-general-1967",
+     "date": "1967-06-08",
+     "name": "제7대 국회의원선거",
+     "img": "/og/maps/7th-general-1967/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "8th-general-1971",
+     "date": "1971-05-25",
+     "name": "제8대 국회의원선거",
+     "img": "/og/maps/8th-general-1971/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "9th-general-1973",
+     "date": "1973-02-27",
+     "name": "제9대 국회의원선거",
+     "img": "/og/maps/9th-general-1973/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "10th-general-1978",
+     "date": "1978-12-12",
+     "name": "제10대 국회의원선거",
+     "img": "/og/maps/10th-general-1978/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "11th-general-1981",
+     "date": "1981-03-25",
+     "name": "제11대 국회의원선거",
+     "img": "/og/maps/11th-general-1981/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 647
+    },
+    {
+     "slug": "12th-general-1985",
+     "date": "1985-02-12",
+     "name": "제12대 국회의원선거",
+     "img": "/og/maps/12th-general-1985/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 614
+    },
+    {
+     "slug": "13th-general-1988",
+     "date": "1988-04-26",
+     "name": "제13대 국회의원선거",
+     "img": "/og/maps/13th-general-1988/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 614
+    },
+    {
+     "slug": "14th-general-1992",
+     "date": "1992-03-24",
+     "name": "제14대 국회의원선거",
+     "img": "/og/maps/14th-general-1992/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 614
+    },
+    {
+     "slug": "15th-general-1996",
+     "date": "1996-04-11",
+     "name": "제15대 국회의원선거",
+     "img": "/og/maps/15th-general-1996/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 614
+    },
+    {
+     "slug": "16th-general-2000",
+     "date": "2000-04-13",
+     "name": "제16대 국회의원선거",
+     "img": "/og/maps/16th-general-2000/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 564
+    },
+    {
+     "slug": "17th-general-2004",
+     "date": "2004-04-15",
+     "name": "제17대 국회의원선거",
+     "img": "/og/maps/17th-general-2004/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 564
+    },
+    {
+     "slug": "18th-general-2008",
+     "date": "2008-04-09",
+     "name": "제18대 국회의원선거",
+     "img": "/og/maps/18th-general-2008/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 572
+    },
+    {
+     "slug": "19th-general-2012",
+     "date": "2012-04-11",
+     "name": "제19대 국회의원선거",
+     "img": "/og/maps/19th-general-2012/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 572
+    },
+    {
+     "slug": "20th-general-2016",
+     "date": "2016-04-13",
+     "name": "제20대 국회의원선거",
+     "img": "/og/maps/20th-general-2016/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 572
+    },
+    {
+     "slug": "21st-general-2020",
+     "date": "2020-04-15",
+     "name": "제21대 국회의원선거",
+     "img": "/og/maps/21st-general-2020/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 572
+    },
+    {
+     "slug": "22nd-general-2024",
+     "date": "2024-04-10",
+     "name": "제22대 국회의원선거",
+     "img": "/og/maps/22nd-general-2024/sidoseat-hex.png",
+     "key": "sidoseat-hex",
+     "w": 600,
+     "h": 561
+    }
+   ]
+  },
+  {
+   "kind": "local",
+   "name": "지선",
+   "means": "광역단체장 1위",
+   "frames": [
+    {
+     "slug": "1st-local-1995",
+     "date": "1995-06-27",
+     "name": "제1회 전국동시지방선거",
+     "img": "/og/maps/1st-local-1995/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 536
+    },
+    {
+     "slug": "2nd-local-1998",
+     "date": "1998-06-04",
+     "name": "제2회 전국동시지방선거",
+     "img": "/og/maps/2nd-local-1998/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "3rd-local-2002",
+     "date": "2002-06-13",
+     "name": "제3회 전국동시지방선거",
+     "img": "/og/maps/3rd-local-2002/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "4th-local-2006",
+     "date": "2006-05-31",
+     "name": "제4회 전국동시지방선거",
+     "img": "/og/maps/4th-local-2006/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 486
+    },
+    {
+     "slug": "5th-local-2010",
+     "date": "2010-06-02",
+     "name": "제5회 전국동시지방선거",
+     "img": "/og/maps/5th-local-2010/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "6th-local-2014",
+     "date": "2014-06-04",
+     "name": "제6회 전국동시지방선거",
+     "img": "/og/maps/6th-local-2014/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "7th-local-2018",
+     "date": "2018-06-13",
+     "name": "제7회 전국동시지방선거",
+     "img": "/og/maps/7th-local-2018/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    },
+    {
+     "slug": "8th-local-2022",
+     "date": "2022-06-01",
+     "name": "제8회 전국동시지방선거",
+     "img": "/og/maps/8th-local-2022/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 486
+    },
+    {
+     "slug": "9th-local-2026",
+     "date": "2026-06-03",
+     "name": "제9회 전국동시지방선거",
+     "img": "/og/maps/9th-local-2026/gov-hex.png",
+     "key": "gov-hex",
+     "w": 600,
+     "h": 487
+    }
+   ]
+  }
+ ]
+}
