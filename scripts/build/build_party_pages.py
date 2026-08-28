@@ -175,6 +175,7 @@ PAGE = """<!DOCTYPE html>
     <div class="pty-bar" data-party="{name}"></div>
     <h1 class="pty-name">{name}{abbr_badge}</h1>
     <p class="pty-life">{life}</p>
+    {stream_html}
     {note}
   </section>
   {lineage}
@@ -294,6 +295,36 @@ def build_runs() -> dict:
     # 한 정당의 기록이 된다. registry의 괄호 표기(민주당(1991) 등)와도 안 맞아
     # 18종 중 14종이 조용히 빈 채로 남았다. 저장소의 단일 출처를 쓴다.
     from party_canon import disambiguate_party
+    # 결과 파일 61개에 _meta.election이 없다. 그대로 두면 정당 페이지 34쪽에
+    # '11th-general-1981' 같은 슬러그가 사람에게 보인다 — 이름의 정본은
+    # data/elections/{id}.json이다.
+    _NAMES: dict = {}
+    for _f in (ROOT / "data/elections").glob("*.json"):
+        if _f.name == "index.json":
+            continue
+        try:
+            _e = json.loads(_f.read_text(encoding="utf-8"))
+        except Exception:                                        # noqa: BLE001
+            continue
+        if _e.get("id") and _e.get("name"):
+            _NAMES[_e["id"]] = _e["name"]
+
+    # 존속 기간 밖 기록은 **같은 이름의 다른 정당**이다. registry에 없는 시점의
+    # 동명 정당이 disambiguate의 기본값으로 떨어져 엉뚱한 페이지에 붙었다 —
+    # 1965년 통합야당 민중당 페이지에 1948년 제헌총선 기록이 있었다.
+    # 조용히 버리지 않는다: 몇 건을 왜 뺐는지 실행 끝에 말한다.
+    _reg = json.loads((ROOT / "data/parties/registry.json").read_text(
+        encoding="utf-8"))["parties"]
+
+    def _in_life(party: str, date: str) -> bool:
+        r = _reg.get(party)
+        if not r:
+            return True                 # 레지스트리가 모르는 당은 판단하지 않는다
+        yr = date[:4]
+        fo, di = (r.get("founded") or "")[:4], (r.get("dissolved") or "")[:4]
+        return not ((fo and yr < fo) or (di and yr > di))
+
+    dropped: list = []
     agg: dict = collections.defaultdict(dict)
     for f in sorted((ROOT / "data/results").glob("*.json")):
         if ".sigungu" in f.name or f.name.startswith(
@@ -307,7 +338,8 @@ def build_runs() -> dict:
         date = meta.get("election_date") or meta.get("date") or ""
         if not date:
             continue
-        label = meta.get("election") or f.stem
+        label = meta.get("election") or _NAMES.get(
+            meta.get("election_id") or f.stem) or f.stem
         seen: dict = collections.defaultdict(lambda: [0, 0, 0])
 
         def walk(o):
@@ -332,11 +364,19 @@ def build_runs() -> dict:
 
         walk(doc)
         for party, (n, votes, won) in seen.items():
+            if not _in_life(party, date):
+                dropped.append((party, date, n))
+                continue
             cur = agg[party].get(date)
             # 한 선거가 여러 파일에 있으면 후보 수가 가장 많은 쪽(가장 완전한 표현)
             if cur is None or n > cur["candidates"]:
                 agg[party][date] = {"date": date, "label": label,
                                     "candidates": n, "votes": votes, "won": won}
+    if dropped:
+        by = collections.Counter(f"{p}@{d[:4]}" for p, d, _ in dropped)
+        print(f"  · 존속 기간 밖이라 뺀 출마 기록 {len(dropped)}건 "
+              f"({len(by)}조합) — 같은 이름의 다른 정당이다: "
+              + ", ".join(sorted(by)[:6]), file=sys.stderr)
     _RUNS_CACHE.update({k: sorted(v.values(), key=lambda r: r["date"], reverse=True)
                         for k, v in agg.items()})
     return _RUNS_CACHE
@@ -368,6 +408,12 @@ def render_runs(name: str) -> str:
             f'같은 선거의 중복 표현은 한 번만 셉니다.</p></section>')
 
 
+def _stream_id(stream: str) -> str:
+    """계열 이름 → 앵커 id. 한글 id는 URL에서 퍼센트 인코딩돼 링크가 지저분해진다."""
+    return {"중도진보": "s-cl", "중도": "s-c", "보수": "s-r", "진보": "s-l",
+            "기타": "s-etc"}.get(stream or "", "s-etc")
+
+
 def render(name, info, known, appearances, members, regions=""):
     abbr = info.get("abbr")
     abbr_badge = f' <span class="pty-abbr" data-party="{esc(name)}">{esc(abbr)}</span>' if abbr else ""
@@ -382,6 +428,13 @@ def render(name, info, known, appearances, members, regions=""):
     rel = REL.get(info.get("relation"), "")
     if rel:
         life += f" · {rel}"
+    # 계열(stream) — registry가 145개 정당을 여섯 갈래로 나눠 두고도 정당 페이지엔
+    # 안 나왔다. 한 줄이지만 그 정당이 어디 서 있었는지를 말하고, 허브의 같은 계열로
+    # 나가는 길이기도 하다.
+    stream = info.get("stream")
+    stream_html = (f'<p class="pty-stream">계열 '
+                   f'<a href="/parties.html#{_stream_id(stream)}">{esc(stream)}</a></p>'
+                   if stream else "")
     note_html = f'<p class="pty-note">{esc(info["note"])}</p>' if info.get("note") else ""
 
     # 계보
@@ -436,7 +489,7 @@ def render(name, info, known, appearances, members, regions=""):
             + (info.get("note") or ""))
     return PAGE.format(
         nav=render_nav(menu_for_path("party/x/index.html")),
-        name=esc(name), abbr_badge=abbr_badge, life=life, life_span=esc(life_span), note=note_html,
+        name=esc(name), abbr_badge=abbr_badge, life=life, stream_html=stream_html, life_span=esc(life_span), note=note_html,
         lineage=lineage, elections=elections, runs=render_runs(name),
         members=members_html,
         regions=regions,
@@ -481,7 +534,9 @@ def party_index_block(ps: dict) -> str:
                       key=lambda n: -(ps[n].get("order") or 0))
         gone = sorted((n for n, v in items if v.get("dissolved")),
                       key=lambda n: (ps[n].get("dissolved") or ""), reverse=True)
-        out.append(f'    <div class="pi-group"><h3 class="pi-stream">{esc(stream)}'
+        # 계열마다 id를 준다 — 정당 페이지가 '같은 계열 N개'로 이 자리를 가리킨다.
+        out.append(f'    <div class="pi-group" id="{_stream_id(stream)}">'
+                   f'<h3 class="pi-stream">{esc(stream)}'
                    f'<span class="ph-meta">{len(items)}</span></h3>')
         if live:
             out.append('      <ul class="pi-list">' + "".join(_chip(n, ps[n]) for n in live) + "</ul>")

@@ -9,6 +9,7 @@
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -97,6 +98,36 @@ if _conflated:
     print("\n  [미등록 동음이의 후보] registry에 넣을 때 시점으로 갈라야 한다")
     for _p, _a, _b, _v in sorted(_conflated, key=lambda x: -x[3])[:8]:
         print(f"    {_p:16} {_a}~{_b}  {_v:,}표")
+
+# ── 그 정당이 아닌 기록이 붙어 있지 않은가 ─────────────────────────────────
+# 막는 사고 둘.
+#  1. **동명이의 정당이 섞인다.** registry에 없는 시점의 동명 정당이
+#     disambiguate_party의 기본값으로 떨어져 엉뚱한 페이지에 붙었다 — 1965년
+#     통합야당 민중당 페이지에 1948년 제헌총선 기록이 있었다(창당 17년 전). 7쪽.
+#  2. **선거 이름 대신 슬러그가 보인다.** 결과 파일 61개에 _meta.election이 없어
+#     '11th-general-1981'이 사람에게 그대로 찍혔다(34쪽). 이름의 정본은
+#     data/elections/{id}.json이다.
+print("\n  [정당 페이지] 그 정당의 기록만 있는가")
+_reg2 = json.loads((ROOT / "data/parties/registry.json").read_text(
+    encoding="utf-8"))["parties"]
+_out_life, _slugs = [], []
+_slug_re = re.compile(r">\s*\d+(?:st|nd|rd|th)-(?:general|pres|local)-\d{4}\s*<")
+for _f in sorted((ROOT / "party").glob("*/index.html")):
+    _n = _f.parent.name
+    _h = _f.read_text(encoding="utf-8")
+    if _slug_re.search(_h):
+        _slugs.append(_n)
+    _r = _reg2.get(_n)
+    if not _r:
+        continue
+    _fo, _di = (_r.get("founded") or "")[:4], (_r.get("dissolved") or "")[:4]
+    for _d in re.findall(r">(\d{4})-\d{2}-\d{2}<", _h):
+        if (_fo and _d < _fo) or (_di and _d > _di):
+            _out_life.append(f"{_n}({_fo or '?'}~{_di or '현재'})@{_d}")
+            break
+ck("정당 페이지에 존속 기간 밖 기록이 없다", not _out_life,
+   f"{len(_out_life)}쪽 — {_out_life[:3]}")
+ck("선거 이름 대신 슬러그가 보이지 않는다", not _slugs, f"{len(_slugs)}쪽 — {_slugs[:3]}")
 
 print(f"\n[정당 페이지 내용] 실패 {len(fails)}")
 sys.exit(1 if fails else 0)

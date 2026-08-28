@@ -94,21 +94,53 @@ def scan() -> dict:
             "path": str(rel), "chars": len(t), "data": data_len(html),
             "links": len(re.findall(r"<a [^>]*href", html)),
             "hash": hashlib.md5(t.encode()).hexdigest()[:10],
+            "text": t,
         })
     return rows
+
+
+def _unique_len(rows: list) -> dict:
+    """페이지별 **고유 텍스트** 길이 — 그 템플릿의 상투구를 뺀 나머지.
+
+    ⚠️ 처음엔 '모든 페이지의 공통 앞뒤'로 재려다 실패했다. 페이지는 첫 글자부터
+    다르므로(이름·정당명) 공통 접두가 늘 비고, 결과가 전체 길이와 같아진다 —
+    주석은 상투구를 뺀다고 하는데 실제로는 한 글자도 안 뺐다.
+
+    상투구는 **위치가 아니라 빈도**로 찾는다: 그 템플릿 페이지의 80% 이상에 나오는
+    토큰은 틀에서 온 것이다('출마 이력', '득표율', '소속 인물은 당선 국회의원 기준').
+    남는 것이 그 페이지만의 사실이다.
+    """
+    import collections
+    texts = {r["path"]: (r.get("text") or "") for r in rows}
+    n = len(texts)
+    if n < 3:
+        return {p: len(t) for p, t in texts.items()}
+    df: collections.Counter = collections.Counter()
+    toks = {p: t.split() for p, t in texts.items()}
+    for ts in toks.values():
+        df.update(set(ts))
+    boiler = {w for w, c in df.items() if c >= n * 0.8}
+    return {p: sum(len(w) + 1 for w in ts if w not in boiler) for p, ts in toks.items()}
 
 
 def main(argv: list) -> int:
     rows = scan()
     want = argv[argv.index("--list") + 1] if "--list" in argv else None
     print(f"{'template':10}{'n':>6}{'중앙':>7}{'하위25%':>8}"
-          f"{'<'+str(THIN)+'자':>8}{'그중 자료0':>10}{'중복':>6}  판단")
+          f"{'<'+str(THIN)+'자':>8}{'빈 껍데기':>9}{'중복':>6}  판단")
     for k, v in sorted(rows.items(), key=lambda kv: -len(kv[1])):
         lens = sorted(x["chars"] for x in v)
         med, q1 = lens[len(lens) // 2], lens[len(lens) // 4]
         thin = [x for x in v if x["chars"] < THIN]
-        # 얇은 것 중 자료도 없는 것 — 진짜 빈 껍데기. 렌더하면 보이는 것과 다르다.
-        empty = sum(1 for x in thin if x["data"] == 0)
+        # ⚠️ '자료 0'만으로 빈 껍데기라 부르면 틀린다. 정당 페이지는 애초에 JSON을
+        # 안 싣는데 145쪽이 전부 자료 0이라, 짧은 18쪽이 '빈 껍데기'로 찍혔다.
+        # 그 18쪽엔 각자 다른 역사적 사실이 있었다(중복 0) — 짧은 이유는 그 정당의
+        # 역사가 짧기 때문이고, 실을 게 없어서가 아니다.
+        #
+        # 그래서 **고유 텍스트**를 본다: 같은 템플릿 안에서 모두가 공유하는 앞뒤
+        # (nav·푸터·안내문)를 빼고 남는 길이. 그게 0에 가까울 때만 빈 껍데기다.
+        uniq = _unique_len(v)
+        empty = sum(1 for x in thin if uniq.get(x["path"], x["chars"]) < 40)
         dup = len(v) - len({x["hash"] for x in v})
         note = []
         if len(thin) > len(v) * 0.4:
@@ -117,16 +149,19 @@ def main(argv: list) -> int:
             note.append(f"빈 껍데기 {empty}")
         if dup > len(v) * 0.3:
             note.append(f"본문 중복 {dup}")
-        print(f"{k:10}{len(v):6}{med:7}{q1:8}{len(thin):8}{empty:10}{dup:6}  "
+        print(f"{k:10}{len(v):6}{med:7}{q1:8}{len(thin):8}{empty:9}{dup:6}  "
               + (" · ".join(note) or "—"))
     if want and want in rows:
         print(f"\n[{want}] 가장 얇은 20개")
+        u = _unique_len(rows[want])
         for x in sorted(rows[want], key=lambda r: r["chars"])[:20]:
-            print(f"  {x['chars']:5}자 자료{x['data']:6} 링크{x['links']:3}  {x['path']}")
+            print(f"  {x['chars']:5}자(고유 {u.get(x['path'], 0):4}) 자료{x['data']:6} "
+                  f"링크{x['links']:3}  {x['path']}")
     print("\n얇거나 중복인 템플릿은 셋 중 하나를 골라야 한다 — "
           "내용을 더 싣기 / 상위로 canonical / noindex.")
-    print("'그중 자료0'이 진짜 빈 껍데기다. 자료가 있는 얇은 페이지는 "
-          "'실을 게 없다'가 아니라 '렌더가 필요하다'는 뜻이다.")
+    print("'빈 껍데기'는 **고유 텍스트**(템플릿 공통 앞뒤를 뺀 나머지)가 40자 미만인 "
+          "것이다. 짧다고 다 빈 게 아니다 — 정당 18쪽은 짧지만 각자 다른 사실을 "
+          "갖고 있고 중복이 0이다. 그 정당의 역사가 짧은 것이지 실을 게 없는 게 아니다.")
     return 0
 
 
