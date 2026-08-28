@@ -154,6 +154,94 @@ def check_person_index_noindex() -> None:
            "noindex" not in hub.read_text(encoding="utf-8"))
 
 
+def check_election_triangle() -> None:
+    """한 선거의 세 URL이 서로를 아는가.
+
+    한 선거가 셋으로 나뉘어 있다 — archive(개요) · history(지역별 전체 표) ·
+    polls(여론조사 vs 실제). 나눈 건 의도지만, 서로 모르면 그냥 파편이다.
+
+    2026-08-28 실측: **history → polls 링크가 0개**였다. 회차의 가장 자세한 표를
+    보던 사람이 '이 선거 조사는 얼마나 맞았나'로 갈 문이 없었다. 대선 archive 3쪽은
+    history로 나가는 문도 없었다(총선·지선은 직위별 표가 걸어 준다).
+    """
+    import json as _j
+    from urllib.parse import urljoin
+    idx = ROOT / "data/polls/election_index.json"
+    if not idx.is_file():
+        return
+    def outs(path):
+        f = ROOT / path.strip("/") / "index.html"
+        if not f.is_file():
+            return None
+        txt = f.read_text(encoding="utf-8")
+        m = re.search(r'<base\s+href="([^"]*)"', txt)
+        base = m.group(1) if m else path
+        txt = re.sub(r"<script.*?</script>", "", txt, flags=re.S)   # 정적만
+        return {unquote(urljoin(base, h).split("#")[0].split("?")[0])
+                for h in re.findall(r'href="([^"]+)"', txt)}
+    def hist_paths(kind, n):
+        if kind == "local":
+            return [f"/history/local/{n}/{o}/"
+                    for o in ("governor", "mayor", "superintendent")]
+        if kind == "presidential":
+            return [f"/history/presidential/{n}/"]
+        return [f"/history/national-assembly/{n}/"]
+    bad = []
+    for e in _j.loads(idx.read_text(encoding="utf-8")):
+        s = e["slug"]
+        try:
+            m = _j.loads((ROOT / f"data/elections/{s}.json").read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        hp = [h for h in hist_paths(m["kind"], m["n"])
+              if (ROOT / h.strip("/") / "index.html").is_file()]
+        la, lp = outs(f"/archive/{s}/"), outs(f"/polls/{s}/")
+        if la is not None and hp and not any(h in la for h in hp):
+            bad.append(f"{s}: archive→history 없음")
+        if la is not None and f"/polls/{s}/" not in la:
+            bad.append(f"{s}: archive→polls 없음")
+        if lp is not None and f"/archive/{s}/" not in lp:
+            bad.append(f"{s}: polls→archive 없음")
+        for h in hp:
+            lh = outs(h)
+            if lh is None:
+                continue
+            if f"/archive/{s}/" not in lh:
+                bad.append(f"{h}: →archive 없음")
+            if f"/polls/{s}/" not in lh:
+                bad.append(f"{h}: →polls 없음")
+    ck(f"선거 9회차의 archive·history·polls가 서로를 건다", not bad,
+       f"{len(bad)}건 — {bad[:3]}")
+
+
+def check_byelection_hub() -> None:
+    """/byelection/ 허브가 재보궐 회차를 **정적으로** 열거하는가.
+
+    막는 사고: 결과가 있는 선거가 사이트 어느 목록에도 없는 것. 2026 재보궐
+    (2026-06-03·국회의원 14곳·확정)이 그랬다 — elections.html은 재보궐을 일부러
+    빼고, 허브는 손관리 캘린더를 JS로 그리는데 거기 2026이 없었다.
+    """
+    hub = ROOT / "byelection" / "index.html"
+    if not hub.is_file():
+        return
+    html = re.sub(r"<script.*?</script>", "", hub.read_text(encoding="utf-8"), flags=re.S)
+    linked = {unquote(h) for h in re.findall(r'href="(/archive/[^"]+)"', html)}
+    import json as _j
+    want = set()
+    for f in (ROOT / "data/elections").glob("*.json"):
+        if f.name == "index.json":
+            continue
+        try:
+            m = _j.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        pg = (m.get("archive") or {}).get("page")
+        if m.get("kind") == "byelection" and pg:
+            want.add(pg)
+    missing = sorted(want - linked)
+    ck(f"재보궐 허브가 {len(want)}회차를 정적으로 연다", not missing, str(missing[:3]))
+
+
 def check_history_island() -> None:
     """/history/ 프리렌더가 **바깥에서** 링크되는가.
 
@@ -284,6 +372,8 @@ def main():
     check_logo_home()
     check_history_island()
     check_no_orphans()
+    check_election_triangle()
+    check_byelection_hub()
     check_person_index_noindex()
     check_hub_enumerates()
 

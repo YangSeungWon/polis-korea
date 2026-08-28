@@ -31,6 +31,8 @@ INDEX_HTML = ROOT / "index.html"
 AR_LIST_START = "<!-- AR_LIST_START"
 AR_LIST_END = "<!-- AR_LIST_END -->"
 AR_RECENT_START = "<!-- AR_RECENT_START"
+BX_LIST_START = "<!-- BX_LIST_START"
+BX_LIST_END = "<!-- BX_LIST_END -->"
 AR_RECENT_END = "<!-- AR_RECENT_END -->"
 AR_RECENT_N = 6   # 홈은 최근 몇 개만 — 전체는 /elections.html 허브가 링크한다.
 
@@ -147,10 +149,17 @@ def derive(meta: dict) -> dict:
     date_label = kday(meta["date"])
     if context:
         date_label += f" · {context}"
+    # 재보궐은 **연도로 부른다**('2025년 재보궐'). n이 연도인 회차가 대부분인데,
+    # 지선과 같은 날 치른 2026 재보궐만 n=9(지선 회차)라 '9년 재보궐'이 됐다.
+    # n의 다른 용도(nec sg_id·roster 공유)를 건드리지 않으려고 날짜에서 뽑는다.
+    bye_label = (str(meta.get("date") or "")[:4] or str(meta["n"])) if kind == "byelection" \
+        else f'{meta["n"]}{km["n_unit"]}'
+    if kind == "byelection":
+        bye_label += "년"
     # breadcrumb — 재보궐은 역대(history/timeline)에 없으니 '재·보궐'로, 나머지는 타임라인·역대 선거.
     if kind == "byelection":
         breadcrumb = (f'<a href="/byelection/">재·보궐</a> · '
-                      f'<span>{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브</span>')
+                      f'<span>{bye_label} {km["short"]} 아카이브</span>')
     else:
         breadcrumb = (f'<a href="/timeline.html">역대 판세</a> · '
                       f'<a href="/history.html?type={km["history_type"]}&n={meta["n"]}">역대 선거</a> · '
@@ -161,7 +170,7 @@ def derive(meta: dict) -> dict:
                 else "https://polis.ysw.kr/og.png")
     # 화면 breadcrumb과 같은 경로를 기계가 읽을 수 있게 — 검색 결과에 URL 대신 경로가 뜬다.
     if kind == "byelection":
-        trail = [("재·보궐", "/byelection/"), (f'{meta["n"]}{km["n_unit"]} {km["short"]} 아카이브', None)]
+        trail = [("재·보궐", "/byelection/"), (f'{bye_label} {km["short"]} 아카이브', None)]
     else:
         trail = [("역대 판세", "/timeline.html"),
                  ("역대 선거", f'/history.html?type={km["history_type"]}&n={meta["n"]}'),
@@ -175,9 +184,18 @@ def derive(meta: dict) -> dict:
     # 회차별 여론조사 페이지(/polls/{id}/)가 있으면 링크. 이 9개는 sitemap에만 있고
     # 사이트 어디서도 링크하지 않아 검색엔진으로만 도달 가능한 고아였다(page-map gap-2).
     polls_page = ROOT / "polls" / meta["id"] / "index.html"
-    polls_link = (f'<p class="ar-source-line"><a href="/polls/{meta["id"]}/">'
-                  f'{meta["n"]}{km["n_unit"]} {km["short"]} 여론조사 vs 실제 — 조사별 정확도 비교</a></p>'
-                  if polls_page.exists() else "")
+    links = []
+    # 회차 상세(history)로 나가는 문. 총선·지선은 직위별 표 안에서 이미 걸리지만
+    # 대선은 그 표가 없다 — 3쪽이 history로 못 나갔다.
+    hist = HIST_PATH.get(kind)
+    if hist and meta.get("n") is not None and (ROOT / hist.format(n=meta["n"]).strip("/") /
+                                               "index.html").exists():
+        links.append(f'<a href="{hist.format(n=meta["n"])}">'
+                     f'{meta["n"]}{km["n_unit"]} {km["short"]} 회차 상세 — 지역별 전체 표</a>')
+    if polls_page.exists():
+        links.append(f'<a href="/polls/{meta["id"]}/">'
+                     f'{meta["n"]}{km["n_unit"]} {km["short"]} 여론조사 vs 실제 — 조사별 정확도 비교</a>')
+    polls_link = "".join(f'<p class="ar-source-line">{a}</p>' for a in links)
     return {
         "polls_link": polls_link,
         "breadcrumb_ld": ('<script type="application/ld+json">'
@@ -1067,6 +1085,9 @@ def region_table(eid: str, kind: str) -> str:
 # archive가 "그 선거 전체"를 말하려면 직위 하나로는 부족하다. 지선은 4직위가 한날
 # 치러지고, 대선은 후보가 여럿이고, 총선은 지역구와 비례가 따로다. 지역별 상세는
 # history가 갖되(중복 금지), **무엇이 어떻게 끝났는지**는 여기가 전부 적는다.
+# 회차 상세 경로 — 대선만 여기서 링크한다(총선·지선은 직위별 표가 이미 건다).
+HIST_PATH = {"presidential": "/history/presidential/{n}/"}
+
 OFFICE_SPECS = {
     "local": [("3", "sido", "광역단체장", "/history/local/{n}/governor/"),
               ("4", "sigungu", "기초단체장", "/history/local/{n}/mayor/"),
@@ -1075,6 +1096,9 @@ OFFICE_SPECS = {
               ("6", "district", "기초의원", None)],
     "general_election": [("2", "district", "지역구", "/history/national-assembly/{n}/"),
                          ("7", "sido", "비례대표", None)],
+    # ⚠️ 대선은 여기 없다. 전국 1행이라 '직위별 집계' 표로는 '대통령 1곳'이 되어
+    # 표가 아무 말도 안 한다. 대선 archive → history 링크는 아래 polls_link 자리에서
+    # 함께 낸다(2026-08-28에 대선 3쪽만 history로 나가는 문이 없던 것을 그렇게 고쳤다).
     "byelection": [],
 }
 
@@ -1482,6 +1506,41 @@ def sync_recent_html(metas: list[dict], check: bool) -> bool:
     return True
 
 
+def sync_byelection_hub(metas: list[dict], check: bool) -> bool:
+    """/byelection/ 허브가 재보궐 회차를 **정적으로** 열거하게 한다.
+
+    막는 사고: 회차가 목록 어디에도 없는 것. 2026 재보궐(2026-06-03, 국회의원 14곳,
+    결과 확정)이 그랬다 — elections.html은 재보궐을 일부러 빼고(전용 허브가 있으니),
+    허브는 손관리 캘린더(data/byelection_calendar.json)를 JS로 그리는데 그 파일에
+    2026이 없었다. 그래서 결과가 있는 선거가 사이트 어느 목록에도 없었다.
+
+    정본은 archive 페이지가 실재하는 회차다 — 캘린더가 아니라. 캘린더는 1991년까지
+    거슬러 가지만 결과가 없는 회차도 담고 있어 '목록'과 '있는 것'이 다르다.
+    """
+    src = ROOT / "byelection" / "index.html"
+    if not src.exists():
+        return False
+    html = src.read_text(encoding="utf-8")
+    si, ei = html.find(BX_LIST_START), html.find(BX_LIST_END)
+    if si < 0 or ei < 0:
+        print("  ! byelection/index.html에 BX_LIST 마커 없음 — 스킵", file=sys.stderr)
+        return False
+    rows = sorted((m for m in metas if m.get("kind") == "byelection"
+                   and (m.get("archive") or {}).get("page")),
+                  key=lambda m: m["date"], reverse=True)
+    items = "".join(
+        f'<li><a href="{(m["archive"] or {})["page"]}">{_esc(m["name"])}</a> '
+        f'<span>{m["date"]}</span></li>' for m in rows)
+    block = f'    <ul class="bx-list-fallback">{items}</ul>\n    '
+    start_end = html.find("\n", html.find("-->", si)) + 1
+    new_html = html[:start_end] + block + html[ei:]
+    if new_html == html:
+        return False
+    if not check:
+        src.write_text(new_html, encoding="utf-8")
+    return True
+
+
 def sync_index_html(metas: list[dict], check: bool, target: Path = None) -> bool:
     """AR_LIST 마커 사이 회차 목록 갱신. 변경 여부 반환.
 
@@ -1639,6 +1698,10 @@ def main():
             print(("~" if args.check else "OK") + " index.html (최근 선거)")
         if sync_index_html(archive_metas, args.check):
             print(("~" if args.check else "OK") + " index.html (회차 아카이브 목록)")
+        # 재보궐은 elections.html 목록에서 일부러 빼므로(전용 허브가 있다) 허브가
+        # 열거하지 않으면 어느 목록에도 없게 된다 — 2026 재보궐이 그랬다.
+        if sync_byelection_hub(all_metas, args.check):
+            print(("~" if args.check else "OK") + " byelection/ (회차 목록)")
 
     print(f"\n변경 {n_changed} · 동일 {n_unchanged} · 스킵 {n_skipped}")
 

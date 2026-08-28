@@ -830,6 +830,40 @@ def intro_block(h1: str, lede: str, extra: str = '') -> str:
 # 네 번째 표를 만들지 않으려고.
 
 
+_POLL_SLUGS: set | None = None
+
+
+def has_poll_page(slug: str) -> bool:
+    """그 회차에 /polls/{slug}/ 가 있는가."""
+    global _POLL_SLUGS
+    if _POLL_SLUGS is None:
+        f = ROOT / 'data' / 'polls' / 'election_index.json'
+        try:
+            _POLL_SLUGS = {e['slug'] for e in json.loads(f.read_text(encoding='utf-8'))}
+        except Exception:                                        # noqa: BLE001
+            _POLL_SLUGS = set()
+    return slug in _POLL_SLUGS
+
+
+def round_links(slug: str | None) -> str:
+    """회차 페이지에서 나가는 길 — 아카이브와 여론조사.
+
+    한 선거가 세 URL에 나뉘어 있는데(개요=archive · 전체 표=history · 조사=polls)
+    2026-08-28 실측에서 **history → polls 링크가 0개**였다. 회차의 가장 자세한 표를
+    보던 사람이 '이 선거 여론조사는 얼마나 맞았나'로 갈 문이 없었다.
+
+    id를 붙여 둔다 — 사용자가 회차를 바꾸면 JS가 갱신한다.
+    """
+    if not slug:
+        return ''
+    out = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
+           f'<a href="/archive/{slug}/">이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n')
+    if has_poll_page(slug):
+        out += ('    <p class="lede hx-poll-link" id="hx-poll-link">'
+                f'<a href="/polls/{slug}/">이 회차 여론조사 vs 실제 — 조사가 얼마나 맞았나</a></p>\n')
+    return out
+
+
 def round_figures(slug: str, off_slug: str, title: str) -> str:
     if not slug:
         return ''
@@ -980,9 +1014,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                         bits.append(f'투표율 {turnout}%')
                     slug = slugs.get((type_key, n))
                     # 정적 링크를 남기되 id를 붙여, 사용자가 회차를 바꾸면 JS가 갱신한다.
-                    extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
-                             '<a href="/archive/' + slug + '/">'
-                             f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
+                    extra = round_links(slug)
                     intro = (intro_block(f'{n}회 {type_short} {office_ko}',
                                          _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
                              + round_figures(slug, off_slug, f'{n}회 {type_short} {office_ko}')
@@ -1026,9 +1058,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 if meta.get('note'):
                     bits.append(str(meta['note']))
                 slug = slugs.get((type_key, n))
-                extra = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
-                         '<a href="/archive/' + slug + '/">'
-                         f'이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n') if slug else ''
+                extra = round_links(slug)
                 intro = (intro_block(f'{n}{unit} {type_short}',
                                      _esc(' · '.join(bits)), extra)
                          + round_figures(slug, '', f'{n}{unit} {type_short}')
