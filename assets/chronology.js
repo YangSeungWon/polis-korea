@@ -54,6 +54,10 @@ function mdOf(d) {
   $('#loading').hidden = true;
   const root = $('#chrono');
   root.hidden = false;
+  // 정적 시드를 비우고 다시 그린다. 예전엔 append만 해서, 크롤러용 시드를 넣자
+  // 화면에 연표가 **두 번** 나왔다(본문 2,719 → 4,556자). 렌더러가 멱등해야
+  // 시드를 심을 수 있다.
+  root.innerHTML = '';
 
   let di = 0;
   const emitDividers = (upto) => {

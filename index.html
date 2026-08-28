@@ -97,20 +97,29 @@
   </section>
   <section class="status-overview-v2" id="status-overview" hidden>
     <div class="status-timeline-strip" id="status-timeline-strip"></div>
-    <div class="status-cards-row">
-      <a class="status-card" data-slot="president" href="history.html?type=presidential">
-        <div class="status-label">대통령 · 대선</div>
-        <div class="status-value" id="status-pres-name">—</div>
-        <div class="status-meta" id="status-pres-meta">—</div>
+    <div class="status-cards-row" data-map-host="status" data-map-self="1"
+         aria-label="지금 대통령·국회·지방정부">
+      <!-- STATUS_STATIC_START — scripts/build/sync_home_status.py 자동 갱신. 손수정 X.
+         assets/status.js가 로드되면 같은 자리를 더 풍부하게 갈아끼운다.
+         JS 없이도(그리고 크롤러가 렌더하기 전에도) 세 자리의 사실이
+         HTML에 남게 하는 것이 목적. 잔여 임기는 안 적는다 — 매일 변한다. -->
+      <a class="status-card" data-slot="president" href="/archive/21st-pres-2025/">
+        <div class="status-label">대통령 · 대선</div><div class="card-heading"><span class="card-heading-n">21대 대선</span><span class="card-heading-date">2025-06-03</span></div>
+        <div class="status-value" id="status-pres-name">이재명 <b>더불어민주당</b><br>이재명 49.4% · 김문수 41.1% · 이준석 8.3%</div>
+        <div class="status-meta" id="status-pres-meta">임기 5년 · 2030-06까지</div>
       </a>
-      <a class="status-card" data-slot="assembly" href="history.html?type=national_assembly">
-        <div class="status-label">국회 · 총선</div>
-        <div class="status-value" id="status-asm-top">—</div>
-        <div class="status-meta" id="status-asm-meta">—</div>
+      <a class="status-card" data-slot="assembly" href="/archive/22nd-general-2024/">
+        <div class="status-label">국회 · 총선</div><div class="card-heading"><span class="card-heading-n">22대 총선</span><span class="card-heading-date">2024-04-10</span></div>
+        <div class="status-value" id="status-asm-top">더불어민주당 <b>161</b>석 · 국민의힘 <b>108</b>석 · 더불어민주연합 <b>14</b>석 · 조국혁신당 <b>12</b>석 · 개혁신당 <b>3</b>석</div>
+        <div class="status-meta" id="status-asm-meta">300석 · 임기 4년 · 2028-04까지</div>
       </a>
-      <a class="status-card" data-slot="local" href="history.html?type=local">
-        <div class="status-label">지방정부 · 지선</div>
-        <div class="status-value" id="status-local-name">—</div>
+      <a class="status-card" data-slot="local" href="/archive/9th-local-2026/">
+        <div class="status-label">지방정부 · 지선</div><div class="card-heading"><span class="card-heading-n">9회 지선</span><span class="card-heading-date">2026-06-03</span></div>
+        <div class="status-value" id="status-local-name">광역단체장 더불어민주당 <b>12</b>곳 · 국민의힘 <b>4</b>곳</div>
+        <div class="status-meta" id="status-local-meta">16개 시·도 · 임기 4년 · 2030-06까지</div>
+      </a>
+      <!-- STATUS_STATIC_END -->
+    </div>
         <div class="status-meta" id="status-local-meta">—</div>
       </a>
     </div>
@@ -243,7 +252,7 @@
 <!-- STATIC_FIG_START — scripts/build/sync_static_figures.py 자동 갱신. 손수정 X. -->
   <section class="ar-section" id="static-figs">
     <h2 class="ar-section-title">최근 회차 판세</h2>
-    <div class="map-fig-grid"><figure class="map-fig" id="dashgov"><img src="/og/static/home/dashgov.png" alt="광역단체장 판세" width="384" height="301" loading="lazy" decoding="async"><figcaption>광역단체장 판세</figcaption></figure><figure class="map-fig" id="dashmayor"><img src="/og/static/home/dashmayor.png" alt="기초단체장 판세" width="446" height="301" loading="lazy" decoding="async"><figcaption>기초단체장 판세</figcaption></figure></div>
+    <div class="map-fig-grid"><figure class="map-fig" id="status"><img src="/og/static/home/status.png" alt="지금 대통령·국회·지방정부" width="1272" height="469" loading="lazy" decoding="async"><figcaption>지금 대통령·국회·지방정부</figcaption></figure><figure class="map-fig" id="dashgov"><img src="/og/static/home/dashgov.png" alt="광역단체장 판세" width="384" height="301" loading="lazy" decoding="async"><figcaption>광역단체장 판세</figcaption></figure><figure class="map-fig" id="dashmayor"><img src="/og/static/home/dashmayor.png" alt="기초단체장 판세" width="446" height="301" loading="lazy" decoding="async"><figcaption>기초단체장 판세</figcaption></figure></div>
   </section>
   <!-- STATIC_FIG_END -->
 </main>

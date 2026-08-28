@@ -61,6 +61,8 @@ DERIVED=(
   "scripts/build/sync_satellites_js.py"               # assets/parties.js ← satellites.json
   "scripts/build/sync_view_thumbs_js.py"              # election-timeline.js ← view_registry.json
   "scripts/build/sync_static_figures.py"             # tracker·parties·홈·재보궐 그림 ← og/static/
+  "scripts/build/sync_home_status.py"                # 홈 상단 3칸 정적 시드 ← timeline.json
+  "scripts/build/sync_page_seeds.py"                 # 연표·재보궐 정적 시드
   "scripts/normalize/validate_reaggregation.py 22 21" # reaggregated/validation_22__21.json
   "scripts/normalize/validate_reaggregation.py 21 20" # reaggregated/validation_21__20.json
 )

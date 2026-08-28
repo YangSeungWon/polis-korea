@@ -535,6 +535,10 @@ def main():
                 #   캡처 안 됨). 제목·날짜는 카드 헤드라인(HTML)이 따로 표시.
                 pg.add_style_tag(content=(
                     ".ar-sido-toggle,.sgg-mode-toggle,.view-toggle{opacity:0!important}"
+                    # 홈 카드의 '잔여 3년 9개월'은 **오늘 기준이라 매일 변한다.**
+                    # 그림에 박히면 하루 만에 거짓이 된다 — 안 변하는 사실(선거일·
+                    # 임기 종료)은 카드 헤딩에 이미 있으므로 이 줄만 뺀다.
+                    ".status-card .status-meta{visibility:hidden!important}"
                     # 2026-08까지는 여기서 svg text를 전부 숨겼다. 근거는 "썸네일·카드서
                     # 안 읽히는 잡음"이었고 48px 썸네일 기준으론 맞다. 그런데 같은 PNG를
                     # 본문 그림으로 쓰기 시작하면 반대가 된다 — 지역명·후보명·득표율이

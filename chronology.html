@@ -63,7 +63,90 @@
 
   <section class="chrono-viz">
     <div id="loading" class="loading-overlay"><span class="spin"></span> 데이터 불러오는 중…</div>
-    <div id="chrono" class="chrono" hidden></div>
+    <div id="chrono" class="chrono">
+    <!-- CHRONO_SEED_START — scripts/build/sync_page_seeds.py 자동 갱신. 손수정 X.
+         chronology.js가 로드되면 같은 자리를 연표로 갈아끼운다. JS 없이도 선거·사건이 HTML에 남게 하는 것이 목적. -->
+    <ol class="cx-seed">
+      <li><span class="cx-d">2026-06-03</span> <a href="/archive/9th-local-2026/">9회 지선</a></li>
+      <li><span class="cx-d">2025-06-03</span> <a href="/archive/21st-pres-2025/">21대 대선</a> <span class="cx-w">이재명 · 더불어민주당</span></li>
+      <li><span class="cx-d">2025-04-04</span> 윤석열 대통령 파면 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2024-12-14</span> 윤석열 대통령 탄핵소추 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2024-12-03</span> 비상계엄 선포·해제 <span class="cx-t">정변</span></li>
+      <li><span class="cx-d">2024-04-10</span> <a href="/archive/22nd-general-2024/">22대 총선</a></li>
+      <li><span class="cx-d">2022-06-01</span> <a href="/archive/8th-local-2022/">8회 지선</a></li>
+      <li><span class="cx-d">2022-03-09</span> <a href="/archive/20th-pres-2022/">20대 대선</a> <span class="cx-w">윤석열 · 국민의힘</span></li>
+      <li><span class="cx-d">2020-04-15</span> <a href="/archive/21st-general-2020/">21대 총선</a></li>
+      <li><span class="cx-d">2018-06-13</span> <a href="/archive/7th-local-2018/">7회 지선</a></li>
+      <li><span class="cx-d">2017-05-09</span> <a href="/archive/19th-pres-2017/">19대 대선</a> <span class="cx-w">문재인 · 더불어민주당</span></li>
+      <li><span class="cx-d">2017-03-10</span> 박근혜 대통령 파면 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2016-12-09</span> 박근혜 대통령 탄핵소추 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2016-04-13</span> <a href="/archive/20th-general-2016/">20대 총선</a></li>
+      <li><span class="cx-d">2014-06-04</span> <a href="/archive/6th-local-2014/">6회 지선</a></li>
+      <li><span class="cx-d">2012-12-19</span> <a href="/archive/18th-pres-2012/">18대 대선</a> <span class="cx-w">박근혜 · 새누리당</span></li>
+      <li><span class="cx-d">2012-04-11</span> <a href="/archive/19th-general-2012/">19대 총선</a></li>
+      <li><span class="cx-d">2010-06-02</span> <a href="/archive/5th-local-2010/">5회 지선</a></li>
+      <li><span class="cx-d">2008-04-09</span> <a href="/archive/18th-general-2008/">18대 총선</a></li>
+      <li><span class="cx-d">2007-12-19</span> <a href="/archive/17th-pres-2007/">17대 대선</a> <span class="cx-w">이명박 · 한나라당</span></li>
+      <li><span class="cx-d">2006-05-31</span> <a href="/archive/4th-local-2006/">4회 지선</a></li>
+      <li><span class="cx-d">2004-05-14</span> 노무현 대통령 탄핵 기각 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2004-04-15</span> <a href="/archive/17th-general-2004/">17대 총선</a></li>
+      <li><span class="cx-d">2004-03-12</span> 노무현 대통령 탄핵소추 <span class="cx-t">탄핵</span></li>
+      <li><span class="cx-d">2002-12-19</span> <a href="/archive/16th-pres-2002/">16대 대선</a> <span class="cx-w">노무현 · 새천년민주당</span></li>
+      <li><span class="cx-d">2002-06-13</span> <a href="/archive/3rd-local-2002/">3회 지선</a></li>
+      <li><span class="cx-d">2000-04-13</span> <a href="/archive/16th-general-2000/">16대 총선</a></li>
+      <li><span class="cx-d">1998-06-04</span> <a href="/archive/2nd-local-1998/">2회 지선</a></li>
+      <li><span class="cx-d">1997-12-18</span> <a href="/archive/15th-pres-1997/">15대 대선</a> <span class="cx-w">김대중 · 새정치국민회의</span></li>
+      <li><span class="cx-d">1997-11-21</span> IMF 외환위기 <span class="cx-t">경제</span></li>
+      <li><span class="cx-d">1996-04-11</span> <a href="/archive/15th-general-1996/">15대 총선</a></li>
+      <li><span class="cx-d">1995-06-27</span> <a href="/archive/1st-local-1995/">1회 지선</a></li>
+      <li><span class="cx-d">1992-12-18</span> <a href="/archive/14th-pres-1992/">14대 대선</a> <span class="cx-w">김영삼 · 민주자유당</span></li>
+      <li><span class="cx-d">1992-03-24</span> <a href="/archive/14th-general-1992/">14대 총선</a></li>
+      <li><span class="cx-d">1988-04-26</span> <a href="/archive/13th-general-1988/">13대 총선</a></li>
+      <li><span class="cx-d">1987-12-16</span> <a href="/archive/13th-pres-1987/">13대 대선</a> <span class="cx-w">노태우 · 민주정의당</span></li>
+      <li><span class="cx-d">1987-06-29</span> 6·29 선언 <span class="cx-t">항쟁</span></li>
+      <li><span class="cx-d">1987-06-10</span> 6월 민주항쟁 <span class="cx-t">항쟁</span></li>
+      <li><span class="cx-d">1985-02-12</span> <a href="/archive/12th-general-1985/">12대 총선</a></li>
+      <li><span class="cx-d">1981-03-25</span> <a href="/archive/11th-general-1981/">11대 총선</a></li>
+      <li><span class="cx-d">1981-02-25</span> <a href="/archive/12th-pres-1981/">12대 대선</a> <span class="cx-w">전두환 · 민주정의당</span></li>
+      <li><span class="cx-d">1980-08-27</span> <a href="/archive/11th-pres-1980/">11대 대선</a> <span class="cx-w">전두환 · 민주정의당</span></li>
+      <li><span class="cx-d">1980-05-18</span> 5·18 광주민주화운동 <span class="cx-t">항쟁</span></li>
+      <li><span class="cx-d">1979-12-12</span> 12·12 군사반란 <span class="cx-t">정변</span></li>
+      <li><span class="cx-d">1979-12-06</span> <a href="/archive/10th-pres-1979/">10대 대선</a> <span class="cx-w">최규하 · 무소속</span></li>
+      <li><span class="cx-d">1979-10-26</span> 10·26 사건 <span class="cx-t">정변</span></li>
+      <li><span class="cx-d">1978-12-12</span> <a href="/archive/10th-general-1978/">10대 총선</a></li>
+      <li><span class="cx-d">1978-07-06</span> <a href="/archive/9th-pres-1978/">9대 대선</a> <span class="cx-w">박정희 · 민주공화당</span></li>
+      <li><span class="cx-d">1973-02-27</span> <a href="/archive/9th-general-1973/">9대 총선</a></li>
+      <li><span class="cx-d">1972-12-23</span> <a href="/archive/8th-pres-1972/">8대 대선</a> <span class="cx-w">박정희 · 민주공화당</span></li>
+      <li><span class="cx-d">1972-10-17</span> 10월 유신 <span class="cx-t">정변</span></li>
+      <li><span class="cx-d">1971-05-25</span> <a href="/archive/8th-general-1971/">8대 총선</a> <span class="cx-w">민주공화당</span></li>
+      <li><span class="cx-d">1971-04-27</span> <a href="/archive/7th-pres-1971/">7대 대선</a> <span class="cx-w">박정희 · 민주공화당</span></li>
+      <li><span class="cx-d">1969-10-21</span> 3선 개헌 (6차) <span class="cx-t">개헌</span></li>
+      <li><span class="cx-d">1967-06-08</span> <a href="/archive/7th-general-1967/">7대 총선</a> <span class="cx-w">민주공화당</span></li>
+      <li><span class="cx-d">1967-05-03</span> <a href="/archive/6th-pres-1967/">6대 대선</a> <span class="cx-w">박정희 · 민주공화당</span></li>
+      <li><span class="cx-d">1963-11-26</span> <a href="/archive/6th-general-1963/">6대 총선</a> <span class="cx-w">민주공화당</span></li>
+      <li><span class="cx-d">1963-10-15</span> <a href="/archive/5th-pres-1963/">5대 대선</a> <span class="cx-w">박정희 · 민주공화당</span></li>
+      <li><span class="cx-d">1961-05-16</span> 5·16 군사정변 <span class="cx-t">정변</span></li>
+      <li><span class="cx-d">1960-08-12</span> <a href="/archive/4th-pres-1960/">4대 대선</a> <span class="cx-w">윤보선 · 민주당(1955)</span></li>
+      <li><span class="cx-d">1960-07-29</span> <a href="/archive/5th-general-1960/">5대 총선</a> <span class="cx-w">민주당(1955)</span></li>
+      <li><span class="cx-d">1960-04-19</span> 4·19 혁명 <span class="cx-t">항쟁</span></li>
+      <li><span class="cx-d">1960-03-15</span> <a href="/archive/4th-pres-1960/">4대 대선</a> <span class="cx-w">이승만 · 자유당</span></li>
+      <li><span class="cx-d">1958-05-02</span> <a href="/archive/4th-general-1958/">4대 총선</a> <span class="cx-w">자유당</span></li>
+      <li><span class="cx-d">1956-05-15</span> <a href="/archive/3rd-pres-1956/">3대 대선</a> <span class="cx-w">이승만 · 자유당</span></li>
+      <li><span class="cx-d">1954-11-29</span> 사사오입 개헌 (2차 · 중임제한 철폐) <span class="cx-t">개헌</span></li>
+      <li><span class="cx-d">1954-05-20</span> <a href="/archive/3rd-general-1954/">3대 총선</a> <span class="cx-w">자유당</span></li>
+      <li><span class="cx-d">1953-07-27</span> 정전협정 <span class="cx-t">전쟁</span></li>
+      <li><span class="cx-d">1952-08-05</span> <a href="/archive/2nd-pres-1952/">2대 대선</a> <span class="cx-w">이승만 · 자유당</span></li>
+      <li><span class="cx-d">1952-07-07</span> 발췌개헌 (1차 · 대통령 직선제) <span class="cx-t">개헌</span></li>
+      <li><span class="cx-d">1950-06-25</span> 6·25 한국전쟁 발발 <span class="cx-t">전쟁</span></li>
+      <li><span class="cx-d">1950-05-30</span> <a href="/archive/2nd-general-1950/">2대 총선</a> <span class="cx-w">무소속</span></li>
+      <li><span class="cx-d">1948-07-20</span> <a href="/archive/1st-pres-1948/">1대 대선</a> <span class="cx-w">이승만 · 대한독립촉성국민회</span></li>
+      <li><span class="cx-d">1948-07-17</span> 제헌헌법 공포 <span class="cx-t">개헌</span></li>
+      <li><span class="cx-d">1948-05-10</span> <a href="/archive/1st-general-1948/">1대 총선</a> <span class="cx-w">무소속</span></li>
+      <li><span class="cx-d">1945-08-15</span> 광복 <span class="cx-t">국가</span></li>
+      <li><span class="cx-d">1919-04-11</span> 대한민국 임시정부 수립 <span class="cx-t">국가</span></li>
+    </ol>
+    <!-- CHRONO_SEED_END -->
+    </div>
   </section>
 
   <footer class="foot">
