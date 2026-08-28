@@ -150,6 +150,24 @@ def _region_slug(sido: str, sigungu: str) -> str:
 OFFICE_MAP_HOST = {'광역단체장': 'pollgov', '기초단체장': 'pollmayor'}
 
 
+def office_siblings(office_ko: str) -> str:
+    """직위 네 쪽이 서로를 건다.
+
+    막는 사고: /superintendent/(교육감)와 /party/(정당지지)가 **어느 정적 페이지에서도
+    링크되지 않았다**(2026-08-28 관측: sitemap 687쪽 중 인바운드 0인 것이 이 둘뿐).
+    홈 대시보드가 광역단체장·기초단체장만 패널로 걸어서, 나머지 둘은 sitemap에만
+    있었다 — 2026-07 미색인 사고의 '고아' 조합 그대로다.
+
+    형제끼리 잇는 게 가장 자연스럽다. 같은 선거의 다른 직위이고, 읽는 사람도 직위를
+    바꿔 가며 본다.
+    """
+    others = [(ko, slug) for ko, slug in OFFICE_SLUG.items() if ko != office_ko]
+    if not others:
+        return ''
+    li = ' · '.join(f'<a href="/{slug}/">{_esc(ko)}</a>' for ko, slug in others)
+    return (f'<p class="pe-static-links">다른 직위 — {li}</p>')
+
+
 def office_figures(office_ko: str) -> str:
     """직위 페이지의 지도 그림.
 
@@ -239,6 +257,7 @@ def office_static_block(office_ko: str) -> str:
         f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
         f'<ul class="pe-agency-list">{li}{more}</ul></details>'
         + office_figures(office_ko)
+        + office_siblings(office_ko)
         + f'<p class="pe-static-links"><a href="/archive/9th-local-2026/">'
         f'제9회 지방선거 아카이브 — 결과·여론조사·출구조사</a></p></section>'
     )

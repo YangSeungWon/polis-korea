@@ -52,6 +52,7 @@ MANIFEST = ROOT / "data/sitemap_lastmod.json"
 
 _LASTMOD_CACHE: dict | None = None
 _MAN: dict | None = None
+_TOUCHED: set = set()  # 이번 실행에서 lastmod_for가 본 경로 — 매니페스트 가지치기용
 _SEEDED = 0            # 매니페스트에 없어서 새로 심은 수
 _SEED_FROM_GIT = 0     # 그중 git 커밋일로 심은 수
 
@@ -131,6 +132,7 @@ def lastmod_for(url: str) -> str:
     except OSError:
         return TODAY
     rel = str(fp.relative_to(ROOT))
+    _TOUCHED.add(rel)
     m = manifest()
     prev = m.get(rel)
     if prev and prev.get("h") == h:
@@ -406,7 +408,11 @@ def main():
                   "나온다. git 커밋일을 쓰면 shallow clone·리베이스·대량 재빌드에 흔들려 "
                   "매일 4,980쪽이 '오늘'로 찍혔다 — 해시는 안 흔들린다."),
         "_fields": {"h": "index.html 내용 sha1 앞 12자", "d": "그 내용이 처음 나타난 날"},
-        "pages": dict(sorted(manifest().items())),
+        # sitemap에 **없는 페이지는 매니페스트에서 뺀다.** person 4,340쪽을 sitemap에서
+        # 걷어낸 뒤에도 옛 항목이 남아 있었고, 그 파일이 바뀌자 해시가 어긋나 검사가
+        # 빨개졌다 — '지금 sitemap에 있는 것의 기록'이라는 뜻이 흐려진 것이다.
+        # 되살리면(person 줄을 여는 등) 다음 실행이 다시 심는다.
+        "pages": dict(sorted((k, v) for k, v in manifest().items() if k in _TOUCHED)),
     }, ensure_ascii=False, indent=0) + "\n", encoding="utf-8")
 
     total = out.count("<loc>")

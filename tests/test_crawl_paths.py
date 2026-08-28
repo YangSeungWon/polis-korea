@@ -91,6 +91,69 @@ def check_hub_enumerates() -> None:
            f"{len(missing)}쪽 누락 — {missing[:3]}")
 
 
+def check_no_orphans() -> None:
+    """sitemap에 올린 URL이 **정적 HTML 어딘가에서** 링크되는가.
+
+    막는 사고: sitemap에만 있고 어디서도 안 걸리는 페이지. 2026-07 미색인 사고의
+    '고아' 조합이고, 2026-08-28에도 둘이 그랬다 — /superintendent/(교육감)와
+    /party/(정당지지). 홈 대시보드가 광역단체장·기초단체장만 패널로 걸어서 나머지
+    둘은 sitemap에만 있었다.
+
+    ⚠️ 링크를 셀 때 **두 가지를 놓치기 쉽다.** 재는 동안 실제로 둘 다 틀렸다:
+      · 퍼센트 인코딩 — href="/region/%EC%84%9C%EC%9A%B8.../"는 원시 한글로 안 잡힌다.
+      · 상대 경로 — 홈은 href="history.html"을 쓰고 <base href="/">가 루트로 만든다.
+    둘을 안 풀면 멀쩡한 페이지를 고아로 오판한다(그래서 두 번 오보를 냈다).
+    """
+    from urllib.parse import urljoin
+    inb: set = set()
+    for f in ROOT.rglob("*.html"):
+        rel = f.relative_to(ROOT)
+        if rel.parts[0] in {"node_modules", ".venv", "og", ".render"}:
+            continue
+        txt = f.read_text(encoding="utf-8", errors="replace")
+        src = unquote("/" + str(rel).replace("index.html", ""))
+        m = re.search(r'<base\s+href="([^"]*)"', txt)
+        base = m.group(1) if m else src
+        for h in re.findall(r'href="([^"]+)"', txt):
+            if h.startswith(("http", "mailto:", "#", "javascript:")):
+                continue
+            u = unquote(urljoin(base, h).split("#")[0].split("?")[0])
+            if u.startswith("/") and u != src:      # 자기 링크는 안 센다
+                inb.add(u)
+    want = set()
+    for sm in ROOT.glob("sitemap-*.xml"):
+        want |= {unquote(x) for x in re.findall(
+            r"<loc>https://polis\.ysw\.kr([^<]*)</loc>", sm.read_text(encoding="utf-8"))}
+    # 인물 4,340쪽은 sitemap_person.txt로 따로 들어가고 초성 갈래가 잇는다 — 여기선
+    # sitemap-*.xml에 오른 687쪽만 본다.
+    orphans = sorted(u for u in want if u not in inb)
+    ck(f"sitemap {len(want)}쪽이 전부 정적으로 링크됨", not orphans,
+       f"고아 {len(orphans)}쪽 — {orphans[:4]}")
+
+
+def check_person_index_noindex() -> None:
+    """초성 갈래가 색인 대상에서 빠져 있는가.
+
+    막는 사고: 크롤 예산이 person으로 쏠리는 것. 초성 14쪽이 person으로 가는 링크
+    8,746개 중 대부분을 만든다(한 쪽이 최대 1,209명). 2026-08 관측에서 구글이 크롤한
+    1,898쪽 중 1,880이 person이었고 색인된 것은 18쪽이었다.
+
+    follow는 남아 있어야 한다 — nofollow로 막으면 인물 페이지가 통째로 고아가 된다.
+    """
+    bad = []
+    for f in sorted(ROOT.glob("person/초성-*/index.html")):
+        m = re.search(r'<meta name="robots" content="([^"]*)"', f.read_text(encoding="utf-8"))
+        v = (m.group(1) if m else "").replace(" ", "")
+        if "noindex" not in v or "nofollow" in v:
+            bad.append(f"{f.parent.name}={v or '(없음)'}")
+    ck(f"초성 갈래 {len(list(ROOT.glob('person/초성-*')))}쪽이 noindex,follow", not bad,
+       str(bad[:3]))
+    hub = ROOT / "person" / "index.html"
+    if hub.is_file():
+        ck("/person/ 허브 자신은 색인 대상이다",
+           "noindex" not in hub.read_text(encoding="utf-8"))
+
+
 def check_history_island() -> None:
     """/history/ 프리렌더가 **바깥에서** 링크되는가.
 
@@ -220,6 +283,8 @@ def main():
 
     check_logo_home()
     check_history_island()
+    check_no_orphans()
+    check_person_index_noindex()
     check_hub_enumerates()
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")

@@ -369,7 +369,7 @@ HUB_TEMPLATE = '''<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://polis.ysw.kr/og.png">
 <link rel="canonical" href="{canon}">
-{jsonld}
+{robots}{jsonld}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
 <link rel="stylesheet" href="assets/components.css">
@@ -488,6 +488,15 @@ def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
                 f'사람마다 출마 회차·지역·정당과 득표율을 볼 수 있습니다.')
         html = HUB_TEMPLATE.format(
             nav=render_nav(menu_for_path(f"person/{slug}/index.html")),
+            # 초성 갈래는 **색인 대상이 아니다.** 사람이 이름을 찾는 통로지 읽을 글이
+            # 아니다(한 쪽이 최대 1,209명을 나열한다). 그런데 이 14쪽이 person으로
+            # 가는 링크 8,746개 중 대부분을 만들어, 구글 크롤 예산을 색인도 안 되는
+            # 층으로 몰아넣는다(2026-08 관측: 크롤된 1,898쪽 중 1,880이 person,
+            # 색인은 18쪽).
+            #
+            # follow는 남긴다 — 링크는 계속 따라가되 이 묶음 자체를 색인 후보에서
+            # 뺀다. noindex,nofollow로 하면 인물 페이지가 통째로 고아가 된다.
+            robots='<meta name="robots" content="noindex,follow">\n',
             title=esc(title), desc=esc(desc), canon=canon,
             jsonld=hub_jsonld(group, canon),
             h1=esc(f'{g} — 인물 {len(group)}명'),
@@ -527,6 +536,7 @@ def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
             f'이름 초성으로 찾거나 지역·정당에서 따라갈 수 있습니다.')
     html = HUB_TEMPLATE.format(
         nav=render_nav(menu_for_path("person/index.html")),
+        robots='',                     # /person/ 허브 자신은 색인 대상이다
         title=esc(title), desc=esc(desc), canon="/person/",
         jsonld=hub_jsonld(persons, "/person/"),
         h1="역대 선거 인물",
