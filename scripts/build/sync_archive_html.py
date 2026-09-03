@@ -1088,14 +1088,22 @@ def region_table(eid: str, kind: str) -> str:
 # 회차 상세 경로 — 대선만 여기서 링크한다(총선·지선은 직위별 표가 이미 건다).
 HIST_PATH = {"presidential": "/history/presidential/{n}/"}
 
+# (sg_typecode, scope, 라벨, history 경로, 세는 법)
+#
+# ⚠️ **세는 법이 직위마다 다르다.** 지역구·단체장은 선거구마다 1명이 이기므로 won을
+# 센다. 비례대표는 **전국 정당 득표율로 배분**하므로 won을 세면 안 된다 — 그런데
+# 2026-09까지 ("7","sido")로 두고 won을 세서, 17개 시도의 1위 정당을 한 석씩 세어
+# **비례 46석이 '17석'으로 나왔다**(21·20대도 17석). 진짜 배분은 전국 행의
+# proportional_seats에 있다(46·47·47).
 OFFICE_SPECS = {
-    "local": [("3", "sido", "광역단체장", "/history/local/{n}/governor/"),
-              ("4", "sigungu", "기초단체장", "/history/local/{n}/mayor/"),
-              ("11", "sigungu", "교육감", "/history/local/{n}/superintendent/"),
-              ("5", "district", "광역의원", None),
-              ("6", "district", "기초의원", None)],
-    "general_election": [("2", "district", "지역구", "/history/national-assembly/{n}/"),
-                         ("7", "sido", "비례대표", None)],
+    "local": [("3", "sido", "광역단체장", "/history/local/{n}/governor/", "won"),
+              ("4", "sigungu", "기초단체장", "/history/local/{n}/mayor/", "won"),
+              ("11", "sigungu", "교육감", "/history/local/{n}/superintendent/", "won"),
+              ("5", "district", "광역의원", None, "won"),
+              ("6", "district", "기초의원", None, "won")],
+    "general_election": [("2", "district", "지역구",
+                          "/history/national-assembly/{n}/", "won"),
+                         ("7", "nation", "비례대표", None, "prop")],
     # ⚠️ 대선은 여기 없다. 전국 1행이라 '직위별 집계' 표로는 '대통령 1곳'이 되어
     # 표가 아무 말도 안 한다. 대선 archive → history 링크는 아래 polls_link 자리에서
     # 함께 낸다(2026-08-28에 대선 3쪽만 history로 나가는 문이 없던 것을 그렇게 고쳤다).
@@ -1112,13 +1120,22 @@ def office_summary(eid: str, kind: str, n) -> str:
     if not races:
         return ""
     rows = []
-    for tc, scope, label, href in specs:
+    for tc, scope, label, href, mode in specs:
         won: dict = {}
         for r in races:
             if r.get("sg_typecode") != tc or r.get("scope") != scope:
                 continue
             for c in (r.get("candidates") or []):
-                if c.get("won"):
+                if mode == "prop":
+                    # 비례는 '이겼다'가 아니라 '몇 석 받았다'다. seats가 없는 옛
+                    # 회차는 proportional_seats에 있다(21·20대).
+                    s = c.get("proportional_seats")
+                    if s is None:
+                        s = c.get("seats")
+                    if s:
+                        k = c.get("party") or c.get("name") or "무소속"
+                        won[k] = won.get(k, 0) + s
+                elif c.get("won"):
                     won[c.get("party") or "무소속"] = won.get(c.get("party") or "무소속", 0) + 1
         if not won:
             continue
@@ -1208,7 +1225,14 @@ def office_by_sido(eid: str, kind: str, n) -> str:
     if not races:
         return ""
     out = []
-    for tc, scope, label, href in specs:
+    for tc, scope, label, href, mode in specs:
+        if mode == "prop":
+            # **비례는 시도별 표를 내지 않는다.** 의석이 전국 단위로 배분되므로
+            # '시도별 몇 석'이라는 것이 존재하지 않는다. won을 세던 시절엔 17개
+            # 시도가 각 1석으로 찍혀, 이 저장소가 금기로 삼은 '비례를 승자독식으로
+            # 그리기'를 표로 하고 있었다. 시도별로 의미 있는 건 정당 **득표율**이고
+            # 그건 지도(prop-grid·prop-hex)가 보여준다.
+            continue
         by: dict = {}
         for r in races:
             if r.get("sg_typecode") != tc or r.get("scope") != scope:

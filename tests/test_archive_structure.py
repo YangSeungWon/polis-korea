@@ -6,6 +6,7 @@
 실행: python3 tests/test_archive_structure.py
 """
 from __future__ import annotations
+import pathlib
 import glob
 import re
 import sys
@@ -82,6 +83,43 @@ def main():
         if "투표율 0.0%" in Path(f).read_text(encoding="utf-8"):
             zero.append(Path(f).parent.name)
     ck("투표율 0.0%로 찍힌 회차 없음", not zero, zero[:5])
+
+    # ── 비례대표를 승자독식으로 세지 않는가 ────────────────────────────────
+    # 막는 사고: 비례 의석을 '시도별 1위'로 세는 것. 2026-09까지 archive 총선 3쪽이
+    # ("7","sido")에서 won을 세어 **비례 46석을 '17석'으로** 적고 있었다(17개 시도의
+    # 1위 정당 하나씩). 이 저장소가 금기로 삼은 '비례를 승자독식으로 그리기'를
+    # 표로 하고 있었던 셈이다(docs/absence.md·no-winner-take-all).
+    #
+    # 정본은 전국 행의 proportional_seats다. 시도별 비례 표는 아예 없어야 한다 —
+    # 의석이 전국 단위로 배분되므로 '시도별 몇 석'이 존재하지 않는다.
+    import json as _j
+    import re as _re
+    bad_prop, sido_prop = [], []
+    for f in sorted(glob.glob(str(ROOT / "archive" / "*" / "index.html"))):
+        eid = pathlib.Path(f).parent.name
+        h = pathlib.Path(f).read_text(encoding="utf-8")
+        if "ar-by-sido-7" in h:
+            sido_prop.append(eid)
+        m = _re.search(r"비례대표</td><td>(\d+)석", h)
+        if not m:
+            continue
+        rp = ROOT / "data" / "results" / f"{eid}.json"
+        if not rp.is_file():
+            continue
+        try:
+            races = _j.loads(rp.read_text(encoding="utf-8")).get("races") or []
+        except Exception:
+            continue
+        want = 0
+        for r in races:
+            if r.get("sg_typecode") == "7" and r.get("scope") == "nation":
+                want = sum((c.get("proportional_seats") or c.get("seats") or 0)
+                           for c in r.get("candidates") or [])
+        if want and int(m.group(1)) != want:
+            bad_prop.append(f"{eid}: 페이지 {m.group(1)}석 ≠ 배분 {want}석")
+    ck("비례 의석이 전국 배분과 같다", not bad_prop, str(bad_prop[:3]))
+    ck("비례를 시도별로 세는 표가 없다", not sido_prop,
+       f"{len(sido_prop)}쪽 — {sido_prop[:3]}")
 
     # 스크립트 로드 순서 — trust는 렌더러보다 먼저 와야 mount가 동작한다
     it, ic = html.find("assets/trust.js"), html.find("assets/archive/core.js")
