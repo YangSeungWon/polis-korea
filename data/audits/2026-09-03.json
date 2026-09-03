@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-03",
+  "polls_total": 1790,
+  "polls_data": 1698,
+  "polls_pending": 92,
+  "checks": [
+    {
+      "name": "시계열 outlier (시간 windowed)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "메이저정당 4+ 후보 잔존",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "정당명-as-후보",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "정당/비례지지 형태 위반(후보표 오염)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "후보지지 이름없음(정당라벨 후보표)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "예상외 metric_type(지표 누수)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "국정평가 형태 위반(대통령창·값)",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "office 분류 false positive",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "합계 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "NEC roster 누락 의심",
+      "severity": "info",
+      "count": 0,
+      "items": []
+    },
+    {
+      "name": "트래커 소스 신선도",
+      "severity": "warn",
+      "count": 2,
+      "items": [
+        {
+          "stream": "국정평가",
+          "agency": "KOPRA",
+          "latest": "2026-03-15",
+          "days_since": 172,
+          "median_gap": 35.0,
+          "n": 20
+        },
+        {
+          "stream": "정당지지·기타",
+          "agency": "여론조사꽃",
+          "latest": "2026-06-13",
+          "days_since": 82,
+          "median_gap": 7.0,
+          "n": 80
+        }
+      ]
+    },
+    {
+      "name": "build_golden 회귀",
+      "severity": "info",
+      "count": 0,
+      "items": [
+        "총 19 cases: 15 pass, 4 warn, 0 fail"
+      ]
+    }
+  ]
+}
