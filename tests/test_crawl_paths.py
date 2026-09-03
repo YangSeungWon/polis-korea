@@ -214,6 +214,44 @@ def check_election_triangle() -> None:
        f"{len(bad)}건 — {bad[:3]}")
 
 
+def check_office_siblings() -> None:
+    """지선 직위 페이지가 같은 회차의 형제 직위로 이어지는가.
+
+    막는 사고: 2026-09-03 실측에서 9회 교육감 쪽에서 기초단체장 쪽으로 갈 길이
+    **없었다.** /history/local/9/governor/가 거는 history 링크는 자기 자신뿐이었고,
+    형제로 가려면 archive를 거쳐야 했다. 한 선거를 직위 바꿔 가며 훑는 흐름이 거기서
+    끊긴다("어디부터 볼까요"는 선거별이 아니라 사이트 공용 푸터다).
+
+    404도 함께 본다. 교육감 전국 직선은 5회부터라 1~4회엔 그 페이지가 없는데, 내비가
+    그 규칙을 모르면 없는 쪽을 건다. 그래서 생성기는 local_offices_for(n) 하나만 본다.
+    """
+    pages = sorted(ROOT.glob("history/local/*/*/index.html"))
+    bad = []
+    for f in pages:
+        n, off = f.parent.parent.name, f.parent.name
+        txt = f.read_text(encoding="utf-8")
+        m = re.search(r'<nav class="lede hx-office-nav".*?</nav>', txt, re.S)
+        if not m:
+            bad.append(f"{n}회 {off}: 형제 내비 없음")
+            continue
+        nav = m.group(0)
+        hrefs = re.findall(r'href="([^"]+)"', nav)
+        for h in hrefs:
+            if not (ROOT / h.strip("/") / "index.html").is_file():
+                bad.append(f"{n}회 {off} → {h} 404")
+        if f"/history/local/{n}/{off}/" in hrefs:
+            bad.append(f"{n}회 {off}: 자기 자신을 링크")
+        if '<strong aria-current="page">' not in nav:
+            bad.append(f"{n}회 {off}: 현재 쪽 표시 없음")
+        # 형제가 실제로 있으면 반드시 걸려 있어야 한다
+        sibs = {g.parent.name for g in (f.parent.parent).glob("*/index.html")} - {off}
+        for s in sibs:
+            if f"/history/local/{n}/{s}/" not in hrefs:
+                bad.append(f"{n}회 {off} → {s} 링크 없음")
+    ck(f"지선 직위 {len(pages)}쪽이 같은 회차 형제로 이어진다", not bad,
+       f"{len(bad)}건 — {bad[:3]}")
+
+
 def check_byelection_hub() -> None:
     """/byelection/ 허브가 재보궐 회차를 **정적으로** 열거하는가.
 
@@ -373,6 +411,7 @@ def main():
     check_history_island()
     check_no_orphans()
     check_election_triangle()
+    check_office_siblings()
     check_byelection_hub()
     check_person_index_noindex()
     check_hub_enumerates()

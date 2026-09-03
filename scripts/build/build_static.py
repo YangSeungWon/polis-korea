@@ -845,6 +845,37 @@ def has_poll_page(slug: str) -> bool:
     return slug in _POLL_SLUGS
 
 
+def local_offices_for(n: int) -> list[tuple[str, str]]:
+    """그 회차에 **실제로 만드는** 지선 직위. 생성 루프와 형제 내비가 같은 것을 본다.
+
+    교육감 전국 직선 동시선거는 5회(2010)부터다. 이 규칙이 두 군데로 갈리면 형제
+    내비가 없는 쪽을 걸어 404가 난다 — ROUTES 주석이 기록한 사고(지선은 직위
+    세그먼트까지 있어야 하는데 그걸 모르고 링크를 조립해 404)와 같은 종류다.
+    """
+    return [(ko, slug) for ko, slug in LOCAL_OFFICE_SLUG.items()
+            if not (slug == 'superintendent' and n < 5)]
+
+
+def local_office_nav(n: int, cur_slug: str) -> str:
+    """같은 회차의 다른 직위로 가는 길.
+
+    막는 사고: 9회 교육감 쪽에서 기초단체장 쪽으로 갈 길이 **없었다.** 형제 링크가
+    하나도 없어서 archive를 거쳐야 했고, 한 선거를 직위 바꿔 가며 훑는 흐름이
+    거기서 끊겼다(2026-09-03 실측: /history/local/9/governor/가 거는 history 링크는
+    자기 자신뿐. '어디부터 볼까요'는 선거별이 아니라 사이트 공용 푸터다).
+
+    지금 쪽은 링크가 아니라 <strong>이다 — 자기 자신을 거는 링크는 어디로도 안 간다.
+    """
+    offs = local_offices_for(n)
+    if len(offs) < 2:
+        return ''
+    parts = [(f'<strong aria-current="page">{_esc(ko)}</strong>' if slug == cur_slug
+              else f'<a href="/history/local/{n}/{slug}/">{_esc(ko)}</a>')
+             for ko, slug in offs]
+    return ('    <nav class="lede hx-office-nav" aria-label="같은 회차 다른 직위">'
+            f'직위 — {" · ".join(parts)}</nav>\n')
+
+
 def round_links(slug: str | None) -> str:
     """회차 페이지에서 나가는 길 — 아카이브와 여론조사.
 
@@ -902,31 +933,55 @@ def round_figures(slug: str, off_slug: str, title: str) -> str:
             f'    <div class="map-fig-grid">{"".join(figs)}</div>\n'
             '  </section>\n')
 
+# 회차 × 직위 → 표. 값이 **목록**인 건 한 페이지가 표 둘을 갖는 경우가 있어서다.
+#   (섹션 id, sg_typecode, scope, place_cols, 지역 열 이름, 인물 열 이름, 캡션, 세는 말)
+#
+# ⚠️ **인물 열 이름은 scope가 정한다.** winner_rows는 그 행 범위 안에서 1위를 고르므로,
+# 뽑는 단위보다 잘게 편 표에선 그게 당선인이 아니다. 오래 전부를 '당선인'이라 적어
+# 왔는데, 대선 시군구 표의 '당선인'은 그 시군구 1위(전국 당선인과 다를 수 있다)이고
+# 교육감 시군구 표의 '당선인'도 그 시군구 1위다.
 HIST_TC = {
-    ('presidential', ''):        ('1', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '시군구별 1위'),
-    ('national_assembly', ''):   ('2', 'district', ['sido', 'district'], ['시도', '선거구'], '지역구 당선인'),
-    ('local', 'governor'):       ('3', 'sido', ['sido'], ['시도'], '광역단체장 당선인'),
-    ('local', 'mayor'):          ('4', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '기초단체장 당선인'),
-    ('local', 'superintendent'): ('11', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'], '교육감 당선인'),
+    ('presidential', ''): [
+        ('hx-round-table', '1', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
+         '1위', '시군구별 1위', '곳')],
+    ('national_assembly', ''): [
+        ('hx-round-table', '2', 'district', ['sido', 'district'], ['시도', '선거구'],
+         '당선인', '지역구 당선인', '곳')],
+    ('local', 'governor'): [
+        ('hx-round-table', '3', 'sido', ['sido'], ['시도'],
+         '당선인', '광역단체장 당선인', '곳')],
+    ('local', 'mayor'): [
+        ('hx-round-table', '4', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
+         '당선인', '기초단체장 당선인', '곳')],
+    # 교육감은 **시도 단위로** 뽑는다. 시군구 256행은 당선인 256명이 아니라 같은
+    # 당선인을 시군구별 득표로 편 것인데, 캡션이 '교육감 당선인 — 256곳'이라
+    # 256명으로 읽혔다(2026-09-03). 당선인 표를 위에 두고 득표 상세를 아래에 둔다.
+    ('local', 'superintendent'): [
+        ('hx-round-table', '11', 'sido', ['sido'], ['시도'],
+         '당선인', '교육감 당선인', '곳'),
+        ('hx-round-table-detail', '11', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
+         '1위', '시군구별 교육감 득표', '개 지역')],
 }
 
 
 def round_table(slug: str, type_key: str, off_slug: str = '') -> str:
     """회차 × 직위 → 정적 결과 표. archive slug가 없으면 표도 없다."""
-    spec = HIST_TC.get((type_key, off_slug))
-    if not slug or not spec:
+    specs = HIST_TC.get((type_key, off_slug))
+    if not slug or not specs:
         return ''
-    tc, scope, place_cols, head_pre, cap = spec
     races = _rt.load_races(slug)
     if not races:
         return ''
-    # 링크는 걸지 않는다 — person-links 색인은 archive 쪽 규칙(동명이인 배제)을 따르는데
-    # 여기서 같은 판단을 두 벌 두면 어긋난다. 이 페이지의 목적은 내용이 읽히는 것이고,
-    # 인물·정당으로 나가는 길은 바로 위 '이 회차 아카이브' 링크가 잇는다.
-    rows = _rt.winner_rows(races, tc, scope, place_cols=place_cols,
-                           link=lambda kind, place, name: _rt._esc(name or ''))
-    head = head_pre + ['당선인', '정당', '득표율', '투표율']
-    return _rt.table_html('hx-round-table', cap, head, rows)
+    out = []
+    for sec_id, tc, scope, place_cols, head_pre, person_col, cap, unit in specs:
+        # 링크는 걸지 않는다 — person-links 색인은 archive 쪽 규칙(동명이인 배제)을 따르는데
+        # 여기서 같은 판단을 두 벌 두면 어긋난다. 이 페이지의 목적은 내용이 읽히는 것이고,
+        # 인물·정당으로 나가는 길은 바로 위 '이 회차 아카이브' 링크가 잇는다.
+        rows = _rt.winner_rows(races, tc, scope, place_cols=place_cols,
+                               link=lambda kind, place, name: _rt._esc(name or ''))
+        head = head_pre + [person_col, '정당', '득표율', '투표율']
+        out.append(_rt.table_html(sec_id, cap, head, rows, unit=unit))
+    return ''.join(out)
 
 def breadcrumb_ld(trail: list) -> str:
     """BreadcrumbList — 검색 결과에 URL 대신 경로가 표시되게 한다."""
@@ -998,10 +1053,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
             seen.add(n)
             el_date = meta.get('date', '')
             if type_key == 'local':
-                for office_ko, off_slug in LOCAL_OFFICE_SLUG.items():
-                    # 교육감 전국 직선 동시선거는 5회(2010)부터 — 1~4회 교육감 페이지는 생성 안 함.
-                    if off_slug == 'superintendent' and n < 5:
-                        continue
+                for office_ko, off_slug in local_offices_for(n):
                     title = (f'{el_date[:4]} 지방선거 {office_ko} 결과 지도 — '
                              f'제{n}회 시군구별 개표 | polis')
                     desc = (f'{el_date[:4]}년 제{n}회 전국동시지방선거 {office_ko} 결과. '
@@ -1014,7 +1066,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                         bits.append(f'투표율 {turnout}%')
                     slug = slugs.get((type_key, n))
                     # 정적 링크를 남기되 id를 붙여, 사용자가 회차를 바꾸면 JS가 갱신한다.
-                    extra = round_links(slug)
+                    extra = local_office_nav(n, off_slug) + round_links(slug)
                     intro = (intro_block(f'{n}회 {type_short} {office_ko}',
                                          _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
                              + round_figures(slug, off_slug, f'{n}회 {type_short} {office_ko}')
