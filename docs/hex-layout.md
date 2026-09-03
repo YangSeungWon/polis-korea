@@ -258,10 +258,37 @@ if bot_cells_actual < bot_h:  # 동쪽 col 1개는 full 채워야 right wrap 연
 | 영남 blob bot 정렬 | 대구·울산 bot row 일치 | 경남·부산과 직접 접촉 |
 | 제주 호남 실제 bot + 2 | allocated 무시 | 영남 길이 무관 갭 1 통일 |
 
+## ⚠️ 생성 뒤 구멍 메우기 — 두 단계다
+
+`build_zone_hex.py`는 **내부 빈칸 0을 보장하지 않는다.** 독스트링에 오래 그렇게 적혀
+있었지만 사실이 아니었다. 영남 70셀을 이 구조(대구 3×3 · 울산 3×2 L · 경북 wrap ·
+경남/부산 bot)로 놓으면 **빈칸 0인 후보가 탐색 공간에 아예 없고 최소가 2다.** 그중
+하나가 바깥으로 못 나가고 `sigungu_hex` `(12,10)`에 갇혔다 — 이웃이 대구 동구·울산
+북구·경북 영천시·청송군이라, 지도에서 대구와 경북 사이가 뚫려 보였다. 회차별 지선
+hex는 5~9회에 같은 이유로 구멍이 있었다(5~8회는 각 4~6칸).
+
+경북이 공간을 더 받은 게 아니다 — 22칸으로 실제 시군구 수와 정확히 같다. 모양의
+문제이고, 그래서 재배치가 아니라 **slide-fill**로 고친다:
+
+```bash
+python scripts/build/build_zone_hex.py          # 배치
+python scripts/build/build_local_period_hex.py  # 회차별 배치
+python scripts/build/fill_district_hex_holes.py --apply --path data/geo/sigungu_hex.json
+python scripts/build/fill_district_hex_holes.py --apply --path data/geo/sigungu_hex_local.json
+python scripts/build/fill_district_hex_holes.py --apply          # 지역구 hex 전체
+```
+
+hole→외곽 최단경로 위 셀을 1칸씩 밀어 닫는다. 셀 수·시도 소속은 그대로고 좌표만
+움직인다(9회는 청송군·울진군 2칸). **셀에 `sido`가 있으면 그 묶음을 더 쪼개는 이동은
+고르지 않는다** — 이 필터가 없던 첫 판이 포항시를 `(13,10)→(12,10)`으로 밀어
+`(13,11)` 경북 셀을 울산·빈칸 사이에 고립시켰다. 구멍은 사라졌고 검사도 없었으니
+그대로 나갈 뻔했다. `tests/test_hex_holes.py`가 둘 다 잡는다(CI 포함).
+
 ## 검증
 
 ```bash
 python3 scripts/build/build_zone_hex.py
+python tests/test_hex_holes.py    # 갇힌 빈칸 0 · 시도 분절 회귀 없음
 ```
 
 - 모든 회차 cluster 단일성 (시도 cells 끊김 없음)

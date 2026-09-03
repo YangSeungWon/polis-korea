@@ -156,6 +156,11 @@ jobs:
       - name: 지리 계보 (행정구역·선거구 변화 그래프)
         run: python tests/test_geography_lineage.py
 
+      # 생성기(build_zone_hex)와 구멍 메우기(fill_district_hex_holes)가 다른 스크립트라,
+      # 재생성하고 fill을 잊으면 지도에 갇힌 빈칸이 조용히 돌아온다.
+      - name: hex 카토그램 (갇힌 빈칸·시도 분절)
+        run: python tests/test_hex_holes.py
+
       # 정당 문자열 ≠ 비교 identity. 분리하지 않으면 같은 버그가 연산마다 다르게 난다
       # (승자 판정은 same_party, 득표 집계는 raw name → 국민의힘 +46%p/미래통합당 -45%p).
       - name: 정당 identity (개명·합당 구분·resolver 우회 금지)

@@ -6,6 +6,10 @@
 modern hex(sigungu_hex.json)에서 no-data 셀로 보강해 지도 연속성 유지(회색 표시).
 
 출력: data/geo/sigungu_hex_local.json (회차→셀). render-sigungu가 지선 기초장에 사용.
+
+⚠️ build_zone_hex가 내부 빈칸을 남긴다(5~9회에서 확인). 이 스크립트를 돌린 뒤 반드시:
+
+    python scripts/build/fill_district_hex_holes.py --apply --path data/geo/sigungu_hex_local.json
 """
 import json, re, sys, glob
 from pathlib import Path
