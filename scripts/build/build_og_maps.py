@@ -52,6 +52,13 @@ from view_registry import (PRIMARY_ORDER, HOSTS, key_for, mode_of,  # noqa: E402
                            host_label, is_page_view, parse_key as _vr_parse)
 
 
+# 캡처 배율. 페이지는 2배로 띄우고 **큰 지도만** 그 배율로 남긴다(시군구 230칸·
+# 선거구 254칸이 CSS 820px에 들어가 1배에선 셀 하나가 54px, 경계와 글씨가 뭉갠다).
+# 시도 hex는 17칸 600px이라 1배로 충분하고 2배는 용량만 먹는다.
+CAP_DSF = 2
+RETINA_MIN_W = 700          # CSS px 기준
+
+
 
 def shrink(path: Path) -> tuple[int, int]:
     """PNG를 256색 팔레트로 다시 저장. (전, 후) 바이트.
@@ -325,8 +332,13 @@ def _one_pass(page, out, by_img, problems, only, slug):
             if el is None:
                 problems.append(f"{token}/{enc}: 캡처 대상을 못 잡았다")
                 continue
+            # 큰 지도만 장치 배율(=CAP_DSF)로 남기고, 작은 건 scale="css"로 CSS
+            # 픽셀 그대로 받는다. 2배로 찍어 PIL로 되줄이면 크기는 같은데 용량이
+            # 1.5배가 된다 — 리샘플링이 만든 가장자리 픽셀이 PNG 행 필터를 망친다
+            # (색 수는 양자화 뒤 둘 다 256으로 같았고, 차이는 공간 주파수였다).
+            shot = "device" if got["w"] >= RETINA_MIN_W else "css"
             try:
-                png = el.screenshot(omit_background=True)
+                png = el.screenshot(omit_background=True, scale=shot)
             except Exception as e:
                 problems.append(f"{token}/{enc}: screenshot 실패 {e}")
                 continue
@@ -522,7 +534,12 @@ def main():
         targets = ([(root + STATIC_PAGES[s].rstrip("/"), s) for s in slugs] if static_mode
                    else [(f"{base}/{s}", s) for s in slugs])
         for url, slug in targets:
-            pg = b.new_page(viewport={"width": 1320, "height": 1700})
+            # dsf=2로 찍고 작은 지도만 되줄인다(RETINA_MIN_W). 시군구·선거구 hex는
+            # 820 CSS px에 230~254칸이라 1배에선 셀 하나가 54px, 라벨과 경계가 뭉갠다.
+            # 페이지 CSS가 `.map-fig img{width:100%}`라 width/height 속성은 종횡비만
+            # 정하므로, 2배는 표시 크기를 안 바꾸고 밀도만 올린다.
+            pg = b.new_page(viewport={"width": 1320, "height": 1700},
+                            device_scale_factor=CAP_DSF)
             try:
                 pg.goto(url if static_mode else f"{url}/",
                         wait_until="networkidle", timeout=25000)
