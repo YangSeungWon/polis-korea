@@ -964,7 +964,7 @@ KIND_TO_SECTIONS = {
 
 
 
-def region_table(eid: str, kind: str) -> str:
+def region_table(eid: str, kind: str, n=None) -> str:
     """지역별 결과를 **정적 표**로 — 크롤러가 렌더 없이 읽는 유일한 본문.
 
     2026-08 측정: archive 페이지의 정적 텍스트가 1,120자였다. 결과 섹션이 전부
@@ -1015,7 +1015,7 @@ def region_table(eid: str, kind: str) -> str:
         h = party_href(name or "")
         return f'<a href="{h}">{_esc(name)}</a>' if h else _esc(name or "무소속")
 
-    head, rows, cap = [], [], ""
+    head, rows, cap, detail_link = [], [], "", ""
 
     if kind in ("presidential", "local"):
         tc = "1" if kind == "presidential" else "3"
@@ -1023,6 +1023,12 @@ def region_table(eid: str, kind: str) -> str:
         if not rs:
             return ""
         cap = "시도별 1위" if kind == "presidential" else "시도별 광역단체장"
+        # 광역단체장·교육감은 office_by_sido가 표를 안 낸다(접는 단위 == 뽑는 단위라
+        # 전부 `1곳`이 된다). history로 가는 문은 「직위별 결과」 표가 이미 들고
+        # 있으므로 닫히지 않는다 — 이건 그 데이터를 **보고 있는 자리**에서 상세로
+        # 가는 두 번째 문이다.
+        if kind == "local" and n:
+            detail_link = f' <a href="/history/local/{n}/governor/">지역별 상세 →</a>' 
         head = ["시도", "1위 후보", "정당", "득표율", "투표율"]
         for r in rs:
             cs = sorted(r.get("candidates") or [], key=lambda c: -(c.get("votes") or 0))
@@ -1033,25 +1039,12 @@ def region_table(eid: str, kind: str) -> str:
                          party_cell(c.get("party")), _fmt_pct(c.get("pct")), turnout(r)])
 
     elif kind == "general_election":
-        rs = pick("2", "district")
-        if not rs:
-            return ""
-        cap = "시도별 지역구 의석"
-        head = ["시도", "지역구", "1당", "의석"]
-        agg: dict = {}
-        for r in rs:
-            sido = r.get("sido") or ""
-            a = agg.setdefault(sido, {"n": 0, "by": {}})
-            a["n"] += 1
-            for c in (r.get("candidates") or []):
-                if c.get("won"):
-                    pty = c.get("party") or "무소속"
-                    a["by"][pty] = a["by"].get(pty, 0) + 1
-        for sido, a in agg.items():
-            if not a["by"]:
-                continue
-            top, n = max(a["by"].items(), key=lambda x: x[1])
-            rows.append([_esc(sido), str(a["n"]), party_cell(top), f"{n}석"])
+        # **총선은 여기서 표를 내지 않는다.** office_by_sido의 「지역구 — 시도별」이
+        # 같은 17행을 더 많은 정보로 낸다 — 이 표가 `서울 | 48 | 더불어민주당 | 37석`
+        # (1당만)인데 그쪽은 `서울 | 48석 | 더불어민주당 37 · 국민의힘 11`(전체 분포)
+        # 이고 history로 가는 링크까지 든다. 이 표의 정보가 그쪽의 부분집합이라,
+        # 한 페이지에 시도별 표를 둘 걸고 있었다(2026-09-03).
+        return ""
 
     else:   # byelection — 회차마다 치러진 직·지역이 다르다. 있는 그대로 적는다.
         cap = "치러진 선거"
@@ -1074,7 +1067,7 @@ def region_table(eid: str, kind: str) -> str:
     th = "".join(f"<th>{h}</th>" for h in head)
     tr = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
     return (f'\n  <section class="ar-section" id="ar-region-table">\n'
-            f'    <h2 class="ar-section-title">{cap}</h2>\n'
+            f'    <h2 class="ar-section-title">{cap}{detail_link}</h2>\n'
             f'    <div class="pp-scroll">'
             f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
             f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
@@ -1095,15 +1088,26 @@ HIST_PATH = {"presidential": "/history/presidential/{n}/"}
 # 2026-09까지 ("7","sido")로 두고 won을 세서, 17개 시도의 1위 정당을 한 석씩 세어
 # **비례 46석이 '17석'으로 나왔다**(21·20대도 17석). 진짜 배분은 전국 행의
 # proportional_seats에 있다(46·47·47).
+#
+# ⚠️ **세는 말도 직위마다 다르다.** 단체장·교육감은 한 곳에서 1명이라 '곳'이 곧
+# 당선인 수지만, 광역·기초의원은 중선거구제라 다르다 — 9회 강원 기초의원은 선거구
+# 56곳에서 154명이 나온다. 2026-09까지 '곳'에 선거구 수를 넣고 옆 칸엔 당선인을
+# 세어서, `강원 | 56곳 | 국민의힘 80 · 더불어민주당 71`처럼 두 칸의 단위가 서로
+# 달랐다(15개 시도 전부). 광역의원은 대개 1:1이라 우연히 맞아서 안 보였다.
+# 이제 두 칸 다 **당선인**을 센다 — 한 행 안에서 합이 맞는다.
 OFFICE_SPECS = {
-    "local": [("3", "sido", "광역단체장", "/history/local/{n}/governor/", "won"),
-              ("4", "sigungu", "기초단체장", "/history/local/{n}/mayor/", "won"),
-              ("11", "sigungu", "교육감", "/history/local/{n}/superintendent/", "won"),
-              ("5", "district", "광역의원", None, "won"),
-              ("6", "district", "기초의원", None, "won")],
+    "local": [("3", "sido", "광역단체장", "/history/local/{n}/governor/", "won", "곳"),
+              ("4", "sigungu", "기초단체장", "/history/local/{n}/mayor/", "won", "곳"),
+              # ⚠️ 교육감은 **시도 단위로** 뽑는다. 2026-09까지 scope="sigungu"라
+              # 시군구 256행을 당선인으로 세어 「직위별 결과」가 **"교육감 256곳"**,
+              # 시도별 집계가 "강원 18곳 무소속 18"이라 적었다 — 강원 교육감은 1명이다.
+              # 같은 착오를 history 표에서도 고쳤다(4f2129ece).
+              ("11", "sido", "교육감", "/history/local/{n}/superintendent/", "won", "곳"),
+              ("5", "district", "광역의원", None, "won", "석"),
+              ("6", "district", "기초의원", None, "won", "석")],
     "general_election": [("2", "district", "지역구",
-                          "/history/national-assembly/{n}/", "won"),
-                         ("7", "nation", "비례대표", None, "prop")],
+                          "/history/national-assembly/{n}/", "won", "석"),
+                         ("7", "nation", "비례대표", None, "prop", "석")],
     # ⚠️ 대선은 여기 없다. 전국 1행이라 '직위별 집계' 표로는 '대통령 1곳'이 되어
     # 표가 아무 말도 안 한다. 대선 archive → history 링크는 아래 polls_link 자리에서
     # 함께 낸다(2026-08-28에 대선 3쪽만 history로 나가는 문이 없던 것을 그렇게 고쳤다).
@@ -1120,7 +1124,7 @@ def office_summary(eid: str, kind: str, n) -> str:
     if not races:
         return ""
     rows = []
-    for tc, scope, label, href, mode in specs:
+    for tc, scope, label, href, mode, unit in specs:
         won: dict = {}
         for r in races:
             if r.get("sg_typecode") != tc or r.get("scope") != scope:
@@ -1142,7 +1146,6 @@ def office_summary(eid: str, kind: str, n) -> str:
         total = sum(won.values())
         top = sorted(won.items(), key=lambda x: -x[1])
         detail = " · ".join(f"{_party_link(p)} {v}" for p, v in top[:6])
-        unit = "석" if tc in ("2", "5", "6", "7") else "곳"
         cell = f'<a href="{href.format(n=n)}">{_esc(label)}</a>' if href and n else _esc(label)
         rows.append([cell, f"{total}{unit}", detail])
     if not rows:
@@ -1225,13 +1228,20 @@ def office_by_sido(eid: str, kind: str, n) -> str:
     if not races:
         return ""
     out = []
-    for tc, scope, label, href, mode in specs:
+    for tc, scope, label, href, mode, unit in specs:
         if mode == "prop":
             # **비례는 시도별 표를 내지 않는다.** 의석이 전국 단위로 배분되므로
             # '시도별 몇 석'이라는 것이 존재하지 않는다. won을 세던 시절엔 17개
             # 시도가 각 1석으로 찍혀, 이 저장소가 금기로 삼은 '비례를 승자독식으로
             # 그리기'를 표로 하고 있었다. 시도별로 의미 있는 건 정당 **득표율**이고
             # 그건 지도(prop-grid·prop-hex)가 보여준다.
+            continue
+        if scope == "sido":
+            # **접는 단위가 뽑는 단위와 같으면 접어도 아무 말이 안 된다.** 광역단체장은
+            # 시도마다 1명이라 16행이 전부 `1곳 · 정당 1`이었다 — 바로 위 「시도별
+            # 광역단체장」 표에 이미 있는 사실을 아무것도 더하지 않고 되풀이했다.
+            # 대선을 OFFICE_SPECS에서 뺀 것과 같은 이유다("대통령 1곳"). 다만
+            # history로 나가는 문은 살려야 해서 region_table 캡션이 그 링크를 든다.
             continue
         by: dict = {}
         for r in races:
@@ -1241,24 +1251,24 @@ def office_by_sido(eid: str, kind: str, n) -> str:
             if not sido:
                 continue
             b = by.setdefault(sido, {"n": 0, "p": {}})
-            b["n"] += 1
             for c in (r.get("candidates") or []):
                 if c.get("won"):
                     pty = c.get("party") or "무소속"
                     b["p"][pty] = b["p"].get(pty, 0) + 1
+                    b["n"] += 1        # 선거구가 아니라 **당선인**을 센다(중선거구)
         rows = []
         for sido, b in by.items():
             if not b["p"]:
                 continue
             top = sorted(b["p"].items(), key=lambda x: -x[1])
-            rows.append([_esc(sido), str(b["n"]),
+            rows.append([_esc(sido), f'{b["n"]}{unit}',
                          " · ".join(f"{_party_link(pp)} {vv}" for pp, vv in top[:4])])
         if len(rows) < 2:
             continue        # 시도 하나뿐이면 접을 게 없다(재보궐 등)
         link = (f' <a href="{href.format(n=n)}">지역별 상세 →</a>'
                 if href and n else "")
         out.append(_rt.table_html(f"ar-by-sido-{tc}", f"{label} — 시도별{link}",
-                                  ["시도", "곳", "정당별"], rows))
+                                  ["시도", "당선인", "정당별"], rows))
     return "".join(out)
 
 def _party_link(name: str) -> str:
@@ -1417,7 +1427,7 @@ def render(meta: dict, neighbors: dict | None = None) -> str:
         + results_summary(d["id"], d["kind"])       # 빌드 시점 정적 요약(검색엔진용)
         + map_figures(d["id"], d.get("name") or d["id"])   # 결과 지도 — 렌더 없이 보이는 그림
         + nation_table(d["id"], d["kind"])         # 대선 전국 후보 전원
-        + region_table(d["id"], d["kind"])         # 지역별 결과 정적 표 — 렌더 없이 읽히는 본문
+        + region_table(d["id"], d["kind"], d.get("n"))  # 지역별 결과 정적 표 — 렌더 없이 읽히는 본문
         + office_summary(d["id"], d["kind"], d.get("n"))  # 직위별 집계 — 상세는 history가 갖는다
         + office_by_sido(d["id"], d["kind"], d.get("n"))  # 직위 × 시도 — history는 시군구 입도
         + KIND_TO_SECTIONS[d["kind"]].format(**d)

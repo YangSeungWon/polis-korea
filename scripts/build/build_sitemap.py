@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 from datetime import date
 from pathlib import Path
@@ -205,6 +206,32 @@ def archive_urls() -> list[tuple[str, str, str]]:
     return out
 
 
+def self_canonical(p) -> bool:
+    """그 파일이 **자기 URL을 canonical로 선언**하는가.
+
+    sitemap은 "이게 정본이니 색인해 달라"는 목록이다. 페이지 스스로 다른 URL을
+    정본이라 말하는데 sitemap이 그 URL을 싣고 있으면 두 신호가 어긋난다.
+
+    실제 대상: /history/local/{1..4}/governor/. 광역단체장은 시도 단위로 뽑는데
+    1995~2006 회차는 NEC가 시군구별 득표를 주지 않아(tc=3 scope=sigungu 0건) 그
+    쪽에 실을 상세가 없다 — 16행 요약이 전부이고, 그건 archive의 「시도별
+    광역단체장」과 **같은 행**이다. 내용을 더 실을 수 없으니 archive로 canonical
+    하고 여기서도 뺀다. 페이지는 남긴다(형제 내비·탐색은 살아야 한다).
+
+    목록을 손으로 적지 않는다 — 생성기가 canonical을 정하고 여기는 그걸 읽는다.
+    """
+    try:
+        h = p.read_text(encoding="utf-8")
+    except Exception:
+        return True
+    m = re.search(r'<link rel="canonical" href="([^"]*)"', h)
+    if not m:
+        return True
+    want = "/" + p.relative_to(ROOT).parent.as_posix() + "/"
+    got = m.group(1).replace(BASE, "") or "/"
+    return got == want
+
+
 def history_urls() -> list[tuple[str, str, str]]:
     """history/{type}/{n}/[office]/ prerender 디렉토리 스캔."""
     out = []
@@ -212,6 +239,8 @@ def history_urls() -> list[tuple[str, str, str]]:
     if not hroot.exists():
         return out
     for p in sorted(hroot.rglob("index.html")):
+        if not self_canonical(p):
+            continue
         rel = p.relative_to(ROOT).parent.as_posix()
         out.append((f"/{rel}/", "monthly", "0.6", lastmod_for(f"/{rel}/")))
     return out

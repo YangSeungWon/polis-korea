@@ -121,6 +121,9 @@ def check_images() -> None:
     # 같은 PNG를 쓰기 때문에, 한쪽 sitemap에서 한 장을 지워도 다른 쪽에 남아 합집합은
     # 그대로였다. 이미지 sitemap의 요점은 '어느 URL에 걸렸나'라서 URL 단위로 봐야 한다.
     import re as _re
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "scripts/build"))
+    from build_sitemap import self_canonical      # noqa: E402
     listed: dict = {}
     for f in sorted(ROOT.glob("sitemap-*.xml")):
         raw = f.read_text(encoding="utf-8")
@@ -136,6 +139,8 @@ def check_images() -> None:
             u = "/" + str(pf.parent.relative_to(ROOT)) + "/"
             on = set(_re.findall(r'<figure class="map-fig"[^>]*>\s*<img src="([^"]+)"',
                                  pf.read_text(encoding="utf-8")))
+            if u not in listed and not self_canonical(pf):
+                continue        # canonical을 넘긴 쪽 — sitemap에 없는 게 맞다
             miss = on - listed.get(u, set())
             if miss:
                 bad.append(f"{u} → {sorted(miss)[:2]}")
@@ -194,8 +199,18 @@ def main():
         u = "/" if f == "index.html" else "/" + (
             f[: -len("index.html")] if f.endswith("/index.html") else f)
         pages.append((f, u))
-    missing = [u for _, u in pages if u not in listed]
-    ck(f"실제 페이지 {len(pages):,}개가 전부 sitemap에 있다 (제외 {excluded})",
+    # 빠져도 되는 쪽이 하나 있다 — **스스로 다른 URL을 정본이라 선언한** 페이지.
+    # sitemap은 "이게 정본이니 색인해 달라"는 목록이라, 페이지가 "저기가 정본"이라
+    # 말하는데 여기 실려 있으면 두 신호가 어긋난다. 규칙을 여기 다시 적지 않고
+    # 생성기의 판정을 그대로 쓴다 — 두 벌이 되면 언젠가 갈린다.
+    sys.path.insert(0, str(ROOT / "scripts/build"))
+    from build_sitemap import self_canonical      # noqa: E402
+    missing = [u for f, u in pages
+               if u not in listed and self_canonical(ROOT / f)]
+    declared = [u for f, u in pages
+                if u not in listed and not self_canonical(ROOT / f)]
+    ck(f"실제 페이지 {len(pages):,}개가 전부 sitemap에 있다 "
+       f"(제외 {excluded} · canonical 넘김 {len(declared)})",
        not missing, f"{len(missing)}개 누락: {missing[:4]}")
 
     # ── 유령 URL: sitemap에만 있고 파일이 없는 것 ───────────────────────────

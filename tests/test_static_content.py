@@ -81,22 +81,102 @@ def check_no_duplicate_tables() -> None:
                 for m in re.finditer(r'<table class="pp-static".*?</table>', h, re.S)]
 
     print("\n[중복] archive와 history가 같은 표를 갖지 않는가")
-    pairs = [("archive/9th-local-2026", "history/local/9/mayor"),
-             ("archive/21st-pres-2025", "history/presidential/21"),
-             ("archive/22nd-general-2024", "history/national-assembly/22")]
+    # ⚠️ 쌍을 **손으로 적지 않는다.** 2026-08 사고 직후 3쌍만 적어 뒀는데, 나중에
+    # 생긴 /history/local/{n}/governor·superintendent가 그 목록에 없었다. 그래서
+    # governor의 유일한 표 16행이 archive의 「시도별 광역단체장」과 **100% 같은
+    # 행**인 채로 1년 가까이 지나갔다(2026-09-03 발견). 목록을 손으로 관리하면
+    # 새로 생긴 쪽은 늘 빠진다 — 디스크에서 열거한다.
+    def hist_of(slug):
+        import json as _j
+        try:
+            m = _j.loads((ROOT / f"data/elections/{slug}.json").read_text(encoding="utf-8"))
+        except Exception:
+            return []
+        kind, n = m.get("kind"), m.get("n")
+        if kind == "local":
+            base = ROOT / f"history/local/{n}"
+            return [f"history/local/{n}/{d.name}" for d in sorted(base.glob("*"))
+                    if (d / "index.html").is_file()]
+        seg = {"presidential": "presidential",
+               "national_assembly": "national-assembly"}.get(kind)
+        p2 = f"history/{seg}/{n}" if seg else None
+        return [p2] if p2 and (ROOT / p2 / "index.html").is_file() else []
+
+    pairs = []
+    for d in sorted((ROOT / "archive").glob("*")):
+        if not (d / "index.html").is_file():
+            continue
+        pairs += [(f"archive/{d.name}", h) for h in hist_of(d.name)]
+    # **표 대 표 최대 유사도로 재지 않는다.** 그러면 '요약 + 상세' 패턴이 늘
+    # 빨개진다 — 상세 페이지가 위에 16행 요약을 두고 아래에 256행 상세를 두는 건
+    # 정상이고, 그 요약이 archive의 표와 같은 건 당연하다. 문제는 "같은 화면이 두
+    # URL에 있는가"이므로 **페이지 단위**로 잰다: B의 표 행 중 몇 %가 A에도 있나.
+    #   고침 전 governor 16/16 = 100%  ← 페이지 전체가 복사본이었다
+    #   고침 후 governor 16/272 = 6%   ← 요약만 겹치고 본문은 자기 것이다
+    #   mayor 0%                       ← 원래 정상
+    def rowset(f):
+        h = re.sub(r"<script.*?</script>", "", f.read_text(encoding="utf-8"), flags=re.S)
+        out = set()
+        for tb in re.finditer(r'<table class="pp-static".*?</table>', h, re.S):
+            for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tb.group(0), re.S):
+                cells = tuple(re.sub(r"<[^>]+>", "", c).strip()
+                              for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S))
+                if cells:
+                    out.add(cells)
+        return out
+
     worst = []
     for a, h in pairs:
         fa, fh = ROOT / a / "index.html", ROOT / h / "index.html"
         if not (fa.is_file() and fh.is_file()):
             continue
-        ta, th = tables(fa), tables(fh)
-        # 어느 한 쌍이라도 크게 겹치면 그 구분이 무너진 것이다.
-        r = max((difflib.SequenceMatcher(None, x, y).ratio() for x in ta for y in th),
-                default=0.0)
-        worst.append((r, a, h))
-    for r, a, h in worst:
-        ck(f"{a.split('/')[1]} ↔ {h} 겹침 {r:.0%} < 50%", r < 0.5,
-           "같은 표를 두 URL이 갖고 있다 — 입도(시도 vs 시군구)가 무너졌다")
+        ra, rh = rowset(fa), rowset(fh)
+        if not rh:
+            continue
+        worst.append((len(ra & rh) / len(rh), a, h))
+    worst.sort(reverse=True)
+    for r, a, h in worst[:3]:
+        print(f"    {r:.0%}  {h}의 표 행 중 {a}에도 있는 것")
+
+    # 겹쳐도 되는 경우가 하나 있다 — 실을 내용이 아예 없어서 **그렇다고 선언한** 쪽.
+    # /history/local/{1..4}/governor는 NEC가 그 회차 광역단체장의 시군구별 득표를
+    # 주지 않아 16행 요약이 전부다. 그런 쪽은 canonical이 archive를 가리키고
+    # sitemap에서도 빠진다. 그러니 기준은 "겹치지 않는다"가 아니라 **"겹치면
+    # 선언돼 있다"**이다 — 조용한 중복만 막는다.
+    def canon_of(path):
+        h = (ROOT / path / "index.html").read_text(encoding="utf-8")
+        m = re.search(r'<link rel="canonical" href="([^"]*)"', h)
+        return (m.group(1) if m else "").replace("https://polis.ysw.kr", "")
+
+    undeclared = [f"{h} {r:.0%}" for r, a, h in worst
+                  if r >= 0.6 and canon_of(h) == f"/{h}/"]
+    ck(f"archive↔history 쌍 {len(pairs)}개에 **선언 안 된** 중복이 없다",
+       not undeclared, str(undeclared[:3]))
+
+    # 선언한 쪽은 sitemap에도 없어야 한다. 페이지는 "저기가 정본"이라 하는데
+    # sitemap이 "여기를 색인해 달라"고 하면 두 신호가 어긋난다.
+    sm = (ROOT / "sitemap-history.xml")
+    if sm.is_file():
+        raw2 = sm.read_text(encoding="utf-8")
+        leaked = [h for r, a, h in worst if r >= 0.6 and canon_of(h) != f"/{h}/"
+                  and f"/{h}/" in raw2]
+        ck("canonical을 넘긴 쪽이 sitemap에 없다", not leaked, str(leaked[:3]))
+
+    # 한 페이지 안에서도 마찬가지다. 22대 archive는 「시도별 지역구 의석」과
+    # 「지역구 — 시도별」을 함께 걸고 있었는데 앞의 것이 뒤의 것의 부분집합이었다.
+    # 페이지 밖만 보는 검사는 그걸 못 본다.
+    inner = []
+    for d in sorted((ROOT / "archive").glob("*")):
+        f = d / "index.html"
+        if not f.is_file():
+            continue
+        ts = tables(f)
+        for i in range(len(ts)):
+            for j2 in range(i + 1, len(ts)):
+                r = difflib.SequenceMatcher(None, ts[i], ts[j2]).ratio()
+                if r >= 0.75:
+                    inner.append(f"{d.name} 표{i}↔표{j2} {r:.0%}")
+    ck(f"archive 한 쪽 안에 겹치는 표가 없다 ({len(pairs)}쪽 검사)", not inner, str(inner[:3]))
 
 
 def main() -> int:

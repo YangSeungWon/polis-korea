@@ -947,9 +947,15 @@ HIST_TC = {
     ('national_assembly', ''): [
         ('hx-round-table', '2', 'district', ['sido', 'district'], ['시도', '선거구'],
          '당선인', '지역구 당선인', '곳')],
+    # 광역단체장도 시도 단위로 뽑는다 — 그래서 이 쪽의 유일한 표 16행이 archive의
+    # 「시도별 광역단체장」과 **100% 같은 행**이었다(2026-09-03 실측). 페이지 전체가
+    # 1,182자였으니 사실상 복사본 한 쪽이었다. 교육감과 같은 꼴로 시군구별 득표를
+    # 아래에 붙여 고유한 내용을 갖게 한다.
     ('local', 'governor'): [
         ('hx-round-table', '3', 'sido', ['sido'], ['시도'],
-         '당선인', '광역단체장 당선인', '곳')],
+         '당선인', '광역단체장 당선인', '곳'),
+        ('hx-round-table-detail', '3', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
+         '1위', '시군구별 광역단체장 득표', '개 지역')],
     ('local', 'mayor'): [
         ('hx-round-table', '4', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
          '당선인', '기초단체장 당선인', '곳')],
@@ -962,6 +968,26 @@ HIST_TC = {
         ('hx-round-table-detail', '11', 'sigungu', ['sido', 'sigungu'], ['시도', '시군구'],
          '1위', '시군구별 교육감 득표', '개 지역')],
 }
+
+
+def has_office_detail(slug: str, type_key: str, off_slug: str) -> bool:
+    """그 쪽에 **자기만의 내용**이 있는가 — 요약 말고 상세 행이 있는가.
+
+    광역단체장은 시도 단위로 뽑으므로 요약 표 16행이 archive의 「시도별 광역단체장」과
+    같은 행이다. 상세(시군구별 득표)가 있으면 그건 요약일 뿐이지만, **없으면 그 쪽은
+    통째로 archive의 복사본이다.** 1~4회(1995~2006)가 그렇다 — NEC가 그 회차
+    광역단체장의 시군구별 득표를 주지 않는다(tc=3 scope=sigungu가 0건).
+    docs/absence.md의 '못 받았다'이고, 내용을 더 실을 수 없으니 canonical로 넘긴다.
+    """
+    specs = HIST_TC.get((type_key, off_slug)) or []
+    detail = [s for s in specs if s[0].endswith('-detail')]
+    if not detail:
+        return True          # 애초에 요약/상세로 안 나뉜 직위(기초단체장 등)
+    races = _rt.load_races(slug) if slug else []
+    for _sec, tc, scope, *_ in detail:
+        if any(r.get('sg_typecode') == tc and r.get('scope') == scope for r in races):
+            return True
+    return False
 
 
 def round_table(slug: str, type_key: str, off_slug: str = '') -> str:
@@ -1060,6 +1086,14 @@ def build_history(manifest: dict, elections: dict, urls: list):
                             f'시군구 hex 격자로 지역별 1위 정당과 득표율을 한눈에.')
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
                     init_state = {'type': type_key, 'n': n, 'office': office_ko}
+                    slug0 = slugs.get((type_key, n))
+                    # 상세가 없으면 이 쪽은 archive의 복사본이다 — 그렇게 선언하고
+                    # sitemap에서도 뺀다. 페이지 자체는 남긴다(형제 내비·탐색은 살아야 한다).
+                    dup_of = (f'/archive/{slug0}/'
+                              if slug0 and not has_office_detail(slug0, type_key, off_slug)
+                              else None)
+                    if dup_of:
+                        canon = dup_of
                     turnout = meta.get('turnout')
                     bits = [f'{el_date} 실시']
                     if turnout:
@@ -1078,7 +1112,8 @@ def build_history(manifest: dict, elections: dict, urls: list):
                                                     og_image=_round_card(slug)),
                                        intro, ld)
                     write_page(ROOT / 'history' / type_slug / str(n) / off_slug / 'index.html', html)
-                    urls.append((canon, '0.6', 'yearly'))
+                    if not dup_of:
+                        urls.append((canon, '0.6', 'yearly'))
                     # 실제로 만든 경로를 남긴다 — 클라이언트(lens-switcher)가 링크를
                     # 조립할 때 추측하지 않게. 지선은 /history/local/{n}/ 자체가 없고
                     # 직위 세그먼트까지 있어야 하는데, 그걸 모르고 만들어 404가 났다.
