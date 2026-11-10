@@ -63,6 +63,7 @@ jobs:
       ref: ${{ needs.revision.outputs.sha }}
 
   build-deploy:
+    timeout-minutes: 30
     needs: [revision, checks]
     runs-on: ubuntu-latest
     environment:
@@ -113,6 +114,8 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
         with:
+          # 파일 동기화 후 공개 전환이 기본 10분을 넘긴 사례가 있어 20분까지 기다린다.
+          timeout: 1200000
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: 실제 서비스에 같은 SHA가 반영됐는지 확인
