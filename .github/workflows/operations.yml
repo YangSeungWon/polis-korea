@@ -1,0 +1,28 @@
+name: Live service health
+
+# push가 없어도 서비스·배포 지연·수집 결손을 확인한다.
+on:
+  schedule:
+    - cron: '23 8 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-service-health
+  cancel-in-progress: false
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 배포 지연·데이터 신선도 (수동 갱신 필요도 실패)
+        run: python scripts/audit/check_operations.py

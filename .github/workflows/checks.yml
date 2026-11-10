@@ -26,18 +26,22 @@ name: Checks (구조 불변식)
 #   대비 4.5:1을 못 넘는다 — 정의당 노랑은 흰 배경에서 1.17:1로 사실상 안 보인다.
 #   렌더러가 color:${pcol(...)} 같은 걸 새로 쓰면 여기서 잡는다.
 #
-# 새 불변식이 생기면 이 잡에 단계로 추가할 것 — 배포(pages.yml)를 막지 않는 별도 잡이라
-# 실패해도 사이트는 계속 뜨고, 빨간 X로 알린다.
+# 새 불변식이 생기면 이 잡에 단계로 추가할 것.
+# 배포 워크플로도 같은 검사를 호출하며, 실패하면 새 버전 배포를 막는다.
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
   workflow_dispatch: {}
+  workflow_call:
+    inputs:
+      ref:
+        description: 검사할 배포 커밋 SHA
+        required: true
+        type: string
 
 concurrency:
-  group: checks-${{ github.ref }}
+  group: checks-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -47,6 +51,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -57,6 +63,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      - name: 운영 감시 회귀 검사
+        run: python tests/test_operations.py
 
       - name: nav 단일 출처 (생성기가 사본을 박지 않았는지)
         run: python scripts/build/sync_nav_html.py --check
@@ -202,6 +211,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4

@@ -105,11 +105,13 @@ def main() -> int:
         ck(f"{_lbl}: 주기 {_cad}일이 실제 발표 간격(중앙값 {_med:.0f}일)을 덮는다",
            _cad >= _med, f"{_cad} < {_med}")
 
-    # 갤럽 휴간이 overdue로 잡히면 모델이 되돌아간 것이다
-    gal = [f for f in fresh if "갤럽" in f["label"]]
-    ck("갤럽이 overdue로 잡히지 않는다 (휴간 반영)",
-       all(f["state"] != "overdue" for f in gal),
-       str({f["label"]: f["state"] for f in gal}))
+    # 휴간 모델은 그 휴간 날짜에 검증한다. 오늘 자료가 낡은 것은 운영 감시가 판정한다.
+    from unittest.mock import patch
+    with patch("health.data_date", return_value="2026-07-25"):
+        paused = data_freshness(today=D("2026-08-04"))
+    gal = [f for f in paused if "갤럽" in f["label"]]
+    ck("휴간 중 갤럽이 overdue로 잡히지 않는다",
+       all(f["state"] != "overdue" for f in gal))
 
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0

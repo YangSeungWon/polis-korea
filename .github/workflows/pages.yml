@@ -2,11 +2,22 @@ name: Deploy to GitHub Pages
 
 # 정적 사이트 배포 — master push마다 TS 지도 모듈을 빌드(esbuild)해 산출물 포함 후 배포.
 # 기존 legacy(브랜치 직접 서빙) 대체: 이제 assets/hexgrid.js는 커밋 안 하고 CI가 생성.
-# 데이터 갱신 워크플로(daily-refresh 등)가 master에 push하면 이 워크플로가 자동 재배포.
+# GITHUB_TOKEN push는 후속 push 이벤트를 만들지 않는다. 수집 완료 이벤트로 연결하고,
+# 최신 master SHA를 고정해 같은 커밋을 검사·배포한다.
 on:
   push:
     branches: [master]
   workflow_dispatch: {}
+  workflow_run:
+    workflows:
+      - Daily data refresh
+      - Daily tracker refresh
+      - Weekly SEO coverage (색인·노출 수집)
+      - Election finalize (잠정→확정 승격)
+      - Election results polling (개표 추적)
+      - Pledge capture (선거공약 캡처)
+    types: [completed]
+    branches: [master]
 
 permissions:
   contents: read
@@ -19,7 +30,40 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  revision:
+    # 수집 실패여도 이미 커밋된 결과가 있을 수 있다. 신뢰하는 기본 브랜치만 읽는다.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.revision.outputs.sha }}
+      changed: ${{ steps.revision.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+      - name: 배포할 커밋 고정 (변경 없는 예약 실행은 생략)
+        id: revision
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          if python3 scripts/audit/check_operations.py --deployment-only --exact; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  checks:
+    needs: revision
+    if: needs.revision.outputs.changed == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/checks.yml
+    with:
+      ref: ${{ needs.revision.outputs.sha }}
+
   build-deploy:
+    needs: [revision, checks]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -27,6 +71,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.revision.outputs.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -49,7 +95,7 @@ jobs:
       # 저장소에는 커밋하지 않는다 — 커밋하면 매 배포마다 4,900개가 바뀌고
       # 생성기 멱등성 검사가 매번 깨진다.
       - name: 빌드 SHA 새기기 (배포본 전용)
-        run: python3 scripts/build/stamp_build.py
+        run: python3 scripts/build/stamp_build.py --sha "$(git rev-parse --short=12 HEAD)"
 
       - name: Prune build deps (정적 산출물만 배포)
         run: rm -rf node_modules
@@ -65,3 +111,6 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: 실제 서비스에 같은 SHA가 반영됐는지 확인
+        run: python3 scripts/audit/check_operations.py --deployment-only --exact --attempts 12 --delay 10
