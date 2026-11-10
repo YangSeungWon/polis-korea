@@ -80,7 +80,7 @@ function renderIndirectCard(el, nat) {
   const kind = el.indirect_kind || '간접선거';
   const elec = total ? `선거인 ${total.toLocaleString()}명` : '';
   return `<div class="indirect-card">
-    <div class="ind-badge">간접선거 · ${kind}</div>
+    <div class="ind-badge">${kind === '간접선거' ? kind : `간접선거 (${kind})`}</div>
     <h3>${el.n}대 대통령선거 <span class="ind-date">${el.date || ''}</span></h3>
     <p class="ind-note">국민 직접투표가 아니라 <b>${kind}</b>가 대통령을 선출했습니다.
       지역별(시·도/시·군·구) 개표가 없습니다. ${elec}</p>
@@ -108,7 +108,7 @@ function renderSeatsCard(el, district) {
     </div>`;
   }).join('');
   return `<div class="indirect-card">
-    <div class="ind-badge" style="background:#2d6e7e">옛 총선 · 지역구 지도 없음</div>
+    <div class="ind-badge" style="background:#2d6e7e">지역구 지도가 없는 옛 총선</div>
     <h3>${el.n}대 국회의원선거 <span class="ind-date">${el.date || ''}</span></h3>
     <p class="ind-note">옛 회차라 선거구 경계 지도가 없습니다. 지역구 당선 <b>정당별 의석</b> (총 ${total}석):</p>
     <div class="ind-rows">${rows}</div>
@@ -226,7 +226,7 @@ function renderRoundsSeg() {
     const option = document.createElement('option');
     option.value = JSON.stringify([e.n, e.variant || null]);
     const round = e.btn || `${e.n}${state.type === 'local' ? '회' : '대'}`;
-    option.textContent = `${e.date.slice(0, 4)}년 · ${round}${!e.variant && !available.includes(e.n) ? ' · 데이터 미수집' : ''}`;
+    option.textContent = `${e.date.slice(0, 4)}년 (${round}${!e.variant && !available.includes(e.n) ? ', 데이터 미수집' : ''})`;
     select.appendChild(option);
   }
   select.addEventListener('change', () => setRound(...JSON.parse(select.value)));
@@ -256,7 +256,7 @@ async function setRound(n, variant = null) {
   if (select) select.value = JSON.stringify([n, variant || null]);
   const el = currentEl();
   if (el) {
-    $('#election-date').textContent = `${el.date}${el.note ? ' · ' + el.note : ''}`;
+    $('#election-date').textContent = `${el.date}${el.note ? ' (' + el.note + ')' : ''}`;
     // 정당색 시대 맥락 — 회차 변경할 때마다 그 회차 날짜로 partyColor periods 활성.
     if (typeof setPartyColorContext === 'function') setPartyColorContext(el.date);
   }
@@ -445,7 +445,7 @@ function renderDetail() {
     html += `<div class="national-summary" style="border-left-color:${color}">
       <div class="ns-title">${state.n}${state.type === 'local' ? '회' : '대'} ${TYPE_LABEL[state.type].ko} · 전국</div>
       <div class="ns-name" style="color:${_textLegible(color)}">${candLabel(top) || el?.winner || '—'}</div>
-      <div class="ns-party">${top.party} · ${top.pct?.toFixed(1)}%</div>
+      <div class="ns-party">${top.party} ${top.pct?.toFixed(1)}%</div>
       <div class="ns-stat">
         <span>투표율 ${turnoutLabel(nat?.turnout, el)}</span>
         ${el?.date ? `<span>${el.date}</span>` : ''}
@@ -518,7 +518,7 @@ function renderDetail() {
     const closeRaces = computeCloseRaces();
     if (closeRaces.length) {
       html += `<div class="hist-close">
-        <div class="hist-close-title">박빙 ${closeRaces.length}곳 <span class="hist-close-sub">격차 작은 순 · 클릭 시 그 지역으로</span></div>
+        <div class="hist-close-title">박빙 ${closeRaces.length}곳 <span class="hist-close-sub">격차가 작은 순서입니다. 지역을 선택해 자세히 보세요.</span></div>
         ${closeRaces.map((r) => {
           const top = r.candidates[0], second = r.candidates[1];
           const col1 = partyColor(top.party), col2 = partyColor(second.party);
@@ -763,7 +763,7 @@ async function init() {
     if (viz && !viz.querySelector('.pz-hint')) {
       const hint = document.createElement('div');
       hint.className = 'pz-hint';
-      hint.textContent = '✥ 두 손가락으로 확대 · 더블탭 리셋';
+      hint.textContent = '두 손가락으로 확대, 두 번 탭하여 원래 크기로';
       viz.appendChild(hint);
       const kill = () => hint.remove();
       viz.addEventListener('touchstart', kill, { once: true, passive: true });
