@@ -107,10 +107,13 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: 실제 서비스에 같은 SHA가 반영됐는지 확인
         run: python3 scripts/audit/check_operations.py --deployment-only --exact --attempts 12 --delay 10
