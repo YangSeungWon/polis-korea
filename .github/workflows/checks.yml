@@ -247,12 +247,12 @@ jobs:
 
       # 스크린샷은 판정이 아니라 사람이 보는 용도 — 실패시키지 않고 아티팩트로 남긴다.
       - name: 대표 화면 촬영
-        if: always()
+        if: always() && github.event_name == 'pull_request'
         run: node tests/ui/shoot.mjs --out=ui-shots
         continue-on-error: true
 
       - name: Upload screenshots
-        if: always()
+        if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: ui-screenshots
