@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="/">
 <title>polis · 데이터 커버리지</title>
-<meta name="description" content="대선·총선·지선·재보궐 1987-2026 데이터 가용성·source 매트릭스. 어디까지 채워졌고 어디가 비었는지.">
+<meta name="description" content="대선·총선·지선·재보궐 1987-2026 자료의 출처와 수집 범위. 확인할 수 있는 결과와 아직 없는 자료를 안내합니다.">
 <meta property="og:title" content="polis · 데이터 커버리지">
-<meta property="og:description" content="1987-2026 모든 선거 데이터의 source·갭 명시.">
+<meta property="og:description" content="1987-2026 선거 자료의 출처와 수집 범위 안내.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="/about/data-coverage/">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -39,7 +39,7 @@
 <main class="page">
   <section class="intro">
     <h1>데이터 커버리지</h1>
-    <p class="lede">1987-2026 대선·총선·지선·재보궐 회차별 데이터 source·갭.</p>
+    <p class="lede">1987년부터 2026년까지 선거별 자료의 출처와 수집 범위를 확인합니다.</p>
   </section>
 
   <section class="cov-section">
@@ -48,8 +48,8 @@
   </section>
 
   <section class="cov-section">
-    <h2 class="cov-section-title">회차별 매트릭스</h2>
-    <p class="cov-section-sub">행=종류, 열=연도. 색=source. 셀 hover로 상세.</p>
+    <h2 class="cov-section-title">선거별 자료 현황</h2>
+    <p class="cov-section-sub">선거 종류와 연도별 자료입니다. 색은 출처를 나타냅니다.</p>
     <div class="cov-legend">
       <span class="cov-tag cov-tag-nec">NEC API</span>
       <span class="cov-tag cov-tag-live">실시간 (잠정)</span>
@@ -62,27 +62,27 @@
   </section>
 
   <section class="cov-section">
-    <h2 class="cov-section-title">source 별 한계</h2>
+    <h2 class="cov-section-title">출처별 수집 범위</h2>
     <div class="cov-source-details">
       <div class="cov-src-card">
         <h3>NEC OpenAPI <span class="cov-src-tag">data.go.kr</span></h3>
-        <p>중앙선거관리위원회 공식 API. 인증키 필요. 2010-07-28 이후 모든 race 시도/시군구별 break + 후보별 득표·정당 다 포함.</p>
-        <p class="cov-caveat">한계: 그 이전(1987-2009) 데이터 안 줌.</p>
+        <p>중앙선거관리위원회에서 제공하는 자료입니다. 2010년 7월 28일 이후 선거의 지역별 결과와 후보별 득표, 소속 정당을 수집합니다.</p>
+        <p class="cov-caveat">이 경로로 수집하지 못한 이전 선거는 다른 출처를 함께 이용합니다.</p>
       </div>
       <div class="cov-src-card">
         <h3>NEC 개표 포털 (실시간) <span class="cov-src-tag">info.nec.go.kr</span></h3>
-        <p>비공식 JSON 엔드포인트. 인증키 X. 개표 진행 중 잠정값 제공 — OpenAPI보다 빠름. is_final=false.</p>
-        <p class="cov-caveat">한계: 선거 직후만. 며칠 후 OpenAPI 데이터로 자동 승계.</p>
+        <p>개표 중인 잠정 결과입니다. 확정 결과와 다를 수 있습니다.</p>
+        <p class="cov-caveat">확정 자료가 확보되면 해당 결과로 갱신합니다.</p>
       </div>
       <div class="cov-src-card">
         <h3>위키백과 한국어판 <span class="cov-src-tag">ko.wikipedia.org</span></h3>
-        <p>article infobox + body wikitable. 옛 회차 (대선 13-15·총선 13-16·지선 1-4) 결과 + 재보궐 dates·count.</p>
-        <p class="cov-caveat">한계: nation 단위 합산만. 시도/시군구 break, 후보별 상세, 정확한 사유 없음. 위키 편집 오류 가능성.</p>
+        <p>옛 선거의 결과와 재보궐선거의 실시일, 선거 수를 보완하는 자료입니다.</p>
+        <p class="cov-caveat">전국 합계만 있는 경우 지역별 결과나 후보별 상세는 확인할 수 없습니다. 편집 오류가 있을 수 있습니다.</p>
       </div>
       <div class="cov-src-card">
         <h3>결손 시기 <span class="cov-src-tag">1987-2009 재보궐</span></h3>
-        <p>재보궐 1989-2007 위키 article에서 회차 실시여부 + office별 count 확보. 1987/1988 + 일부 갭.</p>
-        <p class="cov-caveat">보강 source: NEC PDF 통계자료실, 국회도서관 PDF, 행정안전부. 수기 입력 필요.</p>
+        <p>1989~2007년 재보궐선거는 실시 여부와 직위별 선거 수를 보완했습니다. 1987~1988년을 비롯해 일부 자료는 아직 없습니다.</p>
+        <p class="cov-caveat">추가 확인이 필요한 자료: 중앙선거관리위원회 통계자료실, 국회도서관, 행정안전부.</p>
       </div>
     </div>
   </section>

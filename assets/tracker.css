@@ -6,7 +6,7 @@
   gap: 12px; margin: 0 0 6px;
   padding-bottom: 8px; border-bottom: 2px solid var(--ink);
 }
-.tk-section-title { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+.tk-section-title { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
 .tk-section-meta { font-size: 12px; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 .tk-chart { width: 100%; overflow: hidden; position: relative; }
@@ -16,6 +16,8 @@
 
 /* 모바일: 9년 시계열이 압축돼 빽빽 → 본문만 가로 스크롤, Y축은 좌측 고정 오버레이 */
 @media (max-width: 640px) {
+  .tk-section-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .tk-section-meta { white-space: normal; }
   .tk-chart { overflow: visible; }
   .tk-chart .tk-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
   .tk-chart svg.tk-body { width: auto; height: 240px; max-width: none; }

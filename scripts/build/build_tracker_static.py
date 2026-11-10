@@ -103,29 +103,26 @@ def block() -> str:
             # **산출방식이 값과 같은 자리에 있어야 한다.** 숫자만 떼어 보면(스니펫·공유)
             # 'polis의 자체 집계' 또는 '최신 단일 조사'로 읽힌다. 서로 다른 기관·기간·
             # 방법론을 단순평균한 것 자체가 또 하나의 방법론이라 감출 수 없다.
-            f'<div class="tk-sum-sub">부정 {ap["negative"]}% · '
-            f'<b>최근 {ap["n"]}개 조사 단순평균</b> '
-            f'· {esc(", ".join(ap["agencies"][:3]))}</div></div>')
+            f'<div class="tk-sum-sub">부정 {ap["negative"]}%</div>'
+            f'<div class="tk-sum-sub">최근 {ap["n"]}개 조사 단순평균 ({esc(ap["as_of"])}까지)<br>'
+            f'{esc(", ".join(ap["agencies"]))}</div></div>')
     if pt and pt["parties"]:
         # 헤드라인이 1위를 이미 말했다 — 아래 줄에서 또 쓰면 같은 값이 두 번 나온다
         top = " · ".join(f"{esc(n)} {v}%" for n, v in pt["parties"][1:])
         rows.append(
             f'<div class="tk-sum-item"><div class="tk-sum-label">정당 지지도</div>'
             f'<div class="tk-sum-value">{esc(pt["parties"][0][0])} {pt["parties"][0][1]}%</div>'
-            f'<div class="tk-sum-sub">{top} · {esc(pt["agency"])}</div></div>')
+            f'<div class="tk-sum-sub">{top}</div>'
+            f'<div class="tk-sum-sub">최근 조사: {esc(pt["agency"])} ({esc(pt["as_of"])})</div></div>')
     if not rows:
         return START + " — 표시할 최근 조사가 없다 -->\n" + END
-    as_of = max([x["as_of"] for x in (ap, pt) if x] or [""])
     out = [START + " — scripts/build/build_tracker_static.py 자동 갱신. 손수정 X. -->",
            '  <section class="tk-summary" aria-label="현재 지표 요약">',
            '    <div class="tk-sum-grid">']
     out += ["    " + r for r in rows]
     out += ['    </div>',
-            f'    <p class="tk-sum-meta">조사 기간 기준 {esc(as_of)}까지. '
-            f'국정수행 평가는 <b>최근 {ap["n"] if ap else RECENT_N}개 조사의 단순평균</b>이고 '
-            '정당 지지도는 <b>가장 최근 조사 하나</b>를 그대로 인용합니다 — '
-            'polis가 따로 보정하거나 가중하지 않습니다. '
-            '기관마다 값이 다르므로(house effect) 아래 그래프에서 산포와 추세를 봅니다.</p>',
+            '    <p class="tk-sum-meta">기관마다 조사 방식에 차이가 있습니다. '
+            '위 수치에는 별도의 보정이나 가중치를 적용하지 않았습니다.</p>',
             '  </section>',
             "  " + END]
     return "\n".join(out)

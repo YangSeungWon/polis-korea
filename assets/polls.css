@@ -148,7 +148,7 @@
 /* === 최근 여론조사 피드 (여론조사 허브 상시 섹션) === */
 .recent-polls { margin: 8px 0 24px; }
 .rp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-.rp-title { font-size: 18px; font-weight: 800; color: var(--ink); margin: 0; }
+.rp-title { font-size: 18px; font-weight: 600; color: var(--ink); margin: 0; }
 .rp-filter { flex-wrap: wrap; }
 .rp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; align-items: start; }
 .rp-grid-mini { grid-template-columns: repeat(3, 1fr); }
@@ -311,3 +311,14 @@
 /* 접힘 바로 뒤에 오는 설명 문단이 붙어 보인다 — 인용/표 접힘과 다음 이야기를 뗀다. */
 .pe-static-more + .pe-static-lede, .pe-cites + .pe-static-lede { margin-top: 16px; }
 #poll-acc-hub { margin-top: 20px; }
+
+/* 허브 비교표는 결과 열까지 모바일 첫 화면에 둔다. */
+#poll-acc-hub .pp-static { min-width: 0; width: 100%; }
+#poll-acc-hub .pp-static caption {
+  position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+#poll-acc-hub .pp-static td:not(:first-child) { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.poll-acc-meta { display: block; font-size: 12px; color: var(--ink-soft); font-weight: 400; }
+.pe-static .ar-section-title { font-size: 18px; font-weight: 600; }
+#poll-acc-hub .ar-section-title { font-size: 16px; margin-bottom: 8px; }
