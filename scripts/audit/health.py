@@ -172,8 +172,8 @@ def next_expected(last: date, cadence: int, key: str | None) -> date:
     return nxt
 
 
-def data_freshness() -> list[dict]:
-    today = date.today()
+def data_freshness(today: date | None = None) -> list[dict]:
+    today = today or date.today()
     out = []
     for label, rel, cadence, key in REFRESH_TARGETS:
         fp = ROOT / rel

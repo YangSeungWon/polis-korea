@@ -67,6 +67,12 @@ jobs:
       - name: Refresh pending PDFs (늦게 첨부된 결과표 회수)
         run: python scripts/fetch/refresh_pending_pdfs.py --csv data/raw/nesdc_etc_polls.csv --max-days 14
 
+      - name: Fetch 갤럽 자체발표 (최신 보고서 자동 발견·과거 기록 보존)
+        # 소스 장애가 다른 기관의 갱신까지 막지 않게 한다. 독립 운영 감시가 지연을 실패로 알린다.
+        continue-on-error: true
+        timeout-minutes: 10
+        run: python scripts/fetch/fetch_gallup_self.py --recent
+
       # 리얼미터는 국정수행평가를 NESDC에 등록 안 함(정당지지만) → 자체 사이트 '보도용' PDF로 보완.
       # ⚠️ realmeter.net이 GitHub Actions 러너 IP를 차단 → CI에선 항상 "총 0건" (NESDC IP차단과 동일).
       #    따라서 리얼미터 국정평가는 CI로 안 차오름 → 로컬에서 주기적으로 fetch+extract+commit 해야 함
@@ -108,6 +114,7 @@ jobs:
                   data/polls/approval_general.scancache.json
           # sitemap-*.xml은 sitemap.xml(index)이 가리키는 층 파일 — 함께 넣지 않으면
           # 매일 만들고 매일 버려 index와 층 내용이 어긋난다.
+          git add data/polls/gallup_leaders.json data/polls/aggregated_gallup.json
           git add tracker.html index.html sitemap.xml sitemap-*.xml data/sitemap_lastmod.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "tracker 변경 없음 — push skip"

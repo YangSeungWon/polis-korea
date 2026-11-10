@@ -114,13 +114,39 @@ def parse(htmltext: str, seqno: int):
             "leaders": leaders, "party": party}
 
 
+def recent_bounds():
+    """공식 목록에서 상한을 찾고, 커밋된 기록 이후를 회수한다 (raw 캐시 불필요)."""
+    req = urllib.request.Request('https://www.gallup.co.kr/gallupdb/report.asp',
+                                 headers={'User-Agent': UA})
+    with urllib.request.urlopen(req, timeout=30) as response:
+        listing = response.read().decode('euc-kr', errors='replace')
+    ids = [int(n) for n in re.findall(r'seqNo=(\d+)', listing, re.I)]
+    if not ids:
+        raise RuntimeError('갤럽 공식 목록에서 보고서 번호를 찾지 못했습니다')
+    known = []
+    if OUT.exists():
+        known = [int(r['seqNo']) for r in json.loads(OUT.read_text())['records'] if r.get('seqNo')]
+    return max(ids), max(1, max(known) - 2) if known else min(ids)
+
+
+def merge_records(path, key, fresh, identity):
+    """캐시가 없는 CI에서도 커밋된 과거 기록을 보존한다."""
+    old = json.loads(path.read_text()).get(key, []) if path.exists() else []
+    combined = {identity(r): r for r in old}
+    combined.update({identity(r): r for r in fresh})
+    return list(combined.values())
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--from", dest="frm", type=int, default=1645)
     ap.add_argument("--to", dest="to", type=int, default=1400)
     ap.add_argument("--max", type=int, default=300)
     ap.add_argument("--sleep", type=float, default=0.4)
+    ap.add_argument("--recent", action="store_true", help="공식 목록에서 최신 보고서 자동 발견")
     args = ap.parse_args()
+    if args.recent:
+        args.frm, args.to = recent_bounds()
 
     CACHE.mkdir(parents=True, exist_ok=True)
     idx_path = CACHE / "index.json"
@@ -130,6 +156,7 @@ def main():
         return e is None or (isinstance(e, dict) and "party" not in e)
 
     scanned = 0
+    failed = []
     for seq in range(args.frm, args.to - 1, -1):
         if scanned >= args.max:
             break
@@ -139,6 +166,8 @@ def main():
         scanned += 1
         h = fetch(seq)
         time.sleep(args.sleep)
+        if h is None:
+            failed.append(seq)
         res = parse(h, seq) if h else None
         # sentinel: 빈 결과도 party 키 든 dict로 저장 → 다음 run에서 재fetch 안 함(None은 fetch 실패만)
         idx[key] = res if res else ({"period_end": None, "ho": None, "leaders": [], "party": {}} if h else None)
@@ -161,6 +190,7 @@ def main():
             if nm not in _STOP:
                 lrecs.append({"date": v["period_end"], "ho": v.get("ho"), "candidate": nm,
                               "party": NAME_PARTY.get(nm, ""), "pct": pct, "seqNo": int(seq)})
+    lrecs = merge_records(OUT, "records", lrecs, lambda r: (r["seqNo"], r["candidate"]))
     lrecs.sort(key=lambda r: (r["date"], -r["pct"]))
     OUT.write_text(json.dumps({"_meta": {"source": "gallup.co.kr 데일리 오피니언 '장래 정치 지도자 선호도'(자유응답)",
                    "kind": "gallup_leaders_open", "agency": "한국갤럽조사연구소",
@@ -179,12 +209,16 @@ def main():
                       "period_end": v["period_end"], "sido": "", "metric_type": "정당지지",
                       "office_level": "", "candidates": cands,
                       "source_url": URL.format(n=seq).split('&')[0]})
+    polls = merge_records(PARTY_OUT, "polls", polls, lambda r: r["ntt_id"])
     polls.sort(key=lambda p: p["period_end"])
     PARTY_OUT.write_text(json.dumps({"_meta": {"source": "gallup.co.kr 데일리 오피니언 정당지지도(HTML 산문)",
                    "note": "갤럽 정당지지 — NESDC VT012 미포함분 보완. 트래커 정당지지 소스."},
                    "polls": polls}, ensure_ascii=False, separators=(",", ":")))
     pm = sorted(set(p["period_end"] for p in polls))
     print(f"→ {PARTY_OUT.name}: {len(polls)}건 정당지지, {pm[0] if pm else '?'}~{pm[-1] if pm else '?'}")
+
+    if failed:
+        raise RuntimeError(f"갤럽 보고서 수집 실패: {failed}; 기존 기록 보존")
 
 
 if __name__ == "__main__":
