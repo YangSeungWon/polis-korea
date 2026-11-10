@@ -708,9 +708,8 @@ def _write_poll_acc_hub(made_sorted: list) -> None:
     선거에서 여론조사가 얼마나 맞았는지를 한 표로 본다.
 
     ⚠️ 계열마다 **세는 단위가 다르다**. 총선은 지역구, 대선은 시도 1위, 지선은
-    광역단체장이다. 그냥 줄세우면 20대 대선 13/17이 '여론조사가 틀렸다'로 읽히는데,
-    실제로는 **박빙 시도가 많았다**는 뜻이다. 그래서 계열별로 나누고 단위를 칼럼에
-    적고, 그 문장을 표 옆에 둔다.
+    광역단체장이다. 서로 다른 기준을 같은 척도로 비교하지 않도록 종류별로 나누고,
+    각 선거의 비교 대상을 선거명 아래에 표시한다.
     """
     src = ROOT / 'polls.html'
     if not src.exists():
@@ -732,23 +731,21 @@ def _write_poll_acc_hub(made_sorted: list) -> None:
                 continue
             pct = round(o['match'] / o['total'] * 100)
             rows.append([
-                f'<a href="/polls/{m["slug"]}/">{_esc(m["name"])}</a>',
-                # 무엇을 세는지를 직위까지 밝힌다 — '시도'만 적으면 지선 행이
-                # 광역단체장인지 교육감인지 알 수 없다.
-                _esc(m['date']), _esc(f"{HEAD[kind]} · {o['unit']}"),
+                f'<a href="/polls/{m["slug"]}/">{_esc(m["name"])}</a>'
+                f'<span class="poll-acc-meta">{_esc(m["date"])}</span>'
+                f'<span class="poll-acc-meta">{_esc(HEAD[kind])} ({_esc(o["unit"])})</span>',
                 f'{o["match"]}/{o["total"]}', f'{pct}%',
             ])
         sections.append(_rt.table_html(
-            f'poll-acc-{kind}', f'{ko} — 여론조사 1위가 실제와 같았던 비율',
-            ['선거', '선거일', '세는 대상', '적중', ''], rows, unit='번'))
+            f'poll-acc-{kind}', ko,
+            ['선거', '일치', '비율'], rows, unit='번'))
     body = ''.join(s for s in sections if s)
     if not body:
         return
-    note = ('<p class="pe-static-lede">2016년 이후 NESDC에 등록된 조사만 다룹니다'
-            '(그 이전은 <a href="/history.html">역대 결과</a>). '
-            '<b>계열끼리 견주지 마십시오</b> — 총선은 지역구 254곳, 대선은 시도 17곳, '
-            '지선은 광역단체장 17곳을 셉니다. 대선이 낮게 나오는 것은 조사가 틀렸다기보다 '
-            '<b>박빙 시도가 많았다</b>는 뜻입니다. 시도 1위는 몇천 표로 뒤집힙니다.</p>')
+    note = ('<p class="pe-static-lede">여론조사 1위와 실제 결과가 일치한 지역의 비율입니다. '
+            '2016년 이후 NESDC 등록 조사를 비교합니다. '
+            '대선은 시도별 1위, 총선은 지역구, 지선은 광역단체장 선거를 세므로 '
+            '서로 다른 종류의 선거를 같은 기준으로 비교할 수 없습니다.</p>')
     block = ('<!-- POLL_ACC_HUB — build_static.py 자동 갱신. 손수정 X.\n'
              '         ⚠️ polls.html은 14쪽의 틀이기도 하다 — 파생 페이지는 _strip_hub가 비운다. -->\n'
              '    <section class="pe-static" id="poll-acc-hub">\n'
