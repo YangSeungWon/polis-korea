@@ -85,15 +85,17 @@ await page.waitForTimeout(1200);
 const pushDead = []; let n_push = 0;
 for (const t of (await page.$$('.seg-btn')).slice(0, 3)) {
   try { await t.click({ timeout: 1500 }); await page.waitForTimeout(600); } catch { continue; }
-  for (const r of (await page.$$('[data-n], .seg-rounds .seg-btn')).slice(-4)) {
-    try { await r.click({ timeout: 1200 }); await page.waitForTimeout(500); } catch { continue; }
+  const rounds = await page.locator('#round-select option').evaluateAll(options => options.slice(-4).map(o => o.value));
+  for (const value of rounds) {
+    await page.selectOption('#round-select', value);
+    await page.waitForTimeout(500);
     const path = new URL(page.url()).pathname;
     if (path === '/history.html') continue;
     n_push++;
     if (await alive(path) >= 400) pushDead.push(path);
   }
 }
-ck(`회차 전환 ${n_push}회의 주소가 전부 실재`, !pushDead.length,
+ck(`회차 전환 ${n_push}회의 주소가 전부 실재`, n_push === 12 && !pushDead.length,
   [...new Set(pushDead)].slice(0, 3).join(' · '));
 
 // ── 4. 대표 경로 fixture — 회귀 방지 ────────────────────────────────────────

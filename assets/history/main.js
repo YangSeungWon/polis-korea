@@ -208,26 +208,29 @@ function currentEl() {
 function renderRoundsSeg() {
   const seg = $('#rounds-seg');
   seg.innerHTML = '';
+  seg.setAttribute('role', 'group');
+  const label = document.createElement('label');
+  label.htmlFor = 'round-select';
+  label.textContent = '선거 연도';
+  const select = document.createElement('select');
+  select.id = 'round-select';
   const list = state.elections[state.type]?.elections || [];
   const available = state.elections._available?.[state.type] || [];
   const seen = new Set();
   for (const e of list) {
-    // variant(별도 키, 예 4대 3·15)는 같은 n이어도 별 버튼으로. 일반 회차는 n당 하나.
+    // 같은 회차의 별도 선거(예: 1960년 3·15)도 각각 선택할 수 있다.
     if (!e.variant) {
       if (seen.has(e.n)) continue;
       seen.add(e.n);
     }
-    const btn = document.createElement('button');
-    btn.className = 'seg-btn';
-    if (e.variant) btn.classList.add('seg-variant');
-    if (!e.variant && !available.includes(e.n)) btn.classList.add('no-data');
-    btn.dataset.n = e.n;
-    if (e.variant) btn.dataset.variant = e.variant;
-    btn.textContent = e.btn || `${e.n}`;
-    btn.title = `${e.date}${e.note ? ' · ' + e.note : ''}${(e.variant || available.includes(e.n)) ? '' : ' · 데이터 미수집'}`;
-    btn.addEventListener('click', () => setRound(e.n, e.variant || null));
-    seg.appendChild(btn);
+    const option = document.createElement('option');
+    option.value = JSON.stringify([e.n, e.variant || null]);
+    const round = e.btn || `${e.n}${state.type === 'local' ? '회' : '대'}`;
+    option.textContent = `${e.date.slice(0, 4)}년 · ${round}${!e.variant && !available.includes(e.n) ? ' · 데이터 미수집' : ''}`;
+    select.appendChild(option);
   }
+  select.addEventListener('change', () => setRound(...JSON.parse(select.value)));
+  seg.append(label, select);
 }
 
 // 교육감은 5회(2010)부터 전국 직선 동시선거 — 1~4회엔 office 선택지에서 숨기고,
@@ -249,9 +252,8 @@ async function setRound(n, variant = null) {
   state.selected = null;
   updateOfficeAvailability(n);
   updateURL();
-  document.querySelectorAll('#rounds-seg [data-n]').forEach((b) => {
-    b.classList.toggle('is-active', +b.dataset.n === n && (b.dataset.variant || '') === (variant || ''));
-  });
+  const select = $('#round-select');
+  if (select) select.value = JSON.stringify([n, variant || null]);
   const el = currentEl();
   if (el) {
     $('#election-date').textContent = `${el.date}${el.note ? ' · ' + el.note : ''}`;
