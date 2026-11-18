@@ -77,6 +77,7 @@
         <option value="기초의원">기초의원</option>
       </select>
       <span class="ar-winners-count" id="ar-winners-count"></span>
+      <button type="button" class="fig-tool" id="ar-winners-csv" title="지금 필터에 걸린 당선자 전부(화면의 500명 제한 없이)">CSV</button>
     `;
     body.innerHTML = '';
     body.appendChild(ctrl);
@@ -98,16 +99,11 @@
       }
     }
 
-    function render() {
+    function current() {
       const q = document.getElementById('ar-winners-q').value.trim().toLowerCase();
       const sido = document.getElementById('ar-winners-sido').value;
       const party = document.getElementById('ar-winners-party').value;
       const level = document.getElementById('ar-winners-level').value;
-      if (VS) {
-        const patch = {};
-        for (const [id, k] of Object.entries(URL_KEYS)) patch[k] = document.getElementById(id).value.trim() || null;
-        VS.set(patch);
-      }
       const filtered = winners.filter((w) => {
         if (sido && w.sido !== sido) return false;
         if (party && w.party !== party) return false;
@@ -115,6 +111,33 @@
         if (q && !`${w.name} ${w.district}`.toLowerCase().includes(q)) return false;
         return true;
       });
+      return { q, sido, party, level, filtered };
+    }
+
+    // 추출은 결과만이 아니라 **조건도** — CSV 머리에 어떤 필터로 뽑았는지 적는다.
+    document.getElementById('ar-winners-csv').addEventListener('click', () => {
+      const FT = window.FigureTools;
+      if (!FT) return;
+      const { q, sido, party, level, filtered } = current();
+      const cond = [q && `검색 "${q}"`, sido, party, level].filter(Boolean).join(' · ') || '필터 없음(전체)';
+      const meta = (ctx && ctx.meta) || {};
+      FT.download(`${meta.id || 'winners'}-winners.csv`, FT.toCSV([
+        { key: 'level', label: '직급' }, { key: 'sido', label: '시도' }, { key: 'district', label: '선거구' },
+        { key: 'name', label: '당선자' }, { key: 'party', label: '정당' }, { key: 'pct', label: '득표율' },
+      ], filtered, [
+        `${meta.name || ''} 당선자 · ${filtered.length}명`,
+        `조건: ${cond}`,
+        `내려받은 화면: ${location.href}`,
+      ]));
+    });
+
+    function render() {
+      const { q, sido, party, level, filtered } = current();
+      if (VS) {
+        const patch = {};
+        for (const [id, k] of Object.entries(URL_KEYS)) patch[k] = document.getElementById(id).value.trim() || null;
+        VS.set(patch);
+      }
       document.getElementById('ar-winners-count').textContent = `${filtered.length}명`;
       // 필터 없으면 2,661명 통째 dump 대신 안내(지도 클릭·검색 유도) — 광역의원만 500개 깔리는 문제 방지.
       if (!(q || sido || party || level)) {

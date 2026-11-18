@@ -765,6 +765,19 @@ async function init() {
     if (!viz || !enc) return;
     const tg = document.createElement('div'); tg.className = 'hist-viz-toggles';
     tg.appendChild(enc);
+    // 링크 복사 — URL이 회차·방식·선택·줌을 담고 있으므로 지금 화면 그대로 보낸다(Extract).
+    if (window.FigureTools) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'fig-tool hist-copy-link';
+      b.textContent = '링크 복사';
+      b.title = '지금 보이는 회차·방식·선택·확대까지 담긴 링크';
+      b.addEventListener('click', async () => {
+        const ok = await window.FigureTools.copyText(location.href);
+        b.textContent = ok ? '복사됨' : '복사 실패';
+        setTimeout(() => { b.textContent = '링크 복사'; }, 1800);
+      });
+      tg.appendChild(b);
+    }
     viz.appendChild(tg);
   })();
   // 모바일 핀치 힌트 — 한 번만, 첫 터치/5초 후 사라짐.

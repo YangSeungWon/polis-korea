@@ -162,6 +162,57 @@ if (await page.$('#ar-winners-sido')) {
   ck('9회 지선 당선자 표가 있다', false, '#ar-winners-sido 없음');
 }
 
+// ── 여론조사 ──────────────────────────────────────────────────────
+console.log('여론조사 (지선)');
+const activeOf = (sel) => page.$eval(sel, (b) => b.classList.contains('is-active')).catch(() => false);
+await page.goto(srv.url + '/polls/9th-local-2026/?office=' + encodeURIComponent('기초단체장')
+  + '&mode=polls&view=map&sel=' + encodeURIComponent('경기도'));
+await page.waitForSelector('#detail-pane h2', { timeout: 20000 }).catch(() => null);
+await settle();
+ck('?office=기초단체장 복원', await activeOf('[data-office="기초단체장"]'));
+ck('?mode=polls 복원(과거 선거 기본은 result)', await activeOf('[data-mode="polls"]'));
+ck('?view=map 복원', !(await page.$eval('#map', (e) => e.hidden).catch(() => true)));
+ck('?sel=경기도 → 상세 패널', /경기도/.test(await page.$eval('#detail-pane', (e) => e.textContent).catch(() => '')));
+const L3 = await histLen();
+await page.click('[data-office="광역단체장"]');
+await settle();
+ck('페이지 기본 직위로 → ?office 사라짐', !('office' in (await q())), JSON.stringify(await q()));
+await page.click('[data-mode="result"]');
+await settle();
+ck('기본 자료로 → ?mode 사라짐', !('mode' in (await q())), JSON.stringify(await q()));
+ck('여론조사 토글은 뒤로가기 항목을 안 만든다', (await histLen()) === L3, `${L3}→${await histLen()}`);
+
+console.log('여론조사 (대선·총선)');
+await page.goto(srv.url + '/polls/21st-pres-2025/?view=grid&mode=polls');
+await page.waitForSelector('.pres-view-enc [data-enc].is-active', { timeout: 20000 }).catch(() => null);
+await settle();
+ck('대선 폴 ?view=grid 복원', (await activeEnc('.pres-view-enc')) === 'grid', await activeEnc('.pres-view-enc'));
+ck('대선 폴 ?mode=polls 복원', await activeOf('[data-pmode="polls"]'));
+await page.click('.pres-view-enc [data-enc="map"]');
+await settle();
+ck('대선 폴 방식 전환 → ?view=map', (await q()).view === 'map', JSON.stringify(await q()));
+await page.goto(srv.url + '/polls/22nd-general-2024/?mode=polls');
+await page.waitForSelector('[data-dmode]', { timeout: 20000 }).catch(() => null);
+await settle();
+ck('총선 폴 ?mode=polls 복원', await activeOf('[data-dmode="polls"]'));
+
+// ── 검색·지역 허브 ──────────────────────────────────────────────────
+console.log('검색·지역 허브');
+await page.goto(srv.url + '/search.html?q=' + encodeURIComponent('이재명') + '&round=' + encodeURIComponent('대선'));
+await page.waitForTimeout(1500);
+ck('검색 ?q= 복원', (await page.$eval('#q', (e) => e.value)) === '이재명');
+ck('검색 ?round=대선 복원', await activeOf('[data-round="대선"]'));
+await page.fill('#q', '김대중');
+await page.press('#q', 'Enter');
+await settle();
+ck('검색어를 고치면 ?q= 갱신', (await q()).q === '김대중' && (await q()).round === '대선', JSON.stringify(await q()));
+await page.goto(srv.url + '/region/?q=' + encodeURIComponent('성남'));
+await settle();
+ck('지역 허브 ?q= 복원·적용', (await page.$eval('#rg-q', (e) => e.value)) === '성남' && /곳/.test(await page.$eval('#rg-hit', (e) => e.textContent)));
+await page.fill('#rg-q', '');
+await settle();
+ck('지역 허브 검색어 지우면 ?q 사라짐', !('q' in (await q())), JSON.stringify(await q()));
+
 ck('페이지 오류 없음', errs.length === 0, errs.slice(0, 3).join(' | '));
 
 await browser.close();

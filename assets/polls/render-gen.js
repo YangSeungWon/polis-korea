@@ -4,6 +4,18 @@
 (function () {
   'use strict';
   const gs = { propRace: null, propSidoRaces: [], pmap: 'dorling', districtRaces: [], layout: null, dmode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', selected: null, pollFn: null, resultFn: null };
+  // 화면 상태 ↔ URL — ?view=(비례 분포 방식) ?mode=(지역구 자료). 기본값이면 지운다.
+  const GS_DEF = { view: gs.pmap, mode: gs.dmode };
+  (function restore() {
+    if (typeof ViewState === 'undefined') return;
+    const m = ViewState.get('mode'), v = ViewState.get('view');
+    if (m === 'polls' || m === 'result') gs.dmode = m;
+    if (v === 'dorling' || v === 'grid' || v === 'map') gs.pmap = v;
+  })();
+  function syncURL() {
+    if (typeof ViewState === 'undefined') return;
+    ViewState.set({ view: gs.pmap === GS_DEF.view ? null : gs.pmap, mode: gs.dmode === GS_DEF.mode ? null : gs.dmode });
+  }
 
   async function loadResults() {
     try {
@@ -59,12 +71,12 @@
     if (encHost) {
       const OPTS = [{ key: 'dorling', label: '원형' }, { key: 'grid', label: '격자' }, { key: 'map', label: '지도' }];
       if (window.EncodingToggle) {
-        window.EncodingToggle.render(encHost, { options: OPTS, active: gs.pmap, onSelect: (v) => { gs.pmap = v; drawPropMap(); } });
+        window.EncodingToggle.render(encHost, { options: OPTS, active: gs.pmap, onSelect: (v) => { gs.pmap = v; syncURL(); drawPropMap(); } });
       } else {
         encHost.classList.add('seg');
         encHost.innerHTML = OPTS.map((o) => `<button class="seg-btn${o.key === gs.pmap ? ' is-active' : ''}" data-pmap="${o.key}">${o.label}</button>`).join('');
         encHost.querySelectorAll('[data-pmap]').forEach((b) => b.addEventListener('click', () => {
-          gs.pmap = b.dataset.pmap;
+          gs.pmap = b.dataset.pmap; syncURL();
           encHost.querySelectorAll('[data-pmap]').forEach((x) => x.classList.toggle('is-active', x === b));
           drawPropMap();
         }));
@@ -136,7 +148,7 @@
       },
     });
     host.querySelectorAll('[data-dmode]').forEach((b) => b.addEventListener('click', () => {
-      gs.dmode = b.dataset.dmode; renderDistrict();
+      gs.dmode = b.dataset.dmode; syncURL(); renderDistrict();
     }));
     renderReadout();
   }

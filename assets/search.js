@@ -89,7 +89,15 @@
     return `<span class="s-party" style="color:${tcol};border-color:${col}">${party || '무소속'}</span>`;
   }
 
+  // 검색어·종류 ↔ URL(replace). 결과 화면을 그대로 링크로 보낼 수 있게 — 예전엔 ?q=를
+  // 읽기만 하고 쓰지 않아서, 입력창에서 고친 검색은 주소창에 안 남았다.
+  function syncURL(q) {
+    if (typeof ViewState === 'undefined') return;
+    ViewState.set({ q: String(q || '').trim() || null, round: filterRound || null });
+  }
+
   function render(rawQ) {
+    syncURL(rawQ);
     const q = normalize(rawQ);
     const partyMatches = filterRound ? [] : matchParties(q);
     const filtered = items.filter((it) => {
@@ -190,6 +198,12 @@
     const params = new URLSearchParams(location.search);
     const qp = params.get('q');
     if (qp) input.value = qp;
+    const rp = params.get('round');
+    const rb = rp && document.querySelector(`[data-round="${CSS.escape(rp)}"]`);
+    if (rb) {
+      filterRound = rp;
+      document.querySelectorAll('[data-round]').forEach((x) => x.classList.toggle('is-active', x === rb));
+    }
     load();
   }
 

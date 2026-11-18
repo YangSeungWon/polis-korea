@@ -1,26 +1,31 @@
 # 데이터 디렉터리 — 출처와 수집 흐름
 
-vote.ysw.kr의 모든 데이터셋·원본·생성물 정리.
+polis.ysw.kr의 모든 데이터셋·원본·생성물 정리. (사이트 이용자용 안내 — 파일 형식·출처·이용 조건 —
+는 `/about/data/`에 있다. 여기는 개발자용 지도다.)
 
 ## 디렉터리 구조
 
 ```
 data/
 ├── elections.json          # 회차 메타 (날짜·label·당선자) - 수동 관리
+├── elections/{id}.json     # 선거별 메타 레지스트리 (archive 페이지·결과 경로·출처)
+├── archive_index.json      # 선거 목록 (slug = 위 {id})
 ├── geo/                    # 지리·hex layout - 생성물 (scripts/build_*)
-├── raw/                    # 원본 다운로드 (수집 스크립트 입력)
-├── parsed/                 # 중간 산출물 (raw → 정제)
+├── raw/                    # 원본 다운로드 (수집 스크립트 입력). raw/parsed/ = PDF 파싱 중간 산출물
 ├── results/                # 최종 결과 JSON (UI fetch 대상)
-├── polls/                  # 9회 지선 여론조사 (NESDC)
+├── polls/                  # 여론조사 (NESDC) · 국정평가 · 트래커 시계열
+├── parties/                # 정당 registry(확인) · observed(관측) · 계보·축
+├── comparisons/            # 직전 회차 대비 정당 득표 비교
 └── seo/                    # 색인·노출 수집 (GSC Search Analytics) - docs/seo-coverage.md
 ```
 
 ## results/ — 역대 선거 결과 (UI fetch)
 
-`/history` 페이지가 fetch. 파일명 `{type}_{n}.json`:
-- `presidential_{16..21}.json`
-- `national_assembly_{17..22}.json`
-- `local_{5..8}.json`
+두 이름 체계가 공존한다:
+- `{id}.json` — 선거 id(= `archive_index.json`의 slug, 예 `21st-pres-2025`). archive 페이지가 fetch.
+  `_meta.chunked`가 참이면 시군구 단위가 `{id}.sigungu.json`에 따로 있다.
+- `presidential_{16..21}.json` · `national_assembly_{n}.json` — `/history` 탐색기의 옛 경로(폴백).
+- `byelection-{YYYY-MM-DD}.json` — 재·보궐.
 
 스키마는 `data/results/README.md`.
 

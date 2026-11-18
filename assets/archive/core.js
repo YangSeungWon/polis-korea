@@ -73,6 +73,7 @@
   window.Archive.pledgeRealms?.render(ctx);
   mountTrust(ctx);
   showDataFailBanner();
+  window.FigureTools?.mountArchive(ctx);   // 링크 복사·그림·결과 CSV (Extract)
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
@@ -95,6 +96,7 @@
     if (mode && mode.renderDeferred) await mode.renderDeferred(ctx);
     mountTrust(ctx);   // 출구조사·여론조사는 2단계에서 오므로 한 번 더 (mount는 교체 방식)
     showDataFailBanner();
+    window.FigureTools?.mountArchive(ctx);   // 2단계에서 생긴 지도 섹션에도 (섹션마다 한 번만 붙는다)
   })();
 })();
 

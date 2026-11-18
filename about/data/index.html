@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script>try{var _m=localStorage.getItem('vote-ysw-theme');if(_m==='dark')document.documentElement.setAttribute('data-theme','dark');else if(_m==='light')document.documentElement.setAttribute('data-theme','light');}catch(_e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/">
+<title>polis · 데이터 내려받기</title>
+<meta name="description" content="polis의 선거 결과·여론조사·정당 데이터를 CSV와 JSON으로 내려받는 방법, 파일 형식, 출처와 이용 조건.">
+<meta property="og:title" content="polis · 데이터 내려받기">
+<meta property="og:description" content="선거 결과·여론조사·정당 데이터의 파일 형식과 출처.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/about/data/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/about-coverage.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+              <!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지금</a>
+  <a href="/elections.html" class="hdr-link">선거</a>
+  <span data-nav-urgent></span>
+  <a href="/parties.html" class="hdr-link">인물·정당</a>
+  <a href="/chronology.html" class="hdr-link">역사</a>
+  <!-- NAV_END -->
+</nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <h1>데이터 내려받기</h1>
+    <p class="lede">이 사이트의 화면은 모두 공개 파일에서 그려집니다. 화면에서 본 것을 그대로 가져가거나, 원본 파일을 직접 받을 수 있습니다.</p>
+  </section>
+
+  <section class="cov-section" id="from-screen">
+    <h2 class="cov-section-title">화면에서 바로</h2>
+    <div class="cov-source-details">
+      <div class="cov-src-card">
+        <h3>링크 복사</h3>
+        <p>지도의 표현 방식, 고른 지역, 확대, 표의 필터가 주소에 담깁니다. 지도 제목 옆 <b>링크 복사</b>로 받은 링크를 열면 같은 화면이 나옵니다.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>선거 결과 CSV</h3>
+        <p>각 선거 페이지의 <b>데이터 내려받기</b>에서 후보별 득표를 받습니다. 집계단위(전국·시도·시군구·선거구)마다 후보 한 명이 한 행입니다.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>당선자 CSV</h3>
+        <p>지방선거 페이지의 당선자 표에서 <b>CSV</b>를 누르면 지금 걸어 둔 필터의 당선자 전부를 받습니다. 파일 머리에 어떤 조건으로 뽑았는지 적힙니다.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>지지율 추이 CSV</h3>
+        <p><a href="/tracker.html">지금</a> 페이지의 각 차트에서 받습니다. 평활선이 아니라 <b>개별 조사 값</b>이고, 행마다 원문 링크가 붙습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cov-section" id="files">
+    <h2 class="cov-section-title">원본 파일</h2>
+    <p class="cov-section-sub">아래 주소는 사이트와 같은 곳에서 바로 받을 수 있습니다. 모두 UTF-8 JSON입니다.</p>
+    <div class="dl-wrap">
+    <table class="dl-table">
+      <thead><tr><th>파일</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><code>/data/archive_index.json</code></td><td>선거 목록 — 각 선거의 <code>slug</code>가 아래 파일 이름의 <code>{id}</code>입니다.</td></tr>
+        <tr><td><code>/data/elections/{id}.json</code></td><td>선거 메타 — 날짜, 출처 설명, 결과 파일 경로(<code>archive.results_path</code>).</td></tr>
+        <tr><td><code>/data/results/{id}.json</code></td><td>선거 결과 — 후보별 득표. <code>_meta.chunked</code>가 참이면 시군구 단위가 <code>{id}.sigungu.json</code>에 따로 있습니다.</td></tr>
+        <tr><td><code>/data/polls/aggregated*.json</code></td><td>여론조사 — 중앙선거여론조사심의위원회(NESDC) 등록 조사, 문항 하나가 한 레코드.</td></tr>
+        <tr><td><code>/data/polls/approval_*.json</code></td><td>대통령 국정수행 평가 — 기관별 긍정·부정.</td></tr>
+        <tr><td><code>/data/parties/registry.json</code></td><td>정식명·창당·계보를 <b>확인한</b> 정당.</td></tr>
+        <tr><td><code>/data/parties/observed.json</code></td><td>결과에 이름이 <b>나온</b> 정당. 여기 있다고 계보를 안다는 뜻은 아닙니다.</td></tr>
+        <tr><td><code>/data/comparisons/</code></td><td>같은 종류 직전 선거와의 정당 득표 비교.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="cov-section" id="schema">
+    <h2 class="cov-section-title">결과 파일 읽는 법</h2>
+    <p class="cov-section-sub"><code>races[]</code>가 집계 하나(어느 단위의 어느 선거)이고, 그 안의 <code>candidates[]</code>가 후보입니다.</p>
+    <div class="dl-wrap">
+    <table class="dl-table">
+      <thead><tr><th>필드</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><td><code>sg_typecode</code></td><td>선거 종류. 1 대통령 · 2 국회의원(지역구) · 3 시·도지사 · 4 구·시·군의 장 · 5 시·도의원 · 6 구·시·군의원 · 7 국회의원(비례) · 8 시·도의원(비례) · 9 구·시·군의원(비례) · 10 교육의원 · 11 교육감</td></tr>
+        <tr><td><code>scope</code></td><td>집계단위 — <code>nation</code>·<code>sido</code>·<code>sigungu</code>·<code>district</code>(선거구) 등</td></tr>
+        <tr><td><code>sido</code> · <code>sigungu</code> · <code>district</code></td><td>지역 이름(그 선거 당시 이름)</td></tr>
+        <tr><td><code>electors</code> · <code>voters</code> · <code>valid_votes</code></td><td>선거인수 · 투표수 · 유효투표수</td></tr>
+        <tr><td><code>candidates[].votes</code> · <code>pct</code></td><td>득표수 · 득표율(%)</td></tr>
+        <tr><td><code>candidates[].won</code> · <code>rank</code></td><td>당선 여부 · 순위</td></tr>
+        <tr><td><code>is_uncontested</code></td><td>무투표 당선 — 득표가 없는 게 맞습니다.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cov-note"><b>비어 있는 값은 0이 아닙니다.</b> 값이 없거나 <code>null</code>이면 “모른다(아직 못 받았다)”이고, 0은 실제로 0입니다. CSV에서도 모르는 칸은 빈칸으로 둡니다. 자세한 규칙은 <a href="https://github.com/YangSeungWon/polis-korea/blob/master/docs/absence.md" target="_blank" rel="noopener">결손 모델 문서</a>에 있습니다. 선거별로 어디까지 수집됐는지는 <a href="/about/data-coverage/">데이터 커버리지</a>에서 봅니다.</p>
+  </section>
+
+  <section class="cov-section" id="license">
+    <h2 class="cov-section-title">출처와 이용 조건</h2>
+    <div class="cov-source-details">
+      <div class="cov-src-card">
+        <h3>선거 결과 <span class="cov-src-tag">중앙선거관리위원회</span></h3>
+        <p>공공데이터포털(data.go.kr) OpenAPI와 선거통계시스템에서 받은 공공데이터입니다. 쓸 때 출처를 밝혀 주세요.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>여론조사 <span class="cov-src-tag">NESDC</span></h3>
+        <p>공직선거법상 선거 여론조사를 인용할 때는 의뢰자·조사기관·조사기간 등을 함께 밝혀야 합니다. 각 행의 원문 링크(NESDC 등록 페이지)에 그 정보가 있습니다.</p>
+        <p class="cov-caveat">선거일 6일 전부터 투표 마감까지는 새 조사를 공표할 수 없습니다.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>위키백과에서 보완한 자료 <span class="cov-src-tag">CC BY-SA 4.0</span></h3>
+        <p>옛 선거 결과 일부와 선거구역은 한국어 위키백과에서 보완했습니다. 이 부분을 다시 배포하면 같은 조건(출처 표시·동일조건변경허락)이 따라갑니다.</p>
+      </div>
+      <div class="cov-src-card">
+        <h3>코드 <span class="cov-src-tag">MIT</span></h3>
+        <p>수집·정리·화면 코드는 <a href="https://github.com/YangSeungWon/polis-korea" target="_blank" rel="noopener">GitHub 저장소</a>에서 MIT 라이선스로 공개합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회</a>
+      <a href="https://www.nesdc.go.kr" target="_blank" rel="noopener">중앙선거여론조사심의위원회</a>
+      <a href="https://github.com/YangSeungWon/polis-korea" target="_blank" rel="noopener">소스 코드</a>
+    </div>
+  </footer>
+</main>
+
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+</body>
+</html>

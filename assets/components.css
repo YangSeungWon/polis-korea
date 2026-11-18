@@ -615,3 +615,20 @@
   cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 2px 0;
 }
 .pi-past[open] > summary { margin-bottom: 6px; }
+
+/* ── 추출 도구줄 (assets/figure-tools.js) — 링크 복사·그림·CSV ───────────── */
+.fig-tools { display: inline-flex; gap: 4px; margin-left: 10px; vertical-align: middle; }
+.fig-tool {
+  font: inherit; font-size: 12px; font-weight: 600; line-height: 1.4;
+  padding: 2px 8px; border: 1px solid var(--rule-strong); border-radius: 3px;
+  background: transparent; color: var(--ink-soft); cursor: pointer; text-decoration: none;
+  white-space: nowrap;
+}
+.fig-tool:hover:not([disabled]) { color: var(--ink); border-color: var(--ink-soft); }
+.fig-tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.fig-tool[disabled] { opacity: 0.5; cursor: not-allowed; }
+.fig-export-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+.fig-tool-link { font-size: 12px; color: var(--ink-soft); }
+@media (max-width: 520px) {
+  .fig-tools { display: flex; margin: 6px 0 0; }
+}

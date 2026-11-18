@@ -33,6 +33,7 @@ export const PAGES = [
   { id: 'tracker',       url: '/tracker.html',                    why: '시계열' },
   { id: 'search',        url: '/search.html',                     why: '검색 진입' },
   { id: 'coverage',      url: '/about/data-coverage/',            why: '자료 출처 매트릭스 — 추정 금지 자리' },
+  { id: 'data-dl',       url: '/about/data/',                     why: '데이터 내려받기 — 파일·필드 표(좁은 화면에서 쌓임)' },
 ];
 
 // 뷰포트 — 초대형과 모바일 사이가 가장 잘 깨진다.

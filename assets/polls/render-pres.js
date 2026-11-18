@@ -5,6 +5,18 @@
   'use strict';
 
   const ps = { mode: (typeof IS_PAST !== 'undefined' && IS_PAST) ? 'result' : 'polls', viewmode: 'dorling', sidoRaces: [], sigunguRaces: [], nationRace: null, weights: {} };
+  // 화면 상태 ↔ URL(?mode= ?view=). 기본값이면 지운다. 모르는 값은 버린다.
+  const PS_DEF = { mode: ps.mode, view: ps.viewmode };
+  (function restore() {
+    if (typeof ViewState === 'undefined') return;
+    const m = ViewState.get('mode'), v = ViewState.get('view');
+    if (m === 'polls' || m === 'result') ps.mode = m;
+    if (v === 'dorling' || v === 'grid' || v === 'map') ps.viewmode = v;
+  })();
+  function syncURL() {
+    if (typeof ViewState === 'undefined') return;
+    ViewState.set({ mode: ps.mode === PS_DEF.mode ? null : ps.mode, view: ps.viewmode === PS_DEF.view ? null : ps.viewmode });
+  }
 
   // 헤드라인: 본선 후보 지지율 추이 (전국 시계열 + 선거일 실제 ◆).
   // 본선 선별·정규화는 PollAdapter.presTrend가 담당 — 여기선 형태만 렌더로 넘김.
@@ -217,19 +229,21 @@
     controls.querySelectorAll('[data-pmode]').forEach((b) => b.addEventListener('click', () => {
       ps.mode = b.dataset.pmode;
       controls.querySelectorAll('[data-pmode]').forEach((x) => x.classList.toggle('is-active', x === b));
+      syncURL();
       render();
     }));
     // 방식 — 표비례(원형·격자) + 1위(지도 격차명도). 공용 EncodingToggle, 없으면 폴백 seg.
     const encHost = controls.querySelector('.pres-view-enc');
     const VIEW_OPTS = [{ key: 'dorling', label: '원형' }, { key: 'grid', label: '격자' }, { key: 'map', label: '지도' }];
     if (window.EncodingToggle) {
-      window.EncodingToggle.render(encHost, { options: VIEW_OPTS, active: ps.viewmode, onSelect: (v) => { ps.viewmode = v; render(); } });
+      window.EncodingToggle.render(encHost, { options: VIEW_OPTS, active: ps.viewmode, onSelect: (v) => { ps.viewmode = v; syncURL(); render(); } });
     } else {
       encHost.className = 'seg'; encHost.setAttribute('role', 'tablist'); encHost.setAttribute('aria-label', '방식');
       encHost.innerHTML = VIEW_OPTS.map((o) => `<button class="seg-btn${o.key === ps.viewmode ? ' is-active' : ''}" data-pview="${o.key}">${o.label}</button>`).join('');
       encHost.querySelectorAll('[data-pview]').forEach((b) => b.addEventListener('click', () => {
         ps.viewmode = b.dataset.pview;
         encHost.querySelectorAll('[data-pview]').forEach((x) => x.classList.toggle('is-active', x === b));
+        syncURL();
         render();
       }));
     }
