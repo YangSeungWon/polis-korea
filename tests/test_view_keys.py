@@ -233,8 +233,50 @@ def check_labels() -> None:
         bad("모르는 키에 None이 아닌 답을 준다")
 
 
+def check_js() -> None:
+    """브라우저 판(assets/view-keys.js)이 최신이고 parse_key와 같은 답을 주는가.
+
+    URL 상태(?v=sgg-dorling)는 JS가 해석한다. 표를 고치고 생성을 잊으면 공유 링크가
+    다른 지도를 연다 — 그래서 (1) 생성물이 지금 표에서 나온 것과 같은지, (2) 모든
+    (host, mode)와 모든 enc에 대해 JS와 Python의 답이 같은지 node로 직접 묻는다.
+    """
+    import json as _json
+    import shutil
+    import subprocess
+
+    if V.JS_OUT.read_text(encoding="utf-8") != V.render_js():
+        bad("assets/view-keys.js가 낡았다 — python3 scripts/build/view_registry.py 로 다시 생성")
+    node = shutil.which("node")
+    if not node:
+        print("  · node 없음 — JS 왕복 검사 생략")
+        return
+    keys = [V.key_for(h["token"], m["mode"]) for h in V.HOSTS for m in V.MODES]
+    keys += [h["token"] for h in V.HOSTS] + ["nope-geo", "sgg-nope", ""]
+    encs = [e for m in V.MODES for e in m["enc"]] + ["nope", ""]
+    script = (
+        "globalThis.window=globalThis;"
+        f"require({str(V.JS_OUT)!r});"
+        f"const keys={_json.dumps(keys, ensure_ascii=False)};"
+        f"const encs={_json.dumps(encs, ensure_ascii=False)};"
+        "console.log(JSON.stringify({p:keys.map(k=>ViewKeys.parseKey(k)),m:encs.map(e=>ViewKeys.modeOf(e))}));"
+    )
+    out = subprocess.run([node, "-e", script], capture_output=True, text=True)
+    if out.returncode != 0:
+        bad(f"view-keys.js 실행 실패: {out.stderr.strip()[:200]}")
+        return
+    got = _json.loads(out.stdout)
+    for k, js in zip(keys, got["p"]):
+        py = V.parse_key(k)
+        if (list(py) if py else None) != js:
+            bad(f"parseKey 불일치 {k!r}: JS {js} ≠ Python {py}")
+    for e, js in zip(encs, got["m"]):
+        if V.mode_of(e) != js:
+            bad(f"modeOf 불일치 {e!r}: JS {js} ≠ Python {V.mode_of(e)}")
+
+
 def main() -> int:
     print("뷰 키 규칙 (레지스트리 v2)")
+    check_js()
     check_tables()
     check_roundtrip()
     check_labels()

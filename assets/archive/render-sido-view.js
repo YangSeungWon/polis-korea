@@ -150,11 +150,15 @@
     // 토글이 안 그려지는데, 그때 캡처가 버튼이 없다는 이유로 모드를 모르면 같은
     // 그림이 어느 회차에선 sggturn-hex, 어느 회차에선 sggturn이 된다(2026-08-27:
     // 옛 대선 8회차가 그랬다). 이름이 회차마다 달라지면 이름의 뜻이 없어진다.
-    host.dataset.mode = modes[0].key;
+    // URL ?v={host}-{mode}가 있으면 그 모드로 연다(공유 링크·새로고침 복원). 없으면 첫 모드.
+    const hostToken = (opts && opts.hostKey) || host.dataset.mapHost || '';
+    const VS = window.ViewState;
+    const initKey = (VS && VS.hostMode(hostToken, modes.map((m) => m.key))) || modes[0].key;
+    host.dataset.mode = initKey;
     // 인코딩 토글(공용) — 아이콘+가족 한 바. 가족 게이팅은 ENC의 fam이 자동 분류:
     //   1위(균등·지도) / 표 비례(격자·원형) / 자료(투표율). 흩어진 .seg 토글과 단일 컴포넌트로 통일.
     const views = modes.map((m, i) =>
-      `<div class="ar-sido-view" data-view="${m.key}"${i === 0 ? '' : ' hidden'}></div>`
+      `<div class="ar-sido-view" data-view="${m.key}"${m.key === initKey ? '' : ' hidden'}></div>`
     ).join('');
     host.innerHTML = `<div class="ar-sido-toggle"></div>${views}`;
     // **보이는 모드만 그린다.** 예전엔 숨겨진 모드까지 전부 mount에서 그렸다 —
@@ -170,7 +174,7 @@
       drawn.add(key);
       m.draw(el, drawArg);
     }
-    drawOnce(modes[0].key);
+    drawOnce(initKey);
     // 투표율 탭은 정당색이 아닌 그라데이션 → 캡션도 전환(결과 캡션은 mount 직후 값 보존).
     const cap = host.closest && host.closest('.ar-section')?.querySelector('.info-pop, .ar-source-line');
     const resultCaption = cap ? cap.textContent : '';
@@ -204,13 +208,14 @@
         : resultCaption;
       if (titleNode) titleNode.nodeValue = (isTurnout && opts && opts.turnoutTitle)
         ? opts.turnoutTitle : resultTitle;
+      if (VS) VS.setHostMode(hostToken, v, modes[0].key);
     }
 
     const tog = host.querySelector('.ar-sido-toggle');
     if (window.EncodingToggle) {
       window.EncodingToggle.render(tog, {
         options: modes.map((m) => ({ key: m.key, label: m.label })),
-        active: modes[0].key,
+        active: initKey,
         onSelect: activate,
       });
     } else {
@@ -223,6 +228,11 @@
       const seg = (label, ms, off) => (ms.length
         ? `<div class="seg" role="tablist" aria-label="${label}">${ms.map((m, i) => btn(m, off + i === 0)).join('')}</div>` : '');
       tog.innerHTML = seg('표현 방식', enc, 0) + seg('투표율', turn, enc.length);
+      tog.querySelectorAll('.seg-btn').forEach((b) => {
+        const on = b.dataset.view === initKey;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
       tog.querySelectorAll('.seg-btn').forEach((btnEl) => {
         btnEl.addEventListener('click', () => {
           tog.querySelectorAll('.seg-btn').forEach((b) => {
@@ -234,6 +244,8 @@
         });
       });
     }
+    // URL로 다른 모드에서 열렸으면 제목·캡션도 그 모드의 것으로(activate는 이미 그린 뷰를 다시 그리지 않는다).
+    if (initKey !== modes[0].key) activate(initKey);
   }
 
   function init(ctx, opts) {

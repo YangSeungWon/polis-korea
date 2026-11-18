@@ -252,7 +252,43 @@ function parseInitialState() {
     n: n != null ? n : (params.get('n') ? +params.get('n') : init.n),
     office: office || params.get('office') || init.office,
     sizing: params.get('sizing') || init.sizing,
+    view: params.get('view'),          // 통합 인코딩 모드(hex·geo·grid·dorling) — ?sizing= 대체
+    sel: parseSel(params.get('sel')),
+    zoom: parseZoom(params.get('z')),
   };
+}
+
+// 인코딩 모드 ↔ URL 값. URL엔 뷰 레지스트리의 정규 모드명(ASCII)을 쓴다 — '격자'가 아니라 grid.
+const ENC_TO_VIEW = { hex: 'hex', geo: 'geo', '격자': 'grid', dorling: 'dorling' };
+const VIEW_TO_ENC = { hex: 'hex', geo: 'geo', grid: '격자', dorling: 'dorling' };
+
+// 선택 ↔ ?sel=. 시도 'sido', 시군구 'sido|name', 지역구 'd:sido|name'.
+function encodeSel(sel) {
+  if (!sel || !sel.sido) return null;
+  if (!sel.name) return sel.sido;
+  return `${sel.kind === 'district' ? 'd:' : ''}${sel.sido}|${sel.name}`;
+}
+function parseSel(v) {
+  if (!v) return null;
+  const district = v.startsWith('d:');
+  const body = district ? v.slice(2) : v;
+  const i = body.indexOf('|');
+  if (i < 0) return { sido: body };
+  const out = { sido: body.slice(0, i), name: body.slice(i + 1) };
+  if (district) out.kind = 'district';
+  return out;
+}
+// 줌 ↔ ?z=region~scale. region은 svg-viewport/geoFocus report()의 앵커(시도 또는 시도|시군구).
+function encodeZoom(z) {
+  if (!z || !z.region || !((z.scale || 1) > 1.05)) return null;
+  return `${z.region}~${Math.round(z.scale * 100) / 100}`;
+}
+function parseZoom(v) {
+  if (!v) return null;
+  const i = v.lastIndexOf('~');
+  if (i < 0) return null;
+  const scale = +v.slice(i + 1);
+  return scale > 1.05 ? { region: v.slice(0, i), scale } : null;
 }
 
 
@@ -289,16 +325,26 @@ function buildPath() {
   return path;
 }
 
+// 회차·유형·직위는 경로 — 바뀌면 뒤로가기 항목(push). 방식·선택·줌은 쿼리 — replace.
+// ViewState가 같은 틱의 기록을 하나로 모으므로 setType→setRound가 항목 둘을 만들지 않는다.
 function updateURL() {
-  const newPath = buildPath();
-  const params = new URLSearchParams();
-  if (state.sizing && state.sizing !== typeDefaultSizing(state.type)) params.set('sizing', state.sizing);
-  const q = params.toString();
-  const newUrl = q ? `${newPath}?${q}` : newPath;
-  if (newUrl !== location.pathname + location.search) {
-    history.replaceState(null, '', newUrl);
-  }
+  if (typeof ViewState === 'undefined') return updateArchiveLink();
+  ViewState.setPath(buildPath(), { nav: true });
+  const enc = currentEncMode();
+  const defEnc = state.type === 'presidential' ? '격자' : 'hex';
+  ViewState.set({ sizing: null, view: enc === defEnc ? null : ENC_TO_VIEW[enc] });
+  syncSelURL();
   updateArchiveLink();
+}
+
+function syncSelURL() {
+  if (typeof ViewState === 'undefined') return;
+  ViewState.set({ sel: encodeSel(state.selected) });
+}
+
+function syncZoomURL() {
+  if (typeof ViewState === 'undefined' || typeof HistoryFocus === 'undefined') return;
+  ViewState.set({ z: encodeZoom(HistoryFocus.capture()) });
 }
 
 // 대선만 격자 hex 기본(전국 표심을 면적으로 — 1 hex=2만표). 지선·총선은 단일 hex('동일',
@@ -354,6 +400,7 @@ function setDisplay(d) {
   // 균등↔지도 전환 시 보던 지역 유지 — 떠나는 뷰 capture → 렌더 후 새 뷰 apply.
   const keep = (typeof HistoryFocus !== 'undefined') ? HistoryFocus.capture() : null;
   state.display = d;
+  updateURL();
   Promise.resolve(renderAll()).then(() => { if (keep && typeof HistoryFocus !== 'undefined') HistoryFocus.apply(keep); });
 }
 

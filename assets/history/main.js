@@ -246,10 +246,11 @@ function updateOfficeAvailability(n) {
   }
 }
 
-async function setRound(n, variant = null) {
+// restore: URL 복원(초기 진입·뒤로가기)일 때 {sel, zoom} — 선택을 지우지 않고 렌더 뒤 줌을 되살린다.
+async function setRound(n, variant = null, restore = null) {
   state.n = n;
   state.variant = variant || null;
-  state.selected = null;
+  state.selected = restore ? (restore.sel || null) : null;
   updateOfficeAvailability(n);
   updateURL();
   const select = $('#round-select');
@@ -265,7 +266,8 @@ async function setRound(n, variant = null) {
   const cacheKey = `${state.type}|${n}|${variant || ''}`;
   if (state.roundCache.has(cacheKey)) {
     state.results = state.roundCache.get(cacheKey);
-    renderAll();
+    await renderAll();
+    applyRestoredZoom(restore);
     return;
   }
 
@@ -306,7 +308,14 @@ async function setRound(n, variant = null) {
   if (loadingEl) loadingEl.hidden = true;
   // 이 회차 결과가 바뀌었어도(같은 세션) 다시 안 받게 캐시. 회차당 1회만 페치.
   if (state.results) state.roundCache.set(cacheKey, state.results);
-  renderAll();
+  await renderAll();
+  applyRestoredZoom(restore);
+}
+
+function applyRestoredZoom(restore) {
+  if (!restore || !restore.zoom || typeof HistoryFocus === 'undefined') return;
+  // 렌더 직후 한 프레임 뒤 — svg-viewport·leaflet이 셀 좌표를 등록한 다음.
+  requestAnimationFrame(() => HistoryFocus.apply(restore.zoom));
 }
 
 // === Parliament half-donut chart ===
@@ -538,6 +547,7 @@ function renderDetail() {
     }
   }
   pane.innerHTML = html;
+  syncSelURL();   // 모든 선택 경로(지도·박빙 목록·geo)가 여기로 모인다 — URL ?sel= 기록
   // 박빙 row 클릭 → 선택
   pane.querySelectorAll('.hist-close-row').forEach((row) => {
     row.addEventListener('click', () => {
@@ -795,21 +805,44 @@ async function init() {
 
   // 초기 상태 — path 우선 (prerender path 호환), 쿼리스트링·INITIAL_STATE fallback
   // path: /history/presidential/16/ or /history/local/8/governor/
-  const init0 = parseInitialState();
-  const type0 = init0.type || 'presidential';
-  setType(type0, /*skipDefaultRound=*/ init0.n != null);
-  if (init0.office && init0.office !== state.office) setOffice(init0.office);
-  // URL ?sizing= 가 있으면 type 기본을 override (setType이 이미 type 기본 적용)
-  if (init0.sizing && init0.sizing !== state.sizing) setSizing(init0.sizing);
-  if (init0.n != null) setRound(init0.n);
+  // 복원은 URL을 고쳐 쓰지 않는다(quiet → replace만). 같은 화면을 한 번만 그리도록
+  // 방식·선택은 state에 먼저 넣고 setRound 한 번으로 렌더한다.
+  const restoreFromURL = (s, first) => {
+    const typeChanged = !!(s.type && s.type !== state.type);
+    if (first || typeChanged) setType(s.type || 'presidential', /*skipDefaultRound=*/ s.n != null);
+    if (s.office && s.office !== state.office) {
+      state.office = s.office;
+      document.querySelectorAll('[data-office]').forEach((b) =>
+        b.classList.toggle('is-active', b.dataset.office === s.office));
+    }
+    const enc = s.view ? VIEW_TO_ENC[s.view] : null;
+    if (enc) {
+      state.display = enc === 'geo' ? 'geo' : 'hex';
+      if (enc !== 'geo') state.sizing = enc === 'hex' ? '동일' : enc;
+    } else if (s.sizing) {
+      state.sizing = s.sizing;              // 옛 링크 ?sizing= 호환
+      state.display = 'hex';
+    } else {
+      state.display = 'hex';
+      state.sizing = typeDefaultSizing(state.type);
+    }
+    if (s.n != null) return setRound(s.n, null, { sel: s.sel, zoom: s.zoom });
+    // n 없는 진입(/history.html)은 setType이 기본 회차로 setRound까지 했다.
+    if (!first && !typeChanged) return renderAll();
+  };
+  const run = (fn) => (typeof ViewState !== 'undefined' ? ViewState.quiet(fn) : fn());
+  run(() => restoreFromURL(parseInitialState(), true));
 
-  // popstate (브라우저 뒤·앞) — path 우선
-  window.addEventListener('popstate', () => {
-    const s = parseInitialState();
-    if (s.type && s.type !== state.type) setType(s.type, s.n != null);
-    if (s.office && s.office !== state.office) setOffice(s.office);
-    if (s.n != null && s.n !== state.n) setRound(s.n);
-  });
+  // 뒤로·앞으로 — 경로(회차·유형·직위)와 쿼리(방식·선택·줌) 전부 되살린다.
+  window.addEventListener('popstate', () => run(() => restoreFromURL(parseInitialState(), false)));
+
+  // 줌·팬이 끝나면 ?z= 기록(replace). 드래그 중 매 프레임 쓰지 않게 잠깐 모은다.
+  const viz = document.querySelector('.viz');
+  if (viz) {
+    let zt = 0;
+    const later = () => { clearTimeout(zt); zt = setTimeout(syncZoomURL, 400); };
+    ['wheel', 'mouseup', 'touchend', 'dblclick'].forEach((ev) => viz.addEventListener(ev, later, { passive: true }));
+  }
 
   $('#loading').hidden = true;
 }

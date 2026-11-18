@@ -652,6 +652,8 @@ FOOT_SCRIPTS = """<script src="assets/regions.js"></script>
 <script src="assets/utils.js"></script>
 <script src="assets/lens-switcher.js"></script>
 {extra_scripts}<script src="assets/elections.js"></script>
+<script src="assets/view-keys.js"></script><!-- 뷰 키(host×mode) — 생성물 -->
+<script src="assets/view-state.js"></script><!-- 화면 상태 ↔ URL -->
 <script src="assets/svg-viewport.js"></script><!-- SVG 팬·줌 (방식 뷰 공용) -->
 <script src="assets/encoding-toggle.js"></script><!-- 인코딩 토글(아이콘+가족) -->
 <script src="assets/archive/shared.js"></script>
