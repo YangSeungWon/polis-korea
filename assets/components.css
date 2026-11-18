@@ -256,7 +256,9 @@
   margin-bottom: 6px;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--ink);
+  flex-wrap: wrap;
 }
+.detail-hdr .region-page-link { flex-basis: 100%; margin: 6px 0 0; }
 .detail-hdr h2 {
   font-size: 22px;
   font-weight: 800;
@@ -632,3 +634,18 @@
 @media (max-width: 520px) {
   .fig-tools { display: flex; margin: 6px 0 0; }
 }
+
+/* 연동 하이라이트(brush.js) — 같은 지역을 가리키는 칸·행을 함께 밝히고 나머지는 흐린다.
+   지우지 않는다: 전체 모습은 남는다. 같은 지역이 없는 지도는 건드리지 않는다. */
+svg.brushing [data-region] { transition: opacity .12s; }
+svg.brushing [data-region]:not(.is-brushed) { opacity: .28; }
+svg [data-region].is-brushed { stroke: var(--ink); stroke-width: 1.4; }
+.ar-winners-grid.brushing .ar-winner-row:not(.is-brushed) { opacity: .45; }
+.ar-winner-row.is-brushed { background: var(--bg2); }
+
+/* 지도에서 고른 곳 → 그 지역의 역대 선거 페이지 */
+.region-page-link {
+  margin-left: auto; font-size: 12px; font-weight: 600;
+  color: var(--ink-soft); text-decoration: none; white-space: nowrap;
+}
+.region-page-link:hover { color: var(--ink); text-decoration: underline; }

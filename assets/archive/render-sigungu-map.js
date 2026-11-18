@@ -151,6 +151,7 @@
         : win ? `${sido} ${name} · ${win.name || ''}(${win.party}) ${fmtPct(win.pct, { digits: 1 })} · 격차 ${fmtPp(win.margin)}`
           : `${sido} ${name} · 데이터 없음`;
       path.appendChild(tt);
+      path.dataset.region = sido + '|' + name;   // brush.js 공통 키
       if (opts.onSelect) { path.style.cursor = 'pointer'; path.addEventListener('click', () => opts.onSelect(sido, name)); }
       svg.appendChild(path);
       const c = centroid(f.geometry);

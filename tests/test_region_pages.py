@@ -197,8 +197,56 @@ def main():
     ck("시군구가 자기 시도로 올라가는 링크를 갖는다", not no_up,
        f"{len(no_up)}개 — {no_up[:3]}")
 
+    check_relate(by)
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
+
+
+def check_relate(by: dict) -> None:
+    """지역에서 지역으로 — '비슷한 지역'과 비교 자료가 거짓을 말하지 않는가.
+
+    막는 사고: 모시가 자기 일반구를 '비슷한 지역'으로 고른다(수원시 → 수원시장안구 —
+    같은 표를 나눠 가진 사이다). 겹친 대선이 두 번뿐인 짝이 우연히 1위가 된다.
+    모르는 득표를 0표로 세어 득표율을 만든다. 비교 자료가 표와 다른 값을 낸다.
+    """
+    import json
+    from build_region_pages import (collect as _c, similar_regions, is_kin,
+                                    SIM_MIN_COMMON, REGION_DATA)
+    pres = _c.pres
+    keys = sorted(k for k, rows in by.items() if len(rows) >= MIN_ROUNDS)
+    sim = similar_regions(keys, pres)
+    kin = [(k, o[:2]) for k in keys for o in sim[k]["list"] if is_kin(k[0], k[1], o[1], o[0])]
+    ck("비슷한 지역에 자기 모시·일반구가 없다", not kin, str(kin[:3]))
+    # is_kin이 실제로 무엇을 거르는지도 본다 — 수원시는 일반구와 표가 같다.
+    ck("수원시의 비슷한 지역에 수원시장안구가 없다",
+       all(not o[1].startswith("수원시") for o in sim[("경기도", "수원시")]["list"]))
+    thin = [(k, o[:2], o[3]) for k in keys for o in sim[k]["list"] if o[3] < SIM_MIN_COMMON]
+    ck(f"겹친 대선 {SIM_MIN_COMMON}회 미만인 짝은 고르지 않는다", not thin, str(thin[:3]))
+    unsorted = [k for k in keys if [o[2] for o in sim[k]["list"]] != sorted(o[2] for o in sim[k]["list"])]
+    ck("가까운 순서", not unsorted, str(unsorted[:3]))
+    bad = [(k, e, v) for k, m in pres.items() for e, v in m.items()
+           if not (0 <= v[0] <= 100 and 0 <= v[1] <= 100 and v[0] + v[1] <= 100.01)]
+    ck("대선 득표율 축이 0~100이고 둘의 합이 100을 넘지 않는다", not bad, str(bad[:3]))
+
+    # 비교 자료 = 페이지와 같은 집합, 같은 값
+    pages = {d.name for d in (ROOT / "region").iterdir()
+             if d.is_dir() and (d / "index.html").exists()}
+    files = {f.stem for f in REGION_DATA.glob("*.json") if f.name != "index.json"}
+    ck(f"지역 페이지마다 비교 자료가 있다 ({len(files)})", pages == files,
+       f"페이지만 {sorted(pages - files)[:3]} · 자료만 {sorted(files - pages)[:3]}")
+    ix = json.loads((REGION_DATA / "index.json").read_text(encoding="utf-8"))
+    ck("색인이 페이지 전부를 가리킨다", {r["slug"] for r in ix["regions"]} == pages)
+    j = json.loads((REGION_DATA / "서울특별시-강남구.json").read_text(encoding="utf-8"))
+    ck("비교 자료 행 수 = 표의 행 수", len(j["rows"]) == len(by[("서울특별시", "강남구")]))
+    zero = [f for f in files
+            for r in json.loads((REGION_DATA / f"{f}.json").read_text(encoding="utf-8"))["rows"]
+            if r.get("turnout") == 0]
+    ck("비교 자료에도 투표율 0이 없다 (없는 값 ≠ 0)", not zero, str(zero[:3]))
+    # 페이지마다 비교 진입점
+    no_cmp = [p for p in sorted(pages)
+              if "/region/compare.html?a=" not in (ROOT / "region" / p / "index.html").read_text(encoding="utf-8")]
+    ck("지역 페이지마다 '나란히 보기' 진입점", not no_cmp, str(no_cmp[:3]))
 
 
 if __name__ == "__main__":

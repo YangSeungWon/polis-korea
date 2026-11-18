@@ -4,6 +4,8 @@
   const $ = (s) => document.querySelector(s);
   let items = [];
   let partyList = [];   // registry.json parties — 정당명 검색 최상단 노출용
+  let regionList = [];  // data/regions/index.json — 지역 페이지 카드
+  let electionList = []; // data/archive_index.json — 선거 페이지 카드
   let filterRound = '';
   const MAX_RESULTS = 200;
 
@@ -23,6 +25,14 @@
       const jp = await rp.json();
       partyList = Object.entries(jp.parties || {}).map(([name, info]) => ({ name, ...info }));
     } catch (e) { partyList = []; }
+    // 지역·선거도 검색 대상이다 — 사람만 찾히면 '성남'을 쳐도 성남 출신 정치인만 나오고
+    // 성남의 선거 기록으로 가는 길이 없다. 실패해도 인물검색은 동작.
+    const [ri, ai] = await Promise.all([
+      fetch('data/regions/index.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      fetch('data/archive_index.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]);
+    regionList = (ri && ri.regions) || [];
+    electionList = Array.isArray(ai) ? ai : [];
     render($('#q').value || '');
   }
 
@@ -40,6 +50,60 @@
     }
     scored.sort((x, y) => x.score - y.score || (x.p.founded || '').localeCompare(y.p.founded || ''));
     return scored.slice(0, 6).map((s) => s.p);
+  }
+
+  // 지역 — 정확>접두>부분. 시도 페이지가 시군구보다 앞(같은 점수일 때).
+  function matchRegions(q) {
+    if (!q || q.length < 2) return [];
+    const scored = [];
+    for (const r of regionList) {
+      const nm = normalize(r.name), sh = normalize(r.short), full = normalize(r.sido + r.name);
+      let score = -1;
+      if (nm === q || sh === q) score = 0;
+      else if (nm.startsWith(q) || sh.startsWith(q)) score = 1;
+      else if (nm.includes(q) || full.includes(q)) score = 2;
+      if (score >= 0) scored.push({ r, score: score + (r.name === r.sido ? 0 : 0.5) });
+    }
+    scored.sort((a, b) => a.score - b.score || a.r.short.localeCompare(b.r.short, 'ko'));
+    return scored.slice(0, 6).map((x) => x.r);
+  }
+
+  const KIND_SHORT = { presidential: '대선', national_assembly: '총선', local: '지선', byelection: '재보궐' };
+  // 선거 — '20대 대선'·'2022 지선'·'제8회 전국동시지방선거' 어느 꼴로 쳐도.
+  function matchElections(q) {
+    if (!q || q.length < 2) return [];
+    const out = [];
+    for (const e of electionList) {
+      const short = KIND_SHORT[e.type] || '';
+      if (filterRound && short !== filterRound) continue;
+      const unit = e.type === 'local' ? '회' : '대';
+      const hay = normalize(`${e.name} ${(e.date || '').slice(0, 4)}${short} ${e.n}${unit}${short} ${(e.date || '').slice(0, 4)}`);
+      if (hay.includes(q)) out.push(e);
+    }
+    out.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    return out.slice(0, 6);
+  }
+
+  function regionCard(r) {
+    return `<li class="s-item s-party-card s-entity-card">
+      <a class="s-link" href="/region/${encodeURIComponent(r.slug)}/">
+        <span class="s-name">${escapeHtml(r.name === r.sido ? r.sido : r.short)}</span>
+        <span class="s-meta">${r.name === r.sido ? '시도 — 광역단체장·교육감·대선' : escapeHtml(r.sido) + ' — 역대 대선·총선·지선 1위'}</span>
+        <span class="s-group-arrow">지역 →</span>
+      </a>
+    </li>`;
+  }
+
+  function electionCard(e) {
+    const href = archiveHref(e.slug);
+    const tag = href ? 'a' : 'span';
+    return `<li class="s-item s-party-card s-entity-card">
+      <${tag} class="s-link"${href ? ` href="${href}"` : ''}>
+        <span class="s-name">${escapeHtml(e.name)}</span>
+        <span class="s-pty-life">${escapeHtml(e.date || '')}</span>
+        <span class="s-group-arrow">선거 →</span>
+      </${tag}>
+    </li>`;
   }
 
   function partyCard(p) {
@@ -100,6 +164,8 @@
     syncURL(rawQ);
     const q = normalize(rawQ);
     const partyMatches = filterRound ? [] : matchParties(q);
+    const regionMatches = filterRound ? [] : matchRegions(q);
+    const electionMatches = matchElections(q);
     const filtered = items.filter((it) => {
       if (filterRound && it.r !== filterRound) return false;
       return match(it, q);
@@ -120,7 +186,8 @@
     groups.sort((a, b) => b.items.length - a.items.length
       || (Math.max(...b.items.map((x) => x.y || 0)) - Math.max(...a.items.map((x) => x.y || 0))));
     const capGroups = groups.slice(0, MAX_RESULTS);
-    const partyMeta = partyMatches.length ? `정당 ${partyMatches.length} · ` : '';
+    const partyMeta = [[electionMatches, '선거'], [regionMatches, '지역'], [partyMatches, '정당']]
+      .filter(([m]) => m.length).map(([m, l]) => `${l} ${m.length} · `).join('');
     $('#meta').textContent = q || filterRound
       ? `${partyMeta}${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
       : `${items.length.toLocaleString()}건 (검색어 입력)`;
@@ -166,7 +233,8 @@
         <div class="s-sub-list">${sub}</div>
       </li>`;
     }).join('');
-    $('#list').innerHTML = partyMatches.map(partyCard).join('') + html;
+    $('#list').innerHTML = electionMatches.map(electionCard).join('') + regionMatches.map(regionCard).join('')
+      + partyMatches.map(partyCard).join('') + html;
   }
 
   function escapeHtml(s) {

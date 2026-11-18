@@ -11,6 +11,8 @@ polis에는 이미 선거·인물·정당이 있는데 **지역**만 entity가 �
 Output:
   region/{시도}-{시군구}/index.html
   data/sitemap_region.txt
+  region/compare.html                (두 지역 나란히 — 도구 껍데기, sitemap 제외)
+  data/regions/{slug}.json, index.json (비교 페이지·지도→지역 링크가 읽는다)
 """
 from __future__ import annotations
 import json
@@ -261,6 +263,7 @@ def collect() -> dict:
     all_rounds = list(load_all())
     won = winners({eid: races for eid, _meta, races in all_rounds})
     collect.won = won          # 시도 층도 같은 당선자 표를 쓴다
+    nat: dict = {}                          # 대선 회차 → 전국 1·2위 (유사 지역 축)
     for eid, meta, races in all_rounds:
         em = election_meta(eid)
         kind = em.get("kind") or ""
@@ -269,6 +272,10 @@ def collect() -> dict:
         # 시군구 단위 대표 race — 그 지역의 '1위'가 무엇이었는지.
         # 지선은 기초단체장(4), 대선·총선은 시군구 분해 row.
         for r in races:
+            if r.get("sg_typecode") == "1" and r.get("scope") == "nation":
+                top2 = nation_top2(r)
+                if top2:
+                    nat[eid] = {"date": date, "name": name, "cands": top2}
             sg, sd = r.get("sigungu"), sido_canon(r.get("sido"))
             if not sg or not sd:
                 continue
@@ -330,7 +337,98 @@ def collect() -> dict:
         m = merge_rows(rows)
         if m:
             emit(sd, pc, eid, tc, m, True)
+    collect.nat = nat
+    collect.pres = pres_vectors(direct, rolled, nat)
     return by_region
+
+
+def nation_top2(r: dict) -> list | None:
+    """전국 집계 race → 1·2위 [(이름, 정당)]. 득표를 모르는 후보가 끼면 순위를
+    정할 수 없으니 None — 모르는 회차는 축에서 뺀다."""
+    cs = [c for c in (r.get("candidates") or []) if (c.get("name") or "").strip()]
+    if len(cs) < 2 or any(c.get("votes") is None for c in cs):
+        return None
+    cs.sort(key=lambda c: -c["votes"])
+    return [(c["name"].strip(), c.get("party") or "무소속") for c in cs[:2]]
+
+
+def _shares(rows: list, names: list) -> tuple | None:
+    """하위 row(들)을 합쳐 names 각각의 득표율(%). 득표를 모르는 칸이 하나라도 있거나
+    전국 1·2위 후보가 이 지역 개표에 없으면 None — 모름을 0표로 세지 않는다."""
+    votes: dict = defaultdict(int)
+    for r in rows:
+        for c in (r.get("candidates") or []):
+            nm = (c.get("name") or "").strip()
+            if not nm:
+                continue
+            if c.get("votes") is None:
+                return None
+            votes[nm] += c["votes"]
+    total = sum(votes.values())
+    if not total or any(n not in votes for n in names):
+        return None
+    return tuple(round(votes[n] / total * 100, 2) for n in names)
+
+
+def pres_vectors(direct: dict, rolled: dict, nat: dict) -> dict:
+    """(시도, 시군구) → {대선 회차: (전국 1위 후보 득표율, 전국 2위 후보 득표율)}.
+
+    '비슷하게 투표한 지역'의 축이다. 정당 계보·이념 점수를 쓰지 않는다 — stream은
+    배치 키일 뿐 이념 위치가 아니고(political_axes), 후보 득표율은 원자료 그 자체다.
+    지역 단위는 표와 같은 규칙으로 접는다(직접 행 우선, 없으면 일반구 합산).
+    """
+    out: dict = defaultdict(dict)
+    for (sd, sg, eid, tc), r in direct.items():
+        if tc != "1" or eid not in nat or not fold_target(sd, sg)[1]:
+            continue
+        v = _shares([r], [n for n, _p in nat[eid]["cands"]])
+        if v:
+            out[(sd, sg)][eid] = v
+    for (sd, pc, eid, tc), rows in rolled.items():
+        if tc != "1" or eid not in nat or (sd, pc, eid, tc) in direct:
+            continue
+        v = _shares(rows, [n for n, _p in nat[eid]["cands"]])
+        if v:
+            out[(sd, pc)][eid] = v
+    return dict(out)
+
+
+# 유사 지역 — 두 지역 모두 결과가 있는 대선이 이만큼은 겹쳐야 견준다.
+SIM_MIN_COMMON = 3
+SIM_TOP = 5
+
+
+def is_kin(sd: str, a: str, b: str, sd2: str) -> bool:
+    """모시↔일반구는 같은 표를 나눠 가진 사이라 '비슷하다'가 아니라 '같다'다."""
+    return sd == sd2 and (a.startswith(b) or b.startswith(a))
+
+
+def similar_regions(keys: list, pres: dict) -> dict:
+    """(시도, 시군구) → {"own": 이 지역 대선 회차 수, "list": [(시도, 시군구, 거리, 겹친 회차)]}.
+
+    거리 = 겹친 회차의 (1위 후보 득표율 차, 2위 후보 득표율 차) 제곱평균의 제곱근(%p).
+    겹침이 SIM_MIN_COMMON 미만이거나 이 지역 기록의 절반에 못 미치면 견주지 않는다 —
+    옛 대선 세 번만 겹친 짝이 우연히 가까워 맨 위에 오는 것을 막는다.
+    """
+    out = {}
+    for k in keys:
+        mine = pres.get(k) or {}
+        need = max(SIM_MIN_COMMON, (len(mine) + 1) // 2)
+        cand = []
+        if len(mine) >= SIM_MIN_COMMON:
+            for o in keys:
+                if o == k or is_kin(k[0], k[1], o[1], o[0]):
+                    continue
+                theirs = pres.get(o) or {}
+                common = [e for e in mine if e in theirs]
+                if len(common) < need:
+                    continue
+                sq = sum((mine[e][0] - theirs[e][0]) ** 2 + (mine[e][1] - theirs[e][1]) ** 2
+                         for e in common)
+                cand.append((o[0], o[1], round((sq / (2 * len(common))) ** 0.5, 2), len(common)))
+        cand.sort(key=lambda x: (x[2], x[0], x[1]))
+        out[k] = {"own": len(mine), "list": cand[:SIM_TOP]}
+    return out
 
 
 TEMPLATE = """<!DOCTYPE html>
@@ -375,6 +473,7 @@ TEMPLATE = """<!DOCTYPE html>
   </section>
 {kin}
   <section>{table}</section>
+{relate}
   <footer class="foot">
     <p class="fine">{foot}</p>
   </footer>
@@ -591,7 +690,45 @@ def _emit_sido(by_sido, sd, tc, r, eid, date, kind, name, won, merged):
     })
 
 
-def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
+def compare_href(a: str, b: str | None = None) -> str:
+    return f"/region/compare.html?a={quote(a)}" + (f"&amp;b={quote(b)}" if b else "")
+
+
+def relate_block(slug: str, sim: dict | None) -> str:
+    """'이 지역과 닮은 곳'과 '다른 곳과 나란히' — 지역에서 지역으로 가는 길.
+
+    지금까지 지역 페이지는 위(시도)·옆(모시↔일반구)·바깥(인물·정당·선거)으로만
+    이어졌고, 다른 지역과 견줄 길이 없었다. 견줄 수 없는 곳은 왜 없는지 말한다.
+    """
+    cmp_link = (f'<p class="rg-cmp-link"><a href="{compare_href(slug)}">'
+                f'다른 지역과 나란히 보기 →</a></p>')
+    if sim is None:
+        return f'<section class="rg-sec rg-relate">{cmp_link}</section>'
+    lst = sim["list"]
+    if not lst:
+        why = (f'이 지역은 전국 1·2위를 알 수 있는 대선 결과가 {sim["own"]}회뿐이라'
+               if sim["own"] < SIM_MIN_COMMON else
+               '대선 기록이 충분히 겹치는 다른 지역이 없어')
+        body = f'<p class="rg-sim-none">{why} 비슷한 지역을 고르지 않았습니다.</p>'
+    else:
+        li = []
+        for sd2, sg2, d, n in lst:
+            other = f"{sd2}-{sg2}"
+            li.append(
+                f'<li><a href="/region/{quote(other)}/">{esc(sido_short(sd2))} {esc(sg2)}</a>'
+                f' <span class="rg-sim-d">평균 {d:.1f}%p 차이 · 대선 {n}회</span>'
+                f' <a class="rg-sim-cmp" href="{compare_href(slug, other)}">나란히</a></li>')
+        body = ('<ol class="rg-sim">' + "".join(li) + '</ol>'
+                '<p class="rg-sim-how">각 대선에서 전국 1·2위였던 두 후보가 이 지역에서 얻은 '
+                '득표율을 다른 지역과 견줘, 차이(제곱평균)가 가장 작은 곳입니다. 정당 성향 '
+                '점수가 아니라 득표율 그 자체의 거리이고, 두 지역 모두 결과가 있는 대선만 '
+                '견줍니다(이 지역 기록의 절반 이상, 최소 3회). 같은 시의 일반구는 표를 나눠 '
+                '가진 사이라 뺐습니다.</p>')
+    return (f'<section class="rg-sec rg-relate" id="similar">'
+            f'<h2>대선에서 비슷하게 투표한 지역</h2>{body}{cmp_link}</section>')
+
+
+def build_page(sd: str, sg: str, rows: list, by_region: dict, sim: dict | None = None) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     slug = f"{sd}-{sg}"
     years = [r["date"][:4] for r in rows if r.get("date")]
@@ -633,6 +770,7 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
         h1=esc(f"{sd} {sg}"),
         slug=esc(slug), desc=desc, lede=lede, table=table, foot=FOOT_SGG,
         kin=kin_block(sd, sg, by_region),
+        relate=relate_block(slug, sim),
         swing=swing_line(rows),
         nav=render_nav(menu_for_path(f"region/{slug}/index.html")),
         jsonld='<script type="application/ld+json">'
@@ -730,6 +868,7 @@ def build_sido_page(sd: str, rows: list, by_region: dict) -> str:
         slug=esc(sd), desc=desc, lede=lede,
         swing=swing_line(rows),
         kin=sido_kin(sd, kids),
+        relate=relate_block(sd, None),
         table=table + sido_units_block(sd, kids), foot=FOOT_SIDO,
         nav=render_nav(menu_for_path(f"region/{sd}/index.html")),
         jsonld='<script type="application/ld+json">'
@@ -797,6 +936,7 @@ HUB = """<!DOCTYPE html>
              aria-describedby="rg-hit">
       <span id="rg-hit" class="rg-hit" aria-live="polite"></span>
     </form>
+    <p class="rg-cmp-link"><a href="/region/compare.html">두 지역 나란히 보기 →</a></p>
   </section>
 {body}
 </main>
@@ -954,17 +1094,115 @@ def build_hub(entries: list, sidos: list) -> str:
     return hub_sido_block(sidos) + "\n" + "\n".join(blocks)
 
 
+# 두 지역 나란히 — 375×375 짝을 빌드하지 않는다. 지역마다 행을 JSON으로 내고
+# 페이지가 두 개를 받아 맞춘다. 도구 껍데기라 sitemap에 넣지 않는다(search.html과 같은 이유).
+COMPARE = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script>try{{var _m=localStorage.getItem('vote-ysw-theme');if(_m==='dark')document.documentElement.setAttribute('data-theme','dark');else if(_m==='light')document.documentElement.setAttribute('data-theme','light');}}catch(_e){{}}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<base href="/">
+<title>두 지역 나란히 보기 — 역대 대선·총선·지선 | polis</title>
+<meta name="description" content="두 지역의 역대 선거 1위와 득표율·투표율, 대선 후보 득표율을 같은 선거끼리 나란히 놓고 봅니다.">
+<link rel="canonical" href="/region/compare.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/person.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+{nav}
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+<main class="page">
+  <section class="intro">
+    <h1>두 지역 나란히 보기</h1>
+    <p class="lede">같은 선거에서 두 지역이 어떻게 갈렸는지 — <a href="/region/">지역 {n}곳</a> 가운데 둘을 고릅니다.</p>
+    <form class="rg-cmp-pick" onsubmit="return false">
+      <label>지역 A <input id="cmp-a" list="cmp-regions" autocomplete="off" placeholder="예: 서울 강남구"></label>
+      <label>지역 B <input id="cmp-b" list="cmp-regions" autocomplete="off" placeholder="예: 경기 성남시분당구"></label>
+      <datalist id="cmp-regions"></datalist>
+    </form>
+  </section>
+  <section id="cmp-out" aria-live="polite"><p class="rg-sim-none">두 지역을 고르면 여기에 나란히 나옵니다.</p></section>
+  <footer class="foot">
+    <p class="fine">지역 1위는 그 지역에서 가장 많이 얻은 후보입니다(광역단체장·교육감의 시도 행은 당선 결과). 비어 있는 칸(—)은 자료가 없다는 뜻이고 0이 아닙니다. 대선 막대는 전국 1·2위 후보가 그 지역에서 얻은 득표율입니다.</p>
+  </footer>
+</main>
+<script src="assets/parties.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/view-state.js"></script><!-- ?a=&b= ↔ URL -->
+<script src="assets/region-compare.js"></script>
+</body>
+</html>
+"""
+
+REGION_DATA = ROOT / "data/regions"
+
+
+def region_json(slug: str, sd: str, sg: str | None, rows: list, pres: dict) -> dict:
+    """비교 페이지가 받는 지역 하나. 표의 행 그대로 — 새 값을 만들지 않는다."""
+    keep = ("eid", "date", "election", "office", "party", "name", "pct", "turnout",
+            "merged", "uncontested")
+    rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
+    return {"slug": slug, "sido": sd, "name": sg or sd, "level": "sigungu" if sg else "sido",
+            "rows": [{k: r.get(k) for k in keep} for r in rows],
+            "pres": {e: list(v) for e, v in sorted(pres.items())}}
+
+
+def region_index(slugs: list, nat: dict) -> dict:
+    """지역 목록 + 지도·검색에서 지역 페이지로 가는 이름 해소표.
+
+    해소 근거는 표와 같다 — 시도 개명(SIDO_CANON)과 containment의 선거구 집계
+    (동대문갑구→동대문구). 이름 모양으로 추측하지 않는다.
+    """
+    fold = {f"{sd}|{child}": parent
+            for (sd, child), (parent, keep) in sorted(fold_index().items()) if not keep}
+    regions = []
+    for slug in slugs:
+        sd, _, sg = slug.partition("-")
+        regions.append({"slug": slug, "sido": sd, "name": sg or sd,
+                        "short": f"{sido_short(sd)} {sg}" if sg else sd})
+    return {"regions": regions, "sido_alias": SIDO_CANON, "fold": fold,
+            "pres": {e: {"date": v["date"], "name": v["name"],
+                         "cands": [list(c) for c in v["cands"]]}
+                     for e, v in sorted(nat.items())}}
+
+
+def write_json(fp: Path, obj) -> None:
+    fp.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")) + "\n",
+                  encoding="utf-8")
+
+
 def main():
     by_region = collect()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    urls, n = [], 0
-    for (sd, sg), rows in sorted(by_region.items()):
-        if len(rows) < MIN_ROUNDS:
-            continue
+    REGION_DATA.mkdir(parents=True, exist_ok=True)
+    pres = collect.pres
+    page_keys = sorted(k for k, rows in by_region.items() if len(rows) >= MIN_ROUNDS)
+    sim = similar_regions(page_keys, pres)
+    urls, n, data_files = [], 0, set()
+    for (sd, sg) in page_keys:
+        rows = by_region[(sd, sg)]
         slug = f"{sd}-{sg}"
         d = OUT_DIR / slug
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(build_page(sd, sg, rows, by_region), encoding="utf-8")
+        (d / "index.html").write_text(build_page(sd, sg, rows, by_region, sim.get((sd, sg))),
+                                      encoding="utf-8")
+        write_json(REGION_DATA / f"{slug}.json",
+                   region_json(slug, sd, sg, rows, pres.get((sd, sg)) or {}))
+        data_files.add(f"{slug}.json")
         urls.append(f"/region/{slug}/")
         n += 1
     # 시도 층 — 시군구 366곳과 전국 사이가 비어 있었다. '경기도 지방선거 결과'는
@@ -982,6 +1220,8 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(build_sido_page(sd, srows, by_region),
                                       encoding="utf-8")
+        write_json(REGION_DATA / f"{sd}.json", region_json(sd, sd, None, srows, {}))
+        data_files.add(f"{sd}.json")
         urls.append(f"/region/{sd}/")
         sido_slugs.append(sd)
         n_sido += 1
@@ -994,6 +1234,17 @@ def main():
                    nav=render_nav(menu_for_path("region/index.html"))), encoding="utf-8")
     # stale 제거 — 시도 정규화·MIN_ROUNDS 변경으로 더 이상 안 만드는 slug가 남으면
     # sitemap에 없는 페이지가 배포돼 크롤러에는 살아 있고 우리는 모르는 상태가 된다.
+    # 디렉터리가 아니라 파일로 둔다 — region/*/index.html은 '지역 페이지'라는 뜻으로
+    # 여러 검사(본문 길이·고아·구조)가 훑는다. 도구 껍데기가 거기 섞이면 안 된다.
+    (OUT_DIR / "compare.html").write_text(
+        COMPARE.format(n=len(urls), nav=render_nav(menu_for_path("region/compare.html"))),
+        encoding="utf-8")
+    slugs = [u.split("/")[2] for u in urls]
+    write_json(REGION_DATA / "index.json", region_index(slugs, collect.nat))
+    data_files.add("index.json")
+    for f in REGION_DATA.glob("*.json"):
+        if f.name not in data_files:
+            f.unlink()
     import shutil
     keep = {u.split("/")[2] for u in urls}
     n_stale = 0

@@ -11,6 +11,10 @@
     ? ({ '광주광역시': '전남광주특별시', '전라남도': '전남광주특별시', '전남광주통합특별시': '전남광주특별시' }[s] || s)
     : s);
 
+  // brush.js 공통 키 — 지도 칸과 같은 모양(시도|시군구, 시도 단위는 시도). 통합 정규화 **전**
+  // 원 시도명을 쓴다: 지도 칸도 원 시도명(광주광역시)을 단다.
+  const regionKey = (r) => (r.sido ? (r.sigungu ? `${r.sido}|${r.sigungu}` : r.sido) : '');
+
   function init(ctx) {
     const host = document.getElementById('ar-winners-section');
     if (!host) return;
@@ -24,7 +28,7 @@
         const level = tc === '5' ? '광역의원' : '기초의원';
         for (const c of r.candidates || []) {
           if (!c.won) continue;
-          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct, tc, place: r.district || r.sigungu || '' });
+          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct, tc, place: r.district || r.sigungu || '', region: regionKey(r) });
         }
       } else if (['8', '9'].includes(tc)) {
         // 비례 당선인 (tc8 광역·tc9 기초) — 정당 명부(개인명 없음) → 정당별 seats 만큼 행. hex와 일치.
@@ -32,7 +36,7 @@
         const dist = (tc === '9' && r.sigungu) ? `${r.sigungu} 비례` : '비례대표';
         for (const c of r.candidates || []) {
           for (let k = 0; k < (c.seats || 0); k++) {
-            winners.push({ level, sido: normSido(r.sido || ''), district: dist, name: '비례대표', party: c.party || '무소속' });
+            winners.push({ level, sido: normSido(r.sido || ''), district: dist, name: '비례대표', party: c.party || '무소속', region: regionKey(r) });
           }
         }
       }
@@ -147,15 +151,26 @@
       grid.innerHTML = filtered.slice(0, 500).map((w) => {
         const col = (typeof partyTextColor === 'function') ? partyTextColor(w.party) : '#999';
         const lvlBadge = w.level === '광역의원' ? '광역' : '기초';
-        return `<div class="ar-winner-row" style="border-left:3px solid ${col}">
+        return `<div class="ar-winner-row" style="border-left:3px solid ${col}"${w.region ? ` data-region="${w.region}"` : ''}>
           <span class="ar-winner-lvl">${lvlBadge}</span>
-          <span class="ar-winner-loc">${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}</span>
+          <span class="ar-winner-loc">${locHtml(w)}</span>
           <span class="ar-winner-name">${(window.Archive.personLink && w.tc) ? window.Archive.personLink.wrap(w.tc, w.place, w.name) : w.name}</span>
           <span class="ar-winner-party" style="color:${col}">${w.party}</span>
           ${w.pct != null ? `<span class="ar-winner-pct">${w.pct.toFixed(1)}%</span>` : ''}
         </div>`;
       }).join('') + (filtered.length > 500 ? `<div class="ar-winners-more">… ${filtered.length - 500}명 추가 (검색·filter로 좁히세요)</div>` : '');
     }
+    // 선거구 → 그 시군구의 역대 선거 페이지. 시군구를 아는 행만 잇는다(광역의원 선거구는
+    // 원자료에 시군구가 없다 — 이름 모양으로 떼어 내지 않는다).
+    let regionIx = null;
+    function locHtml(w) {
+      const txt = `${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}`;
+      const [sd, sg] = (w.region || '').split('|');
+      const slug = (regionIx && sg && window.RegionPaths) ? window.RegionPaths.resolveWith(regionIx, sd, sg) : null;
+      return slug ? `<a href="/region/${encodeURIComponent(slug)}/" title="${sg}의 역대 선거">${txt}</a>` : txt;
+    }
+    if (window.RegionPaths) window.RegionPaths.load().then((ix) => { regionIx = ix; if (ix) render(); });
+
     for (const id of ['ar-winners-q', 'ar-winners-sido', 'ar-winners-party', 'ar-winners-level']) {
       const el = document.getElementById(id);
       el.addEventListener('input', render);

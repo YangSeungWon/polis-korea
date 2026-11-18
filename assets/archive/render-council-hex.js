@@ -211,6 +211,7 @@
       const seats = lookupKey(sigunguSeats, cell.sido, cell.name);   // exact→rolled (matchKeys) — '금정구' 등 보존
       const [cx, cy] = hexCenter(cell.c, cell.r);
       const g = document.createElementNS(NS, 'g');
+      g.dataset.region = cell.sido + '|' + cell.name;   // brush.js — 당선인 행과 같은 키
       // 클릭 → 아래 당선인 섹션을 그 시군구 기초의원으로 필터·스크롤(의석 있는 셀만).
       if (seats && seats.size) {
         g.style.cursor = 'pointer';
@@ -520,6 +521,7 @@
       const [cx, cy] = hexCenter(cell.c, cell.r);
       const win = valueOf(cell);
       const g = document.createElementNS(NS, 'g');
+      g.dataset.region = cell.sido + '|' + cell.name;
       const poly = document.createElementNS(NS, 'polygon');
       poly.setAttribute('points', hexPoints(cx, cy, PARENT_R));
       if (win) {

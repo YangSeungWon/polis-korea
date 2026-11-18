@@ -34,6 +34,7 @@ export const PAGES = [
   { id: 'search',        url: '/search.html',                     why: '검색 진입' },
   { id: 'coverage',      url: '/about/data-coverage/',            why: '자료 출처 매트릭스 — 추정 금지 자리' },
   { id: 'data-dl',       url: '/about/data/',                     why: '데이터 내려받기 — 파일·필드 표(좁은 화면에서 쌓임)' },
+  { id: 'region-cmp',    url: '/region/compare.html?a=서울특별시-강남구&b=광주광역시-북구', why: '두 지역 나란히 — 3열 표·대선 막대(좁은 화면)' },
 ];
 
 // 뷰포트 — 초대형과 모바일 사이가 가장 잘 깨진다.

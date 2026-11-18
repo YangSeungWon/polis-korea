@@ -547,6 +547,10 @@ function renderDetail() {
     }
   }
   pane.innerHTML = html;
+  // 고른 곳 → 그 지역의 역대 선거. 지역구(선거구)는 장소가 아니라 잇지 않는다.
+  if (state.selected && state.selected.kind !== 'district' && window.RegionPaths) {
+    window.RegionPaths.attach(pane.querySelector('.detail-hdr'), state.selected.sido, state.selected.name || null);
+  }
   syncSelURL();   // 모든 선택 경로(지도·박빙 목록·geo)가 여기로 모인다 — URL ?sel= 기록
   // 박빙 row 클릭 → 선택
   pane.querySelectorAll('.hist-close-row').forEach((row) => {
