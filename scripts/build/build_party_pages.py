@@ -277,8 +277,14 @@ def render_regions(name: str, strength: dict, page_slugs: set) -> str:
 _RUNS_CACHE: dict = {}
 
 
-def build_runs() -> dict:
+def build_runs(include_outside: bool = False) -> dict:
     """정당별 **출마 기록** — 선거마다 후보 수·득표.
+
+    include_outside: registry 노드의 존속 기간 밖 기록까지 줄지. 정당 **페이지**는
+    빼야 한다(1965년 민중당 페이지에 1948년 기록이 붙는다). 그러나 관측 층
+    (build_observed_parties)은 **결과에 나온 이름을 전부** 적는 곳이라 빼면 안 된다 —
+    뺐더니 1948년 민중당 7,664표가 관측에서 사라지고 그걸 조사하라는 동음이의 큐
+    항목만 허공에 남았다. 기록은 한 번 모으고, 거르는 건 호출부가 고른다.
 
     기존 '등장 선거'는 당선자 기준이라 원외 정당은 아무것도 안 나온다. 녹색당은
     16회 선거에 871명이 나와 318만표를 얻었는데 페이지에는 한 줄도 없었다.
@@ -288,7 +294,7 @@ def build_runs() -> dict:
     family_vote_share.py와 같은 규칙이다.
     """
     if _RUNS_CACHE:
-        return _RUNS_CACHE
+        return _runs_view(include_outside)
     import collections
     # **같은 이름의 다른 정당을 한 덩어리로 세지 않는다.** 원자료의 '국민의당'은
     # 1963·2016·2020이 다 그 이름이라, 그대로 세면 1963~2022 · 35M표 · 당선 39가
@@ -364,22 +370,34 @@ def build_runs() -> dict:
 
         walk(doc)
         for party, (n, votes, won) in seen.items():
-            if not _in_life(party, date):
+            outside = not _in_life(party, date)
+            if outside:
                 dropped.append((party, date, n))
-                continue
             cur = agg[party].get(date)
             # 한 선거가 여러 파일에 있으면 후보 수가 가장 많은 쪽(가장 완전한 표현)
             if cur is None or n > cur["candidates"]:
                 agg[party][date] = {"date": date, "label": label,
-                                    "candidates": n, "votes": votes, "won": won}
+                                    "candidates": n, "votes": votes, "won": won,
+                                    "outside_life": outside}
     if dropped:
         by = collections.Counter(f"{p}@{d[:4]}" for p, d, _ in dropped)
-        print(f"  · 존속 기간 밖이라 뺀 출마 기록 {len(dropped)}건 "
+        print(f"  · 존속 기간 밖이라 정당 페이지에서 뺀 출마 기록 {len(dropped)}건 "
               f"({len(by)}조합) — 같은 이름의 다른 정당이다: "
               + ", ".join(sorted(by)[:6]), file=sys.stderr)
     _RUNS_CACHE.update({k: sorted(v.values(), key=lambda r: r["date"], reverse=True)
                         for k, v in agg.items()})
-    return _RUNS_CACHE
+    return _runs_view(include_outside)
+
+
+def _runs_view(include_outside: bool) -> dict:
+    """캐시(전량)에서 호출부가 고른 범위만. 기록 사전은 복사해 outside_life 표지를 뗀다."""
+    out = {}
+    for k, rs in _RUNS_CACHE.items():
+        keep = [{x: v for x, v in r.items() if x != "outside_life"}
+                for r in rs if include_outside or not r["outside_life"]]
+        if keep:
+            out[k] = keep
+    return out
 
 
 def render_runs(name: str) -> str:

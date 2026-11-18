@@ -33,7 +33,9 @@ def main() -> int:
     reg = json.loads(REG.read_text(encoding="utf-8"))["parties"]
     hom = {x["name"]: x for x in
            json.loads(HOM.read_text(encoding="utf-8"))["unresolved"]}
-    runs = build_runs()
+    # 관측 층은 결과에 나온 이름을 **전부** 적는다 — 존속 기간 밖 기록도. 그걸
+    # 드러내는 게 아래 outside_registry_interval이다(빼면 그 표지가 설 자리가 없다).
+    runs = build_runs(include_outside=True)
     rows = []
     for name, rs in runs.items():
         if not rs:
