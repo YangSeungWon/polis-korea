@@ -173,6 +173,8 @@ const PARTY_COLORS = {
 };
 
 const PARTY_FALLBACK = '#777777';
+// 부분 매칭에서 뺄 정당 — 이름에 다른 정당명이 들어 있지만 그 정당이 아니다.
+const NO_PARTIAL_COLOR = new Set(['사회민주당']);
 
 // 같은 당명이라도 시대에 따라 공식 브랜드 색이 달랐던 케이스 override.
 // from(inclusive) ≤ date < to(exclusive). 매칭되면 PARTY_COLORS보다 우선.
@@ -219,7 +221,10 @@ function partyColor(party, date) {
     }
   }
   if (PARTY_COLORS[party]) return PARTY_COLORS[party];
-  // 부분 매칭 (e.g., "더불어민주당 OO지부")
+  // 부분 매칭 (e.g., "더불어민주당 OO지부"). 다른 정당이 이름 속에 기존 정당명을 품은
+  // 경우는 빼 둔다 — '사회민주당'이 '민주당' 색(남색)을 받아 민주당 의석처럼 보였다.
+  // 색을 모르면 회색(PARTY_FALLBACK)이 정직하다. 남의 색을 칠하지 않는다.
+  if (NO_PARTIAL_COLOR.has(party)) return PARTY_FALLBACK;
   for (const k of Object.keys(PARTY_COLORS)) {
     if (party.includes(k) || k.includes(party)) return PARTY_COLORS[k];
   }
