@@ -34,8 +34,12 @@
   function cell(r) {
     if (!r) return '<td class="cmp-cell cmp-none">이 지역 기록 없음</td>';
     const v = r.uncontested ? '<span class="rg-nv">무투표</span>' : pct(r.pct);
-    return `<td class="cmp-cell"><span class="cmp-dot" style="background:${fill(r.party, r.date)}"></span>`
-      + `<span class="cmp-party" style="color:${ink(r.party, r.date)}">${esc(r.party)}</span> `
+    // 교육감은 정당이 없다(party null) — '무소속'으로 바꿔 적지 않는다.
+    const party = r.party
+      ? `<span class="cmp-dot" style="background:${fill(r.party, r.date)}"></span>`
+        + `<span class="cmp-party" style="color:${ink(r.party, r.date)}">${esc(r.party)}</span> `
+      : '<span class="cmp-party cmp-noparty" title="교육감 선거는 정당 공천이 없습니다">정당 없음</span> ';
+    return `<td class="cmp-cell">${party}`
       + `<span class="cmp-name">${esc(r.name || '')}</span> <span class="cmp-pct">${v}</span>`
       + `<span class="cmp-turn">투표율 ${pct(r.turnout)}</span></td>`;
   }

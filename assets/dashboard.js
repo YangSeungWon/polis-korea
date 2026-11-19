@@ -24,11 +24,11 @@ function getPhase() {
 
 const PHASE_META = {
   PRE:       { title: '활성 · 9회 지선 · 1년 이전', subtitle: '여론조사 본격 수집 전', source: null },
-  CAMPAIGN:  { title: '활성 · 9회 지선 + 재·보궐', subtitle: '17개 시·도 · 마지막 조사 1위', source: 'polls' },
+  CAMPAIGN:  { title: '활성 · 9회 지선 + 재·보궐', subtitle: '16개 시·도 · 마지막 조사 1위', source: 'polls' },
   BLACKOUT:  { title: '활성 · 9회 지선 · 공표금지 중', subtitle: '5/27 이전 등록 조사만 표시', source: 'polls' },
-  ELECTION:  { title: '9회 지선 · 개표 중', subtitle: '17개 시·도 · 잠정 1위', source: 'results' },
-  POST:      { title: '9회 지선 · 결과', subtitle: '17개 시·도 · 1위 정당', source: 'results', dateNote: true },
-  RECENT:    { title: '최근 회차 · 9회 지선', subtitle: '17개 시·도 · 1위 정당', source: 'results' },
+  ELECTION:  { title: '9회 지선 · 개표 중', subtitle: '16개 시·도 · 잠정 1위', source: 'results' },
+  POST:      { title: '9회 지선 · 결과', subtitle: '16개 시·도 · 1위 정당', source: 'results', dateNote: true },
+  RECENT:    { title: '최근 회차 · 9회 지선', subtitle: '16개 시·도 · 1위 정당', source: 'results' },
   ARCHIVED:  { title: '다음 회차 준비 중', subtitle: '10회 지선 ~2030', source: null },
 };
 
@@ -91,7 +91,7 @@ async function init() {
 
   // sub-line
   const govSub = document.querySelector('[data-slot-sub="governor"]');
-  if (govSub) govSub.textContent = `17개 시·도 · ${meta.source === 'results' ? '1위 정당' : '마지막 조사 1위'}`;
+  if (govSub) govSub.textContent = `16개 시·도 · ${meta.source === 'results' ? '1위 정당' : '마지막 조사 1위'}`;
   const mayorSub = document.querySelector('[data-slot-sub="mayor"]');
   if (mayorSub) mayorSub.textContent = `${meta.source === 'results' ? '시군구 결과 1위' : '시군구 단위'} · ${meta.source === 'results' ? '1위 정당' : '마지막 조사 1위'}`;
   const boeSub = document.querySelector('[data-slot-sub="byelection"]');

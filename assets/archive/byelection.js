@@ -25,10 +25,15 @@
     for (const r of (results?.races || [])) {
       const tc = r.sg_typecode;
       if (!byTc[tc]) continue;
+      // 시군구로 쪼갠 분해 행(district_sigungu·sigungu_part)은 같은 선거를 한 번 더 담는다.
+      if (/_sigungu$|_part$/.test(r.scope || '')) continue;
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
       if (!cs[0]) continue;
       byTc[tc][cs[0].party] = (byTc[tc][cs[0].party] || 0) + 1;
-      if (cs.length >= 2 && cs[0].pct != null && cs[1].pct != null && cs[0].pct - cs[1].pct < 5) closeN++;
+      // 박빙 — 마지막 당선자와 첫 낙선자의 격차(여러 명 뽑는 기초의원 선거구 대응).
+      const seats = Math.max(1, cs.filter((c) => c.won).length);
+      const w = cs[seats - 1], l = cs[seats];
+      if (w && l && w.pct != null && l.pct != null && w.pct - l.pct < 5) closeN++;
     }
     const total = {};
     for (const tc of Object.keys(byTc)) {
@@ -89,7 +94,8 @@
     }
     const m = results?._meta || {};
     const sourceLabel = m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행');
-    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || '미상'}`);
+    // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
+    setText('ar-status', `${sourceLabel} 결과` + (m.fetched_at ? ` · 갱신 ${m.fetched_at}` : ''));
   }
 
   // 교육감은 정당 추천·표방이 금지된 직 — 빈 정당은 '자료 없음'이 아니라 '정당이 없음'.

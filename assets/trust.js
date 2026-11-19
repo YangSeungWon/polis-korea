@@ -28,11 +28,25 @@
     'nec-vccp09-개표현황': 'NEC 개표현황',
   };
 
+  // 접두어로 갈래를 아는 내부 코드 — 'nec-report-개표현황' 같은 ID가 그대로 보였다.
+  const SOURCE_PREFIX = [
+    [/^nec-report-개표현황|^nec-개표현황|^nec-vccp09/, 'NEC 개표현황'],
+    [/당선인명부/, 'NEC 당선인명부'],
+    [/^nec-투개표API|^nec-openapi/, 'NEC OpenAPI'],
+    [/^nec-lod/, 'NEC 선거통계'],
+    [/^nec-간접선거/, 'NEC 간접선거 기록'],
+    [/^data\.go\.kr/, '공공데이터포털(선관위)'],
+    [/^nec\.go\.kr/, '선관위 자료'],
+  ];
+
   function sourceLabel(raw) {
     if (!raw) return null;
     if (SOURCE_LABEL[raw]) return SOURCE_LABEL[raw];
     if (/NESDC/i.test(raw)) return 'NESDC 등록 조사';
+    for (const [re, label] of SOURCE_PREFIX) if (re.test(raw)) return label;
     if (/^https?:/.test(raw)) return null;
+    // 하이픈·점·슬래시가 든 값은 내부 식별자나 경로다 — 사람 이름이 아니다.
+    if (/[-./_]/.test(raw)) return null;
     return raw.length <= 24 ? raw : null;
   }
 

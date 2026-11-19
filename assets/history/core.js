@@ -310,7 +310,7 @@ async function updateArchiveLink() {
   if (!el) return;
   const slug = (state.type && state.n != null) ? await archiveSlugFor(state.type, state.n) : null;
   if (!slug) { el.hidden = true; el.innerHTML = ''; return; }
-  el.innerHTML = `<a href="/archive/${slug}/">이 회차 아카이브 — 결과·여론조사·출구조사</a>`;
+  el.innerHTML = `<a href="/archive/${slug}/">이 회차 아카이브 — 한 화면 요약</a>`;
   el.hidden = false;
 }
 

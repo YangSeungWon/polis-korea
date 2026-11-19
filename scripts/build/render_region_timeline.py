@@ -256,10 +256,15 @@ def main(regions: list[str]) -> int:
                 '<span class="rt-key"><i class="rt-i-unknown"></i>계보 미확인·무소속</span>')
         bd = d.get("bridge_dependency") or {}
         share = bd.get("bridge_dependent_share_of_resolved")
-        meta = (f'선거 {len(d["points"])}회 · 계열 {len(d["series"])}종 · '
-                f'행정구역·선거구 사건 {len(d.get("events") or [])}건')
+        # '계열'은 이 페이지에서 정당 계보(보수계·민주계…)를 뜻한다 — series는 선거
+        # 종류별 줄이라 '선거 종류'로 쓴다. 사건은 다 모은 게 아니다: 0건은 '없었다'가
+        # 아니라 '못 모았다'라서 숫자를 쓰지 않는다(결손 모델).
+        n_ev = len(d.get("events") or [])
+        meta = (f'선거 {len(d["points"])}회 · 선거 종류 {len(d["series"])}가지 · '
+                + (f'행정구역·선거구 사건 {n_ev}건(일부만 수집)' if n_ev
+                   else '행정구역·선거구 사건은 아직 모으지 않았습니다'))
         if share is not None:
-            meta += (f' · 계보 분류의 {share}%는 강제해산 등 제도적 단절을 '
+            meta += (f' · 계보 분류의 약 {round(share)}%는 강제해산 등 제도적 단절을 '
                      f'건너는 역사적 연속성 해석에 기댑니다')
         # STYLE은 format 대상이 아니다 — CSS의 중괄호가 .format()과 충돌한다
         body = PAGE.format(region=esc(d["region"]), svg=render(d),

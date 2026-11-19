@@ -43,19 +43,21 @@
   }
 
   // 재보궐 캘린더: wiki entries만 추가 (NEC 회차는 위에서 처리됨)
+  // 한 해에 재보궐이 여러 번(1991년 11회) 있을 수 있다 — 첫 회만 두면 툴팁이
+  // '1991년 재보궐 (1건)'처럼 줄어든다. 그해 회차를 전부 모은다.
   if (calendar?.cycles) {
     for (const c of calendar.cycles) {
       const key = `byelection|${c.year}`;
       if (!cellMap[key]) {
-        cellMap[key] = {
-          source: c.source === 'wikipedia-ko' ? 'wiki' : 'nec',
-          calendar: c,
-        };
-      } else if (cellMap[key].source === 'nec' && c.source === 'wikipedia-ko') {
-        // 같은 연도에 NEC + wiki 있으면 NEC 유지
+        cellMap[key] = { source: c.source === 'wikipedia-ko' ? 'wiki' : 'nec', calendar: [c] };
+      } else if (cellMap[key].calendar) {
+        cellMap[key].calendar.push(c);
       }
+      // 같은 연도에 NEC 회차(meta)가 이미 있으면 그것을 유지한다
     }
   }
+  // 요약은 행렬과 같은 범위(1987~2026)만 센다 — 1948년부터 세면 행렬에 없는 칸이 숫자에 들어간다.
+  const inRange = (k) => { const y = +k.split('|')[1]; return y >= YEAR_START && y <= YEAR_END; };
 
   renderSummary();
   renderMatrix();
@@ -63,12 +65,13 @@
   function renderSummary() {
     const host = document.getElementById('cov-summary');
     const counts = { nec: 0, live: 0, wiki: 0, mixed: 0, unknown: 0, total: 0 };
-    for (const [_, v] of Object.entries(cellMap)) {
+    for (const [k, v] of Object.entries(cellMap)) {
+      if (!inRange(k)) continue;
       counts.total += 1;
       if (v.source in counts) counts[v.source] += 1;
     }
     const byKind = {};
-    for (const k of Object.keys(cellMap)) {
+    for (const k of Object.keys(cellMap).filter(inRange)) {
       const kind = k.split('|')[0];
       byKind[kind] = (byKind[kind] || 0) + 1;
     }
@@ -82,7 +85,7 @@
         <div class="cov-stat"><div class="cov-stat-n">${counts.unknown}</div><div class="cov-stat-lbl">출처 미기재</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${wikiCycles}</div><div class="cov-stat-lbl">재보궐 (위키 회차)</div></div>
       </div>
-      <p class="cov-note">대선 ${byKind.presidential || 0} · 총선 ${byKind.general || 0} · 지선 ${byKind.local || 0} · 재보궐 연도 ${byKind.byelection || 0}.</p>
+      <p class="cov-note">${YEAR_START}~${YEAR_END}년 · 대선 ${byKind.presidential || 0}해 · 총선 ${byKind.general || 0}해 · 지선 ${byKind.local || 0}해 · 재보궐 ${byKind.byelection || 0}해.</p>
     `;
   }
 
@@ -114,8 +117,13 @@
             + (note ? `\n${note}` : '\n출처가 적혀 있지 않다');
           if (meta.archive?.page) link = meta.archive.page;
         } else if (cell?.calendar) {
-          const c = cell.calendar;
-          tooltip = `${c.year}년 재보궐 (${c.reasons_count || '?'}건)\nsource: ${status}`;
+          const cs = cell.calendar;
+          // reasons_count 0은 '못 받았다' — 0건으로 쓰지 않는다.
+          const known = cs.filter((c) => c.reasons_count > 0);
+          const n = known.reduce((a, c) => a + c.reasons_count, 0);
+          const cnt = known.length === cs.length ? `${n}건`
+            : known.length ? `${n}건 이상` : '건수 모름';
+          tooltip = `${y}년 재보궐 ${cs.length}회 (${cnt})\nsource: ${status}`;
         }
         const cls = `cov-mat-cell cov-mat-${status}`;
         if (link) {

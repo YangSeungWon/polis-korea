@@ -69,7 +69,12 @@ def build_appearances(timeline: dict) -> dict:
             for c in r["presCandidates"]:
                 if c.get("party"):
                     nm = f" ({c['name']})" if c.get("name") else ""
-                    rows.append((c["party"], f"{c.get('pct', 0):.1f}%{nm}"))
+                    # 득표율이 없는 회차(간선 대선 등)를 0.0%로 쓰지 않는다. 0.05% 미만도
+                    # 반올림해 0.0%가 되면 '아무도 안 찍었다'로 읽힌다.
+                    pc = c.get("pct")
+                    pv = ("득표율 없음" if pc is None
+                          else "0.1% 미만" if pc < 0.05 else f"{pc:.1f}%")
+                    rows.append((c["party"], f"{pv}{nm}"))
         elif kind == "local" and r.get("sidoWinners"):
             cnt = {}
             for w in r["sidoWinners"].values():
@@ -118,11 +123,16 @@ def build_members(persons: list) -> dict:
     for p in persons:
         if not (p.get("assembly_id") and p.get("dob")):
             continue
-        title, rank = member_title(p.get("races", []))
+        races = p.get("races", [])
         for party in set(canon_party(x) for x in p.get("parties", [])):
+            # 직함은 **그 정당으로** 얻은 것만. 경력 전체로 매기면 더불어민주당으로
+            # 당선된 울산시장이 국민의힘 페이지에 '울산광역시장'으로 걸린다.
+            mine = [r for r in races if r.get("party") and canon_party(r["party"]) == party]
+            title, rank = member_title(mine)
             out.setdefault(party, []).append({
                 "name": p["name"], "dob": p["dob"],
-                "title": title, "rank": rank, "wins": p.get("wins", 0),
+                "title": title, "rank": rank,
+                "wins": sum(1 for r in mine if r.get("won")),
             })
     for party in out:
         out[party].sort(key=lambda m: (-m["rank"], -m["wins"], m["name"]))
@@ -368,7 +378,7 @@ def build_runs(include_outside: bool = False) -> dict:
                 for v in o:
                     walk(v)
 
-        walk(doc)
+        walk(race_level(doc))
         for party, (n, votes, won) in seen.items():
             outside = not _in_life(party, date)
             if outside:
@@ -389,6 +399,42 @@ def build_runs(include_outside: bool = False) -> dict:
     return _runs_view(include_outside)
 
 
+# 같은 선거를 지역별로 쪼갠 **분해 행**은 후보·득표·당선을 다시 담는다. 대선
+# 파일은 전국 1행 + 시도 17행이라, 다 세면 후보 1명이 '후보 18'이 되고 득표가
+# 두 배가 되며 시도 1위가 '당선'으로 세졌다(21대 국민의힘 '후보 18 · 당선 6').
+# 직위(sg_typecode)마다 **선거 단위 그 자체**인 행만 센다.
+_SCOPE_RANK = {"nation": 0, "sido": 1, "proportional_sido": 1,
+               "district": 2, "sigungu": 3, "proportional_sigungu": 3}
+
+
+def _is_breakdown(scope: str) -> bool:
+    return scope.endswith("_sigungu") or scope.endswith("_part")
+
+
+def race_level(doc):
+    """결과 문서 → 선거 단위 행만 남긴 문서. races 목록이 아닌 모양은 그대로."""
+    races = doc.get("races") if isinstance(doc, dict) else None
+    if not isinstance(races, list):
+        return doc
+    top: dict = {}
+    for r in races:
+        sc = r.get("scope") or ""
+        if sc and not _is_breakdown(sc) and sc in _SCOPE_RANK:
+            tc = r.get("sg_typecode")
+            top[tc] = min(top.get(tc, 99), _SCOPE_RANK[sc])
+    keep = []
+    for r in races:
+        sc = r.get("scope") or ""
+        if not sc:
+            keep.append(r)          # 단위를 모르는 행 — 판단하지 않는다
+            continue
+        if _is_breakdown(sc):
+            continue
+        if _SCOPE_RANK.get(sc, 99) == top.get(r.get("sg_typecode"), _SCOPE_RANK.get(sc, 99)):
+            keep.append(r)
+    return {"races": keep}
+
+
 def _runs_view(include_outside: bool) -> dict:
     """캐시(전량)에서 호출부가 고른 범위만. 기록 사전은 복사해 outside_life 표지를 뗀다."""
     out = {}
@@ -400,13 +446,35 @@ def _runs_view(include_outside: bool) -> dict:
     return out
 
 
+# registry note는 큐레이터 메모와 독자용 설명이 섞여 있다. '※' 뒤는 큐레이터 주석이고,
+# 필드명(dissolved·founded…)·작업 용어(노드·edge·관측·큐)가 든 문장도 독자에게는
+# 뜻이 없다. 그런 문장·절만 뺀다 — 사실 문장은 그대로 둔다.
+_CURATOR = re.compile(r"dissolved|founded|successors|predecessors|absorbed|registry|"
+                      r"path_compressed|_bound|edge|노드|관측|큐에|큐로|alias|늘리면|늘리지")
+
+
+def public_note(note: str | None) -> str:
+    if not note:
+        return ""
+    note = note.split("※")[0].replace("**", "")
+    out = []
+    for sent in re.split(r"(?<=[.])\s+", note.strip()):
+        clauses = [c for c in sent.split(" — ") if not _CURATOR.search(c)]
+        if not clauses:
+            continue
+        t = " — ".join(clauses).strip()
+        if not t.endswith("."):
+            t += "."
+        out.append(t)
+    return " ".join(out)
+
+
 def render_runs(name: str) -> str:
     runs = build_runs().get(name) or []
     if not runs:
         return ""
     n_el = len(runs)
     tot_c = sum(r["candidates"] for r in runs)
-    tot_v = sum(r["votes"] for r in runs)
     tot_w = sum(r["won"] for r in runs)
     rows = []
     for r in runs[:14]:
@@ -417,13 +485,15 @@ def render_runs(name: str) -> str:
             f'<span class="pty-run-n">후보 {r["candidates"]}</span>'
             f'<span class="pty-run-v">{r["votes"]:,}표</span>{won}</li>')
     more = (f'<li class="pty-run-more">외 {n_el - 14}회</li>' if n_el > 14 else "")
-    head = (f'선거 {n_el}회 · 후보 {tot_c:,}명 · 득표 {tot_v:,}'
+    # 득표 합계는 내지 않는다 — 대선 1표와 지선 투표지 7장을 더한 수는 뜻이 없다.
+    head = (f'선거 {n_el}회 · 후보 {tot_c:,}명'
             + (f' · 당선 {tot_w:,}' if tot_w else " · 당선 없음"))
     return (f'<section class="pty-sec"><h2>출마 기록 <span class="pty-cnt">{n_el}</span></h2>'
             f'<p class="pty-run-sum">{head}</p>'
             f'<ul class="pty-runs">{"".join(rows)}{more}</ul>'
             f'<p class="fine">당선 여부와 무관하게 후보를 낸 선거 전부. '
-            f'같은 선거의 중복 표현은 한 번만 셉니다.</p></section>')
+            f'같은 선거의 중복 표현은 한 번만 셉니다. 지방선거 득표는 '
+            f'단체장·의원·비례 투표지를 모두 더한 수입니다.</p></section>')
 
 
 def _stream_id(stream: str) -> str:
@@ -453,7 +523,8 @@ def render(name, info, known, appearances, members, regions=""):
     stream_html = (f'<p class="pty-stream">계열 '
                    f'<a href="/parties.html#{_stream_id(stream)}">{esc(stream)}</a></p>'
                    if stream else "")
-    note_html = f'<p class="pty-note">{esc(info["note"])}</p>' if info.get("note") else ""
+    pnote = public_note(info.get("note"))
+    note_html = f'<p class="pty-note">{esc(pnote)}</p>' if pnote else ""
 
     # 계보
     preds = info.get("predecessors", [])
@@ -504,7 +575,7 @@ def render(name, info, known, appearances, members, regions=""):
 
     desc = (f'{name}' + (f'({abbr})' if abbr else '')
             + f' 선거 기록 — {life_span}. 역대 대선·총선·지선 득표와 소속 인물. '
-            + (info.get("note") or ""))
+            + pnote)
     return PAGE.format(
         nav=render_nav(menu_for_path("party/x/index.html")),
         name=esc(name), abbr_badge=abbr_badge, life=life, stream_html=stream_html, life_span=esc(life_span), note=note_html,

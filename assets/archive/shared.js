@@ -124,6 +124,8 @@
       let hits = 0, total = 0, errSum = 0, errN = 0;
       const rows = [];
       for (const sido of order) {
+        // '전국'은 시·도가 아니다 — 세면 적중이 하나 더 붙어 히어로(시·도만)와 어긋난다.
+        if (sido === '전국') continue;
         const e = res[sido] && res[sido][0];
         const a = actual[sido];
         if (!e || !a) continue;

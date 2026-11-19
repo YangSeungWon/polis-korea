@@ -76,7 +76,8 @@
     const m = results._meta || {};
     const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
       : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
-    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${m.fetched_at || m.election_date || '미상'}`);
+    // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
+    setText('ar-status', `${sourceLabel} 결과` + (m.fetched_at ? ` · 갱신 ${m.fetched_at}` : ''));
   }
 
   function renderNation(ctx) {

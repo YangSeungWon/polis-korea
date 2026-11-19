@@ -96,15 +96,17 @@
 
     // 하단 meta
     if (electors > 0) setText('ar-turnout', (voters / electors * 100).toFixed(1) + '%');
-    // 박빙 — 1·2위 차이 5%p 미만 race 카운트 (지역구만)
+    // 박빙 — 당락을 가른 격차가 5%p 미만인 선거구 수 (지역구만).
+    // 기초의원은 한 선거구에서 2~4명을 뽑는다. 1·2위가 둘 다 당선되는 곳에서 그 차이는
+    // 당락과 상관없다 — 마지막 당선자와 첫 낙선자의 차이를 본다.
     let closeN = 0;
     for (const r of results.races) {
       if (!['3', '4', '5', '6'].includes(r.sg_typecode)) continue;
       if (!['sido', 'sigungu', 'district'].includes(r.scope)) continue;
       const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
-      if (cs.length >= 2 && cs[0].pct != null && cs[1].pct != null) {
-        if (cs[0].pct - cs[1].pct < 5) closeN++;
-      }
+      const seats = Math.max(1, cs.filter((c) => c.won).length);
+      const w = cs[seats - 1], l = cs[seats];
+      if (w && l && w.pct != null && l.pct != null && w.pct - l.pct < 5) closeN++;
     }
     if (closeN > 0) {
       setText('ar-close-count', `${closeN}곳`);
@@ -141,7 +143,8 @@
     const meta = results._meta || {};
     const sourceLabel = meta.source === 'wikipedia-ko-infobox' || meta.source === 'wikipedia-ko-body'
       ? '위키' : (meta.is_final ? '확정' : (meta.source === 'nec-live-portal' ? '잠정' : '진행'));
-    setText('ar-status', `${sourceLabel} 결과 · 갱신 ${meta.fetched_at || meta.election_date || '미상'}`);
+    // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
+    setText('ar-status', `${sourceLabel} 결과` + (meta.fetched_at ? ` · 갱신 ${meta.fetched_at}` : ''));
   }
 
   function renderCounting(ctx) {

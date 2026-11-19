@@ -1,7 +1,7 @@
 """지역 entity 페이지 → /region/{시도}-{시군구}/index.html.
 
 polis에는 이미 선거·인물·정당이 있는데 **지역**만 entity가 아니었다. 같은 시군구가
-역대 대선·총선·지선에서 어떻게 갈렸는지는 데이터에 다 있지만 한곳에 모이지 않았다.
+역대 대선·지선에서 어떻게 갈렸는지는 데이터에 다 있지만 한곳에 모이지 않았다.
 
 새 데이터를 만들지 않는다. data/results/*.json의 시군구 단위 race를 모아 재배열할 뿐이다.
 
@@ -53,7 +53,38 @@ def person_href(eid: str, tc: str, place: str, name: str) -> str | None:
     return f"/person/{quote(slug)}/" if slug else None
 
 
-def party_cell(name: str, date: str) -> str:
+# 교육감은 정당 공천이 없다. '무소속'으로 쓰면 무소속 후보가 이긴 것처럼 읽히고,
+# 정당 집계(1위 정당 …)에 끼어 '1위 정당 무소속'이라는 거짓 요약이 된다.
+NO_PARTY = '<span class="rg-np" title="교육감 선거는 정당 공천이 없습니다">정당 없음</span>'
+
+
+def top_party(top: dict, tc: str) -> str | None:
+    """1위 후보의 정당. 교육감(11)은 None — 정당이 없는 선거다."""
+    if tc == "11":
+        return None
+    return top.get("party") or "무소속"
+
+
+def party_tally(rows: list) -> str:
+    """1위 정당 상위 3 — 정당 없는 선거(교육감)는 세지 않는다."""
+    parties: dict = {}
+    for r in rows:
+        if r.get("party"):
+            parties[r["party"]] = parties.get(r["party"], 0) + 1
+    return " · ".join(p for p, _ in sorted(parties.items(), key=lambda x: -x[1])[:3])
+
+
+def year_span(rows: list) -> str:
+    years = [r["date"][:4] for r in rows if r.get("date")]
+    if not years:
+        return ""
+    lo, hi = min(years), max(years)
+    return f"{lo}년 " if lo == hi else f"{lo}~{hi}년 "
+
+
+def party_cell(name: str | None, date: str) -> str:
+    if not name:
+        return NO_PARTY
     canon = disambiguate_party(name, date or "")
     if canon in PARTY_PAGES:
         return f'<a href="/party/{quote(canon)}/">{esc(name)}</a>'
@@ -307,7 +338,7 @@ def collect() -> dict:
             "eid": eid, "date": date, "kind": kind,
             "election": name,
             "office": OFFICE.get(tc, tc),
-            "party": top.get("party") or "무소속", "name": top.get("name"),
+            "party": top_party(top, tc), "name": top.get("name"),
             "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
             # 인물 링크용 — person-links 색인의 (직|지역) 키를 그대로 보존한다.
             # 기초 단위(4·6)는 시군구명이, 광역 단위(1·3·11)는 시도명이 키다.
@@ -651,7 +682,7 @@ def _emit_sido(by_sido, sd, tc, r, eid, date, kind, name, won, merged):
     by_sido[sd].append({
         "eid": eid, "date": date, "kind": kind, "election": name,
         "office": SIDO_OFFICE[tc], "tc": tc,
-        "party": top.get("party") or "무소속", "name": top.get("name"),
+        "party": top_party(top, tc), "name": top.get("name"),
         "uncontested": bool(r.get("is_uncontested") or top.get("uncontested")),
         "place": sd,
         "pct": top.get("pct"),
@@ -683,17 +714,14 @@ def relate_block(slug: str) -> str:
 def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     slug = f"{sd}-{sg}"
-    years = [r["date"][:4] for r in rows if r.get("date")]
-    span = f"{min(years)}~{max(years)}년 " if years else ""
-    parties = {}
-    for r in rows:
-        parties[r["party"]] = parties.get(r["party"], 0) + 1
-    top_parties = " · ".join(p for p, _ in sorted(parties.items(), key=lambda x: -x[1])[:3])
-    lede = esc(f"{span}선거 {len(rows)}건 — 1위 정당 {top_parties}")
+    span = year_span(rows)
+    top_parties = party_tally(rows)
+    lede = esc(f"{span}선거 {len(rows)}건" + (f" — 1위 정당 {top_parties}" if top_parties else ""))
     # 설명도 '선거 기록'이 아니라 사람이 치는 '선거 결과'로 연다. 뒤에는 이 페이지에
     # 실제로 있는 것(1위 정당·후보·득표율·투표율)을 적어 무엇을 보러 오는지 맞춘다.
-    desc = esc(f"{sd} {sigungu_short(sg)} 선거 결과. {span}대선·총선·지선 {len(rows)}건의 "
-               f"1위 정당·후보와 득표율·투표율. 최다 1위 {top_parties}.")
+    desc = esc(f"{sd} {sigungu_short(sg)} 선거 결과. {span}대선·지선 {len(rows)}건의 "
+               f"1위 정당·후보와 득표율·투표율."
+               + (f" 최다 1위 {top_parties}." if top_parties else ""))
 
     trs = []
     for r in rows:
@@ -717,7 +745,7 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
                "item": f"{SITE}/elections.html"},
               {"@type": "ListItem", "position": 2, "name": f"{sd} {sg}"}]}
     return TEMPLATE.format(
-        title=esc(f"{sg} 선거 결과 — {sd} 역대 대선·총선·지선 1위와 투표율 | polis"),
+        title=esc(f"{sg} 선거 결과 — {sd} 역대 대선·지선 1위와 투표율 | polis"),
         og_title=esc(f"{sg} 선거 결과 — {sd}"),
         h1=esc(f"{sd} {sg}"),
         slug=esc(slug), desc=desc, lede=lede, table=table, foot=FOOT_SGG,
@@ -795,16 +823,12 @@ def sido_units_block(sd: str, kids: list) -> str:
 
 def build_sido_page(sd: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
-    years = [r["date"][:4] for r in rows if r.get("date")]
-    span = f"{min(years)}~{max(years)}년 " if years else ""
+    span = year_span(rows)
     n_gov = sum(1 for r in rows if r["office"] == "광역단체장")
-    parties = {}
-    for r in rows:
-        parties[r["party"]] = parties.get(r["party"], 0) + 1
-    top_parties = " · ".join(p for p, _ in sorted(parties.items(),
-                                                  key=lambda x: -x[1])[:3])
+    top_parties = party_tally(rows)
     kids = sido_sigungu(sd, by_region)
-    lede = esc(f"{span}선거 {len(rows)}건 — 광역단체장 {n_gov}회 · 1위 정당 {top_parties}")
+    lede = esc(f"{span}선거 {len(rows)}건 — 광역단체장 {n_gov}회"
+               + (f" · 1위 정당 {top_parties}" if top_parties else ""))
     desc = esc(f"{sd} 선거 결과. 역대 광역단체장 {n_gov}명과 교육감, 대선에서 이 "
                f"시도가 어떻게 갈렸는지. {span}{len(rows)}건 · 시군구 {len(kids)}곳.")
     table = sido_table(rows)
@@ -1065,7 +1089,7 @@ COMPARE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <base href="/">
-<title>두 지역 나란히 보기 — 역대 대선·총선·지선 | polis</title>
+<title>두 지역 나란히 보기 — 역대 대선·지선 | polis</title>
 <meta name="description" content="두 지역의 역대 선거 1위와 득표율·투표율, 대선 후보 득표율을 같은 선거끼리 나란히 놓고 봅니다.">
 <link rel="canonical" href="/region/compare.html">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
