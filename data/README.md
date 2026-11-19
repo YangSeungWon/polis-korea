@@ -15,6 +15,7 @@ data/
 ├── results/                # 최종 결과 JSON (UI fetch 대상)
 ├── polls/                  # 여론조사 (NESDC) · 국정평가 · 트래커 시계열
 ├── parties/                # 정당 registry(확인) · observed(관측) · 계보·축
+├── assembly/current.json   # 지금 국회 재적 의원·정당별 의석·공석 (열린국회정보) — 총선 당일 결과가 아니다
 ├── comparisons/            # 직전 회차 대비 정당 득표 비교
 └── seo/                    # 색인·노출 수집 (GSC Search Analytics) - docs/seo-coverage.md
 ```
@@ -78,6 +79,18 @@ GET /WtvtelpcInfoInqireService/getWtvtelpcsccnInfoInqire
   &sgTypecode=4            # 4=구시군의장(기초단체장), 3=시도지사, 1=대통령, 2=국회의원
   &pageNo=1&numOfRows=100
 ```
+
+## 열린국회정보 Open API (국회사무처) — 활성
+
+발급일 2026-11-19. 인증키 환경변수 `ASSEMBLY_API_KEY`(.env — **약관상 공개·공유 금지**, 커밋하지 않는다).
+키 없이 부르면 5줄 샘플만 주고, User-Agent가 없으면 `Bad Request.`를 돌려준다.
+
+| 엔드포인트 | 용도 | 스크립트 |
+|---|---|---|
+| `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu` | 현 대수 재적 의원(정당·지역구/비례·선수) → 홈 국회 카드 '지금' 줄 | `scripts/fetch/fetch_assembly_members.py` → `data/assembly/current.json` |
+| `…/openapi/ALLNAMEMBER` | 역대 의원 대수별 정당·선거구(당적 변경 **날짜는 없다**) | (미사용) |
+
+CI 시크릿이 없어 **자동 갱신되지 않는다** — 로컬에서 돌려 커밋한다. 화면은 받은 날짜를 함께 적는다.
 
 ## data.nec.go.kr LOD (SPARQL) — 옛 총선 백필
 

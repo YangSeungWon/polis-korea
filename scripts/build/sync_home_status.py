@@ -18,6 +18,7 @@
 움직이는 값은 status.js가 화면에서만 보여준다.
 
 정본은 화면과 같은 data/timeline.json이다. 다른 파일에서 뽑으면 글과 화면이 갈린다.
+(국회 '지금' 줄만 data/assembly/current.json — 화면도 같은 파일을 읽는다.)
 
 사용: python3 scripts/build/sync_home_status.py
 """
@@ -76,7 +77,7 @@ SLOT_IDS = {
 }
 
 
-def card(slot: str, label: str, r: dict, value: str, meta: str) -> str:
+def card(slot: str, label: str, r: dict, value: str, meta: str, extra: str = "") -> str:
     slug = archive_slug(r)
     href = f"/archive/{slug}/" if (ROOT / "archive" / slug / "index.html").exists() \
         else f"history.html?type={r['kind']}"
@@ -86,8 +87,27 @@ def card(slot: str, label: str, r: dict, value: str, meta: str) -> str:
             f'<div class="card-heading"><span class="card-heading-n">{esc(r["label"])}</span>'
             f'<span class="card-heading-date">{esc(r["date"])}</span></div>\n'
             f'        <div class="status-value" id="{vid}">{value}</div>\n'
+            + extra +
             f'        <div class="status-meta" id="{mid}">{esc(meta)}</div>\n'
             f'      </a>\n')
+
+
+def assembly_now() -> str:
+    """국회 '지금' 줄 — data/assembly/current.json(열린국회정보 의원 명부). 총선 당일
+    의석과 다르다(탈당·합당·승계). 파일이 없으면 줄을 안 낸다 — 0석으로 적지 않는다.
+    status.js가 같은 id를 같은 파일로 다시 채운다."""
+    f = ROOT / "data" / "assembly" / "current.json"
+    if not f.is_file():
+        return ""
+    cur = json.loads(f.read_text(encoding="utf-8"))
+    items = [f'<span class="leg-item">{esc(p)} <b>{n}</b></span>' for p, n in cur["party_seats"]]
+    if cur.get("vacant"):
+        items.append(f'<span class="leg-item">공석 <b>{cur["vacant"]}</b></span>')
+    when = (cur.get("_meta") or {}).get("fetched")
+    return ('        <div class="status-now" id="status-asm-now"><span class="status-now-k">지금</span>'
+            + "".join(items)
+            + (f'<span class="status-now-d">{esc(when)} 국회 의원 명부 기준</span>' if when else "")
+            + "</div>\n")
 
 
 def build() -> str:
@@ -108,7 +128,7 @@ def build() -> str:
         tot = sum(s for _, s in (a.get("partySeats") or []))
         v = " · ".join(f'{esc(n)} <b>{s}</b>석' for n, s in seats)
         out.append(card("assembly", "국회 · 총선", a, v,
-                        f'{tot}석 · 임기 4년 · {term_end(a["date"], 4)}까지'))
+                        f'{tot}석 · 임기 4년 · {term_end(a["date"], 4)}까지', assembly_now()))
 
     lo = latest(rounds, "local")
     if lo:

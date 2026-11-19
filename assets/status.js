@@ -109,6 +109,30 @@
         + `<div class="party-legend">${legendHtml}</div>`;
     }
     document.getElementById('status-asm-meta').textContent = `임기 4년`;
+    fillAssemblyNow(card);
+  }
+
+  // 2-1) 국회 '지금' — 총선 당일 의석과 다른 줄로. 탈당·입당·합당·비례 승계로 바뀐
+  //      재적 의원의 소속(열린국회정보 명부, data/assembly/current.json). 총선 결과를
+  //      재보궐로 고쳐 만들지 않는다 — 일부만 고친 숫자가 '지금'이 된다.
+  //      못 받으면 정적 시드를 그대로 둔다(그것도 없으면 줄이 없다 — 0석으로 적지 않는다).
+  async function fillAssemblyNow(card) {
+    let cur;
+    try { cur = await fetch('data/assembly/current.json').then((r) => (r.ok ? r.json() : null)); } catch { cur = null; }
+    if (!cur || !card || !Array.isArray(cur.party_seats)) return;
+    let el = document.getElementById('status-asm-now');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'status-now';
+      el.id = 'status-asm-now';
+      document.getElementById('status-asm-meta').before(el);
+    }
+    const dot = (p) => `<span class="leg-dot" style="background:${typeof partyColor === 'function' ? partyColor(p) : '#999'}"></span>`;
+    const items = cur.party_seats.map(([p, n]) => `<span class="leg-item">${p === '무소속' ? '' : dot(p)}${p} <b>${n}</b></span>`);
+    if (cur.vacant > 0) items.push(`<span class="leg-item">공석 <b>${cur.vacant}</b></span>`);
+    const when = cur._meta && cur._meta.fetched;
+    el.innerHTML = `<span class="status-now-k">지금</span>${items.join('')}`
+      + (when ? `<span class="status-now-d">${when} 국회 의원 명부 기준</span>` : '');
   }
 
   // 3) 지방정부 — 가장 최근 지선, 시도지사 정당 분포

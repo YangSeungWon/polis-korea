@@ -9,6 +9,7 @@
 | `fetch_nec_byelection.py` | NEC 재보궐 raw |
 | `fetch_nec_roster.py` | 후보 명부 |
 | `fetch_byelection_reasons.py` | 재보궐 사유 → `data/byelection_reasons.json` |
+| `fetch_assembly_members.py` | 지금 국회 재적 의원 → `data/assembly/current.json` (열린국회정보 · `ASSEMBLY_API_KEY` · 로컬 수동) |
 | `fetch_district_full.py`·`fetch_districts_api.py` | 지역구 메타 |
 | `fetch_local_full.py` | 지선 종합 (legacy 회차) |
 | `fetch_proportional_api.py` | 비례 정당 매핑 |

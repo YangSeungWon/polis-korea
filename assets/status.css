@@ -197,6 +197,18 @@
 }
 
 
+/* 국회 카드 '지금' 줄 — 총선 당일 의석(위 반원·범례)과 따로. 탈당·합당·승계 반영. */
+.status-card .status-now {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 3px 9px; margin: 10px 0 2px; padding-top: 8px; border-top: 1px dashed var(--rule);
+  font-size: 11px; color: var(--ink-soft); text-align: center;
+}
+.status-card .status-now .status-now-k { font-weight: 700; color: var(--ink); }
+.status-card .status-now .leg-item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.status-card .status-now .leg-item b { color: var(--ink); font-weight: 700; }
+.status-card .status-now .leg-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.status-card .status-now .status-now-d { flex-basis: 100%; font-size: 10.5px; }
+
 /* 대통령 카드 — 임기 progress bar */
 .status-card .pres-result {
   font-size: 18px;
