@@ -39,10 +39,13 @@ def round_label(eid: str) -> str:
     """13th-pres-1987 → '13대 대선'. byelection-2020-04-15 → '2020-04-15 재보궐'."""
     if eid.startswith("byelection-"):
         return f"{eid.replace('byelection-','')} 재보궐"
-    m = re.match(r"(\d+)(?:st|nd|rd|th)?-(\w+)-\d+", eid)
+    m = re.match(r"(\d+)(?:st|nd|rd|th)?-(\w+)-(\d+)", eid)
     if not m:
         return eid
-    n, kind = m.groups()
+    n, kind, year = m.groups()
+    # 9th-byelection-2026 — 9회 지선과 같은 날 치른 재보궐. 'n'은 재보궐 회차가 아니다.
+    if kind == "byelection":
+        return f"{year} 재보궐"
     return f"{n}{NTH_UNIT.get(kind, '')} {KIND_SHORT.get(kind, kind)}".strip()
 
 
@@ -388,7 +391,7 @@ def main():
                 "dob": dob,
                 "hanja": next((r["hanja"] for r in grp if r.get("hanja")), None),
                 "wins": wins, "losses": losses,
-                "parties": parties[:6],
+                "parties": parties,   # 자르지 않는다 — 앞 6개만 두면 지금 소속이 빠진다
                 "sidos": sorted(set(s for r in grp for s in r["sidos"])),
                 "likely_namesake": namesake,
                 "races": [{

@@ -220,10 +220,28 @@ def derive(meta: dict) -> dict:
         "is_active": meta.get("status") == "active",
         "election_id_full": f"002{sg_id}" if sg_id else "",
         "nesdc_gubun_query": f"&pollGubuncd={gubun}" if gubun else "",
+        # 설명에는 이 회차에 실제로 있는 것만 적는다 — 1952년 페이지가 '여론조사·출구조사
+        # 비교까지'를 약속하면 거짓이다.
+        **_extras_desc(meta["id"], bool(gubun or polls_page.exists())),
+        # 여론조사심의위원회(2014~)는 여론조사가 있는 회차에만 건다. 1952년 페이지에
+        # '중앙선거여론조사심의위원회 (2대 대선)'은 있지도 않은 기관·자료를 가리킨다.
+        "nesdc_link": ((f'<a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467'
+                        f'{"&pollGubuncd=" + gubun if gubun else ""}" target="_blank" rel="noopener">'
+                        f'중앙선거여론조사심의위원회 ({meta["n"]}{km["n_unit"]} {km["short"]})</a>')
+                       if (gubun or polls_page.exists()) else ""),
         "wiki_url": ar.get("wiki_url", ""),
         "year": meta["date"][:4],
     }
 
+
+
+def _extras_desc(eid: str, has_polls: bool) -> dict:
+    parts = (["여론조사"] if has_polls else []) + (
+        ["출구조사"] if (ROOT / "data" / "exit_polls" / f"{eid}.json").exists() else [])
+    if not parts:
+        return {"extras_desc": "", "extras_og": ""}
+    j = "·".join(parts)
+    return {"extras_desc": f", {j} 비교까지 한 화면에서", "extras_og": f", {j} 비교"}
 
 
 def _name_short(name: str, km: dict) -> str:
@@ -256,9 +274,9 @@ HEAD = """<!DOCTYPE html>
 <meta name="theme-color" content="#5b54d6">
 <base href="/">
 <title>{year} {kind_query} 결과 — {name_short} 개표·득표율 | polis</title>
-<meta name="description" content="{year}년 {kind_query}({date}) 결과. {name} 시도·시군구별 개표와 득표율, 여론조사·출구조사 비교까지 한 화면에서.">
+<meta name="description" content="{year}년 {kind_query}({date}) 결과. {name} 시도·시군구별 개표와 득표율{extras_desc}.">
 <meta property="og:title" content="{year} {kind_query} 결과 — {name_short}">
-<meta property="og:description" content="{n}{n_unit} {kind_short} 시도·시군구별 개표와 득표율, 여론조사·출구조사 비교.">
+<meta property="og:description" content="{n}{n_unit} {kind_short} 시도·시군구별 개표와 득표율{extras_og}.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="{og_image}">
 <meta property="og:image:width" content="1200">
@@ -488,7 +506,7 @@ SECTIONS_LOCAL = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(한국리서치·입소스·코리아리서치 컨소시엄, 1,980개 투표소) — 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>이라 값이 다름. JTBC는 별도. 시도별 1위 일치율·평균 오차 자동 계산.</p>
+    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 시도별 1위 일치율·평균 오차는 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -537,7 +555,7 @@ SECTIONS_PRES = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(한국리서치·입소스·코리아리서치 컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>. JTBC는 별도. 전국 적중·평균 오차 자동 계산.</p>
+    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 시도별 1위 일치율·평균 오차는 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -621,7 +639,7 @@ SECTIONS_GENERAL = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">{date} 18:00 발표. <b>KBS·MBC·SBS 방송 3사 공동 출구조사</b>(컨소시엄). 표본은 공유, <b>의석 예측은 각 사 분석팀이 별도 시뮬레이션</b>(기준점·접전구 처리 차이). JTBC는 별도. 범위 안 적중 자동 계산.</p>
+    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 3사 공동조사는 표본을 함께 쓰지만 의석 예측은 각 사가 따로 냈습니다. 예측 범위 안 적중은 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -636,7 +654,7 @@ FOOT_CHROME = """
   <footer class="foot">
     <div class="foot-row">
       <span class="ar-foot-src"><a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>{nec_source_suffix}</span>
-      <a href="https://www.nesdc.go.kr/portal/bbs/B0000005/list.do?menuNo=200467{nesdc_gubun_query}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 ({n}{n_unit} {kind_short})</a>{wiki_link}
+      {nesdc_link}{wiki_link}
     </div>
     <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
   </footer>
@@ -867,8 +885,10 @@ def results_summary(eid: str, kind: str) -> str:
     have_vo = [r for r in top if r.get("voters") is not None]
     vo = sum(r["voters"] for r in have_vo)
     # 일부만 있으면 그 합은 전국 투표율이 아니다 — 전부 있을 때만 쓴다.
+    # 재보궐은 선거구마다 따로 치른 선거들의 묶음이다 — 시도 단위 한 곳(교육감 등)의
+    # 투표율을 그날 전체 투표율처럼 쓰지 않는다.
     turnout = (f" · 투표율 {vo / el * 100:.1f}%"
-               if (el and have_vo and len(have_vo) == len(top)) else "")
+               if (kind != "byelection" and el and have_vo and len(have_vo) == len(top)) else "")
 
     items = "".join(f"<li><b>{a}</b> <span>{b}</span></li>" for a, b in rows)
     return (f'<section class="ar-summary"><h2>결과 요약</h2>'

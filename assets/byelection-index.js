@@ -172,11 +172,18 @@
       const hasNec = cycles.some((c) => c.source !== 'wikipedia-ko');
       const hasWiki = cycles.some((c) => c.source === 'wikipedia-ko');
       const status = hasNec ? 'nec' : (hasWiki ? 'wiki' : (y < 2010 ? 'gap' : 'unknown'));
-      const n = cycles.reduce((s, c) => s + (c.reasons_count || 0), 0);
+      // reasons_count 0은 '사유를 못 받았다'이지 '0건'이 아니다 — 모름을 0으로 쓰지 않는다.
+      const known = cycles.filter((c) => c.reasons_count > 0);
+      const n = known.reduce((s, c) => s + c.reasons_count, 0);
+      const cnt = !cycles.length ? ''
+        : known.length === cycles.length ? ` · ${n}건`
+        : known.length ? ` · ${n}건 이상` : ' · 건수 모름';
       const label = cycles.length
-        ? (cycles.length === 1 ? `1회 · ${n}건` : `${cycles.length}회 · ${n}건`)
+        ? `${cycles.length}회${cnt}`
         : (y < 2010 ? '미확인' : '실시 안 함');
-      html += `<div class="bx-cov-cell bx-cov-${status}" title="${y} · ${cycles.length} 회차">
+      const tip = cycles.length ? `${y} · ${cycles.length}회`
+        : (y < 2010 ? `${y} · 확인 못 함` : `${y} · 재·보궐 없음`);
+      html += `<div class="bx-cov-cell bx-cov-${status}" title="${tip}">
         <div class="bx-cov-year">${y}</div>
         <div class="bx-cov-meta">${label}</div>
       </div>`;

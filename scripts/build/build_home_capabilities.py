@@ -55,7 +55,9 @@ def counts() -> dict:
     try:
         h = json.loads((ROOT / "data/history_events.json").read_text(encoding="utf-8"))
         c["event"] = len(h.get("events") or [])
-        c["republic"] = len(h.get("republics") or [])
+        # 시대 구분(임시정부·미군정·군정 포함 9개) 전부가 공화국은 아니다 — 이름이
+        # '공화국'인 것만 센다(제1~6공화국).
+        c["republic"] = sum(1 for r in (h.get("republics") or []) if "공화국" in (r.get("name") or ""))
     except Exception:
         c["event"] = c["republic"] = 0
     try:
@@ -163,8 +165,7 @@ def approval_figure() -> str:
 def build(c: dict) -> str:
     """능력 목록 — 여론 / 사람 / 맥락.
 
-    설명은 문장이 아니라 조각으로 쓴다 — 이 사이트의 다른 설명이 그렇다('17개 시·도',
-    '1987~2036 · 27 역대 + 8 향후'). '~해 본다' 같은 종결로 설명하면 그 줄만 말이 많아진다.
+    설명은 문장이 아니라 조각으로 쓴다 — 이 사이트의 다른 설명이 그렇다. '~해 본다' 같은 종결로 설명하면 그 줄만 말이 많아진다.
 
     카드 그리드가 아니라 색인 행이다. 홈 위쪽은 이미 대시보드 패널(진행 중인 선거)이라,
     아래까지 같은 상자가 이어지면 스크롤이 평평해진다. 행으로 두면 수치가 오른쪽 한 열에
@@ -200,9 +201,11 @@ def build(c: dict) -> str:
         ]),
     ]
     if c["pledge"]:
+        # 공약은 인물 페이지에 있다. 9회 지선 아카이브로 보내면 13개 선거의 공약 수를
+        # 한 선거의 것처럼 읽게 된다.
         groups[1][1].append(
-            ("/archive/9th-local-2026/", "선거공약",
-             "공약서 원문 · 낙선자 포함",
+            ("/person/", "선거공약",
+             f"선거 {c['pledge_rounds']}개 · 인물별 공약서 원문",
              f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", ""))
 
     for label, rows in groups:
@@ -232,7 +235,9 @@ def data_freshness() -> str:
     newest = ""
     heads = [ROOT / "data/polls/aggregated.json", ROOT / "data/timeline.json"]
     heads += sorted((ROOT / "data/results").glob("*.json"))
-    pat = re.compile(r'"(?:fetched_at|generated_at|updated|_updated)"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+    # 의원 명부(_meta.fetched)도 화면(홈 국회 카드)이 쓰는 자료다.
+    heads.append(ROOT / "data/assembly/current.json")
+    pat = re.compile(r'"(?:fetched_at|fetched|generated_at|updated|_updated)"\s*:\s*"(\d{4}-\d{2}-\d{2})')
     for f in heads:
         try:
             with f.open(encoding="utf-8") as fh:
@@ -241,6 +246,18 @@ def data_freshness() -> str:
             continue
         for m in pat.finditer(head):
             newest = max(newest, m.group(1))
+    # 지지율 추이는 _meta에 날짜가 없다 — 실린 조사의 마지막 날을 본다.
+    for f in sorted((ROOT / "data/polls").glob("approval_*.json")):
+        if "scancache" in f.name:
+            continue
+        try:
+            recs = json.loads(f.read_text(encoding="utf-8")).get("records") or []
+        except Exception:                                            # noqa: BLE001
+            continue
+        for r in recs:
+            d = (r.get("period_end") or "")[:10]
+            if re.fullmatch(r"\d{4}-\d{2}-\d{2}", d):
+                newest = max(newest, d)
     return newest
 
 

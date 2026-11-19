@@ -226,6 +226,15 @@ def office_static_block(office_ko: str) -> str:
     counts: dict = {}
     for p in sel:
         sido, sigungu = p.get('sido') or '', p.get('sigungu') or ''
+        # 9회 지선은 광주+전남이 전남광주특별시 하나로 광역 선거를 치렀다. 통합 전 조사는
+        # 옛 이름으로 등록돼 있어, 그대로 세면 한 지역이 셋('18곳')이 된다.
+        # 기초는 종전 시군구로 뽑으므로 옛 시도 쪽(지역 페이지가 있는 쪽)으로 붙인다.
+        if office_ko == '기초단체장':
+            if sido == '전남광주특별시':
+                sido = next((o for o in ('전라남도', '광주광역시')
+                             if _region_slug(o, sigungu)), sido)
+        elif sido in ('광주광역시', '전라남도'):
+            sido = '전남광주특별시'
         key = (sido, sigungu) if office_ko == '기초단체장' else (sido, '')
         if key[0]:
             counts[key] = counts.get(key, 0) + 1
@@ -885,7 +894,7 @@ def round_links(slug: str | None) -> str:
     if not slug:
         return ''
     out = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
-           f'<a href="/archive/{slug}/">이 회차 아카이브 — 결과·여론조사·출구조사</a></p>\n')
+           f'<a href="/archive/{slug}/">이 회차 아카이브 — 한 화면 요약</a></p>\n')
     if has_poll_page(slug):
         out += ('    <p class="lede hx-poll-link" id="hx-poll-link">'
                 f'<a href="/polls/{slug}/">이 회차 여론조사 vs 실제 — 조사가 얼마나 맞았나</a></p>\n')

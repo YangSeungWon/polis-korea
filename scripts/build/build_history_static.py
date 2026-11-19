@@ -146,12 +146,14 @@ def rounds() -> dict:
 def rounds_block() -> str:
     rs = rounds()
     total = sum(len(v) for v in rs.values())
+    # 지선은 직위마다 페이지가 따로라 페이지 수(66)는 회차 수가 아니다 — 회차를 센다.
+    n_rounds = sum(len({key[0] for key, _, _ in v}) for v in rs.values())
     if not total:
         return R_START + " — 프리렌더가 없다 -->\n" + R_END
     out = [R_START + " — scripts/build/build_history_static.py 자동 갱신. 손수정 X.",
            "           JS 타임라인이 같은 링크를 만들지만 렌더 후에만 존재한다. -->",
            '  <section class="hs-start" aria-label="회차별 결과 지도">',
-           f'    <h2 class="hs-start-title">회차별 결과 지도 <span class="hs-date">{total}회차</span></h2>']
+           f'    <h2 class="hs-start-title">회차별 결과 지도 <span class="hs-date">{n_rounds}회차</span></h2>']
     for kind, label in KIND_DIR.items():
         items = rs.get(kind) or []
         if not items:

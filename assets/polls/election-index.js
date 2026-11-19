@@ -15,7 +15,7 @@
         current: cur,
         curSuffix: '(최근)',
         ariaFn: (e) => `${e.name} 여론조사 vs 실제`,
-        note: '2016년 이후 선거만 (NESDC 등록 시작). 그 이전은 <a href="/history.html">역대 결과 →</a>',
+        note: '이 사이트의 여론조사 자료는 2016년 선거부터입니다. 그 이전은 <a href="/history.html">역대 결과 →</a>',
       });
     })
     .catch(() => { sec && sec.remove(); });
