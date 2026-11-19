@@ -69,7 +69,7 @@
         return `<span class="mh-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-metro-hex-total');
-      if (tot) tot.textContent = `${totalSeats}석 (시·도의회) · hex 클릭 → 당선인`;
+      if (tot) tot.textContent = `${totalSeats}석`;
     }
   }
 
@@ -89,7 +89,7 @@
       sec = document.createElement('section');
       sec.className = 'ar-section'; sec.id = 'ar-metro-prop';
       sec.innerHTML = '<h2 class="ar-section-title">광역의원 비례 — 시·도별 표심'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">비례대표 정당 득표를 시·도별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지.</span></span></h2>'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">의석은 지역구 1등이 가져가므로, 정당 지지는 비례 득표로 봐야 드러납니다.</span></span></h2>'
         + '<div class="ar-metro-prop-host"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }

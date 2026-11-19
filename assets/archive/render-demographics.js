@@ -280,16 +280,15 @@
     sec.className = 'ar-section'; sec.id = 'ar-demographics';
     sec.innerHTML = '<h2 class="ar-section-title">성·연령 득표 기여'
       + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">'
-      + '막대 길이 = 실제 투표자수(NEC 투표율 분석, 표본). 채움 = 후보 득표 구성(방송3사 출구조사 추정). '
-      + '%가 아닌 실제 표 크기로 영향을 본다 — 이대남은 비율 높아도 인구·투표율이 낮아 표는 작다.</span></span></h2>'
+      + '막대 길이는 실제 투표자 수(선관위 투표율 분석 표본)이고, 색 비율은 방송 3사 출구조사로 추정한 후보별 득표입니다. '
+      + '지지율이 높아도 인구가 적거나 투표율이 낮은 집단은 표가 작습니다.</span></span></h2>'
       + '<div class="dg-toggle seg" role="tablist">'
       + '<button class="seg-btn is-active" data-dgv="group" role="tab">집단 → 후보</button>'
       + '<button class="seg-btn" data-dgv="cand" role="tab">후보 → 지지층</button>'
       + (hasGrid() ? '<button class="seg-btn" data-dgv="gap" role="tab">성별 격차</button>' : '')
       + (TURN ? '<button class="seg-btn" data-dgv="region" role="tab">지역 투표율</button>' : '')
-      + (PRIOR ? `<button class="seg-btn" data-dgv="swing" role="tab">직전 대비 swing</button>` : '') + '</div>'
-      + '<div class="dg-body"></div>'
-      + `<p class="ar-parl-note">크기=실측 투표자수 · 구성=출구조사 추정(±오차). 총 투표자 ${fmt(d.total_voters)}(표본).</p>`;
+      + (PRIOR ? `<button class="seg-btn" data-dgv="swing" role="tab">직전 대비 변화</button>` : '') + '</div>'
+      + '<div class="dg-body"></div>';
     anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     sec.querySelectorAll('[data-dgv]').forEach((b) => b.addEventListener('click', () => { view = b.dataset.dgv; draw(sec); }));
     draw(sec);

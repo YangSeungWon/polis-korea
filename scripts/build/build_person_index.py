@@ -36,9 +36,14 @@ NTH_UNIT = {"pres": "대", "general": "대", "local": "회"}
 
 
 def round_label(eid: str) -> str:
-    """13th-pres-1987 → '13대 대선'. byelection-2020-04-15 → '2020-04-15 재보궐'."""
+    """13th-pres-1987 → '13대 대선'. byelection-2020-04-15 → '4·15 재보궐'.
+
+    연도는 화면에서 늘 따로 붙는다(연도 칸) — 날짜를 통째로 적으면 연도가 두 번 나온다.
+    """
     if eid.startswith("byelection-"):
-        return f"{eid.replace('byelection-','')} 재보궐"
+        d = eid.replace("byelection-", "")
+        m = re.match(r"\d{4}-(\d{2})-(\d{2})$", d)
+        return f"{int(m.group(1))}·{int(m.group(2))} 재보궐" if m else f"{d} 재보궐"
     m = re.match(r"(\d+)(?:st|nd|rd|th)?-(\w+)-(\d+)", eid)
     if not m:
         return eid

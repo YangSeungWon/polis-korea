@@ -65,21 +65,41 @@ def top_party(top: dict, tc: str) -> str | None:
     return top.get("party") or "무소속"
 
 
-def party_tally(rows: list) -> str:
+def party_tally(rows: list) -> list:
     """1위 정당 상위 3 — 정당 없는 선거(교육감)는 세지 않는다."""
     parties: dict = {}
     for r in rows:
         if r.get("party"):
             parties[r["party"]] = parties.get(r["party"], 0) + 1
-    return " · ".join(p for p, _ in sorted(parties.items(), key=lambda x: -x[1])[:3])
+    return [p for p, _ in sorted(parties.items(), key=lambda x: -x[1])[:3]]
+
+
+def top_party_sentence(tops: list) -> str:
+    """'가장 자주 1위를 한 정당은 A이고, 그다음은 B, C입니다.'"""
+    if not tops:
+        return ""
+    if len(tops) == 1:
+        return f"가장 자주 1위를 한 정당은 {tops[0]}입니다."
+    return f"가장 자주 1위를 한 정당은 {tops[0]}이고, 그다음은 {', '.join(tops[1:])}입니다."
 
 
 def year_span(rows: list) -> str:
+    """'1952년부터 2026년까지 ' / 한 해뿐이면 '2026년 '. 같은 해를 범위로 쓰지 않는다."""
     years = [r["date"][:4] for r in rows if r.get("date")]
     if not years:
         return ""
     lo, hi = min(years), max(years)
-    return f"{lo}년 " if lo == hi else f"{lo}~{hi}년 "
+    return f"{lo}년 " if lo == hi else f"{lo}년부터 {hi}년까지 "
+
+
+def _has_batchim(word: str) -> bool:
+    c = word[-1:] or "가"
+    return "가" <= c <= "힣" and (ord(c) - 0xAC00) % 28 != 0
+
+
+def josa(word: str, with_b: str, without_b: str) -> str:
+    """받침에 맞는 조사 — josa('성남시', '은', '는') → '성남시는'."""
+    return word + (with_b if _has_batchim(word) else without_b)
 
 
 def party_cell(name: str | None, date: str) -> str:
@@ -513,27 +533,26 @@ def kin_block(sd: str, sg: str, by_region: dict) -> str:
     up = (f'<a href="/region/{quote(sd)}/">{esc(sd)} 전체</a>'
           if (ROOT / "region" / sd).exists() else "")
     if parent:
-        return (f'<section class="rg-kin"><p>{esc(sg)}는 {esc(parent)}의 일반구입니다. '
-                f'기초단체장({esc(parent)}장)은 시 전체가 한 선거구라 구별로 뽑지 '
-                f'않습니다 — <a href="/region/{quote(f"{sd}-{parent}")}/">'
-                f'{esc(parent)}</a>에서 볼 수 있습니다.'
-                + (f' 광역단체장·교육감은 {up}.' if up else "")
+        return (f'<section class="rg-kin"><p>{esc(josa(sg, "은", "는"))} {esc(parent)}의 일반구입니다. '
+                f'{esc(parent)}장은 시 전체가 한 선거구라 구별로 뽑지 않습니다. '
+                f'시장 선거는 <a href="/region/{quote(f"{sd}-{parent}")}/">'
+                f'{esc(parent)}</a> 페이지에 있습니다.'
+                + (f' 광역단체장·교육감 당선 결과는 {up}에서 볼 수 있습니다.' if up else "")
                 + '</p></section>')
     if kids:
-        li = " · ".join(
+        li = "·".join(
             f'<a href="/region/{quote(f"{sd}-{k}")}/">{esc(k[len(sg):])}</a>'
             for k in kids)
-        return (f'<section class="rg-kin"><p>{esc(sg)}의 일반구 {len(kids)}곳: {li}. '
-                f'대선·광역단체장·교육감은 구 단위로 개표되므로, 그런 회차는 구별 '
-                f'득표를 합산해 1위와 투표율을 다시 계산했습니다'
-                f'(표에서 <span class="rg-mg">합산</span>으로 표시).'
-                + (f' 광역 단위 결과는 {up}.' if up else "")
+        return (f'<section class="rg-kin"><p>{esc(sg)}에는 일반구 {li}가 있습니다. '
+                f'대선·광역단체장·교육감은 구별로 개표해서, 구별 득표를 더해 1위와 '
+                f'투표율을 다시 계산했습니다(표의 <span class="rg-mg">합산</span>).'
+                + (f' 광역단체장·교육감 당선 결과는 {up}에서 볼 수 있습니다.' if up else "")
                 + '</p></section>')
     # 관계가 없어도 시도로 올라가는 길은 남긴다 — 시군구 356곳 전부가 자기 시도로
     # 가는 링크를 갖게 된다.
     if up:
-        return (f'<section class="rg-kin"><p>이 지역이 속한 광역단체의 역대 '
-                f'광역단체장·교육감과 대선 판세는 {up}에서.</p></section>')
+        return (f'<section class="rg-kin"><p>광역단체장·교육감 당선 결과는 '
+                f'{up}에서 볼 수 있습니다.</p></section>')
     return ""
 
 
@@ -571,7 +590,7 @@ def winner_note(r: dict) -> str:
     if not diverged(r):
         return ""
     return (f'<span class="rg-vs" title="이 지역 1위와 실제 당선자가 다릅니다">'
-            f'{esc(r["won_scope"])} 당선 {esc(r["won_by"])}</span>')
+            f'({esc(r["won_scope"])} 당선자 {esc(r["won_by"])})</span>')
 
 
 def swing_line(rows: list) -> str:
@@ -585,24 +604,24 @@ def swing_line(rows: list) -> str:
         return ""
     diff = [r for r in cmp_rows if diverged(r)]
     if not diff:
-        label = " · ".join(sorted({r["office"] for r in cmp_rows}))
-        return (f'<p class="rg-swing">{esc(label)} {len(cmp_rows)}건 모두에서 이 지역 '
+        label = "·".join(sorted({r["office"] for r in cmp_rows}))
+        return (f'<p class="rg-swing">{esc(label)} 선거 {len(cmp_rows)}번 모두 이 지역 '
                 f'1위가 실제 당선자와 같았습니다.</p>')
     offices = sorted({r["office"] for r in cmp_rows})
     # 견준 직위가 하나뿐이면 연도마다 그 이름을 되풀이하지 않는다
     # ('대통령 15건 중 4건 … 2022 대통령 · 1971 대통령').
-    years = " · ".join(
-        esc((r.get("date") or "")[:4]) + ("" if len(offices) == 1
-                                          else " " + esc(r["office"]))
+    years = ", ".join(
+        esc((r.get("date") or "")[:4]) + "년" + ("" if len(offices) == 1
+                                                else " " + esc(r["office"]))
         for r in sorted(diff, key=lambda r: r.get("date") or "", reverse=True)[:4])
-    more = f' 외 {len(diff) - 4}건' if len(diff) > 4 else ""
+    more = f' 외 {len(diff) - 4}번' if len(diff) > 4 else ""
     # 라벨은 **실제로 견준 직위**에서 뽑는다. 고정 문구로 두면 시도 페이지에서
     # 거짓이 된다 — 거기선 대통령만 견주는데(광역단체장·교육감은 시도가 선거구
     # 자체라 견줄 상대가 없다) "대통령·광역단체장·교육감 15건"이라고 적혔다.
-    label = " · ".join(offices)
-    return (f'<p class="rg-swing">{esc(label)} {len(cmp_rows)}건 중 '
-            f'<b>{len(diff)}건</b>에서 이 지역 1위가 실제 당선자와 달랐습니다 — '
-            f'{years}{more}.</p>')
+    label = "·".join(offices)
+    return (f'<p class="rg-swing">{esc(label)} 선거 {len(cmp_rows)}번 가운데 '
+            f'<b>{len(diff)}번</b>은 이 지역 1위가 실제 당선자와 달랐습니다'
+            f'({years}{more}).</p>')
 
 
 # ── 시도 층 ────────────────────────────────────────────────────────────────
@@ -614,13 +633,13 @@ SIDO_OFFICE = {"1": "대통령", "3": "광역단체장", "11": "교육감"}
 
 # 꼬리말은 페이지 종류마다 다르다. 시도 페이지에 '시군구 단위로 집계한 기록'이라고
 # 적으면 거짓이다 — 거기 광역단체장은 집계가 아니라 당선 결과다.
+# 시도 페이지의 '당선 결과 / 시도 1위' 구분은 표 caption에 한 번만 적는다.
 _NO_VOTE_NOTE = (
-    '회차별 상세는 각 아카이브에서 볼 수 있습니다. 투표율의 '
-    '<span class="rg-nd">—</span>는 원자료에 투표수가 없는 회차입니다(1~4회 지방선거).'
+    '투표율의 <span class="rg-nd">—</span>는 원자료에 투표수가 없는 회차입니다'
+    '(1~4회 지방선거).'
 )
 FOOT_SGG = '시군구 단위로 1위를 집계한 기록입니다. ' + _NO_VOTE_NOTE
-FOOT_SIDO = ('광역단체장·교육감은 이 시도가 선거구 자체라 <b>당선 결과</b>이고, '
-             '대통령은 이 시도에서 1위를 한 후보입니다. ') + _NO_VOTE_NOTE
+FOOT_SIDO = _NO_VOTE_NOTE
 
 
 def collect_sido(won: dict, nat: dict | None = None) -> dict:
@@ -716,12 +735,13 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     slug = f"{sd}-{sg}"
     span = year_span(rows)
     top_parties = party_tally(rows)
-    lede = esc(f"{span}선거 {len(rows)}건" + (f" — 1위 정당 {top_parties}" if top_parties else ""))
+    lede = esc(f"{span}치른 선거 {len(rows)}번의 이 지역 1위 기록입니다. "
+               + top_party_sentence(top_parties)).strip()
     # 설명도 '선거 기록'이 아니라 사람이 치는 '선거 결과'로 연다. 뒤에는 이 페이지에
     # 실제로 있는 것(1위 정당·후보·득표율·투표율)을 적어 무엇을 보러 오는지 맞춘다.
-    desc = esc(f"{sd} {sigungu_short(sg)} 선거 결과. {span}대선·지선 {len(rows)}건의 "
-               f"1위 정당·후보와 득표율·투표율."
-               + (f" 최다 1위 {top_parties}." if top_parties else ""))
+    desc = esc(f"{sd} {sigungu_short(sg)} 선거 결과. {span}대선과 지방선거 {len(rows)}번의 "
+               f"지역 1위 정당과 후보, 득표율, 투표율을 정리했습니다. "
+               + top_party_sentence(top_parties[:1])).strip()
 
     trs = []
     for r in rows:
@@ -734,10 +754,12 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
             f'<td>{name_cell(r)}{winner_note(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
-    table = ('<table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
+    # 7열 표 — 좁은 화면에서 글꼴이 조금만 넓어도 페이지가 가로로 밀렸다(390px에 393).
+    # 인물 표처럼 표만 가로로 스크롤하게 감싼다.
+    table = ('<div class="pp-scroll"><table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
              '<th>연도</th><th>선거</th><th>직</th><th>1위 정당</th><th>1위 후보</th>'
              '<th>득표율</th><th>투표율</th></tr></thead><tbody>'
-             + "".join(trs) + "</tbody></table>")
+             + "".join(trs) + "</tbody></table></div>")
 
     ld = {"@context": "https://schema.org", "@type": "BreadcrumbList",
           "itemListElement": [
@@ -776,10 +798,10 @@ def sido_sigungu(sd: str, by_region: dict) -> list:
 def sido_kin(sd: str, kids: list) -> str:
     merged = SIDO_MERGED_FROM.get(sd)
     if merged:
-        li = " · ".join(esc(x) for x in merged)
-        return (f'<section class="rg-kin"><p>{esc(sd)}는 2026년 지방선거부터 '
-                f'{li}가 광역 단위로 통합된 자치단체입니다. 광역단체장·교육감은 '
-                f'통합 단위로 뽑고, 기초단체장·지방의원은 종전 시군구에서 그대로 '
+        li = (", ".join(merged[:-1]) and josa(", ".join(merged[:-1]), "과", "와") + " ") + merged[-1]
+        return (f'<section class="rg-kin"><p>{esc(josa(li, "이", "가"))} 2026년 지방선거부터 '
+                f'하나의 광역단체인 {esc(sd)}로 합쳐졌습니다. 광역단체장·교육감은 '
+                f'통합 단위로 뽑고, 기초단체장과 지방의원은 이전 시군구에서 그대로 '
                 f'뽑습니다.</p></section>')
     if not kids:
         return ""
@@ -816,7 +838,7 @@ def sido_units_block(sd: str, kids: list) -> str:
     out = f'<section class="rg-sec"><h2>{esc(sd)}의 시군구 {len(now)}곳</h2>'
     out += f'<div class="rg-units">{" ".join(now)}</div>'
     if past:
-        out += (f'<details class="rg-past"><summary>지금 이 시도의 시군구가 아닌 이름 {len(past)}곳</summary>'
+        out += (f'<details class="rg-past"><summary>지금은 이 시도에 없는 이름 {len(past)}곳</summary>'
                 f'<div class="rg-units">{" ".join(past)}</div></details>')
     return out + "</section>"
 
@@ -825,12 +847,12 @@ def build_sido_page(sd: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     span = year_span(rows)
     n_gov = sum(1 for r in rows if r["office"] == "광역단체장")
-    top_parties = party_tally(rows)
     kids = sido_sigungu(sd, by_region)
-    lede = esc(f"{span}선거 {len(rows)}건 — 광역단체장 {n_gov}회"
-               + (f" · 1위 정당 {top_parties}" if top_parties else ""))
-    desc = esc(f"{sd} 선거 결과. 역대 광역단체장 {n_gov}명과 교육감, 대선에서 이 "
-               f"시도가 어떻게 갈렸는지. {span}{len(rows)}건 · 시군구 {len(kids)}곳.")
+    lede = esc(f"{span}치른 선거 {len(rows)}번의 결과입니다. "
+               + (f"광역단체장 선거는 {n_gov}번입니다." if n_gov else "")).strip()
+    desc = esc(f"{sd} 선거 결과. 역대 광역단체장 선거 {n_gov}번과 교육감 선거의 당선 결과, "
+               f"대선에서 이 시도의 1위를 정리했습니다."
+               + (f" 시군구 {len(kids)}곳의 결과로도 이어집니다." if kids else ""))
     table = sido_table(rows)
     ld = {"@context": "https://schema.org", "@type": "BreadcrumbList",
           "itemListElement": [
@@ -838,7 +860,7 @@ def build_sido_page(sd: str, rows: list, by_region: dict) -> str:
                "item": f"{SITE}/region/"},
               {"@type": "ListItem", "position": 2, "name": sd}]}
     return TEMPLATE.format(
-        title=esc(f"{sd} 선거 결과 — 역대 광역단체장·교육감과 대선 판세 | polis"),
+        title=esc(f"{sd} 선거 결과 — 역대 광역단체장·교육감·대선 | polis"),
         og_title=esc(f"{sd} 선거 결과"),
         h1=esc(sd),
         slug=esc(sd), desc=desc, lede=lede,
@@ -862,12 +884,12 @@ def sido_table(rows: list) -> str:
             f'<td>{name_cell(r)}{winner_note(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
-    return ('<table class="pp-static">'
-            '<caption>역대 선거 — 광역단체장·교육감은 당선 결과, 대통령은 이 시도 1위'
+    return ('<div class="pp-scroll"><table class="pp-static">'
+            '<caption>역대 선거. 광역단체장·교육감은 당선 결과이고, 대통령은 이 시도의 1위입니다.'
             '</caption><thead><tr>'
             '<th>연도</th><th>선거</th><th>직</th><th>1위 정당</th><th>1위 후보</th>'
             '<th>득표율</th><th>투표율</th></tr></thead><tbody>'
-            + "".join(trs) + "</tbody></table>")
+            + "".join(trs) + "</tbody></table></div>")
 
 
 def sigungu_short(sg: str) -> str:
@@ -883,7 +905,7 @@ HUB = """<!DOCTYPE html>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <base href="/">
 <title>지역별 선거 결과 — 시도 {n_sido}곳·시군구 {n}곳의 대선·지선 | polis</title>
-<meta name="description" content="시도와 전국 시군구 {n}곳의 선거 결과. 역대 광역단체장·교육감과 지역마다의 대선·지선 1위 정당·후보, 득표율·투표율.">
+<meta name="description" content="시도와 전국 시군구 {n}곳의 선거 결과. 역대 광역단체장·교육감 당선자와, 지역마다 대선·지방선거 1위 정당과 후보, 득표율, 투표율을 볼 수 있습니다.">
 <link rel="canonical" href="/region/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
@@ -919,7 +941,7 @@ HUB = """<!DOCTYPE html>
        정당색을 칠하지 않는다: 이 페이지는 특정 선거의 결과가 아니다. JS가 없으면 비어 있고,
        아래 목록이 같은 링크를 전부 갖는다. -->
   <section class="rg-map-wrap" aria-label="시군구 지도">
-    <svg id="rg-map" class="rg-map" role="group" aria-label="시군구 지도 — 칸을 고르면 그 지역 페이지로"></svg>
+    <svg id="rg-map" class="rg-map" role="group" aria-label="시군구 지도. 칸을 고르면 그 지역 페이지로 갑니다"></svg>
   </section>
 {body}
 </main>
@@ -1060,7 +1082,7 @@ def build_hub(entries: list, sidos: list) -> str:
                 f'href="/region/{slug}/" data-name="{esc(sg)}">{esc(sg)}</a>')
         grid = "".join(item(sg, slug, False) for sg, slug in live)
         if past:
-            grid += ('<details class="rg-past"><summary>폐지·변경된 행정구역 '
+            grid += ('<details class="rg-past"><summary>지금은 이 시도에 없는 이름 '
                      f'{len(past)}곳</summary><div class="rg-grid">'
                      + "".join(item(sg, slug, True) for sg, slug in past)
                      + '</div></details>')
@@ -1070,13 +1092,14 @@ def build_hub(entries: list, sidos: list) -> str:
                 if (ROOT / "region" / sd).exists() else esc(sd))
         blocks.append(f'<section class="dash-section" data-sido="{esc(sd)}">'
                       f'<h2 class="dash-section-title">{head}'
-                      f'<span class="rg-count">{len(live)}</span></h2>'
-                      f'<div class="rg-grid">{grid}</div></section>')
+                      + (f'<span class="rg-count">{len(live)}</span></h2>' if live else '</h2>'
+                         '<p class="fine">지금은 시군구가 없습니다.</p>')
+                      + f'<div class="rg-grid">{grid}</div></section>')
     total = sum(len(v) for v in by_sido.values())
     return (
             # 목록은 접어 둔다 — 지도가 먼저다. 그래도 HTML에는 전부 있다(크롤 1-hop·비JS).
-            f'<details class="rg-list" id="rg-list"><summary>전체 목록 — 일반구와 지금은 없는 이름까지 '
-            + f'{total}곳</summary>\n' + "\n".join(blocks) + "\n</details>")
+            f'<details class="rg-list" id="rg-list"><summary>전체 목록 {total}곳 '
+            + '(일반구와 지금은 없는 이름 포함)</summary>\n' + "\n".join(blocks) + "\n</details>")
 
 
 # 두 지역 나란히 — 375×375 짝을 빌드하지 않는다. 지역마다 행을 JSON으로 내고
@@ -1112,7 +1135,7 @@ COMPARE = """<!DOCTYPE html>
 <main class="page">
   <section class="intro">
     <h1>두 지역 나란히 보기</h1>
-    <p class="lede">같은 선거에서 두 지역이 어떻게 갈렸는지 — <a href="/region/">지역 {n}곳</a> 가운데 둘을 고릅니다.</p>
+    <p class="lede">두 지역을 골라 같은 선거의 결과를 나란히 봅니다. 지역은 <a href="/region/">지역별 선거 기록</a>에서도 찾을 수 있습니다.</p>
     <form class="rg-cmp-pick" onsubmit="return false">
       <label>지역 A <input id="cmp-a" list="cmp-regions" autocomplete="off" placeholder="예: 서울 강남구"></label>
       <label>지역 B <input id="cmp-b" list="cmp-regions" autocomplete="off" placeholder="예: 경기 성남시분당구"></label>

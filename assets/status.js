@@ -108,7 +108,7 @@
         `<div class="parliament-wrap-mini">${chart}<div class="parliament-total">${total}석</div></div>`
         + `<div class="party-legend">${legendHtml}</div>`;
     }
-    document.getElementById('status-asm-meta').textContent = `임기 4년`;
+    /* 정적 시드의 '300석 · 임기 4년 · 2028-04까지'를 그대로 둔다 — 끝나는 때가 빠지면 안 된다. */
     fillAssemblyNow(card);
   }
 
@@ -189,13 +189,7 @@
     addLine('기초의원 지역구', localTotal, localCouncil);
     addLine('기초의원 비례', localPropTotal, localProp);
     if (lines.length) nameEl.innerHTML = lines.join('');
-    const tot = [
-      govTotal && `${govTotal} 광역장`,
-      mayorTotal && `${mayorTotal} 기초장`,
-      (metroTotal + metroPropTotal) && `${metroTotal + metroPropTotal} 광역의원`,
-      (localTotal + localPropTotal) && `${localTotal + localPropTotal} 기초의원`,
-    ].filter(Boolean).join(' · ');
-    document.getElementById('status-local-meta').textContent = `${tot || '17개 시·도'} · 임기 4년`;
+    // 자리 수는 위 막대 라벨에 이미 있다 — 정적 시드의 '16개 시·도 · 임기 4년 · …까지'를 둔다.
   }
 
   // 4) 시간축 strip — 최근 5년 + 향후 5년 회차 흐름. 오늘 dot.

@@ -95,7 +95,7 @@
     const m = results?._meta || {};
     const sourceLabel = m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행');
     // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
-    setText('ar-status', `${sourceLabel} 결과` + (m.fetched_at ? ` · 갱신 ${m.fetched_at}` : ''));
+    setText('ar-status', `${sourceLabel} 결과` + window.Archive.updatedNote(m.fetched_at));
   }
 
   // 교육감은 정당 추천·표방이 금지된 직 — 빈 정당은 '자료 없음'이 아니라 '정당이 없음'.
@@ -111,7 +111,7 @@
     const colOf = (p) => (partyless ? 'var(--ink-soft)' : pcol(p));
     const tcolOf = (p) => (partyless ? 'var(--ink-soft)' : ptcol(p));
     const nameOf = (p) => (partyless
-      ? '<span class="ar-by-partyless" title="교육감은 정당의 추천·표방이 금지된 직입니다">정당 없음</span>'
+      ? '<span class="ar-by-partyless">정당 없음</span>'
       : (p || ''));
     const host = document.getElementById(hostId);
     host.innerHTML = '';

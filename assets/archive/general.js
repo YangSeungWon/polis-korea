@@ -88,7 +88,7 @@
     const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
       : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
     // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
-    setText('ar-status', `${sourceLabel} 결과` + (m.fetched_at ? ` · 갱신 ${m.fetched_at}` : ''));
+    setText('ar-status', `${sourceLabel} 결과` + window.Archive.updatedNote(m.fetched_at));
   }
 
   // '의회 구성' 섹션 — 반원은 히어로가 가지므로 여기선 정당별 지역구/비례/계 상세표(중복 제거).
@@ -200,7 +200,7 @@
     if (!host) {
       host = document.createElement('div');
       host.id = 'ar-prop-map'; host.className = 'ar-prop-map';
-      host.innerHTML = '<h3 class="ar-subhead">시·도별 비례 득표 분포 — 색=정당, 면적=득표</h3>'
+      host.innerHTML = '<h3 class="ar-subhead">시·도별 비례 득표</h3>'
         + '<div class="ar-prop-map-toggle"></div>';
       sec.appendChild(host);
     }
@@ -365,7 +365,7 @@
       sec.className = 'ar-section';
       sec.id = 'ar-general-hex';
       sec.innerHTML = '<h2 class="ar-section-title">지역구 의석 — 시도별'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">각 시도의 지역구 의석을 hex로. <b>균등</b>=1석 1칸 · <b>원형</b>=원 크기 의석·파이 정당.</span></span></h2>'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">한 칸이 지역구 1석입니다.</span></span></h2>'
         + '<div class="ar-genhex-toggle"></div><div class="ar-genhex-legend ch-leg-row"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
@@ -413,9 +413,9 @@
     const n = (ctx.polls || []).length;
     host.innerHTML = `
       <div class="ar-polls-link-card">
-        <div class="ar-polls-link-stat">${n ? `NESDC 등록 여론조사 <b>${n}건</b>` : '여론조사 vs 실제 결과'}</div>
-        <div class="ar-polls-link-note">정당 지지율 추이(여론조사 + 실제 ◆)와 비례·지역구 결과를 비교합니다.</div>
-        <a class="ar-polls-link-cta" href="/polls/${ctx.meta.id}/">여론조사 vs 실제 상세 →</a>
+        <div class="ar-polls-link-stat">${n ? `여론조사 <b>${n}건</b>` : '여론조사와 실제 결과'}</div>
+        <div class="ar-polls-link-note">선거 전 정당 지지율 조사와 실제 득표를 나란히 봅니다.</div>
+        ${document.querySelector(`#ar-polls-link a[href="/polls/${ctx.meta.id}/"]`) ? '' : `<a class="ar-polls-link-cta" href="/polls/${ctx.meta.id}/">여론조사와 실제 비교 →</a>`}
       </div>`;
     document.getElementById('ar-polls-link').hidden = false;
   }
@@ -440,7 +440,7 @@
     if (!sec) {
       sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-district-map';
       sec.innerHTML = '<h2 class="ar-section-title">지역구 선거구별 1위'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">선거구마다 당선자 정당색(승자독식). <b>균등</b>=등면적 hex · <b>지도</b>=실제 경계.</span></span></h2>'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">선거구마다 당선자의 정당색입니다. 균등은 모든 선거구를 같은 크기로 그립니다.</span></span></h2>'
         + '<div class="ar-district-map-toggle"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
@@ -463,7 +463,7 @@
       window.Archive.sidoView.mount(sec.querySelector('.ar-district-map-toggle'), modes, null, {
         hostKey: 'district',
         turnoutTitle: '지역구 선거구별 투표율',
-        turnoutCaption: '선거구별 투표율 — 짙을수록 높음(투표수/선거인수).',
+        turnoutCaption: '투표수를 선거인 수로 나눈 값입니다. 진할수록 높습니다.',
       });
     }
   }

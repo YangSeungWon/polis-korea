@@ -19,22 +19,22 @@
       (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
-  // 내부 source 코드 → 사용자에게 보일 이름. 모르는 값은 그대로 두지 않고 버린다
+  // 내부 source 코드 → 사용자에게 보일 이름('NEC OpenAPI' 같은 영어 약칭 대신 선관위). 모르는 값은 그대로 두지 않고 버린다
   // (내부 식별자가 화면에 새는 것보다 출처를 안 보이는 편이 낫다).
   const SOURCE_LABEL = {
-    'nec-openapi': 'NEC OpenAPI',
-    'nec-live-portal': 'NEC 실시간',
-    'nec-openapi-ElecPrmsInfoInqireService': 'NEC 선거공약 API',
-    'nec-vccp09-개표현황': 'NEC 개표현황',
+    'nec-openapi': '중앙선관위',
+    'nec-live-portal': '선관위 실시간',
+    'nec-openapi-ElecPrmsInfoInqireService': '중앙선관위 선거공약',
+    'nec-vccp09-개표현황': '선관위 개표현황',
   };
 
   // 접두어로 갈래를 아는 내부 코드 — 'nec-report-개표현황' 같은 ID가 그대로 보였다.
   const SOURCE_PREFIX = [
-    [/^nec-report-개표현황|^nec-개표현황|^nec-vccp09/, 'NEC 개표현황'],
-    [/당선인명부/, 'NEC 당선인명부'],
-    [/^nec-투개표API|^nec-openapi/, 'NEC OpenAPI'],
-    [/^nec-lod/, 'NEC 선거통계'],
-    [/^nec-간접선거/, 'NEC 간접선거 기록'],
+    [/^nec-report-개표현황|^nec-개표현황|^nec-vccp09/, '선관위 개표현황'],
+    [/당선인명부/, '선관위 당선인명부'],
+    [/^nec-투개표API|^nec-openapi/, '중앙선관위'],
+    [/^nec-lod/, '선관위 선거통계'],
+    [/^nec-간접선거/, '선관위 간접선거 기록'],
     [/^data\.go\.kr/, '공공데이터포털(선관위)'],
     [/^nec\.go\.kr/, '선관위 자료'],
   ];

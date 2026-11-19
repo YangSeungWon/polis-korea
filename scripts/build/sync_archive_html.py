@@ -191,10 +191,10 @@ def derive(meta: dict) -> dict:
     if hist and meta.get("n") is not None and (ROOT / hist.format(n=meta["n"]).strip("/") /
                                                "index.html").exists():
         links.append(f'<a href="{hist.format(n=meta["n"])}">'
-                     f'{meta["n"]}{km["n_unit"]} {km["short"]} 회차 상세 — 지역별 전체 표</a>')
+                     f'{meta["n"]}{km["n_unit"]} {km["short"]} 지역별 전체 표 →</a>')
     if polls_page.exists():
         links.append(f'<a href="/polls/{meta["id"]}/">'
-                     f'{meta["n"]}{km["n_unit"]} {km["short"]} 여론조사 vs 실제 — 조사별 정확도 비교</a>')
+                     f'여론조사는 얼마나 맞았나 →</a>')
     polls_link = "".join(f'<p class="ar-source-line">{a}</p>' for a in links)
     return {
         "polls_link": polls_link,
@@ -351,7 +351,7 @@ HERO_LOCAL = """
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
-      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
+      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">5%p 미만 박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
       <span class="ar-hm-item" id="ar-hm-exit" hidden><span class="ar-hm-label">출구조사 적중</span> <span class="ar-hm-value" id="ar-exit-hit">—</span></span>
       <span class="ar-hm-item" id="ar-hm-polls" hidden><span class="ar-hm-label">여론조사</span> <span class="ar-hm-value" id="ar-polls-count">—</span></span>
       <span class="ar-hm-item" id="ar-hm-by" hidden><span class="ar-hm-label">동시 재·보궐</span> <span class="ar-hm-value" id="ar-byelection-count">—</span></span>
@@ -419,7 +419,7 @@ HERO_BYELECTION = """
     </div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">실시 사유</span> <span class="ar-hm-value" id="ar-by-reasons-count">—</span></span>
-      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
+      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">5%p 미만 박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
     </div>
     <p class="ar-hero-status" id="ar-status">{hero_status}</p>
   </section>
@@ -434,7 +434,7 @@ HERO_GENERAL = """
     <div class="ar-hero-scorecard ar-parl-sc" id="ar-scorecard" hidden></div>
     <div class="ar-hero-meta" id="ar-hero-meta">
       <span class="ar-hm-item"><span class="ar-hm-label">투표율</span> <span class="ar-hm-value" id="ar-turnout">—</span></span>
-      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
+      <span class="ar-hm-item" id="ar-hm-close" hidden><span class="ar-hm-label">5%p 미만 박빙</span> <span class="ar-hm-value" id="ar-close-count">—</span></span>
       <span class="ar-hm-item" id="ar-hm-exit" hidden><span class="ar-hm-label">출구조사 적중</span> <span class="ar-hm-value" id="ar-exit-hit">—</span></span>
       <span class="ar-hm-item" id="ar-hm-polls" hidden><span class="ar-hm-label">여론조사</span> <span class="ar-hm-value" id="ar-polls-count">—</span></span>
     </div>
@@ -450,30 +450,30 @@ NEC_RESULTS_URL = "https://info.nec.go.kr/main/showDocument.xhtml?electionId={el
 
 SECTIONS_LOCAL = """
   <div class="ar-group">
-    <h2 class="ar-group-title">결과<span class="ar-group-sub">이 선거에서 무슨 일이 있었나</span></h2>
+    <h2 class="ar-group-title">결과</h2>
 
   <section class="ar-section" id="ar-offices" hidden>
     <h2 class="ar-section-title">선출직 정당 분포</h2>
-    <p class="ar-source-line">광역단체장 · 기초단체장 · 광역의원 (지역구·비례) · 기초의원 (지역구·비례). 교육감 제외.</p>
+    <p class="ar-source-line">교육감은 정당이 없어 뺐습니다.</p>
     <div class="ar-offices-grid" id="ar-offices-grid"></div>
   </section>
 
   <section class="ar-section" id="ar-governor-hex-section" hidden>
     <h2 class="ar-section-title">광역단체장 결과</h2>
-    <p class="ar-source-line">각 시·도 1위 후보 — 정당색·득표율.</p>
+    <p class="ar-source-line">균등·지도는 시·도마다 1위 후보의 정당색입니다. 격자·원형은 후보별 득표를 비율대로 나눠 그렸습니다.</p>
     <div class="ar-governor-hex" id="ar-governor-hex"></div>
   </section>
 
   <section class="ar-section" id="ar-metro-hex-section" hidden>
     <h2 class="ar-section-title">시·도의회 의석 분포</h2>
-    <p class="ar-source-line">시·도의회 광역의원 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.</p>
+    <p class="ar-source-line">지역구와 비례를 합친 의석입니다. 한 칸이 1석입니다.</p>
     <div class="ar-metro-hex" id="ar-metro-hex"></div>
     <div class="ar-metro-hex-meta"><span id="ar-metro-hex-total"></span><span id="ar-metro-hex-legend"></span></div>
   </section>
 
   <section class="ar-section" id="ar-council-hex-section" hidden>
     <h2 class="ar-section-title">시군구의회 의석 분포</h2>
-    <p class="ar-source-line">시·군·구의회 의석(지역구+비례) — 칸 1개 = 1석, 색 = 정당.</p>
+    <p class="ar-source-line">지역구와 비례를 합친 의석입니다. 한 칸이 1석입니다.</p>
     <div class="ar-council-hex" id="ar-council-hex"></div>
     <div class="ar-council-hex-meta"><span id="ar-council-hex-total"></span><span id="ar-council-hex-legend"></span></div>
   </section>
@@ -481,32 +481,31 @@ SECTIONS_LOCAL = """
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">무엇이 바뀌었나<span class="ar-group-sub">지난 회차와 견줘서</span></h2>
+    <h2 class="ar-group-title">지난 선거와 비교</h2>
 
   <section class="ar-section" id="ar-compare-section" hidden>
-    <h2 class="ar-section-title">무엇이 바뀌었나</h2>
     <div id="ar-compare-host"></div>
   </section>
   </div>
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">누가 경쟁했나<span class="ar-group-sub">당선인과 후보</span></h2>
+    <h2 class="ar-group-title">누가 경쟁했나</h2>
 
   <section class="ar-section" id="ar-winners-section" hidden>
     <h2 class="ar-section-title">시·도의원·시·군·구의원 당선인</h2>
-    <p class="ar-source-line">시·도의원·시·군·구의원 모두 NEC 확정 당선인 기준 — 중선거구 정수·무투표 포함.</p>
+    <p class="ar-source-line">무투표 당선과 한 선거구에서 여러 명이 당선된 경우까지 모두 넣은 확정 명단입니다.</p>
     <div id="ar-winners-body"></div>
   </section>
   </div>
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">선거 전에는 어떻게 보였나<span class="ar-group-sub">여론조사·출구조사와 실제의 거리</span></h2>
+    <h2 class="ar-group-title">예측과 실제</h2>
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 시도별 1위 일치율·평균 오차는 polis가 계산했습니다.</p>
+    <p class="ar-source-line">조사마다 출처를 따로 적었습니다. 시·도별 1위 일치율과 평균 오차는 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -519,18 +518,17 @@ SECTIONS_LOCAL = """
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">공약<span class="ar-group-sub">NEC에 등록된 선거공약</span></h2>
+    <h2 class="ar-group-title">공약</h2>
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
   </div>
 
 
   <div class="ar-group">
-    <h2 class="ar-group-title">함께 치러진 선거<span class="ar-group-sub">같은 날 실시된 재·보궐</span></h2>
+    <h2 class="ar-group-title">같은 날 치른 재·보궐</h2>
 
   <section class="ar-section" id="ar-byelection" hidden>
     <h2 class="ar-section-title">재·보궐</h2>
@@ -543,7 +541,7 @@ SECTIONS_LOCAL = """
 SECTIONS_PRES = """
   <section class="ar-section" id="ar-pres-sido-hex-section" hidden>
     <h2 class="ar-section-title">시도별 결과</h2>
-    <p class="ar-source-line">각 시·도 1위 후보 — 정당색·득표율.</p>
+    <p class="ar-source-line">격자·원형은 시·도마다 후보별 득표를 비율대로 나눠 그렸습니다. 균등·지도는 1위 후보의 정당색이고, 1·2위 차이가 작을수록 옅습니다.</p>
     <div class="ar-governor-hex" id="ar-pres-sido-hex"></div>
   </section>
 
@@ -555,7 +553,7 @@ SECTIONS_PRES = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 시도별 1위 일치율·평균 오차는 polis가 계산했습니다.</p>
+    <p class="ar-source-line">조사마다 출처를 따로 적었습니다. 시·도별 1위 일치율과 평균 오차는 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -567,12 +565,10 @@ SECTIONS_PRES = """
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
 
   <section class="ar-section" id="ar-compare-section" hidden>
-    <h2 class="ar-section-title">무엇이 바뀌었나</h2>
     <div id="ar-compare-host"></div>
   </section>
 """
@@ -602,25 +598,22 @@ SECTIONS_BYELECTION = """
 
   <section class="ar-section" id="ar-by-sido-mem-section" hidden>
     <h2 class="ar-section-title">광역의원 결과</h2>
-    <p class="ar-source-line">시·도의회 의원 보궐 (선거구별).</p>
-    <div class="ar-by-sido-mem-host" id="ar-by-sido-mem-host"></div>
+        <div class="ar-by-sido-mem-host" id="ar-by-sido-mem-host"></div>
   </section>
 
   <section class="ar-section" id="ar-by-sigungu-mem-section" hidden>
     <h2 class="ar-section-title">기초의원 결과</h2>
-    <p class="ar-source-line">시·군·구의회 의원 보궐 (선거구별).</p>
-    <div class="ar-by-sigungu-mem-host" id="ar-by-sigungu-mem-host"></div>
+        <div class="ar-by-sigungu-mem-host" id="ar-by-sigungu-mem-host"></div>
   </section>
 
   <section class="ar-section" id="ar-by-reasons-section" hidden>
     <h2 class="ar-section-title">실시 사유</h2>
-    <p class="ar-source-line">중앙선거관리위원회 재·보궐 실시사유 확정상황 API · 전임자·소속 정당·사유.</p>
+    <p class="ar-source-line">다시 뽑게 된 까닭입니다. 전임자와 그 소속 정당, 사유를 적었습니다.</p>
     <div class="ar-by-reasons-host" id="ar-by-reasons-host"></div>
   </section>
 
   <section class="ar-section" id="ar-pledge-realm-section" hidden>
     <h2 class="ar-section-title">공약 분야 분포</h2>
-    <p class="ar-source-line">중앙선거관리위원회 선거공약 API. 분야는 원문에 없어 제목·본문으로 자동 분류했습니다.</p>
     <div id="ar-pledge-realm-host"></div>
   </section>
 """
@@ -628,7 +621,7 @@ SECTIONS_BYELECTION = """
 SECTIONS_GENERAL = """
   <section class="ar-section" id="ar-parliament" hidden>
     <h2 class="ar-section-title">의회 구성</h2>
-    <p class="ar-source-line">정당별 지역구·비례대표 의석. 데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
+    <p class="ar-source-line">데이터 원본: <a href="{nec_url}" target="_blank" rel="noopener">중앙선거관리위원회 ↗</a></p>
     <div class="ar-parliament-table" id="ar-parliament-table"></div>
   </section>
 
@@ -639,7 +632,7 @@ SECTIONS_GENERAL = """
 
   <section class="ar-section" id="ar-exitpoll" hidden>
     <h2 class="ar-section-title">출구조사 vs 실제</h2>
-    <p class="ar-source-line">방송사 출구조사와 실제 결과. 조사마다 출처를 따로 적었습니다. 3사 공동조사는 표본을 함께 쓰지만 의석 예측은 각 사가 따로 냈습니다. 예측 범위 안 적중은 polis가 계산했습니다.</p>
+    <p class="ar-source-line">조사마다 출처를 따로 적었습니다. 3사 공동조사는 표본을 함께 쓰지만 의석 예측은 각 사가 따로 냈습니다. 예측 범위 안 적중은 polis가 계산했습니다.</p>
     <div class="ar-exitpoll-grid" id="ar-exitpoll-grid"></div>
   </section>
 
@@ -656,7 +649,6 @@ FOOT_CHROME = """
       <span class="ar-foot-src"><a href="https://info.nec.go.kr" target="_blank" rel="noopener">중앙선거관리위원회 선거통계시스템</a>{nec_source_suffix}</span>
       {nesdc_link}{wiki_link}
     </div>
-    <p class="fine">본 아카이브는 NEC 개표 결과·NESDC 등록 여론조사·방송사 출구조사를 통합 가공한 회차 단위 영구 보존 페이지입니다.</p>
   </footer>
 </main>
 
@@ -805,7 +797,9 @@ def comparison_line(eid: str) -> str:
             o = (d.get("offices") or {}).get(tc)
             if not o:
                 continue
-            seats = top_delta(o.get("delta_compared_only") or {}, "")
+            # 같은 당 사슬로 묶은 증감이 있으면 그것 — 이름별로 쓰면 '새누리당 +8 ·
+            # 민주당 -7'처럼 개명·합당이 득실로 보인다.
+            seats = top_delta(o.get("delta_by_lineage", o.get("delta_compared_only")) or {}, "")
             if seats:
                 bits.append(f'{_esc(o.get("label") or "")} {seats}')
                 break
@@ -887,18 +881,19 @@ def results_summary(eid: str, kind: str) -> str:
     # 일부만 있으면 그 합은 전국 투표율이 아니다 — 전부 있을 때만 쓴다.
     # 재보궐은 선거구마다 따로 치른 선거들의 묶음이다 — 시도 단위 한 곳(교육감 등)의
     # 투표율을 그날 전체 투표율처럼 쓰지 않는다.
-    turnout = (f" · 투표율 {vo / el * 100:.1f}%"
-               if (kind != "byelection" and el and have_vo and len(have_vo) == len(top)) else "")
+    # 지선·총선은 히어로가 이미 투표율을 보여 준다 — 같은 숫자를 여기서 또 쓰지 않는다.
+    # 대선 히어로엔 투표율 칸이 없어 여기 한 번 쓴다.
+    turnout = (f"투표율은 {vo / el * 100:.1f}%입니다. "
+               if (kind == "presidential" and el and have_vo and len(have_vo) == len(top)) else "")
 
     items = "".join(f"<li><b>{a}</b> <span>{b}</span></li>" for a, b in rows)
     return (f'<section class="ar-summary"><h2>결과 요약</h2>'
             f'<ul class="ar-summary-list">{items}</ul>'
             + comparison_line(eid)
-            + (f'<p class="ar-summary-note">개표 결과 기준{turnout}. '
-            f'지역별 상세는 아래 섹션에서 — '
+            + (f'<p class="ar-summary-note">{turnout}'
             # archive에서 지역 entity로 나가는 길. 시군구 265곳을 다 나열하지 않고
             # 허브 1-hop으로 둔다(역방향은 이미 강하다 — 지역 페이지가 archive 25개를 링크).
-            f'<a href="/region/">내 지역의 역대 기록</a>도 볼 수 있습니다.</p>')
+            f'시·군·구별 역대 기록은 <a href="/region/">지역 페이지</a>에서 볼 수 있습니다.</p>')
             + '</section>')
 
 
@@ -924,7 +919,7 @@ def _sourceline_to_info(html: str) -> str:
 # 회차 종류마다 있는 섹션이 다르므로, 없는 섹션은 조용히 건너뛰고 빈 그룹은 만들지 않는다.
 
 def group_sections(body: str, groups: list) -> str:
-    """섹션 블록을 서사 그룹으로 재배열. groups = [(제목, 부제, [section_id...])]"""
+    """섹션 블록을 서사 그룹으로 재배열. groups = [(제목, [section_id...])]"""
     blocks = {}
     for m in re.finditer(r'\n  <section class="ar-section" id="(ar-[a-z0-9-]+)"[\s\S]*?\n  </section>\n',
                          body):
@@ -932,12 +927,11 @@ def group_sections(body: str, groups: list) -> str:
     if not blocks:
         return body
     out, seen = [], set()
-    for title, sub, ids in groups:
+    for title, ids in groups:
         have = [i for i in ids if i in blocks]
         if not have:
             continue                       # 이 회차에 없는 그룹은 만들지 않는다
-        out.append(f'\n  <div class="ar-group">\n    <h2 class="ar-group-title">{title}'
-                   f'<span class="ar-group-sub">{sub}</span></h2>')
+        out.append(f'\n  <div class="ar-group">\n    <h2 class="ar-group-title">{title}</h2>')
         for i in have:
             out.append(blocks[i].rstrip('\n'))
             seen.add(i)
@@ -948,35 +942,36 @@ def group_sections(body: str, groups: list) -> str:
     return '\n'.join(out) + '\n'
 
 
-G_RESULT = ("결과", "이 선거에서 무슨 일이 있었나")
-G_CHANGE = ("무엇이 바뀌었나", "지난 회차와 견줘서")
-G_WHO = ("누가 경쟁했나", "당선인과 후보")
-G_BEFORE = ("선거 전에는 어떻게 보였나", "여론조사·출구조사와 실제의 거리")
-# 섹션 이름은 짧고 건조하게 — nav의 "선거 / 인물·정당 / 역사"와 같은 명명법.
-# 부제는 링크가 아니라 부제다(다른 그룹과 동일). "당선인·후보의"는 두 집단인지
-# 헷갈리게 하고, 회차마다 모집단이 달라(당선인만/등록 후보 전체) 고정 문구로는
-# 정확할 수 없다 — 정확한 모집단은 차트 위 note가 말한다.
-G_PLEDGE = ("공약", "NEC에 등록된 선거공약")
-G_TOGETHER = ("함께 치러진 선거", "같은 날 실시된 재·보궐")
+# 그룹 제목만 둔다. 예전엔 질문형 부제('결과 / 이 선거에서 무슨 일이 있었나')가
+# 모든 그룹에 붙어 제목을 한 번 더 말했다. 섹션 이름은 짧고 건조하게 — nav의
+# "선거 / 인물·정당 / 역사"와 같은 명명법. 모집단(당선인만/등록 후보 전체)은
+# 회차마다 달라 고정 문구로는 정확할 수 없다 — 차트 위 note가 말한다.
+# 지선 템플릿(SECTIONS_LOCAL)은 그룹을 직접 적으므로 거기 제목도 같이 바꾼다.
+G_RESULT = "결과"
+G_CHANGE = "지난 선거와 비교"
+G_WHO = "누가 경쟁했나"
+G_BEFORE = "예측과 실제"
+G_PLEDGE = "공약"
+G_TOGETHER = "같은 날 치른 재·보궐"
 
 GROUPS_BY_KIND = {
     "presidential": [
-        (*G_RESULT, ["ar-nation", "ar-pres-sido-hex-section"]),
-        (*G_CHANGE, ["ar-compare-section"]),
-        (*G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
-        (*G_PLEDGE, ["ar-pledge-realm-section"]),
+        (G_RESULT, ["ar-nation", "ar-pres-sido-hex-section"]),
+        (G_CHANGE, ["ar-compare-section"]),
+        (G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
+        (G_PLEDGE, ["ar-pledge-realm-section"]),
     ],
     "general_election": [
-        (*G_RESULT, ["ar-parliament", "ar-proportional"]),
-        (*G_CHANGE, ["ar-compare-section"]),
-        (*G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
+        (G_RESULT, ["ar-parliament", "ar-proportional"]),
+        (G_CHANGE, ["ar-compare-section"]),
+        (G_BEFORE, ["ar-exitpoll", "ar-polls-link"]),
     ],
     "byelection": [
-        (*G_RESULT, ["ar-by-sido-section", "ar-by-supt-section", "ar-by-district-section",
+        (G_RESULT, ["ar-by-sido-section", "ar-by-supt-section", "ar-by-district-section",
                      "ar-by-sigungu-section", "ar-by-sido-mem-section",
                      "ar-by-sigungu-mem-section"]),
-        (*G_WHO, ["ar-by-reasons-section"]),
-        (*G_PLEDGE, ["ar-pledge-realm-section"]),
+        (G_WHO, ["ar-by-reasons-section"]),
+        (G_PLEDGE, ["ar-pledge-realm-section"]),
     ],
 }
 
@@ -1054,7 +1049,8 @@ def region_table(eid: str, kind: str, n=None) -> str:
         # 있으므로 닫히지 않는다 — 이건 그 데이터를 **보고 있는 자리**에서 상세로
         # 가는 두 번째 문이다.
         if kind == "local" and n:
-            detail_link = f' <a href="/history/local/{n}/governor/">지역별 상세 →</a>' 
+            detail_link = (f'    <p class="ar-source-line">'
+                           f'<a href="/history/local/{n}/governor/">지역별 전체 표 →</a></p>\n')
         head = ["시도", "1위 후보", "정당", "득표율", "투표율"]
         for r in rs:
             cs = sorted(r.get("candidates") or [], key=lambda c: -(c.get("votes") or 0))
@@ -1093,7 +1089,10 @@ def region_table(eid: str, kind: str, n=None) -> str:
     th = "".join(f"<th>{h}</th>" for h in head)
     tr = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in rows)
     return (f'\n  <section class="ar-section" id="ar-region-table">\n'
-            f'    <h2 class="ar-section-title">{cap}{detail_link}</h2>\n'
+            f'    <h2 class="ar-section-title">{cap}</h2>\n'
+            # 상세로 가는 문은 제목에 붙이지 않고 제목 아래 따로 — 제목과 링크가 한 줄로
+            # 엉겨 '시도별 광역단체장 지역별 상세 →'로 읽혔다.
+            f'{detail_link}'
             f'    <div class="pp-scroll">'
             f'<table class="pp-static"><caption>{cap} — {len(rows)}곳</caption>'
             f'<thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table></div>\n'
@@ -1291,10 +1290,13 @@ def office_by_sido(eid: str, kind: str, n) -> str:
                          " · ".join(f"{_party_link(pp)} {vv}" for pp, vv in top[:4])])
         if len(rows) < 2:
             continue        # 시도 하나뿐이면 접을 게 없다(재보궐 등)
-        link = (f' <a href="{href.format(n=n)}">지역별 상세 →</a>'
-                if href and n else "")
-        out.append(_rt.table_html(f"ar-by-sido-{tc}", f"{label} — 시도별{link}",
-                                  ["시도", "당선인", "정당별"], rows))
+        html = _rt.table_html(f"ar-by-sido-{tc}", f"{label} — 시도별",
+                              ["시도", "당선인", "정당별"], rows)
+        if href and n:
+            # 상세로 가는 문은 제목 아래 따로 — 제목·캡션에 섞으면 '…시도별 지역별 상세 →'가 된다.
+            html = html.replace('</h2>\n', f'</h2>\n    <p class="ar-source-line">'
+                                f'<a href="{href.format(n=n)}">지역별 전체 표 →</a></p>\n', 1)
+        out.append(html)
     return "".join(out)
 
 def _party_link(name: str) -> str:
@@ -1328,7 +1330,24 @@ def nec_source_suffix(meta: dict) -> str:
     """data_source_note(예 '중앙선거관리위원회 OpenAPI')를 푸터 NEC 링크 옆 인라인 접미로.
     '중앙선거관리위원회'는 링크 텍스트에 이미 있으니 떼고 방식만(예 'OpenAPI') ' · '로 붙임."""
     note = (meta.get("archive") or {}).get("data_source_note", "")
-    method = note.replace("중앙선거관리위원회", "").strip().lstrip("·").strip()
+    # 노트는 빌드용 메모라 API ID·서비스 코드(VCCP09·SPARQL·tc7)가 섞여 있다. 푸터엔
+    # 독자가 알아볼 자료 이름만 낸다. 자세한 출처는 /about/data/가 말한다.
+    if not note:
+        return ""
+    if "OpenAPI" in note:
+        method = "공공데이터 API"
+    elif "LOD" in note:
+        method = "선거통계 LOD · 전국구는 위키백과"
+    elif "간접선거" in note:
+        method = "간접선거 기록"
+    elif "당선인명부" in note and "개표현황" in note:
+        method = "당선인명부 · 개표현황"
+    elif "당선인명부" in note:
+        method = "역대 당선인명부"
+    elif "개표현황" in note:
+        method = "역대 개표현황"
+    else:
+        method = note.replace("중앙선거관리위원회", "").strip().lstrip("·").strip()
     return f' · {method}' if method else ""
 
 

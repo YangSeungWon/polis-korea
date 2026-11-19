@@ -304,7 +304,7 @@
         return `<span class="ch-leg" style="color:${col}"><b>${n}</b> ${p}</span>`;
       }).join(' · ');
       const tot = document.getElementById('ar-council-hex-total');
-      if (tot) tot.textContent = `${totalSeats}석 (시군구 의회) · hex 클릭 → 당선인`;
+      if (tot) tot.textContent = `${totalSeats}석`;
     }
   }
 
@@ -423,7 +423,7 @@
       sec = document.createElement('section');
       sec.className = 'ar-section'; sec.id = 'ar-sgg-turnout';
       sec.innerHTML = '<h2 class="ar-section-title">시군구 투표율'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">시·군·구별 투표율(투표수/선거인수) — 짙을수록 높음. <b>균등</b>=등면적 hex · <b>지도</b>=실제 경계.</span></span></h2>'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">투표수를 선거인 수로 나눈 값입니다. 진할수록 높습니다.</span></span></h2>'
         + '<div class="ar-sgg-turnout-host"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);
     }
@@ -589,7 +589,7 @@
         const title = tc === '4' ? '시·군·구 기초단체장' : '시·군·구 1위 후보';
         sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-result';
         sec.innerHTML = `<h2 class="ar-section-title">${title}`
-          + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">1위 후보 정당색. 단색·지도=격차 명도, 격자·원형=표(인구) 비례.</span></span></h2>'
+          + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">단색·지도는 1위 후보의 정당색이고, 1·2위 차이가 작을수록 옅습니다. 격자·원형은 후보별 득표를 표 수만큼 나눠 그렸습니다.</span></span></h2>'
           + '<div class="ar-sgg-result-host"></div>';
         anchor.parentElement.insertBefore(sec, turn || anchor.nextSibling);
       }
@@ -746,7 +746,7 @@
     if (!sec) {
       sec = document.createElement('section'); sec.className = 'ar-section'; sec.id = 'ar-sgg-prop';
       sec.innerHTML = '<h2 class="ar-section-title">기초의원 비례 — 시·군·구별 표심'
-        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">비례대표 정당 득표를 시·군·구별로 — 의석(지역구 승자독식)이 가린 실제 정당 지지. 격자 1칸=2만표.</span></span></h2>'
+        + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">의석은 지역구 1등이 가져가므로, 정당 지지는 비례 득표로 봐야 드러납니다. 격자 한 칸이 2만 표입니다.</span></span></h2>'
         + '<div class="sgg-mode-toggle seg" role="tablist"></div><div class="ar-sgg-prop-host sgg-map-area"></div>'
         + '<div class="ar-sgg-prop-legend ch-leg-row"></div>';
       anchor.parentElement.insertBefore(sec, anchor.nextSibling);

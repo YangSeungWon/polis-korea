@@ -4,7 +4,7 @@
     "previous": "2nd-pres-1952",
     "current_name": null,
     "previous_name": "제2대 대통령선거",
-    "generated_at": "2026-08-05T11:38:18+09:00",
+    "generated_at": "2026-11-19T21:34:05+09:00",
     "source": "polis 계산",
     "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
   },
@@ -26,7 +26,7 @@
       "무소속": 26.88,
       "자유당": -4.63
     },
-    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+    "note": "후보가 달라도 같은 정당이면 이어서 비교했습니다."
   },
   "offices": {
     "1": {
@@ -51,6 +51,7 @@
         "delta": {}
       },
       "delta_compared_only": {},
+      "delta_by_lineage": {},
       "units": [
         {
           "sido": "강원특별자치도",

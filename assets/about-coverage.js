@@ -59,6 +59,9 @@
   // 요약은 행렬과 같은 범위(1987~2026)만 센다 — 1948년부터 세면 행렬에 없는 칸이 숫자에 들어간다.
   const inRange = (k) => { const y = +k.split('|')[1]; return y >= YEAR_START && y <= YEAR_END; };
 
+  // 툴팁의 출처 이름 — 범례(about/data-coverage/index.html)와 같은 말을 쓴다.
+  const SRC_LABEL = { nec: 'NEC API', live: '실시간 (잠정)', mixed: '두 출처 혼합', wiki: '위키백과', unknown: '출처 미기재', none: '없음' };
+
   renderSummary();
   renderMatrix();
 
@@ -78,14 +81,14 @@
     const wikiCycles = (calendar?.cycles || []).filter((c) => c.source === 'wikipedia-ko').length;
     host.innerHTML = `
       <div class="cov-stat-row">
-        <div class="cov-stat"><div class="cov-stat-n">${counts.total}</div><div class="cov-stat-lbl">전체 (회차/연도 셀)</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${counts.total}</div><div class="cov-stat-lbl">자료가 있는 칸</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${counts.nec + counts.live}</div><div class="cov-stat-lbl">NEC API</div></div>
-        <div class="cov-stat"><div class="cov-stat-n">${counts.mixed}</div><div class="cov-stat-lbl">출처 둘</div></div>
-        <div class="cov-stat"><div class="cov-stat-n">${counts.wiki}</div><div class="cov-stat-lbl">위키</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${counts.mixed}</div><div class="cov-stat-lbl">두 출처 혼합</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${counts.wiki}</div><div class="cov-stat-lbl">위키백과</div></div>
         <div class="cov-stat"><div class="cov-stat-n">${counts.unknown}</div><div class="cov-stat-lbl">출처 미기재</div></div>
-        <div class="cov-stat"><div class="cov-stat-n">${wikiCycles}</div><div class="cov-stat-lbl">재보궐 (위키 회차)</div></div>
+        <div class="cov-stat"><div class="cov-stat-n">${wikiCycles}</div><div class="cov-stat-lbl">위키백과로 보완한 재보궐 회차</div></div>
       </div>
-      <p class="cov-note">${YEAR_START}~${YEAR_END}년 · 대선 ${byKind.presidential || 0}해 · 총선 ${byKind.general || 0}해 · 지선 ${byKind.local || 0}해 · 재보궐 ${byKind.byelection || 0}해.</p>
+      <p class="cov-note">${YEAR_START}~${YEAR_END}년 가운데 자료가 있는 해는 대선 ${byKind.presidential || 0}, 총선 ${byKind.general || 0}, 지선 ${byKind.local || 0}, 재보궐 ${byKind.byelection || 0}해입니다.</p>
     `;
   }
 
@@ -113,8 +116,8 @@
         if (meta) {
           const note = meta.archive?.data_source_note || meta._data_caveat || '';
           // 라벨은 뭉뚱그린 것이고 사실은 문장에 있다 — 있으면 문장을 보여준다.
-          tooltip = `${meta.name}\n${meta.date}\nsource: ${status}`
-            + (note ? `\n${note}` : '\n출처가 적혀 있지 않다');
+          tooltip = `${meta.name}\n${meta.date}\n출처: ${SRC_LABEL[status] || status}`
+            + (note ? `\n${note}` : '');
           if (meta.archive?.page) link = meta.archive.page;
         } else if (cell?.calendar) {
           const cs = cell.calendar;
@@ -123,7 +126,7 @@
           const n = known.reduce((a, c) => a + c.reasons_count, 0);
           const cnt = known.length === cs.length ? `${n}건`
             : known.length ? `${n}건 이상` : '건수 모름';
-          tooltip = `${y}년 재보궐 ${cs.length}회 (${cnt})\nsource: ${status}`;
+          tooltip = `${y}년 재보궐 ${cs.length}회 (${cnt})\n출처: ${SRC_LABEL[status] || status}`;
         }
         const cls = `cov-mat-cell cov-mat-${status}`;
         if (link) {

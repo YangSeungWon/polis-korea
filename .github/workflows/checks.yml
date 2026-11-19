@@ -53,6 +53,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref || github.sha }}
+          # test_sitemap은 lastmod가 한 날짜로 뭉쳤을 때 '그날 정말 모든 쪽이 바뀌었나'를
+          # 그날 이전 커밋과 비교해 확인한다. 얕은 클론(1)이면 비교할 커밋이 없다.
+          # 전체 이력(570MB)은 무겁고, 100개면 하루 이상을 넉넉히 덮는다.
+          fetch-depth: 100
 
       - name: Setup Python
         uses: actions/setup-python@v5

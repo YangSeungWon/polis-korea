@@ -24,7 +24,7 @@ function renderHistoryLegend() {
       const viz = document.querySelector('.viz');
       if (viz) viz.insertAdjacentElement('afterend', el);
       el.hidden = false;
-      el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선 = 추정 경계 (갑·을 등 다인선거구 분할)</span>';
+      el.innerHTML = '<span class="leg-item"><span class="leg-dash"></span>점선은 추정한 경계입니다(갑·을 등으로 나뉜 선거구)</span>';
     } else {
       el.hidden = true; el.innerHTML = '';
     }
@@ -527,7 +527,7 @@ function renderDetail() {
     const closeRaces = computeCloseRaces();
     if (closeRaces.length) {
       html += `<div class="hist-close">
-        <div class="hist-close-title">박빙 ${closeRaces.length}곳 <span class="hist-close-sub">격차가 작은 순서입니다. 지역을 선택해 자세히 보세요.</span></div>
+        <div class="hist-close-title">박빙 ${closeRaces.length}곳 <span class="hist-close-sub">1·2위 차이가 작은 순서입니다.</span></div>
         ${closeRaces.map((r) => {
           const top = r.candidates[0], second = r.candidates[1];
           const col1 = partyColor(top.party), col2 = partyColor(second.party);
@@ -541,9 +541,9 @@ function renderDetail() {
           </a>`;
         }).join('')}
       </div>
-      <div class="detail-empty hist-empty-hint">시도·시군구를 클릭하면 그 지역 결과가 표시됩니다.</div>`;
+      <div class="detail-empty hist-empty-hint">지역을 고르면 그 지역 결과가 여기 나옵니다.</div>`;
     } else {
-      html += `<div class="detail-empty">시도·시군구를 클릭하면 그 지역 결과가 표시됩니다.</div>`;
+      html += `<div class="detail-empty">지역을 고르면 그 지역 결과가 여기 나옵니다.</div>`;
     }
   }
   pane.innerHTML = html;
@@ -774,7 +774,7 @@ async function init() {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'fig-tool hist-copy-link';
       b.textContent = '링크 복사';
-      b.title = '지금 보이는 회차·방식·선택·확대까지 담긴 링크';
+      b.title = '지금 화면 그대로 여는 링크';
       b.addEventListener('click', async () => {
         const ok = await window.FigureTools.copyText(location.href);
         b.textContent = ok ? '복사됨' : '복사 실패';

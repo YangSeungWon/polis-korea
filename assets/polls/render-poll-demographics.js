@@ -176,10 +176,10 @@
     const hasGrid = dims.some(([k]) => k === '성연령');
     sec.innerHTML = '<h3 class="pres-trend-title">여론조사 성·연령 추이 '
       + '<span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">'
-      + `후보지지를 ${hasGrid ? '성별·연령·성×연령' : '성별·연령'}으로 본 시계열(다자대결 잡음 줄이려 최종 후보만). `
-      + (hasExit ? '끝의 ◆ = 방송3사 출구조사. ' : '')
-      + `성별·연령은 다기관(${(d._meta.agencies || []).length}곳)`
-      + (hasGrid ? ', 성×연령 그리드는 공표 기관이 적음' : '') + '.</span></span></h3>'
+      + `후보 지지율을 ${hasGrid ? '성별·연령·성×연령' : '성별·연령'}별로 시간 순서에 따라 봅니다. 다자 대결의 잡음을 줄이려고 최종 후보만 셉니다. `
+      + (hasExit ? '끝의 ◆는 방송3사 출구조사입니다. ' : '')
+      + `성별·연령은 여러 기관(${(d._meta.agencies || []).length}곳)의 조사입니다`
+      + (hasGrid ? '. 성×연령 표는 공표한 기관이 적습니다' : '') + '.</span></span></h3>'
       + `<div class="pd-dim seg" role="tablist">${dimBtns}</div>`
       + '<div class="pd-cells"></div><div class="pd-chart"></div>';
     const anchor = document.getElementById('pres-trend') || document.querySelector('.controls');
@@ -197,7 +197,7 @@
     const host = sec.querySelector('.pd-cells');
     if (dim === '성별격차') {
       const dem = focalDemName() || '민주 후보';
-      host.innerHTML = `<p class="pd-gap-note">연령대별 <b>${dem}</b> 득표율의 남−여 격차(%p). 선이 0 위면 남성, 아래면 여성이 더 지지. ◆=출구조사. 캠페인 동안 이대남·이대녀 격차가 어떻게 벌어지는지.</p>`;
+      host.innerHTML = `<p class="pd-gap-note">연령대별 <b>${dem}</b> 득표율의 남−여 격차(%p)입니다. 선이 0보다 위면 남성, 아래면 여성이 더 지지했습니다. ◆는 출구조사입니다.</p>`;
       return;
     }
     if (dim === '성연령') {

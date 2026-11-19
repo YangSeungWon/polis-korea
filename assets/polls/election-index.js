@@ -14,8 +14,8 @@
         hrefFn: (e) => `/polls/${e.slug}/`,
         current: cur,
         curSuffix: '(최근)',
-        ariaFn: (e) => `${e.name} 여론조사 vs 실제`,
-        note: '이 사이트의 여론조사 자료는 2016년 선거부터입니다. 그 이전은 <a href="/history.html">역대 결과 →</a>',
+        ariaFn: (e) => `${e.name} 여론조사와 실제 결과`,
+        note: '이 사이트의 여론조사 자료는 2016년 선거부터입니다. 그 전 선거는 <a href="/history.html">역대 결과</a>에서 보세요.',
       });
     })
     .catch(() => { sec && sec.remove(); });

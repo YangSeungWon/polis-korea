@@ -18,6 +18,13 @@
   Archive.pcol = (p) => { const c = (typeof partyColor === 'function') ? partyColor(p) : '#999'; return (typeof legibleColor === 'function') ? legibleColor(c) : c; };
   Archive.ptcol = (p) => ((typeof partyTextColor === 'function') ? partyTextColor(p) : 'var(--ink)');
 
+  // 받은 시각(ISO) → '2026년 8월 4일 갱신'. 원시 타임스탬프를 화면에 그대로 내지 않는다.
+  // 날짜가 없으면 빈 문자열 — 선거일로 채우면 '1952년에 갱신'이 된다.
+  Archive.updatedNote = (iso) => {
+    const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? ` · ${+m[1]}년 ${+m[2]}월 ${+m[3]}일 갱신` : '';
+  };
+
   // 위성정당 → 본정당: assets/parties.js 의 SATELLITE_TO_MAIN/mainParty 전역 사용.
   // 단일 출처: data/parties/satellites.json → sync_satellites_js.py가 parties.js로 sync.
   Archive.SATELLITE_TO_MAIN = (typeof SATELLITE_TO_MAIN !== 'undefined') ? SATELLITE_TO_MAIN : {};

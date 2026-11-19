@@ -4,7 +4,7 @@
     "previous": "2nd-local-1998",
     "current_name": "제3회 전국동시지방선거",
     "previous_name": "제2회 전국동시지방선거",
-    "generated_at": "2026-08-05T11:38:17+09:00",
+    "generated_at": "2026-11-19T21:34:05+09:00",
     "source": "polis 계산",
     "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
   },
@@ -50,6 +50,11 @@
         "새천년민주당": 4,
         "자유민주연합": -3,
         "한나라당": 5
+      },
+      "delta_by_lineage": {
+        "한나라당": 5,
+        "자유민주연합": -3,
+        "새천년민주당": -2
       },
       "units": [
         {
@@ -307,6 +312,13 @@
         "새천년민주당": 40,
         "자유민주연합": -12,
         "한나라당": 56
+      },
+      "delta_by_lineage": {
+        "한나라당": 56,
+        "새천년민주당": -34,
+        "자유민주연합": -12,
+        "무소속": -9,
+        "국민신당": -1
       },
       "units": [
         {
@@ -2957,7 +2969,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "경기도",
@@ -2966,7 +2978,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "경기도",
@@ -2975,7 +2987,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -2984,7 +2996,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -2993,7 +3005,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3002,7 +3014,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3011,7 +3023,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3020,7 +3032,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3029,7 +3041,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3038,7 +3050,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3047,7 +3059,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3056,7 +3068,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "대전광역시",
@@ -3065,7 +3077,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대전광역시",
@@ -3074,7 +3086,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대전광역시",
@@ -3083,7 +3095,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "부산광역시",
@@ -3092,7 +3104,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "부산광역시",
@@ -3101,7 +3113,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3110,7 +3122,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3119,7 +3131,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3128,7 +3140,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3137,7 +3149,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "울산광역시",
@@ -3146,7 +3158,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3155,7 +3167,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3164,7 +3176,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3173,7 +3185,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "인천광역시",
@@ -3182,7 +3194,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3191,7 +3203,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3200,7 +3212,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3209,7 +3221,7 @@
           "match_type": "transferred",
           "reason_code": "sido_transferred",
           "reason": "상위 시도가 바뀜",
-          "note": "상위 시도가 바뀌어 직접 대조하지 않음"
+          "note": "속한 시·도가 바뀌어 비교하지 않았습니다"
         },
         {
           "sido": "강원특별자치도",
@@ -3218,7 +3230,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "경기도",
@@ -3227,7 +3239,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "경기도",
@@ -3236,7 +3248,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3245,7 +3257,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3254,7 +3266,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3263,7 +3275,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "광주광역시",
@@ -3272,7 +3284,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3281,7 +3293,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3290,7 +3302,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3299,7 +3311,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3308,7 +3320,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대구광역시",
@@ -3317,7 +3329,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대전광역시",
@@ -3326,7 +3338,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대전광역시",
@@ -3335,7 +3347,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "대전광역시",
@@ -3344,7 +3356,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3353,7 +3365,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3362,7 +3374,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3371,7 +3383,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3380,7 +3392,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3389,7 +3401,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "부산광역시",
@@ -3398,7 +3410,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3407,7 +3419,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3416,7 +3428,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3425,7 +3437,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "울산광역시",
@@ -3434,7 +3446,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3443,7 +3455,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3452,7 +3464,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3461,7 +3473,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         },
         {
           "sido": "인천광역시",
@@ -3470,7 +3482,7 @@
           "match_type": "boundary_changed",
           "reason_code": "boundary_reorganized",
           "reason": "행정구역 개편",
-          "note": "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편"
+          "note": "행정구역 개편으로 사라지거나 새로 생겼습니다"
         }
       ]
     }
@@ -3499,7 +3511,7 @@
         "자유민주연합": -53,
         "한나라당": 207
       },
-      "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."
+      "note": "선거구 획정이 달라 합계만 비교했습니다."
     },
     "6": {
       "label": "기초의원",
@@ -3512,7 +3524,7 @@
       "delta": {
         "무소속": -4
       },
-      "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."
+      "note": "선거구 획정이 달라 합계만 비교했습니다."
     },
     "8": {
       "label": "광역의원 비례",
@@ -3531,7 +3543,7 @@
         "한국미래연합": 2,
         "한나라당": 36
       },
-      "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."
+      "note": "선거구 획정이 달라 합계만 비교했습니다."
     }
   }
 }

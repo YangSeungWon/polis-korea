@@ -66,7 +66,7 @@ function mountOrClearGapLegend(hostSvg) {
   if (!hostSvg) return;
   const encodes = state.mode !== 'result';   // 여론조사 모드에서만 격차 명도가 산다
   if (encodes && typeof mountGapLegend === 'function') {
-    mountGapLegend(hostSvg, { extra: ['점선·흐림 = 최근 조사 부족'] });
+    mountGapLegend(hostSvg, { extra: ['점선과 흐린 칸은 최근 조사가 부족한 곳입니다'] });
   } else if (typeof removeGapLegend === 'function') {
     removeGapLegend(hostSvg);
   }

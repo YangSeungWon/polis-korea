@@ -193,9 +193,6 @@ PAGE = """<!DOCTYPE html>
   {runs}
   {members}
   {regions}
-  <footer class="foot">
-    <p class="fine">소속 인물은 당선 국회의원 기준 — 낙선·기타 후보는 <a href="/search.html?q={qname}">검색</a>에서.</p>
-  </footer>
 </main>
 <script src="assets/parties.js"></script>
 <script src="assets/theme.js"></script>
@@ -263,9 +260,6 @@ def render_regions(name: str, strength: dict, page_slugs: set) -> str:
     if not reg:
         return ""
     total = sum(reg.values())
-    by_sido = defaultdict(int)
-    for (sd, _sg), n in reg.items():
-        by_sido[sd] += 1
     top = sorted(reg.items(), key=lambda x: (-x[1], x[0]))[:24]
     chips = []
     for (sd, sg), n in top:
@@ -275,12 +269,9 @@ def render_regions(name: str, strength: dict, page_slugs: set) -> str:
                  f'{esc(sg)}<span class="pty-rg-n">{n}</span>')
         chips.append(f'<a class="pty-rg" href="/region/{quote(slug)}/">{label}</a>'
                      if slug in page_slugs else f'<span class="pty-rg">{label}</span>')
-    sido = " · ".join(f"{esc(sd)} {n}곳" for sd, n in
-                      sorted(by_sido.items(), key=lambda x: (-x[1], x[0]))[:8])
-    return (f'<section class="pty-sec"><h2>지역 기반 '
-            f'<span class="pty-cnt">{len(reg)}</span></h2>'
-            f'<p class="pty-rg-sum">시군구 1위 {total:,}회 · {len(reg)}곳</p>'
-            f'<p class="pty-rg-sido">{sido}</p>'
+    # 시도별 곳수 줄(경기도 29곳 · 경상북도 25곳 · …)은 뺐다 — 아래 칩이 이미 어디인지 보여 준다.
+    return (f'<section class="pty-sec"><h2>1위를 한 지역</h2>'
+            f'<p class="pty-rg-sum">시군구 {len(reg):,}곳에서 모두 {total:,}번 1위를 했습니다.</p>'
             f'<div class="pty-rg-grid">{"".join(chips)}</div></section>')
 
 
@@ -478,22 +469,29 @@ def render_runs(name: str) -> str:
     tot_w = sum(r["won"] for r in runs)
     rows = []
     for r in runs[:14]:
-        won = f'<span class="pty-run-w">당선 {r["won"]}</span>' if r["won"] else ""
+        won = f'<span class="pty-run-w">당선 {r["won"]:,}명</span>' if r["won"] else ""
         rows.append(
             f'<li><span class="pty-run-d">{esc(r["date"])}</span>'
             f'<span class="pty-run-l">{esc(r["label"])}</span>'
-            f'<span class="pty-run-n">후보 {r["candidates"]}</span>'
+            f'<span class="pty-run-n">후보 {r["candidates"]:,}명</span>'
             f'<span class="pty-run-v">{r["votes"]:,}표</span>{won}</li>')
-    more = (f'<li class="pty-run-more">외 {n_el - 14}회</li>' if n_el > 14 else "")
+    more = (f'<li class="pty-run-more">그 밖에 {n_el - 14}번</li>' if n_el > 14 else "")
     # 득표 합계는 내지 않는다 — 대선 1표와 지선 투표지 7장을 더한 수는 뜻이 없다.
-    head = (f'선거 {n_el}회 · 후보 {tot_c:,}명'
-            + (f' · 당선 {tot_w:,}' if tot_w else " · 당선 없음"))
+    head = (f'선거 {n_el}번에 후보 {tot_c:,}명을 냈고, '
+            + (f'그중 {tot_w:,}명이 당선됐습니다.' if tot_w else "당선자는 없습니다."))
     return (f'<section class="pty-sec"><h2>출마 기록 <span class="pty-cnt">{n_el}</span></h2>'
             f'<p class="pty-run-sum">{head}</p>'
             f'<ul class="pty-runs">{"".join(rows)}{more}</ul>'
-            f'<p class="fine">당선 여부와 무관하게 후보를 낸 선거 전부. '
-            f'같은 선거의 중복 표현은 한 번만 셉니다. 지방선거 득표는 '
-            f'단체장·의원·비례 투표지를 모두 더한 수입니다.</p></section>')
+            f'<p class="fine">당선자가 없어도 후보를 낸 선거는 모두 넣었습니다. '
+            f'지방선거 득표는 단체장·의원·비례대표 투표용지를 모두 더한 수입니다.</p></section>')
+
+
+def _ym(d: str) -> str:
+    """'2020-09' → '2020년 9월', '2020' → '2020년'. 모르는 모양은 그대로."""
+    m = re.match(r"(\d{4})(?:-(\d{1,2}))?", d or "")
+    if not m:
+        return d or ""
+    return f"{m.group(1)}년" + (f" {int(m.group(2))}월" if m.group(2) else "")
 
 
 def _stream_id(stream: str) -> str:
@@ -507,7 +505,7 @@ def render(name, info, known, appearances, members, regions=""):
     abbr_badge = f' <span class="pty-abbr" data-party="{esc(name)}">{esc(abbr)}</span>' if abbr else ""
     founded = info.get("founded", "")
     dissolved = info.get("dissolved")
-    life = esc(founded) + (f" ~ {esc(dissolved)}" if dissolved else " ~ 현재" if founded else "")
+    life = esc(_ym(founded)) + (f" ~ {esc(_ym(dissolved))}" if dissolved else " ~ 현재" if founded else "")
     # 제목에 쓸 짧은 존속기간 — life는 뒤에 관계(개명·분당)가 붙는 화면용 문자열이라
     # 제목에 그대로 넣으면 '2020-09 ~ 현재 · 개명 역대 득표와'로 읽힌다. 연도만 쓴다.
     life_span = (f"{founded[:4]}~{dissolved[:4]}" if founded and dissolved
@@ -515,7 +513,7 @@ def render(name, info, known, appearances, members, regions=""):
     REL = {"new": "신설", "rename": "개명", "merge": "합당", "split": "분당", "dissolve": "해산/소멸"}
     rel = REL.get(info.get("relation"), "")
     if rel:
-        life += f" · {rel}"
+        life += f" ({rel})"
     # 계열(stream) — registry가 145개 정당을 여섯 갈래로 나눠 두고도 정당 페이지엔
     # 안 나왔다. 한 줄이지만 그 정당이 어디 서 있었는지를 말하고, 허브의 같은 계열로
     # 나가는 길이기도 하다.
@@ -549,12 +547,12 @@ def render(name, info, known, appearances, members, regions=""):
         for a in apps:
             href = f'/history.html?type={HISTORY_TYPE.get(a["kind"], "")}&n={a["n"]}'
             kl = KIND_LABEL.get(a["kind"], "")
+            # 회차 이름('20대 대선')에 종류가 이미 있다 — 종류 칸을 따로 두지 않는다.
             rows.append(
-                f'<li><a href="{href}"><span class="pty-el-lab">{esc(a["label"])}</span>'
-                f'<span class="pty-el-k">{esc(kl)}</span>'
+                f'<li><a href="{href}"><span class="pty-el-lab">{esc(a["label"] or kl)}</span>'
                 f'<span class="pty-el-m">{esc(a["metric"])}</span></a></li>'
             )
-        elections = (f'<section class="pty-sec"><h2>등장 선거 <span class="pty-cnt">{len(apps)}</span></h2>'
+        elections = (f'<section class="pty-sec"><h2>선거 결과 <span class="pty-cnt">{len(apps)}</span></h2>'
                      f'<ul class="pty-elections">{"".join(rows)}</ul></section>')
 
     # 소속 인물
@@ -569,12 +567,15 @@ def render(name, info, known, appearances, members, regions=""):
             items.append(
                 f'<li><a href="/person/{quote(slug)}/">{esc(m["name"])}{badge}</a></li>'
             )
-        more = f'<p class="pty-more">외 {len(mem) - len(shown)}명</p>' if len(mem) > len(shown) else ""
+        more = (f'그 밖의 {len(mem) - len(shown)}명은 <a href="/search.html?q={quote(name)}">검색</a>에서 찾을 수 있습니다.'
+                if len(mem) > len(shown) else
+                f'다른 후보는 <a href="/search.html?q={quote(name)}">검색</a>에서 찾을 수 있습니다.')
         members_html = (f'<section class="pty-sec"><h2>소속 인물 <span class="pty-cnt">{len(mem)}</span></h2>'
-                        f'<ul class="pty-members">{"".join(items)}</ul>{more}</section>')
+                        f'<ul class="pty-members">{"".join(items)}</ul>'
+                        f'<p class="pty-more">국회의원을 지낸 사람만 싣습니다. {more}</p></section>')
 
     desc = (f'{name}' + (f'({abbr})' if abbr else '')
-            + f' 선거 기록 — {life_span}. 역대 대선·총선·지선 득표와 소속 인물. '
+            + f' 선거 기록({life_span}). 대선·총선·지방선거마다 얻은 표와 소속 국회의원을 볼 수 있습니다. '
             + pnote)
     return PAGE.format(
         nav=render_nav(menu_for_path("party/x/index.html")),

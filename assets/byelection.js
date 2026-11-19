@@ -261,7 +261,8 @@ function renderCards() {
     const turnout = electors ? (voted / electors * 100) : 0;
     const c1 = partyColor(r1.party);
     const t1 = (typeof partyTextColor === 'function') ? partyTextColor(r1.party) : c1;
-    const hit = top && top.party === r1.party ? '여론조사 적중 ✓' : (top ? '여론조사 빗나감 ✗' : '');
+    // 정당끼리 비교한다 — 조사 1위 후보와 당선인이 같은 당인지.
+    const hit = top && top.party === r1.party ? '조사 1위 정당이 당선' : (top ? '조사 1위 정당이 낙선' : '');
     html += `<div class="boe-result">
       <div class="boe-result-hdr">
         <span class="boe-result-tag">실제 결과</span>

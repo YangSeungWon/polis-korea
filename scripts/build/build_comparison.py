@@ -71,13 +71,17 @@ OUTCOME_INDEP = "independent_to_independent"
 # 같은 당이 이름을 바꾼 것인데, 문자열로 비교하면 '16곳 전부 정당 교체'가 된다 —
 # 실제로 6회 지선 광역단체장이 그렇게 찍히고 있었다. 명백한 오독을 만드는 종류다.
 #
-# registry의 relation='rename' 간선만 따라간다. 합당(merge)·분당(split)은 다른 당이
-# 되는 사건이라 이어 붙이지 않는다 — 그건 정말로 정치적 변화다.
+# registry의 relation='rename' 간선은 늘 따라간다. 합당(merge)은 **같은 계열끼리의
+# 합당일 때만** 잇는다 — 민주당→새정치민주연합(2014)은 지역에서 보면 같은 당이 이어진
+# 것인데, 끊으면 6회 지선 광역 '정당이 바뀐 곳 11'처럼 교체가 부풀었다. 계열이 다른
+# 합당(3당 합당의 통일민주당→민주자유당, 통합민주당(1995)→한나라당)은 정말로 다른
+# 당이 되는 사건이라 잇지 않는다. 분당(split)은 잇지 않는다.
 RENAME_REL = {"rename"}
+MERGE_REL = {"merge"}
 
 
 def rename_groups() -> dict:
-    """정당명 → 개명 사슬의 대표 이름. 개명으로만 이어진 것끼리 한 덩어리."""
+    """정당명 → 개명·같은 계열 합당 사슬의 대표 이름. 이어진 것끼리 한 덩어리."""
     try:
         reg = json.loads((ROOT / "data/parties/registry.json").read_text(encoding="utf-8"))["parties"]
     except Exception:
@@ -98,21 +102,47 @@ def rename_groups() -> dict:
 
     for name, info in reg.items():
         find(name)
-        if info.get("relation") in RENAME_REL:
-            for pr in info.get("predecessors") or []:
-                if pr in reg:
-                    union(pr, name)
+        rel = info.get("relation")
+        for pr in info.get("predecessors") or []:
+            if pr not in reg:
+                continue
+            same_stream = bool(info.get("stream")) and reg[pr].get("stream") == info.get("stream")
+            if rel in RENAME_REL or (rel in MERGE_REL and same_stream):
+                union(pr, name)
     return {n: find(n) for n in parent}
 
 
 _RENAME = None
 
 
-def same_party(a: str, b: str) -> bool:
+def _election_date(eid: str) -> str:
+    try:
+        return json.loads((ROOT / f"data/elections/{eid}.json").read_text(encoding="utf-8")).get("date") or ""
+    except Exception:                                                # noqa: BLE001
+        return ""
+
+
+def _canon(name: str, date: str) -> str:
+    """원자료 정당명 → registry 노드. 2010년 '민주당'은 registry에 '통합민주당'(2008~2011)
+    으로 있다 — 이름 그대로 찾으면 사슬에 없어서 늘 '교체'가 된다."""
+    if not name or not date:
+        return name
+    try:
+        sys.path.insert(0, str(ROOT / "scripts" / "build"))
+        from party_canon import disambiguate_party
+        return disambiguate_party(name, date)
+    except Exception:                                                # noqa: BLE001
+        return name
+
+
+def same_party(a: str, b: str, da: str = "", db: str = "") -> bool:
     """개명 사슬까지 감안한 동일성. 무소속은 정당이 아니므로 여기서 다루지 않는다."""
     global _RENAME
     if not a or not b:
         return False      # 정당명이 없으면 '같다'고 말할 근거가 없다
+    if a == b:
+        return True
+    a, b = _canon(a, da), _canon(b, db)
     if a == b:
         return True
     if _RENAME is None:
@@ -230,6 +260,45 @@ def turnout(races):
     return round(vo / el * 100, 1)
 
 
+def lineage_delta(prev: list, prev_date: str, cur: list, cur_date: str) -> dict:
+    """정당 사슬별 자리 증감. 이름은 지금 회차의 이름(없으면 이전 이름)을 쓴다.
+    무소속은 사슬이 아니라 이름 그대로 센다."""
+    global _RENAME
+    if _RENAME is None:
+        _RENAME = rename_groups()
+
+    def key(name, date):
+        if not name or name == "무소속":
+            return "무소속"
+        c = _canon(name, date)
+        return _RENAME.get(c, c)
+
+    # 이름은 지금 회차에서 가장 많이 쓴 이름, 없으면 이전 회차의 것 — 동률은 이름순.
+    # (집합 순서로 고르면 해시 시드마다 '민주당'과 '열린우리당'이 번갈아 나왔다.)
+    pc, cc = Counter(), Counter()
+    pn: dict = defaultdict(Counter)
+    cn: dict = defaultdict(Counter)
+    for n in prev:
+        k = key(n, prev_date)
+        pc[k] += 1
+        pn[k][n] += 1
+    for n in cur:
+        k = key(n, cur_date)
+        cc[k] += 1
+        cn[k][n] += 1
+
+    def pick(c: Counter) -> str:
+        return sorted(c.items(), key=lambda x: (-x[1], x[0]))[0][0]
+
+    label = {k: pick(cn[k]) if cn[k] else pick(pn[k]) for k in set(pc) | set(cc)}
+    out = {}
+    for k in set(pc) | set(cc):
+        d = cc[k] - pc[k]
+        if d:
+            out[label[k]] = d
+    return dict(sorted(out.items(), key=lambda x: (-abs(x[1]), x[0])))
+
+
 def delta_counter(prev: Counter, cur: Counter) -> dict:
     keys = set(prev) | set(cur)
     return {k: cur.get(k, 0) - prev.get(k, 0) for k in sorted(keys)
@@ -246,6 +315,7 @@ def build(cur_id: str, prev_id: str) -> dict:
         for src in mm.get("merge_from") or []:
             merged_into[canon_sido(src)] = mm.get("canonical")
 
+    prev_date, cur_date = _election_date(prev_id), _election_date(cur_id)
     offices = {}
     for tc, (scope, label) in SINGLE_WINNER.items():
         key_field = "sido" if scope == "sido" else "sigungu"
@@ -263,7 +333,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             mt = "renamed" if (scope == "sido" and p.get("raw_sido") != c.get("raw_sido")) else "exact"
             if p["party"] == "무소속" and c["party"] == "무소속":
                 outcome = OUTCOME_INDEP          # 같은 정당이 아니라 정당이 없는 것
-            elif same_party(p["party"], c["party"]):
+            elif same_party(p["party"], c["party"], prev_date, cur_date):
                 outcome = "party_hold"   # 개명 포함 — 이름이 바뀐 것과 당이 바뀐 것은 다르다
             else:
                 outcome = "party_flip"
@@ -290,16 +360,16 @@ def build(cur_id: str, prev_id: str) -> dict:
             if side == "previous" and k[0] in merged_into:
                 return "merged", "merged_into", f"{merged_into[k[0]]}로 통합"
             if side == "current" and k[0] in set(merged_into.values()):
-                return "merged", "merged_into", "통합으로 새로 생긴 단위"
+                return "merged", "merged_into", "통합으로 새로 생긴 곳"
             if k[1] in other_names:
-                return "transferred", "sido_transferred", "상위 시도가 바뀌어 직접 대조하지 않음"
+                return "transferred", "sido_transferred", "속한 시·도가 바뀌어 비교하지 않았습니다"
             reorg = gone_by_sido.get(k[0], 0) and born_by_sido.get(k[0], 0)
             if reorg:
                 return ("boundary_changed", "boundary_reorganized",
-                        "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편")
+                        "행정구역 개편으로 사라지거나 새로 생겼습니다")
             if side == "previous":
-                return "abolished", "abolished_unit", "이번 회차에 대응 단위가 없다"
-            return "new", "new_unit", "지난 회차에 대응 단위가 없다"
+                return "abolished", "abolished_unit", "이번 선거에는 같은 곳이 없습니다"
+            return "new", "new_unit", "지난 선거에는 같은 곳이 없습니다"
 
         for side, only in (("previous", set(pm) - both), ("current", set(cm) - both)):
             for k in sorted(only):
@@ -332,6 +402,11 @@ def build(cur_id: str, prev_id: str) -> dict:
             # 표심으로 뒤집힌 몫은 직접 비교 가능한 단위만 따로 낸다.
             "delta_compared_only": delta_counter(
                 Counter(pm[k]["party"] for k in both), Counter(cm[k]["party"] for k in both)),
+            # 같은 당(개명·같은 계열 합당)끼리 묶은 증감 — 이름별 증감은
+            # '새누리당 +8 · 민주당 -7'처럼 같은 당의 이름 바뀜을 득실로 보이게 한다.
+            "delta_by_lineage": lineage_delta(
+                [pm[k]["party"] for k in sorted(both)], prev_date,
+                [cm[k]["party"] for k in sorted(both)], cur_date),
             "units": units, "not_compared": not_compared,
         }
 
@@ -342,7 +417,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             continue
         councils[tc] = {"label": label, "previous": dict(p.most_common()),
                         "current": dict(c.most_common()), "delta": delta_counter(p, c),
-                        "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."}
+                        "note": "선거구 획정이 달라 합계만 비교했습니다."}
 
     # 전국 득표율 변화 — 대선에서 가장 먼저 읽히는 값. nation scope가 있을 때만.
     def nation_share(races):
@@ -359,7 +434,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             "previous": np_, "current": nc_,
             "delta": {k: round(nc_.get(k, 0) - np_.get(k, 0), 2) for k in keys
                       if abs(nc_.get(k, 0) - np_.get(k, 0)) >= 0.05},
-            "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다.",
+            "note": "후보가 달라도 같은 정당이면 이어서 비교했습니다.",
         }
 
     tp, tc_ = turnout(prev_races), turnout(cur_races)
@@ -386,13 +461,42 @@ def build(cur_id: str, prev_id: str) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--current", required=True)
-    ap.add_argument("--previous", required=True)
+    ap.add_argument("--current")
+    ap.add_argument("--previous")
+    ap.add_argument("--all", action="store_true",
+                    help="이미 있는 조합(data/comparisons/*__*.json)을 전부 다시 만든다")
     args = ap.parse_args()
-    data = build(args.current, args.previous)
+    if args.all:
+        # 입력(registry·결과)이 바뀌어도 아무도 다시 안 돌려 비교가 낡았다 — 6회 지선
+        # 비교는 결과 파일이 '민주당'으로 바뀐 뒤에도 '통합민주당'을 들고 있었다.
+        for fp in sorted(OUT_DIR.glob("*__*.json")):
+            cur, prev = fp.stem.split("__")
+            write(cur, prev, quiet=True)
+        return
+    if not (args.current and args.previous):
+        ap.error("--current·--previous 또는 --all")
+    write(args.current, args.previous)
+
+
+def write(cur: str, prev: str, quiet: bool = False):
+    data = build(cur, prev)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    fp = OUT_DIR / f"{args.current}__{args.previous}.json"
+    fp = OUT_DIR / f"{cur}__{prev}.json"
+    # 내용이 같으면 generated_at을 바꾸지 않는다 — 다시 돌릴 때마다 시각만 바뀌면
+    # 생성물 정합 검사(regen_check)가 매번 diff를 본다.
+    if fp.exists():
+        try:
+            old = json.loads(fp.read_text(encoding="utf-8"))
+            ga = (old.get("_meta") or {}).get("generated_at")
+            if ga and isinstance(data.get("_meta"), dict):
+                cand = dict(data, _meta=dict(data["_meta"], generated_at=ga))
+                if cand == old:
+                    data = cand
+        except Exception:                                            # noqa: BLE001
+            pass
     fp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if quiet:
+        return
     print(f"→ {fp.relative_to(ROOT)}", file=sys.stderr)
     t = data["turnout"]
     fmt = lambda v: f"{v}%" if v is not None else "자료 없음"

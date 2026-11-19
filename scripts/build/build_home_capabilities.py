@@ -3,10 +3,8 @@
 홈이 선거 결과 중심이라 여론·인물·정당·공약·근현대사가 nav에만 있었다. 스크롤을 내리면
 사이트가 무엇을 줄 수 있는지 순서대로 드러나게 한다.
 
-각 패널은 '무엇을 할 수 있는지' 한 줄 + **실제 수치**를 함께 낸다. 수치를 손으로 적으면
-데이터가 늘 때마다 어긋나므로(오늘 nav에서 겪은 그대로) 데이터에서 세어 넣는다.
-과장하지 않는다 — 여론조사는 파일 합계(10,939)가 아니라 NESDC 등록번호 기준 고유 건수를
-쓴다. 같은 조사가 직위·지표별로 여러 행으로 갈리기 때문이다.
+각 행은 '그 화면에서 무엇을 알 수 있는지' 한 문장이다. 행마다 붙이던 개수는 뺐다
+(build() 참고). counts()는 진단 출력과 범위 수(공약 선거 수)에만 쓴다.
 
 사용: python3 scripts/build/build_home_capabilities.py
 """
@@ -145,33 +143,26 @@ def approval_spark() -> str:
             f'</svg>')
 
 
-def row(href: str, title: str, sub: str, figure: str, viz: str = "") -> str:
-    """능력 한 줄. 카드 대신 색인 행 — 수치가 한 열로 정렬돼 커버리지가 표처럼 읽힌다."""
+def row(href: str, title: str, sub: str, viz: str = "") -> str:
+    """능력 한 줄 — 이름과, 그 화면에서 독자가 얻는 것 한 문장."""
     return (f'      <a class="cap-row" href="{href}">\n'
             f'        <span class="cap-name">{title}</span>\n'
             f'        <span class="cap-desc">{sub}</span>\n'
             f'        <span class="cap-viz-cell">{viz}</span>\n'
-            f'        <span class="cap-fig">{figure}</span>\n'
             f'      </a>\n')
-
-
-def approval_figure() -> str:
-    pts, who = approval_series()
-    if not pts:
-        return "5개 조사기관 통합"
-    return f"{who} 정부 {pts[-1][0] + 1}개월 · 5개 기관" if who else "5개 조사기관 통합"
 
 
 def build(c: dict) -> str:
     """능력 목록 — 여론 / 사람 / 맥락.
 
-    설명은 문장이 아니라 조각으로 쓴다 — 이 사이트의 다른 설명이 그렇다. '~해 본다' 같은 종결로 설명하면 그 줄만 말이 많아진다.
+    설명은 '이 화면에서 무엇을 알 수 있나'를 한 문장으로 쓴다. 명사를 가운뎃점으로
+    쌓으면("국정평가 · 정당지지 · 차기주자") 메뉴 이름을 되풀이할 뿐 무엇을 얻는지
+    말하지 않는다. 행마다 붙이던 개수(조사 N건, N명, 정당 N개)도 뺐다 — 크기 자랑일 뿐
+    고를 때 쓸모가 없다. 범위를 정하는 수(공약이 몇 개 선거 것인지)만 문장 안에 둔다.
 
-    카드 그리드가 아니라 색인 행이다. 홈 위쪽은 이미 대시보드 패널(진행 중인 선거)이라,
-    아래까지 같은 상자가 이어지면 스크롤이 평평해진다. 행으로 두면 수치가 오른쪽 한 열에
-    정렬돼 '무엇을 얼마나 담고 있나'가 표처럼 읽히고, 위쪽 패널과 리듬이 갈린다.
+    카드 그리드가 아니라 색인 행이다. 홈 위쪽은 이미 대시보드 패널이라, 아래까지 같은
+    상자가 이어지면 스크롤이 평평해진다.
     """
-    f = lambda n: f"{n:,}"
     spark = approval_spark()
     out = [START + " — scripts/build/build_home_capabilities.py 자동 갱신. 손수정 X. -->"]
     out.append('  <section class="dash-section cap-sec">')
@@ -180,47 +171,41 @@ def build(c: dict) -> str:
     groups = [
         ("여론", [
             ("/tracker.html", "지지율 추이",
-             "국정평가 · 정당지지 · 차기주자",
-             approval_figure(), spark),
+             "대통령 국정 평가와 정당 지지도가 그동안 어떻게 움직였는지", spark),
             ("/polls.html", "여론조사",
-             "회차별 조사와 실제 결과 대조",
-             f"NESDC 등록 {f(c['poll'])}건", ""),
+             "선거 전 여론조사가 실제 결과와 얼마나 맞았는지", ""),
         ]),
         ("사람", [
             ("/search.html", "출마 이력",
-             "당선·낙선 전적 · 정당 변천",
-             f"{f(c['person'])}명", ""),
+             "한 사람이 언제 어느 당으로 나와 이기고 졌는지", ""),
         ]),
         ("맥락", [
             ("/parties.html", "정당사",
-             "창당 · 합당 · 해산 계보",
-             f"정당 {f(c['party'])}개", ""),
+             "정당이 어디서 갈라지고 합쳐졌는지", ""),
             ("/chronology.html", "근현대사 연표",
-             "공화국 · 개헌 · 항쟁 · 선거",
-             f"{c['republic']}개 공화국 · 주요 사건 {c['event']}건", ""),
+             "개헌·정변·항쟁과 선거를 시간순으로 한 줄에", ""),
         ]),
     ]
     if c["pledge"]:
-        # 공약은 인물 페이지에 있다. 9회 지선 아카이브로 보내면 13개 선거의 공약 수를
-        # 한 선거의 것처럼 읽게 된다.
+        # 공약은 인물 페이지에 있다. 9회 지선 아카이브로 보내면 13개 선거의 공약을
+        # 한 선거의 것처럼 읽게 된다. 선거 수는 범위라 남긴다.
         groups[1][1].append(
             ("/person/", "선거공약",
-             f"선거 {c['pledge_rounds']}개 · 인물별 공약서 원문",
-             f"{f(c['pledge'])}건 · {f(c['pledge_people'])}명", ""))
+             f"선거 {c['pledge_rounds']}개에서 후보들이 낸 공약서 원문(낙선자 포함)", ""))
 
     for label, rows in groups:
         out.append(f'    <div class="cap-group">')
         out.append(f'      <h3 class="cap-eyebrow">{label}</h3>')
-        for href, title, sub, fig, viz in rows:
-            out.append(row(href, title, sub, fig, viz).rstrip("\n"))
+        for href, title, sub, viz in rows:
+            out.append(row(href, title, sub, viz).rstrip("\n"))
         out.append('    </div>')
     out.append('  </section>')
     # 데이터 제품에서 freshness는 장식이 아니다 — '지난 선거를 진행이라 하네'를 한 번
     # 겪으면 나머지 숫자도 의심받는다. 무엇이 언제 갱신됐는지 화면에 남긴다.
     fresh = data_freshness()
     if fresh:
-        out.append(f'  <p class="cap-fresh">데이터 갱신 <time datetime="{fresh}">'
-                   f'{fresh}</time> · 출처는 각 화면에 표기</p>')
+        out.append(f'  <p class="cap-fresh">자료 갱신 <time datetime="{fresh}">'
+                   f'{fresh}</time>. 출처는 각 화면에 적었습니다.</p>')
     out.append("  " + END)
     return "\n".join(out)
 

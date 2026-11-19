@@ -806,7 +806,7 @@ def states_for(geo: Geo, spec: dict, fam: set, sid: str, snaps: list,
         ("election", e0["date"], "선거 시점", None),
         ("before_geo_event", _shift(ed, -1), "경계 사건 직전", None),
         ("after_geo_event", ed, "경계 사건 직후", None),
-        ("previous_on_new_boundary", ed, "새 경계 · 이전 선거 결과", e0),
+        ("previous_on_new_boundary", ed, "새 경계에 옮긴 이전 결과", e0),
         ("next_election", e1["date"], "다음 선거", None),
     ]
     out = []
@@ -857,28 +857,28 @@ def claim(snap: dict | None, g: dict, proj: dict) -> str:
     if g["boundary_resolution"] == "unavailable":
         # 막힌 이유를 **가장 앞의 것**으로 말한다. 경계 그림이 없으면 선거 기록 얘기를
         # 꺼낼 차례가 아니다.
-        return ("이 시점 경계 그림이 없습니다 — "
-                + " · ".join(g["boundary_missing_units"]))
+        return ("이 시점 경계 자료가 없습니다: "
+                + ", ".join(g["boundary_missing_units"]))
     if not snap:
-        return "이 시점 이전에 이 series의 선거 기록이 없습니다"
+        return "이 시점 전에는 이 선거 종류의 기록이 없습니다"
     ms = set(proj["summary"])
     when = snap["label"]
     if ms == {"direct"}:
-        return f"{when} 결과 · 당시 경계"
+        return f"{when} 결과, 당시 경계 그대로"
     if ms <= {"direct", "aggregated"}:
-        return f"{when} 결과 · {boundary_label(g)}에 합산"
+        return f"{when} 결과를 {boundary_label(g)}에 맞춰 합산"
     if ms <= {"direct", "reaggregated"}:
-        return f"{when} 결과 · 읍면동 실측으로 이 경계에 재집계"
+        return f"{when} 결과를 읍면동 득표로 이 경계에 맞춰 재집계"
     if ms == {"unavailable"}:
         rs = {p.get("reason") for p in proj["per_unit"].values()}
         if rs == {"level_inference_not_allowed"}:
             # 막힌 것만 말하고 끝내지 않는다. 무엇이 가능한지는 모델이 이미 알고 있다.
             dl = any((p.get("reaggregation") or {}).get("delta_allowed")
                      for p in proj["per_unit"].values())
-            return (f"{when} 결과 · 이 경계 기준 수준값은 낼 수 없습니다"
-                    + (" (정당별 변화량은 별도 비교에서 가능)" if dl else ""))
+            return (f"{when} 결과로는 이 경계의 득표 수준값을 낼 수 없습니다"
+                    + (" (정당별 변화량은 따로 비교할 수 있습니다)" if dl else ""))
         return f"{when} 결과는 이 경계로 표시할 수 없습니다"
-    return f"{when} 결과 · 일부 경계만 표시 가능"
+    return f"{when} 결과, 일부 경계만 표시할 수 있습니다"
 
 
 def main(regions: list[str]) -> int:

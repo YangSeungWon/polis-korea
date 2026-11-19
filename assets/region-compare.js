@@ -60,18 +60,20 @@
     let sq = 0;
     for (const e of common) sq += (A.pres[e][0] - B.pres[e][0]) ** 2 + (A.pres[e][1] - B.pres[e][1]) ** 2;
     const d = Math.sqrt(sq / (2 * common.length)).toFixed(1);
-    return `<p class="rg-swing">두 지역 모두 결과가 있는 대선 ${common.length}회에서, 전국 1·2위 후보 득표율이 `
-      + `<b>${d}%p</b>쯤 차이 났습니다 <span class="cmp-how">(회차·후보별 차이의 제곱평균제곱근)</span>.</p>`;
+    // 산술평균이 아니라 제곱평균제곱근이다 — '평균 n%p'라고 쓰지 않고 계산법을 밝힌다
+    // (tests/ui/test_relate.mjs). '1·2위 득표율 차이'로 읽히지 않게 '두 지역 사이'를 적는다.
+    return `<p class="rg-swing">두 지역 모두 결과가 있는 대선 ${common.length}번에서, 전국 1·2위 후보의 득표율이 `
+      + `두 지역 사이에 <b>${d}%p</b>쯤 달랐습니다 <span class="cmp-how">(회차·후보별 차이의 제곱평균제곱근)</span>.</p>`;
   }
 
   function render(A, B) {
     const label = (x) => `<a href="/region/${encodeURIComponent(x.slug)}/">${esc(bySlug.get(x.slug)?.short || x.name)}</a>`;
-    let html = `<h2 class="cmp-title">${label(A)} <span class="cmp-vs">와</span> ${label(B)}</h2>` + summary(A, B);
+    let html = `<h2 class="cmp-title">${label(A)} <span class="cmp-vs">·</span> ${label(B)}</h2>` + summary(A, B);
 
     const pe = Object.keys(index.pres || {}).filter((e) => (A.pres && A.pres[e]) || (B.pres && B.pres[e]))
       .sort((x, y) => (index.pres[y].date || '').localeCompare(index.pres[x].date || ''));
     if (pe.length) {
-      html += '<section class="rg-sec"><h2>대선 — 전국 1·2위 후보의 득표율</h2><div class="cmp-wrap"><table class="pp-static cmp-pres"><thead><tr>'
+      html += '<section class="rg-sec"><h2>대선 전국 1·2위 후보의 지역 득표율</h2><div class="cmp-wrap"><table class="pp-static cmp-pres"><thead><tr>'
         + `<th>대선</th><th>${esc(bySlug.get(A.slug)?.short || A.name)}</th><th>${esc(bySlug.get(B.slug)?.short || B.name)}</th></tr></thead><tbody>`;
       for (const e of pe) {
         const p = index.pres[e];
@@ -91,7 +93,7 @@
       else keys.set(k, { a: null, b: r, date: r.date, election: r.election, eid: r.eid, office: r.office });
     }
     const rows = [...keys.values()].sort((x, y) => (y.date || '').localeCompare(x.date || '') || x.office.localeCompare(y.office));
-    html += '<section class="rg-sec"><h2>역대 선거 — 각 지역 1위</h2><div class="cmp-wrap"><table class="pp-static cmp-table"><thead><tr>'
+    html += '<section class="rg-sec"><h2>선거별 지역 1위</h2><div class="cmp-wrap"><table class="pp-static cmp-table"><thead><tr>'
       + `<th>선거</th><th>${esc(bySlug.get(A.slug)?.short || A.name)}</th><th>${esc(bySlug.get(B.slug)?.short || B.name)}</th></tr></thead><tbody>`
       + rows.map((x) => {
         return `<tr><td><span class="cmp-year">${esc((x.date || '').slice(0, 4))}</span> `
@@ -110,7 +112,7 @@
     if (!a || !b) {
       const bad = [['A', $('#cmp-a').value, a], ['B', $('#cmp-b').value, b]].filter(([, t, s]) => t.trim() && !s);
       out.innerHTML = `<p class="rg-sim-none">${bad.length
-        ? bad.map(([k, t]) => `지역 ${k} “${esc(t)}”을(를) 하나로 정하지 못했습니다 — 목록에서 고르세요.`).join(' ')
+        ? bad.map(([k, t]) => `지역 ${k}의 “${esc(t)}”에 맞는 곳을 하나로 정하지 못했습니다. 목록에서 골라 주세요.`).join(' ')
         : '두 지역을 고르면 여기에 나란히 나옵니다.'}</p>`;
       return;
     }

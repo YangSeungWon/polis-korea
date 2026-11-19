@@ -34,6 +34,9 @@ GENERATORS=(
   sync_nav_html          # nav 정본 → 모든 HTML
   sync_archive_html      # archive 목록·그룹 구조
   build_poll_accuracy    # data/polls/accuracy.json (여론조사 1위 vs 실제 — 계산 정본)
+  # history.html의 진입점 블록을 build_static이 회차 페이지 62쪽에 복사한다 — 블록을
+  # 먼저 갱신하지 않으면 바뀐 블록이 다음 실행에야 들어간다(두 번 돌려야 수렴).
+  build_history_static
   build_static           # history/·polls/ 프리렌더 (accuracy 뒤 — 표를 읽는다)
   build_person_pages     # /person/{slug}/
   build_party_pages
@@ -55,6 +58,7 @@ GENERATORS=(
 # validation_21__20도 그랬다(한나라당 오귀속을 품은 채 낡아 있었다).
 # 외부에서 받아오는 fetch 스크립트는 대상이 아니다 — 네트워크가 답을 바꾼다.
 DERIVED=(
+  "scripts/build/build_comparison.py --all"           # data/comparisons/*__*.json ← results·registry
   "scripts/normalize/party_lifecycle.py --write"      # lifecycle.json ← registry
   "scripts/build/political_axes.py --write"           # political_axes.json ← registry·lifecycle
   "scripts/build/family_vote_share.py"                # family_vote_share.json ← political_axes·results

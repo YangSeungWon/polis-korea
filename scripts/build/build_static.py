@@ -120,6 +120,12 @@ def write_page(path: Path, html: str):
 
 
 
+def _ko_date(d: str) -> str:
+    """'2025-01-18' → '2025년 1월 18일'. 모양이 다르면 그대로 둔다."""
+    m = re.fullmatch(r'(\d{4})-(\d{2})-(\d{2})', str(d or ''))
+    return f'{m[1]}년 {int(m[2])}월 {int(m[3])}일' if m else str(d or '')
+
+
 def _eul(word: str) -> str:
     """받침 유무로 을/를. '광역단체장을(를)'처럼 두 개를 다 적으면 기계가 쓴 티가 난다."""
     if not word:
@@ -165,7 +171,7 @@ def office_siblings(office_ko: str) -> str:
     if not others:
         return ''
     li = ' · '.join(f'<a href="/{slug}/">{_esc(ko)}</a>' for ko, slug in others)
-    return (f'<p class="pe-static-links">다른 직위 — {li}</p>')
+    return (f'<p class="pe-static-links">다른 조사: {li}</p>')
 
 
 def office_figures(office_ko: str) -> str:
@@ -220,7 +226,8 @@ def office_static_block(office_ko: str) -> str:
         return ''
     ends = sorted(p['period_end'] for p in sel if p.get('period_end'))
     agencies = sorted({p.get('agency', '') for p in sel if p.get('agency')})
-    span = (f'조사 기간 {_esc(ends[0])} ~ {_esc(ends[-1])} · ' if ends else '')
+    span = (f'{_esc(_ko_date(ends[0]))}부터 {_esc(_ko_date(ends[-1]))}까지 '
+            if ends else '')
 
     # 지역 분포 — 조사가 많이 몰린 곳부터. 지역 페이지로 나가는 길이기도 하다.
     counts: dict = {}
@@ -246,29 +253,29 @@ def office_static_block(office_ko: str) -> str:
         inner = (f'<a href="/region/{quote(slug)}/">{_esc(label)}</a>'
                  if slug else _esc(label))
         items.append(f'<li>{inner} <span class="pe-n">{c}건</span></li>')
-    region_html = (f'<details class="pe-static-more"><summary>조사가 많은 지역 '
-                   f'{len(counts)}곳 중 {len(top)}곳</summary>'
+    region_html = (f'<details class="pe-static-more"><summary>조사가 많은 지역'
+                   f'</summary>'
                    f'<ul class="pe-agency-list">{"".join(items)}</ul></details>'
                    ) if items else ''
 
     li = ''.join(f'<li>{_esc(a)}</li>' for a in agencies[:8])
     more = f'<li>외 {len(agencies) - 8}곳</li>' if len(agencies) > 8 else ''
     return (
-        f'<section class="pe-static"><h2 class="pe-static-title">'
-        f'2026 지방선거 {_esc(office_ko)} 여론조사</h2>'
+        f'<section class="pe-static"><h1 class="pe-static-title">'
+        f'2026 지방선거 {_esc(office_ko)} 여론조사</h1>'
         f'<p class="pe-static-lede">2026년 6월 3일 제9회 전국동시지방선거 '
-        f'{_esc(office_ko)}{_eul(office_ko)} 대상으로 중앙선거여론조사심의위원회(NESDC)에 '
-        f'등록·공표된 조사 <b>{len(sel):,}건</b>입니다. {span}'
-        f'조사기관 {len(agencies)}곳.</p>'
-        f'<p class="pe-static-lede">기관마다 표본·방법이 달라 같은 지역에서도 값이 '
-        f'갈립니다. 아래에서 조사별 표본수·응답률·표본오차를 함께 봅니다.</p>'
+        f'{_esc(office_ko)}{_eul(office_ko)} 두고 {span}'
+        f'{len(agencies)}개 기관이 중앙선거여론조사심의위원회에 등록·공표한 조사 '
+        f'<b>{len(sel):,}건</b>입니다.</p>'
+        f'<p class="pe-static-lede">기관마다 표본과 방법이 달라 같은 지역에서도 '
+        f'숫자가 갈립니다.</p>'
         f'{region_html}'
-        f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
+        f'<details class="pe-static-more"><summary>조사기관 목록</summary>'
         f'<ul class="pe-agency-list">{li}{more}</ul></details>'
         + office_figures(office_ko)
         + office_siblings(office_ko)
         + f'<p class="pe-static-links"><a href="/archive/9th-local-2026/">'
-        f'제9회 지방선거 아카이브 — 결과·여론조사·출구조사</a></p></section>'
+        f'제9회 지방선거 결과 보기</a></p></section>'
     )
 
 
@@ -281,8 +288,8 @@ def build_polls(urls: list):
         # 정당지지는 후보를 묻는 조사가 아니다 — 꼬리말을 직위에 맞춘다.
         tail = '정당 지지율' if office_ko == '정당지지' else '후보 지지율'
         title = f'2026 지방선거 {office_ko} 여론조사 — 제9회 지선 {tail} | polis'
-        desc = (f'2026 제9회 전국동시지방선거 {office_ko} 여론조사를 시도·시군구 단위로. '
-                f'후보별 지지율과 판세를 NESDC 등록 조사만 인용해.')
+        desc = (f'2026 제9회 전국동시지방선거 {office_ko} 여론조사를 시도·시군구별로 봅니다. '
+                f'중앙선거여론조사심의위원회에 등록된 조사만 인용합니다.')
         canon = f'/{slug}/'
         html = replace_meta(template, title, desc, canon, {'office': office_ko})
         blk = office_static_block(office_ko)
@@ -507,9 +514,7 @@ def poll_accuracy_block(slug: str) -> str:
         s = (f'<b>{_esc(off)}</b>은 조사가 있던 {o["unit"]} {o["total"]}곳 중 '
              f'<b>{o["match"]}곳</b>({pct}%)에서 여론조사 1위가 실제 1위와 같았습니다')
         if 0 < len(miss) <= 4:
-            s += f' — 빗나간 곳은 {", ".join(_region_label(m) for m in miss)}'
-        elif miss:
-            s += f' — 빗나간 곳 {len(miss)}곳'
+            s += f'. 빗나간 곳은 {", ".join(_region_label(m) for m in miss)}입니다'
         lede.append(s + '.')
     if not lede:
         return ''
@@ -526,8 +531,8 @@ def poll_accuracy_block(slug: str) -> str:
         parts.append(
             f'<p class="pe-static-lede">대선 조사는 대부분 전국 단위입니다. '
             f'선거일 이전 <b>{nat["window_days"]}일</b> 안의 전국 조사 '
-            f'<b>{nat["n_polls"]}건</b>을 후보별로 단순평균해 실제 득표와 견줍니다'
-            f'(가중치 없음 — 글이 계산을 설명해야 하므로). 선거일 뒤에 끝난 조사는 '
+            f'<b>{nat["n_polls"]}건</b>을 후보별로 가중치 없이 평균해 실제 득표와 견줍니다. '
+            f'선거일 뒤에 끝난 조사는 '
             f'뺐습니다.</p>'
             + _rt.table_html('pe-acc-national', '전국 — 막판 조사 평균 vs 실제 득표',
                              ['후보', '정당', '막판 조사', '실제 득표', '차이'], rows, unit='명'))
@@ -583,7 +588,7 @@ def poll_accuracy_block(slug: str) -> str:
                 for r in ag_rows]
         oth = ag.get('other') or {}
         parts.append(
-            f'<p class="pe-static-lede">조사기관별로 봅니다. 선거일 기준 '
+            f'<p class="pe-static-lede">선거일 기준 '
             f'<b>{ag.get("window_days", 30)}일 안</b>의 조사만, {ag.get("min_polls", 3)}건 '
             f'이상인 기관만 싣습니다'
             + (f'(그 외 {oth.get("agencies", 0)}곳 {oth.get("polls", 0)}건은 뺐습니다)'
@@ -625,20 +630,17 @@ def poll_election_block(meta: dict, el: dict) -> str:
         return ''
     ends = sorted(p['period_end'] for p in sel)
     agencies = sorted({p.get('agency', '') for p in sel if p.get('agency')})
-    offices = sorted({p.get('office_level', '') for p in sel if p.get('office_level')})
-    name, date_s = _esc(meta['name']), _esc(meta['date'])
+    name = _esc(meta['name'])
     li = ''.join(f'<li>{_esc(a)}</li>' for a in agencies[:8])
     more = f'<li>외 {len(agencies) - 8}곳</li>' if len(agencies) > 8 else ''
-    off = ' · '.join(_esc(o) for o in offices[:5])
     return (
-        f'<section class="pe-static"><h2 class="pe-static-title">{name} 여론조사</h2>'
-        f'<p class="pe-static-lede">{date_s} 선거를 앞두고 중앙선거여론조사심의위원회'
-        f'(NESDC)에 등록·공표된 조사 <b>{len(sel):,}건</b>을 실제 결과와 대조합니다. '
-        f'조사 기간 {_esc(ends[0])} ~ {_esc(ends[-1])} · 조사기관 {len(agencies)}곳'
-        + (f' · 직위 {off}' if off else '') + '.</p>'
-        f'<p class="pe-static-lede">기관마다 방법·표본이 달라 값이 갈립니다(house '
-        f'effect). 아래에서 조사별 표본수·응답률·표본오차를 실제 득표와 나란히 봅니다.</p>'
-        f'<details class="pe-static-more"><summary>조사기관 {len(agencies)}곳</summary>'
+        f'<section class="pe-static"><h1 class="pe-static-title">{name} 여론조사</h1>'
+        f'<p class="pe-static-lede">{_esc(_ko_date(ends[0]))}부터 '
+        f'{_esc(_ko_date(ends[-1]))}까지 {len(agencies)}개 기관이 중앙선거여론조사심의위원회에 '
+        f'등록·공표한 조사 <b>{len(sel):,}건</b>을 실제 결과와 맞춰 봤습니다.</p>'
+        f'<p class="pe-static-lede">같은 지역이라도 기관마다 방법과 표본이 달라 '
+        f'숫자가 갈립니다.</p>'
+        f'<details class="pe-static-more"><summary>조사기관 목록</summary>'
         f'<ul class="pe-agency-list">{li}{more}</ul></details>'
         + poll_accuracy_block(meta['slug'])
         + f'<p class="pe-static-links"><a href="/archive/{_esc(meta["slug"])}/">'
@@ -666,8 +668,8 @@ def build_poll_elections(urls: list):
         query = {'presidential': '대통령선거', 'general_election': '총선'}.get(meta['kind'], '지방선거')
         title = (f'{date_s[:4]} {query} 여론조사 vs 실제 결과 — '
                  f'{n}{unit} {short} 조사 적중률 | polis')
-        desc = (f'{meta["name"]} 여론조사와 실제 개표 결과 비교. NESDC 등록 조사가 '
-                f'시도별로 얼마나 맞았는지 비례로.')
+        desc = (f'{meta["name"]} 여론조사와 실제 개표 결과를 비교합니다. 중앙선거여론조사'
+                f'심의위원회에 등록된 조사가 지역별로 얼마나 맞았는지 봅니다.')
         canon = f'/polls/{slug}/'
         # 공유 카드. **여론조사 페이지는 제 카드를 쓴다**(og/polls-{slug}.png,
         # build_og_maps --pages polls). 2026-08까지 결과 지도 카드를 빌려 써서,
@@ -702,6 +704,18 @@ def build_poll_elections(urls: list):
 HUB_RE = re.compile(r'<!-- POLL_ACC_HUB[\s\S]*?<!-- /POLL_ACC_HUB -->')
 
 
+INTRO_RE = re.compile(r'[ \t]*<section class="intro">[\s\S]*?</section>\n?')
+
+
+def _strip_intro(html: str) -> str:
+    """파생 페이지에서 허브 머리말(h1 '여론조사'와 허브 소개)을 걷는다.
+
+    직위·회차 페이지는 PE_STATIC의 h1이 제목이다. 허브 h1을 그대로 두면 제목 둘이
+    연달아 나온다('2026 지방선거 광역단체장 여론조사' 다음에 '여론조사').
+    """
+    return INTRO_RE.sub('', html, count=1)
+
+
 def _strip_hub(template: str) -> str:
     """파생 페이지에서 허브 전용 블록을 비운다.
 
@@ -709,7 +723,8 @@ def _strip_hub(template: str) -> str:
     4쪽과 회차 페이지 9쪽에 같은 표가 복사된다 — 중복 본문은 이 저장소가 2026-07에
     이미 크게 물린 사고다(history 프리렌더 66쪽이 서로 완전히 같아 대거 보류됐다).
     """
-    return HUB_RE.sub('<!-- POLL_ACC_HUB --><!-- /POLL_ACC_HUB -->', template, count=1)
+    return _strip_intro(
+        HUB_RE.sub('<!-- POLL_ACC_HUB --><!-- /POLL_ACC_HUB -->', template, count=1))
 
 
 def _write_poll_acc_hub(made_sorted: list) -> None:
@@ -752,9 +767,9 @@ def _write_poll_acc_hub(made_sorted: list) -> None:
     if not body:
         return
     note = ('<p class="pe-static-lede">여론조사 1위와 실제 결과가 일치한 지역의 비율입니다. '
-            '2016년 이후 NESDC 등록 조사를 비교합니다. '
-            '대선은 시도별 1위, 총선은 지역구, 지선은 광역단체장 선거를 세므로 '
-            '서로 다른 종류의 선거를 같은 기준으로 비교할 수 없습니다.</p>')
+            '2016년 이후 중앙선거여론조사심의위원회에 등록된 조사를 비교합니다. '
+            '대선은 시도, 총선은 지역구, 지선은 광역단체장 선거 단위로 셉니다. '
+            '세는 단위가 달라 선거 종류끼리는 비율을 비교할 수 없습니다.</p>')
     block = ('<!-- POLL_ACC_HUB — build_static.py 자동 갱신. 손수정 X.\n'
              '         ⚠️ polls.html은 14쪽의 틀이기도 하다 — 파생 페이지는 _strip_hub가 비운다. -->\n'
              '    <section class="pe-static" id="poll-acc-hub">\n'
@@ -879,7 +894,7 @@ def local_office_nav(n: int, cur_slug: str) -> str:
               else f'<a href="/history/local/{n}/{slug}/">{_esc(ko)}</a>')
              for ko, slug in offs]
     return ('    <nav class="lede hx-office-nav" aria-label="같은 회차 다른 직위">'
-            f'직위 — {" · ".join(parts)}</nav>\n')
+            f'직위: {" · ".join(parts)}</nav>\n')
 
 
 def round_links(slug: str | None) -> str:
@@ -894,10 +909,10 @@ def round_links(slug: str | None) -> str:
     if not slug:
         return ''
     out = ('    <p class="lede hx-archive-link" id="hx-archive-link">'
-           f'<a href="/archive/{slug}/">이 회차 아카이브 — 한 화면 요약</a></p>\n')
+           f'<a href="/archive/{slug}/">이 선거 한 화면 요약</a></p>\n')
     if has_poll_page(slug):
         out += ('    <p class="lede hx-poll-link" id="hx-poll-link">'
-                f'<a href="/polls/{slug}/">이 회차 여론조사 vs 실제 — 조사가 얼마나 맞았나</a></p>\n')
+                f'<a href="/polls/{slug}/">이 선거 여론조사는 얼마나 맞았나</a></p>\n')
     return out
 
 
@@ -1089,7 +1104,7 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     title = (f'{el_date[:4]} 지방선거 {office_ko} 결과 지도 — '
                              f'제{n}회 시군구별 개표 | polis')
                     desc = (f'{el_date[:4]}년 제{n}회 전국동시지방선거 {office_ko} 결과. '
-                            f'시군구 hex 격자로 지역별 1위 정당과 득표율을 한눈에.')
+                            f'시군구별 1위 정당과 득표율을 지도로 봅니다.')
                     canon = f'/history/{type_slug}/{n}/{off_slug}/'
                     init_state = {'type': type_key, 'n': n, 'office': office_ko}
                     slug0 = slugs.get((type_key, n))
@@ -1101,14 +1116,12 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     if dup_of:
                         canon = dup_of
                     turnout = meta.get('turnout')
-                    bits = [f'{el_date} 실시']
-                    if turnout:
-                        bits.append(f'투표율 {turnout}%')
+                    lede = f'{_ko_date(el_date)} 실시' + (f', 투표율 {turnout}%.' if turnout else '.')
                     slug = slugs.get((type_key, n))
                     # 정적 링크를 남기되 id를 붙여, 사용자가 회차를 바꾸면 JS가 갱신한다.
                     extra = local_office_nav(n, off_slug) + round_links(slug)
                     intro = (intro_block(f'{n}회 {type_short} {office_ko}',
-                                         _esc(' · '.join(bits)) + ' — 시군구 hex 격자.', extra)
+                                         _esc(lede), extra)
                              + round_figures(slug, off_slug, f'{n}회 {type_short} {office_ko}')
                              + round_table(slug, type_key, off_slug))
                     ld = breadcrumb_ld([('역대 결과', '/history.html'),
@@ -1132,13 +1145,13 @@ def build_history(manifest: dict, elections: dict, urls: list):
                 type_query = TYPE_QUERY.get(type_key, type_short)
                 title = (f'{el_date[:4]} {type_query} 결과 지도 — '
                          f'제{n}{unit} 지역별 1위 정당{winner_str} | polis')
-                desc = (f'{el_date[:4]}년 제{n}{unit} {type_short} 결과. hex 격자로 '
-                        f'지역별 1위 정당과 득표 격차를 한눈에.')
+                desc = (f'{el_date[:4]}년 제{n}{unit} {type_short} 결과. '
+                        f'지역별 1위와 득표 격차를 지도로 봅니다.')
                 canon = f'/history/{type_slug}/{n}/'
                 ROUTES.setdefault(type_key, {}).setdefault(str(n), [])
                 init_state = {'type': type_key, 'n': n}
                 turnout = meta.get('turnout')
-                bits = [f'{el_date} 실시']
+                bits = []
                 if winner:
                     wp = meta.get('winner_party')
                     bits.append(f'{winner}({wp}) 당선' if wp else f'{winner} 당선')
@@ -1148,12 +1161,16 @@ def build_history(manifest: dict, elections: dict, urls: list):
                     bits.append(f'투표율 {turnout}%')
                 if meta.get('indirect'):
                     bits.append('간선')
+                lede = f'{_ko_date(el_date)} 실시.'
+                if bits:
+                    lede += ' ' + ', '.join(bits) + '.'
                 if meta.get('note'):
-                    bits.append(str(meta['note']))
+                    note = str(meta['note']).rstrip('.')
+                    lede += f' {note}.'
                 slug = slugs.get((type_key, n))
                 extra = round_links(slug)
                 intro = (intro_block(f'{n}{unit} {type_short}',
-                                     _esc(' · '.join(bits)), extra)
+                                     _esc(lede), extra)
                          + round_figures(slug, '', f'{n}{unit} {type_short}')
                          + round_table(slug, type_key))
                 ld = breadcrumb_ld([('역대 결과', '/history.html'),

@@ -26,7 +26,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from map_timelapse import _rings  # noqa: E402  (면적·좌표 해석을 한 곳에서)
+from map_timelapse import _rings, boundary_label  # noqa: E402  (면적·좌표 해석을 한 곳에서)
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "data/map_timelapse"
@@ -142,8 +142,8 @@ def frame(s: dict, pr, sid: str, visible: bool = False,
     if not proj["per_unit"]:
         # 빈 상자를 그냥 두지 않는다 — 비어 있는 것과 자료가 없는 것은 다르다
         rows.append('<tr class="mt-why"><td colspan="4">'
-                    + esc("이 시점의 경계 그림이 없어 폴리곤을 그리지 않습니다. "
-                          "없는 경계에 색을 만들지 않습니다.") + '</td></tr>')
+                    + esc("이 시점의 경계 자료가 없어 지도를 그리지 않습니다.")
+                    + '</td></tr>')
     for name, p in sorted(proj["per_unit"].items()):
         _, _, desc = fill_for(p)
         w = p.get("winner") or {}
@@ -167,9 +167,9 @@ def frame(s: dict, pr, sid: str, visible: bool = False,
         # 영역이 그대로인 사건(승격·편입)은 폴리곤이 안 바뀌는 게 맞다. 화면이 그걸
         # 말하지 않으면 "왜 아무것도 안 바뀌지?"가 된다.
         ev = ('<p class="mt-ev">' + esc(ev_info.get("label") or "행정구역 변화")
-              + (' — 경계는 사건일에 이산 전환하며, 없던 중간 경계를 만들지 않습니다.'
+              + ('. 경계는 바뀐 날 한 번에 바뀌고, 그 사이 경계를 지어내지 않습니다.'
                  if ev_info.get("expect_topology_change") else
-                 ' — 영역은 그대로이고 이름·소속만 바뀌었습니다. 폴리곤이 같은 것이 맞습니다.')
+                 '. 영역은 그대로이고 이름·소속만 바뀌었습니다. 그래서 지도 모양도 같습니다.')
               + '</p>')
     return f"""<section class="mt-frame" data-role="{esc(s['role'])}"
  data-series="{esc(sid)}" data-state="{esc(s['state_id'])}"{'' if visible else ' hidden'}>
@@ -184,16 +184,16 @@ def frame(s: dict, pr, sid: str, visible: bool = False,
 {ev}
 <dl class="mt-layers">
 <dt>경계</dt><dd class="mt-geo">{esc(' · '.join(g['units']))}
- <span class="mt-dim">({esc(g['boundary_source'])})</span></dd>
+ <span class="mt-dim">({esc(boundary_label(g))})</span></dd>
 <dt>선거</dt><dd class="mt-snap">{esc(snap['label'] if snap else '없음')}
  <span class="mt-dim">{esc(snap['date'] if snap else '')}</span></dd>
-<dt>투영</dt><dd class="mt-proj">{esc(' · '.join(
+<dt>표시 방법</dt><dd class="mt-proj">{esc(' · '.join(
     f'{METHOD_LABEL[k]} {v}곳' for k, v in sorted(proj['summary'].items())) or '없음')}</dd>
 </dl>
-<table class="mt-tab"><caption>단위별 투영</caption>
+<table class="mt-tab"><caption>단위별 표시 방법</caption>
 <colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
 <thead><tr><th>경계 단위</th>
-<th>투영</th><th>계열</th><th>1위 / 사유</th></tr></thead>
+<th>표시 방법</th><th>계열</th><th>1위 또는 사유</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
 </div></div></section>"""
 
@@ -309,8 +309,8 @@ def render(doc: dict) -> str:
                      for si, s in enumerate(b["states"]))
     leg = "".join(f'<span class="mt-key"><i style="background:{c}"></i>'
                   f'{FAM_LABEL[k]}</span>' for k, c in FAM_COLOR.items() if k != "other")
-    leg += ('<span class="mt-key"><i style="background:#9aa3ad"></i>복수 계보'
-            '(계열 hue 없음)</span>'
+    leg += ('<span class="mt-key"><i style="background:#9aa3ad"></i>여러 계보가 합쳐진 정당'
+            '</span>'
             '<span class="mt-key"><i style="background:#d7dbe0"></i>계보 미확인·무소속'
             '</span><span class="mt-key"><i style="background:#eceef1"></i>'
             '이 경계로 표시 불가</span>')
@@ -323,15 +323,14 @@ def render(doc: dict) -> str:
     return f"""<section class="mt" data-series="{esc(d0['comparison_series_id'])}"
  data-role="{esc(d0['states'][0]['role'])}">
 <h2>{esc(doc['region'])} 지도 타임랩스</h2>
-<p class="mt-lead">경계 · 선거 · 투영은 다른 층입니다. <b>결과가 있다고 해서 지금
-경계에 칠할 수 있는 것은 아닙니다</b> — 칠할 수 없는 경계는 그리되 정치색을 주지
-않습니다.</p>
-<div class="mt-ctl"><label>비교 series</label><div class="mt-seg">{sers}</div></div>
+<p class="mt-lead">선거 결과가 있어도 그 경계에 맞출 수 없으면 색을 칠하지 않고
+회색으로 둡니다.</p>
+<div class="mt-ctl"><label>선거 종류</label><div class="mt-seg">{sers}</div></div>
 <div class="mt-ctl"><label>시점</label><div class="mt-seg">{roles}</div></div>
 {DEFS}{frames}
 <p class="mt-legend">{leg}</p>
-<p class="mt-note">선거 사이를 보간하지 않습니다. 각 시점은 그 이전 마지막 선거의
-결과를 보여주며, 경계는 행정구역 사건일에 이산 전환합니다.</p>
+<p class="mt-note">각 시점은 그 전 마지막 선거 결과를 보여 줍니다. 경계는 행정구역이
+바뀐 날 한 번에 바뀝니다.</p>
 </section>"""
 
 

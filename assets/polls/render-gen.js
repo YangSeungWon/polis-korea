@@ -117,10 +117,10 @@
     const acc = PollAdapter.accuracyOf('국회의원');
     const polled = acc ? acc.total : 0;
     const note = gs.dmode === 'polls'
-      ? `조사된 지역구 ${polled}/${gs.layout.length} (나머지 회색)`
+      ? `조사가 있는 지역구 ${polled}/${gs.layout.length}곳(나머지는 회색)`
       : (acc ? `확정 결과 · 여론조사 적중 <b>${acc.match}/${acc.total}</b>` : '확정 결과');
     host.innerHTML = `
-      <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span> <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">칸=선거구, 색=1위 정당. <b>여론조사 1위</b>/<b>실제 1위</b> 토글. 점선 테두리=여론조사가 예측한 1위(실제와 다른 곳).</span></span></h3>
+      <h3 class="pres-trend-title">지역구 1위 <span class="pres-trend-sub">소선거구 ${gs.layout.length}석</span> <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">칸 하나가 선거구 하나이고, 색은 1위 정당입니다. 점선 테두리는 여론조사 1위가 실제와 달랐던 곳입니다.</span></span></h3>
       <div class="gen-dist-bar">
         <div class="seg" role="tablist">
           <button class="seg-btn${gs.dmode === 'polls' ? ' is-active' : ''}" data-dmode="polls">여론조사 1위</button>
@@ -157,7 +157,7 @@
   function renderReadout() {
     const el = document.getElementById('gen-dist-readout');
     if (!el) return;
-    if (!gs.selected) { el.innerHTML = '<span class="gen-dist-hint">지역구를 클릭하면 여론조사 1위 vs 실제 1위를 비교합니다.</span>'; return; }
+    if (!gs.selected) { el.innerHTML = '<span class="gen-dist-hint">지역구를 고르면 여론조사 1위와 실제 1위를 나란히 보여 줍니다.</span>'; return; }
     const { sido, name } = gs.selected;
     const pr = gs.pollFn(sido, name), rr = gs.resultFn(sido, name);
     const pTop = pr && pr.candidates[0], rTop = rr && rr.candidates[0];

@@ -56,7 +56,7 @@
   <!-- PE_STATIC --><!-- /PE_STATIC -->
   <section class="intro">
     <h1>여론조사</h1>
-    <p class="lede">NESDC 등록 조사. 최근 조사 흐름과 선거별 여론을 한 곳에 — 추세는 <a href="/tracker.html">지지율 추이</a>.</p>
+    <p class="lede">중앙선거여론조사심의위원회에 등록된 조사만 싣습니다. 지지율 추세는 <a href="/tracker.html">지지율 추이</a>에 있습니다.</p>
   </section>
 
   <!-- 활성 폴링 시즌(선거 6개월 전~선거일)이면 그 선거를 전면에 — setPhase가 표시 -->
@@ -77,7 +77,7 @@
          ⚠️ polls.html은 14쪽의 틀이기도 하다 — 파생 페이지는 _strip_hub가 비운다. -->
     <section class="pe-static" id="poll-acc-hub">
     <h2 class="pe-static-title">여론조사는 얼마나 맞았나</h2>
-    <p class="pe-static-lede">여론조사 1위와 실제 결과가 일치한 지역의 비율입니다. 2016년 이후 NESDC 등록 조사를 비교합니다. 대선은 시도별 1위, 총선은 지역구, 지선은 광역단체장 선거를 세므로 서로 다른 종류의 선거를 같은 기준으로 비교할 수 없습니다.</p>
+    <p class="pe-static-lede">여론조사 1위와 실제 결과가 일치한 지역의 비율입니다. 2016년 이후 중앙선거여론조사심의위원회에 등록된 조사를 비교합니다. 대선은 시도, 총선은 지역구, 지선은 광역단체장 선거 단위로 셉니다. 세는 단위가 달라 선거 종류끼리는 비율을 비교할 수 없습니다.</p>
   <section class="ar-section" id="poll-acc-presidential">
     <h2 class="ar-section-title">대통령선거</h2>
     <div class="pp-scroll"><table class="pp-static"><caption>대통령선거 — 3번</caption><thead><tr><th>선거</th><th>일치</th><th>비율</th></tr></thead><tbody><tr><td><a href="/polls/21st-pres-2025/">제21대 대통령선거</a><span class="poll-acc-meta">2025-06-03</span><span class="poll-acc-meta">대통령 (시도 1위)</span></td><td>13/17</td><td>76%</td></tr><tr><td><a href="/polls/20th-pres-2022/">제20대 대통령선거</a><span class="poll-acc-meta">2022-03-09</span><span class="poll-acc-meta">대통령 (시도 1위)</span></td><td>13/17</td><td>76%</td></tr><tr><td><a href="/polls/19th-pres-2017/">제19대 대통령선거</a><span class="poll-acc-meta">2017-05-09</span><span class="poll-acc-meta">대통령 (시도 1위)</span></td><td>16/17</td><td>94%</td></tr></tbody></table></div>
@@ -114,8 +114,8 @@
   <div id="lens-switcher-host"></div><!-- per-election 폴 페이지에서만 — 그 선거 제목 바로 위 렌즈 바(허브는 no-op) -->
   <!-- 선거별 상세 (활성 선거 시즌이면 그 선거, 아니면 직전 선거 회고) -->
   <section class="election-intro" id="election-intro">
-    <h2 id="poll-h1">9회 전국동시지방선거 · 여론조사 vs 실제</h2>
-    <p class="lede" id="poll-lede">NESDC 등록 조사 vs 실제 결과 — 여론조사가 얼마나 맞았는지. 셀 색=1위 정당.</p>
+    <h2 id="poll-h1">9회 전국동시지방선거 여론조사와 실제 결과</h2>
+    <p class="lede" id="poll-lede" hidden></p>
     <div class="post-election-banner" id="post-banner">
       <span class="peb-tag">2026-06-03</span>
       <span class="peb-text">선거 종료</span>
@@ -145,7 +145,7 @@
       <button class="seg-btn" data-scope="시군구">시군구 단위</button>
     </div>
     <div class="time-anchor" id="time-anchor">
-      <span class="label" id="anchor-value">각 셀의 조사 시점은 클릭 시 확인</span>
+      <span class="label" id="anchor-value">조사 시점은 지역마다 다릅니다.</span>
     </div>
   </section>
 
@@ -168,7 +168,7 @@
       <div id="poll-legend" class="poll-legend" aria-label="색 범례"></div>
     </div>
     <aside class="detail-pane" id="detail-pane">
-      <div class="detail-empty">시도·시군구를 선택하면 그 지역의 모든 여론조사가 여기에 표시됩니다.</div>
+      <div class="detail-empty">지역을 고르면 그 지역 조사가 여기 나옵니다.</div>
     </aside>
   </section>
 
@@ -181,14 +181,14 @@
     <details class="poll-gloss">
       <summary>여론조사 용어 설명</summary>
       <dl>
-        <dt>의뢰</dt><dd>조사를 의뢰하고 비용을 부담한 주체(언론사·정당 등). 정당·후보 본인 의뢰분은 표시에서 제외.</dd>
-        <dt>방법</dt><dd>전화면접·ARS(자동응답)·인터넷 패널 등 조사 수단.</dd>
-        <dt>표본수</dt><dd>실제 응답한 사람 수. 클수록 표본오차가 작아진다.</dd>
-        <dt>응답률</dt><dd>접촉에 성공한 사람 중 끝까지 응답한 비율. 낮으면 대표성에 유의.</dd>
-        <dt>접촉률</dt><dd>시도한 전체 대상 중 실제로 연결된 비율. <b>2019년 이전 조사는 미공표</b>라 옛 선거에선 ‘—’로 표시된다.</dd>
-        <dt>표본오차</dt><dd>95% 신뢰수준에서 ±몇 %P. 작을수록 정밀하다.</dd>
+        <dt>의뢰</dt><dd>조사를 의뢰하고 비용을 부담한 주체(언론사·정당 등)입니다. 정당·후보 본인 의뢰분은 표시하지 않습니다.</dd>
+        <dt>방법</dt><dd>전화면접·ARS(자동응답)·인터넷 패널 등 조사 수단입니다.</dd>
+        <dt>표본수</dt><dd>실제 응답한 사람 수입니다. 클수록 표본오차가 작아집니다.</dd>
+        <dt>응답률</dt><dd>접촉에 성공한 사람 중 끝까지 응답한 비율입니다. 낮으면 대표성에 유의해야 합니다.</dd>
+        <dt>접촉률</dt><dd>시도한 전체 대상 중 실제로 연결된 비율입니다. <b>2019년 이전 조사는 공표하지 않아</b> 옛 선거에선 ‘—’로 표시됩니다.</dd>
+        <dt>표본오차</dt><dd>95% 신뢰수준에서 ±몇 %P인지 나타냅니다. 작을수록 정밀합니다.</dd>
       </dl>
-      <p class="gloss-note">설계서·질문지 등 자세한 사항은 각 조사 카드의 ‘중앙선거여론조사심의위원회 홈페이지’ 링크에서 확인할 수 있다.</p>
+      <p class="gloss-note">설계서·질문지 등 자세한 사항은 각 조사 카드의 ‘중앙선거여론조사심의위원회 홈페이지’ 링크에서 확인할 수 있습니다.</p>
     </details>
   </footer>
 </main>
