@@ -858,8 +858,8 @@ HUB = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <base href="/">
-<title>지역별 선거 결과 — 시도 {n_sido}곳·시군구 {n}곳의 대선·총선·지선 | polis</title>
-<meta name="description" content="시도와 전국 시군구 {n}곳의 선거 결과. 역대 광역단체장·교육감과 지역마다의 대선·총선·지선 1위 정당·후보, 득표율·투표율.">
+<title>지역별 선거 결과 — 시도 {n_sido}곳·시군구 {n}곳의 대선·지선 | polis</title>
+<meta name="description" content="시도와 전국 시군구 {n}곳의 선거 결과. 역대 광역단체장·교육감과 지역마다의 대선·지선 1위 정당·후보, 득표율·투표율.">
 <link rel="canonical" href="/region/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/common.css">
@@ -881,7 +881,7 @@ HUB = """<!DOCTYPE html>
 <main class="page">
   <section class="intro">
     <h1>지역별 선거 기록</h1>
-    <p class="lede">시군구 {n}곳 — 역대 대선·총선·지선에서 그 지역이 어떻게 갈렸는지.</p>
+    <p class="lede">대선과 지방선거 때마다 그 지역에서 누가 1위였는지 볼 수 있습니다.</p>
     <form class="rg-find" role="search" onsubmit="return false">
       <label for="rg-q">지역 찾기</label>
       <input id="rg-q" type="search" autocomplete="off" placeholder="예: 성남, 분당, 김천"
@@ -890,9 +890,19 @@ HUB = """<!DOCTYPE html>
     </form>
     <p class="rg-cmp-link"><a href="/region/compare.html">두 지역 나란히 보기 →</a></p>
   </section>
+{sido}
+  <!-- 지도 — 지금 시군구를 육각형 한 칸씩. 칸이 그 지역 페이지 링크다(region-hub.js).
+       정당색을 칠하지 않는다: 이 페이지는 특정 선거의 결과가 아니다. JS가 없으면 비어 있고,
+       아래 목록이 같은 링크를 전부 갖는다. -->
+  <section class="rg-map-wrap" aria-label="시군구 지도">
+    <svg id="rg-map" class="rg-map" role="group" aria-label="시군구 지도 — 칸을 고르면 그 지역 페이지로"></svg>
+  </section>
 {body}
 </main>
 <script src="assets/parties.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/hexgrid.js"></script>
+<script src="assets/render-sigungu-hex.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/nav.js"></script>
 <script src="assets/view-state.js"></script><!-- 화면 상태 ↔ URL -->
@@ -1002,14 +1012,9 @@ def hub_sido_block(sidos: list) -> str:
     """
     if not sidos:
         return ""
-    items = "".join(f'<a class="rg-item" href="/region/{quote(sd)}/">{esc(sd)}</a>'
-                    for sd in sorted(sidos))
-    return ('<section class="dash-section">'
-            f'<h2 class="dash-section-title">시도<span class="rg-count">'
-            f'{len(sidos)}</span></h2>'
-            '<p class="fine">역대 광역단체장·교육감과 대선에서 그 시도가 어떻게 '
-            '갈렸는지.</p>'
-            f'<div class="rg-grid">{items}</div></section>')
+    items = " ".join(f'<a href="/region/{quote(sd)}/" title="{esc(sd)}">{esc(sido_short(sd))}</a>'
+                     for sd in sorted(sidos))
+    return f'<p class="rg-sido-links"><span class="rg-sido-k">시도</span> {items}</p>'
 
 
 def build_hub(entries: list, sidos: list) -> str:
@@ -1043,7 +1048,11 @@ def build_hub(entries: list, sidos: list) -> str:
                       f'<h2 class="dash-section-title">{head}'
                       f'<span class="rg-count">{len(live)}</span></h2>'
                       f'<div class="rg-grid">{grid}</div></section>')
-    return hub_sido_block(sidos) + "\n" + "\n".join(blocks)
+    total = sum(len(v) for v in by_sido.values())
+    return (
+            # 목록은 접어 둔다 — 지도가 먼저다. 그래도 HTML에는 전부 있다(크롤 1-hop·비JS).
+            f'<details class="rg-list" id="rg-list"><summary>전체 목록 — 일반구와 지금은 없는 이름까지 '
+            + f'{total}곳</summary>\n' + "\n".join(blocks) + "\n</details>")
 
 
 # 두 지역 나란히 — 375×375 짝을 빌드하지 않는다. 지역마다 행을 JSON으로 내고
@@ -1181,7 +1190,7 @@ def main():
                 u.split("/")[2]) for u in urls if "-" in u.split("/")[2]]
     (OUT_DIR / "index.html").write_text(
         HUB.format(n=len(entries), n_sido=len(sido_slugs),
-                   body=build_hub(entries, sido_slugs),
+                   body=build_hub(entries, sido_slugs), sido=hub_sido_block(sido_slugs),
                    nav=render_nav(menu_for_path("region/index.html"))), encoding="utf-8")
     # stale 제거 — 시도 정규화·MIN_ROUNDS 변경으로 더 이상 안 만드는 slug가 남으면
     # sitemap에 없는 페이지가 배포돼 크롤러에는 살아 있고 우리는 모르는 상태가 된다.
