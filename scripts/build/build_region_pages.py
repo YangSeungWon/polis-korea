@@ -754,10 +754,12 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
             f'<td>{name_cell(r)}{winner_note(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
-    table = ('<table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
+    # 7열 표 — 좁은 화면에서 글꼴이 조금만 넓어도 페이지가 가로로 밀렸다(390px에 393).
+    # 인물 표처럼 표만 가로로 스크롤하게 감싼다.
+    table = ('<div class="pp-scroll"><table class="pp-static"><caption>역대 선거 — 이 지역 1위</caption><thead><tr>'
              '<th>연도</th><th>선거</th><th>직</th><th>1위 정당</th><th>1위 후보</th>'
              '<th>득표율</th><th>투표율</th></tr></thead><tbody>'
-             + "".join(trs) + "</tbody></table>")
+             + "".join(trs) + "</tbody></table></div>")
 
     ld = {"@context": "https://schema.org", "@type": "BreadcrumbList",
           "itemListElement": [
@@ -882,12 +884,12 @@ def sido_table(rows: list) -> str:
             f'<td>{name_cell(r)}{winner_note(r)}</td>'
             f'<td>{num_cell(r, "pct")}</td>'
             f'<td>{num_cell(r, "turnout")}</td></tr>')
-    return ('<table class="pp-static">'
+    return ('<div class="pp-scroll"><table class="pp-static">'
             '<caption>역대 선거. 광역단체장·교육감은 당선 결과이고, 대통령은 이 시도의 1위입니다.'
             '</caption><thead><tr>'
             '<th>연도</th><th>선거</th><th>직</th><th>1위 정당</th><th>1위 후보</th>'
             '<th>득표율</th><th>투표율</th></tr></thead><tbody>'
-            + "".join(trs) + "</tbody></table>")
+            + "".join(trs) + "</tbody></table></div>")
 
 
 def sigungu_short(sg: str) -> str:
