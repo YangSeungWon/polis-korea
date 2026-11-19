@@ -52,19 +52,19 @@
     // 알고 싶은 건 처리 로직(제외했다)이 아니라 분모가 얼마인가다.
     // note에 <b>를 쓰므로 값은 숫자로 강제한다 — 문자열이 그대로 들어가면 마크업이 샌다.
     const num = (v) => (Number(v) || 0).toLocaleString();
-    const note = (who ? `${who} ${num(d.n_people)}명 · `
-      : `${num(d.n_people)}명(수집 범위 미상) · `)
+    // 모집단을 모르면 '(수집 범위 미상)'처럼 괄호로 얼버무리지 않고 문장으로 밝힌다.
+    const note = `${who || '후보'} ${num(d.n_people)}명의 `
       + (d.n_unclassified
-        ? `공약 ${num(d.n_pledges)}건 중 <b>${num(total)}건 분류</b>`
-          + ` · 미분류 ${num(d.n_unclassified)}건`
-        : `공약 ${num(d.n_pledges)}건`);
+        ? `공약 ${num(d.n_pledges)}건 중 <b>${num(total)}건 분류</b>입니다.`
+        : `공약 ${num(d.n_pledges)}건입니다.`)
+      + (who ? '' : ' 이 자료가 후보 전체인지 당선인만인지는 모릅니다.');
     // 출처·가공 여부는 신뢰 문법의 값 단위 칩으로 — 문장으로 세 번 반복하지 않는다.
     const chip = (window.Trust && window.Trust.fieldChip)
       ? window.Trust.fieldChip('autoClassified') : '';
     host.innerHTML = `<p class="pr-note">${note}</p>
       <div class="pr-chart">${d.realms.map((r) => row(r, max, total)).join('')}</div>
-      <p class="pr-fine">${chip} NEC 원문에 분야 정보가 없어 공약 제목과 본문을 바탕으로
-        분류했습니다. 공약마다 대표 분야 1개를 적용했으며, 일부 오분류가 있을 수 있습니다.</p>`;
+      <p class="pr-fine">${chip} 선관위 원문에 분야가 없어 제목과 본문을 보고 공약마다
+        대표 분야 1개를 붙였습니다. 일부 오분류가 있을 수 있습니다.</p>`;
     sec.hidden = false;
   }
 

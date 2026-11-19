@@ -74,7 +74,8 @@ def main() -> int:
         if re.search(r"(\d{4})~\1년", h):
             same_year.append(f.parent.name)
         m = re.search(r'<p class="rg-lede">([^<]*)', h) or re.search(r'class="lede"[^>]*>([^<]*)', h)
-        if m and "1위 정당 무소속" in m.group(1):
+        # 리드 문구: '가장 자주 1위를 한 정당은 X…' (예전 '1위 정당 X · …')
+        if m and re.search(r"1위를 한 정당은 무소속|1위 정당 무소속", m.group(1)):
             mu_lede.append(f.parent.name)
     ck("총선 기록이 없는데 '총선'을 약속하지 않는다", not total_claim, ", ".join(total_claim[:5]))
     ck("'2026~2026년' 같은 같은 해 범위가 없다", not same_year, ", ".join(same_year[:5]))
@@ -111,7 +112,9 @@ def main() -> int:
     home = read(ROOT / "index.html")
     ev = json.loads(read(ROOT / "data/history_events.json"))
     n_rep = sum(1 for r in ev["republics"] if "공화국" in r["name"])
-    ck(f"홈 공화국 수 = {n_rep}", f"{n_rep}개 공화국" in home)
+    # 홈 '더 볼 것'은 이제 개수를 적지 않는다. 다시 적게 되면 실제 공화국 수여야 한다.
+    shown = re.findall(r"(\d+)개 공화국", home)
+    ck(f"홈 공화국 수(적는다면) = {n_rep}", all(int(x) == n_rep for x in shown), str(shown))
     ck("홈에 '17개 시·도' 없음(9회 지선은 16)", "17개 시·도" not in home)
 
     print(f"\n{'전부 통과' if not fails else f'실패 {len(fails)}'}")

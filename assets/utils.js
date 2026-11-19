@@ -235,6 +235,9 @@ function renderPollCard(p, officeLabel) {
     if (/vs\.?|맞붙|가상대결/.test(t)) return ' · 양자대결';
     return '';
   })();
+  // 의뢰·방법·표본·응답률·접촉률·오차가 전부 비면 '—'만 여섯 줄인 빈 틀이 된다 — 한 줄로 말한다.
+  const hasMeta = [p.requester, p.method, p.sample_size, p.response_rate, p.contact_rate, p.sample_error]
+    .some((v) => v != null && v !== '');
   return `<div class="poll-card" style="border-left-color:${partyColor(topParty)}">
     <div class="pc-hdr">
       <span class="pc-period">${formatPeriod(p.period_start, p.period_end)}</span>
@@ -242,15 +245,15 @@ function renderPollCard(p, officeLabel) {
     </div>
     <div class="pc-agency">${p.agency}</div>
     <div class="pc-bars">${bars}</div>
-    <div class="pc-meta">
-      <span><span class="pc-term" title="조사를 의뢰하고 비용을 부담한 주체(언론사·정당 등). 정당·후보 본인 의뢰분은 표시에서 제외.">의뢰</span> · ${p.requester || '—'}</span>
-      <span><span class="pc-term" title="전화면접·ARS(자동응답)·인터넷 패널 등 조사 수단.">방법</span> · ${p.method || '—'}</span>
-      <span><span class="pc-term" title="실제 응답한 사람 수. 클수록 표본오차가 작아진다.">표본</span> · ${p.sample_size ? p.sample_size + '명' : '—'}</span>
-      <span><span class="pc-term" title="접촉에 성공한 사람 중 끝까지 응답한 비율. 낮으면 대표성에 유의.">응답률</span> · ${pctField(p.response_rate)}</span>
-      <span><span class="pc-term" title="시도한 전체 대상 중 실제로 연결된 비율. 2019년 이전 조사는 미공표라 '—'.">접촉률</span> · ${pctField(p.contact_rate)}</span>
-      <span><span class="pc-term" title="95% 신뢰수준에서 ±몇 %P. 작을수록 정밀하다.">오차</span> · ${p.sample_error || '—'}</span>
-    </div>
-    <div class="pc-legal">그 밖의 사항은 <a href="${p.source_url}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 홈페이지</a> 참조</div>
+    ${hasMeta ? `<div class="pc-meta">
+      <span><span class="pc-term" title="조사를 의뢰하고 비용을 부담한 주체(언론사·정당 등)입니다. 정당·후보 본인 의뢰분은 표시하지 않습니다.">의뢰</span> · ${p.requester || '—'}</span>
+      <span><span class="pc-term" title="전화면접·ARS(자동응답)·인터넷 패널 등 조사 수단입니다.">방법</span> · ${p.method || '—'}</span>
+      <span><span class="pc-term" title="실제 응답한 사람 수입니다. 클수록 표본오차가 작아집니다.">표본</span> · ${p.sample_size ? p.sample_size + '명' : '—'}</span>
+      <span><span class="pc-term" title="접촉에 성공한 사람 중 끝까지 응답한 비율입니다. 낮으면 대표성에 유의해야 합니다.">응답률</span> · ${pctField(p.response_rate)}</span>
+      <span><span class="pc-term" title="시도한 전체 대상 중 실제로 연결된 비율입니다. 2019년 이전 조사는 공표하지 않아 '—'로 표시됩니다.">접촉률</span> · ${pctField(p.contact_rate)}</span>
+      <span><span class="pc-term" title="95% 신뢰수준에서 ±몇 %P인지 나타냅니다. 작을수록 정밀합니다.">오차</span> · ${p.sample_error || '—'}</span>
+    </div>` : '<div class="pc-meta">조사 정보 없음</div>'}
+    <div class="pc-legal">그 밖의 사항은 <a href="${p.source_url}" target="_blank" rel="noopener">중앙선거여론조사심의위원회 홈페이지</a>를 참조하십시오.</div>
   </div>`;
 }
 

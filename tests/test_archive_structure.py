@@ -42,7 +42,7 @@ def main():
     groups = re.findall(r'ar-group-title">([^<]*)', html)
     ck("서사 그룹 6개", len(groups) == 6, groups)
     ck("그룹 순서: 결과가 먼저", groups and groups[0] == "결과", groups[:1])
-    ck("비교가 결과 다음", len(groups) > 1 and groups[1] == "무엇이 바뀌었나", groups[:2])
+    ck("비교가 결과 다음", len(groups) > 1 and groups[1] == "지난 선거와 비교", groups[:2])
 
     # 회차 종류마다 최소 그룹 수 — 한 회차만 손대고 끝나는 실수를 잡는다.
     # 종류마다 있는 섹션이 다르므로 기대치도 다르다(총선은 비교·공약이 없다).

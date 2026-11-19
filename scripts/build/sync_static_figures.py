@@ -27,6 +27,14 @@ START = "<!-- STATIC_FIG_START — scripts/build/sync_static_figures.py 자동 �
 END = "<!-- STATIC_FIG_END -->"
 PAT = re.compile(re.escape("<!-- STATIC_FIG_START") + r"[\s\S]*?" + re.escape(END))
 
+# 화면에서는 숨긴다. 같은 그림이 위쪽 실시간 화면에 이미 있어, 꼬리말 아래에 다시
+# 보이면 되풀이일 뿐이다. 그래도 지우지 않는 이유는 위 docstring 그대로 — 검색엔진과
+# 공유 카드가 JS 없이 읽을 정적 그림이 필요하다. display:none([hidden])은 크롤러가
+# 내용을 무시할 수 있어, 스크린리더용 '시각적 숨김' 패턴(1px·clip)을 쓴다. 공용 CSS에
+# 해당 클래스가 없어 인라인으로 둔다.
+HIDE = ("position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;"
+        "clip-path:inset(50%);white-space:nowrap;border:0")
+
 # 화면 이름 → (페이지 파일, 그림 위 제목)
 PAGES = {
     "tracker": ("tracker.html", "지표 그림"),
@@ -58,7 +66,7 @@ def main() -> int:
             wh = _rt.png_size(f) if f.is_file() else None
             if wh:
                 figs.append(_rt.fig(name, key, m, wh[0], wh[1], "", base="/og/static"))
-        body = (f'\n  <section class="ar-section" id="static-figs">\n'
+        body = (f'\n  <section class="ar-section" id="static-figs" style="{HIDE}">\n'
                 f'    <h2 class="ar-section-title">{heading}</h2>\n'
                 f'    <div class="map-fig-grid">{"".join(figs)}</div>\n'
                 f'  </section>\n  ') if figs else ""

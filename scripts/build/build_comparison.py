@@ -360,16 +360,16 @@ def build(cur_id: str, prev_id: str) -> dict:
             if side == "previous" and k[0] in merged_into:
                 return "merged", "merged_into", f"{merged_into[k[0]]}로 통합"
             if side == "current" and k[0] in set(merged_into.values()):
-                return "merged", "merged_into", "통합으로 새로 생긴 단위"
+                return "merged", "merged_into", "통합으로 새로 생긴 곳"
             if k[1] in other_names:
-                return "transferred", "sido_transferred", "상위 시도가 바뀌어 직접 대조하지 않음"
+                return "transferred", "sido_transferred", "속한 시·도가 바뀌어 비교하지 않았습니다"
             reorg = gone_by_sido.get(k[0], 0) and born_by_sido.get(k[0], 0)
             if reorg:
                 return ("boundary_changed", "boundary_reorganized",
-                        "같은 시도에서 단위가 사라지고 새로 생겼다 — 행정구역 개편")
+                        "행정구역 개편으로 사라지거나 새로 생겼습니다")
             if side == "previous":
-                return "abolished", "abolished_unit", "이번 회차에 대응 단위가 없다"
-            return "new", "new_unit", "지난 회차에 대응 단위가 없다"
+                return "abolished", "abolished_unit", "이번 선거에는 같은 곳이 없습니다"
+            return "new", "new_unit", "지난 선거에는 같은 곳이 없습니다"
 
         for side, only in (("previous", set(pm) - both), ("current", set(cm) - both)):
             for k in sorted(only):
@@ -417,7 +417,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             continue
         councils[tc] = {"label": label, "previous": dict(p.most_common()),
                         "current": dict(c.most_common()), "delta": delta_counter(p, c),
-                        "note": "선거구 획정이 달라 단위 대조는 하지 않고 합계만 비교한다."}
+                        "note": "선거구 획정이 달라 합계만 비교했습니다."}
 
     # 전국 득표율 변화 — 대선에서 가장 먼저 읽히는 값. nation scope가 있을 때만.
     def nation_share(races):
@@ -434,7 +434,7 @@ def build(cur_id: str, prev_id: str) -> dict:
             "previous": np_, "current": nc_,
             "delta": {k: round(nc_.get(k, 0) - np_.get(k, 0), 2) for k in keys
                       if abs(nc_.get(k, 0) - np_.get(k, 0)) >= 0.05},
-            "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다.",
+            "note": "후보가 달라도 같은 정당이면 이어서 비교했습니다.",
         }
 
     tp, tc_ = turnout(prev_races), turnout(cur_races)

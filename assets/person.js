@@ -148,7 +148,7 @@
       const doc = await r.json();
       mount.innerHTML = (doc.entries || []).map(renderPledgeEntry).join('');
     } catch (e) {
-      mount.innerHTML = '<div class="detail-empty">공약 로드 실패.</div>';
+      mount.innerHTML = '<div class="detail-empty">공약을 불러오지 못했습니다.</div>';
     }
   }
 
@@ -162,7 +162,7 @@
     if (!o.margin) return `<div class="pp-rival">상대 ${who}</div>`;
     const win = r.won || r.rank === 1;
     const n = o.margin.toLocaleString('ko-KR');
-    return `<div class="pp-rival">${who}${win ? ' 앞섬 +' : ' 뒤짐 −'}${n}표</div>`;
+    return `<div class="pp-rival">${who}보다 ${n}표 ${win ? '앞섬' : '뒤짐'}</div>`;
   }
 
   function renderTimelineCard(races, label) {
@@ -170,7 +170,6 @@
     const dkey = (r) => r.date || (r.year ? String(r.year) : '');
     races = races.slice().sort((a, b) => dkey(a).localeCompare(dkey(b)));
     const wins = races.filter((r) => r.won).length;
-    const losses = races.length - wins;
     const parties = [];
     const seen = new Set();
     for (const r of races) {
@@ -193,7 +192,6 @@
         <div class="pp-rk">${rank}</div>
         <div class="pp-pct">${pct}</div>
         <div class="pp-tag-cell">${tag}</div>
-        <div class="pp-link">→</div>
         ${rivalLine(r)}
       </a>`;
     }).join('');
@@ -204,7 +202,6 @@
         <div class="pp-record">
           <div class="pp-stat"><b class="pp-stat-num">${races.length}</b><span class="pp-stat-label">출마</span></div>
           <div class="pp-stat pp-win"><b class="pp-stat-num">${wins}</b><span class="pp-stat-label">당선</span></div>
-          <div class="pp-stat pp-loss"><b class="pp-stat-num">${losses}</b><span class="pp-stat-label">낙선</span></div>
         </div>
         <div class="pp-meta">
           <div class="pp-field"><span class="pp-field-k">정당</span><span class="pp-field-v pp-parties">${allPartyless ? partylessChip() : parties.slice(0, 5).map((p) => partyBadge(p, true)).join('')}</span></div>
@@ -218,7 +215,7 @@
   async function load() {
     if (!targetName) {
       $('#person-body').innerHTML =
-        '<div class="detail-empty">URL에 <code>?name=이재명</code> 같이 인물 이름을 넣어주세요. 또는 <a href="/search.html">검색</a>에서 결과 클릭.</div>';
+        '<div class="detail-empty">인물 이름을 찾지 못했습니다. <a href="/search.html">검색</a>에서 이름을 찾아 주세요.</div>';
       return;
     }
     try {
@@ -232,7 +229,7 @@
       const person = (j.persons || []).find((p) => p.name === targetName);
       if (!person) {
         $('#person-body').innerHTML =
-          `<div class="detail-empty">${escapeHtml(targetName)} 일치 없음. <a href="/search.html?q=${encodeURIComponent(targetName)}">검색</a>으로 확인.</div>`;
+          `<div class="detail-empty">${escapeHtml(targetName)}(이)라는 인물이 없습니다. <a href="/search.html?q=${encodeURIComponent(targetName)}">검색</a>에서 확인해 주세요.</div>`;
         return;
       }
       // 같은 이름 entry 여러 건 (동명이인) — 모두 표시
@@ -243,7 +240,7 @@
       // 단일 인물 lede는 요약 카드(출마·당선·낙선)와 중복 → 제거. 동명이인일 때만 구분 안내.
       const sub = $('#person-sub');
       if (sub) {
-        if (all.length > 1) sub.textContent = `동명이인 ${all.length}명 추정 · 합산 ${totalRaces}회 출마 · 당선 ${totalWins}`;
+        if (all.length > 1) sub.textContent = `이름이 같은 사람이 ${all.length}명으로 보입니다. 모두 합쳐 ${totalRaces}번 출마해 ${totalWins}번 당선됐습니다.`;
         else sub.remove();
       }
       let html = '';
@@ -254,9 +251,8 @@
           const meta = [];
           if (p.dob) meta.push(p.dob);
           if (p.hanja) meta.push(p.hanja);
-          if (p.assembly_id) meta.push('국회');
-          else meta.push('비국회');
-          label = `인물 ${String.fromCharCode(65 + i)} — ${p.races.length}회 (${p.wins}당선)${meta.length ? ' · ' + meta.join(' · ') : ''}`;
+          if (p.assembly_id) meta.push('국회의원 지냄');
+          label = `인물 ${String.fromCharCode(65 + i)}: ${p.races.length}번 출마, ${p.wins}번 당선${meta.length ? ' (' + meta.join(', ') + ')' : ''}`;
         }
         html += renderTimelineCard(p.races, label);
       });
@@ -284,7 +280,7 @@
         });
       });
     } catch (e) {
-      $('#person-body').innerHTML = '<div class="detail-empty">인덱스 로드 실패.</div>';
+      $('#person-body').innerHTML = '<div class="detail-empty">인물 자료를 불러오지 못했습니다.</div>';
     }
   }
 

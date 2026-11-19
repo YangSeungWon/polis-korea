@@ -73,7 +73,7 @@ function renderSigunguHex() {
       // 격자는 크기만, 원형은 크기+격차 명도. 키도 그대로 따라간다 —
       // 격자에서 격차 키를 붙이면 없는 인코딩을 설명하고, 크기 키까지 걷으면
       // 점 크기가 무엇인지 알 수 없게 된다.
-      mountGapLegend(svg, { scale: sizingMode === 'dorling', extra: ['크기 = 투표수'] });
+      mountGapLegend(svg, { scale: sizingMode === 'dorling', extra: [sizingMode === 'dorling' ? '원 크기는 투표수에 비례합니다' : '칸 수는 투표수에 비례합니다'] });
     }
     return;
   }

@@ -38,7 +38,9 @@ ROOT = Path(__file__).resolve().parents[1]
 # 페이지끼리 경쟁하는 상태다 — 그래서 archive는 얇은 게 아니라 접혀 있는 것이다.
 # archive 하한을 5,000으로 올리려면 history에서 뭘 가져올지부터 정해야 한다.
 FAMILIES = [
-    ("archive", "archive/*/index.html", 1400),
+    # 1400 → 1250 (2026-11 문체 정리): 모든 그룹의 질문형 부제와 3~4번 반복되던
+    # 단서를 걷어 중앙값이 1,347자가 됐다. 정적 표가 빠진 회귀는 이보다 훨씬 크게 준다.
+    ("archive", "archive/*/index.html", 1250),
     ("history", "history/*/*/**/index.html", 5000),
     ("region",  "region/*/index.html",  1500),
 ]

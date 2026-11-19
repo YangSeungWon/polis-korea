@@ -34,7 +34,7 @@
       // 같은 font-size가 차트 대비 더 커짐(width:100% 스케일이라 화면 점유 크기는 그대로). 와이드 비율 유지.
       w: 600, h: 290,
     });
-    host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">전국 여론조사(본선 구도) · ◆ 선거일 실제 득표</span></span></h3>`
+    host.innerHTML = `<h3 class="pres-trend-title">본선 후보 지지율 추이 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">본선 구도로 물은 전국 여론조사입니다. ◆는 선거일 실제 득표입니다.</span></span></h3>`
       + `<div class="pres-trend-chart">${svg}</div>`;
     host.hidden = false;
   }
@@ -116,7 +116,7 @@
     if (!pane) return;
     let race = null;
     for (const k of sigKeys(sido, name)) if (map.has(k)) { race = map.get(k); break; }
-    if (!race) { pane.innerHTML = '<div class="detail-empty">시·군·구를 선택하면 그 지역 개표 결과가 표시됩니다.</div>'; return; }
+    if (!race) { pane.innerHTML = '<div class="detail-empty">지역을 고르면 그 지역 개표 결과가 여기 나옵니다.</div>'; return; }
     const card = (typeof renderActualResultCard === 'function') ? renderActualResultCard(race) : '';
     pane.innerHTML = `<div class="detail-hdr"><h2>${sido} · ${name}</h2><span class="count">개표 확정</span></div>`
       + (card || '<div class="detail-empty">결과 데이터가 없습니다.</div>');
@@ -131,9 +131,9 @@
       sec = document.createElement('section');
       sec.id = 'pres-sgg-result'; sec.className = 'pres-sgg-result';
       // 자체 2단(지도 + 우측 상세) — 지역·비례 viz의 공용 detail 패널과 분리(시군구 클릭은 여기로).
-      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 · 단색=격차 명도 · 격자/원형=표 비례</span></span></h3>'
+      sec.innerHTML = '<h3 class="pres-trend-title">시·군·구 1위 후보 <span class="info-i" tabindex="0" role="button" aria-label="설명">i<span class="info-pop">실제 개표 결과입니다. 격자와 원형은 투표수에 비례하고, 단색은 색 진하기로 1·2위 격차를 나타냅니다.</span></span></h3>'
         + '<div class="pres-sgg-body"><div class="pres-sgg-host"></div>'
-        + '<aside class="pres-sgg-detail detail-pane"><div class="detail-empty">시·군·구를 선택하면 그 지역 개표 결과가 표시됩니다.</div></aside></div>';
+        + '<aside class="pres-sgg-detail detail-pane"><div class="detail-empty">지역을 고르면 그 지역 개표 결과가 여기 나옵니다.</div></aside></div>';
       const viz = document.querySelector('.viz');
       if (viz && viz.parentElement) viz.parentElement.insertBefore(sec, viz.nextSibling);
       else (document.querySelector('main.page') || document.body).appendChild(sec);
@@ -161,12 +161,12 @@
     const h = presHost(); h.hidden = false;
     const cs = cells();
     if (!cs.length) {
-      h.innerHTML = `<div class="detail-empty">${ps.mode === 'polls' ? '시도 단위 여론조사가 없습니다 (대선 조사는 대부분 전국 단위).' : '결과 데이터가 없습니다.'}</div>`;
+      h.innerHTML = `<div class="detail-empty">${ps.mode === 'polls' ? '시도 단위 여론조사가 없습니다. 대선 조사는 대부분 전국 단위입니다.' : '결과 데이터가 없습니다.'}</div>`;
       renderDetail();
       return;
     }
     const legend = ps.mode === 'polls'
-      ? (ps.viewmode === 'grid' ? '■ 면적=유권자 규모 · 색=조사 지지' : '● 크기=유권자 규모 · 파이=조사 지지 구성')
+      ? (ps.viewmode === 'grid' ? '칸 면적은 유권자 수, 색은 조사 지지입니다.' : '원 크기는 유권자 수, 조각은 조사 지지 구성입니다.')
       : undefined;
     // 실제 모드: 막판 여론조사 시도 1위 vs 실제 — 빗나간 시도 점선 마커(조사 1위 정당색) + 적중 헤드라인.
     //
@@ -197,7 +197,7 @@
     } else {
       sp[ps.viewmode === 'grid' ? 'drawGrid' : 'drawDorling'](h, cs, { legend, onSelect: pickSido, missOf });
     }
-    if (acc) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${acc.match}/${acc.total}곳</b> <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>`; h.prepend(cap); }
+    if (acc) { const cap = document.createElement('div'); cap.className = 'pres-acc-note'; cap.innerHTML = `여론조사 막판 시도 1위 적중 <b>${acc.match}/${acc.total}곳</b> <span class="ra-legend">점선 테두리는 여론조사 1위가 틀린 곳이고, 테두리 색이 여론조사 1위 정당입니다.</span>`; h.prepend(cap); }
     renderDetail();
   }
 

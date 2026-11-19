@@ -58,9 +58,9 @@
       }
     }
     if (!rows.length) return '';
-    return `<details class="cmp-excluded"><summary>비교하지 않은 단위 ${rows.length}</summary>
-      <p class="cmp-excluded-why">행정구역이 통합·신설·이관돼 지난 회차와 짝을 지을 수 없는
-        단위입니다. 빼고 세면 실제로 없던 변화가 만들어지므로 따로 밝힙니다.</p>
+    return `<details class="cmp-excluded"><summary>비교에서 뺀 곳 ${rows.length}</summary>
+      <p class="cmp-excluded-why">행정구역이 통합·신설·이관돼 지난 선거와 짝을 지을 수 없는
+        곳입니다. 말없이 빼면 없던 변화처럼 보여 따로 적었습니다.</p>
       <ul class="cmp-flip-list">${rows.join('')}</ul></details>`;
   }
 
@@ -84,7 +84,7 @@
         ${indep}
         ${excluded ? stat(excluded, '직접 비교 불가', '행정구역 변경') : ''}
       </div>
-      ${deltaRow('정당 증감', o.delta_compared_only, '직접 비교 가능한 곳만')}
+      ${deltaRow('정당 증감', o.delta_compared_only)}
       ${flipList(o)}
       ${notCompared([o])}
     </div>`;
@@ -103,10 +103,8 @@
     } catch { return; }
     if (!d || !d.offices) return;
 
-    const t = d.turnout || {};
-    const parts = [`<p class="cmp-head"><b>${esc(d._meta.previous_name || prev)}</b>와 비교
-      ${t.delta != null ? `· 투표율 ${t.previous}% → <b>${t.current}%</b>
-        <span class="${t.delta > 0 ? 'is-up' : 'is-down'}">${sign(t.delta)}%p</span>` : ''}</p>`];
+    // 투표율 변화는 결과 요약(.ar-summary-cmp)이 이미 말한다 — 여기서 되풀이하지 않는다.
+    const parts = [`<p class="cmp-head"><b>${esc(d._meta.previous_name || prev)}</b>와 비교</p>`];
 
     // 대선은 전국 득표율 변화가 본론이다 — 시도별 교체 수보다 먼저 읽혀야 한다.
     if (d.nation && d.nation.delta && Object.keys(d.nation.delta).length) {
@@ -124,16 +122,13 @@
     const councils = Object.values(d.councils || {});
     if (councils.length) {
       parts.push(`<div class="cmp-office"><h3 class="cmp-office-title">지방의회 의석</h3>
-        ${councils.map((c) => deltaRow(c.label, c.delta, '선거구 획정이 달라 합계만 비교')).join('')}
+        ${councils.map((c) => deltaRow(c.label, c.delta, '선거구 획정이 달라 합계만 비교했습니다')).join('')}
       </div>`);
     }
 
-    const chip = (window.Trust && window.Trust.fieldChip)
-      ? window.Trust.fieldChip('calculated',
-        '두 회차 결과에서 polis가 계산한 값입니다. 같은 이름·같은 경계의 단위끼리만 대조합니다.')
-      : '';
-    parts.push(`<p class="cmp-foot">${chip} 정당 증감은 통합·개편 단위를 뺀
-      <b>직접 비교 가능한 곳</b> 기준입니다. 전체 단위 수 변화는 별도입니다.</p>`);
+    // 비교 기준은 이 한 줄에만 적는다 — 예전엔 행 메모·칩 툴팁·꼬리말이 같은 말을 세 번 했다.
+    const chip = (window.Trust && window.Trust.fieldChip) ? window.Trust.fieldChip('calculated') : '';
+    parts.push(`<p class="cmp-foot">${chip} 이름과 경계가 같은 곳끼리만 비교했습니다.</p>`);
 
     host.innerHTML = parts.filter(Boolean).join('');
     sec.hidden = false;

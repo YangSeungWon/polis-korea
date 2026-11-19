@@ -55,7 +55,7 @@
     const acc = accuracyForOffice(state.office);
     if (!acc) { host.textContent = ''; return; }
     const pct = ((acc.match / acc.total) * 100).toFixed(0);
-    const legend = (state.mode === 'result' && acc.match < acc.total) ? ' <span class="ra-legend">점선 테두리=여론조사 1위 정당</span>' : '';
+    const legend = (state.mode === 'result' && acc.match < acc.total) ? ' <span class="ra-legend">점선 테두리는 여론조사 1위가 틀린 곳이고, 테두리 색이 여론조사 1위 정당입니다.</span>' : '';
     host.innerHTML = `여론조사 적중 <b>${acc.match}/${acc.total}</b> <span class="ra-pct">${pct}%</span>${legend}`;
   }
 

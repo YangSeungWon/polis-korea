@@ -20,14 +20,14 @@ function check(name, cond, detail) {
   else { fail++; console.log(`  ✗ ${name}${detail ? ' — ' + detail : ''}`); }
 }
 
-// ── 1. 확정 · NEC OpenAPI (선거 결과) ───────────────────────────────────────
+// ── 1. 확정 · 중앙선관위 (선거 결과) ───────────────────────────────────────
 const res = read('data/results/9th-local-2026.json');
 const m1 = T.deriveDataset(res._meta);
 const h1 = T.renderDataset(m1);
 check('1 확정: lifecycle=final', m1.lifecycle === 'final', JSON.stringify(m1));
-check('1 확정: 출처 NEC OpenAPI', m1.sourceLabel === 'NEC OpenAPI', m1.sourceLabel);
+check('1 확정: 출처 중앙선관위', m1.sourceLabel === '중앙선관위', m1.sourceLabel);
 check('1 확정: 확정본에 개표율 없음', m1.progress === null, m1.progress);
-check('1 확정: 렌더 문자열', h1.includes('확정') && h1.includes('NEC OpenAPI'), h1);
+check('1 확정: 렌더 문자열', h1.includes('확정') && h1.includes('중앙선관위'), h1);
 
 // ── 2. 잠정 + 개표율 (합성 — 다음 개표일용 코드 경로) ────────────────────────
 const m2 = T.deriveDataset(
@@ -35,7 +35,7 @@ const m2 = T.deriveDataset(
   { countPct: 87.4 });
 check('2 잠정: lifecycle=provisional', m2.lifecycle === 'provisional');
 check('2 잠정: 개표 87.4%', m2.progress === '개표 87.4%', m2.progress);
-check('2 잠정: 출처 NEC 실시간', m2.sourceLabel === 'NEC 실시간', m2.sourceLabel);
+check('2 잠정: 출처 선관위 실시간', m2.sourceLabel === '선관위 실시간', m2.sourceLabel);
 check('2 잠정: 갱신 시각 노출', !!m2.publishedAt, m2.publishedAt);
 // 확정본에는 개표율을 붙이지 않는다 — 무투표 race의 100뿐이라 없는 정보가 생긴다.
 check('2 잠정: 확정이면 개표율 무시',
@@ -122,7 +122,7 @@ const diff = T.onlyDifferent(parent, child);
 check('9 상속: 다른 항목만 남는다',
   diff && diff.incomplete && !diff.lifecycle && !diff.sourceLabel, JSON.stringify(diff));
 check('9 상속: 자식 줄에 확정/출처 반복 없음',
-  !/잠정|NEC 실시간/.test(T.renderDataset(diff)), T.renderDataset(diff));
+  !/잠정|선관위 실시간/.test(T.renderDataset(diff)), T.renderDataset(diff));
 
 // ── 10. 출구조사 시리즈별 provenance ────────────────────────────────────────
 const s0 = ex.sources[0];

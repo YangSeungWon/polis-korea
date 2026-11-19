@@ -77,7 +77,7 @@
     const sourceLabel = m.source === 'wikipedia-ko-infobox' ? '위키'
       : (m.source === 'nec-live-portal' ? '잠정' : (m.is_final ? '확정' : '진행'));
     // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
-    setText('ar-status', `${sourceLabel} 결과` + (m.fetched_at ? ` · 갱신 ${m.fetched_at}` : ''));
+    setText('ar-status', `${sourceLabel} 결과` + window.Archive.updatedNote(m.fetched_at));
   }
 
   function renderNation(ctx) {
@@ -182,9 +182,9 @@
     const n = (ctx.polls || []).length;
     host.innerHTML = `
       <div class="ar-polls-link-card">
-        <div class="ar-polls-link-stat">${n ? `NESDC 등록 여론조사 <b>${n}건</b>` : '여론조사 vs 실제 결과'}</div>
-        <div class="ar-polls-link-note">후보 지지율 추이(여론조사 + 실제 ◆)와 시·도별 득표를 비교합니다.</div>
-        <a class="ar-polls-link-cta" href="/polls/${ctx.meta.id}/">여론조사 vs 실제 상세 →</a>
+        <div class="ar-polls-link-stat">${n ? `여론조사 <b>${n}건</b>` : '여론조사와 실제 결과'}</div>
+        <div class="ar-polls-link-note">선거 전 여론조사와 실제 득표를 나란히 봅니다.</div>
+        ${document.querySelector(`#ar-polls-link a[href="/polls/${ctx.meta.id}/"]`) ? '' : `<a class="ar-polls-link-cta" href="/polls/${ctx.meta.id}/">여론조사와 실제 비교 →</a>`}
       </div>`;
     document.getElementById('ar-polls-link').hidden = false;
   }

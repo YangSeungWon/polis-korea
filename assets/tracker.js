@@ -140,7 +140,7 @@
 
   // 개별 점(=특정 1개 조사) 호버 시 인용공표 참조 한 줄. 클릭하면 그 조사 NESDC 등록페이지로.
   // (점 단독 노출은 '추세'보다 단독 인용에 가까워 조사기관·일시 + 심의위 참조를 함께 표기.)
-  const srcLine = (su) => `<br><span class="tk-tip-src">중앙선거여론조사심의위원회 등록${su ? ' · 클릭→원자료' : ''}</span>`;
+  const srcLine = (su) => `<br><span class="tk-tip-src">중앙선거여론조사심의위원회 등록${su ? ' (누르면 원자료)' : ''}</span>`;
 
   // ===== 인터랙션: hover 툴팁 (차트별 점 좌표 저장 → 최근접 점 표시) =====
   const HOVER = {};  // chartId → [{x,y,tip,color,su}]
@@ -517,10 +517,11 @@
       declareHost('tk-party', 'tkparty');
       declareHost('tk-cand', 'tkcand');
       if (GLEAD) renderGallupLeaders();
-      const ar = recs.length ? `${recs.length}개 조사 · ${recs[0].period_end.slice(0, 7)}~${recs[recs.length - 1].period_end.slice(0, 7)}` : '';
-      document.getElementById('tk-approval-meta').textContent = `다기관 통합 · ${ar}`;
-      document.getElementById('tk-party-meta').textContent = `전국 ${polls.length}개 조사`;
-      document.getElementById('tk-cand-meta').textContent = `다자대결 기준 · 대선 국면`;
+      const ym = (s) => `${s.slice(0, 4)}년 ${+s.slice(5, 7)}월`;
+      document.getElementById('tk-approval-meta').textContent = recs.length
+        ? `${ym(recs[0].period_end)}부터 조사 ${recs.length.toLocaleString()}건` : '';
+      document.getElementById('tk-party-meta').textContent = `전국 조사 ${polls.length.toLocaleString()}건`;
+      document.getElementById('tk-cand-meta').textContent = '다자대결 조사만';
       ['tk-approval', 'tk-party', 'tk-cand'].forEach(attachHover);
       // 모바일 가로 스크롤은 최신(우측 끝)이 보이도록 초기 스크롤.
       // requestAnimationFrame으로 레이아웃 완료 후 실행.
@@ -569,7 +570,7 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'fig-tool';
       b.textContent = 'CSV';
-      b.title = '개별 조사 점 전부(평활선 아님) · 행마다 출처';
+      b.title = '개별 조사 값 CSV (출처 링크 포함)';
       b.addEventListener('click', () => {
         const rows = rowsOf();
         FT.download(`polis-${id.replace('tk-', '')}-${today}.csv`, FT.toCSV(COLS, rows, [

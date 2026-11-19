@@ -233,10 +233,9 @@ STYLE = """<style>
 
 PAGE = """<section class="rt-wrap">
 <h2>{region} 지역 정치사</h2>
-<p class="rt-note">가로축은 <b>실제 날짜 비례</b>입니다 — 긴 공백은 실제로 깁니다.
-점은 선거, 선은 <b>변화량을 이어도 되는지</b>를 뜻합니다.
-<span class="rt-x">×</span> 는 선거는 있었지만 경계·구도가 달라 변화량을 비교할 수 없다는
-뜻이지 결과가 없다는 뜻이 아닙니다.</p>
+<p class="rt-note">가로축은 실제 날짜 간격입니다. 선으로 이어진 선거끼리는 변화량을
+비교할 수 있습니다. <span class="rt-x">×</span>는 선거는 있었지만 경계나 구도가 달라 앞
+선거와 비교할 수 없는 경우이고, 결과가 없다는 뜻은 아닙니다.</p>
 <div class="rt-scroll">{svg}</div>
 <p class="rt-legend">{legend}</p>
 <p class="rt-meta">{meta}</p>
@@ -260,12 +259,12 @@ def main(regions: list[str]) -> int:
         # 종류별 줄이라 '선거 종류'로 쓴다. 사건은 다 모은 게 아니다: 0건은 '없었다'가
         # 아니라 '못 모았다'라서 숫자를 쓰지 않는다(결손 모델).
         n_ev = len(d.get("events") or [])
-        meta = (f'선거 {len(d["points"])}회 · 선거 종류 {len(d["series"])}가지 · '
-                + (f'행정구역·선거구 사건 {n_ev}건(일부만 수집)' if n_ev
-                   else '행정구역·선거구 사건은 아직 모으지 않았습니다'))
+        meta = (f'선거 {len(d["points"])}회. '
+                + (f'행정구역·선거구 변화는 {n_ev}건만 모았습니다.' if n_ev
+                   else '행정구역·선거구 변화는 아직 모으지 않았습니다.'))
         if share is not None:
-            meta += (f' · 계보 분류의 약 {round(share)}%는 강제해산 등 제도적 단절을 '
-                     f'건너는 역사적 연속성 해석에 기댑니다')
+            meta += (f' 계보 분류의 약 {round(share)}%는 강제해산 같은 단절을 건너 '
+                     f'이어 본 해석입니다.')
         # STYLE은 format 대상이 아니다 — CSS의 중괄호가 .format()과 충돌한다
         body = PAGE.format(region=esc(d["region"]), svg=render(d),
                            legend=leg, meta=esc(meta))

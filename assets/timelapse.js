@@ -88,7 +88,7 @@
       + '<span class="tl-year"></span></div>'
       + '<div class="tl-lanes">'
       + d.lanes.map((L) =>
-        `<figure class="tl-lane"><figcaption class="tl-lane-name">${L.name}`
+        `<figure class="tl-lane"><figcaption class="tl-lane-name">${L.name} `
         + `<span class="tl-lane-means">${L.means}</span></figcaption>`
         + '<img alt="" loading="lazy" decoding="async">'
         + '<div class="tl-none" hidden></div>'

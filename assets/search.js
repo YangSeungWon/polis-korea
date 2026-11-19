@@ -189,7 +189,7 @@
       .filter(([m]) => m.length).map(([m, l]) => `${l} ${m.length} · `).join('');
     $('#meta').textContent = q || filterRound
       ? `${partyMeta}${filtered.length.toLocaleString()}건 · ${groups.length.toLocaleString()}명${groups.length > MAX_RESULTS ? ` · 상위 ${MAX_RESULTS}명 표시` : ''}`
-      : `${items.length.toLocaleString()}건 (검색어 입력)`;
+      : '검색어를 입력하세요';
 
     // 정적 페이지(/person/{name-dob}/)는 dob + 당선 이력(pg) 있을 때만. 없으면 동적 검색.
     const personHref = (g) =>

@@ -77,8 +77,7 @@ def block() -> str:
         if n:
             kinds.append((k, label, n))
     out = [START + " — scripts/build/build_history_static.py 자동 갱신. 손수정 X. -->",
-           '  <section class="hs-start" aria-label="어디부터 볼까요">',
-           '    <h2 class="hs-start-title">어디부터 볼까요</h2>',
+           '  <section class="hs-start" aria-label="최근 선거와 바로가기">',
            '    <div class="hs-start-group"><span class="hs-start-label">최근 선거</span>',
            '      <ul class="hs-start-list">']
     for e in recent:

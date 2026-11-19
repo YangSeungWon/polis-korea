@@ -27,8 +27,8 @@ const PHASE_META = {
   CAMPAIGN:  { title: '활성 · 9회 지선 + 재·보궐', subtitle: '16개 시·도 · 마지막 조사 1위', source: 'polls' },
   BLACKOUT:  { title: '활성 · 9회 지선 · 공표금지 중', subtitle: '5/27 이전 등록 조사만 표시', source: 'polls' },
   ELECTION:  { title: '9회 지선 · 개표 중', subtitle: '16개 시·도 · 잠정 1위', source: 'results' },
-  POST:      { title: '9회 지선 · 결과', subtitle: '16개 시·도 · 1위 정당', source: 'results', dateNote: true },
-  RECENT:    { title: '최근 회차 · 9회 지선', subtitle: '16개 시·도 · 1위 정당', source: 'results' },
+  POST:      { title: '제9회 지방선거 결과', subtitle: '16개 시·도', source: 'results', dateNote: true },
+  RECENT:    { title: '제9회 지방선거 결과', subtitle: '16개 시·도', source: 'results' },
   ARCHIVED:  { title: '다음 회차 준비 중', subtitle: '10회 지선 ~2030', source: null },
 };
 
@@ -91,11 +91,14 @@ async function init() {
 
   // sub-line
   const govSub = document.querySelector('[data-slot-sub="governor"]');
-  if (govSub) govSub.textContent = `16개 시·도 · ${meta.source === 'results' ? '1위 정당' : '마지막 조사 1위'}`;
+  // 결과 단계에선 판이 곧 1위 정당이라 부제에 되풀이하지 않는다.
+  if (govSub) govSub.textContent = meta.source === 'results' ? '16개 시·도' : '16개 시·도 · 마지막 조사 1위';
   const mayorSub = document.querySelector('[data-slot-sub="mayor"]');
-  if (mayorSub) mayorSub.textContent = `${meta.source === 'results' ? '시군구 결과 1위' : '시군구 단위'} · ${meta.source === 'results' ? '1위 정당' : '마지막 조사 1위'}`;
+  // #dash-mayor-note는 renderMayor가 실제 곳 수로 채운다 — textContent로 덮으면 span이 사라진다.
+  if (mayorSub) mayorSub.innerHTML = '<span id="dash-mayor-note">시군구 단위</span>'
+    + (meta.source === 'results' ? '' : ' · 마지막 조사 1위');
   const boeSub = document.querySelector('[data-slot-sub="byelection"]');
-  if (boeSub) boeSub.textContent = `${meta.source === 'results' ? '14 선거구 결과' : '7 선거구 · 마지막 조사 1위'}`;
+  if (boeSub) boeSub.textContent = meta.source === 'results' ? '14개 선거구' : '7개 선거구 · 마지막 조사 1위';
 
   renderGovernor(polls, results);
   renderMayor(polls, sgHex, results);
@@ -266,7 +269,7 @@ function renderMayor(polls, sgHex, results) {
   });
   drawHexPanel(svg, cells, 8.5, true);
   const note = $('#dash-mayor-note');
-  if (note) note.textContent = useResults ? `시군구 ${covered}곳 결과` : `시군구 ${covered}곳 조사`;
+  if (note) note.textContent = useResults ? `시군구 ${covered}곳` : `시군구 ${covered}곳 조사`;
 }
 
 // 재보궐 — 폴 vs 결과 자동 전환
@@ -333,7 +336,6 @@ init();
       ariaFn: (e) => `${e.name} 종합 결과${e.party ? ' · ' + e.party : ''}`,
       // 노드 = 중립 단색, 최신 회차만 레인색으로 강조(정당색 rainbow는 과함). 정당은 hover 툴팁에만.
       nodeColorFn: (e, lane, isCur) => (isCur ? lane : 'var(--ink-soft, #5a6378)'),
-      note: '레인 = 대선·총선·지선, 최신 회차만 강조. 노드에 커서를 올리면 당선·1당 정당이 보입니다. 클릭 → 그 선거 <b>종합 결과</b>.',
     });
   }).catch(() => host.remove());
 })();

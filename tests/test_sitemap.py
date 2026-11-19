@@ -85,7 +85,23 @@ def check_lastmod_manifest(raw: str) -> None:
     ck("매니페스트가 없는 파일을 가리키지 않는다", not missing, str(missing[:4]))
     # 날짜가 한 값으로 뭉쳐 있으면 그건 '오늘로 떨어진' 그 상태다
     days = {v["d"] for v in man.values()}
-    ck(f"lastmod가 한 날짜로 뭉쳐 있지 않다 ({len(days)}종)", len(days) >= 2, str(days))
+    # 단, 그날 **정말로 모든 쪽이 바뀌었을** 수 있다(전 템플릿 문구 정리). 그때는 그
+    # 날짜 이전 마지막 커밋과 비교해 매니페스트의 모든 파일이 실제로 달라졌는지 본다 —
+    # 폴백이면 안 바뀐 파일이 있으니 여전히 잡힌다. 얕은 클론이라 기준 커밋이 없으면
+    # 확인할 수 없으므로 원래 검사대로 실패한다.
+    genuine = False
+    if len(days) == 1:
+        d = next(iter(days))
+        base = subprocess.run(["git", "rev-list", "-1", f"--before={d} 00:00", "HEAD"],
+                              cwd=ROOT, capture_output=True, text=True).stdout.strip()
+        if base:
+            changed = set(subprocess.run(
+                ["git", "diff", "--name-only", "-z", base], cwd=ROOT,
+                capture_output=True, text=True).stdout.split("\0"))
+            genuine = all(rel in changed for rel in man)
+    ck(f"lastmod가 한 날짜로 뭉쳐 있지 않다 ({len(days)}종)"
+       + (" — 그날 모든 쪽이 실제로 바뀜(확인)" if genuine else ""),
+       len(days) >= 2 or genuine, str(days))
     # sitemap에 적힌 값과 매니페스트가 같은가
     bad = []
     for loc, lm in urls.items():

@@ -74,6 +74,7 @@
   mountTrust(ctx);
   showDataFailBanner();
   window.FigureTools?.mountArchive(ctx);   // 그림·결과 CSV (Extract)
+  watchGroups();
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {
@@ -99,6 +100,25 @@
     window.FigureTools?.mountArchive(ctx);   // 2단계에서 생긴 지도 섹션에도 (섹션마다 한 번만 붙는다)
   })();
 })();
+
+// 서사 그룹은 섹션이 하나라도 보일 때만 보인다. 섹션은 렌더러가 데이터가 있을 때
+// hidden을 걷는데, 그룹 제목은 정적이라 1952년 대선처럼 비교 자료가 없는 회차에
+// '지난 선거와 비교' 제목만 덩그러니 남았다. 렌더가 늦게 끝나는 섹션(출구조사 등)도
+// 있으므로 한 번 세고 끝내지 않고 hidden 변화를 지켜본다.
+function syncGroups() {
+  document.querySelectorAll('.ar-group').forEach((g) => {
+    const secs = g.querySelectorAll(':scope > .ar-section');
+    if (!secs.length) return;
+    const empty = [...secs].every((s) => s.hidden);
+    if (g.hidden !== empty) g.hidden = empty;   // 같은 값이면 건드리지 않는다(관찰 루프 방지)
+  });
+}
+function watchGroups() {
+  syncGroups();
+  if (typeof MutationObserver !== 'function') return;
+  new MutationObserver(syncGroups).observe(document.body,
+    { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+}
 
 // 신뢰 상태 한 줄을 각 섹션 제목 아래에 붙인다 — docs/trust-states.md.
 // 한 곳에서만 부른다: 섹션마다 _meta를 따로 해석하면 규칙이 갈라진다.

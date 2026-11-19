@@ -4,7 +4,7 @@
     "previous": "7th-pres-1971",
     "current_name": "제13대 대통령선거",
     "previous_name": "제7대 대통령선거",
-    "generated_at": "2026-11-19T20:55:29+09:00",
+    "generated_at": "2026-11-19T21:34:05+09:00",
     "source": "polis 계산",
     "method": "같은 이름의 단위끼리 대조한다. 개명(강원도→강원특별자치도 등)은 이어 붙이고, 통합·신설·개편·이관은 비교하지 않고 not_compared에 담는다."
   },
@@ -40,7 +40,7 @@
       "평화민주당": 27.05,
       "한주의통일한국당": 0.21
     },
-    "note": "정당 기준 전국 득표율. 후보가 달라도 정당이 같으면 이어 본다."
+    "note": "후보가 달라도 같은 정당이면 이어서 비교했습니다."
   },
   "offices": {
     "1": {
@@ -231,7 +231,7 @@
           "match_type": "abolished",
           "reason_code": "abolished_unit",
           "reason": "이번 회차에 없는 단위",
-          "note": "이번 회차에 대응 단위가 없다"
+          "note": "이번 선거에는 같은 곳이 없습니다"
         },
         {
           "sido": "광주광역시",
@@ -240,7 +240,7 @@
           "match_type": "new",
           "reason_code": "new_unit",
           "reason": "지난 회차에 없던 단위",
-          "note": "지난 회차에 대응 단위가 없다"
+          "note": "지난 선거에는 같은 곳이 없습니다"
         },
         {
           "sido": "대구광역시",
@@ -249,7 +249,7 @@
           "match_type": "new",
           "reason_code": "new_unit",
           "reason": "지난 회차에 없던 단위",
-          "note": "지난 회차에 대응 단위가 없다"
+          "note": "지난 선거에는 같은 곳이 없습니다"
         },
         {
           "sido": "인천광역시",
@@ -258,7 +258,7 @@
           "match_type": "new",
           "reason_code": "new_unit",
           "reason": "지난 회차에 없던 단위",
-          "note": "지난 회차에 대응 단위가 없다"
+          "note": "지난 선거에는 같은 곳이 없습니다"
         },
         {
           "sido": "제주도",
@@ -267,7 +267,7 @@
           "match_type": "new",
           "reason_code": "new_unit",
           "reason": "지난 회차에 없던 단위",
-          "note": "지난 회차에 대응 단위가 없다"
+          "note": "지난 선거에는 같은 곳이 없습니다"
         }
       ]
     }

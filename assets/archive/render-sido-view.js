@@ -204,7 +204,7 @@
       // 'turnout'·'turnout-map' — 자료가 투표율이면 방식이 무엇이든 제목·캡션은 투표율의 것.
       const isTurnout = /^turnout/.test(v);
       if (cap) cap.textContent = isTurnout
-        ? ((opts && opts.turnoutCaption) || '시·도별 투표율 — 짙을수록 높음(투표수/선거인수).')
+        ? ((opts && opts.turnoutCaption) || '투표수를 선거인 수로 나눈 값입니다. 진할수록 높습니다.')
         : resultCaption;
       if (titleNode) titleNode.nodeValue = (isTurnout && opts && opts.turnoutTitle)
         ? opts.turnoutTitle : resultTitle;

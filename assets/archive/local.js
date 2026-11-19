@@ -144,7 +144,7 @@
     const sourceLabel = meta.source === 'wikipedia-ko-infobox' || meta.source === 'wikipedia-ko-body'
       ? '위키' : (meta.is_final ? '확정' : (meta.source === 'nec-live-portal' ? '잠정' : '진행'));
     // 받은 날짜가 없으면 갱신일을 쓰지 않는다 — 선거일로 채우면 '1952년에 갱신'이 된다.
-    setText('ar-status', `${sourceLabel} 결과` + (meta.fetched_at ? ` · 갱신 ${meta.fetched_at}` : ''));
+    setText('ar-status', `${sourceLabel} 결과` + window.Archive.updatedNote(meta.fetched_at));
   }
 
   function renderCounting(ctx) {
@@ -348,9 +348,9 @@
       .join('');
     host.innerHTML = `
       <div class="ar-polls-link-card">
-        <div class="ar-polls-link-stat">NESDC 등록 여론조사 <b>${polls.length}건</b></div>
+        <div class="ar-polls-link-stat">여론조사 <b>${polls.length}건</b></div>
         ${officeRows}
-        ${pollsPageHref ? `<a class="ar-polls-link-cta" href="${pollsPageHref}">여론조사 vs 실제 상세 — 시도·시군구 hex →</a>` : ''}
+        ${pollsPageHref && !document.querySelector(`#ar-polls-link a[href="${pollsPageHref}"]`) ? `<a class="ar-polls-link-cta" href="${pollsPageHref}">여론조사와 실제 비교 →</a>` : ''}
       </div>
     `;
     document.getElementById('ar-polls-link').hidden = false;

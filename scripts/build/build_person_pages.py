@@ -82,7 +82,7 @@ TEMPLATE = """<!DOCTYPE html>
   </section>
   <section id="person-body">{static_body}</section>
   <footer class="foot">
-    <p class="fine">같은 이름의 다른 출마자는 <a href="/person.html?name={name}">이름 검색</a>에서.</p>
+    <p class="fine">같은 이름의 다른 출마자는 <a href="/person.html?name={name}">이름 검색</a>에서 볼 수 있습니다.</p>
   </footer>
 </main>
 <script src="assets/parties.js"></script>
@@ -318,12 +318,10 @@ def static_body(p: dict) -> tuple[str, str]:
     """
     races = sorted(p.get("races", []), key=lambda r: (r.get("date") or str(r.get("year") or "")))
     years = [r.get("year") for r in races if r.get("year")]
-    span = (f"{min(years)}년 " if min(years) == max(years) else f"{min(years)}~{max(years)}년 ") if years else ""
-    wins, losses = p.get("wins", 0), p.get("losses", 0)
-    lede_bits = [f"{span}{len(races)}회 출마 · {wins}회 당선 · {losses}회 낙선"]
+    lede = record_sentence(years, len(races), p.get("wins", 0))
     if p.get("parties"):
-        lede_bits.append(recent_parties(p, 4))
-    lede = esc(" — ".join(lede_bits))
+        lede += f" 소속 정당은 {party_phrase(p, 4)}입니다."
+    lede = esc(lede)
 
     rows = []
     for r in races:
@@ -434,14 +432,15 @@ def person_line(p: dict) -> str:
     bits = []
     sidos = _short_sidos(p)
     if sidos:
-        bits.append(" · ".join(sidos))
+        bits.append("·".join(sidos))
     years = [r.get("year") for r in (p.get("races") or []) if r.get("year")]
     if years:
         lo, hi = min(years), max(years)
         bits.append(f"{lo}~{hi}" if lo != hi else str(lo))
-    bits.append(f'{len(p.get("races") or [])}회 출마·{p.get("wins", 0)}회 당선')
+    n, wins = len(p.get("races") or []), p.get("wins", 0)
+    bits.append(f"{n}번 출마, {wins}번 당선" if wins else f"{n}번 출마, 당선 없음")
     return (f'<li><a href="/person/{quote(slug)}/">{esc(p["name"])}</a>'
-            f'<span class="ph-meta">{esc(" · ".join(bits))}</span></li>')
+            f'<span class="ph-meta">{esc(", ".join(bits))}</span></li>')
 
 
 def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
@@ -499,8 +498,7 @@ def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
             title=esc(title), desc=esc(desc), canon=canon,
             jsonld=hub_jsonld(group, canon),
             h1=esc(f'{g} — 인물 {len(group)}명'),
-            lede=esc(f'이름이 {label} 시작하는 역대 선거 출마자입니다. '
-                     f'전체 {len(persons):,}명 중 {len(group):,}명.'),
+            lede=esc(f'이름이 {label} 시작하는 역대 선거 출마자입니다.'),
             body=body)
         d = OUT_DIR / slug
         d.mkdir(parents=True, exist_ok=True)
@@ -524,11 +522,11 @@ def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
         f'<ul class="ph-list">{"".join(person_line(p) for p in most)}</ul></section>'
         f'<section class="ph-sec"><h2>다른 길로 찾기</h2><ul class="ph-list">'
         f'<li><a href="/region/">지역별 선거 기록</a>'
-        f'<span class="ph-meta">시군구에서 그 지역 1위 후보로</span></li>'
+        f'<span class="ph-meta">시군구마다 선거별 1위 후보를 따라갑니다</span></li>'
         f'<li><a href="/parties.html">정당 계보</a>'
-        f'<span class="ph-meta">정당에서 소속 인물로</span></li>'
+        f'<span class="ph-meta">정당마다 소속 인물을 따라갑니다</span></li>'
         f'<li><a href="/search.html">통합 검색</a>'
-        f'<span class="ph-meta">이름·지역·정당을 한 번에</span></li>'
+        f'<span class="ph-meta">이름이나 지역, 정당으로 찾습니다</span></li>'
         f'</ul></section>')
     title = f'역대 선거 인물 {len(persons):,}명 — 출마·당선 기록 | polis'
     desc = (f'역대 선거에서 당선했거나 공약이 남은 인물 {len(persons):,}명의 출마·당선 기록. '
@@ -538,22 +536,34 @@ def build_hub(persons: list, valid_slugs: set, sitemap_urls: list) -> int:
         robots='',                     # /person/ 허브 자신은 색인 대상이다
         title=esc(title), desc=esc(desc), canon="/person/",
         jsonld=hub_jsonld(persons, "/person/"),
-        h1="역대 선거 인물",
-        lede=esc(f'당선했거나 국회의원을 지냈거나 공약이 남은 인물 {len(persons):,}명. '
-                 f'사람마다 언제 어디서 누구와 붙어 몇 표 차로 갈렸는지.'),
+        h1="인물",
+        lede=esc(f'당선됐거나 국회의원을 지냈거나 공약이 남아 있는 후보 {len(persons):,}명입니다. '
+                 f'출마할 때마다 누구와 맞붙어 몇 표 차가 났는지 볼 수 있습니다.'),
         body=body)
     (OUT_DIR / "index.html").write_text(html, encoding="utf-8")
     sitemap_urls.append("/person/")
     return n_made + 1
 
 
-def recent_parties(p: dict, k: int) -> str:
+def party_phrase(p: dict, k: int) -> str:
     """소속 정당 — 최근 k개를 시간순으로. 앞에서 자르면 지금 소속이 빠진다
-    (이재명: 앞 3개에 더불어민주당이 없었다). 더 있으면 '외 n'을 붙인다."""
+    (이재명: 앞 3개에 더불어민주당이 없었다). 더 있으면 '등 n곳'을 붙인다."""
     ps = p.get("parties") or []
     if len(ps) <= k:
-        return " · ".join(ps)
-    return " · ".join(ps[-k:]) + f" 외 {len(ps) - k}"
+        return ", ".join(ps)
+    return ", ".join(ps[-k:]) + f" 등 {len(ps)}곳"
+
+
+def record_sentence(years: list, n: int, wins: int) -> str:
+    """'2006년부터 2025년까지 9번 출마해 6번 당선됐습니다.' — 리드·설명 공용.
+    연도를 모르면 연도 없이."""
+    lo, hi = (min(years), max(years)) if years else (None, None)
+    when = (f"{lo}년부터 {hi}년까지 " if lo != hi else f"{lo}년에 ") if lo else ""
+    if n == 1:
+        return f"{when}출마해 {'당선됐습니다' if wins else '당선되지 못했습니다'}."
+    if not wins:
+        return f"{when}{n}번 출마했고 당선되지 못했습니다."
+    return f"{when}{n}번 출마해 {wins}번 당선됐습니다."
 
 
 def main():
@@ -584,12 +594,11 @@ def main():
         data = {"persons": [p]}
         data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
         # description: 다회차·정당 요약
-        rounds = sorted({r.get("round", "") for r in p["races"] if r.get("round")})
-        parties = recent_parties(p, 3)
+        years = [r.get("year") for r in p["races"] if r.get("year")]
         desc = (
-            f"{p['name']} 선거 이력. {len(p['races'])}회 출마해 {p['wins']}회 당선"
-            f"·{p['losses']}회 낙선 — 회차별 지역·정당·득표율·순위까지."
-            + (f" 소속: {parties}." if parties else "")
+            f"{p['name']} 선거 이력. {record_sentence(years, len(p['races']), p['wins'])}"
+            " 선거마다 지역, 정당, 득표율, 순위를 볼 수 있습니다."
+            + (f" 소속 정당은 {party_phrase(p, 3)}입니다." if p.get("parties") else "")
         )
         lede, body = static_body(p)
         ld = jsonld(p, slug, desc)

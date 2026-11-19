@@ -164,7 +164,7 @@
     }
     let html = '<div class="bx-cov-legend">'
       + '<span class="bx-cov-tag bx-cov-tag-nec">NEC API</span>'
-      + '<span class="bx-cov-tag bx-cov-tag-wiki">위키</span>'
+      + '<span class="bx-cov-tag bx-cov-tag-wiki">위키백과</span>'
       + '<span class="bx-cov-tag bx-cov-tag-none">데이터 없음</span>'
       + '</div><div class="bx-cov-grid">';
     for (const y of allYears) {

@@ -28,7 +28,7 @@ function renderDetail() {
   const pane = $('#detail-pane');
   if (!state.selectedSido) {
     pane.innerHTML =
-      '<div class="detail-empty">시도·시군구를 선택하면 그 지역의 모든 여론조사가 여기에 표시됩니다.</div>';
+      '<div class="detail-empty">지역을 고르면 그 지역 조사가 여기 나옵니다.</div>';
     return;
   }
   const polls = pollsByRegion(state.selectedSido, state.selectedSigungu);
@@ -168,8 +168,8 @@ function buildLeanTableHTML(officePolls) {
     return `<tr><td class="ag">${a.replace(/\(주\)|주식회사/g, '').trim()}</td>${cells}<td class="n">${cnt[a]}</td></tr>`;
   }).join('');
   return `<div class="lean-mini">
-    <div class="lean-mini-head">조사기관별 lean <span class="lean-mini-sub">잔차 평균 (+높게 / −낮게)</span></div>
-    <table class="lean-mini-tbl"><thead><tr><th>기관</th>${head}<th>n</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="lean-mini-head">조사기관별 치우침 <span class="lean-mini-sub">추세보다 높게(+) 또는 낮게(−) 나온 평균</span></div>
+    <table class="lean-mini-tbl"><thead><tr><th>기관</th>${head}<th>조사 수</th></tr></thead><tbody>${rows}</tbody></table>
   </div>`;
 }
 
