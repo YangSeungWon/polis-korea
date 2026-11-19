@@ -805,7 +805,9 @@ def comparison_line(eid: str) -> str:
             o = (d.get("offices") or {}).get(tc)
             if not o:
                 continue
-            seats = top_delta(o.get("delta_compared_only") or {}, "")
+            # 같은 당 사슬로 묶은 증감이 있으면 그것 — 이름별로 쓰면 '새누리당 +8 ·
+            # 민주당 -7'처럼 개명·합당이 득실로 보인다.
+            seats = top_delta(o.get("delta_by_lineage", o.get("delta_compared_only")) or {}, "")
             if seats:
                 bits.append(f'{_esc(o.get("label") or "")} {seats}')
                 break

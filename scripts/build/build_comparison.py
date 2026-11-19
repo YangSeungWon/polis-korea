@@ -260,6 +260,45 @@ def turnout(races):
     return round(vo / el * 100, 1)
 
 
+def lineage_delta(prev: list, prev_date: str, cur: list, cur_date: str) -> dict:
+    """정당 사슬별 자리 증감. 이름은 지금 회차의 이름(없으면 이전 이름)을 쓴다.
+    무소속은 사슬이 아니라 이름 그대로 센다."""
+    global _RENAME
+    if _RENAME is None:
+        _RENAME = rename_groups()
+
+    def key(name, date):
+        if not name or name == "무소속":
+            return "무소속"
+        c = _canon(name, date)
+        return _RENAME.get(c, c)
+
+    # 이름은 지금 회차에서 가장 많이 쓴 이름, 없으면 이전 회차의 것 — 동률은 이름순.
+    # (집합 순서로 고르면 해시 시드마다 '민주당'과 '열린우리당'이 번갈아 나왔다.)
+    pc, cc = Counter(), Counter()
+    pn: dict = defaultdict(Counter)
+    cn: dict = defaultdict(Counter)
+    for n in prev:
+        k = key(n, prev_date)
+        pc[k] += 1
+        pn[k][n] += 1
+    for n in cur:
+        k = key(n, cur_date)
+        cc[k] += 1
+        cn[k][n] += 1
+
+    def pick(c: Counter) -> str:
+        return sorted(c.items(), key=lambda x: (-x[1], x[0]))[0][0]
+
+    label = {k: pick(cn[k]) if cn[k] else pick(pn[k]) for k in set(pc) | set(cc)}
+    out = {}
+    for k in set(pc) | set(cc):
+        d = cc[k] - pc[k]
+        if d:
+            out[label[k]] = d
+    return dict(sorted(out.items(), key=lambda x: (-abs(x[1]), x[0])))
+
+
 def delta_counter(prev: Counter, cur: Counter) -> dict:
     keys = set(prev) | set(cur)
     return {k: cur.get(k, 0) - prev.get(k, 0) for k in sorted(keys)
@@ -363,6 +402,11 @@ def build(cur_id: str, prev_id: str) -> dict:
             # 표심으로 뒤집힌 몫은 직접 비교 가능한 단위만 따로 낸다.
             "delta_compared_only": delta_counter(
                 Counter(pm[k]["party"] for k in both), Counter(cm[k]["party"] for k in both)),
+            # 같은 당(개명·같은 계열 합당)끼리 묶은 증감 — 이름별 증감은
+            # '새누리당 +8 · 민주당 -7'처럼 같은 당의 이름 바뀜을 득실로 보이게 한다.
+            "delta_by_lineage": lineage_delta(
+                [pm[k]["party"] for k in sorted(both)], prev_date,
+                [cm[k]["party"] for k in sorted(both)], cur_date),
             "units": units, "not_compared": not_compared,
         }
 
