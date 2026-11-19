@@ -197,8 +197,51 @@ def main():
     ck("시군구가 자기 시도로 올라가는 링크를 갖는다", not no_up,
        f"{len(no_up)}개 — {no_up[:3]}")
 
+    check_relate(by)
+
     print(f"\n{'실패 ' + str(len(fails)) if fails else '전부 통과'}")
     return 1 if fails else 0
+
+
+def check_relate(by: dict) -> None:
+    """지역에서 지역으로 — 비교 자료가 거짓을 말하지 않는가.
+
+    막는 사고: 모르는 득표를 0표로 세어 득표율을 만든다. 비교 자료가 표와 다른 값을
+    낸다. 시도 자료에 대선 득표율이 빠져, 표엔 결과가 있는데 비교 막대는 '자료 없음'이다.
+    """
+    import json
+    from build_region_pages import collect as _c, REGION_DATA
+    pres = _c.pres
+    bad = [(k, e, v) for k, m in pres.items() for e, v in m.items()
+           if not (0 <= v[0] <= 100 and 0 <= v[1] <= 100 and v[0] + v[1] <= 100.01)]
+    ck("대선 득표율 축이 0~100이고 둘의 합이 100을 넘지 않는다", not bad, str(bad[:3]))
+
+    # 비교 자료 = 페이지와 같은 집합, 같은 값
+    pages = {d.name for d in (ROOT / "region").iterdir()
+             if d.is_dir() and (d / "index.html").exists()}
+    files = {f.stem for f in REGION_DATA.glob("*.json") if f.name != "index.json"}
+    ck(f"지역 페이지마다 비교 자료가 있다 ({len(files)})", pages == files,
+       f"페이지만 {sorted(pages - files)[:3]} · 자료만 {sorted(files - pages)[:3]}")
+    ix = json.loads((REGION_DATA / "index.json").read_text(encoding="utf-8"))
+    ck("색인이 페이지 전부를 가리킨다", {r["slug"] for r in ix["regions"]} == pages)
+    j = json.loads((REGION_DATA / "서울특별시-강남구.json").read_text(encoding="utf-8"))
+    ck("비교 자료 행 수 = 표의 행 수", len(j["rows"]) == len(by[("서울특별시", "강남구")]))
+    # 시도 — 대선 행이 있으면 득표율 축도 있어야 한다(있는데 '모른다'고 보이지 않게).
+    seoul = json.loads((REGION_DATA / "서울특별시.json").read_text(encoding="utf-8"))
+    pres_rows = {r["eid"] for r in seoul["rows"] if r.get("tc") == "1" or r.get("office") == "대통령"}
+    ck(f"시도 비교 자료에 대선 득표율 ({len(seoul['pres'])}/{len(pres_rows)})",
+       len(seoul["pres"]) >= 10 and set(seoul["pres"]) <= pres_rows,
+       f"{sorted(pres_rows - set(seoul['pres']))[:5]}")
+    sbad = [(e, v) for e, v in seoul["pres"].items() if not (0 <= v[0] <= 100 and 0 <= v[1] <= 100 and v[0] + v[1] <= 100.01)]
+    ck("시도 대선 득표율도 0~100", not sbad, str(sbad[:3]))
+    zero = [f for f in files
+            for r in json.loads((REGION_DATA / f"{f}.json").read_text(encoding="utf-8"))["rows"]
+            if r.get("turnout") == 0]
+    ck("비교 자료에도 투표율 0이 없다 (없는 값 ≠ 0)", not zero, str(zero[:3]))
+    # 페이지마다 비교 진입점
+    no_cmp = [p for p in sorted(pages)
+              if "/region/compare.html?a=" not in (ROOT / "region" / p / "index.html").read_text(encoding="utf-8")]
+    ck("지역 페이지마다 '나란히 보기' 진입점", not no_cmp, str(no_cmp[:3]))
 
 
 if __name__ == "__main__":

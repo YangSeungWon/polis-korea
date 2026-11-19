@@ -2,7 +2,29 @@
 
 // === 디테일 패널 ===
 
+// 지선 화면 상태 ↔ URL(replace). 기본값과 같으면 지운다 — 링크가 짧고 정본이 하나다.
+//   ?office= (페이지가 연 직위와 다를 때) ?scope= ?view= ?mode= ?sel=시도[|시군구]
+// 대선·총선 폴은 render-pres/render-gen이 자기 상태(view·mode)를 같은 이름으로 쓴다.
+function pollDefaultOffice() {
+  const init0 = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
+  return init0.office || '광역단체장';
+}
+function syncPollURL() {
+  if (typeof ViewState === 'undefined') return;
+  if (typeof POLL_ELECTION === 'object' && POLL_ELECTION && POLL_ELECTION.kind !== 'local') return;
+  const defMode = IS_PAST ? 'result' : 'polls';
+  const defScope = state.office === '정당지지' && hasSigunguData() ? '시군구' : '시도';
+  ViewState.set({
+    office: state.office === pollDefaultOffice() ? null : state.office,
+    scope: state.scope === defScope ? null : state.scope,
+    view: state.view === 'hex' ? null : state.view,
+    mode: state.mode === defMode ? null : state.mode,
+    sel: state.selectedSido ? state.selectedSido + (state.selectedSigungu ? '|' + state.selectedSigungu : '') : null,
+  });
+}
+
 function renderDetail() {
+  syncPollURL();   // 선택·직위·자료 변경이 모두 여기로 모인다
   const pane = $('#detail-pane');
   if (!state.selectedSido) {
     pane.innerHTML =
@@ -180,6 +202,7 @@ function setView(v) {
   // 떠나는 뷰에서 보던 지역·배율 capture (state.view 갱신 전).
   if (window.Focus) Focus.capture(viewHandle(state.view));
   state.view = v;
+  syncPollURL();
   const sigungu = isSigunguMode();
   $('#map').toggleAttribute('hidden', v !== 'map');
   $('#hex').toggleAttribute('hidden', !(v === 'hex' && !sigungu));

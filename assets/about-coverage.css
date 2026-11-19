@@ -122,3 +122,18 @@
     grid-template-columns: 50px repeat(40, minmax(10px, 1fr));
   }
 }
+
+/* /about/data/ — 파일·필드 표 */
+.dl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 12px; }
+.dl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.dl-table th, .dl-table td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.dl-table th { font-size: 11px; font-weight: 700; color: var(--ink-soft); border-bottom: 1px solid var(--rule-strong); }
+.dl-table td:first-child { white-space: nowrap; }
+.dl-table code, .cov-note code, .cov-section-sub code { font-size: 12px; }
+/* 좁은 화면: 두 칸이 글자 하나씩 꺾이지 않게 행을 위아래로 쌓는다. */
+@media (max-width: 600px) {
+  .dl-table thead { display: none; }
+  .dl-table tr { display: block; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+  .dl-table td { display: block; border: 0; padding: 2px 0; }
+  .dl-table td:first-child { white-space: normal; overflow-wrap: anywhere; font-weight: 600; }
+}

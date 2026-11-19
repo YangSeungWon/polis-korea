@@ -359,6 +359,7 @@
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
         const g = document.createElementNS(NS, 'g');
+        g.dataset.region = n.sido;   // brush.js 공통 키
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const outline = document.createElementNS(NS, 'circle');   // 클러스터 경계(크기 ∝ 의석수)
         outline.setAttribute('cx', n.cx.toFixed(1)); outline.setAttribute('cy', n.cy.toFixed(1)); outline.setAttribute('r', n.r.toFixed(1));
@@ -410,6 +411,7 @@
       const svg = newSvg(L.viewBox);
       for (const n of L.nodes) {
         const g = document.createElementNS(NS, 'g');
+        g.dataset.region = n.sido;   // brush.js 공통 키
         if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(n.sido)); }
         const missCol = opts.missOf && opts.missOf(n.sido);   // 여론조사 빗나감 → 조사 1위 정당색 점선 링
         const tt = document.createElementNS(NS, 'title'); tt.textContent = tipOf(n, mode) + (missCol ? ' · 여론조사 빗나감(테두리=조사 1위 정당)' : ''); g.appendChild(tt);

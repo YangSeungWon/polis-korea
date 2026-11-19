@@ -27,6 +27,9 @@
     }
     hit.textContent = t ? `${n}곳` : '';
   }
-  q.addEventListener('input', apply);
+  // 검색어 ↔ URL(?q=, replace) — '성남'으로 좁힌 목록을 링크로 보낼 수 있게.
+  const VS = window.ViewState;
+  if (VS && VS.get('q')) q.value = VS.get('q');
+  q.addEventListener('input', () => { apply(); if (VS) VS.set({ q: q.value.trim() || null }); });
   apply();
 })();

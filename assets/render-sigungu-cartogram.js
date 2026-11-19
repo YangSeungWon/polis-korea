@@ -47,7 +47,7 @@
     // 줌·포커스 앵커 — region(시도|시군구)→셀 중심(그리드). 단색/격자/원형 교차 보존에 공통 키.
     const focusCells = cells.map((d) => { const [cx, cy] = ctr(d); return { region: d.sido + '|' + d.name, cx, cy }; });
     const isSel = (d) => !!(sel && sel.sido === d.sido && sel.name === d.name);
-    const bindClick = (g, d) => { if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(d.sido, d.name, resultFn(d.sido, d.name), d)); } };
+    const bindClick = (g, d) => { g.dataset.region = d.sido + '|' + d.name; if (opts.onSelect) { g.style.cursor = 'pointer'; g.addEventListener('click', () => opts.onSelect(d.sido, d.name, resultFn(d.sido, d.name), d)); } };
     // 득표율이 없으면 '0%'가 아니라 '—'. 0%는 '아무도 안 찍었다'는 없는 사실이다.
     const pctStr = (top) => (top.uncontested ? '무투표 당선'
       : (top.pct != null ? top.pct.toFixed(1) + '%' : '득표율 자료 없음'));

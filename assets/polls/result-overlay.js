@@ -61,6 +61,7 @@
 
   // 과거 선거 기본 모드(result)일 때 main.js가 첫 렌더 전 실제결과를 미리 로드(빈 화면 깜빡임 방지).
   window.pollEnsureActual = loadActual;
+  window.pollSetMode = setMode;   // URL 복원(main.js)이 토글·적중률 배지까지 한 경로로 맞추게
 
   function init() {
     if (typeof state === 'undefined') return;

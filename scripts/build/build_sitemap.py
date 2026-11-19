@@ -169,6 +169,7 @@ STATIC = [
     ("/parties.html", "weekly", "0.7"),
     ("/chronology.html", "weekly", "0.6"),
     ("/about/data-coverage/", "weekly", "0.5"),
+    ("/about/data/", "monthly", "0.5"),
 ]
 
 

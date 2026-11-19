@@ -256,7 +256,9 @@
   margin-bottom: 6px;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--ink);
+  flex-wrap: wrap;
 }
+.detail-hdr .region-page-link { flex-basis: 100%; margin: 6px 0 0; }
 .detail-hdr h2 {
   font-size: 22px;
   font-weight: 800;
@@ -615,3 +617,78 @@
   cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 2px 0;
 }
 .pi-past[open] > summary { margin-bottom: 6px; }
+
+/* ── 추출 도구줄 (assets/figure-tools.js) — 그림·CSV ───────────── */
+.fig-tools { display: inline-flex; gap: 4px; margin-left: 10px; vertical-align: middle; }
+.fig-tool {
+  font: inherit; font-size: 12px; font-weight: 600; line-height: 1.4;
+  padding: 2px 8px; border: 1px solid var(--rule-strong); border-radius: 3px;
+  background: transparent; color: var(--ink-soft); cursor: pointer; text-decoration: none;
+  white-space: nowrap;
+}
+.fig-tool:hover:not([disabled]) { color: var(--ink); border-color: var(--ink-soft); }
+.fig-tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.fig-tool[disabled] { opacity: 0.5; cursor: not-allowed; }
+.fig-export-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+.fig-tool-link { font-size: 12px; color: var(--ink-soft); }
+@media (max-width: 520px) {
+  .fig-tools { display: flex; margin: 6px 0 0; }
+}
+
+/* 연동 하이라이트(brush.js) — 같은 지역을 가리키는 칸·행을 함께 밝히고 나머지는 흐린다.
+   지우지 않는다: 전체 모습은 남는다. 같은 지역이 없는 지도는 건드리지 않는다. */
+svg.brushing [data-region] { transition: opacity .12s; }
+svg.brushing [data-region]:not(.is-brushed) { opacity: .28; }
+svg [data-region].is-brushed { stroke: var(--ink); stroke-width: 1.4; }
+.ar-winners-grid.brushing .ar-winner-row:not(.is-brushed) { opacity: .45; }
+.ar-winner-row.is-brushed { background: var(--bg2); }
+
+/* 지도에서 고른 곳 → 그 지역의 역대 선거 페이지 */
+.region-page-link {
+  margin-left: auto; font-size: 12px; font-weight: 600;
+  color: var(--ink-soft); text-decoration: none; white-space: nowrap;
+}
+.region-page-link:hover { color: var(--ink); text-decoration: underline; }
+
+/* 범위 슬라이더(range-filter.js) — 실제 range 두 개를 한 줄에 겹친다. */
+.rf { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
+.rf-label { font-weight: 700; color: var(--ink-soft); white-space: nowrap; }
+.rf-track { position: relative; display: inline-block; width: 160px; height: 22px; }
+.rf-track::before { content: ''; position: absolute; left: 0; right: 0; top: 10px; height: 3px; background: var(--rule); border-radius: 2px; }
+.rf-fill { position: absolute; top: 10px; height: 3px; background: var(--ink-soft); border-radius: 2px; }
+.rf-track input {
+  position: absolute; left: 0; top: 0; width: 100%; height: 22px; margin: 0;
+  background: none; pointer-events: none; -webkit-appearance: none; appearance: none;
+}
+.rf-track input::-webkit-slider-runnable-track { background: none; height: 22px; }
+.rf-track input::-moz-range-track { background: none; }
+.rf-track input::-webkit-slider-thumb {
+  -webkit-appearance: none; pointer-events: auto; width: 14px; height: 14px; margin-top: 4px;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); cursor: pointer;
+}
+.rf-track input::-moz-range-thumb {
+  pointer-events: auto; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--ink); cursor: pointer;
+}
+.rf-track input:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent, var(--ink)); outline-offset: 2px; }
+.rf-out { min-width: 64px; font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* 지도 위 동적 질의(map-filter.js) — 조건 밖 칸은 지우지 않고 흐린다. */
+.map-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin: 8px 0 6px; font-size: 12px; }
+.mf-margin { display: inline-flex; align-items: center; gap: 8px; }
+.mf-lbl { font-weight: 700; color: var(--ink-soft); }
+.mf-margin input { width: 140px; }
+.mf-mval { min-width: 92px; font-variant-numeric: tabular-nums; }
+.mf-count { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.mf-on [data-region] { transition: opacity .1s; }
+.mf-on [data-region].mf-out { opacity: .15; }
+/* 맞는 칸에 테두리 — 칸이 g면 그 안의 **첫** 면(칸 외곽)에. 격자의 표 비례 네모도
+   polygon이라, 전부에 치면 득표 비례가 검은 덩어리로 덮인다. 렌더러가 stroke를
+   속성으로 박아 두어 g에서 물려받지 않는다. 표 비례 점(circle)·네모(rect)는 건드리지
+   않는다 — 거기 테두리를 치면 득표 비례가 검은 덩어리로 덮인다. */
+.mf-on [data-region].mf-hit:is(polygon, path),
+.mf-on [data-region].mf-hit > :is(polygon, path):first-of-type { stroke: var(--ink); stroke-width: 1.2; }
+@media (max-width: 600px) {
+  .rf-track { width: 120px; }
+  .mf-margin input { width: 110px; }
+}

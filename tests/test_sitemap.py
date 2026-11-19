@@ -40,6 +40,9 @@ EXCLUDE_EXACT = {
     # 실제 내용은 /person/{slug}/ 4,300여 개가 따로 색인된다.
     "person.html",
     "search.html",
+    # ?a=&b=로 두 지역을 받아 그리는 비교 도구 껍데기 — 같은 이유. 내용은 지역 페이지
+    # 375곳에 이미 색인돼 있고, 비교는 그 페이지들의 '나란히' 링크로 들어온다.
+    "region/compare.html",
 }
 
 fails = []

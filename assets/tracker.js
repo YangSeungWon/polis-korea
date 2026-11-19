@@ -242,7 +242,8 @@
   }
 
   // ===== ② 정당지지 =====
-  function renderPartySupport(polls, hoverKey = 'tk-party', title = '정당 지지도 추이') {
+  function renderPartySupport(polls) {
+    const hoverKey = 'tk-party', title = '정당 지지도 추이';
     // 개별 조사 점(전국) — party -> [{t,v,ag}]
     const byParty = {};
     for (const p of polls) {
@@ -318,7 +319,8 @@
   }
 
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
-  function renderCandidatePref(polls, hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이') {
+  function renderCandidatePref(polls) {
+    const hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이';
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
     const byCand = {};  // name -> {pts:[{t,v,ag}], party}
     for (const p of polls) {
@@ -531,9 +533,53 @@
     }
     _rerender = renderAll;
     renderAll();
+    mountCSV(recs, polls, candPolls);
     renderLeanTable(recs, polls);
     document.getElementById('tk-loading')?.remove();
     showDataFailBanner();
+  }
+
+  // ---- CSV (Extract) — 평활선이 아니라 **개별 조사 점**을 낸다. 추세는 우리가 만든
+  // 해석이고, 받는 사람이 자기 방식으로 다시 그릴 수 있어야 한다. 출처 URL을 행마다.
+  function mountCSV(recs, polls, candPolls) {
+    const FT = window.FigureTools;
+    if (!FT) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const COLS = [
+      { key: 'metric', label: '지표' }, { key: 'agency', label: '조사기관' },
+      { key: 'start', label: '조사시작' }, { key: 'end', label: '조사종료' },
+      { key: 'item', label: '항목' }, { key: 'party', label: '정당' }, { key: 'pct', label: '값(%)' },
+      { key: 'url', label: '출처' },
+    ];
+    const pollRows = (ps, metric, itemOf) => ps.flatMap((p) => (p.candidates || [])
+      .filter((c) => c.pct != null)
+      .map((c) => ({ metric, agency: p.agency, start: p.period_start, end: p.period_end,
+        item: itemOf(c), party: c.party, pct: c.pct, url: p.source_url })));
+    const sets = {
+      'tk-approval': () => recs.flatMap((r) => [
+        { metric: '국정수행 평가', agency: r.agency, start: r.period_start, end: r.period_end, item: `${r.subject} 긍정`, pct: r.positive, url: r.source_url },
+        { metric: '국정수행 평가', agency: r.agency, start: r.period_start, end: r.period_end, item: `${r.subject} 부정`, pct: r.negative, url: r.source_url },
+      ]),
+      'tk-party': () => pollRows(polls, '정당 지지도', (c) => c.party),
+      'tk-cand': () => pollRows(candPolls, '차기 대선주자', (c) => c.name || c.party),
+    };
+    for (const [id, rowsOf] of Object.entries(sets)) {
+      const head = document.getElementById(id)?.closest('.tk-section')?.querySelector('.tk-section-head');
+      if (!head || head.querySelector('.fig-tool')) continue;
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'fig-tool';
+      b.textContent = 'CSV';
+      b.title = '개별 조사 점 전부(평활선 아님) · 행마다 출처';
+      b.addEventListener('click', () => {
+        const rows = rowsOf();
+        FT.download(`polis-${id.replace('tk-', '')}-${today}.csv`, FT.toCSV(COLS, rows, [
+          `${rows[0] ? rows[0].metric : id} · 개별 조사 ${rows.length}행 · 받은 날 ${today}`,
+          '출처: 중앙선거여론조사심의위원회(NESDC) 등록 공표 조사 등 · polis.ysw.kr 정리',
+          `내려받은 화면: ${location.href}`,
+        ]));
+      });
+      head.appendChild(b);
+    }
   }
 
   // ---- 기관별 lean 표 (538식 투명성) — 민주·국힘·국정긍정 잔차 평균 ----

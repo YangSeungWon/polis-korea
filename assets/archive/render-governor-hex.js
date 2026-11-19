@@ -153,6 +153,7 @@
         t3.textContent = `${fmtPct(cell.win.pct, { digits: 1 })}`;
         g.appendChild(t3);
       }
+      g.dataset.region = cell.sido;   // brush.js 공통 키
       if (opts.onSelect) { g.style.cursor = cell.win ? 'pointer' : 'default'; g.addEventListener('click', () => opts.onSelect(cell.sido)); }
       svg.appendChild(g);
     }

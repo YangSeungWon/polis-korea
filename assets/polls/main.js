@@ -114,8 +114,25 @@ async function init() {
   if (state.mode === 'result' && typeof window.pollEnsureActual === 'function') await window.pollEnsureActual();
   // 정적 prerender가 주입한 초기 상태 (URL 기반)
   const init0 = (typeof window !== 'undefined' && window.__INITIAL_STATE__) || {};
-  if (init0.office) setOffice(init0.office);
-  setView(init0.view || state.view);  // 기본 hex (prerender가 view 주입 시 그것)
+  // URL(공유 링크) > prerender 주입 > 기본. 모르는 값은 버린다(낡은 링크가 빈 화면을 만들지 않게).
+  const VS = (typeof ViewState !== 'undefined') ? ViewState : null;
+  const u = VS ? { office: VS.get('office'), scope: VS.get('scope'), view: VS.get('view'), mode: VS.get('mode'), sel: VS.get('sel') } : {};
+  const officeOK = (o) => o && document.querySelector(`[data-office="${CSS.escape(o)}"]`);
+  const office0 = officeOK(u.office) ? u.office : init0.office;
+  if (office0) setOffice(office0);
+  if ((u.scope === '시도' || u.scope === '시군구') && !$('#scope-seg').hidden && u.scope !== state.scope) setScope(u.scope);
+  if ((u.mode === 'polls' || u.mode === 'result') && u.mode !== state.mode && typeof window.pollSetMode === 'function') {
+    await window.pollSetMode(u.mode);
+  }
+  if (u.sel) {
+    const i = u.sel.indexOf('|');
+    state.selectedSido = i < 0 ? u.sel : u.sel.slice(0, i);
+    state.selectedSigungu = i < 0 ? null : u.sel.slice(i + 1);
+  }
+  const view0 = (u.view === 'map' || u.view === 'hex') ? u.view : (init0.view || state.view);
+  if (vtog && window.EncodingToggle && window.EncodingToggle.setActive) window.EncodingToggle.setActive(vtog, view0);
+  setView(view0);  // 기본 hex (prerender가 view 주입 시 그것)
+  if (state.selectedSido) renderDetail();
   // 지선 per-election 페이지 — 선거 무렵 국정·정당 지지 배경(허브는 election 없어 no-op)
   if (window.PollClimate) PollClimate.mount({ after: 'election-intro' });
 }

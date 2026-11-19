@@ -295,3 +295,39 @@ a.pp-party:hover { background: var(--bg2); }
 .rg-past summary { font-size: 12px; color: var(--ink-soft); cursor: pointer; }
 .rg-past .rg-units { margin-top: 8px; }
 .rg-past .rg-units a { color: var(--ink-soft); }
+
+/* 다른 지역과 나란히 — 지역에서 지역으로. */
+.rg-sim-none { margin: 8px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.rg-cmp-link { margin: 10px 0 0; font-size: 13px; }
+.rg-cmp-link a { color: var(--ink); font-weight: 600; }
+
+/* 두 지역 나란히 (/region/compare.html) */
+.rg-cmp-pick { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; }
+.rg-cmp-pick label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+.rg-cmp-pick input {
+  width: 200px; max-width: calc(100vw - 110px); padding: 6px 9px; font: inherit; font-weight: 400;
+  color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 3px;
+}
+.cmp-title { font-size: 18px; margin: 22px 0 4px; }
+.cmp-title a { color: var(--ink); }
+.cmp-vs { font-weight: 400; color: var(--ink-soft); font-size: 14px; }
+.cmp-how { font-size: 12px; color: var(--ink-soft); }
+.cmp-wrap { overflow-x: auto; }
+.cmp-table, .cmp-pres { width: 100%; }
+.cmp-table td, .cmp-pres td { vertical-align: top; }
+.cmp-year { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+.cmp-office, .cmp-cands { display: block; font-size: 11px; color: var(--ink-soft); }
+.cmp-cell { min-width: 120px; }
+.cmp-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.cmp-party { font-weight: 600; }
+.cmp-pct { font-variant-numeric: tabular-nums; }
+.cmp-turn { display: block; font-size: 11px; color: var(--ink-soft); }
+.cmp-none { color: var(--ink-soft); font-size: 12px; }
+.cmp-bar { display: flex; height: 12px; background: var(--bg3, var(--bg2)); border-radius: 2px; overflow: hidden; min-width: 100px; }
+.cmp-bar span { display: block; height: 100%; }
+.cmp-bar-none { background: none; height: auto; font-size: 12px; color: var(--ink-soft); }
+.cmp-bar-num { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+  .cmp-cell { min-width: 0; }
+  .cmp-bar { min-width: 60px; }
+}

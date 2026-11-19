@@ -52,6 +52,7 @@
       // 여론조사 빗나감 — 점선 테두리색 = 여론조사가 예측한 정당색(missOf 반환).
       const missCol = opts.missOf && opts.missOf(d.sido, d.name);
       if (missCol) poly.classList.add('hex-poll-miss');
+      poly.dataset.region = d.sido + '|' + d.name;   // brush.js 공통 키
       if (opts.onSelect) {
         poly.style.cursor = 'pointer';
         poly.addEventListener('click', () => opts.onSelect(d.sido, d.name, result, d));

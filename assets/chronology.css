@@ -83,7 +83,9 @@
   min-height: 30px;
   padding: 1px 0;
 }
-.chr-row.is-hidden { display: none; }
+.chr-row.is-hidden, .chr-era.is-hidden, .chr-gov.is-hidden { display: none; }
+.chrono-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.chrono-count { font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .chr-date {
   text-align: right; padding-right: 14px;
   font-variant-numeric: tabular-nums; line-height: 1.05;

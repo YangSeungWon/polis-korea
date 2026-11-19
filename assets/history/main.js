@@ -547,6 +547,10 @@ function renderDetail() {
     }
   }
   pane.innerHTML = html;
+  // 고른 곳 → 그 지역의 역대 선거. 지역구(선거구)는 장소가 아니라 잇지 않는다.
+  if (state.selected && state.selected.kind !== 'district' && window.RegionPaths) {
+    window.RegionPaths.attach(pane.querySelector('.detail-hdr'), state.selected.sido, state.selected.name || null);
+  }
   syncSelURL();   // 모든 선택 경로(지도·박빙 목록·geo)가 여기로 모인다 — URL ?sel= 기록
   // 박빙 row 클릭 → 선택
   pane.querySelectorAll('.hist-close-row').forEach((row) => {
@@ -765,6 +769,19 @@ async function init() {
     if (!viz || !enc) return;
     const tg = document.createElement('div'); tg.className = 'hist-viz-toggles';
     tg.appendChild(enc);
+    // 링크 복사 — URL이 회차·방식·선택·줌을 담고 있으므로 지금 화면 그대로 보낸다(Extract).
+    if (window.FigureTools) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'fig-tool hist-copy-link';
+      b.textContent = '링크 복사';
+      b.title = '지금 보이는 회차·방식·선택·확대까지 담긴 링크';
+      b.addEventListener('click', async () => {
+        const ok = await window.FigureTools.copyText(location.href);
+        b.textContent = ok ? '복사됨' : '복사 실패';
+        setTimeout(() => { b.textContent = '링크 복사'; }, 1800);
+      });
+      tg.appendChild(b);
+    }
     viz.appendChild(tg);
   })();
   // 모바일 핀치 힌트 — 한 번만, 첫 터치/5초 후 사라짐.

@@ -11,6 +11,10 @@
     ? ({ '광주광역시': '전남광주특별시', '전라남도': '전남광주특별시', '전남광주통합특별시': '전남광주특별시' }[s] || s)
     : s);
 
+  // brush.js 공통 키 — 지도 칸과 같은 모양(시도|시군구, 시도 단위는 시도). 통합 정규화 **전**
+  // 원 시도명을 쓴다: 지도 칸도 원 시도명(광주광역시)을 단다.
+  const regionKey = (r) => (r.sido ? (r.sigungu ? `${r.sido}|${r.sigungu}` : r.sido) : '');
+
   function init(ctx) {
     const host = document.getElementById('ar-winners-section');
     if (!host) return;
@@ -24,7 +28,7 @@
         const level = tc === '5' ? '광역의원' : '기초의원';
         for (const c of r.candidates || []) {
           if (!c.won) continue;
-          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct, tc, place: r.district || r.sigungu || '' });
+          winners.push({ level, sido: normSido(r.sido || ''), district: r.district || r.sigungu || '', name: c.name, party: c.party || '무소속', pct: c.pct, tc, place: r.district || r.sigungu || '', region: regionKey(r) });
         }
       } else if (['8', '9'].includes(tc)) {
         // 비례 당선인 (tc8 광역·tc9 기초) — 정당 명부(개인명 없음) → 정당별 seats 만큼 행. hex와 일치.
@@ -32,7 +36,7 @@
         const dist = (tc === '9' && r.sigungu) ? `${r.sigungu} 비례` : '비례대표';
         for (const c of r.candidates || []) {
           for (let k = 0; k < (c.seats || 0); k++) {
-            winners.push({ level, sido: normSido(r.sido || ''), district: dist, name: '비례대표', party: c.party || '무소속' });
+            winners.push({ level, sido: normSido(r.sido || ''), district: dist, name: '비례대표', party: c.party || '무소속', region: regionKey(r) });
           }
         }
       }
@@ -77,6 +81,7 @@
         <option value="기초의원">기초의원</option>
       </select>
       <span class="ar-winners-count" id="ar-winners-count"></span>
+      <button type="button" class="fig-tool" id="ar-winners-csv" title="지금 필터에 걸린 당선자 전부(화면의 500명 제한 없이)">CSV</button>
     `;
     body.innerHTML = '';
     body.appendChild(ctrl);
@@ -98,16 +103,11 @@
       }
     }
 
-    function render() {
+    function current() {
       const q = document.getElementById('ar-winners-q').value.trim().toLowerCase();
       const sido = document.getElementById('ar-winners-sido').value;
       const party = document.getElementById('ar-winners-party').value;
       const level = document.getElementById('ar-winners-level').value;
-      if (VS) {
-        const patch = {};
-        for (const [id, k] of Object.entries(URL_KEYS)) patch[k] = document.getElementById(id).value.trim() || null;
-        VS.set(patch);
-      }
       const filtered = winners.filter((w) => {
         if (sido && w.sido !== sido) return false;
         if (party && w.party !== party) return false;
@@ -115,6 +115,33 @@
         if (q && !`${w.name} ${w.district}`.toLowerCase().includes(q)) return false;
         return true;
       });
+      return { q, sido, party, level, filtered };
+    }
+
+    // 추출은 결과만이 아니라 **조건도** — CSV 머리에 어떤 필터로 뽑았는지 적는다.
+    document.getElementById('ar-winners-csv').addEventListener('click', () => {
+      const FT = window.FigureTools;
+      if (!FT) return;
+      const { q, sido, party, level, filtered } = current();
+      const cond = [q && `검색 "${q}"`, sido, party, level].filter(Boolean).join(' · ') || '필터 없음(전체)';
+      const meta = (ctx && ctx.meta) || {};
+      FT.download(`${meta.id || 'winners'}-winners.csv`, FT.toCSV([
+        { key: 'level', label: '직급' }, { key: 'sido', label: '시도' }, { key: 'district', label: '선거구' },
+        { key: 'name', label: '당선자' }, { key: 'party', label: '정당' }, { key: 'pct', label: '득표율' },
+      ], filtered, [
+        `${meta.name || ''} 당선자 · ${filtered.length}명`,
+        `조건: ${cond}`,
+        `내려받은 화면: ${location.href}`,
+      ]));
+    });
+
+    function render() {
+      const { q, sido, party, level, filtered } = current();
+      if (VS) {
+        const patch = {};
+        for (const [id, k] of Object.entries(URL_KEYS)) patch[k] = document.getElementById(id).value.trim() || null;
+        VS.set(patch);
+      }
       document.getElementById('ar-winners-count').textContent = `${filtered.length}명`;
       // 필터 없으면 2,661명 통째 dump 대신 안내(지도 클릭·검색 유도) — 광역의원만 500개 깔리는 문제 방지.
       if (!(q || sido || party || level)) {
@@ -124,15 +151,26 @@
       grid.innerHTML = filtered.slice(0, 500).map((w) => {
         const col = (typeof partyTextColor === 'function') ? partyTextColor(w.party) : '#999';
         const lvlBadge = w.level === '광역의원' ? '광역' : '기초';
-        return `<div class="ar-winner-row" style="border-left:3px solid ${col}">
+        return `<div class="ar-winner-row" style="border-left:3px solid ${col}"${w.region ? ` data-region="${w.region}"` : ''}>
           <span class="ar-winner-lvl">${lvlBadge}</span>
-          <span class="ar-winner-loc">${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}</span>
+          <span class="ar-winner-loc">${locHtml(w)}</span>
           <span class="ar-winner-name">${(window.Archive.personLink && w.tc) ? window.Archive.personLink.wrap(w.tc, w.place, w.name) : w.name}</span>
           <span class="ar-winner-party" style="color:${col}">${w.party}</span>
           ${w.pct != null ? `<span class="ar-winner-pct">${w.pct.toFixed(1)}%</span>` : ''}
         </div>`;
       }).join('') + (filtered.length > 500 ? `<div class="ar-winners-more">… ${filtered.length - 500}명 추가 (검색·filter로 좁히세요)</div>` : '');
     }
+    // 선거구 → 그 시군구의 역대 선거 페이지. 시군구를 아는 행만 잇는다(광역의원 선거구는
+    // 원자료에 시군구가 없다 — 이름 모양으로 떼어 내지 않는다).
+    let regionIx = null;
+    function locHtml(w) {
+      const txt = `${w.sido.replace(/(특별|광역|특별자치)?(시|도)/, '$2')} ${w.district}`;
+      const [sd, sg] = (w.region || '').split('|');
+      const slug = (regionIx && sg && window.RegionPaths) ? window.RegionPaths.resolveWith(regionIx, sd, sg) : null;
+      return slug ? `<a href="/region/${encodeURIComponent(slug)}/" title="${sg}의 역대 선거">${txt}</a>` : txt;
+    }
+    if (window.RegionPaths) window.RegionPaths.load().then((ix) => { regionIx = ix; if (ix) render(); });
+
     for (const id of ['ar-winners-q', 'ar-winners-sido', 'ar-winners-party', 'ar-winners-level']) {
       const el = document.getElementById(id);
       el.addEventListener('input', render);

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script>try{var _m=localStorage.getItem('vote-ysw-theme');if(_m==='dark')document.documentElement.setAttribute('data-theme','dark');else if(_m==='light')document.documentElement.setAttribute('data-theme','light');}catch(_e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<base href="/">
+<title>두 지역 나란히 보기 — 역대 대선·총선·지선 | polis</title>
+<meta name="description" content="두 지역의 역대 선거 1위와 득표율·투표율, 대선 후보 득표율을 같은 선거끼리 나란히 놓고 봅니다.">
+<link rel="canonical" href="/region/compare.html">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/person.css">
+</head>
+<body>
+<header class="site-hdr">
+  <div class="brand">
+    <a href="/" class="logo-link"><span class="logo">polis</span><span class="domain">ysw.kr</span></a>
+  </div>
+  <nav class="hdr-nav">
+<!-- NAV_START — scripts/build/sync_nav_html.py 자동 갱신. 손수정 X. -->
+  <a href="/tracker.html" class="hdr-link">지금</a>
+  <a href="/elections.html" class="hdr-link is-current">선거</a>
+  <span data-nav-urgent></span>
+  <a href="/parties.html" class="hdr-link">인물·정당</a>
+  <a href="/chronology.html" class="hdr-link">역사</a>
+  <!-- NAV_END -->
+  </nav>
+  <div class="hdr-meta">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 토글"></button>
+  </div>
+</header>
+<main class="page">
+  <section class="intro">
+    <h1>두 지역 나란히 보기</h1>
+    <p class="lede">같은 선거에서 두 지역이 어떻게 갈렸는지 — <a href="/region/">지역 374곳</a> 가운데 둘을 고릅니다.</p>
+    <form class="rg-cmp-pick" onsubmit="return false">
+      <label>지역 A <input id="cmp-a" list="cmp-regions" autocomplete="off" placeholder="예: 서울 강남구"></label>
+      <label>지역 B <input id="cmp-b" list="cmp-regions" autocomplete="off" placeholder="예: 경기 성남시분당구"></label>
+      <datalist id="cmp-regions"></datalist>
+    </form>
+  </section>
+  <section id="cmp-out" aria-live="polite"><p class="rg-sim-none">두 지역을 고르면 여기에 나란히 나옵니다.</p></section>
+  <footer class="foot">
+    <p class="fine">지역 1위는 그 지역에서 가장 많이 얻은 후보입니다(광역단체장·교육감의 시도 행은 당선 결과). 비어 있는 칸(—)은 자료가 없다는 뜻이고 0이 아닙니다. 대선 막대는 전국 1·2위 후보가 그 지역에서 얻은 득표율입니다.</p>
+  </footer>
+</main>
+<script src="assets/parties.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/view-state.js"></script><!-- ?a=&b= ↔ URL -->
+<script src="assets/region-compare.js"></script>
+</body>
+</html>
