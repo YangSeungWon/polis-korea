@@ -76,6 +76,7 @@
     for (const e of electionList) {
       const short = KIND_SHORT[e.type] || '';
       if (filterRound && short !== filterRound) continue;
+      if (!archiveHref(e.slug)) continue;   // 갈 페이지가 없는 선거는 카드를 내지 않는다
       const unit = e.type === 'local' ? '회' : '대';
       const hay = normalize(`${e.name} ${(e.date || '').slice(0, 4)}${short} ${e.n}${unit}${short} ${(e.date || '').slice(0, 4)}`);
       if (hay.includes(q)) out.push(e);
@@ -95,14 +96,12 @@
   }
 
   function electionCard(e) {
-    const href = archiveHref(e.slug);
-    const tag = href ? 'a' : 'span';
     return `<li class="s-item s-party-card s-entity-card">
-      <${tag} class="s-link"${href ? ` href="${href}"` : ''}>
+      <a class="s-link" href="${archiveHref(e.slug)}">
         <span class="s-name">${escapeHtml(e.name)}</span>
         <span class="s-pty-life">${escapeHtml(e.date || '')}</span>
         <span class="s-group-arrow">선거 →</span>
-      </${tag}>
+      </a>
     </li>`;
   }
 

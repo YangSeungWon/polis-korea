@@ -373,7 +373,7 @@ def _shares(rows: list, names: list) -> tuple | None:
 def pres_vectors(direct: dict, rolled: dict, nat: dict) -> dict:
     """(시도, 시군구) → {대선 회차: (전국 1위 후보 득표율, 전국 2위 후보 득표율)}.
 
-    '비슷하게 투표한 지역'의 축이다. 정당 계보·이념 점수를 쓰지 않는다 — stream은
+    '두 지역 나란히' 페이지의 대선 막대다. 정당 계보·이념 점수를 쓰지 않는다 — stream은
     배치 키일 뿐 이념 위치가 아니고(political_axes), 후보 득표율은 원자료 그 자체다.
     지역 단위는 표와 같은 규칙으로 접는다(직접 행 우선, 없으면 일반구 합산).
     """
@@ -391,44 +391,6 @@ def pres_vectors(direct: dict, rolled: dict, nat: dict) -> dict:
         if v:
             out[(sd, pc)][eid] = v
     return dict(out)
-
-
-# 유사 지역 — 두 지역 모두 결과가 있는 대선이 이만큼은 겹쳐야 견준다.
-SIM_MIN_COMMON = 3
-SIM_TOP = 5
-
-
-def is_kin(sd: str, a: str, b: str, sd2: str) -> bool:
-    """모시↔일반구는 같은 표를 나눠 가진 사이라 '비슷하다'가 아니라 '같다'다."""
-    return sd == sd2 and (a.startswith(b) or b.startswith(a))
-
-
-def similar_regions(keys: list, pres: dict) -> dict:
-    """(시도, 시군구) → {"own": 이 지역 대선 회차 수, "list": [(시도, 시군구, 거리, 겹친 회차)]}.
-
-    거리 = 겹친 회차의 (1위 후보 득표율 차, 2위 후보 득표율 차) 제곱평균의 제곱근(%p).
-    겹침이 SIM_MIN_COMMON 미만이거나 이 지역 기록의 절반에 못 미치면 견주지 않는다 —
-    옛 대선 세 번만 겹친 짝이 우연히 가까워 맨 위에 오는 것을 막는다.
-    """
-    out = {}
-    for k in keys:
-        mine = pres.get(k) or {}
-        need = max(SIM_MIN_COMMON, (len(mine) + 1) // 2)
-        cand = []
-        if len(mine) >= SIM_MIN_COMMON:
-            for o in keys:
-                if o == k or is_kin(k[0], k[1], o[1], o[0]):
-                    continue
-                theirs = pres.get(o) or {}
-                common = [e for e in mine if e in theirs]
-                if len(common) < need:
-                    continue
-                sq = sum((mine[e][0] - theirs[e][0]) ** 2 + (mine[e][1] - theirs[e][1]) ** 2
-                         for e in common)
-                cand.append((o[0], o[1], round((sq / (2 * len(common))) ** 0.5, 2), len(common)))
-        cand.sort(key=lambda x: (x[2], x[0], x[1]))
-        out[k] = {"own": len(mine), "list": cand[:SIM_TOP]}
-    return out
 
 
 TEMPLATE = """<!DOCTYPE html>
@@ -630,7 +592,7 @@ FOOT_SIDO = ('광역단체장·교육감은 이 시도가 선거구 자체라 <b
              '대통령은 이 시도에서 1위를 한 후보입니다. ') + _NO_VOTE_NOTE
 
 
-def collect_sido(won: dict) -> dict:
+def collect_sido(won: dict, nat: dict | None = None) -> dict:
     """시도 → 역대 선거 행. 시군구 페이지와 같은 모양으로 낸다.
 
     대통령은 시도 집계 행(scope=sido)이 있으면 그것을, 없으면 그 시도의 시군구
@@ -638,6 +600,8 @@ def collect_sido(won: dict) -> dict:
     당선 결과다.
     """
     by_sido = defaultdict(list)
+    pres: dict = defaultdict(dict)   # 시도 → {대선 회차: 전국 1·2위 득표율} (pres_vectors와 같은 축)
+    nat = nat or {}
     for eid, meta, races in load_all():
         em = election_meta(eid)
         kind = em.get("kind") or ""
@@ -656,15 +620,25 @@ def collect_sido(won: dict) -> dict:
             elif tc == "1" and scope == "sigungu" and r.get("sigungu"):
                 parts[(sd, tc)].append(r)
 
+        names = [n for n, _p in nat[eid]["cands"]] if eid in nat else None
         for (sd, tc), r in list(direct.items()):
             merged = False
             _emit_sido(by_sido, sd, tc, r, eid, date, kind, name, won, merged)
+            if tc == "1" and names:
+                v = _shares([r], names)
+                if v:
+                    pres[sd][eid] = v
         for (sd, tc), rows in parts.items():
             if (sd, tc) in direct:      # 시도 집계 행이 있으면 그것이 정본이다
                 continue
             m = merge_rows(rows)
             if m:
                 _emit_sido(by_sido, sd, tc, m, eid, date, kind, name, won, True)
+            if tc == "1" and names:
+                v = _shares(rows, names)
+                if v:
+                    pres[sd][eid] = v
+    collect_sido.pres = dict(pres)
     return by_sido
 
 
@@ -694,41 +668,19 @@ def compare_href(a: str, b: str | None = None) -> str:
     return f"/region/compare.html?a={quote(a)}" + (f"&amp;b={quote(b)}" if b else "")
 
 
-def relate_block(slug: str, sim: dict | None) -> str:
-    """'이 지역과 닮은 곳'과 '다른 곳과 나란히' — 지역에서 지역으로 가는 길.
+def relate_block(slug: str) -> str:
+    """'다른 곳과 나란히' — 지역에서 지역으로 가는 길.
 
     지금까지 지역 페이지는 위(시도)·옆(모시↔일반구)·바깥(인물·정당·선거)으로만
-    이어졌고, 다른 지역과 견줄 길이 없었다. 견줄 수 없는 곳은 왜 없는지 말한다.
+    이어졌고, 다른 지역과 견줄 길이 없었다. (자동으로 고른 '비슷한 지역' 목록은
+    대부분 같은 시도 이웃이라 새로 알려 주는 게 적어 두지 않는다 — 견줄 곳은 읽는
+    사람이 고른다.)
     """
-    cmp_link = (f'<p class="rg-cmp-link"><a href="{compare_href(slug)}">'
-                f'다른 지역과 나란히 보기 →</a></p>')
-    if sim is None:
-        return f'<section class="rg-sec rg-relate">{cmp_link}</section>'
-    lst = sim["list"]
-    if not lst:
-        why = (f'이 지역은 전국 1·2위를 알 수 있는 대선 결과가 {sim["own"]}회뿐이라'
-               if sim["own"] < SIM_MIN_COMMON else
-               '대선 기록이 충분히 겹치는 다른 지역이 없어')
-        body = f'<p class="rg-sim-none">{why} 비슷한 지역을 고르지 않았습니다.</p>'
-    else:
-        li = []
-        for sd2, sg2, d, n in lst:
-            other = f"{sd2}-{sg2}"
-            li.append(
-                f'<li><a href="/region/{quote(other)}/">{esc(sido_short(sd2))} {esc(sg2)}</a>'
-                f' <span class="rg-sim-d">평균 {d:.1f}%p 차이 · 대선 {n}회</span>'
-                f' <a class="rg-sim-cmp" href="{compare_href(slug, other)}">나란히</a></li>')
-        body = ('<ol class="rg-sim">' + "".join(li) + '</ol>'
-                '<p class="rg-sim-how">각 대선에서 전국 1·2위였던 두 후보가 이 지역에서 얻은 '
-                '득표율을 다른 지역과 견줘, 차이(제곱평균)가 가장 작은 곳입니다. 정당 성향 '
-                '점수가 아니라 득표율 그 자체의 거리이고, 두 지역 모두 결과가 있는 대선만 '
-                '견줍니다(이 지역 기록의 절반 이상, 최소 3회). 같은 시의 일반구는 표를 나눠 '
-                '가진 사이라 뺐습니다.</p>')
-    return (f'<section class="rg-sec rg-relate" id="similar">'
-            f'<h2>대선에서 비슷하게 투표한 지역</h2>{body}{cmp_link}</section>')
+    return (f'<section class="rg-sec rg-relate"><p class="rg-cmp-link">'
+            f'<a href="{compare_href(slug)}">다른 지역과 나란히 보기 →</a></p></section>')
 
 
-def build_page(sd: str, sg: str, rows: list, by_region: dict, sim: dict | None = None) -> str:
+def build_page(sd: str, sg: str, rows: list, by_region: dict) -> str:
     rows = sorted(rows, key=lambda r: (r["date"] or "", r["office"]), reverse=True)
     slug = f"{sd}-{sg}"
     years = [r["date"][:4] for r in rows if r.get("date")]
@@ -770,7 +722,7 @@ def build_page(sd: str, sg: str, rows: list, by_region: dict, sim: dict | None =
         h1=esc(f"{sd} {sg}"),
         slug=esc(slug), desc=desc, lede=lede, table=table, foot=FOOT_SGG,
         kin=kin_block(sd, sg, by_region),
-        relate=relate_block(slug, sim),
+        relate=relate_block(slug),
         swing=swing_line(rows),
         nav=render_nav(menu_for_path(f"region/{slug}/index.html")),
         jsonld='<script type="application/ld+json">'
@@ -868,7 +820,7 @@ def build_sido_page(sd: str, rows: list, by_region: dict) -> str:
         slug=esc(sd), desc=desc, lede=lede,
         swing=swing_line(rows),
         kin=sido_kin(sd, kids),
-        relate=relate_block(sd, None),
+        relate=relate_block(sd),
         table=table + sido_units_block(sd, kids), foot=FOOT_SIDO,
         nav=render_nav(menu_for_path(f"region/{sd}/index.html")),
         jsonld='<script type="application/ld+json">'
@@ -1191,14 +1143,13 @@ def main():
     REGION_DATA.mkdir(parents=True, exist_ok=True)
     pres = collect.pres
     page_keys = sorted(k for k, rows in by_region.items() if len(rows) >= MIN_ROUNDS)
-    sim = similar_regions(page_keys, pres)
     urls, n, data_files = [], 0, set()
     for (sd, sg) in page_keys:
         rows = by_region[(sd, sg)]
         slug = f"{sd}-{sg}"
         d = OUT_DIR / slug
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(build_page(sd, sg, rows, by_region, sim.get((sd, sg))),
+        (d / "index.html").write_text(build_page(sd, sg, rows, by_region),
                                       encoding="utf-8")
         write_json(REGION_DATA / f"{slug}.json",
                    region_json(slug, sd, sg, rows, pres.get((sd, sg)) or {}))
@@ -1209,7 +1160,7 @@ def main():
     # 실제로 찾는 말인데 착지할 페이지가 없었고, 광역단체장을 누가 했는지는 어느
     # 시군구 페이지에도 없다(시군구의 '광역단체장' 줄은 그 지역 1위지 당선자가 아니다).
     n_sido, sido_slugs = 0, []
-    for sd, srows in sorted(collect_sido(collect.won).items()):
+    for sd, srows in sorted(collect_sido(collect.won, collect.nat).items()):
         # 시군구의 MIN_ROUNDS(3)는 한두 번 스친 옛 지명을 걸러내려는 문턱이다.
         # 시도는 18곳뿐이고 전부 실재한 광역단체이며, 페이지가 시군구 목록을
         # 함께 이고 있어 얇지 않다. 2026 출범한 전남광주특별시(광역 2건 + 시군구
@@ -1220,7 +1171,7 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(build_sido_page(sd, srows, by_region),
                                       encoding="utf-8")
-        write_json(REGION_DATA / f"{sd}.json", region_json(sd, sd, None, srows, {}))
+        write_json(REGION_DATA / f"{sd}.json", region_json(sd, sd, None, srows, collect_sido.pres.get(sd) or {}))
         data_files.add(f"{sd}.json")
         urls.append(f"/region/{sd}/")
         sido_slugs.append(sd)

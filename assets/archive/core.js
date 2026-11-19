@@ -73,7 +73,7 @@
   window.Archive.pledgeRealms?.render(ctx);
   mountTrust(ctx);
   showDataFailBanner();
-  window.FigureTools?.mountArchive(ctx);   // 링크 복사·그림·결과 CSV (Extract)
+  window.FigureTools?.mountArchive(ctx);   // 그림·결과 CSV (Extract)
 
   // === 2단계: 2차 데이터 백그라운드 병렬 로드 → 해당 섹션만 채움 ===
   (async () => {

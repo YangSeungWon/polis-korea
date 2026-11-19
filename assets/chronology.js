@@ -68,20 +68,70 @@ function mdOf(d) {
   };
   for (const it of items) {
     emitDividers(it.date);
-    root.appendChild(it.type === 'election' ? electionRow(it, tlByKey) : eventRow(it));
+    const row = it.type === 'election' ? electionRow(it, tlByKey) : eventRow(it);
+    row.dataset.year = yearOf(it.date);
+    root.appendChild(row);
   }
   emitDividers('9999');  // 마지막 항목 뒤 시대(예: 국민주권정부 출범 후) 처리
 
-  // 필터 (전체/선거/사건) — 행·헤더 토글
+  // 필터 — 종류(전체/선거/사건) × 연도 범위. 둘 다 URL에 남는다(?f=&from=&to=).
+  // 시대 머리(공화국·정부)는 그 아래 보이는 행이 하나라도 있을 때만 남긴다 —
+  // 범위를 좁혔는데 빈 '제3공화국' 머리들이 줄줄이 남으면 거기 뭔가 있는 줄 안다.
+  const VS = window.ViewState;
+  const years = items.map((x) => +yearOf(x.date)).filter(Boolean);
+  const Y0 = Math.min(...years), Y1 = Math.max(...years);
+  let kind = 'all';
+  const f0 = VS && VS.get('f');
+  if (f0 === 'election' || f0 === 'event') kind = f0;
+  document.querySelectorAll('[data-filter]').forEach((b) => b.classList.toggle('is-active', b.dataset.filter === kind));
+
+  let urlT = null;
+  function applyFilter() {
+    const [a, b] = range ? range.get() : [Y0, Y1];
+    const rows = [...root.children];
+    for (const el of rows) {
+      if (!el.classList.contains('chr-row')) continue;
+      const y = +el.dataset.year;
+      el.classList.toggle('is-hidden', (kind !== 'all' && el.dataset.type !== kind) || y < a || y > b);
+    }
+    // 머리: 공화국은 다음 공화국 머리 전까지, 정부는 다음 머리(어느 쪽이든) 전까지에 보이는 행이 있나.
+    for (let i = 0; i < rows.length; i++) {
+      const h = rows[i];
+      const isRep = h.classList.contains('chr-era'), isGov = h.classList.contains('chr-gov');
+      if (!isRep && !isGov) continue;
+      let any = false;
+      for (let k = i + 1; k < rows.length; k++) {
+        const n = rows[k];
+        if (n.classList.contains('chr-era') || (isGov && n.classList.contains('chr-gov'))) break;
+        if (n.classList.contains('chr-row') && !n.classList.contains('is-hidden')) { any = true; break; }
+      }
+      h.classList.toggle('is-hidden', !any);
+    }
+    const shown = rows.filter((r) => r.classList.contains('chr-row') && !r.classList.contains('is-hidden')).length;
+    const cnt = document.getElementById('chrono-count');
+    if (cnt) cnt.textContent = `${shown}건`;
+    clearTimeout(urlT);
+    urlT = setTimeout(() => {
+      if (VS) VS.set({ f: kind === 'all' ? null : kind, from: a > Y0 ? a : null, to: b < Y1 ? b : null });
+    }, 250);
+  }
+
+  let range = null;
+  const rHost = document.getElementById('chrono-range');
+  if (rHost && window.RangeFilter) {
+    range = window.RangeFilter.mount(rHost, {
+      min: Y0, max: Y1, step: 1, label: '연도', fmt: (v) => `${v}`,
+      from: VS && VS.get('from'), to: VS && VS.get('to'), onInput: applyFilter,
+    });
+  }
   document.querySelectorAll('[data-filter]').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-filter]').forEach((b) => b.classList.toggle('is-active', b === btn));
-      const f = btn.dataset.filter;
-      root.querySelectorAll('.chr-row').forEach((row) => {
-        row.classList.toggle('is-hidden', f !== 'all' && row.dataset.type !== f);
-      });
+      kind = btn.dataset.filter;
+      applyFilter();
     });
   });
+  applyFilter();
 })();
 
 function repHeader(rep) {

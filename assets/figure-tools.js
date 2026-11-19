@@ -1,10 +1,9 @@
 // 찾은 것과 찾은 조건을 가져간다 (Shneiderman의 Extract).
 //
-// 세 가지를 준다:
-//   · 링크 복사 — 지금 URL(view-state가 방식·선택·필터를 담아 둔다) + 그 섹션 앵커.
-//     조건까지 함께 나가므로, 받은 사람이 같은 화면을 연다.
-//   · 그림 — 캡처가 만들어 둔 og/maps/{회차}/{뷰 키}.png. 지금 보이는 모드의 키로 찾는다.
-//     없으면 **없다고 말한다**(버튼을 숨기지 않는다 — 결손 모델: 못 받았다 ≠ 없다).
+// 두 가지를 준다(링크는 따로 없다 — 방식·선택·필터가 이미 주소창 URL에 있다):
+//   · 그림 — 캡처가 만들어 둔 og/maps/{회차}/{뷰 키}.png. 지금 보이는 **방식**의 기본
+//     그림이다(고른 지역·확대·필터는 담기지 않는다). 없으면 **없다고 말한다**(버튼을
+//     숨기지 않는다 — 결손 모델: 못 받았다 ≠ 없다).
 //   · CSV — 결과 원자료를 행으로 편 것. 비어 있는 칸은 빈칸이다(0이 아니다).
 //
 // 라벨·파일명은 손으로 짓지 않는다 — 뷰 키와 회차 id에서 나온다.
@@ -59,12 +58,6 @@
       ta.remove();
       return ok;
     }
-  }
-
-  function linkTo(anchorId) {
-    const u = new URL(location.href);
-    u.hash = anchorId ? '#' + anchorId : '';
-    return u.href;
   }
 
   // 결과 파일(races[].candidates[]) → 후보 한 명당 한 행.
@@ -156,38 +149,31 @@
     return b;
   }
 
-  // section 제목 옆에 [링크 복사][그림] — 섹션 안 첫 지도 host를 대상으로.
+  // section 제목 옆에 [그림] — 섹션 안 첫 지도 host를 대상으로.
   function mountSection(section, electionId) {
-    if (!section || section.dataset.figTools) return;
+    if (!electionId || !section || section.dataset.figTools) return;
     const host = section.querySelector('[data-map-host]');
     const title = section.querySelector('.ar-section-title');
     if (!host || !title) return;
     section.dataset.figTools = '1';
     const bar = document.createElement('span');
     bar.className = 'fig-tools';
-    const link = button('링크 복사', '지금 보이는 방식·필터까지 담긴 링크');
-    link.addEventListener('click', async () => {
-      flash(link, (await copyText(linkTo(section.id))) ? '복사됨' : '복사 실패');
+    const img = button('그림', '이 방식으로 미리 그려 둔 전국 그림(PNG) — 고른 지역·확대·필터는 담기지 않는다');
+    img.addEventListener('click', async () => {
+      const key = currentKey(host);
+      const views = await manifestViews(electionId);
+      if (key && views && views.has(key)) {
+        window.open(`/og/maps/${encodeURIComponent(electionId)}/${key}.png`, '_blank', 'noopener');
+      } else {
+        // 숨기지 않는다 — 이 모드의 그림이 왜 없는지 말한다.
+        flash(img, views ? '이 방식의 그림은 아직 없음' : '그림 목록을 못 받음');
+      }
     });
-    bar.appendChild(link);
-    if (electionId) {
-      const img = button('그림', '지금 보이는 지도의 PNG');
-      img.addEventListener('click', async () => {
-        const key = currentKey(host);
-        const views = await manifestViews(electionId);
-        if (key && views && views.has(key)) {
-          window.open(`/og/maps/${encodeURIComponent(electionId)}/${key}.png`, '_blank', 'noopener');
-        } else {
-          // 숨기지 않는다 — 이 모드의 그림이 왜 없는지 말한다.
-          flash(img, views ? '이 방식의 그림은 아직 없음' : '그림 목록을 못 받음');
-        }
-      });
-      bar.appendChild(img);
-    }
+    bar.appendChild(img);
     title.appendChild(bar);
   }
 
-  // archive — 지도가 있는 섹션마다 도구줄 + 결과 원자료 내려받기 블록.
+  // archive — 지도가 있는 섹션마다 [그림] + 맨 아래 결과 원자료 내려받기 블록.
   // 지도 섹션은 **나중에 생긴다**(시군구 결과는 렌더러가 비동기로 섹션째 끼워 넣는다).
   // 정해진 시점에 한 번 훑으면 그 섹션을 놓친다 — 그래서 지도 host가 생길 때마다 붙인다.
   // 섹션마다 한 번만 붙으므로 여러 번 불려도 된다.
@@ -211,21 +197,28 @@
 
   function mountDataBlock(ctx) {
     if (!ctx || !ctx.meta || document.getElementById('ar-data-export')) return;
-    const anchor = document.getElementById('ar-map-figures') || document.querySelector('.ar-section');
-    if (!anchor) return;
+    // 맨 아래 — 본 결과보다 내려받기가 먼저 나오지 않게. 아래쪽 회차 이동 막대 바로 앞.
+    const first = document.getElementById('ar-map-figures') || document.querySelector('.ar-section');
+    if (!first) return;
     const meta = ctx.meta;
     const sec = document.createElement('section');
     sec.className = 'ar-section';
     sec.id = 'ar-data-export';
     const hasRows = !!(ctx.results && (ctx.results.races || []).length);
+    const raw = String(meta.resultsPath || '').replace(/^\/+/, '');
+    // 큰 회차는 시군구 행을 .sigungu.json으로 따로 둔다 — 본 파일 하나만 걸면 반쪽이다.
+    const chunked = !!(ctx.results && ctx.results._meta && ctx.results._meta.chunked);
+    const rawFiles = raw ? [raw].concat(chunked ? [raw.replace(/\.json$/, '.sigungu.json')] : []) : [];
     sec.innerHTML = `<h2 class="ar-section-title">데이터 내려받기</h2>
       <p class="ar-source-line">이 선거의 후보별 득표 — 집계단위(전국·시도·시군구·선거구)마다 후보 한 명이 한 행. 비어 있는 칸은 모른다는 뜻이고 0이 아니다.</p>
       <div class="fig-export-row">
         <button type="button" class="fig-tool" id="ar-results-csv"${hasRows ? '' : ' disabled title="결과 파일을 못 받았다"'}>결과 CSV</button>
-        ${meta.resultsPath ? `<a class="fig-tool" href="/${meta.resultsPath.replace(/^\/+/, '')}" download>원본 JSON</a>` : ''}
+        ${rawFiles.map((f, i) => `<a class="fig-tool" href="/${f}" download>${rawFiles.length > 1 ? (i ? '원본 JSON (시군구)' : '원본 JSON (전국·시도)') : '원본 JSON'}</a>`).join('')}
         <a class="fig-tool-link" href="/about/data/">데이터 형식·출처</a>
       </div>`;
-    anchor.parentNode.insertBefore(sec, anchor.nextSibling);
+    const bottom = document.querySelector('.ar-nav-bottom');
+    if (bottom && bottom.parentNode === first.parentNode) bottom.before(sec);
+    else first.parentNode.appendChild(sec);
     const btn = sec.querySelector('#ar-results-csv');
     if (btn && hasRows) {
       btn.addEventListener('click', () => {
@@ -234,12 +227,12 @@
         download(`${meta.id}-results.csv`, toCSV(RESULT_COLUMNS, rows, [
           `${meta.name} (${meta.date}) 후보별 득표 · ${rows.length}행`,
           `출처: 중앙선거관리위원회${src ? ' (' + src + ')' : ''} · polis.ysw.kr 정리`,
-          `원본: ${location.origin}/${String(meta.resultsPath || '').replace(/^\/+/, '')}`,
-          `내려받은 화면: ${location.href}`,
+          `원본: ${rawFiles.map((f) => `${location.origin}/${f}`).join(' + ')}`,
+          '지도·표에 건 필터와 상관없이 이 선거의 모든 행이다',
         ]));
       });
     }
   }
 
-  window.FigureTools = { toCSV, download, copyText, linkTo, resultRows, RESULT_COLUMNS, mountArchive, mountSection, currentKey };
+  window.FigureTools = { toCSV, download, copyText, resultRows, RESULT_COLUMNS, mountArchive, mountSection, currentKey };
 })();

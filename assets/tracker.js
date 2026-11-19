@@ -242,7 +242,8 @@
   }
 
   // ===== ② 정당지지 =====
-  function renderPartySupport(polls, hoverKey = 'tk-party', title = '정당 지지도 추이') {
+  function renderPartySupport(polls) {
+    const hoverKey = 'tk-party', title = '정당 지지도 추이';
     // 개별 조사 점(전국) — party -> [{t,v,ag}]
     const byParty = {};
     for (const p of polls) {
@@ -318,7 +319,8 @@
   }
 
   // ===== ③ 차기 대선주자 선호 (다자대결) =====
-  function renderCandidatePref(polls, hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이') {
+  function renderCandidatePref(polls) {
+    const hoverKey = 'tk-cand', aria = '차기 대선주자 선호 추이';
     // 다자대결만 — 후보 4명+, 합 70~106, 1위 <55 (양자·단독 적합 배제). 인물별 점+평활.
     const byCand = {};  // name -> {pts:[{t,v,ag}], party}
     for (const p of polls) {

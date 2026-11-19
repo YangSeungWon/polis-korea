@@ -204,27 +204,14 @@ def main():
 
 
 def check_relate(by: dict) -> None:
-    """지역에서 지역으로 — '비슷한 지역'과 비교 자료가 거짓을 말하지 않는가.
+    """지역에서 지역으로 — 비교 자료가 거짓을 말하지 않는가.
 
-    막는 사고: 모시가 자기 일반구를 '비슷한 지역'으로 고른다(수원시 → 수원시장안구 —
-    같은 표를 나눠 가진 사이다). 겹친 대선이 두 번뿐인 짝이 우연히 1위가 된다.
-    모르는 득표를 0표로 세어 득표율을 만든다. 비교 자료가 표와 다른 값을 낸다.
+    막는 사고: 모르는 득표를 0표로 세어 득표율을 만든다. 비교 자료가 표와 다른 값을
+    낸다. 시도 자료에 대선 득표율이 빠져, 표엔 결과가 있는데 비교 막대는 '자료 없음'이다.
     """
     import json
-    from build_region_pages import (collect as _c, similar_regions, is_kin,
-                                    SIM_MIN_COMMON, REGION_DATA)
+    from build_region_pages import collect as _c, REGION_DATA
     pres = _c.pres
-    keys = sorted(k for k, rows in by.items() if len(rows) >= MIN_ROUNDS)
-    sim = similar_regions(keys, pres)
-    kin = [(k, o[:2]) for k in keys for o in sim[k]["list"] if is_kin(k[0], k[1], o[1], o[0])]
-    ck("비슷한 지역에 자기 모시·일반구가 없다", not kin, str(kin[:3]))
-    # is_kin이 실제로 무엇을 거르는지도 본다 — 수원시는 일반구와 표가 같다.
-    ck("수원시의 비슷한 지역에 수원시장안구가 없다",
-       all(not o[1].startswith("수원시") for o in sim[("경기도", "수원시")]["list"]))
-    thin = [(k, o[:2], o[3]) for k in keys for o in sim[k]["list"] if o[3] < SIM_MIN_COMMON]
-    ck(f"겹친 대선 {SIM_MIN_COMMON}회 미만인 짝은 고르지 않는다", not thin, str(thin[:3]))
-    unsorted = [k for k in keys if [o[2] for o in sim[k]["list"]] != sorted(o[2] for o in sim[k]["list"])]
-    ck("가까운 순서", not unsorted, str(unsorted[:3]))
     bad = [(k, e, v) for k, m in pres.items() for e, v in m.items()
            if not (0 <= v[0] <= 100 and 0 <= v[1] <= 100 and v[0] + v[1] <= 100.01)]
     ck("대선 득표율 축이 0~100이고 둘의 합이 100을 넘지 않는다", not bad, str(bad[:3]))
@@ -239,6 +226,14 @@ def check_relate(by: dict) -> None:
     ck("색인이 페이지 전부를 가리킨다", {r["slug"] for r in ix["regions"]} == pages)
     j = json.loads((REGION_DATA / "서울특별시-강남구.json").read_text(encoding="utf-8"))
     ck("비교 자료 행 수 = 표의 행 수", len(j["rows"]) == len(by[("서울특별시", "강남구")]))
+    # 시도 — 대선 행이 있으면 득표율 축도 있어야 한다(있는데 '모른다'고 보이지 않게).
+    seoul = json.loads((REGION_DATA / "서울특별시.json").read_text(encoding="utf-8"))
+    pres_rows = {r["eid"] for r in seoul["rows"] if r.get("tc") == "1" or r.get("office") == "대통령"}
+    ck(f"시도 비교 자료에 대선 득표율 ({len(seoul['pres'])}/{len(pres_rows)})",
+       len(seoul["pres"]) >= 10 and set(seoul["pres"]) <= pres_rows,
+       f"{sorted(pres_rows - set(seoul['pres']))[:5]}")
+    sbad = [(e, v) for e, v in seoul["pres"].items() if not (0 <= v[0] <= 100 and 0 <= v[1] <= 100 and v[0] + v[1] <= 100.01)]
+    ck("시도 대선 득표율도 0~100", not sbad, str(sbad[:3]))
     zero = [f for f in files
             for r in json.loads((REGION_DATA / f"{f}.json").read_text(encoding="utf-8"))["rows"]
             if r.get("turnout") == 0]

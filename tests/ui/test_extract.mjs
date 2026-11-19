@@ -1,10 +1,13 @@
 // 추출(Extract) — 화면에서 가져간 것이 화면과 같은가.
 //
 // 막는 사고:
-//   · 링크 복사가 상태 없는 주소를 준다(받은 사람이 다른 화면을 본다).
-//   · '그림'이 지금 보이는 모드가 아니라 첫 모드의 PNG를 연다.
+//   · history 링크 복사가 상태 없는 주소를 준다(받은 사람이 다른 화면을 본다).
+//   · '그림'이 지금 보이는 모드가 아니라 첫 모드의 PNG를 연다 / 고른 지역·필터까지
+//     담긴 그림인 척한다(미리 그려 둔 기본 그림이다).
 //   · 그림이 없는 모드에서 버튼이 조용히 아무것도 안 한다(결손을 숨긴다).
 //   · CSV가 원자료와 행 수·값이 다르다. 모르는 득표(null)를 0으로 적는다.
+//   · 결과 CSV가 지도 필터에 걸린 것처럼 적힌다(실제로는 전 행). 원본 JSON 링크가
+//     시군구 조각(.sigungu.json)을 빠뜨린다. 내려받기 블록이 본 결과보다 먼저 나온다.
 //   · 당선자 CSV가 화면의 500명 제한을 그대로 따라 잘린다. 조건이 안 적힌다.
 //
 // 실행: node tests/ui/test_extract.mjs
@@ -58,7 +61,7 @@ async function grab(clickSel) {
   return { name: dl.suggestedFilename(), csv: parseCSV(fs.readFileSync(p, 'utf8')) };
 }
 
-// ── archive: 링크·그림 ───────────────────────────────────────────
+// ── archive: 그림 ───────────────────────────────────────────
 console.log('archive 도구줄');
 const ID = '21st-pres-2025';
 await page.goto(srv.url + `/archive/${ID}/`);
@@ -67,13 +70,10 @@ await page.waitForTimeout(800);
 const sggSec = await page.$eval('[data-map-host="sgg"]', (e) => e.closest('.ar-section').id);
 const tools = `#${sggSec} .fig-tools`;
 ck('시군구 지도 섹션 제목에 도구줄', !!(await page.$(tools)), sggSec);
+ck('섹션마다 링크 복사는 없다(상태는 이미 주소창에)', !(await page.$(`${tools} .fig-tool:has-text("링크 복사")`)));
+ck('그림 설명이 기본 그림이라고 밝힌다', /담기지 않는다/.test(await page.$eval(`${tools} .fig-tool`, (b) => b.title)));
 await page.click('.sgg-mode-toggle [data-enc="격자"]');
 await page.waitForTimeout(300);
-await page.click(`${tools} .fig-tool:has-text("링크 복사")`);
-await page.waitForTimeout(200);
-const copied = new URL(await clip());
-ck('링크에 섹션 앵커', copied.hash === '#' + sggSec, copied.hash);
-ck('링크에 지금 모드(?v=sgg-grid)', copied.searchParams.getAll('v').includes('sgg-grid'), copied.search);
 
 const manifest = JSON.parse(fs.readFileSync(ROOT + 'data/map_manifest.json', 'utf8')).elections[ID].views;
 const [pop] = await Promise.all([
@@ -103,6 +103,15 @@ const res = await grab('#ar-results-csv');
 ck('파일명 = 회차 id', res.name === `${ID}-results.csv`, res.name);
 ck('UTF-8 BOM(엑셀 한글)', res.csv.bom);
 ck('머리 주석에 출처', res.csv.notes.some((n) => /출처/.test(n)), res.csv.notes.join(' | '));
+ck('머리 주석: 필터와 상관없이 전 행', res.csv.notes.some((n) => /필터와 상관없이/.test(n)) && !res.csv.notes.some((n) => /내려받은 화면/.test(n)), res.csv.notes.join(' | '));
+const raws = await page.$$eval('#ar-data-export a[download]', (as) => as.map((a) => a.getAttribute('href')));
+const wantRaw = [`/data/results/${ID}.json`].concat(main._meta && main._meta.chunked ? [`/data/results/${ID}.sigungu.json`] : []);
+ck(`원본 JSON 링크 = 원자료 파일 전부(${wantRaw.length})`, raws.join() === wantRaw.join(), raws.join(' '));
+ck('내려받기 블록은 결과 섹션들 뒤(맨 아래)', await page.evaluate(() => {
+  const d = document.getElementById('ar-data-export');
+  const secs = [...document.querySelectorAll('.ar-section:not([hidden])')];
+  return d && secs[secs.length - 1] === d && !!(d.nextElementSibling && d.nextElementSibling.matches('.ar-nav-bottom'));
+}));
 ck('행 수 = 원자료 후보 수', res.csv.data.length === nCand, `${res.csv.data.length} vs ${nCand}`);
 const H = res.csv.header;
 const col = (n) => H.indexOf(n);

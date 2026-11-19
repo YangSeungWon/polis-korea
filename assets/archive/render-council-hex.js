@@ -491,6 +491,20 @@
     }
     return m;
   }
+  // 지도 필터(map-filter.js)용 — 격차·투표율. 모르면 null(0이 아니다): 득표율이 빠진
+  // 후보가 있으면 격차를 셀 수 없고, 투표수가 없는 옛 회차는 투표율을 셀 수 없다.
+  // 시군구 → 1·2위 격차(%p). 무투표·득표율 모름은 null(격차가 없거나 모른다 — 0이 아니다).
+  function marginBySigungu(races, tc) {
+    const put = (m, k, v) => { if (!m.has(k)) m.set(k, v); };
+    const m = new Map();
+    for (const r of races || []) {
+      if (r.scope !== 'sigungu' || r.sg_typecode !== tc) continue;
+      const cs = (r.candidates || []).slice().sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      const un = r.is_uncontested || r.uncontested || cs.length < 2;
+      putKeys(m, r.sido, r.sigungu, (!un && cs[0].pct != null && cs[1].pct != null) ? cs[0].pct - cs[1].pct : null, put);
+    }
+    return m;
+  }
   function marginOpacity(margin) { return 0.4 + 0.6 * Math.max(0, Math.min(1, margin / 40)); }
 
   // cartogram용 — 시군구별 {candidates, voted}(전 후보+총투표). exact·rolled 키.
@@ -602,6 +616,11 @@
     ];
     const VS = window.ViewState;
     let mode = (VS && VS.hostMode('sgg', MODES.map(([k]) => k))) || '단색';
+    // 접전 필터는 **기초단체장 지도에만** — 실제로 한 명이 그 시군구에서 이긴 선거다.
+    // 대선은 시군구 승부가 없고(단색 금지), 단색 모드가 이미 격차를 명도로 보여 준다.
+    const mmap = tc === '4' ? marginBySigungu(races, tc) : null;
+    const filter = () => mmap && window.MapFilter && window.MapFilter.attach(mapHost, area,
+      (s, n) => lookupKey(mmap, s, n) ?? null);
     async function redraw() {
       area.dataset.mode = mode;   // 캡처가 읽는다 — 어느 모드의 그림인지
       if (VS) VS.setHostMode('sgg', mode, '단색');
@@ -611,6 +630,7 @@
         const meta = await SGM.draw(area, { year: sggYear, lookup: (s, n) => lookupKey(rmap, s, n), onSelect });
         const svgEl = area.querySelector('svg');
         if (window.SvgViewport && svgEl && meta && meta.cells) window.SvgViewport.applyHost(area, svgEl, { cells: meta.cells }, keep);
+        filter();
         return;
       }
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
@@ -623,6 +643,7 @@
       // 같은 뜻을 여기서만 문장으로 적으면 페이지마다 문법이 갈린다.
       if (mode === '단색' && typeof mountGapLegend === 'function') mountGapLegend(svg);
       else if (typeof removeGapLegend === 'function') removeGapLegend(svg);
+      filter();   // 다시 그린 칸에 지금 조건을 다시 건다
     }
     // 인코딩 토글 — 아이콘+가족(1위[단색] | 표 비례[격자·원형]). 공용 EncodingToggle, 없으면 폴백.
     if (window.EncodingToggle) {

@@ -15,6 +15,16 @@
 //   ViewState.onPop(() => restore())
 //   ViewState.hostMode('sgg', ['단색','geo','격자','dorling'])  → URL ?v=sgg-grid 이면 '격자'
 //   ViewState.setHostMode('sgg', '격자', '단색')          // 기본 모드면 v에서 뺀다
+//
+// 파라미터 이름 — 한 페이지 안에서만 뜻을 갖는다(페이지끼리 공유하지 않는다).
+// 같은 페이지에 같은 이름을 쓰는 위젯이 둘 생기면 앞에 접두어를 붙인다(당선자 표 w*).
+//   공통      sel=시도|시군구 (고른 곳)   q= (검색어)
+//   history   view= (표현 방식)  z= (줌)  — 회차·유형·직위는 경로(/history/{유형}/{n}/)
+//   archive   v={host}-{mode} (지도마다 하나, 기본 모드는 생략 — 뷰 키와 같은 이름)
+//             wq= wsido= wparty= wlv= (당선자 표)   margin= (기초단체장 접전 상한)
+//   polls     office= scope= view= mode= sel=
+//   search    q= round=      region hub  q=      compare  a= b= (지역 slug)
+//   chronology f= (종류) from= to= (연도)
 (function () {
   let pending = null;
   let quietDepth = 0;

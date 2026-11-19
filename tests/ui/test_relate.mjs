@@ -4,9 +4,10 @@
 //   · 지도에서 고른 시군구에서 그 지역 페이지로 가는 길이 없다(history 상세 패널).
 //   · 선거구 집계(동대문갑구)를 이름 모양으로 잘라 없는 지역으로 보낸다.
 //   · 지도 칸과 당선자 표가 서로를 모른다 — 한쪽에 손을 올려도 다른 쪽이 그대로다.
-//   · 연동이 지도를 '지운다'(Overview를 잃는다). 상관없는 지도까지 흐린다.
-//   · '비슷한 지역'이 자기 일반구(성남시↔분당구)를 고른다. 견줄 수 없을 때 침묵한다.
-//   · 비교 페이지가 URL 조건을 안 읽는다 / 모르는 칸을 0으로 쓴다.
+//   · 연동이 지도를 '지운다'(Overview를 잃는다). 지도에 손을 올리면 다른 지도까지 흐린다.
+//   · 비교 페이지가 URL 조건을 안 읽는다 / 모르는 칸을 0으로 쓴다 / 지역 1위가
+//     '같았다'를 센다(대선은 지역 승부가 아니다, 교육감 무소속=무소속은 같은 편이 아니다).
+//   · 시도를 비교하면 대선 막대가 전부 '자료 없음'이다(자료가 있는데 모른다고 보인다).
 //   · 검색이 사람만 찾는다 — '성남'으로 성남의 선거 기록에 못 간다.
 //
 // 실행: node tests/ui/test_relate.mjs
@@ -86,6 +87,7 @@ const back = await page.evaluate((k) => {
 }, key);
 ck('지도 칸에 손 → 그 시군구 당선자 행이 밝아진다', back.on.length >= 1 && back.on.every((r) => r === key), JSON.stringify(back.on.slice(0, 3)));
 ck('다른 시군구 행은 밝아지지 않는다', back.off.every((r) => r !== key));
+ck('지도에 손 → 지도들은 흐리지 않는다(표만 따라온다)', await page.evaluate(() => !document.querySelector('svg.brushing')));
 // 상관없는 지도는 흐리지 않는다 — 시도 단위만 있는 지도(광역)는 시군구 키와 직접 맞지 않으면 그대로.
 await page.mouse.move(0, 0);
 await page.waitForTimeout(50);
@@ -95,30 +97,12 @@ ck('손을 떼면 원래대로', await page.evaluate(() => !document.querySelect
 const locHref = await page.$eval(`.ar-winner-row[data-region="${key}"] .ar-winner-loc a`, (a) => a.getAttribute('href')).catch(() => null);
 ck('당선자 선거구 → 그 시군구 지역 페이지', decodeURIComponent(locHref || '') === `/region/${key.replace('|', '-')}/`, locHref);
 
-// ── 3. 지역 페이지: 비슷한 지역 + 비교 진입 ────────────────────────────────
+// ── 3. 지역 페이지: 비교 진입 ──────────────────────────────────────────────
 console.log('\n[지역 페이지]');
 await page.goto(srv.url + '/region/' + enc('경기도-성남시분당구') + '/');
-const sim = await page.$$eval('.rg-sim li > a:first-child', (as) => as.map((a) => decodeURIComponent(a.getAttribute('href'))));
-ck('비슷한 지역 5곳', sim.length === 5, String(sim.length));
-ck('자기 모시·형제 일반구는 고르지 않는다', sim.every((h) => !/성남시/.test(h)), sim.join(' '));
-const sims = await page.$$eval('.rg-sim .rg-sim-cmp', (as) => as.map((a) => a.getAttribute('href')));
-ck('각 지역에 나란히 보기 링크(a·b)', sims.length === 5 && sims.every((h) => /\?a=.+&b=.+/.test(h)), sims[0]);
-ck('방법이 적혀 있다', /제곱평균/.test(await page.$eval('.rg-sim-how', (e) => e.textContent).catch(() => '')));
-// 견줄 수 없는 곳은 왜 없는지 말한다.
-const noneFile = await page.evaluate(async () => {
-  const ix = await (await fetch('/data/regions/index.json')).json();
-  for (const r of ix.regions) {
-    if (r.name === r.sido) continue;
-    const j = await (await fetch('/data/regions/' + encodeURIComponent(r.slug) + '.json')).json();
-    if (Object.keys(j.pres).length < 3) return r.slug;
-  }
-  return null;
-});
-if (noneFile) {
-  await page.goto(srv.url + '/region/' + enc(noneFile) + '/');
-  const why = await page.$eval('.rg-relate .rg-sim-none', (e) => e.textContent).catch(() => '');
-  ck(`견줄 수 없는 곳(${noneFile})은 이유를 말한다`, /회뿐|겹치는/.test(why), why);
-}
+const cmpIn = await page.$eval('.rg-relate .rg-cmp-link a', (a) => decodeURIComponent(a.getAttribute('href'))).catch(() => '');
+ck('나란히 보기 진입점(a=이 지역)', cmpIn === '/region/compare.html?a=경기도-성남시분당구', cmpIn);
+ck('자동 \'비슷한 지역\' 목록은 없다', !(await page.$('.rg-sim, #similar')));
 
 // ── 4. 비교 페이지 ─────────────────────────────────────────────────────────
 console.log('\n[두 지역 나란히]');
@@ -135,7 +119,8 @@ const cmp = await page.evaluate(() => (!document.querySelector('.cmp-table') ? {
 ck('URL ?a=&b= → 두 입력이 채워진다', cmp.a === '서울 강남구' && cmp.b === '광주 북구', `${cmp.a} / ${cmp.b}`);
 ck('같은 선거끼리 맞춘 표', cmp.rows > 10, String(cmp.rows));
 ck('대선 득표율 막대(단색 아님 — 두 후보 비례)', cmp.pres > 3 && cmp.bars.length >= 2 * 3 && cmp.bars.every((w) => w >= 0 && w <= 100));
-ck('요약 한 줄(대선 거리·같은 1위 수)', /%p/.test(cmp.sum) && /1위 정당이 같았/.test(cmp.sum), cmp.sum);
+ck('요약 한 줄 = 대선 득표율 차이(제곱평균제곱근이라고 밝힌다)', /%p/.test(cmp.sum) && /제곱평균/.test(cmp.sum) && !/평균 <b>|평균 \d/.test(cmp.sum), cmp.sum);
+ck('지역 1위가 같았는지는 세지 않는다', !/1위 정당이 같았/.test(cmp.sum), cmp.sum);
 // 표의 값이 지역 JSON과 같다(새 값을 만들지 않는다).
 const same = await page.evaluate(async () => {
   const j = await (await fetch('/data/regions/' + encodeURIComponent('서울특별시-강남구') + '.json')).json();
@@ -146,6 +131,16 @@ const same = await page.evaluate(async () => {
   return cellTxt ? cellTxt.children[1].textContent.includes(r.pct.toFixed(1) + '%') : false;
 });
 ck('표 값 = 지역 JSON 값', same);
+// 시도끼리 — 대선 막대가 '자료 없음'으로 비지 않는다.
+await page.goto(srv.url + '/region/compare.html?a=' + enc('서울특별시') + '&b=' + enc('경기도'));
+await page.waitForSelector('.cmp-pres tbody tr', { timeout: 20000 }).catch(() => null);
+const sd = await page.evaluate(() => ({
+  bars: document.querySelectorAll('.cmp-pres .cmp-bar:not(.cmp-bar-none)').length,
+  none: document.querySelectorAll('.cmp-pres .cmp-bar-none').length,
+}));
+ck('시도 비교 — 대선 득표율 막대가 있다', sd.bars >= 20 && sd.none <= 4, JSON.stringify(sd));
+await page.goto(srv.url + '/region/compare.html?a=' + enc('서울특별시-강남구') + '&b=' + enc('광주광역시-북구'));
+await page.waitForSelector('.cmp-table tbody tr', { timeout: 20000 }).catch(() => null);
 // 입력을 바꾸면 URL이 따라간다(replace — 히스토리 길이 불변).
 const h0 = await page.evaluate(() => history.length);
 await page.fill('#cmp-b', '부산 해운대구');
