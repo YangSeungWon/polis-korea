@@ -36,7 +36,7 @@ rows = obs["parties"]
 # ① 유도값이 실제로 유도된 것인가 — build_runs를 다시 돌려 합계를 맞춘다
 from build_party_pages import build_runs  # noqa: E402
 
-runs = build_runs()
+runs = build_runs(include_outside=True)   # 관측 층은 존속 기간 밖 기록까지 전부 싣는다
 tot_o = (sum(r["candidates"] for r in rows), sum(r["votes"] for r in rows),
          sum(r["wins"] for r in rows))
 tot_r = (sum(x["candidates"] for rs in runs.values() for x in rs),

@@ -84,11 +84,30 @@
     grid.className = 'ar-winners-grid';
     body.appendChild(grid);
 
+    // 필터 ↔ URL(?wq=&wsido=&wparty=&wlv=). 지도 클릭도 focus()로 이 필터를 고치므로
+    // 지도에서 고른 지역까지 링크로 남는다. 옵션에 없는 값은 버린다(링크가 낡아도 빈 표가 아니라 전체).
+    const URL_KEYS = { 'ar-winners-q': 'wq', 'ar-winners-sido': 'wsido', 'ar-winners-party': 'wparty', 'ar-winners-level': 'wlv' };
+    const VS = window.ViewState;
+    if (VS) {
+      for (const [id, k] of Object.entries(URL_KEYS)) {
+        const v = VS.get(k);
+        const el = document.getElementById(id);
+        if (!v || !el) continue;
+        if (el.tagName === 'SELECT' && ![...el.options].some((o) => o.value === v)) continue;
+        el.value = v;
+      }
+    }
+
     function render() {
       const q = document.getElementById('ar-winners-q').value.trim().toLowerCase();
       const sido = document.getElementById('ar-winners-sido').value;
       const party = document.getElementById('ar-winners-party').value;
       const level = document.getElementById('ar-winners-level').value;
+      if (VS) {
+        const patch = {};
+        for (const [id, k] of Object.entries(URL_KEYS)) patch[k] = document.getElementById(id).value.trim() || null;
+        VS.set(patch);
+      }
       const filtered = winners.filter((w) => {
         if (sido && w.sido !== sido) return false;
         if (party && w.party !== party) return false;

@@ -120,3 +120,43 @@ def is_page_view(host: str, mode: str | None) -> bool:
     """본문 <figure>로 낼 뷰인가. 전부 내면 총선 history가 8→13장이 된다."""
     h = _HOST.get(host)
     return bool(h) and mode in (h.get("page") or [])
+
+
+# ── 브라우저 판 ──────────────────────────────────────────────────────────────
+# URL 상태(?v=sgg-dorling)가 뷰 키를 쓴다. JS가 enc→mode·키 해석을 손으로 베끼면
+# 이 표와 어긋난다 — 그래서 **이 표에서 생성**한다. tests/test_view_keys.py가
+# 생성물이 최신인지, JS 해석이 parse_key와 같은지 확인한다.
+JS_OUT = ROOT / "assets" / "view-keys.js"
+
+
+def render_js() -> str:
+    payload = {
+        "enc2mode": _ENC2MODE,
+        "hosts": [h["token"] for h in HOSTS],
+        "modes": [m["mode"] for m in MODES],
+    }
+    body = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    return (
+        "// 생성물 — scripts/build/view_registry.py가 data/view_registry.json에서 만든다. 손수정 X.\n"
+        "// 뷰 키 = {host} 또는 {host}-{mode}. parseKey는 긴 host 토큰을 먼저 맞춘다(parse_key와 같은 규칙).\n"
+        "(function () {\n"
+        f"  const R = {body};\n"
+        "  const MODES = new Set(R.modes);\n"
+        "  const HOSTS = R.hosts.slice().sort((a, b) => b.length - a.length);\n"
+        "  function modeOf(enc) { return R.enc2mode[String(enc == null ? '' : enc).trim()] || null; }\n"
+        "  function keyFor(host, mode) { return mode ? host + '-' + mode : host; }\n"
+        "  function parseKey(key) {\n"
+        "    if (R.hosts.indexOf(key) >= 0) return [key, null];\n"
+        "    for (const t of HOSTS) {\n"
+        "      if (key.indexOf(t + '-') === 0) { const m = key.slice(t.length + 1); return MODES.has(m) ? [t, m] : null; }\n"
+        "    }\n"
+        "    return null;\n"
+        "  }\n"
+        "  window.ViewKeys = { modeOf, keyFor, parseKey };\n"
+        "})();\n"
+    )
+
+
+if __name__ == "__main__":
+    JS_OUT.write_text(render_js(), encoding="utf-8")
+    print(f"→ {JS_OUT.relative_to(ROOT)}")

@@ -598,9 +598,11 @@
       ...(GEO ? [['geo', '지도']] : []),
       ...(CART ? [['격자', '격자'], ['dorling', '원형']] : []),
     ];
-    let mode = '단색';
+    const VS = window.ViewState;
+    let mode = (VS && VS.hostMode('sgg', MODES.map(([k]) => k))) || '단색';
     async function redraw() {
       area.dataset.mode = mode;   // 캡처가 읽는다 — 어느 모드의 그림인지
+      if (VS) VS.setHostMode('sgg', mode, '단색');
       // 호스트 단위 줌 보존 — 단색↔지도↔격자↔원형 교차에 region(시도|시군구) 앵커(좌표계 달라도 같은 키).
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       if (mode === 'geo') {
@@ -628,8 +630,8 @@
         onSelect: (k) => { mode = k; redraw(); },
       });
     } else {
-      tog.innerHTML = MODES.map(([k, lbl], i) =>
-        `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');
+      tog.innerHTML = MODES.map(([k, lbl]) =>
+        `<button type="button" class="seg-btn${k === mode ? ' is-active' : ''}" data-sgmode="${k}">${lbl}</button>`).join('');
       tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => {
         mode = b.dataset.sgmode;
         tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b));
@@ -739,9 +741,11 @@
     const nUncon = hexCells.filter((c) => kindOf(c) === 'uncontested').length;
     const nUnknown = hexCells.filter((c) => kindOf(c) === 'unknown').length;
     const nPending = nUncon + nUnknown;
-    let mode = '격자';
+    const VSp = window.ViewState;
+    let mode = (VSp && VSp.hostMode('sggprop', ['격자', 'dorling'])) || '격자';
     function redraw() {
       area.dataset.mode = mode;   // 캡처가 읽는다 — 어느 모드의 그림인지
+      if (VSp) VSp.setHostMode('sggprop', mode, '격자');
       const keep = window.SvgViewport ? window.SvgViewport.captureHost(area) : null;
       const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('xmlns', NS);
       svg.setAttribute('class', 'council-hex-svg cartogram-map');
@@ -753,7 +757,7 @@
     if (window.EncodingToggle) {
       window.EncodingToggle.render(tog, { options: MODES.map(([k, l]) => ({ key: k, label: l })), active: mode, onSelect: (k) => { mode = k; redraw(); } });
     } else {
-      tog.innerHTML = MODES.map(([k, l], i) => `<button type="button" class="seg-btn${i === 0 ? ' is-active' : ''}" data-sgmode="${k}">${l}</button>`).join('');
+      tog.innerHTML = MODES.map(([k, l]) => `<button type="button" class="seg-btn${k === mode ? ' is-active' : ''}" data-sgmode="${k}">${l}</button>`).join('');
       tog.querySelectorAll('[data-sgmode]').forEach((b) => b.addEventListener('click', () => { mode = b.dataset.sgmode; tog.querySelectorAll('[data-sgmode]').forEach((x) => x.classList.toggle('is-active', x === b)); redraw(); }));
     }
     leg.innerHTML = parties.slice(0, 8).map((p) => `<span class="ch-leg" style="color:${(typeof partyTextColor==='function')?partyTextColor(p):pcol(p)}">■ ${p}</span>`).join(' ');
