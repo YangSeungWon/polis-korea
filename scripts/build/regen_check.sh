@@ -55,6 +55,7 @@ GENERATORS=(
 # validation_21__20도 그랬다(한나라당 오귀속을 품은 채 낡아 있었다).
 # 외부에서 받아오는 fetch 스크립트는 대상이 아니다 — 네트워크가 답을 바꾼다.
 DERIVED=(
+  "scripts/build/build_comparison.py --all"           # data/comparisons/*__*.json ← results·registry
   "scripts/normalize/party_lifecycle.py --write"      # lifecycle.json ← registry
   "scripts/build/political_axes.py --write"           # political_axes.json ← registry·lifecycle
   "scripts/build/family_vote_share.py"                # family_vote_share.json ← political_axes·results
