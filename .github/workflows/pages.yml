@@ -21,7 +21,6 @@ on:
 
 permissions:
   contents: read
-  actions: read   # 배포 전 아티팩트 목록 확인용
   pages: write
   id-token: write
 
@@ -69,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -111,23 +110,38 @@ jobs:
           path: '.'
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
-      # 업로드 확정 직후 아티팩트 목록 API가 늦게 갱신돼 deploy-pages가
-      # "No artifacts named ... were found"로 실패한 적이 있다(2026-11-24 연속 3회).
-      # 목록에 보일 때까지 최대 90초 기다린다. 끝내 안 보여도 Deploy가 판정하게 둔다.
-      - name: 아티팩트 목록 반영 대기
-        env:
-          GH_TOKEN: ${{ github.token }}
-          NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
-        run: |
-          for i in $(seq 1 18); do
-            n=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts?name=$NAME" --jq '.total_count' 2>/dev/null || echo 0)
-            if [ "${n:-0}" -ge 1 ]; then echo "artifact visible after $(( (i-1)*5 ))s"; exit 0; fi
-            sleep 5
-          done
-          echo "::warning::$NAME 가 90초 안에 목록에 보이지 않음 — Deploy 진행"
+      # 업로드 확정 직후 deploy-pages가 "No artifacts named ... were found"로 1~2초 만에
+      # 실패하는 일이 있다(2026-11-24 하루 4회, 재실행하면 성공). deploy-pages는 러너 내부
+      # Twirp ArtifactService로 목록을 보는데, 이건 run 단계에서 부를 수 없고 REST 목록과도
+      # 따로 늦는다 — REST로 '보임'을 확인한 직후에도 0개가 나왔다. 그래서 미리 기다리지
+      # 않고, 60초 안에 끝난 실패만 30초 뒤 한 번 다시 시도한다. 오래 걸린 실패
+      # (syncing_files 시간 초과 등)는 재시도하지 않는다 — job 시간 제한을 넘긴다.
+      - name: Deploy 시작 시각
+        id: deploy_start
+        run: echo "t=$(date +%s)" >> "$GITHUB_OUTPUT"
 
       - name: Deploy
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: 빠른 실패면 재시도 대기
+        id: deploy_gate
+        if: steps.deployment.outcome == 'failure'
+        run: |
+          took=$(( $(date +%s) - ${{ steps.deploy_start.outputs.t }} ))
+          if [ "$took" -gt 60 ]; then
+            echo "::error::Deploy가 ${took}s 만에 실패 — 아티팩트 조회 실패가 아니므로 재시도하지 않는다"
+            exit 1
+          fi
+          echo "::warning::Deploy가 ${took}s 만에 실패 — 30초 뒤 재시도"
+          sleep 30
+
+      - name: Deploy (재시도)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
