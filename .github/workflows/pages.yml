@@ -21,6 +21,7 @@ on:
 
 permissions:
   contents: read
+  actions: read   # 배포 전 아티팩트 목록 확인용
   pages: write
   id-token: write
 
@@ -109,6 +110,21 @@ jobs:
         with:
           path: '.'
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+
+      # 업로드 확정 직후 아티팩트 목록 API가 늦게 갱신돼 deploy-pages가
+      # "No artifacts named ... were found"로 실패한 적이 있다(2026-11-24 연속 3회).
+      # 목록에 보일 때까지 최대 90초 기다린다. 끝내 안 보여도 Deploy가 판정하게 둔다.
+      - name: 아티팩트 목록 반영 대기
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          for i in $(seq 1 18); do
+            n=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts?name=$NAME" --jq '.total_count' 2>/dev/null || echo 0)
+            if [ "${n:-0}" -ge 1 ]; then echo "artifact visible after $(( (i-1)*5 ))s"; exit 0; fi
+            sleep 5
+          done
+          echo "::warning::$NAME 가 90초 안에 목록에 보이지 않음 — Deploy 진행"
 
       - name: Deploy
         id: deployment
