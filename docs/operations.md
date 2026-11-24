@@ -51,6 +51,12 @@ python scripts/build/build_home_capabilities.py
 python scripts/build/build_sitemap.py
 ```
 
+이 순서는 `scripts/fetch/local_realmeter_weekly.sh`로 묶여 있고, 관리자 PC의 systemd user
+timer `polis-realmeter.timer`가 매주 화요일 10:00에 돌린다(PC가 꺼져 있었으면 켜질 때).
+신규가 있으면 `full_gate.sh` 통과 후에만 커밋·push하고, master가 아니거나 작업 중인
+변경이 있으면 건너뛴다. 결과는 데스크톱 알림과 `journalctl --user -u polis-realmeter`.
+unit 파일은 저장소 밖(`~/.config/systemd/user/`)에 있다 — PC를 바꾸면 다시 만들어야 한다.
+
 자동화만으로 해결되지 않은 소스를 정상으로 감추지 않는다. 마지막 조사일이 예정일을
 넘기면 운영 감시는 실패한다. 장기 해결은 해당 공식 소스에 접근 가능한 실행 환경이 필요하다.
 
